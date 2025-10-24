@@ -276,6 +276,16 @@ def _resource_gain_for_state(state: State) -> list[ResourceInfo]:
     )
 
 
+def _index_for_action_pair(pair: tuple[ResolverAction, DamageState]) -> int:
+    node = pair[0]
+    if isinstance(node, WorldGraphNode):
+        return node.database_node.node_index
+    elif isinstance(node, DockLockNode):
+        return node.dock.node_index
+    else:
+        return node.node_index
+
+
 async def _inner_advance_depth(
     state: State,
     logic: Logic,
@@ -355,7 +365,8 @@ async def _inner_advance_depth(
     actions: list[tuple[ActionPriority, ResolverAction, DamageState]] = [
         (priority, action, damage_state)
         for priority, entries in actions_by_priority.items()
-        for action, damage_state in entries
+        # HACK: sort nodes so they're somewhat more consistent between classic and new graph
+        for action, damage_state in sorted(entries, key=_index_for_action_pair)
     ]
     logic.log_checking_satisfiable_actions(state, actions)
     has_action = False
