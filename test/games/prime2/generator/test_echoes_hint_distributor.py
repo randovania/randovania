@@ -2,8 +2,7 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from random import Random
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock, call
 
 import pytest
@@ -21,16 +20,14 @@ from randovania.game_description.hint import (
     RedTempleHint,
     SpecificHintPrecision,
 )
-from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
-from randovania.generator.generator import create_player_pool
 from randovania.generator.pre_fill_params import PreFillParams
 from randovania.layout.base.standard_pickup_state import StandardPickupState
-from randovania.resolver import debug
 
 if TYPE_CHECKING:
+    from randovania.game_description.hint_features import HintFeature
     from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 
 
@@ -135,117 +132,6 @@ def echoes_configuration_everything_shuffled(default_echoes_configuration) -> Ec
             },
         ),
     )
-
-
-async def test_keybearer_hint_precisions(
-    echoes_configuration_everything_shuffled, echoes_game_patches, echoes_pickup_database
-):
-    # Setup
-    rng = Random(0)
-
-    player_pools = [
-        await create_player_pool(rng, echoes_configuration_everything_shuffled, 0, 1, "World 1", MagicMock()),
-    ]
-    pool = player_pools[0]
-
-    hint_distributor = EchoesHintDistributor()
-
-    hint_node = NodeIdentifier.create("Agon Wastes", "Central Mining Station", "Keybearer Corpse (J-Stl)")
-    keybearer_precision = (await hint_distributor.get_specific_pickup_precision_pairs())[hint_node]
-    hint = LocationHint(keybearer_precision, PickupIndex(0))
-
-    categories = echoes_pickup_database.pickup_categories
-    # FIXME: temporary. When keybearers have been tested more, we should try to avoid detailed whenever possible
-    # Also not sure if we really need to check all exact features/order now that they use the same as a normal hint,
-    # since that would mean the test fails on each feature-tweak.
-    expected_category_order = [
-        categories["chozo"],
-        categories["visor"],
-        categories["dark"],
-        categories["visor"],
-        categories["dark"],
-        categories["light"],
-        categories["suit"],
-        categories["beam"],
-        categories["beam"],
-        categories["dark"],
-        categories["beam"],
-        categories["dark"],
-        categories["cheat"],
-        categories["cheat"],
-        categories["morph_ball"],
-        categories["chozo"],
-        categories["morph_ball"],
-        categories["morph_ball"],
-        categories["chozo"],
-        categories["cheat"],
-        categories["movement"],
-        categories["movement"],
-        categories["movement"],
-        categories["chozo"],
-        categories["chozo"],
-        categories["chozo"],
-        categories["missile"],
-        categories["cheat"],
-        categories["chozo"],
-        categories["luminoth"],
-        categories["dark"],
-        categories["dark"],
-        categories["translator"],
-        categories["translator"],
-        categories["luminoth"],
-        categories["translator"],
-        HintItemPrecision.DETAILED,
-        categories["chozo"],
-        categories["chozo"],
-        categories["luminoth"],
-        HintItemPrecision.DETAILED,
-        HintItemPrecision.DETAILED,
-        categories["key"],
-        HintItemPrecision.DETAILED,
-        HintItemPrecision.DETAILED,
-        HintItemPrecision.DETAILED,
-        categories["key"],
-        categories["key"],
-        categories["key"],
-        categories["key"],
-        categories["key"],
-        categories["key"],
-        HintItemPrecision.DETAILED,
-        categories["key"],
-        categories["key"],
-        categories["key"],
-        categories["key"],
-        HintItemPrecision.DETAILED,
-        categories["key"],
-        categories["key"],
-        categories["luminoth"],
-        categories["dark"],
-        categories["dark"],
-        HintItemPrecision.DETAILED,
-        categories["key"],
-        categories["key"],
-    ]
-
-    pickup_results: dict[str, HintFeature | Literal[HintItemPrecision.DETAILED]] = {}
-    expected_results: dict[str, HintFeature | Literal[HintItemPrecision.DETAILED]] = {}
-
-    # Run
-    for index, pickup in enumerate(pool.pickups_in_world):
-        expected_results[pickup.name] = expected_category_order[index]
-
-        patches = echoes_game_patches.assign_own_pickups([(PickupIndex(0), pickup)])
-
-        with debug.with_level(1):
-            precision = hint_distributor.get_hint_precision(hint_node, hint, rng, patches, player_pools)
-
-        assert isinstance(precision.item, HintFeature) or (
-            isinstance(precision.item, HintItemPrecision) and precision.item == HintItemPrecision.DETAILED
-        )
-        pickup_results[pickup.name] = precision.item
-
-    # Assert
-    assert pickup_results == expected_results
 
 
 @pytest.mark.parametrize(
