@@ -17,7 +17,6 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.filler.filler_configuration import FillerConfiguration
-from randovania.graph import world_graph
 from randovania.graph.world_graph import WorldGraphNode
 from randovania.layout import filtered_database
 from randovania.resolver.hint_state import ResolverHintState
@@ -424,21 +423,11 @@ def setup_resolver(
 
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
 
-    game, starting_state = bootstrap.logic_bootstrap(configuration, game, patches)
+    game, starting_state = bootstrap.logic_bootstrap_graph(
+        configuration, game, patches, use_world_graph=use_world_graph
+    )
+    logic = Logic(game, configuration)
 
-    if use_world_graph:
-        graph = world_graph.create_graph(
-            database_view=game,
-            patches=patches,
-            resources=starting_state.resources,
-            damage_multiplier=1.0,
-            victory_condition=game.victory_condition,
-        )
-        logic = Logic(graph, configuration)
-        starting_state.node = graph.original_to_node[starting_state.node.node_index]
-
-    else:
-        logic = Logic(game, configuration)
     starting_state.resources.add_self_as_requirement_to_resources = True
 
     return starting_state, logic

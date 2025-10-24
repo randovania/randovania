@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, NamedTuple
+from typing import TYPE_CHECKING, NamedTuple, cast
 
 from randovania.game_description import default_database
 from randovania.game_description.db.node import NodeContext
@@ -13,6 +13,7 @@ from randovania.game_description.resources.resource_collection import ResourceCo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup, create_standard_pickup
 from randovania.generator.pickup_pool.standard_pickup import find_ammo_for
+from randovania.graph import world_graph
 from randovania.graph.state import State
 from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -262,17 +263,19 @@ class Bootstrap[Configuration: BaseConfiguration]:
         """
         return db
 
-    def logic_bootstrap(
+    def logic_bootstrap_graph(
         self,
         configuration: Configuration,
         game: GameDescription,
         patches: GamePatches,
-    ) -> tuple[GameDescription, State]:
+        use_world_graph: bool,
+    ) -> tuple[GameDescription | world_graph.WorldGraph, State]:
         """
         Core code for starting a new Logic/State.
         :param configuration:
         :param game:
         :param patches:
+        :param use_world_graph:
         :return:
         """
         if not game.mutable:
@@ -300,14 +303,41 @@ class Bootstrap[Configuration: BaseConfiguration]:
             starting_state.resources.set_resource(resource, quantity)
 
         self.apply_game_specific_patches(configuration, game, patches)
-        game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
 
         # All majors/pickups required
         game.victory_condition = victory_condition_for_pickup_placement(
             enabled_pickups(game, configuration), game, configuration.logical_pickup_placement
         )
 
-        return game, starting_state
+        if use_world_graph:
+            graph = world_graph.create_graph(
+                database_view=game,
+                patches=patches,
+                resources=starting_state.resources,
+                damage_multiplier=configuration.damage_strictness.value,
+                victory_condition=game.victory_condition,
+            )
+            starting_state.node = graph.original_to_node[starting_state.node.node_index]
+            return graph, starting_state
+        else:
+            game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
+            return game, starting_state
+
+    def logic_bootstrap(
+        self,
+        configuration: Configuration,
+        game: GameDescription,
+        patches: GamePatches,
+    ) -> tuple[GameDescription, State]:
+        """
+        Core code for starting a new Logic/State.
+        :param configuration:
+        :param game:
+        :param patches:
+        :return:
+        """
+        game, starting_state = self.logic_bootstrap_graph(configuration, game, patches, False)
+        return cast("GameDescription", game), starting_state
 
     def apply_game_specific_patches(
         self, configuration: Configuration, game: GameDescription, patches: GamePatches
