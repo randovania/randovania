@@ -207,42 +207,30 @@ def _add_dock_connections(
 
     if forward_weakness.lock is not None:
         front_lock_resource = NodeResourceInfo.from_node(node, context)
+        requirement_parts.append(ResourceRequirement.simple(front_lock_resource))
+
         node.is_lock_action = True
         node.resource_gain.append((front_lock_resource, 1))
-        requirement_parts.append(ResourceRequirement.simple(front_lock_resource))
         requirement_to_collect = _get_dock_lock_requirement(node.database_node, forward_weakness)
 
     # Handle the different kinds of ways a dock lock can be opened from behind
 
     if back_lock is not None:
         back_lock_resource = NodeResourceInfo.from_node(target_node, context)
+        requirement_parts.append(ResourceRequirement.simple(back_lock_resource))
 
-        match back_lock.lock_type:
-            case DockLockType.FRONT_BLAST_BACK_FREE_UNLOCK:
-                node.is_lock_action = True
-                node.resource_gain.append((back_lock_resource, 1))
+        # Check if we can unlock from the back.
+        if not (
+            back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE
+            or (back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_IF_MATCHING and forward_weakness != back_weakness)
+        ):
+            node.is_lock_action = True
+            node.resource_gain.append((back_lock_resource, 1))
 
-            case DockLockType.FRONT_BLAST_BACK_BLAST:
-                node.is_lock_action = True
-                node.resource_gain.append((back_lock_resource, 1))
-                requirement_parts.append(ResourceRequirement.simple(back_lock_resource))
-
-                if forward_weakness != back_weakness:
-                    requirement_to_collect = RequirementAnd(
-                        [requirement_to_collect, _get_dock_lock_requirement(target_node.database_node, back_weakness)]
-                    )
-
-            case DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE:
-                requirement_parts.append(ResourceRequirement.simple(back_lock_resource))
-
-            case DockLockType.FRONT_BLAST_BACK_IF_MATCHING:
-                requirement_parts.append(ResourceRequirement.simple(back_lock_resource))
-                if forward_weakness == back_weakness:
-                    node.is_lock_action = True
-                    node.resource_gain.append((back_lock_resource, 1))
-
-            case _:
-                raise RuntimeError(f"Unknown lock type: {back_lock.lock_type}")
+            if back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST and forward_weakness != back_weakness:
+                requirement_to_collect = RequirementAnd(
+                    [requirement_to_collect, _get_dock_lock_requirement(target_node.database_node, back_weakness)]
+                )
 
     final_requirement = RequirementAnd(requirement_parts)
     node.requirement_to_collect = requirement_to_collect
