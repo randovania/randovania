@@ -38,7 +38,7 @@ class DockLockNode(ResourceNode):
             _resource=NodeResourceInfo(
                 resource_db.first_unused_resource_index() + dock.node_index,
                 dock.identifier,
-                dock.name,
+                dock.full_name(),
                 dock.name,
             ),
         )
