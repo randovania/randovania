@@ -316,6 +316,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
                 resources=starting_state.resources,
                 damage_multiplier=configuration.damage_strictness.value,
                 victory_condition=game.victory_condition,
+                flatten_to_set_on_patch=game.region_list.flatten_to_set_on_patch,
             )
             starting_state.node = graph.original_to_node[starting_state.node.node_index]
             return graph, starting_state

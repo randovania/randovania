@@ -14,6 +14,7 @@ def test_create_graph(
         starting_resources,
         damage_multiplier=1.0,
         victory_condition=blank_game_description.victory_condition,
+        flatten_to_set_on_patch=False,
     )
 
     assert len(graph.nodes) == 38

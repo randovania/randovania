@@ -16,11 +16,12 @@ from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Callable, Iterator
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
@@ -245,9 +246,9 @@ def _add_dock_connections(
 def _connections_from(
     node: WorldGraphNode,
     original_to_node: dict[int, WorldGraphNode],
-    damage_multiplier: float,
     patches: GamePatches,
     context: NodeContext,
+    simplify_requirement: Callable[[Requirement], Requirement],
 ) -> Iterator[WorldGraphNodeConnection]:
     requirement_to_leave = Requirement.trivial()
 
@@ -267,13 +268,11 @@ def _connections_from(
 
         # TODO: good spot to add some heuristic for simplifying requirements in general
         requirement_including_leaving = requirement
-        requirement = requirement.patch_requirements(damage_multiplier, context).simplify()
+        requirement = simplify_requirement(requirement)
 
         if requirement_to_leave != Requirement.trivial():
-            requirement_including_leaving = (
+            requirement_including_leaving = simplify_requirement(
                 RequirementAnd([requirement_including_leaving, requirement_to_leave])
-                .patch_requirements(damage_multiplier, context)
-                .simplify()
             )
         else:
             requirement_including_leaving = requirement
@@ -352,6 +351,7 @@ def create_graph(
     resources: ResourceCollection,
     damage_multiplier: float,
     victory_condition: Requirement,
+    flatten_to_set_on_patch: bool,
 ) -> WorldGraph:
     nodes: list[WorldGraphNode] = []
 
@@ -378,6 +378,16 @@ def create_graph(
     node_provider = WorldGraphNodeProvider(database_view, original_to_node)
 
     context = NodeContext(patches, resources, database_view.get_resource_database_view(), node_provider)
+
+    def simplify_requirement_with_as_set(requirement: Requirement) -> Requirement:
+        patched = requirement.patch_requirements(damage_multiplier, context)
+        return RequirementOr(
+            [RequirementAnd(alternative.values()) for alternative in patched.as_set(context).alternatives]
+        ).simplify()
+
+    def simplify_requirement(requirement: Requirement) -> Requirement:
+        return requirement.patch_requirements(damage_multiplier, context).simplify()
+
     for node in nodes:
         if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
             node.resource_gain.append((node_provider.get_node_resource_info_for(node.identifier, context), 1))
@@ -386,9 +396,9 @@ def create_graph(
             _connections_from(
                 node,
                 original_to_node,
-                damage_multiplier,
                 patches,
                 context,
+                simplify_requirement_with_as_set if flatten_to_set_on_patch else simplify_requirement,
             )
         )
 
