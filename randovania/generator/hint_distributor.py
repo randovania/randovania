@@ -175,6 +175,9 @@ class FeatureChooser[PrecisionT: Enum]:
             )
             print(f"  * Possible precisions:\n{possible_precisions}")
 
+        # shuffle to avoid always picking the first feature when multiple have the same precision
+        rng.shuffle(possible_features)
+
         # find feature closest to the chosen precision
         feature = min(possible_features, key=lambda f: abs(feature_precisions[f] - target_precision))
         debug.debug_print(
