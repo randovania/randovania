@@ -87,6 +87,9 @@ class WorldGraphNode:
     pickup_entry: PickupEntry | None
     """The pickup entry of the GamePatches for this node's pickup_index at the time of creation."""
 
+    is_lock_action: bool
+    """If this node should be considered a ActionPriority.LOCK_ACTION by the resolver."""
+
     database_node: Node
     """The Node instance used to create this WorldGraphNode."""
 
@@ -204,6 +207,7 @@ def _add_dock_connections(
 
     if forward_weakness.lock is not None:
         front_lock_resource = NodeResourceInfo.from_node(node, context)
+        node.is_lock_action = True
         node.resource_gain.append((front_lock_resource, 1))
         requirement_parts.append(ResourceRequirement.simple(front_lock_resource))
         requirement_to_collect = _get_dock_lock_requirement(node.database_node, forward_weakness)
@@ -215,9 +219,11 @@ def _add_dock_connections(
 
         match back_lock.lock_type:
             case DockLockType.FRONT_BLAST_BACK_FREE_UNLOCK:
+                node.is_lock_action = True
                 node.resource_gain.append((back_lock_resource, 1))
 
             case DockLockType.FRONT_BLAST_BACK_BLAST:
+                node.is_lock_action = True
                 node.resource_gain.append((back_lock_resource, 1))
                 requirement_parts.append(ResourceRequirement.simple(back_lock_resource))
 
@@ -232,6 +238,7 @@ def _add_dock_connections(
             case DockLockType.FRONT_BLAST_BACK_IF_MATCHING:
                 requirement_parts.append(ResourceRequirement.simple(back_lock_resource))
                 if forward_weakness == back_weakness:
+                    node.is_lock_action = True
                     node.resource_gain.append((back_lock_resource, 1))
 
             case _:
@@ -339,6 +346,7 @@ def create_node(
         require_collected_to_leave=isinstance(original_node, EventNode | PickupNode | EventPickupNode),
         pickup_index=pickup_index,
         pickup_entry=pickup_entry,
+        is_lock_action=isinstance(original_node, EventNode | EventPickupNode),
         database_node=original_node,
         area=area,
         region=region,

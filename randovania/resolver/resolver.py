@@ -28,7 +28,6 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.graph.state import State
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -37,12 +36,6 @@ if TYPE_CHECKING:
 ResolverAction = WorldGraphNode | ResourceNode
 AnyPickupNode = PickupNode | EventPickupNode
 AnyEventNode = EventNode | EventPickupNode
-
-
-def _pickup_index_for_node(node: AnyPickupNode) -> PickupIndex:
-    if isinstance(node, EventPickupNode):
-        node = node.pickup_node
-    return node.pickup_index
 
 
 def _is_later_progression_item(
@@ -166,11 +159,8 @@ def _should_check_if_action_is_safe(
     :param dangerous_resources:
     :return:
     """
-    original_node = action.database_node if isinstance(action, WorldGraphNode) else action
     return not _is_action_dangerous(state, action, dangerous_resources) and (
-        isinstance(original_node, AnyEventNode)
-        or _is_major_or_key_pickup_node(action, state)
-        or isinstance(original_node, HintNode)
+        _is_event_node(action) or _is_major_or_key_pickup_node(action, state) or _is_hint_node(action)
     )
 
 
@@ -199,16 +189,35 @@ class ActionPriority(enum.IntEnum):
     """This node grants a dangerous resource"""
 
 
-def _priority_for_resource_action(action: ResolverAction, state: State, logic: Logic) -> ActionPriority:
-    original_node = action.database_node if isinstance(action, WorldGraphNode) else action
+def _is_event_node(action: ResolverAction) -> bool:
+    if isinstance(action, WorldGraphNode):
+        return any(it.resource_type == ResourceType.EVENT for it, q in action.resource_gain if q > 0)
+    else:
+        return isinstance(action, AnyEventNode)
 
+
+def _is_hint_node(action: ResolverAction) -> bool:
+    target_node = action
+    if isinstance(action, WorldGraphNode):
+        target_node = action.database_node
+    return isinstance(target_node, HintNode)
+
+
+def _is_lock_action(action: ResolverAction) -> bool:
+    if isinstance(action, WorldGraphNode):
+        return action.is_lock_action
+    else:
+        return isinstance(action, DockLockNode | AnyEventNode)
+
+
+def _priority_for_resource_action(action: ResolverAction, state: State, logic: Logic) -> ActionPriority:
     if _is_dangerous_event(state, action, logic.dangerous_resources):
         return ActionPriority.DANGEROUS
-    elif logic.prioritize_hints and isinstance(original_node, HintNode):
+    elif logic.prioritize_hints and _is_hint_node(action):
         return ActionPriority.PRIORITIZED_HINT
     elif _is_major_or_key_pickup_node(action, state):
         return ActionPriority.MAJOR_PICKUP
-    elif isinstance(original_node, DockLockNode | AnyEventNode):
+    elif _is_lock_action(action):
         return ActionPriority.LOCK_ACTION
     else:
         return ActionPriority.EVERYTHING_ELSE
@@ -257,6 +266,14 @@ def _assign_hint_available_locations(state: State, action: ResolverAction, logic
     ):
         available = state.hint_state.valid_available_locations_for_hint(state, logic)
         state.hint_state.assign_available_locations(action.pickup_index, available)
+
+
+def _resource_gain_for_state(state: State) -> list[ResourceInfo]:
+    return (
+        [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
+        if isinstance(state.node, ResourceNode | WorldGraphNode)
+        else []
+    )
 
 
 async def _inner_advance_depth(
@@ -318,12 +335,7 @@ async def _inner_advance_depth(
                 if new_result[0] is None:
                     additional = logic.get_additional_requirements(action).alternatives
 
-                    resources = (
-                        [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
-                        if isinstance(state.node, ResourceNode | WorldGraphNode)
-                        else []
-                    )
-
+                    resources = _resource_gain_for_state(state)
                     progressive_chain_info = _progressive_chain_info(state.database_node, state.node_context())
 
                     logic.set_additional_requirements(
@@ -387,12 +399,7 @@ async def _inner_advance_depth(
 
         additional_requirements = additional_requirements.union(additional_alts)
 
-    resources = (
-        [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
-        if isinstance(state.node, ResourceNode | WorldGraphNode)
-        else []
-    )
-
+    resources = _resource_gain_for_state(state)
     progressive_chain_info = _progressive_chain_info(state.database_node, state.node_context())
 
     logic.set_additional_requirements(
