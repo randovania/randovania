@@ -1,3 +1,21 @@
+"""
+Part of the process needed for making universal macOS executables with PyInstaller.
+
+As a requirement to create these executables, all native extensions need to be universal binaries. For that, all
+binary wheels installed to the virtual environment used to run PyInstaller must be `universal2`.
+This script is responsible for providing these wheels, with managing the venv being left to the GitHub workflow.
+
+Summary:
+- For every package installed in the active venv, as said by `uv pip list`.
+- Skip packages that don't provide wheels (assuming they're legacy pure-python packages).
+- Skip packages that provide only one wheel (assuming they're pure-python packages).
+- Skip packages that only provide universal2 wheels (nothing to do!)
+- If it provides universal2 and (arm64 or x86_64) wheels, download the universal2 wheel.
+- If there's no universal2, but both arm64 and x86_64 wheel, download both and use `delocate` to create an universal2.
+- If there's only an arm64 or x86_64 wheel, check if there's a pure python wheel and use that instead.
+- All else, fail. Better request to the package maintainers that they provide both wheels.
+"""
+
 import asyncio
 import json
 import subprocess
