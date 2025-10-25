@@ -185,7 +185,11 @@ def _get_dock_lock_requirement(node: DockNode, weakness: DockWeakness) -> Requir
 
 
 def _add_dock_connections(
-    node: WorldGraphNode, original_to_node: dict[int, WorldGraphNode], patches: GamePatches, context: NodeContext
+    node: WorldGraphNode,
+    original_to_node: dict[int, WorldGraphNode],
+    patches: GamePatches,
+    context: NodeContext,
+    simplify_requirement: Callable[[Requirement], Requirement],
 ) -> WorldGraphNodeConnection:
     assert isinstance(node.database_node, DockNode)
     target_node = original_to_node[patches.get_dock_connection_for(node.database_node).node_index]
@@ -232,8 +236,8 @@ def _add_dock_connections(
                     [requirement_to_collect, _get_dock_lock_requirement(target_node.database_node, back_weakness)]
                 )
 
-    final_requirement = RequirementAnd(requirement_parts)
-    node.requirement_to_collect = requirement_to_collect
+    final_requirement = simplify_requirement(RequirementAnd(requirement_parts))
+    node.requirement_to_collect = simplify_requirement(requirement_to_collect)
 
     return WorldGraphNodeConnection(target_node, final_requirement, final_requirement)
 
@@ -279,7 +283,7 @@ def _connections_from(
         )
 
     if isinstance(node.database_node, DockNode):
-        yield _add_dock_connections(node, original_to_node, patches, context)
+        yield _add_dock_connections(node, original_to_node, patches, context, simplify_requirement)
 
 
 def _dangerous_resources(nodes: list[WorldGraphNode], context: NodeContext) -> Iterator[ResourceInfo]:
