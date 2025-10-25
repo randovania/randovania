@@ -46,7 +46,7 @@ jobs:
           WEBHOOK_URL: ${{ secrets.GENERAL_TALK_WEBHOOK }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Reports
           if-no-files-found: error

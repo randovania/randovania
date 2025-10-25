@@ -95,7 +95,7 @@ jobs:
         run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool --skip-resolver-tests --durations=100 --ignore=test/server --ignore=test/discord_bot --ignore=test/cli/commands/test_website.py --ignore=test/cli/commands/test_export_videos.py
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v5.0.0
         with:
           name: Executable
           if-no-files-found: error
