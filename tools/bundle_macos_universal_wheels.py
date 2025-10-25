@@ -197,6 +197,7 @@ def calculate_merged_wheel_name(matching_wheels: list[dict[str, Any]]) -> str:
         if min_version is None or version < min_version:
             min_version = version
 
+    assert min_version is not None
     # Replace the platform tag with universal2 using the oldest version
     major, minor = min_version
     filename_parts[-1] = f"macosx_{major}_{minor}_universal2.whl"
