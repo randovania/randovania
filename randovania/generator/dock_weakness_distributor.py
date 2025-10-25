@@ -33,8 +33,8 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.filler.filler_configuration import FillerResults
+    from randovania.graph.state import State
     from randovania.layout.base.base_configuration import BaseConfiguration
-    from randovania.resolver.state import State
 
 
 def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePatches:
@@ -163,6 +163,7 @@ class DockRandoLogic(Logic):
 
     @classmethod
     def from_logic(cls, logic: Logic, dock: DockNode, target: DockNode) -> Self:
+        assert logic.game is not None
         return cls(logic.game, logic.configuration, dock, target)
 
     def victory_condition(self, state: State) -> Requirement:
@@ -281,7 +282,8 @@ def _determine_valid_weaknesses(
 
     if state is not None:
         reach = ResolverReach.calculate_reach(logic, state)
-        state_dock = state.node.dock if isinstance(state.node, DockLockNode) else state.node
+        state_node = state.database_node
+        state_dock = state_node.dock if isinstance(state_node, DockLockNode) else state_node
         if state_dock == target:
             # When using two sided door search, the state could be pointing at either dock or target.
             # Simply swap dock and target if we found the target side.
@@ -370,7 +372,7 @@ async def distribute_post_fill_weaknesses(
     path_to_area = {
         player: distances_to_node(
             filler_results.player_results[player].game,
-            state.node,
+            state.database_node,
             [],
             patches=new_patches[player],
         )

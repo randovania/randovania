@@ -33,7 +33,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.filler.weighted_locations import WeightedLocations
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
 
 
 class GeneratorHintState(HintState):
@@ -118,7 +118,7 @@ class PlayerState:
         filler_logging.print_new_resources(self.game, self.reach, self.event_seen_count, "Events")
 
     def _log_new_pickup_index(self) -> None:
-        for index in self.reach.state.collected_pickup_indices:
+        for index in self.reach.state.collected_pickup_indices(self.game):
             if index not in self.pickup_index_ages:
                 self.pickup_index_ages[index] = 0.0
                 filler_logging.print_new_pickup_index(self, index)

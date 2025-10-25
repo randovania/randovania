@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.generator_reach import GeneratorReach
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
 
 PickupCombination = tuple[PickupEntry, ...]
 PickupCombinations = tuple[PickupCombination, ...]
