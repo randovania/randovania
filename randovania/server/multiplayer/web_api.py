@@ -10,7 +10,7 @@ from randovania.game_description import default_database
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import json_lib
 from randovania.network_common import remote_inventory
-from randovania.server.database import MultiplayerMembership, MultiplayerSession, World, WorldUserAssociation
+from randovania.server.database import MultiplayerMembership, MultiplayerSession, User, World, WorldUserAssociation
 from randovania.server.server_app import AdminDep, RequireAdminUser, ServerApp, ServerAppDep
 
 router = APIRouter()
@@ -137,6 +137,36 @@ def download_world_preset(user: AdminDep, world_id: int) -> Response:
         raise HTTPException(status_code=404, detail="Session not found")
 
     return RdvFileResponse(world.preset, f"{session.name} - {world.name}.rdvpreset")
+
+
+@router.post(
+    "/session/{session_id}/user/{user_id}/toggle_admin", dependencies=[RequireAdminUser], response_class=HTMLResponse
+)
+def toggle_admin_status(sa: ServerAppDep, request: Request, session_id: int, user_id: int) -> HTMLResponse:
+    try:
+        membership = MultiplayerMembership.get_by_ids(user_id, session_id)
+        user = User.get_by_id(user_id)
+    except MultiplayerMembership.DoesNotExist:
+        raise HTTPException(status_code=404, detail="Membership not found")
+    except User.DoesNotExist:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    membership.admin = not membership.admin
+    membership.save()
+
+    content = "Admin status of <code>{user}</code> toggled. <a href='{to_session}'>Return to session</a>".format(
+        user=user.name,
+        to_session=request.url_for("admin_session", session_id=session_id),
+    )
+    return sa.templates.TemplateResponse(
+        request,
+        "basic_page.html.jinja",
+        context={
+            "title": "Toggle Admin Status",
+            "header": "Toggle Admin Status",
+            "content": content,
+        },
+    )
 
 
 @router.get("/session/{session_id}/delete", dependencies=[RequireAdminUser], response_class=HTMLResponse)

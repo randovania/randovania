@@ -131,6 +131,49 @@ def test_delete_session_get(test_client, solo_two_world_session_setup) -> None:
     assert database.MultiplayerSession.get_by_id(1) == dict_to_model(database.MultiplayerSession, session_dict)
 
 
+def test_toggle_admin_status_doesnt_exist(test_client, solo_two_world_session_setup) -> None:
+    # Setup
+    _handle_db_nonsense(test_client, solo_two_world_session_setup)
+
+    # Run
+    test_client.post("/setup-db")
+    result = test_client.post("/session/9999/user/0/toggle_admin")
+
+    assert result.status_code == 404
+    assert "Membership not found" in result.text
+
+
+@pytest.mark.parametrize("initial_admin", [False, True])
+def test_toggle_admin_status(test_client, solo_two_world_session_setup, initial_admin) -> None:
+    # Setup
+    def setup() -> database.MultiplayerSession:
+        session = solo_two_world_session_setup()
+
+        member = database.MultiplayerMembership.get_by_ids(1234, 1)
+        member.admin = initial_admin
+        member.save()
+
+        return session
+
+    _handle_db_nonsense(test_client, setup)
+
+    # Run
+    test_client.post("/setup-db")
+    result = test_client.post("/session/1/user/1234/toggle_admin")
+
+    # Assert
+    @test_client.sa.app.get("/check-toggled")
+    def check_toggled():
+        membership = database.MultiplayerMembership.get_by_ids(1234, 1)
+        assert membership.admin is not initial_admin
+
+    assert (
+        "Admin status of <code>The Name</code> toggled. <a href='http://testserver/session/1'>Return to session</a>"
+        in result.text
+    )
+    test_client.get("/check-toggled")
+
+
 def test_delete_session_post(test_client, solo_two_world_session_setup) -> None:
     # Setup
     _handle_db_nonsense(test_client, solo_two_world_session_setup)
