@@ -49,15 +49,18 @@ def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
 
 def _combine_leave(
     it: Iterator[tuple[Node, Requirement]], requirement_to_leave: Requirement
-) -> Iterator[tuple[Node, Requirement, Requirement]]:
+) -> list[tuple[Node, Requirement, Requirement]]:
+    result = []
     for a, requirement in it:
         requirement_including_leaving = requirement
         if requirement_to_leave != Requirement.trivial():
             requirement_including_leaving = RequirementAnd([requirement, requirement_to_leave])
             if _is_requirement_viable_as_additional(requirement_to_leave):
-                requirement = RequirementAnd([requirement, requirement_to_leave])
+                requirement = requirement_including_leaving
 
-        yield a, requirement_including_leaving, requirement
+        result.append((a, requirement_including_leaving, requirement))
+
+    return result
 
 
 def _combine_damage_requirements(
