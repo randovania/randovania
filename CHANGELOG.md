@@ -57,7 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Alcove Ludicrous morph jump extends for enough height to do same as above.
 - Fixed: Alcove bottom right to center, regular bombs to break block requires Intermediate midair morph or frozen enemy platform.
 - Added: Namihe's Lair Advanced dboost to escape item area.
-- Added: Namihe's Lair Advanced shinespark to item.
+- Added: Namihe's Lair Expert shinespark to item.
 
 ##### Sector 4 (AQA)
 
