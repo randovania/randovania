@@ -61,6 +61,7 @@ async def test_admin_player_kick_last(
             "allowed_games": ANY,
             "allow_coop": False,
             "allow_everyone_claim_world": False,
+            "allow_give_pickups": False,
         },
         room="multiplayer-session-1",
         namespace="/",
@@ -124,6 +125,7 @@ async def test_admin_player_kick_member(two_player_session, mock_sa, mocker, moc
             "allowed_games": ANY,
             "allow_coop": False,
             "allow_everyone_claim_world": False,
+            "allow_give_pickups": False,
         },
         room="multiplayer-session-1",
         namespace="/",
@@ -989,3 +991,27 @@ async def test_admin_error_on_disabling_coop_when_coop_worlds_exist(mock_sa, one
             SessionAdminGlobalAction.SET_ALLOW_COOP.value,
             False,
         )
+
+
+@pytest.mark.parametrize("new_state", [False, True])
+@pytest.mark.parametrize("old_state", [False, True])
+async def test_admin_allow_give_pickups(
+    mock_sa, two_player_session, mock_audit, mock_emit_session_update, old_state, new_state
+):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+    two_player_session.allow_give_pickups = old_state
+    two_player_session.save()
+
+    # Run
+    await session_admin.admin_session(
+        mock_sa, "TheSid", 1, SessionAdminGlobalAction.SET_ALLOW_GIVE_PICKUPS.value, new_state
+    )
+
+    assert database.MultiplayerSession.get_by_id(1).allow_give_pickups == new_state
+    mock_audit.assert_awaited_once_with(
+        mock_sa,
+        "TheSid",
+        two_player_session,
+        f"{'Allowing' if new_state else 'Disallowing'} giving pickups by admins for the session.",
+    )
+    mock_emit_session_update.assert_awaited_once_with(mock_sa, two_player_session)

@@ -80,6 +80,7 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
         visibility=MultiplayerSessionVisibility.HIDDEN,
         allow_coop=False,
         allow_everyone_claim_world=False,
+        allow_give_pickups=False,
     )
     assert result_actions == MultiplayerSessionActions(session_id=1, actions=actions)
 

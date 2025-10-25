@@ -78,6 +78,7 @@ def test_widgets_in_normal_session(skip_qtbot, preset_manager):
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_give_pickups=False,
     )
 
     session_api = MagicMock()
@@ -113,6 +114,7 @@ def test_widgets_in_normal_session(skip_qtbot, preset_manager):
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_give_pickups=False,
     )
 
     # Run
@@ -200,6 +202,7 @@ def test_widgets_in_coop_session(skip_qtbot, preset_manager):
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=True,
         allow_everyone_claim_world=True,
+        allow_give_pickups=False,
     )
 
     session_api = MagicMock()
@@ -235,6 +238,7 @@ def test_widgets_in_coop_session(skip_qtbot, preset_manager):
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_give_pickups=False,
     )
 
     # Run

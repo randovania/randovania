@@ -182,6 +182,7 @@ class MultiplayerSession(BaseModel):
 
     allow_coop: bool = peewee.BooleanField(default=False)
     allow_everyone_claim_world: bool = peewee.BooleanField(default=False)
+    allow_give_pickups: bool = peewee.BooleanField(default=False)
 
     members: list[MultiplayerMembership]
     worlds: list[World]
@@ -371,6 +372,7 @@ class MultiplayerSession(BaseModel):
             allowed_games=self.allowed_games,
             allow_coop=self.allow_coop,
             allow_everyone_claim_world=self.allow_everyone_claim_world,
+            allow_give_pickups=self.allow_give_pickups,
         )
 
     def get_audit_log(self) -> MultiplayerSessionAuditLog:
@@ -761,6 +763,7 @@ class DatabaseMigrations(enum.Enum):
     ADD_READY_TO_MEMBERSHIP = "ready_membership"
     SESSION_STATE_TO_VISIBILITY = "session_state_to_visibility"
     ADD_GAME_BEATEN = "game_beaten"
+    ADD_ALLOW_GIVE_PICKUPS = "allow_give_pickups"
 
 
 class PerformedDatabaseMigrations(BaseModel):

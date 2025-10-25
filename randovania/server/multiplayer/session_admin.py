@@ -363,6 +363,7 @@ async def _duplicate_session(sa: ServerApp, sid: str, session: MultiplayerSessio
             dev_features=session.dev_features,
             allow_coop=session.allow_coop,
             allow_everyone_claim_world=session.allow_everyone_claim_world,
+            allow_give_pickups=session.allow_give_pickups,
         )
         for world in session.worlds:
             assert isinstance(world, World)
@@ -449,6 +450,9 @@ async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *
 
     elif action_ == SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM:
         await _set_allow_everyone_claim(sa, sid, session, *args)
+
+    elif action_ == SessionAdminGlobalAction.SET_ALLOW_GIVE_PICKUPS:
+        await _set_allow_give_pickups(sa, sid, session, *args)
 
     await session_common.emit_session_meta_update(sa, session)
 
@@ -602,6 +606,19 @@ async def _set_allow_coop(sa: ServerApp, sid: str, session: MultiplayerSession, 
         session.allow_coop = new_state
         new_operation = "Allowing" if session.allow_coop else "Disallowing"
         await session_common.add_audit_entry(sa, sid, session, f"{new_operation} coop for the session.")
+        session.save()
+
+
+async def _set_allow_give_pickups(sa: ServerApp, sid: str, session: MultiplayerSession, new_state: bool) -> None:
+    """Sets the Co-Op state of the given session to the desired state."""
+    await verify_has_admin(sa, sid, session.id, None)
+
+    with database.db.atomic():
+        session.allow_give_pickups = new_state
+        new_operation = "Allowing" if session.allow_give_pickups else "Disallowing"
+        await session_common.add_audit_entry(
+            sa, sid, session, f"{new_operation} giving pickups by admins for the session."
+        )
         session.save()
 
 
