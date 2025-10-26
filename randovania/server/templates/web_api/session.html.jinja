@@ -61,11 +61,18 @@
                         <td>{{ assoc.game }}</td>
                         <td>{{ assoc.connection_state.pretty_text }}</td>
                         <td>{{ assoc.inventory }}</td>
-                        <td>{{ assoc.is_admin }}</td>
+                        <td>
+                            {{ assoc.is_admin }}
+                        </td>
                         <td>
                             <form class="form_inline">
                                 <button type="submit" formaction="{{ url_for('download_world_preset', world_id=assoc.world_id)}}">
                                     Download Preset
+                                </button>
+                            </form>
+                            <form class="form_inline">
+                                <button type="submit" formmethod="post" formaction="{{ url_for('toggle_admin_status', session_id=session.id, user_id=assoc.user.id)}}">
+                                    Toggle Admin Status
                                 </button>
                             </form>
                         </td>
