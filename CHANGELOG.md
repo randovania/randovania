@@ -111,6 +111,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Sanctuary Entrance: Now accounts for being able to reload the room to use the cannon.
 
+##### Sky Temple Grounds
+
+- Fixed: Sky Temple Gateway: Removed unnecessary dangerous requirements.
+
 ### Metroid: Samus Returns
 
 - Added: Support for .cci rom files to use the same file for exporting and playing via Azahar.
