@@ -14,6 +14,8 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from oauthlib.common import generate_token
 from oauthlib.oauth2.rfc6749.errors import raise_from_error
 from pydantic import BaseModel, model_validator
+from starlette import status
+from starlette.responses import JSONResponse
 
 from randovania.network_common import error as network_error
 from randovania.server import fastapi_discord
@@ -25,7 +27,6 @@ if typing.TYPE_CHECKING:
     from randovania.server.fastapi_discord import DiscordUser
     from randovania.server.server_app import ServerApp
 
-
 router = APIRouter()
 
 
@@ -34,21 +35,25 @@ def _encrypt_session_for_user(sa: ServerApp, session: dict) -> bytes:
     return base64.b85encode(encrypted_session)
 
 
-def _create_client_side_session_raw(sa: ServerApp, sid: str, user: User) -> dict:
-    sa.logger.info(f"Client at {sa.current_client_ip(sid)} is user {user.name} ({user.id}).")
+def _create_client_side_session_raw(sa: ServerApp, sid: str | None, user: User) -> dict:
+    if sid is not None:
+        sa.logger.info(f"Client at {sa.current_client_ip(sid)} is user {user.name} ({user.id}).")
 
     return {
         "user": user.as_json,
     }
 
 
-async def _create_client_side_session(sa: ServerApp, sid: str, user: User | None, session: dict | None = None) -> dict:
+async def _create_client_side_session(
+    sa: ServerApp, sid: str | None, user: User | None, session: dict | None = None
+) -> dict:
     """
 
     :param user: If the session's user was already retrieved, pass it along to avoid an extra query.
     :return:
     """
     if session is None:
+        assert sid is not None
         session = await sa.sio.get_session(sid)
 
     if user is None:
@@ -135,7 +140,7 @@ async def login_with_guest(sa: ServerApp, sid: str, encrypted_login_request: byt
     if _get_now() - date > datetime.timedelta(days=1):
         raise network_error.NotAuthorizedForActionError
 
-    user: User = User.create(name=f"Guest: {name}")
+    user: User = User.get_or_create(name=f"Guest: {name}")[0]
 
     async with sa.sio.session(sid) as session:
         session["user-id"] = user.id
@@ -329,16 +334,51 @@ async def browser_discord_login_callback(
     return unable_to_login(sa, request, error_message, status_code)
 
 
-@router.get("/me", response_class=HTMLResponse)
-async def browser_me(sa: ServerAppDep, request: Request, user: UserDep) -> HTMLResponse:
+@router.get("/me")
+async def browser_me(sa: ServerAppDep, request: Request, user: UserDep) -> Response:
+    if sa.is_api_request(request):
+        return JSONResponse(user.as_json)
+
     return sa.templates.TemplateResponse(
         request,
         "user_session/me.html.jinja",
         context={
             "user": user,
-            "is_admin": user.admin or sa.app.debug,
+            "is_admin": user.admin,
         },
     )
+
+
+@router.get("/guest_login")
+async def guest_login(sa: ServerAppDep, request: Request) -> Response:
+    if not sa.app.debug:
+        return unable_to_login(sa, request, "Unable to perform login", 400)
+
+    return sa.templates.TemplateResponse(
+        request,
+        "user_session/guest_login.html.jinja",
+    )
+
+
+@router.post("/guest_login")
+async def guest_login_post(sa: ServerAppDep, request: Request, name: typing.Annotated[str, Form()]) -> Response:
+    if not sa.app.debug:
+        return unable_to_login(sa, request, "Unable to perform login", 400)
+
+    user, _ = User.get_or_create(
+        name=f"Guest: {name}",
+        discord_id=None,
+    )
+
+    request.session["user_id"] = user.id
+
+    if sa.is_api_request(request):
+        return JSONResponse(await _create_client_side_session(sa, None, user, {"user-id": user.id}))
+    else:
+        return RedirectResponse(
+            request.url_for("browser_me"),
+            status_code=status.HTTP_303_SEE_OTHER,  # POST to GET
+        )
 
 
 @router.post("/create_token", response_class=HTMLResponse)
