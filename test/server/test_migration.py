@@ -78,5 +78,5 @@ def test_migrations(empty_database):
         allowed_games=ANY,
         allow_coop=False,
         allow_everyone_claim_world=False,
-        allow_give_pickups=False,
+        allow_create_pickups=False,
     )

@@ -36,12 +36,12 @@ def add_game_beaten_field(migrator: playhouse.migrate.SqliteMigrator) -> None:
         )
 
 
-def add_allow_give_pickups_field(migrator: playhouse.migrate.SqliteMigrator) -> None:
+def add_allow_create_pickups_field(migrator: playhouse.migrate.SqliteMigrator) -> None:
     with database.db.atomic():
         database.db.execute(
             migrator._alter_table(migrator.make_context(), "multiplayer_session")
             .literal(" ADD ")
-            .sql(peewee.Entity("allow_give_pickups"))
+            .sql(peewee.Entity("allow_create_pickups"))
             .literal(" INTEGER NOT NULL DEFAULT(0)")
         )
 
@@ -50,7 +50,7 @@ _migrations = {
     database.DatabaseMigrations.ADD_READY_TO_MEMBERSHIP: add_ready_field,
     database.DatabaseMigrations.SESSION_STATE_TO_VISIBILITY: rename_state_to_visibility,
     database.DatabaseMigrations.ADD_GAME_BEATEN: add_game_beaten_field,
-    database.DatabaseMigrations.ADD_ALLOW_GIVE_PICKUPS: add_allow_give_pickups_field,
+    database.DatabaseMigrations.ADD_ALLOW_CREATE_PICKUPS: add_allow_create_pickups_field,
 }
 
 

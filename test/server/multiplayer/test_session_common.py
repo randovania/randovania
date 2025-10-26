@@ -61,7 +61,7 @@ async def test_emit_session_meta_update(session_update, mock_sa, default_game_li
         "allowed_games": default_game_list,
         "allow_coop": False,
         "allow_everyone_claim_world": False,
-        "allow_give_pickups": False,
+        "allow_create_pickups": False,
     }
 
     # Run

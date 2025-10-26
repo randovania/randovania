@@ -135,7 +135,7 @@ async def test_create_session(clean_database, preset_manager, default_game_list,
         "allowed_games": default_game_list,
         "allow_coop": False,
         "allow_everyone_claim_world": False,
-        "allow_give_pickups": False,
+        "allow_create_pickups": False,
     }
 
 
@@ -184,7 +184,7 @@ async def test_join_session(
         "allowed_games": default_game_list,
         "allow_coop": False,
         "allow_everyone_claim_world": False,
-        "allow_give_pickups": False,
+        "allow_create_pickups": False,
     }
     mock_join_multiplayer_session.assert_awaited_once_with(mock_sa, "TheSid", session)
 

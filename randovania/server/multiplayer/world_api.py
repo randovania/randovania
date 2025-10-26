@@ -15,7 +15,9 @@ from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.generator.pickup_pool import pool_creator
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.versioned_preset import InvalidPreset
 from randovania.network_common import error, remote_inventory, signals
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
@@ -25,7 +27,14 @@ from randovania.network_common.world_sync import (
     ServerWorldResponse,
     ServerWorldSync,
 )
-from randovania.server.database import MultiplayerSession, User, World, WorldAction, WorldUserAssociation
+from randovania.server.database import (
+    MultiplayerMembership,
+    MultiplayerSession,
+    User,
+    World,
+    WorldAction,
+    WorldUserAssociation,
+)
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
 
@@ -447,6 +456,29 @@ async def report_disconnect(sa: ServerApp, session_dict: dict) -> None:
         await session_common.emit_session_meta_update(sa, session)
 
 
+async def world_create_pickup(sa: ServerApp, sid: str, world_uuid: uuid.UUID, pickup_name: str) -> None:
+    user = await sa.get_current_user(sid)
+
+    world = World.get_by_uuid(world_uuid)
+    session = world.session
+    membership = MultiplayerMembership.get_by_ids(user_id=user, session_id=session)
+
+    if not session.allow_create_pickups or not membership.admin:
+        raise error.NotAuthorizedForActionError
+
+    try:
+        preset = world.get_preset().get_preset()
+    except InvalidPreset as e:
+        raise error.InvalidActionError(f"World {world.name} has an invalid preset: {e}")
+
+    try:
+        pool = pool_creator.calculate_pool_results(preset.configuration, preset.game.game_description)
+        next(it for it in pool.pickups_in_world() if it.name == pickup_name)
+    except StopIteration:
+        raise error.InvalidActionError(f"Unknown pickup of name {pickup_name}")
+
+
 def setup_app(sa: ServerApp) -> None:
     sa.on("multiplayer_watch_inventory", watch_inventory)
     sa.on_with_wrapper("multiplayer_world_sync", world_sync)
+    sa.on("multiplayer_world_create_pickup", world_create_pickup)
