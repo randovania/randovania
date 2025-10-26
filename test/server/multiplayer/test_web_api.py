@@ -167,11 +167,19 @@ def test_toggle_admin_status(test_client, solo_two_world_session_setup, initial_
         membership = database.MultiplayerMembership.get_by_ids(1234, 1)
         assert membership.admin is not initial_admin
 
+    @test_client.sa.app.get("/check-new-audit")
+    def check_new_audit():
+        session = database.MultiplayerSession.get_by_id(1)
+        audit_log = session.get_audit_log()
+        last_entry = audit_log.entries[-1]
+        assert f"Randovania Team made The Name{' not' if initial_admin else ''} an Admin" == last_entry.message
+
     assert (
         "Admin status of <code>The Name</code> toggled. <a href='http://testserver/session/1'>Return to session</a>"
         in result.text
     )
     test_client.get("/check-toggled")
+    test_client.get("/check-new-audit")
 
 
 def test_delete_session_post(test_client, solo_two_world_session_setup) -> None:

@@ -10,7 +10,15 @@ from randovania.game_description import default_database
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import json_lib
 from randovania.network_common import remote_inventory
-from randovania.server.database import MultiplayerMembership, MultiplayerSession, User, World, WorldUserAssociation
+from randovania.server.database import (
+    MultiplayerAuditEntry,
+    MultiplayerMembership,
+    MultiplayerSession,
+    User,
+    World,
+    WorldUserAssociation,
+)
+from randovania.server.multiplayer.session_common import emit_session_audit_update
 from randovania.server.server_app import AdminDep, RequireAdminUser, ServerApp, ServerAppDep
 
 router = APIRouter()
@@ -139,20 +147,30 @@ def download_world_preset(user: AdminDep, world_id: int) -> Response:
     return RdvFileResponse(world.preset, f"{session.name} - {world.name}.rdvpreset")
 
 
-@router.post(
-    "/session/{session_id}/user/{user_id}/toggle_admin", dependencies=[RequireAdminUser], response_class=HTMLResponse
-)
-def toggle_admin_status(sa: ServerAppDep, request: Request, session_id: int, user_id: int) -> HTMLResponse:
+@router.post("/session/{session_id}/user/{user_id}/toggle_admin", response_class=HTMLResponse)
+async def toggle_admin_status(
+    sa: ServerAppDep, admin: AdminDep, request: Request, session_id: int, user_id: int
+) -> HTMLResponse:
     try:
         membership = MultiplayerMembership.get_by_ids(user_id, session_id)
         user = User.get_by_id(user_id)
+        session = MultiplayerSession.get_by_id(session_id)
     except MultiplayerMembership.DoesNotExist:
         raise HTTPException(status_code=404, detail="Membership not found")
     except User.DoesNotExist:
         raise HTTPException(status_code=404, detail="User not found")
+    except MultiplayerSession.DoesNotExist:
+        raise HTTPException(status_code=404, detail="Session not found")
 
     membership.admin = not membership.admin
     membership.save()
+
+    MultiplayerAuditEntry.create(
+        session=session,
+        user=admin,
+        message=f"Randovania Team made {user.name}{' not' if not membership.admin else ''} an Admin",
+    )
+    await emit_session_audit_update(sa, session)
 
     content = "Admin status of <code>{user}</code> toggled. <a href='{to_session}'>Return to session</a>".format(
         user=user.name,
