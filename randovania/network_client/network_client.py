@@ -9,7 +9,7 @@ import ssl
 import time
 import uuid
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Unpack
 
 import aiofiles
 import aiohttp
@@ -58,6 +58,8 @@ from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncRe
 if TYPE_CHECKING:
     from collections.abc import Sequence
     from pathlib import Path
+
+    from aiohttp.client import _RequestContextManager, _RequestOptions
 
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
@@ -359,7 +361,9 @@ class NetworkClient:
 
         self.logger.info(f"{self._current_user.name}, state: {self.connection_state}")
 
+        self.http.headers["X-Randovania-Session"] = new_session["encoded_session_b85"].decode("ascii")
         encoded_session_data = base64.b85decode(new_session["encoded_session_b85"])
+
         self.server_data_path.mkdir(exist_ok=True, parents=True)
         async with aiofiles.open(self.session_data_path, "wb") as open_file:
             await open_file.write(encoded_session_data)
@@ -686,6 +690,7 @@ class NetworkClient:
     async def logout(self):
         self.logger.info("Logging out")
         self.session_data_path.unlink()
+        self.http.headers["X-Randovania-Session"] = None
         self._current_user = None
         self._update_reported_username()
 
@@ -720,3 +725,27 @@ class NetworkClient:
     def allow_reporting_username(self, value: bool) -> None:
         self._allow_reporting_username = value
         self._update_reported_username()
+
+    def server_get(
+        self,
+        url: str,
+        headers: http_lib.LooseHeaders | None = None,
+        **kwargs: Unpack[_RequestOptions],
+    ) -> _RequestContextManager:
+        if headers is None:
+            headers = {}
+        if "Accept" not in headers:
+            headers["Accept"] = "application/json"
+        return self.http.get(f"{self.configuration['server_address']}/{url}", headers=headers, **kwargs)
+
+    def server_post(
+        self,
+        url: str,
+        headers: http_lib.LooseHeaders | None = None,
+        **kwargs: Unpack[_RequestOptions],
+    ) -> _RequestContextManager:
+        if headers is None:
+            headers = {}
+        if "Accept" not in headers:
+            headers["Accept"] = "application/json"
+        return self.http.post(f"{self.configuration['server_address']}/{url}", headers=headers, **kwargs)
