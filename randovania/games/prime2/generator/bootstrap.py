@@ -58,7 +58,6 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
         if configuration.use_new_patcher:
             yield resource_database.get_event("Event73"), 1  # Dynamo Chamber Gates
             yield resource_database.get_event("Event75"), 1  # Trooper Security Station Gate
-            yield resource_database.get_event("Event20"), 1  # Security Station B DS Appearance
 
     def _get_enabled_misc_resources(
         self, configuration: EchoesConfiguration, resource_database: ResourceDatabaseView
