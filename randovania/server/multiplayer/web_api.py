@@ -28,6 +28,11 @@ def RdvFileResponse(data: str, filename: str) -> Response:
     return Response(data, headers={"Content-Disposition": f"attachment; filename={filename}"})
 
 
+# For endpoints, there are 2 ways to  gate them behind being accessible only by an RDV-Admin:
+# - pass in an AdminDep as an argument
+# - pass in RequireAdminUser as a dependency in the decorator.
+
+
 @router.get("/sessions", response_class=HTMLResponse)
 def admin_sessions(
     sa: ServerAppDep, user: AdminDep, request: Request, page: Annotated[int, Query(ge=1)] = 1
