@@ -36,7 +36,7 @@ def solo_two_world_session_setup_fixture(test_files_dir) -> Callable[[], databas
         preset_0 = VersionedPreset.with_preset(description.get_preset(0))
         preset_1 = VersionedPreset.with_preset(description.get_preset(1))
 
-        user1 = database.User.create(id=1234, name="The Name")
+        user1 = database.User.create(id=1234, name="The Name", admin=True)
 
         session = database.MultiplayerSession.create(
             id=1,
