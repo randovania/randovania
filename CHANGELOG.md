@@ -93,7 +93,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Fixed: Using the Turret in Sanctuary Entrance now accounts for being able to reload the room.
+##### Agon Wastes
+
+- Fixed: Security Station B: Removed unnecessary dangerous requirements and simplified connections.
+
+##### Dark Agon Wastes
+
+- Fixed: Portal Site: Removed unnecessary dangerous requirements.
+
+##### Temple Grounds
+
+- Fixed: GFMC: Removed unnecessary dangerous requirements.
+
+##### Torvus Bog
+
+- Fixed: Torvus Temple: Removed unnecessary dangerous requirements.
+- Fixed: Training Chamber: Removed unnecessary dangerous requirements.
+
+##### Sanctuary Fortress
+
+- Fixed: Sanctuary Entrance: Now accounts for being able to reload the room to use the cannon.
+
+##### Sky Temple Grounds
+
+- Fixed: Sky Temple Gateway: Removed unnecessary dangerous requirements.
 
 ### Metroid: Samus Returns
 
