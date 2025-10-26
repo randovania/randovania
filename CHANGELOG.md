@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Agon Wastes
 
-- Fixed: Security Station B: Removed unnecessary dangerous requirements.
+- Fixed: Security Station B: Removed unnecessary dangerous requirements and simplified connections.
 
 ##### Dark Agon Wastes
 
