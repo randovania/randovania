@@ -658,8 +658,21 @@ class NetworkClient:
         return result
 
     async def create_new_session(self, session_name: str) -> MultiplayerSessionEntry:
-        result = await self.server_call("multiplayer_create_session", session_name)
-        return self._with_new_session(result)
+        """
+        Creates a new session and joins it.
+        :param session_name: The name of the session to create.
+        :return:
+        """
+        assert self.http.headers["X-Randovania-Sid"] is not None
+
+        async with self.server_post("session", json={"name": session_name}) as response:
+            # TODO: this can very much be a generic component
+            if response.status == 422:
+                msg = "\n".join(err["msg"] for err in (await response.json())["errors"])
+                raise error.InvalidActionError(msg)
+
+            response.raise_for_status()
+            return self._with_new_session(await response.json())
 
     async def join_multiplayer_session(self, session_id: int, password: str | None):
         result = await self.server_call("multiplayer_join_session", (session_id, password))
