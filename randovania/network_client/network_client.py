@@ -353,6 +353,7 @@ class NetworkClient:
             self._restore_session_task.cancel()
 
     async def on_user_session_updated(self, new_session: dict):
+        self.http.headers["X-Randovania-Sid"] = new_session["sid"]
         self._current_user = CurrentUser.from_json(new_session["user"])
         self._update_reported_username()
 
@@ -732,6 +733,8 @@ class NetworkClient:
         headers: http_lib.LooseHeaders | None = None,
         **kwargs: Unpack[_RequestOptions],
     ) -> _RequestContextManager:
+        """Perform HTTP GET request to Randovania's REST Server."""
+
         if headers is None:
             headers = {}
         if "Accept" not in headers:
@@ -744,6 +747,7 @@ class NetworkClient:
         headers: http_lib.LooseHeaders | None = None,
         **kwargs: Unpack[_RequestOptions],
     ) -> _RequestContextManager:
+        """Perform HTTP POST request to Randovania's REST Server."""
         if headers is None:
             headers = {}
         if "Accept" not in headers:

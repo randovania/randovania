@@ -40,6 +40,7 @@ def _create_client_side_session_raw(sa: ServerApp, sid: str | None, user: User) 
         sa.logger.info(f"Client at {sa.current_client_ip(sid)} is user {user.name} ({user.id}).")
 
     return {
+        "sid": sid,
         "user": user.as_json,
     }
 
