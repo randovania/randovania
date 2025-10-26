@@ -46,7 +46,14 @@ _migrations = {
 def apply_migrations() -> None:
     migrator = playhouse.migrate.SqliteMigrator(database.db)
 
-    all_performed = {performed.migration for performed in database.PerformedDatabaseMigrations.select()}
+    all_performed = {
+        performed.migration
+        for performed in database.PerformedDatabaseMigrations.select().where(
+            # Filter migrations for enum values that don't exist (such as removed ones, or made in a branch)
+            # `<<` operator means `X in Y`: https://peewee.readthedocs.io/en/latest/peewee/query_operators.html#query-operators
+            database.PerformedDatabaseMigrations.migration << list(_migrations.keys())
+        )
+    }
 
     for enum_value, call in _migrations.items():
         if enum_value not in all_performed:
