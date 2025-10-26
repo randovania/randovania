@@ -16,11 +16,12 @@ def test_encode_world_sync():
         collected_locations=(),
         inventory=None,
         request_details=True,
+        has_been_beaten=False,
     )
 
     encoded = construct_pack.encode(request)
 
-    assert encoded == b"\x00\x00\x00\x01"
+    assert encoded == b"\x00\x00\x00\x01\x00"
 
 
 def test_encode_sync_request():
@@ -32,6 +33,7 @@ def test_encode_sync_request():
                     collected_locations=(1, 2, 5),
                     inventory=None,
                     request_details=True,
+                    has_been_beaten=False,
                 ),
             }
         )
@@ -39,7 +41,7 @@ def test_encode_sync_request():
 
     encoded = construct_pack.encode(request)
 
-    assert encoded == b"\x01/\xb1C\xa7\xf4\x8bA\xd0\x91Z\x02v\xa0!\xf5X\x00\x03\x02\x04\n\x00\x01"
+    assert encoded == b"\x01/\xb1C\xa7\xf4\x8bA\xd0\x91Z\x02v\xa0!\xf5X\x00\x03\x02\x04\n\x00\x01\x00"
 
 
 def test_encode_sync_response():

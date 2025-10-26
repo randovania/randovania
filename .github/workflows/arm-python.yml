@@ -1,0 +1,121 @@
+name: ARM
+
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: 'Which image to use for the build?'
+        type: choice
+        required: true
+        options:
+          - 'macos-latest'
+          - 'macos-26'
+          - 'ubuntu-24.04-arm'
+          - 'windows-11-arm'
+
+jobs:
+  pytest:
+    runs-on: ${{ inputs.image }}
+    timeout-minutes: 30
+
+    name: pytest (${{ inputs.image }})
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.9.5"
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+
+      - name: Apt
+        run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server $(cat .github/linux_apt_dependencies.txt)
+        if: startsWith(inputs.image, 'ubuntu')
+
+      - name: Install Python packages
+        run: uv sync --locked --all-extras
+
+      - name: create test game
+        run: uv run coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
+
+      - name: run pytest
+        run: $PREFIX uv run pytest -n auto --durations=100
+        shell: bash
+        env:
+          QT_QPA_PLATFORM: "${{ startsWith(inputs.image, 'ubuntu') && 'xcb' || '' }}"
+          PREFIX: "${{ startsWith(inputs.image, 'ubuntu') && 'xvfb-run' || '' }}"
+
+  executable:
+    runs-on: ${{ inputs.image }}
+    timeout-minutes: 30
+
+    name: executable (${{ inputs.image }})
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.9.5"
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+
+      - name: Apt
+        run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server x11-utils gnumeric libxcb-cursor0 libxkbcommon-x11-0
+        if: startsWith(inputs.image, 'ubuntu')
+
+      - name: Install Python packages
+        run: uv sync --locked --extra gui --extra exporters --extra test --group installer
+
+      - name: create executable
+        run: uv run tools/create_release.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OBFUSCATOR_SECRET: ${{ secrets.OBFUSCATOR_SECRET }}
+          SENTRY_CLIENT_URL: ${{ secrets.SENTRY_CLIENT_URL }}
+          PRODUCTION: false
+
+      - name: executable check
+        run: dist/randovania/randovania --version
+
+      - name: executable test
+        run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool --skip-resolver-tests --durations=100 --ignore=test/server --ignore=test/discord_bot --ignore=test/cli/commands/test_website.py --ignore=test/cli/commands/test_export_videos.py
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: Executable
+          if-no-files-found: error
+          path: |
+            dist/randovania-*.zip
+            dist/randovania-*.tar.gz
+            dist/randovania-*.7z
+
+  notify_failure:
+    runs-on: ubuntu-latest
+    needs:
+      - pytest
+      - executable
+    if: ${{ failure() }}
+    steps:
+      - name: Alert Failure
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.GENERAL_TALK_WEBHOOK }}
+          nodetail: true
+          title: ARM build for ${{ inputs.image }} failed!
+          description: |
+            [CI failed for `${{ github.ref_name }}`](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})

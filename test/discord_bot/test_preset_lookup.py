@@ -1,14 +1,16 @@
 from __future__ import annotations
 
+import dataclasses
 import subprocess
 from typing import TYPE_CHECKING
-from unittest.mock import AsyncMock, MagicMock, call
+from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import discord
 import pytest
 
 import randovania
 from randovania.game.game_enum import RandovaniaGame
+from randovania.layout.layout_description import LayoutDescription
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -238,3 +240,46 @@ async def test_reply_for_preset(mocker):
     )
     message.reply.assert_awaited_once_with(embed=embed, mention_author=False)
     mock_describe.assert_called_once_with(preset)
+
+
+@pytest.mark.parametrize("has_spoiler", [False, True])
+async def test_reply_for_layout_description(mocker: pytest_mock.MockerFixture, test_files_dir, has_spoiler):
+    mocker.patch("randovania.layout.layout_description.shareable_word_hash", return_value="<WORD HASH>")
+
+    message = AsyncMock()
+    layout = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "blank", "issue-3717.rdvgame"))
+    layout = dataclasses.replace(
+        layout,
+        generator_parameters=dataclasses.replace(
+            layout.generator_parameters,
+            spoiler=has_spoiler,
+        ),
+    )
+
+    # Run
+    from randovania.discord_bot import preset_lookup
+
+    await preset_lookup.reply_for_layout_description(message, layout)
+
+    # Assert
+    expected_description = [
+        "Blank Development Game, with preset Starter Preset.",
+        f"Seed Hash for {randovania.VERSION}: <WORD HASH>",
+    ]
+    if not has_spoiler:
+        expected_description.insert(1, "**For Races** (No Spoiler available).")
+
+    message.reply.assert_awaited_once_with(embed=ANY, mention_author=False)
+    embed: discord.Embed = message.reply.call_args.kwargs["embed"]
+    assert embed.title == "Spoiler file (Generated with 5.1.0.dev64)"
+    assert embed.description == "\n".join(expected_description)
+    fields = [field.to_dict() for field in embed.fields]
+    assert fields == [
+        {"name": "Logic Settings", "value": "All tricks disabled", "inline": True},
+        {
+            "name": "Pickup Pool",
+            "value": "Size: 5 of 8\nUnmodified starting pickup\nExcludes Health\nShuffles 0x Progressive Jump",
+            "inline": True,
+        },
+        {"name": "Gameplay", "value": "Starts at Intro - Starting Area", "inline": True},
+    ]

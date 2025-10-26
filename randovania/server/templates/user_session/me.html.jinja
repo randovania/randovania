@@ -1,0 +1,51 @@
+{% extends "layout.html.jinja" %}
+
+{% block title %}
+	Profile: {{ user.name }}
+{% endblock %}
+
+{% block header %}
+	Profile
+{% endblock header %}
+
+{% block content %}
+	<div >
+		<p class="main-content__body" data-lead-id="main-content-body">
+            Hello {{ user.name }}. Admin? {{ is_admin }}
+        </p>
+        {% if is_admin %}
+            <h2>Admin Tools</h2>
+            <p><a href="{{ url_for('admin_sessions') }}">Session List</a></p>
+        {% endif %}
+        <h2>Access Tokens</h2>
+        <table>
+            <thead>
+                <td>Token Name</td>
+                <td>Created</td>
+                <td>Last used</td>
+                <td>Actions</td>
+            </thead>
+            <tbody>
+            {% for token in user.access_tokens %}
+                <tr>
+                    <form class="form-inline">
+                        <td><strong>{{ token.name }}</strong></td>
+                        <td>{{ token.creation_datetime.strftime("%H:%M %Z, %d %b %Y") }}</td>
+                        <td>{{ token.last_used_datetime.strftime("%H:%M %Z, %d %b %Y") }}</td>
+                        <input type="hidden" id="token" name="token" value="{{ token.name }}">
+                        <td><button formaction="{{ url_for('delete_token') }}" type="submit">Delete</button></td>
+                    </form>
+                </tr>
+            {% endfor %}
+            <tr>
+                <form class="form-inline" method="POST" action="{{ url_for('create_token') }}">
+                    <td><input id="name" placeholder="Access token name" name="name"></td>
+                    <td></td>
+                    <td></td>
+                    <td><button type="submit">Create new</button></td>
+                </form>
+            </tr>
+            </tbody>
+        </table>
+	</div>
+{% endblock content %}

@@ -25,10 +25,11 @@ class RelativeItemFormatter(RelativeFormatter):
         assert isinstance(hint.precision.relative, RelativeDataItem)
         index = hint.precision.relative.other_index
 
-        other_area = self.region_list.nodes_to_area(self.region_list.node_from_pickup_index(index))
+        node = self.game_view.node_from_pickup_index(index)
+        other_area = self.game_view.find_area_by_identifier(node.identifier.area_identifier)[1]
         phint = create_pickup_hint(
             self.patches.pickup_assignment,
-            self.region_list,
+            self.game_view,
             hint.precision.relative.precision,
             self.patches.pickup_assignment.get(index),
             self.players_config,

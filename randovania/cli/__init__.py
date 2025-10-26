@@ -53,7 +53,11 @@ def _run_args(parser: ArgumentParser, args: Namespace) -> int:
         raise SystemExit(1)
 
     logging.debug("Executing from args...")
-    return args.func(args) or 0
+    try:
+        return args.func(args) or 0
+    except KeyboardInterrupt:
+        print("Quitting due to requested interrupt.")
+        return 2
 
 
 def run_pytest(argv: list[str]) -> None:

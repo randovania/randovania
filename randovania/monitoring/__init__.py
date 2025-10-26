@@ -9,11 +9,13 @@ from pathlib import Path
 
 import sentry_sdk
 import sentry_sdk.integrations.logging
-import sentry_sdk.metrics
 import sentry_sdk.scrubber
 import sentry_sdk.types
 
 import randovania
+
+if typing.TYPE_CHECKING:
+    from randovania.lib.json_lib import JsonObject_RO
 
 
 class HomeEventScrubber(sentry_sdk.scrubber.EventScrubber):
@@ -179,7 +181,6 @@ def bot_init() -> None:
 trace_function = sentry_sdk.trace
 set_tag = sentry_sdk.set_tag
 start_transaction = sentry_sdk.start_transaction
-metrics = sentry_sdk.metrics
 
 
 def trace_block(description: str):
@@ -191,3 +192,16 @@ def trace_block(description: str):
         )
     else:
         return contextlib.nullcontext()
+
+
+class Metrics:
+    """Placeholder for monitoring events in the client."""
+
+    def incr(self, key: str, value: int = 1, tags: JsonObject_RO | None = None) -> None:
+        pass
+
+    def gauge(self, key: str, value: int = 1, tags: JsonObject_RO | None = None) -> None:
+        pass
+
+
+metrics = Metrics()

@@ -4,23 +4,12 @@ from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING, Self, TypedDict
 
 import aiohttp
-from fastapi_discord import DiscordOAuthClient, Guild, Unauthorized, User
+
+from randovania.lib import http_lib
+from randovania.server.fastapi_discord import DiscordOAuthClient
 
 if TYPE_CHECKING:
     from randovania.server.server_app import Lifespan, RdvFastAPI, ServerApp
-
-
-class CustomDiscordOAuthClient(DiscordOAuthClient):
-    async def user(self, token: str | None) -> User:
-        return await super().user(token)
-
-    async def guilds(self, token: str | None) -> list[Guild]:
-        return await super().guilds(token)
-
-    def get_token(self, token: str | None) -> str:
-        if token is None:
-            raise Unauthorized
-        return token
 
 
 class EnforceRoleConfiguration(TypedDict, total=True):
@@ -47,11 +36,11 @@ class EnforceDiscordRole:
         self.sa = _app.sa
         self.guild_id = config["guild_id"]
         self.role_id = str(config["role_id"])
-        async with aiohttp.ClientSession() as self.session:
+        async with http_lib.http_session() as self.session:
             self.session.headers["Authorization"] = "Bot {}".format(config["token"])
             yield self
 
-    async def verify_user(self, user_id: int) -> bool:
+    async def verify_user(self, user_id: str) -> bool:
         url = f"https://discordapp.com/api/guilds/{self.guild_id}/members/{user_id}"
         async with self.session.get(url) as r:
             try:
@@ -68,16 +57,16 @@ class EnforceDiscordRole:
 
 
 @asynccontextmanager
-async def discord_oauth_lifespan(_app: RdvFastAPI) -> Lifespan[CustomDiscordOAuthClient]:
+async def discord_oauth_lifespan(_app: RdvFastAPI) -> Lifespan[DiscordOAuthClient]:
     config = _app.sa.configuration
 
     client_id = config["discord_client_id"]
     client_secret = config["server_config"]["discord_client_secret"]
-    redirect_uri = f"{config['server_address']}/login_callback"
+    redirect_uri = ""  # let the server route the redirect
 
     scopes = ("identify",)
 
-    discord = CustomDiscordOAuthClient(client_id, client_secret, redirect_uri, scopes)
+    discord = DiscordOAuthClient(str(client_id), client_secret, redirect_uri, scopes)
 
     await discord.init()
 

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'widget_pickup_style.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QDialog, QGroupBox, QLabel,
     QSizePolicy, QVBoxLayout, QWidget)
 
-from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
+from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox
 
 class Ui_PickupStyleWidget(object):
     def setupUi(self, PickupStyleWidget):
@@ -78,7 +78,7 @@ class Ui_PickupStyleWidget(object):
     def retranslateUi(self, PickupStyleWidget):
         PickupStyleWidget.setWindowTitle(QCoreApplication.translate("PickupStyleWidget", u"Item Configuration", None))
         self.pickup_style_box.setTitle(QCoreApplication.translate("PickupStyleWidget", u"Pickup style", None))
-        self.pickup_model_combo.setItemText(0, QCoreApplication.translate("PickupStyleWidget", u"Use correct item model, scan and name", None))
+        self.pickup_model_combo.setItemText(0, QCoreApplication.translate("PickupStyleWidget", u"Use correct model, scan and name", None))
         self.pickup_model_combo.setItemText(1, QCoreApplication.translate("PickupStyleWidget", u"Use correct scan and name, hide the model", None))
         self.pickup_model_combo.setItemText(2, QCoreApplication.translate("PickupStyleWidget", u"Use correct name, hide the model and scan", None))
         self.pickup_model_combo.setItemText(3, QCoreApplication.translate("PickupStyleWidget", u"Hide the model, scan and name", None))

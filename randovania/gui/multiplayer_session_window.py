@@ -233,9 +233,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         self.export_game_menu = QtWidgets.QMenu(self.export_game_button)
 
-        self.progress_bar.setVisible(False)
-        self.background_process_button.setVisible(False)
-
         self.status_bar.addWidget(self.progress_label, 2)
         self.status_bar.addPermanentWidget(self.progress_bar)
         self.status_bar.addPermanentWidget(self.background_process_button)
@@ -1043,18 +1040,28 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.generate_game_button.setText(text)
         self.generate_game_button.setMenu(self.generate_game_menu if has_menu else None)
 
-    def background_process_button_clicked(self):
-        self.stop_background_process()
+    def _can_cancel_generation(self) -> bool:
+        return self._session.game_details is None and self._session.generation_in_progress is not None
+
+    @asyncSlot()
+    @handle_network_errors
+    async def background_process_button_clicked(self):
+        # Telling server to cancel generation while the process is still running can mess things up.
+        # So prioritize background processes.
+        if self.has_background_process:
+            self.stop_background_process()
+        elif self._can_cancel_generation():
+            await self.game_session_api.abort_generation()
 
     def update_background_process_button(self):
-        self.background_process_button.setEnabled(self.has_background_process and self._can_stop_background_process)
-        self.background_process_button.setVisible(self.progress_bar.isVisible())
+        has_cancellable_background_process = self.has_background_process and self._can_stop_background_process
+        can_cancel_generation = self._can_cancel_generation() and self.current_player_membership.admin
+        self.background_process_button.setEnabled(has_cancellable_background_process or can_cancel_generation)
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self.update_background_process_button()
 
     def update_progress(self, message: str, percentage: int):
-        self.progress_bar.setVisible(True)
         self.progress_label.setText(message)
         if "Aborted" in message:
             percentage = 0

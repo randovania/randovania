@@ -18,7 +18,6 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.resource_database_editor_ui import Ui_ResourceDatabaseEditor
-from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.connections_visualizer import create_tree_items_for_requirement
 from randovania.gui.lib.editable_table_model import AppendableEditableTableModel, FieldDefinition
 from randovania.lib import frozen_lib
@@ -143,7 +142,6 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
     def __init__(self, parent: QtWidgets.QWidget, db: ResourceDatabase, region_list: RegionList):
         super().__init__(parent)
         self.setupUi(self)
-        set_default_window_icon(self)
 
         self.db = db
         self.region_list = region_list

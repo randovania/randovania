@@ -13,8 +13,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.layout import preset_migration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset import Preset
-from randovania.lib import json_lib
-from randovania.lib.construct_lib import CompressedJsonValue, NullTerminatedCompressedJsonValue
+from randovania.lib import construct_lib, json_lib
 
 if TYPE_CHECKING:
     import io
@@ -22,12 +21,13 @@ if TYPE_CHECKING:
 
 BinaryVersionedPreset = construct.Struct(
     magic=construct.Const(b"RDVP"),
-    version=construct.Rebuild(construct.VarInt, 2),
+    version=construct.Rebuild(construct.VarInt, 3),
     data=construct.Switch(
         construct.this.version,
         {
-            1: NullTerminatedCompressedJsonValue,
-            2: CompressedJsonValue,
+            1: construct_lib.NullTerminatedCompressedJsonValue,
+            2: construct_lib.CompressedZlibJsonValue,
+            3: construct_lib.CompressedZstdJsonValue,
         },
         construct.Error,
     ),

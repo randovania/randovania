@@ -75,6 +75,7 @@ exe = EXE(
     upx=False,
     icon=icon_path,
     console=True,
+    target_arch="universal2",
 )
 coll = COLLECT(exe, a.binaries, a.zipfiles, a.datas, strip=False, upx=False, name="randovania")
 app = BUNDLE(

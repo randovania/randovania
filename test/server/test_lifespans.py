@@ -53,21 +53,40 @@ async def test_discord_auth_lifespan(
     mock_discord.client_session.close = mock_client_session_close
 
     mock_discord_oauth = mocker.patch(
-        "randovania.server.discord_auth.CustomDiscordOAuthClient",
+        "randovania.server.discord_auth.DiscordOAuthClient",
         return_value=mock_discord,
     )
 
     async with discord_oauth_lifespan(lifespan_sa.app) as discord:
         assert discord == mock_discord
         mock_discord_oauth.assert_called_once_with(
-            1234,
+            "1234",
             "5678",
-            "https://somewhere.nice/login_callback",
+            "",
             ("identify",),
         )
         mock_discord.init.assert_awaited_once_with()
 
     mock_client_session_close.assert_awaited_once_with()
+
+
+@pytest.mark.parametrize("state", ["some_state", None])
+async def test_discord_oauth_url(lifespan_sa, state):
+    mock_request = MagicMock()
+    mock_request.url_for.return_value = lifespan_sa.configuration["server_address"]
+
+    async with discord_oauth_lifespan(lifespan_sa.app) as discord:
+        result = discord.get_oauth_login_url(mock_request, state)
+
+    base_url = "https://discord.com/api/oauth2/authorize"
+    client_param = "?client_id=1234"
+    redirect_param = "&redirect_uri=https://somewhere.nice"
+    other_params = "&scope=identify&response_type=code"
+    state_param = ""
+    if state is not None:
+        state_param = f"&state={state}"
+
+    assert result == f"{base_url}{client_param}{redirect_param}{other_params}{state_param}"
 
 
 @pytest.mark.parametrize("enforce", [None])

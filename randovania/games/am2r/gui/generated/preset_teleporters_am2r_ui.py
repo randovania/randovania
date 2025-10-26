@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'preset_teleporters_am2r.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QGroupBox,
     QLabel, QMainWindow, QScrollArea, QSizePolicy,
     QVBoxLayout, QWidget)
 
-from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
+from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox
 
 class Ui_PresetTeleportersAM2R(object):
     def setupUi(self, PresetTeleportersAM2R):

@@ -66,7 +66,7 @@ def test_on_preset_changed(enable_random_hints: bool, skip_qtbot, hints_tab_with
 
     assert hints_tab.random_hints_box.isVisibleTo(parent) == has_random_hints
     assert hints_tab.specific_location_hints_box.isVisibleTo(parent) == has_specific_location_hints
-    assert hints_tab.specific_pickup_hints_box.isVisibleTo(parent) == has_specific_pickup_hints
+    assert hints_tab.specific_pickup_hints_widget.isVisibleTo(parent) == has_specific_pickup_hints
 
 
 def test_persist_enable_random_hints(skip_qtbot, preset_manager):

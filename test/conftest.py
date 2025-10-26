@@ -654,3 +654,85 @@ def pytest_configure(config: pytest.Config) -> None:
         markers.append("not skip_gui_tests")
 
     config.option.markexpr = " and ".join(markers)
+
+
+# The second field indicates the expected result for running the resolver.
+# - True: possible
+# - False: not possible
+# - None: not ran (for multiworld, or particularly bad files)
+SOLO_RDVGAMES = [
+    # Cross Game Multis
+    ("multi-cs+dread+prime1+prime2.rdvgame", None),
+    ("multi-am2r+cs+dread+prime1+prime2.rdvgame", None),
+    ("multi-am2r+cs+dread+prime1+prime2+msr.rdvgame", None),
+    ("prime1_and_2_multi.rdvgame", None),
+    ("cs_echoes_multi_1.rdvgame", None),
+    ("dread_prime1_multiworld.rdvgame", None),  # dread-prime1 multi
+    # AM2R
+    ("am2r/starter_preset.rdvgame", False),  # starter preset
+    ("am2r/door_lock.rdvgame", False),  # starter preset+door lock rando
+    ("am2r/door_lock_open.rdvgame", False),  # starter preset+door lock rando with open transitions
+    ("am2r/progressive_items.rdvgame", False),  # Starter preset+progressive items
+    ("am2r/starting_items.rdvgame", False),  # Starter preset + random starting items
+    ("am2r/transport_pipe_shuffle.rdvgame", False),  # Starter preset + shuffled transport pipes
+    ("am2r/custom_dna_required.rdvgame", False),  # Has 20/30 dna
+    ("am2r/chaos_options.rdvgame", False),  # Has Chaos Options
+    # Blank
+    ("blank/issue-3717.rdvgame", True),
+    # Factorio
+    ("factorio/starter_preset.rdvgame", True),
+    # Fusion
+    ("fusion/starter_preset.rdvgame", True),
+    ("fusion/short_intro.rdvgame", True),
+    ("fusion/all_hidden_with_nothing.rdvgame", True),
+    ("fusion/all_hidden_with_random.rdvgame", True),
+    ("fusion/starting_items.rdvgame", True),
+    # Dread
+    ("dread/vanilla.rdvgame", True),  # vanilla
+    ("dread/starter_preset.rdvgame", False),  # starter preset
+    ("dread/crazy_settings.rdvgame", True),  # crazy settings
+    ("dread/dread_dread_multiworld.rdvgame", None),  # dread-dread multi
+    ("dread/elevator_rando.rdvgame", None),  # elevator_rando. Resolver skipped due to slow
+    ("dread/custom_start.rdvgame", False),  # crazy settings
+    ("dread/custom_patcher_data.rdvgame", True),  # custom patcher data
+    ("dread/all_settings.rdvgame", True),  # all settings enabled
+    ("dread/hide_all_with_nothing.rdvgame", None),  # Model+scan+name hidden with nothing data
+    # Planets (Zebeth)
+    ("planets_zebeth/starter_preset.rdvgame", True),  # starter preset (vanilla keys)
+    ("planets_zebeth/starter_preset_shuffle_keys.rdvgame", True),  # starter preset (shuffled keys)
+    # Prime Hunters
+    ("prime_hunters/starter_preset.rdvgame", True),  # starter preset
+    ("prime_hunters/shuffled_force_fields.rdvgame", True),  # starter preset with shuffled force fields
+    (
+        "prime_hunters/starting_items_with_nothings.rdvgame",
+        True,
+    ),  # starter preset + random starting item + nothing items
+    ("prime_hunters/two_way_unchecked_portal_shuffle.rdvgame", True),  # starter preset + two-way portal shuffle
+    # Prime 1
+    ("prime1-vanilla.rdvgame", True),  # vanilla
+    ("prime1_crazy_seed.rdvgame", False),  # chaos features
+    ("prime1_crazy_seed_one_way_door.rdvgame", True),  # same as above but 1-way doors
+    ("prime1_refills.rdvgame", True),  # Refill items + custom artifact count
+    # Prime 2
+    ("seed_a.rdvgame", True),  # extremely old rdvgame
+    ("prime2_seed_b.rdvgame", True),
+    ("prime2/starts_with_cannon_ball.rdvgame", True),
+    ("prime2/door_lock_rando.rdvgame", True),
+    ("prime2/launcher_and_negative_expansions.rdvgame", True),
+    # Samus Returns
+    (
+        "samus_returns/arachnus_boss_start_inventory.rdvgame",
+        True,
+    ),  # arachnus final boss + starting inventory + export ids
+    ("samus_returns/diggernaut_boss_free_placement_dna.rdvgame", True),  # diggernaut final boss + 7/15 dna anywhere
+    ("samus_returns/door_lock.rdvgame", True),  # starter preset + door lock
+    ("samus_returns/door_lock_access_open.rdvgame", True),  # door lock + access open doors
+    ("samus_returns/queen_boss_custom_required_dna.rdvgame", True),  # queen final boss + custom required dna 20/30
+    ("samus_returns/starter_preset.rdvgame", True),  # starter preset
+    ("samus_returns/progressive_beams_and_suits.rdvgame", False),  # starter preset + progressive beam and suit
+    ("samus_returns/non_required_mains.rdvgame", True),  # non-required main for power bombs + hide model
+]
+
+COOP_RDVGAMES = [
+    ("multi_coop_am2r+bdg+cs+dread+prime1+echoes+msr.rdvgame", None),
+]

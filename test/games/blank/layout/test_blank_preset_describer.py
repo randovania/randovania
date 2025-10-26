@@ -37,9 +37,9 @@ def test_available_location_count(excluded_indices, expected_count):
         logic_settings_list.append(f"{expected_count} locations excluded")
     expected = {
         "Logic Settings": logic_settings_list,
-        "Item Pool": [
+        "Pickup Pool": [
             "Size: 8 of 8",
-            "Vanilla starting items",
+            "Unmodified starting pickup",
         ],
         "Gameplay": ["Starts at Intro - Starting Area"],
     }

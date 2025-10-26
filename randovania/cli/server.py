@@ -56,11 +56,11 @@ def run_command_logic(args: Namespace) -> None:
         log_config=log_config,
         reload=reload_,
         reload_excludes=[
-            "randovania/cli/server.py",
             "randovania/version_hash.py",
             "randovania/version.py",
             ".venv/Lib/site-packages/__editable___randovania_*_finder.py",
         ],
+        forwarded_allow_ips="*",
     )
 
 

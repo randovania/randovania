@@ -48,7 +48,7 @@ dependencies = [
     # Immutable dicts, used in many places
     "frozendict",
     # Versioning presets
-    "dulwich>=0.20",
+    "dulwich>=0.24.6", # Older versions have an issue on windows when using ProcessPoolExecutor
     # error reports
     "sentry-sdk",
     # Patch GamesPatches JSON from rdvgame
@@ -57,12 +57,16 @@ dependencies = [
     "packaging",
     # For TypeVar default
     "typing-extensions>=4.4.0",
+    # For compressing preset/rdvgames
+    "zstandard",
+    # For consistent HTTPS certificate availability across platforms
+    "certifi",
 ]
 
 [project.optional-dependencies]
 exporters = [
     # AM2R
-    "am2r-yams>=2.8.2",
+    "am2r-yams>=2.8.3",
 
     # Cave Story
     "cave-story-randomizer>=2.4.2",
@@ -81,7 +85,7 @@ exporters = [
     "planets-yapr>=1.0.0",
 
     # Metroid Prime 1
-    "py_randomprime>=1.29.0",
+    "py_randomprime>=1.30.2",
     "random-enemy-attributes>=1.0.3",
 
     # Metroid Prime 1/2
@@ -93,11 +97,11 @@ exporters = [
     "mp2hudcolor>=1.0.10",
 
     # Metroid: Samus Returns
-    "open-samus-returns-rando>=3.2.1",
+    "open-samus-returns-rando>=3.4.0",
 ]
 
 gui = [
-    "PySide6-Essentials>=6.5",
+    "PySide6-Essentials==6.10.0",
     "pyqtdarktheme-fork>=2.3.0",
     "markdown",
     "qasync",
@@ -125,12 +129,12 @@ server = [
     # monitoring
     "sentry-sdk[fastapi]>=2.35.0",
     "prometheus-fastapi-instrumentator",
-    
+
     # discord auth
-    "fastapi-discord>=0.2.7",
-    "requests-oauthlib",
+    "aiocache",  # for fastapi_discord copy
+    "oauthlib",
     "pyjwt",
-    
+
     # database
     "peewee",
     "cachetools",  # for TTLCache
@@ -146,11 +150,12 @@ test = [
     "pytest",
     "pytest-cov",
     "pytest-qt",
-    "pytest-asyncio",
+    "pytest-asyncio<1.0.0",  # Breaks our tests somehow
     "pytest-mock",
     "pytest-localftpserver",
     "pytest-xdist[psutil]",
     "pytest-codspeed",
+    "pytest-test-groups>=1.2.1",
     "httpx", # for server testing
 ]
 
@@ -163,10 +168,11 @@ website = [
 installer = [
     "pyinstaller",
     "pyinstaller-hooks-contrib",
+    "delocate",
 ]
 
 typing = [
-    "mypy",
+    "mypy<1.18.3",
     "types-aiofiles",
     "types-peewee",
     "types-qrcode>=8.0.0.20241004",
@@ -232,12 +238,12 @@ select = [
     "PLW",
     "SIM101",
 ]
-extend-ignore = [
+ignore = [
     "ISC001",  # may cause conflicts with formatter
     "PLW0603",  # we use some globals here and there
     "PLW2901",  # TODO: should actually fix these
     "PLC0415",  # we explicitly use the import within a function to postpone the loading of a module
-    
+
 ]
 
 [tool.ruff.lint.isort]
@@ -275,6 +281,7 @@ runtime-evaluated-decorators = [
 files = [
     "randovania/bitpacking/",
     "randovania/cli/",
+    "randovania/discord_bot/preset_lookup.py",
     "randovania/exporter/",
     "randovania/game/",
     "randovania/game_connection/",
@@ -306,18 +313,18 @@ files = [
     "randovania/gui/dialog/login_prompt_dialog.py",
     "randovania/gui/preset_settings/trick_level_tab.py",
     "randovania/gui/preset_settings/hints_tab.py",
+    "randovania/gui/lib/connections_visualizer.py",
     "randovania/gui/lib/editable_table_model.py",
     "randovania/gui/lib/pixmap_lib.py",
     "randovania/gui/lib/faq_lib.py",
     "randovania/gui/lib/signal_handling.py",
     "randovania/gui/lib/hints_text.py",
-    "randovania/gui/lib/tracker_item_image.py",
-    "randovania/gui/lib/data_editor_canvas.py",
-    "randovania/gui/lib/connections_visualizer.py",
     "randovania/gui/widgets/async_race_room_settings_widget.py",
+    "randovania/gui/widgets/data_editor_canvas.py",
     "randovania/gui/widgets/game_connection_window.py",
     "randovania/gui/widgets/game_validator_widget.py",
     "randovania/gui/widgets/node_selector_widget.py",
+    "randovania/gui/widgets/tracker_item_image.py",
     "randovania/layout/",
     "randovania/lib/",
     "randovania/server/",
@@ -374,7 +381,7 @@ module = [
     "pytestqt.*",
     "qasync.*",
     "ruamel.*",
-    "fastapi_discord.*",
+    "aiocache.*",
     "socketio_handler.*",
 ]
 ignore_missing_imports = true

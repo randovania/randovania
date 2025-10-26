@@ -69,7 +69,7 @@ def _hints() -> randovania.game.hints.GameHints:
         hint_distributor=EchoesHintDistributor(),
         specific_pickup_hints={
             "sky_temple_keys": randovania.game.hints.SpecificHintDetails(
-                long_name="Sky Temple Keys",
+                long_name="Sky Temple Key Hints",
                 description="This controls how precise the hints for Sky Temple Keys in Sky Temple Gateway are.",
             )
         },

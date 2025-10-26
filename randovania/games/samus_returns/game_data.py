@@ -73,11 +73,11 @@ def _hints() -> randovania.game.hints.GameHints:
         hint_distributor=MSRHintDistributor(),
         specific_pickup_hints={
             "artifacts": randovania.game.hints.SpecificHintDetails(
-                long_name="Metroid DNA",
+                long_name="Metroid DNA Hints",
                 description="This controls how precise the Metroid DNA hints for the DNA Chozo Seals are.",
             ),
             "final_boss_item": randovania.game.hints.SpecificHintDetails(
-                long_name="Final Boss Item",
+                long_name="Final Boss Item Hint",
                 description=(
                     "After collecting all Metroid DNA, a message appears that says that "
                     "the final boss can be fought and where to find them. "
@@ -185,7 +185,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "A new goal has been added (DNA Hunt)",
         ],
         need_to_play=[
-            "A modded 3DS with Luma3DS, or Citra",
+            "A modded 3DS with Luma3DS, or Azahar",
             "A decrypted copy of your original game. Currently, only the NA and EU versions are supported.",
         ],
     ),

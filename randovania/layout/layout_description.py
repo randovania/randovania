@@ -17,10 +17,10 @@ from randovania.layout import description_migration, game_patches_serializer
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
-from randovania.lib import json_lib, obfuscator
-from randovania.lib.construct_lib import CompressedJsonValue, NullTerminatedCompressedJsonValue
+from randovania.lib import construct_lib, json_lib, obfuscator
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Sequence
     from pathlib import Path
 
     from randovania.game_description.game_patches import GamePatches
@@ -42,7 +42,7 @@ def shareable_hash(hash_bytes: bytes) -> str:
     return base64.b32encode(hash_bytes).decode()
 
 
-def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]) -> str:
+def shareable_word_hash(hash_bytes: bytes, all_games: Sequence[RandovaniaGame]) -> str:
     rng = Random(sum(hash_byte * (2**8) ** i for i, hash_byte in enumerate(hash_bytes)))
 
     games_left: list[RandovaniaGame] = []
@@ -68,12 +68,13 @@ def _dict_hash(data: dict) -> str:
 
 BinaryLayoutDescription = construct.Struct(
     magic=construct.Const(b"RDVG"),
-    version=construct.Rebuild(construct.VarInt, 2),
+    version=construct.Rebuild(construct.VarInt, 3),
     data=construct.Switch(
         construct.this.version,
         {
-            1: NullTerminatedCompressedJsonValue,
-            2: CompressedJsonValue,
+            1: construct_lib.NullTerminatedCompressedJsonValue,
+            2: construct_lib.CompressedZlibJsonValue,
+            3: construct_lib.CompressedZstdJsonValue,
         },
         construct.Error,
     ),

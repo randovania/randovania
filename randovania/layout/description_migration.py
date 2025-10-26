@@ -807,6 +807,41 @@ def _migrate_v38(data: dict) -> None:
                 hint["precision"]["item_feature"] = replacement_features[feature]
 
 
+def _migrate_v39(data: dict) -> None:
+    replacement_features = {
+        "morph_ball_related": "morph_ball",
+        "beam_related": "beam",
+        "missile_related": "missile",
+    }
+
+    msr_worlds = [
+        world_index for world_index, game in enumerate(data["game_modifications"]) if game["game"] == "samus_returns"
+    ]
+    for world_index, game_mod in enumerate(data["game_modifications"]):
+        for hint in game_mod["hints"].values():
+            if hint["hint_type"] != "location":
+                continue
+
+            precision = hint["precision"]
+            if not (feature := precision.get("item_feature")):
+                continue
+            if feature not in replacement_features:
+                continue
+
+            # Check now if it's hinting an msr world and if yes change the feature
+            pickup_index = hint["target"]
+            is_for_msr = False
+            for location in game_mod["locations"]:
+                if location["index"] != pickup_index:
+                    continue
+
+                is_for_msr = location["owner"] in msr_worlds
+                break
+
+            if is_for_msr:
+                hint["precision"]["item_feature"] = replacement_features[feature]
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -846,6 +881,7 @@ _MIGRATIONS = [
     _migrate_v36,  # am2r: repurpose power beam to arm cannon
     _migrate_v37,  # Refactor how the "locations" field is saved.
     _migrate_v38,  # Redo am2r pickup features
+    _migrate_v39,  # Redo msr pickup features
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

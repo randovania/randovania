@@ -41,6 +41,7 @@ def test_server_command_logic(mocker: pytest_mock.MockerFixture, mode: str):
         log_config=mock_log_config,
         reload=bool(mode == "dev"),
         reload_excludes=ANY,
+        forwarded_allow_ips="*",
     )
     if mode == "other":
         mock_log.assert_called_once_with("Unknown server mode 'other'. Running in prod mode.")

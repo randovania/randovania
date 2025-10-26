@@ -26,9 +26,20 @@ def rename_state_to_visibility(migrator: playhouse.migrate.SqliteMigrator) -> No
         database.db.execute_sql("UPDATE multiplayer_session SET visibility='hidden' WHERE visibility='finished'")
 
 
+def add_game_beaten_field(migrator: playhouse.migrate.SqliteMigrator) -> None:
+    with database.db.atomic():
+        database.db.execute(
+            migrator._alter_table(migrator.make_context(), "world")
+            .literal(" ADD ")
+            .sql(peewee.Entity("beaten"))
+            .literal(" INTEGER NOT NULL DEFAULT(0)")  # SQLite saves boolean values as integers
+        )
+
+
 _migrations = {
     database.DatabaseMigrations.ADD_READY_TO_MEMBERSHIP: add_ready_field,
     database.DatabaseMigrations.SESSION_STATE_TO_VISIBILITY: rename_state_to_visibility,
+    database.DatabaseMigrations.ADD_GAME_BEATEN: add_game_beaten_field,
 }
 
 

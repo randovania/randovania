@@ -20,7 +20,7 @@ def game_editor(echoes_game_data):
     return Editor(data_reader.decode_data(echoes_game_data))
 
 
-def test_edit_connections(game_editor):
+def test_edit_connections_to_trivial(game_editor):
     # Setup
     landing_site = game_editor.game.region_list.area_by_area_location(AreaIdentifier("Temple Grounds", "Landing Site"))
     source = landing_site.node_with_name("Save Station")
@@ -32,6 +32,20 @@ def test_edit_connections(game_editor):
 
     # Assert
     assert landing_site.connections[source][target] == Requirement.trivial()
+
+
+def test_edit_connections_impossible_to_impossible(game_editor):
+    # Setup
+    landing_site = game_editor.game.region_list.area_by_area_location(AreaIdentifier("Temple Grounds", "Landing Site"))
+    source = landing_site.node_with_name("Door to Service Access")
+    target = landing_site.node_with_name("Door to Hive Access Tunnel")
+    assert target not in landing_site.connections[source]
+
+    # Run
+    game_editor.edit_connections(landing_site, source, target, None)
+
+    # Assert
+    assert target not in landing_site.connections[source]
 
 
 def test_remove_node(game_editor):

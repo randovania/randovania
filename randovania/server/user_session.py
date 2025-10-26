@@ -6,21 +6,23 @@ import json
 import typing
 
 import cryptography.fernet
-import fastapi_discord
 import jwt
 import oauthlib
 import peewee
-from fastapi import APIRouter, Form, Request, Response
+from fastapi import APIRouter, Form, Query, Request, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
 from oauthlib.common import generate_token
-from oauthlib.oauth2.rfc6749.errors import InvalidTokenError, raise_from_error
+from oauthlib.oauth2.rfc6749.errors import raise_from_error
+from pydantic import BaseModel, model_validator
 
 from randovania.network_common import error as network_error
+from randovania.server import fastapi_discord
 from randovania.server.database import User, UserAccessToken
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerAppDep, UserDep
 
 if typing.TYPE_CHECKING:
+    from randovania.server.fastapi_discord import DiscordUser
     from randovania.server.server_app import ServerApp
 
 
@@ -60,7 +62,7 @@ async def _create_client_side_session(sa: ServerApp, sid: str, user: User | None
     return result
 
 
-def _create_user_from_discord(discord_user: fastapi_discord.User) -> User:
+def _create_user_from_discord(discord_user: DiscordUser) -> User:
     discord_name = discord_user.global_name
 
     if discord_name is None:
@@ -89,9 +91,9 @@ async def _create_session_with_discord_token(sa: ServerApp, sid: str | None, tok
     discord_user = await sa.discord.user(token)
 
     if sa.enforce_role is not None:
-        if not sa.enforce_role.verify_user(discord_user.id):
-            sa.logger.info("User %s is not authorized for connecting to the server", discord_user.name)
-            raise network_error.UserNotAuthorizedToUseServerError(discord_user.name)
+        if not await sa.enforce_role.verify_user(discord_user.id):
+            sa.logger.info("User %s is not authorized for connecting to the server", discord_user.username)
+            raise network_error.UserNotAuthorizedToUseServerError(discord_user.username)
 
     user = _create_user_from_discord(discord_user)
 
@@ -173,8 +175,8 @@ async def restore_user_session(sa: ServerApp, sid: str, encrypted_session: bytes
         await sa.sio.save_session(sid, {})
         raise
 
-    except (KeyError, peewee.DoesNotExist, json.JSONDecodeError, InvalidTokenError) as e:
-        # InvalidTokenError: discord token expired and couldn't renew
+    except (KeyError, peewee.DoesNotExist, json.JSONDecodeError, fastapi_discord.exceptions.Unauthorized) as e:
+        # Unauthorized: bad discord access token. Expired?
         await sa.sio.save_session(sid, {})
         sa.logger.info(
             "Client at %s was unable to restore session: (%s) %s", sa.current_client_ip(sid), str(type(e)), str(e)
@@ -197,7 +199,7 @@ async def logout(sa: ServerApp, sid: str) -> None:
 def unable_to_login(sa: ServerApp, request: Request, error_message: str, status_code: int) -> HTMLResponse:
     return sa.templates.TemplateResponse(
         request=request,
-        name="unable_to_login.html",
+        name="user_session/unable_to_login.html.jinja",
         context={
             "error_message": error_message,
         },
@@ -224,26 +226,45 @@ async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: st
     else:
         request.session.pop("sid", None)
 
-    return RedirectResponse(sa.discord.get_oauth_login_url(state))
+    return RedirectResponse(sa.discord.get_oauth_login_url(request, state))
+
+
+class DiscordLoginCallbackParams(BaseModel):
+    code: str | None = None
+    state: str | None = None
+    error: str | None = None
+    error_description: str | None = None
+
+    @model_validator(mode="after")
+    def check_all_provided(self) -> typing.Self:
+        if self.error is None:
+            if self.code is None:
+                raise ValueError("'code' param must be provided")
+            if self.state is None:
+                raise ValueError("'state' param must be provided")
+
+        return self
 
 
 @router.get("/login_callback")
 async def browser_discord_login_callback(
     sa: ServerAppDep,
     request: Request,
-    code: str | None = None,
-    state: str | None = None,
-    error: str | None = None,
-    error_description: str | None = None,
+    params: typing.Annotated[DiscordLoginCallbackParams, Query()],
 ) -> Response:
+    code = params.code
+    state = params.state
+    error = params.error
+    error_description = params.error_description
+
     sid: str | None = request.session.get("sid")
 
     try:
         if error is not None:
-            params = {}
+            error_params = {}
             if error_description is not None:
-                params["error_description"] = error_description
-            raise_from_error(error, params)
+                error_params["error_description"] = error_description
+            raise_from_error(error, error_params)
 
         # code and state are only None when there's an error
         assert code is not None
@@ -271,7 +292,7 @@ async def browser_discord_login_callback(
 
             return sa.templates.TemplateResponse(
                 request,
-                "return_to_randovania.html",
+                "user_session/return_to_randovania.html.jinja",
                 context={
                     "user": user,
                 },
@@ -288,7 +309,10 @@ async def browser_discord_login_callback(
         )
         status_code = 403
 
-    except oauthlib.oauth2.rfc6749.errors.MismatchingStateError:
+    except (
+        oauthlib.oauth2.rfc6749.errors.MismatchingStateError,
+        fastapi_discord.exceptions.InvalidToken,
+    ):
         error_message = "You must finish the login with the same browser that you started it with."
         status_code = 401
 
@@ -306,34 +330,46 @@ async def browser_discord_login_callback(
 
 
 @router.get("/me", response_class=HTMLResponse)
-async def browser_me(request: Request, user: UserDep) -> str:
-    result = f"Hello {user.name}. Admin? {user.admin}<br />Access Tokens:<ul>\n"
-
-    for token in user.access_tokens:
-        delete = f' <a href="{request.url_for("delete_token")}?token={token.name}">Delete</a>'
-        result += f"<li>{token.name} created at {token.creation_date}. Last used at {token.last_used}. {delete}</li>"
-
-    result += f'<li><form class="form-inline" method="POST" action="{request.url_for("create_token")}">'
-    result += '<input id="name" placeholder="Access token name" name="name">'
-    result += '<button type="submit">Create new</button></li></ul>'
-
-    return result
+async def browser_me(sa: ServerAppDep, request: Request, user: UserDep) -> HTMLResponse:
+    return sa.templates.TemplateResponse(
+        request,
+        "user_session/me.html.jinja",
+        context={
+            "user": user,
+            "is_admin": user.admin or sa.app.debug,
+        },
+    )
 
 
 @router.post("/create_token", response_class=HTMLResponse)
-async def create_token(sa: ServerAppDep, request: Request, user: UserDep, name: typing.Annotated[str, Form()]) -> str:
-    go_back = f'<a href="{request.url_for("browser_me")}">Go back</a>'
-
+async def create_token(
+    sa: ServerAppDep, request: Request, user: UserDep, name: typing.Annotated[str, Form()]
+) -> HTMLResponse:
     try:
         token = UserAccessToken.create(
             user=user,
             name=name,
         )
         session = _create_session_with_access_token(sa, token).decode("ascii")
-        return f"Token: <pre>{session}</pre><br />{go_back}"
+        context = {
+            "created": True,
+            "token": session,
+        }
+        status_code = 200
 
     except peewee.IntegrityError as e:
-        return f"Unable to create token: {e}<br />{go_back}"
+        context = {
+            "created": False,
+            "error": str(e),
+        }
+        status_code = 500
+
+    return sa.templates.TemplateResponse(
+        request=request,
+        name="user_session/token_created.html.jinja",
+        context=context,
+        status_code=status_code,
+    )
 
 
 @router.get("/delete_token")
