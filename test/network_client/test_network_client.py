@@ -27,8 +27,10 @@ if TYPE_CHECKING:
 
 
 @pytest.fixture
-def client(tmp_path):
-    return NetworkClient(tmp_path, {"server_address": "http://localhost:5000"})
+async def client(tmp_path):
+    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000"})
+    yield client
+    await client.http.close()
 
 
 async def test_on_connect_no_restore(tmp_path):
@@ -51,6 +53,7 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
     if valid_session:
         call_result = {
             "result": {
+                "sid": 12341234,
                 "user": {
                     "id": 1234,
                     "name": "You",
@@ -67,6 +70,8 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
     await client.on_connect()
 
     # Assert
+    if valid_session:
+        assert client.http.headers["X-Randovania-Sid"] == 12341234
     client.sio.call.assert_awaited_once_with("restore_user_session", b"foo", namespace=None, timeout=30)
 
     if valid_session:

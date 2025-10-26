@@ -23,7 +23,7 @@ from randovania.bitpacking import bitpacking, construct_pack
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.lib import container_lib
+from randovania.lib import container_lib, http_lib
 from randovania.network_common import (
     admin_actions,
     connection_headers,
@@ -160,7 +160,14 @@ class NetworkClient:
         aiohttp.ClientSession.ws_connect = wrap_ws_connect
 
         self._connection_state = ConnectionState.Disconnected
-        self.sio = socketio.AsyncClient(ssl_verify=configuration.get("verify_ssl", True), reconnection=False)
+        self.http = http_lib.http_session(
+            headers=connection_headers(),
+        )
+        self.sio = socketio.AsyncClient(
+            ssl_verify=configuration.get("verify_ssl", True),
+            reconnection=False,
+            http_session=self.http,
+        )
         self._call_lock = asyncio.Lock()
         self._connect_lock = asyncio.Lock()
         self._current_timeout = _MINIMUM_TIMEOUT
