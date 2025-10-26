@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'echoes_cosmetic_patches_dialog.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -20,8 +20,8 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
     QLabel, QPushButton, QScrollArea, QSizePolicy,
     QSlider, QSpacerItem, QVBoxLayout, QWidget)
 
-from randovania.gui.lib.foldable import Foldable
-from randovania.gui.lib.scroll_protected import ScrollProtectedSlider
+from randovania.gui.widgets.foldable import Foldable
+from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
 
 class Ui_EchoesCosmeticPatchesDialog(object):
     def setupUi(self, EchoesCosmeticPatchesDialog):

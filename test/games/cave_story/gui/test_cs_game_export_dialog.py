@@ -3,11 +3,10 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-from caver.patcher import CSPlatform
 from PySide6 import QtCore
 
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
-from randovania.games.cave_story.exporter.options import CSPerGameOptions
+from randovania.games.cave_story.exporter.options import CSPerGameOptions, CSPlatform
 from randovania.games.cave_story.gui.dialog.game_export_dialog import CSGameExportDialog
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.interface_common.options import Options

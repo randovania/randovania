@@ -56,7 +56,12 @@ def _hints() -> randovania.game.hints.GameHints:
 
     return randovania.game.hints.GameHints(
         hint_distributor=generator.HuntersHintDistributor(),
-        specific_pickup_hints={},
+        specific_pickup_hints={
+            "octoliths": randovania.game.hints.SpecificHintDetails(
+                long_name="Octolith Hints",
+                description="This controls how precise the Octolith hints in Alimbic Cannon Control Room are.",
+            ),
+        },
     )
 
 
@@ -83,7 +88,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Metroid Prime Hunters",
     development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
+        "starter_preset.rdvpreset",
     ],
     faq=[],
     web_info=randovania.game.web_info.GameWebInfo(

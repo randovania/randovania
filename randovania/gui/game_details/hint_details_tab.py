@@ -53,6 +53,7 @@ class HintDetailsTab(GameDetailsTab):
             players,
             random.Random(0),
             ["A joke hint."],
+            game,
         )
 
         # sort by kind, then type, for ease of reading

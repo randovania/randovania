@@ -2152,6 +2152,27 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Jump 2-BombJump: https://youtu.be/416jYaEuveg",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "JBJ",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -6694,7 +6715,8 @@
         "Operations Ventilation": {
             "default_node": null,
             "hint_features": [
-                "climbable"
+                "climbable",
+                "geron"
             ],
             "extra": {
                 "map_name": "Main Deck35",
@@ -7662,6 +7684,7 @@
                         "area": 0,
                         "room": 38,
                         "source": "Arachnus",
+                        "boss_hint_name": "Arachnus",
                         "infant_weight": 3.5
                     },
                     "valid_starting_location": false,
@@ -8438,7 +8461,9 @@
         },
         "Sub-Zero Containment": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "extreme-temp"
+            ],
             "extra": {
                 "map_name": "Main Deck46",
                 "room_id": [
@@ -10703,7 +10728,9 @@
         },
         "Auxiliary Power Station": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "systems_console"
+            ],
             "extra": {
                 "map_name": "Main Deck54",
                 "room_id": [
@@ -12601,7 +12628,9 @@
                     "pickup_index": 120,
                     "location_category": "major",
                     "custom_index_group": null,
-                    "hint_features": [],
+                    "hint_features": [
+                        "systems_console"
+                    ],
                     "connections": {
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "and",
@@ -13834,6 +13863,7 @@
                         "area": 0,
                         "room": 86,
                         "source": "Yakuza",
+                        "boss_hint_name": "Yakuza",
                         "infant_weight": 3.5
                     },
                     "valid_starting_location": false,

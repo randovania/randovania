@@ -613,7 +613,6 @@ def test_create_string_patches(
     # Setup
     game: GameDescription = MagicMock()
     all_patches = MagicMock()
-    rng = MagicMock()
     player_config = PlayersConfiguration(0, {0: "you"})
 
     mock_item_create_hints: MagicMock = mocker.patch(
@@ -642,7 +641,8 @@ def test_create_string_patches(
         autospec=True,
     )
     mock_akul_testament.return_values = []
-    namer = MagicMock()
+    exporter = MagicMock()
+    namer = exporter.namer
 
     hint_config = MagicMock()
     hint_config.specific_pickup_hints = frozendict({"sky_temple_keys": stk_mode})
@@ -653,15 +653,14 @@ def test_create_string_patches(
         False,
         game,
         all_patches,
-        namer,
         player_config,
-        rng,
         MagicMock(),
+        exporter,
     )
 
     # Assert
     expected_result = ["item", "hints"]
-    mock_item_create_hints.assert_called_once_with(all_patches, player_config, game.region_list, namer, rng)
+    mock_item_create_hints.assert_called_once_with(all_patches, player_config, exporter)
     mock_logbook_title_string_patches.assert_called_once_with()
     mock_akul_testament.assert_called_once_with(namer)
 

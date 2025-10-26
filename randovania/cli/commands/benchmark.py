@@ -9,14 +9,16 @@ import time
 import typing
 from argparse import Namespace
 from asyncio import CancelledError
+from collections.abc import Sequence
 from concurrent.futures import Future, ProcessPoolExecutor
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common import sleep_inhibitor
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.generator_parameters import GeneratorParameters, decode_game_list
 from randovania.layout.permalink import Permalink, PermalinkBinary
 from randovania.lib import json_lib
 from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
@@ -122,13 +124,11 @@ def print_report(header: str, reports: dict[RandovaniaGame, Report]) -> None:
         print(f"{name:>30} |{report.fixes:> 6} |{report.failures:> 9} |{mean: 9.3f} |{stdev: 9.3f} |{median: 9.3f}")
 
 
-def compare_reports(
-    parameters: list[GeneratorParameters], reference: list[float | None], results: list[float | None]
-) -> None:
+def compare_reports(games: list[RandovaniaGame], reference: list[float | None], results: list[float | None]) -> None:
     difference_report: dict[RandovaniaGame, Report] = collections.defaultdict(Report)
 
-    for param, reference_dt, result_dt in zip(parameters, reference, results, strict=True):
-        report = difference_report[param.get_preset(0).game]
+    for game, reference_dt, result_dt in zip(games, reference, results, strict=True):
+        report = difference_report[game]
         if result_dt is None:
             if reference_dt is None:
                 pass
@@ -143,13 +143,56 @@ def compare_reports(
     print_report("Difference", difference_report)
 
 
+def _make_report(games: list[RandovaniaGame], times: list[float | None]) -> dict[RandovaniaGame, Report]:
+    game_report: dict[RandovaniaGame, Report] = collections.defaultdict(Report)
+
+    for game, dt in zip(games, times, strict=True):
+        report = game_report[game]
+        if dt is None:
+            report.failures += 1
+        else:
+            report.times.append(dt)
+
+    return game_report
+
+
+def _generator_parameters_to_games(parameters: Sequence[GeneratorParameters]) -> list[RandovaniaGame]:
+    return [param.get_preset(0).game for param in parameters]
+
+
+def _extract_generator_params_bytes(link: str) -> bytes:
+    """
+    Gets the raw bytes for the GeneratorParameters from the given permalink string, while avoiding the expensive
+    decoding operation.
+    :param link:
+    :return:
+    """
+    encoded_param = link.encode("utf-8")
+    encoded_param += b"=" * ((4 - len(encoded_param)) % 4)
+
+    b = base64.b64decode(encoded_param, altchars=b"-_", validate=True)
+    data = PermalinkBinary.parse(b).value
+    return data.generator_params
+
+
+def _extract_game_from_generator_params_bytes(generator_bytes: bytes) -> RandovaniaGame:
+    """
+    Gets the game used by the given GeneratorParameters in bytes form, avoiding needing to decode it fully.
+    :param generator_bytes:
+    :return:
+    """
+    games = decode_game_list(BitPackDecoder(generator_bytes))
+    assert len(games) == 1
+    return games[0]
+
+
 def run_logic(args: Namespace) -> None:
     base_seed = 1000
     process_count = 6
     preset_manager = PresetManager(None)
 
     link_str_for_param = []
-    reference_params = []
+    reference_params: list[GeneratorParameters] = []
 
     games = RandovaniaGame.all_games()
     if args.game is not None:
@@ -181,15 +224,7 @@ def run_logic(args: Namespace) -> None:
     if args.output_file:
         write_file(args.output_file, dict(zip(link_str_for_param, results, strict=True)))
 
-    game_report: dict[RandovaniaGame, Report] = collections.defaultdict(Report)
-
-    for param, dt in zip(reference_params, results, strict=True):
-        report = game_report[param.get_preset(0).game]
-        if dt is None:
-            report.failures += 1
-        else:
-            report.times.append(dt)
-
+    game_report = _make_report(_generator_parameters_to_games(reference_params), results)
     print_report("Results", game_report)
 
 
@@ -200,8 +235,8 @@ def repeat_logic(args: Namespace) -> None:
     process_count = 6
 
     link_str_for_param = []
-    reference_params = []
-    reference_results = []
+    reference_params: list[GeneratorParameters] = []
+    reference_results: list[float | None] = []
 
     for link_str, link_data in reference.items():
         link_str_for_param.append(link_str)
@@ -213,34 +248,44 @@ def repeat_logic(args: Namespace) -> None:
     if args.output_file:
         write_file(args.output_file, dict(zip(link_str_for_param, generate_results, strict=True)))
 
-    compare_reports(reference_params, reference_results, generate_results)
+    compare_reports(_generator_parameters_to_games(reference_params), reference_results, generate_results)
 
 
-def _extract_generator_params_bytes(link: str) -> bytes:
-    encoded_param = link.encode("utf-8")
-    encoded_param += b"=" * ((4 - len(encoded_param)) % 4)
+def print_logic(args: Namespace) -> None:
+    reference = read_file(args.file)
 
-    b = base64.b64decode(encoded_param, altchars=b"-_", validate=True)
-    data = PermalinkBinary.parse(b).value
-    return data.generator_params
+    reference_games: list[RandovaniaGame] = []
+    reference_results = []
+
+    for link_str, link_data in reference.items():
+        reference_games.append(_extract_game_from_generator_params_bytes(_extract_generator_params_bytes(link_str)))
+        reference_results.append(link_data)
+
+    game_report = _make_report(reference_games, reference_results)
+    print_report("Results", game_report)
 
 
 def compare_logic(args: Namespace) -> None:
     reference_data = read_file(args.reference_file)
     new_data = read_file(args.new_file)
 
+    # Since Permalinks include version information, they can be different but still contain the same GeneratorParams.
+    # So in order to properly verify two permalinks are equivalent one should compare that object.
+    # However, decoding a Permalink properly is a very slow operation especially if done 1000+ times at once so since
+    # the actual contents is not necessary, just comparing the bytes representation is all we need.
     results = {
         _extract_generator_params_bytes(link_str): (link_str, link_data) for link_str, link_data in new_data.items()
     }
 
-    reference_params = []
+    games: list[RandovaniaGame] = []
     reference_times = []
     result_times = []
 
     for link_str, reference_time in reference_data.items():
         param_bytes = _extract_generator_params_bytes(link_str)
-        generator_params = GeneratorParameters.from_bytes(param_bytes)
-        reference_params.append(generator_params)
+        # Except we want to know the game the permalink is for. Thankfully that's the first thing stored in
+        # a GeneratorParams so it's easy to get it without properly parsing.
+        games.append(_extract_game_from_generator_params_bytes(param_bytes))
 
         reference_times.append(reference_time)
         if param_bytes not in results:
@@ -251,7 +296,7 @@ def compare_logic(args: Namespace) -> None:
         bad_permalinks = [link for link, _ in results.values()]
         raise ValueError(f"The following permalinks have no reference data: {bad_permalinks}")
 
-    compare_reports(reference_params, reference_times, result_times)
+    compare_reports(games, reference_times, result_times)
 
 
 def add_commands(sub_parsers: typing.Any) -> None:
@@ -273,6 +318,10 @@ def add_commands(sub_parsers: typing.Any) -> None:
     repeat_parser.add_argument("--output-file", type=Path, help="Save the new session.")
     repeat_parser.add_argument("input_file", type=Path, help="The session to repeat.")
     repeat_parser.set_defaults(func=repeat_logic)
+
+    print_parse: ArgumentParser = sub_parsers.add_parser("print", help="Print a report file")
+    print_parse.add_argument("file", type=Path, help="The session to print.")
+    print_parse.set_defaults(func=print_logic)
 
     compare_parse: ArgumentParser = sub_parsers.add_parser("compare", help="Compares two result files")
     compare_parse.add_argument("reference_file", type=Path, help="The session to compare against.")

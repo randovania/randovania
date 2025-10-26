@@ -64,6 +64,7 @@ class MultiplayerWorld(JsonDataclass):
     id: uuid.UUID
     name: str
     preset_raw: str
+    has_been_beaten: bool
 
     @cached_property
     def preset(self) -> VersionedPreset:

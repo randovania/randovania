@@ -68,6 +68,7 @@ class AM2RPresetDescriber(GamePresetDescriber):
                         "Super Missiles need Launcher": "Super Missile Tank",
                         "Power Bombs need Launcher": "Power Bomb Tank",
                     },
+                    mains_are_default_required=False,
                 ),
                 {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},
                 {f"First Suit Damage Reduction {configuration.first_suit_dr}%": configuration.first_suit_dr != 50},

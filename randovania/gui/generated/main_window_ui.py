@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -161,7 +161,7 @@ class Ui_MainWindow(object):
         self.tab_game_list.setWidgetResizable(True)
         self.game_list_contents = QWidget()
         self.game_list_contents.setObjectName(u"game_list_contents")
-        self.game_list_contents.setGeometry(QRect(0, 0, 98, 28))
+        self.game_list_contents.setGeometry(QRect(0, 0, 682, 400))
         self.tab_game_list.setWidget(self.game_list_contents)
         self.main_tab_widget.addTab(self.tab_game_list, "")
         self.tab_game_details = GamesHelpWidget()
@@ -302,6 +302,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.stop_background_process_button.sizePolicy().hasHeightForWidth())
         self.stop_background_process_button.setSizePolicy(sizePolicy1)
         self.stop_background_process_button.setMaximumSize(QSize(75, 16777215))
+        self.stop_background_process_button.setText(u"\ud83d\udec7 Stop")
         self.stop_background_process_button.setCheckable(False)
         self.stop_background_process_button.setFlat(False)
 
@@ -309,14 +310,15 @@ class Ui_MainWindow(object):
 
         self.progress_label = QLabel(self.centralWidget)
         self.progress_label.setObjectName(u"progress_label")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Preferred)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.progress_label.sizePolicy().hasHeightForWidth())
         self.progress_label.setSizePolicy(sizePolicy2)
         font2 = QFont()
-        font2.setPointSize(7)
+        font2.setPointSize(8)
         self.progress_label.setFont(font2)
+        self.progress_label.setTextFormat(Qt.TextFormat.MarkdownText)
         self.progress_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
         self.progress_label.setWordWrap(True)
 
@@ -328,7 +330,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.status_bar)
         self.menu_bar = QMenuBar(MainWindow)
         self.menu_bar.setObjectName(u"menu_bar")
-        self.menu_bar.setGeometry(QRect(0, 0, 688, 17))
+        self.menu_bar.setGeometry(QRect(0, 0, 688, 23))
         self.menu_open = QMenu(self.menu_bar)
         self.menu_open.setObjectName(u"menu_open")
         self.menu_edit = QMenu(self.menu_bar)
@@ -442,7 +444,6 @@ class Ui_MainWindow(object):
         self.game_connection_label.setText(QCoreApplication.translate("MainWindow", u"Connect Randovania to the many games it support, enabling multiworld or maybe just an automatic tracker.", None))
         self.game_connection_button.setText(QCoreApplication.translate("MainWindow", u"Connect to games", None))
         self.main_tab_widget.setTabText(self.main_tab_widget.indexOf(self.tab_multiworld), QCoreApplication.translate("MainWindow", u"Multiworld", None))
-        self.stop_background_process_button.setText(QCoreApplication.translate("MainWindow", u"Stop", None))
         self.progress_label.setText("")
         self.menu_open.setTitle(QCoreApplication.translate("MainWindow", u"Open", None))
         self.menu_edit.setTitle(QCoreApplication.translate("MainWindow", u"Edit", None))

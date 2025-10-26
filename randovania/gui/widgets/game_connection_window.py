@@ -192,7 +192,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         self.help_label.linkActivated.connect(self.window_manager.open_app_navigation_link)
         self.game_connection.BuildersChanged.connect(self.setup_builder_ui)
         self.game_connection.BuildersUpdated.connect(self.update_builder_ui)
-        self.game_connection.GameStateUpdated.connect(self.update_builder_ui)
+        self.game_connection.GameStateUpdated.connect(lambda state: self.update_builder_ui())
         self.world_database.WorldDataUpdate.connect(self.update_builder_ui)
         self.window_manager.multiworld_client.SyncFailure.connect(self.update_builder_ui)
         self.setup_builder_ui()
@@ -268,7 +268,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             new_ip = await MSRConnectorPromptDialog.prompt(
                 parent=self,
                 is_modal=True,
-                title="Select Citra or Luma3DS to connect to",
+                title="Select Azahar or Luma3DS to connect to",
                 description="Enter the IP address of your 3DS. It can be found in the system settings.",
             )
             if new_ip is None:

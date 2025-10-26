@@ -10,6 +10,7 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
@@ -25,7 +26,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.game_description.requirements.requirement_list import RequirementList
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -288,25 +289,28 @@ def find_duplicated_pickup_index(region_list: RegionList) -> Iterator[str]:
 
 
 def _needed_resources_partly_satisfied(
-    req: Requirement, resources: tuple[str, tuple[str, ...]], context: NodeContext, req_cache: dict
+    req: Requirement,
+    resources: tuple[str, tuple[str, ...]],
+    context: NodeContext,
+    req_cache: dict[Requirement, tuple[RequirementList, ...]],
 ) -> bool:
     if req in req_cache:
-        req_set = req_cache[req]
+        alternatives = req_cache[req]
     else:
-        req_set = req.as_set(context)
-        req_cache[req] = req_set
+        alternatives = tuple(fast_as_set.fast_as_alternatives(req, context))
+        req_cache[req] = alternatives
 
     counter = 0
     res_key = resources[0]
     res_values = resources[1]
-    for alternative in req_set.alternatives:
+    for alternative in alternatives:
         # Either the key must not be present, or the key is present with all values.
         if not any(res_key == item.resource.short_name for item in alternative.values()):
             counter += 1
         elif all(any(resource == item.resource.short_name for item in alternative.values()) for resource in res_values):
             counter += 1
 
-    return counter != len(req_set.alternatives)
+    return counter != len(alternatives)
 
 
 def _does_requirement_contain_resource(req: Requirement, resource: str) -> bool:
@@ -367,7 +371,7 @@ def check_for_resources_to_use_together(
     :return: Error messages of requirements which don't pass the check.
     """
     context = _create_node_context(game)
-    requirement_cache: dict[Requirement, RequirementSet] = {}
+    requirement_cache: dict[Requirement, tuple[RequirementList, ...]] = {}
 
     for source_node in game.region_list.iterate_nodes():
         try:

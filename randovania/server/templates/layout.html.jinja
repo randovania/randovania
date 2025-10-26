@@ -1,0 +1,22 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{% block title %}{% endblock title %}</title>
+		<link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
+		<link href="{{ url_for('static', path='/favicon.ico') }}" rel="icon" type="image/x-icon" >
+	</head>
+	<body>
+		<header class="site-header" id="header">
+			<h1 class="site-header__title" data-lead-id="site-header-title">
+				{% block header %}{% endblock header %}
+			</h1>
+		</header>
+
+		{% block content_class %}
+		<div class="main-content">
+		{% endblock content_class %}
+			{% block content %}{% endblock content %}
+		</div>
+	</body>
+</html>

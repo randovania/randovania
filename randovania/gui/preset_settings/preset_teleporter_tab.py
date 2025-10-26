@@ -21,8 +21,8 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
-    from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
     from randovania.gui.lib.window_manager import WindowManager
+    from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox
     from randovania.interface_common.preset_editor import PresetEditor
 
 

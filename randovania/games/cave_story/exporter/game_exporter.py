@@ -5,12 +5,10 @@ import dataclasses
 import typing
 from pathlib import Path
 
-from caver import patcher as caver_patcher
-from caver.patcher import CSPlatform
-
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game.game_enum import RandovaniaGame
+from randovania.games.cave_story.exporter.options import CSPlatform
 from randovania.lib import json_lib, status_update_lib
 
 if typing.TYPE_CHECKING:
@@ -69,6 +67,10 @@ class CSGameExporter(GameExporter[CSGameExportParams]):
         new_patch["platform"] = export_params.platform.value
         monitoring.set_tag("cs_platform", new_patch["platform"])
         try:
-            caver_patcher.patch_files(new_patch, export_params.output_path, export_params.platform, progress_update)
+            from caver import patcher as caver_patcher
+
+            caver_patcher.patch_files(
+                new_patch, export_params.output_path, caver_patcher.CSPlatform(new_patch["platform"]), progress_update
+            )
         finally:
             json_lib.write_path(export_params.output_path.joinpath("data", "patcher_data.json"), patch_data)

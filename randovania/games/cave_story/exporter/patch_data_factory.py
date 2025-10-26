@@ -150,6 +150,7 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
             self.players_config,
             hint_rng,
             GENERIC_JOKE_HINTS,
+            self.game,
         )
         patches = self.description.all_patches[self.players_config.player_index]
         hints_for_identifier = {

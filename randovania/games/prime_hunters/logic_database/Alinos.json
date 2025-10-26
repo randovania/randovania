@@ -3,20 +3,20 @@
     "extra": {},
     "areas": {
         "Alimbic Cannon Control Room": {
-            "default_node": "Player Spawn",
+            "default_node": "Room Center",
             "hint_features": [],
             "extra": {
                 "room_id": 32,
                 "entity_file": "crystalroom_Ent.bin"
             },
             "nodes": {
-                "Player Spawn": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 160.002685546875,
-                        "y": 128.002685546875,
-                        "z": 128.001953125
+                        "x": 76.20668357053404,
+                        "y": 28.348659128254475,
+                        "z": 0.0
                     },
                     "description": "",
                     "layers": [
@@ -47,71 +47,6 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Combat Hall": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Combat Hall": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 0.468017578125,
-                        "y": 2.00732421875,
-                        "z": 28.244140625
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "entity_id": 1,
-                        "position": {
-                            "x": 0.468017578125,
-                            "y": 2.00732421875,
-                            "z": 28.244140625
-                        },
-                        "up_vector": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0
-                        },
-                        "facing_vector": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": -0.999755859375
-                        },
-                        "entity_type_data": {
-                            "node_name": "",
-                            "palette_id": 9,
-                            "door_type": 0,
-                            "connector_id": 3,
-                            "target_layer_id": 0,
-                            "locked": true,
-                            "out_connector_id": 10,
-                            "out_loader_id": 117,
-                            "entity_filename": "unit1_RM4_Ent.b",
-                            "room_name": "unit1_RM4_Ent.b"
-                        }
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Alinos",
-                        "area": "Combat Hall",
-                        "node": "Door to Alimbic Cannon Control Room"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -197,6 +132,99 @@
                                     }
                                 ]
                             }
+                        },
+                        "Lore Scan 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Lore Scan 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Lore Scan 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Lore Scan 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Combat Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 77.74680982552646,
+                        "y": 2.1214694523656874,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 1,
+                        "position": {
+                            "x": 0.468017578125,
+                            "y": 2.00732421875,
+                            "z": 28.244140625
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.999755859375
+                        },
+                        "entity_type_data": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 0,
+                            "connector_id": 3,
+                            "target_layer_id": 0,
+                            "locked": true,
+                            "out_connector_id": 10,
+                            "out_loader_id": 117,
+                            "entity_filename": "unit1_RM4_Ent.b",
+                            "room_name": "unit1_RM4_Ent.b"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Alinos",
+                        "area": "Combat Hall",
+                        "node": "Door to Alimbic Cannon Control Room"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -204,8 +232,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 76.03,
-                        "y": 95.02,
+                        "x": 74.98525341266483,
+                        "y": 67.78065739113535,
                         "z": 0.0
                     },
                     "description": "",
@@ -216,7 +244,319 @@
                     "valid_starting_location": false,
                     "event_name": "OublietteUnlocked",
                     "connections": {
-                        "Door to Combat Hall": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Lore Scan 1": {
+                    "node_type": "hint",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 109.8,
+                        "y": 51.83,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 6,
+                        "position": {
+                            "x": 5.249755859375,
+                            "y": 4.478271484375,
+                            "z": 5.345458984375
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "string_id": "904L",
+                            "flags": 1,
+                            "effect_flags": 32768,
+                            "model_id": 0,
+                            "linked_entity": -1,
+                            "scan_id": 409,
+                            "scan_message_target": -1,
+                            "scan_message": 0,
+                            "effect_id": 0,
+                            "effect_interval": 10,
+                            "effect_on_inverals": 1,
+                            "effect_position_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "volume": {
+                                "type": 2,
+                                "data": {
+                                    "sphere_position": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "sphere_radius": 1.0
+                                }
+                            }
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "kind": "specific-pickup",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Lore Scan 3": {
+                    "node_type": "hint",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 108.75,
+                        "y": 92.21,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 7,
+                        "position": {
+                            "x": 5.773193359375,
+                            "y": 4.059326171875,
+                            "z": -5.51611328125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "string_id": "114L",
+                            "flags": 1,
+                            "effect_flags": 32768,
+                            "model_id": 0,
+                            "linked_entity": -1,
+                            "scan_id": 411,
+                            "scan_message_target": -1,
+                            "scan_message": 0,
+                            "effect_id": 0,
+                            "effect_interval": 10,
+                            "effect_on_inverals": 1,
+                            "effect_position_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "volume": {
+                                "type": 2,
+                                "data": {
+                                    "sphere_position": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "sphere_radius": 1.0
+                                }
+                            }
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "kind": "specific-pickup",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Lore Scan 2": {
+                    "node_type": "hint",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 37.92,
+                        "y": 90.85,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 9,
+                        "position": {
+                            "x": -5.58984375,
+                            "y": 3.993896484375,
+                            "z": -6.00439453125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "string_id": "014L",
+                            "flags": 1,
+                            "effect_flags": 32768,
+                            "model_id": 0,
+                            "linked_entity": -1,
+                            "scan_id": 410,
+                            "scan_message_target": -1,
+                            "scan_message": 0,
+                            "effect_id": 0,
+                            "effect_interval": 10,
+                            "effect_on_inverals": 1,
+                            "effect_position_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "volume": {
+                                "type": 2,
+                                "data": {
+                                    "sphere_position": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "sphere_radius": 1.0
+                                }
+                            }
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "kind": "specific-pickup",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Lore Scan 4": {
+                    "node_type": "hint",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 35.91,
+                        "y": 48.99,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 8,
+                        "position": {
+                            "x": -6.070556640625,
+                            "y": 3.76611328125,
+                            "z": 5.8642578125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0
+                        },
+                        "entity_type_data": {
+                            "string_id": "214L",
+                            "flags": 1,
+                            "effect_flags": 32768,
+                            "model_id": 0,
+                            "linked_entity": -1,
+                            "scan_id": 412,
+                            "scan_message_target": -1,
+                            "scan_message": 0,
+                            "effect_id": 0,
+                            "effect_interval": 10,
+                            "effect_on_inverals": 1,
+                            "effect_position_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "volume": {
+                                "type": 2,
+                                "data": {
+                                    "sphere_position": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "sphere_radius": 1.0
+                                }
+                            }
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "kind": "specific-pickup",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,

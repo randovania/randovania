@@ -21,7 +21,7 @@ services:
     secrets:
       - configuration
 
-    command: --configuration "/run/secrets/configuration" server flask
+    command: --configuration "/run/secrets/configuration" server run
 
     hostname: "{{.Node.Hostname}}"
 
@@ -84,6 +84,9 @@ services:
 
     secrets:
       - configuration
+
+    environment:
+      - OBFUSCATOR_SECRET=${OBFUSCATOR_SECRET:-}
 
     command: --configuration "/run/secrets/configuration" server bot
 

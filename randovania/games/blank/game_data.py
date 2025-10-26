@@ -83,9 +83,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Blank",
     long_name="Blank Development Game",
     development_state=randovania.game.development_state.DevelopmentState.STAGING,
-    presets=[
-        {"path": "starter_preset.rdvpreset"},
-    ],
+    presets=["starter_preset.rdvpreset"],
     faq=[],
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=(

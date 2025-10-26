@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import math
+import textwrap
 import typing
 from collections import defaultdict
 from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
-from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
@@ -22,7 +22,7 @@ from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
-    from mars_patcher.auto_generated_types import MarsschemaStartingitems
+    from mars_patcher.mf.auto_generated_types import MarsschemamfStartingitems
 
     from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
@@ -31,6 +31,7 @@ if TYPE_CHECKING:
 
 class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeticPatches]):
     _placeholder_metroid_message = "placeholder metroid text"
+    _metroid_message_id = 56
     _lang_list = ["JapaneseKanji", "JapaneseHiragana", "English", "German", "French", "Italian", "Spanish"]
     _easter_egg_bob = 64
     _easter_egg_shiny = 1024
@@ -51,14 +52,12 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             node = self.game.region_list.node_from_pickup_index(pickup.index)
             is_major = False
             jingle = "Minor"
-            message_id = None
             if "source" in node.extra:
                 is_major = True
             if not pickup.is_for_remote_player and pickup.conditional_resources[0].resources:
                 conditional_extras = pickup.conditional_resources[0].resources[-1][0].extra
                 resource = conditional_extras["item"]
                 jingle = conditional_extras.get("Jingle", "Minor")
-                message_id = conditional_extras.get("MessageID", None)
             else:
                 resource = "None"
 
@@ -67,12 +66,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
             item_message = {}
             # Handles special case for infant metroids which use ASM to automatically determine message via a MessageID
-            if text != self._placeholder_metroid_message:
-                item_message = {"Languages": dict.fromkeys(self._lang_list, text), "Kind": "CustomMessage"}
+            if text == self._placeholder_metroid_message:
+                item_message = {"Kind": "MessageID", "MessageID": self._metroid_message_id}
             else:
-                if message_id is None:
-                    raise ValueError("Suppossed to use a message id but none given?")
-                item_message = {"Kind": "MessageID", "MessageID": message_id}
+                item_message = {"Kind": "CustomMessage", "Languages": dict.fromkeys(self._lang_list, text)}
 
             # Shiny easter eggs
             if (
@@ -132,8 +129,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         }
         return starting_location_dict
 
-    def _create_starting_items(self) -> MarsschemaStartingitems:
-        starting_dict: MarsschemaStartingitems = {
+    def _create_starting_items(self) -> MarsschemamfStartingitems:
+        starting_dict: MarsschemamfStartingitems = {
             "Energy": self.configuration.energy_per_tank - 1,
             "Abilities": [],
             "SecurityLevels": [],
@@ -219,10 +216,9 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         return palette_dict
 
     def _create_nav_text(self) -> dict:
-        nav_text_json = {}
-        namer = FusionHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(namer, self.rng, FUSION_JOKE_HINTS)
+        exporter = self.create_hint_exporter(FUSION_JOKE_HINTS)
 
+        nav_text_json = {}
         artifacts = [self.game.resource_database.get_item(f"Infant Metroid {i + 1}") for i in range(20)]
 
         metroid_precision = self.configuration.hints.specific_pickup_hints["artifacts"]
@@ -232,7 +228,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             metroid_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                namer,
+                exporter.namer,
                 True if metroid_precision == SpecificPickupHintMode.HIDE_AREA else False,
                 artifacts,
                 True,
@@ -241,7 +237,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             charge_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                namer,
+                exporter.namer,
                 True if charge_precision == SpecificPickupHintMode.HIDE_AREA else False,
                 [self.game.resource_database.get_item("ChargeBeam")],
                 True,
@@ -275,22 +271,32 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         ]
 
         if metroid_precision != SpecificPickupHintMode.DISABLED:
+            restricted_hint_counter = 1
+            operations_hint_counter = 1
             # loop through all metroids and place ones on bosses on Operations Deck and the rest on Restricted Area
-            for metroid_resource, text in metroid_hint_mapping.items():
+            for metroid_resource, text in sorted(metroid_hint_mapping.items(), key=lambda d: d[1]):
                 if "has no need to be located" in text:
                     continue
                 if metroid_resource in artifacts_on_bosses:
-                    operations_hint = operations_hint + text + " "
+                    operations_hint += f"{operations_hint_counter}. {text}\n"
+                    operations_hint_counter += 1
                 else:
-                    restricted_hint = restricted_hint + text + " "
-            restricted_hint = restricted_hint.rstrip()
-            operations_hint = operations_hint.rstrip()
+                    restricted_hint += f"{restricted_hint_counter}. {text}[NEXT]"
+                    restricted_hint_counter += 1
 
-            no_metroids_hint = "This terminal was unable to scan for any [COLOR=3]Metroids[/COLOR]."
-            # special handling when there's no Metroids to hint on either terminal
-            if not operations_hint:
+            metroid_hint_base = f"{FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value} detected at the following"
+            no_metroids_hint = (
+                f"This terminal was unable to scan for any {FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value}."
+            )
+
+            if operations_hint:
+                operations_hint = f"{metroid_hint_base} Core-X parasites:[NEXT]{operations_hint.rstrip('\n')}"
+            else:
                 operations_hint = no_metroids_hint
-            if not restricted_hint:
+
+            if restricted_hint:
+                restricted_hint = f"{metroid_hint_base} locations:[NEXT]{restricted_hint.rstrip('[NEXT]')}"
+            else:
                 restricted_hint = no_metroids_hint
 
         for node in self.game.region_list.iterate_nodes_of_type(HintNode):
@@ -365,12 +371,17 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
     def _credits_elements(self) -> defaultdict[str, list[dict]]:
         elements = defaultdict(list)
-        majors = credits_spoiler.get_locations_for_major_pickups_and_keys(
-            self.description.all_patches, self.players_config
+        majors = credits_spoiler.generic_credits(
+            self.configuration.standard_pickup_configuration, self.description.all_patches, self.players_config
         )
 
-        for pickup, locations in majors.items():
+        for pickup, locations in majors:
             for location in locations:
+                # Special case for special messages
+                if isinstance(location, str):
+                    elements[pickup.name].append({"World": None, "Region": "", "Area": location})
+                    continue
+
                 region_list = default_database.game_description_for(location.location.game).region_list
                 pickup_node = region_list.node_from_pickup_index(location.location.location)
                 elements[pickup.name].append(
@@ -381,6 +392,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     }
                 )
         return elements
+
+    @staticmethod
+    def _wrap_text_for_credits(text: str) -> list[str]:
+        return textwrap.wrap(text, width=30)
 
     def _create_credits_text(self) -> list:
         credits_array = []
@@ -394,15 +409,38 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         def sort_pickup(p: str) -> tuple[int | float, str]:
             return major_pickup_name_order.get(p, math.inf), p
 
+        credits_array.append({"LineType": "White2", "Text": "Item Locations", "BlankLines": 2})
+
         for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
             credits_array.append({"LineType": "Red", "Text": pickup, "BlankLines": 1})
             for location in spoiler_dict[pickup]:
-                if location["World"] is not None:
-                    credits_array.append({"LineType": "Blue", "Text": location["World"], "BlankLines": 0})
-                credits_array.append({"LineType": "White1", "Text": location["Region"], "BlankLines": 0})
-                credits_array.append({"LineType": "White1", "Text": location["Area"], "BlankLines": 1})
+                region_lines = self._wrap_text_for_credits(location["Region"])
+                area_lines = self._wrap_text_for_credits(location["Area"])
+                world_name = location["World"] if location["World"] else ""
+                world_lines = self._wrap_text_for_credits(world_name)
+                for line in world_lines:
+                    credits_array.append({"LineType": "Blue", "Text": line, "BlankLines": 0})
+                for line in region_lines:
+                    credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
+                for line in area_lines:
+                    credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
+                credits_array[-1]["BlankLines"] = 1
+
+        # Have last item give more space
+        credits_array[-1]["BlankLines"] = 3
+
+        # Self plug, for streaming/showcasing.
+        credits_array.append({"LineType": "Blue", "Text": "Play this Randomizer at", "BlankLines": 0})
+        credits_array.append({"LineType": "White1", "Text": "randovania.org", "BlankLines": 3})
 
         return credits_array
+
+    def _create_title_text(self) -> list:
+        elements = []
+        for line, word in enumerate(self.description.shareable_word_hash.split(), 12):
+            final_word = word if len(word) <= 30 else f"{word[0:27]}..."
+            elements.append({"LineNum": line, "Text": final_word.center(30)})
+        return elements
 
     def _create_nav_locks(self) -> dict:
         locks = {
@@ -477,13 +515,14 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "Palettes": self._create_palette(),
             "NavigationText": self._create_nav_text(),
             "NavStationLocks": self._create_nav_locks(),
+            "TitleText": self._create_title_text(),
             "CreditsText": self._create_credits_text(),
             "DisableDemos": True,
             "RoomNames": self._create_room_names(),
             "AccessibilityPatches": True,
-            "AntiSoftlockRoomEdits": self.configuration.anti_softlock,
             "PowerBombsWithoutBombs": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
+            "InstantUnmorph": self.configuration.instant_morph,
             "UnexploredMap": self.cosmetic_patches.starting_map,
             "RevealHiddenTiles": self.cosmetic_patches.reveal_blocks,
             "StereoDefault": self.cosmetic_patches.stereo_default,

@@ -6,7 +6,7 @@ from randovania.games.cave_story.generator.hint_distributor import CSHintDistrib
 
 async def test_specific_pickup_precision_pairs(cs_game_description):
     hint_distributor = CSHintDistributor()
-    specific_pickups = await hint_distributor.get_specific_pickup_precision_pairs()
+    specific_pickups = await hint_distributor.get_specific_location_precision_pairs()
 
     for pickup_node in specific_pickups:
         # throws a key error if any of the node does not exist in the database

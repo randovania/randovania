@@ -9,6 +9,33 @@
             "command": "uv sync --all-extras --all-groups"
         },
         {
+            "label": "Regenerate UI",
+            "type": "shell",
+            "linux": {
+                "command": "${command:python.interpreterPath} '${workspaceFolder}/tools/uic_wrapper.py' '${workspaceFolder}' --all-ui-files",
+                "options": {
+                    "env": {
+                        "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+                    }
+                }
+            },
+            "windows": {
+                "command": "& '${command:python.interpreterPath}' '${workspaceFolder}/tools/uic_wrapper.py' '${workspaceFolder}' --all-ui-files",
+                "options": {
+                    "env": {
+                        "PATH": "${workspaceFolder}/.venv/Scripts;${env:PATH}"
+                    }
+                }
+            }
+        },
+        {
+            "label": "Launch Prerequisites",
+            "dependsOn": [
+                "Create venv with all exporters",
+                "Regenerate UI"
+            ]
+        },
+        {
             "label": "Run all tests on all cores",
             "type": "shell",
             "linux": {

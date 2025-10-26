@@ -1,0 +1,30 @@
+name: UIC
+
+on:
+  pull_request:
+  merge_group:
+
+jobs:
+  uic:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.9.5"
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+
+      - name: Install Python packages
+        run: uv sync --locked --extra gui
+
+      - name: Check uic
+        run: uv run tools/uic_wrapper.py randovania --all-ui-files --fail-on-difference

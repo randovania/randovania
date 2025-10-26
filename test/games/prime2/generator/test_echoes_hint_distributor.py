@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from random import Random
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock, call
 
@@ -21,16 +20,14 @@ from randovania.game_description.hint import (
     RedTempleHint,
     SpecificHintPrecision,
 )
-from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
-from randovania.generator.generator import create_player_pool
 from randovania.generator.pre_fill_params import PreFillParams
 from randovania.layout.base.standard_pickup_state import StandardPickupState
-from randovania.resolver import debug
 
 if TYPE_CHECKING:
+    from randovania.game_description.hint_features import HintFeature
     from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 
 
@@ -59,7 +56,7 @@ async def test_add_default_hints_to_patches(echoes_game_description, echoes_game
 
     def _keybearer_hint(number: int):
         return LocationHint(
-            PrecisionPair(precision("specific_hint_keybearer"), SpecificHintPrecision(0.4), include_owner=True),
+            PrecisionPair(precision("specific_hint_keybearer"), SpecificHintPrecision(0.65, 0.1), include_owner=True),
             PickupIndex(number),
         )
 
@@ -135,45 +132,6 @@ def echoes_configuration_everything_shuffled(default_echoes_configuration) -> Ec
             },
         ),
     )
-
-
-async def test_keybearer_hint_precisions(
-    echoes_configuration_everything_shuffled, echoes_game_patches, echoes_pickup_database
-):
-    # Setup
-    rng = Random(0)
-
-    player_pools = [
-        await create_player_pool(rng, echoes_configuration_everything_shuffled, 0, 1, "World 1", MagicMock()),
-    ]
-    pool = player_pools[0]
-
-    hint_distributor = EchoesHintDistributor()
-
-    hint_node = NodeIdentifier.create("Agon Wastes", "Central Mining Station", "Keybearer Corpse (J-Stl)")
-    keybearer_precision = (await hint_distributor.get_specific_pickup_precision_pairs())[hint_node]
-    hint = LocationHint(keybearer_precision, PickupIndex(0))
-
-    categories = echoes_pickup_database.pickup_categories
-    broad_categories = {categories["chozo"], categories["luminoth"], categories["key"], categories["cheat"]}
-
-    pickup_results: dict[str, HintFeature] = {}
-    expected_results: dict[str, HintFeature] = {}
-
-    # Run
-    for pickup in pool.pickups_in_world:
-        expected_results[pickup.name] = next(ft for ft in pickup.hint_features if ft in broad_categories)
-
-        patches = echoes_game_patches.assign_own_pickups([(PickupIndex(0), pickup)])
-
-        with debug.with_level(1):
-            precision = hint_distributor.get_hint_precision(hint_node, hint, rng, patches, player_pools)
-
-        assert isinstance(precision.item, HintFeature)
-        pickup_results[pickup.name] = precision.item
-
-    # Assert
-    assert pickup_results == expected_results
 
 
 @pytest.mark.parametrize(

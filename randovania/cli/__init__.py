@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import os
 import sys
 import typing
 from argparse import ArgumentParser
@@ -13,11 +14,12 @@ if typing.TYPE_CHECKING:
 
 
 def create_subparsers(root_parser: _SubParsersAction) -> None:
-    from randovania.cli import database, gui, layout
+    from randovania.cli import analyze, database, gui, layout
 
     layout.create_subparsers(root_parser)
     database.create_subparsers(root_parser)
     gui.create_subparsers(root_parser)
+    analyze.create_subparsers(root_parser)
     if not randovania.is_frozen():
         from randovania.cli import development, server
 
@@ -44,13 +46,18 @@ def create_parser() -> ArgumentParser:
 def _run_args(parser: ArgumentParser, args: Namespace) -> int:
     if args.configuration is not None:
         randovania.CONFIGURATION_FILE_PATH = args.configuration.absolute()
+        os.environ["RANDOVANIA_CONFIGURATION_PATH"] = str(args.configuration)
 
     if args.func is None:
         parser.print_help()
         raise SystemExit(1)
 
     logging.debug("Executing from args...")
-    return args.func(args) or 0
+    try:
+        return args.func(args) or 0
+    except KeyboardInterrupt:
+        print("Quitting due to requested interrupt.")
+        return 2
 
 
 def run_pytest(argv: list[str]) -> None:

@@ -1,210 +1,140 @@
 from __future__ import annotations
 
-from unittest.mock import ANY, MagicMock
+import logging
+from contextlib import AbstractContextManager, nullcontext
+from typing import TYPE_CHECKING
+from unittest.mock import AsyncMock, MagicMock
 
-import flask
 import pytest
 
 from randovania.network_common import error
 from randovania.server import database
-from randovania.server.server_app import EnforceDiscordRole
+from randovania.server.server_app import EnforceDiscordRole, ServerLoggingFormatter
+
+if TYPE_CHECKING:
+    from pytest_mock import MockerFixture
 
 
-def test_session(server_app):
-    server_app.sio = MagicMock()
-
-    with server_app.app.test_request_context():
-        flask.request.sid = 1234
-        result = server_app.session()
-
-    assert result == server_app.sio.server.session.return_value
-    server_app.sio.server.session.assert_called_once_with(1234, namespace=None)
+@pytest.fixture(name="sid")
+def sid_fixture() -> str:
+    return "12345"
 
 
-def test_get_session(server_app):
-    server_app.sio = MagicMock()
-
-    with server_app.app.test_request_context():
-        flask.request.sid = 1234
-        result = server_app.get_session()
-
-    assert result == server_app.sio.server.get_session.return_value
-    server_app.sio.server.get_session.assert_called_once_with(1234, namespace=None)
-
-
-def test_get_current_user_ok(server_app, clean_database):
-    server_app.get_session = MagicMock(return_value={"user-id": 1234})
-    user = database.User.create(id=1234, name="Someone")
+@pytest.mark.parametrize(
+    ("rval", "create_user", "context"),
+    [
+        ({"user-id": 1234}, True, nullcontext()),  # user exists (success)
+        ({"user-id": 1234}, False, pytest.raises(error.InvalidSessionError)),  # unknown user
+        ({}, False, pytest.raises(error.NotLoggedInError)),  # not logged in
+    ],
+)
+async def test_get_current_user(
+    rval: dict, create_user: bool, context: AbstractContextManager, test_client, sid, clean_database
+):
+    test_client.sa.sio.get_session = AsyncMock(return_value=rval)
+    if create_user:
+        user = database.User.create(id=1234, name="Someone")
 
     # Run
-    result = server_app.get_current_user()
+    with context:
+        result = await test_client.sa.get_current_user(sid)
 
     # Assert
-    assert result == user
+    if create_user:
+        assert result == user
 
 
-def test_get_current_user_not_logged(server_app, clean_database):
-    server_app.get_session = MagicMock(return_value={})
-
-    # Run
-    with pytest.raises(error.NotLoggedInError):
-        server_app.get_current_user()
-
-
-def test_get_current_user_unknown_user(server_app, clean_database):
-    server_app.get_session = MagicMock(return_value={"user-id": 1234})
-
-    # Run
-    with pytest.raises(error.InvalidSessionError):
-        server_app.get_current_user()
-
-
-def test_on_success_ok(server_app):
-    # Setup
-    custom = MagicMock(return_value={"foo": 12345})
-    server_app.on("custom", custom)
-
-    # Run
-    test_client = server_app.sio.test_client(server_app.app)
-    result = test_client.emit("custom", callback=True)
-
-    # Assert
-    custom.assert_called_once_with(server_app)
-    assert result == {"result": {"foo": 12345}}
-
-
-def test_on_success_network_error(server_app):
-    # Setup
-    err = error.NotLoggedInError()
-    custom = MagicMock(side_effect=err)
-    server_app.on("custom", custom)
-
-    # Run
-    test_client = server_app.sio.test_client(server_app.app)
-    result = test_client.emit("custom", callback=True)
-
-    # Assert
-    custom.assert_called_once_with(server_app)
-    assert result == err.as_json
-
-
-def test_on_success_exception(server_app):
-    # Setup
-    custom = MagicMock(side_effect=RuntimeError("something happened"))
-    server_app.on("custom", custom)
-
-    # Run
-    test_client = server_app.sio.test_client(server_app.app)
-    result = test_client.emit("custom", callback=True)
-
-    # Assert
-    custom.assert_called_once_with(server_app)
-    assert result == error.ServerError().as_json
-
-
-def test_store_world_in_session(server_app):
+async def test_store_world_in_session(test_client, sid):
     session = {}
-    server_app.session = MagicMock()
-    server_app.session.return_value.__enter__.return_value = session
+    test_client.sa.sio.session = MagicMock()
+    test_client.sa.sio.session.return_value.__aenter__.return_value = session
 
     world = MagicMock()
     world.id = 1234
 
     # Run
-    server_app.store_world_in_session(world)
+    await test_client.sa.store_world_in_session(sid, world)
 
     # Assert
     assert session == {"worlds": [1234]}
 
 
-def test_remove_world_from_session(server_app):
+async def test_remove_world_from_session(test_client, sid):
     session = {"worlds": [1234]}
-    server_app.session = MagicMock()
-    server_app.session.return_value.__enter__.return_value = session
+    test_client.sa.sio.session = MagicMock()
+    test_client.sa.sio.session.return_value.__aenter__.return_value = session
 
     world = MagicMock()
     world.id = 1234
 
     # Run
-    server_app.remove_world_from_session(world)
+    await test_client.sa.remove_world_from_session(sid, world)
 
     # Assert
     assert session == {"worlds": []}
 
 
 @pytest.mark.parametrize("valid", [False, True])
-def test_verify_user(mocker, valid):
+async def test_verify_user(server_app, mocker: MockerFixture, valid):
     # Setup
-    mock_session = mocker.patch("requests.Session")
-    mock_session.return_value.headers = {}
-    mock_session.return_value.get.return_value.json.return_value = {"roles": ["5678" if valid else "67689"]}
+    mock_session = MagicMock()
+    mock_session.headers = {}
+    mock_session.get = MagicMock()
+    mock_session.get.return_value.__aenter__.return_value.json.return_value = {"roles": ["5678" if valid else "67689"]}
+
+    mock_session_factory = mocker.patch("aiohttp.ClientSession")
+    mock_session_factory.return_value.__aenter__.return_value = mock_session
+
+    server_app.configuration["server_config"]["enforce_role"] = {
+        "guild_id": 1234,
+        "role_id": 5678,
+        "token": "da_token",
+    }
 
     # Run
-    enforce = EnforceDiscordRole(
-        {
-            "guild_id": 1234,
-            "role_id": 5678,
-            "token": "da_token",
-        }
-    )
-    result = enforce.verify_user(2345)
+    async with EnforceDiscordRole.lifespan(server_app.app) as enforce:
+        assert enforce is not None
+        result = await enforce.verify_user("2345")
 
     # Assert
     assert result == valid
-    mock_session.return_value.get.assert_called_once_with("https://discordapp.com/api/guilds/1234/members/2345")
-    mock_session.return_value.get.return_value.json.assert_called_once_with()
-    assert mock_session.return_value.headers == {
+    mock_session.get.assert_called_once_with("https://discordapp.com/api/guilds/1234/members/2345")
+    mock_session.get.return_value.__aenter__.assert_awaited_once_with()
+    mock_session.get.return_value.__aexit__.assert_awaited_once_with(None, None, None)
+    mock_session.get.return_value.__aenter__.return_value.json.assert_awaited_once_with()
+    assert mock_session.headers == {
         "Authorization": "Bot da_token",
     }
 
 
-def test_request_sid_none(server_app):
-    with server_app.app.test_request_context():
-        with pytest.raises(KeyError):
-            assert server_app.request_sid
-
-
-def test_request_sid_from_session(server_app):
-    with server_app.app.test_request_context() as context:
-        context.session["sid"] = "THE_SID"
-        assert server_app.request_sid == "THE_SID"
-
-
-def test_request_sid_from_request(server_app):
-    with server_app.app.test_request_context() as context:
-        context.request.sid = "THE_SID@"
-        assert server_app.request_sid == "THE_SID@"
-
-
 @pytest.mark.parametrize("expected", [False, True])
-def test_ensure_in_room(server_app, expected):
-    server_app.sio.server.rooms = MagicMock(return_value=[] if expected else ["the_room"])
-    server_app.sio.server.enter_room = MagicMock()
+async def test_ensure_in_room(test_client, sid, expected):
+    test_client.sa.sio.rooms = MagicMock(return_value=[] if expected else ["the_room"])
+    test_client.sa.sio.enter_room = AsyncMock()
 
     # Run
-    with server_app.app.test_request_context() as ctx:
-        ctx.request.sid = "THE_SID"
-        result = server_app.ensure_in_room("the_room")
+    result = await test_client.sa.ensure_in_room(sid, "the_room")
 
     # Assert
-    server_app.sio.server.rooms.assert_called_once_with("THE_SID", namespace="/")
-    server_app.sio.server.enter_room.assert_called_once_with("THE_SID", "the_room", namespace="/")
+    test_client.sa.sio.rooms.assert_called_once_with(sid, namespace="/")
+    test_client.sa.sio.enter_room.assert_awaited_once_with(sid, "the_room", namespace="/")
     assert result is expected
 
 
-def test_on_with_wrapper(server_app):
-    def my_function(sa, arg: bytes) -> list[int]:
-        return list(arg)
+async def test_fernet(server_app):
+    encrpyted_value = (
+        b"gAAAAABfSh6fY4FOiqfGWMHXdE9A4uNVEu5wfn8BAsgP8EZ0-f-lqbYDqYzdiblhT5xhk-wMmG8sOLgKNN-dUaiV7n6JCydn7Q=="
+    )
+    assert server_app.fernet_encrypt.decrypt(encrpyted_value) == b"banana"
 
-    def on(message, handler, with_header_check):
-        return handler
 
-    server_app.on = MagicMock(side_effect=on)
+def test_custom_formatter():
+    record = logging.LogRecord("Name", logging.DEBUG, "path", 10, "the msg", (), None)
 
-    # Run
-    wrapped = server_app.on_with_wrapper("my_func", my_function)
+    x = ServerLoggingFormatter(
+        "%(levelprefix)s %(context)s [%(who)s] in %(where)s: %(msg)s",
+        use_colors=False,
+    )
+    result = x.formatMessage(record)
 
-    # Assert
-    result = wrapped(server_app, b"\x041234")
-    assert result == b"\x04bdfh"
-    server_app.on.assert_called_once_with("my_func", ANY, with_header_check=True)
+    assert result == "DEBUG:    Free [None] in None: the msg"

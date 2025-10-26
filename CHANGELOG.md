@@ -5,10 +5,218 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.1.0] - 2025-09-0?
+## [10.3.0] - 2025-11-??
+
+- Added: The Multiworld Session will now display when a world has been beaten. This is supported for the following games:
+  - Another Metroid 2 Remake
+  - Metroid Prime
+- Added: 1 more joke hint.
+- Changed: Centered the text at the top of the Hints preset settings.
+- Changed: Cleaned up how Specific Pickup Hints are shown in the preset settings.
+- Changed: Places that describe a preset with Specific Pickup Hints have slightly better grammar in some cases.
+- Changed: The "Item Pool" tab is now called "Pickup Pool".
+- Changed: Random starting items is now Random starting pickups.
+- Changed: Minor pickups will not show in the credits anymore if you randomly started with them.
+- Fixed: Admins can now abort a Multiworld generation again.
+- Fixed: You can now abort a Multiworld generation again should you have been disconnected during the generation process.
+- Fixed: HTTPS errors due to invalid certificates in certain platforms.
+- Fixed: Eliminated some bias when picking hint features.
+
+### Another Metroid 2 Remake
+
+- Changed: When using Door Lock Rando with the Types mode, both sides will now always have the same door type.
+- Changed: Renamed the "a beam upgrade" pickup category to "a beam".
+
+### Factorio
+
+- Fixed: A typo on the "Changes" preset page.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Added: Extra requirements to break the blobs in Arbitrary Enky Room, to improve the quality of generated games.
+- Fixed: Screw Attack Room: Using a Shinespark to reach Start Point 2 from the door to Transport to Burenia was missing a requirement on having activated the Rotatable.
+
+### Metroid Fusion
+
+- Added: 4 new hint location features: guarded by a Tank-Mimic, near a Geron, in a room with extreme temperatures, and activating a B.S.L. Systems Console.
+- Added: 1 new pickup hint feature: Ice Related.
+- Removed: "Multiple Pickups" as a hint feature.
+- Fixed: "Security Shaft East" was missing from "Climbable Surface" feature hint.
+
+### Metroid Prime
+
+- Fixed: Crash when entering Metroid Prime Lair while in Scan Visor
+- Fixed: Rare crash that can happen in any room
+- Fixed: Sheegoth intro cutscene not repositioning the player at the end if cutscene was not skipped in Chapel of the Elders
+- Fixed: Artifact Temple totem hitbox persisting after Meta Ridley death cutscene
+- Fixed: Sun Tower Access boxes being reloaded after performing Early Wild (inconsistent with vanilla)
+- Fixed: Incorrect Energy Core platform behavior if cutscene skipped on wrong frame
+- Fixed: Chozo music stopping upon entering Training Chamber
+- Fixed: Appearance of "Remove Bars in Great Tree Hall" patch
+- Changed: Charge and Charge Combo projectiles reflected from DLR doors no longer hurt the player
+- Changed: Adjusted timing of the jingle and text after acquiring the item at each of the 4 vanilla Power Bomb Expansion locations
+- Changed: Adjusted fit of main menu text to accommodate larger seed hashes
+- Changed: Adjusted fit of DLR Blast Shields over doors
+- Changed: Research Core cutscene camera angle will now be consistent regardless of the height of the placed pickup
+- Changed: The Elite Pirate in Dynamo Access will now appear on the first pass rather than only after Plasma Beam has been obtained. This makes the behaviour easier to understand and fixes cases where a game becomes logically impossible.
+
+#### Logic Database
+
+- Changed: Going through Open Passages doesn't require to shoot a beam anymore.
+
+##### Chozo Ruins
+
+- Fixed: Ruined Shrine: Removed unnecessary dangerous requirements.
+
+##### Phazon Mines
+
+- Changed: Fighting an Elite Pirate/Phazon Elite now has consistent requirements in Dynamo Access, Elite Control and Elite Research.
+- Changed: Adjusted the Requirements to fight and Elite Pirate/Phazon Elite to be more accurate.
+- Fixed: Metroid Quarantine A: Jumping to the Spider Track Bridge from the Door to Quarantine Access A now requires you to be able to shoot Ice Beam in order to freeze Metroids as opposed to just having it in your inventory.
+- Fixed: Metroid Quarantine A: Now correctly checks for the barrier to be lowered when going from Quarantine Access A to Front of Spider Track (Bridge).
+- Fixed: Metroid Quarantine A: Now correctly checks for the Enabled Backwards Lower Mines going from Front of Spider Track (Wall) to Quarantine Access A.
+
+##### Phendrana Drifts
+
+- Added: Chozo Ice Temple: Documentation for reaching the Chozo Statue NSJ.
+- Fixed: Chozo Ice Temple: Removed unnecessary dangerous requirements.
+- Fixed: Control Tower: Removed unnecessary dangerous requirements.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Expansions with negative value now properly remove items in-game.
+- Changed: Keybearer hints now randomly refer to any one pickup feature, rather than targeting the same feature every time.
+
+#### Logic Database
+
+- Fixed: Using the Turret in Sanctuary Entrance now accounts for being able to reload the room.
+
+### Metroid: Samus Returns
+
+- Added: Support for .cci rom files to use the same file for exporting and playing via Azahar.
+- Added: Featural hint support, where hints may refer to various Features of a pickup or of a location. Read the Hints section for more details.
+- Changed: Dropped support for Citra and switched to Azahar.
+- Fixed: Reserve Tanks won't be hinted anymore.
+- Removed: Redundant Pickup Hint Features.
+
+## [10.2.0] - 2025-10-02
+
+- Added: A warning when trying to generate a Multiworld game if a preset requires all Pickups to be obtainable.
+- Added: Command line arguments for gathering statistics about a collection of generated games. These commands are intended for advanced uses only.
+- Changed: Gave the window for viewing a Multiworld Session some slight visual readjustment
+- Changed: Slightly increased the font size used in the status bar.
+- Changed: Increased how long text in the status bar can be before it wraps.
+- Changed: Gave the "Stop" button in the status bar an icon.
+
+
+### Metroid Dread
+
+- Added: The preset summary now lists when Flash Shift can be used without Main Flash Shift when having Flash Shift Upgrades.
+- Added: The preset summary now lists when Power Bombs can be used without the Main Power Bomb when having Power Bomb Tanks.
+- Changed: The preset summary lists when Power Bomb limitations is disabled instead of when it's enabled.
+- Fixed: 2 Typos in the transporters preset page.
+
+#### Logic Database
+
+- Changed: Reworked Central Unit combat logic to reflect the increasing difficulty of later areas.
+
+##### Elun
+
+- Changed: Minor adjustment aimed at releasing the X parasites safer for the generator, no changes to requirements in practice.
+
+### Metroid Fusion
+
+- Added: Option that allows quick-morphing via the SELECT button.
+- Added: 5 more joke hints.
+- Added: A reference on where to play the randomizer in the credits.
+- Changed: Infant Metroid hints have been reformatted for easier readability.
+- Changed: Fixed formatting of locations in the credits that were incorrectly displayed if too long
+- Changed: "guarded by a boss" feature hint has been reworked to "on a Core-x Parasite" for more clarity.
+- Changed: Adjusted Credits to have the patching, Randovania and original team separated more clearly.
+- Changed: B.O.X has been moved slightly to the left to avoid bumping immediately into him in a future setting.
+- Changed: Main Deck Central Reactor Core: Moved the Door leading to Silo Tunnel back by a tile to prevent getting stuck in a future setting.
+- Changed: Sector 1 Charge Core Upper Access: Moved the Door leading to Crab Rave back by a tile to prevent getting stuck in a future setting.
+- Changed: Sector 1 Tourian Eastern Hub: Removed the shot blocks and remodelled the space leading to Animorphs to prevent getting stuck in a future setting.
+- Changed: Sector 1 Twin Junctions Save Room: Moved the Door leading to Walljump Tutorial back by a tile to prevent getting stuck in a future setting.
+- Changed: Sector 3 Security Access: Moved the Door leading to the Security Room back by a tile to prevent getting stuck in a future setting.
+- Changed: Sector 4 Pump Control Save Room: Moved the Door leading to Breeding Tank Acecss back by a tile to prevent getting stuck in a future setting.
+- Changed: Flooded Tower: Moved the Door leading to Mini-Fridge back by a tile to prevent getting stuck in a future setting.
+- Changed: Geron's Crossing: Moved the Doors leading to the bottom side of Entrance Lobby and Vault back by a tile to prevent getting stuck in a future setting.
+- Changed: Warehouse: Moved the Door leading to Zozoro's Wine Cellar back by a tile to prevent getting stuck in a future setting.
+- Fixed: Typo in a joke hint.
+
+#### Logic Database
+
+##### Main Deck:
+
+- Added: Operations Deck: Ludicrous JBJ to reach Operations Room using only Morph and Bombs.
+
+##### Sector 1 (SRX)
+
+- Added: Ridley Arena: Ludicrous JBJ to escape, having no Space Jump.
+
+##### Sector 2 (TRO)
+
+- Changed: Zoro Zig-Zag: Ludicrous JBJ from bottom door to break bomb blocks reduced to Expert.
+- Changed: Cultivation Station: Advanced JBJ to bomb top floor blocks from beneath reduced to Intermediate.
+- Changed: Puyo Corridor: Expert JBJ from right to left reduced to Advanced.
+- Changed: Cathedral: Ludicrous JBJ to escape from bottom to top section reduced to Expert, accompanying ttv clip replaced by YouTube link having better input display.
+- Changed: Data Courtyard: Advanced JBJ to break left block from beneath reduced to Intermediate.
+- Added: Zazabi Arena: Ludicrous JBJ to escape, having no jump upgrades (besides bombs).
+
+##### Sector 3 (PYR)
+
+- Changed: Namihe's Lair: Expert JBJs, to both get the item and escape, reduced to Advanced.
+- Changed: Processing Access: Expert JBJ off sova to top door reduced to Advanced.
+- Changed: Glass Tube to Sector 5: Expert JBJ to break block reduced to Intermediate, via easier method.
+
+##### Sector 4 (AQA)
+
+- Changed: Security Bypass: Expert JBJ to break top floor bomb blocks from beneath reduced to Advanced.
+- Added: Security Bypass: Expert JBJ to race to the top floor before bomb blocks reform.
+
+##### Sector 5 (ARC)
+
+- Changed: Crow's Nest: Ludicrous JBJ to break 2 reforming bomb blocks and jump through reduced to Expert.
+
+##### Sector 6 (NOC)
+
+- Changed: Entrance Lobby: Expert JBJ to bomb floor from beneath reduced to Advanced.
+- Changed: Zozoro Wine Cellar: Expert JBJ to item reduced to Advanced.
+- Changed: Twin Caverns West: Expert JBJ to tunnel reduced to Advanced.
+
+### Metroid Prime
+
+- Changed: Improved chance of successfully generating a game when shuffling everything on One-Way Anywhere elevator randomization.
+- Changed: Disallowed shuffling the Essence Dead cutscene elevator on One-Way with Cycles and with Replacement, unless Skip Final Bosses is enabled, as otherwise that would leave no path to the Credits.
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Changed: Hall of the Elders: The Bomb Jump to skip Spider Ball and Space Jump is now Expert instead of Ludicrous.
+- Changed: Save Station 3: The Wall Boost to skip Morph Ball Bombs is now Expert instead of Ludicrous.
+- Changed: Sunchamber: Fighting Flaahgra using Wavebuster instead of Morph Ball Bombs is now Combat Intermediate instead of Advanced.
+
+##### Phendrana Drifts
+
+- Removed: Frozen Pike: Logic for scaling the room from Pike Access to Transport Access without Morph Ball has been removed.
+- Changed: Phendrana Canyon: The Combat Dash to obtain the item without Space Jump, Scan Visor, and Boost Ball no longer requires Damage Boosting and the Combat/Scan Dash has been changed from Advanced to Expert.
+- Changed: Qurantine Cave: The Grapple Beam escape from the bottom of the room without Space Jump is now intermediate instead of advanced. With Space Jump it is now beginner instead of trickless.
+
+##### Tallon Overworld
+
+- Changed: Life Grove Tunnel: The Complex Bomb Jump to escape the half-pipe without Boost Ball is now Expert instead of Ludicrous.
+
+## [10.1.0] - 2025-09-02
 
 - Added: 7 Joke hints.
 - Fixed: Hidden Pickups are not shown anymore in the "Pickup Hint Features" tab of a game.
+- Fixed: A crash in Flatpak, should the default language not be set up correctly.
 
 ### AM2R
 
@@ -19,6 +227,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed: Removed the "Key", "Energy Tank", "Morph Ball Related", "Beam Related" and "Missile Related" pickup categories from being hinted.
 
 ### Metroid Dread
+
+- Changed: In Multiworld, don't send items to the game while it's not in-game.
 
 #### Logic Database
 
@@ -43,9 +253,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: More ways to reach Space Jump Room Access from Underwater Bottom in Space Jump Room.
 
+### Metroid: Samus Returns
+
+- Changed: In Multiworld, don't send items to the game while it's not in-game.
+
 ### Metroid Fusion
 
+- Added: The title screen will now display the Randovania and patcher version, as well as the Seed Hash.
 - Added: 5 joke hints.
+- Added: Racetime integration with category https://racetime.gg/mfr-rdv
+- Fixed: Incorrect exporting behaviour, if the option to hide text of pickups was enabled.
+- Fixed: Unable to export a randomized game, in case the input file could not be read.
+- Removed: The "Anti-Softlock" option and instead made the following permanent changes:
+  - Sector 2 Ripper Tower: The Crumble Block is moved one tile up to make it easier to Screw Attack the Bomb Block.
+  - Sector 2 Crumble City: On the far left of the tunnel, the Shot Block has been changed into a Crumble Block.
+  - Sector 2 Cultivation Station: The Bomb Block leading into the space with the Zoros has been changed into a Shot Block.
+  - Sector 4 Reservoir East: The initial Bomb Block and the Shot Blocks leading up to the lower Pickup now never respawn.
+  - Sector 4 Security Bypass: Collision in the dead-end puzzles has been changed to allow not softlocking when exploring without Bombs or Power Bombs.
+  - Sector 6 Zozoro Wine Cellar: The Bomb Block that guards the item always respawns.
 
 #### Logic Database
 
@@ -58,8 +283,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Atmospheric Stabilizer Northeast - Fixed an edge case where a Shinespark trick from another room could be required even with obtaining Speedbooster in the same room
 - Changed: Atmospheric Stabilizer Northeast - Changed the Shinespark trick from Advanced to Expert
 
+##### Sector 2 (TRO)
+
+- Changed: Ripper Tower: Due to removal of the "Anti-Softlock" option, breaking the block with Screw Attack now requires Beginner Knowledge instead of Intermediate.
+
 ##### Sector 4 (AQA)
 
+- Changed: Reservoir East: Due to removal of the "Anti-Softlock" option, collecting the Pickup with only Power Bombs now always requires 2 Power Bombs.
 - Fixed: Security Access - Fixed a trick video appearing incorrectly on the website.
 - Added: Breeding Tank - Added an Advanced Movement trick with Space Jump to cross the tank
 - Added: Breeding Tank - Added the Underwater Wall Jump trick videos
@@ -76,6 +306,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Tallon Overworld
 
 - Changed: Climbing Reactor Core with Bomb Jumps is now classified as Complex Bomb Jump(s) (Ludicrous).
+
+##### Magmoor Caverns
+
+- Changed: Twin Fires Tunnels - removed the L-Jump requirement for the Expert Bomb Jump towards Twin Fires.
+- Fixed: Twin Fire Tunnels - corrected the damage required to escape the lava with Bombs only towards Tallon Transport West from 60 to 110.
+
 
 ### Metroid Prime 2: Echoes
 

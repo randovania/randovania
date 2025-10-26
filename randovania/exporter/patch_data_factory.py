@@ -18,6 +18,7 @@ from randovania.layout import filtered_database
 if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game.game_enum import RandovaniaGame
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_database import PickupDatabase
@@ -85,13 +86,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
             "in_race_setting": not self.description.has_spoiler,
         }
 
-    def create_data(self, custom_metadata: PatcherDataMeta | None = None) -> dict:
-        """
-        Creates the patcher specific data. Applies custom patcher data on top if they exist.
-        :param custom_metadata: If provided, will be used over the default randovania metadata.
-        :return: The patcher data, with the randovania metadata included, as a dict.
-        """
-
+    def _attach_to_sentry(self) -> None:
         with sentry_sdk.isolation_scope() as scope:
             scope.add_attachment(
                 json.dumps(self.description.as_json(force_spoiler=True)).encode("utf-8"),
@@ -100,6 +95,13 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
                 add_to_transactions=True,
             )
 
+    def create_data(self, custom_metadata: PatcherDataMeta | None = None) -> dict:
+        """
+        Creates the patcher specific data. Applies custom patcher data on top if they exist.
+        :param custom_metadata: If provided, will be used over the default randovania metadata.
+        :return: The patcher data, with the randovania metadata included, as a dict.
+        """
+        self._attach_to_sentry()
         randovania_meta = custom_metadata or self.create_default_patcher_data_meta()
 
         game_data = self.create_game_specific_data(randovania_meta)
@@ -161,10 +163,22 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         players_config: PlayersConfiguration,
         rng: Random,
         base_joke_hints: list[str],
+        game_view: GameDatabaseView,
     ) -> HintExporter:
         """Return an instance of this game's HintExporter."""
         return cls.hint_exporter_type()(
             cls.get_hint_namer(all_patches, players_config),
             rng,
             base_joke_hints,
+            game_view,
+        )
+
+    def create_hint_exporter(self, base_joke_hints: list[str]) -> HintExporter:
+        """Return an instance of this game's HintExporter with this PDF's specific fields."""
+        return self.get_hint_exporter(
+            all_patches=self.description.all_patches,
+            players_config=self.players_config,
+            rng=self.rng,
+            base_joke_hints=base_joke_hints,
+            game_view=self.game,
         )

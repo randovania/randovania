@@ -122,7 +122,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
             )
 
         extra_message_tree = {
-            "Item Pool": [
+            "Pickup Pool": [
                 {
                     "Split beam ammo": unified_ammo.pickup_count == 0,
                 }
@@ -146,6 +146,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
                         "Missiles needs Launcher": "Missile Expansion",
                         "Power Bomb needs Main": "Power Bomb Expansion",
                     },
+                    mains_are_default_required=False,
                 ),
                 {
                     "Warp to start": configuration.warp_to_start,
@@ -162,11 +163,11 @@ class EchoesPresetDescriber(GamePresetDescriber):
 
         # Sky Temple Keys
         if configuration.sky_temple_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:
-            template_strings["Item Pool"].append("Sky Temple Keys at all bosses")
+            template_strings["Pickup Pool"].append("Sky Temple Keys at all bosses")
         elif configuration.sky_temple_keys == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
-            template_strings["Item Pool"].append("Sky Temple Keys at all guardians")
+            template_strings["Pickup Pool"].append("Sky Temple Keys at all guardians")
         else:
-            template_strings["Item Pool"].append(f"{configuration.sky_temple_keys.num_keys} Sky Temple Keys")
+            template_strings["Pickup Pool"].append(f"{configuration.sky_temple_keys.num_keys} Sky Temple Keys")
 
         return template_strings
 

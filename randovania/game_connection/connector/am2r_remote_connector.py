@@ -214,6 +214,10 @@ class AM2RRemoteConnector(RemoteConnector):
                 for name, quantity in inventory_dict.items()
             }
         )
+
+        if inventory_dict.get("Credits", 0):
+            self.GameHasBeenBeaten.emit()
+
         self.last_inventory = inventory
         self.InventoryUpdated.emit(inventory)
 

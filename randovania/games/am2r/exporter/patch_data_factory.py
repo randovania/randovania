@@ -471,7 +471,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
 
     def _credits_spoiler(self) -> str:
         spoiler = "*Major Item Locations;;"
-        spoiler_dict = credits_spoiler.generic_credits(
+        spoiler_dict = credits_spoiler.generic_string_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
             self.players_config,

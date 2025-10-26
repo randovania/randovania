@@ -1,0 +1,29 @@
+{% extends "layout.html.jinja" %}
+
+{% block title %}
+	{% if created %}
+		Token Created
+	{% else %}
+		Token not Created
+	{% endif %}
+{% endblock %}
+
+{% block header %}
+	{% if created %}
+		Token Created
+	{% else %}
+		Token not Created
+	{% endif %}
+{% endblock header %}
+
+{% block content %}
+	<div class="main-content__body" data-lead-id="main-content-body">
+		{% if created %}
+			<p>Token:</p>
+			<p><pre>{{ token }}</pre></p>
+		{% else %}
+			<p>Unable to create token: {{ error }}</p>
+		{% endif %}
+		<a href="{{ url_for('browser_me') }}">Go back</a>
+	</div>
+{% endblock content %}

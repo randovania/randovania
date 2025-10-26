@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'pickup_details_tab.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QAbstractItemView, QAbstractScrollArea, QApplicat
     QScrollArea, QSizePolicy, QTableView, QVBoxLayout,
     QWidget)
 
-from randovania.gui.lib.foldable import Foldable
+from randovania.gui.widgets.foldable import Foldable
 
 class Ui_PickupDetailsTab(object):
     def setupUi(self, PickupDetailsTab):
