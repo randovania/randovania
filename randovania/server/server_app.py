@@ -494,3 +494,5 @@ UserDep = Annotated[User, RequireUser]
 """The User associated with the request."""
 AdminDep = Annotated[User, RequireAdminUser]
 """The admin User associated with the request."""
+SidDep = Annotated[str | None, fastapi.Header(alias="X-Randovania-Sid")]
+"""The client's socketio sid as well."""
