@@ -41,36 +41,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Main Deck
 
-- Added: Operations Deck morph only Ludicrous jump extend.
+- Added: Operations Deck: From elevator to next to top door, morph only Ludicrous Jump Extend.
 
 ##### Sector 2 (TRO)
 
-- Added: Cathedral morph only Ludicrous jump extend.
-- Added: Overgrown Entrance Ludicrous hi-jump J2BJ.
-- Added: Level 1 Security Ludicrous jump extend to SA blocks.
-- Added: Puyo Palace Ludicrous acrobatic JBJ nonsense.
-- Changed: Crumble City upper item requires either morph or Beginner movement.
+- Added: Cathedral: From Puyo Corridor to Beside Drop, morph only Ludicrous Jump Extend.
+- Added: Overgrown Entrance: Ludicrous hi-jump Jump Bomb Jump and Walljump up to Silo tunnel.
+- Added: Level 1 Security Room: Ludicrous morph Jump Extend to SA blocks.
+- Added: Puyo Palace: From Cathedral to top floor, Ludicrous Jump Bomb Jump, Jump Extend and Walljump nonsense.
+- Changed: Crumble City: Inside Maze to Upper Pickup requires either morph or Beginner Movement.
 
 ##### Sector 3 (PYR)
 
-- Added: Alcove bombjump out of right tunnel to do Advanced kicks back and forth to upper door.
-- Added: Alcove Ludicrous morph jump extends for enough height to do same as above.
-- Fixed: Alcove bottom right to center, regular bombs to break block requires Intermediate midair morph or frozen enemy platform.
-- Added: Namihe's Lair Advanced dboost to escape item area.
-- Added: Namihe's Lair Expert shinespark to item.
+- Added: Alcove: Bombjump out of bottom right tunnel to do Advanced Walljump back and forth to Deserted Runway.
+- Added: Alcove: Bottom right to Deserted Runway, Ludicrous morph Jump Extends for enough height to Walljump off overhang to reach Deserted Runway.
+- Fixed: Alcove: Bottom right to center, regular bombs to break block requires Intermediate Mid-Air Morph or Stand On Frozen Enemy.
+- Added: Namihe's Lair: Advanced Walljump and Damage Boost to escape Pickup area.
+- Added: Namihe's Lair: Expert Shinespark from Checkpoint Crossing to Pickup.
 
 ##### Sector 4 (AQA)
 
-- Added: Reservoir East Expert dboost for just enough height to kick up to monkey bars and exit.
-- Added: Pump Control Expert J2BJ up into exit tunnel.
+- Added: Reservoir East: Room center to right door, Expert Damage Boost for just enough height to Walljump up to monkey bars and exit, possibly needing Advanced Mid-Air Morph off monkey bars to bomb blocks and Walljump back up.
+- Added: Pump Control: Expert Jump Bomb Jump and Walljump up into Pickup exit tunnel.
 
 ##### Sector 5 (ARC)
 
-- Changed: Nightmare Hub, raised JBJ from Intermediate to Advanced.
-- Changed: Gerubus Gully, same as Nightmare Hub.
-- Fixed: Gerubus Gully, added 50/50 Intermediate Movement trick to shinespark and PB methods.
-- Added: Gerubus Gully, added any bombs as alternative to said 50/50 tricks.
-- Changed: Gerubus Gully, raised Shinespark trick level from Beginner to Intermediate.
+- Changed: Nightmare Hub: Flooded Access to Ruined Break Room, raised Jump Bomb Jump from Intermediate to Advanced.
+- Changed: Gerubus Gully: Raised Jump Bomb Jump to Pickup from Intermediate to Advanced.
+- Fixed: Gerubus Gully: To Pickup, added 50/50 Intermediate Movement trick to Shinespark and Power Bomb methods.
+- Added: Gerubus Gully: Added any bombs as alternative to said 50/50 tricks to Pickup.
+- Changed: Gerubus Gully: Raised Shinespark to Pickup trick difficulty from Beginner to Intermediate.
 
 ### Metroid Prime
 
