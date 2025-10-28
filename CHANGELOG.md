@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: The Multiworld Session will now display when a world has been beaten. This is supported for the following games:
   - Another Metroid 2 Remake
+  - Metroid Dread
   - Metroid Prime
+  - Metroid: Samus Returns
 - Added: 1 more joke hint.
 - Changed: Centered the text at the top of the Hints preset settings.
 - Changed: Cleaned up how Specific Pickup Hints are shown in the preset settings.
