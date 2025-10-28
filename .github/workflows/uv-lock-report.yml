@@ -1,7 +1,7 @@
 name: UV Lock Report
 
 on:
-  pull_request_target:
+  pull_request:
 
 permissions:
   contents: read
@@ -10,6 +10,7 @@ permissions:
 jobs:
   report:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - uses: actions/checkout@v5
         with:
