@@ -30,9 +30,9 @@ if typing.TYPE_CHECKING:
 router = APIRouter()
 
 
-def _encrypt_session_for_user(sa: ServerApp, session: dict) -> bytes:
+def _encrypt_session_for_user(sa: ServerApp, session: dict) -> str:
     encrypted_session = sa.fernet_encrypt.encrypt(json.dumps(session).encode("utf-8"))
-    return base64.b85encode(encrypted_session)
+    return base64.b85encode(encrypted_session).decode("ascii")
 
 
 def _create_client_side_session_raw(sa: ServerApp, sid: str | None, user: User) -> dict:
@@ -83,7 +83,7 @@ def _create_user_from_discord(discord_user: DiscordUser) -> User:
     return user
 
 
-def _create_session_with_access_token(sa: ServerApp, token: UserAccessToken) -> bytes:
+def _create_session_with_access_token(sa: ServerApp, token: UserAccessToken) -> str:
     return _encrypt_session_for_user(
         sa,
         {
@@ -202,7 +202,10 @@ async def logout(sa: ServerApp, sid: str) -> None:
         session.pop("user-id", None)
 
 
-def unable_to_login(sa: ServerApp, request: Request, error_message: str, status_code: int) -> HTMLResponse:
+def unable_to_login(sa: ServerApp, request: Request, error_message: str, status_code: int) -> Response:
+    if sa.is_api_request(request):
+        return JSONResponse({"error_message": error_message}, status_code=status_code)
+
     return sa.templates.TemplateResponse(
         request=request,
         name="user_session/unable_to_login.html.jinja",
@@ -391,7 +394,7 @@ async def create_token(
             user=user,
             name=name,
         )
-        session = _create_session_with_access_token(sa, token).decode("ascii")
+        session = _create_session_with_access_token(sa, token)
         context = {
             "created": True,
             "token": session,

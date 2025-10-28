@@ -362,7 +362,7 @@ class NetworkClient:
 
         self.logger.info(f"{self._current_user.name}, state: {self.connection_state}")
 
-        self.http.headers["X-Randovania-Session"] = new_session["encoded_session_b85"].decode("ascii")
+        self.http.headers["X-Randovania-Session"] = new_session["encoded_session_b85"]
         encoded_session_data = base64.b85decode(new_session["encoded_session_b85"])
 
         self.server_data_path.mkdir(exist_ok=True, parents=True)

@@ -97,7 +97,7 @@ class RdvTestClient(TestClient):
     def set_logged_in_user(self, user_id: int) -> None:
         from randovania.server.user_session import _encrypt_session_for_user
 
-        self.headers["X-Randovania-Session"] = _encrypt_session_for_user(self.sa, {"user-id": user_id}).decode("ascii")
+        self.headers["X-Randovania-Session"] = _encrypt_session_for_user(self.sa, {"user-id": user_id})
 
 
 @pytest.fixture(name="test_client")

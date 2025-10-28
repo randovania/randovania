@@ -128,9 +128,17 @@ def test_toggle_admin_status(test_client, solo_two_world_session, initial_admin)
 def test_delete_session_post(test_client, solo_two_world_session) -> None:
     # Run
     result = test_client.post("/session/1/delete")
+    result.raise_for_status()
 
     # Assert
     assert "Session deleted. <a href='http://testserver/sessions'>Return to list</a>" in result.text
 
     with pytest.raises(database.MultiplayerSession.DoesNotExist):
         database.MultiplayerSession.get_by_id(1)
+
+
+def test_delete_session_post_not_authorized(test_client) -> None:
+    # Run
+    result = test_client.post("/session/1/delete", headers={"Accept": "application/json"})
+    assert result.status_code == 401
+    assert result.json() == {"status_message": "401 Unauthorized", "detail": "Unknown user"}
