@@ -77,9 +77,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sector 5 (ARC)
 
 - Changed: Nightmare Hub: Flooded Access to Ruined Break Room, raised Jump Bomb Jump from Intermediate to Advanced.
-- Changed: Gerubus Gully: Raised Jump Bomb Jump to Pickup from Intermediate to Advanced.
-- Fixed: Gerubus Gully: To Pickup, added 50/50 Intermediate Movement trick to Shinespark and Power Bomb methods. The game processes item acquisition on every other frame, and the bomb block ejects you underneath after clearing the text if you're still in the climb animation.
-- Added: Gerubus Gully: Added any bombs as alternative to all such 50/50 tricks to Pickup.
+- Changed: Gerubus Gully: Raised the Jump Bomb Jump to the Pickup from Intermediate to Advanced. In addition, you now also need to kill the Gerubus or have Combat Beginner.
+- Changed: Gerubus Gully: Getting the Pickup with Screw Attack now requires either Bombs or Ludicrous Movement. This is due to the fact that the game processes item acquisition on every other frame with it coming down to luck whether you collect the item on the correct frame to escape before the Bomb Block respawns.
+- Added: Gerubus Gully: Getting the Pickup with a Shinespark now requires either Bombs or Ludicrous Movement. See the explanation above as to why.
+- Added: Gerubus Gully: Getting the Pickup with Powerbombs now requires either Bombs, 2 Power Bomb or Ludicrous Movement. See the explanation above as to why.
 - Changed: Gerubus Gully: Raised Shinespark to Pickup trick difficulty from Beginner to Intermediate.
 
 ### Metroid Prime
