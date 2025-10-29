@@ -761,3 +761,29 @@ async def test_get_audit_log(simple_room, mocker: pytest_mock.MockFixture):
     assert result == [
         {"user": "The Player", "message": "Someone did a thing", "time": "2020-05-12T00:00:00+00:00"},
     ]
+
+
+async def test_get_livesplit_url(test_client, simple_room):
+    sid = "TheSid"
+    user = User.get_by_id(1235)
+
+    test_client.sa.get_current_user = AsyncMock(return_value=user)
+    test_client.sa.sio.enter_room = AsyncMock()
+
+    url = await room_api.get_livesplit_url(
+        test_client.sa,
+        sid,
+        simple_room.id,
+    )
+    assert url == "ws://127.0.0.1:5000/async-race-room/1/livesplit/1235/TheSid"
+    test_client.sa.sio.enter_room.assert_awaited_once_with(sid, "async-race-1-1235", namespace="/")
+
+
+async def test_livesplit_socket(test_client, simple_room):
+    websocket = test_client.websocket_connect("/async-race-room/1/livesplit/1235/TheSid")
+    websocket.send_json({"event": "Started"})
+    websocket.send_json({"event": "Finished"})
+    websocket.close()
+
+    entry = AsyncRaceEntry.entry_for(simple_room, User.get_by_id(1235))
+    assert entry.user_status() == AsyncRaceRoomUserStatus.FINISHED
