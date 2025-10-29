@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.4.0] - 2025-12-??
 
+- Added: Integration with LiveSplit One for Async Races - after some configuration, starting, pausing and finishing in LiveSplit One will update your status in the Async Race.
 - Changed: The generator and resolver now use a faster algorithm. An option was added to use the old one if needed.
 - Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
 - Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough, especially at high verbosity.
