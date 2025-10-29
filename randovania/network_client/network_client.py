@@ -134,6 +134,18 @@ emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=
 -----END CERTIFICATE-----"""
 
 
+def _apply_default_rest_headers(kwargs: _RequestOptions) -> None:
+    """Adds the default headers we should send to every REST request."""
+    headers = kwargs.get("headers")
+    if headers is None:
+        kwargs["headers"] = headers = {}
+    else:
+        assert isinstance(headers, dict)
+
+    if "Accept" not in headers:
+        headers["Accept"] = "application/json"
+
+
 class NetworkClient:
     sio: socketio.AsyncClient
     _current_user: CurrentUser | None = None
@@ -730,26 +742,27 @@ class NetworkClient:
     def server_get(
         self,
         url: str,
-        headers: http_lib.LooseHeaders | None = None,
         **kwargs: Unpack[_RequestOptions],
     ) -> _RequestContextManager:
-        """Perform HTTP GET request to Randovania's REST Server."""
+        """
+        Perform HTTP GET request to Randovania's REST Server.
 
-        if headers is None:
-            headers = {}
-        if "Accept" not in headers:
-            headers["Accept"] = "application/json"
-        return self.http.get(f"{self.configuration['server_address']}/{url}", headers=headers, **kwargs)
+        ## Example Usage
+        >>> async def get_user(client: NetworkClient) -> CurrentUser:
+        >>>     async with client.server_get("/me") as response:
+        >>>         response.raise_for_status()
+        >>>         return CurrentUser.from_json(await response.json())
+        """
+
+        _apply_default_rest_headers(kwargs)
+        return self.http.get(f"{self.configuration['server_address']}/{url}", **kwargs)
 
     def server_post(
         self,
         url: str,
-        headers: http_lib.LooseHeaders | None = None,
         **kwargs: Unpack[_RequestOptions],
     ) -> _RequestContextManager:
         """Perform HTTP POST request to Randovania's REST Server."""
-        if headers is None:
-            headers = {}
-        if "Accept" not in headers:
-            headers["Accept"] = "application/json"
-        return self.http.post(f"{self.configuration['server_address']}/{url}", headers=headers, **kwargs)
+
+        _apply_default_rest_headers(kwargs)
+        return self.http.post(f"{self.configuration['server_address']}/{url}", **kwargs)

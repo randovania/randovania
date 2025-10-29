@@ -441,7 +441,8 @@ async def get_user(
     discord_token = request.session.get("discord_oauth_token")
 
     # TODO: check for user tokens
-    # maybe make sure tokens have a prefix so we know it's token vs encrypted session?
+    # A good idea would be to make sure all tokens have a known prefix, so we can easily tell
+    # the difference between a token vs encrypted session
 
     if x_randovania_session is not None:
         decrypted_session: bytes = sa.fernet_encrypt.decrypt(base64.b85decode(x_randovania_session))

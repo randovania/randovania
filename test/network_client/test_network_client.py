@@ -28,13 +28,25 @@ if TYPE_CHECKING:
 
 @pytest.fixture
 async def client(tmp_path):
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000"})
+    client = NetworkClient(
+        tmp_path,
+        {
+            "server_address": "http://localhost:5000",
+            "socketio_path": "/socket.io",
+        },
+    )
     yield client
     await client.http.close()
 
 
 async def test_on_connect_no_restore(tmp_path):
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000"})
+    client = NetworkClient(
+        tmp_path,
+        {
+            "server_address": "http://localhost:5000",
+            "socketio_path": "/socket.io",
+        },
+    )
 
     # Run
     await client.on_connect()
@@ -45,7 +57,13 @@ async def test_on_connect_no_restore(tmp_path):
 
 @pytest.mark.parametrize("valid_session", [False, True])
 async def test_on_connect_restore(tmpdir, valid_session: bool):
-    client = NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000"})
+    client = NetworkClient(
+        Path(tmpdir),
+        {
+            "server_address": "http://localhost:5000",
+            "socketio_path": "/socket.io",
+        },
+    )
     session_data_path = Path(tmpdir) / "9iwAGnskOkqzo_NZ" / "session_persistence.bin"
     session_data_path.parent.mkdir(parents=True)
     session_data_path.write_bytes(b"foo")

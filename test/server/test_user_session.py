@@ -120,7 +120,7 @@ async def test_browser_discord_login_callback_success(mock_sa, mock_request, exi
         mock_sa.sio.emit.assert_awaited_once_with(
             "user_session_update",
             {
-                "encoded_session_b85": b"Wo~0~d2n=PWB",
+                "encoded_session_b85": "Wo~0~d2n=PWB",
                 "user": {"discord_id": 1234, "id": 1, "name": expected_name},
                 "sid": "TheSid",
             },

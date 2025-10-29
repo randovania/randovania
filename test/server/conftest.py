@@ -102,7 +102,8 @@ class RdvTestClient(TestClient):
 
 @pytest.fixture(name="test_client")
 def test_client_fixture(server_app) -> Generator[RdvTestClient, None, None]:
-    with RdvTestClient(server_app.app) as client:
+    client = RdvTestClient(server_app.app)
+    with client:
         database.db.database = client.sa.db.database
         database.db.close()
         assert database.db.connect()
