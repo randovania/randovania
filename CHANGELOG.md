@@ -68,7 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Alcove: Reaching the top right door from the bottom right tunnel by ball jumping out of tunnel edge with either Spring Ball or Bombs and Advanced Walljumps.
 - Added: Alcove: From the bottom right of the room, reaching the top right door with Ludicrous Walljump and Ludicrous Jump Extend via Morphing.
-- Fixed: Alcove: For going rom the bottom right of the room to the center with regular Bombs, now requires either Intermediate Mid-Air Morph or Intermediate Stand On Frozen Enemy.
+- Fixed: Alcove: Going from the bottom right of the room to the center with regular Bombs, now requires either Intermediate Mid-Air Morph, Beginner Mid-Air Morph with Hi-Jump, Springball or Intermediate Stand On Frozen Enemy.
 - Added: Namihe's Lair: Advanced Walljump and Damage Boost to escape the Pickup area by getting hit by the Namihe's projectile.
 - Added: Namihe's Lair: Expert Shinespark from Checkpoint Crossing Entrance to the Pickup.
 
