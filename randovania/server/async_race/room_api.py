@@ -587,6 +587,13 @@ async def livesplit_integration(
         except WebSocketDisconnect:
             return
 
+        # The LiveSplit One API is documented in their source code:
+        # https://github.com/LiveSplit/livesplit-core/blob/master/src/networking/server_protocol.rs
+        #
+        # While the messages sent from them to us are handled in this handleEvent function:
+        # https://github.com/LiveSplit/LiveSplitOne/blob/master/src/ui/LiveSplit.tsx#L904
+        # And events defined here: https://github.com/LiveSplit/livesplit-core/blob/master/src/event.rs
+
         try:
             event: dict = json.loads(data)
         except json.JSONDecodeError as e:
