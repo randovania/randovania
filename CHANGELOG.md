@@ -128,7 +128,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Fixed: Expansions with negative value now properly remove items in-game.
-- Changed: Keybearer hints now randomly refer to any one pickup feature, rather than targeting the same feature every time.
+- Changed: Keybearer hints now randomly refer to a pickup feature, rather than targeting the same feature every time.
+- Changed: Some hint features are now only used for lore hints, not for keybearer hints.
+- Added: Some additional pickup features, used only for keybearer hints.
 
 #### Logic Database
 
