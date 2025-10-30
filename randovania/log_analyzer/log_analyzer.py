@@ -284,8 +284,10 @@ def create_report(
             stddev_count += 1
         except Exception:
             pass
-    # div by 2 because +1 deviance at one location always implies +1 everywhere else
-    accumulated_stddev /= stddev_count * 2
+
+    if stddev_count > 0:
+        # div by 2 because +1 deviance at one location always implies +1 everywhere else
+        accumulated_stddev /= stddev_count * 2
 
     # Accumulate deviances for all locations
 
