@@ -375,6 +375,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
                 description="URL to add in 'Server Connection' in the Settings page of LiveSplit One.",
                 initial_value=url,
                 is_modal=True,
+                read_only=True,
             )
         finally:
             self.setEnabled(True)
