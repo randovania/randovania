@@ -278,12 +278,10 @@ def create_report(
     # Average standardized deviances for all locations
     accumulated_stddev = 0
     stddev_count = 0
-    for stddev in stddev_by_location.items():
-        try:
-            accumulated_stddev += stddev[1]
+    for stddev in stddev_by_location.values():
+        if stddev is not None:
+            accumulated_stddev += stddev
             stddev_count += 1
-        except Exception:
-            pass
 
     if stddev_count > 0:
         # div by 2 because +1 deviance at one location always implies +1 everywhere else
