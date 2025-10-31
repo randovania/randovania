@@ -18,8 +18,12 @@ from randovania.game_description.db.teleporter_network_node import TeleporterNet
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.resource_requirement import (
+    PositiveResourceRequirement,
+    ResourceRequirement,
+)
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
+from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
     from collections.abc import Callable, Iterator, Mapping
@@ -243,6 +247,13 @@ def _add_dock_connections(
     return WorldGraphNodeConnection(target_node, final_requirement, final_requirement)
 
 
+def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
+    return not isinstance(requirement, PositiveResourceRequirement) or requirement.resource.resource_type not in (
+        ResourceType.EVENT,
+        ResourceType.NODE_IDENTIFIER,
+    )
+
+
 def _connections_from(
     node: WorldGraphNode,
     original_to_node: dict[int, WorldGraphNode],
@@ -273,6 +284,9 @@ def _connections_from(
             requirement_including_leaving = simplify_requirement(
                 RequirementAnd([requirement_including_leaving, requirement_to_leave])
             )
+            if _is_requirement_viable_as_additional(requirement_to_leave):
+                requirement = requirement_including_leaving
+
         else:
             requirement_including_leaving = requirement
 
