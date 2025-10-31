@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import collections
 import dataclasses
 import typing
 
@@ -249,6 +250,7 @@ def _connections_from(
     context: NodeContext,
     simplify_requirement: Callable[[Requirement], Requirement],
     configurable_node_requirements: Mapping[NodeIdentifier, Requirement],
+    teleporter_networks: dict[str, list[WorldGraphNode]],
 ) -> Iterator[WorldGraphNodeConnection]:
     requirement_to_leave = Requirement.trivial()
 
@@ -257,9 +259,6 @@ def _connections_from(
 
     elif isinstance(node.database_node, HintNode):
         requirement_to_leave = node.database_node.requirement_to_collect
-
-    elif isinstance(node.database_node, TeleporterNetworkNode):
-        raise NotImplementedError
 
     for target_original_node, requirement in node.area.connections[node.database_node].items():
         target_node = original_to_node.get(target_original_node.node_index)
@@ -285,6 +284,21 @@ def _connections_from(
 
     if isinstance(node.database_node, DockNode):
         yield _add_dock_connections(node, original_to_node, patches, context, simplify_requirement)
+
+    if isinstance(node.database_node, TeleporterNetworkNode):
+        for other_node in teleporter_networks[node.database_node.network]:
+            if node != other_node:
+                assert isinstance(other_node.database_node, TeleporterNetworkNode)
+                yield WorldGraphNodeConnection(
+                    target=other_node,
+                    requirement=RequirementAnd(
+                        [
+                            node.database_node.is_unlocked,
+                            other_node.database_node.is_unlocked,
+                        ]
+                    ),
+                    requirement_without_leaving=other_node.database_node.is_unlocked,
+                )
 
 
 def _dangerous_resources(nodes: list[WorldGraphNode], context: NodeContext) -> Iterator[ResourceInfo]:
@@ -361,6 +375,7 @@ def create_graph(
     # Make Nodes
 
     node_replacement = {}
+    teleporter_networks = collections.defaultdict(list)
 
     for _, _, original_node in database_view.node_iterator():
         if isinstance(original_node, EventPickupNode):
@@ -376,6 +391,9 @@ def create_graph(
             continue
 
         nodes.append(create_node(len(nodes), patches, original_node, area, region))
+        if isinstance(original_node, TeleporterNetworkNode):
+            assert original_node.requirement_to_activate == Requirement.trivial()
+            teleporter_networks[original_node.network].append(nodes[-1])
 
     original_to_node = {node.database_node.node_index: node for node in nodes}
     node_provider = WorldGraphNodeProvider(database_view, original_to_node)
@@ -403,6 +421,7 @@ def create_graph(
                 context,
                 simplify_requirement_with_as_set if flatten_to_set_on_patch else simplify_requirement,
                 configurable_node_requirements,
+                teleporter_networks,
             )
         )
 
