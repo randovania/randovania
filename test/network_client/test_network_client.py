@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import uuid
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -18,12 +19,15 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect, _decode_pickup
 from randovania.network_common import connection_headers, remote_inventory
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
+from randovania.network_common.authentication import AuthenticationMethod
 from randovania.network_common.error import InvalidSessionError, RequestTimeoutError, ServerError
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, WorldUserInventory
 from randovania.network_common.remote_pickup import RemotePickup
 
 if TYPE_CHECKING:
     import pytest_mock
+
+    from randovania.lib.json_lib import JsonType_RO
 
 
 @pytest.fixture
@@ -37,6 +41,32 @@ def client(tmp_path, mocker: pytest_mock.MockerFixture):
         },
     )
     return client
+
+
+class MockResponse:
+    def __init__(self, text: str | JsonType_RO, status: int):
+        if not isinstance(text, str):
+            text = json.dumps(text)
+        self._text = text
+        self.status = status
+
+    async def text(self) -> str:
+        return self._text
+
+    async def json(self) -> dict:
+        import json as jsonlib
+
+        return jsonlib.loads(self._text)
+
+    def raise_for_status(self) -> None:
+        if self.status >= 400:
+            raise aiohttp.ClientError("Request not OK")
+
+    async def __aexit__(self, exc_type, exc, tb):
+        pass
+
+    async def __aenter__(self):
+        return self
 
 
 async def test_on_connect_no_restore(tmp_path):
@@ -405,3 +435,31 @@ async def test_on_world_user_inventory_raw(client: NetworkClient):
             inventory={"MyKey": 4},
         )
     )
+
+
+async def test_authentication_methods(client: NetworkClient):
+    client.server_get = MagicMock(
+        return_value=MockResponse(
+            [
+                "discord",
+            ],
+            200,
+        )
+    )
+
+    result = await client.query_authentication_methods()
+
+    client.server_get.assert_called_once_with("authentication_methods")
+    assert result == {AuthenticationMethod.DISCORD}
+
+
+async def test_login_as_guest(client: NetworkClient):
+    client.on_user_session_updated = AsyncMock()
+    client.connect_to_server = AsyncMock()
+    client.server_post = MagicMock(return_value=MockResponse({"data": 5}, 200))
+
+    await client.login_as_guest("Foo")
+
+    client.server_post.assert_called_once_with("guest_login", data={"name": "Foo"})
+    client.on_user_session_updated.assert_awaited_once_with({"data": 5})
+    client.connect_to_server.assert_awaited_once_with()

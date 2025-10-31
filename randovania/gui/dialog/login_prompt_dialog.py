@@ -15,21 +15,21 @@ from randovania.gui.generated.login_prompt_dialog_ui import Ui_LoginPromptDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
 from randovania.network_client.network_client import ConnectionState
+from randovania.network_common.authentication import AuthenticationMethod
 
 if TYPE_CHECKING:
     from randovania.network_common.user import CurrentUser
 
 
 class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
-    def __init__(self, network_client: QtNetworkClient):
+    def __init__(self, network_client: QtNetworkClient, authentication_methods: set[AuthenticationMethod]):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
         self.network_client = network_client
 
-        login_methods = network_client.available_login_methods
-        self.guest_button.setVisible("guest" in login_methods)
-        self.discord_button.setEnabled("discord" in login_methods)
+        self.guest_button.setVisible(AuthenticationMethod.GUEST in authentication_methods)
+        self.discord_button.setEnabled(AuthenticationMethod.DISCORD in authentication_methods)
         self.discord_button.setToolTip(
             "" if self.discord_button.isEnabled() else "This Randovania build is not configured to login with Discord."
         )

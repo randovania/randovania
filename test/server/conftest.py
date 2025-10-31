@@ -75,7 +75,6 @@ def server_app_fixture(db_path, mocker: MockerFixture):
     configuration = NetworkConfiguration(
         server_address="http://127.0.0.1:5000",
         socketio_path="/socket.io",
-        guest_secret="s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
         server_config=server_config,
         discord_client_id=1234,
     )
