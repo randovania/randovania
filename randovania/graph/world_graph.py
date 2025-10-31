@@ -21,7 +21,7 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Callable, Iterator
+    from collections.abc import Callable, Iterator, Mapping
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
@@ -248,11 +248,12 @@ def _connections_from(
     patches: GamePatches,
     context: NodeContext,
     simplify_requirement: Callable[[Requirement], Requirement],
+    configurable_node_requirements: Mapping[NodeIdentifier, Requirement],
 ) -> Iterator[WorldGraphNodeConnection]:
     requirement_to_leave = Requirement.trivial()
 
     if isinstance(node.database_node, ConfigurableNode):
-        raise NotImplementedError
+        requirement_to_leave = configurable_node_requirements[node.database_node.identifier]
 
     elif isinstance(node.database_node, HintNode):
         requirement_to_leave = node.database_node.requirement_to_collect
@@ -355,6 +356,8 @@ def create_graph(
 ) -> WorldGraph:
     nodes: list[WorldGraphNode] = []
 
+    configurable_node_requirements = database_view.get_configurable_node_requirements()
+
     # Make Nodes
 
     node_replacement = {}
@@ -399,6 +402,7 @@ def create_graph(
                 patches,
                 context,
                 simplify_requirement_with_as_set if flatten_to_set_on_patch else simplify_requirement,
+                configurable_node_requirements,
             )
         )
 

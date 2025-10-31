@@ -29,7 +29,6 @@ async def test_resolver_with_log_file(test_files_dir, layout_name, is_valid):
         patches=patches,
         use_world_graph=patches.game.game
         not in {
-            RandovaniaGame.METROID_PRIME_ECHOES,
             RandovaniaGame.METROID_SAMUS_RETURNS,
             RandovaniaGame.METROID_PRIME_HUNTERS,
         },
