@@ -15,6 +15,7 @@ from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, wait_dialog
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect
 from randovania.network_common import error
+from randovania.network_common.async_race_room import AsyncRaceRoomEntry
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionActions,
     MultiplayerSessionAuditLog,
@@ -99,6 +100,8 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
     WorldPickupsUpdated = Signal(MultiplayerWorldPickups)
     WorldUserInventoryUpdated = Signal(WorldUserInventory)
 
+    AsyncRaceRoomUpdated = Signal(AsyncRaceRoomEntry)
+
     def __init__(self, user_data_dir: Path):
         configuration = randovania.get_configuration()
         user_data_dir = user_data_dir.joinpath("network_client")
@@ -149,6 +152,10 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
     async def on_world_user_inventory(self, inventory: WorldUserInventory):
         await super().on_world_user_inventory(inventory)
         self.WorldUserInventoryUpdated.emit(inventory)
+
+    async def on_async_race_room_update(self, room: AsyncRaceRoomEntry) -> None:
+        await super().on_async_race_room_update(room)
+        self.AsyncRaceRoomUpdated.emit(room)
 
     async def login_with_discord(self) -> str:
         if "discord_client_id" not in self.configuration:

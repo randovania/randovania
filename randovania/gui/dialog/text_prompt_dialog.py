@@ -76,6 +76,7 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
         initial_value: str | None = None,
         is_modal: bool = False,
         check_re: typing.Pattern | None = None,
+        read_only: bool = False,
     ) -> str | None:
         inst = cls(
             parent=parent,
@@ -87,6 +88,9 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
             is_modal=is_modal,
             check_re=check_re,
         )
+        if read_only:
+            inst.accept_button.setVisible(False)
+            inst.prompt_edit.setReadOnly(True)
 
         if await async_dialog.execute_dialog(inst) == QtWidgets.QDialog.DialogCode.Accepted:
             return inst.text_value
