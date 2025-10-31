@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 @pytest.fixture(name="prompt")
 def login_prompt_fixture(skip_qtbot):
-    return LoginPromptDialog(MagicMock())
+    return LoginPromptDialog(MagicMock(), set())
 
 
 @pytest.mark.parametrize("valid_name", [False, True])

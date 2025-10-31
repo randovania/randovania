@@ -25,7 +25,6 @@ def config_fixture(db_path) -> NetworkConfiguration:
         "socketio_path": "/prefix/somewhere_evil",
         "discord_client_id": 1234,
         "server_address": "https://somewhere.nice",
-        "guest_secret": "s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
         "server_config": {
             "secret_key": "key",
             "discord_client_secret": "5678",

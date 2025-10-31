@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import datetime
 import json
 import urllib.parse
 from typing import TYPE_CHECKING
@@ -298,30 +297,6 @@ async def test_restore_user_session_with_discord(mock_sa, fernet, mocker: pytest
     mock_create_client_side.assert_called_once_with(mock_sa, "TheSid", discord_user)
 
     assert result is discord_result
-
-
-async def test_login_with_guest(mock_sa, mocker):
-    # Setup
-    mocker.patch("randovania.server.user_session._get_now", return_value=datetime.datetime(year=2020, month=9, day=4))
-    mock_create_session = mocker.patch("randovania.server.user_session._create_client_side_session", autospec=True)
-    enc_request = b"encrypted stuff"
-
-    mock_sa.guest_encrypt.decrypt.return_value = json.dumps(
-        {
-            "name": "Someone",
-            "date": "2020-09-05T17:12:09.941661",
-        }
-    ).encode("utf-8")
-
-    result = await user_session.login_with_guest(mock_sa, "TheSid", enc_request)
-
-    # Assert
-    mock_sa.guest_encrypt.decrypt.assert_called_once_with(enc_request)
-    user: User = User.get_by_id(1)
-    assert user.name == "Guest: Someone"
-
-    mock_create_session.assert_called_once_with(mock_sa, "TheSid", user)
-    assert result is mock_create_session.return_value
 
 
 async def test_logout(mock_sa, mocker: MockerFixture):
