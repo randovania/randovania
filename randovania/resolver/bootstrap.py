@@ -9,6 +9,7 @@ from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup, create_standard_pickup
@@ -319,6 +320,24 @@ class Bootstrap[Configuration: BaseConfiguration]:
                 flatten_to_set_on_patch=game.region_list.flatten_to_set_on_patch,
             )
             starting_state.node = graph.original_to_node[starting_state.node.node_index]
+
+            context = starting_state.node_context()
+            new_resources = []
+
+            for resource, quantity in list(starting_state.resources.as_resource_gain()):
+                if resource.resource_type == ResourceType.NODE_IDENTIFIER:
+                    starting_state.resources.remove_resource(resource)
+                    new_resources.append(
+                        (
+                            NodeResourceInfo.from_node(
+                                graph.original_to_node[resource.to_node(context).node_index],
+                                context,
+                            ),
+                            quantity,
+                        )
+                    )
+            starting_state.resources.add_resource_gain(new_resources)
+
             return graph, starting_state
         else:
             game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
