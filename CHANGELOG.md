@@ -9,16 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: The Multiworld Session will now display when a world has been beaten. This is supported for the following games:
   - Another Metroid 2 Remake
+  - Metroid Dread
   - Metroid Prime
+  - Metroid: Samus Returns
+- Added: 1 more joke hint.
 - Changed: Centered the text at the top of the Hints preset settings.
 - Changed: Cleaned up how Specific Pickup Hints are shown in the preset settings.
 - Changed: Places that describe a preset with Specific Pickup Hints have slightly better grammar in some cases.
 - Changed: The "Item Pool" tab is now called "Pickup Pool".
 - Changed: Random starting items is now Random starting pickups.
 - Changed: Minor pickups will not show in the credits anymore if you randomly started with them.
-- Fixed: Admins can now abort a Multiworld generation again
+- Fixed: Admins can now abort a Multiworld generation again.
 - Fixed: You can now abort a Multiworld generation again should you have been disconnected during the generation process.
 - Fixed: HTTPS errors due to invalid certificates in certain platforms.
+- Fixed: Eliminated some bias when picking hint features.
 
 ### Another Metroid 2 Remake
 
@@ -35,11 +39,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Artaria
 
+- Added: Extra requirements to break the blobs in Arbitrary Enky Room, to improve the quality of generated games.
 - Fixed: Screw Attack Room: Using a Shinespark to reach Start Point 2 from the door to Transport to Burenia was missing a requirement on having activated the Rotatable.
 
 ### Metroid Fusion
 
-- Added: 3 new hint location features: guarded by a Tank-Mimic, near a Geron and in a room with extreme temperatures.
+- Added: 4 new hint location features: guarded by a Tank-Mimic, near a Geron, in a room with extreme temperatures, and activating a B.S.L. Systems Console.
+- Added: 1 new pickup hint feature: Ice Related.
+- Removed: "Multiple Pickups" as a hint feature.
+- Fixed: "Security Shaft East" was missing from "Climbable Surface" feature hint.
+- Fixed: Starting Pickups will now also show up in the credits spoiler.
+
+#### Logic Database
+
+##### Main Deck
+
+- Added: Operations Deck: Reaching the top door via a Ludicrous Walljump and Ludicrous Jump Extend via Morphing.
+
+##### Sector 2 (TRO)
+
+- Added: Cathedral: Reaching the top part of the room from the bottom via Ludicrous Walljump and Ludicrous Jump Extend via Morphing.
+- Added: Overgrown Entrance: Reaching the Tunnel from the bottom with Hi-Jump, Ludicrous Jump Bomb Jump and Ludicrous Walljump.
+- Added: Level 1 Security Room: A way to reach the top left door from the top right door with Screw Attack, Ludicrous Walljump and Ludicrous Jump Extend via Morphing.
+- Added: Puyo Palace: From Cathedral to top floor, a Ludicrous chain of Walljump, bomb, pause buffer morph Jump Extend back, to Walljump into Jump Bomb Jump, repeated a couple times to ascend up the left side.
+- Changed: Crumble City: Collecting the upper Pickup now requires either Morph Ball or Beginner Movement to avoid softlocking.
+
+##### Sector 3 (PYR)
+
+- Added: Alcove: Reaching the top right door from the bottom right tunnel by ball jumping out of tunnel edge with either Spring Ball or Bombs and Advanced Walljumps.
+- Added: Alcove: From the bottom right of the room, reaching the top right door with Ludicrous Walljump and Ludicrous Jump Extend via Morphing.
+- Fixed: Alcove: Going from the bottom right of the room to the center with regular Bombs, now requires either Intermediate Mid-Air Morph, Beginner Mid-Air Morph with Hi-Jump, Springball or Intermediate Stand On Frozen Enemy.
+- Added: Namihe's Lair: Advanced Walljump and Damage Boost to escape the Pickup area by getting hit by the Namihe's projectile.
+- Added: Namihe's Lair: Expert Shinespark from Checkpoint Crossing Entrance to the Pickup.
+
+##### Sector 4 (AQA)
+
+- Added: Reservoir East: A Method from the room center to reach the right door using Hi-Jump, Expert Damage Boost and Expert Walljump. This is done by damage boosting off of a reformed Scizer's projectile to then Expert Walljump up to the monkey bars. If you have regular bombs, an Advanced Mid-Air Morph to break the bomb blocks and Walljump back up are also needed.
+- Added: Pump Control: An Expert Jump Bomb Jump and Walljump up into the Pickup exit tunnel.
+
+##### Sector 5 (ARC)
+
+- Changed: Nightmare Hub: Flooded Access to Ruined Break Room, raised Jump Bomb Jump from Intermediate to Advanced.
+- Changed: Gerubus Gully: Raised the Jump Bomb Jump to the Pickup from Intermediate to Advanced. In addition, you now also need to kill the Gerubus or have Combat Beginner.
+- Changed: Gerubus Gully: Getting the Pickup with Screw Attack now requires either Bombs or Ludicrous Movement. This is due to the fact that the game processes item acquisition on every other frame with it coming down to luck whether you collect the item on the correct frame to escape before the Bomb Block respawns.
+- Added: Gerubus Gully: Getting the Pickup with a Shinespark now requires either Bombs or Ludicrous Movement. See the explanation above as to why.
+- Added: Gerubus Gully: Getting the Pickup with Powerbombs now requires either Bombs, 2 Power Bomb or Ludicrous Movement. See the explanation above as to why.
+- Changed: Gerubus Gully: Raised Shinespark to Pickup trick difficulty from Beginner to Intermediate.
 
 ### Metroid Prime
 
@@ -83,19 +128,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Fixed: Expansions with negative value now properly remove items in-game.
-- Changed: Keybearer hints now randomly refer to any one pickup feature, rather than targeting the same feature every time.
+- Changed: Keybearer hints now randomly refer to a pickup feature, rather than targeting the same feature every time.
+- Changed: Some hint features are now only used for lore hints, not for keybearer hints.
+- Added: Some additional pickup features, used only for keybearer hints.
 
 #### Logic Database
 
-- Fixed: Using the Turret in Sanctuary Entrance now accounts for being able to reload the room.
+##### Agon Wastes
+
+- Fixed: Security Station B: Removed unnecessary dangerous requirements and simplified connections.
+
+##### Dark Agon Wastes
+
+- Fixed: Portal Site: Removed unnecessary dangerous requirements.
+
+##### Temple Grounds
+
+- Fixed: GFMC: Removed unnecessary dangerous requirements.
+
+##### Torvus Bog
+
+- Fixed: Torvus Temple: Removed unnecessary dangerous requirements.
+- Fixed: Training Chamber: Removed unnecessary dangerous requirements.
+
+##### Sanctuary Fortress
+
+- Fixed: Sanctuary Entrance: Now accounts for being able to reload the room to use the cannon.
+
+##### Sky Temple Grounds
+
+- Fixed: Sky Temple Gateway: Removed unnecessary dangerous requirements.
 
 ### Metroid: Samus Returns
 
 - Added: Support for .cci rom files to use the same file for exporting and playing via Azahar.
 - Added: Featural hint support, where hints may refer to various Features of a pickup or of a location. Read the Hints section for more details.
+- Changed: Renamed the "Movement" Pickup category to "Jump Upgade". This was only used if a game in a Multiworld was hinting a Samus Returns pickup.
 - Changed: Dropped support for Citra and switched to Azahar.
 - Fixed: Reserve Tanks won't be hinted anymore.
-- Removed: Redundant Pickup Hint Features.
+- Removed: The Missile Related, Morph Ball Related, Beam Related and Key pickup features. These were only used if a game in a Multiworld was hinting a Samus Returns pickup.
 
 ## [10.2.0] - 2025-10-02
 

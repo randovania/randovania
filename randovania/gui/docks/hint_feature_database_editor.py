@@ -25,6 +25,8 @@ class HintFeatureDatabaseModel(AppendableEditableTableModel[HintFeature]):
                 to_qt=lambda v: v.description,
                 from_qt=lambda v: (True, HintDetails("", v)),
             ),
+            BoolFieldDefinition("Random hints?", "random_hint_target"),
+            BoolFieldDefinition("Specific hints?", "specific_hint_target"),
             BoolFieldDefinition("Hidden?", "hidden"),
             FieldDefinition[str, str]("Description", "description"),
         ]

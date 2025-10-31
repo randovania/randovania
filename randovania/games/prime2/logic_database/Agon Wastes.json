@@ -11713,12 +11713,10 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Command Center (First)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Event20",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -11756,26 +11754,8 @@
                                     {
                                         "type": "template",
                                         "data": "Shoot Dark Beam"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event20",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
-                            }
-                        },
-                        "Event - Security Station B DS Appearance": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event20",
-                                "amount": 1,
-                                "negate": true
                             }
                         }
                     }
@@ -11806,12 +11786,10 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Command Center (Second)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Event20",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Main Reactor": {
@@ -11822,24 +11800,8 @@
                                     {
                                         "type": "template",
                                         "data": "Shoot Dark Beam"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event20",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
-                            }
-                        },
-                        "Event - Security Station B DS Appearance": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         },
                         "Event - Main Reactor Reloaded via Security Station B": {
@@ -11849,34 +11811,6 @@
                                 "name": "Event18",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        }
-                    }
-                },
-                "Event - Security Station B DS Appearance": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Event20",
-                    "connections": {
-                        "Door to Command Center (Second)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Command Center (First)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -11893,7 +11827,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event89",
                     "connections": {
-                        "Door to Command Center (Second)": {
+                        "Door to Command Center (First)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
