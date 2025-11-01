@@ -3,20 +3,16 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.exporter.hints import guaranteed_item_hint
-from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.game_description.db.hint_node import HintNode
-from randovania.games.prime2.exporter.joke_hints import ECHOES_JOKE_HINTS
 from randovania.games.prime2.patcher import echoes_items
 
 if TYPE_CHECKING:
-    from random import Random
-
+    from randovania.exporter.hints.hint_exporter import HintExporter
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
-    from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
     from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
@@ -30,12 +26,8 @@ def create_simple_logbook_hint(asset_id: int, hint: str) -> dict:
 def create_patches_hints(
     all_patches: dict[int, GamePatches],
     players_config: PlayersConfiguration,
-    region_list: RegionList,
-    namer: HintNamer,
-    rng: Random,
+    exporter: HintExporter,
 ) -> list:
-    exporter = HintExporter(namer, rng, ECHOES_JOKE_HINTS)
-
     hints_for_asset: dict[NodeIdentifier, str] = {}
     for identifier, hint in all_patches[players_config.player_index].hints.items():
         hints_for_asset[identifier] = exporter.create_message_for_hint(hint, True)
@@ -45,7 +37,7 @@ def create_patches_hints(
             logbook_node.extra["string_asset_id"],
             hints_for_asset.get(logbook_node.identifier, "Someone forgot to leave a message."),
         )
-        for logbook_node in region_list.iterate_nodes_of_type(HintNode)
+        for _, _, logbook_node in exporter.owner_game_view.iterate_nodes_of_type(HintNode)
     ]
 
 
@@ -109,7 +101,7 @@ def create_stk_hints(
     ]
 
 
-def hide_stk_hints(namer: EchoesHintNamer) -> list:
+def hide_stk_hints(namer: HintNamer) -> list:
     """
     Creates the string patches entries that changes the Sky Temple Gateway hint scans with hints for
     completely useless text.

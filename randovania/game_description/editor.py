@@ -48,7 +48,8 @@ class Editor:
         current_connections = area.connections[from_node]
 
         if requirement is None:
-            del area.connections[from_node][target_node]
+            if target_node in area.connections[from_node]:
+                del area.connections[from_node][target_node]
         else:
             area.connections[from_node][target_node] = requirement
 

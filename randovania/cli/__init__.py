@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import os
 import sys
 import typing
 from argparse import ArgumentParser
@@ -45,13 +46,18 @@ def create_parser() -> ArgumentParser:
 def _run_args(parser: ArgumentParser, args: Namespace) -> int:
     if args.configuration is not None:
         randovania.CONFIGURATION_FILE_PATH = args.configuration.absolute()
+        os.environ["RANDOVANIA_CONFIGURATION_PATH"] = str(args.configuration)
 
     if args.func is None:
         parser.print_help()
         raise SystemExit(1)
 
     logging.debug("Executing from args...")
-    return args.func(args) or 0
+    try:
+        return args.func(args) or 0
+    except KeyboardInterrupt:
+        print("Quitting due to requested interrupt.")
+        return 2
 
 
 def run_pytest(argv: list[str]) -> None:

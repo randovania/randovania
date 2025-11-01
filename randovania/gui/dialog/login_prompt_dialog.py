@@ -6,7 +6,6 @@ import textwrap
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-import qrcode
 from PySide6 import QtGui, QtWidgets
 from PySide6.QtWidgets import QDialog
 from qasync import asyncSlot
@@ -82,6 +81,8 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
     @asyncSlot()
     @handle_network_errors
     async def on_login_with_discord_button(self) -> None:
+        import qrcode
+
         previous = self.discord_button.isEnabled()
         try:
             self.discord_button.setEnabled(False)

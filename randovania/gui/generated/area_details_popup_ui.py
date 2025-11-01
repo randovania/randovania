@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'area_details_popup.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogBu
     QHBoxLayout, QLabel, QLineEdit, QPlainTextEdit,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
-from randovania.gui.lib.hint_feature_list_view import HintFeatureListView
+from randovania.gui.widgets.hint_feature_list_view import HintFeatureListView
 
 class Ui_AreaDetailsPopup(object):
     def setupUi(self, AreaDetailsPopup):

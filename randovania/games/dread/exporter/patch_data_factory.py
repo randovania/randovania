@@ -263,12 +263,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         return details
 
     def _encode_hints(self) -> list[dict]:
-        exporter = self.get_hint_exporter(
-            self.description.all_patches,
-            self.players_config,
-            self.rng,
-            GENERIC_JOKE_HINTS,
-        )
+        exporter = self.create_hint_exporter(GENERIC_JOKE_HINTS)
 
         return [
             {
@@ -312,7 +307,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         return text
 
     def _credits_spoiler(self) -> dict[str, str]:
-        return credits_spoiler.generic_credits(
+        return credits_spoiler.generic_string_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
             self.players_config,

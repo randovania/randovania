@@ -369,7 +369,7 @@ async def distribute_post_fill_weaknesses(
 
     path_to_area = {
         player: distances_to_node(
-            state.region_list,
+            filler_results.player_results[player].game,
             state.node,
             [],
             patches=new_patches[player],

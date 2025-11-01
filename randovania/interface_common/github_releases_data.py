@@ -9,6 +9,7 @@ import aiofiles
 import aiohttp
 
 from randovania.interface_common import persistence
+from randovania.lib import http_lib
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -44,7 +45,7 @@ async def _read_from_persisted() -> list[dict] | None:
 
 
 async def _download_from_github(page_size: int = 100) -> list[dict] | None:
-    async with aiohttp.ClientSession() as session:
+    async with http_lib.http_session() as session:
         try:
             result = []
 

@@ -1,6 +1,6 @@
 import contextlib
 import datetime
-from unittest.mock import ANY, MagicMock
+from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
 import pytest_mock
@@ -23,20 +23,22 @@ from randovania.server.database import AsyncRaceAuditEntry, AsyncRaceEntry, Asyn
 from randovania.server.server_app import ServerApp
 
 
-def test_verify_authorization_no_password(simple_room):
+async def test_verify_authorization_no_password(simple_room):
     # Setup
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
 
     # Run
-    room_api._verify_authorization(sa, simple_room, "AuthToken")
+    await room_api._verify_authorization(sa, "", simple_room, "AuthToken")
 
     # Assert
     sa.decrypt_dict.assert_not_called()
 
 
-def test_verify_authorization_password_valid(simple_room):
+async def test_verify_authorization_password_valid(simple_room):
     # Setup
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.decrypt_dict.return_value = {
         "room_id": simple_room.id,
         "time": datetime.datetime.now().timestamp(),
@@ -44,15 +46,16 @@ def test_verify_authorization_password_valid(simple_room):
     simple_room.password = "SomePassword"
 
     # Run
-    room_api._verify_authorization(sa, simple_room, "AuthToken")
+    await room_api._verify_authorization(sa, "", simple_room, "AuthToken")
 
     # Assert
     sa.decrypt_dict.assert_called_once_with("AuthToken")
 
 
-def test_verify_authorization_password_wrong_room(simple_room):
+async def test_verify_authorization_password_wrong_room(simple_room):
     # Setup
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.decrypt_dict.return_value = {
         "room_id": 1234,
         "time": datetime.datetime.now().timestamp(),
@@ -61,15 +64,16 @@ def test_verify_authorization_password_wrong_room(simple_room):
 
     # Run
     with pytest.raises(error.NotAuthorizedForActionError):
-        room_api._verify_authorization(sa, simple_room, "AuthToken")
+        await room_api._verify_authorization(sa, "", simple_room, "AuthToken")
 
     # Assert
     sa.decrypt_dict.assert_called_once_with("AuthToken")
 
 
-def test_verify_authorization_token_too_old(simple_room):
+async def test_verify_authorization_token_too_old(simple_room):
     # Setup
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.decrypt_dict.return_value = {
         "room_id": simple_room.id,
         "time": 0,
@@ -78,27 +82,28 @@ def test_verify_authorization_token_too_old(simple_room):
 
     # Run
     with pytest.raises(error.NotAuthorizedForActionError):
-        room_api._verify_authorization(sa, simple_room, "AuthToken")
+        await room_api._verify_authorization(sa, "", simple_room, "AuthToken")
 
     # Assert
     sa.decrypt_dict.assert_called_once_with("AuthToken")
 
 
-def test_verify_authorization_unexpected_error(simple_room):
+async def test_verify_authorization_unexpected_error(simple_room):
     # Setup
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.decrypt_dict.return_value = {}
     simple_room.password = "SomePassword"
 
     # Run
     with pytest.raises(error.NotAuthorizedForActionError):
-        room_api._verify_authorization(sa, simple_room, "AuthToken")
+        await room_api._verify_authorization(sa, "", simple_room, "AuthToken")
 
     # Assert
     sa.decrypt_dict.assert_called_once_with("AuthToken")
 
 
-def test_list_rooms(simple_room, mocker: pytest_mock.MockFixture):
+async def test_list_rooms(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     sa = MagicMock()
     mocker.patch(
@@ -107,7 +112,7 @@ def test_list_rooms(simple_room, mocker: pytest_mock.MockFixture):
     )
 
     # Run
-    results = room_api.list_rooms(sa, None)
+    results = await room_api.list_rooms(sa, "", None)
 
     # Assert
     assert results == [
@@ -126,7 +131,7 @@ def test_list_rooms(simple_room, mocker: pytest_mock.MockFixture):
     ]
 
 
-def test_create_room(clean_database, test_files_dir, mocker: pytest_mock.MockFixture):
+async def test_create_room(clean_database, test_files_dir, mocker: pytest_mock.MockFixture):
     # Setup
     mocker.patch(
         "randovania.server.lib.datetime_now",
@@ -135,6 +140,7 @@ def test_create_room(clean_database, test_files_dir, mocker: pytest_mock.MockFix
 
     user1 = User.create(id=1234, name="The Name")
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = user1
 
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime2_seed_b.rdvgame"))
@@ -149,7 +155,7 @@ def test_create_room(clean_database, test_files_dir, mocker: pytest_mock.MockFix
     ).as_json
 
     # Run
-    result = room_api.create_room(sa, layout_bin, settings_json)
+    result = await room_api.create_room(sa, "", layout_bin, settings_json)
 
     # Assert
     assert result == {
@@ -170,7 +176,7 @@ def test_create_room(clean_database, test_files_dir, mocker: pytest_mock.MockFix
     }
 
 
-def test_change_room_settings_wrong_user(simple_room, mocker: pytest_mock.MockFixture):
+async def test_change_room_settings_wrong_user(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     mocker.patch(
         "randovania.server.lib.datetime_now",
@@ -178,6 +184,7 @@ def test_change_room_settings_wrong_user(simple_room, mocker: pytest_mock.MockFi
     )
 
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1235)
 
     settings_json = AsyncRaceSettings(
@@ -191,10 +198,10 @@ def test_change_room_settings_wrong_user(simple_room, mocker: pytest_mock.MockFi
 
     # Run
     with pytest.raises(error.NotAuthorizedForActionError):
-        room_api.change_room_settings(sa, simple_room.id, settings_json)
+        await room_api.change_room_settings(sa, "", simple_room.id, settings_json)
 
 
-def test_change_room_settings_back_in_time(simple_room, mocker: pytest_mock.MockFixture):
+async def test_change_room_settings_back_in_time(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     mocker.patch(
         "randovania.server.lib.datetime_now",
@@ -206,6 +213,7 @@ def test_change_room_settings_back_in_time(simple_room, mocker: pytest_mock.Mock
     # end_date = datetime.datetime(2020, 6, 10, 0, 0, tzinfo=datetime.UTC),
 
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1234)
 
     settings_json = AsyncRaceSettings(
@@ -219,15 +227,16 @@ def test_change_room_settings_back_in_time(simple_room, mocker: pytest_mock.Mock
 
     # Run
     with pytest.raises(error.InvalidActionError, match="Can't go back in time for race status"):
-        room_api.change_room_settings(sa, simple_room.id, settings_json)
+        await room_api.change_room_settings(sa, "", simple_room.id, settings_json)
 
 
-def test_change_room_settings_valid(simple_room, mocker: pytest_mock.MockFixture):
+async def test_change_room_settings_valid(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     now = datetime.datetime(year=2019, month=5, day=12, tzinfo=datetime.UTC)
     mocker.patch("randovania.server.lib.datetime_now", return_value=now)
 
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1234)
 
     settings_json = AsyncRaceSettings(
@@ -240,7 +249,7 @@ def test_change_room_settings_valid(simple_room, mocker: pytest_mock.MockFixture
     ).as_json
 
     # Run
-    result = room_api.change_room_settings(sa, simple_room.id, settings_json)
+    result = await room_api.change_room_settings(sa, "", simple_room.id, settings_json)
 
     # Assert
     assert result == {
@@ -262,7 +271,7 @@ def test_change_room_settings_valid(simple_room, mocker: pytest_mock.MockFixture
 
 
 @pytest.mark.parametrize("password", [None, "Something"])
-def test_get_room_valid_password(simple_room, mocker: pytest_mock.MockFixture, password: str | None):
+async def test_get_room_valid_password(simple_room, mocker: pytest_mock.MockFixture, password: str | None):
     # Setup
     now = datetime.datetime(year=2019, month=5, day=12, tzinfo=datetime.UTC)
     mocker.patch("randovania.server.lib.datetime_now", return_value=now)
@@ -271,10 +280,11 @@ def test_get_room_valid_password(simple_room, mocker: pytest_mock.MockFixture, p
     simple_room.save()
 
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1234)
 
     # Run
-    result = room_api.get_room(sa, simple_room.id, password)
+    result = await room_api.get_room(sa, "", simple_room.id, password)
 
     # Assert
     assert result == {
@@ -296,7 +306,7 @@ def test_get_room_valid_password(simple_room, mocker: pytest_mock.MockFixture, p
 
 
 @pytest.mark.parametrize("has_password", [False, True])
-def test_get_room_wrong_password(simple_room, has_password: bool):
+async def test_get_room_wrong_password(simple_room, has_password: bool):
     # Setup
     if has_password:
         simple_room.password = "Something"
@@ -308,26 +318,28 @@ def test_get_room_wrong_password(simple_room, has_password: bool):
     simple_room.save()
 
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1234)
 
     with pytest.raises(error.WrongPasswordError):
-        room_api.get_room(sa, simple_room.id, used_password)
+        await room_api.get_room(sa, "", simple_room.id, used_password)
 
 
-def test_refresh_room(simple_room, mocker: pytest_mock.MockFixture):
+async def test_refresh_room(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     now = datetime.datetime(year=2019, month=5, day=12, tzinfo=datetime.UTC)
     mocker.patch("randovania.server.lib.datetime_now", return_value=now)
     mock_verify = mocker.patch("randovania.server.async_race.room_api._verify_authorization")
 
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1234)
 
     # Run
-    result = room_api.refresh_room(sa, simple_room.id, "AuthTokenx")
+    result = await room_api.refresh_room(sa, "", simple_room.id, "AuthTokenx")
 
     # Assert
-    mock_verify.assert_called_once_with(sa, simple_room, "AuthTokenx")
+    mock_verify.assert_awaited_once_with(sa, "", simple_room, "AuthTokenx")
     assert result == {
         "id": 1,
         "auth_token": ANY,
@@ -381,7 +393,7 @@ VALID_TRANSITIONS = {
 
 @pytest.mark.parametrize("after_state", list(AsyncRaceRoomUserStatus))
 @pytest.mark.parametrize("before_state", list(AsyncRaceRoomUserStatus))
-def test_change_state(
+async def test_change_state(
     simple_room,
     mocker: pytest_mock.MockFixture,
     before_state,
@@ -418,7 +430,7 @@ def test_change_state(
 
     # Run
     with expectation:
-        room_api.change_state(sa, room.id, after_state.value)
+        await room_api.change_state(sa, "", room.id, after_state.value)
 
     # Assert
     if before_state != AsyncRaceRoomUserStatus.NOT_MEMBER:
@@ -428,7 +440,7 @@ def test_change_state(
         assert AsyncRaceEntry.entry_for(room, user).start_datetime == now
 
 
-def test_get_leaderboard_too_early(simple_room, mocker: pytest_mock.MockFixture):
+async def test_get_leaderboard_too_early(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     now = datetime.datetime(year=2019, month=5, day=12, tzinfo=datetime.UTC)
     mocker.patch("randovania.server.lib.datetime_now", return_value=now)
@@ -437,10 +449,10 @@ def test_get_leaderboard_too_early(simple_room, mocker: pytest_mock.MockFixture)
 
     # Run
     with pytest.raises(error.NotAuthorizedForActionError):
-        room_api.get_leaderboard(sa, simple_room.id, "")
+        await room_api.get_leaderboard(sa, "", simple_room.id, "")
 
 
-def test_get_leaderboard(simple_room, mocker: pytest_mock.MockFixture):
+async def test_get_leaderboard(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     now = datetime.datetime(year=2021, month=5, day=12, tzinfo=datetime.UTC)
     mocker.patch("randovania.server.lib.datetime_now", return_value=now)
@@ -483,7 +495,7 @@ def test_get_leaderboard(simple_room, mocker: pytest_mock.MockFixture):
     sa = MagicMock(spec=ServerApp)
 
     # Run
-    result = RaceRoomLeaderboard.from_json(room_api.get_leaderboard(sa, room.id, ""))
+    result = RaceRoomLeaderboard.from_json(await room_api.get_leaderboard(sa, "", room.id, ""))
 
     # Assert
     assert result == RaceRoomLeaderboard(
@@ -498,57 +510,61 @@ def test_get_leaderboard(simple_room, mocker: pytest_mock.MockFixture):
     )
 
 
-def test_get_layout_too_early(simple_room, mocker: pytest_mock.MockFixture):
+async def test_get_layout_too_early(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     now = datetime.datetime(year=2019, month=5, day=12, tzinfo=datetime.UTC)
     mocker.patch("randovania.server.lib.datetime_now", return_value=now)
     mock_verify = mocker.patch("randovania.server.async_race.room_api._verify_authorization")
 
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1234)
 
     # Run
     with pytest.raises(error.NotAuthorizedForActionError):
-        room_api.get_layout(sa, simple_room.id, "AuthTokenx")
+        await room_api.get_layout(sa, "", simple_room.id, "AuthTokenx")
 
     # Assert
-    mock_verify.assert_called_once_with(sa, simple_room, "AuthTokenx")
+    mock_verify.assert_awaited_once_with(sa, "", simple_room, "AuthTokenx")
 
 
-def test_get_layout_valid(simple_room, mocker: pytest_mock.MockFixture):
+async def test_get_layout_valid(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     now = datetime.datetime(year=2021, month=5, day=12, tzinfo=datetime.UTC)
     mocker.patch("randovania.server.lib.datetime_now", return_value=now)
     mock_verify = mocker.patch("randovania.server.async_race.room_api._verify_authorization")
 
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1234)
 
     # Run
-    result = room_api.get_layout(sa, simple_room.id, "AuthTokenx")
+    result = await room_api.get_layout(sa, "", simple_room.id, "AuthTokenx")
 
     # Assert
-    mock_verify.assert_called_once_with(sa, simple_room, "AuthTokenx")
+    mock_verify.assert_awaited_once_with(sa, "", simple_room, "AuthTokenx")
     assert result == simple_room.layout_description_json
 
 
-def test_admin_get_admin_data_non_admin(simple_room):
+async def test_admin_get_admin_data_non_admin(simple_room):
     # Setup
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1235)
 
     # Run
     with pytest.raises(error.NotAuthorizedForActionError):
-        room_api.admin_get_admin_data(sa, simple_room.id)
+        await room_api.admin_get_admin_data(sa, "", simple_room.id)
 
 
-def test_admin_get_admin_data(simple_room):
+async def test_admin_get_admin_data(simple_room):
     # Setup
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1234)
 
     # Run
-    result = room_api.admin_get_admin_data(sa, simple_room.id)
+    result = await room_api.admin_get_admin_data(sa, "", simple_room.id)
 
     # Assert
     assert result == {
@@ -567,22 +583,24 @@ def test_admin_get_admin_data(simple_room):
     }
 
 
-def test_admin_update_entries_admin_only(simple_room):
+async def test_admin_update_entries_admin_only(simple_room):
     # Setup
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1235)
 
     # Run
     with pytest.raises(error.NotAuthorizedForActionError):
-        room_api.admin_update_entries(sa, simple_room.id, [])
+        await room_api.admin_update_entries(sa, "", simple_room.id, [])
 
 
-def test_admin_update_entries(simple_room, mocker: pytest_mock.MockFixture):
+async def test_admin_update_entries(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     now = datetime.datetime(year=2019, month=5, day=12, tzinfo=datetime.UTC)
     mocker.patch("randovania.server.lib.datetime_now", return_value=now)
 
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1234)
 
     new_entries = [
@@ -599,7 +617,7 @@ def test_admin_update_entries(simple_room, mocker: pytest_mock.MockFixture):
     ]
 
     # Run
-    result = room_api.admin_update_entries(sa, simple_room.id, new_entries)
+    result = await room_api.admin_update_entries(sa, "", simple_room.id, new_entries)
 
     # Assert
     assert result == {
@@ -623,22 +641,23 @@ def test_admin_update_entries(simple_room, mocker: pytest_mock.MockFixture):
     ]
 
 
-def test_join_and_export_too_early(simple_room, mocker: pytest_mock.MockFixture):
+async def test_join_and_export_too_early(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     now = datetime.datetime(year=2019, month=5, day=12, tzinfo=datetime.UTC)
     mocker.patch("randovania.server.lib.datetime_now", return_value=now)
     mock_verify = mocker.patch("randovania.server.async_race.room_api._verify_authorization")
 
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1234)
 
     with pytest.raises(error.NotAuthorizedForActionError):
-        room_api.join_and_export(sa, simple_room.id, "AuthTokenz", {})
+        await room_api.join_and_export(sa, "", simple_room.id, "AuthTokenz", {})
 
-    mock_verify.assert_called_once_with(sa, simple_room, "AuthTokenz")
+    mock_verify.assert_awaited_once_with(sa, "", simple_room, "AuthTokenz")
 
 
-def test_join_and_export_success(simple_room, mocker: pytest_mock.MockFixture):
+async def test_join_and_export_success(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     now = datetime.datetime(year=2020, month=5, day=12, tzinfo=datetime.UTC)
     mocker.patch("randovania.server.lib.datetime_now", return_value=now)
@@ -646,19 +665,21 @@ def test_join_and_export_success(simple_room, mocker: pytest_mock.MockFixture):
     mock_verify = mocker.patch("randovania.server.async_race.room_api._verify_authorization")
 
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1234)
 
     # Run
-    result = room_api.join_and_export(sa, simple_room.id, "AuthTokenz", {})
+    result = await room_api.join_and_export(sa, "", simple_room.id, "AuthTokenz", {})
 
     # Assert
-    mock_verify.assert_called_once_with(sa, simple_room, "AuthTokenz")
+    mock_verify.assert_awaited_once_with(sa, "", simple_room, "AuthTokenz")
     assert result is mock_data.return_value
 
 
-def test_get_own_proof(simple_room):
+async def test_get_own_proof(simple_room):
     # Setup
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1235)
 
     entry = AsyncRaceEntry.entry_for(simple_room, sa.get_current_user.return_value)
@@ -666,36 +687,39 @@ def test_get_own_proof(simple_room):
     entry.save()
 
     # Run
-    notes, url = room_api.get_own_proof(sa, simple_room.id)
+    notes, url = await room_api.get_own_proof(sa, "", simple_room.id)
 
     # Assert
     assert notes == ""
     assert url == ""
 
 
-def test_submit_proof_not_joined(simple_room):
+async def test_submit_proof_not_joined(simple_room):
     # Setup
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1234)
 
     # Run
     with pytest.raises(error.NotAuthorizedForActionError):
-        room_api.submit_proof(sa, simple_room.id, "notes", "")
+        await room_api.submit_proof(sa, "", simple_room.id, "notes", "")
 
 
-def test_submit_proof_not_finished(simple_room):
+async def test_submit_proof_not_finished(simple_room):
     # Setup
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1235)
 
     # Run
     with pytest.raises(error.InvalidActionError, match="Only possible to submit proof after finishing"):
-        room_api.submit_proof(sa, simple_room.id, "notes", "")
+        await room_api.submit_proof(sa, "", simple_room.id, "notes", "")
 
 
-def test_submit_proof_valid(simple_room):
+async def test_submit_proof_valid(simple_room):
     # Setup
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1235)
 
     entry = AsyncRaceEntry.entry_for(simple_room, sa.get_current_user.return_value)
@@ -703,7 +727,7 @@ def test_submit_proof_valid(simple_room):
     entry.save()
 
     # Run
-    room_api.submit_proof(sa, simple_room.id, "notes", "")
+    await room_api.submit_proof(sa, "", simple_room.id, "notes", "")
 
     # Assert
     entry = AsyncRaceEntry.entry_for(simple_room, sa.get_current_user.return_value)
@@ -715,9 +739,10 @@ def test_submit_proof_valid(simple_room):
     ]
 
 
-def test_get_audit_log(simple_room, mocker: pytest_mock.MockFixture):
+async def test_get_audit_log(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     sa = MagicMock()
+    sa.get_current_user = AsyncMock()
     sa.get_current_user.return_value = User.get_by_id(1235)
     mock_verify = mocker.patch("randovania.server.async_race.room_api._verify_authorization")
 
@@ -729,10 +754,10 @@ def test_get_audit_log(simple_room, mocker: pytest_mock.MockFixture):
     )
 
     # Run
-    result = room_api.get_audit_log(sa, simple_room.id, "AuthTokenx")
+    result = await room_api.get_audit_log(sa, "", simple_room.id, "AuthTokenx")
 
     # Assert
-    mock_verify.assert_called_once_with(sa, simple_room, "AuthTokenx")
+    mock_verify.assert_awaited_once_with(sa, "", simple_room, "AuthTokenx")
     assert result == [
         {"user": "The Player", "message": "Someone did a thing", "time": "2020-05-12T00:00:00+00:00"},
     ]

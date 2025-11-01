@@ -2173,6 +2173,41 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Morph Jump Extend: https://youtu.be/hbxt0FJyjWs",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "MorphBall",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "JumpExtends",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -2728,10 +2763,6 @@
                     },
                     {
                         "x": 20,
-                        "y": 8
-                    },
-                    {
-                        "x": 21,
                         "y": 8
                     }
                 ]
@@ -4390,6 +4421,10 @@
                     {
                         "x": 11,
                         "y": 10
+                    },
+                    {
+                        "x": 12,
+                        "y": 8
                     }
                 ]
             },
@@ -6711,7 +6746,8 @@
         "Operations Ventilation": {
             "default_node": null,
             "hint_features": [
-                "climbable"
+                "climbable",
+                "geron"
             ],
             "extra": {
                 "map_name": "Main Deck35",
@@ -7349,6 +7385,10 @@
                     38
                 ],
                 "minimap_coordinates": [
+                    {
+                        "x": 21,
+                        "y": 8
+                    },
                     {
                         "x": 22,
                         "y": 8
@@ -8436,7 +8476,9 @@
         },
         "Sub-Zero Containment": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "extreme-temp"
+            ],
             "extra": {
                 "map_name": "Main Deck46",
                 "room_id": [
@@ -10701,7 +10743,9 @@
         },
         "Auxiliary Power Station": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "systems_console"
+            ],
             "extra": {
                 "map_name": "Main Deck54",
                 "room_id": [
@@ -12599,7 +12643,9 @@
                     "pickup_index": 120,
                     "location_category": "major",
                     "custom_index_group": null,
-                    "hint_features": [],
+                    "hint_features": [
+                        "systems_console"
+                    ],
                     "connections": {
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "and",

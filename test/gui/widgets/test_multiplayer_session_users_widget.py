@@ -31,11 +31,13 @@ def test_widgets_in_normal_session(skip_qtbot, preset_manager):
                 preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
+                has_been_beaten=True,
             ),
             MultiplayerWorld(
                 name="W2",
                 id=u2,
                 preset_raw=json.dumps(preset_manager.default_preset.as_json),
+                has_been_beaten=False,
             ),
             MultiplayerWorld(
                 name="W3",
@@ -43,6 +45,7 @@ def test_widgets_in_normal_session(skip_qtbot, preset_manager):
                 preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
+                has_been_beaten=False,
             ),
         ],
         users_list=[
@@ -124,6 +127,8 @@ def test_widgets_in_normal_session(skip_qtbot, preset_manager):
     assert p_a.childCount() == p_b.childCount() == 2
     assert p_a.child(0).text(0) == "W1"
     assert p_b.child(0).text(0) == "W2"
+    assert p_a.child(0).text(6) == "Beaten"
+    assert p_b.child(0).text(6) == ""
     unclaimed = root.child(2)
     assert unclaimed.text(0) == "Unclaimed Worlds"
     assert unclaimed.childCount() == 1
@@ -145,11 +150,13 @@ def test_widgets_in_coop_session(skip_qtbot, preset_manager):
                 preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
+                has_been_beaten=True,
             ),
             MultiplayerWorld(
                 name="W2",
                 id=u2,
                 preset_raw=json.dumps(preset_manager.default_preset.as_json),
+                has_been_beaten=False,
             ),
             MultiplayerWorld(
                 name="W3",
@@ -157,6 +164,7 @@ def test_widgets_in_coop_session(skip_qtbot, preset_manager):
                 preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
+                has_been_beaten=False,
             ),
         ],
         users_list=[
@@ -247,8 +255,11 @@ def test_widgets_in_coop_session(skip_qtbot, preset_manager):
     assert p_a.childCount() == 3
     assert p_a.child(0).text(0) == "W1"
     assert p_a.child(1).text(0) == "W2"
+    assert p_a.child(0).text(6) == "Beaten"
+    assert p_a.child(1).text(6) == ""
     assert p_b.text(0) == "Player B"
     assert p_b.child(0).text(0) == "W2"
+    assert p_b.child(1).text(6) == ""
     assert p_b.childCount() == 2
     unclaimed = root.child(2)
     assert unclaimed.text(0) == "Unclaimed Worlds"

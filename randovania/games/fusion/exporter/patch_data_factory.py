@@ -8,7 +8,6 @@ from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
-from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
@@ -217,10 +216,9 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         return palette_dict
 
     def _create_nav_text(self) -> dict:
-        nav_text_json = {}
-        namer = FusionHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(namer, self.rng, FUSION_JOKE_HINTS)
+        exporter = self.create_hint_exporter(FUSION_JOKE_HINTS)
 
+        nav_text_json = {}
         artifacts = [self.game.resource_database.get_item(f"Infant Metroid {i + 1}") for i in range(20)]
 
         metroid_precision = self.configuration.hints.specific_pickup_hints["artifacts"]
@@ -230,7 +228,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             metroid_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                namer,
+                exporter.namer,
                 True if metroid_precision == SpecificPickupHintMode.HIDE_AREA else False,
                 artifacts,
                 True,
@@ -239,7 +237,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             charge_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                namer,
+                exporter.namer,
                 True if charge_precision == SpecificPickupHintMode.HIDE_AREA else False,
                 [self.game.resource_database.get_item("ChargeBeam")],
                 True,
@@ -373,12 +371,17 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
     def _credits_elements(self) -> defaultdict[str, list[dict]]:
         elements = defaultdict(list)
-        majors = credits_spoiler.get_locations_for_major_pickups_and_keys(
-            self.description.all_patches, self.players_config
+        majors = credits_spoiler.generic_credits(
+            self.configuration.standard_pickup_configuration, self.description.all_patches, self.players_config
         )
 
-        for pickup, locations in majors.items():
+        for pickup, locations in majors:
             for location in locations:
+                # Special case for special messages
+                if isinstance(location, str):
+                    elements[pickup.name].append({"World": None, "Region": "", "Area": location})
+                    continue
+
                 region_list = default_database.game_description_for(location.location.game).region_list
                 pickup_node = region_list.node_from_pickup_index(location.location.location)
                 elements[pickup.name].append(

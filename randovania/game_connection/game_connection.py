@@ -16,10 +16,8 @@ if TYPE_CHECKING:
     import uuid
 
     from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-    from randovania.game_connection.connector.remote_connector import RemoteConnector
+    from randovania.game_connection.connector.remote_connector import PlayerLocationEvent, RemoteConnector
     from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-    from randovania.game_description.db.area import Area
-    from randovania.game_description.db.region import Region
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.interface_common.options import Options
     from randovania.interface_common.world_database import WorldDatabase
@@ -32,6 +30,7 @@ class ConnectedGameState:
     status: GameConnectionStatus
     current_inventory: Inventory = dataclasses.field(default_factory=Inventory.empty)
     collected_indices: set[PickupIndex] = dataclasses.field(default_factory=set)
+    has_been_beaten: bool = False
 
 
 class GameConnection:
@@ -126,6 +125,7 @@ class GameConnection:
         connector.PlayerLocationChanged.connect(functools.partial(self._on_player_location_changed, connector))
         connector.PickupIndexCollected.connect(functools.partial(self._on_pickup_index_collected, connector))
         connector.InventoryUpdated.connect(functools.partial(self._on_inventory_updated, connector))
+        connector.GameHasBeenBeaten.connect(functools.partial(self._on_game_beaten, connector))
         self.GameStateUpdated.emit(self._ensure_connected_state_exists(connector))
 
     def _handle_connector_removed(self, connector: RemoteConnector) -> None:
@@ -141,12 +141,10 @@ class GameConnection:
             )
         return self.connected_states[connector]
 
-    def _on_player_location_changed(
-        self, connector: RemoteConnector, location: tuple[Region | None, Area | None]
-    ) -> None:
+    def _on_player_location_changed(self, connector: RemoteConnector, location: PlayerLocationEvent) -> None:
         connected_state = self._ensure_connected_state_exists(connector)
-        world, area = location
-        if world is None:
+        region, area = location
+        if region is None:
             connected_state.status = GameConnectionStatus.TitleScreen
         else:
             connected_state.status = GameConnectionStatus.InGame
@@ -160,6 +158,11 @@ class GameConnection:
     def _on_inventory_updated(self, connector: RemoteConnector, inventory: Inventory) -> None:
         connected_state = self._ensure_connected_state_exists(connector)
         connected_state.current_inventory = inventory
+        self.GameStateUpdated.emit(connected_state)
+
+    def _on_game_beaten(self, connector: RemoteConnector) -> None:
+        connected_state = self._ensure_connected_state_exists(connector)
+        connected_state.has_been_beaten = True
         self.GameStateUpdated.emit(connected_state)
 
     def get_builder_for_connector(self, connector: RemoteConnector) -> ConnectorBuilder:

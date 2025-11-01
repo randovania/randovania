@@ -56,7 +56,12 @@ def _hints() -> randovania.game.hints.GameHints:
 
     return randovania.game.hints.GameHints(
         hint_distributor=generator.HuntersHintDistributor(),
-        specific_pickup_hints={},
+        specific_pickup_hints={
+            "octoliths": randovania.game.hints.SpecificHintDetails(
+                long_name="Octolith Hints",
+                description="This controls how precise the Octolith hints in Alimbic Cannon Control Room are.",
+            ),
+        },
     )
 
 
@@ -88,12 +93,13 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     faq=[],
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=(
-            "Everything",
-            "Nothing",
+            "All items, excluding Octoliths",
+            "Force Fields",
+            "Portals",
         ),
         need_to_play=(
-            "A Nintendo Virtual Boy",
-            "Your original Virtual Boy Game Cartridge",
+            "A ROM of Metroid Prime Hunters",
+            "A Nintendo DS emulator or flashcart",
         ),
     ),
     hash_words=_hash_words(),

@@ -33,4 +33,5 @@ GENERIC_JOKE_HINTS = [
     "By the time you finished reading this hint, you already could have been further ahead.",
     "What is a hint? A miserable little pile of secrets!",
     "They say that not all hints are useful.",
+    "You get nothing! You lose! Good day, sir!",
 ]

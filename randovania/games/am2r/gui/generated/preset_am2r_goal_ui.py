@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'preset_am2r_goal.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QGroupBox, QHBoxLayout,
     QSizePolicy, QSlider, QSpacerItem, QVBoxLayout,
     QWidget)
 
-from randovania.gui.lib.scroll_protected import ScrollProtectedSlider
+from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
 
 class Ui_PresetAM2RGoal(object):
     def setupUi(self, PresetAM2RGoal):

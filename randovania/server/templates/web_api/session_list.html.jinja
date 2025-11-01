@@ -1,0 +1,52 @@
+{% extends "layout.html.jinja" %}
+
+{% block title %}
+	Sessions
+{% endblock %}
+
+{% block header %}
+	Sessions
+{% endblock header %}
+
+{% block content %}
+	<div class="main-content__body" data-lead-id="main-content-body">
+		<table>
+            <thead>
+                <td>Name</td>
+                <td>Creator</td>
+                <td>Creation Date</td>
+                <td>Num Users</td>
+                <td>Num Worlds</td>
+                <td>Has Password?</td>
+            </thead>
+            <tbody>
+                {% for session in sessions %}
+                    <tr>
+                        <td><a href="{{ url_for('admin_session', session_id=session.id) }}">
+                            {{ session.name }}
+                        </a></td>
+                        <td>{{ session.creator.name }}</td>
+                        <td>{{ session.creation_datetime.strftime("%H:%M %Z, %d %b %Y") }}</td>
+                        <td>{{ session.members | length }}</td>
+                        <td>{{ session.worlds | length }}</td>
+                        <td>{{ session.password != None }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>
+            Page {{ page }} of {{ page_count }}.
+            {% if page > 1 %}
+                <a href="{{ url_for('admin_sessions') }}?page={{ page - 1 }}">Previous</a>
+            {% else %}
+                Previous
+            {% endif %}
+            /
+            {% if page < page_count %}
+                <a href="{{ url_for('admin_sessions') }}?page={{ page + 1 }}">Next</a>
+            {% else %}
+                Next
+            {% endif %}
+        </p>
+	</div>
+{% endblock content %}

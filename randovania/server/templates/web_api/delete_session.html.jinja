@@ -1,0 +1,19 @@
+{% extends "layout.html.jinja" %}
+
+{% block title %}
+	Delete Session
+{% endblock %}
+
+{% block header %}
+	Delete Session
+{% endblock header %}
+
+{% block content %}
+	<div class="main-content__body" data-lead-id="main-content-body">
+		<p>Delete session {{ session.name }}?</p>
+        <form>
+            <button type="submit" formmethod="post">Confirm delete</button>
+            <button type="submit" formaction="{{ url_for('admin_session', session_id=session.id) }}">Cancel</button>
+        </form>
+	</div>
+{% endblock content %}

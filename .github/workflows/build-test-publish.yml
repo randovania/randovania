@@ -36,9 +36,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.8.22"
+          version: "0.9.5"
           enable-cache: true
 
       - name: Set up Python
@@ -48,7 +48,7 @@ jobs:
         run: uv build
 
       - name: Upload wheel
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v5.0.0
         with:
           name: Python Package
           if-no-files-found: error
@@ -69,9 +69,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.8.22"
+          version: "0.9.5"
           enable-cache: true
 
       - name: Set up Python
@@ -103,7 +103,7 @@ jobs:
       matrix:
         os:
           - { name: "Linux", image: ubuntu-latest }
-          - { name: "macOS", image: macos-13 }
+          - { name: "macOS", image: macos-latest }
           - { name: "Windows", image: windows-latest }
         is_merge_queue:
           - ${{ github.event_name == 'merge_queue' }}
@@ -114,20 +114,12 @@ jobs:
           - is_merge_queue: true
             os: { name: "Linux", image: ubuntu-latest }
           - is_merge_queue: true
-            os: { name: "macOS", image: macos-13 }
+            os: { name: "macOS", image: macos-latest }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
 
     name: ${{ matrix.os.name }}
-
-    env:
-      # Due to https://github.com/eventlet/eventlet/issues/670, merely importing eventlet during a test running with
-      # pytest-async causes an error. Settings EVENTLET_IMPORT_VERSION_ONLY allows us to avoid that error, but this
-      # instead causes the flask_socketio to fail importing. Setting FLASK_RUN_FROM_CLI causes it to default to the
-      # threading async method instead, avoiding the issue
-      EVENTLET_IMPORT_VERSION_ONLY: ${{ matrix.os.image == 'macos-13' && '1' || '0' }}
-      FLASK_RUN_FROM_CLI: ${{ matrix.os.image == 'macos-13' && '1' || '0' }}
 
     steps:
       - name: Checkout
@@ -136,9 +128,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.8.22"
+          version: "0.9.5"
           enable-cache: true
 
       - name: Set up Python
@@ -179,7 +171,7 @@ jobs:
       matrix:
         os:
           - { name: "Linux", image: ubuntu-latest }
-          - { name: "macOS", image: macos-13 }
+          - { name: "macOS", image: macos-latest }
           - { name: "Windows", image: windows-latest }
 
         is_merge_queue:
@@ -191,20 +183,12 @@ jobs:
           - is_merge_queue: true
             os: { name: "Linux", image: ubuntu-latest }
           - is_merge_queue: true
-            os: { name: "macOS", image: macos-13 }
+            os: { name: "macOS", image: macos-latest }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
 
     name: ${{ matrix.os.name }} Executable
-
-    env:
-      # Due to https://github.com/eventlet/eventlet/issues/670, merely importing eventlet during a test running with
-      # pytest-async causes an error. Settings EVENTLET_IMPORT_VERSION_ONLY allows us to avoid that error, but this
-      # instead causes the flask_socketio to fail importing. Setting FLASK_RUN_FROM_CLI causes it to default to the
-      # threading async method instead, avoiding the issue
-      EVENTLET_IMPORT_VERSION_ONLY: ${{ matrix.os.image == 'macos-13' && '1' || '0' }}
-      FLASK_RUN_FROM_CLI: ${{ matrix.os.image == 'macos-13' && '1' || '0' }}
 
     steps:
       - name: Checkout
@@ -213,9 +197,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.8.22"
+          version: "0.9.5"
           enable-cache: true
 
       - name: Set up Python
@@ -228,8 +212,12 @@ jobs:
       - name: Install Python packages
         run: uv sync --locked --extra gui --extra exporters --extra test --group installer
 
+      - name: Prepare macOS venv for universal2 build
+        run: uv run tools/bundle_macos_universal_wheels.py && uv pip install universal_wheels/*.whl
+        if: matrix.os.image == 'macos-latest'
+
       - name: create executable
-        run: uv run tools/create_release.py
+        run: uv run --no-sync tools/create_release.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OBFUSCATOR_SECRET: ${{ secrets.OBFUSCATOR_SECRET }}
@@ -252,7 +240,7 @@ jobs:
 
       - name: Upload artifacts
         if: ${{ (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v5.0.0
         with:
           name: Randovania ${{ matrix.os.name }} Executable
           if-no-files-found: error
@@ -271,7 +259,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Download the executable
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: Randovania Windows Executable
           path: packages/
@@ -351,7 +339,7 @@ jobs:
           $project.Build();
 
       - name: Upload installer
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v5.0.0
         with:
           name: Randovania Windows Installer
           if-no-files-found: error
@@ -369,16 +357,16 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.8.22"
+          version: "0.9.5"
           enable-cache: true
 
       - name: Set up Python
         uses: actions/setup-python@v6
 
       - name: Download the executable
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: Randovania Linux Executable
           path: packages/
@@ -455,7 +443,7 @@ jobs:
       -
         name: Login to DockerHub
         if: ${{ fromJSON(steps.decide_push.outputs.should) }}
-        uses: docker/login-action@v3.5.0
+        uses: docker/login-action@v3.6.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -501,16 +489,16 @@ jobs:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.8.22"
+          version: "0.9.5"
           enable-cache: true
 
       - name: Set up Python
         uses: actions/setup-python@v6
 
       - name: Download the executables
-        uses: actions/download-artifact@v5.0.0
+        uses: actions/download-artifact@v6.0.0
         with:
           pattern: '* *'
           path: packages/
@@ -600,6 +588,8 @@ jobs:
       - name: deploy server
         if: ${{ steps.decide_env.outputs.should_deploy == 'true' }}
         run: uv run tools/deploy_server.py
+        env:
+          OBFUSCATOR_SECRET: ${{ secrets.OBFUSCATOR_SECRET }}
 
       - name: update deployment status
         uses: bobheadxi/deployments@v1.5.0

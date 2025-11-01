@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'debug_connector_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -28,7 +28,7 @@ class Ui_DebugConnectorWindow(object):
         self.central_widget = QWidget(DebugConnectorWindow)
         self.central_widget.setObjectName(u"central_widget")
         self.central_widget.setMaximumSize(QSize(16777215, 16777215))
-        self.central_widget.setLayoutDirection(Qt.LeftToRight)
+        self.central_widget.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         self.grid_layout = QGridLayout(self.central_widget)
         self.grid_layout.setSpacing(6)
         self.grid_layout.setContentsMargins(11, 11, 11, 11)
@@ -50,7 +50,7 @@ class Ui_DebugConnectorWindow(object):
 
         self.messages_list = QListView(self.central_widget)
         self.messages_list.setObjectName(u"messages_list")
-        self.messages_list.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.messages_list.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
 
         self.grid_layout.addWidget(self.messages_list, 0, 2, 4, 2)
 
@@ -77,10 +77,15 @@ class Ui_DebugConnectorWindow(object):
 
         self.grid_layout.addWidget(self.inventory_table_view, 2, 0, 1, 2)
 
+        self.beat_game_button = QPushButton(self.central_widget)
+        self.beat_game_button.setObjectName(u"beat_game_button")
+
+        self.grid_layout.addWidget(self.beat_game_button, 1, 0, 1, 1)
+
         DebugConnectorWindow.setCentralWidget(self.central_widget)
         self.menuBar = QMenuBar(DebugConnectorWindow)
         self.menuBar.setObjectName(u"menuBar")
-        self.menuBar.setGeometry(QRect(0, 0, 697, 17))
+        self.menuBar.setGeometry(QRect(0, 0, 697, 23))
         DebugConnectorWindow.setMenuBar(self.menuBar)
 
         self.retranslateUi(DebugConnectorWindow)
@@ -94,5 +99,6 @@ class Ui_DebugConnectorWindow(object):
         self.reset_button.setText(QCoreApplication.translate("DebugConnectorWindow", u"Finish", None))
         self.collect_randomly_check.setText(QCoreApplication.translate("DebugConnectorWindow", u"Collect locations randomly periodically", None))
         self.current_location_label.setText(QCoreApplication.translate("DebugConnectorWindow", u"Current Location", None))
+        self.beat_game_button.setText(QCoreApplication.translate("DebugConnectorWindow", u"Beat Game", None))
     # retranslateUi
 

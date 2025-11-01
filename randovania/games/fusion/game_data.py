@@ -58,11 +58,11 @@ def _hints() -> randovania.game.hints.GameHints:
         hint_distributor=FusionHintDistributor(),
         specific_pickup_hints={
             "artifacts": randovania.game.hints.SpecificHintDetails(
-                long_name="Infant Metroids",
+                long_name="Infant Metroids Hint",
                 description="This controls how precise the Infant Metroids hint at Restricted Labs is.",
             ),
             "charge_beam": randovania.game.hints.SpecificHintDetails(
-                long_name="Charge Beam",
+                long_name="Charge Beam Hint",
                 description="This controls how precise the hint for Charge Beam in Auxiliary Navigation Room is.",
             ),
         },

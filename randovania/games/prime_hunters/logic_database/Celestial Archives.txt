@@ -1,10 +1,10 @@
 ----------------
-Biodefense Chamber A
+Biodefense Chamber 01
 Extra - room_id: 55
 Extra - entity_file: Unit2_b1_Ent.bin
-> Door to Stronghold Void A; Heals? False
+> Door to Stronghold Void A (Celestial Archives); Heals? False
   * Layers: default
-  * Normal Door to Stronghold Void A/Door to Biodefense Chamber A
+  * Normal Door to Stronghold Void A (Celestial Archives)/Door to Biodefense Chamber 01
   * Extra - entity_id: 1
   * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -0.89990234375, 'z': 10.0})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -37,18 +37,18 @@ Extra - entity_file: Unit2_b1_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.03466796875, 'y': 0.0, 'z': -0.999267578125})
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
-  > Door to Stronghold Void A
+  > Door to Stronghold Void A (Celestial Archives)
       After Celestial Archives - Defeat Cretaphid v1
   > Event - Cretaphid v1
       Trivial
 
 ----------------
-Biodefense Chamber B
+Biodefense Chamber 05
 Extra - room_id: 64
 Extra - entity_file: Unit2_b2_Ent.bin
-> Door to Stronghold Void B; Heals? False
+> Door to Stronghold Void B (Celestial Archives); Heals? False
   * Layers: default
-  * Normal Door to Stronghold Void B/Door to Biodefense Chamber B
+  * Normal Door to Stronghold Void B (Celestial Archives)/Door to Biodefense Chamber 05
   * Extra - entity_id: 4
   * Extra - position: frozendict.frozendict({'x': 0.0, 'y': 2.479248046875, 'z': 17.3896484375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -81,7 +81,7 @@ Extra - entity_file: Unit2_b2_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
-  > Door to Stronghold Void B
+  > Door to Stronghold Void B (Celestial Archives)
       After Celestial Archives - Defeat Slench 3
   > Event - Slench 3
       Battlehammer
@@ -121,6 +121,8 @@ Extra - entity_file: unit2_C0_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'node_name': 'port_rmjump', 'palette_id': 9, 'door_type': 0, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
   > Door to Helm Room (Hallway Door East)
       Trivial
+  > Event - Unlock Scan Door (East)
+      Trivial
 
 > Door to Celestial Gateway; Heals? False
   * Layers: default
@@ -134,7 +136,7 @@ Extra - entity_file: unit2_C0_Ent.bin
       Trivial
   > Door to Helm Room (Hallway Door West)
       After CA - Helm Room Scan Door Unlocked
-  > Event - Unlock Scan Door
+  > Event - Unlock Scan Door (West)
       Trivial
 
 > Door to Helm Room (Hallway Door West); Heals? False
@@ -170,10 +172,16 @@ Extra - entity_file: unit2_C0_Ent.bin
   > Door to Helm Room (Psycho Bits Room Door West)
       Trivial
 
-> Event - Unlock Scan Door; Heals? False
+> Event - Unlock Scan Door (West); Heals? False
   * Layers: default
   * Event CA - Helm Room Scan Door Unlocked
   > Door to Celestial Gateway
+      Trivial
+
+> Event - Unlock Scan Door (East); Heals? False
+  * Layers: default
+  * Event CA - Helm Room Scan Door Unlocked
+  > Door to Helm Room (Psycho Bits Room Door West)
       Trivial
 
 ----------------
@@ -326,9 +334,9 @@ Extra - portal_filename: unit2_C4_Ent
   > Event - Ship Deck Portal Unlocked
       Trivial
 
-> Portal to Stronghold Void A; Heals? False
+> Portal to Stronghold Void A (Celestial Archives); Heals? False
   * Layers: default
-  * Portal to Stronghold Void A/Portal to Synergy Core; Custom name: Celestial Archives - Synergy Core (Stronghold Void A Portal)
+  * Portal to Stronghold Void A (Celestial Archives)/Portal to Synergy Core; Custom name: Celestial Archives - Synergy Core (Stronghold Void A Portal)
   * Extra - entity_id: 2
   * Extra - position: frozendict.frozendict({'x': 31.341552734375, 'y': 14.1943359375, 'z': -17.767578125})
   * Extra - up_vector: frozendict.frozendict({'x': -0.062744140625, 'y': 0.997802734375, 'z': 0.0})
@@ -415,7 +423,7 @@ Extra - portal_filename: unit2_C4_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.808837890625, 'y': 0.0, 'z': 0.587646484375})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': 'port_rmRory', 'palette_id': 9, 'door_type': 0, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
-  > Portal to Stronghold Void A
+  > Portal to Stronghold Void A (Celestial Archives)
       Celestial Attameter Artifact 1 and Celestial Binary Subscripture Artifact 1 and Celestial Cartograph Artifact 1
 
 > Door to Synergy Core (Shield Key Room Door East); Heals? False
@@ -627,9 +635,9 @@ Extra - portal_filename: unit2_C7_Ent
   > Middle Section
       Trivial
 
-> Portal to Stronghold Void B; Heals? False
+> Portal to Stronghold Void B (Celestial Archives); Heals? False
   * Layers: default
-  * Portal to Stronghold Void B/Portal to New Arrival Registration; Custom name: Celestial Archives - New Arrival Registration (Stronghold Void B Portal)
+  * Portal to Stronghold Void B (Celestial Archives)/Portal to New Arrival Registration; Custom name: Celestial Archives - New Arrival Registration (Stronghold Void B Portal)
   * Extra - entity_id: 24
   * Extra - position: frozendict.frozendict({'x': -63.405029296875, 'y': 21.0, 'z': -43.697998046875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -674,7 +682,7 @@ Extra - portal_filename: unit2_C7_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.70703125, 'y': 0.0, 'z': 0.70703125})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': 'port_rmUgly', 'palette_id': 9, 'door_type': 0, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
-  > Portal to Stronghold Void B
+  > Portal to Stronghold Void B (Celestial Archives)
       Celestial Attameter Artifact 2 and Celestial Binary Subscripture Artifact 2 and Celestial Cartograph Artifact 2
 
 > Middle Section; Heals? False
@@ -829,7 +837,7 @@ Extra - entity_file: unit2_RM1_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 2, 'door_type': 0, 'connector_id': 10, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 1, 'out_loader_id': 117, 'entity_filename': 'unit2_C1_Ent.bi', 'room_name': 'unit2_C1_Ent.bi'})
   > Player Spawn
       Trivial
-  > Door to Data Shrine 01 (Outer Room Door SW)
+  > Door to Data Shrine 01 (Outer Room Door SE)
       Trivial
 
 > Door to Fan Room Alpha; Heals? False
@@ -840,7 +848,7 @@ Extra - entity_file: unit2_RM1_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 11, 'target_layer_id': 1, 'locked': True, 'out_connector_id': 2, 'out_loader_id': 117, 'entity_filename': 'unit2_C2_Ent.bi', 'room_name': 'unit2_C2_Ent.bi'})
-  > Door to Data Shrine 01 (Outer Room Door NE)
+  > Door to Data Shrine 01 (Outer Room Door NW)
       Trivial
   > Pickup (Energy Tank)
       Trivial
@@ -866,9 +874,9 @@ Extra - entity_file: unit2_RM1_Ent.bin
   > Door to Meditation Room
       Trivial
 
-> Door to Data Shrine 01 (Outer Room Door SW); Heals? False
+> Door to Data Shrine 01 (Outer Room Door SE); Heals? False
   * Layers: default
-  * Normal Door to Data Shrine 01/Door to Data Shrine 01 (Inner Room Door SW)
+  * Normal Door to Data Shrine 01/Door to Data Shrine 01 (Inner Room Door SE)
   * Extra - entity_id: 8
   * Extra - position: frozendict.frozendict({'x': 17.9140625, 'y': 3.53271484375, 'z': 17.9140625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -877,9 +885,9 @@ Extra - entity_file: unit2_RM1_Ent.bin
   > Door to Meditation Room
       Trivial
 
-> Door to Data Shrine 01 (Outer Room Door NE); Heals? False
+> Door to Data Shrine 01 (Outer Room Door NW); Heals? False
   * Layers: default
-  * Normal Door to Data Shrine 01/Door to Data Shrine 01 (Inner Room Door NE)
+  * Normal Door to Data Shrine 01/Door to Data Shrine 01 (Inner Room Door NW)
   * Extra - entity_id: 9
   * Extra - position: frozendict.frozendict({'x': -17.9140625, 'y': 3.53271484375, 'z': -17.9140625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -903,9 +911,9 @@ Extra - entity_file: unit2_RM1_Ent.bin
   * Layers: default
   > Event - Shield Key
       Trivial
-  > Door to Data Shrine 01 (Inner Room Door SW)
+  > Door to Data Shrine 01 (Inner Room Door SE)
       After CA - Data Shrine 01 Shield Key Collected
-  > Door to Data Shrine 01 (Inner Room Door NE)
+  > Door to Data Shrine 01 (Inner Room Door NW)
       After CA - Data Shrine 01 Shield Key Collected
 
 > Event - Shield Key; Heals? False
@@ -916,9 +924,9 @@ Extra - entity_file: unit2_RM1_Ent.bin
   > Inner Room
       Trivial
 
-> Door to Data Shrine 01 (Inner Room Door SW); Heals? False
+> Door to Data Shrine 01 (Inner Room Door SE); Heals? False
   * Layers: default
-  * Normal Door to Data Shrine 01/Door to Data Shrine 01 (Outer Room Door SW)
+  * Normal Door to Data Shrine 01/Door to Data Shrine 01 (Outer Room Door SE)
   * Extra - entity_id: 8
   * Extra - position: frozendict.frozendict({'x': 17.9140625, 'y': 3.53271484375, 'z': 17.9140625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -927,9 +935,9 @@ Extra - entity_file: unit2_RM1_Ent.bin
   > Inner Room
       Trivial
 
-> Door to Data Shrine 01 (Inner Room Door NE); Heals? False
+> Door to Data Shrine 01 (Inner Room Door NW); Heals? False
   * Layers: default
-  * Normal Door to Data Shrine 01/Door to Data Shrine 01 (Outer Room Door NE)
+  * Normal Door to Data Shrine 01/Door to Data Shrine 01 (Outer Room Door NW)
   * Extra - entity_id: 9
   * Extra - position: frozendict.frozendict({'x': -17.9140625, 'y': 3.53271484375, 'z': -17.9140625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -1136,7 +1144,7 @@ Extra - entity_file: unit2_RM3_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 11, 'target_layer_id': 1, 'locked': True, 'out_connector_id': 6, 'out_loader_id': 117, 'entity_filename': 'unit2_C4_Ent.bi', 'room_name': 'unit2_C4_Ent.bi'})
-  > Door to Data Shrine 03 (Outer Room Door SW)
+  > Door to Data Shrine 03 (Outer Room Door SE)
       Trivial
 
 > Door to Fan Room Beta; Heals? False
@@ -1147,7 +1155,7 @@ Extra - entity_file: unit2_RM3_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 10, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 5, 'out_loader_id': 117, 'entity_filename': 'unit2_C3_Ent.bi', 'room_name': 'unit2_C3_Ent.bi'})
-  > Door to Data Shrine 03 (Outer Room Door SE)
+  > Door to Data Shrine 03 (Outer Room Door NE)
       Trivial
 
 > Pickup (Attameter Artifact); Heals? False
@@ -1161,9 +1169,9 @@ Extra - entity_file: unit2_RM3_Ent.bin
   > Inner Room
       Trivial
 
-> Door to Data Shrine 03 (Outer Room Door SE); Heals? False
+> Door to Data Shrine 03 (Outer Room Door NE); Heals? False
   * Layers: default
-  * Normal Door to Data Shrine 03/Door to Data Shrine 03 (Inner Room Door SE)
+  * Normal Door to Data Shrine 03/Door to Data Shrine 03 (Inner Room Door NE)
   * Extra - entity_id: 4
   * Extra - position: frozendict.frozendict({'x': 17.9140625, 'y': 3.53271484375, 'z': -17.9140625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -1172,9 +1180,9 @@ Extra - entity_file: unit2_RM3_Ent.bin
   > Door to Fan Room Beta
       Trivial
 
-> Door to Data Shrine 03 (Outer Room Door SW); Heals? False
+> Door to Data Shrine 03 (Outer Room Door SE); Heals? False
   * Layers: default
-  * Normal Door to Data Shrine 03/Door to Data Shrine 03 (Inner Room Door SW)
+  * Normal Door to Data Shrine 03/Door to Data Shrine 03 (Inner Room Door SE)
   * Extra - entity_id: 7
   * Extra - position: frozendict.frozendict({'x': 17.9140625, 'y': 3.53271484375, 'z': 17.9140625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -1199,9 +1207,9 @@ Extra - entity_file: unit2_RM3_Ent.bin
       After CA - Data Shrine 03 Kanden Defeated
   > Event - Kanden Defeated
       Trivial
-  > Door to Data Shrine 03 (Inner Room Door SE)
+  > Door to Data Shrine 03 (Inner Room Door NE)
       After CA - Data Shrine 03 Kanden Defeated
-  > Door to Data Shrine 03 (Inner Room Door SW)
+  > Door to Data Shrine 03 (Inner Room Door SE)
       After CA - Data Shrine 03 Kanden Defeated
 
 > Event - Kanden Defeated; Heals? False
@@ -1210,9 +1218,9 @@ Extra - entity_file: unit2_RM3_Ent.bin
   > Inner Room
       Trivial
 
-> Door to Data Shrine 03 (Inner Room Door SE); Heals? False
+> Door to Data Shrine 03 (Inner Room Door NE); Heals? False
   * Layers: default
-  * Normal Door to Data Shrine 03/Door to Data Shrine 03 (Outer Room Door SE)
+  * Normal Door to Data Shrine 03/Door to Data Shrine 03 (Outer Room Door NE)
   * Extra - entity_id: 4
   * Extra - position: frozendict.frozendict({'x': 17.9140625, 'y': 3.53271484375, 'z': -17.9140625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -1221,9 +1229,9 @@ Extra - entity_file: unit2_RM3_Ent.bin
   > Inner Room
       Trivial
 
-> Door to Data Shrine 03 (Inner Room Door SW); Heals? False
+> Door to Data Shrine 03 (Inner Room Door SE); Heals? False
   * Layers: default
-  * Normal Door to Data Shrine 03/Door to Data Shrine 03 (Outer Room Door SW)
+  * Normal Door to Data Shrine 03/Door to Data Shrine 03 (Outer Room Door SE)
   * Extra - entity_id: 7
   * Extra - position: frozendict.frozendict({'x': 17.9140625, 'y': 3.53271484375, 'z': 17.9140625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -1376,6 +1384,8 @@ Extra - portal_filename: unit2_RM5_Ent
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 22, 'target_index': 24, 'artifact_id': 10, 'active': False, 'invisible': False, 'entity_filename': 'unit2_RM6_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Lower Level
       Trivial
+  > Upper Level
+      Trivial
 
 > Portal to Docking Bay (Behind Force Field); Heals? False
   * Layers: default
@@ -1407,8 +1417,6 @@ Extra - portal_filename: unit2_RM5_Ent
       After CA - Incubation Vault 01 Guardians Defeated
   > Portal to Incubation Vault 01 (Lower Level)
       After CA - Incubation Vault 01 Guardians Defeated
-  > Portal to Incubation Vault 02 (Artifact Shield)
-      After CA - Incubation Vault 01 Guardians Defeated
   > Shock Coil Force Field
       Trivial
   > Upper Level
@@ -1425,6 +1433,8 @@ Extra - portal_filename: unit2_RM5_Ent
   > Portal to Incubation Vault 02 (Bridge)
       After CA - Incubation Vault 01 Guardians Defeated
   > Pickup (Attameter Artifact)
+      After CA - Incubation Vault 01 Guardians Defeated
+  > Portal to Incubation Vault 02 (Artifact Shield)
       After CA - Incubation Vault 01 Guardians Defeated
   > Lower Level
       Trivial
@@ -1456,6 +1466,8 @@ Extra - portal_filename: unit2_RM6_Ent
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Portal to Docking Bay
+      After CA - Incubation Vault 02 Guardians Defeated
+  > Portal to Incubation Vault 03
       After CA - Incubation Vault 02 Guardians Defeated
   > Portal to Incubation Vault 01 (Lower Level)
       After CA - Incubation Vault 02 Guardians Defeated
@@ -1498,7 +1510,7 @@ Extra - portal_filename: unit2_RM6_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.939453125, 'y': 0.0, 'z': -0.341796875})
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 25, 'target_index': 30, 'artifact_id': 10, 'active': False, 'invisible': False, 'entity_filename': 'unit2_RM7_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
-  > Upper Level
+  > Lower Level
       Trivial
 
 > Pickup (Shock Coil); Heals? False
@@ -1819,7 +1831,7 @@ Extra - portal_filename: unit2_RM8_Ent
       Trivial
 
 ----------------
-Stronghold Void A
+Stronghold Void A (Celestial Archives)
 Extra - room_id: 54
 Extra - entity_file: Unit2_TP1_Ent.bin
 Extra - portal_filename: Unit2_TP1_Ent
@@ -1835,7 +1847,7 @@ Extra - portal_filename: Unit2_TP1_Ent
 
 > Portal to Synergy Core; Heals? False
   * Layers: default
-  * Portal to Synergy Core/Portal to Stronghold Void A
+  * Portal to Synergy Core/Portal to Stronghold Void A (Celestial Archives)
   * Extra - entity_id: 1
   * Extra - position: frozendict.frozendict({'x': 0.37109375, 'y': 0.222412109375, 'z': 65.701904296875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -1843,12 +1855,12 @@ Extra - portal_filename: Unit2_TP1_Ent
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 2, 'target_index': 2, 'artifact_id': 255, 'active': True, 'invisible': False, 'entity_filename': 'unit2_C4_Ent.b', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
-  > Door to Biodefense Chamber A
+  > Door to Biodefense Chamber 01
       Trivial
 
-> Door to Biodefense Chamber A; Heals? False
+> Door to Biodefense Chamber 01; Heals? False
   * Layers: default
-  * Normal Door to Biodefense Chamber A/Door to Stronghold Void A
+  * Normal Door to Biodefense Chamber 01/Door to Stronghold Void A (Celestial Archives)
   * Extra - entity_id: 2
   * Extra - position: frozendict.frozendict({'x': 0.12158203125, 'y': 1.657470703125, 'z': 6.73046875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -1858,7 +1870,7 @@ Extra - portal_filename: Unit2_TP1_Ent
       Trivial
 
 ----------------
-Stronghold Void B
+Stronghold Void B (Celestial Archives)
 Extra - room_id: 63
 Extra - entity_file: Unit2_TP2_Ent.bin
 Extra - portal_filename: Unit2_TP2_Ent
@@ -1874,7 +1886,7 @@ Extra - portal_filename: Unit2_TP2_Ent
 
 > Portal to New Arrival Registration; Heals? False
   * Layers: default
-  * Portal to New Arrival Registration/Portal to Stronghold Void B
+  * Portal to New Arrival Registration/Portal to Stronghold Void B (Celestial Archives)
   * Extra - entity_id: 1
   * Extra - position: frozendict.frozendict({'x': 0.37109375, 'y': 0.222412109375, 'z': 65.701904296875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -1882,12 +1894,12 @@ Extra - portal_filename: Unit2_TP2_Ent
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 3, 'target_index': 3, 'artifact_id': 255, 'active': True, 'invisible': False, 'entity_filename': 'unit2_C7_Ent.b', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
-  > Door to Biodefense Chamber B
+  > Door to Biodefense Chamber 05
       Trivial
 
-> Door to Biodefense Chamber B; Heals? False
+> Door to Biodefense Chamber 05; Heals? False
   * Layers: default
-  * Normal Door to Biodefense Chamber B/Door to Stronghold Void B
+  * Normal Door to Biodefense Chamber 05/Door to Stronghold Void B (Celestial Archives)
   * Extra - entity_id: 2
   * Extra - position: frozendict.frozendict({'x': 0.12158203125, 'y': 1.657470703125, 'z': 6.73046875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})

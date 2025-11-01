@@ -14,6 +14,7 @@ class ServerWorldSync:
     collected_locations: tuple[int, ...]
     inventory: bytes | None  # frozendict[str, InventoryItem], but pre-encoded
     request_details: bool
+    has_been_beaten: bool
 
 
 @dataclasses.dataclass(frozen=True)

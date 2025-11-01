@@ -23498,17 +23498,67 @@
                             }
                         },
                         "Event - ArbEnky Blob West": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Beam"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "This piece of logic is here so help the generator not break the dangerous blob for no reason.",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "node",
+                                                                "data": {
+                                                                    "region": "Artaria",
+                                                                    "area": "Navigation Station North",
+                                                                    "node": "Save Station"
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Slide",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Beam"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -26442,6 +26492,15 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "Speedbooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ArtariaSARotatable",
                                             "amount": 1,
                                             "negate": false
                                         }

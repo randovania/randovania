@@ -109,7 +109,7 @@ def test_location_precision(
     }
 
     # Run
-    feature_chooser = hint_distributor.get_location_feature_chooser(blank_game_patches, pickup_node)
+    feature_chooser = hint_distributor.get_location_feature_chooser(blank_game_patches, False, pickup_node)
     result = feature_chooser.feature_precisions()
 
     # filter for only features actually present on the pickup node

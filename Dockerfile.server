@@ -25,4 +25,4 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 VOLUME ["/data"]
 ENTRYPOINT ["/usr/src/app/.venv/bin/python", "-m", "randovania"]
-CMD ["--configuration", "/data/configuration.json", "server", "flask"]
+CMD ["--configuration", "/data/configuration.json", "server", "run"]

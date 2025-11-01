@@ -5,7 +5,174 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.2.0] - 2025-10-??
+## [10.4.0] - 2025-12-??
+
+- Coming soon.
+
+## [10.3.0] - 2025-11-01
+
+- Added: The Multiworld Session will now display when a world has been beaten. This is supported for the following games:
+  - Another Metroid 2 Remake
+  - Metroid Dread
+  - Metroid Prime
+  - Metroid: Samus Returns
+- Added: 1 more joke hint.
+- Changed: Centered the text at the top of the Hints preset settings.
+- Changed: Cleaned up how Specific Pickup Hints are shown in the preset settings.
+- Changed: Places that describe a preset with Specific Pickup Hints have slightly better grammar in some cases.
+- Changed: The "Item Pool" tab is now called "Pickup Pool".
+- Changed: Random starting items is now Random starting pickups.
+- Changed: Minor pickups will not show in the credits anymore if you randomly started with them.
+- Fixed: Admins can now abort a Multiworld generation again.
+- Fixed: You can now abort a Multiworld generation again should you have been disconnected during the generation process.
+- Fixed: HTTPS errors due to invalid certificates in certain platforms.
+- Fixed: Eliminated some bias when picking hint features.
+
+### Another Metroid 2 Remake
+
+- Changed: When using Door Lock Rando with the Types mode, both sides will now always have the same door type.
+- Changed: Renamed the "a beam upgrade" pickup category to "a beam".
+
+### Factorio
+
+- Fixed: A typo on the "Changes" preset page.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Added: Extra requirements to break the blobs in Arbitrary Enky Room, to improve the quality of generated games.
+- Fixed: Screw Attack Room: Using a Shinespark to reach Start Point 2 from the door to Transport to Burenia was missing a requirement on having activated the Rotatable.
+
+### Metroid Fusion
+
+- Added: 4 new hint location features: guarded by a Tank-Mimic, near a Geron, in a room with extreme temperatures, and activating a B.S.L. Systems Console.
+- Added: 1 new pickup hint feature: Ice Related.
+- Removed: "Multiple Pickups" as a hint feature.
+- Fixed: "Security Shaft East" was missing from "Climbable Surface" feature hint.
+- Fixed: Starting Pickups will now also show up in the credits spoiler.
+
+#### Logic Database
+
+##### Main Deck
+
+- Added: Operations Deck: Reaching the top door via a Ludicrous Walljump and Ludicrous Jump Extend via Morphing.
+
+##### Sector 2 (TRO)
+
+- Added: Cathedral: Reaching the top part of the room from the bottom via Ludicrous Walljump and Ludicrous Jump Extend via Morphing.
+- Added: Overgrown Entrance: Reaching the Tunnel from the bottom with Hi-Jump, Ludicrous Jump Bomb Jump and Ludicrous Walljump.
+- Added: Level 1 Security Room: A way to reach the top left door from the top right door with Screw Attack, Ludicrous Walljump and Ludicrous Jump Extend via Morphing.
+- Added: Puyo Palace: From Cathedral to top floor, a Ludicrous chain of Walljump, bomb, pause buffer morph Jump Extend back, to Walljump into Jump Bomb Jump, repeated a couple times to ascend up the left side.
+- Changed: Crumble City: Collecting the upper Pickup now requires either Morph Ball or Beginner Movement to avoid softlocking.
+
+##### Sector 3 (PYR)
+
+- Added: Alcove: Reaching the top right door from the bottom right tunnel by ball jumping out of tunnel edge with either Spring Ball or Bombs and Advanced Walljumps.
+- Added: Alcove: From the bottom right of the room, reaching the top right door with Ludicrous Walljump and Ludicrous Jump Extend via Morphing.
+- Fixed: Alcove: Going from the bottom right of the room to the center with regular Bombs, now requires either Intermediate Mid-Air Morph, Beginner Mid-Air Morph with a jump upgrade, Springball or Intermediate Stand On Frozen Enemy.
+- Added: Namihe's Lair: Advanced Walljump and Damage Boost to escape the Pickup area by getting hit by the Namihe's projectile.
+- Added: Namihe's Lair: Expert Shinespark from Checkpoint Crossing Entrance to the Pickup.
+
+##### Sector 4 (AQA)
+
+- Added: Reservoir East: A Method from the room center to reach the right door using Hi-Jump, Expert Damage Boost and Expert Walljump. This is done by damage boosting off of a reformed Scizer's projectile to then Expert Walljump up to the monkey bars. If you have regular bombs, an Advanced Mid-Air Morph to break the bomb blocks and Walljump back up are also needed.
+- Added: Pump Control: An Expert Jump Bomb Jump and Walljump up into the Pickup exit tunnel.
+
+##### Sector 5 (ARC)
+
+- Changed: Nightmare Hub: Flooded Access to Ruined Break Room, raised Jump Bomb Jump from Intermediate to Advanced.
+- Changed: Gerubus Gully: Raised the Jump Bomb Jump to the Pickup from Intermediate to Advanced. In addition, you now also need to kill the Gerubus or have Combat Beginner.
+- Changed: Gerubus Gully: Getting the Pickup with Screw Attack now requires either Bombs or Ludicrous Movement. This is due to the fact that the game processes item acquisition on every other frame with it coming down to luck whether you collect the item on the correct frame to escape before the Bomb Block respawns.
+- Added: Gerubus Gully: Getting the Pickup with a Shinespark now requires either Bombs or Ludicrous Movement. See the explanation above as to why.
+- Added: Gerubus Gully: Getting the Pickup with Powerbombs now requires either Bombs, 2 Power Bomb or Ludicrous Movement. See the explanation above as to why.
+- Changed: Gerubus Gully: Raised Shinespark to Pickup trick difficulty from Beginner to Intermediate.
+
+### Metroid Prime
+
+- Fixed: Crash when entering Metroid Prime Lair while in Scan Visor
+- Fixed: Rare crash that can happen in any room
+- Fixed: Sheegoth intro cutscene not repositioning the player at the end if cutscene was not skipped in Chapel of the Elders
+- Fixed: Artifact Temple totem hitbox persisting after Meta Ridley death cutscene
+- Fixed: Sun Tower Access boxes being reloaded after performing Early Wild (inconsistent with vanilla)
+- Fixed: Incorrect Energy Core platform behavior if cutscene skipped on wrong frame
+- Fixed: Chozo music stopping upon entering Training Chamber
+- Fixed: Appearance of "Remove Bars in Great Tree Hall" patch
+- Changed: Charge and Charge Combo projectiles reflected from DLR doors no longer hurt the player
+- Changed: Adjusted timing of the jingle and text after acquiring the item at each of the 4 vanilla Power Bomb Expansion locations
+- Changed: Adjusted fit of main menu text to accommodate larger seed hashes
+- Changed: Adjusted fit of DLR Blast Shields over doors
+- Changed: Research Core cutscene camera angle will now be consistent regardless of the height of the placed pickup
+- Changed: The Elite Pirate in Dynamo Access will now appear on the first pass rather than only after Plasma Beam has been obtained. This makes the behaviour easier to understand and fixes cases where a game becomes logically impossible.
+
+#### Logic Database
+
+- Changed: Going through Open Passages doesn't require to shoot a beam anymore.
+
+##### Chozo Ruins
+
+- Fixed: Ruined Shrine: Removed unnecessary dangerous requirements.
+
+##### Phazon Mines
+
+- Changed: Fighting an Elite Pirate/Phazon Elite now has consistent requirements in Dynamo Access, Elite Control and Elite Research.
+- Changed: Adjusted the Requirements to fight and Elite Pirate/Phazon Elite to be more accurate.
+- Fixed: Metroid Quarantine A: Jumping to the Spider Track Bridge from the Door to Quarantine Access A now requires you to be able to shoot Ice Beam in order to freeze Metroids as opposed to just having it in your inventory.
+- Fixed: Metroid Quarantine A: Now correctly checks for the barrier to be lowered when going from Quarantine Access A to Front of Spider Track (Bridge).
+- Fixed: Metroid Quarantine A: Now correctly checks for the Enabled Backwards Lower Mines going from Front of Spider Track (Wall) to Quarantine Access A.
+
+##### Phendrana Drifts
+
+- Added: Chozo Ice Temple: Documentation for reaching the Chozo Statue NSJ.
+- Fixed: Chozo Ice Temple: Removed unnecessary dangerous requirements.
+- Fixed: Control Tower: Removed unnecessary dangerous requirements.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Expansions with negative value now properly remove items in-game.
+- Changed: Keybearer hints now randomly refer to a pickup feature, rather than targeting the same feature every time.
+- Changed: Some hint features are now only used for lore hints, not for keybearer hints.
+- Added: Some additional pickup features, used only for keybearer hints.
+
+#### Logic Database
+
+##### Agon Wastes
+
+- Fixed: Security Station B: Removed unnecessary dangerous requirements and simplified connections.
+
+##### Dark Agon Wastes
+
+- Fixed: Portal Site: Removed unnecessary dangerous requirements.
+
+##### Temple Grounds
+
+- Fixed: GFMC: Removed unnecessary dangerous requirements.
+
+##### Torvus Bog
+
+- Fixed: Torvus Temple: Removed unnecessary dangerous requirements.
+- Fixed: Training Chamber: Removed unnecessary dangerous requirements.
+
+##### Sanctuary Fortress
+
+- Fixed: Sanctuary Entrance: Now accounts for being able to reload the room to use the cannon.
+
+##### Sky Temple Grounds
+
+- Fixed: Sky Temple Gateway: Removed unnecessary dangerous requirements.
+
+### Metroid: Samus Returns
+
+- Added: Support for .cci rom files to use the same file for exporting and playing via Azahar.
+- Added: Featural hint support, where hints may refer to various Features of a pickup or of a location. Read the Hints section for more details.
+- Changed: Renamed the "Movement" Pickup category to "Jump Upgade". This was only used if a game in a Multiworld was hinting a Samus Returns pickup.
+- Changed: Dropped support for Citra and switched to Azahar.
+- Fixed: Reserve Tanks won't be hinted anymore.
+- Removed: The Missile Related, Morph Ball Related, Beam Related and Key pickup features. These were only used if a game in a Multiworld was hinting a Samus Returns pickup.
+
+## [10.2.0] - 2025-10-02
 
 - Added: A warning when trying to generate a Multiworld game if a preset requires all Pickups to be obtainable.
 - Added: Command line arguments for gathering statistics about a collection of generated games. These commands are intended for advanced uses only.
