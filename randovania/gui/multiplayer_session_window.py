@@ -1190,7 +1190,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             await async_dialog.execute_dialog(
                 LoginPromptDialog(
                     self.network_client,
-                    await self.network_client.authentication_methods(),
+                    await self.network_client.query_authentication_methods(),
                 )
             )
         else:

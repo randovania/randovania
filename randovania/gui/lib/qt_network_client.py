@@ -193,6 +193,6 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
         if self.current_user is None:
             from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 
-            await async_dialog.execute_dialog(LoginPromptDialog(self, await self.authentication_methods()))
+            await async_dialog.execute_dialog(LoginPromptDialog(self, await self.query_authentication_methods()))
 
         return self.current_user is not None

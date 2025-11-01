@@ -742,7 +742,7 @@ class NetworkClient:
         self._allow_reporting_username = value
         self._update_reported_username()
 
-    async def authentication_methods(self) -> set[AuthenticationMethod]:
+    async def query_authentication_methods(self) -> set[AuthenticationMethod]:
         async with self.server_get("authentication_methods") as response:
             response.raise_for_status()
             result = await response.json()
