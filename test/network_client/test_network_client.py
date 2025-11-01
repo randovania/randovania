@@ -362,15 +362,19 @@ async def test_on_disconnect(client: NetworkClient):
 
 async def test_create_new_session(client: NetworkClient, mocker: pytest_mock.MockerFixture):
     mock_session_from = mocker.patch("randovania.network_common.multiplayer_session.MultiplayerSessionEntry.from_json")
-    client.server_call = AsyncMock()
+    client.server_post = MagicMock(return_value=AsyncMock())
+    response = client.server_post.return_value.__aenter__.return_value
+    response.raise_for_status = MagicMock()
+    client.http.headers["X-Randovania-Sid"] = 1234
 
     # Run
     result = await client.create_new_session("The Session")
 
     # Assert
     assert result is mock_session_from.return_value
-    client.server_call.assert_awaited_once_with("multiplayer_create_session", "The Session")
-    mock_session_from.assert_called_once_with(client.server_call.return_value)
+    client.server_post.assert_called_once_with("session", json={"name": "The Session"})
+    mock_session_from.assert_called_once_with(response.json.return_value)
+    response.raise_for_status.assert_called_once_with()
     assert client._sessions_interested_in == {mock_session_from.return_value.id}
 
 
