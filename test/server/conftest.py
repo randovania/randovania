@@ -94,10 +94,19 @@ class RdvTestClient(TestClient):
         self.sa = app.sa
         super().__init__(app, *args)
 
+    def set_logged_in_user(self, user_id: int) -> None:
+        from randovania.server.user_session import _encrypt_session_for_user
+
+        self.headers["X-Randovania-Session"] = _encrypt_session_for_user(self.sa, {"user-id": user_id})
+
 
 @pytest.fixture(name="test_client")
 def test_client_fixture(server_app) -> Generator[RdvTestClient, None, None]:
-    with RdvTestClient(server_app.app) as client:
+    client = RdvTestClient(server_app.app)
+    with client:
+        database.db.database = client.sa.db.database
+        database.db.close()
+        assert database.db.connect()
         yield client
 
 

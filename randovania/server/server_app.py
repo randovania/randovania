@@ -28,6 +28,7 @@ from fastapi.templating import Jinja2Templates
 from prometheus_client import Summary
 from prometheus_fastapi_instrumentator import Instrumentator
 from starlette.middleware.sessions import SessionMiddleware
+from starlette.responses import JSONResponse
 from uvicorn.logging import ColourizedFormatter
 
 import randovania
@@ -64,6 +65,7 @@ ctx_context: ContextVar[str] = ContextVar("context", default="Free")
 
 class ServerLoggingFormatter(ColourizedFormatter):
     converter = time.gmtime  # type: ignore[assignment]
+
     # `time.gmtime` is actually `Callable[[float | None], struct_time]`, mypy seems just wrong
 
     def formatMessage(self, record: logging.LogRecord) -> str:
@@ -187,13 +189,21 @@ class ServerApp:
 
         @self.app.exception_handler(starlette.exceptions.HTTPException)
         async def http_exception_handler(request: fastapi.Request, exc: fastapi.HTTPException) -> fastapi.Response:
+            body = {
+                "status_message": status_message(exc.status_code),
+                "detail": exc.detail,
+            }
+
+            if self.is_api_request(request):
+                return JSONResponse(
+                    body,
+                    status_code=exc.status_code,
+                )
+
             return self.templates.TemplateResponse(
                 request,
                 "errors/http_error.html.jinja",
-                {
-                    "status_message": status_message(exc.status_code),
-                    "detail": exc.detail,
-                },
+                body,
                 status_code=exc.status_code,
             )
 
@@ -208,13 +218,21 @@ class ServerApp:
             else:
                 errors = [{"type": "error", "loc": ("query",), "msg": "Unknown error"}]
 
+            body = {
+                "status_message": status_message(status_code),
+                "errors": errors,
+            }
+
+            if self.is_api_request(request):
+                return JSONResponse(
+                    body,
+                    status_code=status_code,
+                )
+
             return self.templates.TemplateResponse(
                 request,
                 "errors/validation_error.html.jinja",
-                {
-                    "status_message": status_message(status_code),
-                    "errors": errors,
-                },
+                body,
                 status_code=status_code,
             )
 
@@ -394,6 +412,9 @@ class ServerApp:
         json_string = self.fernet_encrypt.decrypt(encrypted_session).decode("utf-8")
         return json.loads(json_string)
 
+    def is_api_request(self, request: fastapi.Request) -> bool:
+        return "application/json" in request.headers.get("accept", "")
+
 
 async def server_app(request: fastapi.Request) -> ServerApp:
     """Returns the request's ServerApp. Used for dependency injection ."""
@@ -406,38 +427,67 @@ ServerAppDep = Annotated[ServerApp, fastapi.Depends(server_app)]
 """The `ServerApp` handling this request."""
 
 
-def get_user(needs_admin: bool) -> AsyncCallable[[ServerAppDep, fastapi.Request], User]:
+async def get_user(
+    sa: ServerAppDep,
+    request: fastapi.Request,
+    x_randovania_session: Annotated[str | None, fastapi.Header()] = None,
+) -> User:
     """
-    Gets the User associated with the Request, and optionally checks admin permissions.
+    Gets the User associated with the Request.
     Used for dependency injection.
     """
 
-    async def handler(sa: ServerAppDep, request: fastapi.Request) -> User:
-        try:
-            user: User
-            if not sa.app.debug:
-                token = request.session.get("discord_oauth_token")
-                discord_user = await sa.discord.user(token)
-                user = User.get(discord_id=int(discord_user.id))
-                if user is None or (needs_admin and not user.admin):
-                    raise fastapi.HTTPException(status_code=403, detail="User not authorized")
-            else:
-                user = User.get()
+    user_id: int | None = request.session.get("user_id")
+    discord_token = request.session.get("discord_oauth_token")
 
-            return user
+    # TODO: check for user tokens
+    # A good idea would be to make sure all tokens have a known prefix, so we can easily tell
+    # the difference between a token vs encrypted session
 
-        except (
-            fastapi_discord.exceptions.Unauthorized,
-            User.DoesNotExist,
-        ):
-            raise fastapi.HTTPException(status_code=401, detail="Unknown user")
+    if x_randovania_session is not None:
+        decrypted_session: bytes = sa.fernet_encrypt.decrypt(base64.b85decode(x_randovania_session))
+        session = json.loads(decrypted_session.decode("utf-8"))
+        if "discord-access-token" in session:
+            discord_token = session["discord-access-token"]
+        else:
+            user_id = session["user-id"]
 
-    return handler
+    try:
+        if user_id is not None:
+            return User.get_by_id(user_id)
+
+        if discord_token is not None:
+            discord_user = await sa.discord.user(discord_token)
+            return User.get(discord_id=int(discord_user.id))
+
+    except (
+        fastapi_discord.exceptions.Unauthorized,
+        User.DoesNotExist,
+    ):
+        pass
+
+    raise fastapi.HTTPException(status_code=401, detail="Unknown user")
 
 
-RequireUser = fastapi.Depends(get_user(needs_admin=False))
+async def get_admin_user(
+    sa: ServerAppDep,
+    request: fastapi.Request,
+    x_randovania_session: Annotated[str | None, fastapi.Header()] = None,
+) -> User:
+    """
+    Gets the User associated with the Request, and checks admin permissions.
+    Used for dependency injection.
+    """
+
+    user = await get_user(sa, request, x_randovania_session)
+    if not user.admin:
+        raise fastapi.HTTPException(status_code=403, detail="User not authorized")
+    return user
+
+
+RequireUser = fastapi.Depends(get_user)
 """Ensure that there is a User associated with the request before handling it."""
-RequireAdminUser = fastapi.Depends(get_user(needs_admin=True))
+RequireAdminUser = fastapi.Depends(get_admin_user)
 """Ensure that there is an admin User associated with the request before handling it."""
 
 UserDep = Annotated[User, RequireUser]

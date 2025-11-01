@@ -16,7 +16,7 @@ from randovania.network_common.session_visibility import MultiplayerSessionVisib
 
 
 @pytest.fixture(name="client")
-def network_client_fixture(skip_qtbot, mocker, tmpdir):
+async def network_client_fixture(skip_qtbot, mocker, tmpdir):
     mocker.patch(
         "randovania.get_configuration",
         return_value={
@@ -25,7 +25,9 @@ def network_client_fixture(skip_qtbot, mocker, tmpdir):
             "discord_client_id": 1234,
         },
     )
-    return qt_network_client.QtNetworkClient(Path(tmpdir))
+    client = qt_network_client.QtNetworkClient(Path(tmpdir))
+    yield client
+    await client.http.close()
 
 
 async def test_handle_network_errors_success(skip_qtbot, qapp):
