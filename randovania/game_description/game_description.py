@@ -142,6 +142,11 @@ class GameDescription(GameDatabaseView):
         self.__dict__.update(state)
         self._victory_condition_as_set = None
 
+    @property
+    def game_enum(self) -> RandovaniaGame:
+        # compatibility with WorldGraph
+        return self.game
+
     def create_node_context(self, resources: ResourceCollection) -> NodeContext:
         return NodeContext(
             None,
@@ -255,6 +260,10 @@ class GameDescription(GameDatabaseView):
         return bool(self.game.hints.specific_pickup_hints) or self._has_hint_with_kind(HintNodeKind.SPECIFIC_PICKUP)
 
     # Game Database View
+
+    @override
+    def get_game_enum(self) -> RandovaniaGame:
+        return self.game
 
     def node_iterator(self) -> Iterator[tuple[Region, Area, Node]]:
         return self.region_list.all_regions_areas_nodes

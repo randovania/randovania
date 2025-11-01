@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING, Self
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
@@ -16,7 +17,6 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.node_provider import NodeProvider
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -26,9 +26,9 @@ if TYPE_CHECKING:
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.hint_state import ResolverHintState
 
-    GraphOrClassicNode = WorldGraphNode | Node
-    GraphOrResourceNode = WorldGraphNode | ResourceNode
-    NodeSequence = tuple[GraphOrClassicNode, ...]
+GraphOrClassicNode = WorldGraphNode | Node
+GraphOrResourceNode = WorldGraphNode | ResourceNode
+NodeSequence = tuple[GraphOrClassicNode, ...]
 
 
 class State:

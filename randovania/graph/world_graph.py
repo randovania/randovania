@@ -29,6 +29,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 if typing.TYPE_CHECKING:
     from collections.abc import Callable, Iterator, Mapping
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
@@ -140,6 +141,9 @@ class WorldGraphNode:
                 return False
         return True
 
+    # TODO: ResourceNode name for compatibility
+    is_collected = has_all_resources
+
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
         yield from self.resource_gain
         if self.pickup_entry is not None:
@@ -159,6 +163,7 @@ class WorldGraph:
     Represents a highly optimised view of a RegionList, with all per-Preset tweaks baked in.
     """
 
+    game_enum: RandovaniaGame
     victory_condition: Requirement
     dangerous_resources: frozenset[ResourceInfo]
     nodes: list[WorldGraphNode]
@@ -452,6 +457,7 @@ def create_graph(
     original_to_node = {node.database_node.node_index: node for node in nodes}
 
     graph = WorldGraph(
+        game_enum=database_view.get_game_enum(),
         victory_condition=victory_condition,
         dangerous_resources=frozenset(),
         nodes=nodes,

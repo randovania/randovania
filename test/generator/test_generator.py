@@ -58,7 +58,9 @@ async def test_create_patches(
     mock_create_player_pool.side_effect = player_pools
 
     # Run
-    result = await generator._create_description(generator_parameters, status_update, 0, world_names)
+    result = await generator._create_description(
+        generator_parameters, status_update, 0, world_names, use_world_graph=False
+    )
 
     # Assert
     generator_parameters.create_rng.assert_called_once_with()

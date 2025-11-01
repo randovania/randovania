@@ -59,7 +59,7 @@ async def test_run_filler(
     )
 
     # Run
-    filler_result = await runner.run_filler(rng, player_pools, ["World 1"], status_update)
+    filler_result = await runner.run_filler(rng, player_pools, ["World 1"], status_update, False)
 
     assert filler_result.action_log == action_log
     assert len(filler_result.player_results) == 1

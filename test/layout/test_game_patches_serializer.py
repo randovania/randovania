@@ -271,6 +271,7 @@ async def test_round_trip_generated_patches(default_preset):
         status_update=lambda x: None,
         attempts=0,
         world_names=["Test"],
+        use_world_graph=False,
     )
     all_patches = description.all_patches
 

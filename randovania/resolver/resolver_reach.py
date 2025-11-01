@@ -241,7 +241,7 @@ class ResolverReach:
         else:
             for node in self.nodes:
                 node = typing.cast("ResourceNode", node)
-                if not node.is_resource_node:
+                if not node.is_resource_node():
                     continue
                 if node.should_collect(context) and node.requirement_to_collect.satisfied(
                     context, self._game_state_at_node[node.node_index].health_for_damage_requirements()

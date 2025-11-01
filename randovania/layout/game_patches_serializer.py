@@ -37,7 +37,7 @@ def _pickup_assignment_to_pickup_locations(
     pickup_locations = []
 
     for region, area, node in region_list.all_regions_areas_nodes:
-        if not node.is_resource_node or not isinstance(node, PickupNode):
+        if not node.is_resource_node() or not isinstance(node, PickupNode):
             continue
 
         if node.pickup_index in pickup_assignment:

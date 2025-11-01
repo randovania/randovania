@@ -43,7 +43,6 @@ class EventPickupNode(ResourceNode):
             f"EventPickupNode({self.name!r} -> {self.event_node.event.long_name}+{self.pickup_node.pickup_index.index})"
         )
 
-    @property
     def is_resource_node(self) -> bool:
         return True
 
