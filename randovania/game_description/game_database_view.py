@@ -5,7 +5,7 @@ from abc import ABC
 from typing import TYPE_CHECKING, final, override
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator, Sequence
+    from collections.abc import Iterator, Mapping, Sequence
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
@@ -299,6 +299,12 @@ class GameDatabaseView(ABC):
         :raises: KeyError if it doesn't exist
         """
 
+    @abc.abstractmethod
+    def get_configurable_node_requirements(self) -> Mapping[NodeIdentifier, Requirement]:
+        """
+        All configurable node requirements to leave, as a mapping of their node identifiers to the values.
+        """
+
 
 class GameDatabaseViewProxy(GameDatabaseView):
     """
@@ -360,3 +366,7 @@ class GameDatabaseViewProxy(GameDatabaseView):
     @override
     def area_from_node(self, node: Node) -> Area:
         return self._original.area_from_node(node)
+
+    @override
+    def get_configurable_node_requirements(self) -> Mapping[NodeIdentifier, Requirement]:
+        return self._original.get_configurable_node_requirements()

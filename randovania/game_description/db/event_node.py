@@ -25,6 +25,7 @@ class EventNode(ResourceNode):
         else:
             return Requirement.trivial()
 
+    @property
     def requirement_to_collect(self) -> Requirement:
         return Requirement.trivial()
 
