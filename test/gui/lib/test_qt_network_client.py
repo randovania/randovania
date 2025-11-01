@@ -22,7 +22,6 @@ async def network_client_fixture(skip_qtbot, mocker, tmpdir):
         return_value={
             "server_address": "http://localhost:5000",
             "socketio_path": "/path",
-            "discord_client_id": 1234,
         },
     )
     client = qt_network_client.QtNetworkClient(Path(tmpdir))
@@ -83,15 +82,7 @@ async def test_login_to_discord(client):
 
     # Assert
     assert result == "http://localhost:5000/login?sid=THE_SID"
-    client.server_call.assert_awaited_once_with("start_discord_login_flow")
-
-
-async def test_login_to_discord_raise(client):
-    del client.configuration["discord_client_id"]
-    client.server_call = AsyncMock(return_value="THE_SID")
-
-    with pytest.raises(RuntimeError, match="Missing Discord configuration for Randovania"):
-        await client.login_with_discord()
+    client.server_call.assert_awaited_once_with("get_sid")
 
 
 @pytest.mark.parametrize("connection_state", [ConnectionState.Disconnected, ConnectionState.Connected])

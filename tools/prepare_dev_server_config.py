@@ -16,8 +16,7 @@ def main():
             {
                 "server_address": "http://127.0.0.1:5000",
                 "socketio_path": "/socket.io",
-                "guest_secret": Fernet.generate_key().decode("ascii"),
-                "discord_client_id": "",
+                "discord_client_id": 0,
                 "server_config": {
                     "secret_key": f"dev-server-{random.randint(1000, 9999)}",
                     "fernet_key": Fernet.generate_key().decode("ascii"),

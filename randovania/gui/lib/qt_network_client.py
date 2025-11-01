@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-import datetime
 import functools
-import json
 from typing import TYPE_CHECKING
 
 import PySide6
@@ -151,40 +149,9 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
         self.WorldUserInventoryUpdated.emit(inventory)
 
     async def login_with_discord(self) -> str:
-        if "discord_client_id" not in self.configuration:
-            raise RuntimeError("Missing Discord configuration for Randovania")
-
-        sid = await self.server_call("start_discord_login_flow")
+        sid = await self.server_call("get_sid")
         url = self.configuration["server_address"] + f"/login?sid={sid}"
         return url
-
-    async def login_as_guest(self, name: str = "Unknown"):
-        if "guest_secret" not in self.configuration:
-            raise RuntimeError("Missing guest configuration for Randovania")
-
-        from cryptography.fernet import Fernet
-
-        fernet = Fernet(self.configuration["guest_secret"].encode("ascii"))
-        login_request = fernet.encrypt(
-            json.dumps(
-                {
-                    "name": name,
-                    "date": datetime.datetime.now(datetime.UTC).isoformat(),
-                }
-            ).encode("utf-8")
-        )
-
-        new_session = await self.server_call("login_with_guest", login_request)
-        await self.on_user_session_updated(new_session)
-
-    @property
-    def available_login_methods(self) -> set[str]:
-        methods = []
-        if "guest_secret" in self.configuration:
-            methods.append("guest")
-        if "discord_client_id" in self.configuration:
-            methods.append("discord")
-        return set(methods)
 
     async def attempt_join_with_password_check(self, session: MultiplayerSessionListEntry):
         if session.has_password and not session.is_user_in_session:
@@ -226,6 +193,6 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
         if self.current_user is None:
             from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 
-            await async_dialog.execute_dialog(LoginPromptDialog(self))
+            await async_dialog.execute_dialog(LoginPromptDialog(self, await self.query_authentication_methods()))
 
         return self.current_user is not None

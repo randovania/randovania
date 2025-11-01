@@ -25,7 +25,6 @@ def config_fixture(db_path) -> NetworkConfiguration:
         "socketio_path": "/prefix/somewhere_evil",
         "discord_client_id": 1234,
         "server_address": "https://somewhere.nice",
-        "guest_secret": "s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
         "server_config": {
             "secret_key": "key",
             "discord_client_secret": "5678",
@@ -148,6 +147,8 @@ async def test_server_lifespan(
     mock_enforce_lifespan = mocker.patch("randovania.server.server_app.EnforceDiscordRole.lifespan")
     mock_socketio_lifespan = mocker.patch("randovania.server.server_app.fastapi_socketio_lifespan")
     mock_database_lifespan = mocker.patch("randovania.server.server_app.database_lifespan")
+    socket_manager = mock_socketio_lifespan.return_value.__aenter__.return_value
+    socket_manager.sio.on = MagicMock()
 
     # routing
     mock_multiplayer = mocker.patch("randovania.server.multiplayer.setup_app")
