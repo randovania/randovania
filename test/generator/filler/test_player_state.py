@@ -21,7 +21,9 @@ def state_for_blank(
     return player_state.PlayerState(
         index=0,
         name="World",
+        game_enum=game.game,
         game=game,
+        original_game=game,
         initial_state=game.game.generator.bootstrap.calculate_starting_state(
             game,
             empty_patches,
@@ -46,9 +48,9 @@ def test_current_state_report(state_for_blank):
         "* Intro/Ledge Room/Low Ledge: Jump\n"
         "* Intro/Starting Area/Door to Boss Arena: Missile and Weapon\n"
         "\n"
-        "Accessible teleporters:\n"
-        "None\n"
-        "\n"
+        # "Accessible teleporters:\n"
+        # "None\n"
+        # "\n"
         "Reachable nodes:\n"
         "32 nodes total"
     )
@@ -78,7 +80,9 @@ def test_filter_usable_locations(
     second_state = player_state.PlayerState(
         index=0,
         name="World",
+        game_enum=state_for_blank.game_enum,
         game=state_for_blank.game,
+        original_game=state_for_blank.game,
         initial_state=state_for_blank.game.game.generator.bootstrap.calculate_starting_state(
             state_for_blank.game,
             empty_patches,

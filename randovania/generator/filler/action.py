@@ -2,20 +2,22 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
-ActionStep = ResourceNode | PickupEntry
+    from randovania.graph.state import GraphOrResourceNode
+
+    type ActionStep = GraphOrResourceNode | PickupEntry
 
 
 def format_action(action: ActionStep) -> str:
-    if isinstance(action, ResourceNode):
-        return f"{type(action).__name__[0]}: {action.identifier}"
-    else:
+    if isinstance(action, PickupEntry):
+        # TODO: can combine the if
         return f"{type(action).__name__[0]}: {action.name}"
+    else:
+        return f"{type(action).__name__[0]}: {action.identifier}"
 
 
 class Action:
@@ -39,7 +41,7 @@ class Action:
     def num_steps(self) -> int:
         return len(self.steps)
 
-    def split_pickups(self) -> tuple[list[ResourceNode], list[PickupEntry]]:
+    def split_pickups(self) -> tuple[list[GraphOrResourceNode], list[PickupEntry]]:
         pickups = []
         resources = []
         for step in self.steps:

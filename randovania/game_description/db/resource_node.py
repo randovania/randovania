@@ -12,7 +12,6 @@ if TYPE_CHECKING:
 
 @dataclasses.dataclass(frozen=True, slots=True)
 class ResourceNode(Node):
-    @property
     def is_resource_node(self) -> bool:
         return True
 

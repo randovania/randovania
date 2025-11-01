@@ -82,7 +82,7 @@ def action_details_from_state(state: State, node: GraphOrClassicNode | None = No
         action_type = ActionType.HINT
         if not text.startswith("Hint - "):
             text = f"Hint - {text}"
-    elif not node.is_resource_node:
+    elif not node.is_resource_node():
         return None
     else:
         action_type = ActionType.OTHER

@@ -192,7 +192,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
 
         initial_resources = patches.starting_resources()
 
-        if starting_node.is_resource_node:
+        if starting_node.is_resource_node():
             assert isinstance(starting_node, ResourceNode)
             initial_resources.add_resource_gain(
                 starting_node.resource_gain_on_collect(

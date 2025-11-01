@@ -15,6 +15,7 @@ from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock import DockWeaknessDatabase
 from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
@@ -27,7 +28,7 @@ from randovania.generator import reach_lib
 from randovania.generator.old_generator_reach import OldGeneratorReach
 from randovania.generator.pickup_pool import pool_creator
 from randovania.generator.reach_lib import advance_reach_with_possible_unsafe_resources
-from randovania.graph.state import State
+from randovania.graph.state import GraphOrResourceNode, State
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -38,7 +39,6 @@ from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.generator_reach import GeneratorReach
     from randovania.layout.preset import Preset
@@ -105,7 +105,7 @@ def _create_reaches_and_compare(
 def _compare_actions(
     first_reach: GeneratorReach,
     second_reach: GeneratorReach,
-) -> tuple[list[ResourceNode], list[ResourceNode]]:
+) -> tuple[list[GraphOrResourceNode], list[GraphOrResourceNode]]:
     first_actions = reach_lib.get_collectable_resource_nodes_of_reach(first_reach)
     second_actions = reach_lib.get_collectable_resource_nodes_of_reach(second_reach)
     assert set(first_actions) == set(second_actions)
@@ -129,7 +129,7 @@ def test_database_collectable(
         game_test_data.database_collectable_include_tricks,
     )
 
-    all_pickups = set(reach_lib.filter_pickup_nodes(game.region_list.iterate_nodes()))
+    all_pickups = set(game.region_list.iterate_nodes_of_type(PickupNode))
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration, game)
 
     for pickup in pool_results.starting + pool_results.to_place:

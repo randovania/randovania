@@ -103,7 +103,7 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
 
     locations = []
     for region, area, node in game.region_list.all_regions_areas_nodes:
-        if node.is_resource_node and isinstance(node, PickupNode):
+        if node.is_resource_node() and isinstance(node, PickupNode):
             locations.append(
                 {
                     "node_identifier": node.identifier.as_json,
@@ -271,6 +271,7 @@ async def test_round_trip_generated_patches(default_preset):
         status_update=lambda x: None,
         attempts=0,
         world_names=["Test"],
+        use_world_graph=False,
     )
     all_patches = description.all_patches
 

@@ -146,6 +146,7 @@ async def _create_pools_and_fill(
     presets: list[Preset],
     status_update: Callable[[str], None],
     world_names: list[str],
+    use_world_graph: bool,
 ) -> tuple[list[PlayerPool], FillerResults]:
     """
     Runs the rng-dependant parts of the generation, with retries
@@ -178,7 +179,7 @@ async def _create_pools_and_fill(
                 raise config
             raise
 
-    results = await run_filler(rng, player_pools, world_names, status_update)
+    results = await run_filler(rng, player_pools, world_names, status_update, use_world_graph)
     return player_pools, results
 
 
@@ -263,6 +264,7 @@ async def _create_description(
     status_update: Callable[[str], None],
     attempts: int,
     world_names: list[str],
+    use_world_graph: bool,
 ) -> LayoutDescription:
     """
     :param generator_params:
@@ -282,7 +284,12 @@ async def _create_description(
         reraise=True,
     )
     pools_results: tuple[list[PlayerPool], FillerResults] = await retrying(
-        _create_pools_and_fill, rng, presets, status_update, world_names
+        _create_pools_and_fill,
+        rng,
+        presets,
+        status_update,
+        world_names,
+        use_world_graph=use_world_graph,
     )
     player_pools, filler_results = pools_results
 
@@ -305,6 +312,7 @@ async def generate_and_validate_description(
     timeout: int | None = 600,
     attempts: int = DEFAULT_ATTEMPTS,
     world_names: list[str] | None = None,
+    use_world_graph: bool = False,
 ) -> LayoutDescription:
     """
     Creates a LayoutDescription for the given Permalink.
@@ -314,6 +322,7 @@ async def generate_and_validate_description(
     :param timeout: Abort generation after this many seconds.
     :param attempts: Attempt this many generations.
     :param world_names: Name for each world. Used for error and status messages.
+    :param use_world_graph: Use WorldGraph for database backend.
     :return:
     """
     actual_status_update: Callable[[str], None]
@@ -334,6 +343,7 @@ async def generate_and_validate_description(
             status_update=actual_status_update,
             attempts=attempts,
             world_names=world_names,
+            use_world_graph=use_world_graph,
         )
     except UnableToGenerate as e:
         raise GenerationFailure(

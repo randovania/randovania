@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import collections
 import re
+import typing
 from typing import TYPE_CHECKING
 
-from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.common import elevators
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.action import Action
@@ -18,22 +19,23 @@ from randovania.generator.filler.pickup_list import (
     interesting_resources_for_reach,
 )
 from randovania.generator.hint_state import HintState
+from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.assignment import PickupTarget
-    from randovania.game_description.db.region_list import RegionList
-    from randovania.game_description.db.resource_node import ResourceNode
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.location_category import LocationCategory
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.filler.weighted_locations import WeightedLocations
-    from randovania.graph.state import State
+    from randovania.graph.state import GraphOrResourceNode, State
 
 
 class GeneratorHintState(HintState):
@@ -61,12 +63,12 @@ class GeneratorHintState(HintState):
 
 class PlayerState:
     index: int
-    game: GameDescription
+    game: GameDescription | WorldGraph
     pickups_left: list[PickupEntry]
     configuration: FillerConfiguration
     pickup_index_ages: collections.defaultdict[PickupIndex, float]
     event_seen_count: dict[ResourceInfo, int]
-    _unfiltered_potential_actions: tuple[PickupCombinations, tuple[ResourceNode, ...]]
+    _unfiltered_potential_actions: tuple[PickupCombinations, tuple[GraphOrResourceNode, ...]]
     num_starting_pickups_placed: int
     num_assigned_pickups: int
     hint_state: GeneratorHintState
@@ -75,14 +77,18 @@ class PlayerState:
         self,
         index: int,
         name: str,
-        game: GameDescription,
+        game_enum: RandovaniaGame,
+        game: GameDescription | WorldGraph,
+        original_game: GameDescription,
         initial_state: State,
         pickups_left: list[PickupEntry],
         configuration: FillerConfiguration,
     ):
         self.index = index
         self.name = name
+        self.game_enum = game_enum
         self.game = game
+        self.original_game = original_game
 
         self.reach = reach_lib.advance_reach_with_possible_unsafe_resources(
             reach_lib.reach_with_all_safe_resources(game, initial_state, configuration)
@@ -95,7 +101,7 @@ class PlayerState:
         self.num_starting_pickups_placed = 0
         self.num_assigned_pickups = 0
         self.num_actions = 0
-        self.indices_groups, self.all_indices = build_available_indices(game.region_list, configuration)
+        self.indices_groups, self.all_indices = build_available_indices(game, configuration)
 
         self.hint_state = GeneratorHintState(configuration, game)
 
@@ -190,7 +196,7 @@ class PlayerState:
             if resource.resource_type == ResourceType.ITEM
         }
 
-        wl = self.reach.game.region_list
+        nodes_by_index = {node.node_index: node for node in self.reach.iterate_nodes}
         s = self.reach.state
         ctx = s.node_context()
         nodes_by_index = {node.node_index: node for node in self.reach.iterate_nodes}
@@ -222,21 +228,24 @@ class PlayerState:
                     )
                 )
 
-        teleporters = []
-        teleporter_dock_types = self.reach.game.dock_weakness_database.all_teleporter_dock_types
-        for node in wl.iterate_nodes_of_type(DockNode):
-            if node.dock_type in teleporter_dock_types and self.reach.is_reachable_node(node):
-                other = wl.resolve_dock_node(node, s.patches)
-                teleporters.append(
-                    "* {} to {}".format(
-                        elevators.get_elevator_or_area_name(self.game, wl, node.identifier, True),
-                        (
-                            elevators.get_elevator_or_area_name(self.game, wl, node.identifier, True)
-                            if other is not None
-                            else "<Not connected>"
-                        ),
-                    )
-                )
+        # FIXME: what about actually implementing this? :)
+        # teleporters = []
+        # teleporter_dock_types = self.reach.game.dock_weakness_database.all_teleporter_dock_types
+        # wl = self.reach.game.region_list
+        #
+        # for node in wl.iterate_nodes_of_type(DockNode):
+        #     if node.dock_type in teleporter_dock_types and self.reach.is_reachable_node(node):
+        #         other = wl.resolve_dock_node(node, s.patches)
+        #         teleporters.append(
+        #             "* {} to {}".format(
+        #                 elevators.get_elevator_or_area_name(self.game, wl, node.identifier, True),
+        #                 (
+        #                     elevators.get_elevator_or_area_name(self.game, wl, node.identifier, True)
+        #                     if other is not None
+        #                     else "<Not connected>"
+        #                 ),
+        #             )
+        #         )
 
         accessible_nodes = [n.full_name() for n in self.reach.iterate_nodes if self.reach.is_reachable_node(n)]
 
@@ -245,7 +254,7 @@ class PlayerState:
             "Pickups still available: {}\n\n"
             "Resources to progress: {}\n\n"
             "Paths to be opened:\n{}\n\n"
-            "Accessible teleporters:\n{}\n\n"
+            # "Accessible teleporters:\n{}\n\n"
             "Reachable nodes:\n{}"
         ).format(
             self.reach.state.node.full_name(),
@@ -259,7 +268,7 @@ class PlayerState:
             ),
             ", ".join(sorted(to_progress)),
             "\n".join(sorted(paths_to_be_opened)) or "None",
-            "\n".join(teleporters) or "None",
+            # "\n".join(teleporters) or "None",
             "\n".join(accessible_nodes) if len(accessible_nodes) < 15 else f"{len(accessible_nodes)} nodes total",
         )
 
@@ -279,8 +288,19 @@ class PlayerState:
     def count_self_locations(self, locations: WeightedLocations) -> int:
         return locations.count_for_player(self)
 
+    def get_pickup_node_at(self, location: PickupIndex) -> WorldGraphNode | PickupNode:
+        if isinstance(self.game, GameDescription):
+            return self.game.region_list.node_from_pickup_index(location)
+        else:
+            return self.game.node_by_pickup_index[location]
+
     def get_location_category(self, index: PickupIndex) -> LocationCategory:
-        return self.game.region_list.node_from_pickup_index(index).location_category
+        node = self.get_pickup_node_at(index)
+        if isinstance(node, WorldGraphNode):
+            pickup_node = typing.cast("PickupNode", node.database_node)
+        else:
+            pickup_node = node
+        return pickup_node.location_category
 
     def can_place_pickup_at(self, pickup: PickupEntry, index: PickupIndex) -> bool:
         if self.configuration.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
@@ -290,7 +310,7 @@ class PlayerState:
 
 
 def build_available_indices(
-    region_list: RegionList,
+    view_or_graph: GameDatabaseView | WorldGraph,
     configuration: FillerConfiguration,
 ) -> tuple[list[set[PickupIndex]], set[PickupIndex]]:
     """
@@ -298,8 +318,24 @@ def build_available_indices(
     """
     named_index_group = collections.defaultdict(set)
 
-    for region, area, node in region_list.all_regions_areas_nodes:
-        if isinstance(node, PickupNode) and node.pickup_index not in configuration.indices_to_exclude:
+    if isinstance(view_or_graph, WorldGraph):
+
+        def get_pickup_node(node: Node) -> PickupNode:
+            if isinstance(node, EventPickupNode):
+                return node.pickup_node
+            assert isinstance(node, PickupNode)
+            return node
+
+        iterable = [
+            (node.region, node.area, get_pickup_node(node.database_node))
+            for node in view_or_graph.nodes
+            if node.pickup_index is not None
+        ]
+    else:
+        iterable = list(view_or_graph.iterate_nodes_of_type(PickupNode))
+
+    for region, area, node in iterable:
+        if node.pickup_index not in configuration.indices_to_exclude:
             group_name = node.custom_index_group or region.name
             named_index_group[group_name].add(node.pickup_index)
 

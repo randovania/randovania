@@ -43,6 +43,7 @@ def common_generate_logic(args: Namespace, permalink: Permalink) -> None:
                 validate_after_generation=args.validate,
                 timeout=None,
                 attempts=attempts,
+                use_world_graph=args.use_world_graph,
             )
         )
         after = time.perf_counter()
@@ -81,6 +82,7 @@ def common_generate_arguments(parser: ArgumentParser) -> None:
     parser.add_argument("--repeat", default=1, type=int, help="Generate multiple times. Used for benchmarking.")
     parser.add_argument("--no-retry", default=False, action="store_true", help="Disable retries in the generation.")
     parser.add_argument("--status-update", default=False, action="store_true", help="Print the status updates.")
+    parser.add_argument("--use-world-graph", default=False, action="store_true", help="Use WorldGraph for database.")
     parser.add_argument("output_file", type=Path, help="Where to place the seed log.")
 
 

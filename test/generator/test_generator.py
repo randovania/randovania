@@ -59,7 +59,9 @@ async def test_create_patches(
     mock_create_player_pool.side_effect = player_pools
 
     # Run
-    result = await generator._create_description(generator_parameters, status_update, 0, world_names)
+    result = await generator._create_description(
+        generator_parameters, status_update, 0, world_names, use_world_graph=False
+    )
 
     # Assert
     generator_parameters.create_rng.assert_called_once_with()
@@ -70,7 +72,7 @@ async def test_create_patches(
         [call(player_pools[i].pickups, player_pools[i].game, player_pools[i].configuration) for i in range(num_players)]
     )
     mock_run_filler.assert_awaited_once_with(
-        rng, [player_pools[i] for i in range(num_players)], world_names, status_update
+        rng, [player_pools[i] for i in range(num_players)], world_names, status_update, False
     )
     mock_distribute_remaining_items.assert_called_once_with(rng, filler_result, presets)
     mock_dock_weakness_distributor.assert_called_once_with(rng, filler_result, status_update)

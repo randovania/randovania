@@ -4,6 +4,7 @@ import collections
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.hint_node import HintNode
+from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
@@ -20,13 +21,13 @@ class HintState:
     """Tracks necessary state for anything relating to hint placement"""
 
     configuration: FillerConfiguration
-    game: GameDescription
+    game: GameDescription | WorldGraph
 
     hint_seen_count: collections.defaultdict[NodeIdentifier, int]
     hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]]
     pickup_available_indices_when_collected: dict[PickupIndex, frozenset[PickupIndex]]
 
-    def __init__(self, config: FillerConfiguration, game: GameDescription):
+    def __init__(self, config: FillerConfiguration, game: GameDescription | WorldGraph):
         self.configuration = config
         self.game = game
 
@@ -46,9 +47,17 @@ class HintState:
             }
             for hint, pickups in self.hint_initial_pickups.items()
         }
-        for node in self.game.region_list.iterate_nodes_of_type(HintNode):
+
+        nodes: list[WorldGraphNode | HintNode]
+        if isinstance(self.game, WorldGraph):
+            nodes = [node for node in self.game.nodes if isinstance(node.database_node, HintNode)]
+        else:
+            nodes = [node for _, _, node in self.game.iterate_nodes_of_type(HintNode)]
+
+        for node in nodes:
             # ensure all hint nodes are included, even if they have no targets
             targets.setdefault(node.identifier, set())
+
         return targets
 
     def advance_hint_seen_count(self, state: State) -> None:
