@@ -5,17 +5,25 @@ import itertools
 import typing
 from collections import defaultdict
 from heapq import heappop, heappush
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
+
+import networkx
+import rustworkx
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterator
+    from collections.abc import Callable, Collection, Iterable, Iterator, Mapping, Sequence
 
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.base import Requirement
 
     type GraphData = Requirement
 
 
 class BaseGraph:
+    @classmethod
+    def new(cls, game: GameDescription) -> typing.Self:
+        raise NotImplementedError
+
     def copy(self) -> typing.Self:
         raise NotImplementedError
 
@@ -41,18 +49,27 @@ class BaseGraph:
         self,
         sources: set[int],
         weight: Callable[[int, int, GraphData], int],
-    ) -> tuple[dict[int, int], dict[int, list[int]]]:
+    ) -> tuple[dict[int, int], Mapping[int, Sequence[int]]]:
         raise NotImplementedError
 
-    def strongly_connected_components(self) -> Iterator[set[int]]:
+    def shortest_paths_dijkstra(
+        self,
+        source: int,
+        weight: Callable[[int, int, GraphData], int],
+    ) -> Mapping[int, Sequence[int]]:
+        _, paths = self.multi_source_dijkstra({source}, weight)
+        return paths
+
+    def strongly_connected_components(self) -> Iterable[Collection[int]]:
         raise NotImplementedError
 
 
 class RandovaniaGraph(BaseGraph):
     edges: dict[int, dict[int, GraphData]]
 
+    @override
     @classmethod
-    def new(cls) -> typing.Self:
+    def new(cls, game: GameDescription) -> typing.Self:
         return cls(defaultdict(dict))
 
     def __init__(self, edges: dict[int, dict[int, GraphData]]):
@@ -88,7 +105,7 @@ class RandovaniaGraph(BaseGraph):
         self,
         sources: set[int],
         weight: Callable[[int, int, GraphData], int],
-    ) -> tuple[dict[int, int], dict[int, list[int]]]:
+    ) -> tuple[dict[int, int], Mapping[int, Sequence[int]]]:
         paths = {source: [source] for source in sources}  # dictionary of paths
         edges = self.edges
 
@@ -126,7 +143,7 @@ class RandovaniaGraph(BaseGraph):
 
         return dist, paths
 
-    def strongly_connected_components(self) -> Iterator[set[int]]:
+    def strongly_connected_components(self) -> Iterable[Collection[int]]:
         preorder = {}
         lowlink = {}
         scc_found = set()
@@ -165,3 +182,112 @@ class RandovaniaGraph(BaseGraph):
                             yield scc
                         else:
                             scc_queue.append(v)
+
+
+class NetworkXGraph(BaseGraph):
+    _graph: networkx.DiGraph
+
+    @override
+    @classmethod
+    def new(cls, game: GameDescription) -> typing.Self:
+        return cls(networkx.DiGraph())
+
+    def __init__(self, graph: networkx.DiGraph):
+        self._graph = graph
+
+    def copy(self) -> NetworkXGraph:
+        return NetworkXGraph(self._graph.copy())
+
+    def add_node(self, node: int) -> None:
+        self._graph.add_node(node)
+
+    def add_edge(self, previous_node: int, next_node: int, requirement: GraphData) -> None:
+        self._graph.add_edge(previous_node, next_node, data=requirement)
+
+    def remove_edge(self, previous: int, target: int) -> None:
+        self._graph.remove_edge(previous, target)
+
+    def has_edge(self, previous_node: int, next_node: int) -> bool:
+        return self._graph.has_edge(previous_node, next_node)
+
+    def __contains__(self, item: int) -> bool:
+        return self._graph.has_node(item)
+
+    def edges_data(self) -> Iterator[tuple[int, int, GraphData]]:
+        for a, b, data in self._graph.edges(data=True):
+            yield a, b, data["data"]
+
+    def multi_source_dijkstra(
+        self,
+        sources: set[int],
+        weight: Callable[[int, int, GraphData], int],
+    ) -> tuple[dict[int, int], Mapping[int, Sequence[int]]]:
+        return networkx.multi_source_dijkstra(self._graph, sources, weight=weight)
+
+    def strongly_connected_components(self) -> Iterable[Collection[int]]:
+        return networkx.strongly_connected_components(self._graph)
+
+
+class RustworkXGraph(BaseGraph):
+    _graph: rustworkx.PyDiGraph
+    _added_nodes: set[int]
+
+    @override
+    @classmethod
+    def new(cls, game: GameDescription) -> typing.Self:
+        g = rustworkx.PyDiGraph()
+        g.add_nodes_from(list(range(len(game.region_list.all_nodes))))
+        return cls(g, set())
+
+    def __init__(self, graph: rustworkx.PyDiGraph, added_nodes: set[int]):
+        self._graph = graph
+        self._added_nodes = added_nodes
+
+    def copy(self) -> RustworkXGraph:
+        return RustworkXGraph(self._graph.copy(), self._added_nodes.copy())
+
+    def add_node(self, node: int) -> None:
+        self._added_nodes.add(node)
+
+    def add_edge(self, previous_node: int, next_node: int, data: GraphData) -> None:
+        self._graph.add_edge(previous_node, next_node, (previous_node, next_node, data))
+
+    def remove_edge(self, previous_node: int, next_node: int) -> None:
+        self._graph.remove_edge(previous_node, next_node)
+
+    def has_edge(self, previous_node: int, next_node: int) -> bool:
+        return self._graph.has_edge(previous_node, next_node)
+
+    def __contains__(self, item: int) -> bool:
+        return item in self._added_nodes
+
+    def edges_data(self) -> Iterator[tuple[int, int, GraphData]]:
+        yield from self._graph.edges()
+
+    def multi_source_dijkstra(
+        self,
+        sources: set[int],
+        weight: Callable[[int, int, GraphData], int],
+    ) -> tuple[dict[int, int], Mapping[int, Sequence[int]]]:
+        raise NotImplementedError
+
+    def shortest_paths_dijkstra(
+        self,
+        source: int,
+        weight: Callable[[int, int, GraphData], int],
+    ) -> Mapping[int, Sequence[int]]:
+        def wrap(data: tuple[int, int, GraphData]) -> float:
+            return weight(*data)
+
+        paths: dict[int, Sequence[int]] = dict(
+            rustworkx.dijkstra_shortest_paths(
+                self._graph,
+                source,
+                weight_fn=wrap,
+            )
+        )
+        paths[source] = [source]
+        return paths
+
+    def strongly_connected_components(self) -> Iterable[Collection[int]]:
+        return rustworkx.strongly_connected_components(self._graph)
