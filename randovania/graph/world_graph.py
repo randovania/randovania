@@ -304,6 +304,24 @@ def _connections_from(
     elif isinstance(node.database_node, HintNode):
         requirement_to_leave = node.database_node.requirement_to_collect
 
+    elif isinstance(node.database_node, DockNode):
+        yield _create_dock_connection(node, graph, patches, simplify_requirement)
+
+    elif isinstance(node.database_node, TeleporterNetworkNode):
+        for other_node in teleporter_networks[node.database_node.network]:
+            if node != other_node:
+                assert isinstance(other_node.database_node, TeleporterNetworkNode)
+                yield WorldGraphNodeConnection(
+                    target=other_node,
+                    requirement=RequirementAnd(
+                        [
+                            node.database_node.is_unlocked,
+                            other_node.database_node.is_unlocked,
+                        ]
+                    ),
+                    requirement_without_leaving=other_node.database_node.is_unlocked,
+                )
+
     for target_original_node, requirement in node.area.connections[node.database_node].items():
         target_node = graph.original_to_node.get(target_original_node.node_index)
         if target_node is None:
@@ -328,24 +346,6 @@ def _connections_from(
             requirement=requirement_including_leaving,
             requirement_without_leaving=requirement,
         )
-
-    if isinstance(node.database_node, DockNode):
-        yield _create_dock_connection(node, graph, patches, simplify_requirement)
-
-    if isinstance(node.database_node, TeleporterNetworkNode):
-        for other_node in teleporter_networks[node.database_node.network]:
-            if node != other_node:
-                assert isinstance(other_node.database_node, TeleporterNetworkNode)
-                yield WorldGraphNodeConnection(
-                    target=other_node,
-                    requirement=RequirementAnd(
-                        [
-                            node.database_node.is_unlocked,
-                            other_node.database_node.is_unlocked,
-                        ]
-                    ),
-                    requirement_without_leaving=other_node.database_node.is_unlocked,
-                )
 
 
 def _dangerous_resources(nodes: list[WorldGraphNode], context: NodeContext) -> Iterator[ResourceInfo]:
