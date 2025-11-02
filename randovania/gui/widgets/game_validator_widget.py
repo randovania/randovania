@@ -83,7 +83,7 @@ async def _run_validator(write_to_log: debug.DebugPrintFunction, debug_level: in
             final_state_by_resolve = await resolver.resolve(
                 configuration=configuration,
                 patches=patches,
-                fully_indent_log=False,
+                # fully_indent_log=False, TODO
             )
         after = time.perf_counter()
 
