@@ -6,22 +6,29 @@ from randovania.exporter.hints import pickup_hint
 from randovania.exporter.hints.temple_key_hint import create_temple_key_hint
 from randovania.game_description.hint import Hint, JokeHint, LocationHint, RedTempleHint, SpecificHintPrecision
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
-from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
     from random import Random
 
     from randovania.exporter.hints.hint_namer import HintNamer
+    from randovania.game_description.game_database_view import GameDatabaseView
 
 
 class HintExporter:
     namer: HintNamer
     joke_hints: list[str]
 
-    def __init__(self, namer: HintNamer, rng: Random, base_joke_hints: list[str]):
+    def __init__(
+        self,
+        namer: HintNamer,
+        rng: Random,
+        base_joke_hints: list[str],
+        owner_game_view: GameDatabaseView,
+    ):
         self.namer = namer
         self.rng = rng
         self.base_joke_hints = base_joke_hints
+        self.owner_game_view = owner_game_view
         self.joke_hints = []
 
     def create_joke_hint(self) -> str:
@@ -59,7 +66,7 @@ class HintExporter:
             pickup_target = patches.pickup_assignment.get(hint.target)
             phint = pickup_hint.create_pickup_hint(
                 patches.pickup_assignment,
-                filtered_database.game_description_for_layout(configuration).region_list,
+                self.owner_game_view,
                 hint.precision.item,
                 pickup_target,
                 players_config,

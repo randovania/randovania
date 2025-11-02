@@ -1,0 +1,85 @@
+{% extends "layout.html.jinja" %}
+
+{% block title %}
+	Session: {{ session.name }}
+{% endblock %}
+
+{% block header %}
+	Session View
+{% endblock header %}
+
+{% block content_class %}
+<div class="extrawide-content">
+{% endblock content_class %}
+
+{% block content %}
+	<div class="left main-content__body" data-lead-id="main-content-body">
+		<h2>Session: {{ session.name }}</h2>
+        <p>
+            Created by {{ session.creator.name }} at
+            {{ session.creation_datetime.strftime("%H:%M:%S.%f %Z, %d %B %Y") }}
+        </p>
+        {% if session.password != None %}
+            <p>
+                Session is password protected.
+                Password hash is <code>{{ session.password }}</code>.
+            </p>
+        {% else %}
+            <p>Session is not password protected.</p>
+        {% endif %}
+
+        <h2>Actions</h2>
+        <form class="form_inline" action="{{ url_for('download_session_spoiler', session_id=session.id) }}">
+            {% if session.has_layout_description() %}
+                <button type="submit">
+            {% else %}
+                <button type="submit" disabled title="No .rdvgame attached">
+            {% endif %}
+                Download .rdvgame
+            </button>
+        </form>
+        <form class="form_inline" action="{{ url_for('delete_session', session_id=session.id) }}">
+            <button type="submit">Delete session</button>
+        </form>
+
+        <h2>World/User Associations</h2>
+        <table>
+            <thead>
+                <td>User</td>
+                <td>World</td>
+                <td>Game</td>
+                <td>Connection State</td>
+                <td>Inventory</td>
+                <td>Is Admin?</td>
+                <td>Actions</td>
+            </thead>
+            <tbody>
+                {% for assoc in assocations %}
+                    <tr>
+                        <td>{{ assoc.user.name }}</td>
+                        <td>{{ assoc.world.name }}</td>
+                        <td>{{ assoc.game }}</td>
+                        <td>{{ assoc.connection_state.pretty_text }}</td>
+                        <td>{{ assoc.inventory }}</td>
+                        <td>
+                            {{ assoc.is_admin }}
+                        </td>
+                        <td>
+                            <form class="form_inline">
+                                <button type="submit" formaction="{{ url_for('download_world_preset', world_id=assoc.world_id)}}">
+                                    Download Preset
+                                </button>
+                            </form>
+                            <form class="form_inline">
+                                <button type="submit" formmethod="post" formaction="{{ url_for('toggle_admin_status', session_id=session.id, user_id=assoc.user.id)}}">
+                                    Toggle Admin Status
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p><a href="{{ url_for('admin_sessions') }}">Return to session list</a></p>
+	</div>
+{% endblock content %}

@@ -32,7 +32,9 @@ def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
             yield node
 
 
-def _filter_collectable(resource_nodes: Iterator[ResourceNodeT], reach: GeneratorReach) -> Iterator[ResourceNodeT]:
+def _filter_collectable[ResourceNodeT: ResourceNode](
+    resource_nodes: Iterator[ResourceNodeT], reach: GeneratorReach
+) -> Iterator[ResourceNodeT]:
     context = reach.node_context()
     for resource_node in resource_nodes:
         if resource_node.should_collect(context) and resource_node.requirement_to_collect().satisfied(
@@ -41,13 +43,13 @@ def _filter_collectable(resource_nodes: Iterator[ResourceNodeT], reach: Generato
             yield resource_node
 
 
-def _filter_reachable(nodes: Iterator[NodeT], reach: GeneratorReach) -> Iterator[NodeT]:
+def _filter_reachable[NodeT: Node](nodes: Iterator[NodeT], reach: GeneratorReach) -> Iterator[NodeT]:
     for node in nodes:
         if reach.is_reachable_node(node):
             yield node
 
 
-def _filter_out_dangerous_actions(
+def _filter_out_dangerous_actions[ResourceNodeT: ResourceNode](
     resource_nodes: Iterator[ResourceNodeT],
     game: GameDescription,
     context: NodeContext,

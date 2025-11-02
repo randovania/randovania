@@ -2970,7 +2970,9 @@
         },
         "E-Tank Mimic Den": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "mimic"
+            ],
             "extra": {
                 "map_name": "Sector 512",
                 "room_id": [
@@ -3823,6 +3825,7 @@
         "Mini-Fridge": {
             "default_node": null,
             "hint_features": [
+                "extreme-temp",
                 "pillar"
             ],
             "extra": {
@@ -4588,7 +4591,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "JBJ",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -5620,6 +5623,7 @@
                         "area": 5,
                         "room": 20,
                         "source": "Nightmare",
+                        "boss_hint_name": "Nightmare",
                         "infant_weight": 3.5
                     },
                     "valid_starting_location": false,
@@ -5641,7 +5645,10 @@
         },
         "Security Shaft East": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "climbable",
+                "extreme-temp"
+            ],
             "extra": {
                 "map_name": "Sector 522",
                 "room_id": [
@@ -6807,7 +6814,9 @@
         },
         "Ripper Road": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "extreme-temp"
+            ],
             "extra": {
                 "map_name": "Sector 526",
                 "room_id": [
@@ -8102,7 +8111,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Hold right during climb and down+left during fanfare. 50/50 on success: https://youtu.be/bh1TmgiSngk",
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -8123,12 +8132,24 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": "Get item mid animation. 50/50 on success: https://youtu.be/bh1TmgiSngk",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Any Bombs"
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -8162,17 +8183,43 @@
                                                                                         "data": {
                                                                                             "type": "tricks",
                                                                                             "name": "JBJ",
-                                                                                            "amount": 2,
+                                                                                            "amount": 3,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "or",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Movement",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
+                                                                                            "comment": "To Kill or Save a Geruboss",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Combat",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Missiles",
+                                                                                                        "amount": 5,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "ScrewAttack",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -8185,8 +8232,46 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Use Power Bombs"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Power Bombs"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "1 or 2 PBs, depending on 50/50, like SA method",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "PowerBombs",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Bombs"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -8207,7 +8292,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "ShinesparkTrick",
-                                                                    "amount": 1,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -8245,6 +8330,27 @@
                                                                     "name": "EntranceRando",
                                                                     "amount": 1,
                                                                     "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "50/50, like for SA method",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Any Bombs"
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -8896,7 +9002,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "JBJ",
-                                                                    "amount": 5,
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -11598,7 +11704,9 @@
         },
         "Transmutation Trial": {
             "default_node": null,
-            "hint_features": [],
+            "hint_features": [
+                "extreme-temp"
+            ],
             "extra": {
                 "map_name": "Sector 551",
                 "room_id": [

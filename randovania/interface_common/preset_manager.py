@@ -25,7 +25,7 @@ def read_preset_list() -> list[Path]:
     preset_list = []
     for game in enum_lib.iterate_enum(RandovaniaGame):
         base_path = game.data_path.joinpath("presets")
-        preset_list.extend([base_path.joinpath(preset["path"]) for preset in game.data.presets])
+        preset_list.extend([base_path.joinpath(preset_relative_path) for preset_relative_path in game.data.presets])
 
     return preset_list
 

@@ -90,9 +90,9 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Cave Story",
     development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
-        {"path": "multiworld-starter-preset.rdvpreset"},
-        {"path": "classic.rdvpreset"},
+        "starter_preset.rdvpreset",
+        "multiworld-starter-preset.rdvpreset",
+        "classic.rdvpreset",
     ],
     faq=[],
     web_info=randovania.game.web_info.GameWebInfo(

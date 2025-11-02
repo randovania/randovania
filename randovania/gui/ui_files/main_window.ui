@@ -181,8 +181,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>682</width>
+          <height>400</height>
          </rect>
         </property>
        </widget>
@@ -402,7 +402,7 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
        </size>
       </property>
       <property name="text">
-       <string>Stop</string>
+       <string notr="true">🛇 Stop</string>
       </property>
       <property name="checkable">
        <bool>false</bool>
@@ -415,18 +415,21 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
     <item>
      <widget class="QLabel" name="progress_label">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
       <property name="font">
        <font>
-        <pointsize>7</pointsize>
+        <pointsize>8</pointsize>
        </font>
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::TextFormat::MarkdownText</enum>
       </property>
       <property name="alignment">
        <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -445,7 +448,7 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
      <x>0</x>
      <y>0</y>
      <width>688</width>
-     <height>17</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_open">

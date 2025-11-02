@@ -9,7 +9,7 @@ import ssl
 import time
 import uuid
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Unpack
 
 import aiofiles
 import aiohttp
@@ -23,7 +23,7 @@ from randovania.bitpacking import bitpacking, construct_pack
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.lib import container_lib
+from randovania.lib import container_lib, http_lib
 from randovania.network_common import (
     admin_actions,
     connection_headers,
@@ -59,9 +59,12 @@ if TYPE_CHECKING:
     from collections.abc import Sequence
     from pathlib import Path
 
+    from aiohttp.client import _RequestContextManager, _RequestOptions
+
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
     from randovania.lib.json_lib import JsonType
+    from randovania.network_common.configuration import NetworkConfiguration
 
 
 class ConnectionState(Enum):
@@ -131,6 +134,18 @@ emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=
 -----END CERTIFICATE-----"""
 
 
+def _apply_default_rest_headers(kwargs: _RequestOptions) -> None:
+    """Adds the default headers we should send to every REST request."""
+    headers = kwargs.get("headers")
+    if headers is None:
+        kwargs["headers"] = headers = {}
+    else:
+        assert isinstance(headers, dict)
+
+    if "Accept" not in headers:
+        headers["Accept"] = "application/json"
+
+
 class NetworkClient:
     sio: socketio.AsyncClient
     _current_user: CurrentUser | None = None
@@ -145,7 +160,7 @@ class NetworkClient:
     _tracking_worlds: set[tuple[uuid.UUID, int]]
     _allow_reporting_username: bool = False
 
-    def __init__(self, user_data_dir: Path, configuration: dict):
+    def __init__(self, user_data_dir: Path, configuration: NetworkConfiguration):
         self.logger = logging.getLogger("NetworkClient")
 
         old_connect = aiohttp.ClientSession.ws_connect
@@ -159,7 +174,14 @@ class NetworkClient:
         aiohttp.ClientSession.ws_connect = wrap_ws_connect
 
         self._connection_state = ConnectionState.Disconnected
-        self.sio = socketio.AsyncClient(ssl_verify=configuration.get("verify_ssl", True), reconnection=False)
+        self.http = http_lib.http_session(
+            headers=connection_headers(),
+        )
+        self.sio = socketio.AsyncClient(
+            ssl_verify=configuration.get("verify_ssl", True),
+            reconnection=False,
+            http_session=self.http,
+        )
         self._call_lock = asyncio.Lock()
         self._connect_lock = asyncio.Lock()
         self._current_timeout = _MINIMUM_TIMEOUT
@@ -343,6 +365,7 @@ class NetworkClient:
             self._restore_session_task.cancel()
 
     async def on_user_session_updated(self, new_session: dict):
+        self.http.headers["X-Randovania-Sid"] = new_session["sid"]
         self._current_user = CurrentUser.from_json(new_session["user"])
         self._update_reported_username()
 
@@ -351,7 +374,9 @@ class NetworkClient:
 
         self.logger.info(f"{self._current_user.name}, state: {self.connection_state}")
 
+        self.http.headers["X-Randovania-Session"] = new_session["encoded_session_b85"]
         encoded_session_data = base64.b85decode(new_session["encoded_session_b85"])
+
         self.server_data_path.mkdir(exist_ok=True, parents=True)
         async with aiofiles.open(self.session_data_path, "wb") as open_file:
             await open_file.write(encoded_session_data)
@@ -678,6 +703,7 @@ class NetworkClient:
     async def logout(self):
         self.logger.info("Logging out")
         self.session_data_path.unlink()
+        self.http.headers["X-Randovania-Session"] = None
         self._current_user = None
         self._update_reported_username()
 
@@ -712,3 +738,31 @@ class NetworkClient:
     def allow_reporting_username(self, value: bool) -> None:
         self._allow_reporting_username = value
         self._update_reported_username()
+
+    def server_get(
+        self,
+        url: str,
+        **kwargs: Unpack[_RequestOptions],
+    ) -> _RequestContextManager:
+        """
+        Perform HTTP GET request to Randovania's REST Server.
+
+        ## Example Usage
+        >>> async def get_user(client: NetworkClient) -> CurrentUser:
+        >>>     async with client.server_get("/me") as response:
+        >>>         response.raise_for_status()
+        >>>         return CurrentUser.from_json(await response.json())
+        """
+
+        _apply_default_rest_headers(kwargs)
+        return self.http.get(f"{self.configuration['server_address']}/{url}", **kwargs)
+
+    def server_post(
+        self,
+        url: str,
+        **kwargs: Unpack[_RequestOptions],
+    ) -> _RequestContextManager:
+        """Perform HTTP POST request to Randovania's REST Server."""
+
+        _apply_default_rest_headers(kwargs)
+        return self.http.post(f"{self.configuration['server_address']}/{url}", **kwargs)

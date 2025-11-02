@@ -16,13 +16,13 @@ class FusionArtifactConfig(BitPackDataclass, JsonDataclass):
 
 @dataclasses.dataclass(frozen=True)
 class FusionConfiguration(BaseConfiguration):
-    anti_softlock: bool
     instant_transitions: bool
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     artifacts: FusionArtifactConfig
     open_save_recharge_hatches: bool
     unlock_sector_hub: bool
     short_intro_text: bool
+    instant_morph: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

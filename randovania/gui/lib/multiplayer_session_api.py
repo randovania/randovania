@@ -26,7 +26,7 @@ RetType = typing.TypeVar("RetType")
 OriginalFunc = typing.Callable[Param, RetType]
 
 
-def handle_network_errors(
+def handle_network_errors[**Param, RetType](
     fn: typing.Callable[typing.Concatenate[MultiplayerSessionApi, Param], RetType],
 ) -> typing.Callable[Param, RetType]:
     @functools.wraps(fn)

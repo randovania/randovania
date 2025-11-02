@@ -34,6 +34,12 @@ class HintFeature(JsonDataclass):
     description: str = dataclasses.field(default="", metadata=EXCLUDE_DEFAULT)
     """Additional description to display in the GUI in the HintFeatureTab."""
 
+    random_hint_target: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
+    """Whether this feature is a valid target for random hints."""
+
+    specific_hint_target: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
+    """Whether this feature is a valid target for specific-location or specific-pickup hints."""
+
     def __post_init__(self) -> None:
         assert self.name, "Name must not be empty"
         assert self.long_name, "Long name must not be empty"

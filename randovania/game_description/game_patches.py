@@ -117,7 +117,7 @@ class GamePatches:
         elif self.starting_equipment:
             raise IncompatibleStartingEquipment("GamePatches already has starting pickups")
         else:
-            current = ResourceCollection.with_database(self.game.resource_database)
+            current = self.game.create_resource_collection()
 
         current.add_resource_gain(new_resources)
         return dataclasses.replace(self, starting_equipment=current)
@@ -228,7 +228,7 @@ class GamePatches:
         if isinstance(self.starting_equipment, ResourceCollection):
             return self.starting_equipment.duplicate()
         else:
-            result = ResourceCollection.with_database(self.game.resource_database)
+            result = self.game.create_resource_collection()
             for it in self.starting_equipment:
                 result.add_resource_gain(it.resource_gain(result))
             return result

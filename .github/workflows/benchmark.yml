@@ -7,35 +7,37 @@ on:
       - main
 
 jobs:
-  benchmark:
+  walltime:
+    name: Walltime Benchmark
     runs-on: 'ubuntu-latest'
-    name: Benchmark
+    strategy:
+      matrix:
+        shard: [1, 2, 3]
 
     timeout-minutes: 30
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v5
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.6.8"
+          version: "0.9.5"
           enable-cache: true
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
 
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install $(cat .github/linux_apt_dependencies.txt)
 
       - name: Install Python packages
-        run: uv sync --frozen --extra exporters --extra gui --extra server --extra test
+        run: uv sync --locked --extra exporters --extra gui --extra server --extra test
 
       - name: run pytest (benchmark)
-        uses: CodSpeedHQ/action@v3
+        uses: CodSpeedHQ/action@v4
         with:
-          run: uv run pytest -n auto --codspeed --codspeed-mode=walltime --codspeed-max-rounds=1 --skip-gui-tests
+          run: uv run pytest --codspeed --codspeed-max-rounds=2 --skip-gui-tests --test-group=${{ matrix.shard }} --test-group-count=3
+          mode: walltime
           token: ${{ secrets.CODSPEED_TOKEN }}

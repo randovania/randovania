@@ -2,11 +2,9 @@
 requires = [
     "setuptools>=64",
     "setuptools_scm>=8",
-    "pyqt-distutils>=0.7.3",
     "wheel>=0.37.0",
     "dulwich",
     "randovania-scm-version-schema",
-    "PySide6-Essentials>=6.5",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -22,61 +20,53 @@ classifiers = [
     "Environment :: Win32 (MS Windows)",
     "Environment :: X11 Applications :: Qt",
     "Intended Audience :: End Users/Desktop",
-    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.12",
     "Topic :: Games/Entertainment",
 ]
 requires-python = ">=3.12"
+license = "GPL-3.0-or-later"
 dynamic = ["version"]
 
 dependencies = [
     # server communication, binary version of logic db
     "construct",
-
     # Default name for exporting presets
     "python-slugify",
-
     # permalinks
     "bitstruct",
-
     # obfuscator, guest login, server code
     "cryptography",
-
     # Generator
     "networkx",
     "tenacity>=7.0.0",
-
     # server communication
     "python-socketio[asyncio_client]",
     "aiohttp>=3.9.3",
-
     # nonblocking file IO
     "aiofiles",
-
     # Immutable dicts, used in many places
     "frozendict",
-
     # Versioning presets
-    "dulwich>=0.20",
-
+    "dulwich>=0.24.6", # Older versions have an issue on windows when using ProcessPoolExecutor
     # error reports
     "sentry-sdk",
-
     # Patch GamesPatches JSON from rdvgame
     "json-delta",
-
     # For the Version class
     "packaging",
-
     # For TypeVar default
     "typing-extensions>=4.4.0",
+    # For compressing preset/rdvgames
+    "zstandard",
+    # For consistent HTTPS certificate availability across platforms
+    "certifi",
 ]
 
 [project.optional-dependencies]
 exporters = [
     # AM2R
-    "am2r-yams>=2.8.2",
+    "am2r-yams>=2.8.3",
 
     # Cave Story
     "cave-story-randomizer>=2.4.2",
@@ -86,32 +76,32 @@ exporters = [
     "factorio-randovania-mod>=0.8.0",
 
     # Metroid Dread
-    "open-dread-rando>=2.16.0",
+    "open-dread-rando>=2.18.0",
 
     # Metroid fusion
-    "mars-patcher>=0.5.0",
+    "mars-patcher>=0.8.2",
 
     # Metroid Planets
     "planets-yapr>=1.0.0",
 
     # Metroid Prime 1
-    "py_randomprime>=1.29.0",
+    "py_randomprime>=1.30.2",
     "random-enemy-attributes>=1.0.3",
 
     # Metroid Prime 1/2
     "ppc-asm>=1.2.1",
     "open-prime-rando>=0.13.0",
-    "retro-data-structures>=0.24.0",
+    "retro-data-structures>=0.24.0,<0.29",  # Newer versions break asset conversion and needs adjusting
 
     # Metroid Prime 2
     "mp2hudcolor>=1.0.10",
 
     # Metroid: Samus Returns
-    "open-samus-returns-rando>=3.2.0",
+    "open-samus-returns-rando>=3.4.0",
 ]
 
 gui = [
-    "PySide6-Essentials>=6.5",
+    "PySide6-Essentials==6.10.0",
     "pyqtdarktheme-fork>=2.3.0",
     "markdown",
     "qasync",
@@ -128,30 +118,45 @@ gui = [
 ]
 
 server = [
-    "sentry-sdk[flask]",
-    "flask-discord",
-    "flask-socketio",
-    "prometheus-flask-exporter",
-    "eventlet",
+    "fastapi", # REST server
+    "jinja2", # templating
+    "uvicorn[standard]", # server runner
+    "itsdangerous", # for starlette SessionMiddleware
+    "python-multipart", # for Form data
+
+    "fastapi-socketio-handler>=0.4.0", # socketio server
+
+    # monitoring
+    "sentry-sdk[fastapi]>=2.35.0",
+    "prometheus-fastapi-instrumentator",
+
+    # discord auth
+    "aiocache",  # for fastapi_discord copy
+    "oauthlib",
+    "pyjwt",
+
+    # database
     "peewee",
-    "requests-oauthlib",
     "cachetools",  # for TTLCache
 
-    "py-cord>=2.3.1",  # for randovania/server/discord; 2.3.1+ is needed for Python 3.11
+    # discord bot
+    "py-cord>=2.3.1",  # for randovania/discord_bot; 2.3.1+ is needed for Python 3.11
     "audioop-lts; python_version>='3.13'",  # for py-cord
-    "Pillow>=9.0.0",  # for randovania/server/discord/database_command
-    "graphviz",  # for randovania/server/discord/database_command
+    "Pillow>=9.0.0",  # for randovania/discord_bot/database_command
+    "graphviz",  # for randovania/discord_bot/database_command
 ]
 
 test = [
     "pytest",
     "pytest-cov",
     "pytest-qt",
-    "pytest-asyncio",
+    "pytest-asyncio<1.0.0",  # Breaks our tests somehow
     "pytest-mock",
     "pytest-localftpserver",
     "pytest-xdist[psutil]",
     "pytest-codspeed",
+    "pytest-test-groups>=1.2.1",
+    "httpx", # for server testing
 ]
 
 website = [
@@ -163,13 +168,17 @@ website = [
 installer = [
     "pyinstaller",
     "pyinstaller-hooks-contrib",
+    "delocate",
 ]
 
 typing = [
-    "mypy",
+    "mypy<1.18.3",
     "types-aiofiles",
     "types-peewee",
     "types-qrcode>=8.0.0.20241004",
+    "python-socketio-stubs",
+    "types-oauthlib",
+    "types-cachetools",
 ]
 
 [project.readme]
@@ -192,7 +201,7 @@ include = ["randovania*"]
 local_scheme = "no-local-version"
 version_file = "randovania/version.py"
 version_scheme = "randovania_scm_version_schema:version_scheme"
-git_describe_command = [
+scm.git.describe_command = [
     "git",
     "describe",
     "--dirty",
@@ -204,7 +213,10 @@ git_describe_command = [
 
 [tool.ruff]
 line-length = 120
-target-version = "py311"
+
+extend-exclude = [
+    "*_ui.py",
+]
 
 [tool.ruff.lint]
 select = [
@@ -226,10 +238,12 @@ select = [
     "PLW",
     "SIM101",
 ]
-extend-ignore = [
+ignore = [
     "ISC001",  # may cause conflicts with formatter
     "PLW0603",  # we use some globals here and there
     "PLW2901",  # TODO: should actually fix these
+    "PLC0415",  # we explicitly use the import within a function to postpone the loading of a module
+
 ]
 
 [tool.ruff.lint.isort]
@@ -250,11 +264,24 @@ runtime-evaluated-base-classes = [
     "randovania.exporter.game_exporter.GameExportParams",
     "randovania.game_description.pickup.pickup_definition.base_pickup.BasePickupDefinition",
 ]
+runtime-evaluated-decorators = [
+    "fastapi.FastAPI.get",
+    "fastapi.FastAPI.post",
+    "fastapi.FastAPI.put",
+    "fastapi.FastAPI.patch",
+    "fastapi.FastAPI.delete",
+    "fastapi.APIRouter.get",
+    "fastapi.APIRouter.post",
+    "fastapi.APIRouter.put",
+    "fastapi.APIRouter.patch",
+    "fastapi.APIRouter.delete",
+]
 
 [tool.mypy]
 files = [
     "randovania/bitpacking/",
     "randovania/cli/",
+    "randovania/discord_bot/preset_lookup.py",
     "randovania/exporter/",
     "randovania/game/",
     "randovania/game_connection/",
@@ -286,20 +313,21 @@ files = [
     "randovania/gui/dialog/login_prompt_dialog.py",
     "randovania/gui/preset_settings/trick_level_tab.py",
     "randovania/gui/preset_settings/hints_tab.py",
+    "randovania/gui/lib/connections_visualizer.py",
     "randovania/gui/lib/editable_table_model.py",
     "randovania/gui/lib/pixmap_lib.py",
     "randovania/gui/lib/faq_lib.py",
     "randovania/gui/lib/signal_handling.py",
     "randovania/gui/lib/hints_text.py",
-    "randovania/gui/lib/tracker_item_image.py",
-    "randovania/gui/lib/data_editor_canvas.py",
-    "randovania/gui/lib/connections_visualizer.py",
     "randovania/gui/widgets/async_race_room_settings_widget.py",
+    "randovania/gui/widgets/data_editor_canvas.py",
     "randovania/gui/widgets/game_connection_window.py",
     "randovania/gui/widgets/game_validator_widget.py",
     "randovania/gui/widgets/node_selector_widget.py",
+    "randovania/gui/widgets/tracker_item_image.py",
     "randovania/layout/",
     "randovania/lib/",
+    "randovania/server/",
     "test/bitpacking/",
     "test/game_connection",
     "test/game_description/",
@@ -353,6 +381,8 @@ module = [
     "pytestqt.*",
     "qasync.*",
     "ruamel.*",
+    "aiocache.*",
+    "socketio_handler.*",
 ]
 ignore_missing_imports = true
 

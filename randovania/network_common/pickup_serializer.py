@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from frozendict import frozendict
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackFloat, BitPackJson
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackFloat, BitPackJson, BitPackValue
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.pickup.pickup_entry import (
@@ -104,7 +104,7 @@ def _decode_hint_feature(decoder: BitPackDecoder) -> HintFeature:
     )
 
 
-class BitPackPickupEntry:
+class BitPackPickupEntry(BitPackValue):
     value: PickupEntry
     database: ResourceDatabase
 
@@ -192,3 +192,7 @@ class BitPackPickupEntry:
             is_expansion=is_expansion,
             extra=extra,
         )
+
+    @classmethod
+    def bit_pack_skip_if_equals(cls) -> bool:
+        return False

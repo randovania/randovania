@@ -31,9 +31,10 @@ async def test_connect(executor, mocker):
     bootstrap_1 = [b"\x03", b"\x02", b"\x01\x03\x00\x00\x00", b"nil"]
     bootstrap_2 = [b"\x03", b"\x03", b"\x01\x03\x00\x00\x00", b"nil"]
     bootstrap_3 = [b"\x03", b"\x04", b"\x01\x03\x00\x00\x00", b"nil"]
-    update_client = [b"\x03", b"\x05", b"\x01\x03\x00\x00\x00", b"nil"]
+    bootstrap_4 = [b"\x03", b"\x05", b"\x01\x03\x00\x00\x00", b"nil"]
+    update_client = [b"\x03", b"\x06", b"\x01\x03\x00\x00\x00", b"nil"]
     reader.read.side_effect = (
-        handshake_answer + api_request_answer + bootstrap_1 + bootstrap_2 + bootstrap_3 + update_client
+        handshake_answer + api_request_answer + bootstrap_1 + bootstrap_2 + bootstrap_3 + bootstrap_4 + update_client
     )
 
     mocker.patch("asyncio.open_connection", new_callable=AsyncMock, return_value=(reader, writer))
@@ -189,4 +190,4 @@ async def test_code_in_multiple_buffer(executor):
     executor._socket.buffer_size = 4096
 
     await executor.bootstrap()
-    assert executor.run_lua_code.call_count == 3
+    assert executor.run_lua_code.call_count == 4

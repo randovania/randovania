@@ -1,10 +1,10 @@
 ----------------
-Biodefense Chamber A
+Biodefense Chamber 03
 Extra - room_id: 71
 Extra - entity_file: Unit3_b1_Ent.bin
-> Door to Stronghold Void A; Heals? False
+> Door to Stronghold Void A (VDO); Heals? False
   * Layers: default
-  * Normal Door to Stronghold Void A/Door to Biodefense Chamber A
+  * Normal Door to Stronghold Void A (VDO)/Door to Biodefense Chamber 03
   * Extra - entity_id: 1
   * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -0.89990234375, 'z': 10.0})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -37,18 +37,18 @@ Extra - entity_file: Unit3_b1_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.03466796875, 'y': 0.0, 'z': -0.999267578125})
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
-  > Door to Stronghold Void A
+  > Door to Stronghold Void A (VDO)
       After VDO - Defeat Cretaphid v2
   > Event - Cretaphid v2
       Trivial
 
 ----------------
-Biodefense Chamber B
+Biodefense Chamber 08
 Extra - room_id: 76
 Extra - entity_file: Unit3_b2_Ent.bin
-> Door to Stronghold Void B; Heals? False
+> Door to Stronghold Void B (VDO); Heals? False
   * Layers: default
-  * Normal Door to Stronghold Void B/Door to Biodefense Chamber B
+  * Normal Door to Stronghold Void B (VDO)/Door to Biodefense Chamber 08
   * Extra - entity_id: 4
   * Extra - position: frozendict.frozendict({'x': 0.0, 'y': 2.479248046875, 'z': 17.3896484375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -76,7 +76,7 @@ Extra - entity_file: Unit3_b2_Ent.bin
 
 > Room Center; Heals? False
   * Layers: default
-  > Door to Stronghold Void B
+  > Door to Stronghold Void B (VDO)
       After VDO - Defeat Slench 4
   > Event - Slench 4
       Magmaul
@@ -123,6 +123,7 @@ Extra - entity_file: unit3_C0_Ent.bin
 Ascension
 Extra - room_id: 72
 Extra - entity_file: unit3_C1_Ent.bin
+Extra - portal_filename: unit3_C1_Ent
 > Player Spawn; Heals? False; Default Node
   * Layers: default
   * Extra - entity_id: 0
@@ -272,6 +273,7 @@ Extra - entity_file: Unit3_C2_Ent.bin
 VDO Gateway
 Extra - room_id: 65
 Extra - entity_file: unit3_Land_Ent.bin
+Extra - portal_filename: unit3_Land_Ent
 > Ship; Heals? False; Default Node
   * Layers: default
   * Teleporter Network (Unlocked by Trivial)
@@ -300,7 +302,7 @@ Extra - entity_file: unit3_Land_Ent.bin
 
 > Portal to Ascension; Heals? False
   * Layers: default
-  * Portal to Ascension/Portal to VDO Gateway
+  * Portal to Ascension/Portal to VDO Gateway; Custom name: Vesper Defense Outpost - VDO Gateway (Ascension Portal)
   * Extra - entity_id: 5
   * Extra - position: frozendict.frozendict({'x': -11.09375, 'y': 18.499755859375, 'z': -11.02587890625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -311,7 +313,7 @@ Extra - entity_file: unit3_Land_Ent.bin
 
 > Portal to Weapons Complex; Heals? False
   * Layers: default
-  * Portal to Weapons Complex/Portal to VDO Gateway
+  * Portal to Weapons Complex/Portal to VDO Gateway; Custom name: Vesper Defense Outpost - VDO Gateway (Weapons Complex Portal)
   * Extra - entity_id: 8
   * Extra - position: frozendict.frozendict({'x': -12.19384765625, 'y': 18.499755859375, 'z': 8.642578125})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -324,6 +326,7 @@ Extra - entity_file: unit3_Land_Ent.bin
 Weapons Complex
 Extra - room_id: 68
 Extra - entity_file: Unit3_RM1_Ent.bin
+Extra - portal_filename: unit3_RM1_Ent
 > Door to Bioweaponry Lab; Heals? False
   * Layers: default
   * Normal Door to Bioweaponry Lab/Door to Weapons Complex
@@ -523,9 +526,10 @@ Extra - entity_file: Unit3_RM2_Ent.bin
 Stasis Bunker
 Extra - room_id: 74
 Extra - entity_file: Unit3_RM3_Ent.bin
-> Portal to Stronghold Void B; Heals? False
+Extra - portal_filename: unit3_RM3_Ent
+> Portal to Stronghold Void B (VDO); Heals? False
   * Layers: default
-  * Portal to Stronghold Void B/Portal to Stasis Bunker
+  * Portal to Stronghold Void B (VDO)/Portal to Stasis Bunker
   * Extra - entity_id: 3
   * Extra - position: frozendict.frozendict({'x': 16.009033203125, 'y': 8.124755859375, 'z': -4.98388671875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -601,7 +605,7 @@ Extra - entity_file: Unit3_RM3_Ent.bin
 
 > Room Center; Heals? False
   * Layers: default
-  > Portal to Stronghold Void B
+  > Portal to Stronghold Void B (VDO)
       VDO Attameter Artifact 2 and VDO Binary Subscripture Artifact 2 and VDO Cartograph Artifact 2
   > Door to Weapons Complex
       After VDO - Stasis Bunker Unlock Doors
@@ -634,9 +638,10 @@ Extra - entity_file: Unit3_RM3_Ent.bin
 Compression Chamber
 Extra - room_id: 69
 Extra - entity_file: unit3_rm4_Ent.bin
-> Portal to Stronghold Void A; Heals? False
+Extra - portal_filename: unit3_RM4_Ent
+> Portal to Stronghold Void A (VDO); Heals? False
   * Layers: default
-  * Portal to Stronghold Void A/Portal to Compression Chamber
+  * Portal to Stronghold Void A (VDO)/Portal to Compression Chamber
   * Extra - entity_id: 36
   * Extra - position: frozendict.frozendict({'x': -17.21142578125, 'y': 5.0009765625, 'z': 0.0})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -726,7 +731,7 @@ Extra - entity_file: unit3_rm4_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.99853515625, 'y': 0.0, 'z': 0.050048828125})
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
-  > Portal to Stronghold Void A
+  > Portal to Stronghold Void A (VDO)
       VDO Attameter Artifact 1 and VDO Binary Subscripture Artifact 1 and VDO Cartograph Artifact 1
   > Morph Ball Door to Cortex CPU (Upper)
       Trivial
@@ -751,9 +756,10 @@ Extra - entity_file: unit3_rm4_Ent.bin
       Trivial
 
 ----------------
-Stronghold Void A
+Stronghold Void A (VDO)
 Extra - room_id: 70
 Extra - entity_file: Unit3_TP1_Ent.bin
+Extra - portal_filename: Unit3_TP1_Ent
 > Player Spawn; Heals? False; Default Node
   * Layers: default
   * Extra - entity_id: 0
@@ -766,7 +772,7 @@ Extra - entity_file: Unit3_TP1_Ent.bin
 
 > Portal to Compression Chamber; Heals? False
   * Layers: default
-  * Portal to Compression Chamber/Portal to Stronghold Void A
+  * Portal to Compression Chamber/Portal to Stronghold Void A (VDO)
   * Extra - entity_id: 1
   * Extra - position: frozendict.frozendict({'x': 0.37109375, 'y': 0.222412109375, 'z': 65.701904296875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -774,12 +780,12 @@ Extra - entity_file: Unit3_TP1_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 4, 'target_index': 4, 'artifact_id': 255, 'active': True, 'invisible': False, 'entity_filename': 'unit3_RM4_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
-  > Door to Biodefense Chamber A
+  > Door to Biodefense Chamber 03
       Trivial
 
-> Door to Biodefense Chamber A; Heals? False
+> Door to Biodefense Chamber 03; Heals? False
   * Layers: default
-  * Normal Door to Biodefense Chamber A/Door to Stronghold Void A
+  * Normal Door to Biodefense Chamber 03/Door to Stronghold Void A (VDO)
   * Extra - entity_id: 2
   * Extra - position: frozendict.frozendict({'x': 0.12158203125, 'y': 1.657470703125, 'z': 6.73046875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -789,9 +795,10 @@ Extra - entity_file: Unit3_TP1_Ent.bin
       Trivial
 
 ----------------
-Stronghold Void B
+Stronghold Void B (VDO)
 Extra - room_id: 75
 Extra - entity_file: Unit3_TP2_Ent.bin
+Extra - portal_filename: Unit3_TP2_Ent
 > Player Spawn; Heals? False; Default Node
   * Layers: default
   * Extra - entity_id: 0
@@ -804,7 +811,7 @@ Extra - entity_file: Unit3_TP2_Ent.bin
 
 > Portal to Stasis Bunker; Heals? False
   * Layers: default
-  * Portal to Stasis Bunker/Portal to Stronghold Void B
+  * Portal to Stasis Bunker/Portal to Stronghold Void B (VDO)
   * Extra - entity_id: 1
   * Extra - position: frozendict.frozendict({'x': 0.37109375, 'y': 0.222412109375, 'z': 65.701904296875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -812,12 +819,12 @@ Extra - entity_file: Unit3_TP2_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 5, 'target_index': 5, 'artifact_id': 255, 'active': True, 'invisible': False, 'entity_filename': 'unit3_RM3_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
-  > Door to Biodefense Chamber B
+  > Door to Biodefense Chamber 08
       Trivial
 
-> Door to Biodefense Chamber B; Heals? False
+> Door to Biodefense Chamber 08; Heals? False
   * Layers: default
-  * Normal Door to Biodefense Chamber B/Door to Stronghold Void B
+  * Normal Door to Biodefense Chamber 08/Door to Stronghold Void B (VDO)
   * Extra - entity_id: 2
   * Extra - position: frozendict.frozendict({'x': 0.12158203125, 'y': 1.657470703125, 'z': 6.73046875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})

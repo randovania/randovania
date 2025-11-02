@@ -15,6 +15,7 @@ if TYPE_CHECKING:
     from randovania.exporter.hints.pickup_hint import PickupHint
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.pickup_index import PickupIndex
 
@@ -84,15 +85,17 @@ class FeaturalFormatter(TemplatedFormatter):
 class RelativeFormatter(LocationFormatter):
     """Hint formatter for relative hints"""
 
+    game_view: GameDatabaseView
+
     def __init__(self, patches: GamePatches, distance_painter: Callable[[str, bool], str]):
-        self.region_list = filtered_database.game_description_for_layout(patches.configuration).region_list
+        self.game_view = filtered_database.game_description_for_layout(patches.configuration)
         self.patches = patches
         self.distance_painter = distance_painter
 
     def _calculate_distance(self, source_location: PickupIndex, target: Area) -> int:
-        source = self.region_list.node_from_pickup_index(source_location)
+        source = self.game_view.node_from_pickup_index(source_location)
 
-        return node_search.distances_to_node(self.region_list, source, [], patches=self.patches)[target]
+        return node_search.distances_to_node(self.game_view, source, [], patches=self.patches)[target]
 
     def relative_format(
         self,
@@ -125,10 +128,10 @@ class RelativeAreaFormatter(RelativeFormatter):
         relative = hint.precision.relative
         assert isinstance(relative, RelativeDataArea)
 
-        other_area = self.region_list.area_by_area_location(relative.area_location)
+        other_region, other_area = self.game_view.find_area_by_identifier(relative.area_location)
 
         if relative.precision == HintRelativeAreaName.NAME:
-            other_name = self.region_list.area_name(other_area)
+            other_name = f"{other_region.name} - {other_area.name}"
         elif relative.precision == HintRelativeAreaName.FEATURE:
             raise NotImplementedError("HintRelativeAreaName.FEATURE not implemented")
         else:

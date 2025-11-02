@@ -5,7 +5,6 @@ import re
 import traceback
 from typing import TYPE_CHECKING
 
-import markdown
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
@@ -306,6 +305,8 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             self.create_preset_tree.select_preset(preset)
 
     def on_preset_changed(self, preset: VersionedPreset | None):
+        import markdown
+
         can_generate = False
         if preset is None:
             description = "Please select a preset from the list."

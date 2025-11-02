@@ -138,7 +138,7 @@ def pickups_to_solve_list(
 ) -> list[PickupEntry] | None:
     pickups = []
 
-    db = state.resource_database
+    game = state.patches.game
     context = dataclasses.replace(state.node_context(), current_resources=state.resources.duplicate())
     pickups_for_this = list(pickup_pool)
 
@@ -154,9 +154,9 @@ def pickups_to_solve_list(
         # Create another copy of the list, so we can remove elements while iterating
         for pickup in list(pickups_for_this):
             new_resources = ResourceCollection.from_resource_gain(
-                db, pickup.resource_gain(context.current_resources, force_lock=True)
+                game, pickup.resource_gain(context.current_resources, force_lock=True)
             )
-            pickup_progression = ResourceCollection.from_resource_gain(db, pickup.progression)
+            pickup_progression = ResourceCollection.from_resource_gain(game, pickup.progression)
             if new_resources[individual.resource] + pickup_progression[individual.resource] > 0:
                 pickups.append(pickup)
                 pickups_for_this.remove(pickup)
@@ -199,16 +199,16 @@ def get_pickups_that_solves_unreachable(
 
     all_lists = _requirement_lists_without_satisfied_resources(state, possible_sets, uncollected_resources)
 
-    result = []
+    # Hacky way to get rid of duplicates. Can't use a set as a set's order is not deterministic.
+    result = {}
     for requirement_list in sorted(all_lists, key=lambda it: it.as_stable_sort_tuple):
         pickups = pickups_to_solve_list(pickups_left, requirement_list, state)
         if pickups is not None and pickups:
-            # FIXME: avoid duplicates in result
-            result.append(tuple(pickups))
+            result[tuple(pickups)] = ""
 
     if debug.debug_level() > 2:
         print(">> All pickup combinations alternatives:")
-        for items in sorted(result):
+        for items in sorted(result.keys()):
             print("* {}".format(", ".join(p.name for p in items)))
 
-    return tuple(result)
+    return tuple(result.keys())

@@ -4878,17 +4878,8 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Before lowering gate",
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "Event13",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
@@ -4973,7 +4964,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "After lowering gate",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -8294,6 +8285,23 @@
                                         "data": {
                                             "type": "items",
                                             "name": "AgonKey3",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Amorbis": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Having a connection back the event node lets the genrator know when this sequence is safe.",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event86",
                                             "amount": 1,
                                             "negate": false
                                         }

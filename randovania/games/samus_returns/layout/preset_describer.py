@@ -112,7 +112,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                     or configuration.super_missile_tank_size != 10
                 },
             ],
-            "Item Pool": [
+            "Pickup Pool": [
                 {
                     "Energy Reserve Tank": has_shuffled_item(standard_pickups, "Energy Reserve Tank"),
                     "Aeion Reserve Tank": has_shuffled_item(standard_pickups, "Aeion Reserve Tank"),
@@ -135,6 +135,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                         "Super Missile needs Launcher": "Super Missile Tank",
                         "Power Bomb needs Launcher": "Power Bomb Tank",
                     },
+                    mains_are_default_required=False,
                 ),
                 {
                     "Charge Beam Door Buff": configuration.charge_door_buff,

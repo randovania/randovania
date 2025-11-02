@@ -152,19 +152,31 @@ async def test_multiworld_interaction(connector: Prime1RemoteConnector, depth: i
 
 @pytest.mark.parametrize("failure_at", [None, 1, 2])
 @pytest.mark.parametrize("depth", [0, 1, 2, 3])
-async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, failure_at: int | None):
+@pytest.mark.parametrize("is_at_end_of_game", [True, False])
+async def test_interact_with_game(
+    mocker, connector: Prime1RemoteConnector, depth: int, failure_at: int | None, is_at_end_of_game: bool
+):
     # Setup
     assert isinstance(connector.executor, AsyncMock)
 
     connector.message_cooldown = 0.0
     connector.executor.is_connected.return_value = True
     connector.executor.disconnect = MagicMock()
+    game_has_been_beaten_mock = mocker.patch.object(connector.GameHasBeenBeaten, "emit")
 
-    connector.get_inventory = AsyncMock()
+    inventory_mock = MagicMock(spec=Inventory)
+    inventory_mock.get = MagicMock(return_value=MagicMock(spec=InventoryItem))
+    connector.get_inventory = AsyncMock(return_value=inventory_mock)
+
+    region = None
+    if depth > 0:
+        region = MagicMock()
+        if is_at_end_of_game:
+            region.name = "End of Game"
     connector.current_game_status = AsyncMock(
         return_value=(
             depth <= 1,  # has pending op
-            MagicMock() if depth > 0 else None,  # db
+            region,  # db
         )
     )
 
@@ -206,6 +218,10 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
 
     if 0 < depth:
         assert connector._last_emitted_region is not None
+        if is_at_end_of_game and (failure_at is None or failure_at > 1):
+            game_has_been_beaten_mock.assert_called_once_with()
+        else:
+            game_has_been_beaten_mock.assert_not_called()
     else:
         assert connector._last_emitted_region is None
 

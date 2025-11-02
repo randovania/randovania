@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+from typing import TYPE_CHECKING
 
 import pytest
 from frozendict import frozendict
@@ -16,10 +17,12 @@ from randovania.game_description.pickup.pickup_entry import (
     StartingPickupBehavior,
 )
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.standard_pickup_state import StandardPickupState
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_collection import ResourceCollection
 
 
 @pytest.fixture
@@ -177,6 +180,7 @@ def test_create_missile_launcher(
                 categories["missile"],
                 categories["missile_related"],
                 categories["chozo"],
+                categories["ordnance"],
             )
         ),
         generator_params=default_generator_params,
@@ -239,6 +243,7 @@ def test_create_seeker_launcher(
                 categories["missile_related"],
                 categories["major"],
                 categories["luminoth"],
+                categories["ordnance"],
             )
         ),
         respects_lock=ammo_requires_main_item,
@@ -302,7 +307,9 @@ def test_create_ammo_expansion(
 
 
 @pytest.mark.parametrize("include_before", [False, True])
-def test_missile_expansion_before_launcher(include_before, echoes_pickup_database, echoes_resource_database):
+def test_missile_expansion_before_launcher(
+    include_before, echoes_pickup_database, echoes_resource_database, echoes_game_description
+):
     # Setup
     ammo = echoes_pickup_database.ammo_pickups["Missile Expansion"]
     standard_pickup = echoes_pickup_database.standard_pickups["Missile Launcher"]
@@ -321,7 +328,7 @@ def test_missile_expansion_before_launcher(include_before, echoes_pickup_databas
     def to_dict(col: ResourceCollection):
         return dict(col.as_resource_gain())
 
-    collection = ResourceCollection.with_database(echoes_resource_database)
+    collection = echoes_game_description.create_resource_collection()
 
     if include_before:
         # Ammo Expansion

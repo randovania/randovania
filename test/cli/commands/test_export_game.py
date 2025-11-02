@@ -1,11 +1,10 @@
 from pathlib import Path
 from unittest.mock import MagicMock
 
-from caver.patcher import CSPlatform
-
 from randovania.cli.commands import export_game
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
+from randovania.games.cave_story.exporter.options import CSPlatform
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform
 
 
@@ -19,6 +18,13 @@ def test_add_parser_arguments_for(game_enum: RandovaniaGame) -> None:
         type=Path,
         required=False,
     )
+
+
+def test_compare_csplatform_enum() -> None:
+    import caver.patcher
+
+    assert [e.name for e in CSPlatform] == [e.name for e in caver.patcher.CSPlatform]
+    assert [e.value for e in CSPlatform] == [e.value for e in caver.patcher.CSPlatform]
 
 
 def test_get_export_params_from_cli_cave_story() -> None:

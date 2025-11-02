@@ -1,0 +1,2588 @@
+{
+    "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
+    "seed": 1792370901,
+    "preferences": {
+        "defaultGameOptions": {
+            "screenBrightness": 4,
+            "screenOffsetX": 0,
+            "screenOffsetY": 0,
+            "screenStretch": 0,
+            "soundMode": 1,
+            "sfxVolume": 127,
+            "musicVolume": 127,
+            "visorOpacity": 255,
+            "helmetOpacity": 255,
+            "hudLag": true,
+            "reverseYAxis": false,
+            "rumble": true,
+            "swapBeamControls": false
+        },
+        "qolGameBreaking": true,
+        "qolCosmetic": true,
+        "qolPickupScans": true,
+        "qolGeneral": true,
+        "qolCutscenes": "Skippable",
+        "mapDefaultState": "Always",
+        "artifactHintBehavior": "All",
+        "automaticCrashScreen": true,
+        "quickplay": false,
+        "quiet": false,
+        "suitColors": {},
+        "forceFusion": false
+    },
+    "gameConfig": {
+        "resultsString": "1.2.3 | Seed Hash - Some Words (XXXXXXXX)",
+        "bossSizes": {},
+        "noDoors": false,
+        "startingRoom": "Tallon Overworld:Landing Site",
+        "warpToStart": false,
+        "springBallItem": "Spring Ball",
+        "incineratorDroneConfig": {
+            "eyeWaitInitialRandomTime": 0.0,
+            "eyeWaitRandomTime": 0.0,
+            "eyeStayUpRandomTime": 0.0,
+            "resetContraptionRandomTime": 0.0,
+            "eyeWaitInitialMinimumTime": 9.815285289826065,
+            "eyeWaitMinimumTime": 16.82848788076487,
+            "eyeStayUpMinimumTime": 8.000802746605139,
+            "resetContraptionMinimumTime": 4.355133108441116
+        },
+        "mazeSeeds": [
+            430341267
+        ],
+        "nonvariaHeatDamage": true,
+        "missileStationPbRefill": true,
+        "staggeredSuitDamage": "Default",
+        "heatDamagePerSec": 10.0,
+        "autoEnabledElevators": false,
+        "multiworldDolPatches": true,
+        "doorOpenMode": "PrimaryBlastShield",
+        "difficultyBehavior": "NormalOnly",
+        "blastShieldLockon": false,
+        "disableItemLoss": true,
+        "startingItems": {
+            "powerBeam": true,
+            "ice": false,
+            "wave": false,
+            "plasma": false,
+            "missiles": 0,
+            "scanVisor": true,
+            "bombs": false,
+            "powerBombs": 0,
+            "flamethrower": false,
+            "thermalVisor": false,
+            "charge": false,
+            "superMissile": false,
+            "grapple": false,
+            "xray": false,
+            "iceSpreader": false,
+            "spaceJump": false,
+            "morphBall": false,
+            "combatVisor": true,
+            "boostBall": false,
+            "spiderBall": false,
+            "gravitySuit": false,
+            "variaSuit": false,
+            "phazonSuit": false,
+            "energyTanks": 0,
+            "wavebuster": false
+        },
+        "etankCapacity": 100,
+        "itemMaxCapacity": {
+            "Energy Tank": 200,
+            "Power Bomb": 99,
+            "Missile": 999,
+            "Unknown Item 1": 65536
+        },
+        "mainPlazaDoor": false,
+        "backwardsFrigate": false,
+        "backwardsLabs": false,
+        "backwardsUpperMines": false,
+        "backwardsLowerMines": false,
+        "phazonEliteWithoutDynamo": false,
+        "gameBanner": {
+            "gameName": "Metroid Prime: Randomizer",
+            "gameNameFull": "Metroid Prime: Randomizer - XXXXXXXX",
+            "description": "Seed Hash: Some Words"
+        },
+        "mainMenuMessage": "Randovania v1.2.3\nSome Words",
+        "creditsString": "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Charge Beam&pop;\nChozo Ruins - Watery Hall\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Wave Beam&pop;\nPhendrana Drifts - Chapel of the Elders\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Ice Beam&pop;\nChozo Ruins - Antechamber\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Plasma Beam&pop;\nMagmoor Caverns - Plasma Processing\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Missile Launcher&pop;\nChozo Ruins - Hive Totem\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Grapple Beam&pop;\nPhazon Mines - Storage Depot B\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Thermal Visor&pop;\nPhendrana Drifts - Research Core\n\n&push;&font=C29C51F1;&main-color=#33ffd6;X-Ray Visor&pop;\nTallon Overworld - Life Grove\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Space Jump Boots&pop;\nTallon Overworld - Alcove\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Morph Ball&pop;\nChozo Ruins - Ruined Shrine\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Morph Ball Bomb&pop;\nChozo Ruins - Burn Dome\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Boost Ball&pop;\nPhendrana Drifts - Phendrana Canyon\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Spider Ball&pop;\nPhendrana Drifts - Quarantine Cave\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Power Bomb&pop;\nPhazon Mines - Central Dynamo\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Varia Suit&pop;\nChozo Ruins - Sunchamber\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Gravity Suit&pop;\nPhendrana Drifts - Gravity Chamber\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Phazon Suit&pop;\nPhazon Mines - Elite Quarters\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Super Missile&pop;\nPhendrana Drifts - Observatory\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Wavebuster&pop;\nChozo Ruins - Tower of Light\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Ice Spreader&pop;\nMagmoor Caverns - Shore Tunnel\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Flamethrower&pop;\nPhazon Mines - Storage Depot A\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Chozo&pop;\nTallon Overworld - Life Grove\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Elder&pop;\nPhendrana Drifts - Control Tower\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Lifegiver&pop;\nChozo Ruins - Tower Chamber\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Nature&pop;\nMagmoor Caverns - Lava Lake\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Newborn&pop;\nPhazon Mines - Phazon Mining Tunnel\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Spirit&pop;\nPhendrana Drifts - Storage Cave\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Strength&pop;\nMagmoor Caverns - Warrior Shrine\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Sun&pop;\nPhendrana Drifts - Chozo Ice Temple\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Truth&pop;\nTallon Overworld - Artifact Temple\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Warrior&pop;\nPhazon Mines - Elite Research\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Wild&pop;\nChozo Ruins - Sunchamber\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of World&pop;\nChozo Ruins - Elder Chamber",
+        "artifactHints": {
+            "Artifact of Truth": "&push;&main-color=#c300ff;Artifact of Truth&pop; is located in &push;&main-color=#89a1ff;Tallon Overworld - Artifact Temple&pop;.",
+            "Artifact of Strength": "&push;&main-color=#c300ff;Artifact of Strength&pop; is located in &push;&main-color=#89a1ff;Magmoor Caverns - Warrior Shrine&pop;.",
+            "Artifact of Elder": "&push;&main-color=#c300ff;Artifact of Elder&pop; is located in &push;&main-color=#89a1ff;Phendrana Drifts - Control Tower&pop;.",
+            "Artifact of Wild": "&push;&main-color=#c300ff;Artifact of Wild&pop; is located in &push;&main-color=#89a1ff;Chozo Ruins - Sunchamber&pop;.",
+            "Artifact of Lifegiver": "&push;&main-color=#c300ff;Artifact of Lifegiver&pop; is located in &push;&main-color=#89a1ff;Chozo Ruins - Tower Chamber&pop;.",
+            "Artifact of Warrior": "&push;&main-color=#c300ff;Artifact of Warrior&pop; is located in &push;&main-color=#89a1ff;Phazon Mines - Elite Research&pop;.",
+            "Artifact of Chozo": "&push;&main-color=#c300ff;Artifact of Chozo&pop; is located in &push;&main-color=#89a1ff;Tallon Overworld - Life Grove&pop;.",
+            "Artifact of Nature": "&push;&main-color=#c300ff;Artifact of Nature&pop; is located in &push;&main-color=#89a1ff;Magmoor Caverns - Lava Lake&pop;.",
+            "Artifact of Sun": "&push;&main-color=#c300ff;Artifact of Sun&pop; is located in &push;&main-color=#89a1ff;Phendrana Drifts - Chozo Ice Temple&pop;.",
+            "Artifact of World": "&push;&main-color=#c300ff;Artifact of World&pop; is located in &push;&main-color=#89a1ff;Chozo Ruins - Elder Chamber&pop;.",
+            "Artifact of Spirit": "&push;&main-color=#c300ff;Artifact of Spirit&pop; is located in &push;&main-color=#89a1ff;Phendrana Drifts - Storage Cave&pop;.",
+            "Artifact of Newborn": "&push;&main-color=#c300ff;Artifact of Newborn&pop; is located in &push;&main-color=#89a1ff;Phazon Mines - Phazon Mining Tunnel&pop;."
+        },
+        "artifactTempleLayerOverrides": {
+            "Artifact of Truth": true,
+            "Artifact of Strength": true,
+            "Artifact of Elder": true,
+            "Artifact of Wild": true,
+            "Artifact of Lifegiver": true,
+            "Artifact of Warrior": true,
+            "Artifact of Chozo": true,
+            "Artifact of Nature": true,
+            "Artifact of Sun": true,
+            "Artifact of World": true,
+            "Artifact of Spirit": true,
+            "Artifact of Newborn": true
+        },
+        "requiredArtifactCount": 12
+    },
+    "tweaks": {},
+    "levelData": {
+        "Impact Crater": {
+            "transports": {
+                "Crater Entry Point": "Artifact Temple",
+                "Essence Dead Cutscene": "Credits"
+            },
+            "rooms": {
+                "Crater Entry Point": {
+                    "extraScans": [
+                        {
+                            "position": [
+                                -19.4009,
+                                41.001,
+                                2.805
+                            ],
+                            "combatVisible": true,
+                            "text": "&push;&main-color=#c300ff;Phazon Suit&pop; is located in &push;&main-color=#89a1ff;Phazon Mines&pop;.",
+                            "rotation": 45.0,
+                            "isRed": true,
+                            "logbookTitle": "Phazon Suit",
+                            "logbookCategory": 5
+                        }
+                    ]
+                }
+            }
+        },
+        "Phendrana Drifts": {
+            "transports": {
+                "Phendrana Drifts North (Phendrana Shorelines)": "Magmoor Caverns West (Monitor Station)",
+                "Phendrana Drifts South (Quarantine Cave)": "Magmoor Caverns South (Magmoor Workstation, Save Station)"
+            },
+            "rooms": {
+                "Phendrana Shorelines": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Chozo Ice Temple": {
+                    "pickups": [
+                        {
+                            "type": "Artifact of Sun",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Artifact of Sun"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Artifact of Sun"
+                            },
+                            "scanText": "Artifact of Sun.",
+                            "hudmemoText": "Artifact of Sun acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Ice Ruins West": {
+                    "pickups": [
+                        {
+                            "type": "Power Bomb",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Power Bomb Expansion"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Power Bomb Expansion"
+                            },
+                            "scanText": "Power Bomb Expansion. Provides 1 Power Bomb.",
+                            "hudmemoText": "Power Bomb Expansion acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "2": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Ice Ruins East": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Canyon Entryway": {
+                    "doors": {
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Chapel of the Elders": {
+                    "pickups": [
+                        {
+                            "type": "Wave Beam",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Wave Beam"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Wave Beam"
+                            },
+                            "scanText": "Wave Beam.",
+                            "hudmemoText": "Wave Beam acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Ruined Courtyard": {
+                    "pickups": [
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Phendrana Canyon": {
+                    "pickups": [
+                        {
+                            "type": "Boost Ball",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Boost Ball"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Boost Ball"
+                            },
+                            "scanText": "Boost Ball.",
+                            "hudmemoText": "Boost Ball acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Save Station A": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Quarantine Cave": {
+                    "pickups": [
+                        {
+                            "type": "Spider Ball",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Spider Ball"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Spider Ball"
+                            },
+                            "scanText": "Spider Ball.",
+                            "hudmemoText": "Spider Ball acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Research Lab Hydra": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Quarantine Monitor": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Observatory": {
+                    "pickups": [
+                        {
+                            "type": "Super Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Super Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Super Missile"
+                            },
+                            "scanText": "Super Missile.",
+                            "hudmemoText": "Super Missile acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "2": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Transport Access": {
+                    "pickups": [
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "West Tower Entrance": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Save Station D": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "West Tower": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Control Tower": {
+                    "pickups": [
+                        {
+                            "type": "Artifact of Elder",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Artifact of Elder"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Artifact of Elder"
+                            },
+                            "scanText": "Artifact of Elder.",
+                            "hudmemoText": "Artifact of Elder acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Research Core": {
+                    "pickups": [
+                        {
+                            "type": "Thermal Visor",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Thermal Visor"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Thermal Visor"
+                            },
+                            "scanText": "Thermal Visor.",
+                            "hudmemoText": "Thermal Visor acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Frost Cave": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Research Lab Aether": {
+                    "pickups": [
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Gravity Chamber": {
+                    "pickups": [
+                        {
+                            "type": "Gravity Suit",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Gravity Suit"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Gravity Suit"
+                            },
+                            "scanText": "Gravity Suit.",
+                            "hudmemoText": "Gravity Suit acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Storage Cave": {
+                    "pickups": [
+                        {
+                            "type": "Artifact of Spirit",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Artifact of Spirit"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Artifact of Spirit"
+                            },
+                            "scanText": "Artifact of Spirit.",
+                            "hudmemoText": "Artifact of Spirit acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Security Cave": {
+                    "pickups": [
+                        {
+                            "type": "Power Bomb",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Power Bomb Expansion"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Power Bomb Expansion"
+                            },
+                            "scanText": "Power Bomb Expansion. Provides 1 Power Bomb.",
+                            "hudmemoText": "Power Bomb Expansion acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                }
+            }
+        },
+        "Frigate Orpheon": {
+            "transports": {
+                "Frigate Escape Cutscene": "Tallon Overworld:Landing Site"
+            },
+            "rooms": {}
+        },
+        "Magmoor Caverns": {
+            "transports": {
+                "Magmoor Caverns North (Lava Lake)": "Chozo Ruins North (Sun Tower)",
+                "Magmoor Caverns West (Monitor Station)": "Phendrana Drifts North (Phendrana Shorelines)",
+                "Magmoor Caverns East (Twin Fires)": "Tallon Overworld West (Root Cave)",
+                "Magmoor Caverns South (Magmoor Workstation, Debris)": "Phazon Mines West (Phazon Processing Center)",
+                "Magmoor Caverns South (Magmoor Workstation, Save Station)": "Phendrana Drifts South (Quarantine Cave)"
+            },
+            "rooms": {
+                "Burning Trail": {
+                    "doors": {
+                        "2": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Save Station Magmoor A": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Lava Lake": {
+                    "pickups": [
+                        {
+                            "type": "Artifact of Nature",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Artifact of Nature"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Artifact of Nature"
+                            },
+                            "scanText": "Artifact of Nature.",
+                            "hudmemoText": "Artifact of Nature acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Triclops Pit": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Storage Cavern": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Transport Tunnel A": {
+                    "pickups": [
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Warrior Shrine": {
+                    "pickups": [
+                        {
+                            "type": "Artifact of Strength",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Artifact of Strength"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Artifact of Strength"
+                            },
+                            "scanText": "Artifact of Strength.",
+                            "hudmemoText": "Artifact of Strength acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Shore Tunnel": {
+                    "pickups": [
+                        {
+                            "type": "Ice Spreader",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Ice Spreader"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Ice Spreader"
+                            },
+                            "scanText": "Ice Spreader.",
+                            "hudmemoText": "Ice Spreader acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Fiery Shores": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Power Bomb",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Power Bomb Expansion"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Power Bomb Expansion"
+                            },
+                            "scanText": "Power Bomb Expansion. Provides 1 Power Bomb.",
+                            "hudmemoText": "Power Bomb Expansion acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Plasma Processing": {
+                    "pickups": [
+                        {
+                            "type": "Plasma Beam",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Plasma Beam"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Plasma Beam"
+                            },
+                            "scanText": "Plasma Beam.",
+                            "hudmemoText": "Plasma Beam acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Magmoor Workstation": {
+                    "pickups": [
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Transport to Phendrana Drifts South": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Save Station Magmoor B": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                }
+            }
+        },
+        "Phazon Mines": {
+            "transports": {
+                "Phazon Mines East (Main Quarry)": "Tallon Overworld South (Great Tree Hall, Lower)",
+                "Phazon Mines West (Phazon Processing Center)": "Magmoor Caverns South (Magmoor Workstation, Debris)"
+            },
+            "rooms": {
+                "Main Quarry": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Security Access A": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Storage Depot B": {
+                    "pickups": [
+                        {
+                            "type": "Grapple Beam",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Grapple Beam"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Grapple Beam"
+                            },
+                            "scanText": "Grapple Beam.",
+                            "hudmemoText": "Grapple Beam acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Storage Depot A": {
+                    "pickups": [
+                        {
+                            "type": "Flamethrower",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Flamethrower"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Flamethrower"
+                            },
+                            "scanText": "Flamethrower.",
+                            "hudmemoText": "Flamethrower acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Elite Research": {
+                    "pickups": [
+                        {
+                            "type": "Artifact of Warrior",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Artifact of Warrior"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Artifact of Warrior"
+                            },
+                            "scanText": "Artifact of Warrior.",
+                            "hudmemoText": "Artifact of Warrior acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Elite Control Access": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Ventilation Shaft": {
+                    "pickups": [
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Phazon Processing Center": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Processing Center Access": {
+                    "pickups": [
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Dynamo Access": {
+                    "deleteIds": [
+                        1573289,
+                        1573288
+                    ],
+                    "triggers": [
+                        {
+                            "id": 1573176,
+                            "active": true
+                        },
+                        {
+                            "id": 1573177,
+                            "active": true
+                        }
+                    ]
+                },
+                "Elite Quarters": {
+                    "pickups": [
+                        {
+                            "type": "Phazon Suit",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Phazon Suit"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Phazon Suit"
+                            },
+                            "scanText": "Phazon Suit.",
+                            "hudmemoText": "Phazon Suit acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Central Dynamo": {
+                    "pickups": [
+                        {
+                            "type": "Power Bomb",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Power Bomb"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Power Bomb"
+                            },
+                            "scanText": "Power Bomb.",
+                            "hudmemoText": "Main Power Bomb acquired!",
+                            "currIncrease": 4,
+                            "maxIncrease": 4,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Metroid Quarantine B": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Metroid Quarantine A": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Fungal Hall B": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Phazon Mining Tunnel": {
+                    "pickups": [
+                        {
+                            "type": "Artifact of Newborn",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Artifact of Newborn"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Artifact of Newborn"
+                            },
+                            "scanText": "Artifact of Newborn.",
+                            "hudmemoText": "Artifact of Newborn acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Fungal Hall Access": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                }
+            }
+        },
+        "Tallon Overworld": {
+            "transports": {
+                "Tallon Overworld North (Tallon Canyon)": "Chozo Ruins West (Main Plaza)",
+                "Artifact Temple": "Crater Entry Point",
+                "Tallon Overworld East (Frigate Crash Site)": "Chozo Ruins East (Reflecting Pool, Save Station)",
+                "Tallon Overworld West (Root Cave)": "Magmoor Caverns East (Twin Fires)",
+                "Tallon Overworld South (Great Tree Hall, Upper)": "Chozo Ruins South (Reflecting Pool, Far End)",
+                "Tallon Overworld South (Great Tree Hall, Lower)": "Phazon Mines East (Main Quarry)"
+            },
+            "rooms": {
+                "Landing Site": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Alcove": {
+                    "pickups": [
+                        {
+                            "type": "Space Jump Boots",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Space Jump Boots"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Space Jump Boots"
+                            },
+                            "scanText": "Space Jump Boots.",
+                            "hudmemoText": "Space Jump Boots acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Waterfall Cavern": {
+                    "doors": {
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Temple Security Station": {
+                    "doors": {
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Frigate Crash Site": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Root Tunnel": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Temple Lobby": {
+                    "doors": {
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Overgrown Cavern": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Root Cave": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Artifact Temple": {
+                    "pickups": [
+                        {
+                            "type": "Artifact of Truth",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Artifact of Truth"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Artifact of Truth"
+                            },
+                            "scanText": "Artifact of Truth.",
+                            "hudmemoText": "Artifact of Truth acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Transport Tunnel B": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Arbor Chamber": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Cargo Freight Lift to Deck Gamma": {
+                    "pickups": [
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Biohazard Containment": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Hydro Access Tunnel": {
+                    "pickups": [
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Great Tree Chamber": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Life Grove Tunnel": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Life Grove": {
+                    "pickups": [
+                        {
+                            "type": "X-Ray Visor",
+                            "model": {
+                                "game": "prime1",
+                                "name": "X-Ray Visor"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "X-Ray Visor"
+                            },
+                            "scanText": "X-Ray Visor.",
+                            "hudmemoText": "X-Ray Visor acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Artifact of Chozo",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Artifact of Chozo"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Artifact of Chozo"
+                            },
+                            "scanText": "Artifact of Chozo.",
+                            "hudmemoText": "Artifact of Chozo acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                }
+            }
+        },
+        "Chozo Ruins": {
+            "transports": {
+                "Chozo Ruins West (Main Plaza)": "Tallon Overworld North (Tallon Canyon)",
+                "Chozo Ruins North (Sun Tower)": "Magmoor Caverns North (Lava Lake)",
+                "Chozo Ruins East (Reflecting Pool, Save Station)": "Tallon Overworld East (Frigate Crash Site)",
+                "Chozo Ruins South (Reflecting Pool, Far End)": "Tallon Overworld South (Great Tree Hall, Upper)"
+            },
+            "rooms": {
+                "Main Plaza": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "2": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Ruined Shrine Access": {
+                    "doors": {
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Ruined Fountain": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Ruined Shrine": {
+                    "pickups": [
+                        {
+                            "type": "Morph Ball",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Morph Ball"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Morph Ball"
+                            },
+                            "scanText": "Morph Ball.",
+                            "hudmemoText": "Morph Ball acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Vault": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Training Chamber": {
+                    "pickups": [
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Arboretum Access": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Ruined Nursery": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Training Chamber Access": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Arboretum": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        },
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        },
+                        "2": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Magma Pool": {
+                    "pickups": [
+                        {
+                            "type": "Power Bomb",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Power Bomb Expansion"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Power Bomb Expansion"
+                            },
+                            "scanText": "Power Bomb Expansion. Provides 1 Power Bomb.",
+                            "hudmemoText": "Power Bomb Expansion acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Tower of Light": {
+                    "pickups": [
+                        {
+                            "type": "Wavebuster",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Wavebuster"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Wavebuster"
+                            },
+                            "scanText": "Wavebuster.",
+                            "hudmemoText": "Wavebuster acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Sunchamber Lobby": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Gathering Hall Access": {
+                    "doors": {
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Tower Chamber": {
+                    "pickups": [
+                        {
+                            "type": "Artifact of Lifegiver",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Artifact of Lifegiver"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Artifact of Lifegiver"
+                            },
+                            "scanText": "Artifact of Lifegiver.",
+                            "hudmemoText": "Artifact of Lifegiver acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Ruined Gallery": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "2": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Transport Access North": {
+                    "pickups": [
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Gathering Hall": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "2": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Map Station": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Hive Totem": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Launcher.",
+                            "hudmemoText": "Missile Launcher acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Sunchamber": {
+                    "pickups": [
+                        {
+                            "type": "Varia Suit",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Varia Suit"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Varia Suit"
+                            },
+                            "scanText": "Varia Suit.",
+                            "hudmemoText": "Varia Suit acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Artifact of Wild",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Artifact of Wild"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Artifact of Wild"
+                            },
+                            "scanText": "Artifact of Wild.",
+                            "hudmemoText": "Artifact of Wild acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Watery Hall Access": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Save Station 2": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Watery Hall": {
+                    "pickups": [
+                        {
+                            "type": "Charge Beam",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Charge Beam"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Charge Beam"
+                            },
+                            "scanText": "Charge Beam.",
+                            "hudmemoText": "Charge Beam acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        },
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Dynamo Access": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        },
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Dynamo": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Burn Dome": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Morph Ball Bomb",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Morph Ball Bomb"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Morph Ball Bomb"
+                            },
+                            "scanText": "Morph Ball Bomb.",
+                            "hudmemoText": "Morph Ball Bomb acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Furnace": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        },
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Hall of the Elders": {
+                    "pickups": [
+                        {
+                            "type": "Energy Tank",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Energy Tank"
+                            },
+                            "scanText": "Energy Tank.",
+                            "hudmemoText": "Energy Tank acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Crossway": {
+                    "pickups": [
+                        {
+                            "type": "Missile",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Missile"
+                            },
+                            "scanText": "Missile Expansion. Provides 5 Missiles.",
+                            "hudmemoText": "Missile Expansion acquired!",
+                            "currIncrease": 5,
+                            "maxIncrease": 5,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ],
+                    "doors": {
+                        "2": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Elder Hall Access": {
+                    "doors": {
+                        "1": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Elder Chamber": {
+                    "pickups": [
+                        {
+                            "type": "Artifact of World",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Artifact of World"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Artifact of World"
+                            },
+                            "scanText": "Artifact of World.",
+                            "hudmemoText": "Artifact of World acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                },
+                "Reflecting Pool": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        },
+                        "3": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Save Station 3": {
+                    "doors": {
+                        "0": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missile"
+                        }
+                    }
+                },
+                "Antechamber": {
+                    "pickups": [
+                        {
+                            "type": "Ice Beam",
+                            "model": {
+                                "game": "prime1",
+                                "name": "Ice Beam"
+                            },
+                            "original_model": {
+                                "game": "prime1",
+                                "name": "Ice Beam"
+                            },
+                            "scanText": "Ice Beam.",
+                            "hudmemoText": "Ice Beam acquired!",
+                            "currIncrease": 1,
+                            "maxIncrease": 1,
+                            "respawn": false,
+                            "showIcon": true
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "hasSpoiler": true,
+    "roomRandoMode": "None",
+    "randEnemyAttributes": null,
+    "uuid": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        17,
+        17,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "_randovania_meta": {
+        "layout_was_user_modified": true,
+        "in_race_setting": false
+    }
+}

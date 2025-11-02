@@ -37,6 +37,7 @@ async def deploy(remote_host: str, host2: str, remote_user: str, server_environm
             "docker",
             "stack",
             "deploy",
+            "--detach=true",
             "-c",
             stack_file,
             f"randovania-{server_environment}",

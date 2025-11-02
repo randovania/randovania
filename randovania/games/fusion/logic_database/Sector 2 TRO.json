@@ -1885,7 +1885,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "JBJ",
-                                                                    "amount": 5,
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -2140,20 +2140,28 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "JBJ: https://youtu.be/WSEOa-Ke16g",
+                                                        "comment": null,
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "JBJ",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Use Springball"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "JBJ: https://youtu.be/gDFuo_4ODSo",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "JBJ",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -2415,7 +2423,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "JBJ",
-                                                                    "amount": 4,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2498,7 +2506,7 @@
                         "node": "Door to Shooting Gallery"
                     },
                     "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -2895,14 +2903,14 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "JBJ then buffer wall jump https://clips.twitch.tv/GrotesqueYummyGerbilChefFrank-5OKlWbe3ooKrkuFE",
+                                            "comment": "JBJ then buffer wall jump https://youtu.be/0vK7hC9qb0c",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "WallJump",
-                                                        "amount": 5,
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
@@ -2911,7 +2919,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "JBJ",
-                                                        "amount": 5,
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
@@ -2937,6 +2945,41 @@
                                                         "type": "tricks",
                                                         "name": "WallJump",
                                                         "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Morph Jump Extend: https://youtu.be/jryfI4EHDmM",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "JumpExtends",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 5,
                                                         "negate": false
                                                     }
                                                 }
@@ -4066,6 +4109,7 @@
                         "area": 2,
                         "room": 18,
                         "source": "Zazabi",
+                        "boss_hint_name": "Zazabi",
                         "infant_weight": 3.5
                     },
                     "valid_starting_location": false,
@@ -4136,6 +4180,45 @@
                                                                     "type": "tricks",
                                                                     "name": "WallJump",
                                                                     "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "WallJump BombJump: https://youtu.be/jcV-y3iVvPQ",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "JBJ",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "JumpExtends",
+                                                                    "amount": 5,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -4846,7 +4929,7 @@
                         "node": "Door to Nettori Arena Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -5753,6 +5836,7 @@
                         "area": 2,
                         "room": 22,
                         "source": "Nettori",
+                        "boss_hint_name": "Nettori",
                         "infant_weight": 3.5
                     },
                     "valid_starting_location": false,
@@ -6183,6 +6267,45 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Freeze Enemies With Any Weapon"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "J2BJ Wall Jump: https://youtu.be/jZdNjWwfv08",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "JBJ",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -6778,6 +6901,41 @@
                                                                     "type": "items",
                                                                     "name": "Hi-Jump",
                                                                     "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Morph Jump Extend: https://youtu.be/Gt3qi5ueffc",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "MorphBall",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "JumpExtends",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 5,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -7711,14 +7869,14 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "JBJ: https://youtu.be/Fs10I7_LjRY",
+                                                                                "comment": "JBJ: https://youtu.be/rBjunlUjoGI",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "tricks",
                                                                                             "name": "JBJ",
-                                                                                            "amount": 3,
+                                                                                            "amount": 2,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
@@ -9774,7 +9932,8 @@
             "extra": {
                 "map_name": "Sector 241",
                 "room_id": [
-                    41
+                    41,
+                    45
                 ],
                 "minimap_coordinates": [
                     {
@@ -10756,6 +10915,45 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Walljump Bomb Jump: https://youtu.be/pWsLDYmU7qg",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "JBJ",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "JumpExtends",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -11263,42 +11461,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Knowledge: You need to beforehand break the block with Screw Attack",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "MorphBall",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "data": "Can Break Single Bomb Blocks"
                                     }
                                 ]
                             }
@@ -11882,10 +12045,29 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Pickup (Energy Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Softlock risk",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Pickup (Power Bomb Tank)": {
@@ -11962,7 +12144,6 @@
         "Zazabi Speedway": {
             "default_node": null,
             "hint_features": [
-                "boss",
                 "multiple-pickups"
             ],
             "extra": {

@@ -3228,7 +3228,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=QR7cK9gGVLY",
+                                            "comment": "Screw Attack bonk: https://www.youtube.com/watch?v=QR7cK9gGVLY",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -3249,7 +3249,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=dpwWRVCUBdY",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3261,12 +3261,63 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "StandableTerrain",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Slide up pipe: https://www.youtube.com/watch?v=dpwWRVCUBdY",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "StandableTerrain",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Instant Morph Jump: https://www.youtube.com/watch?v=LEipbQwmNaQ",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "MorphBall",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "InstantMorph",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "BSJ",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -11662,12 +11713,10 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Command Center (First)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Event20",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -11705,26 +11754,8 @@
                                     {
                                         "type": "template",
                                         "data": "Shoot Dark Beam"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event20",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
-                            }
-                        },
-                        "Event - Security Station B DS Appearance": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event20",
-                                "amount": 1,
-                                "negate": true
                             }
                         }
                     }
@@ -11755,12 +11786,10 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Command Center (Second)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Event20",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Main Reactor": {
@@ -11771,24 +11800,8 @@
                                     {
                                         "type": "template",
                                         "data": "Shoot Dark Beam"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event20",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
-                            }
-                        },
-                        "Event - Security Station B DS Appearance": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         },
                         "Event - Main Reactor Reloaded via Security Station B": {
@@ -11798,34 +11811,6 @@
                                 "name": "Event18",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        }
-                    }
-                },
-                "Event - Security Station B DS Appearance": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Event20",
-                    "connections": {
-                        "Door to Command Center (Second)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Command Center (First)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -11842,7 +11827,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event89",
                     "connections": {
-                        "Door to Command Center (Second)": {
+                        "Door to Command Center (First)": {
                             "type": "and",
                             "data": {
                                 "comment": null,

@@ -96,7 +96,7 @@ class GamePresetDescriber:
         if starting_list:
             result.append("Starts with " + ", ".join(starting_list))
         elif is_vanilla_starting:
-            result.append("Vanilla starting items")
+            result.append("Unmodified starting pickup")
 
         if excluded_list:
             result.append("Excludes " + ", ".join(excluded_list))
@@ -125,7 +125,7 @@ class GamePresetDescriber:
 
         for hint, mode in configuration.hints.specific_pickup_hints.items():
             details = configuration.game.hints.specific_pickup_hints[hint]
-            strings.append(f"{details.long_name} Hint: {mode.long_name}")
+            strings.append(f"{details.long_name}: {mode.long_name}")
 
         return strings
 
@@ -170,25 +170,25 @@ class GamePresetDescriber:
             template_strings["Logic Settings"].append(f"{excluded_locations_count} locations excluded")
 
         if randomization_mode != RandomizationMode.default():
-            template_strings["Item Pool"].append(randomization_mode.description)
+            template_strings["Pickup Pool"].append(randomization_mode.description)
 
-        # Item Pool
+        # Pickup Pool
         per_category_pool = pool_creator.calculate_pool_pickup_count(configuration)
         if configuration.available_locations.randomization_mode is RandomizationMode.FULL:
             pool_items, maximum_size = pool_creator.get_total_pickup_count(per_category_pool)
-            template_strings["Item Pool"].append(f"Size: {pool_items} of {maximum_size}")
+            template_strings["Pickup Pool"].append(f"Size: {pool_items} of {maximum_size}")
         else:
             for category, (count, num_nodes) in per_category_pool.items():
                 if isinstance(category, LocationCategory):
-                    template_strings["Item Pool"].append(f"{category.long_name}: {count}/{num_nodes}")
+                    template_strings["Pickup Pool"].append(f"{category.long_name}: {count}/{num_nodes}")
 
         if random_starting_pickups != "0":
-            template_strings["Item Pool"].append(f"{random_starting_pickups} random starting items")
+            template_strings["Pickup Pool"].append(f"{random_starting_pickups} random starting pickups")
 
-        template_strings["Item Pool"].extend(self._calculate_pickup_pool(configuration))
+        template_strings["Pickup Pool"].extend(self._calculate_pickup_pool(configuration))
 
         if configuration.logical_pickup_placement is not LogicalPickupPlacementConfiguration.MINIMAL:
-            template_strings["Item Pool"].append(f"All {configuration.logical_pickup_placement.value} obtainable")
+            template_strings["Pickup Pool"].append(f"All {configuration.logical_pickup_placement.value} obtainable")
 
         # Difficulty
         if configuration.damage_strictness != LayoutDamageStrictness.MEDIUM:
@@ -224,21 +224,25 @@ class GamePresetDescriber:
         return ()
 
 
-def _require_majors_check(ammo_configuration: AmmoPickupConfiguration, ammo_names: list[str]) -> list[bool]:
+def _require_majors_check(
+    ammo_configuration: AmmoPickupConfiguration, ammo_names: list[str], mains_are_default_required: bool
+) -> list[bool]:
     result = [False] * len(ammo_names)
 
     name_index_mapping = {name: i for i, name in enumerate(ammo_names)}
 
     for ammo, state in ammo_configuration.pickups_state.items():
         if ammo.name in name_index_mapping:
-            result[name_index_mapping[ammo.name]] = state.requires_main_item
+            result[name_index_mapping[ammo.name]] = state.requires_main_item != mains_are_default_required
 
     return result
 
 
-def message_for_required_mains(ammo_configuration: AmmoPickupConfiguration, message_to_item: dict[str, str]) -> dict:
+def message_for_required_mains(
+    ammo_configuration: AmmoPickupConfiguration, message_to_item: dict[str, str], mains_are_default_required: bool
+) -> dict:
     item_names = list(message_to_item.values())
-    main_required = _require_majors_check(ammo_configuration, item_names)
+    main_required = _require_majors_check(ammo_configuration, item_names, mains_are_default_required)
     return dict(zip(message_to_item.keys(), main_required))
 
 

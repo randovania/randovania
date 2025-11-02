@@ -1,0 +1,22 @@
+name: UV Lock Report
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Report
+        uses: mw-root/uv-lock-report@v0.7.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

@@ -68,11 +68,11 @@ def _hints() -> randovania.game.hints.GameHints:
         hint_distributor=PrimeHintDistributor(),
         specific_pickup_hints={
             "artifacts": randovania.game.hints.SpecificHintDetails(
-                long_name="Chozo Artifacts",
+                long_name="Chozo Artifact Hints",
                 description="This controls how precise the hints for Chozo Artifacts in Artifact Temple are.",
             ),
             "phazon_suit": randovania.game.hints.SpecificHintDetails(
-                long_name="Phazon Suit",
+                long_name="Phazon Suit Hint",
                 description="This controls how precise the hint for Phazon Suit in Impact Crater is.",
                 disabled_details="No hint is added.",
                 hide_area_details=(
@@ -110,9 +110,9 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Metroid Prime",
     development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
-        {"path": "moderate_challenge.rdvpreset"},
-        {"path": "april_fools_2022.rdvpreset"},
+        "starter_preset.rdvpreset",
+        "moderate_challenge.rdvpreset",
+        "april_fools_2022.rdvpreset",
     ],
     faq=[
         (

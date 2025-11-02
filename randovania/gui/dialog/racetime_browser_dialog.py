@@ -13,6 +13,7 @@ from randovania.gui.generated.racetime_browser_dialog_ui import Ui_RacetimeBrows
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.layout.permalink import Permalink, UnsupportedPermalink
+from randovania.lib import http_lib
 
 
 @dataclasses.dataclass(frozen=True)
@@ -46,6 +47,7 @@ _SUPPORTED_GAME_URLS = {
     RandovaniaGame.METROID_DREAD: "https://racetime.gg/dread-rando/data",
     RandovaniaGame.AM2R: "https://racetime.gg/am2r-rdv/data",
     RandovaniaGame.METROID_SAMUS_RETURNS: "https://racetime.gg/msrr/data",
+    RandovaniaGame.FUSION: "https://racetime.gg/mfr-rdv/data",
 }
 _TEST_RESPONSE = {
     "name": "Metroid Prime 2: Echoes Randomizer",
@@ -107,7 +109,7 @@ _TEST_RESPONSE = {
 
 
 async def _query_server(race_url) -> dict:
-    async with aiohttp.ClientSession() as session:
+    async with http_lib.http_session() as session:
         async with session.get(race_url) as response:
             response.raise_for_status()
             return await response.json()

@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, override
 
 from randovania.exporter.hints.basic_hint_formatters import basic_hint_formatters
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
+from randovania.game_description import default_database
 
 if TYPE_CHECKING:
     from randovania.exporter.hints.pickup_hint import PickupHint
@@ -65,6 +66,13 @@ class FusionHintNamer(HintNamer[FusionColor]):
         fmt = "{} is located in {}{}."
         location_name = self.format_location(location, with_region=True, with_area=not hide_area, with_color=with_color)
 
+        if resource.extra.get("item") == "InfantMetroid":
+            region_list = default_database.game_description_for(location.game).region_list
+            node = region_list.node_from_pickup_index(location.location)
+            if boss_name := node.extra.get("boss_hint_name"):
+                location_name = self.colorize_text(self.color_boss, boss_name, with_color)
+            return f"{determiner}{location_name}."
+
         return fmt.format(
             self.colorize_text(self.color_item, resource.long_name, with_color),
             determiner,
@@ -91,9 +99,13 @@ class FusionHintNamer(HintNamer[FusionColor]):
     @override
     @property
     def color_world(self) -> FusionColor:
-        return FusionColor.RED
+        return FusionColor.TEAL
 
     @override
     @property
     def color_location(self) -> FusionColor:
         return FusionColor.PINK
+
+    @property
+    def color_boss(self) -> FusionColor:
+        return FusionColor.RED

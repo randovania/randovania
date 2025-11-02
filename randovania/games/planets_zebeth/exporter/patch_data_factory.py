@@ -132,7 +132,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
 
     def _credits_spoiler(self) -> list:
         spoiler = []
-        spoiler_dict = credits_spoiler.generic_credits(
+        spoiler_dict = credits_spoiler.generic_string_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
             self.players_config,

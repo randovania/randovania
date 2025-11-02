@@ -3,14 +3,19 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import TYPE_CHECKING, Final, override
 
+from randovania.exporter.hints import guaranteed_item_hint
+from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory, PatcherDataMeta
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.prime_hunters.exporter.hint_namer import HuntersHintNamer
 from randovania.games.prime_hunters.layout import HuntersConfiguration, HuntersCosmeticPatches
 from randovania.games.prime_hunters.layout.force_field_configuration import LayoutForceFieldRequirement
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 
 if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
@@ -54,6 +59,13 @@ _OCTOLITH_TO_ARTIFACT_ID = {
     "Octolith6": 5,
     "Octolith7": 6,
     "Octolith8": 7,
+}
+
+_STRING_ID_TO_SCAN_TITLE = {
+    "904L": "OCTOLITH HINTS 01",
+    "014L": "OCTOLITH HINTS 02",
+    "114L": "OCTOLITH HINTS 03",
+    "214L": "OCTOLITH HINTS 04",
 }
 
 
@@ -143,6 +155,27 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
         return force_fields
 
+    def _get_portals_for_area(self, area: Area) -> list:
+        portals = []
+
+        for node, connection in self.patches.all_dock_connections():
+            if (
+                isinstance(node, DockNode)
+                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+                and node in area.nodes
+            ):
+                portal: dict = {}
+
+                portal["entity_id"] = node.extra["entity_id"]
+                portal["target_index"] = connection.extra["entity_type_data"]["load_index"]
+                portal["entity_filename"] = self.game.region_list.area_by_area_location(
+                    connection.identifier.area_identifier
+                ).extra["portal_filename"]
+
+                portals.append(portal)
+
+        return portals
+
     def _entity_patching_per_area(self) -> dict:
         db = self.game
         regions = list(db.region_list.regions)
@@ -157,9 +190,61 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 level_data[region.name]["levels"][area.name] = {
                     "pickups": self._get_pickups_for_area(area),
                     "force_fields": self._get_force_fields_for_area(area, self.patches.game_specific["force_fields"]),
+                    "portals": self._get_portals_for_area(area),
                 }
 
         return level_data
+
+    def _update_string_tables(self) -> dict:
+        string_tables: dict = {
+            "scan_log": {},
+        }
+
+        exporter = self.create_hint_exporter(GENERIC_JOKE_HINTS)
+
+        octoliths = [self.game.resource_database.get_item(f"Octolith{i + 1}") for i in range(8)]
+        octoliths_precision = self.configuration.hints.specific_pickup_hints["octoliths"]
+
+        if octoliths_precision != SpecificPickupHintMode.DISABLED:
+            octolith_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                exporter.namer,
+                True if octoliths_precision == SpecificPickupHintMode.HIDE_AREA else False,
+                octoliths,
+                False,
+            )
+
+        hint_nodes = sorted(self.game.region_list.iterate_nodes_of_type(HintNode))
+
+        # Hints are assigned to four lore scans in pairs: (1,2), (3,4), (5,6), (7,8)
+        i = 1
+        for node in hint_nodes:
+            string_id = node.extra["entity_type_data"]["string_id"]
+
+            scan_title = f"{_STRING_ID_TO_SCAN_TITLE[string_id]}\\"
+            scan_text = " ".join(
+                [
+                    text
+                    for text in octolith_hint_mapping.values()
+                    if f"OCTOLITH {i}" in text or f"OCTOLITH {i + 1}" in text
+                ]
+            )
+
+            dud_hint = "this lore scan did not provide any useful OCTOLITH hints."
+            useless_hints = [self.rng.choice(GENERIC_JOKE_HINTS + [dud_hint])]
+
+            if octoliths_precision != SpecificPickupHintMode.DISABLED:
+                if scan_text == "":
+                    string_tables["scan_log"][string_id] = scan_title + self.rng.choice(useless_hints)
+                else:
+                    string_tables["scan_log"][string_id] = scan_title + scan_text
+            else:
+                string_tables["scan_log"][string_id] = scan_title + self.rng.choice(useless_hints)
+
+            i += 2
+
+        return string_tables
 
     def create_visual_nothing(self) -> PickupEntry:
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
@@ -171,6 +256,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             "configuration_id": self.description.get_seed_for_world(self.players_config.player_index),
             "starting_items": starting_items,
             "areas": self._entity_patching_per_area(),
+            "string_tables": self._update_string_tables(),
         }
 
     @override

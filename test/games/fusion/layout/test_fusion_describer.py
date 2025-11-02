@@ -35,7 +35,7 @@ def test_fusion_format_params(artifacts):
 
     # Assert
     assert dict(result) == {
-        "Game Changes": ["Unlocked hatches in Sector Hub"],
+        "Game Changes": ["Instant Morph Button (SELECT)", "Unlocked hatches in Sector Hub"],
         "Gameplay": ["Starts at Main Deck - Sector Hub"],
         "Goal": (
             [f"{artifacts.required_artifacts} of {artifacts.placed_artifacts} Metroids Required"]
@@ -43,9 +43,9 @@ def test_fusion_format_params(artifacts):
             else ["Kill the SA-X"]
         ),
         "Hints": ["Infant Metroids Hint: Region and area", "Charge Beam Hint: Region only"],
-        "Item Pool": [
+        "Pickup Pool": [
             f"Size: {121 + artifacts.placed_artifacts} of 127",
-            "1 random starting items",
+            "1 random starting pickups",
             "Starts with Energy Tank",
             "Shuffles 19x Energy Tank",
         ],

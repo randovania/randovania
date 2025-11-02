@@ -45,6 +45,7 @@ class PlanetsZebethPresetDescriber(GamePresetDescriber):
                     {
                         "Missiles need Launcher": "Missile Expansion",
                     },
+                    mains_are_default_required=False,
                 ),
                 {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},
             ],

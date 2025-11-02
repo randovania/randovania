@@ -86,8 +86,10 @@ class DreadPresetDescriber(GamePresetDescriber):
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
                     {
-                        "Power Bomb needs Main": "Power Bomb Expansion",
+                        "Power Bomb does not need Main": "Power Bomb Tank",
+                        "Flash Shift does not need Main": "Flash Shift Upgrade",
                     },
+                    mains_are_default_required=True,
                 ),
                 {
                     "Open Hanubia Shortcut": configuration.hanubia_shortcut_no_grapple,
@@ -102,7 +104,7 @@ class DreadPresetDescriber(GamePresetDescriber):
                     "X Starts Released": configuration.x_starts_released,
                 },
                 {
-                    "Power Bomb Limitations": configuration.nerf_power_bombs,
+                    "Disabled Power Bomb Limitations": not configuration.nerf_power_bombs,
                 },
             ],
             "Environmental Damage": _format_environmental_damage(configuration),

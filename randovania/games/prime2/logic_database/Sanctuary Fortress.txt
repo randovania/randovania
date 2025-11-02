@@ -28,6 +28,8 @@ Extra - asset_id: 1650075282
       After [Sanctuary] Temple Transport Access Rings
   > Event - [Sanctuary] Temple Transport Access Rings
       Boost Ball and Morph Ball and Scan Visor
+  > Event - Sanctuary Entrance Reloaded
+      After Sanctuary Entrance Fight Cleared
 
 > Door to Sanctuary Entrance; Heals? False
   * Layers: default
@@ -42,6 +44,12 @@ Extra - asset_id: 1650075282
   > Door to Transport to Temple Grounds
       Trivial
   > Door to Sanctuary Entrance
+      Trivial
+
+> Event - Sanctuary Entrance Reloaded; Heals? False
+  * Layers: default
+  * Event Sanctuary Entrance Reloaded for Cannon
+  > Door to Transport to Temple Grounds
       Trivial
 
 ----------------
@@ -81,7 +89,7 @@ Hint Features - Abyss, Elevator, Keybearer Corpse, Luminoth Lore, Luminoth Corps
               Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced) and Standable Terrain (Advanced)
   > Turret
       All of the following:
-          Scan Visor
+          Scan Visor and After Sanctuary Entrance Reloaded for Cannon
           Any of the following:
               All of the following:
                   Spider Ball
@@ -93,6 +101,8 @@ Hint Features - Abyss, Elevator, Keybearer Corpse, Luminoth Lore, Luminoth Corps
               Standable Terrain (Advanced) and Use Screw Attack (Space Jump)
               # https://www.youtube.com/watch?v=2brsOGq0P7Y&t=55s
               Morph Ball and Power Bomb and Space Jump Boots and Before Spider Guardian and Slope Jump (Intermediate) and Standable Terrain (Intermediate)
+  > Event - Sanctuary Entrance Fight
+      Trivial
 
 > Door to Temple Transport Access; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -151,6 +161,12 @@ Hint Features - Abyss, Elevator, Keybearer Corpse, Luminoth Lore, Luminoth Corps
   > Turret
       Trivial
 
+> Event - Sanctuary Entrance Fight; Heals? False
+  * Layers: default
+  * Event Sanctuary Entrance Fight Cleared
+  > Door to Power Junction
+      Trivial
+
 ----------------
 Power Junction
 Extra - asset_id: 834698518
@@ -160,11 +176,19 @@ Extra - asset_id: 834698518
   * Extra - dock_name: North2
   > Door to Sanctuary Entrance
       Trivial
+  > Event - Sancturay Entrance Reloaded
+      After Sanctuary Entrance Fight Cleared
 
 > Door to Sanctuary Entrance; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Light Door to Sanctuary Entrance/Door to Power Junction
   * Extra - dock_name: South
+  > Door to Reactor Access
+      Trivial
+
+> Event - Sancturay Entrance Reloaded; Heals? False
+  * Layers: default
+  * Event Sanctuary Entrance Reloaded for Cannon
   > Door to Reactor Access
       Trivial
 
@@ -2151,6 +2175,9 @@ Hint Features - Abyss, Boss, Echo Visor Lock, Elevator, Portal
       Morph Ball Bomb and Bomb Space Jump (Expert) and Movement (Expert) and Use Screw Attack (Space Jump)
   > Elevator to Aerie Transport Station
       Echo Visor and After Aerie Pickup
+  > Event - Dark Samus 2
+      # Having a connection back the event node lets the genrator know when this sequence is safe.
+      After Dark Samus 2
 
 > Before Dark Samus; Heals? False
   * Layers: default

@@ -20,7 +20,7 @@ from randovania.cli import database
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games import default_data
 from randovania.interface_common import installation_check
-from randovania.lib import json_lib
+from randovania.lib import http_lib, json_lib
 from randovania.lib.enum_lib import iterate_enum
 
 _ROOT_FOLDER = Path(__file__).parents[1]
@@ -55,7 +55,7 @@ async def download_nintendont():
     if "GITHUB_TOKEN" in os.environ:
         headers = {"Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}"}
 
-    async with aiohttp.ClientSession(headers=headers) as session:
+    async with http_lib.http_session(headers=headers) as session:
         print(f"Downloading {_NINTENDONT_DOWNLOAD_URL}")
         async with session.get(_NINTENDONT_DOWNLOAD_URL) as download_response:
             download_response.raise_for_status()
@@ -70,7 +70,7 @@ async def download_dotnet() -> None:
     # Windows is finnicky about the file extension. Not sure why.
     script_path = _ROOT_FOLDER.joinpath("dotnet.ps1" if platform.system() == "Windows" else "dotnet.sh")
     dotnet_path = _ROOT_FOLDER.joinpath("randovania", "data", "dotnet_runtime")
-    async with aiohttp.ClientSession() as session:
+    async with http_lib.http_session() as session:
         url = get_dotnet_url()
         print(f"Downloading {url}")
         async with session.get(url) as response:
@@ -108,7 +108,7 @@ def write_obfuscator_secret(path: Path, secret: bytes):
     numbers = str(list(secret))
     path.write_text(
         f"""# Generated file
-secret = b"".join(
+secret: None | bytes = b"".join(
     bytes([x]) for x in
     {numbers}
 )

@@ -69,7 +69,7 @@ def _hints() -> randovania.game.hints.GameHints:
         hint_distributor=EchoesHintDistributor(),
         specific_pickup_hints={
             "sky_temple_keys": randovania.game.hints.SpecificHintDetails(
-                long_name="Sky Temple Keys",
+                long_name="Sky Temple Key Hints",
                 description="This controls how precise the hints for Sky Temple Keys in Sky Temple Gateway are.",
             )
         },
@@ -101,8 +101,8 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Metroid Prime 2: Echoes",
     development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
-        {"path": "starter_preset.rdvpreset"},
-        {"path": "darkszero_deluxe.rdvpreset"},
+        "starter_preset.rdvpreset",
+        "darkszero_deluxe.rdvpreset",
     ],
     faq=[
         (

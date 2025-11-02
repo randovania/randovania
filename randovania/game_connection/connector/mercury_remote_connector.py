@@ -16,13 +16,12 @@ from randovania.game_connection.connector.remote_connector import (
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_collection import ResourceCollection
 
 if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.region import Region
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.network_common.remote_pickup import RemotePickup
 
 
@@ -70,7 +69,13 @@ class MercuryConnector(RemoteConnector):
         self.inventory_index: int | None = None
         self.current_region: Region | None = None
 
-    def new_player_location_received(self, state_or_region: str) -> None:
+    def new_player_location_received(self, game_state: str) -> None:
+        split_state = game_state.split(";")
+        state_or_region = split_state[0]
+        has_beaten = False
+        if len(split_state) > 1:
+            has_beaten = split_state[1] == "true"
+
         if state_or_region == "MAINMENU":
             self.reset_values()
             self.current_region = None
@@ -80,6 +85,10 @@ class MercuryConnector(RemoteConnector):
                 None,
             )
         self.PlayerLocationChanged.emit(PlayerLocationEvent(self.current_region, None))
+
+        if has_beaten:
+            self.GameHasBeenBeaten.emit()
+            self.logger.debug("Game has been beaten")
 
     def new_collected_locations_received(self, new_indices: bytes) -> None:
         locations = set()
@@ -119,7 +128,8 @@ class MercuryConnector(RemoteConnector):
     async def new_received_pickups_received(self, new_received_pickups: str) -> None:
         new_recv_as_int = int(new_received_pickups)
         self.logger.debug("Received Pickups: %s", new_received_pickups)
-        self.in_cooldown = False
+        if self.current_region is not None:
+            self.in_cooldown = False
         self.received_pickups = new_recv_as_int
         await self.receive_remote_pickups()
 
@@ -143,7 +153,7 @@ class MercuryConnector(RemoteConnector):
         self.in_cooldown = True
 
         provider_name, pickup, coop_location = remote_pickups[num_pickups]
-        item_name, items_list = self.resources_to_give_for_pickup(self.game.resource_database, pickup, inventory)
+        item_name, items_list = self.resources_to_give_for_pickup(self.game, pickup, inventory)
 
         scenario_id = ""
         if coop_location is not None:
@@ -173,11 +183,11 @@ class MercuryConnector(RemoteConnector):
 
     def resources_to_give_for_pickup(
         self,
-        db: ResourceDatabase,
+        view: GameDatabaseView,
         pickup: PickupEntry,
         inventory: Inventory,
     ) -> tuple[str, list[list[dict]]]:
-        inventory_resources = ResourceCollection.with_database(db)
+        inventory_resources = view.create_resource_collection()
         inventory_resources.add_resource_gain(inventory.as_resource_gain())
         conditional = pickup.conditional_for_resources(inventory_resources)
         if conditional.name is not None:

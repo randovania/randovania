@@ -351,6 +351,10 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 0}, {'x': 17, 'y': 1}, {'x': 17, 'y
               Level 0 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
               # Single Wall Jump
               Wall Jump (Beginner) and Can Single Walljump
+              # Jump 2-BombJump: https://youtu.be/416jYaEuveg
+              Jump Bombjump (Ludicrous) and Can Use Bombs
+              # Morph Jump Extend: https://youtu.be/hbxt0FJyjWs
+              Morph Ball and Jump Extends (Ludicrous) and Wall Jump (Ludicrous)
 
 > Door to Operations Room; Heals? False
   * Layers: default
@@ -415,7 +419,7 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 0}, {'x': 17, 'y': 1}, {'x': 17, 'y
 Concourse Ventilation
 Extra - map_name: Main Deck14
 Extra - room_id: [14]
-Extra - minimap_coordinates: [{'x': 18, 'y': 8}, {'x': 19, 'y': 8}, {'x': 20, 'y': 8}, {'x': 21, 'y': 8}]
+Extra - minimap_coordinates: [{'x': 18, 'y': 8}, {'x': 19, 'y': 8}, {'x': 20, 'y': 8}]
 > Other to Arachnus Arena; Heals? False
   * Layers: default
   * Open Passage to Arachnus Arena/Other to Concourse Ventilation
@@ -655,7 +659,7 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 7}, {'x': 13, 'y': 8}, {'x': 13, 'y
 Dark Stairwell
 Extra - map_name: Main Deck20
 Extra - room_id: [20]
-Extra - minimap_coordinates: [{'x': 11, 'y': 8}, {'x': 11, 'y': 9}, {'x': 11, 'y': 10}]
+Extra - minimap_coordinates: [{'x': 11, 'y': 8}, {'x': 11, 'y': 9}, {'x': 11, 'y': 10}, {'x': 12, 'y': 8}]
 > Door to Nexus Navigation Room; Heals? False
   * Layers: default
   * Open Hatch to Nexus Navigation Room/Door to Dark Stairwell
@@ -1073,7 +1077,7 @@ Operations Ventilation
 Extra - map_name: Main Deck35
 Extra - room_id: [35, 36]
 Extra - minimap_coordinates: [{'x': 20, 'y': 1}, {'x': 20, 'y': 2}, {'x': 20, 'y': 3}, {'x': 20, 'y': 4}, {'x': 20, 'y': 5}, {'x': 20, 'y': 6}, {'x': 20, 'y': 7}]
-Hint Features - Climbable Surface
+Hint Features - Climbable Surface, Geron
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 2; Category? Minor
@@ -1170,7 +1174,7 @@ Extra - unlocked_save_recharge_station: True
 Arachnus Arena
 Extra - map_name: Main Deck38
 Extra - room_id: [38]
-Extra - minimap_coordinates: [{'x': 22, 'y': 8}, {'x': 23, 'y': 6}, {'x': 23, 'y': 7}, {'x': 23, 'y': 8}, {'x': 24, 'y': 6}, {'x': 24, 'y': 7}, {'x': 24, 'y': 8}]
+Extra - minimap_coordinates: [{'x': 21, 'y': 8}, {'x': 22, 'y': 8}, {'x': 23, 'y': 6}, {'x': 23, 'y': 7}, {'x': 23, 'y': 8}, {'x': 24, 'y': 6}, {'x': 24, 'y': 7}, {'x': 24, 'y': 8}]
 Hint Features - Multiple Pickups
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -1221,10 +1225,11 @@ Hint Features - Multiple Pickups
 > Pickup (Morph Ball); Heals? False
   * Layers: default
   * Pickup 100; Category? Major
-  * Hint Features - Boss
+  * Hint Features - Core-X
   * Extra - area: 0
   * Extra - room: 38
   * Extra - source: Arachnus
+  * Extra - boss_hint_name: Arachnus
   * Extra - infant_weight: 3.5
   > Arena
       Trivial
@@ -1381,6 +1386,7 @@ Sub-Zero Containment
 Extra - map_name: Main Deck46
 Extra - room_id: [46]
 Extra - minimap_coordinates: [{'x': 9, 'y': 10}, {'x': 10, 'y': 10}]
+Hint Features - Extreme Temperatures
 > Door to Dark Stairwell; Heals? False
   * Layers: default
   * L3 Hatch to Dark Stairwell/Door to Sub-Zero Containment
@@ -1712,6 +1718,7 @@ Auxiliary Power Station
 Extra - map_name: Main Deck54
 Extra - room_id: [54]
 Extra - minimap_coordinates: [{'x': 20, 'y': 19}]
+Hint Features - B.S.L. Systems Console
 > Other to Yakuza Arena; Heals? False
   * Layers: default
   * Open Passage to Yakuza Arena/Other to Auxiliary Power Station
@@ -2065,6 +2072,7 @@ Hint Features - 1-way Shutter
 > Pickup (Save the Animals); Heals? False
   * Layers: default
   * Pickup 120; Category? Major
+  * Hint Features - B.S.L. Systems Console
   * Extra - area: 0
   * Extra - room: 69
   * Extra - source: Animals
@@ -2299,6 +2307,7 @@ Yakuza Arena
 Extra - map_name: Main Deck86
 Extra - room_id: [86]
 Extra - minimap_coordinates: [{'x': 21, 'y': 19}, {'x': 21, 'y': 20}, {'x': 21, 'y': 21}]
+Hint Features - Core-X
 > Door to Silo Scaffolding; Heals? False
   * Layers: default
   * Open Hatch to Silo Scaffolding/Door to Yakuza Arena
@@ -2325,6 +2334,7 @@ Extra - minimap_coordinates: [{'x': 21, 'y': 19}, {'x': 21, 'y': 20}, {'x': 21, 
   * Extra - area: 0
   * Extra - room: 86
   * Extra - source: Yakuza
+  * Extra - boss_hint_name: Yakuza
   * Extra - infant_weight: 3.5
   > Arena
       Trivial
@@ -2334,7 +2344,9 @@ Extra - minimap_coordinates: [{'x': 21, 'y': 19}, {'x': 21, 'y': 20}, {'x': 21, 
   > Door to Silo Scaffolding
       Space Jump and After Boss Yakuza Defeated
   > Other to Auxiliary Power Station
-      Space Jump
+      All of the following:
+          Space Jump
+          After Boss Yakuza Defeated or Knowledge (Beginner)
   > Event - Yakuza
       All of the following:
           All of the following:

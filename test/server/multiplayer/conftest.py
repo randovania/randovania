@@ -3,7 +3,7 @@ from __future__ import annotations
 import datetime
 import json
 import uuid
-from unittest.mock import MagicMock
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
@@ -16,22 +16,22 @@ from randovania.server import database
 
 
 @pytest.fixture
-def mock_emit_session_update(mocker) -> MagicMock:
+def mock_emit_session_update(mocker) -> AsyncMock:
     return mocker.patch("randovania.server.multiplayer.session_common.emit_session_meta_update", autospec=True)
 
 
 @pytest.fixture
-def mock_audit(mocker) -> MagicMock:
+def mock_audit(mocker) -> AsyncMock:
     return mocker.patch("randovania.server.multiplayer.session_common.add_audit_entry", autospec=True)
 
 
-@pytest.fixture
-def solo_two_world_session(clean_database, test_files_dir):
+@pytest.fixture(name="solo_two_world_session")
+def solo_two_world_session_fixture(test_client, test_files_dir) -> database.MultiplayerSession:
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame"))
     preset_0 = VersionedPreset.with_preset(description.get_preset(0))
     preset_1 = VersionedPreset.with_preset(description.get_preset(1))
 
-    user1 = database.User.create(id=1234, name="The Name")
+    user1 = database.User.create(id=1234, name="The Name", admin=True)
 
     session = database.MultiplayerSession.create(
         id=1,
@@ -43,10 +43,18 @@ def solo_two_world_session(clean_database, test_files_dir):
     session.layout_description = description
     session.save()
     w1 = database.World.create_for(
-        session=session, name="World 1", preset=preset_0, order=0, uid=uuid.UUID("1179c986-758a-4170-9b07-fe4541d78db0")
+        session=session,
+        name="World 1",
+        preset=preset_0,
+        order=0,
+        uid=uuid.UUID("1179c986-758a-4170-9b07-fe4541d78db0"),
     )
     w2 = database.World.create_for(
-        session=session, name="World 2", preset=preset_1, order=1, uid=uuid.UUID("6b5ac1a1-d250-4f05-a5fb-ae37e8a92165")
+        session=session,
+        name="World 2",
+        preset=preset_1,
+        order=1,
+        uid=uuid.UUID("6b5ac1a1-d250-4f05-a5fb-ae37e8a92165"),
     )
 
     database.MultiplayerMembership.create(user=user1, session=session, admin=False)
@@ -57,8 +65,13 @@ def solo_two_world_session(clean_database, test_files_dir):
         world=w2, user=user1, last_activity=datetime.datetime(2022, 5, 6, 12, 0, tzinfo=datetime.UTC)
     )
     database.WorldAction.create(provider=w2, location=0, receiver=w1, session=session)
-
+    test_client.set_logged_in_user(1234)
     return session
+
+
+@pytest.fixture
+def solo_two_world_session(clean_database, solo_two_world_session_setup) -> database.MultiplayerSession:
+    return solo_two_world_session_setup()
 
 
 @pytest.fixture
@@ -151,10 +164,10 @@ def session_update(clean_database, mocker):
         user=user2, session=session, row=1, admin=False, ready=True, connection_state="Game"
     )
     w1 = database.World.create(
-        session=session, name="World1", uuid=uuid.UUID("67d75d0e-da8d-4a90-b29e-cae83bcf9519"), preset="{}"
+        session=session, name="World1", uuid=uuid.UUID("67d75d0e-da8d-4a90-b29e-cae83bcf9519"), preset="{}", order=0
     )
     w2 = database.World.create(
-        session=session, name="World2", uuid=uuid.UUID("d0f7ed70-66b0-413c-bc13-f9f7fb018726"), preset="{}"
+        session=session, name="World2", uuid=uuid.UUID("d0f7ed70-66b0-413c-bc13-f9f7fb018726"), preset="{}", order=1
     )
 
     database.WorldAction.create(provider=w1, location=0, session=session, receiver=w2, time=time)

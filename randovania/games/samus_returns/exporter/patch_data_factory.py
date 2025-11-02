@@ -323,7 +323,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         return details
 
     def _encode_hints(self, rng: Random) -> list[dict]:
-        exporter = self.get_hint_exporter(self.description.all_patches, self.players_config, rng, MSR_JOKE_HINTS)
+        exporter = self.create_hint_exporter(MSR_JOKE_HINTS)
 
         hints = [
             {
@@ -510,7 +510,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         return text
 
     def _credits_spoiler(self) -> dict[str, str]:
-        return credits_spoiler.generic_credits(
+        return credits_spoiler.generic_string_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
             self.players_config,
@@ -675,6 +675,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
 
     def _objective(self, config: MSRConfiguration) -> dict:
         return {
+            "placed_dna": config.artifacts.placed_artifacts,
             "required_dna": config.artifacts.required_artifacts,
             "final_boss": config.final_boss.value,
         }

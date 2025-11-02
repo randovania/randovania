@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
@@ -9,9 +10,13 @@ from randovania.game_connection.connector.msr_remote_connector import MSRRemoteC
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
 from randovania.game_connection.executor.msr_executor import MSRExecutor
+from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.network_common.remote_pickup import RemotePickup
+
+if TYPE_CHECKING:
+    from pytest_mock import MockerFixture
 
 
 @pytest.fixture(name="connector")
@@ -40,20 +45,29 @@ async def test_general_class_content(connector: MSRRemoteConnector):
     assert await connector.current_game_status() == (True, None)
 
 
-async def test_new_player_location(connector: MSRRemoteConnector):
+@pytest.mark.parametrize("has_beaten", [True, False, None])
+async def test_new_player_location(mocker: MockerFixture, connector: MSRRemoteConnector, has_beaten: bool | None):
     location_changed = MagicMock()
     connector.PlayerLocationChanged.connect(location_changed)
+    game_has_been_beaten_mock = mocker.patch.object(connector.GameHasBeenBeaten, "emit")
 
     assert connector.inventory_index is None
     connector.inventory_index = 1
     assert connector.inventory_index == 1
 
     assert connector.current_region is None
-    connector.new_player_location_received("s050_area5")
+    location_string = "s050_area5"
+    if has_beaten is not None:
+        location_string += f";{str(has_beaten).lower()}"
+    connector.new_player_location_received(location_string)
     assert connector.current_region is not None
     assert connector.current_region.name == "Area 4 Crystal Mines"
     location_changed.assert_called_once_with(PlayerLocationEvent(connector.current_region, None))
     assert await connector.current_game_status() == (True, connector.current_region)
+    if has_beaten:
+        game_has_been_beaten_mock.assert_called_once()
+    else:
+        game_has_been_beaten_mock.assert_not_called()
 
     location_changed.reset_mock()
     connector.new_player_location_received("MAINMENU")
@@ -96,6 +110,9 @@ async def test_new_inventory_received(connector: MSRRemoteConnector):
 async def test_new_received_pickups_received(connector: MSRRemoteConnector):
     connector.receive_remote_pickups = AsyncMock()
     connector.in_cooldown = True
+    connector.current_region = default_database.game_description_for(
+        RandovaniaGame("samus_returns")
+    ).region_list.regions[0]
 
     await connector.new_received_pickups_received("6")
     assert connector.received_pickups == 6

@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 
 class MSRModPlatform(Enum):
-    CITRA = "citra"
+    AZAHAR = "azahar"
     LUMA = "luma"
 
 
