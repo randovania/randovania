@@ -16,7 +16,7 @@ from randovania.generator.generator_reach import GeneratorReach
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.db.node import Node, NodeContext, NodeIndex
     from randovania.game_description.game_description import GameDescription
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.resolver.state import State
@@ -355,8 +355,8 @@ class OldGeneratorReach(GeneratorReach):
 
         self.advance_to(new_state)
 
-    def unreachable_nodes_with_requirements(self) -> dict[Node, RequirementSet]:
-        results: dict[Node, RequirementSet] = {}
+    def unreachable_nodes_with_requirements(self) -> dict[NodeIndex, RequirementSet]:
+        results: dict[NodeIndex, RequirementSet] = {}
         all_nodes = typing.cast("tuple[Node, ...]", self.all_nodes)
         context = self._state.node_context()
 
@@ -372,10 +372,10 @@ class OldGeneratorReach(GeneratorReach):
 
         for node, requirement in to_check:
             requirements = requirement.patch_requirements(context)
-            if node in results:
-                results[node] = results[node].expand_alternatives(requirements)
+            if node.node_index in results:
+                results[node.node_index] = results[node.node_index].expand_alternatives(requirements)
             else:
-                results[node] = requirement
+                results[node.node_index] = requirement
 
         return results
 

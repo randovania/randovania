@@ -193,9 +193,11 @@ class PlayerState:
         wl = self.reach.game.region_list
         s = self.reach.state
         ctx = s.node_context()
+        nodes_by_index = {node.node_index: node for node in self.reach.iterate_nodes}
 
         paths_to_be_opened = set()
-        for node, requirement in self.reach.unreachable_nodes_with_requirements().items():
+        for node_index, requirement in self.reach.unreachable_nodes_with_requirements().items():
+            node = nodes_by_index[node_index]
             for alternative in requirement.alternatives:
                 if any(
                     r.negate
