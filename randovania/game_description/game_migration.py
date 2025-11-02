@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import collections
+import statistics
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import migration_data
@@ -375,6 +376,10 @@ def _migrate_v30(data: dict, game: RandovaniaGame) -> None:
 def _migrate_v31(data: dict, game: RandovaniaGame) -> None:
     trivial = {"type": "and", "data": {"comment": None, "items": []}}
 
+    def lerp(a: dict, b: dict, r: float) -> dict:
+        """Linearly interpolate two points"""
+        return {dim: a[dim] * (1 - r) + b[dim] * r for dim in ("x", "y", "z")}
+
     dock_types: dict[str, dict] = data["dock_weakness_database"]["types"]
     dock_with_locks = {
         (type_name, weak_name)
@@ -441,6 +446,19 @@ def _migrate_v31(data: dict, game: RandovaniaGame) -> None:
                         node["valid_starting_location"] = False
 
                     node_order.insert(node_order.index(name) + 1, new_name)
+
+                    if new_node["coordinates"]:
+                        other_coordinates = [area["nodes"][other]["coordinates"] for other in node_interactions]
+                        interpolated_coords = [
+                            lerp(new_node["coordinates"], coord, 0.1)
+                            for coord in other_coordinates
+                            if coord is not None
+                        ]
+                        if interpolated_coords:
+                            new_node["coordinates"] = {
+                                dim: statistics.mean(coord[dim] for coord in interpolated_coords)
+                                for dim in ("x", "y", "z")
+                            }
 
                     # Connect dock and the new node
                     node["connections"] = {new_name: trivial}
