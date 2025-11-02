@@ -59,7 +59,7 @@
                         "default"
                     ],
                     "extra": {},
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Mimiga Village",
@@ -73,6 +73,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Teleporter to Arthur's House": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Teleporter to Arthur's House": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 578.15,
+                        "y": 282.06,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Teleporter to Arthur's House": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Outside Sand Zone Residence": {
                             "type": "or",
                             "data": {
@@ -180,7 +211,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Teleporter to Arthur's House": {
+                        "Front of Teleporter to Arthur's House": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3242,7 +3273,7 @@
                         "default"
                     ],
                     "extra": {},
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sand Zone",
@@ -3256,6 +3287,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Sand Zone": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sand Zone": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 295.04,
+                        "y": 100.71,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Sand Zone": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Curly Boss)": {
                             "type": "and",
                             "data": {
@@ -3299,7 +3361,7 @@
                                 ]
                             }
                         },
-                        "Door to Small Room": {
+                        "Front of Door to Small Room": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -3333,7 +3395,7 @@
                     "valid_starting_location": false,
                     "event_name": "eventFightCurly",
                     "connections": {
-                        "Door to Sand Zone": {
+                        "Front of Door to Sand Zone": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3363,7 +3425,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Sand Zone": {
+                        "Front of Door to Sand Zone": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3399,13 +3461,44 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Sand Zone": {
+                        "Front of Door to Small Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Small Room": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 104.25,
+                        "y": 102.09,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Sand Zone": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
                                 "name": "eventFightCurly",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Small Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Before Curly": {
@@ -3546,6 +3639,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Sand Zone Residence": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sand Zone Residence": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 134.98,
+                        "y": 101.17,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Sand Zone Residence": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Puppy (Curly))": {
                             "type": "and",
                             "data": {
@@ -3590,7 +3714,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Sand Zone Residence": {
+                        "Front of Door to Sand Zone Residence": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3620,7 +3744,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Sand Zone Residence": {
+                        "Front of Door to Sand Zone Residence": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3644,7 +3768,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Sand Zone Residence": {
+                        "Front of Door to Sand Zone Residence": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3714,7 +3838,7 @@
                         "default"
                     ],
                     "extra": {},
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sand Zone",
@@ -3728,6 +3852,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Sand Zone": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sand Zone": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 201.4807534807535,
+                        "y": 83.74119574119575,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Sand Zone": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Jenka)": {
                             "type": "resource",
                             "data": {
@@ -3783,7 +3938,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Sand Zone": {
+                        "Front of Door to Sand Zone": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3808,7 +3963,7 @@
                     "valid_starting_location": false,
                     "event_name": "eventPuppies",
                     "connections": {
-                        "Door to Sand Zone": {
+                        "Front of Door to Sand Zone": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3832,7 +3987,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Sand Zone": {
+                        "Front of Door to Sand Zone": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3908,7 +4063,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Sand Zone": {
+                        "Front of Door to Sand Zone": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3956,6 +4111,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Sand Zone": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sand Zone": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 88.1965601965602,
+                        "y": 53.92956592956594,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Sand Zone": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Puppy (Dark))": {
                             "type": "and",
                             "data": {
@@ -3993,7 +4179,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Sand Zone": {
+                        "Front of Door to Sand Zone": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4017,7 +4203,7 @@
                     "extra": {},
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Sand Zone": {
+                        "Front of Door to Sand Zone": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4066,6 +4252,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Entrance from Sand Zone": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Entrance from Sand Zone": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 88.65,
+                        "y": 123.09,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Entrance from Sand Zone": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Before Toroko+": {
                             "type": "and",
                             "data": {
@@ -4073,7 +4290,7 @@
                                 "items": []
                             }
                         },
-                        "Exit to Labyrinth I": {
+                        "Front of Exit to Labyrinth I": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -4254,7 +4471,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Exit to Labyrinth I": {
+                        "Front of Exit to Labyrinth I": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4289,7 +4506,39 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Front of Exit to Labyrinth I": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Exit to Labyrinth I": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 87.34,
+                        "y": 104.09,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Exit to Labyrinth I": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         }

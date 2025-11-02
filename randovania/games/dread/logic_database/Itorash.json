@@ -256,7 +256,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Hanubia": {
+                        "Front of Elevator to Hanubia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -501,7 +501,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
                         "transporter_name": "Itorash"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Hanubia",
@@ -515,7 +515,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Elevator to Hanubia": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Elevator to Hanubia": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3850.0,
+                        "y": -4700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
                         "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Elevator to Hanubia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -623,7 +654,7 @@
                                 "items": []
                             }
                         },
-                        "Elevator to Hanubia": {
+                        "Front of Elevator to Hanubia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -699,11 +730,42 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3450.0,
+                        "y": -4500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Destroy Generator": {
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
-                        "Dock to Raven Beak Arena": {
+                        "Front of Dock to Raven Beak Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -823,7 +885,7 @@
                     "valid_starting_location": false,
                     "event_name": "s090_skybase:default:block_pbcolumn_000",
                     "connections": {
-                        "Door to Save Station": {
+                        "Front of Door to Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -850,7 +912,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Raven Beak Arena": {
+                        "Front of Dock to Raven Beak Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -891,7 +953,31 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Save Station": {
+                        "Front of Dock to Raven Beak Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Dock to Raven Beak Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5050.0,
+                        "y": -3100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -899,6 +985,13 @@
                             }
                         },
                         "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Raven Beak Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,

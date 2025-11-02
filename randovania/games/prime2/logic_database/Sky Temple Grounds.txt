@@ -1,11 +1,18 @@
 ----------------
 Base Access
 Extra - asset_id: 1752128027
-> Door to War Ritual Grounds; Heals? False; Spawn Point; Default Node
+> Door to War Ritual Grounds; Heals? False; Default Node
   * Layers: default
   * Super Missile Blast Shield to War Ritual Grounds/Door to Base Access
   * Extra - dock_name: South
-  > Portal to Hall of Eyes
+  > Front of Door to War Ritual Grounds
+      Trivial
+
+> Front of Door to War Ritual Grounds; Heals? False; Spawn Point
+  * Layers: default
+  > Door to War Ritual Grounds
+      Trivial
+  > Front of Portal to Hall of Eyes
       All of the following:
           Dark World Damage ≥ 20 or Activate Safe Zone
           Any of the following:
@@ -18,32 +25,46 @@ Extra - asset_id: 1752128027
   * Layers: default
   * Normal Door to Abandoned Base/Door to Base Access
   * Extra - dock_name: West
-  > Portal to Hall of Eyes
+  > Front of Portal to Hall of Eyes
       Dark World Damage ≥ 20
 
 > Portal to Hall of Eyes; Heals? True
   * Layers: default
   * Light Portal to Hall of Eyes/Portal to Base Access
   * Extra - dock_name: Docks_VirtualNorth
-  > Door to War Ritual Grounds
+  > Front of Portal to Hall of Eyes
+      Trivial
+
+> Front of Portal to Hall of Eyes; Heals? False
+  * Layers: default
+  > Door to Abandoned Base
+      Dark World Damage ≥ 20
+  > Front of Door to War Ritual Grounds
       Any of the following:
           Dark World Damage ≥ 35
           Dark World Damage ≥ 25 and Activate Safe Zone
-  > Door to Abandoned Base
-      Dark World Damage ≥ 20
+  > Portal to Hall of Eyes
+      Trivial
 
 ----------------
 War Ritual Grounds
 Extra - asset_id: 2859985581
 Hint Features - Dark Visor Lock, Half-Pipe
-> Door to Shrine Access; Heals? False; Spawn Point; Default Node
+> Door to Shrine Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Shrine Access/Door to War Ritual Grounds
   * Extra - dock_name: EastBottom
+  > Front of Door to Shrine Access
+      Trivial
+
+> Front of Door to Shrine Access; Heals? False; Spawn Point
+  * Layers: default
   > Central Safe Zone
       Any of the following:
           Dark World Damage ≥ 20
           Morph Ball and Dark World Damage ≥ 15
+  > Door to Shrine Access
+      Trivial
 
 > Door to Base Access; Heals? False
   * Layers: default
@@ -67,10 +88,6 @@ Hint Features - Dark Visor Lock, Half-Pipe
 
 > Central Safe Zone; Heals? True
   * Layers: default
-  > Door to Shrine Access
-      Any of the following:
-          Dark World Damage ≥ 50
-          Dark World Damage ≥ 30 and Activate Safe Zone
   > Door to Base Access
       All of the following:
           Dark World Damage ≥ 20 or Activate Safe Zone
@@ -83,6 +100,10 @@ Hint Features - Dark Visor Lock, Half-Pipe
           Any of the following:
               Dark World Damage ≥ 40
               Dark World Damage ≥ 15 and Activate Safe Zone
+  > Front of Door to Shrine Access
+      Any of the following:
+          Dark World Damage ≥ 50
+          Dark World Damage ≥ 30 and Activate Safe Zone
 
 ----------------
 Abandoned Base
@@ -91,13 +112,18 @@ Extra - asset_id: 3337937090
   * Layers: default
   * Light Portal to Path of Eyes/Portal from Abandoned Base
   * Extra - dock_name: VirtualNorth
-  > Door to Base Access
+  > Front of Door to Base Access
       Dark World Damage ≥ 40
 
-> Door to Base Access; Heals? False; Spawn Point; Default Node
+> Door to Base Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Base Access/Door to Abandoned Base
   * Extra - dock_name: East
+  > Front of Door to Base Access
+      Trivial
+
+> Front of Door to Base Access; Heals? False; Spawn Point
+  * Layers: default
   > Portal to Path of Eyes
       Any of the following:
           All of the following:
@@ -122,6 +148,8 @@ Extra - asset_id: 3337937090
                   Suitless Dark Aether (Advanced) and Ingclaw Vapor Damage ≥ 70
           # https://www.youtube.com/watch?v=grxl4PoO9wk
           Standable Terrain (Intermediate) and Dark World Damage ≥ 50 and Use Screw Attack (Space Jump)
+  > Door to Base Access
+      Trivial
 
 ----------------
 Shrine Access
@@ -139,12 +167,19 @@ Extra - asset_id: 521996255
                   Morph Ball Bomb and Dark World Damage ≥ 70
                   Suitless Dark Aether (Beginner) or Has Suit
 
-> Door to Defiled Shrine; Heals? True; Spawn Point; Default Node
+> Door to Defiled Shrine; Heals? True; Default Node
   * Layers: default
   * Super Missile Blast Shield to Defiled Shrine/Door to Shrine Access
   * Extra - dock_name: South
+  > Front of Door to Defiled Shrine
+      Trivial
+
+> Front of Door to Defiled Shrine; Heals? False; Spawn Point
+  * Layers: default
   > Safe Zone
       Dark World Damage ≥ 15
+  > Door to Defiled Shrine
+      Trivial
 
 > Door to Gateway Access; Heals? True
   * Layers: default
@@ -173,20 +208,20 @@ Extra - asset_id: 521996255
               All of the following:
                   Morph Ball Bomb and Dark World Damage ≥ 60
                   Suitless Dark Aether (Beginner) or Has Suit
-  > Door to Defiled Shrine
-      Any of the following:
-          Dark World Damage ≥ 40
-          Dark World Damage ≥ 20 and Activate Safe Zone
   > Door to Gateway Access
       Any of the following:
           Dark World Damage ≥ 60
           Dark World Damage ≥ 25 and Activate Safe Zone
+  > Front of Door to Defiled Shrine
+      Any of the following:
+          Dark World Damage ≥ 40
+          Dark World Damage ≥ 20 and Activate Safe Zone
 
 ----------------
 Plain of Dark Worship
 Extra - asset_id: 67496868
 Hint Features - Luminoth Corpse, Portal
-> Door to Lake Access; Heals? False; Spawn Point; Default Node
+> Door to Lake Access; Heals? False; Default Node
   * Layers: default
   * Seeker Launcher Blast Shield to Lake Access/Door to Plain of Dark Worship
   * <https://youtu.be/_mSQ-ckqaA8>
@@ -198,15 +233,25 @@ Hint Features - Luminoth Corpse, Portal
             Destroy Seeker Locks
             Missile and Seeker Locks without Seeker Missiles (Expert) and Use Screw Attack (Space Jump)
 
-  > Portal to Temple Assembly Site
+  > Front of Door to Lake Access
+      Trivial
+
+> Front of Door to Lake Access; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Lake Access
+      Trivial
+  > Front of Portal to Temple Assembly Site
       Dark World Damage ≥ 10
 
 > Portal to Temple Assembly Site; Heals? True
   * Layers: default
   * Light Portal to Temple Assembly Site/Portal to Plain of Dark Worship
   * Extra - dock_name: VirtualNorth
-  > Door to Lake Access
-      Dark World Damage ≥ 10
+  > Front of Portal to Temple Assembly Site
+      Trivial
+
+> Front of Portal to Temple Assembly Site; Heals? False
+  * Layers: default
   > Pickup (Missile)
       Any of the following:
           Dark World Damage ≥ 15 and Has Suit
@@ -220,12 +265,16 @@ Hint Features - Luminoth Corpse, Portal
                           Boost Ball and Dark World Damage ≥ 40 and Ingclaw Vapor Damage ≥ 200
                   Dark World Damage ≥ 20 and Ingclaw Vapor Damage ≥ 120 and Use Screw Attack (Space Jump)
                   Dark World Damage ≥ 80 and Ingclaw Vapor Damage ≥ 400
+  > Front of Door to Lake Access
+      Dark World Damage ≥ 10
+  > Portal to Temple Assembly Site
+      Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
   * Pickup 10; Category? Minor; Index Group: Temple Grounds
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (2228237,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 2228303, 'hud_memo': 2228309, 'streamed_audio': 2228312, 'sound': 2228304, 'audio_fade': 2228311})})
-  > Portal to Temple Assembly Site
+  > Front of Portal to Temple Assembly Site
       Any of the following:
           Dark World Damage ≥ 20 and Has Suit
           All of the following:
@@ -243,14 +292,21 @@ Hint Features - Luminoth Corpse, Portal
 Defiled Shrine
 Extra - asset_id: 383850164
 Hint Features - Flying Ing Cache
-> Door to Shrine Access; Heals? True; Spawn Point; Default Node
+> Door to Shrine Access; Heals? True; Default Node
   * Layers: default
   * Super Missile Blast Shield to Shrine Access/Door to Defiled Shrine
   * Extra - dock_name: North
+  > Front of Door to Shrine Access
+      Trivial
+
+> Front of Door to Shrine Access; Heals? False; Spawn Point
+  * Layers: default
   > Safe Zone (Ship Location)
       Any of the following:
           Dark World Damage ≥ 40
           Dark World Damage ≥ 20 and Activate Safe Zone
+  > Door to Shrine Access
+      Trivial
 
 > Pickup (Sky Temple Key 8); Heals? False
   * Layers: default
@@ -261,7 +317,14 @@ Hint Features - Flying Ing Cache
 
 > Safe Zone (Ship Location); Heals? True
   * Layers: default
-  > Door to Shrine Access
+  > Pickup (Sky Temple Key 8)
+      All of the following:
+          Dark Visor
+          Any of the following:
+              Space Jump Boots
+              # https://www.youtube.com/watch?v=D5Kr5s22mFA
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 20
+  > Front of Door to Shrine Access
       Any of the following:
           All of the following:
               Space Jump Boots
@@ -274,13 +337,6 @@ Hint Features - Flying Ing Cache
               Any of the following:
                   Dark World Damage ≥ 90
                   Dark World Damage ≥ 40 and Activate Safe Zone
-  > Pickup (Sky Temple Key 8)
-      All of the following:
-          Dark Visor
-          Any of the following:
-              Space Jump Boots
-              # https://www.youtube.com/watch?v=D5Kr5s22mFA
-              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 20
 
 ----------------
 Gateway Access
@@ -292,12 +348,19 @@ Extra - asset_id: 2217888920
   > Central Safe Zone
       Dark World Damage ≥ 30
 
-> Door to Shrine Access; Heals? False; Spawn Point; Default Node
+> Door to Shrine Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Shrine Access/Door to Gateway Access
   * Extra - dock_name: West
+  > Front of Door to Shrine Access
+      Trivial
+
+> Front of Door to Shrine Access; Heals? False; Spawn Point
+  * Layers: default
   > Central Safe Zone
       Dark World Damage ≥ 40
+  > Door to Shrine Access
+      Trivial
 
 > Central Safe Zone; Heals? True
   * Layers: default
@@ -314,7 +377,7 @@ Extra - asset_id: 2217888920
               Any of the following:
                   Dark World Damage ≥ 60
                   Dark World Damage ≥ 45 and Activate Safe Zone
-  > Door to Shrine Access
+  > Front of Door to Shrine Access
       Any of the following:
           Dark World Damage ≥ 60
           Dark World Damage ≥ 45 and Activate Safe Zone
@@ -322,10 +385,15 @@ Extra - asset_id: 2217888920
 ----------------
 Ing Windchamber
 Extra - asset_id: 3455003633
-> Portal to Grand Windchamber; Heals? True; Spawn Point; Default Node
+> Portal to Grand Windchamber; Heals? True; Default Node
   * Layers: default
   * Light Portal to Grand Windchamber/Portal to Ing Windchamber
   * Extra - dock_name: VirtualNorth1
+  > Front of Portal to Grand Windchamber
+      Trivial
+
+> Front of Portal to Grand Windchamber; Heals? False; Spawn Point
+  * Layers: default
   > Event - Ing Windchamber Blue Seeker Lock
       All of the following:
           Boost Ball and Missile ≥ 4 and Morph Ball and Seeker Launcher
@@ -340,36 +408,45 @@ Extra - asset_id: 3455003633
               Morph Ball Bomb
               # Use Power Bombs to exit Boost Ball Spinners
               Power Bomb ≥ 4 and Knowledge (Beginner)
+  > Portal to Grand Windchamber
+      Trivial
 
 > Event - Ing Windchamber Blue Seeker Lock; Heals? True
   * Layers: default
   * Event Ing Windchamber Blue Seeker Lock
-  > Portal to Grand Windchamber
+  > Front of Portal to Grand Windchamber
       Trivial
 
 > Event - Ing Windchamber Yellow Seeker Lock; Heals? True
   * Layers: default
   * Event Ing Windchamber Yellow Seeker Lock
-  > Portal to Grand Windchamber
+  > Front of Portal to Grand Windchamber
       Trivial
 
 ----------------
 Lake Access
 Extra - asset_id: 1753921710
-> Door to Accursed Lake; Heals? False; Spawn Point; Default Node
+> Door to Accursed Lake; Heals? False; Default Node
   * Layers: default
   * Normal Door to Accursed Lake/Door to Lake Access
   * Extra - dock_name: A__South
+  > Front of Door to Accursed Lake
+      Trivial
+
+> Front of Door to Accursed Lake; Heals? False; Spawn Point
+  * Layers: default
   > Door to Plain of Dark Worship
       All of the following:
           Dark World Damage ≥ 100
           Suitless Dark Aether (Beginner) or Has Suit
+  > Door to Accursed Lake
+      Trivial
 
 > Door to Plain of Dark Worship; Heals? False
   * Layers: default
   * Super Missile Blast Shield to Plain of Dark Worship/Door to Lake Access
   * Extra - dock_name: A__North1
-  > Door to Accursed Lake
+  > Front of Door to Accursed Lake
       All of the following:
           Dark World Damage ≥ 100
           Suitless Dark Aether (Beginner) or Has Suit
@@ -381,15 +458,22 @@ Extra - asset_id: 2278776548
   * Layers: default
   * Normal Door to Gateway Access/Door to Sky Temple Gateway
   * Extra - dock_name: South
+  > Front of Door to Gateway Access
+      Trivial
+
+> Front of Door to Gateway Access; Heals? False
+  * Layers: default
   > Spawn Point/Front of Teleporter
       Any of the following:
           Dark World Damage ≥ 35
           Morph Ball and Dark World Damage ≥ 25
+  > Door to Gateway Access
+      Trivial
 
 > Event - Dark Samus 3 and 4; Heals? False
   * Layers: default
   * Event Dark Samus 3 and 4
-  > Door to Gateway Access
+  > Front of Door to Gateway Access
       Trivial
 
 > Elevator to Sky Temple; Heals? False
@@ -398,8 +482,11 @@ Extra - asset_id: 2278776548
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 136970379
   * Extra - keep_name_when_vanilla: True
-  > Door to Gateway Access
-      Dark World Damage ≥ 45
+  > Front of Elevator to Sky Temple
+      Trivial
+
+> Front of Elevator to Sky Temple; Heals? False
+  * Layers: default
   > Event - Dark Samus 3 and 4
       All of the following:
           After Emperor Ing
@@ -414,10 +501,14 @@ Extra - asset_id: 2278776548
                               Annihilator Beam and Dark Ammo ≥ 26 and Light Ammo ≥ 26 and Combat (Beginner)
                       Combat (Intermediate) and Invisible Objects (Intermediate) and Dark World Damage ≥ 800
               Missile ≥ 5 and Combat (Advanced) and Invisible Objects (Advanced) and Normal Damage ≥ 80 and Dark World Damage ≥ 300 and Use Screw Attack (Space Jump)
+  > Front of Door to Gateway Access
+      Dark World Damage ≥ 45
+  > Elevator to Sky Temple
+      Trivial
 
 > Spawn Point/Front of Teleporter; Heals? False; Spawn Point; Default Node
   * Layers: default
-  > Elevator to Sky Temple
+  > Front of Elevator to Sky Temple
       Sky Temple Key 1 and Sky Temple Key 2 and Sky Temple Key 3 and Sky Temple Key 4 and Sky Temple Key 5 and Sky Temple Key 6 and Sky Temple Key 7 and Sky Temple Key 8 and Sky Temple Key 9 and Dark World Damage ≥ 10
 
 ----------------
@@ -428,14 +519,21 @@ Hint Features - Flying Ing Cache
   * Layers: default
   * Normal Door to Lake Access/Door to Accursed Lake
   * Extra - dock_name: North
+  > Front of Door to Lake Access
+      Trivial
+
+> Front of Door to Lake Access; Heals? False
+  * Layers: default
   > Spawn Point
       Dark World Damage ≥ 15
+  > Door to Lake Access
+      Trivial
 
 > Pickup (Sky Temple Key 9); Heals? False
   * Layers: default
   * Pickup 15; Category? Major; Index Group: Temple Grounds
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'SkyTempleKey', 'connections': (), 'removals': (204341388, 204341345), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.6, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 204341296, 'hud_memo': 204341386, 'streamed_audio': 204341389, 'sound': 204341297, 'audio_fade': 204341387})})
-  > Door to Lake Access
+  > Front of Door to Lake Access
       Any of the following:
           All of the following:
               Space Jump Boots and Dark World Damage ≥ 45
@@ -459,8 +557,6 @@ Hint Features - Flying Ing Cache
 
 > Spawn Point; Heals? False; Spawn Point; Default Node
   * Layers: default
-  > Door to Lake Access
-      Dark World Damage ≥ 30
   > Pickup (Sky Temple Key 9)
       All of the following:
           Dark Visor
@@ -489,16 +585,31 @@ Hint Features - Flying Ing Cache
                   Dark World Damage ≥ 40 or Activate Safe Zone
               # https://www.youtube.com/watch?v=D0wVfhd1W-w
               Gravity Boost and Light Suit and Morph Ball and Air Underwater (Advanced)
+  > Front of Door to Lake Access
+      Dark World Damage ≥ 30
 
 ----------------
 Profane Path
 Extra - asset_id: 1692811478
 Hint Features - Echo Visor Lock, Portal
-> Door to Phazon Pit; Heals? False; Spawn Point; Default Node
+> Door to Phazon Pit; Heals? False; Default Node
   * Layers: default
   * Normal Door to Phazon Pit/Door to Profane Path
   * Extra - dock_name: North
-  > Portal to Sacred Path
+  > Front of Door to Phazon Pit
+      Trivial
+
+> Front of Door to Phazon Pit; Heals? False; Spawn Point
+  * Layers: default
+  > Safe Zone (Front of Echo Gate)
+      Any of the following:
+          Space Jump Boots and Dark World Damage ≥ 40
+          # Double Bomb Jump
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 70
+          Movement (Intermediate) and Dark World Damage ≥ 50 and Use Screw Attack (No Space Jump)
+  > Door to Phazon Pit
+      Trivial
+  > Front of Portal to Sacred Path
       Any of the following:
           Space Jump Boots and Dark World Damage ≥ 35
           All of the following:
@@ -506,21 +617,22 @@ Hint Features - Echo Visor Lock, Portal
               Any of the following:
                   Dark World Damage ≥ 35
                   Space Jump Boots and Dark World Damage ≥ 25
-  > Safe Zone (Front of Echo Gate)
-      Any of the following:
-          Space Jump Boots and Dark World Damage ≥ 40
-          # Double Bomb Jump
-          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 70
-          Movement (Intermediate) and Dark World Damage ≥ 50 and Use Screw Attack (No Space Jump)
 
 > Portal to Sacred Path; Heals? True
   * Layers: default
   * Light Portal to Sacred Path/Portal to Profane Path
   * Extra - dock_name: VirtualNorth1
-  > Door to Phazon Pit
-      Dark World Damage ≥ 15
+  > Front of Portal to Sacred Path
+      Trivial
+
+> Front of Portal to Sacred Path; Heals? False
+  * Layers: default
   > Safe Zone (Front of Echo Gate)
       Dark World Damage ≥ 15 and Activate Safe Zone
+  > Front of Door to Phazon Pit
+      Dark World Damage ≥ 15
+  > Portal to Sacred Path
+      Trivial
 
 > Pickup (Dark Ammo); Heals? False
   * Layers: default
@@ -531,11 +643,17 @@ Hint Features - Echo Visor Lock, Portal
 
 > Safe Zone (Front of Echo Gate); Heals? True
   * Layers: default
-  > Door to Phazon Pit
+  > Pickup (Dark Ammo)
+      All of the following:
+          Annihilator Beam and Echo Visor and Dark World Damage ≥ 55
+          Any of the following:
+              Charge Beam
+              Dark Ammo ≥ 4 and Light Ammo ≥ 4
+  > Front of Door to Phazon Pit
       Any of the following:
           Dark World Damage ≥ 35
           Morph Ball and Dark World Damage ≥ 30
-  > Portal to Sacred Path
+  > Front of Portal to Sacred Path
       All of the following:
           Activate Safe Zone
           Any of the following:
@@ -547,12 +665,6 @@ Hint Features - Echo Visor Lock, Portal
               Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate) and Dark World Damage ≥ 25
               # https://www.youtube.com/watch?v=aKNRlZfSTfw
               Scan Visor and Combat/Scan Dash (Advanced) and Standable Terrain (Beginner) and Dark World Damage ≥ 70
-  > Pickup (Dark Ammo)
-      All of the following:
-          Annihilator Beam and Echo Visor and Dark World Damage ≥ 55
-          Any of the following:
-              Charge Beam
-              Dark Ammo ≥ 4 and Light Ammo ≥ 4
 
 ----------------
 Phazon Pit
@@ -561,7 +673,7 @@ Extra - asset_id: 506667008
   * Layers: default
   * Normal Door to Profane Path/Door to Phazon Pit
   * Extra - dock_name: South
-  > Door to Phazon Grounds
+  > Front of Door to Phazon Grounds
       Any of the following:
           All of the following:
               Any of the following:
@@ -581,10 +693,15 @@ Extra - asset_id: 506667008
                   # https://www.youtube.com/watch?v=zdUCjMKDNUo
                   Boost Ball and Boost Jump (Expert) and Dark World Damage ≥ 60
 
-> Door to Phazon Grounds; Heals? False; Spawn Point; Default Node
+> Door to Phazon Grounds; Heals? False; Default Node
   * Layers: default
   * Normal Door to Phazon Grounds/Door to Phazon Pit
   * Extra - dock_name: East
+  > Front of Door to Phazon Grounds
+      Trivial
+
+> Front of Door to Phazon Grounds; Heals? False; Spawn Point
+  * Layers: default
   > Door to Profane Path
       All of the following:
           Any of the following:
@@ -594,6 +711,8 @@ Extra - asset_id: 506667008
                   Dark World Damage ≥ 50
                   Grapple Beam or Space Jump Boots
           Suitless Dark Aether (Beginner) or Has Suit
+  > Door to Phazon Grounds
+      Trivial
 
 ----------------
 Phazon Grounds
@@ -603,8 +722,11 @@ Hint Features - Abyss, Phazon
   * Layers: default
   * Normal Door to Phazon Pit/Door to Phazon Grounds
   * Extra - dock_name: WestTop
-  > Door to Reliquary Access
-      Dark World Damage ≥ 60
+  > Front of Door to Phazon Pit
+      Trivial
+
+> Front of Door to Phazon Pit; Heals? False
+  * Layers: default
   > Pickup (Missile)
       Any of the following:
           All of the following:
@@ -621,8 +743,12 @@ Hint Features - Abyss, Phazon
                   Dark Visor
                   # https://www.youtube.com/watch?v=TLVEtDIZuOY
                   Invisible Objects (Expert)
+  > Door to Phazon Pit
+      Trivial
+  > Front of Door to Reliquary Access
+      Dark World Damage ≥ 60
 
-> Door to Reliquary Access; Heals? False; Spawn Point; Default Node
+> Door to Reliquary Access; Heals? False; Default Node
   * Layers: default
   * Seeker Launcher Blast Shield to Reliquary Access/Door to Phazon Grounds
   * <https://youtu.be/_ZB9NSBnIrs>
@@ -634,19 +760,26 @@ Hint Features - Abyss, Phazon
             Destroy Seeker Locks
             Missile ≥ 2 and Seeker Locks without Seeker Missiles (Expert) and Use Screw Attack (Space Jump)
 
-  > Door to Phazon Pit
+  > Front of Door to Reliquary Access
+      Trivial
+
+> Front of Door to Reliquary Access; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Phazon Pit
       Any of the following:
           # Double Bomb Jump
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 55
           Space Jump Boots and Dark World Damage ≥ 45
           # https://www.youtube.com/watch?v=UIGRq3fHK0w
           Slope Jump (Intermediate) and Dark World Damage ≥ 70
+  > Door to Reliquary Access
+      Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
   * Pickup 18; Category? Minor; Index Group: Temple Grounds
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (3866914,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 3866838, 'hud_memo': 3866912, 'streamed_audio': 3866906, 'sound': 3866916, 'audio_fade': 3866908})})
-  > Door to Phazon Pit
+  > Front of Door to Phazon Pit
       Any of the following:
           All of the following:
               Dark World Damage ≥ 50 and Use Screw Attack (Space Jump)
@@ -667,7 +800,7 @@ Hint Features - Abyss, Phazon
 ----------------
 Reliquary Access
 Extra - asset_id: 2235615956
-> Door to Phazon Grounds; Heals? False; Spawn Point; Default Node
+> Door to Phazon Grounds; Heals? False; Default Node
   * Layers: default
   * Seeker Launcher Blast Shield to Phazon Grounds/Door to Reliquary Access
   * <https://www.youtube.com/watch?v=L0ULmh5YmFg>
@@ -679,6 +812,11 @@ Extra - asset_id: 2235615956
             Destroy Seeker Locks
             Missile and Seeker Locks without Seeker Missiles (Expert) and Use Screw Attack (Space Jump)
 
+  > Front of Door to Phazon Grounds
+      Trivial
+
+> Front of Door to Phazon Grounds; Heals? False; Spawn Point
+  * Layers: default
   > Door to Reliquary Grounds
       Any of the following:
           Light Suit
@@ -693,12 +831,14 @@ Extra - asset_id: 2235615956
                       Any of the following:
                           Dark World Damage ≥ 80 and Ingstorm Damage ≥ 150
                           Boost Ball and Dark World Damage ≥ 55 and Ingstorm Damage ≥ 120
+  > Door to Phazon Grounds
+      Trivial
 
 > Door to Reliquary Grounds; Heals? False
   * Layers: default
   * Light Door to Reliquary Grounds/Door to Reliquary Access
   * Extra - dock_name: South
-  > Door to Phazon Grounds
+  > Front of Door to Phazon Grounds
       Any of the following:
           Light Suit
           All of the following:
@@ -719,10 +859,15 @@ Extra - asset_id: 2235615956
 ----------------
 Reliquary Grounds
 Extra - asset_id: 4237279396
-> Door to Reliquary Access; Heals? False; Spawn Point; Default Node
+> Door to Reliquary Access; Heals? False; Default Node
   * Layers: default
   * Light Door to Reliquary Access/Door to Reliquary Grounds
   * Extra - dock_name: North
+  > Front of Door to Reliquary Access
+      Trivial
+
+> Front of Door to Reliquary Access; Heals? False; Spawn Point
+  * Layers: default
   > Door to Ing Reliquary
       Any of the following:
           All of the following:
@@ -741,12 +886,14 @@ Extra - asset_id: 4237279396
                   Space Jump Boots and Dark World Damage ≥ 60 and Ingstorm Damage ≥ 180
                   Dark World Damage ≥ 80 and Ingstorm Damage ≥ 320 and Use Screw Attack (No Space Jump)
                   Morph Ball Bomb and Morph Ball and Bomb Jump (Advanced) and Dark World Damage ≥ 160 and Ingstorm Damage ≥ 340
+  > Door to Reliquary Access
+      Trivial
 
 > Door to Ing Reliquary; Heals? False
   * Layers: default
   * Normal Door to Ing Reliquary/Door to Reliquary Grounds
   * Extra - dock_name: South_Top
-  > Door to Reliquary Access
+  > Front of Door to Reliquary Access
       Any of the following:
           Light Suit
           All of the following:
@@ -763,10 +910,15 @@ Extra - asset_id: 4237279396
 Ing Reliquary
 Extra - asset_id: 1956545251
 Hint Features - Flying Ing Cache
-> Door to Reliquary Grounds; Heals? False; Spawn Point; Default Node
+> Door to Reliquary Grounds; Heals? False; Default Node
   * Layers: default
   * Normal Door to Reliquary Grounds/Door to Ing Reliquary
   * Extra - dock_name: North_Top
+  > Front of Door to Reliquary Grounds
+      Trivial
+
+> Front of Door to Reliquary Grounds; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Sky Temple Key 7)
       All of the following:
           Dark Visor
@@ -788,12 +940,14 @@ Hint Features - Flying Ing Cache
                       Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 20 and Ingstorm Damage ≥ 10
                       # https://www.youtube.com/watch?v=FDgp_e_ZzHg&t=16s
                       Standable Terrain (Intermediate) and Dark World Damage ≥ 10
+  > Door to Reliquary Grounds
+      Trivial
 
 > Pickup (Sky Temple Key 7); Heals? False
   * Layers: default
   * Pickup 19; Category? Major; Index Group: Temple Grounds
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'SkyTempleKey', 'connections': (), 'removals': (4063274, 4063322), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.6, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 4063266, 'hud_memo': 4063271, 'streamed_audio': 4063272, 'sound': 4063277, 'audio_fade': 4063270})})
-  > Door to Reliquary Grounds
+  > Front of Door to Reliquary Grounds
       Any of the following:
           Light Suit
           All of the following:

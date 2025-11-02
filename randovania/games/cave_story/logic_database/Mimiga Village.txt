@@ -6,14 +6,21 @@ Extra - starting_script: <EVE0091
   * Layers: default
   * Door to First Cave/Door to Start Point
   * Extra - different_strongly_connected_component: True
+  > Front of Door to First Cave
+      Trivial
+
+> Front of Door to First Cave; Heals? False
+  * Layers: default
   > Save Point
+      Trivial
+  > Door to First Cave
       Trivial
 
 > Save Point; Heals? False
   * Layers: default
-  > Door to First Cave
-      Trivial
   > Refill
+      Trivial
+  > Front of Door to First Cave
       Trivial
 
 > Room Spawn; Heals? False; Spawn Point; Default Node
@@ -31,16 +38,21 @@ Extra - starting_script: <EVE0091
   * Layers: default
   * Event Start in Start Point
   * Extra - different_strongly_connected_component: True
-  > Door to First Cave
+  > Front of Door to First Cave
       Trivial
 
 ----------------
 First Cave
 Extra - map_name: Cave
 Extra - starting_script: <TRA0012:0094:0037:0011
-> Door to Start Point; Heals? False; Spawn Point; Default Node
+> Door to Start Point; Heals? False; Default Node
   * Layers: default
   * Door to Start Point/Door to First Cave
+  > Front of Door to Start Point
+      Trivial
+
+> Front of Door to Start Point; Heals? False; Spawn Point
+  * Layers: default
   > Door to Hermit Gunsmith
       Trivial
   > Door to Mimiga Village
@@ -50,52 +62,61 @@ Extra - starting_script: <TRA0012:0094:0037:0011
           Before Start in Start Point or Has Weapon
   > Pickup (First Cave Life Capsule)
       Trivial
+  > Door to Start Point
+      Trivial
 
 > Door to Hermit Gunsmith; Heals? False
   * Layers: default
   * Door to Hermit Gunsmith/Door to First Cave
-  > Door to Start Point
+  > Front of Door to Start Point
       Trivial
 
 > Door to Mimiga Village; Heals? False
   * Layers: default
   * Door to Mimiga Village/Door to First Cave
-  > Door to Start Point
+  > Front of Door to Start Point
       Can Break Blocks
 
 > Pickup (First Cave Life Capsule); Heals? False
   * Layers: default
   * Pickup 32; Category? Minor
   * Extra - event: 0401
-  > Door to Start Point
+  > Front of Door to Start Point
       Trivial
 
 ----------------
 Hermit Gunsmith
 Extra - map_name: Pole
 Extra - starting_script: <TRA0090:0094:0007:0009
-> Door to First Cave; Heals? False; Spawn Point; Default Node
+> Door to First Cave; Heals? False; Default Node
   * Layers: default
   * Door to First Cave/Door to Hermit Gunsmith
+  > Front of Door to First Cave
+      Trivial
+
+> Front of Door to First Cave; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Hermit Gunsmith Chest)
       Trivial
   > Pickup (Tetsuzou)
       All of the following:
           After Defeated Core
           Polar Star or Spur
+  > Door to First Cave
+      Trivial
 
 > Pickup (Hermit Gunsmith Chest); Heals? False
   * Layers: default
   * Pickup 33; Category? Minor
   * Extra - event: 0202
-  > Door to First Cave
+  > Front of Door to First Cave
       Trivial
 
 > Pickup (Tetsuzou); Heals? False
   * Layers: default
   * Pickup 34; Category? Minor
   * Extra - event: 0303
-  > Door to First Cave
+  > Front of Door to First Cave
       Trivial
 
 ----------------
@@ -185,19 +206,26 @@ Extra - starting_script: <TRA0020:0094:0008:0009
 > Door to Mimiga Village; Heals? False
   * Layers: default
   * Door to Mimiga Village/Door to Save Point
+  > Front of Door to Mimiga Village
+      Trivial
+
+> Front of Door to Mimiga Village; Heals? False
+  * Layers: default
   > Save Point
       Trivial
   > Refill
       Trivial
+  > Door to Mimiga Village
+      Trivial
 
 > Save Point; Heals? False; Spawn Point; Default Node
   * Layers: default
-  > Door to Mimiga Village
+  > Front of Door to Mimiga Village
       Trivial
 
 > Refill; Heals? True
   * Layers: default
-  > Door to Mimiga Village
+  > Front of Door to Mimiga Village
       Trivial
 
 ----------------
@@ -205,17 +233,24 @@ Yamashita Farm
 Extra - map_name: Plant
 Extra - starting_script: <TRA0017:0092:0002:0011
 Hint Features - Garden, Underwater
-> Door to Mimiga Village; Heals? False; Spawn Point; Default Node
+> Door to Mimiga Village; Heals? False; Default Node
   * Layers: default
   * Door to Mimiga Village/Door to Yamashita Farm
+  > Front of Door to Mimiga Village
+      Trivial
+
+> Front of Door to Mimiga Village; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Yamashita Farm)
+      Trivial
+  > Door to Mimiga Village
       Trivial
 
 > Pickup (Yamashita Farm); Heals? False
   * Layers: default
   * Pickup 36; Category? Minor
   * Extra - event: 0401
-  > Door to Mimiga Village
+  > Front of Door to Mimiga Village
       Trivial
 
 ----------------
@@ -223,32 +258,39 @@ Reservoir
 Extra - map_name: Pool
 Extra - starting_script: <TRA0015:0090:0036:0014
 Hint Features - Underwater
-> Door to Mimiga Village; Heals? False; Spawn Point; Default Node
+> Door to Mimiga Village; Heals? False; Default Node
   * Layers: default
   * Door to Mimiga Village/Door to Reservoir
+  > Front of Door to Mimiga Village
+      Trivial
+
+> Front of Door to Mimiga Village; Heals? False; Spawn Point
+  * Layers: default
   > Debug Cat to Dark Place
       # Appears after killing Ironhead with entrance rando disabled
       After Defeated Ironhead and Disabled Entrance Randomizer
   > Pickup (Reservoir)
       Trivial
+  > Door to Mimiga Village
+      Trivial
 
 > Debug Cat to Dark Place; Heals? False
   * Layers: default
   * Debug Cat to Dark Place/Entrance from Reservoir
-  > Door to Mimiga Village
+  > Front of Door to Mimiga Village
       Trivial
 
 > Pickup (Reservoir); Heals? False
   * Layers: default
   * Pickup 37; Category? Minor
   * Extra - event: 0301
-  > Door to Mimiga Village
+  > Front of Door to Mimiga Village
       Trivial
 
 > Entrance from Main Artery; Heals? False
   * Layers: default
   * Entrance to Main Artery/Exit to Reservoir
-  > Door to Mimiga Village
+  > Front of Door to Mimiga Village
       Trivial
 
 ----------------
@@ -256,37 +298,51 @@ Assembly Hall
 Extra - map_name: Comu
 Extra - starting_script: <TRA0019:0094:0007:0010
 Hint Features - Fireplace
-> Door to Mimiga Village; Heals? False; Spawn Point; Default Node
+> Door to Mimiga Village; Heals? False; Default Node
   * Layers: default
   * Door to Mimiga Village/Door to Assembly Hall
+  > Front of Door to Mimiga Village
+      Trivial
+
+> Front of Door to Mimiga Village; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Assembly Hall Fireplace)
       Jellyfish Juice
+  > Door to Mimiga Village
+      Trivial
 
 > Pickup (Assembly Hall Fireplace); Heals? False
   * Layers: default
   * Pickup 38; Category? Minor
   * Extra - event: 0303
-  > Door to Mimiga Village
+  > Front of Door to Mimiga Village
       Trivial
 
 ----------------
 Graveyard
 Extra - map_name: Cemet
 Extra - starting_script: <TRA0016:0092:0002:0012
-> Door to Mimiga Village; Heals? False; Spawn Point; Default Node
+> Door to Mimiga Village; Heals? False; Default Node
   * Layers: default
   * Door to Mimiga Village/Door to Graveyard
+  > Front of Door to Mimiga Village
+      Trivial
+
+> Front of Door to Mimiga Village; Heals? False; Spawn Point
+  * Layers: default
   > Door to Storage
       Has Flight
   > Pickup (Arthur's Grave)
       Trivial
   > Pickup (Mr. Little (Graveyard))
       Trivial
+  > Door to Mimiga Village
+      Trivial
 
 > Door to Storage; Heals? False
   * Layers: default
   * Door to Storage/Door to Graveyard
-  > Door to Mimiga Village
+  > Front of Door to Mimiga Village
       Trivial
 
 > Pickup (Arthur's Grave); Heals? False
@@ -294,23 +350,28 @@ Extra - starting_script: <TRA0016:0092:0002:0012
   * Pickup 39; Category? Minor
   * Hint Features - Fallen Hero
   * Extra - event: 0301
-  > Door to Mimiga Village
+  > Front of Door to Mimiga Village
       Trivial
 
 > Pickup (Mr. Little (Graveyard)); Heals? False
   * Layers: default
   * Pickup 40; Category? Minor
   * Extra - event: 0202
-  > Door to Mimiga Village
+  > Front of Door to Mimiga Village
       Trivial
 
 ----------------
 Storage
 Extra - map_name: Mapi
 Extra - starting_script: <TRA0083:0094:0007:0010
-> Door to Graveyard; Heals? False; Spawn Point; Default Node
+> Door to Graveyard; Heals? False; Default Node
   * Layers: default
   * Door to Graveyard/Door to Storage
+  > Front of Door to Graveyard
+      Trivial
+
+> Front of Door to Graveyard; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Storage? Chest)
       After Saved Curly
   > Event - Ma Pignon
@@ -318,12 +379,14 @@ Extra - starting_script: <TRA0083:0094:0007:0010
           Mushroom Badge
           # Ma Pignon is completely immune to Missiles, Super Missiles, and the Blade
           Bubbler or Fireball or Machine Gun or Nemesis or Polar Star or Snake or Spur
+  > Door to Graveyard
+      Trivial
 
 > Pickup (Storage? Chest); Heals? False
   * Layers: default
   * Pickup 41; Category? Minor
   * Extra - event: 0202
-  > Door to Graveyard
+  > Front of Door to Graveyard
       Trivial
 
 > Event - Ma Pignon; Heals? False
@@ -337,16 +400,21 @@ Extra - starting_script: <TRA0083:0094:0007:0010
   * Pickup 42; Category? Minor
   * Hint Features - Boss
   * Extra - event: 0501
-  > Door to Graveyard
+  > Front of Door to Graveyard
       Trivial
 
 ----------------
 Shack
 Extra - map_name: Barr
 Extra - starting_script: <TRA0014:0094:0005:0009
-> Door to Mimiga Village; Heals? False; Spawn Point; Default Node
+> Door to Mimiga Village; Heals? False; Default Node
   * Layers: default
   * Door to Mimiga Village/Door to Shack
+  > Front of Door to Mimiga Village
+      Trivial
+
+> Front of Door to Mimiga Village; Heals? False; Spawn Point
+  * Layers: default
   > Event - Toroko Kidnapped
       Silver Locket and Has Weapon
   > Event - Balrog 1
@@ -364,23 +432,25 @@ Extra - starting_script: <TRA0014:0094:0005:0009
               Combat (Beginner) and Normal Damage ≥ 3
   > Event - Level MG
       Machine Gun and After Defeated Balrog 1
+  > Door to Mimiga Village
+      Trivial
 
 > Event - Toroko Kidnapped; Heals? False
   * Layers: default
   * Event Toroko Kidnapped
-  > Door to Mimiga Village
+  > Front of Door to Mimiga Village
       Trivial
 
 > Event - Balrog 1; Heals? False
   * Layers: default
   * Event Defeated Balrog 1
-  > Door to Mimiga Village
+  > Front of Door to Mimiga Village
       Trivial
 
 > Event - Level MG; Heals? False
   * Layers: default
   * Event Level Up Machine Gun
-  > Door to Mimiga Village
+  > Front of Door to Mimiga Village
       Trivial
 
 ----------------

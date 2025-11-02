@@ -20,44 +20,58 @@ Hint Features - Boss
 > Door to Plantation; Heals? False
   * Layers: default
   * Door to Plantation/Door to Last Cave (Hidden)
+  > Front of Door to Plantation
+      Trivial
+
+> Front of Door to Plantation; Heals? False
+  * Layers: default
   > Before Red Demon
       Booster 2.0 and Has Weapon
+  > Door to Plantation
+      Trivial
 
 > Event - Red Demon; Heals? False
   * Layers: default
   * Event Defeated Red Demon
-  > Door to Plantation
-      Booster 2.0
   > Pickup (Red Demon Boss)
       Booster 2.0
-  > Door to Balcony (Pre-Bosses)
+  > Front of Door to Plantation
+      Booster 2.0
+  > Front of Door to Balcony (Pre-Bosses)
       Booster 2.0
 
 > Pickup (Red Demon Boss); Heals? False
   * Layers: default
   * Pickup 29; Category? Minor
   * Extra - event: 0300
-  > Door to Plantation
+  > Front of Door to Plantation
       Booster 2.0
-  > Door to Balcony (Pre-Bosses)
+  > Front of Door to Balcony (Pre-Bosses)
       Booster 2.0
 
 > Door to Balcony (Pre-Bosses); Heals? False
   * Layers: default
   * Door to Balcony (Pre-Bosses)/Door to Last Cave (Hidden)
+  > Front of Door to Balcony (Pre-Bosses)
+      Trivial
+
+> Front of Door to Balcony (Pre-Bosses); Heals? False
+  * Layers: default
   > Before Red Demon
       Booster 2.0 and Has Weapon
+  > Door to Balcony (Pre-Bosses)
+      Trivial
 
 > Before Red Demon; Heals? False
   * Layers: default
-  > Door to Plantation
-      After Defeated Red Demon
   > Event - Red Demon
       Any of the following:
           Can Kill Bosses
           Missiles ≥ 8 and Super Missile Launcher and Kill Bosses with Missiles (Intermediate)
           Missiles ≥ 18 and Missile Launcher and Kill Bosses with Missiles (Advanced)
-  > Door to Balcony (Pre-Bosses)
+  > Front of Door to Plantation
+      After Defeated Red Demon
+  > Front of Door to Balcony (Pre-Bosses)
       After Defeated Red Demon
 
 ----------------
@@ -71,18 +85,23 @@ Extra - starting_script: <TRA0062:0091:0007:0074
 > Door to Final Cave; Heals? False
   * Layers: default
   * Door to Final Cave/Door to Balcony (Pre-Bosses)
-  > Door to Prefab Building
+  > Front of Door to Prefab Building
       Trivial
 
 > Door to Last Cave (Hidden); Heals? False
   * Layers: default
   * Door to Last Cave (Hidden)/Door to Balcony (Pre-Bosses)
-  > Door to Prefab Building
+  > Front of Door to Prefab Building
       Trivial
 
-> Door to Prefab Building; Heals? False; Spawn Point; Default Node
+> Door to Prefab Building; Heals? False; Default Node
   * Layers: default
   * Door to Prefab Building/Door to Balcony (Pre-Bosses)
+  > Front of Door to Prefab Building
+      Trivial
+
+> Front of Door to Prefab Building; Heals? False; Spawn Point
+  * Layers: default
   > Exit to Throne Room
       After Lowered Barrier
   > Door to Final Cave
@@ -107,11 +126,13 @@ Extra - starting_script: <TRA0062:0091:0007:0074
                               Enabled All Bosses
                               # 100%
                               Enabled 100%
+  > Door to Prefab Building
+      Trivial
 
 > Event - Lowered Barrier; Heals? False
   * Layers: default
   * Event Lowered Barrier
-  > Door to Prefab Building
+  > Front of Door to Prefab Building
       Trivial
 
 ----------------
@@ -135,7 +156,7 @@ Extra - map_name: Ring1
 > Event - Misery; Heals? False
   * Layers: default
   * Event Defeated Misery
-  > H/V Trigger to The King's Table
+  > Front of H/V Trigger to The King's Table
       Trivial
 
 > Entrance from Balcony (Pre-Bosses); Heals? False
@@ -154,8 +175,15 @@ Extra - map_name: Ring1
 > H/V Trigger to The King's Table; Heals? False
   * Layers: default
   * H/V Trigger to The King's Table/H/V Trigger to Throne Room
+  > Front of H/V Trigger to The King's Table
+      Trivial
+
+> Front of H/V Trigger to The King's Table; Heals? False
+  * Layers: default
   > Exit to Balcony (Post-Bosses)
       After Defeated Undead Core
+  > H/V Trigger to The King's Table
+      Trivial
 
 ----------------
 The King's Table
@@ -163,23 +191,37 @@ Extra - map_name: Ring2
 > Event - Doctor; Heals? False
   * Layers: default
   * Event Defeated Doctor
-  > H/V Trigger to Black Space
+  > Front of H/V Trigger to Black Space
       Trivial
 
 > H/V Trigger to Throne Room; Heals? False
   * Layers: default
   * H/V Trigger to Throne Room/H/V Trigger to The King's Table
+  > Front of H/V Trigger to Throne Room
+      Trivial
+
+> Front of H/V Trigger to Throne Room; Heals? False
+  * Layers: default
   > Event - Doctor
       Any of the following:
           Can Kill Bosses
           Missiles ≥ 36 and Missile Launcher and Kill Bosses with Missiles (Intermediate)
           Missiles ≥ 16 and Super Missile Launcher and Kill Bosses with Missiles (Advanced)
+  > H/V Trigger to Throne Room
+      Trivial
 
 > H/V Trigger to Black Space; Heals? False
   * Layers: default
   * H/V Trigger to Black Space/H/V Trigger to The King's Table
-  > H/V Trigger to Throne Room
+  > Front of H/V Trigger to Black Space
+      Trivial
+
+> Front of H/V Trigger to Black Space; Heals? False
+  * Layers: default
+  > Front of H/V Trigger to Throne Room
       After Defeated Undead Core
+  > H/V Trigger to Black Space
+      Trivial
 
 ----------------
 Black Space
@@ -210,12 +252,19 @@ Extra - map_name: Blcny2
 > Entrance from Throne Room; Heals? False
   * Layers: default
   * Entrance to Throne Room/Exit to Balcony (Post-Bosses)
+  > Front of Entrance from Throne Room
+      Trivial
+
+> Front of Entrance from Throne Room; Heals? False
+  * Layers: default
   > Event - Normal Ending
       After Defeated Undead Core and Enabled Normal Ending
   > Exit to Prefab House
       All of the following:
           Iron Bond
           Enabled All Bosses or Enabled Best Ending or Enabled Entrance Randomizer or Enabled 100%
+  > Entrance from Throne Room
+      Trivial
 
 > Exit to Prefab House; Heals? False
   * Layers: default
@@ -224,7 +273,7 @@ Extra - map_name: Blcny2
 > Entrance from Prefab House; Heals? False
   * Layers: default
   * Entrance to Prefab House/Exit to Balcony (Post-Bosses)
-  > Entrance from Throne Room
+  > Front of Entrance from Throne Room
       Trivial
 
 ----------------
@@ -233,11 +282,18 @@ Extra - map_name: Prefa2
 > Entrance from Balcony (Post-Bosses); Heals? False
   * Layers: default
   * Entrance to Balcony (Post-Bosses)/Exit to Prefab House
+  > Front of Entrance from Balcony (Post-Bosses)
+      Trivial
+
+> Front of Entrance from Balcony (Post-Bosses); Heals? False
+  * Layers: default
   > Exit to Balcony (Post-Bosses)
       Trivial
   > Exit to Sacred Grounds - B1
       Trivial
   > Save Point
+      Trivial
+  > Entrance from Balcony (Post-Bosses)
       Trivial
 
 > Exit to Balcony (Post-Bosses); Heals? False
@@ -250,7 +306,7 @@ Extra - map_name: Prefa2
 
 > Save Point; Heals? False; Default Node
   * Layers: default
-  > Entrance from Balcony (Post-Bosses)
+  > Front of Entrance from Balcony (Post-Bosses)
       Trivial
 
 ----------------
@@ -265,22 +321,29 @@ Extra - map_name: Hell1
 > Door to Sacred Grounds - B2; Heals? False
   * Layers: default
   * Door to Sacred Grounds - B2/Door to Sacred Grounds - B1
+  > Front of Door to Sacred Grounds - B2
+      Trivial
+
+> Front of Door to Sacred Grounds - B2; Heals? False
+  * Layers: default
   > Pickup (Hell B1 Spot)
       Booster 2.0
   > Event - Curly
       After Used Ma Pignon
+  > Door to Sacred Grounds - B2
+      Trivial
 
 > Pickup (Hell B1 Spot); Heals? False
   * Layers: default
   * Pickup 30; Category? Minor
   * Extra - event: 0401
-  > Door to Sacred Grounds - B2
+  > Front of Door to Sacred Grounds - B2
       Booster 2.0
 
 > Event - Curly; Heals? False; Default Node
   * Layers: default
   * Event Picked up Curly (Hell)
-  > Door to Sacred Grounds - B2
+  > Front of Door to Sacred Grounds - B2
       Trivial
 
 ----------------

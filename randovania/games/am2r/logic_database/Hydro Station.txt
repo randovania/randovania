@@ -7,7 +7,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Horizontal Dock to Hydro Station Exterior; Heals? False
   * Layers: default
   * 2-Tiles High Dock to Hydro Station Exterior/Horizontal Dock to Hydro Station Entrance
-  > Door to Main Caves
+  > Front of Door to Main Caves
       Tunnel Climb
 
 > Door to Main Caves; Heals? False
@@ -18,17 +18,24 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - x: 1280
   * Extra - y: 160
   * Extra - is_area_transition: True
+  > Front of Door to Main Caves
+      Trivial
+
+> Front of Door to Main Caves; Heals? False
+  * Layers: default
   > Horizontal Dock to Hydro Station Exterior
       Morph Ball
   > Event - Alpha
       Defeat non-dodging Alpha
+  > Door to Main Caves
+      Trivial
 
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Metroids Area 2 - Entrance Alpha
-  > Door to Main Caves
-      Trivial
   > Pickup (Alpha)
+      Trivial
+  > Front of Door to Main Caves
       Trivial
 
 > Pickup (Alpha); Heals? False
@@ -48,14 +55,21 @@ Extra - enemy_data: {'109745': 'oChuteLeech', '109746': 'oChuteLeech', '109747':
 > Horizontal Dock to Hydro Station Entrance; Heals? False
   * Layers: default
   * 2-Tiles High Dock to Hydro Station Entrance/Horizontal Dock to Hydro Station Exterior
-  > Door to Broken Save Station
+  > Front of Horizontal Dock to Hydro Station Entrance
       Trivial
-  > Vertical Dock to Arachnus Save Station
+
+> Front of Horizontal Dock to Hydro Station Entrance; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Can Use Spider Ball
+  > Horizontal Dock to Hydro Station Entrance
+      Trivial
+  > Front of Door to Broken Save Station
+      Trivial
+  > Front of Vertical Dock to Arachnus Save Station
       Any of the following:
           Space Jump Wall
           Speed Booster and Shinesparking Tricks (Beginner)
-  > Pickup (Missile Tank)
-      Can Use Spider Ball
 
 > Door to Broken Save Station; Heals? False
   * Layers: default
@@ -64,7 +78,14 @@ Extra - enemy_data: {'109745': 'oChuteLeech', '109746': 'oChuteLeech', '109747':
   * Extra - facing: right
   * Extra - x: 3200
   * Extra - y: 1360
-  > Horizontal Dock to Hydro Station Entrance
+  > Front of Door to Broken Save Station
+      Trivial
+
+> Front of Door to Broken Save Station; Heals? False
+  * Layers: default
+  > Front of Horizontal Dock to Hydro Station Entrance
+      Trivial
+  > Door to Broken Save Station
       Trivial
 
 > Door to Inner Save Station; Heals? False
@@ -74,12 +95,19 @@ Extra - enemy_data: {'109745': 'oChuteLeech', '109746': 'oChuteLeech', '109747':
   * Extra - facing: left
   * Extra - x: 960
   * Extra - y: 1360
-  > Door to Water Turbine Station
+  > Front of Door to Inner Save Station
       Trivial
-  > Horizontal Dock to Breeding Grounds Entrance (Bottom)
+
+> Front of Door to Inner Save Station; Heals? False
+  * Layers: default
+  > Door to Water Turbine Station
       Trivial
   > Middle Left
       Power Grip or Hijump Wall
+  > Door to Inner Save Station
+      Trivial
+  > Front of Horizontal Dock to Breeding Grounds Entrance (Bottom)
+      Trivial
 
 > Door to Inner Alpha Nest North; Heals? False
   * Layers: default
@@ -94,28 +122,24 @@ Extra - enemy_data: {'109745': 'oChuteLeech', '109746': 'oChuteLeech', '109747':
 > Tunnel to Inner Alpha Nest North; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Inner Alpha Nest North/Tunnel to Hydro Station Exterior
-  > Door to Broken Save Station
+  > Front of Tunnel to Inner Alpha Nest North
+      Trivial
+
+> Front of Tunnel to Inner Alpha Nest North; Heals? False
+  * Layers: default
+  > Front of Door to Broken Save Station
+      Trivial
+  > Tunnel to Inner Alpha Nest North
       Trivial
 
 > Vertical Dock to Arachnus Save Station; Heals? False
   * Layers: default
   * 2-Tiles Wide Dock to Arachnus Save Station/Vertical Dock to Hydro Station Exterior
-  > Tunnel to Inner Alpha Nest North
+  > Front of Vertical Dock to Arachnus Save Station
       Trivial
-  > Horizontal Dock to Exterior Alpha Nest
-      Any of the following:
-          Space Jump
-          # IBJ
-          Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
-          # Shinespark to the left
-          Speed Booster and Shinesparking Tricks (Beginner)
-          All of the following:
-              # Highjump
-              Hi-Jump Boots
-              Any of the following:
-                  Power Grip
-                  Morph Ball and Morph Glide (Beginner)
-                  Walljump (Advanced) and Can Walljump
+
+> Front of Vertical Dock to Arachnus Save Station; Heals? False
+  * Layers: default
   > Pickup (Missile Tank)
       Any of the following:
           Space Jump
@@ -137,48 +161,87 @@ Extra - enemy_data: {'109745': 'oChuteLeech', '109746': 'oChuteLeech', '109747':
                               Walljump (Intermediate) and Can Walljump
                   # With HJ
                   Hi-Jump Boots and Morph Glide (Beginner)
+  > Front of Tunnel to Inner Alpha Nest North
+      Trivial
+  > Vertical Dock to Arachnus Save Station
+      Trivial
+  > Front of Horizontal Dock to Exterior Alpha Nest
+      Any of the following:
+          Space Jump
+          # IBJ
+          Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
+          # Shinespark to the left
+          Speed Booster and Shinesparking Tricks (Beginner)
+          All of the following:
+              # Highjump
+              Hi-Jump Boots
+              Any of the following:
+                  Power Grip
+                  Morph Ball and Morph Glide (Beginner)
+                  Walljump (Advanced) and Can Walljump
 
 > Door to Water Turbine Station; Heals? False
   * Layers: default
   * Hydro Station Water Turbine to Water Turbine Station/Door to Hydro Station Exterior; Dock Lock Rando incompatible with: Screw Attack Door, Spider Ball Door
   * Extra - door_instance_id: 110043
-  > Door to Inner Save Station
+  > Front of Door to Inner Save Station
       Trivial
 
 > Horizontal Dock to Exterior Alpha Nest; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Exterior Alpha Nest/Horizontal Dock to Hydro Station Exterior
-  > Horizontal Dock to Breeding Grounds Entrance (Top)
-      Can Use Spider Ball
+  > Front of Horizontal Dock to Exterior Alpha Nest
+      Trivial
+
+> Front of Horizontal Dock to Exterior Alpha Nest; Heals? False
+  * Layers: default
   > Middle Left
       Trivial
+  > Horizontal Dock to Exterior Alpha Nest
+      Trivial
+  > Front of Horizontal Dock to Breeding Grounds Entrance (Top)
+      Can Use Spider Ball
 
 > Horizontal Dock to Breeding Grounds Entrance (Top); Heals? False
   * Layers: default
   * 3-Tiles High Dock to Breeding Grounds Entrance/Horizontal Dock to Hydro Station Exterior (Top)
-  > Horizontal Dock to Breeding Grounds Entrance (Bottom)
+  > Front of Horizontal Dock to Breeding Grounds Entrance (Top)
+      Trivial
+
+> Front of Horizontal Dock to Breeding Grounds Entrance (Top); Heals? False
+  * Layers: default
+  > Horizontal Dock to Breeding Grounds Entrance (Top)
+      Trivial
+  > Front of Horizontal Dock to Breeding Grounds Entrance (Bottom)
       Trivial
 
 > Horizontal Dock to Breeding Grounds Entrance (Bottom); Heals? False
   * Layers: default
   * 3-Tiles High Dock to Breeding Grounds Entrance/Horizontal Dock to Hydro Station Exterior (Bottom)
-  > Door to Inner Save Station
+  > Front of Horizontal Dock to Breeding Grounds Entrance (Bottom)
       Trivial
-  > Horizontal Dock to Breeding Grounds Entrance (Top)
+
+> Front of Horizontal Dock to Breeding Grounds Entrance (Bottom); Heals? False
+  * Layers: default
+  > Front of Door to Inner Save Station
+      Trivial
+  > Front of Horizontal Dock to Breeding Grounds Entrance (Top)
       Any of the following:
           Space Jump
           # IBJ
           Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
           # Damage boost WJ
           Hi-Jump Boots and Walljump (Advanced) and Can Walljump
+  > Horizontal Dock to Breeding Grounds Entrance (Bottom)
+      Trivial
 
 > Middle Left; Heals? False
   * Layers: default
-  > Door to Inner Save Station
-      Trivial
   > Door to Inner Alpha Nest North
       Morph Ball
-  > Vertical Dock to Arachnus Save Station
+  > Front of Door to Inner Save Station
+      Trivial
+  > Front of Vertical Dock to Arachnus Save Station
       Any of the following:
           Space Jump
           All of the following:
@@ -199,7 +262,7 @@ Extra - enemy_data: {'109745': 'oChuteLeech', '109746': 'oChuteLeech', '109747':
           Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
           # WJ up: https://www.youtube.com/watch?v=Dk761p7pP78
           Walljump (Advanced) and Can Walljump
-  > Horizontal Dock to Breeding Grounds Entrance (Top)
+  > Front of Horizontal Dock to Breeding Grounds Entrance (Top)
       # Shinespark from the room on the right
       Morph Ball and Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando and Disabled Shuffled Open Transitions
 
@@ -207,11 +270,11 @@ Extra - enemy_data: {'109745': 'oChuteLeech', '109746': 'oChuteLeech', '109747':
   * Layers: default
   * Pickup 163; Category? Minor
   * Extra - object_name: oItemM_163
-  > Door to Broken Save Station
+  > Front of Door to Broken Save Station
       Trivial
-  > Vertical Dock to Arachnus Save Station
+  > Front of Vertical Dock to Arachnus Save Station
       Can Use Spider Ball
-  > Horizontal Dock to Exterior Alpha Nest
+  > Front of Horizontal Dock to Exterior Alpha Nest
       Can Use Spider Ball
 
 ----------------
@@ -425,6 +488,11 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Layers: default
   * Normal Door to Arachnus Save Station/Door to Arachnus Arena; Dock Lock Rando incompatible with: Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - door_instance_id: 110437
+  > Front of Door to Arachnus Save Station
+      Trivial
+
+> Front of Door to Arachnus Save Station; Heals? False
+  * Layers: default
   > Event - Arachnus
       All of the following:
           Can Shoot
@@ -444,18 +512,20 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
           Disabled Fusion Mode or Can Shoot Missile or Can Shoot Super Missile
   > Pickup (Spring Ball)
       After Boss - Arachnus Defeated
+  > Door to Arachnus Save Station
+      Trivial
 
 > Event - Arachnus; Heals? False
   * Layers: default
   * Event Boss - Arachnus Defeated
-  > Door to Arachnus Save Station
+  > Front of Door to Arachnus Save Station
       Trivial
 
 > Pickup (Spring Ball); Heals? False
   * Layers: default
   * Pickup 3; Category? Major
   * Extra - object_name: oItemJumpBall
-  > Door to Arachnus Save Station
+  > Front of Door to Arachnus Save Station
       Trivial
 
 ----------------
@@ -471,10 +541,17 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 192
+  > Front of Door to Hydro Station Exterior
+      Trivial
+
+> Front of Door to Hydro Station Exterior; Heals? False
+  * Layers: default
   > Vertical Dock to Varia Chamber Access Water Pipe
       Can Use Any Bombs and High Mid-Air Morph Tunnel Climb
   > Event - Alpha
       Defeat dodging Alpha
+  > Door to Hydro Station Exterior
+      Trivial
 
 > Tunnel to Hydro Station Exterior; Heals? False
   * Layers: default
@@ -485,7 +562,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Vertical Dock to Varia Chamber Access Water Pipe; Heals? False
   * Layers: default
   * 1-Tiles Wide Dock to Varia Chamber Access Water Pipe/Vertical Dock to Inner Alpha Nest North
-  > Door to Hydro Station Exterior
+  > Front of Door to Hydro Station Exterior
       All of the following:
           Can Use Any Bombs
           Any of the following:
@@ -503,9 +580,9 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Metroids Area 2 - Interior Upper Alpha
-  > Door to Hydro Station Exterior
-      Trivial
   > Pickup (Alpha)
+      Trivial
+  > Front of Door to Hydro Station Exterior
       Trivial
 
 > Pickup (Alpha); Heals? False
@@ -526,6 +603,11 @@ Extra - enemy_data: {'110516': 'oAutrack', '110519': 'oSenjoo', '110520': 'oSenj
   * Layers: default
   * Missile Door to Varia Chamber/Door to Varia Chamber Access
   * Extra - door_instance_id: 110608
+  > Front of Door to Varia Chamber
+      Trivial
+
+> Front of Door to Varia Chamber; Heals? False
+  * Layers: default
   > Vertical Dock to Autrack Corridor Left Water Pipe
       Tunnel Climb
   > Top tunnel
@@ -542,11 +624,13 @@ Extra - enemy_data: {'110516': 'oAutrack', '110519': 'oSenjoo', '110520': 'oSenj
                       Hi-Jump Boots or Space Jump
                       Walljump (Intermediate) and Can Walljump
                   Power Grip or Mid-Air Morph (Intermediate)
+  > Door to Varia Chamber
+      Trivial
 
 > Vertical Dock to Autrack Corridor Left Water Pipe; Heals? False
   * Layers: default
   * 1-Tiles Wide Dock to Autrack Corridor Left Water Pipe/Vertical Dock to Varia Chamber Access
-  > Door to Varia Chamber
+  > Front of Door to Varia Chamber
       Any of the following:
           High Mid-Air Morph Tunnel Climb
           # Movement directly from pipe to tunnel
@@ -563,9 +647,9 @@ Extra - enemy_data: {'110516': 'oAutrack', '110519': 'oSenjoo', '110520': 'oSenj
 
 > Top tunnel; Heals? False
   * Layers: default
-  > Door to Varia Chamber
-      Can Use Any Bombs
   > Pickup (Missile Tank)
+      Can Use Any Bombs
+  > Front of Door to Varia Chamber
       Can Use Any Bombs
 
 ----------------
@@ -703,6 +787,11 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 192, 'should_wave': True
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 208
+  > Front of Door to Water Turbine Station
+      Trivial
+
+> Front of Door to Water Turbine Station; Heals? False
+  * Layers: default
   > Vertical Dock to Wave Beam Chamber Access Water Pipe
       Any of the following:
           Hi-Jump Boots or Space Jump or Can Use Spider Ball
@@ -748,11 +837,13 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 192, 'should_wave': True
           Morph Ball and Power Grip and Morph Glide (Ludicrous) and Walljump (Advanced) and Can Walljump
           # IBJ https://www.youtube.com/watch?v=-dcePWj-7jI
           Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
+  > Door to Water Turbine Station
+      Trivial
 
 > Vertical Dock to Wave Beam Chamber Access Water Pipe; Heals? False
   * Layers: default
   * 1-Tiles Wide Dock to Wave Beam Chamber Access Water Pipe/Vertical Dock to Inner Alpha Nest South
-  > Door to Water Turbine Station
+  > Front of Door to Water Turbine Station
       Trivial
 
 > Door to Inner Hydro Station Pipe; Heals? False
@@ -762,22 +853,22 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 192, 'should_wave': True
   * Extra - facing: left
   * Extra - x: 960
   * Extra - y: 144
-  > Door to Water Turbine Station
+  > Front of Door to Water Turbine Station
       Screw Attack or Disabled Screw Attack Pipe Blocks
 
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Metroids Area 2 - Interior Lower Alpha
-  > Door to Water Turbine Station
-      Trivial
   > Pickup (Alpha)
+      Trivial
+  > Front of Door to Water Turbine Station
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 151; Category? Minor
   * Extra - object_name: oItemM_151
-  > Door to Water Turbine Station
+  > Front of Door to Water Turbine Station
       Morph Ball
 
 > Pickup (Alpha); Heals? False
@@ -983,22 +1074,29 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Layers: default
   * Normal Door to Hi-Jump Chamber Access/Door to Hi-Jump Chamber
   * Extra - door_instance_id: 111277
+  > Front of Door to Hi-Jump Chamber Access
+      Trivial
+
+> Front of Door to Hi-Jump Chamber Access; Heals? False
+  * Layers: default
   > Tunnel to Hydro Station Basement
       Can Use Any Bombs and Tunnel Climb
   > Pickup (Hi-Jump Boots)
+      Trivial
+  > Door to Hi-Jump Chamber Access
       Trivial
 
 > Tunnel to Hydro Station Basement; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Hydro Station Basement/Tunnel to Hi-Jump Chamber
-  > Door to Hi-Jump Chamber Access
+  > Front of Door to Hi-Jump Chamber Access
       Can Use Any Bombs
 
 > Pickup (Hi-Jump Boots); Heals? False
   * Layers: default
   * Pickup 4; Category? Major
   * Extra - object_name: oItemHijump
-  > Door to Hi-Jump Chamber Access
+  > Front of Door to Hi-Jump Chamber Access
       Trivial
 
 ----------------
@@ -1015,8 +1113,11 @@ Extra - enemy_data: {'111282': 'oAutrack', '111283': 'oAutrack', '111284': 'oAut
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 160
-  > Horizontal Dock to Shootblock Stairway
+  > Front of Door to Wallfire Venue
       Trivial
+
+> Front of Door to Wallfire Venue; Heals? False
+  * Layers: default
   > Pickup (Top Missile Tank)
       All of the following:
           Can Use Any Bombs and Tunnel Climb
@@ -1031,27 +1132,38 @@ Extra - enemy_data: {'111282': 'oAutrack', '111283': 'oAutrack', '111284': 'oAut
                       Hi-Jump Boots or Space Jump
                       Walljump (Advanced) and Can Walljump
                   Power Grip or Mid-Air Morph (Advanced)
+  > Door to Wallfire Venue
+      Trivial
+  > Front of Horizontal Dock to Shootblock Stairway
+      Trivial
 
 > Horizontal Dock to Shootblock Stairway; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Shootblock Stairway/Horizontal Dock to Autoad Playground
-  > Door to Wallfire Venue
+  > Front of Horizontal Dock to Shootblock Stairway
       Trivial
+
+> Front of Horizontal Dock to Shootblock Stairway; Heals? False
+  * Layers: default
   > Pickup (Bottom Missile Tank)
       Can Use Any Bombs and Low Mid-Air Morph Tunnel Climb
+  > Front of Door to Wallfire Venue
+      Trivial
+  > Horizontal Dock to Shootblock Stairway
+      Trivial
 
 > Pickup (Top Missile Tank); Heals? False
   * Layers: default
   * Pickup 153; Category? Minor
   * Extra - object_name: oItemM_153
-  > Door to Wallfire Venue
+  > Front of Door to Wallfire Venue
       Can Use Any Bombs and Tunnel Climb
 
 > Pickup (Bottom Missile Tank); Heals? False
   * Layers: default
   * Pickup 154; Category? Minor
   * Extra - object_name: oItemM_154
-  > Horizontal Dock to Shootblock Stairway
+  > Front of Horizontal Dock to Shootblock Stairway
       Can Use Any Bombs and Low Mid-Air Morph Tunnel Climb
 
 ----------------
@@ -1101,6 +1213,11 @@ Extra - enemy_data: {'111587': 'oAutrack', '111591': 'oAutoad', '111592': 'oAuto
 > Tunnel to Hi-Jump Chamber; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Hi-Jump Chamber/Tunnel to Hydro Station Basement
+  > Front of Tunnel to Hi-Jump Chamber
+      Trivial
+
+> Front of Tunnel to Hi-Jump Chamber; Heals? False
+  * Layers: default
   > Pickup (Energy Tank)
       Morph Ball
   > Pickup (Right Missile Tank)
@@ -1120,19 +1237,21 @@ Extra - enemy_data: {'111587': 'oAutrack', '111591': 'oAutoad', '111592': 'oAuto
                   Any of the following:
                       Power Grip
                       Walljump (Expert) and Can Walljump
+  > Tunnel to Hi-Jump Chamber
+      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 157; Category? Minor
   * Extra - object_name: oItemETank_157
-  > Tunnel to Hi-Jump Chamber
+  > Front of Tunnel to Hi-Jump Chamber
       Morph Ball
 
 > Pickup (Right Missile Tank); Heals? False
   * Layers: default
   * Pickup 156; Category? Minor
   * Extra - object_name: oItemM_156
-  > Tunnel to Hi-Jump Chamber
+  > Front of Tunnel to Hi-Jump Chamber
       Can Use Any Bombs and Tunnel Climb
 
 > Pickup (Left Missile Tank); Heals? False
@@ -1155,7 +1274,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 144
-  > Door to Shootblock Stairway
+  > Front of Door to Shootblock Stairway
       Trivial
 
 > Door to Shootblock Stairway; Heals? False
@@ -1165,6 +1284,11 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - facing: left
   * Extra - x: 640
   * Extra - y: 144
+  > Front of Door to Shootblock Stairway
+      Trivial
+
+> Front of Door to Shootblock Stairway; Heals? False
+  * Layers: default
   > Door to Inner Alpha Nest South
       Trivial
   > Pipe to The Tower
@@ -1176,6 +1300,8 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
                   Hi-Jump Boots
                   # Shinespark up the pipe, then fall down into it
                   Speed Booster and Shinesparking Tricks (Beginner)
+  > Door to Shootblock Stairway
+      Trivial
 
 > Pipe to The Tower; Heals? False
   * Layers: default
@@ -1183,7 +1309,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - instance_id: 111669
   * Extra - dest_x: 200
   * Extra - dest_y: 128
-  > Door to Shootblock Stairway
+  > Front of Door to Shootblock Stairway
       Morph Ball
 
 ----------------
@@ -1225,6 +1351,11 @@ Extra - enemy_data: {'111708': 'oTsumuri', '111709': 'oTsumuri', '111710': 'oTsu
 > Horizontal Dock to Hydro Station Exterior (Bottom); Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hydro Station Exterior/Horizontal Dock to Breeding Grounds Entrance (Bottom)
+  > Front of Horizontal Dock to Hydro Station Exterior (Bottom)
+      Trivial
+
+> Front of Horizontal Dock to Hydro Station Exterior (Bottom); Heals? False
+  * Layers: default
   > Tunnel to Breeding Grounds Save Station
       All of the following:
           Morph Ball
@@ -1280,38 +1411,40 @@ Extra - enemy_data: {'111708': 'oTsumuri', '111709': 'oTsumuri', '111710': 'oTsu
                           Walljump (Intermediate) and Can Walljump
           # IBJ
           Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
+  > Horizontal Dock to Hydro Station Exterior (Bottom)
+      Trivial
 
 > Tunnel to Breeding Grounds Save Station; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Breeding Grounds Save Station/Tunnel to Breeding Grounds Entrance
-  > Horizontal Dock to Hydro Station Exterior (Bottom)
+  > Front of Horizontal Dock to Hydro Station Exterior (Bottom)
       Morph Ball
 
 > Door to Speedboosting Challenge; Heals? False
   * Layers: default
   * Hydro Station EMP Door to Speedboosting Challenge/Door to Breeding Grounds Entrance
   * Extra - door_instance_id: 111778
-  > Horizontal Dock to Hydro Station Exterior (Bottom)
+  > Front of Horizontal Dock to Hydro Station Exterior (Bottom)
       Trivial
 
 > Event - EMP Slot; Heals? False
   * Layers: default
   * Event EMP - Hydro Station
-  > Horizontal Dock to Hydro Station Exterior (Bottom)
+  > Front of Horizontal Dock to Hydro Station Exterior (Bottom)
       Trivial
 
 > EMPBall; Heals? False
   * Layers: default
   > Horizontal Dock to Hydro Station Exterior (Top)
       Morph Ball
-  > Horizontal Dock to Hydro Station Exterior (Bottom)
-      Trivial
   > Event - EMP Slot
       All of the following:
           After Area 5 - Distribution Center Energy Activated
           Any of the following:
               Can Use Bombs
               Missiles ≥ 20 and Can Shoot
+  > Front of Horizontal Dock to Hydro Station Exterior (Bottom)
+      Trivial
 
 ----------------
 Breeding Grounds Save Station
@@ -1369,6 +1502,11 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - facing: left
   * Extra - x: 320
   * Extra - y: 624
+  > Front of Door to Breeding Grounds Alpha Nest East
+      Trivial
+
+> Front of Door to Breeding Grounds Alpha Nest East; Heals? False
+  * Layers: default
   > Door to Breeding Grounds Lobby
       Trivial
   > Middle
@@ -1387,6 +1525,8 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
           # IBJ
           Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
           Walljump (Intermediate) and Can Shoot and Can Walljump
+  > Door to Breeding Grounds Alpha Nest East
+      Trivial
 
 > Door to Breeding Grounds Lobby; Heals? False
   * Layers: default
@@ -1395,7 +1535,7 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 864
-  > Door to Breeding Grounds Alpha Nest East
+  > Front of Door to Breeding Grounds Alpha Nest East
       Hijump Wall
 
 > Horizontal Dock to Breeding Grounds Overgrown Alley; Heals? False
@@ -1417,8 +1557,6 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Layers: default
   > Door to Breeding Grounds Save Station
       Power Grip Wall
-  > Door to Breeding Grounds Alpha Nest East
-      Can Destroy Shot Block
   > Horizontal Dock to Breeding Grounds Overgrown Alley
       All of the following:
           Screw Attack
@@ -1426,6 +1564,8 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
               # Go Through Vines
               Gravity Suit
               Damage Boost (Beginner) and Lava Damage ≥ 5
+  > Front of Door to Breeding Grounds Alpha Nest East
+      Can Destroy Shot Block
 
 ----------------
 Breeding Grounds Alpha Nest East
@@ -1534,6 +1674,11 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
   * Extra - facing: left
   * Extra - x: 1600
   * Extra - y: 624
+  > Front of Door to Breeding Grounds Lobby
+      Trivial
+
+> Front of Door to Breeding Grounds Lobby; Heals? False
+  * Layers: default
   > Dock to Breeding Grounds Overgrown Alley
       All of the following:
           Speed Booster and Shinesparking Tricks (Intermediate)
@@ -1570,6 +1715,8 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
                       # IBJ method
                       Can IBJ and Can Use Bombs
                       Diagonal Infinite Bomb Jumping (Advanced) or Infinite Bomb Jumping (Advanced)
+  > Door to Breeding Grounds Lobby
+      Trivial
 
 > Dock to Breeding Grounds Overgrown Alley; Heals? False
   * Layers: default
@@ -1579,10 +1726,10 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Metroids Area 2 - Breeding Grounds Left Alpha
-  > Door to Breeding Grounds Lobby
-      Go Through Vines or Hijump Wall
   > Pickup (Alpha)
       Trivial
+  > Front of Door to Breeding Grounds Lobby
+      Go Through Vines or Hijump Wall
 
 > Pickup (Alpha); Heals? False
   * Layers: default
@@ -1600,23 +1747,30 @@ Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Horizontal Dock to Breeding Grounds Lobby; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Breeding Grounds Lobby/Horizontal Dock to Breeding Grounds Gamma Nest
-  > Horizontal Dock to Breeding Grounds Alpha Nest South
+  > Front of Horizontal Dock to Breeding Grounds Alpha Nest South
       Trivial
 
 > Horizontal Dock to Breeding Grounds Alpha Nest South; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Breeding Grounds Alpha Nest South/Horizontal Dock to Breeding Grounds Gamma Nest
+  > Front of Horizontal Dock to Breeding Grounds Alpha Nest South
+      Trivial
+
+> Front of Horizontal Dock to Breeding Grounds Alpha Nest South; Heals? False
+  * Layers: default
   > Horizontal Dock to Breeding Grounds Lobby
       Trivial
   > Event - Gamma
       After Metroids Area 2 - Breeding Grounds Lower Right Alpha and Defeat dodging Gamma
+  > Horizontal Dock to Breeding Grounds Alpha Nest South
+      Trivial
 
 > Event - Gamma; Heals? False
   * Layers: default
   * Event Metroids Area 2 - Breeding Grounds Gamma
-  > Horizontal Dock to Breeding Grounds Alpha Nest South
-      Trivial
   > Pickup (Gamma)
+      Trivial
+  > Front of Horizontal Dock to Breeding Grounds Alpha Nest South
       Trivial
 
 > Pickup (Gamma); Heals? False

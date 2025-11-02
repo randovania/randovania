@@ -107,7 +107,7 @@
                         }
                     },
                     "connections": {
-                        "Elevator to Area 2 Dam Entryway": {
+                        "Front of Elevator to Area 2 Dam Entryway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -420,7 +420,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea00"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Surface East",
@@ -434,6 +434,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Area 1 Chozo Seal Elevator North",
                     "connections": {
+                        "Front of Elevator to Surface East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Elevator to Surface East": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -19805.42,
+                        "y": 5374.81,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Elevator to Surface East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Save Station": {
                             "type": "and",
                             "data": {
@@ -473,6 +504,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Area 1 Chozo Seal Elevator South",
+                    "connections": {
+                        "Front of Elevator to Area 2 Dam Entryway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Elevator to Area 2 Dam Entryway": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12333.23,
+                        "y": -4487.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Chozo Seal": {
                             "type": "or",
@@ -592,6 +647,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Elevator to Area 2 Dam Entryway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Transport Cache": {
@@ -769,7 +831,7 @@
                                 "items": []
                             }
                         },
-                        "Elevator to Surface East": {
+                        "Front of Elevator to Surface East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -847,7 +909,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Elevator to Area 2 Dam Entryway": {
+                        "Front of Elevator to Area 2 Dam Entryway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -976,7 +1038,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Magma Pool": {
+                        "Front of Door to Magma Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1015,7 +1077,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Magma Pool": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Magma Pool": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9557.249970480576,
+                        "y": 2630.050773408903,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Door to Transport to Surface and Area 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Magma Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1062,7 +1155,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Magma Pool": {
+                        "Front of Door to Magma Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1134,6 +1227,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Magma Pool": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Magma Pool": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7168.369738825745,
+                        "y": 2678.315031290589,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Magma Pool": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door from Water Maze": {
                             "type": "and",
                             "data": {
@@ -1194,7 +1318,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Magma Pool": {
+                        "Front of Door to Magma Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1234,7 +1358,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Magma Pool": {
+                        "Front of Door to Magma Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1270,7 +1394,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Magma Pool": {
+                        "Front of Door to Magma Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1310,7 +1434,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Magma Pool": {
+                        "Front of Door to Magma Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1376,7 +1500,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Tunnel to Bomb Chamber Access": {
+                        "Front of Tunnel to Bomb Chamber Access": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -1479,9 +1603,40 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Tunnel to Bomb Chamber Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Tunnel to Bomb Chamber Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -56.11270296084058,
+                        "y": 4497.063037249283,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
                             "data": "Lay Any Bomb"
+                        },
+                        "Tunnel to Bomb Chamber Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Room Center": {
                             "type": "template",
@@ -1520,7 +1675,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Bomb Chamber Access": {
+                        "Front of Tunnel to Bomb Chamber Access": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -1589,7 +1744,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Inner Temple Teleporter": {
+                        "Front of Door to Destroyed Armory": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Destroyed Armory": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9227.470775770456,
+                        "y": 4685.848388239461,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Destroyed Armory": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Inner Temple Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1635,6 +1821,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Temple Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Temple Exterior": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9245.18,
+                        "y": 7829.67,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Temple Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Inner Temple Upper Hallway": {
                             "type": "or",
                             "data": {
@@ -1656,7 +1873,7 @@
                                 ]
                             }
                         },
-                        "Door to Inner Temple Teleporter": {
+                        "Front of Door to Inner Temple Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1695,7 +1912,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Temple Exterior": {
+                        "Front of Door to Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1735,14 +1952,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Destroyed Armory": {
+                        "Front of Door to Inner Temple Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Inner Temple Teleporter": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7850.0,
+                        "y": 6200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Destroyed Armory": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Temple Exterior": {
+                        "Front of Door to Temple Exterior": {
                             "type": "or",
                             "data": {
                                 "comment": "SWJ: https://youtu.be/n_gpWjN5Px0",
@@ -1770,6 +2011,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Inner Temple Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1801,7 +2049,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Destroyed Armory": {
+                        "Front of Door to Destroyed Armory": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1865,7 +2113,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Inner Temple East Hall": {
+                        "Front of Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1903,6 +2151,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Front of Door to Inner Temple East Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Inner Temple East Hall": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9242.143906020558,
+                        "y": 4698.523396989147,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Aeion Tank)": {
                             "type": "and",
@@ -2252,6 +2524,13 @@
                                 ]
                             }
                         },
+                        "Door to Inner Temple East Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Tunnel to Spider Ball Chamber": {
                             "type": "template",
                             "data": "Lay Any Bomb"
@@ -2285,7 +2564,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Inner Temple East Hall": {
+                        "Front of Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2434,6 +2713,30 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Temple Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Temple Exterior": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11948.85759829968,
+                        "y": 8006.695005313496,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
@@ -2467,6 +2770,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Temple Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Room Bottom": {
@@ -2540,7 +2850,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Temple Exterior": {
+                        "Front of Door to Temple Exterior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2594,7 +2904,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Temple Exterior": {
+                        "Front of Door to Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3274,7 +3584,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Exterior Alpha Arena": {
+                        "Front of Door to Exterior Alpha Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3492,7 +3802,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Exterior Alpha Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Exterior Alpha Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11923.38,
+                        "y": 9571.77,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Exterior Alpha Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3878,7 +4219,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Inner Temple Save Station": {
+                        "Front of Door to Inner Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3952,13 +4293,44 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Exterior Alpha Arena": {
+                        "Front of Tunnel to Exterior Alpha Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Tunnel to Exterior Alpha Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11887.075848303391,
+                        "y": 10588.236027944113,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Exterior Alpha Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Tunnel to Exterior Alpha Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4030,7 +4402,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Inner Temple Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Inner Temple Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1350.0,
+                        "y": 7700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Door to Chute Leech Cabin": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Inner Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4135,7 +4538,7 @@
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Door to Inner Temple Save Station": {
+                        "Front of Door to Inner Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4173,7 +4576,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Exterior Alpha Arena": {
+                        "Front of Door to Exterior Alpha Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4197,14 +4600,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Exterior Alpha Arena": {
+                        "Front of Door to Exterior Alpha Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Exterior Alpha Arena": {
+                        "Front of Tunnel to Exterior Alpha Arena": {
                             "type": "and",
                             "data": {
                                 "comment": "Melee Clip above the tunnel: https://youtu.be/eFYeU_gh6gU",
@@ -4467,7 +4870,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Metroid Caverns Alpha Arena South West Access": {
+                        "Front of Door to Metroid Caverns Alpha Arena South East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Metroid Caverns Alpha Arena South East": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1144.815382104005,
+                        "y": -258.2890541976626,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Metroid Caverns Alpha Arena South East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Metroid Caverns Alpha Arena South West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4510,7 +4944,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel to Metroid Caverns Energy Recharge Station": {
+                        "Front of Dock to Metroid Caverns Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Dock to Metroid Caverns Hub": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1338.82,
+                        "y": 1462.1,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Dock to Metroid Caverns Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Tunnel to Metroid Caverns Energy Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4551,7 +5016,7 @@
                                 ]
                             }
                         },
-                        "Door to Metroid Caverns Alpha Arena South West Access": {
+                        "Front of Door to Metroid Caverns Alpha Arena South West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4587,7 +5052,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Metroid Caverns Alpha Arena South West Access": {
+                        "Front of Tunnel to Metroid Caverns Energy Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Tunnel to Metroid Caverns Energy Recharge Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -260.78150064484373,
+                        "y": 1765.9168733026331,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Tunnel to Metroid Caverns Energy Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Metroid Caverns Alpha Arena South West Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4629,16 +5125,47 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Metroid Caverns Alpha Arena South East": {
+                        "Front of Door to Metroid Caverns Alpha Arena South West Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Metroid Caverns Alpha Arena South West Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -250.0,
+                        "y": -400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Metroid Caverns Alpha Arena South East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Metroid Caverns Hub": {
+                        "Front of Dock to Metroid Caverns Hub": {
                             "type": "template",
                             "data": "Lay Any Bomb"
+                        },
+                        "Door to Metroid Caverns Alpha Arena South West Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4659,7 +5186,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Metroid Caverns Alpha Arena South East": {
+                        "Front of Door to Metroid Caverns Alpha Arena South East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5266,6 +5793,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Metroid Caverns Lobby": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Metroid Caverns Lobby": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1133.3213515456507,
+                        "y": -260.4960460100648,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Metroid Caverns Lobby": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Alpha Metroid": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid"
@@ -5319,7 +5877,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Metroid Caverns Lobby": {
+                        "Front of Door to Metroid Caverns Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5393,6 +5951,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Metroid Caverns Alpha Arena North East Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Metroid Caverns Alpha Arena North East Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7537.728187880984,
+                        "y": 1461.6191034159328,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Metroid Caverns Alpha Arena North East Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Alpha Metroid": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid"
@@ -5446,7 +6035,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Metroid Caverns Alpha Arena North East Access": {
+                        "Front of Door to Metroid Caverns Alpha Arena North East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5551,6 +6140,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Gullugg Gangway (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Gullugg Gangway (Bottom)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5463.39,
+                        "y": 2677.47,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Gullugg Gangway (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Next to Pickup": {
                             "type": "and",
                             "data": {
@@ -5957,7 +6577,31 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Gullugg Gangway (Bottom)": {
+                        "Front of Door to Gullugg Gangway (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Gullugg Gangway (Top)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5450.0,
+                        "y": 2900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Gullugg Gangway (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6009,6 +6653,13 @@
                                 ]
                             }
                         },
+                        "Door to Gullugg Gangway (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Metroid Caverns Save Station": {
                             "type": "and",
                             "data": {
@@ -6049,7 +6700,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Gullugg Gangway (Top)": {
+                        "Front of Door to Gullugg Gangway (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6143,7 +6794,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Gullugg Gangway (Bottom)": {
+                        "Front of Door to Gullugg Gangway (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6553,7 +7204,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Moheek Mount": {
+                        "Front of Door to Moheek Mount": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6631,6 +7282,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Front of Door to Moheek Mount": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Moheek Mount": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9545.536663124336,
+                        "y": 2644.5625221395676,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -6743,7 +7418,14 @@
                                 ]
                             }
                         },
-                        "Door to Gullugg Gangway": {
+                        "Door to Moheek Mount": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Gullugg Gangway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6813,7 +7495,31 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Moheek Mount": {
+                        "Front of Door to Gullugg Gangway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Gullugg Gangway": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7165.090329436769,
+                        "y": 2669.35883811548,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Moheek Mount": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6849,6 +7555,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Gullugg Gangway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Pickup (Super Missile Tank)": {
@@ -7111,7 +7824,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Gullugg Gangway": {
+                        "Front of Door to Gullugg Gangway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7210,7 +7923,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Bomb Chamber Access": {
+                        "Front of Door to Inner Temple Teleporter Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Inner Temple Teleporter Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3839.6918172157284,
+                        "y": 6231.278781438186,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Inner Temple Teleporter Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Bomb Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7513,7 +8257,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Bomb Chamber Access": {
+                        "Front of Door to Bomb Chamber Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -7555,7 +8299,31 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Inner Temple Teleporter Access": {
+                        "Front of Door to Bomb Chamber Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Bomb Chamber Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2550.0,
+                        "y": 4600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Inner Temple Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7763,6 +8531,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Door to Bomb Chamber Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -7797,7 +8572,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Inner Temple Teleporter Access": {
+                        "Front of Door to Inner Temple Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7861,7 +8636,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Dock to Metroid Caverns Hub": {
+                        "Front of Dock to Metroid Caverns Hub": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -8108,7 +8883,7 @@
                                 ]
                             }
                         },
-                        "Dock to Metroid Caverns Hub": {
+                        "Front of Dock to Metroid Caverns Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8222,11 +8997,42 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Dock to Metroid Caverns Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Dock to Metroid Caverns Hub": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1371.81,
+                        "y": 3405.6,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
                         "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Metroid Caverns Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8598,7 +9404,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Inner Temple Upper Hallway": {
+                        "Front of Door to Inner Temple Upper Hallway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8636,7 +9442,7 @@
                                 ]
                             }
                         },
-                        "Dock to Inner Temple Teleporter Access": {
+                        "Front of Dock to Inner Temple Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8674,6 +9480,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Front of Door to Inner Temple Upper Hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Inner Temple Upper Hallway": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5048.86055024206,
+                        "y": 8962.89998819223,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "or",
@@ -8713,7 +9543,14 @@
                                 ]
                             }
                         },
-                        "Dock to Inner Temple Teleporter Access": {
+                        "Door to Inner Temple Upper Hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Dock to Inner Temple Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8748,7 +9585,39 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Front of Dock to Inner Temple Teleporter Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Dock to Inner Temple Teleporter Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4597.567599480458,
+                        "y": 6936.686739874837,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Dock to Inner Temple Teleporter Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tunnel to Temple Exterior": {
                     "node_type": "dock",
@@ -8881,6 +9750,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Dock to Metroid Caverns Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Dock to Metroid Caverns Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1324.7786043216436,
+                        "y": 3360.1133545873186,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Dock to Metroid Caverns Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Tunnel to Metroid Caverns Save Station": {
                             "type": "or",
                             "data": {
@@ -8990,7 +9890,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Metroid Caverns Alpha Arena North East Access": {
+                        "Front of Door to Metroid Caverns Alpha Arena North East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9026,7 +9926,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Dock to Metroid Caverns Save Station": {
+                        "Front of Dock to Metroid Caverns Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9072,7 +9972,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Dock to Metroid Caverns Save Station": {
+                        "Front of Dock to Metroid Caverns Save Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -9110,7 +10010,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Metroid Caverns Alpha Arena North East Access": {
+                        "Front of Door to Metroid Caverns Alpha Arena North East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9150,7 +10050,31 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Dock to Metroid Caverns Save Station": {
+                        "Front of Door to Metroid Caverns Alpha Arena North East Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Metroid Caverns Alpha Arena North East Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2550.0,
+                        "y": 1300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Dock to Metroid Caverns Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9160,6 +10084,13 @@
                         "Dock to Metroid Caverns Lobby": {
                             "type": "template",
                             "data": "Lay Any Bomb"
+                        },
+                        "Door to Metroid Caverns Alpha Arena North East Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -9226,6 +10157,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Metroid Caverns Alpha Arena North East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Metroid Caverns Alpha Arena North East": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7557.428708363288,
+                        "y": 1454.996405463695,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Metroid Caverns Alpha Arena North East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Metroid Caverns Hub": {
                             "type": "and",
                             "data": {
@@ -9273,7 +10235,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Metroid Caverns Alpha Arena North East": {
+                        "Front of Door to Metroid Caverns Alpha Arena North East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9299,7 +10261,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Metroid Caverns Alpha Arena North East": {
+                        "Front of Door to Metroid Caverns Alpha Arena North East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9371,7 +10333,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Inner Temple West Hall": {
+                        "Front of Door to Inner Temple West Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9411,7 +10373,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Inner Temple West Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Inner Temple West Hall": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2550.0,
+                        "y": 4600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Door to Bomb Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Inner Temple West Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9451,7 +10444,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Inner Temple West Hall": {
+                        "Front of Door to Inner Temple West Hall": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -9673,6 +10666,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Inner Temple Ventilation Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Inner Temple Ventilation Shaft": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5037.616250611845,
+                        "y": 8950.02447381302,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Inner Temple Ventilation Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
@@ -9721,7 +10745,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Inner Temple Ventilation Shaft": {
+                        "Front of Door to Inner Temple Ventilation Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9757,7 +10781,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Inner Temple Ventilation Shaft": {
+                        "Front of Door to Inner Temple Ventilation Shaft": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -9837,7 +10861,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Inner Temple East Hall": {
+                        "Front of Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9873,7 +10897,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Inner Temple East Hall": {
+                        "Front of Door to Inner Temple East Hall": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9923,6 +10947,30 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Inner Temple East Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Inner Temple East Hall": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7850.0,
+                        "y": 6200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Teleporter": {
                             "type": "and",
                             "data": {
@@ -9940,6 +10988,13 @@
                                         "data": "Lay Any Bomb"
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Inner Temple East Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Teleporter Unlocked": {
@@ -9967,7 +11022,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 1 Teleporter",
                     "connections": {
-                        "Door to Inner Temple East Hall": {
+                        "Front of Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,

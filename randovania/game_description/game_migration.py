@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import collections
+
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import migration_data
 from randovania.lib import migration_lib
@@ -370,6 +372,67 @@ def _migrate_v30(data: dict, game: RandovaniaGame) -> None:
                         node["default_connection"]["region"] = rename
 
 
+def _migrate_v31(data: dict, game: RandovaniaGame) -> None:
+    trivial = {"type": "and", "data": {"comment": None, "items": []}}
+
+    def should_split(dock_node: dict, interactions: set[str]) -> bool:
+        if dock_node["valid_starting_location"]:
+            if game in {RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES}:
+                if dock_node["dock_type"] == "door":
+                    return True
+            else:
+                return True
+
+        return len(interactions) > 1
+
+    def calc_conn_from(a):
+        r = collections.defaultdict(set)
+
+        for node_name, a_node in a["nodes"].items():
+            for conn in a_node.get("connections", {}):
+                r[conn].add(node_name)
+
+        return r
+
+    for region in data["regions"]:
+        for area in region["areas"].values():
+            node_order = list(area["nodes"])
+
+            for name, node in list(area["nodes"].items()):
+                if node["node_type"] != "dock":
+                    continue
+
+                connections_from = calc_conn_from(area)
+                node_interactions = set(node.get("connections", {})) | connections_from[name]
+                if should_split(node, node_interactions):
+                    new_name = f"Front of {name}"
+                    area["nodes"][new_name] = new_node = {
+                        "node_type": "generic",
+                        "heal": False,
+                        "coordinates": node["coordinates"],
+                        "description": "",
+                        "layers": node["layers"],
+                        "extra": {},
+                        "valid_starting_location": node["valid_starting_location"],
+                        "connections": node["connections"],
+                    }
+                    node["valid_starting_location"] = False
+                    node_order.insert(node_order.index(name) + 1, new_name)
+
+                    # Connect dock and the new node
+                    node["connections"] = {new_name: trivial}
+                    new_node["connections"][name] = trivial
+
+                    for other_name in connections_from[name]:
+                        other_conn = area["nodes"][other_name]["connections"]
+                        other_conn[new_name] = other_conn.pop(name)
+
+            if node_order != list(area["nodes"]):
+                # new node!
+                old_dict = area["nodes"]
+                area["nodes"] = {name: old_dict[name] for name in node_order}
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -401,6 +464,7 @@ _MIGRATIONS = [
     _migrate_v28,  # rename HintNodeKind
     _migrate_v29,  # add custom_index_group
     _migrate_v30,  # split Echoes light/dark
+    _migrate_v31,  # force single connection dock
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

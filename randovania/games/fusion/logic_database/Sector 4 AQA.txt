@@ -7,23 +7,30 @@ Extra - minimap_coordinates: [{'x': 15, 'y': 4}, {'x': 15, 'y': 5}, {'x': 16, 'y
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Lobby
   * Extra - door_idx: (2,)
+  > Front of Door to Entrance Recharge Room
+      Trivial
+
+> Front of Door to Entrance Recharge Room; Heals? False
+  * Layers: default
   > Door to Sciser Stall
       Trivial
   > Door to Powamp Playhouse
+      Trivial
+  > Door to Entrance Recharge Room
       Trivial
 
 > Door to Sciser Stall; Heals? False
   * Layers: default
   * L0 Hatch to Sciser Stall/Door to Entrance Lobby
   * Extra - door_idx: (3,)
-  > Door to Entrance Recharge Room
+  > Front of Door to Entrance Recharge Room
       Trivial
 
 > Door to Powamp Playhouse; Heals? False
   * Layers: default
   * L0 Hatch to Powamp Playhouse/Door to Entrance Lobby
   * Extra - door_idx: (58,)
-  > Door to Entrance Recharge Room
+  > Front of Door to Entrance Recharge Room
       Trivial
 
 ----------------
@@ -36,23 +43,30 @@ Extra - unlocked_save_recharge_station: True
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
   * Extra - door_idx: (5,)
-  > Door to Entrance Navigation Room
+  > Front of Door to Entrance Navigation Room
       Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
   * Extra - door_idx: (6,)
+  > Front of Door to Entrance Navigation Room
+      Trivial
+
+> Front of Door to Entrance Navigation Room; Heals? False
+  * Layers: default
   > Door to Entrance Recharge Room
       Trivial
   > Save Station
+      Trivial
+  > Door to Entrance Navigation Room
       Trivial
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - X: 9
   * Extra - Y: 10
-  > Door to Entrance Navigation Room
+  > Front of Door to Entrance Navigation Room
       Trivial
 
 ----------------
@@ -64,16 +78,23 @@ Extra - minimap_coordinates: [{'x': 19, 'y': 4}]
   * Layers: default
   * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
   * Extra - door_idx: (1,)
+  > Front of Door to Elevator to Main Deck
+      Trivial
+
+> Front of Door to Elevator to Main Deck; Heals? False
+  * Layers: default
   > Door to Entrance Save Room
       Trivial
   > Navigation Terminal
+      Trivial
+  > Door to Elevator to Main Deck
       Trivial
 
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
   * Extra - door_idx: (7,)
-  > Door to Elevator to Main Deck
+  > Front of Door to Elevator to Main Deck
       Trivial
 
 > Navigation Terminal; Heals? False
@@ -82,7 +103,7 @@ Extra - minimap_coordinates: [{'x': 19, 'y': 4}]
   * Extra - hint_name: Sector4Entrance
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: PRECISE_CATEGORY
-  > Door to Elevator to Main Deck
+  > Front of Door to Elevator to Main Deck
       Trivial
 
 ----------------
@@ -94,7 +115,14 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 5}, {'x': 17, 'y': 6}, {'x': 18, 'y
   * Layers: default
   * L0 Hatch to Entrance Lobby/Door to Powamp Playhouse
   * Extra - door_idx: (8,)
-  > Door to Owtch Atrium
+  > Front of Door to Entrance Lobby
+      Trivial
+
+> Front of Door to Entrance Lobby; Heals? False
+  * Layers: default
+  > Door to Entrance Lobby
+      Trivial
+  > Front of Door to Owtch Atrium
       All of the following:
           Morph Ball
           Any of the following:
@@ -115,7 +143,7 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 5}, {'x': 17, 'y': 6}, {'x': 18, 'y
                       After Sector 4 Water Level Lowered
                       Damage Runs (Intermediate) and Electrified Water Damage ≥ 40
                       Damage Runs (Beginner) and Electrified Water Damage ≥ 10 and Have Any Suit Upgrade
-  > Other to Drain Pipe
+  > Front of Other to Drain Pipe
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
@@ -129,7 +157,12 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 5}, {'x': 17, 'y': 6}, {'x': 18, 'y
   * Layers: default
   * L4 Hatch to Owtch Atrium/Door to Powamp Playhouse
   * Extra - door_idx: (9,)
-  > Door to Entrance Lobby
+  > Front of Door to Owtch Atrium
+      Trivial
+
+> Front of Door to Owtch Atrium; Heals? False
+  * Layers: default
+  > Front of Door to Entrance Lobby
       All of the following:
           Morph Ball
           Any of the following:
@@ -141,7 +174,9 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 5}, {'x': 17, 'y': 6}, {'x': 18, 'y
               Space Jump or After Sector 4 Water Level Lowered or Jump Extends (Intermediate)
               # Damage Reqs
               Damage Runs (Beginner) and Electrified Water Damage ≥ 3
-  > Door to Data Room
+  > Door to Owtch Atrium
+      Trivial
+  > Front of Door to Data Room
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
@@ -155,7 +190,12 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 5}, {'x': 17, 'y': 6}, {'x': 18, 'y
   * Layers: default
   * L4 Hatch to Data Room/Door to Powamp Playhouse
   * Extra - door_idx: (27,)
-  > Door to Owtch Atrium
+  > Front of Door to Data Room
+      Trivial
+
+> Front of Door to Data Room; Heals? False
+  * Layers: default
+  > Front of Door to Owtch Atrium
       All of the following:
           Any of the following:
               # Get up
@@ -169,7 +209,9 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 5}, {'x': 17, 'y': 6}, {'x': 18, 'y
               After Sector 4 Water Level Lowered
               Damage Runs (Intermediate) and Electrified Water Damage ≥ 33
               Damage Runs (Beginner) and Electrified Water Damage ≥ 3 and Have Any Suit Upgrade
-  > Other to Drain Pipe
+  > Door to Data Room
+      Trivial
+  > Front of Other to Drain Pipe
       All of the following:
           Morph Ball
           Any of the following:
@@ -206,7 +248,12 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 5}, {'x': 17, 'y': 6}, {'x': 18, 'y
   * Layers: default
   * Open Passage to Drain Pipe/Other to Powamp Playhouse
   * Extra - door_idx: (84,)
-  > Door to Entrance Lobby
+  > Front of Other to Drain Pipe
+      Trivial
+
+> Front of Other to Drain Pipe; Heals? False
+  * Layers: default
+  > Front of Door to Entrance Lobby
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
@@ -215,6 +262,8 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 5}, {'x': 17, 'y': 6}, {'x': 18, 'y
               Any of the following:
                   Electrified Water Damage ≥ 25
                   Electrified Water Damage ≥ 6 and Have Any Suit Upgrade
+  > Other to Drain Pipe
+      Trivial
 
 ----------------
 Data Room
@@ -272,13 +321,18 @@ Hint Features - Climbable Surface
   * Extra - blockx: 22
   * Extra - blocky: 29
   * Extra - infant_weight: 0.34
-  > Door to Sciser Stall
+  > Front of Door to Sciser Stall
       Trivial
 
 > Door to Sciser Stall; Heals? False
   * Layers: default
   * L0 Hatch to Sciser Stall/Door to Reservoir East
   * Extra - door_idx: (13,)
+  > Front of Door to Sciser Stall
+      Trivial
+
+> Front of Door to Sciser Stall; Heals? False
+  * Layers: default
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
           Any of the following:
@@ -294,6 +348,8 @@ Hint Features - Climbable Surface
               Power Bombs ≥ 2 or Can Use Bombs
   > Room Center
       Can Use Any Bombs
+  > Door to Sciser Stall
+      Trivial
 
 > Door to Skultera Cisterns; Heals? False
   * Layers: default
@@ -323,7 +379,18 @@ Hint Features - Climbable Surface
 
 > Room Center; Heals? False
   * Layers: default
-  > Door to Sciser Stall
+  > Door to Skultera Cisterns
+      Trivial
+  > Other to Waterway
+      All of the following:
+          Speed Booster
+          Any of the following:
+              After Sector 4 Water Level Lowered
+              # Damage Run
+              Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 5
+  > Other to Reservoir Vault
+      Trivial
+  > Front of Door to Sciser Stall
       Any of the following:
           All of the following:
               # Destroy bomb blocks by standing off of sciser: https://youtu.be/h8Q6TKHg8kM
@@ -368,17 +435,6 @@ Hint Features - Climbable Surface
               Any of the following:
                   Can Use Power Bombs
                   Mid-Air Morph (Advanced) and Can Use Bombs
-  > Door to Skultera Cisterns
-      Trivial
-  > Other to Waterway
-      All of the following:
-          Speed Booster
-          Any of the following:
-              After Sector 4 Water Level Lowered
-              # Damage Run
-              Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 5
-  > Other to Reservoir Vault
-      Trivial
 
 ----------------
 Skultera Cisterns
@@ -389,16 +445,23 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 4}, {'x': 9, 'y': 5}, {'x': 10, 'y':
   * Layers: default
   * L0 Hatch to Reservoir East/Door to Skultera Cisterns
   * Extra - door_idx: (15,)
+  > Front of Door to Reservoir East
+      Trivial
+
+> Front of Door to Reservoir East; Heals? False
+  * Layers: default
   > Door to Reservoir West
       Trivial
   > Door to Bridge Access
+      Trivial
+  > Door to Reservoir East
       Trivial
 
 > Door to Reservoir West; Heals? False
   * Layers: default
   * L0 Hatch to Reservoir West/Door to Skultera Cisterns
   * Extra - door_idx: (16,)
-  > Door to Reservoir East
+  > Front of Door to Reservoir East
       Any of the following:
           Wall Jump (Beginner) or Have Any Jump Upgrade
           # Stand on Scizer
@@ -408,7 +471,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 4}, {'x': 9, 'y': 5}, {'x': 10, 'y':
   * Layers: default
   * L0 Hatch to Bridge Access/Door to Skultera Cisterns
   * Extra - door_idx: (19,)
-  > Door to Reservoir East
+  > Front of Door to Reservoir East
       Trivial
 
 ----------------
@@ -420,24 +483,31 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 3}, {'x': 8, 'y': 4}, {'x': 9, 'y': 
   * Layers: default
   * L0 Hatch to Skultera Cisterns/Door to Bridge Access
   * Extra - door_idx: (20,)
-  > Door to Bridge Save Room
+  > Front of Door to Bridge Save Room
       Trivial
 
 > Door to Broken Bridge; Heals? False
   * Layers: default
   * L0 Hatch to Broken Bridge/Door to Bridge Access
   * Extra - door_idx: (21,)
-  > Door to Bridge Save Room
+  > Front of Door to Bridge Save Room
       Morph Ball
 
 > Door to Bridge Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Bridge Save Room/Door to Bridge Access
   * Extra - door_idx: (74,)
+  > Front of Door to Bridge Save Room
+      Trivial
+
+> Front of Door to Bridge Save Room; Heals? False
+  * Layers: default
   > Door to Skultera Cisterns
       Trivial
   > Door to Broken Bridge
       Morph Ball
+  > Door to Bridge Save Room
+      Trivial
 
 ----------------
 Serris Speedway
@@ -536,7 +606,14 @@ Extra - minimap_coordinates: [{'x': 16, 'y': 8}, {'x': 17, 'y': 8}, {'x': 18, 'y
   * Layers: default
   * L0 Hatch to Aquarium Hub/Door to Aquarium Speedway
   * Extra - door_idx: (88,)
-  > Door to Powamp Shaft
+  > Front of Door to Aquarium Hub
+      Trivial
+
+> Front of Door to Aquarium Hub; Heals? False
+  * Layers: default
+  > Door to Aquarium Hub
+      Trivial
+  > Front of Door to Powamp Shaft
       Any of the following:
           # Kill Yarls
           Can Freeze Enemies With Any Weapon or Can Kill Tough Underwater Beam-Resistant Enemy
@@ -544,14 +621,19 @@ Extra - minimap_coordinates: [{'x': 16, 'y': 8}, {'x': 17, 'y': 8}, {'x': 18, 'y
           Damage Boosts (Intermediate) and Normal Damage ≥ 120
           # Dodge
           Combat (Intermediate)
-  > Other to Aquarium Kago Storage
+  > Front of Other to Aquarium Kago Storage
       Gravity Suit and Speed Booster
 
 > Door to Powamp Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Powamp Shaft/Door to Aquarium Speedway
   * Extra - door_idx: (89,)
-  > Door to Aquarium Hub
+  > Front of Door to Powamp Shaft
+      Trivial
+
+> Front of Door to Powamp Shaft; Heals? False
+  * Layers: default
+  > Front of Door to Aquarium Hub
       Any of the following:
           # Kill Yarls
           Can Freeze Enemies With Any Weapon or Can Kill Tough Underwater Beam-Resistant Enemy
@@ -559,7 +641,9 @@ Extra - minimap_coordinates: [{'x': 16, 'y': 8}, {'x': 17, 'y': 8}, {'x': 18, 'y
           Damage Boosts (Intermediate) and Normal Damage ≥ 120
           # Dodge
           Combat (Intermediate)
-  > Other to Aquarium Kago Storage
+  > Door to Powamp Shaft
+      Trivial
+  > Front of Other to Aquarium Kago Storage
       Any of the following:
           All of the following:
               Gravity Suit
@@ -576,7 +660,14 @@ Extra - minimap_coordinates: [{'x': 16, 'y': 8}, {'x': 17, 'y': 8}, {'x': 18, 'y
   * Layers: default
   * Open Passage to Aquarium Kago Storage/Other to Aquarium Speedway
   * Extra - door_idx: (95,)
-  > Door to Powamp Shaft
+  > Front of Other to Aquarium Kago Storage
+      Trivial
+
+> Front of Other to Aquarium Kago Storage; Heals? False
+  * Layers: default
+  > Front of Door to Powamp Shaft
+      Trivial
+  > Other to Aquarium Kago Storage
       Trivial
 
 ----------------
@@ -618,13 +709,18 @@ Hint Features - Multiple Pickups
   * Layers: default
   * Open Passage to Reservoir East/Other to Reservoir Vault
   * Extra - door_idx: (30,)
-  > Door to Reservoir Save Room
+  > Front of Door to Reservoir Save Room
       Trivial
 
 > Door to Reservoir Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Reservoir Save Room/Door to Reservoir Vault
   * Extra - door_idx: (117,)
+  > Front of Door to Reservoir Save Room
+      Trivial
+
+> Front of Door to Reservoir Save Room; Heals? False
+  * Layers: default
   > Other to Reservoir East
       Trivial
   > Next to Chain Blocks
@@ -637,6 +733,8 @@ Hint Features - Multiple Pickups
               Can Freeze Enemies With Ice Beam or Can Freeze Enemies With Ice Missiles
           # Freeze the Owtch (Diffusion): https://youtu.be/ZsfwelK3eFs
           Stand On Frozen Enemies (Expert) and Can Freeze Enemies With Diffusion
+  > Door to Reservoir Save Room
+      Trivial
 
 > Beside Upper Pickup; Heals? False
   * Layers: default
@@ -651,13 +749,11 @@ Hint Features - Multiple Pickups
   * Layers: default
   > Pickup (Lower Missile Tank)
       Trivial
-  > Door to Reservoir Save Room
+  > Front of Door to Reservoir Save Room
       Trivial
 
 > Next to Chain Blocks; Heals? False
   * Layers: default
-  > Door to Reservoir Save Room
-      Trivial
   > Beside Upper Pickup
       Any of the following:
           Can Use Bombs
@@ -669,6 +765,8 @@ Hint Features - Multiple Pickups
                   Mid-Air Morph (Advanced)
                   # Freeze the Owtch: https://youtu.be/U1LHQA0NoFM
                   Stand On Frozen Enemies (Expert) and Can Freeze Enemies With Any Weapon
+  > Front of Door to Reservoir Save Room
+      Trivial
 
 ----------------
 Aquarium Shaft
@@ -679,55 +777,76 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 7}, {'x': 8, 'y': 8}, {'x': 8, 'y': 
   * Layers: default
   * L0 Hatch to Cargo Hold to Sector 5 (ARC)/Door to Aquarium Shaft
   * Extra - door_idx: (31,)
-  > Door to Aquarium Save Room West
+  > Front of Door to Aquarium Save Room West
       Trivial
 
 > Door to Yard Firing Range; Heals? False
   * Layers: default
   * L0 Hatch to Yard Firing Range/Door to Aquarium Shaft
   * Extra - door_idx: (32,)
-  > Door to Cheddar Bay
+  > Front of Door to Yard Firing Range
       Trivial
+
+> Front of Door to Yard Firing Range; Heals? False
+  * Layers: default
   > Other to Cargo Hold to Sector 5 (ARC)
       Morph Ball
-  > Door to Aquarium Save Room West
+  > Door to Yard Firing Range
+      Trivial
+  > Front of Door to Cheddar Bay
+      Trivial
+  > Front of Door to Aquarium Save Room West
       Trivial
 
 > Door to Cheddar Bay; Heals? False
   * Layers: default
   * L0 Hatch to Cheddar Bay/Door to Aquarium Shaft
   * Extra - door_idx: (33,)
-  > Door to Yard Firing Range
+  > Front of Door to Cheddar Bay
+      Trivial
+
+> Front of Door to Cheddar Bay; Heals? False
+  * Layers: default
+  > Door to Aquarium Pirate Tank
+      Trivial
+  > Front of Door to Yard Firing Range
       All of the following:
           Gravity Suit
           Any of the following:
               Space Jump
               # Secret Message Jr.
               Level 0 Keycard and Level 4 Keycard and Speed Booster and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
-  > Door to Aquarium Pirate Tank
+  > Door to Cheddar Bay
       Trivial
 
 > Door to Aquarium Pirate Tank; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Pirate Tank/Door to Aquarium Shaft
   * Extra - door_idx: (34,)
-  > Door to Cheddar Bay
+  > Front of Door to Cheddar Bay
       Trivial
 
 > Other to Cargo Hold to Sector 5 (ARC); Heals? False
   * Layers: default
   * Tunnel to Cargo Hold to Sector 5 (ARC)/Other to Aquarium Shaft
   * Extra - door_idx: (79,)
-  > Door to Yard Firing Range
+  > Front of Door to Yard Firing Range
       Trivial
 
 > Door to Aquarium Save Room West; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Save Room West/Door to Aquarium Shaft
   * Extra - door_idx: (96,)
+  > Front of Door to Aquarium Save Room West
+      Trivial
+
+> Front of Door to Aquarium Save Room West; Heals? False
+  * Layers: default
   > Door to Cargo Hold to Sector 5 (ARC)
       Trivial
-  > Door to Yard Firing Range
+  > Front of Door to Yard Firing Range
+      Trivial
+  > Door to Aquarium Save Room West
       Trivial
 
 ----------------
@@ -814,7 +933,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 11}, {'x': 9, 'y': 12}, {'x': 10, 'y
   * Extra - blockx: 23
   * Extra - blocky: 20
   * Extra - infant_weight: 0.34
-  > Door to Aquarium Shaft
+  > Front of Door to Aquarium Shaft
       All of the following:
           Can Kill Tough Underwater Beam-Resistant Enemy and Can Use Power Bombs
           Any of the following:
@@ -838,7 +957,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 11}, {'x': 9, 'y': 12}, {'x': 10, 'y
   * Layers: default
   * L0 Hatch to Evir Enclosure/Door to Aquarium Pirate Tank
   * Extra - door_idx: (38,)
-  > Door to Aquarium Shaft
+  > Front of Door to Aquarium Shaft
       Any of the following:
           Combat (Advanced) or Can Kill Tough Underwater Beam-Resistant Enemy
           Damage Boosts (Intermediate) and Normal Damage ≥ 499
@@ -854,6 +973,11 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 11}, {'x': 9, 'y': 12}, {'x': 10, 'y
   * Layers: default
   * L0 Hatch to Aquarium Shaft/Door to Aquarium Pirate Tank
   * Extra - door_idx: (39,)
+  > Front of Door to Aquarium Shaft
+      Trivial
+
+> Front of Door to Aquarium Shaft; Heals? False
+  * Layers: default
   > Pickup (Missile Tank)
       All of the following:
           Can Use Power Bombs
@@ -872,6 +996,8 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 11}, {'x': 9, 'y': 12}, {'x': 10, 'y
                   Space Jump
                   # Dodge via jumping and crouching
                   Combat (Advanced)
+  > Door to Aquarium Shaft
+      Trivial
 
 ----------------
 Aquarium Hub Access
@@ -908,9 +1034,11 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 7}, {'x': 14, 'y': 8}, {'x': 14, 'y
   * Layers: default
   * L0 Hatch to Aquarium Speedway/Door to Aquarium Hub
   * Extra - door_idx: (55,)
-  > Door to Drain Pipe
-      # Shinespark from adjacent room: https://youtu.be/ID3TOSUmCa8
-      Gravity Suit and Level 0 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Front of Door to Aquarium Speedway
+      Trivial
+
+> Front of Door to Aquarium Speedway; Heals? False
+  * Layers: default
   > Room Center
       All of the following:
           Gravity Suit
@@ -918,17 +1046,21 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 7}, {'x': 14, 'y': 8}, {'x': 14, 'y
               Screw Attack
               # Shinespark from adjacent room: https://youtu.be/pKQF2grjqDw
               Level 0 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Door to Aquarium Speedway
+      Trivial
+  > Front of Door to Drain Pipe
+      # Shinespark from adjacent room: https://youtu.be/ID3TOSUmCa8
+      Gravity Suit and Level 0 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Drain Pipe; Heals? False
   * Layers: default
   * L0 Hatch to Drain Pipe/Door to Aquarium Hub
   * Extra - door_idx: (90,)
-  > Door to Aquarium Speedway
-      All of the following:
-          Gravity Suit and Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
-          Any of the following:
-              After Sector 4 Water Level Lowered
-              Damage Runs (Beginner) and Electrified Water Damage ≥ 20
+  > Front of Door to Drain Pipe
+      Trivial
+
+> Front of Door to Drain Pipe; Heals? False
+  * Layers: default
   > Room Center
       Any of the following:
           All of the following:
@@ -947,6 +1079,14 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 7}, {'x': 14, 'y': 8}, {'x': 14, 'y
                   # To freeze the powamp
                   Can Freeze Enemies With Diffusion
                   Wave Beam and Can Freeze Enemies With Ice Beam
+  > Front of Door to Aquarium Speedway
+      All of the following:
+          Gravity Suit and Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          Any of the following:
+              After Sector 4 Water Level Lowered
+              Damage Runs (Beginner) and Electrified Water Damage ≥ 20
+  > Door to Drain Pipe
+      Trivial
 
 > Door to Aquarium Save Room East; Heals? False
   * Layers: default
@@ -959,9 +1099,11 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 7}, {'x': 14, 'y': 8}, {'x': 14, 'y
   * Layers: default
   > Door to Aquarium Hub Access
       Morph Ball
-  > Door to Aquarium Speedway
+  > Door to Aquarium Save Room East
+      Trivial
+  > Front of Door to Aquarium Speedway
       Gravity Suit and Screw Attack
-  > Door to Drain Pipe
+  > Front of Door to Drain Pipe
       Any of the following:
           All of the following:
               # Freeze and pass by Powamp
@@ -971,8 +1113,6 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 7}, {'x': 14, 'y': 8}, {'x': 14, 'y
                   Gravity Suit and Can Use Bombs
           # Destroy Powamp
           Gravity Suit and Screw Attack
-  > Door to Aquarium Save Room East
-      Trivial
 
 ----------------
 Reservoir West
@@ -983,8 +1123,11 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 5}, {'x': 5, 'y': 6}, {'x': 6, 'y': 
   * Layers: default
   * L0 Hatch to Skultera Cisterns/Door to Reservoir West
   * Extra - door_idx: (17,)
-  > Other to Breeding Tank Access
-      Can Use Any Bombs
+  > Front of Door to Skultera Cisterns
+      Trivial
+
+> Front of Door to Skultera Cisterns; Heals? False
+  * Layers: default
   > Bottom of Room
       Any of the following:
           After Sector 4 Water Level Lowered
@@ -994,16 +1137,20 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 5}, {'x': 5, 'y': 6}, {'x': 6, 'y': 
               Any of the following:
                   Electrified Water Damage ≥ 31
                   Electrified Water Damage ≥ 8 and Have Any Suit Upgrade
+  > Door to Skultera Cisterns
+      Trivial
+  > Front of Other to Breeding Tank Access
+      Can Use Any Bombs
 
 > Door to Pump Control Access; Heals? False
   * Layers: default
   * L0 Hatch to Pump Control Access/Door to Reservoir West
   * Extra - door_idx: (43,)
-  > Other to Breeding Tank Access
-      Any of the following:
-          Can Break Single Bomb Blocks
-          # Shinespark from Pump Control Unit: https://youtu.be/GukqyHY3bHM
-          Level 0 Keycard and Level 1 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Front of Door to Pump Control Access
+      Trivial
+
+> Front of Door to Pump Control Access; Heals? False
+  * Layers: default
   > Bottom of Room
       All of the following:
           Morph Ball
@@ -1015,6 +1162,13 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 5}, {'x': 5, 'y': 6}, {'x': 6, 'y': 
                   Any of the following:
                       Electrified Water Damage ≥ 14
                       Electrified Water Damage ≥ 3 and Have Any Suit Upgrade
+  > Door to Pump Control Access
+      Trivial
+  > Front of Other to Breeding Tank Access
+      Any of the following:
+          Can Break Single Bomb Blocks
+          # Shinespark from Pump Control Unit: https://youtu.be/GukqyHY3bHM
+          Level 0 Keycard and Level 1 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Other to Waterway; Heals? False
   * Layers: default
@@ -1032,14 +1186,28 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 5}, {'x': 5, 'y': 6}, {'x': 6, 'y': 
   * Layers: default
   * Open Passage to Breeding Tank Access/Other to Reservoir West
   * Extra - door_idx: (71,)
-  > Door to Skultera Cisterns
+  > Front of Other to Breeding Tank Access
+      Trivial
+
+> Front of Other to Breeding Tank Access; Heals? False
+  * Layers: default
+  > Front of Door to Skultera Cisterns
       Can Use Any Bombs
-  > Door to Pump Control Access
+  > Front of Door to Pump Control Access
       Can Break Single Bomb Blocks
+  > Other to Breeding Tank Access
+      Trivial
 
 > Bottom of Room; Heals? False
   * Layers: default
-  > Door to Skultera Cisterns
+  > Other to Waterway
+      All of the following:
+          Speed Booster
+          Any of the following:
+              After Sector 4 Water Level Lowered
+              # Damage Run
+              Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 7
+  > Front of Door to Skultera Cisterns
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
@@ -1050,7 +1218,7 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 5}, {'x': 5, 'y': 6}, {'x': 6, 'y': 
               Any of the following:
                   Electrified Water Damage ≥ 31
                   Electrified Water Damage ≥ 8 and Have Any Suit Upgrade
-  > Door to Pump Control Access
+  > Front of Door to Pump Control Access
       All of the following:
           Morph Ball
           All of the following:
@@ -1065,14 +1233,7 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 5}, {'x': 5, 'y': 6}, {'x': 6, 'y': 
                   Jump Extends (Beginner) or Have Any Jump Upgrade
                   # Shinespark: https://youtu.be/YHSP9j7wIeE
                   Speed Booster and Shinespark Tricks (Beginner)
-  > Other to Waterway
-      All of the following:
-          Speed Booster
-          Any of the following:
-              After Sector 4 Water Level Lowered
-              # Damage Run
-              Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 7
-  > Other to Breeding Tank Access
+  > Front of Other to Breeding Tank Access
       All of the following:
           # Shinespark: https://youtu.be/TdPsN80nnxs
           Hi-Jump and Speed Booster and Shinespark Tricks (Ludicrous) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Use Springball
@@ -1090,6 +1251,11 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 2}, {'x': 4, 'y': 3}, {'x': 4, 'y': 
   * Layers: default
   * L0 Hatch to Reservoir West/Door to Pump Control Access
   * Extra - door_idx: (44,)
+  > Front of Door to Reservoir West
+      Trivial
+
+> Front of Door to Reservoir West; Heals? False
+  * Layers: default
   > Door to Cargo Hold to Sector 5 (ARC)
       Any of the following:
           After Sector 4 Water Level Lowered
@@ -1103,12 +1269,14 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 2}, {'x': 4, 'y': 3}, {'x': 4, 'y': 
       Morph Ball
   > Door to Pump Control Unit
       Trivial
+  > Door to Reservoir West
+      Trivial
 
 > Door to Cargo Hold to Sector 5 (ARC); Heals? False
   * Layers: default
   * L4 Hatch to Cargo Hold to Sector 5 (ARC)/Door to Pump Control Access
   * Extra - door_idx: (45,)
-  > Door to Reservoir West
+  > Front of Door to Reservoir West
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
@@ -1122,14 +1290,14 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 2}, {'x': 4, 'y': 3}, {'x': 4, 'y': 
   * Layers: default
   * L0 Hatch to Pump Control Save Room/Door to Pump Control Access
   * Extra - door_idx: (46,)
-  > Door to Reservoir West
+  > Front of Door to Reservoir West
       Trivial
 
 > Door to Pump Control Unit; Heals? False
   * Layers: default
   * L1 Hatch to Pump Control Unit/Door to Pump Control Access
   * Extra - door_idx: (75,)
-  > Door to Reservoir West
+  > Front of Door to Reservoir West
       Trivial
 
 ----------------
@@ -1142,25 +1310,32 @@ Extra - unlocked_save_recharge_station: True
   * Layers: default
   * L0 Hatch to Pump Control Access/Door to Pump Control Save Room
   * Extra - door_idx: (47,)
+  > Front of Door to Pump Control Access
+      Trivial
+
+> Front of Door to Pump Control Access; Heals? False
+  * Layers: default
   > Other to Breeding Tank Access
       All of the following:
           Morph Ball
           Mid-Air Morph (Beginner) or Can Bounce in Ball
   > Save Station
       Trivial
+  > Door to Pump Control Access
+      Trivial
 
 > Other to Breeding Tank Access; Heals? False
   * Layers: default
   * Tunnel to Breeding Tank Access/Other to Pump Control Save Room
   * Extra - door_idx: (69,)
-  > Door to Pump Control Access
+  > Front of Door to Pump Control Access
       Can Use Any Bombs
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - X: 10
   * Extra - Y: 10
-  > Door to Pump Control Access
+  > Front of Door to Pump Control Access
       Trivial
 
 ----------------
@@ -1268,16 +1443,23 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 10}, {'x': 5, 'y': 11}, {'x': 6, 'y'
   * Extra - blockx: 40
   * Extra - blocky: 7
   * Extra - infant_weight: 0.34
-  > Other to Security Bypass
+  > Front of Other to Security Bypass
       Morph Ball
 
 > Door to Security Access; Heals? False
   * Layers: default
   * L4 Hatch to Security Access/Door to Cheddar Bay
   * Extra - door_idx: (49,)
+  > Front of Door to Security Access
+      Trivial
+
+> Front of Door to Security Access; Heals? False
+  * Layers: default
   > Door to Aquarium Shaft
       Trivial
-  > Other to Security Bypass
+  > Door to Security Access
+      Trivial
+  > Front of Other to Security Bypass
       All of the following:
           Missiles and Morph Ball
           Any of the following:
@@ -1298,21 +1480,28 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 10}, {'x': 5, 'y': 11}, {'x': 6, 'y'
   * Layers: default
   * L0 Hatch to Aquarium Shaft/Door to Cheddar Bay
   * Extra - door_idx: (54,)
-  > Door to Security Access
+  > Front of Door to Security Access
       Trivial
 
 > Other to Security Bypass; Heals? False
   * Layers: default
   * Open Passage to Security Bypass/Other to Cheddar Bay
   * Extra - door_idx: (80,)
+  > Front of Other to Security Bypass
+      Trivial
+
+> Front of Other to Security Bypass; Heals? False
+  * Layers: default
   > Pickup (Power Bomb Tank)
       Morph Ball
-  > Door to Security Access
+  > Front of Door to Security Access
       All of the following:
           Missiles and Morph Ball
           Any of the following:
               Can Use Any Bombs
               Gravity Suit and Screw Attack and Knowledge (Beginner)
+  > Other to Security Bypass
+      Trivial
 
 ----------------
 Security Access
@@ -1323,17 +1512,29 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 11}, {'x': 4, 'y': 12}, {'x': 4, 'y'
   * Layers: default
   * L4 Hatch to Cheddar Bay/Door to Security Access
   * Extra - door_idx: (50,)
-  > Door to Level 4 Security Room
+  > Front of Door to Cheddar Bay
       Trivial
+
+> Front of Door to Cheddar Bay; Heals? False
+  * Layers: default
   > Other to Security Bypass
       Trivial
   > By Hole
       Movement (Beginner)
+  > Door to Cheddar Bay
+      Trivial
+  > Front of Door to Level 4 Security Room
+      Trivial
 
 > Door to Level 4 Security Room; Heals? False
   * Layers: default
   * L4 Hatch to Level 4 Security Room/Door to Security Access
   * Extra - door_idx: (51,)
+  > Front of Door to Level 4 Security Room
+      Trivial
+
+> Front of Door to Level 4 Security Room; Heals? False
+  * Layers: default
   > By Hole
       Any of the following:
           All of the following:
@@ -1344,12 +1545,14 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 11}, {'x': 4, 'y': 12}, {'x': 4, 'y'
                   Wall Jump (Beginner)
           # Long sequence (30+) of Underwater Wall Jumps: https://youtu.be/BYdBjECAoAM
           Hi-Jump and Underwater Wall Jump (Ludicrous)
+  > Door to Level 4 Security Room
+      Trivial
 
 > Other to Security Bypass; Heals? False
   * Layers: default
   * Open Passage to Security Bypass/Other to Security Access
   * Extra - door_idx: (83,)
-  > Door to Cheddar Bay
+  > Front of Door to Cheddar Bay
       Trivial
 
 > Other to Sciser Sanctuary; Heals? False
@@ -1361,7 +1564,15 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 11}, {'x': 4, 'y': 12}, {'x': 4, 'y'
 
 > By Hole; Heals? False
   * Layers: default
-  > Door to Cheddar Bay
+  > Other to Sciser Sanctuary
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Can Use Springball
+              # Mid-Air Morph: https://youtu.be/PtkMTguvNwE
+              Mid-Air Morph (Advanced)
+              Gravity Suit and Can Use Bombs
+  > Front of Door to Cheddar Bay
       Any of the following:
           # Long sequence (30+) of Underwater Wall Jumps: https://youtu.be/n9Z_Ywet4WE
           Underwater Wall Jump (Ludicrous)
@@ -1371,16 +1582,8 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 11}, {'x': 4, 'y': 12}, {'x': 4, 'y'
                   Space Jump
                   # Wall Jump: https://youtu.be/TDwTWYNa_F8
                   Wall Jump (Beginner)
-  > Door to Level 4 Security Room
+  > Front of Door to Level 4 Security Room
       Trivial
-  > Other to Sciser Sanctuary
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Can Use Springball
-              # Mid-Air Morph: https://youtu.be/PtkMTguvNwE
-              Mid-Air Morph (Advanced)
-              Gravity Suit and Can Use Bombs
 
 ----------------
 Level 4 Security Room
@@ -1392,14 +1595,21 @@ Hint Features - Security Room
   * Layers: default
   * L4 Hatch to Security Access/Door to Level 4 Security Room
   * Extra - door_idx: (52,)
+  > Front of Door to Security Access
+      Trivial
+
+> Front of Door to Security Access; Heals? False
+  * Layers: default
   > Pickup (L4 Locks)
+      Trivial
+  > Door to Security Access
       Trivial
 
 > Other to Security Bypass; Heals? False
   * Layers: default
   * Open Passage to Security Bypass/Other to Level 4 Security Room
   * Extra - door_idx: (98,)
-  > Door to Security Access
+  > Front of Door to Security Access
       Trivial
 
 > Pickup (L4 Locks); Heals? False
@@ -1409,7 +1619,7 @@ Hint Features - Security Room
   * Extra - room: 26
   * Extra - source: Level4
   * Extra - infant_weight: 0.34
-  > Door to Security Access
+  > Front of Door to Security Access
       Trivial
 
 ----------------
@@ -1444,13 +1654,18 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 6}, {'x': 10, 'y': 6}]
   * Extra - blockx: 9
   * Extra - blocky: 6
   * Extra - infant_weight: 0.34
-  > Other to Reservoir West
+  > Front of Other to Reservoir West
       Trivial
 
 > Other to Reservoir East; Heals? False
   * Layers: default
   * Open Passage to Reservoir East/Other to Waterway
   * Extra - door_idx: (4,)
+  > Front of Other to Reservoir East
+      Trivial
+
+> Front of Other to Reservoir East; Heals? False
+  * Layers: default
   > Pickup (Underwater Missile Tank)
       All of the following:
           Morph Ball
@@ -1461,7 +1676,9 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 6}, {'x': 10, 'y': 6}]
               After Sector 4 Water Level Lowered
               Damage Runs (Beginner) and Electrified Water Damage ≥ 14 and Have Any Suit Upgrade
               Damage Runs (Intermediate) and Electrified Water Damage ≥ 50
-  > Other to Reservoir West
+  > Other to Reservoir East
+      Trivial
+  > Front of Other to Reservoir West
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
@@ -1475,7 +1692,12 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 6}, {'x': 10, 'y': 6}]
   * Layers: default
   * Open Passage to Reservoir West/Other to Waterway
   * Extra - door_idx: (60,)
-  > Other to Reservoir East
+  > Front of Other to Reservoir West
+      Trivial
+
+> Front of Other to Reservoir West; Heals? False
+  * Layers: default
+  > Front of Other to Reservoir East
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
@@ -1484,6 +1706,8 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 6}, {'x': 10, 'y': 6}]
               Any of the following:
                   Electrified Water Damage ≥ 31
                   Electrified Water Damage ≥ 6 and Have Any Suit Upgrade
+  > Other to Reservoir West
+      Trivial
 
 ----------------
 Entrance Recharge Room
@@ -1613,6 +1837,11 @@ Hint Features - Climbable Surface
   * Layers: default
   * L1 Hatch to Pump Control Access/Door to Pump Control Unit
   * Extra - door_idx: (76,)
+  > Front of Door to Pump Control Access
+      Trivial
+
+> Front of Door to Pump Control Access; Heals? False
+  * Layers: default
   > Event - Pump Control Terminal
       Speed Booster
   > Next to Pickup
@@ -1632,6 +1861,8 @@ Hint Features - Climbable Surface
                   Gravity Suit and Jump Bombjump (Expert) and Wall Jump (Expert) and Can Use Bombs
               # Deal with water
               Gravity Suit or After Sector 4 Water Level Lowered
+  > Door to Pump Control Access
+      Trivial
 
 > Event - Pump Control Terminal; Heals? False
   * Layers: default
@@ -1652,22 +1883,6 @@ Hint Features - Climbable Surface
   * Layers: default
   > Pickup (Missile Tank)
       Trivial
-  > Door to Pump Control Access
-      All of the following:
-          Any of the following:
-              # Get into tunnel
-              Can Use Springball
-              All of the following:
-                  Can Use Bombs
-                  Gravity Suit or After Sector 4 Water Level Lowered
-          Any of the following:
-              After Sector 4 Water Level Lowered
-              All of the following:
-                  # Damage Run
-                  Damage Runs (Beginner)
-                  Any of the following:
-                      Electrified Water Damage ≥ 44
-                      Electrified Water Damage ≥ 15 and Have Any Suit Upgrade
   > Event - Pump Control Terminal
       All of the following:
           Any of the following:
@@ -1684,6 +1899,22 @@ Hint Features - Climbable Surface
                   Any of the following:
                       Electrified Water Damage ≥ 37
                       Electrified Water Damage ≥ 9 and Have Any Suit Upgrade
+  > Front of Door to Pump Control Access
+      All of the following:
+          Any of the following:
+              # Get into tunnel
+              Can Use Springball
+              All of the following:
+                  Can Use Bombs
+                  Gravity Suit or After Sector 4 Water Level Lowered
+          Any of the following:
+              After Sector 4 Water Level Lowered
+              All of the following:
+                  # Damage Run
+                  Damage Runs (Beginner)
+                  Any of the following:
+                      Electrified Water Damage ≥ 44
+                      Electrified Water Damage ≥ 15 and Have Any Suit Upgrade
 
 ----------------
 Security Bypass
@@ -1699,7 +1930,7 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 10}, {'x': 3, 'y': 11}, {'x': 3, 'y'
   * Layers: default
   * Open Passage to Cheddar Bay/Other to Security Bypass
   * Extra - door_idx: (81,)
-  > Other to Security Access
+  > Front of Other to Security Access
       Any of the following:
           Can Use Any Bombs
           All of the following:
@@ -1713,6 +1944,11 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 10}, {'x': 3, 'y': 11}, {'x': 3, 'y'
   * Layers: default
   * Open Passage to Security Access/Other to Security Bypass
   * Extra - door_idx: (82,)
+  > Front of Other to Security Access
+      Trivial
+
+> Front of Other to Security Access; Heals? False
+  * Layers: default
   > Other to Level 4 Security Room
       All of the following:
           Morph Ball
@@ -1747,6 +1983,8 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 10}, {'x': 3, 'y': 11}, {'x': 3, 'y'
                       Hi-Jump or Wall Jump (Beginner)
                       # JBJ before blocks reform: https://youtu.be/_vQKLVtDxF4
                       Jump Bombjump (Expert) and Can Use Bombs
+  > Other to Security Access
+      Trivial
 
 ----------------
 Powamp Shaft
@@ -1757,6 +1995,11 @@ Extra - minimap_coordinates: [{'x': 20, 'y': 5}, {'x': 20, 'y': 6}, {'x': 20, 'y
   * Layers: default
   * L0 Hatch to Owtch Atrium/Door to Powamp Shaft
   * Extra - door_idx: (28,)
+  > Front of Door to Owtch Atrium
+      Trivial
+
+> Front of Door to Owtch Atrium; Heals? False
+  * Layers: default
   > Upper Ladder
       All of the following:
           Missiles and Morph Ball
@@ -1765,11 +2008,18 @@ Extra - minimap_coordinates: [{'x': 20, 'y': 5}, {'x': 20, 'y': 6}, {'x': 20, 'y
       Morph Ball and After Powamp Shaft Diffusion Blocks Destroyed
   > Event - Break Missile Blocks from Hatch
       Diffusion Missile Data and Missiles
+  > Door to Owtch Atrium
+      Trivial
 
 > Door to Aquarium Speedway; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Speedway/Door to Powamp Shaft
   * Extra - door_idx: (56,)
+  > Front of Door to Aquarium Speedway
+      Trivial
+
+> Front of Door to Aquarium Speedway; Heals? False
+  * Layers: default
   > Door to Glass Tube to Sector 2 (TRO)
       Gravity Suit and Screw Attack
   > Upper Ladder
@@ -1786,12 +2036,14 @@ Extra - minimap_coordinates: [{'x': 20, 'y': 5}, {'x': 20, 'y': 6}, {'x': 20, 'y
                   Screw Attack and Wall Jump (Intermediate) and Can Single Walljump
                   # Stand On Frozen Enemies: https://youtu.be/eoniGf8_j70
                   Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies With Any Weapon
+  > Door to Aquarium Speedway
+      Trivial
 
 > Door to Glass Tube to Sector 2 (TRO); Heals? False
   * Layers: default
   * L0 Hatch to Glass Tube to Sector 2 (TRO)/Door to Powamp Shaft
   * Extra - door_idx: (109,)
-  > Door to Aquarium Speedway
+  > Front of Door to Aquarium Speedway
       All of the following:
           Gravity Suit and Screw Attack
           Space Jump or Wall Jump (Intermediate)
@@ -1805,16 +2057,6 @@ Extra - minimap_coordinates: [{'x': 20, 'y': 5}, {'x': 20, 'y': 6}, {'x': 20, 'y
 
 > Upper Ladder; Heals? False
   * Layers: default
-  > Door to Owtch Atrium
-      All of the following:
-          Missiles and Morph Ball
-          Any of the following:
-              Space Jump
-              All of the following:
-                  Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
-                  Hi-Jump or Wall Jump (Intermediate)
-  > Door to Aquarium Speedway
-      Trivial
   > Top Alcove
       All of the following:
           Missiles and After Powamp Shaft Diffusion Blocks Destroyed
@@ -1828,11 +2070,19 @@ Extra - minimap_coordinates: [{'x': 20, 'y': 5}, {'x': 20, 'y': 6}, {'x': 20, 'y
           Diffusion Missile Data and Missiles
           # Shoot missile diagonally
           Missiles ≥ 2 and Movement (Beginner)
+  > Front of Door to Owtch Atrium
+      All of the following:
+          Missiles and Morph Ball
+          Any of the following:
+              Space Jump
+              All of the following:
+                  Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
+                  Hi-Jump or Wall Jump (Intermediate)
+  > Front of Door to Aquarium Speedway
+      Trivial
 
 > Top Alcove; Heals? False
   * Layers: default
-  > Door to Owtch Atrium
-      Morph Ball and After Powamp Shaft Diffusion Blocks Destroyed
   > Other to Hideout
       All of the following:
           Morph Ball
@@ -1842,6 +2092,8 @@ Extra - minimap_coordinates: [{'x': 20, 'y': 5}, {'x': 20, 'y': 6}, {'x': 20, 'y
       Missiles and Morph Ball and After Powamp Shaft Diffusion Blocks Destroyed
   > Event - Break Missile Blocks from Above
       Missiles
+  > Front of Door to Owtch Atrium
+      Morph Ball and After Powamp Shaft Diffusion Blocks Destroyed
 
 > Event - Break Missile Blocks from Below; Heals? False
   * Layers: default
@@ -1852,7 +2104,7 @@ Extra - minimap_coordinates: [{'x': 20, 'y': 5}, {'x': 20, 'y': 6}, {'x': 20, 'y
 > Event - Break Missile Blocks from Hatch; Heals? False
   * Layers: default
   * Event Powamp Shaft Diffusion Blocks Destroyed
-  > Door to Owtch Atrium
+  > Front of Door to Owtch Atrium
       Trivial
 
 > Event - Break Missile Blocks from Above; Heals? False
@@ -1875,7 +2127,7 @@ Hint Features - Geron, 1-way Shutter
   * Extra - blockx: 3
   * Extra - blocky: 7
   * Extra - infant_weight: 0.34
-  > Other to Powamp Playhouse
+  > Front of Other to Powamp Playhouse
       Any of the following:
           After Sector 4 Water Level Lowered
           Damage Runs (Beginner) and Electrified Water Damage ≥ 18 and Have Any Suit Upgrade
@@ -1885,6 +2137,11 @@ Hint Features - Geron, 1-way Shutter
   * Layers: default
   * Open Passage to Powamp Playhouse/Other to Drain Pipe
   * Extra - door_idx: (85,)
+  > Front of Other to Powamp Playhouse
+      Trivial
+
+> Front of Other to Powamp Playhouse; Heals? False
+  * Layers: default
   > Pickup (Hidden Missile Tank)
       All of the following:
           Morph Ball
@@ -1909,7 +2166,9 @@ Hint Features - Geron, 1-way Shutter
                       Screw Attack and Knowledge (Beginner)
                       # Run past Geron spawning
                       Movement (Intermediate)
-  > Door to Aquarium Kago Storage
+  > Other to Powamp Playhouse
+      Trivial
+  > Front of Door to Aquarium Kago Storage
       All of the following:
           Morph Ball
           Any of the following:
@@ -1928,7 +2187,7 @@ Hint Features - Geron, 1-way Shutter
   * Layers: default
   * L0 Hatch to Aquarium Hub/Door to Drain Pipe
   * Extra - door_idx: (91,)
-  > Door to Aquarium Kago Storage
+  > Front of Door to Aquarium Kago Storage
       Any of the following:
           After Sector 4 Water Level Lowered
           All of the following:
@@ -1942,7 +2201,21 @@ Hint Features - Geron, 1-way Shutter
   * Layers: default
   * L0 Hatch to Aquarium Kago Storage/Door to Drain Pipe
   * Extra - door_idx: (92,)
-  > Other to Powamp Playhouse
+  > Front of Door to Aquarium Kago Storage
+      Trivial
+
+> Front of Door to Aquarium Kago Storage; Heals? False
+  * Layers: default
+  > Door to Aquarium Hub
+      Any of the following:
+          After Sector 4 Water Level Lowered
+          All of the following:
+              # Damage Run
+              Damage Runs (Beginner)
+              Any of the following:
+                  Electrified Water Damage ≥ 13
+                  Electrified Water Damage ≥ 5 and Have Any Suit Upgrade
+  > Front of Other to Powamp Playhouse
       All of the following:
           Morph Ball
           Any of the following:
@@ -1956,15 +2229,8 @@ Hint Features - Geron, 1-way Shutter
               # Freeze Powamp
               Can Freeze Enemies With Diffusion
               Wave Beam and Can Freeze Enemies With Ice Beam
-  > Door to Aquarium Hub
-      Any of the following:
-          After Sector 4 Water Level Lowered
-          All of the following:
-              # Damage Run
-              Damage Runs (Beginner)
-              Any of the following:
-                  Electrified Water Damage ≥ 13
-                  Electrified Water Damage ≥ 5 and Have Any Suit Upgrade
+  > Door to Aquarium Kago Storage
+      Trivial
 
 ----------------
 Owtch Atrium
@@ -1999,7 +2265,7 @@ Hint Features - Multiple Pickups
   * Extra - blockx: 42
   * Extra - blocky: 5
   * Extra - infant_weight: 0.34
-  > Other to Aquarium Speedway
+  > Front of Other to Aquarium Speedway
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -2034,6 +2300,11 @@ Hint Features - Multiple Pickups
   * Layers: default
   * Open Passage to Aquarium Speedway/Other to Aquarium Kago Storage
   * Extra - door_idx: (94,)
+  > Front of Other to Aquarium Speedway
+      Trivial
+
+> Front of Other to Aquarium Speedway; Heals? False
+  * Layers: default
   > Pickup (Power Bomb Tank)
       # This can safely not have Door Lock Rando check
       Gravity Suit and Speed Booster and Disabled Entrance Rando
@@ -2058,6 +2329,8 @@ Hint Features - Multiple Pickups
                               Stand On Frozen Enemies (Beginner) and Wall Jump (Intermediate) and Can Freeze Enemies With Any Weapon
               # Underwater Wall Jump: https://youtu.be/UEsvsxt9CgY
               Hi-Jump and Stand On Frozen Enemies (Beginner) and Underwater Wall Jump (Ludicrous) and Can Freeze Enemies With Any Weapon
+  > Other to Aquarium Speedway
+      Trivial
 
 > After Kago; Heals? False
   * Layers: default
@@ -2075,7 +2348,7 @@ Hint Features - Multiple Pickups
                   Space Jump or Wall Jump (Intermediate)
                   # Deal with Yarls in previous room
                   Can Freeze Enemies With Any Weapon or Can Kill Tough Underwater Beam-Resistant Enemy
-  > Other to Aquarium Speedway
+  > Front of Other to Aquarium Speedway
       # Secret Tunnel
       Morph Ball and Knowledge (Beginner)
 

@@ -5,50 +5,64 @@ Extra - starting_script: <TRA0043:0099:0010:0034
 > Door to Boulder Chamber; Heals? False
   * Layers: default
   * Door to Boulder Chamber/Door to Labyrinth B
-  > Door to Labyrinth W
+  > Front of Door to Labyrinth W
       Trivial
 
 > Door to Labyrinth W; Heals? False
   * Layers: default
   * Door to Labyrinth W/Door to Labyrinth B
-  > Door to Boulder Chamber
+  > Front of Door to Labyrinth W
       Trivial
-  > Teleporter to Arthur's House
+
+> Front of Door to Labyrinth W; Heals? False
+  * Layers: default
+  > Door to Boulder Chamber
       Trivial
   > Event - Enter Labyrinth B from Above
       Trivial
   > Save Point
+      Trivial
+  > Door to Labyrinth W
+      Trivial
+  > Front of Teleporter to Arthur's House
       Trivial
 
 > Pickup (Booster Chest); Heals? False
   * Layers: default
   * Pickup 17; Category? Minor
   * Extra - event: 0502
-  > Teleporter to Arthur's House
+  > Front of Teleporter to Arthur's House
       Trivial
 
-> Teleporter to Arthur's House; Heals? False; Spawn Point; Default Node
+> Teleporter to Arthur's House; Heals? False; Default Node
   * Layers: default
   * Teleporter to Arthur's House/Teleporter to Labyrinth B
-  > Door to Labyrinth W
+  > Front of Teleporter to Arthur's House
+      Trivial
+
+> Front of Teleporter to Arthur's House; Heals? False; Spawn Point
+  * Layers: default
+  > Pickup (Booster Chest)
+      Trivial
+  > Front of Door to Labyrinth W
       Any of the following:
           Has Flight
           After Entered Labyrinth B from Above and Remove Points of No Return
-  > Pickup (Booster Chest)
+  > Teleporter to Arthur's House
       Trivial
 
 > Event - Enter Labyrinth B from Above; Heals? False
   * Layers: default
   * Event Entered Labyrinth B from Above
-  > Door to Labyrinth W
+  > Front of Door to Labyrinth W
       Trivial
 
 > Save Point; Heals? False
   * Layers: default
-  > Door to Labyrinth W
-      Trivial
   > Refill
       Has Flight
+  > Front of Door to Labyrinth W
+      Trivial
 
 > Refill; Heals? True
   * Layers: default
@@ -60,9 +74,14 @@ Boulder Chamber
 Extra - map_name: MazeS
 Extra - starting_script: <TRA0044:0092:0002:0013
 Hint Features - Boss
-> Door to Labyrinth B; Heals? False; Spawn Point; Default Node
+> Door to Labyrinth B; Heals? False; Default Node
   * Layers: default
   * Door to Labyrinth B/Door to Boulder Chamber
+  > Front of Door to Labyrinth B
+      Trivial
+
+> Front of Door to Labyrinth B; Heals? False; Spawn Point
+  * Layers: default
   > Event - Balrog 3
       All of the following:
           After Delivered Cure-All
@@ -79,29 +98,31 @@ Hint Features - Boss
       After Defeated Balrog 3
   > Save Point
       After Defeated Balrog 3
+  > Door to Labyrinth B
+      Trivial
 
 > Event - Balrog 3; Heals? False
   * Layers: default
   * Event Defeated Balrog 3
-  > Door to Labyrinth B
+  > Front of Door to Labyrinth B
       Trivial
 
 > Pickup (Boulder Chest); Heals? False
   * Layers: default
   * Pickup 18; Category? Minor
   * Extra - event: 0202
-  > Door to Labyrinth B
+  > Front of Door to Labyrinth B
       Trivial
 
 > Door to Labyrinth M; Heals? False
   * Layers: default
   * Door to Labyrinth M/Door to Boulder Chamber
-  > Door to Labyrinth B
+  > Front of Door to Labyrinth B
       Trivial
 
 > Save Point; Heals? False
   * Layers: default
-  > Door to Labyrinth B
+  > Front of Door to Labyrinth B
       Trivial
 
 ----------------
@@ -111,7 +132,7 @@ Extra - starting_script: <TRA0045:0099:0002:0053
 > Door to Boulder Chamber; Heals? False
   * Layers: default
   * Door to Boulder Chamber/Door to Labyrinth M
-  > Door to Dark Place
+  > Front of Door to Dark Place
       Any of the following:
           Pacifist Strats (Expert) or Has Weapon
           Pacifist Strats (Advanced) and Has Flight
@@ -119,27 +140,41 @@ Extra - starting_script: <TRA0045:0099:0002:0053
 > Door to Dark Place; Heals? False
   * Layers: default
   * Door to Dark Place/Door to Labyrinth M
+  > Front of Door to Dark Place
+      Trivial
+
+> Front of Door to Dark Place; Heals? False
+  * Layers: default
   > Door to Boulder Chamber
       All of the following:
           After Defeated Balrog 3
           Any of the following:
               Break blocks with Bubbler (Expert) or Has Weapon
               Pacifist Strats (Advanced) and Has Flight
-  > Teleporter to Labyrinth Shop
+  > Door to Dark Place
+      Trivial
+  > Front of Teleporter to Labyrinth Shop
       Pacifist Strats (Beginner) or Has Weapon
 
-> Teleporter to Labyrinth Shop; Heals? False; Spawn Point; Default Node
+> Teleporter to Labyrinth Shop; Heals? False; Default Node
   * Layers: default
   * Teleporter to Labyrinth Shop/Teleporter to Labyrinth M
-  > Door to Dark Place
-      Pacifist Strats (Beginner) or Has Weapon
+  > Front of Teleporter to Labyrinth Shop
+      Trivial
+
+> Front of Teleporter to Labyrinth Shop; Heals? False; Spawn Point
+  * Layers: default
   > Event - Level MG
       Machine Gun
+  > Front of Door to Dark Place
+      Pacifist Strats (Beginner) or Has Weapon
+  > Teleporter to Labyrinth Shop
+      Trivial
 
 > Event - Level MG; Heals? False
   * Layers: default
   * Event Level Up Machine Gun
-  > Teleporter to Labyrinth Shop
+  > Front of Teleporter to Labyrinth Shop
       Trivial
 
 ----------------
@@ -149,34 +184,41 @@ Extra - starting_script: <TRA0046:0094:0004:0006
 > Door to Labyrinth M; Heals? False
   * Layers: default
   * Door to Labyrinth M/Door to Dark Place
+  > Front of Door to Labyrinth M
+      Trivial
+
+> Front of Door to Labyrinth M; Heals? False
+  * Layers: default
   > Door to Core
       After Defeated Balrog 3
   > Exit to Waterway
       Curly's Air Tank
   > Save Point
       Trivial
+  > Door to Labyrinth M
+      Trivial
 
 > Door to Core; Heals? False
   * Layers: default
   * Door to Core/Door to Dark Place
-  > Door to Labyrinth M
+  > Front of Door to Labyrinth M
       Trivial
 
 > Exit to Waterway; Heals? False
   * Layers: default
   * Exit to Waterway/Entrance from Dark Place
-  > Door to Labyrinth M
+  > Front of Door to Labyrinth M
       Trivial
 
 > Entrance from Reservoir; Heals? False
   * Layers: default
   * Entrance to Reservoir/Debug Cat to Dark Place
-  > Door to Labyrinth M
+  > Front of Door to Labyrinth M
       Trivial
 
 > Save Point; Heals? False; Spawn Point; Default Node
   * Layers: default
-  > Door to Labyrinth M
+  > Front of Door to Labyrinth M
       Trivial
 
 ----------------
@@ -184,9 +226,14 @@ Core
 Extra - map_name: Almond
 Extra - starting_script: <TRA0047:0092:0004:0017
 Hint Features - Boss, Underwater
-> Door to Dark Place; Heals? False; Spawn Point; Default Node
+> Door to Dark Place; Heals? False; Default Node
   * Layers: default
   * Door to Dark Place/Door to Core
+  > Front of Door to Dark Place
+      Trivial
+
+> Front of Door to Dark Place; Heals? False; Spawn Point
+  * Layers: default
   > Inner Room
       All of the following:
           After Defeated Balrog 3
@@ -196,6 +243,8 @@ Hint Features - Boss, Underwater
               All of the following:
                   Missiles ≥ 2 and Kill Bosses with Missiles (Beginner)
                   Missile Launcher or Super Missile Launcher
+  > Door to Dark Place
+      Trivial
 
 > Event - Core; Heals? False
   * Layers: default
@@ -220,8 +269,6 @@ Hint Features - Boss, Underwater
 
 > Inner Room; Heals? False
   * Layers: default
-  > Door to Dark Place
-      After Defeated Core
   > Event - Core
       Any of the following:
           Can Kill Bosses
@@ -231,15 +278,24 @@ Hint Features - Boss, Underwater
           Pacifist Strats (Intermediate)
   > Pickup (Robot's Arm)
       Trivial
+  > Front of Door to Dark Place
+      After Defeated Core
 
 ----------------
 Waterway
 Extra - map_name: River
 Extra - starting_script: <TRA0048:0093:0155:0001
-> Entrance from Dark Place; Heals? False; Spawn Point; Default Node
+> Entrance from Dark Place; Heals? False; Default Node
   * Layers: default
   * Entrance to Dark Place/Exit to Waterway
-  > Door to Waterway Cabin
+  > Front of Entrance from Dark Place
+      Trivial
+
+> Front of Entrance from Dark Place; Heals? False; Spawn Point
+  * Layers: default
+  > Entrance from Dark Place
+      Trivial
+  > Front of Door to Waterway Cabin
       All of the following:
           Curly's Air Tank
           Pacifist Strats (Intermediate) or Has Weapon
@@ -251,8 +307,15 @@ Extra - starting_script: <TRA0048:0093:0155:0001
 > Door to Waterway Cabin; Heals? False
   * Layers: default
   * Door to Waterway Cabin/Door to Waterway
+  > Front of Door to Waterway Cabin
+      Trivial
+
+> Front of Door to Waterway Cabin; Heals? False
+  * Layers: default
   > Exit to Main Artery
       Curly's Air Tank
+  > Door to Waterway Cabin
+      Trivial
 
 ----------------
 Waterway Cabin
@@ -261,22 +324,29 @@ Extra - starting_script: <TRA0073:0094:0008:0009
 > Door to Waterway; Heals? False
   * Layers: default
   * Door to Waterway/Door to Waterway Cabin
+  > Front of Door to Waterway
+      Trivial
+
+> Front of Door to Waterway; Heals? False
+  * Layers: default
   > Event - Drained Curly
       After Picked up Curly (Core)
   > Bed
+      Trivial
+  > Door to Waterway
       Trivial
 
 > Event - Drained Curly; Heals? True
   * Layers: default
   * Event Saved Curly
-  > Door to Waterway
+  > Front of Door to Waterway
       Trivial
 
 > Save Point; Heals? False; Spawn Point; Default Node
   * Layers: default
-  > Door to Waterway
-      Trivial
   > Bed
+      Trivial
+  > Front of Door to Waterway
       Trivial
 
 > Bed; Heals? True
@@ -291,17 +361,31 @@ Hint Features - Boss, Underwater
 > Entrance from Waterway; Heals? False; Default Node
   * Layers: default
   * Entrance to Waterway/Exit to Main Artery
-  > Exit to Reservoir
-      After Defeated Ironhead
+  > Front of Entrance from Waterway
+      Trivial
+
+> Front of Entrance from Waterway; Heals? False
+  * Layers: default
   > Event - Ironhead
       Any of the following:
           Can Kill Bosses
           Missiles ≥ 10 and Super Missile Launcher and Kill Bosses with Missiles (Intermediate)
           Missiles ≥ 24 and Missile Launcher and Kill Bosses with Missiles (Advanced)
+  > Entrance from Waterway
+      Trivial
+  > Front of Exit to Reservoir
+      After Defeated Ironhead
 
 > Exit to Reservoir; Heals? False
   * Layers: default
   * Exit to Reservoir/Entrance from Main Artery
+  > Front of Exit to Reservoir
+      Trivial
+
+> Front of Exit to Reservoir; Heals? False
+  * Layers: default
+  > Exit to Reservoir
+      Trivial
 
 > Event - Ironhead; Heals? False
   * Layers: default
@@ -314,7 +398,7 @@ Hint Features - Boss, Underwater
   * Pickup 21; Category? Minor
   * Extra - event: 0412
   * Extra - event_map: Pool
-  > Exit to Reservoir
+  > Front of Exit to Reservoir
       Trivial
 
 ----------------
@@ -373,7 +457,14 @@ Extra - starting_script: <TRA0009:0400:0017:0064
 > Teleporter to Sand Zone; Heals? False
   * Layers: default
   * Teleporter to Sand Zone/Teleporter to Labyrinth I
+  > Front of Teleporter to Sand Zone
+      Trivial
+
+> Front of Teleporter to Sand Zone; Heals? False
+  * Layers: default
   > Room Bottom
+      Trivial
+  > Teleporter to Sand Zone
       Trivial
 
 > Save Point; Heals? False
@@ -400,34 +491,48 @@ Extra - starting_script: <TRA0009:0400:0017:0064
 > Event - Use Labyrinth I Teleporter; Heals? False
   * Layers: default
   * Event Used Labyrinth I Teleporter
-  > Teleporter to Sand Zone
+  > Front of Teleporter to Sand Zone
       Trivial
 
 ----------------
 Labyrinth H
 Extra - map_name: MazeH
 Extra - starting_script: <TRA0038:0090:0035:0013
-> Door to Labyrinth I; Heals? False; Spawn Point; Default Node
+> Door to Labyrinth I; Heals? False; Default Node
   * Layers: default
   * Door to Labyrinth I/Door to Labyrinth H
+  > Front of Door to Labyrinth I
+      Trivial
+
+> Front of Door to Labyrinth I; Heals? False; Spawn Point
+  * Layers: default
   > Door to Labyrinth W
+      Trivial
+  > Door to Labyrinth I
       Trivial
 
 > Door to Labyrinth W; Heals? False
   * Layers: default
   * Door to Labyrinth W/Door to Labyrinth H
-  > Door to Labyrinth I
+  > Front of Door to Labyrinth I
       Trivial
 
 ----------------
 Labyrinth W
 Extra - map_name: MazeW
 Extra - starting_script: <TRA0039:0091:0004:0016
-> Door to Labyrinth H; Heals? False; Spawn Point; Default Node
+> Door to Labyrinth H; Heals? False; Default Node
   * Layers: default
   * Door to Labyrinth H/Door to Labyrinth W
+  > Front of Door to Labyrinth H
+      Trivial
+
+> Front of Door to Labyrinth H; Heals? False; Spawn Point
+  * Layers: default
   > Outside Camp
       Traverse Labyrinth W
+  > Door to Labyrinth H
+      Trivial
 
 > Door to Labyrinth Shop; Heals? False
   * Layers: default
@@ -437,8 +542,6 @@ Extra - starting_script: <TRA0039:0091:0004:0016
 
 > Outside Camp; Heals? False
   * Layers: default
-  > Door to Labyrinth H
-      Traverse Labyrinth W
   > Door to Labyrinth Shop
       Traverse Labyrinth W
   > Door to Camp (Lower)
@@ -458,6 +561,8 @@ Extra - starting_script: <TRA0039:0091:0004:0016
       Machine Gun
   > Before Monster X
       Trivial
+  > Front of Door to Labyrinth H
+      Traverse Labyrinth W
 
 > Door to Camp (Lower); Heals? False
   * Layers: default
@@ -480,7 +585,14 @@ Extra - starting_script: <TRA0039:0091:0004:0016
 > Door to Labyrinth B; Heals? False
   * Layers: default
   * Door to Labyrinth B/Door to Labyrinth W
+  > Front of Door to Labyrinth B
+      Trivial
+
+> Front of Door to Labyrinth B; Heals? False
+  * Layers: default
   > Before Monster X
+      Trivial
+  > Door to Labyrinth B
       Trivial
 
 > Event - Monster X; Heals? False
@@ -488,7 +600,7 @@ Extra - starting_script: <TRA0039:0091:0004:0016
   * Event Defeated Monster X
   > Outside Camp
       Trivial
-  > Door to Labyrinth B
+  > Front of Door to Labyrinth B
       Trivial
 
 > Event - Level MG; Heals? False
@@ -501,13 +613,13 @@ Extra - starting_script: <TRA0039:0091:0004:0016
   * Layers: default
   > Outside Camp
       After Defeated Monster X
-  > Door to Labyrinth B
-      After Defeated Monster X
   > Event - Monster X
       Any of the following:
           Can Kill Bosses
           Missiles ≥ 30 and Super Missile Launcher and Kill Bosses with Missiles (Advanced)
           Missiles ≥ 60 and Missile Launcher and Kill Bosses with Missiles (Expert)
+  > Front of Door to Labyrinth B
+      After Defeated Monster X
 
 ----------------
 Labyrinth Shop
@@ -516,6 +628,11 @@ Extra - starting_script: <TRA0042:0094:0015:0003
 > Door to Labyrinth W; Heals? False
   * Layers: default
   * Door to Labyrinth W/Door to Labyrinth Shop
+  > Front of Door to Labyrinth W
+      Trivial
+
+> Front of Door to Labyrinth W; Heals? False
+  * Layers: default
   > Pickup (Chaba Chest (Machine Gun))
       Machine Gun
   > Pickup (Chaba Chest (Fireball))
@@ -526,37 +643,39 @@ Extra - starting_script: <TRA0042:0094:0015:0003
       Has Flight
   > Save Point
       Trivial
+  > Door to Labyrinth W
+      Trivial
 
 > Pickup (Chaba Chest (Machine Gun)); Heals? False
   * Layers: default
   * Pickup 23; Category? Minor
   * Extra - event: 0502
-  > Door to Labyrinth W
+  > Front of Door to Labyrinth W
       Trivial
 
 > Pickup (Chaba Chest (Fireball)); Heals? False
   * Layers: default
   * Pickup 24; Category? Minor
   * Extra - event: 0512
-  > Door to Labyrinth W
+  > Front of Door to Labyrinth W
       Trivial
 
 > Pickup (Chaba Chest (Spur)); Heals? False
   * Layers: default
   * Pickup 25; Category? Minor
   * Extra - event: 0522
-  > Door to Labyrinth W
+  > Front of Door to Labyrinth W
       Trivial
 
 > Teleporter to Labyrinth M; Heals? False
   * Layers: default
   * Teleporter to Labyrinth M/Teleporter to Labyrinth Shop
-  > Door to Labyrinth W
+  > Front of Door to Labyrinth W
       Trivial
 
 > Save Point; Heals? False; Spawn Point; Default Node
   * Layers: default
-  > Door to Labyrinth W
+  > Front of Door to Labyrinth W
       Trivial
 
 ----------------
@@ -566,53 +685,67 @@ Extra - starting_script: <TRA0040:0094:0014:0009
 > Door to Labyrinth W (Lower); Heals? False
   * Layers: default
   * Door to Labyrinth W/Door to Camp (Lower)
-  > Door to Labyrinth W (Upper)
-      After Start in Camp
+  > Front of Door to Labyrinth W (Lower)
+      Trivial
+
+> Front of Door to Labyrinth W (Lower); Heals? False
+  * Layers: default
   > Pickup (Dr. Gero)
       Trivial
   > Event - Cure-All
       Cure-All
   > Save Point
       Trivial
+  > Door to Labyrinth W (Lower)
+      Trivial
+  > Front of Door to Labyrinth W (Upper)
+      After Start in Camp
 
 > Door to Labyrinth W (Upper); Heals? False
   * Layers: default
   * Door to Labyrinth W/Door to Camp (Upper)
-  > Door to Labyrinth W (Lower)
-      After Start in Camp
+  > Front of Door to Labyrinth W (Upper)
+      Trivial
+
+> Front of Door to Labyrinth W (Upper); Heals? False
+  * Layers: default
   > Pickup (Camp Chest)
+      Trivial
+  > Front of Door to Labyrinth W (Lower)
+      After Start in Camp
+  > Door to Labyrinth W (Upper)
       Trivial
 
 > Pickup (Dr. Gero); Heals? True
   * Layers: default
   * Pickup 26; Category? Minor
   * Extra - event: 0305
-  > Door to Labyrinth W (Lower)
+  > Front of Door to Labyrinth W (Lower)
       Trivial
 
 > Event - Cure-All; Heals? True
   * Layers: default
   * Event Delivered Cure-All
-  > Door to Labyrinth W (Lower)
+  > Front of Door to Labyrinth W (Lower)
       Trivial
 
 > Pickup (Camp Chest); Heals? False
   * Layers: default
   * Pickup 27; Category? Minor
   * Extra - event: 0401
-  > Door to Labyrinth W (Upper)
+  > Front of Door to Labyrinth W (Upper)
       Trivial
 
 > Room Spawn; Heals? False; Spawn Point; Default Node
   * Layers: default
-  > Door to Labyrinth W (Lower)
-      Trivial
   > Event - Camp
+      Trivial
+  > Front of Door to Labyrinth W (Lower)
       Trivial
 
 > Save Point; Heals? False
   * Layers: default
-  > Door to Labyrinth W (Lower)
+  > Front of Door to Labyrinth W (Lower)
       Trivial
 
 > Event - Camp; Heals? False
@@ -626,10 +759,17 @@ Extra - starting_script: <TRA0040:0094:0014:0009
 Clinic Ruins
 Extra - map_name: MazeD
 Extra - starting_script: <TRA0041:0090:0015:0009
-> Door to Labyrinth W; Heals? False; Spawn Point; Default Node
+> Door to Labyrinth W; Heals? False; Default Node
   * Layers: default
   * Door to Labyrinth W/Door to Clinic Ruins
+  > Front of Door to Labyrinth W
+      Trivial
+
+> Front of Door to Labyrinth W; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Puu Black Boss)
+      Trivial
+  > Door to Labyrinth W
       Trivial
 
 > Pickup (Puu Black Boss); Heals? False
@@ -645,6 +785,6 @@ Extra - starting_script: <TRA0041:0090:0015:0009
 > Event - Puu Black; Heals? False
   * Layers: default
   * Event Defeated Puu Black
-  > Door to Labyrinth W
+  > Front of Door to Labyrinth W
       Trivial
 

@@ -22,7 +22,7 @@
                     "extra": {},
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Sanctum Access": {
+                        "Front of Door to Sanctum Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -103,7 +103,7 @@
                                 ]
                             }
                         },
-                        "Elevator to Sky Temple Grounds": {
+                        "Front of Elevator to Sky Temple Grounds": {
                             "type": "resource",
                             "data": {
                                 "type": "damage",
@@ -141,6 +141,26 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Front of Door to Sanctum Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sanctum Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -197,7 +217,14 @@
                                 ]
                             }
                         },
-                        "Elevator to Sky Temple Grounds": {
+                        "Door to Sanctum Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Elevator to Sky Temple Grounds": {
                             "type": "resource",
                             "data": {
                                 "type": "damage",
@@ -234,6 +261,26 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Front of Elevator to Sky Temple Grounds": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Elevator to Sky Temple Grounds": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Save Station": {
                             "type": "or",
@@ -334,7 +381,7 @@
                                 ]
                             }
                         },
-                        "Door to Sanctum Access": {
+                        "Front of Door to Sanctum Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -453,6 +500,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Elevator to Sky Temple Grounds": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -476,7 +530,7 @@
                     "extra": {
                         "dock_name": "Darkbottom"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sky Temple",
@@ -493,6 +547,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Sky Temple Energy Controller": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sky Temple Energy Controller": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Sky Temple Energy Controller": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Sanctum": {
                             "type": "and",
                             "data": {
@@ -599,7 +680,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Sky Temple Energy Controller": {
+                        "Front of Door to Sky Temple Energy Controller": {
                             "type": "resource",
                             "data": {
                                 "type": "damage",
@@ -630,7 +711,7 @@
                     "extra": {
                         "dock_name": "SouthDark"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sky Temple",
@@ -647,6 +728,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Sanctum Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sanctum Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Sanctum Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Emperor Ing": {
                             "type": "and",
                             "data": {
@@ -1015,7 +1123,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event8",
                     "connections": {
-                        "Door to Sanctum Access": {
+                        "Front of Door to Sanctum Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,

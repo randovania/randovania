@@ -7,32 +7,39 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 1}, {'x': 5, 'y': 2}, {'x': 6, 'y': 
   * Layers: default
   * L1 Hatch to Lava Lake Annex/Door to Entrance Lobby
   * Extra - door_idx: (1,)
-  > Door to Entrance Recharge Room
+  > Front of Door to Entrance Recharge Room
       Trivial
 
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Lobby
   * Extra - door_idx: (2,)
+  > Front of Door to Entrance Recharge Room
+      Trivial
+
+> Front of Door to Entrance Recharge Room; Heals? False
+  * Layers: default
   > Door to Lava Lake Annex
       Trivial
   > Door to Yameba Corridor
       Trivial
   > Door to Antechamber
       Trivial
+  > Door to Entrance Recharge Room
+      Trivial
 
 > Door to Yameba Corridor; Heals? False
   * Layers: default
   * L0 Hatch to Yameba Corridor/Door to Entrance Lobby
   * Extra - door_idx: (3,)
-  > Door to Entrance Recharge Room
+  > Front of Door to Entrance Recharge Room
       Trivial
 
 > Door to Antechamber; Heals? False
   * Layers: default
   * L2 Hatch to Antechamber/Door to Entrance Lobby
   * Extra - door_idx: (76,)
-  > Door to Entrance Recharge Room
+  > Front of Door to Entrance Recharge Room
       Trivial
 
 ----------------
@@ -45,23 +52,30 @@ Extra - unlocked_save_recharge_station: True
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
   * Extra - door_idx: (4,)
-  > Door to Entrance Navigation Room
+  > Front of Door to Entrance Navigation Room
       Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
   * Extra - door_idx: (5,)
+  > Front of Door to Entrance Navigation Room
+      Trivial
+
+> Front of Door to Entrance Navigation Room; Heals? False
+  * Layers: default
   > Door to Entrance Recharge Room
       Trivial
   > Save Station
+      Trivial
+  > Door to Entrance Navigation Room
       Trivial
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - X: 9
   * Extra - Y: 10
-  > Door to Entrance Navigation Room
+  > Front of Door to Entrance Navigation Room
       Trivial
 
 ----------------
@@ -73,16 +87,23 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 1}]
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
   * Extra - door_idx: (6,)
-  > Door to Elevator to Main Deck
+  > Front of Door to Elevator to Main Deck
       Trivial
 
 > Door to Elevator to Main Deck; Heals? False
   * Layers: default
   * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
   * Extra - door_idx: (87,)
+  > Front of Door to Elevator to Main Deck
+      Trivial
+
+> Front of Door to Elevator to Main Deck; Heals? False
+  * Layers: default
   > Door to Entrance Save Room
       Trivial
   > Navigation Terminal
+      Trivial
+  > Door to Elevator to Main Deck
       Trivial
 
 > Navigation Terminal; Heals? False
@@ -91,7 +112,7 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 1}]
   * Extra - hint_name: Sector1Entrance
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: PRECISE_CATEGORY
-  > Door to Elevator to Main Deck
+  > Front of Door to Elevator to Main Deck
       Trivial
 
 ----------------
@@ -103,28 +124,42 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 2}, {'x': 8, 'y': 2}, {'x': 9, 'y': 
   * Layers: default
   * L0 Hatch to Entrance Lobby/Door to Yameba Corridor
   * Extra - door_idx: (9,)
-  > Door to Atmospheric Stabilizer Northwest
-      After Sector 1 Yameba Corridor Missile Geron Destroyed
+  > Front of Door to Entrance Lobby
+      Trivial
+
+> Front of Door to Entrance Lobby; Heals? False
+  * Layers: default
   > Event - Missile Geron
       Any of the following:
           Can Kill Missile Geron
           Speed Booster and Knowledge (Beginner)
+  > Door to Entrance Lobby
+      Trivial
+  > Front of Door to Atmospheric Stabilizer Northwest
+      After Sector 1 Yameba Corridor Missile Geron Destroyed
 
 > Door to Atmospheric Stabilizer Northwest; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Northwest/Door to Yameba Corridor
   * Extra - door_idx: (10,)
-  > Door to Entrance Lobby
-      After Sector 1 Yameba Corridor Missile Geron Destroyed
+  > Front of Door to Atmospheric Stabilizer Northwest
+      Trivial
+
+> Front of Door to Atmospheric Stabilizer Northwest; Heals? False
+  * Layers: default
   > Event - Missile Geron
       Can Kill Missile Geron
+  > Front of Door to Entrance Lobby
+      After Sector 1 Yameba Corridor Missile Geron Destroyed
+  > Door to Atmospheric Stabilizer Northwest
+      Trivial
 
 > Event - Missile Geron; Heals? False
   * Layers: default
   * Event Sector 1 Yameba Corridor Missile Geron Destroyed
-  > Door to Entrance Lobby
+  > Front of Door to Entrance Lobby
       Trivial
-  > Door to Atmospheric Stabilizer Northwest
+  > Front of Door to Atmospheric Stabilizer Northwest
       Trivial
 
 ----------------
@@ -136,10 +171,17 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 1}, {'x': 10, 'y': 2}, {'x': 11, 'y
   * Layers: default
   * L0 Hatch to Yameba Corridor/Door to Atmospheric Stabilizer Northwest
   * Extra - door_idx: (11,)
+  > Front of Door to Yameba Corridor
+      Trivial
+
+> Front of Door to Yameba Corridor; Heals? False
+  * Layers: default
   > Event - Stabilizer 1 Online
       # Kill with Shinespark from Yameba Corridor - https://youtu.be/DpeSE126r3M
       Level 0 Keycard and Speed Booster and After Sector 1 Yameba Corridor Missile Geron Destroyed and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Room Center
+      Trivial
+  > Door to Yameba Corridor
       Trivial
 
 > Door to Hornoad Hole; Heals? False
@@ -157,12 +199,12 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 1}, {'x': 10, 'y': 2}, {'x': 11, 'y
 
 > Room Center; Heals? False
   * Layers: default
-  > Door to Yameba Corridor
-      After Stabilizer Northwest Restored
   > Door to Hornoad Hole
       After Stabilizer Northwest Restored
   > Event - Stabilizer 1 Online
       Can Kill Stabilizer Geron
+  > Front of Door to Yameba Corridor
+      After Stabilizer Northwest Restored
 
 ----------------
 Hornoad Hole
@@ -177,23 +219,30 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 2}, {'x': 13, 'y': 2}]
   * Extra - blockx: 27
   * Extra - blocky: 10
   * Extra - infant_weight: 0.4
-  > Door to Atmospheric Stabilizer Northwest
+  > Front of Door to Atmospheric Stabilizer Northwest
       Morph Ball
 
 > Door to Atmospheric Stabilizer Northwest; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Northwest/Door to Hornoad Hole
   * Extra - door_idx: (13,)
+  > Front of Door to Atmospheric Stabilizer Northwest
+      Trivial
+
+> Front of Door to Atmospheric Stabilizer Northwest; Heals? False
+  * Layers: default
   > Pickup (Energy Tank)
       Morph Ball
   > Door to Twin Junctions West
+      Trivial
+  > Door to Atmospheric Stabilizer Northwest
       Trivial
 
 > Door to Twin Junctions West; Heals? False
   * Layers: default
   * L0 Hatch to Twin Junctions West/Door to Hornoad Hole
   * Extra - door_idx: (14,)
-  > Door to Atmospheric Stabilizer Northwest
+  > Front of Door to Atmospheric Stabilizer Northwest
       Trivial
 
 ----------------
@@ -205,32 +254,39 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 2}, {'x': 14, 'y': 3}, {'x': 14, 'y
   * Layers: default
   * L0 Hatch to Hornoad Hole/Door to Twin Junctions West
   * Extra - door_idx: (15,)
+  > Front of Door to Hornoad Hole
+      Trivial
+
+> Front of Door to Hornoad Hole; Heals? False
+  * Layers: default
   > Door to Atmospheric Stabilizer Northeast
       Trivial
   > Door to Moto Motorway
       Trivial
   > Door to Twin Junctions East
       Trivial
+  > Door to Hornoad Hole
+      Trivial
 
 > Door to Atmospheric Stabilizer Northeast; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Northeast/Door to Twin Junctions West
   * Extra - door_idx: (16,)
-  > Door to Hornoad Hole
+  > Front of Door to Hornoad Hole
       Trivial
 
 > Door to Moto Motorway; Heals? False
   * Layers: default
   * L0 Hatch to Moto Motorway/Door to Twin Junctions West
   * Extra - door_idx: (17,)
-  > Door to Hornoad Hole
+  > Front of Door to Hornoad Hole
       Trivial
 
 > Door to Twin Junctions East; Heals? False
   * Layers: default
   * L0 Hatch to Twin Junctions East/Door to Twin Junctions West
   * Extra - door_idx: (18,)
-  > Door to Hornoad Hole
+  > Front of Door to Hornoad Hole
       Trivial
 
 ----------------
@@ -261,6 +317,11 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 3}, {'x': 8, 'y': 4}, {'x': 8, 'y': 
   * Layers: default
   * L0 Hatch to Moto Motorway/Door to Zebesian Zig
   * Extra - door_idx: (21,)
+  > Front of Door to Moto Motorway
+      Trivial
+
+> Front of Door to Moto Motorway; Heals? False
+  * Layers: default
   > Door to Sciser Puddle
       Any of the following:
           # Deal with the Pirates
@@ -269,12 +330,14 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 3}, {'x': 8, 'y': 4}, {'x': 8, 'y': 
           Combat (Intermediate)
   > Door to Lava Lake
       Trivial
+  > Door to Moto Motorway
+      Trivial
 
 > Door to Sciser Puddle; Heals? False
   * Layers: default
   * L0 Hatch to Sciser Puddle/Door to Zebesian Zig
   * Extra - door_idx: (31,)
-  > Door to Moto Motorway
+  > Front of Door to Moto Motorway
       Any of the following:
           # Deal with the Pirates
           Charge Beam or Missiles ≥ 10 or Screw Attack or Normal Damage ≥ 84 or Can Freeze Enemies With Any Weapon or Can Use Power Bombs
@@ -285,7 +348,7 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 3}, {'x': 8, 'y': 4}, {'x': 8, 'y': 
   * Layers: default
   * L0 Hatch to Lava Lake/Door to Zebesian Zig
   * Extra - door_idx: (44,)
-  > Door to Moto Motorway
+  > Front of Door to Moto Motorway
       Trivial
 
 ----------------
@@ -304,17 +367,22 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 4}, {'x': 12, 'y': 5}, {'x': 13, 'y
   * Layers: default
   * L0 Hatch to Stabilizer Checkpoint/Door to Atmospheric Stabilizer Central
   * Extra - door_idx: (88,)
+  > Front of Door to Stabilizer Checkpoint
+      Trivial
+
+> Front of Door to Stabilizer Checkpoint; Heals? False
+  * Layers: default
   > Room Center
       Trivial
   > Event - Stabilizer 5 Online
       # Kill with Shinespark from Checkpoint - https://youtu.be/2biI4SB_wAs
       Level 0 Keycard and Speed Booster and Wave Beam and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Door to Stabilizer Checkpoint
+      Trivial
 
 > Room Center; Heals? False
   * Layers: default
   > Door to Charge Core Upper Access
-      After Stabilizer Central Restored
-  > Door to Stabilizer Checkpoint
       After Stabilizer Central Restored
   > Event - Stabilizer 5 Online
       Any of the following:
@@ -332,6 +400,8 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 4}, {'x': 12, 'y': 5}, {'x': 13, 'y
               # Alternate methods of defeating the Geron
               Knowledge (Beginner)
               Screw Attack or Can Use Power Bombs
+  > Front of Door to Stabilizer Checkpoint
+      After Stabilizer Central Restored
 
 > Event - Stabilizer 5 Online; Heals? False
   * Layers: default
@@ -348,31 +418,38 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 4}, {'x': 11, 'y': 5}]
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Central/Door to Charge Core Upper Access
   * Extra - door_idx: (24,)
+  > Front of Door to Atmospheric Stabilizer Central
+      Trivial
+
+> Front of Door to Atmospheric Stabilizer Central; Heals? False
+  * Layers: default
   > Door to Charge Core Arena
       Trivial
   > Other to Crab Rave
       Morph Ball and After Sector 1 Charge Core Escape Missile Block Destroyed
   > Event - Missile Block
       Missiles
+  > Door to Atmospheric Stabilizer Central
+      Trivial
 
 > Door to Charge Core Arena; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Arena/Door to Charge Core Upper Access
   * Extra - door_idx: (84,)
-  > Door to Atmospheric Stabilizer Central
+  > Front of Door to Atmospheric Stabilizer Central
       Trivial
 
 > Other to Crab Rave; Heals? False
   * Layers: default
   * Tunnel to Crab Rave/Other to Charge Core Upper Access
   * Extra - door_idx: (92,)
-  > Door to Atmospheric Stabilizer Central
+  > Front of Door to Atmospheric Stabilizer Central
       Morph Ball and After Sector 1 Charge Core Escape Missile Block Destroyed
 
 > Event - Missile Block; Heals? False
   * Layers: default
   * Event Sector 1 Charge Core Escape Missile Block Destroyed
-  > Door to Atmospheric Stabilizer Central
+  > Front of Door to Atmospheric Stabilizer Central
       Trivial
 
 ----------------
@@ -430,11 +507,18 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 8}, {'x': 10, 'y': 9}, {'x': 11, 'y
   * Layers: default
   * L0 Hatch to Moto Manor/Door to Atmospheric Stabilizer Southwest
   * Extra - door_idx: (29,)
+  > Front of Door to Moto Manor
+      Trivial
+
+> Front of Door to Moto Manor; Heals? False
+  * Layers: default
   > Room Center
       Trivial
   > Event - Stabilizer 3 Online
       # Speed Boost the Stabilizer: https://youtu.be/V20W0F4dZP0
       Level 0 Keycard and Speed Booster and After Stabilizer Southeast Restored and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Door to Moto Manor
+      Trivial
 
 > Door to Sciser Puddle; Heals? False
   * Layers: default
@@ -445,12 +529,12 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 8}, {'x': 10, 'y': 9}, {'x': 11, 'y
 
 > Room Center; Heals? False
   * Layers: default
-  > Door to Moto Manor
-      After Stabilizer Southwest Restored
   > Door to Sciser Puddle
       After Stabilizer Southwest Restored
   > Event - Stabilizer 3 Online
       Can Kill Stabilizer Geron
+  > Front of Door to Moto Manor
+      After Stabilizer Southwest Restored
 
 > Event - Stabilizer 3 Online; Heals? False
   * Layers: default
@@ -493,27 +577,37 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 8}, {'x': 14, 'y': 9}, {'x': 15, 'y
   * Layers: default
   * L0 Hatch to Tourian Trapdoor/Door to Atmospheric Stabilizer Southeast
   * Extra - door_idx: (33,)
+  > Front of Door to Tourian Trapdoor
+      Trivial
+
+> Front of Door to Tourian Trapdoor; Heals? False
+  * Layers: default
   > Room Center
       Trivial
   > Shinespark from Below
+      Trivial
+  > Door to Tourian Trapdoor
       Trivial
 
 > Door to Zebesian Zag; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Zag/Door to Atmospheric Stabilizer Southeast
   * Extra - door_idx: (75,)
+  > Front of Door to Zebesian Zag
+      Trivial
+
+> Front of Door to Zebesian Zag; Heals? False
+  * Layers: default
   > Room Center
       Trivial
   > Shinespark from Below
+      Trivial
+  > Door to Zebesian Zag
       Trivial
 
 > Room Center; Heals? False
   * Layers: default
   > Door to Stabilizer Storage
-      After Stabilizer Southeast Restored
-  > Door to Tourian Trapdoor
-      After Stabilizer Southeast Restored
-  > Door to Zebesian Zag
       After Stabilizer Southeast Restored
   > Event - Stabilizer 4 Online
       Any of the following:
@@ -523,6 +617,10 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 8}, {'x': 14, 'y': 9}, {'x': 15, 'y
               Screw Attack and Knowledge (Beginner)
               # Get high enough
               Wall Jump (Beginner) or Have Any Jump Upgrade
+  > Front of Door to Tourian Trapdoor
+      After Stabilizer Southeast Restored
+  > Front of Door to Zebesian Zag
+      After Stabilizer Southeast Restored
 
 > Event - Stabilizer 4 Online; Heals? False
   * Layers: default
@@ -534,10 +632,6 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 8}, {'x': 14, 'y': 9}, {'x': 15, 'y
 
 > Shinespark from Below; Heals? False
   * Layers: default
-  > Door to Tourian Trapdoor
-      After Stabilizer Southeast Restored
-  > Door to Zebesian Zag
-      After Stabilizer Southeast Restored
   > Event - Stabilizer 4 Online
       All of the following:
           # Shinespark from Screw Shaft or Zebesian Zag: https://youtu.be/SrshBBv-MCw
@@ -546,6 +640,10 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 8}, {'x': 14, 'y': 9}, {'x': 15, 'y
               Hi-Jump or Wall Jump (Advanced)
               # Possible without wall jumps or jump upgrades: https://youtu.be/WsY4pSmBAyo
               Shinespark Tricks (Expert)
+  > Front of Door to Tourian Trapdoor
+      After Stabilizer Southeast Restored
+  > Front of Door to Zebesian Zag
+      After Stabilizer Southeast Restored
 
 ----------------
 Tourian Trapdoor
@@ -556,14 +654,14 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 9}, {'x': 13, 'y': 10}, {'x': 13, '
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Southeast/Door to Tourian Trapdoor
   * Extra - door_idx: (34,)
-  > Door to Moto Manor
+  > Front of Door to Moto Manor
       Trivial
 
 > Door to Ripper Sauna; Heals? False
   * Layers: default
   * L0 Hatch to Ripper Sauna/Door to Tourian Trapdoor
   * Extra - door_idx: (35,)
-  > Door to Moto Manor
+  > Front of Door to Moto Manor
       All of the following:
           Screw Attack
           Any of the following:
@@ -601,10 +699,17 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 9}, {'x': 13, 'y': 10}, {'x': 13, '
   * Layers: default
   * L0 Hatch to Moto Manor/Door to Tourian Trapdoor
   * Extra - door_idx: (94,)
+  > Front of Door to Moto Manor
+      Trivial
+
+> Front of Door to Moto Manor; Heals? False
+  * Layers: default
   > Door to Atmospheric Stabilizer Southeast
       Trivial
   > Door to Ripper Sauna
       Screw Attack
+  > Door to Moto Manor
+      Trivial
 
 ----------------
 Lava Lake
@@ -620,14 +725,14 @@ Hint Features - Climbable Surface, Multiple Pickups
   * Extra - blockx: 8
   * Extra - blocky: 6
   * Extra - infant_weight: 0.4
-  > Door to Lava Lake Annex
+  > Front of Door to Lava Lake Annex
       Any of the following:
           # Deal with Lava
           Gravity Suit and Varia Suit
           # Suitless Damage Run: https://youtu.be/TC4s0dx6lg4
           Damage Runs (Intermediate) and Lava Damage ≥ 60
           Damage Runs (Beginner) and Lava Damage ≥ 30 and Have Any Suit Upgrade
-  > Door to Zebesian Zig
+  > Front of Door to Zebesian Zig
       Any of the following:
           Space Jump
           Gravity Suit and Varia Suit
@@ -651,14 +756,14 @@ Hint Features - Climbable Surface, Multiple Pickups
   * Extra - blockx: 44
   * Extra - blocky: 19
   * Extra - infant_weight: 0.4
-  > Door to Lava Lake Annex
+  > Front of Door to Lava Lake Annex
       All of the following:
           Morph Ball
           Any of the following:
               # Damage run
               Damage Runs (Intermediate) and Lava Damage ≥ 185
               Damage Runs (Beginner) and Lava Damage ≥ 100 and Have Any Suit Upgrade
-  > Door to Zebesian Zig
+  > Front of Door to Zebesian Zig
       All of the following:
           Morph Ball
           Any of the following:
@@ -673,7 +778,14 @@ Hint Features - Climbable Surface, Multiple Pickups
   * Layers: default
   * L2 Hatch to Lava Lake Annex/Door to Lava Lake
   * Extra - door_idx: (36,)
-  > Door to Zebesian Zig
+  > Front of Door to Lava Lake Annex
+      Trivial
+
+> Front of Door to Lava Lake Annex; Heals? False
+  * Layers: default
+  > Door to Lava Lake Annex
+      Trivial
+  > Front of Door to Zebesian Zig
       Any of the following:
           # Intended
           Gravity Suit and Varia Suit
@@ -686,6 +798,11 @@ Hint Features - Climbable Surface, Multiple Pickups
   * Layers: default
   * L0 Hatch to Zebesian Zig/Door to Lava Lake
   * Extra - door_idx: (37,)
+  > Front of Door to Zebesian Zig
+      Trivial
+
+> Front of Door to Zebesian Zig; Heals? False
+  * Layers: default
   > Pickup (Missile Tank on Cliffside)
       Any of the following:
           Space Jump
@@ -701,7 +818,9 @@ Hint Features - Climbable Surface, Multiple Pickups
               Damage Runs (Intermediate) and Lava Damage ≥ 150
               Varia Suit and Damage Runs (Beginner) and Lava Damage ≥ 55
               Gravity Suit and Damage Runs (Beginner) and Lava Damage ≥ 80
-  > Door to Lava Lake Annex
+  > Pickup (Missile Tank on Platform)
+      Trivial
+  > Front of Door to Lava Lake Annex
       Any of the following:
           # Intended
           Gravity Suit and Varia Suit
@@ -709,7 +828,7 @@ Hint Features - Climbable Surface, Multiple Pickups
           Damage Runs (Intermediate) and Lava Damage ≥ 75
           # Damage run and one suit
           Damage Runs (Beginner) and Lava Damage ≥ 35 and Have Any Suit Upgrade
-  > Pickup (Missile Tank on Platform)
+  > Door to Zebesian Zig
       Trivial
 
 > Pickup (Missile Tank on Platform); Heals? False
@@ -720,7 +839,7 @@ Hint Features - Climbable Surface, Multiple Pickups
   * Extra - blockx: 25
   * Extra - blocky: 8
   * Extra - infant_weight: 0.4
-  > Door to Zebesian Zig
+  > Front of Door to Zebesian Zig
       Trivial
 
 ----------------
@@ -773,6 +892,11 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 2}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
   * Layers: default
   * L1 Hatch to Entrance Lobby/Door to Lava Lake Annex
   * Extra - door_idx: (42,)
+  > Front of Door to Entrance Lobby
+      Trivial
+
+> Front of Door to Entrance Lobby; Heals? False
+  * Layers: default
   > Door to Lava Lake
       Any of the following:
           # Deal with Lava
@@ -782,12 +906,14 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 2}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
           Damage Runs (Beginner) and Lava Damage ≥ 25 and Have Any Suit Upgrade
   > Door to Glass Tube to Sector 3 (PYR)
       Morph Ball and Screw Attack
+  > Door to Entrance Lobby
+      Trivial
 
 > Door to Lava Lake; Heals? False
   * Layers: default
   * L2 Hatch to Lava Lake/Door to Lava Lake Annex
   * Extra - door_idx: (43,)
-  > Door to Entrance Lobby
+  > Front of Door to Entrance Lobby
       Any of the following:
           # Deal with Lava
           Gravity Suit and Varia Suit
@@ -799,7 +925,7 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 2}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
   * Layers: default
   * L0 Hatch to Glass Tube to Sector 3 (PYR)/Door to Lava Lake Annex
   * Extra - door_idx: (106,)
-  > Door to Entrance Lobby
+  > Front of Door to Entrance Lobby
       Morph Ball and Screw Attack
 
 ----------------
@@ -830,6 +956,11 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 7}, {'x': 7, 'y': 8}, {'x': 7, 'y': 
   * Layers: default
   * L0 Hatch to Yameba Pool/Door to Tourian Eastern Hub
   * Extra - door_idx: (47,)
+  > Front of Door to Yameba Pool
+      Trivial
+
+> Front of Door to Yameba Pool; Heals? False
+  * Layers: default
   > Door to Tourian Save Room East
       Trivial
   > Other to Animorphs
@@ -842,19 +973,21 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 7}, {'x': 7, 'y': 8}, {'x': 7, 'y': 
               Hi-Jump or Can Single Walljump
   > Event - Open Animorphs
       Trivial
+  > Door to Yameba Pool
+      Trivial
 
 > Door to Tourian Save Room East; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Save Room East/Door to Tourian Eastern Hub
   * Extra - door_idx: (95,)
-  > Door to Yameba Pool
+  > Front of Door to Yameba Pool
       Trivial
 
 > Other to Animorphs; Heals? False
   * Layers: default
   * Open Passage to Animorphs/Other to Tourian Eastern Hub
   * Extra - door_idx: (110,)
-  > Door to Yameba Pool
+  > Front of Door to Yameba Pool
       After Sector 1 Animorphs Entrance Uncovered
 
 > Left Ladder; Heals? False
@@ -868,13 +1001,13 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 7}, {'x': 7, 'y': 8}, {'x': 7, 'y': 
               # Destroy Missile Blocks
               Missiles ≥ 3
               Diffusion Missile Data and Missiles
-  > Door to Yameba Pool
+  > Front of Door to Yameba Pool
       Trivial
 
 > Event - Open Animorphs; Heals? False
   * Layers: default
   * Event Sector 1 Animorphs Entrance Uncovered
-  > Door to Yameba Pool
+  > Front of Door to Yameba Pool
       Trivial
 
 ----------------
@@ -929,32 +1062,46 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 6}, {'x': 4, 'y': 7}, {'x': 4, 'y': 
   * Layers: default
   * L0 Hatch to Gold Pirate Crossing/Door to Tourian Western Hub
   * Extra - door_idx: (50,)
+  > Front of Door to Gold Pirate Crossing
+      Trivial
+
+> Front of Door to Gold Pirate Crossing; Heals? False
+  * Layers: default
   > Door to Tourian Save Room West
       Trivial
-  > Door to Ridley Arena Access
+  > Door to Gold Pirate Crossing
+      Trivial
+  > Front of Door to Ridley Arena Access
       Trivial
 
 > Door to Tourian Save Room West; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Save Room West/Door to Tourian Western Hub
   * Extra - door_idx: (51,)
-  > Door to Gold Pirate Crossing
+  > Front of Door to Gold Pirate Crossing
       Trivial
 
 > Door to Genesis Habitation; Heals? False
   * Layers: default
   * L0 Hatch to Genesis Habitation/Door to Tourian Western Hub
   * Extra - door_idx: (52,)
-  > Door to Ridley Arena Access
+  > Front of Door to Ridley Arena Access
       Trivial
 
 > Door to Ridley Arena Access; Heals? False
   * Layers: default
   * L0 Hatch to Ridley Arena Access/Door to Tourian Western Hub
   * Extra - door_idx: (53,)
-  > Door to Gold Pirate Crossing
-      Space Jump or Wall Jump (Beginner)
+  > Front of Door to Ridley Arena Access
+      Trivial
+
+> Front of Door to Ridley Arena Access; Heals? False
+  * Layers: default
   > Door to Genesis Habitation
+      Trivial
+  > Front of Door to Gold Pirate Crossing
+      Space Jump or Wall Jump (Beginner)
+  > Door to Ridley Arena Access
       Trivial
 
 ----------------
@@ -1290,20 +1437,27 @@ Hint Features - Geron
   * Layers: default
   * L0 Hatch to Twin Junctions West/Door to Atmospheric Stabilizer Northeast
   * Extra - door_idx: (66,)
+  > Front of Door to Twin Junctions West
+      Trivial
+
+> Front of Door to Twin Junctions West; Heals? False
+  * Layers: default
   > Room Center
       Trivial
   > Event - Stabilizer 2 Online
       # Shinespark Trick from Moto Motorway: https://youtu.be/I9YH_s989sQ
       Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Expert) and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Door to Twin Junctions West
+      Trivial
 
 > Room Center; Heals? False
   * Layers: default
-  > Door to Twin Junctions West
-      After Stabilizer Northeast Restored
   > Event - Stabilizer 2 Online
       Can Kill Stabilizer Geron
   > Pickup (NE Stabilizer)
       Trivial
+  > Front of Door to Twin Junctions West
+      After Stabilizer Northeast Restored
 
 > Event - Stabilizer 2 Online; Heals? False
   * Layers: default
@@ -1331,23 +1485,30 @@ Extra - minimap_coordinates: [{'x': 15, 'y': 4}, {'x': 15, 'y': 5}, {'x': 15, 'y
   * Layers: default
   * L0 Hatch to Twin Junctions West/Door to Twin Junctions East
   * Extra - door_idx: (67,)
+  > Front of Door to Twin Junctions West
+      Trivial
+
+> Front of Door to Twin Junctions West; Heals? False
+  * Layers: default
   > Door to Twin Junctions Save Room
       Trivial
   > Door to Stabilizer Checkpoint
+      Trivial
+  > Door to Twin Junctions West
       Trivial
 
 > Door to Twin Junctions Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Twin Junctions Save Room/Door to Twin Junctions East
   * Extra - door_idx: (68,)
-  > Door to Twin Junctions West
+  > Front of Door to Twin Junctions West
       Trivial
 
 > Door to Stabilizer Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Stabilizer Checkpoint/Door to Twin Junctions East
   * Extra - door_idx: (69,)
-  > Door to Twin Junctions West
+  > Front of Door to Twin Junctions West
       Trivial
 
 > Door to Sciser Playground; Heals? False
@@ -1374,6 +1535,11 @@ Extra - unlocked_save_recharge_station: True
   * Layers: default
   * L0 Hatch to Twin Junctions East/Door to Twin Junctions Save Room
   * Extra - door_idx: (74,)
+  > Front of Door to Twin Junctions East
+      Trivial
+
+> Front of Door to Twin Junctions East; Heals? False
+  * Layers: default
   > Other to Wall Jump Tutorial
       All of the following:
           Morph Ball and After Sector 1 Save Room East Shot Block Destroyed
@@ -1382,25 +1548,27 @@ Extra - unlocked_save_recharge_station: True
       Trivial
   > Event - Shot Block
       Trivial
+  > Door to Twin Junctions East
+      Trivial
 
 > Other to Wall Jump Tutorial; Heals? False
   * Layers: default
   * Tunnel to Wall Jump Tutorial/Other to Twin Junctions Save Room
   * Extra - door_idx: (108,)
-  > Door to Twin Junctions East
+  > Front of Door to Twin Junctions East
       After Sector 1 Save Room East Shot Block Destroyed
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - X: 10
   * Extra - Y: 10
-  > Door to Twin Junctions East
+  > Front of Door to Twin Junctions East
       Trivial
 
 > Event - Shot Block; Heals? False
   * Layers: default
   * Event Sector 1 Save Room East Shot Block Destroyed
-  > Door to Twin Junctions East
+  > Front of Door to Twin Junctions East
       Trivial
 
 ----------------
@@ -1484,45 +1652,66 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 6}, {'x': 11, 'y': 7}]
   * Layers: default
   * L0 Hatch to Sciser Playground/Door to Charge Core Lower Access
   * Extra - door_idx: (25,)
-  > Door to Hornoad Housing
-      Morph Ball
+  > Front of Door to Sciser Playground
+      Trivial
+
+> Front of Door to Sciser Playground; Heals? False
+  * Layers: default
   > Event - Bomb Blocks
       Can Break Single Bomb Blocks
+  > Door to Sciser Playground
+      Trivial
+  > Front of Door to Hornoad Housing
+      Morph Ball
 
 > Door to Hornoad Housing; Heals? False
   * Layers: default
   * L0 Hatch to Hornoad Housing/Door to Charge Core Lower Access
   * Extra - door_idx: (77,)
+  > Front of Door to Hornoad Housing
+      Trivial
+
+> Front of Door to Hornoad Housing; Heals? False
+  * Layers: default
   > Door to Charge Core Arena
       Can Kill Gadora
-  > Other to Watering Hole
-      After Sector 1 Charge Core Arena Access Bomb Blocks Destroyed
   > Event - Bomb Blocks
       Any of the following:
           Can Break Single Bomb Blocks
           # Speed Boosting from Hornoad Housing
           Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Door to Hornoad Housing
+      Trivial
+  > Front of Other to Watering Hole
+      After Sector 1 Charge Core Arena Access Bomb Blocks Destroyed
 
 > Door to Charge Core Arena; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Arena/Door to Charge Core Lower Access
   * Extra - door_idx: (83,)
-  > Door to Hornoad Housing
+  > Front of Door to Hornoad Housing
       Trivial
 
 > Other to Watering Hole; Heals? False
   * Layers: default
   * Open Passage to Watering Hole/Other to Charge Core Lower Access
   * Extra - door_idx: (100,)
-  > Door to Hornoad Housing
-      After Sector 1 Charge Core Arena Access Bomb Blocks Destroyed
+  > Front of Other to Watering Hole
+      Trivial
+
+> Front of Other to Watering Hole; Heals? False
+  * Layers: default
   > Event - Bomb Blocks
       Can Break Single Bomb Blocks
+  > Front of Door to Hornoad Housing
+      After Sector 1 Charge Core Arena Access Bomb Blocks Destroyed
+  > Other to Watering Hole
+      Trivial
 
 > Event - Bomb Blocks; Heals? False
   * Layers: default
   * Event Sector 1 Charge Core Arena Access Bomb Blocks Destroyed
-  > Door to Hornoad Housing
+  > Front of Door to Hornoad Housing
       Trivial
 
 ----------------
@@ -1608,6 +1797,11 @@ Hint Features - Multiple Pickups
   * Layers: default
   * L0 Hatch to Charge Core Lower Access/Door to Charge Core Arena
   * Extra - door_idx: (82,)
+  > Front of Door to Charge Core Lower Access
+      Trivial
+
+> Front of Door to Charge Core Lower Access; Heals? False
+  * Layers: default
   > Pickup (Energy Tank)
       All of the following:
           # Shinespark from Hornoad Housing -> Access
@@ -1621,15 +1815,24 @@ Hint Features - Multiple Pickups
               Shinespark Tricks (Advanced)
   > Arena
       Trivial
+  > Door to Charge Core Lower Access
+      Trivial
 
 > Door to Charge Core Upper Access; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Upper Access/Door to Charge Core Arena
   * Extra - door_idx: (85,)
+  > Front of Door to Charge Core Upper Access
+      Trivial
+
+> Front of Door to Charge Core Upper Access; Heals? False
+  * Layers: default
   > Pickup (Energy Tank)
       # Shinespark from Central Stabilizer -> Escape: https://youtu.be/BsW39UKOYVw
       Level 0 Keycard and Speed Booster and After Stabilizer Central Restored and Shinespark Tricks (Ludicrous) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Arena
+      Trivial
+  > Door to Charge Core Upper Access
       Trivial
 
 > Event - Charge Core-X; Heals? False
@@ -1652,10 +1855,6 @@ Hint Features - Multiple Pickups
 
 > Arena; Heals? False
   * Layers: default
-  > Door to Charge Core Lower Access
-      After Boss Charge Core-X Defeated
-  > Door to Charge Core Upper Access
-      After Boss Charge Core-X Defeated
   > Event - Charge Core-X
       All of the following:
           Missiles
@@ -1665,6 +1864,10 @@ Hint Features - Multiple Pickups
               # Fight boss damageless https://youtu.be/4CYTUnKn_3E
               Combat (Intermediate)
               Combat (Beginner) and Normal Damage ≥ 60
+  > Front of Door to Charge Core Lower Access
+      After Boss Charge Core-X Defeated
+  > Front of Door to Charge Core Upper Access
+      After Boss Charge Core-X Defeated
 
 ----------------
 Elevator to Main Deck

@@ -121,7 +121,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea01"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 1",
@@ -135,6 +135,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Area 2 Chozo Seal Elevator North",
                     "connections": {
+                        "Front of Elevator to Area 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Elevator to Area 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 21255.22,
+                        "y": -1515.85,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Elevator to Area 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Save Station": {
                             "type": "and",
                             "data": {
@@ -175,6 +206,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Area 2 Chozo Seal Elevator South",
                     "connections": {
+                        "Front of Elevator to Area 3 Factory Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Elevator to Area 3 Factory Exterior": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 22570.14,
+                        "y": -9364.24,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Elevator to Area 3 Factory Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Chozo Seal": {
                             "type": "and",
                             "data": {
@@ -230,7 +292,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Elevator to Area 1": {
+                        "Front of Elevator to Area 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -378,7 +440,7 @@
                                 ]
                             }
                         },
-                        "Elevator to Area 3 Factory Exterior": {
+                        "Front of Elevator to Area 3 Factory Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -690,7 +752,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 2 (Dam Entry) - Chozo Grapple Block",
                     "connections": {
-                        "Elevator to Area 3 Factory Exterior": {
+                        "Front of Elevator to Area 3 Factory Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -856,7 +918,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Transport to Areas 1 and 3 (Bottom)": {
+                        "Front of Door to Transport to Areas 1 and 3 (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -897,6 +959,30 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Transport to Areas 1 and 3 (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Transport to Areas 1 and 3 (Bottom)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 19060.83,
+                        "y": -4387.2,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Door to Transport to Areas 1 and 3 (Top)": {
                             "type": "resource",
                             "data": {
@@ -904,6 +990,13 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Transport to Areas 1 and 3 (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Below Teleporter": {
@@ -1037,6 +1130,30 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Alpha+ Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Alpha+ Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13847.93364033534,
+                        "y": -850.5372535128114,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "or",
                             "data": {
@@ -1052,6 +1169,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Alpha+ Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Below Teleporter": {
@@ -1117,14 +1241,14 @@
                                 "items": []
                             }
                         },
-                        "Door to Transport to Areas 1 and 3 (Bottom)": {
+                        "Front of Door to Transport to Areas 1 and 3 (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Alpha+ Arena": {
+                        "Front of Door to Alpha+ Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1157,7 +1281,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Alpha+ Arena": {
+                        "Front of Door to Alpha+ Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1295,7 +1419,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea02A"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 2 Dam Exterior",
@@ -1309,6 +1433,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Lightning Armor Chamber Elevator",
                     "connections": {
+                        "Front of Elevator to Area 2 Dam Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Elevator to Area 2 Dam Exterior": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7288.02,
+                        "y": 14.18,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Elevator to Area 2 Dam Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Transport Access (Top)": {
                             "type": "and",
                             "data": {
@@ -1387,7 +1542,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Elevator to Area 2 Dam Exterior": {
+                        "Front of Elevator to Area 2 Dam Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1602,7 +1757,7 @@
                                 "items": []
                             }
                         },
-                        "Elevator to Area 2 Dam Exterior": {
+                        "Front of Elevator to Area 2 Dam Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": "Freeze the Moheek below the Crumble Block and Melee Clip right: https://youtu.be/3VLe-42BmeE",
@@ -1738,7 +1893,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Dock to Fleech Swarm Floodway": {
+                        "Front of Door to Lightning Armor & Transport to Dam Exterior East (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Lightning Armor & Transport to Dam Exterior East (Bottom)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8750.79,
+                        "y": -2787.88,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Lightning Armor & Transport to Dam Exterior East (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Dock to Fleech Swarm Floodway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2022,7 +2208,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Alpha+ Arena": {
+                        "Front of Door to Alpha+ Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2062,6 +2248,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Front of Door to Alpha+ Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Alpha+ Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10450.0,
+                        "y": -1350.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Lightning Armor & Transport to Dam Exterior East (Top)": {
                             "type": "or",
@@ -2104,6 +2314,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Alpha+ Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Plant Ledge": {
@@ -2182,7 +2399,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Lightning Armor & Transport to Dam Exterior East (Bottom)": {
+                        "Front of Dock to Fleech Swarm Floodway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Dock to Fleech Swarm Floodway": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10438.233557680955,
+                        "y": -2000.891486598182,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Lightning Armor & Transport to Dam Exterior East (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Fleech Swarm Floodway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2266,7 +2514,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Lightning Armor & Transport to Dam Exterior East (Bottom)": {
+                        "Front of Door to Lightning Armor & Transport to Dam Exterior East (Bottom)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2313,7 +2561,7 @@
                                 ]
                             }
                         },
-                        "Door to Alpha+ Arena": {
+                        "Front of Door to Alpha+ Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2360,7 +2608,7 @@
                                 ]
                             }
                         },
-                        "Dock to Fleech Swarm Floodway": {
+                        "Front of Dock to Fleech Swarm Floodway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2711,6 +2959,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Transport Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Transport Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10450.0,
+                        "y": -1350.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Transport Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Inside Arena": {
                             "type": "and",
                             "data": {
@@ -2790,7 +3069,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Transport Access": {
+                        "Front of Door to Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2834,7 +3113,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Transport Access": {
+                        "Front of Door to Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,

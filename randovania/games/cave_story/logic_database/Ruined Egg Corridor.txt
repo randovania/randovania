@@ -88,12 +88,19 @@ Extra - starting_script: <TRA0049:0099:0007:0006
   > East Side
       Trivial
 
-> Teleporter to Arthur's House; Heals? False; Spawn Point; Default Node
+> Teleporter to Arthur's House; Heals? False; Default Node
   * Layers: default
   * Teleporter to Arthur's House/Teleporter to Egg Corridor?
+  > Front of Teleporter to Arthur's House
+      Trivial
+
+> Front of Teleporter to Arthur's House; Heals? False; Spawn Point
+  * Layers: default
   > West Side
       Trivial
   > Hint - Blue Robot
+      Trivial
+  > Teleporter to Arthur's House
       Trivial
 
 > Hint - Blue Robot; Heals? False
@@ -101,13 +108,13 @@ Extra - starting_script: <TRA0049:0099:0007:0006
   * Hint
   * Extra - event: 0210
   * Extra - string_asset_id: 7
-  > Teleporter to Arthur's House
+  > Front of Teleporter to Arthur's House
       Trivial
 
 > Event - Used Egg Corridor? Teleporter; Heals? False
   * Layers: default
   * Event Used Egg Corridor? Teleporter
-  > Teleporter to Arthur's House
+  > Front of Teleporter to Arthur's House
       Trivial
 
 > Event - Level MG (West); Heals? False
@@ -135,7 +142,7 @@ Extra - starting_script: <TRA0050:0094:0011:0012
 > Door to Egg Corridor? (Upper); Heals? False
   * Layers: default
   * Door to Egg Corridor?/Door to Cthulhu's Abode? (Upper)
-  > Door to Egg Corridor? (Lower)
+  > Front of Door to Egg Corridor? (Lower)
       All of the following:
           Has Weapon
           Any of the following:
@@ -146,9 +153,14 @@ Extra - starting_script: <TRA0050:0094:0011:0012
                   Missiles ≥ 3 and Break blocks with Missiles (Beginner)
                   Missile Launcher or Super Missile Launcher
 
-> Door to Egg Corridor? (Lower); Heals? False; Spawn Point; Default Node
+> Door to Egg Corridor? (Lower); Heals? False; Default Node
   * Layers: default
   * Door to Egg Corridor?/Door to Cthulhu's Abode? (Lower)
+  > Front of Door to Egg Corridor? (Lower)
+      Trivial
+
+> Front of Door to Egg Corridor? (Lower); Heals? False; Spawn Point
+  * Layers: default
   > Door to Egg Corridor? (Upper)
       All of the following:
           Has Weapon
@@ -159,38 +171,48 @@ Extra - starting_script: <TRA0050:0094:0011:0012
                   Missiles ≥ 3 and Break blocks with Missiles (Beginner)
                   Missile Launcher or Super Missile Launcher
               Bubbler and Break blocks with Bubbler (Beginner)
+  > Door to Egg Corridor? (Lower)
+      Trivial
 
 ----------------
 Egg Observation Room?
 Extra - map_name: EggR2
 Extra - starting_script: <TRA0051:0094:0004:0004
 Hint Features - Boss
-> Door to Egg Corridor? (Western); Heals? False; Spawn Point; Default Node
+> Door to Egg Corridor? (Western); Heals? False; Default Node
   * Layers: default
   * Door to Egg Corridor?/Door to Egg Observation Room? (West)
-  > Door to Egg Corridor? (Eastern)
+  > Front of Door to Egg Corridor? (Western)
+      Trivial
+
+> Front of Door to Egg Corridor? (Western); Heals? False; Spawn Point
+  * Layers: default
+  > Door to Egg Corridor? (Western)
+      Trivial
+  > Front of Door to Egg Corridor? (Eastern)
       Trivial
 
 > Door to Egg Corridor? (Eastern); Heals? False
   * Layers: default
   * Door to Egg Corridor?/Door to Egg Observation Room? (East)
-  > Door to Egg Corridor? (Western)
-      After Defeated Sisters or Has Flight
+  > Front of Door to Egg Corridor? (Eastern)
+      Trivial
+
+> Front of Door to Egg Corridor? (Eastern); Heals? False
+  * Layers: default
   > Pickup (Sisters Boss)
       Trivial
   > Save Point
       After Defeated Sisters
+  > Front of Door to Egg Corridor? (Western)
+      After Defeated Sisters or Has Flight
+  > Door to Egg Corridor? (Eastern)
+      Trivial
 
 > Pickup (Sisters Boss); Heals? False
   * Layers: default
   * Pickup 54; Category? Minor
   * Extra - event: 0303
-  > Door to Egg Corridor? (Western)
-      # Reverse Sisters Skip
-      Sisters Skip (Intermediate) and Has Flight
-  > Door to Egg Corridor? (Eastern)
-      # Sisters Skip - https://www.youtube.com/watch?v=jExjnf7aLRc
-      Booster 2.0 and Sisters Skip (Advanced)
   > Event - Sisters
       All of the following:
           Any of the following:
@@ -206,16 +228,22 @@ Hint Features - Boss
               Combat (Beginner) and Normal Damage ≥ 20
               Combat (Intermediate) and Normal Damage ≥ 15
               Combat (Advanced) and Normal Damage ≥ 8
+  > Front of Door to Egg Corridor? (Western)
+      # Reverse Sisters Skip
+      Sisters Skip (Intermediate) and Has Flight
+  > Front of Door to Egg Corridor? (Eastern)
+      # Sisters Skip - https://www.youtube.com/watch?v=jExjnf7aLRc
+      Booster 2.0 and Sisters Skip (Advanced)
 
 > Event - Sisters; Heals? False
   * Layers: default
   * Event Defeated Sisters
-  > Door to Egg Corridor? (Western)
+  > Front of Door to Egg Corridor? (Western)
       Trivial
 
 > Save Point; Heals? False
   * Layers: default
-  > Door to Egg Corridor? (Eastern)
+  > Front of Door to Egg Corridor? (Eastern)
       Trivial
 
 ----------------
@@ -244,15 +272,22 @@ Extra - starting_script: <TRA0054:0094:0011:0006
 Egg No. 00
 Extra - map_name: EggX2
 Extra - starting_script: <TRA0052:0094:0004:0010
-> Door to Egg Corridor?; Heals? False; Spawn Point; Default Node
+> Door to Egg Corridor?; Heals? False; Default Node
   * Layers: default
   * Door to Egg Corridor?/Door to Egg No. 00
+  > Front of Door to Egg Corridor?
+      Trivial
+
+> Front of Door to Egg Corridor?; Heals? False; Spawn Point
+  * Layers: default
   > Door to Outer Wall
       After Saved Kazuma
+  > Door to Egg Corridor?
+      Trivial
 
 > Door to Outer Wall; Heals? False
   * Layers: default
   * Door to Outer Wall/Door to Egg No. 00
-  > Door to Egg Corridor?
+  > Front of Door to Egg Corridor?
       Trivial
 

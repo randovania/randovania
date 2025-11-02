@@ -737,7 +737,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea10"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 8",
@@ -751,6 +751,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Surface West Elevator",
                     "connections": {
+                        "Front of Elevator to Area 8": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Elevator to Area 8": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -39894.99,
+                        "y": 239.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Elevator to Area 8": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Above Elevator": {
                             "type": "and",
                             "data": {
@@ -1462,7 +1493,7 @@
                                 ]
                             }
                         },
-                        "Elevator to Area 8": {
+                        "Front of Elevator to Area 8": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
