@@ -8,7 +8,6 @@ from typing import TYPE_CHECKING, NamedTuple, Self, override
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.generator import graph as graph_module
 from randovania.generator.generator_reach import GeneratorReach
@@ -18,6 +17,8 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node import Node, NodeContext, NodeIndex
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.resolver.state import State
 
@@ -41,7 +42,7 @@ def _extra_requirement_for_node(game: GameDescription, context: NodeContext, nod
 class GraphPath(NamedTuple):
     previous_node: Node | None
     node: Node
-    requirement: RequirementSet
+    requirement: Requirement
 
     def is_in_graph(self, digraph: graph_module.BaseGraph) -> bool:
         if self.previous_node is None:
@@ -52,7 +53,7 @@ class GraphPath(NamedTuple):
     def add_to_graph(self, digraph: graph_module.BaseGraph) -> None:
         digraph.add_node(self.node.node_index)
         if self.previous_node is not None:
-            digraph.add_edge(self.previous_node.node_index, self.node.node_index, requirement=self.requirement)
+            digraph.add_edge(self.previous_node.node_index, self.node.node_index, data=self.requirement)
 
 
 class _SafeNodes(typing.NamedTuple):
@@ -67,8 +68,8 @@ class OldGeneratorReach(GeneratorReach):
     _reachable_paths: dict[int, list[int]] | None
     _reachable_costs: dict[int, int] | None
     _node_reachable_cache: dict[int, bool]
-    _unreachable_paths: dict[tuple[int, int], RequirementSet]
-    _uncollectable_nodes: dict[int, RequirementSet]
+    _unreachable_paths: dict[tuple[int, int], Requirement]
+    _uncollectable_nodes: dict[int, Requirement]
     _safe_nodes: _SafeNodes | None
     _is_node_safe_cache: dict[int, bool]
     _filler_config: FillerConfiguration
@@ -108,11 +109,10 @@ class OldGeneratorReach(GeneratorReach):
     ) -> Self:
         reach = cls(game, initial_state, graph_module.RandovaniaGraph.new(), filler_config)
         game.region_list.ensure_has_node_cache()
-        reach._expand_graph([GraphPath(None, initial_state.node, RequirementSet.trivial())])
+        reach._expand_graph([GraphPath(None, initial_state.node, Requirement.trivial())])
         return reach
 
-    def _potential_nodes_from(self, node: Node) -> Iterator[tuple[Node, RequirementSet]]:
-        context = self._state.node_context()
+    def _potential_nodes_from(self, node: Node, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:
         extra_requirement = _extra_requirement_for_node(self._game, context, node)
         requirement_to_leave = node.requirement_to_leave(context)
 
@@ -128,7 +128,7 @@ class OldGeneratorReach(GeneratorReach):
 
             yield (
                 target_node,
-                requirement.patch_requirements(1.0, context).as_set(context),
+                requirement,
             )
 
     def _expand_graph(self, paths_to_check: list[GraphPath]) -> None:
@@ -151,14 +151,14 @@ class OldGeneratorReach(GeneratorReach):
             if path.node.is_resource_node:
                 resource_nodes_to_check.add(path.node.node_index)
 
-            for target_node, requirement_set in self._potential_nodes_from(path.node):
-                if requirement_set.satisfied(context, self._state.health_for_damage_requirements):
+            for target_node, requirement in self._potential_nodes_from(path.node, context):
+                if requirement.satisfied(context, self._state.health_for_damage_requirements):
                     # print("* Queue path to", self.game.region_list.node_name(target_node))
-                    paths_to_check.append(GraphPath(path.node, target_node, requirement_set))
+                    paths_to_check.append(GraphPath(path.node, target_node, requirement))
                 else:
                     # print("* Unreachable", self.game.region_list.node_name(target_node), ", missing:",
                     #       requirement.as_str)
-                    self._unreachable_paths[path.node.node_index, target_node.node_index] = requirement_set
+                    self._unreachable_paths[path.node.node_index, target_node.node_index] = requirement
             # print("> done")
 
         for node_index in sorted(resource_nodes_to_check):
@@ -167,7 +167,7 @@ class OldGeneratorReach(GeneratorReach):
 
             requirement = node.requirement_to_collect()
             if not requirement.satisfied(context, self._state.health_for_damage_requirements):
-                self._uncollectable_nodes[node_index] = requirement.patch_requirements(1.0, context).as_set(context)
+                self._uncollectable_nodes[node_index] = requirement
 
         # print("!! _expand_graph finished. Has {} edges".format(sum(1 for _ in self._digraph.edges_data())))
         self._safe_nodes = None
@@ -218,7 +218,7 @@ class OldGeneratorReach(GeneratorReach):
             else:
                 return 0
 
-        def weight(source: int, target: int, attributes: RequirementSet) -> int:
+        def weight(source: int, target: int, attributes: graph_module.GraphData) -> int:
             return _is_collected(target)
 
         self._reachable_costs, self._reachable_paths = self._digraph.multi_source_dijkstra(
@@ -343,11 +343,16 @@ class OldGeneratorReach(GeneratorReach):
         }
         new_state = self._state.act_on_node(node)
 
+        context = new_state.node_context()
+
+        def _dangerous_requirements(req: Requirement) -> set[ResourceInfo]:
+            return {indiv.resource for indiv in req.iterate_resource_requirements(context) if indiv.negate}
+
         if new_dangerous_resources:
             edges_to_remove = []
             for source, target, requirement in self._digraph.edges_data():
-                if not new_dangerous_resources.isdisjoint(requirement.dangerous_resources):
-                    if not requirement.satisfied(new_state.node_context(), new_state.health_for_damage_requirements):
+                if not new_dangerous_resources.isdisjoint(_dangerous_requirements(requirement)):
+                    if not requirement.satisfied(context, new_state.health_for_damage_requirements):
                         edges_to_remove.append((source, target))
 
             for edge in edges_to_remove:
@@ -371,11 +376,11 @@ class OldGeneratorReach(GeneratorReach):
                 to_check.append((target_node, requirement))
 
         for node, requirement in to_check:
-            requirements = requirement.patch_requirements(context)
+            requirements = requirement.patch_requirements(1.0, context).as_set(context)
             if node.node_index in results:
                 results[node.node_index] = results[node.node_index].expand_alternatives(requirements)
             else:
-                results[node.node_index] = requirement
+                results[node.node_index] = requirements
 
         return results
 
