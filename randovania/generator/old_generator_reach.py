@@ -16,7 +16,7 @@ from randovania.graph.state import GraphOrResourceNode
 from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator, Sequence
+    from collections.abc import Iterator, Mapping, Sequence
 
     from randovania.game_description.db.node import NodeContext, NodeIndex
     from randovania.game_description.requirements.requirement_set import RequirementSet
@@ -69,8 +69,8 @@ class OldGeneratorReach(GeneratorReach):
     _digraph: graph_module.BaseGraph
     _state: State
     _game: GameDescription | WorldGraph
-    _reachable_paths: dict[int, list[int]] | None
-    _reachable_costs: dict[int, int] | None
+    _reachable_paths: Mapping[int, Sequence[int]] | None
+    _reachable_costs: dict[int, int | None] | None
     _node_reachable_cache: dict[int, bool]
     _unreachable_paths: dict[tuple[int, int], Requirement]
     _uncollectable_nodes: dict[int, Requirement]
@@ -120,7 +120,7 @@ class OldGeneratorReach(GeneratorReach):
         initial_state: State,
         filler_config: FillerConfiguration,
     ) -> Self:
-        reach = cls(game, initial_state, graph_module.RandovaniaGraph.new(), filler_config)
+        reach = cls(game, initial_state, graph_module.RustworkXGraph.new(game), filler_config)
         if isinstance(game, GameDescription):
             game.region_list.ensure_has_node_cache()
         reach._expand_graph([GraphPath(None, initial_state.node, Requirement.trivial())])
@@ -222,7 +222,7 @@ class OldGeneratorReach(GeneratorReach):
         for component in self._digraph.strongly_connected_components():
             if self._state.node.node_index in component:
                 assert self._safe_nodes is None
-                self._safe_nodes = _SafeNodes(sorted(component), component)
+                self._safe_nodes = _SafeNodes(sorted(component), set(component))
 
         assert self._safe_nodes is not None
 
@@ -245,13 +245,25 @@ class OldGeneratorReach(GeneratorReach):
             else:
                 return 0
 
+        self._reachable_is_collected = _is_collected
+
         def weight(source: int, target: int, attributes: graph_module.GraphData) -> int:
             return _is_collected(target)
 
-        self._reachable_costs, self._reachable_paths = self._digraph.multi_source_dijkstra(
-            {self._state.node.node_index},
-            weight=weight,
-        )
+        if self._digraph.has_multi_source_dijkstra:
+            costs, self._reachable_paths = self._digraph.multi_source_dijkstra(
+                {self._state.node.node_index},
+                weight=weight,
+            )
+            self._reachable_costs = typing.cast("dict[int, int | None]", costs)
+        else:
+            # Having to calculate the costs in python is slower,
+            # but calculating the paths is so much faster it's worth it.
+            self._reachable_paths = self._digraph.shortest_paths_dijkstra(
+                self._state.node.node_index,
+                weight=weight,
+            )
+            self._reachable_costs = {}
 
     def is_reachable_node(self, node: GraphOrClassicNode) -> bool:
         index = node.node_index
@@ -262,7 +274,16 @@ class OldGeneratorReach(GeneratorReach):
 
         self._calculate_reachable_paths()
         assert self._reachable_costs is not None
-        cost = self._reachable_costs.get(index)
+        if index not in self._reachable_costs:
+            assert self._reachable_paths is not None
+            if index in self._reachable_paths:
+                cost = sum(self._reachable_is_collected(it) for it in self._reachable_paths[index])
+            else:
+                cost = None
+            self._reachable_costs[index] = cost
+        else:
+            cost = self._reachable_costs[index]
+
         if cost is not None:
             if cost == 0:
                 self._node_reachable_cache[index] = True
