@@ -375,15 +375,32 @@ def _migrate_v30(data: dict, game: RandovaniaGame) -> None:
 def _migrate_v31(data: dict, game: RandovaniaGame) -> None:
     trivial = {"type": "and", "data": {"comment": None, "items": []}}
 
+    dock_types: dict[str, dict] = data["dock_weakness_database"]["types"]
+    dock_with_locks = {
+        (type_name, weak_name)
+        for type_name, type_data in dock_types.items()
+        for weak_name, weak_data in type_data["items"].items()
+        if weak_data.get("lock") is not None
+    }
+    shuffled_into_lock = {
+        type_name
+        for type_name, type_data in dock_types.items()
+        if type_data["dock_rando"] is not None
+        and any((type_name, change_to) in dock_with_locks for change_to in type_data["dock_rando"]["change_to"])
+    }
+
     def should_split(dock_node: dict, interactions: set[str]) -> bool:
-        if dock_node["valid_starting_location"]:
-            if game in {RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES}:
-                if dock_node["dock_type"] == "door":
-                    return True
-            else:
+        # For Prime 1/2, avoid doors being used as spawn points
+        if game in {RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES}:
+            if dock_node["valid_starting_location"] and dock_node["dock_type"] == "door":
                 return True
 
-        return len(interactions) > 1
+        if len(interactions) <= 1:
+            return False
+
+        return (dock_node["dock_type"] in shuffled_into_lock) or (
+            (dock_node["dock_type"], dock_node["default_dock_weakness"]) in dock_with_locks
+        )
 
     def calc_conn_from(a):
         r = collections.defaultdict(set)
@@ -413,10 +430,16 @@ def _migrate_v31(data: dict, game: RandovaniaGame) -> None:
                         "description": "",
                         "layers": node["layers"],
                         "extra": {},
-                        "valid_starting_location": node["valid_starting_location"],
+                        "valid_starting_location": False,
                         "connections": node["connections"],
                     }
-                    node["valid_starting_location"] = False
+                    if node["valid_starting_location"] and game in {
+                        RandovaniaGame.METROID_PRIME,
+                        RandovaniaGame.METROID_PRIME_ECHOES,
+                    }:
+                        new_node["valid_starting_location"] = True
+                        node["valid_starting_location"] = False
+
                     node_order.insert(node_order.index(name) + 1, new_name)
 
                     # Connect dock and the new node
@@ -428,7 +451,7 @@ def _migrate_v31(data: dict, game: RandovaniaGame) -> None:
                         other_conn[new_name] = other_conn.pop(name)
 
             if node_order != list(area["nodes"]):
-                # new node!
+                # at least one new node
                 old_dict = area["nodes"]
                 area["nodes"] = {name: old_dict[name] for name in node_order}
 
