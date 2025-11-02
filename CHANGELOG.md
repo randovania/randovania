@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.4.0] - 2025-12-??
 
-- Coming soon.
+### Metroid Dread
+- Changed: Energy Parts are now logical.
 
 ## [10.3.0] - 2025-11-01
 
@@ -413,6 +414,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The generator will now check for the count of major pickups when major/minor split is enabled.
 
 ### Metroid Dread
+
 - Fixed: A crash when attempting to fire Proto EMMI's Omega Blaster while having 0 maximum missiles.
 
 ### Metroid: Samus Returns
