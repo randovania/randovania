@@ -172,6 +172,30 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         names = [node.name for node in start_nodes]
         yield f"{area.name} has multiple valid start nodes {names}, but is not allowed for {game.game.long_name}"
 
+    dock_rando_params = game.dock_weakness_database.dock_rando_params
+
+    for node in area.nodes:
+        if isinstance(node, DockNode) and len(area.connections.get(node, {})) > 1:
+            if (
+                # Dock has a lock by default
+                node.default_dock_weakness.lock is not None
+            ):
+                yield f"{area.name} - {node.name}: Has a lock and is connected to more than one area node."
+            elif (
+                # Dock Lock Rando can affect this dock's type
+                node.dock_type in dock_rando_params
+                and (
+                    # And this dock's weakness is allowed to be shuffled
+                    node.default_dock_weakness in dock_rando_params[node.dock_type].change_from
+                )
+                and any(
+                    # And at least one possible target has a lock
+                    possible_target.lock is not None
+                    for possible_target in dock_rando_params[node.dock_type].change_to
+                )
+            ):
+                yield f"{area.name} - {node.name}: Can have a lock and is connected to more than one area node."
+
     for node in area.nodes:
         if isinstance(node, DockNode) or area.connections[node]:
             continue
