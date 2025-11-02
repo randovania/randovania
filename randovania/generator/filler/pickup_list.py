@@ -98,7 +98,7 @@ def _requirement_lists_without_satisfied_resources(
             for items in _unsatisfied_item_requirements_in_list(alternative, state, uncollected_resources):
                 _add_items(items)
 
-    if debug.debug_level() > 2:
+    if debug.debug_level() > debug.LogLevel.HIGH:
         print(">> All requirement lists:")
         for result_it in sorted(result, key=lambda it: it.as_stable_sort_tuple):
             print(f"* {result_it}")
@@ -181,7 +181,7 @@ def get_pickups_that_solves_unreachable(
         if pickups is not None and pickups:
             result[tuple(pickups)] = ""
 
-    if debug.debug_level() > 2:
+    if debug.debug_level() > debug.LogLevel.HIGH:
         print(">> All pickup combinations alternatives:")
         for items in sorted(result.keys()):
             print("* {}".format(", ".join(p.name for p in items)))

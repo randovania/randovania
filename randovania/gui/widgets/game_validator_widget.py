@@ -70,7 +70,9 @@ def get_brush_for_action(action_type: str | None) -> QtGui.QBrush:
     return QtGui.QBrush(ACTION_COLORS.get(action_type, ACTION_COLORS[None]))
 
 
-async def _run_validator(write_to_log: debug.DebugPrintFunction, debug_level: int, layout: LayoutDescription) -> str:
+async def _run_validator(
+    write_to_log: debug.DebugPrintFunction, debug_level: debug.LogLevel, layout: LayoutDescription
+) -> str:
     old_print_function = debug.print_function
     try:
         debug.print_function = write_to_log
@@ -130,11 +132,11 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         init_filter(self.show_locks_check, "Lock")
 
         self._last_run_verbosity: int | None = None
-        for i, name in enumerate(["Silent", "Normal", "High", "Extreme"]):
-            self.verbosity_combo.setItemText(i, name)
-            self.verbosity_combo.setItemData(i, i)
+        for i, level in enumerate(debug.LogLevel):
+            self.verbosity_combo.setItemText(i, level.name.capitalize())
+            self.verbosity_combo.setItemData(i, level)
         signal_handling.on_combo(self.verbosity_combo, self._set_verbosity)
-        self._verbosity = self.verbosity_combo.currentIndex()
+        self._verbosity: debug.LogLevel = self.verbosity_combo.currentData()
 
     def stop_validator(self) -> None:
         if self._current_task is not None:
@@ -158,7 +160,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
 
         return bound
 
-    def _set_verbosity(self, value: int) -> None:
+    def _set_verbosity(self, value: debug.LogLevel) -> None:
         self._verbosity = value
         self._update_needs_refresh()
 

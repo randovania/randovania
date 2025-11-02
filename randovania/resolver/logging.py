@@ -168,34 +168,33 @@ class ResolverLogger(abc.ABC):
         return node.full_name(with_region=with_region) if node is not None else "None"
 
     @cached_property
-    def _visible_features(self) -> Mapping[int, frozenset[LogFeature]]:
+    def _visible_features(self) -> Mapping[debug.LogLevel, frozenset[LogFeature]]:
         """Which features should be displayed at each log level"""
         visibility: dict[int, frozenset[LogFeature]] = {}
 
-        # Silent
-        visibility[0] = frozenset()
+        visibility[debug.LogLevel.SILENT] = frozenset()
 
-        # Normal
-        visibility[1] = visibility[0] | {
+        visibility[debug.LogLevel.NORMAL] = visibility[debug.LogLevel.SILENT] | {
             "Action",
             "Rollback",
         }
-        # High
-        visibility[2] = visibility[1] | {
+
+        visibility[debug.LogLevel.HIGH] = visibility[debug.LogLevel.NORMAL] | {
             "ActionEnergy",
             "RollbackAdditional",
             "Skip",
             "CheckSatisfiable",
         }
 
-        # Extreme
-        visibility[3] = visibility[2] | {
+        visibility[debug.LogLevel.EXTREME] = visibility[debug.LogLevel.HIGH] | {
             "ActionPath",
         }
 
+        visibility[debug.LogLevel.MORE_EXTREME] = visibility[debug.LogLevel.EXTREME]
+
         return visibility
 
-    def should_show(self, feature: LogFeature, log_level: int) -> bool:
+    def should_show(self, feature: LogFeature, log_level: debug.LogLevel) -> bool:
         """Should this log feature be displayed at this log level?"""
         return feature in self._visible_features[log_level]
 
@@ -296,7 +295,7 @@ class TextResolverLogger(ResolverLogger):
 
     @property
     def should_perform_logging(self) -> bool:
-        return debug.debug_level() > 0
+        return debug.debug_level() > debug.LogLevel.SILENT
 
     def _indent(self, offset: int = 0) -> str:
         return " " * (self.current_indent - offset)

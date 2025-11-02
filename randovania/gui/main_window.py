@@ -162,7 +162,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.opened_session_windows = {}
 
         if preview:
-            debug.set_level(2)
+            debug.set_level(debug.LogLevel.HIGH)
 
         if randovania.is_frozen():
             self.menu_bar.removeAction(self.menu_edit.menuAction())

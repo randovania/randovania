@@ -28,7 +28,7 @@ async def test_run_validator(mocker, success):
     old_print_function = debug.print_function
     write_to_log = MagicMock()
     layout = MagicMock()
-    debug_level = 2
+    debug_level = debug.LogLevel.HIGH
 
     def side_effect(**kwargs):
         assert debug.debug_level() == debug_level
@@ -39,7 +39,7 @@ async def test_run_validator(mocker, success):
     mocker.patch("time.perf_counter", side_effect=[1, 2])
 
     # Run
-    with debug.with_level(0):
+    with debug.with_level(debug.LogLevel.SILENT):
         result = await game_validator_widget._run_validator(write_to_log, debug_level, layout)
 
     # Assert

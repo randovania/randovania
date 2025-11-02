@@ -90,7 +90,7 @@ def generate_layout(
 
         debug_level = debug.debug_level()
         if not parameters.spoiler:
-            debug_level = 0
+            debug_level = debug.LogLevel.SILENT
 
         if options.advanced_generate_in_another_process:
             generator_function = generate_in_another_process
@@ -118,7 +118,7 @@ def generate_layout(
             raise
 
 
-def _generate_layout_worker(output_pipe: Connection, debug_level: int, extra_args: dict):
+def _generate_layout_worker(output_pipe: Connection, debug_level: debug.LogLevel, extra_args: dict):
     def status_update(message: str):
         output_pipe.send(message)
         if output_pipe.poll():
@@ -130,7 +130,7 @@ def _generate_layout_worker(output_pipe: Connection, debug_level: int, extra_arg
 
 def generate_in_another_process(
     status_update: Callable[[str], None],
-    debug_level: int,
+    debug_level: debug.LogLevel,
     extra_args: dict,
 ) -> LayoutDescription:
     receiving_pipe, output_pipe = multiprocessing.Pipe(True)
@@ -156,7 +156,7 @@ def generate_in_another_process(
 
 def generate_in_host_process(
     status_update: Callable[[str], None],
-    debug_level: int,
+    debug_level: debug.LogLevel,
     extra_args: dict,
 ) -> LayoutDescription:
     with debug.with_level(debug_level):
