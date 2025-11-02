@@ -8,6 +8,13 @@ Extra - asset_id: collision_camera_008
   * Access Locked to Metroid Nest Hallway South/Door to Metroid Nest Foyer
   * Extra - actor_name: Door010
   * Extra - actor_type: doorclosedpower
+  > Front of Door to Metroid Nest Hallway South
+      Trivial
+
+> Front of Door to Metroid Nest Hallway South; Heals? False
+  * Layers: default
+  > Door to Metroid Nest Hallway South
+      Trivial
   > Tunnel to Metroid Nest Teleporter
       All of the following:
           Morph Ball
@@ -18,7 +25,7 @@ Extra - asset_id: collision_camera_008
 > Tunnel to Metroid Nest Teleporter; Heals? False
   * Layers: default
   * Tunnel to Metroid Nest Teleporter/Tunnel to Metroid Nest Foyer
-  > Door to Metroid Nest Hallway South
+  > Front of Door to Metroid Nest Hallway South
       Morph Ball
 
 > Tunnel to Metroid Nest Hallway South; Heals? False
@@ -30,7 +37,7 @@ Extra - asset_id: collision_camera_008
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Larva_001
-  > Door to Metroid Nest Hallway South
+  > Front of Door to Metroid Nest Hallway South
       Screw Attack
   > Tunnel to Metroid Nest Hallway South
       Morph Ball
@@ -456,12 +463,12 @@ Extra - asset_id: collision_camera_010
   * Pickup 160; Category? Minor
   * Extra - actor_name: LE_Item_008
   * Extra - actor_type: item_missiletank
-  > Door to Entrance Teleporter
+  > Front of Door to Entrance Teleporter
       Any of the following:
           # Drop through left pit
           Lightning Armor
           Hazard Runs (Beginner) and Hazard Damage ≥ 70
-  > Door to Nest Nodule (Bottom)
+  > Front of Door to Nest Nodule (Bottom)
       Trivial
   > Above Grapple Block
       Any of the following:
@@ -477,7 +484,7 @@ Extra - asset_id: collision_camera_010
   * Hint Features - Baby Blocks
   * Extra - actor_name: LE_Item_011
   * Extra - actor_type: item_missiletank
-  > Door to Amphitheater
+  > Front of Door to Amphitheater
       Baby Metroid
 
 > Door to Entrance Teleporter; Heals? False
@@ -485,7 +492,14 @@ Extra - asset_id: collision_camera_010
   * Power Beam Door to Entrance Teleporter/Door to Nest Network
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
-  > Door to Nest Nodule (Bottom)
+  > Front of Door to Entrance Teleporter
+      Trivial
+
+> Front of Door to Entrance Teleporter; Heals? False
+  * Layers: default
+  > Door to Entrance Teleporter
+      Trivial
+  > Front of Door to Nest Nodule (Bottom)
       Lightning Armor or Dodge Enemies (Advanced) or Defeat Non-Counterable Enemies
 
 > Door to Nest Nodule (Bottom); Heals? False
@@ -493,17 +507,31 @@ Extra - asset_id: collision_camera_010
   * Power Beam Door to Nest Nodule/Door to Nest Network (Bottom)
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
-  > Door to Entrance Teleporter
+  > Front of Door to Nest Nodule (Bottom)
+      Trivial
+
+> Front of Door to Nest Nodule (Bottom); Heals? False
+  * Layers: default
+  > Front of Door to Entrance Teleporter
       Lightning Armor or Dodge Enemies (Advanced) or Defeat Non-Counterable Enemies
+  > Door to Nest Nodule (Bottom)
+      Trivial
 
 > Door to Nest Nodule (Top); Heals? False
   * Layers: default
   * Power Beam Door to Nest Nodule/Door to Nest Network (Top)
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerpower
-  > Door to Nest Nodule (Bottom)
+  > Front of Door to Nest Nodule (Top)
       Trivial
-  > Door to Nest Nodule (Middle)
+
+> Front of Door to Nest Nodule (Top); Heals? False
+  * Layers: default
+  > Front of Door to Nest Nodule (Bottom)
+      Trivial
+  > Door to Nest Nodule (Top)
+      Trivial
+  > Front of Door to Nest Nodule (Middle)
       Screw Attack
   > Above Screw Attack Blocks
       # Deal with the enemies
@@ -514,6 +542,11 @@ Extra - asset_id: collision_camera_010
   * Power Beam Door to Amphitheater/Door to Nest Network
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Amphitheater
+      Trivial
+
+> Front of Door to Amphitheater; Heals? False
+  * Layers: default
   > Pickup (Missile Tank Baby Locked)
       All of the following:
           Defeat Non-Counterable Enemies
@@ -521,6 +554,8 @@ Extra - asset_id: collision_camera_010
               Baby Metroid
               # Clip through the Baby blocks
               Morph Ball and Melee Clip (Beginner) and Out of Bounds Movement (Beginner)
+  > Door to Amphitheater
+      Trivial
   > Above Screw Attack Blocks
       Trivial
 
@@ -530,8 +565,15 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_name: RandoDoor_001
   * Extra - actor_type: doorpowerpower
   * Extra - tile_index: 83
-  > Door to Nest Nodule (Bottom)
+  > Front of Door to Nest Nodule (Middle)
+      Trivial
+
+> Front of Door to Nest Nodule (Middle); Heals? False
+  * Layers: default
+  > Front of Door to Nest Nodule (Bottom)
       Screw Attack
+  > Door to Nest Nodule (Middle)
+      Trivial
 
 > Tunnel to Entrance Teleporter; Heals? False
   * Layers: default
@@ -554,7 +596,7 @@ Extra - asset_id: collision_camera_010
           Spider Boost (Beginner) and Can Spider Boost
           # Hazard run
           Hazard Runs (Intermediate) and Hazard Damage ≥ 110
-  > Door to Entrance Teleporter
+  > Front of Door to Entrance Teleporter
       Any of the following:
           # Drop through left pit
           Lightning Armor
@@ -571,10 +613,10 @@ Extra - asset_id: collision_camera_010
 
 > Above Screw Attack Blocks; Heals? False
   * Layers: default
-  > Door to Nest Nodule (Top)
+  > Front of Door to Nest Nodule (Top)
       # Deal with the enemies
       Lightning Armor or Dodge Enemies (Intermediate) or Defeat Weak Enemies
-  > Door to Amphitheater
+  > Front of Door to Amphitheater
       All of the following:
           # Deal with the Gulluggs
           Lightning Armor or Combat (Intermediate) or Defeat Weak Enemies
@@ -607,7 +649,7 @@ Hint Features - Baby Blocks, Teleporter
   * Pickup 161; Category? Minor
   * Extra - actor_name: LE_Item_009
   * Extra - actor_type: item_missiletank
-  > Door to Nest Vestibule
+  > Front of Door to Nest Vestibule
       All of the following:
           Morph Ball
           Any of the following:
@@ -637,7 +679,7 @@ Hint Features - Baby Blocks, Teleporter
   * Extra - actor_name: LE_Platform_Teleporter_10_02
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_10_02
-  > Door to Nest Vestibule
+  > Front of Door to Nest Vestibule
       Trivial
 
 > Door to Nest Vestibule; Heals? False
@@ -645,6 +687,11 @@ Hint Features - Baby Blocks, Teleporter
   * Power Beam Door to Nest Vestibule/Door to Entrance Teleporter
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Nest Vestibule
+      Trivial
+
+> Front of Door to Nest Vestibule; Heals? False
+  * Layers: default
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball
@@ -656,6 +703,8 @@ Hint Features - Baby Blocks, Teleporter
               # Ledge grabs and shooting the blocks in mid-air between ledge grabs
               Movement (Intermediate)
   > Teleporter
+      Trivial
+  > Door to Nest Vestibule
       Trivial
   > Event - Teleporter Unlocked From Below
       Trivial
@@ -670,6 +719,13 @@ Hint Features - Baby Blocks, Teleporter
   * Power Beam Door to Nest Network/Door to Entrance Teleporter
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Nest Network
+      Trivial
+
+> Front of Door to Nest Network; Heals? False
+  * Layers: default
+  > Door to Nest Network
+      Trivial
   > Tunnel to Nest Network
       All of the following:
           Morph Ball and After Area 8 - Nest Network Grapple Block
@@ -683,7 +739,7 @@ Hint Features - Baby Blocks, Teleporter
 > Tunnel to Nest Network; Heals? False
   * Layers: default
   * Tunnel to Nest Network/Tunnel to Entrance Teleporter
-  > Door to Nest Network
+  > Front of Door to Nest Network
       All of the following:
           Morph Ball
           # Deal with the electric Gullugs
@@ -692,17 +748,17 @@ Hint Features - Baby Blocks, Teleporter
 > Event - Teleporter Unlocked From Below; Heals? False
   * Layers: default
   * Event Area 8 - Teleporter Unlocked (Lower)
-  > Door to Nest Vestibule
+  > Front of Door to Nest Vestibule
       Trivial
 
 > Above Screw Attack Blocks; Heals? False
   * Layers: default
-  > Door to Nest Vestibule
+  > Front of Door to Nest Vestibule
       Any of the following:
           Screw Attack
           # Freeze the Gullugg next to the wall and Melee Clip right https://youtu.be/IyM56zKAbRs
           Charge Beam and Ice Beam and Morph Ball and Melee Clip (Advanced) and Out of Bounds Movement (Beginner)
-  > Door to Nest Network
+  > Front of Door to Nest Network
       All of the following:
           Any of the following:
               # Climb the room
@@ -749,7 +805,7 @@ Extra - asset_id: collision_camera_012
   * Hint Features - Baby Blocks
   * Extra - actor_name: LE_Item_001
   * Extra - actor_type: item_supermissiletank
-  > Door to Nest Network (Top)
+  > Front of Door to Nest Network (Top)
       Morph Ball
 
 > Pickup (Missile Tank); Heals? False
@@ -757,7 +813,7 @@ Extra - asset_id: collision_camera_012
   * Pickup 162; Category? Minor
   * Extra - actor_name: LE_Item_010
   * Extra - actor_type: item_missiletank
-  > Door to Nest Network (Middle)
+  > Front of Door to Nest Network (Middle)
       Morph Ball
 
 > Door to Nest Network (Bottom); Heals? False
@@ -765,7 +821,14 @@ Extra - asset_id: collision_camera_012
   * Power Beam Door to Nest Network/Door to Nest Nodule (Bottom)
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
-  > Door to Nest Network (Top)
+  > Front of Door to Nest Network (Bottom)
+      Trivial
+
+> Front of Door to Nest Network (Bottom); Heals? False
+  * Layers: default
+  > Door to Nest Network (Bottom)
+      Trivial
+  > Front of Door to Nest Network (Top)
       All of the following:
           # Deal with the enemies
           Lightning Armor or Defeat Weak Enemies
@@ -780,6 +843,11 @@ Extra - asset_id: collision_camera_012
   * Power Beam Door to Nest Network/Door to Nest Nodule (Top)
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Nest Network (Top)
+      Trivial
+
+> Front of Door to Nest Network (Top); Heals? False
+  * Layers: default
   > Pickup (Super Missile Tank)
       All of the following:
           Morph Ball
@@ -792,9 +860,11 @@ Extra - asset_id: collision_camera_012
                   # PB path
                   Lightning Armor and Lay Power Bomb
                   Phase Drift or Use Spider Ball
-  > Door to Nest Network (Bottom)
+  > Front of Door to Nest Network (Bottom)
       # Deal with the enemies
       Lightning Armor or Defeat Weak Enemies
+  > Door to Nest Network (Top)
+      Trivial
 
 > Door to Nest Network (Middle); Heals? False
   * Layers: default
@@ -802,10 +872,17 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_name: RandoDoor_001
   * Extra - actor_type: doorpowerpower
   * Extra - tile_index: 84
+  > Front of Door to Nest Network (Middle)
+      Trivial
+
+> Front of Door to Nest Network (Middle); Heals? False
+  * Layers: default
   > Pickup (Missile Tank)
       Morph Ball
-  > Door to Nest Network (Bottom)
+  > Front of Door to Nest Network (Bottom)
       Lay Any Bomb
+  > Door to Nest Network (Middle)
+      Trivial
 
 ----------------
 Metroid Nest Small Shaft
@@ -1366,7 +1443,7 @@ Extra - asset_id: collision_camera_024
   * Extra - actor_name: LE_Platform_SaveStation_003
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation_003
-  > Door to Amphitheater
+  > Front of Door to Amphitheater
       Trivial
   > Tunnel to Metroid Nest Foyer
       All of the following:
@@ -1379,7 +1456,7 @@ Extra - asset_id: collision_camera_024
   * Extra - actor_name: LE_Platform_Teleporter_10_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_10_01
-  > Door to Amphitheater
+  > Front of Door to Amphitheater
       Screw Attack
 
 > Door to Amphitheater; Heals? False
@@ -1387,10 +1464,17 @@ Extra - asset_id: collision_camera_024
   * Power Beam Door to Amphitheater/Door to Metroid Nest Teleporter
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Amphitheater
+      Trivial
+
+> Front of Door to Amphitheater; Heals? False
+  * Layers: default
   > Save Station
       Trivial
   > Teleporter
       Screw Attack
+  > Door to Amphitheater
+      Trivial
   > Event - Teleporter Unlocked
       Screw Attack or Knowledge (Beginner)
 
@@ -1403,6 +1487,6 @@ Extra - asset_id: collision_camera_024
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 8 - Teleporter Unlocked (Upper)
-  > Door to Amphitheater
+  > Front of Door to Amphitheater
       Trivial
 

@@ -20,10 +20,17 @@ Extra - asset_id: 1868895730
 ----------------
 Temple Transport Access
 Extra - asset_id: 668125336
-> Door to Transport to Temple Grounds; Heals? False; Spawn Point; Default Node
+> Door to Transport to Temple Grounds; Heals? False; Default Node
   * Layers: default
   * Normal Door to Transport to Temple Grounds/Door to Temple Transport Access
   * Extra - dock_name: East
+  > Front of Door to Transport to Temple Grounds
+      Trivial
+
+> Front of Door to Transport to Temple Grounds; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Transport to Temple Grounds
+      Trivial
   > Door to Torvus Lagoon
       Trivial
 
@@ -31,23 +38,30 @@ Extra - asset_id: 668125336
   * Layers: default
   * Normal Door to Torvus Lagoon/Door to Temple Transport Access
   * Extra - dock_name: West
-  > Door to Transport to Temple Grounds
+  > Front of Door to Transport to Temple Grounds
       Trivial
 
 ----------------
 Torvus Lagoon
 Extra - asset_id: 2114709145
 Hint Features - Keybearer Corpse, Luminoth Corpse, Underwater
-> Door to Temple Transport Access; Heals? False; Spawn Point; Default Node
+> Door to Temple Transport Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Temple Transport Access/Door to Torvus Lagoon
   * Extra - dock_name: East (0A_Hall)
+  > Front of Door to Temple Transport Access
+      Trivial
+
+> Front of Door to Temple Transport Access; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Temple Transport Access
+      Trivial
   > Door to Save Station A
       Any of the following:
           Space Jump Boots
           # https://www.youtube.com/watch?v=VO50mC6OMy4
           Standable Terrain (Intermediate)
-  > Door to Portal Chamber (Light)
+  > Front of Door to Portal Chamber (Light)
       All of the following:
           After Torvus Lagoon Gates
           Any of the following:
@@ -68,17 +82,24 @@ Hint Features - Keybearer Corpse, Luminoth Corpse, Underwater
   * Layers: default
   * Missile Blast Shield to Save Station A/Door to Torvus Lagoon
   * Extra - dock_name: South (00_Pickup)
-  > Door to Temple Transport Access
+  > Front of Door to Temple Transport Access
       Trivial
 
 > Door to Portal Chamber (Light); Heals? False
   * Layers: default
   * Normal Door to Portal Chamber (Light)/Door to Torvus Lagoon
   * Extra - dock_name: West (0C_Hall)
-  > Door to Temple Transport Access
+  > Front of Door to Portal Chamber (Light)
+      Trivial
+
+> Front of Door to Portal Chamber (Light); Heals? False
+  * Layers: default
+  > Front of Door to Temple Transport Access
       Any of the following:
           After Torvus Lagoon Gates
           Single Room Out of Bounds (Advanced) and Use Screw Attack (No Space Jump)
+  > Door to Portal Chamber (Light)
+      Trivial
   > Door to Ruined Alcove
       After Torvus Lagoon Gates
   > Event - Torvus Lagoon Gates
@@ -88,27 +109,27 @@ Hint Features - Keybearer Corpse, Luminoth Corpse, Underwater
   * Layers: default
   * Dark Door to Path of Roots/Door to Torvus Lagoon; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: SouthLower (0B_Hall)
-  > Door to Temple Transport Access
+  > Front of Door to Temple Transport Access
       Trivial
 
 > Door to Ruined Alcove; Heals? False
   * Layers: default
   * Light Door to Ruined Alcove/Door to Torvus Lagoon
   * Extra - dock_name: NorthUpper (0D_Hall)
-  > Door to Portal Chamber (Light)
+  > Front of Door to Portal Chamber (Light)
       After Torvus Lagoon Gates
 
 > Pickup (Missile); Heals? False
   * Layers: default
   * Pickup 60; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (131166,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 131147, 'hud_memo': 131164, 'streamed_audio': 131167, 'sound': 131150, 'audio_fade': 131169})})
-  > Door to Temple Transport Access
+  > Front of Door to Temple Transport Access
       Trivial
 
 > Event - Torvus Lagoon Gates; Heals? False
   * Layers: default
   * Event Torvus Lagoon Gates
-  > Door to Portal Chamber (Light)
+  > Front of Door to Portal Chamber (Light)
       Trivial
 
 > Keybearer Corpse (S-Dly); Heals? False
@@ -116,16 +137,23 @@ Hint Features - Keybearer Corpse, Luminoth Corpse, Underwater
   * Hint
   * Extra - hint_index: 68
   * Extra - string_asset_id: 1489382579
-  > Door to Temple Transport Access
+  > Front of Door to Temple Transport Access
       Trivial
 
 ----------------
 Ruined Alcove
 Extra - asset_id: 3548128276
-> Door to Torvus Lagoon; Heals? False; Spawn Point; Default Node
+> Door to Torvus Lagoon; Heals? False; Default Node
   * Layers: default
   * Light Door to Torvus Lagoon/Door to Ruined Alcove
   * Extra - dock_name: South
+  > Front of Door to Torvus Lagoon
+      Trivial
+
+> Front of Door to Torvus Lagoon; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Torvus Lagoon
+      Trivial
   > Door to Forgotten Bridge
       Trivial
 
@@ -133,7 +161,7 @@ Extra - asset_id: 3548128276
   * Layers: default
   * Light Door to Forgotten Bridge/Door to Ruined Alcove
   * Extra - dock_name: West
-  > Door to Torvus Lagoon
+  > Front of Door to Torvus Lagoon
       Trivial
 
 ----------------
@@ -151,10 +179,17 @@ Hint Features - Portal
   * Layers: default
   * Normal Door to Torvus Lagoon/Door to Portal Chamber (Light)
   * Extra - dock_name: East
+  > Front of Door to Torvus Lagoon
+      Trivial
+
+> Front of Door to Torvus Lagoon; Heals? False
+  * Layers: default
   > Portal to Portal Chamber (Dark)
       # https://www.youtube.com/watch?v=Ff2bv9IFo8Y&ab_channel=erinexplosives
       Single Room Out of Bounds (Advanced) and Screw Attack into Tunnels/Openings (Advanced) and Use Screw Attack (No Space Jump)
-  > Door to Great Bridge
+  > Door to Torvus Lagoon
+      Trivial
+  > Front of Door to Great Bridge
       All of the following:
           Morph Ball
           Any of the following:
@@ -162,17 +197,24 @@ Hint Features - Portal
               # https://www.youtube.com/watch?v=OclmhHImZpo&t=30s
               Boost Ball and Wall Boost (Advanced)
 
-> Door to Great Bridge; Heals? False; Spawn Point; Default Node
+> Door to Great Bridge; Heals? False; Default Node
   * Layers: default
   * Normal Door to Great Bridge/Door to Portal Chamber (Light)
   * Extra - dock_name: West
-  > Door to Torvus Lagoon
+  > Front of Door to Great Bridge
+      Trivial
+
+> Front of Door to Great Bridge; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Torvus Lagoon
       All of the following:
           Morph Ball
           Any of the following:
               Morph Ball Bomb
               # https://www.youtube.com/watch?v=OclmhHImZpo
               Boost Ball and Wall Boost (Advanced)
+  > Door to Great Bridge
+      Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
@@ -185,10 +227,17 @@ Hint Features - Portal
 Path of Roots
 Extra - asset_id: 1950913308
 Hint Features - Grapple Point, Luminoth Lore
-> Door to Torvus Lagoon; Heals? False; Spawn Point; Default Node
+> Door to Torvus Lagoon; Heals? False; Default Node
   * Layers: default
   * Dark Door to Torvus Lagoon/Door to Path of Roots; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: North
+  > Front of Door to Torvus Lagoon
+      Trivial
+
+> Front of Door to Torvus Lagoon; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Torvus Lagoon
+      Trivial
   > Next to Pickup
       # https://www.youtube.com/watch?v=SnmD9Map9kE
       Gravity Boost and Space Jump Boots and Slope Jump (Intermediate)
@@ -199,8 +248,15 @@ Hint Features - Grapple Point, Luminoth Lore
   * Layers: default
   * Normal Door to Great Bridge/Door to Path of Roots
   * Extra - dock_name: West
-  > Door to Torvus Lagoon
+  > Front of Door to Great Bridge
+      Trivial
+
+> Front of Door to Great Bridge; Heals? False
+  * Layers: default
+  > Front of Door to Torvus Lagoon
       Morph Ball
+  > Door to Great Bridge
+      Trivial
   > Next to Pickup
       Any of the following:
           Grapple Beam or Use Screw Attack (Space Jump)
@@ -222,16 +278,16 @@ Hint Features - Grapple Point, Luminoth Lore
 
 > Next to Pickup; Heals? False
   * Layers: default
-  > Door to Torvus Lagoon
+  > Front of Door to Torvus Lagoon
       Trivial
-  > Door to Great Bridge
+  > Front of Door to Great Bridge
       Grapple Beam or Use Screw Attack (Space Jump)
   > Pickup (Missile)
       Trivial
 
 > Under Lore Scan; Heals? False
   * Layers: default
-  > Door to Great Bridge
+  > Front of Door to Great Bridge
       Any of the following:
           Grapple Beam or Gravity Boost or Space Jump Boots
           # Double Bomb Jump
@@ -259,7 +315,7 @@ Hint Features - Grapple Point, Luminoth Lore
   * Hint
   * Extra - translator: Emerald
   * Extra - string_asset_id: 1170414603
-  > Door to Great Bridge
+  > Front of Door to Great Bridge
       Trivial
 
 ----------------
@@ -286,16 +342,16 @@ Hint Features - Bomb Slot, Boost Spinner, Portal
   * Layers: default
   * Missile Blast Shield to Plaza Access/Door to Forgotten Bridge
   * Extra - dock_name: North
-  > Door to Grove Access
+  > Front of Door to Grove Access
       Trivial
 
 > Portal to Dark Forgotten Bridge; Heals? False
   * Layers: default
   * Dark Portal to Dark Forgotten Bridge/Portal to Forgotten Bridge
   * Extra - dock_name: VirtualNorth
-  > Door to Ruined Alcove
+  > Front of Door to Ruined Alcove
       Trivial
-  > Door to Grove Access
+  > Front of Door to Grove Access
       All of the following:
           After Forgotten Bridge Gate
           Any of the following:
@@ -308,10 +364,17 @@ Hint Features - Bomb Slot, Boost Spinner, Portal
   > Bridge Center
       Before Dark Forgotten Bridge Rotated
 
-> Door to Ruined Alcove; Heals? False; Spawn Point; Default Node
+> Door to Ruined Alcove; Heals? False; Default Node
   * Layers: default
   * Light Door to Ruined Alcove/Door to Forgotten Bridge
   * Extra - dock_name: East
+  > Front of Door to Ruined Alcove
+      Trivial
+
+> Front of Door to Ruined Alcove; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Ruined Alcove
+      Trivial
   > Bridge Center
       Any of the following:
           Space Jump Boots
@@ -331,10 +394,17 @@ Hint Features - Bomb Slot, Boost Spinner, Portal
   * Layers: default
   * Dark Door to Grove Access/Door to Forgotten Bridge
   * Extra - dock_name: West
+  > Front of Door to Grove Access
+      Trivial
+
+> Front of Door to Grove Access; Heals? False
+  * Layers: default
   > Door to Plaza Access
       Trivial
   > Portal to Dark Forgotten Bridge
       After Forgotten Bridge Gate
+  > Door to Grove Access
+      Trivial
   > Event - Forgotten Bridge Gate
       Boost Ball and Morph Ball
   > Bridge Center
@@ -347,7 +417,14 @@ Hint Features - Bomb Slot, Boost Spinner, Portal
   * Layers: default
   * Normal Door to Abandoned Worksite/Door to Forgotten Bridge
   * Extra - dock_name: South
-  > Door to Ruined Alcove
+  > Front of Door to Abandoned Worksite
+      Trivial
+
+> Front of Door to Abandoned Worksite; Heals? False
+  * Layers: default
+  > Front of Door to Ruined Alcove
+      Trivial
+  > Door to Abandoned Worksite
       Trivial
   > Pickup (Missile)
       Trivial
@@ -358,13 +435,13 @@ Hint Features - Bomb Slot, Boost Spinner, Portal
   * Layers: default
   * Pickup 63; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (459109,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 459107, 'hud_memo': 459113, 'streamed_audio': 459110, 'sound': 459106, 'audio_fade': 459114})})
-  > Door to Abandoned Worksite
+  > Front of Door to Abandoned Worksite
       Trivial
 
 > Event - Forgotten Bridge Gate; Heals? False
   * Layers: default
   * Event Forgotten Bridge Gate
-  > Door to Grove Access
+  > Front of Door to Grove Access
       Trivial
 
 > Bridge Center; Heals? False
@@ -378,16 +455,16 @@ Hint Features - Bomb Slot, Boost Spinner, Portal
                   After Forgotten Bridge Gate or Use Screw Attack (Space Jump)
                   Scan Visor and Combat/Scan Dash (Intermediate)
                   Morph Ball and Roll Jump (Intermediate)
-  > Door to Ruined Alcove
+  > Front of Door to Ruined Alcove
       Trivial
-  > Door to Grove Access
+  > Front of Door to Grove Access
       All of the following:
           Space Jump Boots
           Any of the following:
               After Forgotten Bridge Gate
               # https://www.youtube.com/watch?v=QKOaevks1mg
               Morph Ball Bomb and Morph Ball and Bomb Space Jump (Expert)
-  > Door to Abandoned Worksite
+  > Front of Door to Abandoned Worksite
       Any of the following:
           After Dark Forgotten Bridge Rotated
           All of the following:
@@ -409,6 +486,13 @@ Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon, Translator Gate
   * Layers: default
   * Normal Door to Torvus Map Station/Door to Great Bridge
   * Extra - dock_name: Docks_SouthUpper1
+  > Front of Door to Torvus Map Station
+      Trivial
+
+> Front of Door to Torvus Map Station; Heals? False
+  * Layers: default
+  > Door to Torvus Map Station
+      Trivial
   > Front of Translator Gate
       # https://youtu.be/CkYSR1jJvNY
       Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Beginner)
@@ -419,7 +503,12 @@ Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon, Translator Gate
   * Layers: default
   * Dark Door to Temple Access/Door to Great Bridge (Top)
   * Extra - dock_name: WestUpper
-  > Door to Torvus Map Station
+  > Front of Door to Temple Access (Top)
+      Trivial
+
+> Front of Door to Temple Access (Top); Heals? False
+  * Layers: default
+  > Front of Door to Torvus Map Station
       Any of the following:
           All of the following:
               Space Jump Boots
@@ -429,7 +518,9 @@ Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon, Translator Gate
                   Scan Visor and Combat/Scan Dash (Advanced)
           # https://youtu.be/aTX79QraJgQ
           Boost Ball and Morph Ball and Boost Jump (Advanced)
-  > Door to Abandoned Worksite
+  > Door to Temple Access (Top)
+      Trivial
+  > Front of Door to Abandoned Worksite
       Any of the following:
           Space Jump Boots
           # https://youtu.be/mUl7NR2b5wU
@@ -440,7 +531,7 @@ Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon, Translator Gate
                   Boost Ball and Boost Jump (Advanced)
                   # https://youtu.be/Ds7zpUqQkwo
                   Roll Jump (Advanced)
-  > Door to Temple Access (Bottom)
+  > Front of Door to Temple Access (Bottom)
       Trivial
   > Pickup (Power Bomb)
       Morph Ball and Power Bomb
@@ -457,23 +548,37 @@ Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon, Translator Gate
   * Layers: default
   * Light Door to Abandoned Worksite/Door to Great Bridge
   * Extra - dock_name: North
-  > Door to Temple Access (Top)
+  > Front of Door to Abandoned Worksite
+      Trivial
+
+> Front of Door to Abandoned Worksite; Heals? False
+  * Layers: default
+  > Front of Door to Temple Access (Top)
       Any of the following:
           Use Screw Attack (Space Jump)
           # https://youtu.be/4nglOQXAFuk
           Scan Visor and Space Jump Boots and Combat/Scan Dash (Intermediate)
-  > Door to Temple Access (Bottom)
+  > Door to Abandoned Worksite
+      Trivial
+  > Front of Door to Temple Access (Bottom)
       Trivial
   > Pickup (Power Bomb)
       Morph Ball and Power Bomb
   > Event - Great Bridge Cannon
       Scan Visor
 
-> Door to Path of Roots; Heals? False; Spawn Point; Default Node
+> Door to Path of Roots; Heals? False; Default Node
   * Layers: default
   * Normal Door to Path of Roots/Door to Great Bridge
   * Extra - dock_name: EastB
-  > Door to Temple Access (Bottom)
+  > Front of Door to Path of Roots
+      Trivial
+
+> Front of Door to Path of Roots; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Path of Roots
+      Trivial
+  > Front of Door to Temple Access (Bottom)
       Any of the following:
           Gravity Boost or Space Jump Boots
           All of the following:
@@ -490,16 +595,21 @@ Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon, Translator Gate
   * Layers: default
   * Missile Blast Shield to Portal Chamber (Light)/Door to Great Bridge
   * Extra - dock_name: EastC
-  > Door to Temple Access (Bottom)
+  > Front of Door to Temple Access (Bottom)
       Trivial
 
 > Door to Temple Access (Bottom); Heals? False
   * Layers: default
   * Normal Door to Temple Access/Door to Great Bridge (Bottom)
   * Extra - dock_name: WestLower
-  > Door to Torvus Map Station
+  > Front of Door to Temple Access (Bottom)
+      Trivial
+
+> Front of Door to Temple Access (Bottom); Heals? False
+  * Layers: default
+  > Front of Door to Torvus Map Station
       Space Jump Boots and Slope Jump (Advanced)
-  > Door to Abandoned Worksite
+  > Front of Door to Abandoned Worksite
       Any of the following:
           All of the following:
               Morph Ball Bomb and Morph Ball
@@ -512,9 +622,11 @@ Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon, Translator Gate
           Movement (Beginner) and Use Screw Attack (Space Jump)
           # https://www.youtube.com/watch?v=-Z7y1qUeubw
           Space Jump Boots and Slope Jump (Expert)
-  > Door to Path of Roots
+  > Front of Door to Path of Roots
       Trivial
   > Door to Portal Chamber (Light)
+      Trivial
+  > Door to Temple Access (Bottom)
       Trivial
   > Front of Translator Gate
       Any of the following:
@@ -529,9 +641,9 @@ Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon, Translator Gate
   * Layers: default
   * Pickup 64; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'PowerBombExpansion', 'connections': (), 'removals': (590220,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 590099, 'hud_memo': 590106, 'streamed_audio': 590218, 'sound': 590095, 'audio_fade': 590216})})
-  > Door to Temple Access (Top)
+  > Front of Door to Temple Access (Top)
       Morph Ball and Power Bomb ≥ 2
-  > Door to Abandoned Worksite
+  > Front of Door to Abandoned Worksite
       Morph Ball and Power Bomb ≥ 2
   > Out of Bounds
       Single Room Out of Bounds (Expert)
@@ -539,24 +651,24 @@ Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon, Translator Gate
 > Event - Great Bridge Cannon; Heals? False
   * Layers: default
   * Event Great Bridge Cannon
-  > Door to Abandoned Worksite
+  > Front of Door to Abandoned Worksite
       Trivial
 
 > Front of Translator Gate; Heals? False
   * Layers: default
-  > Door to Torvus Map Station
+  > Front of Door to Torvus Map Station
       # https://youtu.be/uykOfFn5E_E
       Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Intermediate)
-  > Door to Temple Access (Top)
+  > Front of Door to Temple Access (Top)
       Any of the following:
           Morph Ball and After Great Bridge Cannon
           # https://youtu.be/cHJX27JZYso
           Slope Jump (Intermediate) and Use Screw Attack (Space Jump)
           # https://www.youtube.com/watch?v=nSHgMLE9k8o
           Space Jump Boots and Extended Dash (Advanced) and Slope Jump (Advanced)
-  > Door to Abandoned Worksite
+  > Front of Door to Abandoned Worksite
       Scan Visor and Space Jump Boots and Extended Dash (Advanced)
-  > Door to Temple Access (Bottom)
+  > Front of Door to Temple Access (Bottom)
       Trivial
   > Translator Gate
       Trivial
@@ -567,16 +679,16 @@ Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon, Translator Gate
   * Extra - gate_index: 12
   * Extra - vanilla_actual: Emerald
   * Extra - vanilla_color: Emerald
-  > Door to Torvus Map Station
+  > Front of Door to Torvus Map Station
       Trivial
   > Front of Translator Gate
       Trivial
 
 > Out of Bounds; Heals? False
   * Layers: default
-  > Door to Torvus Map Station
+  > Front of Door to Torvus Map Station
       Single Room Out of Bounds (Expert)
-  > Door to Temple Access (Top)
+  > Front of Door to Temple Access (Top)
       Single Room Out of Bounds (Expert)
   > Pickup (Power Bomb)
       Trivial
@@ -589,18 +701,32 @@ Hint Features - Bomb Slot, Half-Pipe, Morph Ball Tunnel
   * Layers: default
   * Normal Door to Torvus Plaza/Door to Plaza Access
   * Extra - dock_name: North
-  > Door to Forgotten Bridge
+  > Front of Door to Torvus Plaza
+      Trivial
+
+> Front of Door to Torvus Plaza; Heals? False
+  * Layers: default
+  > Door to Torvus Plaza
+      Trivial
+  > Front of Door to Forgotten Bridge
       After Torvus Plaza Access Puzzle (Torvus Plaza Slot) and After Torvus Plaza Access Puzzle (Forgotten Bridge Slot)
   > Out of Bounds
       # https://www.youtube.com/watch?v=WYEyeXanSy0
       Single Room Out of Bounds (Advanced) and Screw Attack into Tunnels/Openings (Advanced) and Use Screw Attack (No Space Jump)
 
-> Door to Forgotten Bridge; Heals? False; Spawn Point; Default Node
+> Door to Forgotten Bridge; Heals? False; Default Node
   * Layers: default
   * Normal Door to Forgotten Bridge/Door to Plaza Access
   * Extra - dock_name: South
-  > Door to Torvus Plaza
+  > Front of Door to Forgotten Bridge
+      Trivial
+
+> Front of Door to Forgotten Bridge; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Torvus Plaza
       After Torvus Plaza Access Puzzle (Torvus Plaza Slot) and After Torvus Plaza Access Puzzle (Forgotten Bridge Slot)
+  > Door to Forgotten Bridge
+      Trivial
   > Pickup (Missile)
       Morph Ball Bomb and Boost Ball and Morph Ball and After Torvus Plaza Access Puzzle (Torvus Plaza Slot) and After Torvus Plaza Access Puzzle (Forgotten Bridge Slot)
   > Event - Bomb Slot (Forgotten Bridge Side)
@@ -615,9 +741,9 @@ Hint Features - Bomb Slot, Half-Pipe, Morph Ball Tunnel
   * Layers: default
   * Pickup 66; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (721105,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 721110, 'hud_memo': 721107, 'streamed_audio': 721101, 'sound': 721109, 'audio_fade': 721108})})
-  > Door to Torvus Plaza
+  > Front of Door to Torvus Plaza
       After Torvus Plaza Access Puzzle (Torvus Plaza Slot)
-  > Door to Forgotten Bridge
+  > Front of Door to Forgotten Bridge
       After Torvus Plaza Access Puzzle (Forgotten Bridge Slot)
   > Event - Bomb Slot (Torvus Plaza Side)
       Morph Ball Bomb and Morph Ball
@@ -625,14 +751,14 @@ Hint Features - Bomb Slot, Half-Pipe, Morph Ball Tunnel
 > Event - Bomb Slot (Forgotten Bridge Side); Heals? False
   * Layers: default
   * Event Torvus Plaza Access Puzzle (Forgotten Bridge Slot)
-  > Door to Forgotten Bridge
+  > Front of Door to Forgotten Bridge
       Morph Ball Bomb and Morph Ball
 
 > Out of Bounds; Heals? False
   * Layers: default
-  > Door to Torvus Plaza
+  > Front of Door to Torvus Plaza
       Morph Ball
-  > Door to Forgotten Bridge
+  > Front of Door to Forgotten Bridge
       Morph Ball
   > Pickup (Missile)
       All of the following:
@@ -643,7 +769,7 @@ Hint Features - Bomb Slot, Half-Pipe, Morph Ball Tunnel
 > Event - Bomb Slot (Torvus Plaza Side); Heals? False
   * Layers: default
   * Event Torvus Plaza Access Puzzle (Torvus Plaza Slot)
-  > Door to Torvus Plaza
+  > Front of Door to Torvus Plaza
       Morph Ball Bomb and Morph Ball
 
 ----------------
@@ -654,6 +780,13 @@ Hint Features - Grapple Point
   * Layers: default
   * Light Door to Great Bridge/Door to Abandoned Worksite
   * Extra - dock_name: South
+  > Front of Door to Great Bridge
+      Trivial
+
+> Front of Door to Great Bridge; Heals? False
+  * Layers: default
+  > Door to Great Bridge
+      Trivial
   > Pickup (Missile)
       Any of the following:
           Grapple Beam
@@ -680,10 +813,17 @@ Hint Features - Grapple Point
           # https://www.youtube.com/watch?v=LY-CpTzBWxU
           Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Intermediate)
 
-> Door to Forgotten Bridge; Heals? False; Spawn Point; Default Node
+> Door to Forgotten Bridge; Heals? False; Default Node
   * Layers: default
   * Normal Door to Forgotten Bridge/Door to Abandoned Worksite
   * Extra - dock_name: North
+  > Front of Door to Forgotten Bridge
+      Trivial
+
+> Front of Door to Forgotten Bridge; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Forgotten Bridge
+      Trivial
   > Tunnel Ledge (Great Bridge Side)
       All of the following:
           Morph Ball
@@ -698,7 +838,7 @@ Hint Features - Grapple Point
   * Layers: default
   * Pickup 67; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (786505,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 786513, 'hud_memo': 786511, 'streamed_audio': 786503, 'sound': 786501, 'audio_fade': 786510})})
-  > Door to Great Bridge
+  > Front of Door to Great Bridge
       Trivial
   > Tunnel Ledge (Great Bridge Side)
       Any of the following:
@@ -711,9 +851,9 @@ Hint Features - Grapple Point
 
 > Tunnel Ledge (Great Bridge Side); Heals? False
   * Layers: default
-  > Door to Great Bridge
+  > Front of Door to Great Bridge
       Trivial
-  > Door to Forgotten Bridge
+  > Front of Door to Forgotten Bridge
       All of the following:
           Morph Ball
           Any of the following:
@@ -735,10 +875,17 @@ Hint Features - Grapple Point
 ----------------
 Grove Access
 Extra - asset_id: 1180978245
-> Door to Torvus Grove; Heals? False; Spawn Point; Default Node
+> Door to Torvus Grove; Heals? False; Default Node
   * Layers: default
   * Dark Door to Torvus Grove/Door to Grove Access
   * Extra - dock_name: West
+  > Front of Door to Torvus Grove
+      Trivial
+
+> Front of Door to Torvus Grove; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Torvus Grove
+      Trivial
   > Door to Forgotten Bridge
       Trivial
 
@@ -746,17 +893,24 @@ Extra - asset_id: 1180978245
   * Layers: default
   * Dark Door to Forgotten Bridge/Door to Grove Access
   * Extra - dock_name: East
-  > Door to Torvus Grove
+  > Front of Door to Torvus Grove
       Trivial
 
 ----------------
 Temple Access
 Extra - asset_id: 121681107
 Hint Features - Morph Ball Tunnel
-> Door to Great Bridge (Top); Heals? False; Spawn Point; Default Node
+> Door to Great Bridge (Top); Heals? False; Default Node
   * Layers: default
   * Dark Door to Great Bridge/Door to Temple Access (Top)
   * Extra - dock_name: Easttop
+  > Front of Door to Great Bridge (Top)
+      Trivial
+
+> Front of Door to Great Bridge (Top); Heals? False; Spawn Point
+  * Layers: default
+  > Door to Great Bridge (Top)
+      Trivial
   > Above Pickup
       Trivial
 
@@ -790,7 +944,7 @@ Hint Features - Morph Ball Tunnel
 
 > Above Pickup; Heals? False
   * Layers: default
-  > Door to Great Bridge (Top)
+  > Front of Door to Great Bridge (Top)
       Trivial
   > Door to Torvus Temple (Top)
       Trivial
@@ -822,26 +976,40 @@ Hint Features - Morph Ball Tunnel
 ----------------
 Torvus Map Station
 Extra - asset_id: 673929343
-> Door to Great Bridge; Heals? False; Spawn Point; Default Node
+> Door to Great Bridge; Heals? False; Default Node
   * Layers: default
   * Normal Door to Great Bridge/Door to Torvus Map Station
   * Extra - dock_name: Docks_Docks_North
+  > Front of Door to Great Bridge
+      Trivial
+
+> Front of Door to Great Bridge; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Great Bridge
+      Trivial
   > Map Station
       Trivial
 
 > Map Station; Heals? False
   * Layers: default
-  > Door to Great Bridge
+  > Front of Door to Great Bridge
       Trivial
 
 ----------------
 Torvus Plaza
 Extra - asset_id: 1978751231
 Hint Features - Half-Pipe, Kinetic Orb Cannon, Spider Track
-> Door to Plaza Access; Heals? False; Spawn Point; Default Node
+> Door to Plaza Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Plaza Access/Door to Torvus Plaza
   * Extra - dock_name: South
+  > Front of Door to Plaza Access
+      Trivial
+
+> Front of Door to Plaza Access; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Plaza Access
+      Trivial
   > Pickup (Energy Tank)
       Any of the following:
           All of the following:
@@ -861,7 +1029,7 @@ Hint Features - Half-Pipe, Kinetic Orb Cannon, Spider Track
   * Layers: default
   * Pickup 71; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'EnergyTank', 'connections': (), 'removals': (1245320,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 1245318, 'hud_memo': 1245323, 'streamed_audio': 1245322, 'sound': 1245317, 'audio_fade': 1245321})})
-  > Door to Plaza Access
+  > Front of Door to Plaza Access
       All of the following:
           Morph Ball
           Any of the following:
@@ -881,14 +1049,26 @@ Hint Features - Half-Pipe
   * Layers: default
   * Dark Door to Grove Access/Door to Torvus Grove
   * Extra - dock_name: East
-  > Door to Underground Tunnel
+  > Front of Door to Grove Access
       Trivial
 
-> Door to Underground Tunnel; Heals? False; Spawn Point; Default Node
+> Front of Door to Grove Access; Heals? False
+  * Layers: default
+  > Door to Grove Access
+      Trivial
+  > Front of Door to Underground Tunnel
+      Trivial
+
+> Door to Underground Tunnel; Heals? False; Default Node
   * Layers: default
   * Light Door to Underground Tunnel/Door to Torvus Grove
   * Extra - dock_name: South
-  > Door to Grove Access
+  > Front of Door to Underground Tunnel
+      Trivial
+
+> Front of Door to Underground Tunnel; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Grove Access
       All of the following:
           Morph Ball
           Any of the following:
@@ -906,7 +1086,9 @@ Hint Features - Half-Pipe
                               # https://www.youtube.com/watch?v=pXscSB2QLcQ
                               Bomb Jump (Expert) and Movement (Expert) and Use Screw Attack (No Space Jump)
               After Torvus Grove Tree and Standable Terrain (Advanced) and Use Screw Attack (Space Jump)
-  > Door to Meditation Vista
+  > Door to Underground Tunnel
+      Trivial
+  > Front of Door to Meditation Vista
       Trivial
   > Pickup (Missile)
       After Torvus Grove Tree
@@ -917,22 +1099,29 @@ Hint Features - Half-Pipe
   * Layers: default
   * Normal Door to Meditation Vista/Door to Torvus Grove
   * Extra - dock_name: North
-  > Door to Grove Access
+  > Front of Door to Meditation Vista
+      Trivial
+
+> Front of Door to Meditation Vista; Heals? False
+  * Layers: default
+  > Front of Door to Grove Access
       Morph Ball Bomb and Power Bomb and Bomb Space Jump (Expert) and Use Screw Attack (Space Jump)
-  > Door to Underground Tunnel
+  > Front of Door to Underground Tunnel
+      Trivial
+  > Door to Meditation Vista
       Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
   * Pickup 73; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (1572906,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 1572914, 'hud_memo': 1572912, 'streamed_audio': 1572911, 'sound': 1572915, 'audio_fade': 1572907})})
-  > Door to Underground Tunnel
+  > Front of Door to Underground Tunnel
       Trivial
 
 > Event - Tree Destroyed; Heals? False
   * Layers: default
   * Event Torvus Grove Tree
-  > Door to Underground Tunnel
+  > Front of Door to Underground Tunnel
       Trivial
 
 ----------------
@@ -944,7 +1133,14 @@ Hint Features - Elevator, Temple, Translator Gate
   * Layers: default
   * Super Missile Blast Shield to Controller Access/Door to Torvus Temple
   * Extra - dock_name: WestGenerator
-  > Door to Temple Access (Top)
+  > Front of Door to Controller Access
+      Trivial
+
+> Front of Door to Controller Access; Heals? False
+  * Layers: default
+  > Door to Controller Access
+      Trivial
+  > Front of Door to Temple Access (Top)
       After Torvus Temple Pirates
   > Event - Torvus Temple Pirates
       Trivial
@@ -956,10 +1152,17 @@ Hint Features - Elevator, Temple, Translator Gate
   > Translator Gate
       Trivial
 
-> Door to Temple Access (Top); Heals? False; Spawn Point; Default Node
+> Door to Temple Access (Top); Heals? False; Default Node
   * Layers: default
   * Dark Door to Temple Access/Door to Torvus Temple (Top)
   * Extra - dock_name: EastTop
+  > Front of Door to Temple Access (Top)
+      Trivial
+
+> Front of Door to Temple Access (Top); Heals? False; Spawn Point
+  * Layers: default
+  > Door to Temple Access (Top)
+      Trivial
   > Pickup (Super Missile)
       After Torvus Temple Pirates
   > Event - Torvus Temple Pirates
@@ -1000,24 +1203,24 @@ Hint Features - Elevator, Temple, Translator Gate
   * Layers: default
   * Pickup 74; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'SuperMissile', 'connections': (frozendict.frozendict({'target': 1770461, 'message': 'ACTV'}), frozendict.frozendict({'target': 1770207, 'message': 'ACTV'}), frozendict.frozendict({'target': 1770207, 'message': 'ZERO'})), 'removals': (1769667, 538641266, 1769484), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 1770204, 'hud_memo': 1770209, 'streamed_audio': 1770210, 'sound': 1770214, 'audio_fade': 1770206})})
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Event - Torvus Temple Pirates; Heals? False
   * Layers: default
   * Event Torvus Temple Pirates
-  > Door to Temple Access (Top)
+  > Front of Door to Temple Access (Top)
       Trivial
 
 > Event - Torvus Temple Elevator; Heals? False
   * Layers: default
   * Event Torvus Temple Elevator
-  > Door to Temple Access (Top)
+  > Front of Door to Temple Access (Top)
       Trivial
 
 > Lower Level; Heals? False
   * Layers: default
-  > Door to Temple Access (Top)
+  > Front of Door to Temple Access (Top)
       After Torvus Temple Elevator
   > Door to Transport to Agon Wastes
       Morph Ball
@@ -1055,11 +1258,18 @@ Hint Features - Elevator, Temple, Translator Gate
 Underground Tunnel
 Extra - asset_id: 2162589584
 Hint Features - Luminoth Lore, Morph Ball Tunnel
-> Door to Torvus Temple; Heals? False; Spawn Point; Default Node
+> Door to Torvus Temple; Heals? False; Default Node
   * Layers: default
   * Normal Door to Torvus Temple/Door to Underground Tunnel
   * Extra - dock_name: South
-  > Door to Torvus Grove
+  > Front of Door to Torvus Temple
+      Trivial
+
+> Front of Door to Torvus Temple; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Torvus Temple
+      Trivial
+  > Front of Door to Torvus Grove
       Morph Ball
   > Pickup (Missile)
       Morph Ball
@@ -1068,7 +1278,12 @@ Hint Features - Luminoth Lore, Morph Ball Tunnel
   * Layers: default
   * Light Door to Torvus Grove/Door to Underground Tunnel
   * Extra - dock_name: North
-  > Door to Torvus Temple
+  > Front of Door to Torvus Grove
+      Trivial
+
+> Front of Door to Torvus Grove; Heals? False
+  * Layers: default
+  > Front of Door to Torvus Temple
       All of the following:
           Morph Ball
           Any of the following:
@@ -1079,6 +1294,8 @@ Hint Features - Luminoth Lore, Morph Ball Tunnel
               Screw Attack into Tunnels/Openings (Expert) and Use Screw Attack (Space Jump)
               # https://www.youtube.com/watch?v=IHkf9X3T9CQ
               Instant Morph (Advanced)
+  > Door to Torvus Grove
+      Trivial
   > Lore Scan
       Trivial
 
@@ -1086,7 +1303,7 @@ Hint Features - Luminoth Lore, Morph Ball Tunnel
   * Layers: default
   * Pickup 77; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (1966214,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 1966211, 'hud_memo': 1966217, 'streamed_audio': 1966221, 'sound': 1966213, 'audio_fade': 1966218})})
-  > Door to Torvus Temple
+  > Front of Door to Torvus Temple
       Morph Ball
 
 > Lore Scan; Heals? False
@@ -1094,7 +1311,7 @@ Hint Features - Luminoth Lore, Morph Ball Tunnel
   * Hint
   * Extra - translator: Emerald
   * Extra - string_asset_id: 1422425996
-  > Door to Torvus Grove
+  > Front of Door to Torvus Grove
       Trivial
 
 ----------------
@@ -1105,14 +1322,21 @@ Hint Features - Abyss, Portal
   * Layers: default
   * Scan Portal to Gloom Vista/Portal to Meditation Vista
   * Extra - dock_name: VirtualNorth
-  > Door to Torvus Grove
+  > Front of Door to Torvus Grove
       Trivial
 
-> Door to Torvus Grove; Heals? False; Spawn Point; Default Node
+> Door to Torvus Grove; Heals? False; Default Node
   * Layers: default
   * Normal Door to Torvus Grove/Door to Meditation Vista
   * Extra - dock_name: Docks_South
+  > Front of Door to Torvus Grove
+      Trivial
+
+> Front of Door to Torvus Grove; Heals? False; Spawn Point
+  * Layers: default
   > Portal to Gloom Vista
+      Trivial
+  > Door to Torvus Grove
       Trivial
   > Pickup (Energy Tank)
       All of the following:
@@ -1133,7 +1357,7 @@ Hint Features - Abyss, Portal
   * Layers: default
   * Pickup 78; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'EnergyTank', 'connections': (), 'removals': (2031771,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 2031654, 'hud_memo': 2031657, 'streamed_audio': 2031655, 'sound': 2031651, 'audio_fade': 2031662})})
-  > Door to Torvus Grove
+  > Front of Door to Torvus Grove
       Normal Damage ≥ 10 or Use Screw Attack (Space Jump)
 
 ----------------
@@ -1164,10 +1388,17 @@ Extra - asset_id: 3479543630
 ----------------
 Underground Transport
 Extra - asset_id: 2455297154
-> Door to Torvus Temple; Heals? False; Spawn Point; Default Node
+> Door to Torvus Temple; Heals? False; Default Node
   * Layers: default
   * Normal Door to Torvus Temple/Door to Underground Transport
   * Extra - dock_name: East_04 (Top)
+  > Front of Door to Torvus Temple
+      Trivial
+
+> Front of Door to Torvus Temple; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Torvus Temple
+      Trivial
   > Door to Hydrodynamo Station
       Scan Visor
 
@@ -1175,16 +1406,23 @@ Extra - asset_id: 2455297154
   * Layers: default
   * Normal Door to Hydrodynamo Station/Door to Underground Transport
   * Extra - dock_name: East_07 (Bottom)
-  > Door to Torvus Temple
+  > Front of Door to Torvus Temple
       Scan Visor and After Torvus Temple Pirates
 
 ----------------
 Controller Access
 Extra - asset_id: 720788297
-> Door to Torvus Temple; Heals? False; Spawn Point; Default Node
+> Door to Torvus Temple; Heals? False; Default Node
   * Layers: default
   * Normal Door to Torvus Temple/Door to Controller Access
   * Extra - dock_name: East1
+  > Front of Door to Torvus Temple
+      Trivial
+
+> Front of Door to Torvus Temple; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Torvus Temple
+      Trivial
   > Door to Torvus Energy Controller
       Any of the following:
           Morph Ball Bomb and Morph Ball
@@ -1195,7 +1433,7 @@ Extra - asset_id: 720788297
   * Layers: default
   * Normal Door to Torvus Energy Controller/Door to Controller Access
   * Extra - dock_name: docks_docks_West
-  > Door to Torvus Temple
+  > Front of Door to Torvus Temple
       Any of the following:
           Morph Ball Bomb and Morph Ball
           # https://www.youtube.com/watch?v=rlYkwliHxQE
@@ -1205,23 +1443,30 @@ Extra - asset_id: 720788297
 Hydrodynamo Station
 Extra - asset_id: 3585454182
 Hint Features - Underwater
-> Door to Underground Transport; Heals? False; Spawn Point; Default Node
+> Door to Underground Transport; Heals? False; Default Node
   * Layers: default
   * Normal Door to Underground Transport/Door to Hydrodynamo Station
   * Extra - dock_name: West_0J
-  > Door to Gathering Access
+  > Front of Door to Underground Transport
+      Trivial
+
+> Front of Door to Underground Transport; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Underground Transport
+      Trivial
+  > Front of Door to Gathering Access
       All of the following:
           Space Jump Boots
           Any of the following:
               Underwater Dash (Intermediate)
               Air Underwater (Advanced) and Use Screw Attack (Space Jump)
-  > Door to Catacombs Access
+  > Front of Door to Catacombs Access
       All of the following:
           Space Jump Boots
           Any of the following:
               Underwater Dash (Intermediate)
               Air Underwater (Advanced) and Use Screw Attack (Space Jump)
-  > Door to Training Access
+  > Front of Door to Training Access
       All of the following:
           Space Jump Boots
           Any of the following:
@@ -1238,15 +1483,29 @@ Hint Features - Underwater
   * Layers: default
   * Missile Blast Shield to Save Station B/Door to Hydrodynamo Station
   * Extra - dock_name: East_Save
-  > Door to Underground Transport
+  > Front of Door to Save Station B
+      Trivial
+
+> Front of Door to Save Station B; Heals? False
+  * Layers: default
+  > Front of Door to Underground Transport
+      Trivial
+  > Door to Save Station B
       Trivial
 
 > Door to Gathering Access; Heals? False
   * Layers: default
   * Light Door to Gathering Access/Door to Hydrodynamo Station; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: West_0L
-  > Door to Underground Transport
+  > Front of Door to Gathering Access
+      Trivial
+
+> Front of Door to Gathering Access; Heals? False
+  * Layers: default
+  > Front of Door to Underground Transport
       Air Underwater (Advanced) and Standable Terrain (Advanced) and Disabled Door Randomizer and Shoot Light Beam and Use Screw Attack (Space Jump)
+  > Door to Gathering Access
+      Trivial
   > Event - Hydrodynamo Station Lock (by Light Door)
       Scan Visor
   > Room Middle
@@ -1258,8 +1517,15 @@ Hint Features - Underwater
   * Layers: default
   * Normal Door to Hydrodynamo Shaft/Door to Hydrodynamo Station; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: East (floor to 0q)
-  > Door to Underground Transport
+  > Front of Door to Hydrodynamo Shaft
+      Trivial
+
+> Front of Door to Hydrodynamo Shaft; Heals? False
+  * Layers: default
+  > Front of Door to Underground Transport
       After Hydrodynamo Station Lock (below Seeker Door) and After Hydrodynamo Station Lock (by Dark Door) and After Hydrodynamo Station Lock (by Light Door) and Air Underwater (Ludicrous) and Movement (Ludicrous) and Use Screw Attack (Space Jump)
+  > Door to Hydrodynamo Shaft
+      Trivial
   > Room Bottom
       Gravity Boost and After Hydrodynamo Station Lock (below Seeker Door) and After Hydrodynamo Station Lock (by Dark Door) and After Hydrodynamo Station Lock (by Light Door)
 
@@ -1267,8 +1533,15 @@ Hint Features - Underwater
   * Layers: default
   * Dark Door to Catacombs Access/Door to Hydrodynamo Station; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: East_0M
-  > Door to Underground Transport
+  > Front of Door to Catacombs Access
+      Trivial
+
+> Front of Door to Catacombs Access; Heals? False
+  * Layers: default
+  > Front of Door to Underground Transport
       Air Underwater (Advanced) and Standable Terrain (Advanced) and Disabled Door Randomizer and Shoot Dark Beam and Use Screw Attack (Space Jump)
+  > Door to Catacombs Access
+      Trivial
   > Event - Hydrodynamo Station Lock (by Dark Door)
       Scan Visor
   > Room Middle
@@ -1291,6 +1564,13 @@ Hint Features - Underwater
                 Missile ≥ 4 and Air Underwater (Advanced) and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
         Missile and Air Underwater (Advanced) and Seeker Locks without Seeker Missiles (Expert) and Use Screw Attack (Space Jump)
 
+  > Front of Door to Training Access
+      Trivial
+
+> Front of Door to Training Access; Heals? False
+  * Layers: default
+  > Door to Training Access
+      Trivial
   > Pickup (Missile)
       Trivial
   > Room Middle
@@ -1302,7 +1582,7 @@ Hint Features - Underwater
   * Layers: default
   * Pickup 81; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (2621681,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 2621639, 'hud_memo': 2621677, 'streamed_audio': 2621676, 'sound': 2621682, 'audio_fade': 2621674})})
-  > Door to Training Access
+  > Front of Door to Training Access
       Trivial
 
 > Event - Hydrodynamo Station Lock (below Seeker Door); Heals? False
@@ -1314,20 +1594,20 @@ Hint Features - Underwater
 > Event - Hydrodynamo Station Lock (by Dark Door); Heals? False
   * Layers: default
   * Event Hydrodynamo Station Lock (by Dark Door)
-  > Door to Catacombs Access
+  > Front of Door to Catacombs Access
       Trivial
 
 > Event - Hydrodynamo Station Lock (by Light Door); Heals? False
   * Layers: default
   * Event Hydrodynamo Station Lock (by Light Door)
-  > Door to Gathering Access
+  > Front of Door to Gathering Access
       Trivial
 
 > Top of Cannon; Heals? False
   * Layers: default
-  > Door to Underground Transport
+  > Front of Door to Underground Transport
       Trivial
-  > Door to Save Station B
+  > Front of Door to Save Station B
       Any of the following:
           Space Jump Boots or Combat/Scan Dash (Intermediate)
           Morph Ball Bomb and Morph Ball and Bomb Jump (Advanced)
@@ -1339,9 +1619,9 @@ Hint Features - Underwater
 
 > Room Middle; Heals? False
   * Layers: default
-  > Door to Underground Transport
+  > Front of Door to Underground Transport
       Gravity Boost
-  > Door to Gathering Access
+  > Front of Door to Gathering Access
       Any of the following:
           Gravity Boost
           All of the following:
@@ -1349,7 +1629,7 @@ Hint Features - Underwater
               Any of the following:
                   Space Jump Boots
                   Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
-  > Door to Catacombs Access
+  > Front of Door to Catacombs Access
       Any of the following:
           Gravity Boost
           All of the following:
@@ -1357,7 +1637,7 @@ Hint Features - Underwater
               Any of the following:
                   Space Jump Boots
                   Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
-  > Door to Training Access
+  > Front of Door to Training Access
       Any of the following:
           Gravity Boost
           All of the following:
@@ -1370,7 +1650,7 @@ Hint Features - Underwater
 
 > Room Bottom; Heals? False
   * Layers: default
-  > Door to Hydrodynamo Shaft
+  > Front of Door to Hydrodynamo Shaft
       After Hydrodynamo Station Lock (below Seeker Door) and After Hydrodynamo Station Lock (by Dark Door) and After Hydrodynamo Station Lock (by Light Door)
   > Event - Hydrodynamo Station Lock (below Seeker Door)
       Scan Visor
@@ -1389,10 +1669,17 @@ Hint Features - Underwater
 Torvus Energy Controller
 Extra - asset_id: 322696632
 Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Luminoth Corpse
-> Door to Controller Access; Heals? False; Spawn Point; Default Node
+> Door to Controller Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Controller Access/Door to Torvus Energy Controller
   * Extra - dock_name: group6_East
+  > Front of Door to Controller Access
+      Trivial
+
+> Front of Door to Controller Access; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Controller Access
+      Trivial
   > Teleporter to Great Temple
       After Main Energy Controller Pickup
   > Teleporter to Sanctuary Fortress
@@ -1410,7 +1697,7 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Lumino
   * Layers: default
   * Pickup 82; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'custom', 'exclude_memo_from_removal': False, 'original_model': 'EmeraldTranslator', 'connections': (frozendict.frozendict({'target': 2687289, 'message': 'ZERO'}), frozendict.frozendict({'target': 2686988, 'message': 'STRT'})), 'removals': (2687032, 472449329), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'collision_size': frozendict.frozendict({'x': 1.0, 'y': 1.0, 'z': 2.0}), 'layer': 'Default'})
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Teleporter to Great Temple; Heals? False
@@ -1419,7 +1706,7 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Lumino
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 338231469
   * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Teleporter to Sanctuary Fortress; Heals? False
@@ -1428,7 +1715,7 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Lumino
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 338231474
   * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Teleporter to Agon Wastes; Heals? False
@@ -1437,13 +1724,13 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Lumino
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 338231479
   * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Event - Torvus Energy Returned; Heals? False
   * Layers: default
   * Event Torvus Energy Returned
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Event - Torvus Energy Controller Pickup; Heals? False
@@ -1457,16 +1744,23 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Lumino
   * Hint
   * Extra - translator: Emerald
   * Extra - string_asset_id: 3529248034
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 ----------------
 Gathering Access
 Extra - asset_id: 1393426305
-> Door to Hydrodynamo Station; Heals? False; Spawn Point; Default Node
+> Door to Hydrodynamo Station; Heals? False; Default Node
   * Layers: default
   * Light Door to Hydrodynamo Station/Door to Gathering Access; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: East
+  > Front of Door to Hydrodynamo Station
+      Trivial
+
+> Front of Door to Hydrodynamo Station; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Hydrodynamo Station
+      Trivial
   > Door to Gathering Hall
       Trivial
 
@@ -1474,7 +1768,7 @@ Extra - asset_id: 1393426305
   * Layers: default
   * Light Door to Gathering Hall/Door to Gathering Access
   * Extra - dock_name: West
-  > Door to Hydrodynamo Station
+  > Front of Door to Hydrodynamo Station
       Trivial
 
 ----------------
@@ -1484,14 +1778,21 @@ Extra - asset_id: 2007998417
   * Layers: default
   * Normal Door to Training Chamber/Door to Training Access
   * Extra - dock_name: North
-  > Door to Hydrodynamo Station
+  > Front of Door to Hydrodynamo Station
       Trivial
 
-> Door to Hydrodynamo Station; Heals? False; Spawn Point; Default Node
+> Door to Hydrodynamo Station; Heals? False; Default Node
   * Layers: default
   * Normal Door to Hydrodynamo Station/Door to Training Access; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: South
+  > Front of Door to Hydrodynamo Station
+      Trivial
+
+> Front of Door to Hydrodynamo Station; Heals? False; Spawn Point
+  * Layers: default
   > Door to Training Chamber
+      Trivial
+  > Door to Hydrodynamo Station
       Trivial
 
 ----------------
@@ -1501,19 +1802,26 @@ Extra - asset_id: 2999623881
   * Layers: default
   * Dark Door to Hydrodynamo Station/Door to Catacombs Access; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: West
-  > Door to Catacombs
+  > Front of Door to Catacombs
       Trivial
 
-> Door to Catacombs; Heals? False; Spawn Point; Default Node
+> Door to Catacombs; Heals? False; Default Node
   * Layers: default
   * Dark Door to Catacombs/Door to Catacombs Access
   * Extra - dock_name: East
+  > Front of Door to Catacombs
+      Trivial
+
+> Front of Door to Catacombs; Heals? False; Spawn Point
+  * Layers: default
   > Door to Hydrodynamo Station
       Any of the following:
           Space Jump Boots
           # Double Bomb Jump
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
           Screw Attack and Slope Jump (Intermediate)
+  > Door to Catacombs
+      Trivial
 
 ----------------
 Save Station B
@@ -1538,41 +1846,62 @@ Extra - asset_id: 813912549
   * Layers: default
   * Dark Portal to Undertemple Access/Portal to Hydrodynamo Shaft
   * Extra - dock_name: Docks_VirtualNorth
-  > Door to Main Hydrochamber
+  > Front of Door to Main Hydrochamber
       Trivial
 
-> Door to Hydrodynamo Station; Heals? False; Spawn Point; Default Node
+> Door to Hydrodynamo Station; Heals? False; Default Node
   * Layers: default
   * Normal Door to Hydrodynamo Station/Door to Hydrodynamo Shaft; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: West
+  > Front of Door to Hydrodynamo Station
+      Trivial
+
+> Front of Door to Hydrodynamo Station; Heals? False; Spawn Point
+  * Layers: default
   > Portal to Undertemple Access
       Any of the following:
           Gravity Boost
           After Hydrodynamo Station Lock (below Seeker Door) and After Hydrodynamo Station Lock (by Dark Door) and After Hydrodynamo Station Lock (by Light Door) and Air Underwater (Ludicrous) and Disabled Room Randomizer and Use Screw Attack (Space Jump)
-  > Door to Main Hydrochamber
+  > Door to Hydrodynamo Station
+      Trivial
+  > Front of Door to Main Hydrochamber
       Trivial
 
 > Door to Main Hydrochamber; Heals? False
   * Layers: default
   * Normal Door to Main Hydrochamber/Door to Hydrodynamo Shaft; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: Docks_North
+  > Front of Door to Main Hydrochamber
+      Trivial
+
+> Front of Door to Main Hydrochamber; Heals? False
+  * Layers: default
   > Portal to Undertemple Access
       Gravity Boost
-  > Door to Hydrodynamo Station
+  > Front of Door to Hydrodynamo Station
       Any of the following:
           Gravity Boost
           # https://www.youtube.com/watch?v=kZUSoLCrMMw
           Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Advanced)
+  > Door to Main Hydrochamber
+      Trivial
 
 ----------------
 Gathering Hall
 Extra - asset_id: 889276218
 Hint Features - Bomb Slot, Boost Spinner, Grapple Point, Half-Pipe, Luminoth Lore, Kinetic Orb Cannon, Portal, Spider Track
-> Door to Transit Tunnel West; Heals? False; Spawn Point; Default Node
+> Door to Transit Tunnel West; Heals? False; Default Node
   * Layers: default
   * Normal Door to Transit Tunnel West/Door to Gathering Hall
   * Extra - dock_name: North
-  > Door to Transit Tunnel South
+  > Front of Door to Transit Tunnel West
+      Trivial
+
+> Front of Door to Transit Tunnel West; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Transit Tunnel West
+      Trivial
+  > Front of Door to Transit Tunnel South
       Gravity Boost and Morph Ball and Air Underwater (Advanced)
   > Room Bottom
       Trivial
@@ -1593,6 +1922,13 @@ Hint Features - Bomb Slot, Boost Spinner, Grapple Point, Half-Pipe, Luminoth Lor
   * Layers: default
   * Annihilator Door to Transit Tunnel South/Door to Gathering Hall
   * Extra - dock_name: East_0P
+  > Front of Door to Transit Tunnel South
+      Trivial
+
+> Front of Door to Transit Tunnel South; Heals? False
+  * Layers: default
+  > Door to Transit Tunnel South
+      Trivial
   > Event - Gathering Hall Portal Gate
       Any of the following:
           Morph Ball Bomb and Morph Ball
@@ -1613,12 +1949,19 @@ Hint Features - Bomb Slot, Boost Spinner, Grapple Point, Half-Pipe, Luminoth Lor
   * Layers: default
   * Light Door to Gathering Access/Door to Gathering Hall
   * Extra - dock_name: East_0L
-  > Door to Transit Tunnel West
+  > Front of Door to Gathering Access
+      Trivial
+
+> Front of Door to Gathering Access; Heals? False
+  * Layers: default
+  > Front of Door to Transit Tunnel West
       Morph Ball and Before Gathering Hall Water Drained and Roll Jump (Expert) and Normal Damage ≥ 20
-  > Door to Transit Tunnel South
+  > Front of Door to Transit Tunnel South
       Any of the following:
           Morph Ball and Before Gathering Hall Water Drained and Roll Jump (Expert) and Normal Damage ≥ 20
           Space Jump Boots and Movement (Intermediate) and Normal Damage ≥ 30
+  > Door to Gathering Access
+      Trivial
   > Room Bottom
       Trivial
   > Kinetic Orb Cannon
@@ -1635,7 +1978,7 @@ Hint Features - Bomb Slot, Boost Spinner, Grapple Point, Half-Pipe, Luminoth Lor
   * Layers: default
   * Pickup 84; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (3539111,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 3539117, 'hud_memo': 3539109, 'streamed_audio': 3539110, 'sound': 3539115, 'audio_fade': 3539114})})
-  > Door to Transit Tunnel South
+  > Front of Door to Transit Tunnel South
       Morph Ball and Space Jump Boots and Roll Jump (Advanced)
   > Kinetic Orb Cannon
       Trivial
@@ -1656,12 +1999,12 @@ Hint Features - Bomb Slot, Boost Spinner, Grapple Point, Half-Pipe, Luminoth Lor
 > Event - Gathering Hall Portal Gate; Heals? False
   * Layers: default
   * Event Gathering Hall Portal Gate
-  > Door to Transit Tunnel South
+  > Front of Door to Transit Tunnel South
       Trivial
 
 > Room Bottom; Heals? False
   * Layers: default
-  > Door to Transit Tunnel West
+  > Front of Door to Transit Tunnel West
       Any of the following:
           Gravity Boost or Space Jump Boots or After Gathering Hall Water Drained
           All of the following:
@@ -1671,7 +2014,7 @@ Hint Features - Bomb Slot, Boost Spinner, Grapple Point, Half-Pipe, Luminoth Lor
                   Grapple Beam and Bomb Jump (Beginner)
   > Portal to Crypt
       After Gathering Hall Portal Gate
-  > Door to Transit Tunnel South
+  > Front of Door to Transit Tunnel South
       Any of the following:
           Grapple Beam
           All of the following:
@@ -1731,11 +2074,11 @@ Hint Features - Bomb Slot, Boost Spinner, Grapple Point, Half-Pipe, Luminoth Lor
 
 > Kinetic Orb Cannon; Heals? False
   * Layers: default
-  > Door to Transit Tunnel West
+  > Front of Door to Transit Tunnel West
       Any of the following:
           Grapple Beam or Use Screw Attack (Space Jump)
           Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
-  > Door to Transit Tunnel South
+  > Front of Door to Transit Tunnel South
       Any of the following:
           Grapple Beam or After Crypt Laser or Use Screw Attack (Space Jump)
           All of the following:
@@ -1743,7 +2086,7 @@ Hint Features - Bomb Slot, Boost Spinner, Grapple Point, Half-Pipe, Luminoth Lor
               Any of the following:
                   Scan Visor and Combat/Scan Dash (Advanced)
                   Morph Ball and Before Gathering Hall Water Drained and Roll Jump (Advanced)
-  > Door to Gathering Access
+  > Front of Door to Gathering Access
       Morph Ball
   > Pickup (Missile)
       All of the following:
@@ -1774,6 +2117,13 @@ Hint Features - Bomb Slot, Boost Spinner, Luminoth Lore, Spider Track, Underwate
   * Layers: default
   * Dark Door to Transit Tunnel East/Door to Training Chamber; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: East
+  > Front of Door to Transit Tunnel East
+      Trivial
+
+> Front of Door to Transit Tunnel East; Heals? False
+  * Layers: default
+  > Door to Transit Tunnel East
+      Trivial
   > Room Center
       Any of the following:
           Gravity Boost
@@ -1782,13 +2132,20 @@ Hint Features - Bomb Slot, Boost Spinner, Luminoth Lore, Spider Track, Underwate
   > Lore Scan
       Trivial
 
-> Door to Training Access; Heals? False; Spawn Point; Default Node
+> Door to Training Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Training Access/Door to Training Chamber
   * Extra - dock_name: South
-  > Door to Transit Tunnel East
+  > Front of Door to Training Access
+      Trivial
+
+> Front of Door to Training Access; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Transit Tunnel East
       Scan Visor and Space Jump Boots and Combat/Scan Dash (Intermediate)
-  > Door to Transit Tunnel West
+  > Door to Training Access
+      Trivial
+  > Front of Door to Transit Tunnel West
       Scan Visor and Space Jump Boots and Combat/Scan Dash (Intermediate)
   > Pickup (Missile)
       After Training Chamber Statue
@@ -1815,6 +2172,13 @@ Hint Features - Bomb Slot, Boost Spinner, Luminoth Lore, Spider Track, Underwate
   * Layers: default
   * Power Bomb Blast Shield to Fortress Transport Access/Door to Training Chamber
   * Extra - dock_name: North
+  > Front of Door to Fortress Transport Access
+      Trivial
+
+> Front of Door to Fortress Transport Access; Heals? False
+  * Layers: default
+  > Door to Fortress Transport Access
+      Trivial
   > Room Center
       Any of the following:
           After Training Chamber Statue
@@ -1829,6 +2193,13 @@ Hint Features - Bomb Slot, Boost Spinner, Luminoth Lore, Spider Track, Underwate
   * Layers: default
   * Light Door to Transit Tunnel West/Door to Training Chamber; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: West1
+  > Front of Door to Transit Tunnel West
+      Trivial
+
+> Front of Door to Transit Tunnel West; Heals? False
+  * Layers: default
+  > Door to Transit Tunnel West
+      Trivial
   > Room Center
       Any of the following:
           Gravity Boost
@@ -1850,7 +2221,7 @@ Hint Features - Bomb Slot, Boost Spinner, Luminoth Lore, Spider Track, Underwate
 
 > Room Center; Heals? False
   * Layers: default
-  > Door to Transit Tunnel East
+  > Front of Door to Transit Tunnel East
       Any of the following:
           Gravity Boost
           All of the following:
@@ -1862,7 +2233,7 @@ Hint Features - Bomb Slot, Boost Spinner, Luminoth Lore, Spider Track, Underwate
                           Morph Ball Bomb
                           Power Bomb and Knowledge (Beginner)
                   Air Underwater (Advanced) and Use Screw Attack (Space Jump)
-  > Door to Training Access
+  > Front of Door to Training Access
       Any of the following:
           Gravity Boost
           All of the following:
@@ -1870,13 +2241,13 @@ Hint Features - Bomb Slot, Boost Spinner, Luminoth Lore, Spider Track, Underwate
               Any of the following:
                   Space Jump Boots
                   Morph Ball Bomb and Bomb Jump (Beginner)
-  > Door to Fortress Transport Access
+  > Front of Door to Fortress Transport Access
       All of the following:
           Morph Ball and After Training Chamber Statue
           Any of the following:
               Spider Ball
               Gravity Boost and Air Underwater (Advanced)
-  > Door to Transit Tunnel West
+  > Front of Door to Transit Tunnel West
       Any of the following:
           Gravity Boost
           All of the following:
@@ -1909,9 +2280,9 @@ Hint Features - Bomb Slot, Boost Spinner, Luminoth Lore, Spider Track, Underwate
 
 > Front of Bomb Slot; Heals? False
   * Layers: default
-  > Door to Transit Tunnel East
+  > Front of Door to Transit Tunnel East
       Space Jump Boots or After Training Chamber Statue
-  > Door to Fortress Transport Access
+  > Front of Door to Fortress Transport Access
       Any of the following:
           After Training Chamber Statue and Use Screw Attack (Space Jump)
           All of the following:
@@ -1927,7 +2298,7 @@ Hint Features - Bomb Slot, Boost Spinner, Luminoth Lore, Spider Track, Underwate
               Any of the following:
                   Air Underwater (Expert)
                   Space Jump Boots and Air Underwater (Advanced)
-  > Door to Transit Tunnel West
+  > Front of Door to Transit Tunnel West
       Space Jump Boots or After Training Chamber Statue
   > Event - Training Chamber Statue
       Any of the following:
@@ -1942,16 +2313,23 @@ Hint Features - Bomb Slot, Boost Spinner, Luminoth Lore, Spider Track, Underwate
   * Hint
   * Extra - translator: Emerald
   * Extra - string_asset_id: 2677320745
-  > Door to Transit Tunnel East
+  > Front of Door to Transit Tunnel East
       Trivial
 
 ----------------
 Catacombs
 Extra - asset_id: 4217540043
-> Door to Transit Tunnel East; Heals? False; Spawn Point; Default Node
+> Door to Transit Tunnel East; Heals? False; Default Node
   * Layers: default
   * Normal Door to Transit Tunnel East/Door to Catacombs
   * Extra - dock_name: North
+  > Front of Door to Transit Tunnel East
+      Trivial
+
+> Front of Door to Transit Tunnel East; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Transit Tunnel East
+      Trivial
   > Room Center
       Trivial
 
@@ -1987,7 +2365,7 @@ Extra - asset_id: 4217540043
 
 > Room Center; Heals? False
   * Layers: default
-  > Door to Transit Tunnel East
+  > Front of Door to Transit Tunnel East
       Any of the following:
           Space Jump Boots
           All of the following:
@@ -2056,10 +2434,17 @@ Extra - asset_id: 4217540043
 ----------------
 Main Hydrochamber
 Extra - asset_id: 3468345533
-> Door to Hydrochamber Storage; Heals? False; Spawn Point; Default Node
+> Door to Hydrochamber Storage; Heals? False; Default Node
   * Layers: default
   * Normal Door to Hydrochamber Storage/Door to Main Hydrochamber; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: South
+  > Front of Door to Hydrochamber Storage
+      Trivial
+
+> Front of Door to Hydrochamber Storage; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Hydrochamber Storage
+      Trivial
   > Portal to Undertemple
       All of the following:
           Morph Ball
@@ -2118,30 +2503,37 @@ Extra - asset_id: 3468345533
   * Layers: default
   * Dark Portal to Undertemple/Portal to Main Hydrochamber
   * Extra - dock_name: VirtualNorth
-  > Door to Hydrochamber Storage
+  > Front of Door to Hydrochamber Storage
       After Alpha Blogg or Before Hydrochamber Storage Item
 
 > Door to Hydrodynamo Shaft; Heals? False
   * Layers: default
   * Normal Door to Hydrodynamo Shaft/Door to Main Hydrochamber; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: South2
-  > Door to Hydrochamber Storage
+  > Front of Door to Hydrochamber Storage
       After Alpha Blogg or Before Hydrochamber Storage Item
 
 > Event - Alpha Blogg; Heals? False
   * Layers: default
   * Event Alpha Blogg
-  > Door to Hydrochamber Storage
+  > Front of Door to Hydrochamber Storage
       Trivial
 
 ----------------
 Transit Tunnel South
 Extra - asset_id: 3072694950
 Hint Features - Bomb Slot, Morph Ball Tunnel, Underwater
-> Door to Catacombs; Heals? False; Spawn Point; Default Node
+> Door to Catacombs; Heals? False; Default Node
   * Layers: default
   * Annihilator Door to Catacombs/Door to Transit Tunnel South
   * Extra - dock_name: East
+  > Front of Door to Catacombs
+      Trivial
+
+> Front of Door to Catacombs; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Catacombs
+      Trivial
   > Door to Gathering Hall
       All of the following:
           Gravity Boost and Morph Ball
@@ -2155,14 +2547,14 @@ Hint Features - Bomb Slot, Morph Ball Tunnel, Underwater
   * Layers: default
   * Annihilator Door to Gathering Hall/Door to Transit Tunnel South
   * Extra - dock_name: West
-  > Door to Catacombs
+  > Front of Door to Catacombs
       Morph Ball Bomb and Morph Ball
 
 > Pickup (Missile); Heals? False
   * Layers: default
   * Pickup 89; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (3997743,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 3997746, 'hud_memo': 3997740, 'streamed_audio': 3997745, 'sound': 3997735, 'audio_fade': 3997742})})
-  > Door to Catacombs
+  > Front of Door to Catacombs
       Morph Ball Bomb and Morph Ball
 
 ----------------
@@ -2172,24 +2564,38 @@ Extra - asset_id: 3780180813
   * Layers: default
   * Light Door to Training Chamber/Door to Transit Tunnel West; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: East
-  > Door to Gathering Hall
+  > Front of Door to Gathering Hall
       Morph Ball Bomb and Morph Ball
 
-> Door to Gathering Hall; Heals? False; Spawn Point; Default Node
+> Door to Gathering Hall; Heals? False; Default Node
   * Layers: default
   * Normal Door to Gathering Hall/Door to Transit Tunnel West
   * Extra - dock_name: South
+  > Front of Door to Gathering Hall
+      Trivial
+
+> Front of Door to Gathering Hall; Heals? False; Spawn Point
+  * Layers: default
   > Door to Training Chamber
       Morph Ball Bomb and Morph Ball
+  > Door to Gathering Hall
+      Trivial
 
 ----------------
 Transit Tunnel East
 Extra - asset_id: 1727410190
 Hint Features - Bomb Slot, Morph Ball Tunnel, Underwater
-> Door to Training Chamber; Heals? False; Spawn Point; Default Node
+> Door to Training Chamber; Heals? False; Default Node
   * Layers: default
   * Dark Door to Training Chamber/Door to Transit Tunnel East; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: West
+  > Front of Door to Training Chamber
+      Trivial
+
+> Front of Door to Training Chamber; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Training Chamber
+      Trivial
   > Door to Catacombs
       All of the following:
           Morph Ball
@@ -2203,7 +2609,7 @@ Hint Features - Bomb Slot, Morph Ball Tunnel, Underwater
   * Layers: default
   * Normal Door to Catacombs/Door to Transit Tunnel East
   * Extra - dock_name: South
-  > Door to Training Chamber
+  > Front of Door to Training Chamber
       All of the following:
           Gravity Boost and Morph Ball
           Any of the following:
@@ -2214,16 +2620,23 @@ Hint Features - Bomb Slot, Morph Ball Tunnel, Underwater
   * Layers: default
   * Pickup 90; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'EnergyTank', 'connections': (), 'removals': (4129027,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 4128859, 'hud_memo': 4128868, 'streamed_audio': 4128867, 'sound': 4129005, 'audio_fade': 4128863})})
-  > Door to Training Chamber
+  > Front of Door to Training Chamber
       Trivial
 
 ----------------
 Fortress Transport Access
 Extra - asset_id: 1662585441
-> Door to Training Chamber; Heals? False; Spawn Point; Default Node
+> Door to Training Chamber; Heals? False; Default Node
   * Layers: default
   * Power Bomb Blast Shield to Training Chamber/Door to Fortress Transport Access
   * Extra - dock_name: South
+  > Front of Door to Training Chamber
+      Trivial
+
+> Front of Door to Training Chamber; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Training Chamber
+      Trivial
   > Door to Transport to Sanctuary Fortress
       Any of the following:
           Gravity Boost or Space Jump Boots
@@ -2238,17 +2651,24 @@ Extra - asset_id: 1662585441
   * Layers: default
   * Normal Door to Transport to Sanctuary Fortress/Door to Fortress Transport Access
   * Extra - dock_name: North
-  > Door to Training Chamber
+  > Front of Door to Training Chamber
       Trivial
 
 ----------------
 Hydrochamber Storage
 Extra - asset_id: 2527519102
 Hint Features - Boss, Underwater
-> Door to Main Hydrochamber; Heals? False; Spawn Point; Default Node
+> Door to Main Hydrochamber; Heals? False; Default Node
   * Layers: default
   * Normal Door to Main Hydrochamber/Door to Hydrochamber Storage; Dock Lock Rando incompatible with: Screw Attack Blast Shield
   * Extra - dock_name: North
+  > Front of Door to Main Hydrochamber
+      Trivial
+
+> Front of Door to Main Hydrochamber; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Main Hydrochamber
+      Trivial
   > Event - Hydrochamber Storage Item
       Gravity Boost or Enabled Allow Vanilla Gravity Boost
 
@@ -2256,7 +2676,7 @@ Hint Features - Boss, Underwater
   * Layers: default
   * Pickup 92; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'GravityBoost', 'connections': (frozendict.frozendict({'target': 4325535, 'message': 'ACTV'}), frozendict.frozendict({'target': 4325535, 'message': 'ZERO'})), 'removals': (4325460, 4325515), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 4325440, 'hud_memo': 4325432, 'streamed_audio': 4325433, 'sound': 4325429, 'audio_fade': 4325437})})
-  > Door to Main Hydrochamber
+  > Front of Door to Main Hydrochamber
       Trivial
 
 > Event - Hydrochamber Storage Item; Heals? False

@@ -20,11 +20,18 @@ Extra - asset_id: 3528156989
 ----------------
 Temple Transport Access
 Extra - asset_id: 1650075282
-> Door to Transport to Temple Grounds; Heals? False; Spawn Point; Default Node
+> Door to Transport to Temple Grounds; Heals? False; Default Node
   * Layers: default
   * Normal Door to Transport to Temple Grounds/Door to Temple Transport Access
   * Extra - dock_name: South1
-  > Door to Sanctuary Entrance
+  > Front of Door to Transport to Temple Grounds
+      Trivial
+
+> Front of Door to Transport to Temple Grounds; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Transport to Temple Grounds
+      Trivial
+  > Front of Door to Sanctuary Entrance
       After [Sanctuary] Temple Transport Access Rings
   > Event - [Sanctuary] Temple Transport Access Rings
       Boost Ball and Morph Ball and Scan Visor
@@ -35,21 +42,28 @@ Extra - asset_id: 1650075282
   * Layers: default
   * Normal Door to Sanctuary Entrance/Door to Temple Transport Access
   * Extra - dock_name: North1
-  > Door to Transport to Temple Grounds
+  > Front of Door to Sanctuary Entrance
+      Trivial
+
+> Front of Door to Sanctuary Entrance; Heals? False
+  * Layers: default
+  > Front of Door to Transport to Temple Grounds
       After [Sanctuary] Temple Transport Access Rings
+  > Door to Sanctuary Entrance
+      Trivial
 
 > Event - [Sanctuary] Temple Transport Access Rings; Heals? False
   * Layers: default
   * Event [Sanctuary] Temple Transport Access Rings
-  > Door to Transport to Temple Grounds
+  > Front of Door to Transport to Temple Grounds
       Trivial
-  > Door to Sanctuary Entrance
+  > Front of Door to Sanctuary Entrance
       Trivial
 
 > Event - Sanctuary Entrance Reloaded; Heals? False
   * Layers: default
   * Event Sanctuary Entrance Reloaded for Cannon
-  > Door to Transport to Temple Grounds
+  > Front of Door to Transport to Temple Grounds
       Trivial
 
 ----------------
@@ -60,7 +74,14 @@ Hint Features - Abyss, Elevator, Keybearer Corpse, Luminoth Lore, Luminoth Corps
   * Layers: default
   * Light Door to Power Junction/Door to Sanctuary Entrance
   * Extra - dock_name: North
-  > Door to Temple Transport Access
+  > Front of Door to Power Junction
+      Trivial
+
+> Front of Door to Power Junction; Heals? False
+  * Layers: default
+  > Door to Power Junction
+      Trivial
+  > Front of Door to Temple Transport Access
       Any of the following:
           Before Spider Guardian
           Boost Ball and Morph Ball and Spider Ball
@@ -104,20 +125,27 @@ Hint Features - Abyss, Elevator, Keybearer Corpse, Luminoth Lore, Luminoth Corps
   > Event - Sanctuary Entrance Fight
       Trivial
 
-> Door to Temple Transport Access; Heals? False; Spawn Point; Default Node
+> Door to Temple Transport Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Temple Transport Access/Door to Sanctuary Entrance
   * Extra - dock_name: South
-  > Door to Power Junction
+  > Front of Door to Temple Transport Access
+      Trivial
+
+> Front of Door to Temple Transport Access; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Power Junction
       Any of the following:
           Before Spider Guardian
           Boost Ball and Morph Ball and Spider Ball
+  > Door to Temple Transport Access
+      Trivial
 
 > Pickup (Power Bomb); Heals? False
   * Layers: default
   * Pickup 94; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'PowerBombExpansion', 'connections': (), 'removals': (131355,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 131298, 'hud_memo': 131301, 'streamed_audio': 131299, 'sound': 131295, 'audio_fade': 131306})})
-  > Door to Temple Transport Access
+  > Front of Door to Temple Transport Access
       Trivial
 
 > Lore Scan; Heals? False
@@ -125,12 +153,12 @@ Hint Features - Abyss, Elevator, Keybearer Corpse, Luminoth Lore, Luminoth Corps
   * Hint
   * Extra - translator: Cobalt
   * Extra - string_asset_id: 4072633400
-  > Door to Power Junction
+  > Front of Door to Power Junction
       Trivial
 
 > Cannon to Pickup; Heals? False
   * Layers: default
-  > Door to Power Junction
+  > Front of Door to Power Junction
       Trivial
   > Pickup (Power Bomb)
       Morph Ball
@@ -147,7 +175,7 @@ Hint Features - Abyss, Elevator, Keybearer Corpse, Luminoth Lore, Luminoth Corps
 
 > Turret; Heals? False
   * Layers: default
-  > Door to Power Junction
+  > Front of Door to Power Junction
       Trivial
   > Cannon to Pickup
       # https://www.youtube.com/watch?v=942ZSFVhzF8
@@ -164,7 +192,7 @@ Hint Features - Abyss, Elevator, Keybearer Corpse, Luminoth Lore, Luminoth Corps
 > Event - Sanctuary Entrance Fight; Heals? False
   * Layers: default
   * Event Sanctuary Entrance Fight Cleared
-  > Door to Power Junction
+  > Front of Door to Power Junction
       Trivial
 
 ----------------
@@ -174,31 +202,52 @@ Extra - asset_id: 834698518
   * Layers: default
   * Normal Door to Reactor Access/Door to Power Junction
   * Extra - dock_name: North2
-  > Door to Sanctuary Entrance
+  > Front of Door to Reactor Access
+      Trivial
+
+> Front of Door to Reactor Access; Heals? False
+  * Layers: default
+  > Door to Reactor Access
+      Trivial
+  > Front of Door to Sanctuary Entrance
       Trivial
   > Event - Sancturay Entrance Reloaded
       After Sanctuary Entrance Fight Cleared
 
-> Door to Sanctuary Entrance; Heals? False; Spawn Point; Default Node
+> Door to Sanctuary Entrance; Heals? False; Default Node
   * Layers: default
   * Light Door to Sanctuary Entrance/Door to Power Junction
   * Extra - dock_name: South
-  > Door to Reactor Access
+  > Front of Door to Sanctuary Entrance
+      Trivial
+
+> Front of Door to Sanctuary Entrance; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Reactor Access
+      Trivial
+  > Door to Sanctuary Entrance
       Trivial
 
 > Event - Sancturay Entrance Reloaded; Heals? False
   * Layers: default
   * Event Sanctuary Entrance Reloaded for Cannon
-  > Door to Reactor Access
+  > Front of Door to Reactor Access
       Trivial
 
 ----------------
 Reactor Access
 Extra - asset_id: 3060184661
-> Door to Power Junction; Heals? False; Spawn Point; Default Node
+> Door to Power Junction; Heals? False; Default Node
   * Layers: default
   * Normal Door to Power Junction/Door to Reactor Access
   * Extra - dock_name: South
+  > Front of Door to Power Junction
+      Trivial
+
+> Front of Door to Power Junction; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Power Junction
+      Trivial
   > Door to Reactor Core
       All of the following:
           After Reactor Access Gate
@@ -213,13 +262,13 @@ Extra - asset_id: 3060184661
   * Layers: default
   * Normal Door to Reactor Core/Door to Reactor Access
   * Extra - dock_name: North
-  > Door to Power Junction
+  > Front of Door to Power Junction
       After Reactor Access Gate
 
 > Event - Reactor Access Gate; Heals? False
   * Layers: default
   * Event Reactor Access Gate
-  > Door to Power Junction
+  > Front of Door to Power Junction
       Trivial
 
 ----------------
@@ -247,10 +296,17 @@ Hint Features - Kinetic Orb Cannon, Spider Track, Translator Gate
   > Translator Gate
       Trivial
 
-> Door to Reactor Access; Heals? False; Spawn Point; Default Node
+> Door to Reactor Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Reactor Access/Door to Reactor Core
   * Extra - dock_name: South
+  > Front of Door to Reactor Access
+      Trivial
+
+> Front of Door to Reactor Access; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Reactor Access
+      Trivial
   > Room Bottom
       Trivial
 
@@ -278,7 +334,7 @@ Hint Features - Kinetic Orb Cannon, Spider Track, Translator Gate
   * Layers: default
   > Door to Save Station A
       After Reactor Core Quad
-  > Door to Reactor Access
+  > Front of Door to Reactor Access
       After Reactor Core Quad
   > Event - Reactor Core Quad
       Kill Quad MB
@@ -366,34 +422,55 @@ Extra - asset_id: 2532624926
   * Layers: default
   * Normal Door to Hall of Combat Mastery/Door to Minigyro Chamber
   * Extra - dock_name: East
-  > Door to Reactor Core
+  > Front of Door to Hall of Combat Mastery
+      Trivial
+
+> Front of Door to Hall of Combat Mastery; Heals? False
+  * Layers: default
+  > Door to Hall of Combat Mastery
+      Trivial
+  > Front of Door to Reactor Core
       Morph Ball and After Minigyro Chamber Puzzle
 
-> Door to Reactor Core; Heals? False; Spawn Point; Default Node
+> Door to Reactor Core; Heals? False; Default Node
   * Layers: default
   * Normal Door to Reactor Core/Door to Minigyro Chamber
   * Extra - dock_name: West
-  > Door to Hall of Combat Mastery
+  > Front of Door to Reactor Core
+      Trivial
+
+> Front of Door to Reactor Core; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Hall of Combat Mastery
       Morph Ball and After Minigyro Chamber Puzzle
+  > Door to Reactor Core
+      Trivial
   > Event - Minigyro Chamber Puzzle
       Morph Ball Bomb and Morph Ball
 
 > Event - Minigyro Chamber Puzzle; Heals? False
   * Layers: default
   * Event Minigyro Chamber Puzzle
-  > Door to Hall of Combat Mastery
+  > Front of Door to Hall of Combat Mastery
       Trivial
-  > Door to Reactor Core
+  > Front of Door to Reactor Core
       Trivial
 
 ----------------
 Transit Station
 Extra - asset_id: 4148317891
 Hint Features - Portal, Spider Track
-> Door to Reactor Core; Heals? False; Spawn Point; Default Node
+> Door to Reactor Core; Heals? False; Default Node
   * Layers: default
   * Power Bomb Blast Shield to Reactor Core/Door to Transit Station
   * Extra - dock_name: East
+  > Front of Door to Reactor Core
+      Trivial
+
+> Front of Door to Reactor Core; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Reactor Core
+      Trivial
   > Room Center
       Trivial
 
@@ -447,7 +524,7 @@ Hint Features - Portal, Spider Track
 
 > Room Center; Heals? False
   * Layers: default
-  > Door to Reactor Core
+  > Front of Door to Reactor Core
       Trivial
   > Portal from Hive Portal Chamber (Second)
       Any of the following:
@@ -464,10 +541,17 @@ Hint Features - Portal, Spider Track
 Sanctuary Map Station
 Extra - asset_id: 1388284403
 Hint Features - Light Energy Transport
-> Door to Reactor Core; Heals? False; Spawn Point; Default Node
+> Door to Reactor Core; Heals? False; Default Node
   * Layers: default
   * Normal Door to Reactor Core/Door to Sanctuary Map Station
   * Extra - dock_name: South
+  > Front of Door to Reactor Core
+      Trivial
+
+> Front of Door to Reactor Core; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Reactor Core
+      Trivial
   > Pickup (Missile)
       Light Suit
 
@@ -475,7 +559,7 @@ Hint Features - Light Energy Transport
   * Layers: default
   * Pickup 97; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (590022,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 590026, 'hud_memo': 590017, 'streamed_audio': 590020, 'sound': 590015, 'audio_fade': 590019})})
-  > Door to Reactor Core
+  > Front of Door to Reactor Core
       Light Suit
 
 ----------------
@@ -486,7 +570,14 @@ Hint Features - Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Phazon, Portal, Spi
   * Layers: default
   * Normal Door to Central Area Transport East/Door to Hall of Combat Mastery
   * Extra - dock_name: EastElevator
-  > Door to Minigyro Chamber
+  > Front of Door to Central Area Transport East
+      Trivial
+
+> Front of Door to Central Area Transport East; Heals? False
+  * Layers: default
+  > Door to Central Area Transport East
+      Trivial
+  > Front of Door to Minigyro Chamber
       All of the following:
           Morph Ball
           Any of the following:
@@ -512,6 +603,13 @@ Hint Features - Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Phazon, Portal, Spi
   * Layers: default
   * Normal Door to Agon Transport Access/Door to Hall of Combat Mastery
   * Extra - dock_name: EastHall
+  > Front of Door to Agon Transport Access
+      Trivial
+
+> Front of Door to Agon Transport Access; Heals? False
+  * Layers: default
+  > Door to Agon Transport Access
+      Trivial
   > Portal to Culling Chamber
       After Hall of Combat Mastery Glass Tunnel
   > Event - Hall of Combat Mastery Glass Tunnel
@@ -521,9 +619,9 @@ Hint Features - Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Phazon, Portal, Spi
   * Layers: default
   * Scan Portal to Culling Chamber/Portal to Hall of Combat Mastery
   * Extra - dock_name: VirtualNorth
-  > Door to Agon Transport Access
+  > Front of Door to Agon Transport Access
       After Hall of Combat Mastery Glass Tunnel
-  > Door to Minigyro Chamber
+  > Front of Door to Minigyro Chamber
       Any of the following:
           Space Jump Boots or Before Hall of Combat Mastery Glass Tunnel
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
@@ -533,11 +631,16 @@ Hint Features - Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Phazon, Portal, Spi
   > Event - Hall of Combat Mastery Glass Tunnel
       Morph Ball and Power Bomb
 
-> Door to Minigyro Chamber; Heals? False; Spawn Point; Default Node
+> Door to Minigyro Chamber; Heals? False; Default Node
   * Layers: default
   * Normal Door to Minigyro Chamber/Door to Hall of Combat Mastery
   * Extra - dock_name: West
-  > Door to Central Area Transport East
+  > Front of Door to Minigyro Chamber
+      Trivial
+
+> Front of Door to Minigyro Chamber; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Central Area Transport East
       All of the following:
           Morph Ball
           Any of the following:
@@ -552,6 +655,8 @@ Hint Features - Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Phazon, Portal, Spi
                       # https://www.youtube.com/watch?v=FtylAcZbKFA
                       Standable Terrain (Intermediate)
   > Portal to Culling Chamber
+      Trivial
+  > Door to Minigyro Chamber
       Trivial
   > Next to Pickup
       All of the following:
@@ -571,7 +676,7 @@ Hint Features - Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Phazon, Portal, Spi
   * Layers: default
   * Pickup 98; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (655434,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 655429, 'hud_memo': 655433, 'streamed_audio': 655435, 'sound': 655430, 'audio_fade': 655432})})
-  > Door to Minigyro Chamber
+  > Front of Door to Minigyro Chamber
       All of the following:
           Morph Ball
           Any of the following:
@@ -589,7 +694,7 @@ Hint Features - Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Phazon, Portal, Spi
   * Hint
   * Extra - translator: Cobalt
   * Extra - string_asset_id: 67497535
-  > Door to Central Area Transport East
+  > Front of Door to Central Area Transport East
       Trivial
 
 > Next to Pickup; Heals? False
@@ -628,7 +733,14 @@ Hint Features - Echo Visor Lock, Luminoth Lore, Portal, Spider Track
   * Layers: default
   * Normal Door to Transit Station/Door to Main Research; Dock Lock Rando incompatible with: Seeker Launcher Blast Shield (patched)
   * Extra - dock_name: East2 to 0m_cliff_hall
-  > Door to Torvus Transport Access
+  > Front of Door to Transit Station
+      Trivial
+
+> Front of Door to Transit Station; Heals? False
+  * Layers: default
+  > Door to Transit Station
+      Trivial
+  > Front of Door to Torvus Transport Access
       Trivial
   > Pickup (Missile)
       # https://www.youtube.com/watch?v=gPxjNeg4ItE
@@ -640,14 +752,19 @@ Hint Features - Echo Visor Lock, Luminoth Lore, Portal, Spider Track
   * Layers: default
   * Dark Portal to Staging Area/Portal to Main Research (Upper)
   * Extra - dock_name: VirtualNorth1
-  > Door to Torvus Transport Access
+  > Front of Door to Torvus Transport Access
       Trivial
 
-> Door to Torvus Transport Access; Heals? False; Spawn Point; Default Node
+> Door to Torvus Transport Access; Heals? False; Default Node
   * Layers: default
   * Power Bomb Blast Shield to Torvus Transport Access/Door to Main Research; Dock Lock Rando incompatible with: Seeker Launcher Blast Shield (patched)
   * Extra - dock_name: West1 to 0p_cliff_hall
-  > Door to Transit Station
+  > Front of Door to Torvus Transport Access
+      Trivial
+
+> Front of Door to Torvus Transport Access; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Transit Station
       Any of the following:
           Morph Ball and Spider Ball
           # https://www.youtube.com/watch?v=56Zl76nNi9k&t=20s
@@ -656,6 +773,8 @@ Hint Features - Echo Visor Lock, Luminoth Lore, Portal, Spider Track
           Standable Terrain (Intermediate) and Use Screw Attack (Space Jump)
   > Portal to Staging Area
       Echo Visor
+  > Door to Torvus Transport Access
+      Trivial
   > Pickup (Missile)
       Morph Ball Bomb and Morph Ball and Spider Ball
   > Lore Scan
@@ -667,13 +786,13 @@ Hint Features - Echo Visor Lock, Luminoth Lore, Portal, Spider Track
   * Layers: default
   * Pickup 99; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (721483,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 721311, 'hud_memo': 721300, 'streamed_audio': 721306, 'sound': 721309, 'audio_fade': 721303})})
-  > Door to Torvus Transport Access
+  > Front of Door to Torvus Transport Access
       Trivial
 
 > Event - Caretaker Drone; Heals? False
   * Layers: default
   * Event Caretaker Drone
-  > Door to Torvus Transport Access
+  > Front of Door to Torvus Transport Access
       Trivial
   > Next to Door to Central Area Transport West
       Trivial
@@ -683,16 +802,16 @@ Hint Features - Echo Visor Lock, Luminoth Lore, Portal, Spider Track
   * Hint
   * Extra - translator: Cobalt
   * Extra - string_asset_id: 3212301619
-  > Door to Torvus Transport Access
+  > Front of Door to Torvus Transport Access
       Trivial
 
 > Next to Door to Central Area Transport West; Heals? False
   * Layers: default
   > Door to Central Area Transport West
       After Caretaker Drone
-  > Door to Transit Station
+  > Front of Door to Transit Station
       Use Screw Attack (Space Jump)
-  > Door to Torvus Transport Access
+  > Front of Door to Torvus Transport Access
       Trivial
   > Pickup (Missile)
       # https://www.youtube.com/watch?v=UOhW8IGOGVU
@@ -701,10 +820,17 @@ Hint Features - Echo Visor Lock, Luminoth Lore, Portal, Spider Track
 ----------------
 Agon Transport Access
 Extra - asset_id: 1963704303
-> Door to Hall of Combat Mastery; Heals? False; Spawn Point; Default Node
+> Door to Hall of Combat Mastery; Heals? False; Default Node
   * Layers: default
   * Normal Door to Hall of Combat Mastery/Door to Agon Transport Access
   * Extra - dock_name: West
+  > Front of Door to Hall of Combat Mastery
+      Trivial
+
+> Front of Door to Hall of Combat Mastery; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Hall of Combat Mastery
+      Trivial
   > Door to Transport to Agon Wastes
       Trivial
 
@@ -712,16 +838,23 @@ Extra - asset_id: 1963704303
   * Layers: default
   * Normal Door to Transport to Agon Wastes/Door to Agon Transport Access
   * Extra - dock_name: East
-  > Door to Hall of Combat Mastery
+  > Front of Door to Hall of Combat Mastery
       Trivial
 
 ----------------
 Central Area Transport East
 Extra - asset_id: 290586973
-> Door to Dynamo Works; Heals? False; Spawn Point; Default Node
+> Door to Dynamo Works; Heals? False; Default Node
   * Layers: default
   * Normal Door to Dynamo Works/Door to Central Area Transport East
   * Extra - dock_name: group1_West_04 (Top)
+  > Front of Door to Dynamo Works
+      Trivial
+
+> Front of Door to Dynamo Works; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Dynamo Works
+      Trivial
   > Door to Hall of Combat Mastery
       Scan Visor
 
@@ -729,26 +862,40 @@ Extra - asset_id: 290586973
   * Layers: default
   * Normal Door to Hall of Combat Mastery/Door to Central Area Transport East
   * Extra - dock_name: group1_West_07 (Bottom)
-  > Door to Dynamo Works
+  > Front of Door to Dynamo Works
       Scan Visor
 
 ----------------
 Central Area Transport West
 Extra - asset_id: 1894024576
 Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon
-> Door to Main Research; Heals? False; Spawn Point; Default Node
+> Door to Main Research; Heals? False; Default Node
   * Layers: default
   * Normal Door to Main Research/Door to Central Area Transport West; Excluded from Dock Lock Rando
   * Extra - dock_name: East_Bottom
-  > Door to Watch Station
+  > Front of Door to Main Research
+      Trivial
+
+> Front of Door to Main Research; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Main Research
+      Trivial
+  > Front of Door to Watch Station
       Echo Visor and Morph Ball
 
 > Door to Watch Station; Heals? False
   * Layers: default
   * Normal Door to Watch Station/Door to Central Area Transport West; Excluded from Dock Lock Rando
   * Extra - dock_name: East_Top
-  > Door to Main Research
+  > Front of Door to Watch Station
+      Trivial
+
+> Front of Door to Watch Station; Heals? False
+  * Layers: default
+  > Front of Door to Main Research
       Morph Ball
+  > Door to Watch Station
+      Trivial
   > Pickup (Missile)
       Morph Ball
 
@@ -756,9 +903,9 @@ Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon
   * Layers: default
   * Pickup 101; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (1048751,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 1048745, 'hud_memo': 1048752, 'streamed_audio': 1048755, 'sound': 1048744, 'audio_fade': 1048753})})
-  > Door to Main Research
+  > Front of Door to Main Research
       Morph Ball
-  > Door to Watch Station
+  > Front of Door to Watch Station
       Morph Ball
 
 ----------------
@@ -768,14 +915,21 @@ Extra - asset_id: 4071453868
   * Layers: default
   * Normal Door to Transport to Torvus Bog/Door to Torvus Transport Access
   * Extra - dock_name: West
-  > Door to Main Research
+  > Front of Door to Main Research
       Trivial
 
-> Door to Main Research; Heals? False; Spawn Point; Default Node
+> Door to Main Research; Heals? False; Default Node
   * Layers: default
   * Power Bomb Blast Shield to Main Research/Door to Torvus Transport Access
   * Extra - dock_name: East
+  > Front of Door to Main Research
+      Trivial
+
+> Front of Door to Main Research; Heals? False; Spawn Point
+  * Layers: default
   > Door to Transport to Torvus Bog
+      Trivial
+  > Door to Main Research
       Trivial
 
 ----------------
@@ -802,11 +956,18 @@ Dynamo Works
 Extra - asset_id: 3222355176
 Extra - low_memory_mode: True
 Hint Features - Bomb Slot, Half-Pipe, Keybearer Corpse, Luminoth Corpse, Portal, Spider Track
-> Door to Workers Path; Heals? False; Spawn Point; Default Node
+> Door to Workers Path; Heals? False; Default Node
   * Layers: default
   * Normal Door to Workers Path/Door to Dynamo Works
   * Extra - dock_name: South2 0H
-  > Door to Dynamo Storage
+  > Front of Door to Workers Path
+      Trivial
+
+> Front of Door to Workers Path; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Workers Path
+      Trivial
+  > Front of Door to Dynamo Storage
       All of the following:
           Morph Ball Bomb and Morph Ball and After Spider Guardian
           Boost Ball or Spider Ball
@@ -827,8 +988,15 @@ Hint Features - Bomb Slot, Half-Pipe, Keybearer Corpse, Luminoth Corpse, Portal,
   * Layers: default
   * Power Bomb Blast Shield to Dynamo Storage/Door to Dynamo Works
   * Extra - dock_name: East2 00_Pickup C
-  > Door to Workers Path
+  > Front of Door to Dynamo Storage
+      Trivial
+
+> Front of Door to Dynamo Storage; Heals? False
+  * Layers: default
+  > Front of Door to Workers Path
       Morph Ball Bomb and Morph Ball and Spider Ball and After Spider Guardian
+  > Door to Dynamo Storage
+      Trivial
   > Pickup 2 (Missile)
       Morph Ball Bomb and Morph Ball and Spider Ball and After Spider Guardian
 
@@ -836,6 +1004,13 @@ Hint Features - Bomb Slot, Half-Pipe, Keybearer Corpse, Luminoth Corpse, Portal,
   * Layers: default
   * Normal Door to Central Area Transport East/Door to Dynamo Works
   * Extra - dock_name: East 0E
+  > Front of Door to Central Area Transport East
+      Trivial
+
+> Front of Door to Central Area Transport East; Heals? False
+  * Layers: default
+  > Door to Central Area Transport East
+      Trivial
   > Pickup 2 (Missile)
       # https://www.youtube.com/watch?v=NoLi_i4zwuM
       Morph Ball and Space Jump Boots and Instant Morph (Expert) and Roll Jump (Expert)
@@ -857,7 +1032,7 @@ Hint Features - Bomb Slot, Half-Pipe, Keybearer Corpse, Luminoth Corpse, Portal,
   * Hint Features - Boss
   * Extra - boss: sub-guardian
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'SpiderBall', 'connections': (frozendict.frozendict({'target': 739509342, 'message': 'ACTV'}), frozendict.frozendict({'target': 739509342, 'message': 'ZERO'})), 'removals': (1310856, 739509371), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 1311406, 'hud_memo': 1311403, 'streamed_audio': 1311404, 'sound': 1310797, 'audio_fade': 1311402})})
-  > Door to Dynamo Storage
+  > Front of Door to Dynamo Storage
       Trivial
 
 > Pickup 2 (Missile); Heals? False
@@ -865,7 +1040,7 @@ Hint Features - Bomb Slot, Half-Pipe, Keybearer Corpse, Luminoth Corpse, Portal,
   * Pickup 103; Category? Minor
   * Hint Features - Morph Ball Tunnel
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (1311917,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 1311926, 'hud_memo': 1311918, 'streamed_audio': 1311916, 'sound': 1311915, 'audio_fade': 1311923})})
-  > Door to Dynamo Storage
+  > Front of Door to Dynamo Storage
       Morph Ball Bomb and Morph Ball and After Spider Guardian
   > Event - Dynamo Works Quads Gone
       Trivial
@@ -875,7 +1050,7 @@ Hint Features - Bomb Slot, Half-Pipe, Keybearer Corpse, Luminoth Corpse, Portal,
   * Event Dynamo Works Quads Gone
   > Portal to Hive Dynamo Works
       Trivial
-  > Door to Central Area Transport East
+  > Front of Door to Central Area Transport East
       Any of the following:
           Morph Ball and Spider Ball and After Spider Guardian
           # https://www.youtube.com/watch?v=yrXFvJcN308
@@ -907,7 +1082,7 @@ Hint Features - Bomb Slot, Half-Pipe, Keybearer Corpse, Luminoth Corpse, Portal,
   * Hint
   * Extra - hint_index: 106
   * Extra - string_asset_id: 2844827238
-  > Door to Central Area Transport East
+  > Front of Door to Central Area Transport East
       Trivial
 
 ----------------
@@ -918,7 +1093,14 @@ Hint Features - Abyss, Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Kinetic Orb 
   * Layers: default
   * Light Door to Watch Station Access/Door to Watch Station
   * Extra - dock_name: East
-  > Door to Sentinel's Path
+  > Front of Door to Watch Station Access
+      Trivial
+
+> Front of Door to Watch Station Access; Heals? False
+  * Layers: default
+  > Door to Watch Station Access
+      Trivial
+  > Front of Door to Sentinel's Path
       Any of the following:
           Use Screw Attack (Space Jump)
           All of the following:
@@ -939,10 +1121,17 @@ Hint Features - Abyss, Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Kinetic Orb 
   > Room Center
       Trivial
 
-> Door to Central Area Transport West; Heals? False; Spawn Point; Default Node
+> Door to Central Area Transport West; Heals? False; Default Node
   * Layers: default
   * Normal Door to Central Area Transport West/Door to Watch Station
   * Extra - dock_name: WestDown
+  > Front of Door to Central Area Transport West
+      Trivial
+
+> Front of Door to Central Area Transport West; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Central Area Transport West
+      Trivial
   > Pickup (Dark Ammo)
       All of the following:
           Morph Ball and Disabled Room Randomizer
@@ -967,6 +1156,13 @@ Hint Features - Abyss, Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Kinetic Orb 
   * Layers: default
   * Normal Door to Grand Abyss/Door to Watch Station
   * Extra - dock_name: WestUp
+  > Front of Door to Grand Abyss
+      Trivial
+
+> Front of Door to Grand Abyss; Heals? False
+  * Layers: default
+  > Door to Grand Abyss
+      Trivial
   > Event - Watch Station Portal Gate
       All of the following:
           Morph Ball and Space Jump Boots
@@ -987,7 +1183,12 @@ Hint Features - Abyss, Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Kinetic Orb 
   * Layers: default
   * Normal Door to Sentinel's Path/Door to Watch Station
   * Extra - dock_name: South
-  > Door to Watch Station Access
+  > Front of Door to Sentinel's Path
+      Trivial
+
+> Front of Door to Sentinel's Path; Heals? False
+  * Layers: default
+  > Front of Door to Watch Station Access
       All of the following:
           Morph Ball and Spider Ball
           Any of the following:
@@ -995,6 +1196,8 @@ Hint Features - Abyss, Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Kinetic Orb 
               Morph Ball Bomb or Instant Morph (Intermediate)
               # https://www.youtube.com/watch?v=2zk_smeEbm8
               Boost Ball and Wall Boost (Advanced)
+  > Door to Sentinel's Path
+      Trivial
   > Room Center
       Trivial
 
@@ -1016,14 +1219,14 @@ Hint Features - Abyss, Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Kinetic Orb 
 
 > Room Center; Heals? False
   * Layers: default
-  > Door to Watch Station Access
+  > Front of Door to Watch Station Access
       # No Space Jump https://www.youtube.com/watch?v=z2zCtuLRRvc
       Space Jump Boots or Movement (Beginner)
-  > Door to Central Area Transport West
+  > Front of Door to Central Area Transport West
       Trivial
   > Portal to Aerial Training Site
       After Watch Station Portal Gate
-  > Door to Grand Abyss
+  > Front of Door to Grand Abyss
       # No Space Jump https://www.youtube.com/watch?v=z2zCtuLRRvc&t=8s
       Space Jump Boots or Movement (Beginner)
   > Lore Scan
@@ -1059,10 +1262,17 @@ Extra - asset_id: 3145160350
 ----------------
 Dynamo Access
 Extra - asset_id: 1120426713
-> Door to Dynamo Works; Heals? False; Spawn Point; Default Node
+> Door to Dynamo Works; Heals? False; Default Node
   * Layers: default
   * Dark Door to Dynamo Works/Door to Dynamo Access
   * Extra - dock_name: East
+  > Front of Door to Dynamo Works
+      Trivial
+
+> Front of Door to Dynamo Works; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Dynamo Works
+      Trivial
   > Door to Main Gyro Chamber
       Any of the following:
           Morph Ball
@@ -1075,7 +1285,7 @@ Extra - asset_id: 1120426713
   * Layers: default
   * Dark Door to Main Gyro Chamber/Door to Dynamo Access
   * Extra - dock_name: West
-  > Door to Dynamo Works
+  > Front of Door to Dynamo Works
       Any of the following:
           Morph Ball
           All of the following:
@@ -1086,10 +1296,17 @@ Extra - asset_id: 1120426713
 ----------------
 Workers Path
 Extra - asset_id: 65839695
-> Door to Dynamo Works; Heals? False; Spawn Point; Default Node
+> Door to Dynamo Works; Heals? False; Default Node
   * Layers: default
   * Normal Door to Dynamo Works/Door to Workers Path
   * Extra - dock_name: North
+  > Front of Door to Dynamo Works
+      Trivial
+
+> Front of Door to Dynamo Works; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Dynamo Works
+      Trivial
   > Door to Sanctuary Temple
       Any of the following:
           Use Screw Attack (Space Jump)
@@ -1107,7 +1324,7 @@ Extra - asset_id: 65839695
   * Layers: default
   * Normal Door to Sanctuary Temple/Door to Workers Path
   * Extra - dock_name: West
-  > Door to Dynamo Works
+  > Front of Door to Dynamo Works
       Any of the following:
           Use Screw Attack (Space Jump)
           All of the following:
@@ -1124,10 +1341,17 @@ Extra - asset_id: 65839695
 ----------------
 Dynamo Storage
 Extra - asset_id: 527902968
-> Door to Dynamo Works; Heals? False; Spawn Point; Default Node
+> Door to Dynamo Works; Heals? False; Default Node
   * Layers: default
   * Normal Door to Dynamo Works/Door to Dynamo Storage
   * Extra - dock_name: group1_West
+  > Front of Door to Dynamo Works
+      Trivial
+
+> Front of Door to Dynamo Works; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Dynamo Works
+      Trivial
   > Portal to Hive Cache 3
       Trivial
 
@@ -1135,17 +1359,24 @@ Extra - asset_id: 527902968
   * Layers: default
   * Dark Portal to Hive Cache 3/Portal to Dynamo Storage
   * Extra - dock_name: VirtualWest
-  > Door to Dynamo Works
+  > Front of Door to Dynamo Works
       Trivial
 
 ----------------
 Sentinel's Path
 Extra - asset_id: 2765624647
 Hint Features - Echo Visor Lock
-> Door to Watch Station; Heals? False; Spawn Point; Default Node
+> Door to Watch Station; Heals? False; Default Node
   * Layers: default
   * Normal Door to Watch Station/Door to Sentinel's Path
   * Extra - dock_name: North
+  > Front of Door to Watch Station
+      Trivial
+
+> Front of Door to Watch Station; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Watch Station
+      Trivial
   > Front of Echo Gate
       Trivial
 
@@ -1165,7 +1396,7 @@ Hint Features - Echo Visor Lock
 
 > Front of Echo Gate; Heals? False
   * Layers: default
-  > Door to Watch Station
+  > Front of Door to Watch Station
       Trivial
   > Door to Sanctuary Temple
       Trivial
@@ -1180,11 +1411,18 @@ Hint Features - Echo Visor Lock
 Watch Station Access
 Extra - asset_id: 1349974475
 Hint Features - Abyss, Grapple Point
-> Door to Watch Station; Heals? False; Spawn Point; Default Node
+> Door to Watch Station; Heals? False; Default Node
   * Layers: default
   * Light Door to Watch Station/Door to Watch Station Access
   * Extra - dock_name: West
-  > Door to Main Gyro Chamber
+  > Front of Door to Watch Station
+      Trivial
+
+> Front of Door to Watch Station; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Watch Station
+      Trivial
+  > Front of Door to Main Gyro Chamber
       # https://www.youtube.com/watch?v=L92JqO2ZUtk
       Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
   > Next to Scan Post
@@ -1194,6 +1432,13 @@ Hint Features - Abyss, Grapple Point
   * Layers: default
   * Light Door to Main Gyro Chamber/Door to Watch Station Access
   * Extra - dock_name: East
+  > Front of Door to Main Gyro Chamber
+      Trivial
+
+> Front of Door to Main Gyro Chamber; Heals? False
+  * Layers: default
+  > Door to Main Gyro Chamber
+      Trivial
   > Next to Scan Post
       Any of the following:
           Use Screw Attack (Space Jump)
@@ -1231,7 +1476,7 @@ Hint Features - Abyss, Grapple Point
 
 > Next to Scan Post; Heals? False
   * Layers: default
-  > Door to Watch Station
+  > Front of Door to Watch Station
       Any of the following:
           Space Jump Boots
           # https://www.youtube.com/watch?v=L92JqO2ZUtk&t=54s
@@ -1240,7 +1485,7 @@ Hint Features - Abyss, Grapple Point
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
           # https://www.youtube.com/watch?v=L92JqO2ZUtk&t=44s
           Movement (Beginner) and Use Screw Attack (No Space Jump)
-  > Door to Main Gyro Chamber
+  > Front of Door to Main Gyro Chamber
       Any of the following:
           Use Screw Attack (Space Jump)
           Grapple Beam and After Watch Station Access Grapple Points
@@ -1274,10 +1519,17 @@ Extra - asset_id: 595516932
   > Event - Grand Abyss (Vault Side)
       Trivial
 
-> Door to Watch Station; Heals? True; Spawn Point; Default Node
+> Door to Watch Station; Heals? True; Default Node
   * Layers: default
   * Normal Door to Watch Station/Door to Grand Abyss
   * Extra - dock_name: East
+  > Front of Door to Watch Station
+      Trivial
+
+> Front of Door to Watch Station; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Watch Station
+      Trivial
   > Event - Grand Abyss (Watch Station Side)
       Before Grand Abyss
   > Event - Grand Abyss (Vault Side)
@@ -1306,7 +1558,7 @@ Extra - asset_id: 595516932
 > Event - Grand Abyss (Watch Station Side); Heals? False
   * Layers: default
   * Event Grand Abyss
-  > Door to Watch Station
+  > Front of Door to Watch Station
       Trivial
   > Event - Grand Abyss (Vault Side)
       Any of the following:
@@ -1345,11 +1597,18 @@ Extra - asset_id: 595516932
 Main Gyro Chamber
 Extra - asset_id: 1932798548
 Hint Features - Bomb Slot, Boost Spinner, Echo Visor Lock, Elevator, Luminoth Lore, Kinetic Orb Cannon, Spider Track
-> Door to Dynamo Access; Heals? False; Spawn Point; Default Node
+> Door to Dynamo Access; Heals? False; Default Node
   * Layers: default
   * Dark Door to Dynamo Access/Door to Main Gyro Chamber
   * Extra - dock_name: East1
-  > Door to Watch Station Access
+  > Front of Door to Dynamo Access
+      Trivial
+
+> Front of Door to Dynamo Access; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Dynamo Access
+      Trivial
+  > Front of Door to Watch Station Access
       After Main Gyro Chamber Spinner Gate
   > Room Bottom
       Scan Visor
@@ -1366,6 +1625,13 @@ Hint Features - Bomb Slot, Boost Spinner, Echo Visor Lock, Elevator, Luminoth Lo
   * Layers: default
   * Missile Blast Shield to Save Station B/Door to Main Gyro Chamber
   * Extra - dock_name: West_Save
+  > Front of Door to Save Station B
+      Trivial
+
+> Front of Door to Save Station B; Heals? False
+  * Layers: default
+  > Door to Save Station B
+      Trivial
   > Event - Main Gyro Chamber Puzzle 1
       All of the following:
           Any of the following:
@@ -1392,9 +1658,16 @@ Hint Features - Bomb Slot, Boost Spinner, Echo Visor Lock, Elevator, Luminoth Lo
   * Layers: default
   * Light Door to Watch Station Access/Door to Main Gyro Chamber
   * Extra - dock_name: West21
-  > Door to Dynamo Access
+  > Front of Door to Watch Station Access
+      Trivial
+
+> Front of Door to Watch Station Access; Heals? False
+  * Layers: default
+  > Front of Door to Dynamo Access
       After Main Gyro Chamber Spinner Gate
-  > Door to Temple Access
+  > Door to Watch Station Access
+      Trivial
+  > Front of Door to Temple Access
       Any of the following:
           Scan Visor
           Morph Ball Bomb and Bomb Space Jump (Advanced) and Use Screw Attack (Space Jump)
@@ -1413,8 +1686,15 @@ Hint Features - Bomb Slot, Boost Spinner, Echo Visor Lock, Elevator, Luminoth Lo
   * Layers: default
   * Normal Door to Temple Access/Door to Main Gyro Chamber
   * Extra - dock_name: South
-  > Door to Watch Station Access
+  > Front of Door to Temple Access
+      Trivial
+
+> Front of Door to Temple Access; Heals? False
+  * Layers: default
+  > Front of Door to Watch Station Access
       Scan Visor
+  > Door to Temple Access
+      Trivial
   > Puzzle 2 Debris
       All of the following:
           Morph Ball
@@ -1426,6 +1706,13 @@ Hint Features - Bomb Slot, Boost Spinner, Echo Visor Lock, Elevator, Luminoth Lo
   * Layers: default
   * Power Bomb Blast Shield to Checkpoint Station/Door to Main Gyro Chamber
   * Extra - dock_name: North1
+  > Front of Door to Checkpoint Station
+      Trivial
+
+> Front of Door to Checkpoint Station; Heals? False
+  * Layers: default
+  > Door to Checkpoint Station
+      Trivial
   > Room Bottom
       All of the following:
           Boost Ball and Morph Ball
@@ -1451,13 +1738,13 @@ Hint Features - Bomb Slot, Boost Spinner, Echo Visor Lock, Elevator, Luminoth Lo
 > Event - Main Gyro Chamber Puzzle 1; Heals? False
   * Layers: default
   * Event Main Gyro Chamber Puzzle 1
-  > Door to Save Station B
+  > Front of Door to Save Station B
       Trivial
 
 > Event - Main Gyro Chamber Puzzle 2; Heals? False
   * Layers: default
   * Event Main Gyro Chamber Puzzle 2
-  > Door to Temple Access
+  > Front of Door to Temple Access
       Trivial
 
 > Event - Main Gyro Chamber Echo Gate; Heals? False
@@ -1469,14 +1756,14 @@ Hint Features - Bomb Slot, Boost Spinner, Echo Visor Lock, Elevator, Luminoth Lo
 > Event - Main Gyro Chamber Spinner Gate; Heals? False
   * Layers: default
   * Event Main Gyro Chamber Spinner Gate
-  > Door to Watch Station Access
+  > Front of Door to Watch Station Access
       Trivial
 
 > Room Bottom; Heals? False
   * Layers: default
-  > Door to Dynamo Access
+  > Front of Door to Dynamo Access
       Scan Visor
-  > Door to Temple Access
+  > Front of Door to Temple Access
       Morph Ball and After Main Gyro Chamber Echo Gate
   > Pickup (Power Bomb)
       Morph Ball and After Main Gyro Chamber Echo Gate
@@ -1508,9 +1795,9 @@ Hint Features - Bomb Slot, Boost Spinner, Echo Visor Lock, Elevator, Luminoth Lo
 
 > Reactor - Save Station Side; Heals? False
   * Layers: default
-  > Door to Dynamo Access
+  > Front of Door to Dynamo Access
       Morph Ball
-  > Door to Save Station B
+  > Front of Door to Save Station B
       Morph Ball
   > Room Bottom
       Any of the following:
@@ -1523,9 +1810,9 @@ Hint Features - Bomb Slot, Boost Spinner, Echo Visor Lock, Elevator, Luminoth Lo
 
 > Reactor - Watch Station Side; Heals? False
   * Layers: default
-  > Door to Watch Station Access
+  > Front of Door to Watch Station Access
       Morph Ball
-  > Door to Checkpoint Station
+  > Front of Door to Checkpoint Station
       All of the following:
           Boost Ball and Morph Ball and After Main Gyro Chamber Puzzle 2
           Any of the following:
@@ -1555,6 +1842,13 @@ Hint Features - Spider Track, Temple, Translator Gate
   * Layers: default
   * Normal Door to Controller Access/Door to Sanctuary Temple
   * Extra - dock_name: South
+  > Front of Door to Controller Access
+      Trivial
+
+> Front of Door to Controller Access; Heals? False
+  * Layers: default
+  > Door to Controller Access
+      Trivial
   > Room Center (Bottom)
       Trivial
   > Room Center (Top)
@@ -1570,10 +1864,17 @@ Hint Features - Spider Track, Temple, Translator Gate
   > Translator Gate
       Trivial
 
-> Door to Temple Access; Heals? False; Spawn Point; Default Node
+> Door to Temple Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Temple Access/Door to Sanctuary Temple
   * Extra - dock_name: North
+  > Front of Door to Temple Access
+      Trivial
+
+> Front of Door to Temple Access; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Temple Access
+      Trivial
   > Room Center (Bottom)
       Trivial
   > Room Center (Top)
@@ -1588,6 +1889,13 @@ Hint Features - Spider Track, Temple, Translator Gate
   * Layers: default
   * Annihilator Door to Sentinel's Path/Door to Sanctuary Temple
   * Extra - dock_name: West
+  > Front of Door to Sentinel's Path
+      Trivial
+
+> Front of Door to Sentinel's Path; Heals? False
+  * Layers: default
+  > Door to Sentinel's Path
+      Trivial
   > Room Center (Bottom)
       Trivial
   > Room Center (Top)
@@ -1600,7 +1908,7 @@ Hint Features - Spider Track, Temple, Translator Gate
 
 > Room Center (Bottom); Heals? False
   * Layers: default
-  > Door to Temple Access
+  > Front of Door to Temple Access
       All of the following:
           Morph Ball and Spider Ball
           Any of the following:
@@ -1624,7 +1932,7 @@ Hint Features - Spider Track, Temple, Translator Gate
 
 > Room Center (Top); Heals? False
   * Layers: default
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Any of the following:
           Grapple Beam or Use Screw Attack (Space Jump)
           All of the following:
@@ -1636,14 +1944,14 @@ Hint Features - Spider Track, Temple, Translator Gate
                   Extended Dash (Expert)
           # https://www.youtube.com/watch?v=l5vF1J2hO-Q
           Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
-  > Door to Temple Access
+  > Front of Door to Temple Access
       Any of the following:
           Use Screw Attack (Space Jump)
           # https://www.youtube.com/watch?v=FsMEbSXfSx0
           Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
           # Works the same as: https://www.youtube.com/watch?v=l5vF1J2hO-Q
           Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
-  > Door to Sentinel's Path
+  > Front of Door to Sentinel's Path
       Any of the following:
           Use Screw Attack (Space Jump)
           # https://www.youtube.com/watch?v=O3RgTYbAnZo
@@ -1683,11 +1991,11 @@ Hint Features - Spider Track, Temple, Translator Gate
 
 > Out of Bounds; Heals? False
   * Layers: default
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
-  > Door to Temple Access
+  > Front of Door to Temple Access
       Trivial
-  > Door to Sentinel's Path
+  > Front of Door to Sentinel's Path
       Trivial
   > Room Center (Top)
       Trivial
@@ -1710,10 +2018,17 @@ Hint Features - Spider Track, Temple, Translator Gate
 Vault
 Extra - asset_id: 1378173793
 Hint Features - Abyss, Bomb Slot, Boost Spinner, Portal
-> Door to Grand Abyss; Heals? False; Spawn Point; Default Node
+> Door to Grand Abyss; Heals? False; Default Node
   * Layers: default
   * Normal Door to Grand Abyss/Door to Vault
   * Extra - dock_name: East
+  > Front of Door to Grand Abyss
+      Trivial
+
+> Front of Door to Grand Abyss; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Grand Abyss
+      Trivial
   > Portal to Vault Attack Portal (Dark)
       After Vault Bridge
   > Event - Vault Bridge
@@ -1738,7 +2053,7 @@ Hint Features - Abyss, Bomb Slot, Boost Spinner, Portal
   * Layers: default
   * Dark Portal to Vault Attack Portal/Portal to Vault (Light)
   * Extra - dock_name: VirtualWest
-  > Door to Grand Abyss
+  > Front of Door to Grand Abyss
       All of the following:
           After Vault Bridge
           Any of the following:
@@ -1829,7 +2144,7 @@ Hint Features - Abyss, Bomb Slot, Boost Spinner, Portal
 
 > Above Bomb Slot; Heals? False
   * Layers: default
-  > Door to Grand Abyss
+  > Front of Door to Grand Abyss
       Any of the following:
           Before Vault Bridge or Use Screw Attack (Space Jump)
           Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
@@ -1854,10 +2169,17 @@ Hint Features - Abyss, Bomb Slot, Boost Spinner, Portal
 Temple Access
 Extra - asset_id: 3312357786
 Hint Features - Boost Spinner, Dark Visor Lock, Echo Visor Lock, Morph Ball Tunnel, Kinetic Orb Cannon
-> Door to Main Gyro Chamber; Heals? False; Spawn Point; Default Node
+> Door to Main Gyro Chamber; Heals? False; Default Node
   * Layers: default
   * Normal Door to Main Gyro Chamber/Door to Temple Access
   * Extra - dock_name: North
+  > Front of Door to Main Gyro Chamber
+      Trivial
+
+> Front of Door to Main Gyro Chamber; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Main Gyro Chamber
+      Trivial
   > Pickup (Missile)
       All of the following:
           Morph Ball and Space Jump Boots
@@ -1890,7 +2212,7 @@ Hint Features - Boost Spinner, Dark Visor Lock, Echo Visor Lock, Morph Ball Tunn
 
 > Room Center; Heals? False
   * Layers: default
-  > Door to Main Gyro Chamber
+  > Front of Door to Main Gyro Chamber
       All of the following:
           After Temple Access (Sanctuary) Quad
           Any of the following:
@@ -1936,10 +2258,17 @@ Hint Features - Boost Spinner, Dark Visor Lock, Echo Visor Lock, Morph Ball Tunn
 ----------------
 Checkpoint Station
 Extra - asset_id: 2219469068
-> Door to Main Gyro Chamber; Heals? False; Spawn Point; Default Node
+> Door to Main Gyro Chamber; Heals? False; Default Node
   * Layers: default
   * Normal Door to Main Gyro Chamber/Door to Checkpoint Station
   * Extra - dock_name: South
+  > Front of Door to Main Gyro Chamber
+      Trivial
+
+> Front of Door to Main Gyro Chamber; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Main Gyro Chamber
+      Trivial
   > Door to Aerie Transport Station
       Trivial
 
@@ -1947,7 +2276,7 @@ Extra - asset_id: 2219469068
   * Layers: default
   * Normal Door to Aerie Transport Station/Door to Checkpoint Station
   * Extra - dock_name: North
-  > Door to Main Gyro Chamber
+  > Front of Door to Main Gyro Chamber
       Trivial
 
 ----------------
@@ -1969,10 +2298,17 @@ Extra - unlocked_save_station: True
 ----------------
 Controller Access
 Extra - asset_id: 3902528658
-> Door to Sanctuary Temple; Heals? False; Spawn Point; Default Node
+> Door to Sanctuary Temple; Heals? False; Default Node
   * Layers: default
   * Normal Door to Sanctuary Temple/Door to Controller Access
   * Extra - dock_name: North
+  > Front of Door to Sanctuary Temple
+      Trivial
+
+> Front of Door to Sanctuary Temple; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Sanctuary Temple
+      Trivial
   > Door to Sanctuary Energy Controller
       Any of the following:
           Morph Ball Bomb and Morph Ball
@@ -1983,7 +2319,7 @@ Extra - asset_id: 3902528658
   * Layers: default
   * Normal Door to Sanctuary Energy Controller/Door to Controller Access
   * Extra - dock_name: South1
-  > Door to Sanctuary Temple
+  > Front of Door to Sanctuary Temple
       Any of the following:
           Morph Ball Bomb and Morph Ball
           # https://www.youtube.com/watch?v=-oxfsO9wVzs
@@ -1994,10 +2330,17 @@ Extra - asset_id: 3902528658
 ----------------
 Aerie Transport Station
 Extra - asset_id: 3136899603
-> Door to Checkpoint Station; Heals? False; Spawn Point; Default Node
+> Door to Checkpoint Station; Heals? False; Default Node
   * Layers: default
   * Normal Door to Checkpoint Station/Door to Aerie Transport Station
   * Extra - dock_name: South
+  > Front of Door to Checkpoint Station
+      Trivial
+
+> Front of Door to Checkpoint Station; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Checkpoint Station
+      Trivial
   > Dock to Aerie Access
       Before Dark Samus 2
   > Elevator to Aerie
@@ -2014,17 +2357,24 @@ Extra - asset_id: 3136899603
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 204865660
   * Extra - keep_name_when_vanilla: True
-  > Door to Checkpoint Station
+  > Front of Door to Checkpoint Station
       Trivial
 
 ----------------
 Sanctuary Energy Controller
 Extra - asset_id: 218311274
 Hint Features - Abyss, Energy Controller, Light Energy Transport, Luminoth Lore, Luminoth Corpse
-> Door to Controller Access; Heals? False; Spawn Point; Default Node
+> Door to Controller Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Controller Access/Door to Sanctuary Energy Controller
   * Extra - dock_name: North
+  > Front of Door to Controller Access
+      Trivial
+
+> Front of Door to Controller Access; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Controller Access
+      Trivial
   > Pickup (Cobalt Translator)
       Trivial
   > Teleporter to Great Temple
@@ -2042,7 +2392,7 @@ Hint Features - Abyss, Energy Controller, Light Energy Transport, Luminoth Lore,
   * Layers: default
   * Pickup 116; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'custom', 'exclude_memo_from_removal': False, 'original_model': 'CobaltTranslator', 'connections': (), 'removals': (3604525, 272040655), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'collision_size': frozendict.frozendict({'x': 1.0, 'y': 1.0, 'z': 2.0}), 'layer': 'Default'})
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Teleporter to Great Temple; Heals? False
@@ -2051,7 +2401,7 @@ Hint Features - Abyss, Energy Controller, Light Energy Transport, Luminoth Lore,
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 137822369
   * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Teleporter to Agon Wastes; Heals? False
@@ -2060,7 +2410,7 @@ Hint Features - Abyss, Energy Controller, Light Energy Transport, Luminoth Lore,
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 137822376
   * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Teleporter to Torvus Bog; Heals? False
@@ -2069,13 +2419,13 @@ Hint Features - Abyss, Energy Controller, Light Energy Transport, Luminoth Lore,
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 137822482
   * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Event - Sanctuary Energy Returned; Heals? False
   * Layers: default
   * Event Sanctuary Energy Returned
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Lore Scan; Heals? False
@@ -2083,7 +2433,7 @@ Hint Features - Abyss, Energy Controller, Light Energy Transport, Luminoth Lore,
   * Hint
   * Extra - translator: Cobalt
   * Extra - string_asset_id: 1041207119
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 ----------------

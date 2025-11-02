@@ -270,9 +270,9 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_name: LE_Platform_Elevator_FromArea06B_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06B_01
-  > Door to Transport to Tower Lobby East
+  > Front of Door to Transport to Tower Lobby East
       Trivial
-  > Door to Grapple Shuffler
+  > Front of Door to Grapple Shuffler
       Any of the following:
           # Deal with the Gunzoo
           Lightning Armor or Defeat Weak Enemies
@@ -286,7 +286,14 @@ Extra - asset_id: collision_camera_005
   * Power Beam Door to Transport to Tower Lobby East/Door to Transport to Tower Exterior East
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
-  > Door to Grapple Shuffler
+  > Front of Door to Transport to Tower Lobby East
+      Trivial
+
+> Front of Door to Transport to Tower Lobby East; Heals? False
+  * Layers: default
+  > Door to Transport to Tower Lobby East
+      Trivial
+  > Front of Door to Grapple Shuffler
       Any of the following:
           # Autrack only spawns on the right from here, so you can't reach elevator
           Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
@@ -303,13 +310,20 @@ Extra - asset_id: collision_camera_005
   * Power Beam Door to Grapple Shuffler/Door to Transport to Tower Exterior East
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Grapple Shuffler
+      Trivial
+
+> Front of Door to Grapple Shuffler; Heals? False
+  * Layers: default
   > Elevator to Area 5 Tower Exterior
       Any of the following:
           # Deal with the Gunzoo
           Lightning Armor or Defeat Weak Enemies
           # Spin Jump over it
           Dodge Enemies (Intermediate)
-  > Door to Transport to Tower Lobby East
+  > Front of Door to Transport to Tower Lobby East
+      Trivial
+  > Door to Grapple Shuffler
       Trivial
 
 > Door to Meboid Marina; Heals? False
@@ -378,7 +392,14 @@ Extra - asset_id: collision_camera_007
   * Missile Door to Plasma Beam Chamber/Door to Grapple Shuffler
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
-  > Door to Interior Teleporter (Bottom)
+  > Front of Door to Plasma Beam Chamber
+      Trivial
+
+> Front of Door to Plasma Beam Chamber; Heals? False
+  * Layers: default
+  > Door to Plasma Beam Chamber
+      Trivial
+  > Front of Door to Interior Teleporter (Bottom)
       All of the following:
           Morph Ball and After Area 5 (Tower Interior) - Grapple Shuffler Grapple Block
           Super Jump (Intermediate) or Unmorph Extend (Beginner) or Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
@@ -388,13 +409,20 @@ Extra - asset_id: collision_camera_007
   * Power Beam Door to Interior Teleporter/Door to Grapple Shuffler (Bottom)
   * Extra - actor_name: Door020
   * Extra - actor_type: doorpowerpower
-  > Door to Plasma Beam Chamber
+  > Front of Door to Interior Teleporter (Bottom)
+      Trivial
+
+> Front of Door to Interior Teleporter (Bottom); Heals? False
+  * Layers: default
+  > Front of Door to Plasma Beam Chamber
       All of the following:
           Morph Ball
           Any of the following:
               Grapple Beam and After Area 5 (Tower Interior) - Grapple Shuffler Grapple Block
               # Ice Clip using the left Glow Fly: https://youtu.be/i9kuD1yPSSk
               Charge Beam and Ice Beam and Ice Beam Clip (Expert) and Out of Bounds Movement (Intermediate)
+  > Door to Interior Teleporter (Bottom)
+      Trivial
   > Pickup (Missile Tank)
       # Ice Clip using the right Glow Fly: https://youtu.be/wA-kNgVe_6c
       Charge Beam and Ice Beam and Morph Ball and Ice Beam Clip (Expert) and Out of Bounds Movement (Intermediate) and Lay Any Bomb
@@ -422,7 +450,7 @@ Extra - asset_id: collision_camera_007
   * Pickup 127; Category? Minor
   * Extra - actor_name: HiddenPowerup002
   * Extra - actor_type: item_missiletank
-  > Door to Interior Teleporter (Bottom)
+  > Front of Door to Interior Teleporter (Bottom)
       # Requirements to prevent Screw Attack paths escaping this way
       Ice Beam and Morph Ball and Ice Beam Clip (Expert) and Out of Bounds Movement (Intermediate)
   > Below Pickup
@@ -436,7 +464,7 @@ Extra - asset_id: collision_camera_007
 
 > Above Pickup; Heals? False
   * Layers: default
-  > Door to Interior Teleporter (Bottom)
+  > Front of Door to Interior Teleporter (Bottom)
       Morph Ball and After Area 5 Tower Interior - Grapple Shuffler Long Grapple Block
   > Pickup (Missile Tank)
       All of the following:
@@ -458,7 +486,7 @@ Extra - asset_id: collision_camera_007
 
 > Below Pickup; Heals? False
   * Layers: default
-  > Door to Plasma Beam Chamber
+  > Front of Door to Plasma Beam Chamber
       Morph Ball and Screw Attack and After Area 5 (Tower Interior) - Grapple Shuffler Grapple Block
   > Above Pickup
       All of the following:
@@ -489,7 +517,7 @@ Extra - asset_id: collision_camera_007
 > Event - Shuffler Long Grapple Block; Heals? False
   * Layers: default
   * Event Area 5 Tower Interior - Grapple Shuffler Long Grapple Block
-  > Door to Interior Teleporter (Bottom)
+  > Front of Door to Interior Teleporter (Bottom)
       Morph Ball
 
 ----------------
@@ -518,6 +546,13 @@ Extra - asset_id: collision_camera_008
   * Power Beam Door to Interior Teleporter/Door to Autrack Acropolis
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerclosed
+  > Front of Door to Interior Teleporter
+      Trivial
+
+> Front of Door to Interior Teleporter; Heals? False
+  * Layers: default
+  > Door to Interior Teleporter
+      Trivial
   > Door to Plasma Beam Chamber
       Trivial
   > Above Crumble Blocks
@@ -546,7 +581,7 @@ Extra - asset_id: collision_camera_008
   * Plasma Beam Door to Plasma Beam Chamber/Door to Autrack Acropolis
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerpower
-  > Door to Interior Teleporter
+  > Front of Door to Interior Teleporter
       Trivial
 
 > Tunnel to Transport to Tower Exterior West; Heals? False
@@ -559,7 +594,7 @@ Extra - asset_id: collision_camera_008
   * Layers: default
   > Energy Recharge Station
       Morph Ball
-  > Door to Interior Teleporter
+  > Front of Door to Interior Teleporter
       Morph Ball
   > Tunnel to Transport to Tower Exterior West
       All of the following:
@@ -599,7 +634,7 @@ Hint Features - Chozo Statue
   * Power Beam Door to Gravity Suit Chamber Access/Door to Gravity Suit Chamber (Bottom)
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Door to Gravity Suit Chamber Access (Middle)
+  > Front of Door to Gravity Suit Chamber Access (Middle)
       Trivial
 
 > Door to Gravity Suit Chamber Access (Middle); Heals? False
@@ -607,6 +642,11 @@ Hint Features - Chozo Statue
   * Power Beam Door to Gravity Suit Chamber Access/Door to Gravity Suit Chamber (Middle)
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Gravity Suit Chamber Access (Middle)
+      Trivial
+
+> Front of Door to Gravity Suit Chamber Access (Middle); Heals? False
+  * Layers: default
   > Door to Gravity Suit Chamber Access (Bottom)
       Any of the following:
           High Jump Boots or Gravity Suit or Space Jump or Super Jump (Beginner)
@@ -624,6 +664,8 @@ Hint Features - Chozo Statue
               Mid-Air Morph (Intermediate) or Infinite Bomb Jump (Intermediate) or Use Spring Ball
           # Spider Ball above spike
           Mid-Air Morph (Beginner) and Use Spider Ball
+  > Door to Gravity Suit Chamber Access (Middle)
+      Trivial
 
 > Door to Gravity Suit Chamber Access (Top); Heals? False
   * Layers: default
@@ -638,7 +680,7 @@ Hint Features - Chozo Statue
   * Extra - start_point_actor_name: ST_CheckPoint_007
   > Pickup (Gravity Suit)
       Trivial
-  > Door to Gravity Suit Chamber Access (Middle)
+  > Front of Door to Gravity Suit Chamber Access (Middle)
       Morph Ball
   > Door to Gravity Suit Chamber Access (Top)
       Trivial
@@ -674,7 +716,7 @@ Extra - asset_id: collision_camera_011
   * Pickup 120; Category? Minor
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_supermissiletank
-  > Door to Phase Drift Trial Reward Room
+  > Front of Door to Phase Drift Trial Reward Room
       Trivial
 
 > Door to Phase Drift Trial East; Heals? False
@@ -682,7 +724,14 @@ Extra - asset_id: collision_camera_011
   * Super Missile Door to Phase Drift Trial East/Door to Phase Drift Trial West
   * Extra - actor_name: Door011
   * Extra - actor_type: doorpowerpower
-  > Door to Phase Drift Trial Reward Room
+  > Front of Door to Phase Drift Trial East
+      Trivial
+
+> Front of Door to Phase Drift Trial East; Heals? False
+  * Layers: default
+  > Door to Phase Drift Trial East
+      Trivial
+  > Front of Door to Phase Drift Trial Reward Room
       Any of the following:
           Phase Drift or Use Spider Ball
           # Skip with SJ: https://youtu.be/K-nJIU_6zso?t=4
@@ -697,15 +746,22 @@ Extra - asset_id: collision_camera_011
   * Power Bomb Door to Phase Drift Trial Reward Room/Door to Phase Drift Trial West
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Phase Drift Trial Reward Room
+      Trivial
+
+> Front of Door to Phase Drift Trial Reward Room; Heals? False
+  * Layers: default
   > Pickup (Super Missile Tank)
       Trivial
-  > Door to Phase Drift Trial East
+  > Front of Door to Phase Drift Trial East
       Any of the following:
           Phase Drift or Use Spider Ball
           # Skip with SJ
           Space Jump and Phase Drift Skip (Intermediate)
           # Skip with Bombs
           Diagonal Bomb Jump (Advanced) and Phase Drift Skip (Expert) and Wall Jump (Advanced) and Lay Bomb
+  > Door to Phase Drift Trial Reward Room
+      Trivial
   > Below Crumble Blocks
       Trivial
 
@@ -746,7 +802,14 @@ Extra - asset_id: collision_camera_012
   * Power Beam Door to Phase Drift Trial Entrance/Door to Phase Drift Trial East
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
-  > Door to Phase Drift Trial West
+  > Front of Door to Phase Drift Trial Entrance
+      Trivial
+
+> Front of Door to Phase Drift Trial Entrance; Heals? False
+  * Layers: default
+  > Door to Phase Drift Trial Entrance
+      Trivial
+  > Front of Door to Phase Drift Trial West
       Any of the following:
           Phase Drift or Use Spider Ball
           # Skip with SJ: https://youtu.be/K-nJIU_6zso
@@ -761,13 +824,20 @@ Extra - asset_id: collision_camera_012
   * Super Missile Door to Phase Drift Trial West/Door to Phase Drift Trial East
   * Extra - actor_name: Door011
   * Extra - actor_type: doorpowerpower
-  > Door to Phase Drift Trial Entrance
+  > Front of Door to Phase Drift Trial West
+      Trivial
+
+> Front of Door to Phase Drift Trial West; Heals? False
+  * Layers: default
+  > Front of Door to Phase Drift Trial Entrance
       Any of the following:
           Phase Drift or Use Spider Ball
           # Skip with SJ
           Space Jump and Phase Drift Skip (Intermediate)
           # Skip with Bombs
           Diagonal Bomb Jump (Advanced) and Phase Drift Skip (Advanced) and Lay Bomb
+  > Door to Phase Drift Trial West
+      Trivial
   > Dock to Transport to Tower Exterior West
       Trivial
 
@@ -895,6 +965,13 @@ Extra - asset_id: collision_camera_017
   * Power Beam Door to Zeta+ Arena/Door to Zeta+ Arena Access
   * Extra - actor_name: Door022
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Zeta+ Arena
+      Trivial
+
+> Front of Door to Zeta+ Arena; Heals? False
+  * Layers: default
+  > Door to Zeta+ Arena
+      Trivial
   > Center Platform
       All of the following:
           Any of the following:
@@ -924,7 +1001,7 @@ Extra - asset_id: collision_camera_017
 
 > Center Platform; Heals? False
   * Layers: default
-  > Door to Zeta+ Arena
+  > Front of Door to Zeta+ Arena
       All of the following:
           Screw Attack
           Any of the following:
@@ -1056,7 +1133,7 @@ Extra - asset_id: collision_camera_017
                               Charge Beam or Phase Drift
                   # HJ
                   High Jump Boots and Super Jump (Advanced)
-  > Door to Zeta+ Arena
+  > Front of Door to Zeta+ Arena
       # TODO: damage boost
       Lightning Armor and Screw Attack and Use Spider Ball
   > Center Platform
@@ -1075,7 +1152,7 @@ Extra - asset_id: collision_camera_017
 > Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Zeta_002
-  > Door to Zeta+ Arena
+  > Front of Door to Zeta+ Arena
       Trivial
 
 ----------------
@@ -1089,7 +1166,7 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_name: LE_Platform_Elevator_FromArea06B_02
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06B_02
-  > Door to Gravity Suit Chamber Access
+  > Front of Door to Gravity Suit Chamber Access
       Trivial
 
 > Door to Gravity Suit Chamber Access; Heals? False
@@ -1097,7 +1174,14 @@ Extra - asset_id: collision_camera_018
   * Spazer Beam Door to Gravity Suit Chamber Access/Door to Transport to Tower Exterior West
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Gravity Suit Chamber Access
+      Trivial
+
+> Front of Door to Gravity Suit Chamber Access; Heals? False
+  * Layers: default
   > Elevator to Area 5 Tower Exterior
+      Trivial
+  > Door to Gravity Suit Chamber Access
       Trivial
   > Tunnel to Autrack Acropolis
       Lay Any Bomb
@@ -1114,13 +1198,13 @@ Extra - asset_id: collision_camera_018
 > Tunnel to Autrack Acropolis; Heals? False
   * Layers: default
   * Tunnel to Autrack Acropolis/Tunnel to Transport to Tower Exterior West
-  > Door to Gravity Suit Chamber Access
+  > Front of Door to Gravity Suit Chamber Access
       Lay Any Bomb
 
 > Tunnel to Phase Drift Trial Entrance; Heals? False
   * Layers: default
   * Tunnel to Phase Drift Trial Entrance/Tunnel to Transport to Tower Exterior West
-  > Door to Gravity Suit Chamber Access
+  > Front of Door to Gravity Suit Chamber Access
       Morph Ball
 
 > Dock from Phase Drift Trial West; Heals? False
@@ -1132,7 +1216,7 @@ Extra - asset_id: collision_camera_018
 > Dock from Phase Drift Trial East; Heals? False
   * Layers: default
   * Blocked Passage to Phase Drift Trial East/Dock to Transport to Tower Exterior West
-  > Door to Gravity Suit Chamber Access
+  > Front of Door to Gravity Suit Chamber Access
       Trivial
 
 ----------------
@@ -1145,6 +1229,13 @@ Extra - asset_id: collision_camera_020
   * Power Beam Door to Gravity Suit Chamber/Door to Gravity Suit Chamber Access (Bottom)
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Gravity Suit Chamber (Bottom)
+      Trivial
+
+> Front of Door to Gravity Suit Chamber (Bottom); Heals? False
+  * Layers: default
+  > Door to Gravity Suit Chamber (Bottom)
+      Trivial
   > Door to Transport to Tower Exterior West
       Any of the following:
           Gravity Suit or Super Jump (Beginner) or Climb Rooms Vertically (High Jump)
@@ -1202,7 +1293,7 @@ Extra - asset_id: collision_camera_020
   * Spazer Beam Door to Transport to Tower Exterior West/Door to Gravity Suit Chamber Access
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
-  > Door to Gravity Suit Chamber (Bottom)
+  > Front of Door to Gravity Suit Chamber (Bottom)
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -1210,7 +1301,7 @@ Extra - asset_id: collision_camera_020
   * Pickup 126; Category? Minor
   * Extra - actor_name: HP_ChozoHologram_001
   * Extra - actor_type: item_missiletank
-  > Door to Gravity Suit Chamber (Bottom)
+  > Front of Door to Gravity Suit Chamber (Bottom)
       Lay Any Bomb
 
 ----------------
@@ -1299,7 +1390,7 @@ Hint Features - Baby Blocks, Teleporter
   * Pickup 121; Category? Minor
   * Extra - actor_name: LE_Item_003
   * Extra - actor_type: item_missiletank
-  > Door to Grapple Shuffler (Bottom)
+  > Front of Door to Grapple Shuffler (Bottom)
       Trivial
 
 > Teleporter; Heals? False; Default Node
@@ -1308,7 +1399,7 @@ Hint Features - Baby Blocks, Teleporter
   * Extra - actor_name: LE_Platform_Teleporter_06C_001
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_06C_001
-  > Door to Grapple Shuffler (Top)
+  > Front of Door to Grapple Shuffler (Top)
       Trivial
 
 > Door to Autrack Acropolis; Heals? False
@@ -1316,7 +1407,7 @@ Hint Features - Baby Blocks, Teleporter
   * Access Locked to Autrack Acropolis/Door to Interior Teleporter
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerclosed
-  > Door to Grapple Shuffler (Bottom)
+  > Front of Door to Grapple Shuffler (Bottom)
       Trivial
 
 > Door to Grapple Shuffler (Bottom); Heals? False
@@ -1324,11 +1415,18 @@ Hint Features - Baby Blocks, Teleporter
   * Power Beam Door to Grapple Shuffler/Door to Interior Teleporter (Bottom)
   * Extra - actor_name: Door020
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Grapple Shuffler (Bottom)
+      Trivial
+
+> Front of Door to Grapple Shuffler (Bottom); Heals? False
+  * Layers: default
   > Pickup (Missile Tank)
       Baby Metroid and Morph Ball
   > Door to Autrack Acropolis
       Trivial
-  > Door to Grapple Shuffler (Top)
+  > Door to Grapple Shuffler (Bottom)
+      Trivial
+  > Front of Door to Grapple Shuffler (Top)
       Any of the following:
           Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
           # UE
@@ -1339,12 +1437,19 @@ Hint Features - Baby Blocks, Teleporter
   * Power Beam Door to Grapple Shuffler/Door to Interior Teleporter (Top)
   * Extra - actor_name: Door021
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Grapple Shuffler (Top)
+      Trivial
+
+> Front of Door to Grapple Shuffler (Top); Heals? False
+  * Layers: default
   > Pickup (Missile Tank)
       # Clip off the teleporter platform
       Out of Bounds Movement (Advanced) and Spider Ball Clip (Intermediate) and Use Spider Ball
   > Teleporter
       Trivial
-  > Door to Grapple Shuffler (Bottom)
+  > Front of Door to Grapple Shuffler (Bottom)
+      Trivial
+  > Door to Grapple Shuffler (Top)
       Trivial
   > Event - Teleporter Unlocked
       Trivial
@@ -1352,7 +1457,7 @@ Hint Features - Baby Blocks, Teleporter
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 5 (Tower Interior) - Teleporter Unlocked
-  > Door to Grapple Shuffler (Top)
+  > Front of Door to Grapple Shuffler (Top)
       Trivial
 
 ----------------

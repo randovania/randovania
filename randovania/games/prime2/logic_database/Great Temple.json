@@ -104,7 +104,7 @@
                     "extra": {},
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Temple Sanctuary": {
+                        "Front of Door to Temple Sanctuary": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -307,6 +307,26 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Temple Sanctuary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Temple Sanctuary": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Save Station": {
                             "type": "resource",
                             "data": {
@@ -314,6 +334,13 @@
                                 "name": "MorphBall",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Temple Sanctuary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Temple Transport A": {
@@ -475,7 +502,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Temple Sanctuary": {
+                        "Front of Door to Temple Sanctuary": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -592,7 +619,7 @@
                     "extra": {
                         "dock_name": "North"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Great Temple",
@@ -606,6 +633,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Transport A Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Transport A Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Transport A Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Room Center": {
                             "type": "or",
                             "data": {
@@ -845,7 +899,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport A Access": {
+                        "Front of Door to Transport A Access": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1194,7 +1248,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport A Access": {
+                        "Front of Door to Transport A Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1284,7 +1338,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event91",
                     "connections": {
-                        "Door to Transport A Access": {
+                        "Front of Door to Transport A Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1327,7 +1381,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Temple Sanctuary": {
+                        "Front of Door to Temple Transport C": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Temple Transport C": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Temple Transport C": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Temple Sanctuary": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1349,7 +1430,7 @@
                     "extra": {
                         "dock_name": "East"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Great Temple",
@@ -1363,13 +1444,40 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Temple Transport C": {
+                        "Front of Door to Temple Sanctuary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Temple Sanctuary": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Door to Temple Transport C": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
                                 "name": "Event7",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Temple Sanctuary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Transport C Access Light Block": {
@@ -1390,14 +1498,14 @@
                     "valid_starting_location": false,
                     "event_name": "Event7",
                     "connections": {
-                        "Door to Temple Transport C": {
+                        "Front of Door to Temple Transport C": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Temple Sanctuary": {
+                        "Front of Door to Temple Sanctuary": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1440,7 +1548,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Energy Controller": {
+                        "Front of Door to Main Energy Controller": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1462,7 +1570,7 @@
                     "extra": {
                         "dock_name": "NorthTop"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Great Temple",
@@ -1476,6 +1584,26 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Main Energy Controller": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Main Energy Controller": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
                         "Door to Temple Sanctuary": {
                             "type": "resource",
                             "data": {
@@ -1483,6 +1611,13 @@
                                 "name": "Scan",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Main Energy Controller": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1509,7 +1644,7 @@
                     "extra": {
                         "dock_name": "West"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Great Temple",
@@ -1523,6 +1658,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Temple Sanctuary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Temple Sanctuary": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Temple Sanctuary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Temple Transport B": {
                             "type": "and",
                             "data": {
@@ -1659,7 +1821,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Temple Sanctuary": {
+                        "Front of Door to Temple Sanctuary": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1709,7 +1871,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Temple Sanctuary": {
+                        "Front of Door to Temple Sanctuary": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1823,7 +1985,7 @@
                     "extra": {
                         "dock_name": "SouthLight"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Great Temple",
@@ -1837,6 +1999,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Controller Transport": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Controller Transport": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Controller Transport": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Violet Translator)": {
                             "type": "and",
                             "data": {
@@ -1931,7 +2120,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Controller Transport": {
+                        "Front of Door to Controller Transport": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2007,7 +2196,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Controller Transport": {
+                        "Front of Door to Controller Transport": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2043,7 +2232,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Controller Transport": {
+                        "Front of Door to Controller Transport": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2079,7 +2268,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Controller Transport": {
+                        "Front of Door to Controller Transport": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2115,7 +2304,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Controller Transport": {
+                        "Front of Door to Controller Transport": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2186,7 +2375,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Controller Transport": {
+                        "Front of Door to Controller Transport": {
                             "type": "and",
                             "data": {
                                 "comment": null,

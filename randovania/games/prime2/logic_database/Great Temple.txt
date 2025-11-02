@@ -22,7 +22,7 @@ Transport A Access
 Extra - asset_id: 3885674414
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
-  > Door to Temple Sanctuary
+  > Front of Door to Temple Sanctuary
       Morph Ball
   > Pickup (Missile)
       Any of the following:
@@ -41,8 +41,15 @@ Extra - asset_id: 3885674414
   * Layers: default
   * Normal Door to Temple Sanctuary/Door to Transport A Access
   * Extra - dock_name: South
+  > Front of Door to Temple Sanctuary
+      Trivial
+
+> Front of Door to Temple Sanctuary; Heals? False
+  * Layers: default
   > Save Station
       Morph Ball
+  > Door to Temple Sanctuary
+      Trivial
   > Door to Temple Transport A
       Any of the following:
           Space Jump Boots
@@ -57,7 +64,7 @@ Extra - asset_id: 3885674414
   * Layers: default
   * Normal Door to Temple Transport A/Door to Transport A Access
   * Extra - dock_name: North
-  > Door to Temple Sanctuary
+  > Front of Door to Temple Sanctuary
       Trivial
 
 > Pickup (Missile); Heals? False
@@ -78,10 +85,17 @@ Hint Features - Boss, Temple, Translator Gate
   > Transport B Translator Gate
       Trivial
 
-> Door to Transport A Access; Heals? False; Spawn Point; Default Node
+> Door to Transport A Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Transport A Access/Door to Temple Sanctuary
   * Extra - dock_name: North
+  > Front of Door to Transport A Access
+      Trivial
+
+> Front of Door to Transport A Access; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Transport A Access
+      Trivial
   > Room Center
       Any of the following:
           After Great Temple Transport A Translator Gone
@@ -120,7 +134,7 @@ Hint Features - Boss, Temple, Translator Gate
 
 > Room Center; Heals? False
   * Layers: default
-  > Door to Transport A Access
+  > Front of Door to Transport A Access
       After Great Temple Transport A Translator Gone
   > Door to Controller Transport
       After Alpha Splinter
@@ -158,7 +172,7 @@ Hint Features - Boss, Temple, Translator Gate
   * Extra - gate_index: 9
   * Extra - vanilla_actual: Emerald
   * Extra - vanilla_color: Emerald
-  > Door to Transport A Access
+  > Front of Door to Transport A Access
       Trivial
   > Room Center
       Trivial
@@ -188,7 +202,7 @@ Hint Features - Boss, Temple, Translator Gate
 > Event - Transport A Gate Removal; Heals? False
   * Layers: default
   * Event Great Temple Transport A Translator Gone
-  > Door to Transport A Access
+  > Front of Door to Transport A Access
       Trivial
 
 ----------------
@@ -198,24 +212,38 @@ Extra - asset_id: 441310400
   * Layers: default
   * Normal Door to Temple Transport C/Door to Transport C Access
   * Extra - dock_name: West
-  > Door to Temple Sanctuary
+  > Front of Door to Temple Transport C
+      Trivial
+
+> Front of Door to Temple Transport C; Heals? False
+  * Layers: default
+  > Door to Temple Transport C
+      Trivial
+  > Front of Door to Temple Sanctuary
       After Transport C Access Light Block
 
-> Door to Temple Sanctuary; Heals? False; Spawn Point; Default Node
+> Door to Temple Sanctuary; Heals? False; Default Node
   * Layers: default
   * Normal Door to Temple Sanctuary/Door to Transport C Access
   * Extra - dock_name: East
-  > Door to Temple Transport C
+  > Front of Door to Temple Sanctuary
+      Trivial
+
+> Front of Door to Temple Sanctuary; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Temple Transport C
       After Transport C Access Light Block
+  > Door to Temple Sanctuary
+      Trivial
   > Event - Transport C Access Light Block
       Shoot Light Beam
 
 > Event - Transport C Access Light Block; Heals? False
   * Layers: default
   * Event Transport C Access Light Block
-  > Door to Temple Transport C
+  > Front of Door to Temple Transport C
       Trivial
-  > Door to Temple Sanctuary
+  > Front of Door to Temple Sanctuary
       Trivial
 
 ----------------
@@ -225,24 +253,38 @@ Extra - asset_id: 300223430
   * Layers: default
   * Normal Door to Temple Sanctuary/Door to Controller Transport
   * Extra - dock_name: NorthBottom
-  > Door to Main Energy Controller
+  > Front of Door to Main Energy Controller
       Scan Visor
 
-> Door to Main Energy Controller; Heals? False; Spawn Point; Default Node
+> Door to Main Energy Controller; Heals? False; Default Node
   * Layers: default
   * Normal Door to Main Energy Controller/Door to Controller Transport
   * Extra - dock_name: NorthTop
+  > Front of Door to Main Energy Controller
+      Trivial
+
+> Front of Door to Main Energy Controller; Heals? False; Spawn Point
+  * Layers: default
   > Door to Temple Sanctuary
       Scan Visor
+  > Door to Main Energy Controller
+      Trivial
 
 ----------------
 Transport B Access
 Extra - asset_id: 4273454375
 Hint Features - Morph Ball Tunnel
-> Door to Temple Sanctuary; Heals? False; Spawn Point; Default Node
+> Door to Temple Sanctuary; Heals? False; Default Node
   * Layers: default
   * Normal Door to Temple Sanctuary/Door to Transport B Access
   * Extra - dock_name: West
+  > Front of Door to Temple Sanctuary
+      Trivial
+
+> Front of Door to Temple Sanctuary; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Temple Sanctuary
+      Trivial
   > Door to Temple Transport B
       Trivial
   > Pickup (Missile)
@@ -260,14 +302,14 @@ Hint Features - Morph Ball Tunnel
   * Layers: default
   * Normal Door to Temple Transport B/Door to Transport B Access
   * Extra - dock_name: East
-  > Door to Temple Sanctuary
+  > Front of Door to Temple Sanctuary
       Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
   * Pickup 22; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (327910,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 327887, 'hud_memo': 327911, 'streamed_audio': 327906, 'sound': 327891, 'audio_fade': 327904})})
-  > Door to Temple Sanctuary
+  > Front of Door to Temple Sanctuary
       Trivial
 
 ----------------
@@ -293,10 +335,17 @@ Extra - asset_id: 2556480432
 Main Energy Controller
 Extra - asset_id: 44045108
 Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore
-> Door to Controller Transport; Heals? False; Spawn Point; Default Node
+> Door to Controller Transport; Heals? False; Default Node
   * Layers: default
   * Normal Door to Controller Transport/Door to Main Energy Controller
   * Extra - dock_name: SouthLight
+  > Front of Door to Controller Transport
+      Trivial
+
+> Front of Door to Controller Transport; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Controller Transport
+      Trivial
   > Pickup (Violet Translator)
       Trivial
   > Teleporter to Agon Wastes
@@ -314,14 +363,14 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore
   * Layers: default
   * Pickup 23; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'custom', 'exclude_memo_from_removal': False, 'original_model': 'VioletTranslator', 'connections': (), 'removals': (459696, 459075, 134677499), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'collision_size': frozendict.frozendict({'x': 1.0, 'y': 1.0, 'z': 2.0}), 'layer': 'Default'})
-  > Door to Controller Transport
+  > Front of Door to Controller Transport
       Trivial
 
 > Pickup (Light Suit); Heals? False
   * Layers: default
   * Pickup 24; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'LightSuit', 'connections': (frozendict.frozendict({'target': 459647, 'message': 'INCR'}), frozendict.frozendict({'target': 537330382, 'message': 'ACTV'}), frozendict.frozendict({'target': 537330382, 'message': 'ZERO'}), frozendict.frozendict({'target': 458813, 'message': 'STRT'}), frozendict.frozendict({'target': 459538, 'message': 'ULCK'}), frozendict.frozendict({'target': 459661, 'message': 'ACTV'})), 'removals': (537330383, 537330343), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 537330375, 'hud_memo': 537330376, 'streamed_audio': 537330381, 'sound': 537330373, 'audio_fade': 537330384})})
-  > Door to Controller Transport
+  > Front of Door to Controller Transport
       Trivial
 
 > Teleporter to Agon Wastes; Heals? False
@@ -330,7 +379,7 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 939982960
   * Extra - keep_name_when_vanilla: False
-  > Door to Controller Transport
+  > Front of Door to Controller Transport
       Trivial
 
 > Teleporter to Torvus Bog; Heals? False
@@ -339,7 +388,7 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 939982964
   * Extra - keep_name_when_vanilla: False
-  > Door to Controller Transport
+  > Front of Door to Controller Transport
       Trivial
 
 > Teleporter to Sanctuary Fortress; Heals? False
@@ -348,7 +397,7 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 939982965
   * Extra - keep_name_when_vanilla: False
-  > Door to Controller Transport
+  > Front of Door to Controller Transport
       Trivial
 
 > Event - Main Energy Controller Pickup; Heals? False
@@ -362,7 +411,7 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore
   * Hint
   * Extra - translator: Violet
   * Extra - string_asset_id: 3277287077
-  > Door to Controller Transport
+  > Front of Door to Controller Transport
       Trivial
 
 ----------------

@@ -104,7 +104,7 @@
                     "extra": {
                         "dock_name": "South1"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -118,7 +118,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Sanctuary Entrance": {
+                        "Front of Door to Transport to Temple Grounds": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Transport to Temple Grounds": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Transport to Temple Grounds": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Sanctuary Entrance": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -198,13 +225,40 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Transport to Temple Grounds": {
+                        "Front of Door to Sanctuary Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sanctuary Entrance": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Transport to Temple Grounds": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
                                 "name": "Event43",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Sanctuary Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -221,14 +275,14 @@
                     "valid_starting_location": false,
                     "event_name": "Event43",
                     "connections": {
-                        "Door to Transport to Temple Grounds": {
+                        "Front of Door to Transport to Temple Grounds": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Sanctuary Entrance": {
+                        "Front of Door to Sanctuary Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -249,7 +303,7 @@
                     "valid_starting_location": false,
                     "event_name": "SancEntranceReload",
                     "connections": {
-                        "Door to Transport to Temple Grounds": {
+                        "Front of Door to Transport to Temple Grounds": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -300,7 +354,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Temple Transport Access": {
+                        "Front of Door to Power Junction": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Power Junction": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Power Junction": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Temple Transport Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -818,7 +899,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -832,7 +913,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Power Junction": {
+                        "Front of Door to Temple Transport Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Temple Transport Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Door to Power Junction": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -883,6 +984,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Door to Temple Transport Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -927,7 +1035,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Temple Transport Access": {
+                        "Front of Door to Temple Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -977,7 +1085,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Power Junction": {
+                        "Front of Door to Power Junction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -997,7 +1105,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Power Junction": {
+                        "Front of Door to Power Junction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1076,7 +1184,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Power Junction": {
+                        "Front of Door to Power Junction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1155,7 +1263,7 @@
                     "valid_starting_location": false,
                     "event_name": "SancEntranceFight",
                     "connections": {
-                        "Door to Power Junction": {
+                        "Front of Door to Power Junction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1198,7 +1306,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Sanctuary Entrance": {
+                        "Front of Door to Reactor Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Reactor Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Reactor Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Sanctuary Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1227,7 +1362,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -1241,7 +1376,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Reactor Access": {
+                        "Front of Door to Sanctuary Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sanctuary Entrance": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Door to Reactor Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Sanctuary Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1262,7 +1424,7 @@
                     "valid_starting_location": false,
                     "event_name": "SancEntranceReload",
                     "connections": {
-                        "Door to Reactor Access": {
+                        "Front of Door to Reactor Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1291,7 +1453,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -1305,6 +1467,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Power Junction": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Power Junction": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Power Junction": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Reactor Core": {
                             "type": "and",
                             "data": {
@@ -1453,7 +1642,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Power Junction": {
+                        "Front of Door to Power Junction": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1476,7 +1665,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event44",
                     "connections": {
-                        "Door to Power Junction": {
+                        "Front of Door to Power Junction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1611,7 +1800,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -1625,6 +1814,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Reactor Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Reactor Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Reactor Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Room Bottom": {
                             "type": "and",
                             "data": {
@@ -1759,7 +1975,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Reactor Access": {
+                        "Front of Door to Reactor Access": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2435,7 +2651,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Reactor Core": {
+                        "Front of Door to Hall of Combat Mastery": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Hall of Combat Mastery": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Hall of Combat Mastery": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Reactor Core": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2474,7 +2717,7 @@
                     "extra": {
                         "dock_name": "West"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -2488,7 +2731,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Hall of Combat Mastery": {
+                        "Front of Door to Reactor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Reactor Core": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Door to Hall of Combat Mastery": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2512,6 +2775,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Reactor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Minigyro Chamber Puzzle": {
@@ -2554,14 +2824,14 @@
                     "valid_starting_location": false,
                     "event_name": "Event46",
                     "connections": {
-                        "Door to Hall of Combat Mastery": {
+                        "Front of Door to Hall of Combat Mastery": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Reactor Core": {
+                        "Front of Door to Reactor Core": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2593,7 +2863,7 @@
                     "extra": {
                         "dock_name": "East"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -2607,6 +2877,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Reactor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Reactor Core": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Reactor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Room Center": {
                             "type": "and",
                             "data": {
@@ -2958,7 +3255,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Reactor Core": {
+                        "Front of Door to Reactor Core": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3095,7 +3392,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -3109,6 +3406,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Reactor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Reactor Core": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Reactor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Missile)": {
                             "type": "resource",
                             "data": {
@@ -3161,7 +3485,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Reactor Core": {
+                        "Front of Door to Reactor Core": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3213,7 +3537,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Minigyro Chamber": {
+                        "Front of Door to Central Area Transport East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Central Area Transport East": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Central Area Transport East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Minigyro Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3412,6 +3763,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Agon Transport Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Agon Transport Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Agon Transport Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Portal to Culling Chamber": {
                             "type": "resource",
                             "data": {
@@ -3474,7 +3852,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Agon Transport Access": {
+                        "Front of Door to Agon Transport Access": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -3483,7 +3861,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Minigyro Chamber": {
+                        "Front of Door to Minigyro Chamber": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3630,7 +4008,7 @@
                     "extra": {
                         "dock_name": "West"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -3644,7 +4022,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Central Area Transport East": {
+                        "Front of Door to Minigyro Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Minigyro Chamber": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Door to Central Area Transport East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3777,6 +4175,13 @@
                             }
                         },
                         "Portal to Culling Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Minigyro Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3970,7 +4375,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Minigyro Chamber": {
+                        "Front of Door to Minigyro Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4102,7 +4507,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Central Area Transport East": {
+                        "Front of Door to Central Area Transport East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4391,7 +4796,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Torvus Transport Access": {
+                        "Front of Door to Transit Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Transit Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Transit Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Torvus Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4455,7 +4887,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Torvus Transport Access": {
+                        "Front of Door to Torvus Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4475,7 +4907,7 @@
                     "extra": {
                         "dock_name": "West1 to 0p_cliff_hall"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -4491,7 +4923,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Transit Station": {
+                        "Front of Door to Torvus Transport Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Torvus Transport Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Door to Transit Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4579,6 +5031,13 @@
                                 "name": "Echo",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Torvus Transport Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Pickup (Missile)": {
@@ -4710,7 +5169,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Torvus Transport Access": {
+                        "Front of Door to Torvus Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4731,7 +5190,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event48",
                     "connections": {
-                        "Door to Torvus Transport Access": {
+                        "Front of Door to Torvus Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4788,7 +5247,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Torvus Transport Access": {
+                        "Front of Door to Torvus Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4817,11 +5276,11 @@
                                 "negate": false
                             }
                         },
-                        "Door to Transit Station": {
+                        "Front of Door to Transit Station": {
                             "type": "template",
                             "data": "Use Screw Attack (Space Jump)"
                         },
-                        "Door to Torvus Transport Access": {
+                        "Front of Door to Torvus Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4871,7 +5330,7 @@
                     "extra": {
                         "dock_name": "West"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -4885,6 +5344,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Hall of Combat Mastery": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Hall of Combat Mastery": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Hall of Combat Mastery": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Transport to Agon Wastes": {
                             "type": "and",
                             "data": {
@@ -4919,7 +5405,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Hall of Combat Mastery": {
+                        "Front of Door to Hall of Combat Mastery": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4948,7 +5434,7 @@
                     "extra": {
                         "dock_name": "group1_West_04 (Top)"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -4962,6 +5448,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Dynamo Works": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Dynamo Works": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Dynamo Works": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Hall of Combat Mastery": {
                             "type": "resource",
                             "data": {
@@ -4998,7 +5511,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Dynamo Works": {
+                        "Front of Door to Dynamo Works": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5032,7 +5545,7 @@
                     "extra": {
                         "dock_name": "East_Bottom"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -5046,7 +5559,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Watch Station": {
+                        "Front of Door to Main Research": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Main Research": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Main Research": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Watch Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5099,13 +5639,40 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Research": {
+                        "Front of Door to Watch Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Watch Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Main Research": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
                                 "name": "MorphBall",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Watch Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Pickup (Missile)": {
@@ -5160,7 +5727,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Main Research": {
+                        "Front of Door to Main Research": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5169,7 +5736,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Watch Station": {
+                        "Front of Door to Watch Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5214,7 +5781,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Research": {
+                        "Front of Door to Main Research": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5234,7 +5801,7 @@
                     "extra": {
                         "dock_name": "East"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -5248,7 +5815,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Main Research": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Main Research": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
                         "Door to Transport to Torvus Bog": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Main Research": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5366,7 +5960,7 @@
                     "extra": {
                         "dock_name": "South2 0H"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -5380,7 +5974,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Dynamo Storage": {
+                        "Front of Door to Workers Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Workers Path": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Workers Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Dynamo Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5572,7 +6193,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Workers Path": {
+                        "Front of Door to Dynamo Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Dynamo Storage": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Workers Path": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5614,6 +6255,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Dynamo Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Pickup 2 (Missile)": {
@@ -5687,6 +6335,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Central Area Transport East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Central Area Transport East": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Central Area Transport East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup 2 (Missile)": {
                             "type": "and",
                             "data": {
@@ -5835,7 +6510,7 @@
                         "boss"
                     ],
                     "connections": {
-                        "Door to Dynamo Storage": {
+                        "Front of Door to Dynamo Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5887,7 +6562,7 @@
                         "morph"
                     ],
                     "connections": {
-                        "Door to Dynamo Storage": {
+                        "Front of Door to Dynamo Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5950,7 +6625,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Central Area Transport East": {
+                        "Front of Door to Central Area Transport East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6277,7 +6952,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Central Area Transport East": {
+                        "Front of Door to Central Area Transport East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6328,7 +7003,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Sentinel's Path": {
+                        "Front of Door to Watch Station Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Watch Station Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Watch Station Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Sentinel's Path": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6572,7 +7274,7 @@
                     "extra": {
                         "dock_name": "WestDown"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -6586,6 +7288,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Central Area Transport West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Central Area Transport West": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Central Area Transport West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Dark Ammo)": {
                             "type": "and",
                             "data": {
@@ -6816,6 +7545,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Grand Abyss": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Grand Abyss": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Grand Abyss": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Watch Station Portal Gate": {
                             "type": "and",
                             "data": {
@@ -7026,7 +7782,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Watch Station Access": {
+                        "Front of Door to Sentinel's Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sentinel's Path": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Watch Station Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7102,6 +7878,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Sentinel's Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Room Center": {
@@ -7240,7 +8023,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Watch Station Access": {
+                        "Front of Door to Watch Station Access": {
                             "type": "or",
                             "data": {
                                 "comment": "No Space Jump https://www.youtube.com/watch?v=z2zCtuLRRvc",
@@ -7266,7 +8049,7 @@
                                 ]
                             }
                         },
-                        "Door to Central Area Transport West": {
+                        "Front of Door to Central Area Transport West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7282,7 +8065,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Grand Abyss": {
+                        "Front of Door to Grand Abyss": {
                             "type": "or",
                             "data": {
                                 "comment": "No Space Jump https://www.youtube.com/watch?v=z2zCtuLRRvc&t=8s",
@@ -7468,7 +8251,7 @@
                     "extra": {
                         "dock_name": "East"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -7482,6 +8265,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Dynamo Works": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Dynamo Works": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Dynamo Works": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Main Gyro Chamber": {
                             "type": "or",
                             "data": {
@@ -7569,7 +8379,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Dynamo Works": {
+                        "Front of Door to Dynamo Works": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7651,7 +8461,7 @@
                     "extra": {
                         "dock_name": "North"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -7665,6 +8475,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Dynamo Works": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Dynamo Works": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Dynamo Works": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Sanctuary Temple": {
                             "type": "or",
                             "data": {
@@ -7838,7 +8675,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Dynamo Works": {
+                        "Front of Door to Dynamo Works": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8032,7 +8869,7 @@
                     "extra": {
                         "dock_name": "group1_West"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -8046,6 +8883,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Dynamo Works": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Dynamo Works": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Dynamo Works": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Portal to Hive Cache 3": {
                             "type": "and",
                             "data": {
@@ -8080,7 +8944,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Dynamo Works": {
+                        "Front of Door to Dynamo Works": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8111,7 +8975,7 @@
                     "extra": {
                         "dock_name": "North"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -8125,6 +8989,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Watch Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Watch Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Watch Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Front of Echo Gate": {
                             "type": "and",
                             "data": {
@@ -8229,7 +9120,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Watch Station": {
+                        "Front of Door to Watch Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8345,7 +9236,7 @@
                     "extra": {
                         "dock_name": "West"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -8359,7 +9250,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Gyro Chamber": {
+                        "Front of Door to Watch Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Watch Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Watch Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Main Gyro Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": "https://www.youtube.com/watch?v=L92JqO2ZUtk",
@@ -8423,6 +9341,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Main Gyro Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Main Gyro Chamber": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Main Gyro Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Next to Scan Post": {
                             "type": "or",
                             "data": {
@@ -8853,7 +9798,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Watch Station": {
+                        "Front of Door to Watch Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8961,7 +9906,7 @@
                                 ]
                             }
                         },
-                        "Door to Main Gyro Chamber": {
+                        "Front of Door to Main Gyro Chamber": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9331,7 +10276,7 @@
                     "extra": {
                         "dock_name": "East"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -9345,6 +10290,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Watch Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Watch Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Watch Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Grand Abyss (Watch Station Side)": {
                             "type": "resource",
                             "data": {
@@ -9592,7 +10564,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event54",
                     "connections": {
-                        "Door to Watch Station": {
+                        "Front of Door to Watch Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9993,7 +10965,7 @@
                     "extra": {
                         "dock_name": "East1"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -10007,7 +10979,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Watch Station Access": {
+                        "Front of Door to Dynamo Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Dynamo Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Dynamo Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Watch Station Access": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -10141,6 +11140,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Save Station B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Save Station B": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Save Station B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Main Gyro Chamber Puzzle 1": {
                             "type": "and",
                             "data": {
@@ -10460,7 +11486,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Dynamo Access": {
+                        "Front of Door to Watch Station Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Watch Station Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Dynamo Access": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -10469,7 +11515,14 @@
                                 "negate": false
                             }
                         },
-                        "Door to Temple Access": {
+                        "Door to Watch Station Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Temple Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10650,13 +11703,40 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Watch Station Access": {
+                        "Front of Door to Temple Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Temple Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Watch Station Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
                                 "name": "Scan",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Temple Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Puzzle 2 Debris": {
@@ -10746,6 +11826,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Checkpoint Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Checkpoint Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Checkpoint Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Room Bottom": {
                             "type": "and",
                             "data": {
@@ -10978,7 +12085,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event57",
                     "connections": {
-                        "Door to Save Station B": {
+                        "Front of Door to Save Station B": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10999,7 +12106,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event58",
                     "connections": {
-                        "Door to Temple Access": {
+                        "Front of Door to Temple Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11041,7 +12148,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event60",
                     "connections": {
-                        "Door to Watch Station Access": {
+                        "Front of Door to Watch Station Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11061,7 +12168,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Dynamo Access": {
+                        "Front of Door to Dynamo Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11070,7 +12177,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Temple Access": {
+                        "Front of Door to Temple Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11453,7 +12560,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Dynamo Access": {
+                        "Front of Door to Dynamo Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11462,7 +12569,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Save Station B": {
+                        "Front of Door to Save Station B": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11560,7 +12667,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Watch Station Access": {
+                        "Front of Door to Watch Station Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11569,7 +12676,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Checkpoint Station": {
+                        "Front of Door to Checkpoint Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11805,6 +12912,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Controller Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Controller Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Controller Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Room Center (Bottom)": {
                             "type": "and",
                             "data": {
@@ -11918,7 +13052,7 @@
                     "extra": {
                         "dock_name": "North"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -11932,6 +13066,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Temple Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Temple Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Temple Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Room Center (Bottom)": {
                             "type": "and",
                             "data": {
@@ -12043,6 +13204,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Sentinel's Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sentinel's Path": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Sentinel's Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Room Center (Bottom)": {
                             "type": "and",
                             "data": {
@@ -12148,7 +13336,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Temple Access": {
+                        "Front of Door to Temple Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12411,7 +13599,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Controller Access": {
+                        "Front of Door to Controller Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -12547,7 +13735,7 @@
                                 ]
                             }
                         },
-                        "Door to Temple Access": {
+                        "Front of Door to Temple Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -12632,7 +13820,7 @@
                                 ]
                             }
                         },
-                        "Door to Sentinel's Path": {
+                        "Front of Door to Sentinel's Path": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -12983,21 +14171,21 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Controller Access": {
+                        "Front of Door to Controller Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Temple Access": {
+                        "Front of Door to Temple Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Sentinel's Path": {
+                        "Front of Door to Sentinel's Path": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13087,7 +14275,7 @@
                     "extra": {
                         "dock_name": "East"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -13101,6 +14289,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Grand Abyss": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Grand Abyss": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Grand Abyss": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Portal to Vault Attack Portal (Dark)": {
                             "type": "resource",
                             "data": {
@@ -13309,7 +14524,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Grand Abyss": {
+                        "Front of Door to Grand Abyss": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14289,7 +15504,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Grand Abyss": {
+                        "Front of Door to Grand Abyss": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -14506,7 +15721,7 @@
                     "extra": {
                         "dock_name": "North"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -14520,6 +15735,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Main Gyro Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Main Gyro Chamber": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Main Gyro Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Missile)": {
                             "type": "and",
                             "data": {
@@ -14763,7 +16005,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Main Gyro Chamber": {
+                        "Front of Door to Main Gyro Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15197,7 +16439,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -15211,6 +16453,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Main Gyro Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Main Gyro Chamber": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Main Gyro Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Aerie Transport Station": {
                             "type": "and",
                             "data": {
@@ -15245,7 +16514,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Gyro Chamber": {
+                        "Front of Door to Main Gyro Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15338,7 +16607,7 @@
                     "extra": {
                         "dock_name": "North"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -15352,6 +16621,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Sanctuary Temple": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sanctuary Temple": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Sanctuary Temple": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Sanctuary Energy Controller": {
                             "type": "or",
                             "data": {
@@ -15482,7 +16778,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Sanctuary Temple": {
+                        "Front of Door to Sanctuary Temple": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -15607,7 +16903,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -15621,6 +16917,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Checkpoint Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Checkpoint Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Checkpoint Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Dock to Aerie Access": {
                             "type": "resource",
                             "data": {
@@ -15694,7 +17017,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Checkpoint Station": {
+                        "Front of Door to Checkpoint Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15729,7 +17052,7 @@
                     "extra": {
                         "dock_name": "North"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Sanctuary Fortress",
@@ -15743,6 +17066,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Controller Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Controller Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Controller Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Cobalt Translator)": {
                             "type": "and",
                             "data": {
@@ -15836,7 +17186,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Controller Access": {
+                        "Front of Door to Controller Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15872,7 +17222,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Controller Access": {
+                        "Front of Door to Controller Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15908,7 +17258,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Controller Access": {
+                        "Front of Door to Controller Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15944,7 +17294,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Controller Access": {
+                        "Front of Door to Controller Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15965,7 +17315,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event66",
                     "connections": {
-                        "Door to Controller Access": {
+                        "Front of Door to Controller Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16015,7 +17365,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Controller Access": {
+                        "Front of Door to Controller Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,

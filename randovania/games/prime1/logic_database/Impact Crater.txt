@@ -41,15 +41,22 @@ Extra - aabb: [-23.104336, -35.499622, -4.009928, 11.508916, 35.501053, 17.09382
   * Plasma Door to Phazon Core/Door to Crater Tunnel A
   * Extra - dock_index: 0
   * Extra - nonstandard: False
-  > Door to Crater Entry Point
+  > Front of Door to Crater Entry Point
       Trivial
 
-> Door to Crater Entry Point; Heals? False; Spawn Point; Default Node
+> Door to Crater Entry Point; Heals? False; Default Node
   * Layers: default
   * Plasma Door to Crater Entry Point/Door to Crater Tunnel A
   * Extra - dock_index: 1
   * Extra - nonstandard: False
+  > Front of Door to Crater Entry Point
+      Trivial
+
+> Front of Door to Crater Entry Point; Heals? False; Spawn Point
+  * Layers: default
   > Door to Phazon Core
+      Trivial
+  > Door to Crater Entry Point
       Trivial
 
 > Pickup (Items Every Room); Heals? False
@@ -67,7 +74,14 @@ Extra - aabb: [-60.524654, -183.18188, -2.189436, 81.86241, -33.338776, 99.45756
   * Plasma Door to Crater Missile Station/Door to Phazon Core
   * Extra - dock_index: 0
   * Extra - nonstandard: False
-  > Door to Crater Tunnel A
+  > Front of Door to Crater Missile Station
+      Trivial
+
+> Front of Door to Crater Missile Station; Heals? False
+  * Layers: default
+  > Door to Crater Missile Station
+      Trivial
+  > Front of Door to Crater Tunnel A
       Trivial
   > Door to Crater Tunnel B
       Any of the following:
@@ -81,25 +95,32 @@ Extra - aabb: [-60.524654, -183.18188, -2.189436, 81.86241, -33.338776, 99.45756
           # https://youtu.be/bbYIFF00zYM?t=24117
           Combat/Scan Dash (Expert) and Jump Off Enemies (Ludicrous) and Standable Terrain (Expert)
 
-> Door to Crater Tunnel A; Heals? False; Spawn Point; Default Node
+> Door to Crater Tunnel A; Heals? False; Default Node
   * Layers: default
   * Plasma Door to Crater Tunnel A/Door to Phazon Core
   * Extra - dock_index: 1
   * Extra - nonstandard: False
-  > Door to Crater Missile Station
+  > Front of Door to Crater Tunnel A
+      Trivial
+
+> Front of Door to Crater Tunnel A; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Crater Missile Station
       Any of the following:
           Space Jump Boots
           # https://youtu.be/TMe76OuirzQ
           Bomb Jump (Expert) and Complex Bomb Jump (Ludicrous) and Slope Jump (Advanced) and Standable Terrain (Expert) and Can Use Bombs
           # https://youtu.be/bbYIFF00zYM?t=24029
           Scan Visor and Combat/Scan Dash (Expert) and L-Jump (Expert) and Slope Jump (Expert) and Standable Terrain (Expert)
+  > Door to Crater Tunnel A
+      Trivial
 
 > Door to Crater Tunnel B; Heals? False
   * Layers: default
   * Plasma Door to Crater Tunnel B/Door to Phazon Core
   * Extra - dock_index: 2
   * Extra - nonstandard: False
-  > Door to Crater Missile Station
+  > Front of Door to Crater Missile Station
       Trivial
 
 > Pickup (Items Every Room); Heals? False
@@ -112,17 +133,24 @@ Crater Missile Station
 Extra - asset_id: 1296329791
 Extra - size_index: 0.1
 Extra - aabb: [-92.82292, -145.4459, 35.740475, -56.359234, -111.74536, 59.004593]
-> Door to Phazon Core; Heals? False; Spawn Point; Default Node
+> Door to Phazon Core; Heals? False; Default Node
   * Layers: default
   * Plasma Door to Phazon Core/Door to Crater Missile Station
   * Extra - dock_index: 0
   * Extra - nonstandard: False
+  > Front of Door to Phazon Core
+      Trivial
+
+> Front of Door to Phazon Core; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Phazon Core
+      Trivial
   > Missile Station
       Trivial
 
 > Missile Station; Heals? False
   * Layers: default
-  > Door to Phazon Core
+  > Front of Door to Phazon Core
       Trivial
 
 > Pickup (Items Every Room); Heals? False
@@ -140,7 +168,7 @@ Extra - aabb: [26.808683, -237.58188, 44.60038, 62.751793, -166.22278, 69.466774
   * Plasma Door to Phazon Infusion Chamber/Door to Crater Tunnel B
   * Extra - dock_index: 0
   * Extra - nonstandard: False
-  > Door to Phazon Core
+  > Front of Door to Phazon Core
       Any of the following:
           Space Jump Boots and Movement (Beginner) and Normal Damage ≥ 5
           All of the following:
@@ -149,11 +177,16 @@ Extra - aabb: [26.808683, -237.58188, 44.60038, 62.751793, -166.22278, 69.466774
                   Can Use Spider Ball
                   Bomb Jump (Beginner) and Movement (Beginner) and Normal Damage ≥ 40
 
-> Door to Phazon Core; Heals? False; Spawn Point; Default Node
+> Door to Phazon Core; Heals? False; Default Node
   * Layers: default
   * Plasma Door to Phazon Core/Door to Crater Tunnel B
   * Extra - dock_index: 1
   * Extra - nonstandard: False
+  > Front of Door to Phazon Core
+      Trivial
+
+> Front of Door to Phazon Core; Heals? False; Spawn Point
+  * Layers: default
   > Door to Phazon Infusion Chamber
       Any of the following:
           Space Jump Boots and Movement (Beginner) and Normal Damage ≥ 5
@@ -162,6 +195,8 @@ Extra - aabb: [26.808683, -237.58188, 44.60038, 62.751793, -166.22278, 69.466774
               Any of the following:
                   Can Use Spider Ball
                   Bomb Jump (Beginner) and Movement (Beginner) and Normal Damage ≥ 40
+  > Door to Phazon Core
+      Trivial
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
@@ -178,15 +213,22 @@ Extra - aabb: [6.539173, -337.83148, 44.879646, 79.305176, -237.58188, 116.43011
   * Open Passage to Subchamber One/Dock from Phazon Infusion Chamber
   * Extra - dock_index: 0
   * Extra - nonstandard: True
-  > Door to Crater Tunnel B
+  > Front of Door to Crater Tunnel B
       Trivial
 
-> Door to Crater Tunnel B; Heals? False; Spawn Point; Default Node
+> Door to Crater Tunnel B; Heals? False; Default Node
   * Layers: default
   * Plasma Door to Crater Tunnel B/Door to Phazon Infusion Chamber
   * Extra - dock_index: 1
   * Extra - nonstandard: False
+  > Front of Door to Crater Tunnel B
+      Trivial
+
+> Front of Door to Crater Tunnel B; Heals? False; Spawn Point
+  * Layers: default
   > Dock to Subchamber One
+      Trivial
+  > Door to Crater Tunnel B
       Trivial
 
 > Pickup (Items Every Room); Heals? False
