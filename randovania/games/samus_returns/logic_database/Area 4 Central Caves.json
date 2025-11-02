@@ -255,7 +255,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Transit Tunnel": {
+                        "Front of Door to Transit Tunnel": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -335,7 +335,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Transit Tunnel": {
+                        "Front of Door to Transit Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -572,6 +572,30 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Transit Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Transit Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6554.0028338646825,
+                        "y": -3815.603967410556,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Save Station": {
                             "type": "template",
                             "data": "Lay Any Bomb"
@@ -583,6 +607,13 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Transit Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Dock to Amethyst Altars": {
@@ -706,7 +737,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Transit Tunnel": {
+                        "Front of Door to Transit Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -731,7 +762,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 4 Central Caves Teleporter",
                     "connections": {
-                        "Door to Transit Tunnel": {
+                        "Front of Door to Transit Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -822,7 +853,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door from Amethyst Altars": {
+                        "Front of Door from Amethyst Altars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -861,7 +892,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door from Amethyst Altars": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door from Amethyst Altars": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3991.059602649007,
+                        "y": -3924.254966887417,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Pickup (Spazer Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door from Amethyst Altars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -954,7 +1016,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door from Amethyst Altars": {
+                        "Front of Door from Amethyst Altars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -980,7 +1042,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door from Amethyst Altars": {
+                        "Front of Door from Amethyst Altars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1044,7 +1106,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Tunnel to Caves Intersection Terminal": {
+                        "Front of Tunnel to Caves Intersection Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1102,7 +1164,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel to Caves Intersection Terminal": {
+                        "Front of Door from Caves Intersection Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door from Caves Intersection Terminal": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7437.277797141861,
+                        "y": 3450.548003562991,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door from Caves Intersection Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Tunnel to Caves Intersection Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1203,7 +1296,39 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Front of Tunnel to Caves Intersection Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Tunnel to Caves Intersection Terminal": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7425.272065373146,
+                        "y": 2817.245652763255,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Tunnel to Caves Intersection Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Hang Ledge": {
                     "node_type": "generic",
@@ -1284,7 +1409,7 @@
                                 ]
                             }
                         },
-                        "Door from Caves Intersection Terminal": {
+                        "Front of Door from Caves Intersection Terminal": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1396,6 +1521,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Caves Intersection Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Caves Intersection Terminal": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4189.464812473662,
+                        "y": 525.2212389380533,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Caves Intersection Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Gamma Arena Access South": {
                             "type": "and",
                             "data": {
@@ -1556,7 +1712,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Caves Intersection Terminal": {
+                        "Front of Door to Caves Intersection Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1601,7 +1757,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Caves Intersection Terminal": {
+                        "Front of Door to Caves Intersection Terminal": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1748,7 +1904,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea03"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 3 Factory Exterior",
@@ -1762,6 +1918,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Area 4 Chozo Seal Elevator West",
                     "connections": {
+                        "Front of Elevator to Area 3 Factory Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Elevator to Area 3 Factory Exterior": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11380.05,
+                        "y": -2515.57,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Elevator to Area 3 Factory Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Chozo Seal Top": {
                             "type": "or",
                             "data": {
@@ -1918,7 +2105,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea05"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 4 Crystal Mines",
@@ -1932,6 +2119,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Area 4 Chozo Seal Elevator East",
                     "connections": {
+                        "Front of Elevator to Area 4 Crystal Mines": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Elevator to Area 4 Crystal Mines": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17643.52,
+                        "y": -4615.99,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Elevator to Area 4 Crystal Mines": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Chozo Seal Bottom": {
                             "type": "and",
                             "data": {
@@ -2025,7 +2243,7 @@
                         }
                     },
                     "connections": {
-                        "Elevator to Area 3 Factory Exterior": {
+                        "Front of Elevator to Area 3 Factory Exterior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2259,7 +2477,7 @@
                                 ]
                             }
                         },
-                        "Door to Caves Intersection Terminal (Bottom)": {
+                        "Front of Door to Caves Intersection Terminal (Bottom)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2605,11 +2823,11 @@
                         }
                     },
                     "connections": {
-                        "Elevator to Area 3 Factory Exterior": {
+                        "Front of Elevator to Area 3 Factory Exterior": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Elevator to Area 4 Crystal Mines": {
+                        "Front of Elevator to Area 4 Crystal Mines": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2901,7 +3119,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Venomous Pond": {
+                        "Front of Tunnel to Venomous Pond": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -2937,7 +3155,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Caves Intersection Terminal (Bottom)": {
+                        "Front of Door to Caves Intersection Terminal (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2975,6 +3193,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Front of Door to Caves Intersection Terminal (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Caves Intersection Terminal (Bottom)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8148.06,
+                        "y": -2522.29,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Chozo Seal Top": {
                             "type": "and",
@@ -3115,6 +3357,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Door to Caves Intersection Terminal (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3220,9 +3469,40 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Tunnel to Venomous Pond": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Tunnel to Venomous Pond": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17232.60635433495,
+                        "y": -7290.73774905762,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Chozo Seal Bottom": {
                             "type": "template",
                             "data": "Lay Any Bomb"
+                        },
+                        "Tunnel to Venomous Pond": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Tunnel to Transport to Area 5": {
                             "type": "and",
@@ -3269,7 +3549,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel to Venomous Pond": {
+                        "Front of Tunnel to Venomous Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3353,7 +3633,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Right",
                     "connections": {
-                        "Elevator to Area 3 Factory Exterior": {
+                        "Front of Elevator to Area 3 Factory Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3492,7 +3772,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Tunnel to Alpha+ Arena Access": {
+                        "Front of Tunnel to Alpha+ Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3712,6 +3992,30 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Tunnel to Alpha+ Arena Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Tunnel to Alpha+ Arena Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4959.331672388823,
+                        "y": -4992.832619329748,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
@@ -3719,6 +4023,13 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Tunnel to Alpha+ Arena Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Start Point": {
@@ -3974,7 +4285,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Alpha+ Arena Access (Top)": {
+                        "Front of Door to Alpha+ Arena Access (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4013,7 +4324,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Alpha+ Arena Access (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Alpha+ Arena Access (Top)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6541.612875716666,
+                        "y": -5192.908778420646,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Door to Caves Intersection Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Alpha+ Arena Access (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4328,7 +4670,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha+ Arena Access (Top)": {
+                        "Front of Door to Alpha+ Arena Access (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4902,7 +5244,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Gamma Arena Access South": {
+                        "Front of Door to Gamma Arena Access South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4943,6 +5285,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Front of Door to Gamma Arena Access South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Gamma Arena Access South": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -820.8,
+                        "y": 2400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -5012,6 +5378,13 @@
                                 ]
                             }
                         },
+                        "Door to Gamma Arena Access South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Inside Arena": {
                             "type": "template",
                             "data": "Lay Any Bomb"
@@ -5067,7 +5440,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Gamma Arena Access South": {
+                        "Front of Door to Gamma Arena Access South": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -5175,7 +5548,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Lava Pond": {
+                        "Front of Door to Lava Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5244,6 +5617,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Front of Door to Lava Pond": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Lava Pond": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -822.5738396624465,
+                        "y": 696.162974683544,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Pickup (Aeion Tank)": {
                             "type": "and",
@@ -5336,6 +5733,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Lava Pond": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Outward Climb": {
@@ -5486,7 +5890,7 @@
                                 ]
                             }
                         },
-                        "Door to Gamma Arena": {
+                        "Front of Door to Gamma Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5541,7 +5945,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Gamma Arena": {
+                        "Front of Door to Gamma Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5584,7 +5988,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Lava Pond": {
+                        "Front of Door to Lava Pond": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5767,7 +6171,31 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Lava Pond": {
+                        "Front of Door to Gamma Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Gamma Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -800.0,
+                        "y": 2414.36,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Lava Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5797,6 +6225,13 @@
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
+                        "Door to Gamma Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Grapple Block": {
                             "type": "resource",
                             "data": {
@@ -5824,7 +6259,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 4 (Central Caves) - Gamma Arena Access South Grapple Block",
                     "connections": {
-                        "Door to Gamma Arena": {
+                        "Front of Door to Gamma Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6019,6 +6454,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Spazer Beam Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Spazer Beam Chamber": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3997.488962472406,
+                        "y": -3938.1392568064753,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Spazer Beam Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door from Spazer Beam Chamber": {
                             "type": "and",
                             "data": {
@@ -6065,7 +6531,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Spazer Beam Chamber": {
+                        "Front of Door to Spazer Beam Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6166,7 +6632,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Spazer Beam Chamber": {
+                        "Front of Door to Spazer Beam Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6458,6 +6924,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Gamma Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Gamma Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -819.9372435433261,
+                        "y": 3806.899187384343,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Gamma Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Outward Climb": {
                             "type": "or",
                             "data": {
@@ -6647,7 +7144,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Gamma Arena": {
+                        "Front of Door to Gamma Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6814,7 +7311,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Gamma Arena": {
+                        "Front of Door to Gamma Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6886,6 +7383,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Transit Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Transit Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6551.81314860734,
+                        "y": -5183.106361763818,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Transit Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door from Transit Tunnel": {
                             "type": "resource",
                             "data": {
@@ -6943,7 +7471,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Transit Tunnel": {
+                        "Front of Door to Transit Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6984,7 +7512,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Transit Tunnel": {
+                        "Front of Door to Transit Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -7022,7 +7550,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Transit Tunnel": {
+                        "Front of Door to Transit Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -7050,7 +7578,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Transit Tunnel": {
+                        "Front of Door to Transit Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7547,7 +8075,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea06"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 Tower Lobby",
@@ -7561,6 +8089,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Central Caves Elevator South",
                     "connections": {
+                        "Front of Elevator to Area 5 Tower Lobby": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Elevator to Area 5 Tower Lobby": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13395.48,
+                        "y": -8466.6,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Elevator to Area 5 Tower Lobby": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Venomous Pond": {
                             "type": "and",
                             "data": {
@@ -7667,7 +8226,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Elevator to Area 5 Tower Lobby": {
+                        "Front of Elevator to Area 5 Tower Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7785,7 +8344,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 5 Tower Lobby": {
+                        "Front of Elevator to Area 5 Tower Lobby": {
                             "type": "or",
                             "data": {
                                 "comment": null,

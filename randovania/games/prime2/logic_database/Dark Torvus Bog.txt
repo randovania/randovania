@@ -5,7 +5,7 @@ Extra - asset_id: 2921206585
   * Layers: default
   * Dark Door to Venomous Pond/Door to Portal Chamber (Dark)
   * Extra - dock_name: West
-  > Door to Poisoned Bog
+  > Front of Door to Poisoned Bog
       All of the following:
           Morph Ball
           Any of the following:
@@ -16,13 +16,18 @@ Extra - asset_id: 2921206585
   * Layers: default
   * Light Portal to Portal Chamber (Light)/Portal to Portal Chamber (Dark)
   * Extra - dock_name: VirtualNorth
-  > Door to Poisoned Bog
+  > Front of Door to Poisoned Bog
       Morph Ball and Dark World Damage ≥ 25
 
-> Door to Poisoned Bog; Heals? True; Spawn Point; Default Node
+> Door to Poisoned Bog; Heals? True; Default Node
   * Layers: default
   * Normal Door to Poisoned Bog/Door to Portal Chamber (Dark)
   * Extra - dock_name: East
+  > Front of Door to Poisoned Bog
+      Trivial
+
+> Front of Door to Poisoned Bog; Heals? False; Spawn Point
+  * Layers: default
   > Door to Venomous Pond
       All of the following:
           Morph Ball and Dark World Damage ≥ 30
@@ -41,22 +46,31 @@ Extra - asset_id: 2921206585
                   # https://www.youtube.com/watch?v=pEQt9C4c-EQ
                   Screw Attack
                   Movement (Expert) or Slope Jump (Intermediate)
+  > Door to Poisoned Bog
+      Trivial
 
 ----------------
 Cache A
 Extra - asset_id: 212528838
-> Door to Poisoned Bog; Heals? False; Spawn Point; Default Node
+> Door to Poisoned Bog; Heals? False; Default Node
   * Layers: default
   * Normal Door to Poisoned Bog/Door to Cache A
   * Extra - dock_name: North
+  > Front of Door to Poisoned Bog
+      Trivial
+
+> Front of Door to Poisoned Bog; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Dark Ammo)
       Dark World Damage ≥ 6
+  > Door to Poisoned Bog
+      Trivial
 
 > Pickup (Dark Ammo); Heals? True
   * Layers: default
   * Pickup 65; Category? Minor; Index Group: Torvus Bog
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'BeamAmmoExpansion', 'connections': (), 'removals': (655379, 655407), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 655419, 'hud_memo': 655413, 'streamed_audio': 655418, 'sound': 655420, 'audio_fade': 655410})})
-  > Door to Poisoned Bog
+  > Front of Door to Poisoned Bog
       Dark World Damage ≥ 4
 
 ----------------
@@ -66,7 +80,20 @@ Extra - asset_id: 39024685
   * Layers: default
   * Super Missile Blast Shield to Brooding Ground/Door to Dark Forgotten Bridge
   * Extra - dock_name: South
-  > Door to Putrid Alcove
+  > Front of Door to Brooding Ground
+      Trivial
+
+> Front of Door to Brooding Ground; Heals? False
+  * Layers: default
+  > Bridge Center
+      All of the following:
+          After Dark Forgotten Bridge Rotated
+          Any of the following:
+              Dark World Damage ≥ 20
+              Dark World Damage ≥ 10 and Activate Safe Zone
+  > Door to Brooding Ground
+      Trivial
+  > Front of Door to Putrid Alcove
       Any of the following:
           Dark World Damage ≥ 50
           All of the following:
@@ -74,25 +101,16 @@ Extra - asset_id: 39024685
               Any of the following:
                   Dark World Damage ≥ 35
                   Before Grapple Guardian and Dark World Damage ≥ 10
-  > Bridge Center
-      All of the following:
-          After Dark Forgotten Bridge Rotated
-          Any of the following:
-              Dark World Damage ≥ 20
-              Dark World Damage ≥ 10 and Activate Safe Zone
 
 > Door to Dark Falls; Heals? False
   * Layers: default
   * Normal Door to Dark Falls/Door to Dark Forgotten Bridge
   * Extra - dock_name: West
-  > Door to Dark Arena Tunnel
-      All of the following:
-          Normal Damage ≥ 10
-          Any of the following:
-              Dark World Damage ≥ 40
-              Morph Ball and Dark World Damage ≥ 25
-  > Portal to Forgotten Bridge
-      After Forgotten Bridge Gate and Dark World Damage ≥ 35
+  > Front of Door to Dark Falls
+      Trivial
+
+> Front of Door to Dark Falls; Heals? False
+  * Layers: default
   > Bridge Center
       All of the following:
           After Forgotten Bridge Gate
@@ -110,21 +128,26 @@ Extra - asset_id: 39024685
                       Dark World Damage ≥ 95
                       Before Grapple Guardian and Dark World Damage ≥ 75
               Scan Visor and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 35
+  > Door to Dark Falls
+      Trivial
+  > Front of Door to Dark Arena Tunnel
+      All of the following:
+          Normal Damage ≥ 10
+          Any of the following:
+              Dark World Damage ≥ 40
+              Morph Ball and Dark World Damage ≥ 25
+  > Front of Portal to Forgotten Bridge
+      After Forgotten Bridge Gate and Dark World Damage ≥ 35
 
-> Door to Putrid Alcove; Heals? False; Spawn Point; Default Node
+> Door to Putrid Alcove; Heals? False; Default Node
   * Layers: default
   * Power Bomb Blast Shield to Putrid Alcove/Door to Dark Forgotten Bridge
   * Extra - dock_name: East
-  > Portal to Forgotten Bridge
-      All of the following:
-          Any of the following:
-              Dark World Damage ≥ 20
-              Before Grapple Guardian and Activate Safe Zone
-          Any of the following:
-              Space Jump Boots and Dark World Damage ≥ 55
-              # Double Bomb Jump
-              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 70
-              Movement (Intermediate) and Dark World Damage ≥ 50 and Use Screw Attack (No Space Jump)
+  > Front of Door to Putrid Alcove
+      Trivial
+
+> Front of Door to Putrid Alcove; Heals? False; Spawn Point
+  * Layers: default
   > Bridge Center
       Any of the following:
           All of the following:
@@ -141,29 +164,55 @@ Extra - asset_id: 39024685
                   # Double Bomb Jump
                   Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 30 and Poison Water Damage ≥ 20
               Dark World Damage ≥ 60 or Activate Safe Zone
+  > Door to Putrid Alcove
+      Trivial
+  > Front of Portal to Forgotten Bridge
+      All of the following:
+          Any of the following:
+              Dark World Damage ≥ 20
+              Before Grapple Guardian and Activate Safe Zone
+          Any of the following:
+              Space Jump Boots and Dark World Damage ≥ 55
+              # Double Bomb Jump
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 70
+              Movement (Intermediate) and Dark World Damage ≥ 50 and Use Screw Attack (No Space Jump)
 
 > Door to Dark Arena Tunnel; Heals? False
   * Layers: default
   * Light Door to Dark Arena Tunnel/Door to Dark Forgotten Bridge
   * Extra - dock_name: North
-  > Door to Dark Falls
-      All of the following:
-          Normal Damage ≥ 10
-          Any of the following:
-              Dark World Damage ≥ 75
-              Morph Ball and Dark World Damage ≥ 55
+  > Front of Door to Dark Arena Tunnel
+      Trivial
+
+> Front of Door to Dark Arena Tunnel; Heals? False
+  * Layers: default
   > Bridge Center
       All of the following:
           Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Advanced)
           Any of the following:
               Dark World Damage ≥ 99
               Before Grapple Guardian and Dark World Damage ≥ 79
+  > Front of Door to Dark Falls
+      All of the following:
+          Normal Damage ≥ 10
+          Any of the following:
+              Dark World Damage ≥ 75
+              Morph Ball and Dark World Damage ≥ 55
+  > Door to Dark Arena Tunnel
+      Trivial
 
 > Portal to Forgotten Bridge; Heals? True
   * Layers: default
   * Light Portal to Forgotten Bridge/Portal to Dark Forgotten Bridge
   * Extra - dock_name: VirtualNorth
-  > Door to Dark Falls
+  > Front of Portal to Forgotten Bridge
+      Trivial
+
+> Front of Portal to Forgotten Bridge; Heals? False
+  * Layers: default
+  > Bridge Center
+      Before Dark Forgotten Bridge Rotated and Dark World Damage ≥ 20
+  > Front of Door to Dark Falls
       All of the following:
           After Forgotten Bridge Gate
           Any of the following:
@@ -173,12 +222,12 @@ Extra - asset_id: 39024685
                   Any of the following:
                       Bomb Jump (Beginner) and Dark World Damage ≥ 55 and Use Screw Attack (No Space Jump)
                       Before Dark Forgotten Bridge Rotated and Bomb Jump (Intermediate) and Dark World Damage ≥ 70
-  > Door to Putrid Alcove
+  > Front of Door to Putrid Alcove
       Any of the following:
           Dark World Damage ≥ 70
           Before Grapple Guardian and Dark World Damage ≥ 30 and Activate Safe Zone
-  > Bridge Center
-      Before Dark Forgotten Bridge Rotated and Dark World Damage ≥ 20
+  > Portal to Forgotten Bridge
+      Trivial
 
 > Event - Dark Forgotten Bridge Rotated; Heals? True
   * Layers: default
@@ -188,7 +237,16 @@ Extra - asset_id: 39024685
 
 > Bridge Center; Heals? True
   * Layers: default
-  > Door to Brooding Ground
+  > Event - Dark Forgotten Bridge Rotated
+      All of the following:
+          Any of the following:
+              Dark World Damage ≥ 45
+              Before Grapple Guardian and Dark World Damage ≥ 25
+          Any of the following:
+              Morph Ball Bomb and Morph Ball
+              # https://www.youtube.com/watch?v=TMTKSnUB-zE
+              Bomb Slot without Bombs (Advanced) and Standable Terrain (Beginner) and Activate Bomb Slot without Bombs (No Space Jump)
+  > Front of Door to Brooding Ground
       All of the following:
           Dark World Damage ≥ 15 or Activate Safe Zone
           Any of the following:
@@ -203,17 +261,17 @@ Extra - asset_id: 39024685
                       Scan Visor and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 5
                       # Same as Light World -> https://www.youtube.com/watch?v=Uv9du120y68
                       Morph Ball and Before Dark Forgotten Bridge Rotated and Roll Jump (Intermediate) and Dark World Damage ≥ 5
-  > Door to Putrid Alcove
+  > Front of Door to Putrid Alcove
       Any of the following:
           Dark World Damage ≥ 60
           Before Grapple Guardian and Dark World Damage ≥ 25 and Activate Safe Zone
-  > Door to Dark Arena Tunnel
+  > Front of Door to Dark Arena Tunnel
       All of the following:
           Space Jump Boots
           Any of the following:
               Morph Ball Bomb and Morph Ball and Bomb Space Jump (Expert) and Dark World Damage ≥ 75
               Movement (Ludicrous) and Standable Terrain (Advanced) and Dark World Damage ≥ 70
-  > Portal to Forgotten Bridge
+  > Front of Portal to Forgotten Bridge
       Any of the following:
           All of the following:
               Before Dark Forgotten Bridge Rotated
@@ -226,15 +284,6 @@ Extra - asset_id: 39024685
                   Dark World Damage ≥ 30
                   Scan Visor and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 10
                   Morph Ball and Roll Jump (Intermediate) and Dark World Damage ≥ 15
-  > Event - Dark Forgotten Bridge Rotated
-      All of the following:
-          Any of the following:
-              Dark World Damage ≥ 45
-              Before Grapple Guardian and Dark World Damage ≥ 25
-          Any of the following:
-              Morph Ball Bomb and Morph Ball
-              # https://www.youtube.com/watch?v=TMTKSnUB-zE
-              Bomb Slot without Bombs (Advanced) and Standable Terrain (Beginner) and Activate Bomb Slot without Bombs (No Space Jump)
 
 ----------------
 Poisoned Bog
@@ -244,12 +293,19 @@ Hint Features - Flying Ing Cache, Underwater
   * Layers: default
   * Power Bomb Blast Shield to Putrid Alcove/Door to Poisoned Bog
   * Extra - dock_name: NorthUpper
+  > Front of Door to Putrid Alcove
+      Trivial
+
+> Front of Door to Putrid Alcove; Heals? False
+  * Layers: default
   > Central Safe Zone (Beacon)
       Dark World Damage ≥ 20
   > Under Poison Water
       Light Suit
+  > Door to Putrid Alcove
+      Trivial
 
-> Door to Cache A; Heals? True; Spawn Point; Default Node
+> Door to Cache A; Heals? True; Default Node
   * Layers: default
   * Seeker Launcher Blast Shield to Cache A/Door to Poisoned Bog
   * https://youtu.be/Myr8MRM5ZDc&t=182
@@ -259,17 +315,29 @@ Hint Features - Flying Ing Cache, Underwater
         Destroy Seeker Locks
         Missile and Seeker Locks without Seeker Missiles (Advanced) and Use Screw Attack (Space Jump)
 
+  > Front of Door to Cache A
+      Trivial
+
+> Front of Door to Cache A; Heals? False; Spawn Point
+  * Layers: default
   > Central Safe Zone (Beacon)
       Any of the following:
           Dark World Damage ≥ 20
           Dark World Damage ≥ 5 and Activate Safe Zone
   > Under Poison Water
       Light Suit
+  > Door to Cache A
+      Trivial
 
 > Door to Portal Chamber (Dark); Heals? False
   * Layers: default
   * Normal Door to Portal Chamber (Dark)/Door to Poisoned Bog
   * Extra - dock_name: West
+  > Front of Door to Portal Chamber (Dark)
+      Trivial
+
+> Front of Door to Portal Chamber (Dark); Heals? False
+  * Layers: default
   > Central Safe Zone (Beacon)
       All of the following:
           Dark World Damage ≥ 15 or Activate Safe Zone
@@ -286,6 +354,8 @@ Hint Features - Flying Ing Cache, Underwater
                               Morph Ball Bomb and No Light Suit and Bomb Jump (Beginner) and Poison Water Damage ≥ 20 and Enabled Allow Jumping on Dark Water
   > Under Poison Water
       Light Suit
+  > Door to Portal Chamber (Dark)
+      Trivial
 
 > Pickup (Sky Temple Key 3); Heals? False
   * Layers: default
@@ -296,7 +366,7 @@ Hint Features - Flying Ing Cache, Underwater
 
 > Central Safe Zone (Beacon); Heals? True
   * Layers: default
-  > Door to Putrid Alcove
+  > Front of Door to Putrid Alcove
       Any of the following:
           All of the following:
               Dark World Damage ≥ 35
@@ -308,13 +378,13 @@ Hint Features - Flying Ing Cache, Underwater
               Any of the following:
                   Movement (Intermediate) and Dark World Damage ≥ 70
                   No Light Suit and Dark World Damage ≥ 50 and Poison Water Damage ≥ 25 and Enabled Allow Jumping on Dark Water
-  > Door to Cache A
+  > Front of Door to Cache A
       All of the following:
           Dark World Damage ≥ 35 or Activate Safe Zone
           Any of the following:
               Space Jump Boots and Dark World Damage ≥ 5
               Standable Terrain (Intermediate) and Dark World Damage ≥ 15
-  > Door to Portal Chamber (Dark)
+  > Front of Door to Portal Chamber (Dark)
       Any of the following:
           Space Jump Boots and Dark World Damage ≥ 45
           All of the following:
@@ -337,12 +407,11 @@ Hint Features - Grapple Point
   * Layers: default
   * Missile Blast Shield to Save Station 1/Door to Venomous Pond; Dock Lock Rando incompatible with: Missile Blast Shield, Super Missile Blast Shield, Seeker Launcher Blast Shield (patched), Power Bomb Blast Shield, Darkburst Blast Shield, Sunburst Blast Shield, Sonic Boom Blast Shield, Bomb Blast Shield, Boost Ball Blast Shield, Screw Attack Blast Shield, Dark Visor Blast Shield, Echo Visor Blast Shield
   * Extra - dock_name: Docks_SouthUpper1
-  > Door to Brooding Ground
-      Dark World Damage ≥ 25 and Use Screw Attack (Space Jump)
-  > Door to Dark Torvus Temple Access
-      Any of the following:
-          Dark World Damage ≥ 45
-          Dark World Damage ≥ 35 and Activate Safe Zone
+  > Front of Door to Save Station 1
+      Trivial
+
+> Front of Door to Save Station 1; Heals? False
+  * Layers: default
   > Pickup (Dark Torvus Key 3)
       All of the following:
           Space Jump Boots and Dark World Damage ≥ 30
@@ -357,21 +426,24 @@ Hint Features - Grapple Point
           Any of the following:
               Movement (Advanced)
               Space Jump Boots and Movement (Intermediate)
+  > Door to Save Station 1
+      Trivial
+  > Front of Door to Brooding Ground
+      Dark World Damage ≥ 25 and Use Screw Attack (Space Jump)
+  > Front of Door to Dark Torvus Temple Access
+      Any of the following:
+          Dark World Damage ≥ 45
+          Dark World Damage ≥ 35 and Activate Safe Zone
 
-> Door to Brooding Ground; Heals? True; Spawn Point; Default Node
+> Door to Brooding Ground; Heals? True; Default Node
   * Layers: default
   * Normal Door to Brooding Ground/Door to Venomous Pond; Dock Lock Rando incompatible with: Missile Blast Shield, Super Missile Blast Shield, Seeker Launcher Blast Shield (patched), Power Bomb Blast Shield, Darkburst Blast Shield, Sunburst Blast Shield, Sonic Boom Blast Shield, Bomb Blast Shield, Boost Ball Blast Shield, Screw Attack Blast Shield, Dark Visor Blast Shield, Echo Visor Blast Shield
   * Extra - dock_name: North
-  > Door to Save Station 1
-      Grapple Beam and Movement (Beginner) and Dark World Damage ≥ 50
-  > Door to Dark Torvus Temple Access
-      Any of the following:
-          Dark World Damage ≥ 25
-          Dark World Damage ≥ 15 and Activate Safe Zone
-  > Door to Portal Chamber (Dark)
-      Any of the following:
-          Dark World Damage ≥ 40
-          Dark World Damage ≥ 5 and Activate Safe Zone
+  > Front of Door to Brooding Ground
+      Trivial
+
+> Front of Door to Brooding Ground; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Dark Torvus Key 3)
       Any of the following:
           # https://www.youtube.com/watch?v=FN6HWNKMJKs
@@ -380,24 +452,28 @@ Hint Features - Grapple Point
           Dark World Damage ≥ 10 and Use Screw Attack (Space Jump)
   > Grapple Ledge Safe Zone
       Morph Ball and Dark World Damage ≥ 20
+  > Front of Door to Save Station 1
+      Grapple Beam and Movement (Beginner) and Dark World Damage ≥ 50
+  > Door to Brooding Ground
+      Trivial
+  > Front of Door to Dark Torvus Temple Access
+      Any of the following:
+          Dark World Damage ≥ 25
+          Dark World Damage ≥ 15 and Activate Safe Zone
+  > Front of Door to Portal Chamber (Dark)
+      Any of the following:
+          Dark World Damage ≥ 40
+          Dark World Damage ≥ 5 and Activate Safe Zone
 
 > Door to Dark Torvus Temple Access; Heals? True
   * Layers: default
   * Light Door to Dark Torvus Temple Access/Door to Venomous Pond; Dock Lock Rando incompatible with: Missile Blast Shield, Super Missile Blast Shield, Seeker Launcher Blast Shield (patched), Power Bomb Blast Shield, Darkburst Blast Shield, Sunburst Blast Shield, Sonic Boom Blast Shield, Bomb Blast Shield, Boost Ball Blast Shield, Screw Attack Blast Shield, Dark Visor Blast Shield, Echo Visor Blast Shield
   * Extra - dock_name: WestLower
-  > Door to Save Station 1
-      All of the following:
-          Dark World Damage ≥ 15 or Activate Safe Zone
-          Any of the following:
-              Space Jump Boots and Dark World Damage ≥ 35
-              Grapple Beam and Movement (Beginner) and Dark World Damage ≥ 50 and Shoot Light Beam
-              All of the following:
-                  Morph Ball
-                  Any of the following:
-                      Morph Ball Bomb and Bomb Space Jump (Advanced) and Dark World Damage ≥ 64 and Poison Water Damage ≥ 35
-                      Boost Ball and Boost Jump (Expert) and Dark World Damage ≥ 50
-  > Door to Brooding Ground
-      Space Jump Boots and Dark World Damage ≥ 15 and Shoot Light Beam
+  > Front of Door to Dark Torvus Temple Access
+      Trivial
+
+> Front of Door to Dark Torvus Temple Access; Heals? False
+  * Layers: default
   > Grapple Ledge Safe Zone
       All of the following:
           Grapple Beam and Movement (Beginner)
@@ -409,23 +485,49 @@ Hint Features - Grapple Point
       Any of the following:
           Dark World Damage ≥ 30
           Dark World Damage ≥ 15 and Activate Safe Zone
+  > Front of Door to Save Station 1
+      All of the following:
+          Dark World Damage ≥ 15 or Activate Safe Zone
+          Any of the following:
+              Space Jump Boots and Dark World Damage ≥ 35
+              Grapple Beam and Movement (Beginner) and Dark World Damage ≥ 50 and Shoot Light Beam
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Morph Ball Bomb and Bomb Space Jump (Advanced) and Dark World Damage ≥ 64 and Poison Water Damage ≥ 35
+                      Boost Ball and Boost Jump (Expert) and Dark World Damage ≥ 50
+  > Front of Door to Brooding Ground
+      Space Jump Boots and Dark World Damage ≥ 15 and Shoot Light Beam
+  > Door to Dark Torvus Temple Access
+      Trivial
 
 > Door to Portal Chamber (Dark); Heals? True
   * Layers: default
   * Dark Door to Portal Chamber (Dark)/Door to Venomous Pond; Dock Lock Rando incompatible with: Missile Blast Shield, Super Missile Blast Shield, Seeker Launcher Blast Shield (patched), Power Bomb Blast Shield, Darkburst Blast Shield, Sunburst Blast Shield, Sonic Boom Blast Shield, Bomb Blast Shield, Boost Ball Blast Shield, Screw Attack Blast Shield, Dark Visor Blast Shield, Echo Visor Blast Shield
   * Extra - dock_name: EastC
+  > Front of Door to Portal Chamber (Dark)
+      Trivial
+
+> Front of Door to Portal Chamber (Dark); Heals? False
+  * Layers: default
   > Next to Liftvine
       Any of the following:
           Dark World Damage ≥ 20
           Dark World Damage ≥ 10 and Activate Safe Zone
+  > Door to Portal Chamber (Dark)
+      Trivial
 
 > Pickup (Dark Torvus Key 3); Heals? False
   * Layers: default
   * Pickup 69; Category? Major; Index Group: Torvus Bog
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'DarkTempleKey', 'connections': (), 'removals': (1048626, 1048621), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.6, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 1049014, 'hud_memo': 1049018, 'streamed_audio': 1049022, 'sound': 1049012, 'audio_fade': 1049021})})
-  > Door to Save Station 1
+  > Grapple Ledge Safe Zone
+      Grapple Beam and Dark World Damage ≥ 30
+  > Next to Liftvine
+      Dark World Damage ≥ 35
+  > Front of Door to Save Station 1
       Dark World Damage ≥ 50
-  > Door to Brooding Ground
+  > Front of Door to Brooding Ground
       Any of the following:
           Space Jump Boots and Movement (Beginner) and Dark World Damage ≥ 35
           All of the following:
@@ -434,18 +536,19 @@ Hint Features - Grapple Point
                   Screw Attack and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 30
                   Combat/Scan Dash (Advanced) and Dark World Damage ≥ 45
           Boost Ball and Morph Ball and Boost Jump (Advanced) and Dark World Damage ≥ 50
-  > Door to Dark Torvus Temple Access
+  > Front of Door to Dark Torvus Temple Access
       Any of the following:
           Dark World Damage ≥ 25
           Dark World Damage ≥ 15 and Activate Safe Zone
-  > Grapple Ledge Safe Zone
-      Grapple Beam and Dark World Damage ≥ 30
-  > Next to Liftvine
-      Dark World Damage ≥ 35
 
 > Grapple Ledge Safe Zone; Heals? True
   * Layers: default
-  > Door to Save Station 1
+  > Pickup (Dark Torvus Key 3)
+      Any of the following:
+          Grapple Beam and Dark World Damage ≥ 15
+          Morph Ball and Space Jump Boots and Roll Jump (Intermediate) and Dark World Damage ≥ 20
+          Scan Visor and Extended Dash (Expert) and Dark World Damage ≥ 35
+  > Front of Door to Save Station 1
       Any of the following:
           Grapple Beam and Movement (Beginner) and Dark World Damage ≥ 55
           All of the following:
@@ -454,31 +557,26 @@ Hint Features - Grapple Point
                   Space Jump Boots
                   Morph Ball and Roll Jump (Intermediate)
                   Scan Visor and Combat/Scan Dash (Intermediate)
-  > Door to Brooding Ground
+  > Front of Door to Brooding Ground
       Any of the following:
           Space Jump Boots and Dark World Damage ≥ 20
           Morph Ball and Dark World Damage ≥ 15
           Scan Visor and Combat/Scan Dash (Advanced) and Dark World Damage ≥ 30
-  > Door to Dark Torvus Temple Access
+  > Front of Door to Dark Torvus Temple Access
       Any of the following:
           Dark World Damage ≥ 30
           Dark World Damage ≥ 20 and Activate Safe Zone
           Dark World Damage ≥ 10 and Shoot Light Beam
-  > Door to Portal Chamber (Dark)
+  > Front of Door to Portal Chamber (Dark)
       All of the following:
           Movement (Beginner) or Dark World Damage ≥ 15
           Any of the following:
               Dark World Damage ≥ 25
               Dark World Damage ≥ 10 and Activate Safe Zone
-  > Pickup (Dark Torvus Key 3)
-      Any of the following:
-          Grapple Beam and Dark World Damage ≥ 15
-          Morph Ball and Space Jump Boots and Roll Jump (Intermediate) and Dark World Damage ≥ 20
-          Scan Visor and Extended Dash (Expert) and Dark World Damage ≥ 35
 
 > Next to Liftvine; Heals? False
   * Layers: default
-  > Door to Brooding Ground
+  > Front of Door to Brooding Ground
       Any of the following:
           Movement (Beginner) and Dark World Damage ≥ 20 and Use Screw Attack (Space Jump)
           All of the following:
@@ -489,11 +587,11 @@ Hint Features - Grapple Point
               Any of the following:
                   Space Jump Boots and Bomb Space Jump (Intermediate) and Dark World Damage ≥ 35
                   Bomb Space Jump (Expert) and Dark World Damage ≥ 55
-  > Door to Dark Torvus Temple Access
+  > Front of Door to Dark Torvus Temple Access
       Any of the following:
           Dark World Damage ≥ 35
           Dark World Damage ≥ 25 and Activate Safe Zone
-  > Door to Portal Chamber (Dark)
+  > Front of Door to Portal Chamber (Dark)
       Any of the following:
           Dark World Damage ≥ 45
           Dark World Damage ≥ 10 and Activate Safe Zone
@@ -501,10 +599,15 @@ Hint Features - Grapple Point
 ----------------
 Dark Arena Tunnel
 Extra - asset_id: 957217977
-> Door to Dark Forgotten Bridge; Heals? False; Spawn Point; Default Node
+> Door to Dark Forgotten Bridge; Heals? False; Default Node
   * Layers: default
   * Light Door to Dark Forgotten Bridge/Door to Dark Arena Tunnel
   * Extra - dock_name: South
+  > Front of Door to Dark Forgotten Bridge
+      Trivial
+
+> Front of Door to Dark Forgotten Bridge; Heals? False; Spawn Point
+  * Layers: default
   > Door to Dark Torvus Arena
       All of the following:
           Morph Ball
@@ -517,12 +620,14 @@ Extra - asset_id: 957217977
                   Any of the following:
                       Dark World Damage ≥ 275 and Use Screw Attack (Space Jump)
                       Dark World Damage ≥ 350 and Use Screw Attack (No Space Jump)
+  > Door to Dark Forgotten Bridge
+      Trivial
 
 > Door to Dark Torvus Arena; Heals? False
   * Layers: default
   * Normal Door to Dark Torvus Arena/Door to Dark Arena Tunnel
   * Extra - dock_name: North
-  > Door to Dark Forgotten Bridge
+  > Front of Door to Dark Forgotten Bridge
       All of the following:
           Morph Ball
           Any of the following:
@@ -539,14 +644,15 @@ Extra - asset_id: 957217977
 ----------------
 Putrid Alcove
 Extra - asset_id: 3418828153
-> Door to Poisoned Bog; Heals? False; Spawn Point; Default Node
+> Door to Poisoned Bog; Heals? False; Default Node
   * Layers: default
   * Power Bomb Blast Shield to Poisoned Bog/Door to Putrid Alcove
   * Extra - dock_name: South
-  > Door to Dark Forgotten Bridge
-      Any of the following:
-          Dark World Damage ≥ 65
-          Dark World Damage ≥ 40 and Enabled Refill with Drops
+  > Front of Door to Poisoned Bog
+      Trivial
+
+> Front of Door to Poisoned Bog; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Power Bomb)
       All of the following:
           Morph Ball and Power Bomb
@@ -555,15 +661,22 @@ Extra - asset_id: 3418828153
               Space Jump Boots and Dark World Damage ≥ 55 and Poison Water Damage ≥ 15
               Morph Ball Bomb and Dark World Damage ≥ 70 and Poison Water Damage ≥ 50
               Movement (Expert) and Slope Jump (Expert) and Dark World Damage ≥ 43 and Poison Water Damage ≥ 7 and Enabled Refill with Drops
+  > Door to Poisoned Bog
+      Trivial
+  > Front of Door to Dark Forgotten Bridge
+      Any of the following:
+          Dark World Damage ≥ 65
+          Dark World Damage ≥ 40 and Enabled Refill with Drops
 
 > Door to Dark Forgotten Bridge; Heals? False
   * Layers: default
   * Power Bomb Blast Shield to Dark Forgotten Bridge/Door to Putrid Alcove
   * Extra - dock_name: West
-  > Door to Poisoned Bog
-      Any of the following:
-          Dark World Damage ≥ 65
-          Dark World Damage ≥ 35 and Enabled Refill with Drops
+  > Front of Door to Dark Forgotten Bridge
+      Trivial
+
+> Front of Door to Dark Forgotten Bridge; Heals? False
+  * Layers: default
   > Pickup (Power Bomb)
       All of the following:
           Morph Ball and Power Bomb
@@ -572,12 +685,18 @@ Extra - asset_id: 3418828153
               Space Jump Boots and Dark World Damage ≥ 55 and Poison Water Damage ≥ 15
               Morph Ball Bomb and Dark World Damage ≥ 70 and Poison Water Damage ≥ 50
               Movement (Expert) and Slope Jump (Expert) and Dark World Damage ≥ 43 and Poison Water Damage ≥ 7 and Enabled Refill with Drops
+  > Front of Door to Poisoned Bog
+      Any of the following:
+          Dark World Damage ≥ 65
+          Dark World Damage ≥ 35 and Enabled Refill with Drops
+  > Door to Dark Forgotten Bridge
+      Trivial
 
 > Pickup (Power Bomb); Heals? False
   * Layers: default
   * Pickup 72; Category? Minor; Index Group: Torvus Bog
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'PowerBombExpansion', 'connections': (), 'removals': (1376429,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 1376439, 'hud_memo': 1376437, 'streamed_audio': 1376435, 'sound': 1376438, 'audio_fade': 1376436})})
-  > Door to Poisoned Bog
+  > Front of Door to Poisoned Bog
       All of the following:
           Morph Ball and Power Bomb
           Any of the following:
@@ -586,7 +705,7 @@ Extra - asset_id: 3418828153
                   Gravity Boost or Space Jump Boots
               Morph Ball Bomb and Dark World Damage ≥ 60
               Movement (Expert) and Slope Jump (Expert) and Dark World Damage ≥ 45 and Enabled Refill with Drops
-  > Door to Dark Forgotten Bridge
+  > Front of Door to Dark Forgotten Bridge
       All of the following:
           Morph Ball and Power Bomb
           Any of the following:
@@ -599,10 +718,15 @@ Extra - asset_id: 3418828153
 ----------------
 Brooding Ground
 Extra - asset_id: 3706669497
-> Door to Dark Forgotten Bridge; Heals? False; Spawn Point; Default Node
+> Door to Dark Forgotten Bridge; Heals? False; Default Node
   * Layers: default
   * Super Missile Blast Shield to Dark Forgotten Bridge/Door to Brooding Ground
   * Extra - dock_name: North
+  > Front of Door to Dark Forgotten Bridge
+      Trivial
+
+> Front of Door to Dark Forgotten Bridge; Heals? False; Spawn Point
+  * Layers: default
   > Door to Venomous Pond
       All of the following:
           Morph Ball
@@ -617,12 +741,14 @@ Extra - asset_id: 3706669497
                   Any of the following:
                       Screw Attack and Dark World Damage ≥ 50
                       Morph Ball Bomb and Bomb Space Jump (Advanced) and Dark World Damage ≥ 100
+  > Door to Dark Forgotten Bridge
+      Trivial
 
 > Door to Venomous Pond; Heals? False
   * Layers: default
   * Normal Door to Venomous Pond/Door to Brooding Ground
   * Extra - dock_name: South
-  > Door to Dark Forgotten Bridge
+  > Front of Door to Dark Forgotten Bridge
       All of the following:
           Morph Ball
           Any of the following:
@@ -683,10 +809,15 @@ Extra - asset_id: 774215801
 ----------------
 Dark Torvus Temple Access
 Extra - asset_id: 3851937017
-> Door to Venomous Pond; Heals? True; Spawn Point; Default Node
+> Door to Venomous Pond; Heals? True; Default Node
   * Layers: default
   * Light Door to Venomous Pond/Door to Dark Torvus Temple Access
   * Extra - dock_name: Eastbottom
+  > Front of Door to Venomous Pond
+      Trivial
+
+> Front of Door to Venomous Pond; Heals? False; Spawn Point
+  * Layers: default
   > Door to Dark Torvus Temple
       All of the following:
           Morph Ball
@@ -694,12 +825,14 @@ Extra - asset_id: 3851937017
               Morph Ball Bomb and Dark World Damage ≥ 5
               # Same as Light World -> https://www.youtube.com/watch?v=SOcGkOu7xlE
               Boost Ball and Wall Boost (Expert) and Dark World Damage ≥ 2
+  > Door to Venomous Pond
+      Trivial
 
 > Door to Dark Torvus Temple; Heals? True
   * Layers: default
   * Light Door to Dark Torvus Temple/Door to Dark Torvus Temple Access
   * Extra - dock_name: West
-  > Door to Venomous Pond
+  > Front of Door to Venomous Pond
       All of the following:
           Morph Ball
           Any of the following:
@@ -727,10 +860,15 @@ Extra - unlocked_save_station: True
 Dark Torvus Arena
 Extra - asset_id: 2761578287
 Hint Features - Half-Pipe, Luminoth Corpse
-> Door to Dark Arena Tunnel; Heals? True; Spawn Point; Default Node
+> Door to Dark Arena Tunnel; Heals? True; Default Node
   * Layers: default
   * Normal Door to Dark Arena Tunnel/Door to Dark Torvus Arena
   * Extra - dock_name: South
+  > Front of Door to Dark Arena Tunnel
+      Trivial
+
+> Front of Door to Dark Arena Tunnel; Heals? False; Spawn Point
+  * Layers: default
   > Pickup 2 (Dark Torvus Key 1)
       All of the following:
           Dark World Damage ≥ 15 or Activate Safe Zone
@@ -744,6 +882,8 @@ Hint Features - Half-Pipe, Luminoth Corpse
       Any of the following:
           Dark World Damage ≥ 20
           Dark World Damage ≥ 10 and Activate Safe Zone
+  > Door to Dark Arena Tunnel
+      Trivial
 
 > Pickup (Boost Ball); Heals? False
   * Layers: default
@@ -758,29 +898,17 @@ Hint Features - Half-Pipe, Luminoth Corpse
   * Layers: default
   * Pickup 76; Category? Major; Index Group: Torvus Bog
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'DarkTempleKey', 'connections': (), 'removals': (1835118, 1835341), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.6, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 1835351, 'hud_memo': 1835348, 'streamed_audio': 1835342, 'sound': 1835353, 'audio_fade': 1835345})})
-  > Door to Dark Arena Tunnel
+  > Central Safe Zone
+      Dark World Damage ≥ 10
+  > Front of Door to Dark Arena Tunnel
       All of the following:
           Dark World Damage ≥ 20 or Activate Safe Zone
           Any of the following:
               Space Jump Boots and Dark World Damage ≥ 25
               Movement (Advanced) and Dark World Damage ≥ 35
-  > Central Safe Zone
-      Dark World Damage ≥ 10
 
 > Central Safe Zone; Heals? True
   * Layers: default
-  > Door to Dark Arena Tunnel
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Boost Ball and Dark World Damage ≥ 25
-              All of the following:
-                  Space Jump Boots
-                  Any of the following:
-                      # https://www.youtube.com/watch?v=iD_vx63DDxM
-                      Morph Ball Bomb and After Boost Guardian and Bomb Space Jump (Advanced) and Dark World Damage ≥ 10
-                      Screw Attack and Dark World Damage ≥ 15
-          Dark World Damage ≥ 10 or Activate Safe Zone
   > Pickup 2 (Dark Torvus Key 1)
       Boost Ball and Morph Ball and Dark World Damage ≥ 5
   > Event - Boost Guardian
@@ -799,6 +927,18 @@ Hint Features - Half-Pipe, Luminoth Corpse
                       Charge Beam and Dark World Damage ≥ 470
                       Light Ammo ≥ 40 and Dark World Damage ≥ 270 and Shoot Light Beam
           Boost Ball or Enabled Allow Vanilla Boost Ball
+  > Front of Door to Dark Arena Tunnel
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Boost Ball and Dark World Damage ≥ 25
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      # https://www.youtube.com/watch?v=iD_vx63DDxM
+                      Morph Ball Bomb and After Boost Guardian and Bomb Space Jump (Advanced) and Dark World Damage ≥ 10
+                      Screw Attack and Dark World Damage ≥ 15
+          Dark World Damage ≥ 10 or Activate Safe Zone
 
 > Event - Boost Guardian; Heals? False
   * Layers: default
@@ -813,15 +953,20 @@ Extra - asset_id: 2208154870
   * Layers: default
   * Dark Door to Dark Falls/Door to Polluted Mire
   * Extra - dock_name: East
-  > Door to Gloom Vista
+  > Front of Door to Gloom Vista
       Any of the following:
           Dark World Damage ≥ 60
           Dark World Damage ≥ 15 and Activate Safe Zone
 
-> Door to Gloom Vista; Heals? False; Spawn Point; Default Node
+> Door to Gloom Vista; Heals? False; Default Node
   * Layers: default
   * Normal Door to Gloom Vista/Door to Polluted Mire
   * Extra - dock_name: North
+  > Front of Door to Gloom Vista
+      Trivial
+
+> Front of Door to Gloom Vista; Heals? False; Spawn Point
+  * Layers: default
   > Door to Dark Falls
       Any of the following:
           All of the following:
@@ -836,6 +981,8 @@ Extra - asset_id: 2208154870
               Any of the following:
                   Dark World Damage ≥ 299
                   Dark World Damage ≥ 35 and Activate Safe Zone
+  > Door to Gloom Vista
+      Trivial
 
 ----------------
 Dark Torvus Temple
@@ -863,8 +1010,15 @@ Hint Features - Boss, Elevator, Grapple Point, Temple
   * Layers: default
   * Normal Door to Dark Controller Access/Door to Dark Torvus Temple; Excluded from Dock Lock Rando
   * Extra - dock_name: WestGenerator
+  > Front of Door to Dark Controller Access
+      Trivial
+
+> Front of Door to Dark Controller Access; Heals? False
+  * Layers: default
   > Central Safe Zone (Bottom)
       After Chykka and Dark World Damage ≥ 58
+  > Door to Dark Controller Access
+      Trivial
 
 > Door to Cache B; Heals? True
   * Layers: default
@@ -938,7 +1092,7 @@ Hint Features - Boss, Elevator, Grapple Point, Temple
 
 > Central Safe Zone (Top); Heals? True; Spawn Point; Default Node
   * Layers: default
-  > Door to Dark Controller Access
+  > Front of Door to Dark Controller Access
       All of the following:
           Space Jump Boots
           Any of the following:
@@ -954,48 +1108,69 @@ Extra - asset_id: 2504558791
   * Layers: default
   * Scan Portal to Meditation Vista/Portal to Gloom Vista
   * Extra - dock_name: VirtualNorth
-  > Door to Polluted Mire
+  > Front of Door to Polluted Mire
       Dark World Damage ≥ 8
 
-> Door to Polluted Mire; Heals? False; Spawn Point; Default Node
+> Door to Polluted Mire; Heals? False; Default Node
   * Layers: default
   * Normal Door to Polluted Mire/Door to Gloom Vista
   * Extra - dock_name: Docks_South
+  > Front of Door to Polluted Mire
+      Trivial
+
+> Front of Door to Polluted Mire; Heals? False; Spawn Point
+  * Layers: default
   > Portal to Meditation Vista
       Any of the following:
           Dark World Damage ≥ 7
           Morph Ball and Dark World Damage ≥ 3
+  > Door to Polluted Mire
+      Trivial
 
 ----------------
 Ammo Station
 Extra - asset_id: 2258105898
-> Door to Dark Torvus Temple; Heals? False; Spawn Point; Default Node
+> Door to Dark Torvus Temple; Heals? False; Default Node
   * Layers: default
   * Normal Door to Dark Torvus Temple/Door to Ammo Station
   * Extra - dock_name: North
+  > Front of Door to Dark Torvus Temple
+      Trivial
+
+> Front of Door to Dark Torvus Temple; Heals? False; Spawn Point
+  * Layers: default
   > Ammo Station
       Dark World Damage ≥ 5
+  > Door to Dark Torvus Temple
+      Trivial
 
 > Ammo Station; Heals? True
   * Layers: default
-  > Door to Dark Torvus Temple
+  > Front of Door to Dark Torvus Temple
       Dark World Damage ≥ 3
 
 ----------------
 Cache B
 Extra - asset_id: 7688697
-> Door to Dark Torvus Temple; Heals? False; Spawn Point; Default Node
+> Door to Dark Torvus Temple; Heals? False; Default Node
   * Layers: default
   * Normal Door to Dark Torvus Temple/Door to Cache B
   * Extra - dock_name: East_04
+  > Front of Door to Dark Torvus Temple
+      Trivial
+
+> Front of Door to Dark Torvus Temple; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Energy Tank)
       Dark World Damage ≥ 10
+  > Door to Dark Torvus Temple
+      Trivial
 
 > Pickup (Energy Tank); Heals? True
   * Layers: default
   * Pickup 80; Category? Major; Index Group: Torvus Bog
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'EnergyTank', 'connections': (), 'removals': (2490373,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 2490385, 'hud_memo': 2490416, 'streamed_audio': 2490417, 'sound': 2490403, 'audio_fade': 2490408})})
-  > Door to Dark Torvus Temple
+  > Front of Door to Dark Torvus Temple
       Any of the following:
           Dark World Damage ≥ 8
           Morph Ball and Dark World Damage ≥ 5
@@ -1007,7 +1182,7 @@ Extra - asset_id: 298078827
   * Layers: default
   * Normal Door to Dark Torvus Energy Controller/Door to Dark Controller Access
   * Extra - dock_name: docks_docks_West
-  > Door to Dark Torvus Temple
+  > Front of Door to Dark Torvus Temple
       All of the following:
           Dark World Damage ≥ 10
           Any of the following:
@@ -1015,10 +1190,15 @@ Extra - asset_id: 298078827
               # Same as Light World -> https://www.youtube.com/watch?v=rlYkwliHxQE
               Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (Space Jump)
 
-> Door to Dark Torvus Temple; Heals? True; Spawn Point; Default Node
+> Door to Dark Torvus Temple; Heals? True; Default Node
   * Layers: default
   * Normal Door to Dark Torvus Temple/Door to Dark Controller Access
   * Extra - dock_name: East1
+  > Front of Door to Dark Torvus Temple
+      Trivial
+
+> Front of Door to Dark Torvus Temple; Heals? False; Spawn Point
+  * Layers: default
   > Door to Dark Torvus Energy Controller
       All of the following:
           Dark World Damage ≥ 15
@@ -1026,6 +1206,8 @@ Extra - asset_id: 298078827
               Morph Ball Bomb and Morph Ball
               # Same as Light World -> https://www.youtube.com/watch?v=rlYkwliHxQE
               Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (Space Jump)
+  > Door to Dark Torvus Temple
+      Trivial
 
 ----------------
 Undertemple Shaft
@@ -1034,9 +1216,18 @@ Extra - asset_id: 3000230508
   * Layers: default
   * Light Door to Crypt Tunnel/Door to Undertemple Shaft
   * Extra - dock_name: West_0L
-  > Door to Undertemple Access
+  > Front of Door to Crypt Tunnel
+      Trivial
+
+> Front of Door to Crypt Tunnel; Heals? False
+  * Layers: default
+  > Top of Cannon
+      Morph Ball and Dark World Damage ≥ 30
+  > Door to Crypt Tunnel
+      Trivial
+  > Front of Door to Undertemple Access
       Dark World Damage ≥ 15
-  > Door to Sacrificial Chamber Tunnel
+  > Front of Door to Sacrificial Chamber Tunnel
       Any of the following:
           Grapple Beam and Dark World Damage ≥ 35
           Dark World Damage ≥ 25 and Use Screw Attack (Space Jump)
@@ -1045,36 +1236,55 @@ Extra - asset_id: 3000230508
               Any of the following:
                   Scan Visor and Combat/Scan Dash (Advanced) and Dark World Damage ≥ 37
                   Morph Ball and Roll Jump (Intermediate) and Dark World Damage ≥ 40
-  > Top of Cannon
-      Morph Ball and Dark World Damage ≥ 30
 
 > Door to Undertemple Access; Heals? True
   * Layers: default
   * Power Bomb Blast Shield to Undertemple Access/Door to Undertemple Shaft
   * Extra - dock_name: East_0M1 (Floor to 0q)
-  > Door to Crypt Tunnel
-      Grapple Beam and Space Jump Boots and Movement (Beginner) and Dark World Damage ≥ 60
-  > Door to Sacrificial Chamber Tunnel
-      Grapple Beam and Space Jump Boots and Movement (Beginner) and Dark World Damage ≥ 60
+  > Front of Door to Undertemple Access
+      Trivial
+
+> Front of Door to Undertemple Access; Heals? False
+  * Layers: default
   > Top of Cannon
       All of the following:
           Morph Ball
           Any of the following:
               Space Jump Boots and Dark World Damage ≥ 50
               Morph Ball Bomb and Scan Visor and Bomb Jump (Advanced) and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 80
+  > Front of Door to Crypt Tunnel
+      Grapple Beam and Space Jump Boots and Movement (Beginner) and Dark World Damage ≥ 60
+  > Door to Undertemple Access
+      Trivial
+  > Front of Door to Sacrificial Chamber Tunnel
+      Grapple Beam and Space Jump Boots and Movement (Beginner) and Dark World Damage ≥ 60
 
 > Door to Save Station 2; Heals? True
   * Layers: default
   * Missile Blast Shield to Save Station 2/Door to Undertemple Shaft
   * Extra - dock_name: Docks_Docks_East_Save
+  > Front of Door to Save Station 2
+      Trivial
+
+> Front of Door to Save Station 2; Heals? False
+  * Layers: default
   > Spawn Point
       Dark World Damage ≥ 5 and Activate Safe Zone
+  > Door to Save Station 2
+      Trivial
 
 > Door to Sacrificial Chamber Tunnel; Heals? False
   * Layers: default
   * Normal Door to Sacrificial Chamber Tunnel/Door to Undertemple Shaft
   * Extra - dock_name: North_OK
-  > Door to Crypt Tunnel
+  > Front of Door to Sacrificial Chamber Tunnel
+      Trivial
+
+> Front of Door to Sacrificial Chamber Tunnel; Heals? False
+  * Layers: default
+  > Top of Cannon
+      Morph Ball and Dark World Damage ≥ 30
+  > Front of Door to Crypt Tunnel
       Any of the following:
           Grapple Beam and Dark World Damage ≥ 35
           Dark World Damage ≥ 25 and Use Screw Attack (Space Jump)
@@ -1083,14 +1293,16 @@ Extra - asset_id: 3000230508
               Any of the following:
                   Scan Visor and Combat/Scan Dash (Advanced) and Dark World Damage ≥ 35
                   Morph Ball and Roll Jump (Intermediate) and Dark World Damage ≥ 40
-  > Door to Undertemple Access
+  > Front of Door to Undertemple Access
       Dark World Damage ≥ 15
-  > Top of Cannon
-      Morph Ball and Dark World Damage ≥ 30
+  > Door to Sacrificial Chamber Tunnel
+      Trivial
 
 > Spawn Point; Heals? True; Spawn Point; Default Node
   * Layers: default
-  > Door to Crypt Tunnel
+  > Top of Cannon
+      Morph Ball and Dark World Damage ≥ 30
+  > Front of Door to Crypt Tunnel
       Any of the following:
           Grapple Beam and Dark World Damage ≥ 25
           All of the following:
@@ -1099,9 +1311,9 @@ Extra - asset_id: 3000230508
                   Morph Ball and Roll Jump (Advanced) and Dark World Damage ≥ 30
                   Dark World Damage ≥ 15 and Use Screw Attack (Space Jump)
                   Scan Visor and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 25
-  > Door to Undertemple Access
+  > Front of Door to Undertemple Access
       Dark World Damage ≥ 5
-  > Door to Sacrificial Chamber Tunnel
+  > Front of Door to Sacrificial Chamber Tunnel
       Any of the following:
           Grapple Beam and Dark World Damage ≥ 25
           Dark World Damage ≥ 15 and Use Screw Attack (Space Jump)
@@ -1111,12 +1323,10 @@ Extra - asset_id: 3000230508
               Any of the following:
                   Scan Visor and Combat/Scan Dash (Advanced)
                   Morph Ball and Roll Jump (Advanced)
-  > Top of Cannon
-      Morph Ball and Dark World Damage ≥ 30
 
 > Top of Cannon; Heals? True
   * Layers: default
-  > Door to Save Station 2
+  > Front of Door to Save Station 2
       All of the following:
           Activate Safe Zone
           Any of the following:
@@ -1132,19 +1342,26 @@ Extra - asset_id: 3000230508
 ----------------
 Dark Torvus Energy Controller
 Extra - asset_id: 1591201049
-> Door to Dark Controller Access; Heals? False; Spawn Point; Default Node
+> Door to Dark Controller Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Dark Controller Access/Door to Dark Torvus Energy Controller
   * Extra - dock_name: group6_East
+  > Front of Door to Dark Controller Access
+      Trivial
+
+> Front of Door to Dark Controller Access; Heals? False; Spawn Point
+  * Layers: default
   > Event - Dark Torvus Energy Taken
       Any of the following:
           Dark World Damage ≥ 25
           Morph Ball and Dark World Damage ≥ 20
+  > Door to Dark Controller Access
+      Trivial
 
 > Event - Dark Torvus Energy Taken; Heals? True
   * Layers: default
   * Event Dark Torvus Energy Taken
-  > Door to Dark Controller Access
+  > Front of Door to Dark Controller Access
       Any of the following:
           Dark World Damage ≥ 30
           Morph Ball and Dark World Damage ≥ 15
@@ -1152,20 +1369,27 @@ Extra - asset_id: 1591201049
 ----------------
 Crypt Tunnel
 Extra - asset_id: 1304699309
-> Door to Undertemple Shaft; Heals? False; Spawn Point; Default Node
+> Door to Undertemple Shaft; Heals? False; Default Node
   * Layers: default
   * Light Door to Undertemple Shaft/Door to Crypt Tunnel
   * Extra - dock_name: East
+  > Front of Door to Undertemple Shaft
+      Trivial
+
+> Front of Door to Undertemple Shaft; Heals? False; Spawn Point
+  * Layers: default
   > Door to Crypt
       Any of the following:
           Dark World Damage ≥ 110
           Morph Ball and Dark World Damage ≥ 105
+  > Door to Undertemple Shaft
+      Trivial
 
 > Door to Crypt; Heals? False
   * Layers: default
   * Light Door to Crypt/Door to Crypt Tunnel
   * Extra - dock_name: West
-  > Door to Undertemple Shaft
+  > Front of Door to Undertemple Shaft
       Any of the following:
           Dark World Damage ≥ 90
           Morph Ball and Dark World Damage ≥ 80
@@ -1177,21 +1401,28 @@ Extra - asset_id: 1709535693
   * Layers: default
   * Normal Door to Sacrificial Chamber/Door to Sacrificial Chamber Tunnel; Excluded from Dock Lock Rando
   * Extra - dock_name: North
-  > Door to Undertemple Shaft
+  > Front of Door to Undertemple Shaft
       Any of the following:
           Dark World Damage ≥ 95
           Morph Ball and Dark World Damage ≥ 85
           Dark World Damage ≥ 45 and Enabled Refill with Drops
 
-> Door to Undertemple Shaft; Heals? False; Spawn Point; Default Node
+> Door to Undertemple Shaft; Heals? False; Default Node
   * Layers: default
   * Normal Door to Undertemple Shaft/Door to Sacrificial Chamber Tunnel
   * Extra - dock_name: South
+  > Front of Door to Undertemple Shaft
+      Trivial
+
+> Front of Door to Undertemple Shaft; Heals? False; Spawn Point
+  * Layers: default
   > Door to Sacrificial Chamber
       Any of the following:
           Dark World Damage ≥ 110
           Morph Ball and Dark World Damage ≥ 100
           Dark World Damage ≥ 70 and Enabled Refill with Drops
+  > Door to Undertemple Shaft
+      Trivial
 
 ----------------
 Save Station 2
@@ -1217,25 +1448,39 @@ Hint Features - Portal
   * Layers: default
   * Light Portal to Hydrodynamo Shaft/Portal to Undertemple Access
   * Extra - dock_name: Docks_VirtualNorth
-  > Door to Undertemple
+  > Front of Portal to Hydrodynamo Shaft
+      Trivial
+
+> Front of Portal to Hydrodynamo Shaft; Heals? False
+  * Layers: default
+  > Pickup (Dark Torvus Key 2)
+      Dark World Damage ≥ 10
+  > Portal to Hydrodynamo Shaft
+      Trivial
+  > Front of Door to Undertemple
       Dark World Damage ≥ 40
-  > Door to Undertemple Shaft
+  > Front of Door to Undertemple Shaft
       Any of the following:
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 150
           Space Jump Boots and Dark World Damage ≥ 90
-  > Pickup (Dark Torvus Key 2)
-      Dark World Damage ≥ 10
 
 > Door to Undertemple; Heals? False
   * Layers: default
   * Power Bomb Blast Shield to Undertemple/Door to Undertemple Access
   * Extra - dock_name: Docks_North
-  > Portal to Hydrodynamo Shaft
+  > Front of Door to Undertemple
+      Trivial
+
+> Front of Door to Undertemple; Heals? False
+  * Layers: default
+  > Front of Portal to Hydrodynamo Shaft
       Any of the following:
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 55
           Space Jump Boots and Dark World Damage ≥ 40
           Jump Off Enemy (Ludicrous) and Normal Damage ≥ 20 and Dark World Damage ≥ 130 and Use Screw Attack (No Space Jump)
-  > Door to Undertemple Shaft
+  > Door to Undertemple
+      Trivial
+  > Front of Door to Undertemple Shaft
       Any of the following:
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 180
           Space Jump Boots and Dark World Damage ≥ 99
@@ -1244,19 +1489,26 @@ Hint Features - Portal
   * Layers: default
   * Power Bomb Blast Shield to Undertemple Shaft/Door to Undertemple Access
   * Extra - dock_name: West
-  > Portal to Hydrodynamo Shaft
+  > Front of Door to Undertemple Shaft
+      Trivial
+
+> Front of Door to Undertemple Shaft; Heals? False
+  * Layers: default
+  > Front of Portal to Hydrodynamo Shaft
       Any of the following:
           Space Jump Boots and Dark World Damage ≥ 70
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 85
           Jump Off Enemy (Ludicrous) and Normal Damage ≥ 20 and Dark World Damage ≥ 130 and Use Screw Attack (No Space Jump)
-  > Door to Undertemple
+  > Front of Door to Undertemple
       Dark World Damage ≥ 135
+  > Door to Undertemple Shaft
+      Trivial
 
 > Pickup (Dark Torvus Key 2); Heals? False
   * Layers: default
   * Pickup 83; Category? Major; Index Group: Torvus Bog
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'DarkTempleKey', 'connections': (), 'removals': (3473468, 3473438), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.6, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 3473648, 'hud_memo': 3473644, 'streamed_audio': 3473640, 'sound': 3473649, 'audio_fade': 3473641})})
-  > Portal to Hydrodynamo Shaft
+  > Front of Portal to Hydrodynamo Shaft
       Dark World Damage ≥ 10
 
 ----------------
@@ -1266,13 +1518,11 @@ Extra - asset_id: 3366472600
   * Layers: default
   * Normal Door to Undertransit One/Door to Crypt
   * Extra - dock_name: North
-  > Portal to Gathering Hall
-      All of the following:
-          After Crypt Barrier
-          Any of the following:
-              Dark World Damage ≥ 40
-              Morph Ball and Dark World Damage ≥ 30
-              Dark World Damage ≥ 20 and Activate Safe Zone
+  > Front of Door to Undertransit One
+      Trivial
+
+> Front of Door to Undertransit One; Heals? False
+  * Layers: default
   > Event - Crypt Barrier
       All of the following:
           Dark World Damage ≥ 10
@@ -1280,21 +1530,53 @@ Extra - asset_id: 3366472600
               Shoot Dark Beam
               # https://www.youtube.com/watch?v=EUJlm0lktkE
               Knowledge (Beginner) and Use Screw Attack (Space Jump)
+  > Door to Undertransit One
+      Trivial
+  > Front of Portal to Gathering Hall
+      All of the following:
+          After Crypt Barrier
+          Any of the following:
+              Dark World Damage ≥ 40
+              Morph Ball and Dark World Damage ≥ 30
+              Dark World Damage ≥ 20 and Activate Safe Zone
 
 > Door to Crypt Tunnel; Heals? False
   * Layers: default
   * Light Door to Crypt Tunnel/Door to Crypt
   * Extra - dock_name: East_A
-  > Door to Undertransit One
-      Morph Ball and Scan Visor and After Crypt Barrier and Combat/Scan Dash (Expert) and Roll Jump (Expert) and Standable Terrain (Intermediate) and Dark World Damage ≥ 55
+  > Front of Door to Crypt Tunnel
+      Trivial
+
+> Front of Door to Crypt Tunnel; Heals? False
+  * Layers: default
   > Laser Platform
       Dark World Damage ≥ 20
+  > Front of Door to Undertransit One
+      Morph Ball and Scan Visor and After Crypt Barrier and Combat/Scan Dash (Expert) and Roll Jump (Expert) and Standable Terrain (Intermediate) and Dark World Damage ≥ 55
+  > Door to Crypt Tunnel
+      Trivial
 
-> Portal to Gathering Hall; Heals? True; Spawn Point; Default Node
+> Portal to Gathering Hall; Heals? True; Default Node
   * Layers: default
   * Light Portal to Gathering Hall/Portal to Crypt
   * Extra - dock_name: VirtualNorth
-  > Door to Undertransit One
+  > Front of Portal to Gathering Hall
+      Trivial
+
+> Front of Portal to Gathering Hall; Heals? False; Spawn Point
+  * Layers: default
+  > Event - Crypt Barrier
+      # https://www.youtube.com/watch?v=EUJlm0lktkE
+      Knowledge (Intermediate) and Dark World Damage ≥ 25 and Use Screw Attack (Space Jump)
+  > Laser Platform
+      Any of the following:
+          Space Jump Boots and Dark World Damage ≥ 25
+          All of the following:
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+              Any of the following:
+                  Bomb Space Jump (Intermediate) and Dark World Damage ≥ 35
+                  Standable Terrain (Beginner) and Dark World Damage ≥ 45
+  > Front of Door to Undertransit One
       All of the following:
           After Crypt Barrier
           Any of the following:
@@ -1307,19 +1589,10 @@ Extra - asset_id: 3366472600
                   Any of the following:
                       Screw Attack and Movement (Intermediate)
                       Scan Visor and Combat/Scan Dash (Advanced)
-  > Door to Crypt Tunnel
+  > Front of Door to Crypt Tunnel
       Space Jump Boots and After Crypt Barrier and Dark World Damage ≥ 120
-  > Event - Crypt Barrier
-      # https://www.youtube.com/watch?v=EUJlm0lktkE
-      Knowledge (Intermediate) and Dark World Damage ≥ 25 and Use Screw Attack (Space Jump)
-  > Laser Platform
-      Any of the following:
-          Space Jump Boots and Dark World Damage ≥ 25
-          All of the following:
-              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
-              Any of the following:
-                  Bomb Space Jump (Intermediate) and Dark World Damage ≥ 35
-                  Standable Terrain (Beginner) and Dark World Damage ≥ 45
+  > Portal to Gathering Hall
+      Trivial
 
 > Event - Crypt Laser; Heals? False
   * Layers: default
@@ -1330,7 +1603,7 @@ Extra - asset_id: 3366472600
 > Event - Crypt Barrier; Heals? False
   * Layers: default
   * Event Crypt Barrier
-  > Portal to Gathering Hall
+  > Front of Portal to Gathering Hall
       All of the following:
           After Crypt Barrier
           Any of the following:
@@ -1340,7 +1613,9 @@ Extra - asset_id: 3366472600
 
 > Laser Platform; Heals? False
   * Layers: default
-  > Door to Crypt Tunnel
+  > Event - Crypt Laser
+      Boost Ball and Morph Ball and Dark World Damage ≥ 20
+  > Front of Door to Crypt Tunnel
       Any of the following:
           Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Intermediate) and Dark World Damage ≥ 25
           All of the following:
@@ -1349,10 +1624,8 @@ Extra - asset_id: 3366472600
                   Space Jump Boots and Bomb Space Jump (Advanced) and Standable Terrain (Advanced) and Dark World Damage ≥ 45
                   # https://www.youtube.com/watch?v=sXP6vYiec4s
                   After Crypt Laser and Bomb Jump (Ludicrous) and Standable Terrain (Ludicrous) and Dark World Damage ≥ 125
-  > Portal to Gathering Hall
+  > Front of Portal to Gathering Hall
       Dark World Damage ≥ 10
-  > Event - Crypt Laser
-      Boost Ball and Morph Ball and Dark World Damage ≥ 20
 
 ----------------
 Sacrificial Chamber
@@ -1367,14 +1640,21 @@ Hint Features - Boss, Grapple Point
           Before Grapple Guardian and Dark World Damage ≥ 7
           Morph Ball and Power Bomb and Dark World Damage ≥ 20
 
-> Door to Sacrificial Chamber Tunnel; Heals? False; Spawn Point; Default Node
+> Door to Sacrificial Chamber Tunnel; Heals? False; Default Node
   * Layers: default
   * Normal Door to Sacrificial Chamber Tunnel/Door to Sacrificial Chamber; Excluded from Dock Lock Rando
   * Extra - dock_name: South
+  > Front of Door to Sacrificial Chamber Tunnel
+      Trivial
+
+> Front of Door to Sacrificial Chamber Tunnel; Heals? False; Spawn Point
+  * Layers: default
   > Event - Grapple Guardian
       Scan Visor and Dark World Damage ≥ 6
   > Front of Broken Statue
       After Grapple Guardian and Dark World Damage ≥ 15
+  > Door to Sacrificial Chamber Tunnel
+      Trivial
 
 > Door to Undertransit One; Heals? False
   * Layers: default
@@ -1407,14 +1687,6 @@ Hint Features - Boss, Grapple Point
           Any of the following:
               Before Grapple Guardian
               Morph Ball and Power Bomb
-  > Door to Sacrificial Chamber Tunnel
-      Any of the following:
-          Grapple Beam and After Grapple Guardian and Movement (Beginner) and Dark World Damage ≥ 35
-          All of the following:
-              Morph Ball and Power Bomb and Before Grapple Guardian
-              Any of the following:
-                  Movement (Intermediate) and Dark World Damage ≥ 20 and Use Screw Attack (Space Jump)
-                  Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Intermediate) and Dark World Damage ≥ 30
   > Door to Undertransit One
       All of the following:
           Dark World Damage ≥ 10
@@ -1426,10 +1698,20 @@ Hint Features - Boss, Grapple Point
           Space Jump Boots and Dark World Damage ≥ 25
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 50
           Slope Jump (Intermediate) and Dark World Damage ≥ 30
+  > Front of Door to Sacrificial Chamber Tunnel
+      Any of the following:
+          Grapple Beam and After Grapple Guardian and Movement (Beginner) and Dark World Damage ≥ 35
+          All of the following:
+              Morph Ball and Power Bomb and Before Grapple Guardian
+              Any of the following:
+                  Movement (Intermediate) and Dark World Damage ≥ 20 and Use Screw Attack (Space Jump)
+                  Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Intermediate) and Dark World Damage ≥ 30
 
 > Top of Broken Statue; Heals? False
   * Layers: default
-  > Door to Sacrificial Chamber Tunnel
+  > Front of Broken Statue
+      After Grapple Guardian and Dark World Damage ≥ 13
+  > Front of Door to Sacrificial Chamber Tunnel
       All of the following:
           After Grapple Guardian
           Any of the following:
@@ -1442,8 +1724,6 @@ Hint Features - Boss, Grapple Point
                       Morph Ball and Roll Jump (Intermediate)
               # https://www.youtube.com/watch?v=NrwVzVqQWD8
               Scan Visor and Extended Dash (Expert) and Dark World Damage ≥ 40
-  > Front of Broken Statue
-      After Grapple Guardian and Dark World Damage ≥ 13
 
 ----------------
 Undertemple
@@ -1458,27 +1738,41 @@ Hint Features - Bomb Slot, Portal, Screw Attack Wall, Spider Track
         After Undertemple Blast Shield Destroyed by PB Guardian
         Morph Ball and Power Bomb
 
+  > Front of Door to Undertemple Access
+      Trivial
+
+> Front of Door to Undertemple Access; Heals? False
+  * Layers: default
   > Before Power Bomb Guardian
       Dark World Damage ≥ 7
   > Room Bottom
       After Power Bomb Guardian and Dark World Damage ≥ 15
+  > Door to Undertemple Access
+      Trivial
 
-> Portal to Main Hydrochamber; Heals? True; Spawn Point; Default Node
+> Portal to Main Hydrochamber; Heals? True; Default Node
   * Layers: default
   * Light Portal to Main Hydrochamber/Portal to Undertemple
   * Extra - dock_name: VirtualNorth
+  > Front of Portal to Main Hydrochamber
+      Trivial
+
+> Front of Portal to Main Hydrochamber; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Missile)
       Dark World Damage ≥ 10 and Use Screw Attack (Space Jump)
   > Before Power Bomb Guardian
       Dark World Damage ≥ 8
   > Room Bottom
       After Power Bomb Guardian and Dark World Damage ≥ 15
+  > Portal to Main Hydrochamber
+      Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
   * Pickup 87; Category? Minor; Index Group: Torvus Bog
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (3932234,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 3932385, 'hud_memo': 3932377, 'streamed_audio': 3932383, 'sound': 3932374, 'audio_fade': 3932380})})
-  > Portal to Main Hydrochamber
+  > Front of Portal to Main Hydrochamber
       Dark World Damage ≥ 10
 
 > Pickup 2 (Power Bomb); Heals? True
@@ -1487,12 +1781,12 @@ Hint Features - Bomb Slot, Portal, Screw Attack Wall, Spider Track
   * Hint Features - Boss
   * Extra - boss: sub-guardian
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'PowerBomb', 'connections': (frozendict.frozendict({'target': 339477359, 'message': 'ACTV'}), frozendict.frozendict({'target': 339477359, 'message': 'ZERO'})), 'removals': (138149964, 339477413), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 138150423, 'hud_memo': 138150429, 'streamed_audio': 138150432, 'sound': 138150424, 'audio_fade': 138150428})})
-  > Door to Undertemple Access
+  > Room Bottom
+      Dark World Damage ≥ 10
+  > Front of Door to Undertemple Access
       Any of the following:
           Space Jump Boots and Dark World Damage ≥ 35
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 50
-  > Room Bottom
-      Dark World Damage ≥ 10
 
 > Event - Power Bomb Guardian; Heals? True
   * Layers: default
@@ -1596,12 +1890,19 @@ Hint Features - Morph Ball Tunnel
   > Central Safe Zone
       Morph Ball Bomb and Morph Ball and Dark World Damage ≥ 15
 
-> Door to Sacrificial Chamber; Heals? False; Spawn Point; Default Node
+> Door to Sacrificial Chamber; Heals? False; Default Node
   * Layers: default
   * Light Door to Sacrificial Chamber/Door to Undertransit One
   * Extra - dock_name: East
+  > Front of Door to Sacrificial Chamber
+      Trivial
+
+> Front of Door to Sacrificial Chamber; Heals? False; Spawn Point
+  * Layers: default
   > Central Safe Zone
       Morph Ball Bomb and Morph Ball and Dark World Damage ≥ 15
+  > Door to Sacrificial Chamber
+      Trivial
 
 > Pickup (Missile); Heals? True
   * Layers: default
@@ -1614,22 +1915,27 @@ Hint Features - Morph Ball Tunnel
   * Layers: default
   > Door to Crypt
       Morph Ball Bomb and Morph Ball and Dark World Damage ≥ 32
-  > Door to Sacrificial Chamber
+  > Pickup (Missile)
+      Morph Ball Bomb and Morph Ball and Dark World Damage ≥ 12
+  > Front of Door to Sacrificial Chamber
       All of the following:
           Morph Ball Bomb and Morph Ball and Dark World Damage ≥ 32
           Any of the following:
               Enabled Room Randomizer
               Power Bomb and Disabled Room Randomizer
-  > Pickup (Missile)
-      Morph Ball Bomb and Morph Ball and Dark World Damage ≥ 12
 
 ----------------
 Undertransit Two
 Extra - asset_id: 1274848825
-> Door to Sacrificial Chamber; Heals? True; Spawn Point; Default Node
+> Door to Sacrificial Chamber; Heals? True; Default Node
   * Layers: default
   * Dark Door to Sacrificial Chamber/Door to Undertransit Two
   * Extra - dock_name: West
+  > Front of Door to Sacrificial Chamber
+      Trivial
+
+> Front of Door to Sacrificial Chamber; Heals? False; Spawn Point
+  * Layers: default
   > Door to Dungeon
       All of the following:
           Morph Ball
@@ -1639,12 +1945,14 @@ Extra - asset_id: 1274848825
               Boost Ball and Wall Boost (Intermediate) and Dark World Damage ≥ 25
               # Works the same -> https://www.youtube.com/watch?v=-r5SIbRCY4c
               Instant Morph (Intermediate)
+  > Door to Sacrificial Chamber
+      Trivial
 
 > Door to Dungeon; Heals? True
   * Layers: default
   * Normal Door to Dungeon/Door to Undertransit Two
   * Extra - dock_name: South
-  > Door to Sacrificial Chamber
+  > Front of Door to Sacrificial Chamber
       All of the following:
           Morph Ball and Dark World Damage ≥ 35
           Any of the following:

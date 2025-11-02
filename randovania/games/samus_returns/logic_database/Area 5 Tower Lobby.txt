@@ -10,7 +10,11 @@ Extra - asset_id: collision_camera_001
   * Extra - start_point_actor_name: ST_SaveStation_001
   > Door to Transport to Tower Interior East
       Trivial
-  > Door to Meboid Millpond
+  > Tunnel to J-Shape Tunnel
+      Lay Any Bomb
+  > Event - Grapple Block
+      Grapple Beam
+  > Front of Door to Meboid Millpond
       All of the following:
           Morph Ball
           Any of the following:
@@ -23,12 +27,8 @@ Extra - asset_id: collision_camera_001
                   Lightning Armor or Normal Damage ≥ 20
               # Melee clip. Requires the block to be there, but that doesn't need to be listed here.
               Melee Clip (Beginner) and Out of Bounds Movement (Beginner)
-  > Tunnel to J-Shape Tunnel
-      Lay Any Bomb
-  > Dock to Phase Drift Chamber
+  > Front of Dock to Phase Drift Chamber
       Morph Ball
-  > Event - Grapple Block
-      Grapple Beam
 
 > Door to Transport to Tower Interior East; Heals? False
   * Layers: default
@@ -43,6 +43,11 @@ Extra - asset_id: collision_camera_001
   * Power Beam Door to Meboid Millpond/Door to Lobby Save Station
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Meboid Millpond
+      Trivial
+
+> Front of Door to Meboid Millpond; Heals? False
+  * Layers: default
   > Save Station
       All of the following:
           Morph Ball
@@ -56,7 +61,9 @@ Extra - asset_id: collision_camera_001
               Ice Beam and Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Beginner) and Melee Clip (Advanced) and Out of Bounds Movement (Intermediate)
               # Boost from the Crumble blocks
               Spider Boost (Advanced) and Can Spider Boost
-  > Dock to Phase Drift Chamber
+  > Door to Meboid Millpond
+      Trivial
+  > Front of Dock to Phase Drift Chamber
       Morph Ball
 
 > Tunnel to J-Shape Tunnel; Heals? False
@@ -68,9 +75,16 @@ Extra - asset_id: collision_camera_001
 > Dock to Phase Drift Chamber; Heals? False
   * Layers: default
   * Open Passage to Phase Drift Chamber/Dock to Lobby Save Station
-  > Door to Meboid Millpond
+  > Front of Dock to Phase Drift Chamber
+      Trivial
+
+> Front of Dock to Phase Drift Chamber; Heals? False
+  * Layers: default
+  > Front of Door to Meboid Millpond
       # Corner Clip from Phase Drift Chamber
       Out of Bounds Movement (Intermediate)
+  > Dock to Phase Drift Chamber
+      Trivial
 
 > Event - Grapple Block; Heals? False
   * Layers: default
@@ -83,17 +97,17 @@ Transport to Tower Interior East
 Extra - total_boundings: {'x1': -5200.0, 'x2': -2400.0, 'y1': -4700.0, 'y2': -700.0}
 Extra - polygon: [[-5200.0, -700.0], [-5200.0, -4700.0], [-2400.0, -4700.0], [-2400.0, -700.0]]
 Extra - asset_id: collision_camera_002
-> Elevator to Area 5 Tower Interior; Heals? False; Spawn Point; Default Node
+> Elevator to Area 5 Tower Interior; Heals? False; Default Node
   * Layers: default
   * Elevator to Transport to Tower Lobby East/Elevator to Area 5 Tower Lobby; Custom name: Phase Drift Chamber Elevator
   * Extra - actor_name: LE_Platform_Elevator_FromArea06C_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06C_01
-  > Door to Lobby Save Station
-      Any of the following:
-          Lightning Armor or Phase Drift
-          # Fall faster when morphed
-          Morph Ball and Dodge Enemies (Advanced)
+  > Front of Elevator to Area 5 Tower Interior
+      Trivial
+
+> Front of Elevator to Area 5 Tower Interior; Heals? False; Spawn Point
+  * Layers: default
   > Top of Room
       Any of the following:
           # Deal with the top Wallfire
@@ -107,29 +121,48 @@ Extra - asset_id: collision_camera_002
                   # Deal with the Wallfire
                   Defeat Non-Counterable Enemies
                   Phase Drift and Dodge Enemies (Advanced)
+  > Elevator to Area 5 Tower Interior
+      Trivial
+  > Front of Door to Lobby Save Station
+      Any of the following:
+          Lightning Armor or Phase Drift
+          # Fall faster when morphed
+          Morph Ball and Dodge Enemies (Advanced)
 
 > Door to Lobby Teleporter West; Heals? False
   * Layers: default
   * Access Locked to Lobby Teleporter West/Door to Transport to Tower Interior East
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerclosed
-  > Door to Lobby Save Station
-      Any of the following:
-          Lightning Armor or Phase Drift
-          # Fall faster when morphed
-          Morph Ball and Dodge Enemies (Advanced)
+  > Front of Door to Lobby Teleporter West
+      Trivial
+
+> Front of Door to Lobby Teleporter West; Heals? False
+  * Layers: default
   > Top of Room
       Any of the following:
           # Deal with the top Wallfire
           Lightning Armor or Space Jump or Defeat Non-Counterable Enemies or Use Spider Ball
           # Land next to the Wallfire
           Phase Drift and Dodge Enemies (Intermediate)
+  > Door to Lobby Teleporter West
+      Trivial
+  > Front of Door to Lobby Save Station
+      Any of the following:
+          Lightning Armor or Phase Drift
+          # Fall faster when morphed
+          Morph Ball and Dodge Enemies (Advanced)
 
 > Door to Lobby Save Station; Heals? False
   * Layers: default
   * Power Beam Door to Lobby Save Station/Door to Transport to Tower Interior East
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Lobby Save Station
+      Trivial
+
+> Front of Door to Lobby Save Station; Heals? False
+  * Layers: default
   > Top of Room
       Any of the following:
           All of the following:
@@ -158,12 +191,14 @@ Extra - asset_id: collision_camera_002
                   # Climbing the room
                   Use Spider Ball
                   Diagonal Bomb Jump (Advanced) and Infinite Bomb Jump (Advanced) and Lay Bomb
+  > Door to Lobby Save Station
+      Trivial
 
 > Top of Room; Heals? False
   * Layers: default
-  > Elevator to Area 5 Tower Interior
+  > Front of Elevator to Area 5 Tower Interior
       Trivial
-  > Door to Lobby Teleporter West
+  > Front of Door to Lobby Teleporter West
       Trivial
 
 ----------------
@@ -218,11 +253,6 @@ Hint Features - Chozo Seal, Elevator
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Ammo Recharge Station
       Trivial
-  > Elevator to Area 4 Central Caves
-      Any of the following:
-          Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
-          # UE
-          Morph Ball and Unmorph Extend (Beginner)
   > Save Station
       Trivial
   > Pickup (Power Bomb Tank)
@@ -233,24 +263,43 @@ Hint Features - Chozo Seal, Elevator
           Hazard Runs (Beginner) and Hazard Damage ≥ 90
   > Bottom of Right Shaft
       Morph Ball
+  > Front of Elevator to Area 4 Central Caves
+      Any of the following:
+          Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          # UE
+          Morph Ball and Unmorph Extend (Beginner)
 
-> Elevator to Area 4 Central Caves; Heals? False; Spawn Point; Default Node
+> Elevator to Area 4 Central Caves; Heals? False; Default Node
   * Layers: default
   * Elevator to Transport to Area 5/Elevator to Area 5 Tower Lobby; Custom name: Area 5 Chozo Seal Elevator North
   * Extra - actor_name: LE_Platform_Elevator_FromArea04
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea04
-  > Chozo Seal
+  > Front of Elevator to Area 4 Central Caves
       Trivial
 
-> Elevator to Area 6; Heals? False; Spawn Point
+> Front of Elevator to Area 4 Central Caves; Heals? False; Spawn Point
+  * Layers: default
+  > Chozo Seal
+      Trivial
+  > Elevator to Area 4 Central Caves
+      Trivial
+
+> Elevator to Area 6; Heals? False
   * Layers: default
   * Elevator to Transport to Area 5/Elevator to Area 5 Tower Lobby; Custom name: Area 5 Chozo Seal Elevator South
   * Extra - actor_name: LE_Platform_Elevator_FromArea07
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea07
+  > Front of Elevator to Area 6
+      Trivial
+
+> Front of Elevator to Area 6; Heals? False; Spawn Point
+  * Layers: default
   > Below Center Tunnel
       Morph Ball and After Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Bottom
+  > Elevator to Area 6
+      Trivial
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
@@ -316,15 +365,13 @@ Hint Features - Chozo Seal, Elevator
 > Event - Grapple Block Bottom; Heals? False
   * Layers: default
   * Event Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Bottom
-  > Elevator to Area 6
+  > Front of Elevator to Area 6
       Trivial
 
 > Below Center Tunnel; Heals? False
   * Layers: default
   > Ammo Recharge Station
       Morph Ball and After Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Middle
-  > Elevator to Area 6
-      Morph Ball and After Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Bottom
   > Above Center Tunnel
       All of the following:
           Screw Attack
@@ -340,6 +387,8 @@ Hint Features - Chozo Seal, Elevator
       Any of the following:
           Climb Rooms Vertically (High Jump)
           Morph Ball and Super Jump (Intermediate) and Unmorph Extend (Beginner)
+  > Front of Elevator to Area 6
+      Morph Ball and After Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Bottom
 
 > Bottom of Right Shaft; Heals? False
   * Layers: default
@@ -693,9 +742,16 @@ Hint Features - Teleporter
   * Power Beam Door to Alpha+ Arena/Door to Lobby Teleporter East
   * Extra - actor_name: Door021
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Alpha+ Arena
+      Trivial
+
+> Front of Door to Alpha+ Arena; Heals? False
+  * Layers: default
   > Next to Teleporter
       Trivial
   > Start Point
+      Trivial
+  > Door to Alpha+ Arena
       Trivial
 
 > Tunnel to Lobby Passageway; Heals? False
@@ -728,7 +784,15 @@ Hint Features - Teleporter
               # TODO: Add video
               Melee Clip (Beginner) and Out of Bounds Movement (Beginner)
               Hazard Runs (Beginner) and Fleech Swarm Damage ≥ 95
-  > Door to Alpha+ Arena
+  > Event - Teleporter Unlocked
+      Trivial
+  > Next to Pickup
+      Any of the following:
+          Lay Power Bomb
+          All of the following:
+              Lay Bomb
+              Mid-Air Morph (Beginner) or Simple IBJ or Use Spider Ball or Use Spring Ball
+  > Front of Door to Alpha+ Arena
       Any of the following:
           Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
           # UE
@@ -742,14 +806,6 @@ Hint Features - Teleporter
                       Stand on Frozen Enemy (Beginner)
                       Charge Beam or Freeze Enemy with Melee (Beginner)
                   Phase Drift and Stand on Frozen Enemy (Intermediate)
-  > Event - Teleporter Unlocked
-      Trivial
-  > Next to Pickup
-      Any of the following:
-          Lay Power Bomb
-          All of the following:
-              Lay Bomb
-              Mid-Air Morph (Beginner) or Simple IBJ or Use Spider Ball or Use Spring Ball
 
 > Next to Pickup; Heals? False
   * Layers: default
@@ -781,7 +837,7 @@ Hint Features - Teleporter
 > Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_001
-  > Door to Alpha+ Arena
+  > Front of Door to Alpha+ Arena
       Trivial
 
 ----------------
@@ -840,21 +896,28 @@ Extra - asset_id: collision_camera_013
   * Power Beam Door to Lobby Teleporter West/Door to Gamma+ Arena Access
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Lobby Teleporter West
+      Trivial
+
+> Front of Door to Lobby Teleporter West; Heals? False
+  * Layers: default
   > Tunnel to Gamma+ Arena
       Lay Any Bomb
   > Start Point
+      Trivial
+  > Door to Lobby Teleporter West
       Trivial
 
 > Tunnel to Gamma+ Arena; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Gamma+ Arena/Tunnel to Gamma+ Arena Access
-  > Door to Lobby Teleporter West
+  > Front of Door to Lobby Teleporter West
       Morph Ball
 
 > Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Gamma_004
-  > Door to Lobby Teleporter West
+  > Front of Door to Lobby Teleporter West
       Trivial
 
 ----------------
@@ -877,8 +940,6 @@ Extra - asset_id: collision_camera_014
   * Pickup 108; Category? Minor
   * Extra - actor_name: HiddenPowerup001
   * Extra - actor_type: item_supermissiletank
-  > Tunnel to Meboid Millpond (Bottom)
-      Trivial
   > Left of Crumble Blocks
       All of the following:
           Morph Ball
@@ -888,6 +949,8 @@ Extra - asset_id: collision_camera_014
               Phase Drift Skip (Advanced) and Lay Bomb
               # Spider Boost
               Spider Boost (Intermediate) and Can Spider Boost
+  > Front of Tunnel to Meboid Millpond (Bottom)
+      Trivial
 
 > Dock to Lobby Save Station; Heals? False
   * Layers: default
@@ -904,6 +967,13 @@ Extra - asset_id: collision_camera_014
 > Tunnel to Meboid Millpond (Bottom); Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Meboid Millpond/Tunnel to Phase Drift Chamber (Bottom)
+  > Front of Tunnel to Meboid Millpond (Bottom)
+      Trivial
+
+> Front of Tunnel to Meboid Millpond (Bottom); Heals? False
+  * Layers: default
+  > Tunnel to Meboid Millpond (Bottom)
+      Trivial
 
 > Left of Crumble Blocks; Heals? False
   * Layers: default
@@ -922,7 +992,7 @@ Extra - asset_id: collision_camera_014
           Spider Boost (Intermediate) and Can Spider Boost
   > Tunnel to Meboid Millpond (Top)
       Lay Any Bomb
-  > Tunnel to Meboid Millpond (Bottom)
+  > Front of Tunnel to Meboid Millpond (Bottom)
       Lay Any Bomb
 
 > Left of Statue; Heals? False; Spawn Point; Default Node
@@ -955,9 +1025,16 @@ Extra - asset_id: collision_camera_015
   * Power Beam Door to Lobby Save Station/Door to Meboid Millpond
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Lobby Save Station
+      Trivial
+
+> Front of Door to Lobby Save Station; Heals? False
+  * Layers: default
   > Tunnel to Phase Drift Chamber (Top)
       Lay Power Bomb
   > Room Bottom
+      Trivial
+  > Door to Lobby Save Station
       Trivial
 
 > Door to Alpha+ Arena; Heals? False
@@ -965,15 +1042,22 @@ Extra - asset_id: collision_camera_015
   * Power Beam Door to Alpha+ Arena/Door to Meboid Millpond
   * Extra - actor_name: Door020
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Alpha+ Arena
+      Trivial
+
+> Front of Door to Alpha+ Arena; Heals? False
+  * Layers: default
   > Room Bottom
       Trivial
   > Start Point
+      Trivial
+  > Door to Alpha+ Arena
       Trivial
 
 > Tunnel to Phase Drift Chamber (Top); Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Phase Drift Chamber/Tunnel to Meboid Millpond (Top)
-  > Door to Lobby Save Station
+  > Front of Door to Lobby Save Station
       Lay Any Bomb
 
 > Tunnel to Phase Drift Chamber (Bottom); Heals? False
@@ -1003,7 +1087,9 @@ Extra - asset_id: collision_camera_015
                               Unmorph Extend (Advanced) or Wall Jump (Intermediate)
                   # UBJ: https://youtu.be/Hs03y1Ufes8
                   Underwater Bomb Jump (Intermediate) and Lay Bomb
-  > Door to Lobby Save Station
+  > Tunnel to Phase Drift Chamber (Bottom)
+      Lay Any Bomb
+  > Front of Door to Lobby Save Station
       Any of the following:
           High Jump Boots or Gravity Suit or Super Jump (Beginner) or Use Spider Ball
           All of the following:
@@ -1015,14 +1101,12 @@ Extra - asset_id: collision_camera_015
                       Stand on Frozen Enemy (Beginner)
                       Charge Beam or Phase Drift or Freeze Enemy with Melee (Beginner)
           Underwater Bomb Jump (Beginner) and Lay Bomb
-  > Door to Alpha+ Arena
+  > Front of Door to Alpha+ Arena
       Trivial
-  > Tunnel to Phase Drift Chamber (Bottom)
-      Lay Any Bomb
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
-  > Door to Alpha+ Arena
+  > Front of Door to Alpha+ Arena
       Trivial
 
 ----------------

@@ -298,7 +298,7 @@
                                 ]
                             }
                         },
-                        "Door to Hive Access Tunnel": {
+                        "Front of Door to Hive Access Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -382,6 +382,26 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Hive Access Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Hive Access Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Save Station": {
                             "type": "resource",
                             "data": {
@@ -389,6 +409,13 @@
                                 "name": "Event71",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Hive Access Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Landing Site Webs": {
@@ -475,7 +502,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Hive Access Tunnel": {
+                        "Front of Door to Hive Access Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -545,7 +572,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -559,6 +586,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Landing Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Landing Site": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Landing Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Path of Honor": {
                             "type": "and",
                             "data": {
@@ -566,7 +620,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Meeting Grounds": {
+                        "Front of Door to Meeting Grounds": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -661,7 +715,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Landing Site": {
+                        "Front of Door to Landing Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -695,7 +749,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Landing Site": {
+                        "Front of Morph Ball Door to Meeting Grounds": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Morph Ball Door to Meeting Grounds": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Landing Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -763,7 +837,14 @@
                                 ]
                             }
                         },
-                        "Morph Ball Door to Path of Honor": {
+                        "Morph Ball Door to Meeting Grounds": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Morph Ball Door to Path of Honor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -911,7 +992,7 @@
                                 ]
                             }
                         },
-                        "Door to Meeting Grounds": {
+                        "Front of Door to Meeting Grounds": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1006,7 +1087,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Landing Site": {
+                        "Front of Morph Ball Door to Path of Honor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Morph Ball Door to Path of Honor": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Landing Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1074,7 +1175,7 @@
                                 ]
                             }
                         },
-                        "Morph Ball Door to Meeting Grounds": {
+                        "Front of Morph Ball Door to Meeting Grounds": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1125,7 +1226,14 @@
                                 ]
                             }
                         },
-                        "Door to Meeting Grounds": {
+                        "Morph Ball Door to Path of Honor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Meeting Grounds": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1220,7 +1328,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Landing Site": {
+                        "Front of Door to Meeting Grounds": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Meeting Grounds": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Landing Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1287,6 +1415,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Door to Meeting Grounds": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1310,7 +1445,7 @@
                     "extra": {
                         "dock_name": "West"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -1324,6 +1459,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Landing Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Landing Site": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Landing Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Dock to Hive Chamber A": {
                             "type": "and",
                             "data": {
@@ -1415,7 +1577,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Landing Site": {
+                        "Front of Door to Landing Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1487,7 +1649,7 @@
                     "extra": {
                         "dock_name": "West"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -1501,6 +1663,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Service Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Service Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Service Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Hall of Honored Dead": {
                             "type": "or",
                             "data": {
@@ -1621,7 +1810,7 @@
                     },
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Service Access": {
+                        "Front of Door to Service Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1756,7 +1945,7 @@
                     "extra": {
                         "dock_name": "EastBottom"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -1770,6 +1959,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Service Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Service Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Service Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Bottom of Halfpipe": {
                             "type": "and",
                             "data": {
@@ -1996,7 +2212,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Service Access": {
+                        "Front of Door to Service Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2188,7 +2404,7 @@
                     "extra": {
                         "dock_name": "group35_blue_01_Temple_Hive_1_4_East_BigDoor"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -2202,6 +2418,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Hive Chamber C": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Hive Chamber C": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Hive Chamber C": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Top of Elevator": {
                             "type": "resource",
                             "data": {
@@ -2231,7 +2474,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Hive Chamber C": {
+                        "Front of Door to Hive Chamber C": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2302,7 +2545,7 @@
                     "extra": {
                         "dock_name": "Ceiling"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -2316,7 +2559,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Hive Tunnel": {
+                        "Front of Dock to Hive Access Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Dock to Hive Access Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Dock to Hive Access Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Hive Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2370,6 +2640,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Hive Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Hive Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Hive Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Missile)": {
                             "type": "and",
                             "data": {
@@ -2439,7 +2736,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Hive Tunnel": {
+                        "Front of Door to Hive Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2469,7 +2766,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event78",
                     "connections": {
-                        "Door to Hive Tunnel": {
+                        "Front of Door to Hive Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2511,7 +2808,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -2566,6 +2863,33 @@
                     },
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Path of Honor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Path of Honor": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Path of Honor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Morph Ball Door to Path of Honor": {
                             "type": "or",
                             "data": {
@@ -2820,7 +3144,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Path of Honor": {
+                        "Front of Door to Path of Honor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2881,7 +3205,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Path of Honor": {
+                        "Front of Door to Path of Honor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2924,7 +3248,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Portal to Base Access": {
+                        "Front of Portal to Base Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2944,7 +3268,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -2958,7 +3282,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Portal to Base Access": {
+                        "Front of Door to Meeting Grounds": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Meeting Grounds": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Meeting Grounds": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Portal to Base Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3037,6 +3388,26 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Portal to Base Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Portal to Base Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Door to Path of Eyes": {
                             "type": "and",
                             "data": {
@@ -3044,7 +3415,14 @@
                                 "items": []
                             }
                         },
-                        "Door to Meeting Grounds": {
+                        "Front of Door to Meeting Grounds": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Portal to Base Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3168,6 +3546,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Agon Transport Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Agon Transport Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Agon Transport Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Translator Gate": {
                             "type": "and",
                             "data": {
@@ -3209,6 +3614,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Collapsed Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Collapsed Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Collapsed Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Front of Crate Terminal": {
                             "type": "and",
                             "data": {
@@ -3238,7 +3670,7 @@
                     "extra": {
                         "dock_name": "West"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -3252,6 +3684,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Hive Transport Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Hive Transport Area": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Hive Transport Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Gate": {
                             "type": "and",
                             "data": {
@@ -3601,7 +4060,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event1",
                     "connections": {
-                        "Door to Hive Transport Area": {
+                        "Front of Door to Hive Transport Area": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3621,7 +4080,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Collapsed Tunnel": {
+                        "Front of Door to Collapsed Tunnel": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3673,7 +4132,7 @@
                                 ]
                             }
                         },
-                        "Door to Hive Transport Area": {
+                        "Front of Door to Hive Transport Area": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4121,7 +4580,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Collapsed Tunnel": {
+                        "Front of Door to Collapsed Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -4325,7 +4784,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Agon Transport Access": {
+                        "Front of Door to Agon Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4373,7 +4832,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Agon Transport Access": {
+                        "Front of Door to Agon Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4437,14 +4896,41 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Hive Transport Area": {
+                        "Front of Door to Hive Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Hive Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Hive Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Morph Ball Door to Hive Chamber B": {
+                        "Front of Door to Hive Transport Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Morph Ball Door to Hive Chamber B": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4480,14 +4966,41 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Hive Save Station": {
+                        "Front of Door to Hive Transport Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Hive Transport Area": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Hive Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Morph Ball Door to Hive Chamber B": {
+                        "Door to Hive Transport Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Morph Ball Door to Hive Chamber B": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4509,7 +5022,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "morph_ball",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -4523,7 +5036,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Hive Save Station": {
+                        "Front of Morph Ball Door to Hive Chamber B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Morph Ball Door to Hive Chamber B": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Door to Hive Save Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4532,13 +5065,20 @@
                                 "negate": false
                             }
                         },
-                        "Door to Hive Transport Area": {
+                        "Front of Door to Hive Transport Area": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
                                 "name": "MorphBall",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Morph Ball Door to Hive Chamber B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4577,7 +5117,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Hive Chamber A": {
+                        "Front of Door to Command Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Command Chamber": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Command Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Hive Chamber A": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -4632,7 +5199,7 @@
                     "extra": {
                         "dock_name": "West"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -4646,13 +5213,40 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Command Chamber": {
+                        "Front of Door to Hive Chamber A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Hive Chamber A": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Door to Command Chamber": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
                                 "name": "Event2",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Hive Chamber A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Hive Tunnel Web": {
@@ -4676,14 +5270,14 @@
                     "valid_starting_location": false,
                     "event_name": "Event2",
                     "connections": {
-                        "Door to Command Chamber": {
+                        "Front of Door to Command Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Hive Chamber A": {
+                        "Front of Door to Hive Chamber A": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4762,7 +5356,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Hall of Eyes": {
+                        "Front of Door to Hall of Eyes": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4796,6 +5390,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Hall of Eyes": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Hall of Eyes": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Hall of Eyes": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Front of Translator Gate": {
                             "type": "and",
                             "data": {
@@ -5033,7 +5654,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event72",
                     "connections": {
-                        "Door to Hall of Eyes": {
+                        "Front of Door to Hall of Eyes": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5062,7 +5683,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Hall of Eyes": {
+                        "Front of Door to Hall of Eyes": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5343,7 +5964,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Hall of Eyes": {
+                        "Front of Door to Hall of Eyes": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5533,7 +6154,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Industrial Site": {
+                        "Front of Door to Industrial Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5553,7 +6174,7 @@
                     "extra": {
                         "dock_name": "West"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -5567,7 +6188,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Industrial Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Industrial Site": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
                         "Door to Transport to Agon Wastes": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Industrial Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5610,7 +6258,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Industrial Site": {
+                        "Front of Door to Industrial Site": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5632,7 +6280,7 @@
                     "extra": {
                         "dock_name": "A__South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -5646,6 +6294,26 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Industrial Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Industrial Site": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
                         "Door to Temple Assembly Site": {
                             "type": "resource",
                             "data": {
@@ -5653,6 +6321,13 @@
                                 "name": "MorphBall",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Industrial Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5693,7 +6368,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Hive Storage": {
+                        "Front of Morph Ball Door to Hive Chamber C": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Morph Ball Door to Hive Chamber C": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Morph Ball Door to Hive Chamber C": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Hive Storage": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5758,7 +6460,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -5772,13 +6474,40 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Morph Ball Door to Hive Chamber C": {
+                        "Front of Door to Hive Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Hive Storage": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Morph Ball Door to Hive Chamber C": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
                                 "name": "MorphBall",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Hive Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5824,7 +6553,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Morph Ball Door to Hive Chamber C": {
+                        "Front of Morph Ball Door to Hive Chamber C": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5933,7 +6662,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Hive Tunnel": {
+                        "Front of Door to Hive Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Hive Storage": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Hive Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Hive Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -5955,7 +6711,7 @@
                     "extra": {
                         "dock_name": "West2"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -5969,13 +6725,40 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Hive Storage": {
+                        "Front of Door to Hive Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Hive Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Door to Hive Storage": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
                                 "name": "Event4",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Hive Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Command Chamber Gate": {
@@ -6027,14 +6810,14 @@
                     "valid_starting_location": false,
                     "event_name": "Event4",
                     "connections": {
-                        "Door to Hive Storage": {
+                        "Front of Door to Hive Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Hive Tunnel": {
+                        "Front of Door to Hive Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6067,7 +6850,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -6081,7 +6864,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Grand Windchamber": {
+                        "Front of Door to Path of Eyes": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Path of Eyes": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Path of Eyes": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Grand Windchamber": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6129,7 +6939,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Path of Eyes": {
+                        "Front of Door to Grand Windchamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Grand Windchamber": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Path of Eyes": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6183,6 +7013,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Grand Windchamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Pickup (Energy Tank)": {
@@ -6404,7 +7241,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Grand Windchamber": {
+                        "Front of Door to Grand Windchamber": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6566,7 +7403,7 @@
                     "extra": {
                         "dock_name": "North"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -6580,6 +7417,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Path of Eyes": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Path of Eyes": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Path of Eyes": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Transport to Torvus Bog": {
                             "type": "and",
                             "data": {
@@ -6614,7 +7478,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Path of Eyes": {
+                        "Front of Door to Path of Eyes": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6661,6 +7525,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Agon Transport Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Agon Transport Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Agon Transport Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Missile)": {
                             "type": "resource",
                             "data": {
@@ -6729,7 +7620,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Agon Transport Access": {
+                        "Front of Door to Agon Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6765,7 +7656,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Agon Gate",
                     "connections": {
-                        "Door to Agon Transport Access": {
+                        "Front of Door to Agon Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6815,7 +7706,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Agon Transport Access": {
+                        "Front of Door to Agon Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6896,6 +7787,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Portal to Plain of Dark Worship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Portal to Plain of Dark Worship": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Portal to Plain of Dark Worship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Room Center": {
                             "type": "or",
                             "data": {
@@ -7015,7 +7933,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -7029,6 +7947,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Collapsed Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Collapsed Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Collapsed Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Room Center": {
                             "type": "and",
                             "data": {
@@ -7102,7 +8047,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event5",
                     "connections": {
-                        "Portal to Plain of Dark Worship": {
+                        "Front of Portal to Plain of Dark Worship": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7136,7 +8081,7 @@
                                 "items": []
                             }
                         },
-                        "Portal to Plain of Dark Worship": {
+                        "Front of Portal to Plain of Dark Worship": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7372,7 +8317,7 @@
                                 ]
                             }
                         },
-                        "Door to Collapsed Tunnel": {
+                        "Front of Door to Collapsed Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7573,7 +8518,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Command Chamber": {
+                        "Front of Door to Command Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7593,7 +8538,7 @@
                     "extra": {
                         "dock_name": "West"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -7607,7 +8552,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Command Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Command Chamber": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
                         "Door to Hive Chamber B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Command Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7656,7 +8628,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Windchamber Gateway": {
+                        "Front of Door to Windchamber Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Windchamber Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Windchamber Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Windchamber Gateway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8079,7 +9078,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Windchamber Gateway": {
+                        "Front of Door to Windchamber Gateway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8099,7 +9098,7 @@
                     "extra": {
                         "dock_name": "West"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -8113,7 +9112,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Windchamber Tunnel": {
+                        "Front of Door to Windchamber Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Windchamber Gateway": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Door to Windchamber Tunnel": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8296,6 +9315,13 @@
                             }
                         },
                         "Portal to Ing Windchamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Windchamber Gateway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8498,7 +9524,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Windchamber Tunnel": {
+                        "Front of Door to Windchamber Tunnel": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8549,7 +9575,7 @@
                                 ]
                             }
                         },
-                        "Door to Windchamber Gateway": {
+                        "Front of Door to Windchamber Gateway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8673,7 +9699,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Temple Assembly Site": {
+                        "Front of Door to Communication Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Communication Area": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Communication Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Temple Assembly Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8806,7 +9859,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -8820,7 +9873,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Communication Area": {
+                        "Front of Door to Temple Assembly Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Temple Assembly Site": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Door to Communication Area": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8912,6 +9985,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Temple Assembly Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Pickup (Power Bomb)": {
@@ -9086,7 +10166,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Temple Assembly Site": {
+                        "Front of Door to Temple Assembly Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9126,14 +10206,14 @@
                     "valid_starting_location": false,
                     "event_name": "Event73",
                     "connections": {
-                        "Door to Communication Area": {
+                        "Front of Door to Communication Area": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Temple Assembly Site": {
+                        "Front of Door to Temple Assembly Site": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9339,7 +10419,7 @@
                     "extra": {
                         "dock_name": "North"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -9353,6 +10433,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Temple Assembly Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Temple Assembly Site": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Temple Assembly Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
@@ -9403,7 +10510,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Temple Assembly Site": {
+                        "Front of Door to Temple Assembly Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9432,7 +10539,7 @@
                     "extra": {
                         "dock_name": "East"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -9446,6 +10553,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to GFMC Compound": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to GFMC Compound": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to GFMC Compound": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Grand Windchamber": {
                             "type": "resource",
                             "data": {
@@ -9482,7 +10616,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to GFMC Compound": {
+                        "Front of Door to GFMC Compound": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -9513,7 +10647,7 @@
                     "extra": {
                         "dock_name": "South11"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -9527,6 +10661,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Dynamo Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Dynamo Chamber": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Dynamo Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Trooper Security Station": {
                             "type": "and",
                             "data": {
@@ -9715,7 +10876,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Dynamo Chamber": {
+                        "Front of Door to Dynamo Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9785,7 +10946,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Dynamo Chamber": {
+                        "Front of Door to Dynamo Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9964,7 +11125,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Sacred Bridge": {
+                        "Front of Door to Windchamber Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Windchamber Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Windchamber Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Sacred Bridge": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -10007,13 +11195,40 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Windchamber Tunnel": {
+                        "Front of Door to Sacred Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sacred Bridge": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Windchamber Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
                                 "name": "MorphBall",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Sacred Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Pickup 2 (Missile On Ship)": {
@@ -10066,7 +11281,7 @@
                     "extra": {
                         "dock_name": "East"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -10080,6 +11295,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Trooper Security Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Trooper Security Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Trooper Security Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - GFMC Compound Trooper Cutscene": {
                             "type": "and",
                             "data": {
@@ -10290,7 +11532,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Windchamber Tunnel": {
+                        "Front of Door to Windchamber Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -10299,7 +11541,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Sacred Bridge": {
+                        "Front of Door to Sacred Bridge": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10418,7 +11660,7 @@
                                 ]
                             }
                         },
-                        "Door to Trooper Security Station": {
+                        "Front of Door to Trooper Security Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10679,7 +11921,7 @@
                     "extra": {
                         "dock_name": "North_Top"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -10693,6 +11935,33 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Communication Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Communication Area": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Communication Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Keybearer Corpse (D-Isl)": {
                             "type": "and",
                             "data": {
@@ -10734,7 +12003,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Communication Area": {
+                        "Front of Door to Communication Area": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10777,7 +12046,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Communication Area": {
+                        "Front of Door to GFMC Compound": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to GFMC Compound": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to GFMC Compound": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Communication Area": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10869,7 +12165,7 @@
                     "extra": {
                         "dock_name": "blue_0D_Temple_hall_South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -10883,7 +12179,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to GFMC Compound": {
+                        "Front of Door to Communication Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Communication Area": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Door to GFMC Compound": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10955,6 +12271,13 @@
                                 ]
                             }
                         },
+                        "Door to Communication Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Trooper Security Station Gate": {
                             "type": "and",
                             "data": {
@@ -11004,7 +12327,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event75",
                     "connections": {
-                        "Door to GFMC Compound": {
+                        "Front of Door to GFMC Compound": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11013,7 +12336,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Communication Area": {
+                        "Front of Door to Communication Area": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11107,7 +12430,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to GFMC Compound": {
+                        "Front of Door to Transport to Sanctuary Fortress": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Transport to Sanctuary Fortress": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Transport to Sanctuary Fortress": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to GFMC Compound": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11134,7 +12484,7 @@
                     "extra": {
                         "dock_name": "South"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -11148,7 +12498,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Transport to Sanctuary Fortress": {
+                        "Front of Door to GFMC Compound": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to GFMC Compound": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Front of Door to Transport to Sanctuary Fortress": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to GFMC Compound": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11207,7 +12584,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to GFMC Compound": {
+                        "Front of Door to GFMC Compound": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11257,7 +12634,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Transport to Sanctuary Fortress": {
+                        "Front of Door to Transport to Sanctuary Fortress": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11286,7 +12663,7 @@
                     "extra": {
                         "dock_name": "East"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -11300,7 +12677,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Sacred Path": {
+                        "Front of Door to GFMC Compound": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to GFMC Compound": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to GFMC Compound": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Sacred Path": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11430,13 +12834,40 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to GFMC Compound": {
+                        "Front of Door to Sacred Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sacred Path": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to GFMC Compound": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
                                 "name": "Event109",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Sacred Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Gate Unlocked": {
@@ -11488,7 +12919,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event109",
                     "connections": {
-                        "Door to Sacred Path": {
+                        "Front of Door to Sacred Path": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11612,14 +13043,41 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Sacred Bridge": {
+                        "Front of Portal to Profane Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Portal to Profane Path": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Portal to Profane Path": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Temple Transport A": {
+                        "Front of Door to Sacred Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Temple Transport A": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11639,7 +13097,7 @@
                     "extra": {
                         "dock_name": "North"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Temple Grounds",
@@ -11653,7 +13111,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Temple Transport A": {
+                        "Front of Door to Sacred Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Sacred Bridge": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Sacred Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Temple Transport A": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11856,7 +13341,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Portal to Profane Path": {
+                        "Front of Door to Temple Transport A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Temple Transport A": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Portal to Profane Path": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11973,7 +13478,14 @@
                                 ]
                             }
                         },
-                        "Door to Sacred Bridge": {
+                        "Front of Door to Sacred Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Temple Transport A": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11994,14 +13506,14 @@
                     "valid_starting_location": false,
                     "event_name": "Event99",
                     "connections": {
-                        "Door to Sacred Bridge": {
+                        "Front of Door to Sacred Bridge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Temple Transport A": {
+                        "Front of Door to Temple Transport A": {
                             "type": "resource",
                             "data": {
                                 "type": "items",

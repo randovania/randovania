@@ -7,6 +7,11 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 2}, {'x': 8, 'y': 3}, {'x': 8, 'y': 
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Lobby
   * Extra - door_idx: (1,)
+  > Front of Door to Entrance Recharge Room
+      Trivial
+
+> Front of Door to Entrance Recharge Room; Heals? False
+  * Layers: default
   > Door to Security Access
       Trivial
   > Door to Checkpoint Crossing
@@ -25,33 +30,35 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 2}, {'x': 8, 'y': 3}, {'x': 8, 'y': 
               Stand On Frozen Enemies (Advanced) and Wall Jump (Intermediate) and Can Freeze Enemies With Any Weapon
   > Door to Monkey Bars of Fire
       Trivial
+  > Door to Entrance Recharge Room
+      Trivial
 
 > Door to Security Access; Heals? False
   * Layers: default
   * Open Hatch to Security Access/Door to Entrance Lobby
   * Extra - door_idx: (2,)
-  > Door to Entrance Recharge Room
+  > Front of Door to Entrance Recharge Room
       Trivial
 
 > Door to Checkpoint Crossing; Heals? False
   * Layers: default
   * L0 Hatch to Checkpoint Crossing/Door to Entrance Lobby
   * Extra - door_idx: (3,)
-  > Door to Entrance Recharge Room
+  > Front of Door to Entrance Recharge Room
       Trivial
 
 > Other to Alcove; Heals? False
   * Layers: default
   * Tunnel to Alcove/Other to Entrance Lobby
   * Extra - door_idx: (4,)
-  > Door to Entrance Recharge Room
+  > Front of Door to Entrance Recharge Room
       Trivial
 
 > Door to Monkey Bars of Fire; Heals? False
   * Layers: default
   * L0 Hatch to Monkey Bars of Fire/Door to Entrance Lobby
   * Extra - door_idx: (53,)
-  > Door to Entrance Recharge Room
+  > Front of Door to Entrance Recharge Room
       Trivial
 
 ----------------
@@ -64,23 +71,30 @@ Extra - unlocked_save_recharge_station: True
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
   * Extra - door_idx: (5,)
-  > Door to Entrance Navigation Room
+  > Front of Door to Entrance Navigation Room
       Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
   * Extra - door_idx: (6,)
+  > Front of Door to Entrance Navigation Room
+      Trivial
+
+> Front of Door to Entrance Navigation Room; Heals? False
+  * Layers: default
   > Door to Entrance Recharge Room
       Trivial
   > Save Station
+      Trivial
+  > Door to Entrance Navigation Room
       Trivial
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - X: 9
   * Extra - Y: 10
-  > Door to Entrance Navigation Room
+  > Front of Door to Entrance Navigation Room
       Trivial
 
 ----------------
@@ -92,16 +106,23 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 2}]
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
   * Extra - door_idx: (7,)
-  > Door to Elevator to Main Deck
+  > Front of Door to Elevator to Main Deck
       Trivial
 
 > Door to Elevator to Main Deck; Heals? False
   * Layers: default
   * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
   * Extra - door_idx: (41,)
+  > Front of Door to Elevator to Main Deck
+      Trivial
+
+> Front of Door to Elevator to Main Deck; Heals? False
+  * Layers: default
   > Door to Entrance Save Room
       Trivial
   > Navigation Terminal
+      Trivial
+  > Door to Elevator to Main Deck
       Trivial
 
 > Navigation Terminal; Heals? False
@@ -110,7 +131,7 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 2}]
   * Extra - hint_name: Sector3Entrance
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: PRECISE_CATEGORY
-  > Door to Elevator to Main Deck
+  > Front of Door to Elevator to Main Deck
       Trivial
 
 ----------------
@@ -191,14 +212,21 @@ Hint Features - Security Room
   * Layers: default
   * L2 Hatch to Security Access/Door to Level 2 Security Room
   * Extra - door_idx: (10,)
+  > Front of Door to Security Access
+      Trivial
+
+> Front of Door to Security Access; Heals? False
+  * Layers: default
   > Pickup (L2 Locks)
+      Trivial
+  > Door to Security Access
       Trivial
 
 > Other to Security Access; Heals? False
   * Layers: default
   * Tunnel to Security Access/Other to Level 2 Security Room
   * Extra - door_idx: (77,)
-  > Door to Security Access
+  > Front of Door to Security Access
       Trivial
 
 > Pickup (L2 Locks); Heals? False
@@ -208,7 +236,7 @@ Hint Features - Security Room
   * Extra - room: 4
   * Extra - source: Level2
   * Extra - infant_weight: 0.3
-  > Door to Security Access
+  > Front of Door to Security Access
       Trivial
 
 ----------------
@@ -220,6 +248,11 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 3}, {'x': 10, 'y': 4}, {'x': 10, 'y
   * Layers: default
   * L0 Hatch to Entrance Lobby/Door to Checkpoint Crossing
   * Extra - door_idx: (11,)
+  > Front of Door to Entrance Lobby
+      Trivial
+
+> Front of Door to Entrance Lobby; Heals? False
+  * Layers: default
   > Door to Bob's Abode
       Trivial
   > Other to Namihe's Lair
@@ -232,19 +265,21 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 3}, {'x': 10, 'y': 4}, {'x': 10, 'y
           Can Kill Tough Beam-Resistant Enemy
           # Charge shinespark from Entrance Lobby and kill Fune: https://youtu.be/3sm2XhRsRRI
           Level 0 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Door to Entrance Lobby
+      Trivial
 
 > Door to Bob's Abode; Heals? False
   * Layers: default
   * L2 Hatch to Bob's Abode/Door to Checkpoint Crossing
   * Extra - door_idx: (12,)
-  > Door to Entrance Lobby
+  > Front of Door to Entrance Lobby
       Trivial
 
 > Other to Namihe's Lair; Heals? False
   * Layers: default
   * Open Passage to Namihe's Lair/Other to Checkpoint Crossing
   * Extra - door_idx: (61,)
-  > Door to Entrance Lobby
+  > Front of Door to Entrance Lobby
       Trivial
 
 ----------------
@@ -261,18 +296,18 @@ Hint Features - Geron
   * Extra - blockx: 5
   * Extra - blocky: 17
   * Extra - infant_weight: 0.3
-  > Door to B.O.X. Arena Access
+  > Front of Door to B.O.X. Arena Access
       Can Bounce in Ball and Can Use Any Bombs
-  > Door to Red Tower
+  > Front of Door to Red Tower
       Can Use Any Bombs
-  > Other to Namihe's Lair
+  > Front of Other to Namihe's Lair
       Morph Ball and Can Break Single Bomb Blocks
 
 > Door to Checkpoint Crossing; Heals? False
   * Layers: default
   * L2 Hatch to Checkpoint Crossing/Door to Bob's Abode
   * Extra - door_idx: (13,)
-  > Door to B.O.X. Arena Access
+  > Front of Door to B.O.X. Arena Access
       Any of the following:
           Can Kill Super Geron
           # Old BOB skip: https://youtu.be/Kqb60S6Kr0w
@@ -282,31 +317,52 @@ Hint Features - Geron
   * Layers: default
   * L2 Hatch to B.O.X. Arena Access/Door to Bob's Abode
   * Extra - door_idx: (14,)
+  > Front of Door to B.O.X. Arena Access
+      Trivial
+
+> Front of Door to B.O.X. Arena Access; Heals? False
+  * Layers: default
   > Pickup (Missile Tank)
       Morph Ball
   > Door to Checkpoint Crossing
       Can Kill Super Geron
-  > Door to Red Tower
+  > Door to B.O.X. Arena Access
+      Trivial
+  > Front of Door to Red Tower
       Morph Ball
 
 > Door to Red Tower; Heals? False
   * Layers: default
   * L0 Hatch to Red Tower/Door to Bob's Abode
   * Extra - door_idx: (15,)
+  > Front of Door to Red Tower
+      Trivial
+
+> Front of Door to Red Tower; Heals? False
+  * Layers: default
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball and Can Break Single Bomb Blocks
           Mid-Air Morph (Beginner) or Can Bounce in Ball
-  > Door to B.O.X. Arena Access
+  > Front of Door to B.O.X. Arena Access
       # New Bob Skip (Wall Clip) - https://youtu.be/aC3VHjplUQw
       Movement (Ludicrous) and Can Use Bombs and Can Use Springball
-  > Other to Namihe's Lair
+  > Door to Red Tower
+      Trivial
+  > Front of Other to Namihe's Lair
       Morph Ball and Can Break Single Bomb Blocks
 
 > Other to Namihe's Lair; Heals? False
   * Layers: default
   * Tunnel to Namihe's Lair/Other to Bob's Abode
   * Extra - door_idx: (60, 63)
+  > Front of Other to Namihe's Lair
+      Trivial
+
+> Front of Other to Namihe's Lair; Heals? False
+  * Layers: default
+  > Other to Namihe's Lair
+      Trivial
 
 ----------------
 Alcove
@@ -322,10 +378,10 @@ Hint Features - Multiple Pickups, Pillar
   * Extra - blockx: 9
   * Extra - blocky: 9
   * Extra - infant_weight: 0.3
-  > Other to Entrance Lobby
-      Morph Ball
   > Above E-Tank
       Can Use Power Bombs
+  > Front of Other to Entrance Lobby
+      Morph Ball
 
 > Pickup (Hidden Energy Tank); Heals? False
   * Layers: default
@@ -344,6 +400,11 @@ Hint Features - Multiple Pickups, Pillar
   * Layers: default
   * Tunnel to Entrance Lobby/Other to Alcove
   * Extra - door_idx: (17,)
+  > Front of Other to Entrance Lobby
+      Trivial
+
+> Front of Other to Entrance Lobby; Heals? False
+  * Layers: default
   > Below E-Tank
       All of the following:
           Can Break Single Bomb Blocks
@@ -351,11 +412,18 @@ Hint Features - Multiple Pickups, Pillar
               # Get past Sidehoppers
               Can Kill Tough Beam-Resistant Enemy
               Damage Boosts (Intermediate) and Normal Damage ≥ 150
+  > Other to Entrance Lobby
+      Trivial
 
 > Door to Deserted Runway; Heals? False
   * Layers: default
   * L0 Hatch to Deserted Runway/Door to Alcove
   * Extra - door_idx: (18,)
+  > Front of Door to Deserted Runway
+      Trivial
+
+> Front of Door to Deserted Runway; Heals? False
+  * Layers: default
   > Above E-Tank
       All of the following:
           Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
@@ -368,6 +436,8 @@ Hint Features - Multiple Pickups, Pillar
           # Deal with Sidehopper
           Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
   > Bottom Right
+      Trivial
+  > Door to Deserted Runway
       Trivial
 
 > Above E-Tank; Heals? False
@@ -400,7 +470,14 @@ Hint Features - Multiple Pickups, Pillar
                   Have Any Jump Upgrade
                   # Enable screw after wall jump: https://youtu.be/mP4l-moOtMc
                   Wall Jump (Advanced) and Enabled Equipment Manipulation
-  > Other to Entrance Lobby
+  > Bottom Right
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              # Get past Sidehoppers
+              Can Kill Tough Beam-Resistant Enemy
+              Damage Boosts (Intermediate) and Normal Damage ≥ 150
+  > Front of Other to Entrance Lobby
       All of the following:
           Any of the following:
               # Destroy Bomb Blocks
@@ -416,35 +493,9 @@ Hint Features - Multiple Pickups, Pillar
               # Get past Sidehoppers
               Can Kill Tough Beam-Resistant Enemy
               Damage Boosts (Intermediate) and Normal Damage ≥ 150
-  > Bottom Right
-      All of the following:
-          Can Use Any Bombs
-          Any of the following:
-              # Get past Sidehoppers
-              Can Kill Tough Beam-Resistant Enemy
-              Damage Boosts (Intermediate) and Normal Damage ≥ 150
 
 > Bottom Right; Heals? False
   * Layers: default
-  > Door to Deserted Runway
-      Any of the following:
-          Space Jump
-          All of the following:
-              # Stand on Frozen Enemy and Jump off it
-              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
-              Any of the following:
-                  # With HJ: https://youtu.be/ZU70fb8aivM
-                  Hi-Jump
-                  # With WJ: https://youtu.be/s6HpLtE82Ug
-                  Wall Jump (Beginner)
-          # HJ and Wall Jumps: https://youtu.be/vIQJEjCc5n0
-          Hi-Jump and Wall Jump (Intermediate)
-          # Single Wall Jump: https://youtu.be/Ge8yZuaVguo&t=21
-          Wall Jump (Intermediate) and Can Single Walljump
-          # Bomb Jump Out of Tunnel and Walljump: https://youtu.be/lG-_kouQp6c
-          Mid-Air Morph (Intermediate) and Wall Jump (Advanced) and Can Bounce in Ball
-          # Morph Jump Extend: https://youtu.be/YeWy3s8ma7E
-          Morph Ball and Jump Extends (Ludicrous) and Wall Jump (Ludicrous)
   > Below E-Tank
       All of the following:
           Morph Ball
@@ -465,6 +516,25 @@ Hint Features - Multiple Pickups, Pillar
               # Get through Sidehoppers
               Can Kill Tough Beam-Resistant Enemy
               Damage Boosts (Intermediate) and Normal Damage ≥ 150
+  > Front of Door to Deserted Runway
+      Any of the following:
+          Space Jump
+          All of the following:
+              # Stand on Frozen Enemy and Jump off it
+              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
+              Any of the following:
+                  # With HJ: https://youtu.be/ZU70fb8aivM
+                  Hi-Jump
+                  # With WJ: https://youtu.be/s6HpLtE82Ug
+                  Wall Jump (Beginner)
+          # HJ and Wall Jumps: https://youtu.be/vIQJEjCc5n0
+          Hi-Jump and Wall Jump (Intermediate)
+          # Single Wall Jump: https://youtu.be/Ge8yZuaVguo&t=21
+          Wall Jump (Intermediate) and Can Single Walljump
+          # Bomb Jump Out of Tunnel and Walljump: https://youtu.be/lG-_kouQp6c
+          Mid-Air Morph (Intermediate) and Wall Jump (Advanced) and Can Bounce in Ball
+          # Morph Jump Extend: https://youtu.be/YeWy3s8ma7E
+          Morph Ball and Jump Extends (Ludicrous) and Wall Jump (Ludicrous)
 
 ----------------
 Deserted Runway
@@ -479,13 +549,18 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 0}, {'x': 13, 'y': 1}, {'x': 14, 'y
   * Extra - blockx: 42
   * Extra - blocky: 8
   * Extra - infant_weight: 0.3
-  > Door to Alcove
+  > Front of Door to Alcove
       Trivial
 
 > Door to Alcove; Heals? False
   * Layers: default
   * L0 Hatch to Alcove/Door to Deserted Runway
   * Extra - door_idx: (19,)
+  > Front of Door to Alcove
+      Trivial
+
+> Front of Door to Alcove; Heals? False
+  * Layers: default
   > Pickup (Missile Tank)
       All of the following:
           Speed Booster
@@ -509,12 +584,14 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 0}, {'x': 13, 'y': 1}, {'x': 14, 'y
               Speed Booster or Have Any Jump Upgrade
               # Freeze Sidehopper or Geruda: https://youtu.be/7dIXfR4dkTA
               Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies With Any Weapon
+  > Door to Alcove
+      Trivial
 
 > Other to B.O.X. Arena; Heals? False
   * Layers: default
   * Open Passage to B.O.X. Arena/Other to Deserted Runway
   * Extra - door_idx: (38,)
-  > Door to Alcove
+  > Front of Door to Alcove
       Any of the following:
           # Get past enemies
           Can Kill Tough Beam-Resistant Enemy
@@ -527,14 +604,14 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 0}, {'x': 13, 'y': 1}, {'x': 14, 'y
   * Layers: default
   * Open Passage to Chute Access/Other to Deserted Runway
   * Extra - door_idx: (83,)
-  > Door to Alcove
+  > Front of Door to Alcove
       Screw Attack
 
 > Door to Glass Tube to Sector 1 (SRX); Heals? False
   * Layers: default
   * L0 Hatch to Glass Tube to Sector 1 (SRX)/Door to Deserted Runway
   * Extra - door_idx: (84,)
-  > Door to Alcove
+  > Front of Door to Alcove
       Screw Attack
 
 ----------------
@@ -546,32 +623,46 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 4}, {'x': 13, 'y': 5}, {'x': 13, 'y
   * Layers: default
   * L0 Hatch to Bob's Abode/Door to Red Tower
   * Extra - door_idx: (20,)
-  > Door to Namihe's Lair
+  > Front of Door to Namihe's Lair
       Trivial
 
 > Door to Lava Reservoirs; Heals? False
   * Layers: default
   * L2 Hatch to Lava Reservoirs/Door to Red Tower
   * Extra - door_idx: (21,)
-  > Door to Namihe's Lair
+  > Front of Door to Lava Reservoirs
       Trivial
+
+> Front of Door to Lava Reservoirs; Heals? False
+  * Layers: default
   > Door to Processing Access
+      Trivial
+  > Door to Lava Reservoirs
+      Trivial
+  > Front of Door to Namihe's Lair
       Trivial
 
 > Door to Namihe's Lair; Heals? False
   * Layers: default
   * L0 Hatch to Namihe's Lair/Door to Red Tower
   * Extra - door_idx: (57,)
+  > Front of Door to Namihe's Lair
+      Trivial
+
+> Front of Door to Namihe's Lair; Heals? False
+  * Layers: default
   > Door to Bob's Abode
       Trivial
-  > Door to Lava Reservoirs
+  > Front of Door to Lava Reservoirs
+      Trivial
+  > Door to Namihe's Lair
       Trivial
 
 > Door to Processing Access; Heals? False
   * Layers: default
   * L2 Hatch to Processing Access/Door to Red Tower
   * Extra - door_idx: (70,)
-  > Door to Lava Reservoirs
+  > Front of Door to Lava Reservoirs
       Trivial
 
 ----------------
@@ -617,13 +708,18 @@ Hint Features - Climbable Surface, Extreme Temperatures
   * Extra - blockx: 12
   * Extra - blocky: 25
   * Extra - infant_weight: 0.3
-  > Door to Lava Reservoirs
+  > Front of Door to Lava Reservoirs
       Trivial
 
 > Door to Lava Reservoirs; Heals? False
   * Layers: default
   * L0 Hatch to Lava Reservoirs/Door to Lava Maze
   * Extra - door_idx: (24,)
+  > Front of Door to Lava Reservoirs
+      Trivial
+
+> Front of Door to Lava Reservoirs; Heals? False
+  * Layers: default
   > Pickup (Power Bomb Tank)
       All of the following:
           Can Use Power Bombs
@@ -652,12 +748,14 @@ Hint Features - Climbable Surface, Extreme Temperatures
               Can Freeze Enemies With Any Weapon
               # SWJ around Namihes
               Hi-Jump and Wall Jump (Intermediate) and Can Single Walljump
+  > Door to Lava Reservoirs
+      Trivial
 
 > Door to Sova Suite; Heals? False
   * Layers: default
   * L0 Hatch to Sova Suite/Door to Lava Maze
   * Extra - door_idx: (25,)
-  > Door to Lava Reservoirs
+  > Front of Door to Lava Reservoirs
       Any of the following:
           Varia Suit
           Damage Runs (Beginner) and Heat Damage ≥ 15
@@ -982,23 +1080,30 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 3}, {'x': 14, 'y': 3}, {'x': 15, 'y
   * Layers: default
   * L0 Hatch to B.O.X. Arena/Door to B.O.X. Arena Access
   * Extra - door_idx: (45,)
+  > Front of Door to B.O.X. Arena
+      Trivial
+
+> Front of Door to B.O.X. Arena; Heals? False
+  * Layers: default
   > Door to Data Save Room
       Trivial
   > Door to Bob's Abode
+      Trivial
+  > Door to B.O.X. Arena
       Trivial
 
 > Door to Data Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Data Save Room/Door to B.O.X. Arena Access
   * Extra - door_idx: (64,)
-  > Door to B.O.X. Arena
+  > Front of Door to B.O.X. Arena
       Trivial
 
 > Door to Bob's Abode; Heals? False
   * Layers: default
   * L2 Hatch to Bob's Abode/Door to B.O.X. Arena Access
   * Extra - door_idx: (16,)
-  > Door to B.O.X. Arena
+  > Front of Door to B.O.X. Arena
       Trivial
 
 ----------------
@@ -1079,6 +1184,11 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 7}, {'x': 3, 'y': 8}, {'x': 4, 'y': 
   * Layers: default
   * L0 Hatch to Main Boiler/Door to Main Boiler Control Room
   * Extra - door_idx: (50,)
+  > Front of Door to Main Boiler
+      Trivial
+
+> Front of Door to Main Boiler; Heals? False
+  * Layers: default
   > Pickup (Cooling Unit)
       After Boss Wide Core-X Defeated
   > Event - Wide Core-X
@@ -1092,6 +1202,8 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 7}, {'x': 3, 'y': 8}, {'x': 4, 'y': 
               # Fight Boss Damageless: https://youtu.be/WdEd1majcTU
               Combat (Intermediate)
               Combat (Beginner) and Normal Damage ≥ 100
+  > Door to Main Boiler
+      Trivial
 
 > Pickup (Cooling Unit); Heals? False
   * Layers: default
@@ -1101,7 +1213,7 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 7}, {'x': 3, 'y': 8}, {'x': 4, 'y': 
   * Extra - room: 25
   * Extra - source: Boiler
   * Extra - infant_weight: 0.3
-  > Door to Main Boiler
+  > Front of Door to Main Boiler
       Trivial
 
 > Event - Wide Core-X; Heals? False
@@ -1119,7 +1231,7 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 7}, {'x': 3, 'y': 8}, {'x': 4, 'y': 
   * Extra - source: WideCoreX
   * Extra - boss_hint_name: Wide Core-X
   * Extra - infant_weight: 3.5
-  > Door to Main Boiler
+  > Front of Door to Main Boiler
       Trivial
 
 ----------------
@@ -1273,17 +1385,24 @@ Hint Features - Multiple Pickups, Pillar
   * Extra - blockx: 36
   * Extra - blocky: 27
   * Extra - infant_weight: 0.3
-  > Door to Monkey Bars of Fire
+  > Front of Door to Monkey Bars of Fire
       Trivial
 
 > Door to Monkey Bars of Fire; Heals? False
   * Layers: default
   * L0 Hatch to Monkey Bars of Fire/Door to Fiery Storage
   * Extra - door_idx: (56,)
+  > Front of Door to Monkey Bars of Fire
+      Trivial
+
+> Front of Door to Monkey Bars of Fire; Heals? False
+  * Layers: default
   > Pickup (Missile Tank)
       Trivial
   > Behind Wall
       Can Break Single Bomb Blocks
+  > Door to Monkey Bars of Fire
+      Trivial
 
 > Door to Glass Tube to Sector 5 (ARC); Heals? False
   * Layers: default
@@ -1312,10 +1431,10 @@ Hint Features - Multiple Pickups, Pillar
               Level 0 Keycard and Disabled Door Lock Rando
               # Door Lock Rando may force you to do the spark from the shortcut: https://youtu.be/I5a5RUqrzn4
               Shinespark Tricks (Advanced)
-  > Door to Monkey Bars of Fire
-      Can Break Single Bomb Blocks
   > Door to Glass Tube to Sector 5 (ARC)
       Screw Attack
+  > Front of Door to Monkey Bars of Fire
+      Can Break Single Bomb Blocks
 
 ----------------
 Namihe's Lair
@@ -1330,7 +1449,7 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 5}, {'x': 11, 'y': 6}, {'x': 12, 'y
   * Extra - blockx: 4
   * Extra - blocky: 13
   * Extra - infant_weight: 0.3
-  > Door to Red Tower
+  > Front of Door to Red Tower
       All of the following:
           Can Use Power Bombs
           Any of the following:
@@ -1350,6 +1469,11 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 5}, {'x': 11, 'y': 6}, {'x': 12, 'y
   * Layers: default
   * L0 Hatch to Red Tower/Door to Namihe's Lair
   * Extra - door_idx: (58,)
+  > Front of Door to Red Tower
+      Trivial
+
+> Front of Door to Red Tower; Heals? False
+  * Layers: default
   > Pickup (Power Bomb Tank)
       All of the following:
           Can Use Power Bombs
@@ -1359,24 +1483,33 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 5}, {'x': 11, 'y': 6}, {'x': 12, 'y
               Jump Bombjump (Advanced) and Can Kill Tough Beam-Resistant Enemy and Can Use Bombs
               # Grab ledge with SWJ
               Wall Jump (Intermediate) and Can Kill Tough Beam-Resistant Enemy and Can Single Walljump
+  > Door to Red Tower
+      Trivial
 
 > Other to Bob's Abode; Heals? False
   * Layers: default
   * Tunnel to Bob's Abode/Other to Namihe's Lair
   * Extra - door_idx: (59,)
-  > Other to Checkpoint Crossing
+  > Front of Other to Checkpoint Crossing
       Trivial
 
 > Other to Checkpoint Crossing; Heals? False
   * Layers: default
   * Open Passage to Checkpoint Crossing/Other to Namihe's Lair
   * Extra - door_idx: (62,)
+  > Front of Other to Checkpoint Crossing
+      Trivial
+
+> Front of Other to Checkpoint Crossing; Heals? False
+  * Layers: default
   > Pickup (Power Bomb Tank)
       # Shinespark: https://youtu.be/4LkNz-cjgUI
       Speed Booster and Shinespark Tricks (Expert) and Disabled Entrance Rando and Can Use Power Bombs
-  > Door to Red Tower
+  > Front of Door to Red Tower
       # This can safely not have Door Lock Rando check
       Speed Booster and Disabled Entrance Rando
+  > Other to Checkpoint Crossing
+      Trivial
 
 ----------------
 Data Recharge Room
@@ -1415,23 +1548,30 @@ Extra - unlocked_save_recharge_station: True
   * Layers: default
   * L0 Hatch to B.O.X. Arena Access/Door to Data Save Room
   * Extra - door_idx: (67,)
+  > Front of Door to B.O.X. Arena Access
+      Trivial
+
+> Front of Door to B.O.X. Arena Access; Heals? False
+  * Layers: default
   > Door to Data Recharge Room
       Trivial
   > Save Station
+      Trivial
+  > Door to B.O.X. Arena Access
       Trivial
 
 > Door to Data Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Data Recharge Room/Door to Data Save Room
   * Extra - door_idx: (68,)
-  > Door to B.O.X. Arena Access
+  > Front of Door to B.O.X. Arena Access
       Trivial
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - X: 9
   * Extra - Y: 10
-  > Door to B.O.X. Arena Access
+  > Front of Door to B.O.X. Arena Access
       Trivial
 
 ----------------
@@ -1471,16 +1611,23 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 9}, {'x': 14, 'y': 10}, {'x': 15, '
   * Extra - blockx: 10
   * Extra - blocky: 15
   * Extra - infant_weight: 0.3
-  > Door to Red Tower
+  > Front of Door to Red Tower
       Trivial
 
 > Door to Sova Processing (Lower); Heals? False
   * Layers: default
   * L0 Hatch to Sova Processing/Door to Processing Access (Lower)
   * Extra - door_idx: (39,)
-  > Door to Red Tower
+  > Front of Door to Sova Processing (Lower)
+      Trivial
+
+> Front of Door to Sova Processing (Lower); Heals? False
+  * Layers: default
+  > Door to Sova Processing (Lower)
+      Trivial
+  > Front of Door to Red Tower
       Can Break Single Bomb Blocks
-  > Door to Sova Processing (Upper)
+  > Front of Door to Sova Processing (Upper)
       Any of the following:
           Space Jump
           All of the following:
@@ -1494,11 +1641,18 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 9}, {'x': 14, 'y': 10}, {'x': 15, '
   * Layers: default
   * L2 Hatch to Red Tower/Door to Processing Access
   * Extra - door_idx: (71,)
+  > Front of Door to Red Tower
+      Trivial
+
+> Front of Door to Red Tower; Heals? False
+  * Layers: default
   > Pickup (Hidden Missile Tank)
       Trivial
-  > Door to Sova Processing (Lower)
+  > Front of Door to Sova Processing (Lower)
       Can Break Single Bomb Blocks
-  > Door to Sova Processing (Upper)
+  > Door to Red Tower
+      Trivial
+  > Front of Door to Sova Processing (Upper)
       All of the following:
           # Shinespark from adjacent room: https://youtu.be/0ILTTSV-Uc4
           Level 2 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
@@ -1519,7 +1673,14 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 9}, {'x': 14, 'y': 10}, {'x': 15, '
   * Layers: default
   * L0 Hatch to Sova Processing/Door to Processing Access (Upper)
   * Extra - door_idx: (74,)
-  > Door to Sova Processing (Lower)
+  > Front of Door to Sova Processing (Upper)
+      Trivial
+
+> Front of Door to Sova Processing (Upper); Heals? False
+  * Layers: default
+  > Front of Door to Sova Processing (Lower)
+      Trivial
+  > Door to Sova Processing (Upper)
       Trivial
 
 ----------------
@@ -1634,13 +1795,18 @@ Extra - minimap_coordinates: [{'x': 0, 'y': 5}]
   * Extra - blockx: 15
   * Extra - blocky: 3
   * Extra - infant_weight: 0.3
-  > Door to Fiery Storage
+  > Front of Door to Fiery Storage
       Trivial
 
 > Door to Fiery Storage; Heals? False
   * Layers: default
   * L0 Hatch to Fiery Storage/Door to Glass Tube to Sector 5 (ARC)
   * Extra - door_idx: (88,)
+  > Front of Door to Fiery Storage
+      Trivial
+
+> Front of Door to Fiery Storage; Heals? False
+  * Layers: default
   > Pickup (Hidden Power Bomb Tank)
       Any of the following:
           Can Use Power Bombs
@@ -1655,12 +1821,14 @@ Extra - minimap_coordinates: [{'x': 0, 'y': 5}]
           Screw Attack and Knowledge (Beginner)
   > Area Transition to Sector 5 (ARC)
       Trivial
+  > Door to Fiery Storage
+      Trivial
 
 > Area Transition to Sector 5 (ARC); Heals? False
   * Layers: default
   * Open Passage to Glass Tube to Sector 3 (PYR)/Area Transition to Sector 3 (PYR)
   * Extra - door_idx: (89,)
-  > Door to Fiery Storage
+  > Front of Door to Fiery Storage
       Trivial
 
 ----------------

@@ -20,18 +20,25 @@ Extra - asset_id: 1473133138
 ----------------
 Plaza Access
 Extra - asset_id: 2918746407
-> Door to Transport to Temple Grounds; Heals? False; Spawn Point; Default Node
+> Door to Transport to Temple Grounds; Heals? False; Default Node
   * Layers: default
   * Normal Door to Transport to Temple Grounds/Door to Plaza Access
   * Extra - dock_name: West
+  > Front of Door to Transport to Temple Grounds
+      Trivial
+
+> Front of Door to Transport to Temple Grounds; Heals? False; Spawn Point
+  * Layers: default
   > Door to Mining Plaza
+      Trivial
+  > Door to Transport to Temple Grounds
       Trivial
 
 > Door to Mining Plaza; Heals? False
   * Layers: default
   * Normal Door to Mining Plaza/Door to Plaza Access
   * Extra - dock_name: East
-  > Door to Transport to Temple Grounds
+  > Front of Door to Transport to Temple Grounds
       Trivial
 
 ----------------
@@ -66,15 +73,18 @@ Hint Features - Echo Visor Lock, Luminoth Lore, Translator Gate
   * Layers: default
   * Missile Blast Shield to Save Station A/Door to Mining Plaza
   * Extra - dock_name: South
-  > Door to Plaza Access
+  > Front of Door to Plaza Access
       Trivial
 
 > Door to Mining Station Access; Heals? False
   * Layers: default
   * Normal Door to Mining Station Access/Door to Mining Plaza
   * Extra - dock_name: East1
-  > Door to Plaza Access
+  > Front of Door to Mining Station Access
       Trivial
+
+> Front of Door to Mining Station Access; Heals? False
+  * Layers: default
   > Pickup (Energy Tank)
       All of the following:
           Echo Visor and After Agon Energy Returned
@@ -84,14 +94,25 @@ Hint Features - Echo Visor Lock, Luminoth Lore, Translator Gate
               Scan Visor and Space Jump Boots and Extended Dash (Ludicrous)
   > Lore Scan
       Trivial
+  > Door to Mining Station Access
+      Trivial
+  > Front of Door to Plaza Access
+      Trivial
 
-> Door to Plaza Access; Heals? False; Spawn Point; Default Node
+> Door to Plaza Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Plaza Access/Door to Mining Plaza
   * Extra - dock_name: West
+  > Front of Door to Plaza Access
+      Trivial
+
+> Front of Door to Plaza Access; Heals? False; Spawn Point
+  * Layers: default
   > Door to Save Station A
       Trivial
-  > Door to Mining Station Access
+  > Translator Gate
+      Trivial
+  > Front of Door to Mining Station Access
       Any of the following:
           Missile or Space Jump Boots
           # Double Bomb Jump
@@ -100,14 +121,14 @@ Hint Features - Echo Visor Lock, Luminoth Lore, Translator Gate
           Movement (Intermediate) and Use Screw Attack (No Space Jump)
           # https://www.youtube.com/watch?v=0BuPg72jQgI
           Combat/Scan Dash (Intermediate) and Slope Jump (Intermediate)
-  > Translator Gate
+  > Door to Plaza Access
       Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 25; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'EnergyTank', 'connections': (), 'removals': (131491,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 131456, 'hud_memo': 131493, 'streamed_audio': 131490, 'sound': 131483, 'audio_fade': 131489})})
-  > Door to Plaza Access
+  > Front of Door to Plaza Access
       Trivial
 
 > Translator Gate; Heals? False
@@ -125,7 +146,7 @@ Hint Features - Echo Visor Lock, Luminoth Lore, Translator Gate
                   Knowledge (Beginner)
                   # Use Boost Ball or Screw Attack to destroy the rock
                   Boost Ball or Use Screw Attack (Space Jump)
-  > Door to Plaza Access
+  > Front of Door to Plaza Access
       Trivial
 
 > Lore Scan; Heals? False
@@ -133,7 +154,7 @@ Hint Features - Echo Visor Lock, Luminoth Lore, Translator Gate
   * Hint
   * Extra - translator: Amber
   * Extra - string_asset_id: 619091749
-  > Door to Plaza Access
+  > Front of Door to Plaza Access
       Trivial
 
 ----------------
@@ -154,10 +175,15 @@ Extra - asset_id: 2220656039
 ----------------
 Transit Station
 Extra - asset_id: 2043266464
-> Door to Mining Plaza; Heals? False; Spawn Point; Default Node
+> Door to Mining Plaza; Heals? False; Default Node
   * Layers: default
   * Normal Door to Mining Plaza/Door to Transit Station
   * Extra - dock_name: South
+  > Front of Door to Mining Plaza
+      Trivial
+
+> Front of Door to Mining Plaza; Heals? False; Spawn Point
+  * Layers: default
   > Door to Mining Station B
       All of the following:
           Morph Ball
@@ -165,12 +191,14 @@ Extra - asset_id: 2043266464
               Morph Ball Bomb or Power Bomb
               # Use Boost Ball to destroy the rock
               Boost Ball and Knowledge (Beginner)
+  > Door to Mining Plaza
+      Trivial
 
 > Door to Mining Station B; Heals? False
   * Layers: default
   * Normal Door to Mining Station B/Door to Transit Station
   * Extra - dock_name: East
-  > Door to Mining Plaza
+  > Front of Door to Mining Plaza
       All of the following:
           Morph Ball
           Any of the following:
@@ -211,25 +239,32 @@ Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon
   * Layers: default
   * Normal Door to Mining Station A/Door to Mining Station Access
   * Extra - dock_name: East
-  > Door to Mining Plaza
+  > Front of Door to Mining Plaza
       Morph Ball
 
-> Door to Mining Plaza; Heals? False; Spawn Point; Default Node
+> Door to Mining Plaza; Heals? False; Default Node
   * Layers: default
   * Normal Door to Mining Plaza/Door to Mining Station Access
   * Extra - dock_name: West
+  > Front of Door to Mining Plaza
+      Trivial
+
+> Front of Door to Mining Plaza; Heals? False; Spawn Point
+  * Layers: default
   > Door to Mining Station A
       Morph Ball
   > Pickup (Energy Tank)
       All of the following:
           Morph Ball
           Morph Ball Bomb or Power Bomb
+  > Door to Mining Plaza
+      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 26; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'EnergyTank', 'connections': (), 'removals': (393237,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 393247, 'hud_memo': 393244, 'streamed_audio': 393238, 'sound': 393245, 'audio_fade': 393239})})
-  > Door to Mining Plaza
+  > Front of Door to Mining Plaza
       Morph Ball
 
 ----------------
@@ -243,17 +278,24 @@ Hint Features - Bomb Slot, Half-Pipe, Luminoth Lore, Luminoth Corpse, Kinetic Or
   > Room Center
       Morph Ball and Power Bomb
 
-> Door to Transit Station; Heals? False; Spawn Point; Default Node
+> Door to Transit Station; Heals? False; Default Node
   * Layers: default
   * Normal Door to Transit Station/Door to Mining Station B
   * Extra - dock_name: West
-  > Portal to Trial Grounds
-      # https://www.youtube.com/watch?v=RAVTrB3Mhrs
-      Scan Visor and Space Jump Boots and Combat/Scan Dash (Expert) and Single Room Out of Bounds (Expert) and Standable Terrain (Expert)
+  > Front of Door to Transit Station
+      Trivial
+
+> Front of Door to Transit Station; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Darkburst)
       Trivial
   > Room Center
       Trivial
+  > Door to Transit Station
+      Trivial
+  > Front of Portal to Trial Grounds
+      # https://www.youtube.com/watch?v=RAVTrB3Mhrs
+      Scan Visor and Space Jump Boots and Combat/Scan Dash (Expert) and Single Room Out of Bounds (Expert) and Standable Terrain (Expert)
 
 > Door to Mine Shaft; Heals? False
   * Layers: default
@@ -272,14 +314,21 @@ Hint Features - Bomb Slot, Half-Pipe, Luminoth Lore, Luminoth Corpse, Kinetic Or
   * Layers: default
   * Dark Portal to Trial Grounds/Portal to Mining Station B
   * Extra - dock_name: VirtualNorth
+  > Front of Portal to Trial Grounds
+      Trivial
+
+> Front of Portal to Trial Grounds; Heals? False
+  * Layers: default
   > Room Center
       After Mining Station B Portal Opened
+  > Portal to Trial Grounds
+      Trivial
 
 > Pickup (Darkburst); Heals? False
   * Layers: default
   * Pickup 27; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'Darkburst', 'connections': (frozendict.frozendict({'target': 403178312, 'message': 'ACTV'}), frozendict.frozendict({'target': 403178312, 'message': 'ZERO'})), 'removals': (524569, 403178341), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 524567, 'hud_memo': 524570, 'streamed_audio': 524574, 'sound': 524568, 'audio_fade': 524573})})
-  > Door to Transit Station
+  > Front of Door to Transit Station
       Trivial
 
 > Event - Mining Station B Portal Opened; Heals? False
@@ -292,7 +341,35 @@ Hint Features - Bomb Slot, Half-Pipe, Luminoth Lore, Luminoth Corpse, Kinetic Or
   * Layers: default
   > Door to Storage A
       Morph Ball and Power Bomb
-  > Door to Transit Station
+  > Door to Mine Shaft
+      Any of the following:
+          Morph Ball and Scan Visor
+          All of the following:
+              Space Jump Boots
+              # https://www.youtube.com/watch?v=OOliuV6E6s4
+              Slope Jump (Intermediate) or Standable Terrain (Beginner)
+  > Event - Mining Station B Portal Opened
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Morph Ball Bomb
+                  Any of the following:
+                      Scan Visor
+                      Standable Terrain (Intermediate) and Use Screw Attack (Space Jump)
+                      Space Jump Boots and Slope Jump (Advanced)
+              All of the following:
+                  # https://www.youtube.com/watch?v=CvU0QLIgzms
+                  Dark Ammo ≥ 60 and Missile ≥ 10 and Scan Visor and Bomb Slot without Bombs (Ludicrous) and Movement (Expert)
+                  Any of the following:
+                      Instant Morph (Expert)
+                      Boost Ball and Wall Boost (Ludicrous)
+                  Any of the following:
+                      Shoot Darkburst
+                      Light Ammo ≥ 60 and Shoot Sonic Boom
+  > Lore Scan
+      Scan Visor
+  > Front of Door to Transit Station
       Any of the following:
           # https://youtu.be/G6Sq--yB5UY
           Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Advanced)
@@ -318,14 +395,7 @@ Hint Features - Bomb Slot, Half-Pipe, Luminoth Lore, Luminoth Corpse, Kinetic Or
           Standable Terrain (Advanced) and Use Screw Attack (Space Jump)
           # https://youtu.be/aNdF-X_OUH8
           Scan Visor and Space Jump Boots and Before Mining Station B Portal Opened and Combat/Scan Dash (Expert) and Slope Jump (Expert) and Standable Terrain (Expert)
-  > Door to Mine Shaft
-      Any of the following:
-          Morph Ball and Scan Visor
-          All of the following:
-              Space Jump Boots
-              # https://www.youtube.com/watch?v=OOliuV6E6s4
-              Slope Jump (Intermediate) or Standable Terrain (Beginner)
-  > Portal to Trial Grounds
+  > Front of Portal to Trial Grounds
       Any of the following:
           All of the following:
               After Mining Station B Portal Opened
@@ -343,27 +413,6 @@ Hint Features - Bomb Slot, Half-Pipe, Luminoth Lore, Luminoth Corpse, Kinetic Or
                   Use Screw Attack (Space Jump)
                   # https://www.youtube.com/watch?v=SCqO5QVJHfE
                   Screw Attack at Z-Axis (Expert) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
-  > Event - Mining Station B Portal Opened
-      All of the following:
-          Morph Ball
-          Any of the following:
-              All of the following:
-                  Morph Ball Bomb
-                  Any of the following:
-                      Scan Visor
-                      Standable Terrain (Intermediate) and Use Screw Attack (Space Jump)
-                      Space Jump Boots and Slope Jump (Advanced)
-              All of the following:
-                  # https://www.youtube.com/watch?v=CvU0QLIgzms
-                  Dark Ammo ≥ 60 and Missile ≥ 10 and Scan Visor and Bomb Slot without Bombs (Ludicrous) and Movement (Expert)
-                  Any of the following:
-                      Instant Morph (Expert)
-                      Boost Ball and Wall Boost (Ludicrous)
-                  Any of the following:
-                      Shoot Darkburst
-                      Light Ammo ≥ 60 and Shoot Sonic Boom
-  > Lore Scan
-      Scan Visor
 
 > Lore Scan; Heals? False
   * Layers: default
@@ -377,19 +426,26 @@ Hint Features - Bomb Slot, Half-Pipe, Luminoth Lore, Luminoth Corpse, Kinetic Or
 Transport Center
 Extra - asset_id: 1272952761
 Hint Features - Bomb Slot, Half-Pipe, Portal
-> Portal to Crossroads; Heals? False; Spawn Point; Default Node
+> Portal to Crossroads; Heals? False; Default Node
   * Layers: default
   * Dark Portal to Crossroads/Portal from Transport Center
   * Extra - dock_name: VirtualNorth
-  > Door to Transport to Torvus Bog
+  > Front of Portal to Crossroads
+      Trivial
+
+> Front of Portal to Crossroads; Heals? False; Spawn Point
+  * Layers: default
+  > Bottom of Halfpipe
+      Trivial
+  > Portal to Crossroads
+      Trivial
+  > Front of Door to Transport to Torvus Bog
       Any of the following:
           Space Jump Boots
           # https://www.youtube.com/watch?v=fjjsnAXoaIc
           Movement (Beginner) and Use Screw Attack (No Space Jump)
           # https://www.youtube.com/watch?v=F1MFnqIj9gg
           Scan Visor and Combat/Scan Dash (Intermediate)
-  > Bottom of Halfpipe
-      Trivial
 
 > Door to Save Station A; Heals? False
   * Layers: default
@@ -408,14 +464,21 @@ Hint Features - Bomb Slot, Half-Pipe, Portal
         Destroy Seeker Locks
         Missile and Seeker Locks without Seeker Missiles (Advanced) and Use Screw Attack (Space Jump)
 
-  > Portal to Crossroads
+  > Front of Door to Transport to Torvus Bog
+      Trivial
+
+> Front of Door to Transport to Torvus Bog; Heals? False
+  * Layers: default
+  > Bottom of Halfpipe
+      Trivial
+  > Front of Portal to Crossroads
       All of the following:
           Morph Ball
           Any of the following:
               Boost Ball
               # https://www.youtube.com/watch?v=Rp3OR7CoL5M
               Morph Ball Bomb and Bomb Space Jump (Advanced) and Use Screw Attack (Space Jump)
-  > Bottom of Halfpipe
+  > Door to Transport to Torvus Bog
       Trivial
 
 > Door to Portal Terminal; Heals? False
@@ -440,11 +503,20 @@ Hint Features - Bomb Slot, Half-Pipe, Portal
 
 > Bottom of Halfpipe; Heals? False
   * Layers: default
-  > Portal to Crossroads
-      Boost Ball and Morph Ball
   > Door to Save Station A
       After Transport Center Gate
-  > Door to Transport to Torvus Bog
+  > Door to Portal Terminal
+      Trivial
+  > Pickup (Missile)
+      After Transport Center Gate
+  > Event - Transport Center Gate
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          # https://www.youtube.com/watch?v=kX1HXF_BCew
+          Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (No Space Jump)
+  > Front of Portal to Crossroads
+      Boost Ball and Morph Ball
+  > Front of Door to Transport to Torvus Bog
       Any of the following:
           Boost Ball and Morph Ball
           # Screw Attack bonk: https://www.youtube.com/watch?v=QR7cK9gGVLY
@@ -456,15 +528,6 @@ Hint Features - Bomb Slot, Half-Pipe, Portal
                   Standable Terrain (Advanced)
                   # Instant Morph Jump: https://www.youtube.com/watch?v=LEipbQwmNaQ
                   Morph Ball and Bomb Space Jump (Advanced) and Instant Morph (Advanced)
-  > Door to Portal Terminal
-      Trivial
-  > Pickup (Missile)
-      After Transport Center Gate
-  > Event - Transport Center Gate
-      Any of the following:
-          Morph Ball Bomb and Morph Ball
-          # https://www.youtube.com/watch?v=kX1HXF_BCew
-          Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (No Space Jump)
 
 ----------------
 Mining Station A
@@ -488,6 +551,11 @@ Hint Features - Luminoth Lore, Kinetic Orb Cannon, Spider Track, Translator Gate
   * Layers: default
   * Normal Door to Central Station Access/Door to Mining Station A
   * Extra - dock_name: East1
+  > Front of Door to Central Station Access
+      Trivial
+
+> Front of Door to Central Station Access; Heals? False
+  * Layers: default
   > Room Center
       Any of the following:
           After Mining Station A Gate
@@ -498,12 +566,21 @@ Hint Features - Luminoth Lore, Kinetic Orb Cannon, Spider Track, Translator Gate
                   Morph Ball Bomb and Bomb Space Jump (Advanced)
                   # https://www.youtube.com/watch?v=4bzhMg0WwbQ
                   Screw Attack and Movement (Expert)
+  > Door to Central Station Access
+      Trivial
 
-> Door to Mining Station Access; Heals? False; Spawn Point; Default Node
+> Door to Mining Station Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Mining Station Access/Door to Mining Station A
   * Extra - dock_name: West1
+  > Front of Door to Mining Station Access
+      Trivial
+
+> Front of Door to Mining Station Access; Heals? False; Spawn Point
+  * Layers: default
   > Room Center
+      Trivial
+  > Door to Mining Station Access
       Trivial
 
 > Door to Portal Access A; Heals? False
@@ -527,15 +604,6 @@ Hint Features - Luminoth Lore, Kinetic Orb Cannon, Spider Track, Translator Gate
           Scan Visor and Extended Dash (Advanced)
           # https://www.youtube.com/watch?v=Xlu62DIi4tY
           Screw Attack at Z-Axis (Beginner) and Use Screw Attack (No Space Jump)
-  > Door to Central Station Access
-      All of the following:
-          After Mining Station A Gate
-          Any of the following:
-              Space Jump Boots
-              # https://www.youtube.com/watch?v=vJ_MaFqBo0E
-              Morph Ball Bomb and Morph Ball and Bomb Jump (Advanced)
-  > Door to Mining Station Access
-      Trivial
   > Door to Portal Access A
       Trivial
   > Pickup (Missile)
@@ -555,6 +623,15 @@ Hint Features - Luminoth Lore, Kinetic Orb Cannon, Spider Track, Translator Gate
           # https://www.youtube.com/watch?v=j_kCNsjwzgI
           Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
   > Lore Scan
+      Trivial
+  > Front of Door to Central Station Access
+      All of the following:
+          After Mining Station A Gate
+          Any of the following:
+              Space Jump Boots
+              # https://www.youtube.com/watch?v=vJ_MaFqBo0E
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Advanced)
+  > Front of Door to Mining Station Access
       Trivial
 
 > Pickup (Missile); Heals? False
@@ -583,7 +660,11 @@ Hint Features - Luminoth Lore, Kinetic Orb Cannon, Spider Track, Translator Gate
 
 > Front of Lore Scan; Heals? False
   * Layers: default
-  > Door to Central Station Access
+  > Room Center
+      Trivial
+  > Event - Mining Station A Gate
+      Scan Visor
+  > Front of Door to Central Station Access
       Any of the following:
           All of the following:
               After Mining Station A Gate
@@ -592,10 +673,6 @@ Hint Features - Luminoth Lore, Kinetic Orb Cannon, Spider Track, Translator Gate
                   # https://www.youtube.com/watch?v=wlzNifVoqTI
                   Combat/Scan Dash (Intermediate)
           Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Expert)
-  > Room Center
-      Trivial
-  > Event - Mining Station A Gate
-      Scan Visor
 
 > Lore Scan; Heals? False
   * Layers: default
@@ -608,18 +685,25 @@ Hint Features - Luminoth Lore, Kinetic Orb Cannon, Spider Track, Translator Gate
 ----------------
 Storage A
 Extra - asset_id: 271726916
-> Door to Mining Station B; Heals? False; Spawn Point; Default Node
+> Door to Mining Station B; Heals? False; Default Node
   * Layers: default
   * Normal Door to Mining Station B/Door to Storage A
   * Extra - dock_name: North
+  > Front of Door to Mining Station B
+      Trivial
+
+> Front of Door to Mining Station B; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Missile)
+      Trivial
+  > Door to Mining Station B
       Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
   * Pickup 32; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (983085,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 983082, 'hud_memo': 983083, 'streamed_audio': 983092, 'sound': 983081, 'audio_fade': 983088})})
-  > Door to Mining Station B
+  > Front of Door to Mining Station B
       Trivial
 
 ----------------
@@ -630,12 +714,19 @@ Hint Features - Morph Ball Tunnel
   * Layers: default
   * Dark Door to Agon Temple/Door to Mine Shaft
   * Extra - dock_name: East
-  > Door to Mining Station B
-      Morph Ball
+  > Front of Door to Agon Temple
+      Trivial
+
+> Front of Door to Agon Temple; Heals? False
+  * Layers: default
   > Pickup (Energy Tank)
       Morph Ball Bomb and Morph Ball
+  > Door to Agon Temple
+      Trivial
+  > Front of Door to Mining Station B
+      Morph Ball
 
-> Door to Mining Station B; Heals? False; Spawn Point; Default Node
+> Door to Mining Station B; Heals? False; Default Node
   * Layers: default
   * Seeker Launcher Blast Shield to Mining Station B/Door to Mine Shaft
   * <https://youtu.be/Myr8MRM5ZDc&t=76>
@@ -645,29 +736,43 @@ Hint Features - Morph Ball Tunnel
         Destroy Seeker Locks
         Missile and Seeker Locks without Seeker Missiles (Advanced) and Use Screw Attack (Space Jump)
 
-  > Door to Agon Temple
+  > Front of Door to Mining Station B
+      Trivial
+
+> Front of Door to Mining Station B; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Agon Temple
       All of the following:
           Morph Ball
           Any of the following:
               Morph Ball Bomb
               # https://www.youtube.com/watch?v=w0Sepfbbj5g
               Boost Ball and Wall Boost (Expert)
+  > Door to Mining Station B
+      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 33; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'EnergyTank', 'connections': (), 'removals': (1048839,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 1048808, 'hud_memo': 1048825, 'streamed_audio': 1048836, 'sound': 1048812, 'audio_fade': 1048831})})
-  > Door to Mining Station B
+  > Front of Door to Mining Station B
       Morph Ball
 
 ----------------
 Portal Terminal
 Extra - asset_id: 734872743
-> Door to Portal Access A; Heals? False; Spawn Point; Default Node
+> Door to Portal Access A; Heals? False; Default Node
   * Layers: default
   * Normal Door to Portal Access A/Door to Portal Terminal
   * Extra - dock_name: North
+  > Front of Door to Portal Access A
+      Trivial
+
+> Front of Door to Portal Access A; Heals? False; Spawn Point
+  * Layers: default
   > Room Center
+      Trivial
+  > Door to Portal Access A
       Trivial
 
 > Door to Transport Center; Heals? False
@@ -694,8 +799,6 @@ Extra - asset_id: 734872743
 
 > Room Center; Heals? False
   * Layers: default
-  > Door to Portal Access A
-      Trivial
   > Door to Transport Center
       After Portal Site Gate
   > Portal to Portal Site
@@ -706,6 +809,8 @@ Extra - asset_id: 734872743
           # https://www.youtube.com/watch?v=KKoOubP1P7g
           Bomb Slot without Bombs (Expert) and Knowledge (Expert) and Screw Attack at Z-Axis (Expert) and Slope Jump (Expert) and Standable Terrain (Expert) and Disabled Room Randomizer and Activate Bomb Slot without Bombs (No Space Jump) and Use Screw Attack (No Space Jump)
   > Lore Scan
+      Trivial
+  > Front of Door to Portal Access A
       Trivial
 
 > Lore Scan; Heals? False
@@ -748,31 +853,45 @@ Extra - asset_id: 710454340
   * Layers: default
   * Normal Door to Agon Temple/Door to Temple Access
   * Extra - dock_name: North
-  > Door to Mining Station A
+  > Front of Door to Mining Station A
       Trivial
 
-> Door to Mining Station A; Heals? False; Spawn Point; Default Node
+> Door to Mining Station A; Heals? False; Default Node
   * Layers: default
   * Normal Door to Mining Station A/Door to Temple Access
   * Extra - dock_name: South
+  > Front of Door to Mining Station A
+      Trivial
+
+> Front of Door to Mining Station A; Heals? False; Spawn Point
+  * Layers: default
   > Door to Agon Temple
+      Trivial
+  > Door to Mining Station A
       Trivial
 
 ----------------
 Central Station Access
 Extra - asset_id: 4268351683
-> Door to Mining Station A; Heals? False; Spawn Point; Default Node
+> Door to Mining Station A; Heals? False; Default Node
   * Layers: default
   * Normal Door to Mining Station A/Door to Central Station Access
   * Extra - dock_name: West
+  > Front of Door to Mining Station A
+      Trivial
+
+> Front of Door to Mining Station A; Heals? False; Spawn Point
+  * Layers: default
   > Door to Central Mining Station
+      Trivial
+  > Door to Mining Station A
       Trivial
 
 > Door to Central Mining Station; Heals? False
   * Layers: default
   * Missile Blast Shield to Central Mining Station/Door to Central Station Access
   * Extra - dock_name: East
-  > Door to Mining Station A
+  > Front of Door to Mining Station A
       Any of the following:
           Space Jump Boots
           All of the following:
@@ -787,18 +906,25 @@ Extra - asset_id: 4268351683
 ----------------
 Sand Cache
 Extra - asset_id: 4105303847
-> Door to Mining Station A; Heals? False; Spawn Point; Default Node
+> Door to Mining Station A; Heals? False; Default Node
   * Layers: default
   * Normal Door to Mining Station A/Door to Sand Cache
   * Extra - dock_name: North
+  > Front of Door to Mining Station A
+      Trivial
+
+> Front of Door to Mining Station A; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Missile)
+      Trivial
+  > Door to Mining Station A
       Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
   * Pickup 35; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (1507352,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 1507348, 'hud_memo': 1507353, 'streamed_audio': 1507357, 'sound': 1507350, 'audio_fade': 1507355})})
-  > Door to Mining Station A
+  > Front of Door to Mining Station A
       Trivial
 
 ----------------
@@ -809,23 +935,37 @@ Hint Features - Luminoth Corpse, Morph Ball Tunnel, Kinetic Orb Cannon
   * Layers: default
   * Normal Door to Portal Terminal/Door to Portal Access A
   * Extra - dock_name: South
-  > Door to Mining Station A
-      Morph Ball
+  > Front of Door to Portal Terminal
+      Trivial
+
+> Front of Door to Portal Terminal; Heals? False
+  * Layers: default
   > Pickup (Missile)
       Morph Ball
+  > Door to Portal Terminal
+      Trivial
+  > Front of Door to Mining Station A
+      Morph Ball
 
-> Door to Mining Station A; Heals? False; Spawn Point; Default Node
+> Door to Mining Station A; Heals? False; Default Node
   * Layers: default
   * Normal Door to Mining Station A/Door to Portal Access A
   * Extra - dock_name: North
-  > Door to Portal Terminal
+  > Front of Door to Mining Station A
+      Trivial
+
+> Front of Door to Mining Station A; Heals? False; Spawn Point
+  * Layers: default
+  > Front of Door to Portal Terminal
       Morph Ball
+  > Door to Mining Station A
+      Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
   * Pickup 36; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (1573288,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 1573278, 'hud_memo': 1573284, 'streamed_audio': 1573280, 'sound': 1573276, 'audio_fade': 1573286})})
-  > Door to Portal Terminal
+  > Front of Door to Portal Terminal
       Morph Ball
 
 ----------------
@@ -836,24 +976,29 @@ Hint Features - Boss, Temple
   * Layers: default
   * Dark Door to Mine Shaft/Door to Agon Temple
   * Extra - dock_name: West
-  > Door to Temple Access
+  > Front of Door to Mine Shaft
+      Trivial
+
+> Front of Door to Mine Shaft; Heals? False
+  * Layers: default
+  > Door to Mine Shaft
+      Trivial
+  > Front of Door to Temple Access
       Any of the following:
           Morph Ball Bomb and Morph Ball
           Space Jump Boots and Standable Terrain (Intermediate)
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
-> Door to Temple Access; Heals? False; Spawn Point; Default Node
+> Door to Temple Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Temple Access/Door to Agon Temple
   * Extra - dock_name: South
-  > Door to Mine Shaft
-      Any of the following:
-          # Double Bomb Jump
-          Morph Ball Bomb and Morph Ball
-          Movement (Intermediate) and Use Screw Attack (Space Jump)
-  > Door to Sandcanyon
+  > Front of Door to Temple Access
       Trivial
+
+> Front of Door to Temple Access; Heals? False; Spawn Point
+  * Layers: default
   > Room Center
       Any of the following:
           Space Jump Boots or Before Bomb Guardian
@@ -866,17 +1011,25 @@ Hint Features - Boss, Temple
                   Use Screw Attack (Space Jump)
                   Boost Ball and Morph Ball
                   Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Front of Door to Mine Shaft
+      Any of the following:
+          # Double Bomb Jump
+          Morph Ball Bomb and Morph Ball
+          Movement (Intermediate) and Use Screw Attack (Space Jump)
+  > Door to Temple Access
+      Trivial
+  > Front of Door to Sandcanyon
+      Trivial
 
 > Door to Controller Access; Heals? False
   * Layers: default
   * Normal Door to Controller Access/Door to Agon Temple
   * Extra - dock_name: North
-  > Door to Mine Shaft
+  > Front of Door to Controller Access
       Trivial
-  > Door to Sandcanyon
-      Any of the following:
-          Morph Ball Bomb and Morph Ball
-          Movement (Intermediate) and Use Screw Attack (Space Jump)
+
+> Front of Door to Controller Access; Heals? False
+  * Layers: default
   > Room Center
       Any of the following:
           Space Jump Boots or Before Bomb Guardian
@@ -889,17 +1042,32 @@ Hint Features - Boss, Temple
                   Use Screw Attack (Space Jump)
                   Boost Ball and Morph Ball
                   Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Front of Door to Mine Shaft
+      Trivial
+  > Door to Controller Access
+      Trivial
+  > Front of Door to Sandcanyon
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          Movement (Intermediate) and Use Screw Attack (Space Jump)
 
 > Door to Sandcanyon; Heals? False
   * Layers: default
   * Light Door to Sandcanyon/Door to Agon Temple
   * Extra - dock_name: East
-  > Door to Temple Access
+  > Front of Door to Sandcanyon
       Trivial
-  > Door to Controller Access
+
+> Front of Door to Sandcanyon; Heals? False
+  * Layers: default
+  > Front of Door to Temple Access
+      Trivial
+  > Front of Door to Controller Access
       Any of the following:
           Morph Ball Bomb and Morph Ball
           Movement (Intermediate) and Use Screw Attack (Space Jump)
+  > Door to Sandcanyon
+      Trivial
 
 > Pickup (Morph Ball Bomb); Heals? False
   * Layers: default
@@ -917,31 +1085,6 @@ Hint Features - Boss, Temple
 
 > Room Center; Heals? False
   * Layers: default
-  > Door to Temple Access
-      Any of the following:
-          All of the following:
-              Morph Ball
-              Morph Ball Bomb or Power Bomb
-          All of the following:
-              Knowledge (Beginner)
-              Any of the following:
-                  Use Screw Attack (Space Jump)
-                  Boost Ball and Morph Ball
-                  Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
-          Space Jump Boots and Slope Jump (Beginner)
-  > Door to Controller Access
-      Any of the following:
-          Before Bomb Guardian
-          All of the following:
-              Morph Ball
-              Morph Ball Bomb or Power Bomb
-          All of the following:
-              Knowledge (Beginner)
-              Any of the following:
-                  Use Screw Attack (Space Jump)
-                  Boost Ball and Morph Ball
-                  Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
-          Space Jump Boots and Slope Jump (Beginner)
   > Event - Bomb Guardian
       Any of the following:
           Power Beam
@@ -956,6 +1099,31 @@ Hint Features - Boss, Temple
               Any of the following:
                   Use Screw Attack (Space Jump)
                   Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Front of Door to Temple Access
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Morph Ball Bomb or Power Bomb
+          All of the following:
+              Knowledge (Beginner)
+              Any of the following:
+                  Use Screw Attack (Space Jump)
+                  Boost Ball and Morph Ball
+                  Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          Space Jump Boots and Slope Jump (Beginner)
+  > Front of Door to Controller Access
+      Any of the following:
+          Before Bomb Guardian
+          All of the following:
+              Morph Ball
+              Morph Ball Bomb or Power Bomb
+          All of the following:
+              Knowledge (Beginner)
+              Any of the following:
+                  Use Screw Attack (Space Jump)
+                  Boost Ball and Morph Ball
+                  Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          Space Jump Boots and Slope Jump (Beginner)
 
 ----------------
 Central Mining Station
@@ -965,10 +1133,11 @@ Hint Features - Keybearer Corpse, Luminoth Corpse, Spider Track
   * Layers: default
   * Light Door to Command Center Access/Door to Central Mining Station (Top)
   * Extra - dock_name: East_Upper
-  > Door to Central Station Access
-      After Central Mining Station Pirates
-  > Door to Command Center Access (Bottom)
-      After Central Mining Station Pirates
+  > Front of Door to Command Center Access (Top)
+      Trivial
+
+> Front of Door to Command Center Access (Top); Heals? False
+  * Layers: default
   > Event - Central Mining Station Pirates
       Trivial
   > Center Platforms
@@ -985,19 +1154,22 @@ Hint Features - Keybearer Corpse, Luminoth Corpse, Spider Track
                   Morph Ball and Roll Jump (Advanced)
           # https://www.youtube.com/watch?v=7IYUQ9MRmCE
           Scan Visor and Extended Dash (Expert)
+  > Door to Command Center Access (Top)
+      Trivial
+  > Front of Door to Central Station Access
+      After Central Mining Station Pirates
+  > Front of Door to Command Center Access (Bottom)
+      After Central Mining Station Pirates
 
-> Door to Central Station Access; Heals? False; Spawn Point; Default Node
+> Door to Central Station Access; Heals? False; Default Node
   * Layers: default
   * Missile Blast Shield to Central Station Access/Door to Central Mining Station
   * Extra - dock_name: West
-  > Door to Command Center Access (Top)
-      All of the following:
-          Morph Ball and After Central Mining Station Pirates
-          Any of the following:
-              Spider Ball
-              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Intermediate)
-  > Door to Command Center Access (Bottom)
-      After Central Mining Station Pirates
+  > Front of Door to Central Station Access
+      Trivial
+
+> Front of Door to Central Station Access; Heals? False; Spawn Point
+  * Layers: default
   > Event - Central Mining Station Pirates
       Trivial
   > Center Platforms
@@ -1009,13 +1181,30 @@ Hint Features - Keybearer Corpse, Luminoth Corpse, Spider Track
               Scan Visor and Combat/Scan Dash (Expert) and Standable Terrain (Beginner)
               # Screw Attack: https://www.youtube.com/watch?v=mprL_DAECUI
               Standable Terrain (Beginner) and Use Screw Attack (Space Jump)
+  > Front of Door to Command Center Access (Top)
+      All of the following:
+          Morph Ball and After Central Mining Station Pirates
+          Any of the following:
+              Spider Ball
+              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Intermediate)
+  > Door to Central Station Access
+      Trivial
+  > Front of Door to Command Center Access (Bottom)
+      After Central Mining Station Pirates
 
 > Door to Command Center Access (Bottom); Heals? False
   * Layers: default
   * Normal Door to Command Center Access/Door to Central Mining Station (Bottom)
   * Extra - dock_name: East_Lower
-  > Door to Central Station Access
+  > Front of Door to Command Center Access (Bottom)
+      Trivial
+
+> Front of Door to Command Center Access (Bottom); Heals? False
+  * Layers: default
+  > Front of Door to Central Station Access
       After Central Mining Station Pirates
+  > Door to Command Center Access (Bottom)
+      Trivial
 
 > Pickup (Dark Ammo); Heals? False
   * Layers: default
@@ -1027,21 +1216,21 @@ Hint Features - Keybearer Corpse, Luminoth Corpse, Spider Track
 > Event - Central Mining Station Pirates; Heals? False
   * Layers: default
   * Event Central Mining Station Pirates
-  > Door to Central Station Access
+  > Front of Door to Central Station Access
       Trivial
 
 > Next to Pickup; Heals? False
   * Layers: default
-  > Door to Central Station Access
-      After Central Mining Station Pirates
-  > Door to Command Center Access (Bottom)
-      After Central Mining Station Pirates
   > Pickup (Dark Ammo)
       Morph Ball
   > Keybearer Corpse (J-Stl)
       Morph Ball and After Central Mining Station Pirates
   > Center Platforms
       Trivial
+  > Front of Door to Central Station Access
+      After Central Mining Station Pirates
+  > Front of Door to Command Center Access (Bottom)
+      After Central Mining Station Pirates
 
 > Keybearer Corpse (J-Stl); Heals? False
   * Layers: default
@@ -1053,7 +1242,11 @@ Hint Features - Keybearer Corpse, Luminoth Corpse, Spider Track
 
 > Center Platforms; Heals? False
   * Layers: default
-  > Door to Command Center Access (Top)
+  > Event - Central Mining Station Pirates
+      Trivial
+  > Next to Pickup
+      Trivial
+  > Front of Door to Command Center Access (Top)
       Any of the following:
           Use Screw Attack (Space Jump)
           Scan Visor and Extended Dash (Expert)
@@ -1063,14 +1256,10 @@ Hint Features - Keybearer Corpse, Luminoth Corpse, Spider Track
                   # Movement: https://youtu.be/BDJ_Fk1VBgQ
                   Movement (Intermediate) or Roll Jump (Advanced)
                   Scan Visor and Combat/Scan Dash (Advanced)
-  > Door to Central Station Access
+  > Front of Door to Central Station Access
       After Central Mining Station Pirates
-  > Door to Command Center Access (Bottom)
+  > Front of Door to Command Center Access (Bottom)
       After Central Mining Station Pirates
-  > Event - Central Mining Station Pirates
-      Trivial
-  > Next to Pickup
-      Trivial
 
 ----------------
 Controller Access
@@ -1079,21 +1268,28 @@ Extra - asset_id: 3209927104
   * Layers: default
   * Normal Door to Agon Energy Controller/Door to Controller Access
   * Extra - dock_name: North
-  > Door to Agon Temple
+  > Front of Door to Agon Temple
       Any of the following:
           Morph Ball Bomb and Morph Ball
           # https://www.youtube.com/watch?v=-26zjhgXqWQ
           Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (Space Jump)
 
-> Door to Agon Temple; Heals? False; Spawn Point; Default Node
+> Door to Agon Temple; Heals? False; Default Node
   * Layers: default
   * Normal Door to Agon Temple/Door to Controller Access
   * Extra - dock_name: South1
+  > Front of Door to Agon Temple
+      Trivial
+
+> Front of Door to Agon Temple; Heals? False; Spawn Point
+  * Layers: default
   > Door to Agon Energy Controller
       Any of the following:
           Morph Ball Bomb and Morph Ball
           # https://www.youtube.com/watch?v=-26zjhgXqWQ
           Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (Space Jump)
+  > Door to Agon Temple
+      Trivial
 
 ----------------
 Sandcanyon
@@ -1103,8 +1299,11 @@ Hint Features - Abyss, Kinetic Orb Cannon
   * Layers: default
   * Normal Door to Ventilation Area A/Door to Sandcanyon
   * Extra - dock_name: East
-  > Door to Agon Temple
-      Morph Ball
+  > Front of Door to Ventilation Area A
+      Trivial
+
+> Front of Door to Ventilation Area A; Heals? False
+  * Layers: default
   > Center Platform
       All of the following:
           Morph Ball and Space Jump Boots
@@ -1113,15 +1312,26 @@ Hint Features - Abyss, Kinetic Orb Cannon
               Screw Attack or Single Room Out of Bounds (Expert)
               # https://www.youtube.com/watch?v=KFsv-zg_w50
               Boost Ball and Before Sandcanyon Denzium and Boost Jump (Expert)
+  > Door to Ventilation Area A
+      Trivial
+  > Front of Door to Agon Temple
+      Morph Ball
 
-> Door to Agon Temple; Heals? False; Spawn Point; Default Node
+> Door to Agon Temple; Heals? False; Default Node
   * Layers: default
   * Light Door to Agon Temple/Door to Sandcanyon
   * Extra - dock_name: West
-  > Door to Ventilation Area A
-      Morph Ball
+  > Front of Door to Agon Temple
+      Trivial
+
+> Front of Door to Agon Temple; Heals? False; Spawn Point
+  * Layers: default
   > Center Platform
       Use Screw Attack (Space Jump)
+  > Front of Door to Ventilation Area A
+      Morph Ball
+  > Door to Agon Temple
+      Trivial
 
 > Pickup (Power Bomb); Heals? False
   * Layers: default
@@ -1132,20 +1342,20 @@ Hint Features - Abyss, Kinetic Orb Cannon
 
 > Center Platform; Heals? False
   * Layers: default
-  > Door to Ventilation Area A
+  > Pickup (Power Bomb)
+      After Sandcanyon Denzium
+  > Event - Sandcanyon Denzium
+      Morph Ball and Power Bomb
+  > Front of Door to Ventilation Area A
       # https://www.youtube.com/watch?v=1mbgP8epiQw
       Terminal Fall Abuse (Beginner) and Normal Damage ≥ 10 and Use Screw Attack (Space Jump)
-  > Door to Agon Temple
+  > Front of Door to Agon Temple
       All of the following:
           Morph Ball and Space Jump Boots
           Any of the following:
               Screw Attack
               # https://www.youtube.com/watch?v=PWAG1cT-GLM
               Boost Ball and Before Sandcanyon Denzium and Boost Jump (Expert)
-  > Pickup (Power Bomb)
-      After Sandcanyon Denzium
-  > Event - Sandcanyon Denzium
-      Morph Ball and Power Bomb
 
 > Event - Sandcanyon Denzium; Heals? False
   * Layers: default
@@ -1160,7 +1370,7 @@ Extra - asset_id: 1887668217
   * Layers: default
   * Dark Door to Command Center/Door to Command Center Access (Bottom)
   * Extra - dock_name: EastLowerDoor
-  > Door to Central Mining Station (Bottom)
+  > Front of Door to Central Mining Station (Bottom)
       Trivial
 
 > Door to Central Mining Station (Top); Heals? False
@@ -1174,7 +1384,20 @@ Extra - asset_id: 1887668217
   * Layers: default
   * Morph Ball Door to Command Center/Morph Ball Door to Command Center Access
   * Extra - dock_name: EastMorphballTunnel
-  > Door to Central Mining Station (Bottom)
+  > Front of Morph Ball Door to Command Center
+      Trivial
+
+> Front of Morph Ball Door to Command Center; Heals? False
+  * Layers: default
+  > Event - Command Center Access Grates/Crates
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb or Power Bomb
+              Boost Ball and Wall Boost (Expert)
+  > Morph Ball Door to Command Center
+      Trivial
+  > Front of Door to Central Mining Station (Bottom)
       All of the following:
           After Command Center Access Grates/Crates
           Any of the following:
@@ -1191,21 +1414,18 @@ Extra - asset_id: 1887668217
                       Space Jump Boots
                       # https://www.youtube.com/watch?v=IC4xKReG6jk
                       Standable Terrain (Beginner)
-  > Event - Command Center Access Grates/Crates
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Morph Ball Bomb or Power Bomb
-              Boost Ball and Wall Boost (Expert)
 
-> Door to Central Mining Station (Bottom); Heals? False; Spawn Point; Default Node
+> Door to Central Mining Station (Bottom); Heals? False; Default Node
   * Layers: default
   * Normal Door to Central Mining Station/Door to Command Center Access (Bottom)
   * Extra - dock_name: West_Lower
+  > Front of Door to Central Mining Station (Bottom)
+      Trivial
+
+> Front of Door to Central Mining Station (Bottom); Heals? False; Spawn Point
+  * Layers: default
   > Door to Command Center (Bottom)
       Trivial
-  > Morph Ball Door to Command Center
-      After Command Center Access Grates/Crates
   > Event - Command Center Access Grates/Crates
       Any of the following:
           All of the following:
@@ -1214,6 +1434,10 @@ Extra - asset_id: 1887668217
                   Morph Ball Bomb or Power Bomb
                   Boost Ball and Knowledge (Beginner)
           Knowledge (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Front of Morph Ball Door to Command Center
+      After Command Center Access Grates/Crates
+  > Door to Central Mining Station (Bottom)
+      Trivial
 
 > Door to Command Center (Top); Heals? False
   * Layers: default
@@ -1225,9 +1449,9 @@ Extra - asset_id: 1887668217
 > Event - Command Center Access Grates/Crates; Heals? False
   * Layers: default
   * Event Command Center Access Grates/Crates
-  > Morph Ball Door to Command Center
+  > Front of Morph Ball Door to Command Center
       Trivial
-  > Door to Central Mining Station (Bottom)
+  > Front of Door to Central Mining Station (Bottom)
       Any of the following:
           All of the following:
               Morph Ball
@@ -1242,10 +1466,15 @@ Extra - asset_id: 1887668217
 Agon Energy Controller
 Extra - asset_id: 50083607
 Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Luminoth Corpse
-> Door to Controller Access; Heals? False; Spawn Point; Default Node
+> Door to Controller Access; Heals? False; Default Node
   * Layers: default
   * Normal Door to Controller Access/Door to Agon Energy Controller
   * Extra - dock_name: South
+  > Front of Door to Controller Access
+      Trivial
+
+> Front of Door to Controller Access; Heals? False; Spawn Point
+  * Layers: default
   > Teleporter to Sanctuary Fortress
       After Main Energy Controller Pickup
   > Teleporter to Torvus Bog
@@ -1258,12 +1487,14 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Lumino
       Trivial
   > Lore Scan
       Trivial
+  > Door to Controller Access
+      Trivial
 
 > Pickup (Amber Translator); Heals? False
   * Layers: default
   * Pickup 46; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'custom', 'exclude_memo_from_removal': False, 'original_model': 'AmberTranslator', 'connections': (frozendict.frozendict({'target': 2555936, 'message': 'ZERO'}),), 'removals': (2556035, 136773993, 136773766), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'collision_size': frozendict.frozendict({'x': 1.0, 'y': 1.0, 'z': 2.0}), 'layer': 'Default'})
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Teleporter to Sanctuary Fortress; Heals? False
@@ -1272,7 +1503,7 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Lumino
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 405209185
   * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Teleporter to Torvus Bog; Heals? False
@@ -1281,7 +1512,7 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Lumino
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 405209407
   * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Teleporter to Great Temple; Heals? False
@@ -1290,13 +1521,13 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Lumino
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 405209411
   * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Event - Agon Energy Returned; Heals? False
   * Layers: default
   * Event Agon Energy Returned
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 > Event - Agon Energy Controller Pickup; Heals? False
@@ -1310,7 +1541,7 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Lumino
   * Hint
   * Extra - translator: Amber
   * Extra - string_asset_id: 4021961856
-  > Door to Controller Access
+  > Front of Door to Controller Access
       Trivial
 
 ----------------
@@ -1321,32 +1552,39 @@ Hint Features - Morph Ball Tunnel
   * Layers: default
   * Power Bomb Blast Shield to Transport to Sanctuary Fortress/Door to Ventilation Area A
   * Extra - dock_name: docks_North
-  > Door to Main Reactor
+  > Front of Door to Main Reactor
       Morph Ball
 
 > Door to Sandcanyon; Heals? False
   * Layers: default
   * Normal Door to Sandcanyon/Door to Ventilation Area A
   * Extra - dock_name: docks_West
-  > Door to Main Reactor
+  > Front of Door to Main Reactor
       Morph Ball
 
-> Door to Main Reactor; Heals? False; Spawn Point; Default Node
+> Door to Main Reactor; Heals? False; Default Node
   * Layers: default
   * Light Door to Main Reactor/Door to Ventilation Area A
   * Extra - dock_name: docks_docks_East
+  > Front of Door to Main Reactor
+      Trivial
+
+> Front of Door to Main Reactor; Heals? False; Spawn Point
+  * Layers: default
   > Door to Transport to Sanctuary Fortress
       Morph Ball Bomb and Morph Ball
   > Door to Sandcanyon
       Morph Ball
   > Pickup (Missile)
       Morph Ball Bomb and Morph Ball
+  > Door to Main Reactor
+      Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
   * Pickup 47; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (2621557,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 2621565, 'hud_memo': 2621496, 'streamed_audio': 2621563, 'sound': 2621564, 'audio_fade': 2621531})})
-  > Door to Main Reactor
+  > Front of Door to Main Reactor
       Trivial
 
 ----------------
@@ -1357,60 +1595,81 @@ Hint Features - Elevator, Morph Ball Tunnel, Portal
   * Layers: default
   * Light Door to Command Center Access/Door to Command Center (Top)
   * Extra - dock_name: WestUpperDoor
-  > Door to Security Station B (First)
-      Trivial
-  > Door to Command Center Access (Bottom)
+  > Front of Door to Command Center Access (Top)
       Trivial
 
-> Morph Ball Door to Command Center Access; Heals? False; Spawn Point; Default Node
+> Front of Door to Command Center Access (Top); Heals? False
+  * Layers: default
+  > Door to Security Station B (First)
+      Trivial
+  > Door to Command Center Access (Top)
+      Trivial
+  > Front of Door to Command Center Access (Bottom)
+      Trivial
+
+> Morph Ball Door to Command Center Access; Heals? False; Default Node
   * Layers: default
   * Morph Ball Door to Command Center Access/Morph Ball Door to Command Center
   * Extra - dock_name: WestMorphballTunnel
-  > Door to Command Center Access (Bottom)
-      After Command Center Gate Closed and After Command Center Gate Opened
+  > Front of Morph Ball Door to Command Center Access
+      Trivial
+
+> Front of Morph Ball Door to Command Center Access; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Missile)
       Morph Ball
   > Event - Command Center Gate Closed
       Morph Ball
+  > Morph Ball Door to Command Center Access
+      Trivial
+  > Front of Door to Command Center Access (Bottom)
+      After Command Center Gate Closed and After Command Center Gate Opened
 
 > Door to Security Station B (First); Heals? False
   * Layers: default
   * Normal Door to Security Station B/Door to Command Center (First)
   * Extra - dock_name: North
-  > Door to Command Center Access (Top)
+  > Front of Door to Command Center Access (Top)
       Trivial
 
 > Door to Biostorage Access; Heals? False
   * Layers: default
   * Normal Door to Biostorage Access/Door to Command Center
   * Extra - dock_name: South
-  > Door to Command Center Access (Bottom)
+  > Front of Door to Command Center Access (Bottom)
       Before Command Center Gate Closed or After Command Center Gate Opened
 
 > Door to Command Center Access (Bottom); Heals? False
   * Layers: default
   * Dark Door to Command Center Access/Door to Command Center (Bottom)
   * Extra - dock_name: WestLowerDoor
-  > Door to Command Center Access (Top)
-      All of the following:
-          Scan Visor
-          Any of the following:
-              Space Jump Boots or Combat/Scan Dash (Beginner)
-              Movement (Beginner) and Use Screw Attack (No Space Jump)
-  > Morph Ball Door to Command Center Access
-      Morph Ball and After Command Center Gate Closed and After Command Center Gate Opened
+  > Front of Door to Command Center Access (Bottom)
+      Trivial
+
+> Front of Door to Command Center Access (Bottom); Heals? False
+  * Layers: default
   > Door to Biostorage Access
       Before Command Center Gate Closed or After Command Center Gate Opened
   > Portal to Doomed Entry
       Trivial
   > Event - Command Center Gate Closed
       Trivial
+  > Front of Door to Command Center Access (Top)
+      All of the following:
+          Scan Visor
+          Any of the following:
+              Space Jump Boots or Combat/Scan Dash (Beginner)
+              Movement (Beginner) and Use Screw Attack (No Space Jump)
+  > Front of Morph Ball Door to Command Center Access
+      Morph Ball and After Command Center Gate Closed and After Command Center Gate Opened
+  > Door to Command Center Access (Bottom)
+      Trivial
 
 > Portal to Doomed Entry; Heals? False
   * Layers: default
   * Dark Portal to Doomed Entry/Portal from Command Center
   * Extra - dock_name: VirtualNorth
-  > Door to Command Center Access (Bottom)
+  > Front of Door to Command Center Access (Bottom)
       Trivial
 
 > Door to Security Station B (Second); Heals? False
@@ -1424,13 +1683,13 @@ Hint Features - Elevator, Morph Ball Tunnel, Portal
   * Layers: default
   * Pickup 48; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (2752721,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 2752798, 'hud_memo': 2752826, 'streamed_audio': 2752825, 'sound': 2752823, 'audio_fade': 2752824})})
-  > Morph Ball Door to Command Center Access
+  > Front of Morph Ball Door to Command Center Access
       Morph Ball
 
 > Event - Command Center Gate Closed; Heals? False
   * Layers: default
   * Event Command Center Gate Closed
-  > Door to Command Center Access (Bottom)
+  > Front of Door to Command Center Access (Bottom)
       Trivial
 
 > Event - Command Center Gate Opened; Heals? False
@@ -1467,15 +1726,18 @@ Hint Features - Elevator, Keybearer Corpse, Luminoth Corpse, Phazon, Spider Trac
   * Layers: default
   * No Return Portal to Dark Oasis/Portal to Main Reactor
   * Extra - dock_name: VirtualEast
-  > Door to Sand Processing
+  > Front of Door to Sand Processing
       Trivial
 
 > Door to Ventilation Area A; Heals? False
   * Layers: default
   * Light Door to Ventilation Area A/Door to Main Reactor
   * Extra - dock_name: West_TopNorth
-  > Door to Storage D
+  > Front of Door to Ventilation Area A
       Trivial
+
+> Front of Door to Ventilation Area A; Heals? False
+  * Layers: default
   > Event - Dark Samus 1
       # https://www.youtube.com/watch?v=ZcW-Ws9nA6Q
       Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Intermediate) and Single Room Out of Bounds (Intermediate) and Standable Terrain (Intermediate)
@@ -1483,38 +1745,55 @@ Hint Features - Elevator, Keybearer Corpse, Luminoth Corpse, Phazon, Spider Trac
       After Dark Samus 1
   > Bottom Floor (Center)
       After Dark Samus 1
+  > Door to Ventilation Area A
+      Trivial
+  > Front of Door to Storage D
+      Trivial
 
-> Door to Sand Processing; Heals? False; Spawn Point; Default Node
+> Door to Sand Processing; Heals? False; Default Node
   * Layers: default
   * Normal Door to Sand Processing/Door to Main Reactor
   * Extra - dock_name: East_TopSouth
-  > Door to Security Station B
+  > Front of Door to Sand Processing
+      Trivial
+
+> Front of Door to Sand Processing; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Sand Processing
+      Trivial
+  > Front of Door to Security Station B
       Trivial
 
 > Door to Storage D; Heals? False
   * Layers: default
   * Normal Door to Storage D/Door to Main Reactor
   * Extra - dock_name: West_TopSouth
-  > Door to Ventilation Area A
+  > Front of Door to Storage D
+      Trivial
+
+> Front of Door to Storage D; Heals? False
+  * Layers: default
+  > Bottom Floor (Center)
+      After Dark Samus 1
+  > Front of Door to Ventilation Area A
       # https://www.youtube.com/watch?v=KIP9PWtVt7o
       Morph Ball Bomb and Bomb Space Jump (Expert) and Use Screw Attack (Space Jump)
-  > Door to Security Station B
+  > Door to Storage D
+      Trivial
+  > Front of Door to Security Station B
       Any of the following:
           Shoot Dark Beam
           Knowledge (Beginner) and Use Screw Attack (No Space Jump)
-  > Bottom Floor (Center)
-      After Dark Samus 1
 
 > Door to Security Station B; Heals? False
   * Layers: default
   * Dark Door to Security Station B/Door to Main Reactor
   * Extra - dock_name: Docks_Docks_Docks_South
-  > Door to Sand Processing
-      After Dark Samus 1
-  > Door to Storage D
-      Any of the following:
-          Shoot Dark Beam
-          Knowledge (Beginner) and Use Screw Attack (No Space Jump)
+  > Front of Door to Security Station B
+      Trivial
+
+> Front of Door to Security Station B; Heals? False
+  * Layers: default
   > Event - Dark Samus 1
       Trivial
   > Next to Pickup
@@ -1532,6 +1811,14 @@ Hint Features - Elevator, Keybearer Corpse, Luminoth Corpse, Phazon, Spider Trac
                       Scan Visor and Combat/Scan Dash (Expert)
   > Bottom Floor (Center)
       After Dark Samus 1
+  > Front of Door to Sand Processing
+      After Dark Samus 1
+  > Front of Door to Storage D
+      Any of the following:
+          Shoot Dark Beam
+          Knowledge (Beginner) and Use Screw Attack (No Space Jump)
+  > Door to Security Station B
+      Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
@@ -1551,7 +1838,7 @@ Hint Features - Elevator, Keybearer Corpse, Luminoth Corpse, Phazon, Spider Trac
   * Hint
   * Extra - hint_index: 53
   * Extra - string_asset_id: 3729939997
-  > Door to Ventilation Area A
+  > Front of Door to Ventilation Area A
       Trivial
 
 > Next to Pickup; Heals? False
@@ -1569,17 +1856,6 @@ Hint Features - Elevator, Keybearer Corpse, Luminoth Corpse, Phazon, Spider Trac
 
 > Bottom Floor (Center); Heals? False
   * Layers: default
-  > Door to Ventilation Area A
-      All of the following:
-          Morph Ball and After Dark Samus 1 and After Main Reactor Reloaded after DS1
-          Any of the following:
-              Spider Ball
-              Morph Ball Bomb and Bomb Space Jump (Expert) and Use Screw Attack (Space Jump)
-  > Door to Storage D
-      After Dark Samus 1
-  > Door to Security Station B
-      # https://www.youtube.com/watch?v=5oRhpi4sF8M
-      Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Advanced) and Standable Terrain (Advanced)
   > Next to Pickup
       All of the following:
           Morph Ball and After Dark Samus 1 and After Main Reactor Reloaded after DS1
@@ -1596,22 +1872,40 @@ Hint Features - Elevator, Keybearer Corpse, Luminoth Corpse, Phazon, Spider Trac
                               # No Space Jump -> https://www.youtube.com/watch?v=PHjXnyJA2is
                               Bomb Space Jump (Expert) and Standable Terrain (Intermediate)
                               Space Jump Boots and Bomb Space Jump (Intermediate) and Standable Terrain (Intermediate)
+  > Front of Door to Ventilation Area A
+      All of the following:
+          Morph Ball and After Dark Samus 1 and After Main Reactor Reloaded after DS1
+          Any of the following:
+              Spider Ball
+              Morph Ball Bomb and Bomb Space Jump (Expert) and Use Screw Attack (Space Jump)
+  > Front of Door to Storage D
+      After Dark Samus 1
+  > Front of Door to Security Station B
+      # https://www.youtube.com/watch?v=5oRhpi4sF8M
+      Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Advanced) and Standable Terrain (Advanced)
 
 ----------------
 Biostorage Access
 Extra - asset_id: 3739948648
-> Door to Command Center; Heals? False; Spawn Point; Default Node
+> Door to Command Center; Heals? False; Default Node
   * Layers: default
   * Normal Door to Command Center/Door to Biostorage Access
   * Extra - dock_name: North
+  > Front of Door to Command Center
+      Trivial
+
+> Front of Door to Command Center; Heals? False; Spawn Point
+  * Layers: default
   > Door to Biostorage Station
+      Trivial
+  > Door to Command Center
       Trivial
 
 > Door to Biostorage Station; Heals? False
   * Layers: default
   * Missile Blast Shield to Biostorage Station/Door to Biostorage Access
   * Extra - dock_name: South
-  > Door to Command Center
+  > Front of Door to Command Center
       Trivial
 
 ----------------
@@ -1621,31 +1915,38 @@ Extra - asset_id: 182082287
   * Layers: default
   * Missile Blast Shield to Command Center/Door to Security Station B (Second)
   * Extra - dock_name: South_Observation
-  > Door to Command Center (First)
+  > Front of Door to Command Center (First)
       Trivial
 
 > Door to Main Reactor; Heals? False
   * Layers: default
   * Dark Door to Main Reactor/Door to Security Station B
   * Extra - dock_name: North
-  > Door to Command Center (First)
+  > Front of Door to Command Center (First)
       Shoot Dark Beam
 
-> Door to Command Center (First); Heals? False; Spawn Point; Default Node
+> Door to Command Center (First); Heals? False; Default Node
   * Layers: default
   * Normal Door to Command Center/Door to Security Station B (First); Excluded from Dock Lock Rando
   * Extra - dock_name: South
+  > Front of Door to Command Center (First)
+      Trivial
+
+> Front of Door to Command Center (First); Heals? False; Spawn Point
+  * Layers: default
   > Door to Command Center (Second)
       Trivial
   > Door to Main Reactor
       Shoot Dark Beam
   > Event - Main Reactor Reloaded via Security Station B
       After Dark Samus 1
+  > Door to Command Center (First)
+      Trivial
 
 > Event - Main Reactor Reloaded via Security Station B; Heals? False
   * Layers: default
   * Event Main Reactor Reloaded after DS1
-  > Door to Command Center (First)
+  > Front of Door to Command Center (First)
       Trivial
 
 ----------------
@@ -1662,13 +1963,20 @@ Hint Features - Bomb Slot, Half-Pipe
           # https://youtu.be/C8Qaq6Qx1Ns
           Movement (Intermediate) and Use Screw Attack (No Space Jump)
 
-> Door to Save Station C; Heals? False; Spawn Point; Default Node
+> Door to Save Station C; Heals? False; Default Node
   * Layers: default
   * Normal Door to Save Station C/Door to Sand Processing
   * Extra - dock_name: East
+  > Front of Door to Save Station C
+      Trivial
+
+> Front of Door to Save Station C; Heals? False; Spawn Point
+  * Layers: default
   > Event - Main Reactor Reloaded via Sand Processing
       After Dark Samus 1
   > Bottom of Halfpipe
+      Trivial
+  > Door to Save Station C
       Trivial
 
 > Pickup (Missile); Heals? False
@@ -1692,14 +2000,28 @@ Hint Features - Bomb Slot, Half-Pipe
 > Event - Main Reactor Reloaded via Sand Processing; Heals? False
   * Layers: default
   * Event Main Reactor Reloaded after DS1
-  > Door to Save Station C
+  > Front of Door to Save Station C
       Trivial
 
 > Bottom of Halfpipe; Heals? False
   * Layers: default
   > Door to Main Reactor
       Missile
-  > Door to Save Station C
+  > Pickup (Missile)
+      After Sand Processing Sand Drained
+  > Tunnel
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Boost Ball
+                  # https://youtu.be/cEghPZPy_AM?t=35
+                  Morph Ball Bomb or Wall Boost (Expert)
+              # https://www.youtube.com/watch?v=CzhDj8MmERg
+              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
+              # https://www.youtube.com/watch?v=1Meg1C7X-1Q
+              Screw Attack into Tunnels/Openings (Expert) and Use Screw Attack (Space Jump)
+  > Front of Door to Save Station C
       Any of the following:
           All of the following:
               Before Sand Processing Sand Drained
@@ -1716,20 +2038,6 @@ Hint Features - Bomb Slot, Half-Pipe
                   # https://www.youtube.com/watch?v=1wn3oAxQg4I
                   Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
                   Slope Jump (Intermediate) and Use Screw Attack (Space Jump)
-  > Pickup (Missile)
-      After Sand Processing Sand Drained
-  > Tunnel
-      All of the following:
-          Morph Ball
-          Any of the following:
-              All of the following:
-                  Boost Ball
-                  # https://youtu.be/cEghPZPy_AM?t=35
-                  Morph Ball Bomb or Wall Boost (Expert)
-              # https://www.youtube.com/watch?v=CzhDj8MmERg
-              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
-              # https://www.youtube.com/watch?v=1Meg1C7X-1Q
-              Screw Attack into Tunnels/Openings (Expert) and Use Screw Attack (Space Jump)
 
 > Tunnel; Heals? False
   * Layers: default
@@ -1751,18 +2059,25 @@ Hint Features - Bomb Slot, Half-Pipe
 ----------------
 Storage D
 Extra - asset_id: 1090496759
-> Door to Main Reactor; Heals? False; Spawn Point; Default Node
+> Door to Main Reactor; Heals? False; Default Node
   * Layers: default
   * Dark Door to Main Reactor/Door to Storage D
   * Extra - dock_name: East
+  > Front of Door to Main Reactor
+      Trivial
+
+> Front of Door to Main Reactor; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Dark Beam)
       Enabled Door Randomizer or Enabled Allow Vanilla Dark Beam or Shoot Dark Beam
+  > Door to Main Reactor
+      Trivial
 
 > Pickup (Dark Beam); Heals? False
   * Layers: default
   * Pickup 52; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'DarkBeam', 'connections': (frozendict.frozendict({'target': 3407979, 'message': 'ACTV'}), frozendict.frozendict({'target': 3407979, 'message': 'ZERO'}), frozendict.frozendict({'target': 3407873, 'message': 'IM00'})), 'removals': (3408058, 3407981, 3408067), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 3408065, 'hud_memo': 3408055, 'streamed_audio': 3408060, 'sound': 3408053, 'audio_fade': 3408064})})
-  > Door to Main Reactor
+  > Front of Door to Main Reactor
       Trivial
 
 ----------------
@@ -1775,10 +2090,15 @@ Extra - asset_id: 2156489961
   > Top Level
       Trivial
 
-> Door to Biostorage Access; Heals? False; Spawn Point; Default Node
+> Door to Biostorage Access; Heals? False; Default Node
   * Layers: default
   * Missile Blast Shield to Biostorage Access/Door to Biostorage Station
   * Extra - dock_name: North
+  > Front of Door to Biostorage Access
+      Trivial
+
+> Front of Door to Biostorage Access; Heals? False; Spawn Point
+  * Layers: default
   > Top Level
       Any of the following:
           Scan Visor
@@ -1786,6 +2106,8 @@ Extra - asset_id: 2156489961
           Space Jump Boots and Standable Terrain (Beginner)
           # https://www.youtube.com/watch?v=vScEQWXSHKw
           Morph Ball Bomb and Morph Ball and Bomb Space Jump (Advanced)
+  > Door to Biostorage Access
+      Trivial
 
 > Door to Storage B; Heals? False
   * Layers: default
@@ -1798,9 +2120,9 @@ Extra - asset_id: 2156489961
   * Layers: default
   > Door to Security Station A
       Trivial
-  > Door to Biostorage Access
-      Trivial
   > Door to Storage B
+      Trivial
+  > Front of Door to Biostorage Access
       Trivial
 
 ----------------
@@ -1831,21 +2153,28 @@ Extra - unlocked_save_station: True
 ----------------
 Security Station A
 Extra - asset_id: 4146307738
-> Door to Biostorage Station; Heals? False; Spawn Point; Default Node
+> Door to Biostorage Station; Heals? False; Default Node
   * Layers: default
   * Normal Door to Biostorage Station/Door to Security Station A
   * Extra - dock_name: West
+  > Front of Door to Biostorage Station
+      Trivial
+
+> Front of Door to Biostorage Station; Heals? False; Spawn Point
+  * Layers: default
   > Door to Bioenergy Production
       Any of the following:
           Morph Ball Bomb and Morph Ball
           # https://www.youtube.com/watch?v=D45mIwT082E
           Bomb Slot without Bombs (Expert) and Activate Bomb Slot without Bombs (Space Jump)
+  > Door to Biostorage Station
+      Trivial
 
 > Door to Bioenergy Production; Heals? False
   * Layers: default
   * Normal Door to Bioenergy Production/Door to Security Station A
   * Extra - dock_name: North
-  > Door to Biostorage Station
+  > Front of Door to Biostorage Station
       Any of the following:
           Morph Ball Bomb and Morph Ball
           # https://www.youtube.com/watch?v=D45mIwT082E
@@ -1854,18 +2183,25 @@ Extra - asset_id: 4146307738
 ----------------
 Storage B
 Extra - asset_id: 2527480810
-> Door to Biostorage Station; Heals? False; Spawn Point; Default Node
+> Door to Biostorage Station; Heals? False; Default Node
   * Layers: default
   * Dark Door to Biostorage Station/Door to Storage B
   * Extra - dock_name: East
+  > Front of Door to Biostorage Station
+      Trivial
+
+> Front of Door to Biostorage Station; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Missile)
+      Trivial
+  > Door to Biostorage Station
       Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
   * Pickup 54; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (3997740,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 3997752, 'hud_memo': 3997746, 'streamed_audio': 3997748, 'sound': 3997753, 'audio_fade': 3997744})})
-  > Door to Biostorage Station
+  > Front of Door to Biostorage Station
       Trivial
 
 ----------------
@@ -1875,13 +2211,18 @@ Extra - asset_id: 1498100491
   * Layers: default
   * Missile Blast Shield to Save Station C/Door to Ventilation Area B
   * Extra - dock_name: North
-  > Door to Bioenergy Production
+  > Front of Door to Bioenergy Production
       Morph Ball Bomb and Morph Ball
 
-> Door to Bioenergy Production; Heals? False; Spawn Point; Default Node
+> Door to Bioenergy Production; Heals? False; Default Node
   * Layers: default
   * Normal Door to Bioenergy Production/Door to Ventilation Area B
   * Extra - dock_name: South
+  > Front of Door to Bioenergy Production
+      Trivial
+
+> Front of Door to Bioenergy Production; Heals? False; Spawn Point
+  * Layers: default
   > Door to Save Station C
       Any of the following:
           Morph Ball Bomb and Morph Ball
@@ -1889,6 +2230,8 @@ Extra - asset_id: 1498100491
               # https://www.youtube.com/watch?v=VzJDml0DK_Q
               Screw Attack into Tunnels/Openings (Advanced) and Use Screw Attack (Space Jump)
               Charge Beam or Missile ≥ 2
+  > Door to Bioenergy Production
+      Trivial
 
 ----------------
 Bioenergy Production
@@ -1898,48 +2241,29 @@ Hint Features - Spider Track
   * Layers: default
   * Super Missile Blast Shield to Storage C/Door to Bioenergy Production
   * Extra - dock_name: East
-  > Door to Security Station A
+  > Front of Door to Storage C
       Trivial
-  > Door to Ventilation Area B
-      Use Screw Attack (Space Jump)
+
+> Front of Door to Storage C; Heals? False
+  * Layers: default
   > Pickup (Energy Tank)
       Use Screw Attack (Space Jump)
+  > Door to Storage C
+      Trivial
+  > Front of Door to Security Station A
+      Trivial
+  > Front of Door to Ventilation Area B
+      Use Screw Attack (Space Jump)
 
-> Door to Security Station A; Heals? False; Spawn Point; Default Node
+> Door to Security Station A; Heals? False; Default Node
   * Layers: default
   * Normal Door to Security Station A/Door to Bioenergy Production
   * Extra - dock_name: South
-  > Door to Storage C
-      Any of the following:
-          Standable Terrain (Intermediate) and Use Screw Attack (Space Jump)
-          All of the following:
-              Scan Visor
-              Any of the following:
-                  Use Screw Attack (Space Jump)
-                  All of the following:
-                      Morph Ball
-                      Any of the following:
-                          Boost Ball and Spider Ball
-                          Morph Ball Bomb and Screw Attack and Bomb Space Jump (Ludicrous) and Movement (Ludicrous)
-                          Space Jump Boots and Roll Jump (Advanced)
-                  Space Jump Boots and Combat/Scan Dash (Advanced)
-  > Door to Ventilation Area B
-      Any of the following:
-          Standable Terrain (Intermediate) and Use Screw Attack (Space Jump)
-          All of the following:
-              Scan Visor
-              Any of the following:
-                  Space Jump Boots
-                  All of the following:
-                      Morph Ball
-                      Any of the following:
-                          All of the following:
-                              Boost Ball and Spider Ball
-                              Any of the following:
-                                  Combat/Scan Dash (Intermediate)
-                                  # https://youtu.be/cEiwn9ZE2W4
-                                  Screw Attack and Movement (Beginner)
-                          Morph Ball Bomb and Bomb Space Jump (Ludicrous) and Movement (Ludicrous)
+  > Front of Door to Security Station A
+      Trivial
+
+> Front of Door to Security Station A; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Energy Tank)
       Any of the following:
           Standable Terrain (Intermediate) and Use Screw Attack (Space Jump)
@@ -1957,41 +2281,88 @@ Hint Features - Spider Track
                                   # https://youtu.be/cEiwn9ZE2W4
                                   Screw Attack and Movement (Advanced)
                           Morph Ball Bomb and Bomb Space Jump (Ludicrous) and Movement (Ludicrous) and Use Screw Attack (No Space Jump)
+  > Front of Door to Storage C
+      Any of the following:
+          Standable Terrain (Intermediate) and Use Screw Attack (Space Jump)
+          All of the following:
+              Scan Visor
+              Any of the following:
+                  Use Screw Attack (Space Jump)
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          Boost Ball and Spider Ball
+                          Morph Ball Bomb and Screw Attack and Bomb Space Jump (Ludicrous) and Movement (Ludicrous)
+                          Space Jump Boots and Roll Jump (Advanced)
+                  Space Jump Boots and Combat/Scan Dash (Advanced)
+  > Door to Security Station A
+      Trivial
+  > Front of Door to Ventilation Area B
+      Any of the following:
+          Standable Terrain (Intermediate) and Use Screw Attack (Space Jump)
+          All of the following:
+              Scan Visor
+              Any of the following:
+                  Space Jump Boots
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          All of the following:
+                              Boost Ball and Spider Ball
+                              Any of the following:
+                                  Combat/Scan Dash (Intermediate)
+                                  # https://youtu.be/cEiwn9ZE2W4
+                                  Screw Attack and Movement (Beginner)
+                          Morph Ball Bomb and Bomb Space Jump (Ludicrous) and Movement (Ludicrous)
 
 > Door to Ventilation Area B; Heals? False
   * Layers: default
   * Normal Door to Ventilation Area B/Door to Bioenergy Production
   * Extra - dock_name: North
-  > Door to Security Station A
+  > Front of Door to Ventilation Area B
       Trivial
+
+> Front of Door to Ventilation Area B; Heals? False
+  * Layers: default
   > Pickup (Energy Tank)
       Use Screw Attack (Space Jump)
+  > Front of Door to Security Station A
+      Trivial
+  > Door to Ventilation Area B
+      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 56; Category? Major
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'EnergyTank', 'connections': (), 'removals': (4260010,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0}), 'instances': frozendict.frozendict({'pickup': 4260006, 'hud_memo': 4260007, 'streamed_audio': 4260014, 'sound': 4260003, 'audio_fade': 4260008})})
-  > Door to Storage C
+  > Front of Door to Storage C
       Use Screw Attack (Space Jump)
-  > Door to Security Station A
+  > Front of Door to Security Station A
       Trivial
-  > Door to Ventilation Area B
+  > Front of Door to Ventilation Area B
       Use Screw Attack (Space Jump)
 
 ----------------
 Storage C
 Extra - asset_id: 1576704079
-> Door to Bioenergy Production; Heals? False; Spawn Point; Default Node
+> Door to Bioenergy Production; Heals? False; Default Node
   * Layers: default
   * Super Missile Blast Shield to Bioenergy Production/Door to Storage C
   * Extra - dock_name: West
+  > Front of Door to Bioenergy Production
+      Trivial
+
+> Front of Door to Bioenergy Production; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Missile)
+      Trivial
+  > Door to Bioenergy Production
       Trivial
 
 > Pickup (Missile); Heals? False
   * Layers: default
   * Pickup 58; Category? Minor
   * Extra - location_data: frozendict.frozendict({'type': 'standard', 'exclude_memo_from_removal': False, 'original_model': 'MissileExpansion', 'connections': (), 'removals': (4522100,), 'collision_offset': frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0}), 'instances': frozendict.frozendict({'pickup': 4522091, 'hud_memo': 4522099, 'streamed_audio': 4522095, 'sound': 4522093, 'audio_fade': 4522097})})
-  > Door to Bioenergy Production
+  > Front of Door to Bioenergy Production
       Trivial
 

@@ -25,6 +25,11 @@ Extra - starting_script: <TRA0006:0097:0004:0018
 > Door to Chaco's House; Heals? False
   * Layers: default
   * Door to Chaco's House/Door to Grasstown
+  > Front of Door to Chaco's House
+      Trivial
+
+> Front of Door to Chaco's House; Heals? False
+  * Layers: default
   > West Side
       Any of the following:
           Pacifist Strats (Intermediate) or Has Weapon
@@ -42,6 +47,8 @@ Extra - starting_script: <TRA0006:0097:0004:0018
                   Damage Boosting (Intermediate) and Normal Damage ≥ 4
                   # Hard Mode method
                   Damage Boosting (Advanced) and Normal Damage ≥ 2 and Has Weapon
+  > Door to Chaco's House
+      Trivial
 
 > Entrance from Chaco's House; Heals? False
   * Layers: default
@@ -120,12 +127,6 @@ Extra - starting_script: <TRA0006:0097:0004:0018
           Has Weapon
           # https://www.youtube.com/watch?v=e2Y-j0IV1Fs
           Pacifist Strats (Beginner)
-  > Door to Chaco's House
-      Any of the following:
-          Pacifist Strats (Intermediate) or Has Weapon
-          Pacifist Strats (Beginner) and Has Flight
-  > Teleporter to Arthur's House
-      Trivial
   > Pickup (Kulala)
       After Summoned Jellies and Has Weapon
   > Event - Return Santa's Key
@@ -134,6 +135,12 @@ Extra - starting_script: <TRA0006:0097:0004:0018
       Trivial
   > Event - Level MG (West)
       Machine Gun
+  > Front of Door to Chaco's House
+      Any of the following:
+          Pacifist Strats (Intermediate) or Has Weapon
+          Pacifist Strats (Beginner) and Has Flight
+  > Front of Teleporter to Arthur's House
+      Trivial
 
 > East Side; Heals? False
   * Layers: default
@@ -177,8 +184,6 @@ Extra - starting_script: <TRA0006:0097:0004:0018
 
 > Above Chaco's House; Heals? False
   * Layers: default
-  > Door to Chaco's House
-      Trivial
   > Beyond First Mannan
       Any of the following:
           # Kill Mannan
@@ -189,6 +194,8 @@ Extra - starting_script: <TRA0006:0097:0004:0018
           Pacifist Strats (Intermediate) and Has Flight
           # Jump over Mannan (TODO: vid)
           Gravity Hopping (Advanced) and Pacifist Strats (Advanced)
+  > Front of Door to Chaco's House
+      Trivial
 
 > Event - Saved Kazuma; Heals? False
   * Layers: default
@@ -196,10 +203,17 @@ Extra - starting_script: <TRA0006:0097:0004:0018
   > East Side
       Trivial
 
-> Teleporter to Arthur's House; Heals? False; Spawn Point; Default Node
+> Teleporter to Arthur's House; Heals? False; Default Node
   * Layers: default
   * Teleporter to Arthur's House/Teleporter to Grasstown
+  > Front of Teleporter to Arthur's House
+      Trivial
+
+> Front of Teleporter to Arthur's House; Heals? False; Spawn Point
+  * Layers: default
   > West Side
+      Trivial
+  > Teleporter to Arthur's House
       Trivial
 
 > Pickup (Kulala); Heals? False
@@ -290,18 +304,25 @@ Hint Features - Someone's House
 > Door to Grasstown; Heals? False
   * Layers: default
   * Door to Grasstown/Door to Santa's House
+  > Front of Door to Grasstown
+      Trivial
+
+> Front of Door to Grasstown; Heals? False
+  * Layers: default
   > Pickup (Santa)
       After Returned Santa's Key
   > Pickup (Santa's Fireplace)
       Jellyfish Juice
   > Save Point
       Trivial
+  > Door to Grasstown
+      Trivial
 
 > Pickup (Santa); Heals? False
   * Layers: default
   * Pickup 10; Category? Minor
   * Extra - event: 0501
-  > Door to Grasstown
+  > Front of Door to Grasstown
       Trivial
 
 > Pickup (Santa's Fireplace); Heals? False
@@ -309,14 +330,14 @@ Hint Features - Someone's House
   * Pickup 11; Category? Minor
   * Hint Features - Fireplace
   * Extra - event: 0302
-  > Door to Grasstown
+  > Front of Door to Grasstown
       Trivial
 
 > Save Point; Heals? False; Spawn Point; Default Node
   * Layers: default
-  > Door to Grasstown
-      Trivial
   > Refill
+      Trivial
+  > Front of Door to Grasstown
       Trivial
 
 > Refill; Heals? True
@@ -332,6 +353,11 @@ Hint Features - Someone's House
 > Door to Grasstown; Heals? False
   * Layers: default
   * Door to Grasstown/Door to Chaco's House
+  > Front of Door to Grasstown
+      Trivial
+
+> Front of Door to Grasstown; Heals? False
+  * Layers: default
   > Exit to Grasstown
       Jellyfish Juice
   > Event - Summon Jellies
@@ -342,6 +368,8 @@ Hint Features - Someone's House
       Trivial
   > Bed
       Trivial
+  > Door to Grasstown
+      Trivial
 
 > Exit to Grasstown; Heals? False
   * Layers: default
@@ -350,24 +378,24 @@ Hint Features - Someone's House
 > Event - Summon Jellies; Heals? False
   * Layers: default
   * Event Summoned Jellies
-  > Door to Grasstown
+  > Front of Door to Grasstown
       Trivial
 
 > Pickup (Chaco's Bed, where you two Had A Nap); Heals? False
   * Layers: default
   * Pickup 12; Category? Minor
   * Extra - event: 0211
-  > Door to Grasstown
+  > Front of Door to Grasstown
       Trivial
 
 > Save Point; Heals? False; Spawn Point; Default Node
   * Layers: default
-  > Door to Grasstown
+  > Front of Door to Grasstown
       Trivial
 
 > Bed; Heals? True
   * Layers: default
-  > Door to Grasstown
+  > Front of Door to Grasstown
       Trivial
 
 ----------------
@@ -375,15 +403,22 @@ Power Room
 Extra - map_name: Malco
 Extra - starting_script: <TRA0025:0094:0016:0007
 Hint Features - Boss
-> Door to Grasstown; Heals? False; Spawn Point; Default Node
+> Door to Grasstown; Heals? False; Default Node
   * Layers: default
   * Door to Grasstown/Door to Power Room
+  > Front of Door to Grasstown
+      Trivial
+
+> Front of Door to Grasstown; Heals? False; Spawn Point
+  * Layers: default
   > Event - Activated Fans
       Trivial
   > Pickup (MALCO)
       Jellyfish Juice and Charcoal and Gum Base and After Defeated Balrog 2 and After Activated Fans
   > Hint - MALCO
       After Defeated Balrog 2
+  > Door to Grasstown
+      Trivial
 
 > Event - Activated Fans; Heals? False
   * Layers: default
@@ -401,14 +436,14 @@ Hint Features - Boss
 > Event - Balrog 2; Heals? False
   * Layers: default
   * Event Defeated Balrog 2
-  > Door to Grasstown
+  > Front of Door to Grasstown
       Trivial
 
 > Pickup (MALCO); Heals? False
   * Layers: default
   * Pickup 13; Category? Minor
   * Extra - event: 0350
-  > Door to Grasstown
+  > Front of Door to Grasstown
       Trivial
 
 > Hint - MALCO; Heals? False
@@ -417,7 +452,7 @@ Hint Features - Boss
   * Extra - event: 0306
   * Extra - hint_index: 13
   * Extra - string_asset_id: 8
-  > Door to Grasstown
+  > Front of Door to Grasstown
       Trivial
 
 ----------------
@@ -427,36 +462,50 @@ Extra - starting_script: <TRA0026:0094:0009:0007
 > Door to Grasstown; Heals? False
   * Layers: default
   * Door to Grasstown/Door to Save Point
+  > Front of Door to Grasstown
+      Trivial
+
+> Front of Door to Grasstown; Heals? False
+  * Layers: default
   > Save Point
       Trivial
   > Refill
       Trivial
+  > Door to Grasstown
+      Trivial
 
 > Save Point; Heals? False; Spawn Point; Default Node
   * Layers: default
-  > Door to Grasstown
+  > Front of Door to Grasstown
       Trivial
 
 > Refill; Heals? True
   * Layers: default
-  > Door to Grasstown
+  > Front of Door to Grasstown
       Trivial
 
 ----------------
 Grasstown Hut
 Extra - map_name: WeedB
 Extra - starting_script: <TRA0030:0094:0007:0009
-> Door to Grasstown; Heals? False; Spawn Point; Default Node
+> Door to Grasstown; Heals? False; Default Node
   * Layers: default
   * Door to Grasstown/Door to Grasstown Hut
+  > Front of Door to Grasstown
+      Trivial
+
+> Front of Door to Grasstown; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Grasstown Hut)
+      Trivial
+  > Door to Grasstown
       Trivial
 
 > Pickup (Grasstown Hut); Heals? False
   * Layers: default
   * Pickup 14; Category? Minor
   * Extra - event: 0301
-  > Door to Grasstown
+  > Front of Door to Grasstown
       # Ravil Boss
       Sisters Skip (Beginner) or Has Weapon
 
@@ -464,21 +513,28 @@ Extra - starting_script: <TRA0030:0094:0007:0009
 Execution Chamber
 Extra - map_name: WeedD
 Extra - starting_script: <TRA0027:0094:0010:0009
-> Door to Grasstown; Heals? False; Spawn Point; Default Node
+> Door to Grasstown; Heals? False; Default Node
   * Layers: default
   * Door to Grasstown/Door to Execution Chamber
+  > Front of Door to Grasstown
+      Trivial
+
+> Front of Door to Grasstown; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Execution Chamber)
       Any of the following:
           Can Break Blocks
           All of the following:
               Missiles ≥ 2 and Break blocks with Missiles (Beginner)
               Missile Launcher or Super Missile Launcher
+  > Door to Grasstown
+      Trivial
 
 > Pickup (Execution Chamber); Heals? False
   * Layers: default
   * Pickup 15; Category? Minor
   * Extra - event: 0305
-  > Door to Grasstown
+  > Front of Door to Grasstown
       Trivial
 
 ----------------
@@ -486,10 +542,17 @@ Gum
 Extra - map_name: Frog
 Extra - starting_script: <TRA0028:0094:0006:0013
 Hint Features - Boss
-> Door to Grasstown; Heals? False; Spawn Point; Default Node
+> Door to Grasstown; Heals? False; Default Node
   * Layers: default
   * Door to Grasstown/Door to Gum
+  > Front of Door to Grasstown
+      Trivial
+
+> Front of Door to Grasstown; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Gum Chest)
+      Trivial
+  > Door to Grasstown
       Trivial
 
 > Pickup (Gum Chest); Heals? False
@@ -509,7 +572,7 @@ Hint Features - Boss
 > Event - Balfrog; Heals? False
   * Layers: default
   * Event Defeated Balfrog
-  > Door to Grasstown
+  > Front of Door to Grasstown
       Trivial
 
 ----------------
@@ -519,30 +582,37 @@ Extra - starting_script: <TRA0018:0099:0015:0010
 > Door to Grasstown; Heals? False
   * Layers: default
   * Door to Grasstown/Door to Shelter
-  > Teleporter to Jail No. 2
+  > Front of Teleporter to Jail No. 2
       Trivial
 
 > Event - Saved Kazuma; Heals? False
   * Layers: default
   * Event Saved Kazuma
-  > Teleporter to Jail No. 2
+  > Front of Teleporter to Jail No. 2
       Trivial
 
 > Save Point; Heals? False
   * Layers: default
-  > Teleporter to Jail No. 2
-      Trivial
   > Refill
       Trivial
+  > Front of Teleporter to Jail No. 2
+      Trivial
 
-> Teleporter to Jail No. 2; Heals? False; Spawn Point; Default Node
+> Teleporter to Jail No. 2; Heals? False; Default Node
   * Layers: default
   * Teleporter to Jail No. 2/Teleporter to Shelter
+  > Front of Teleporter to Jail No. 2
+      Trivial
+
+> Front of Teleporter to Jail No. 2; Heals? False; Spawn Point
+  * Layers: default
   > Door to Grasstown
       After Saved Kazuma
   > Event - Saved Kazuma
       Explosive
   > Save Point
+      Trivial
+  > Teleporter to Jail No. 2
       Trivial
 
 > Refill; Heals? True

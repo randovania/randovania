@@ -38,7 +38,7 @@ Hint Features - Teleporter
       Trivial
   > Door to Transport to Area 3 and Crystal Mines (Bottom)
       Trivial
-  > Door to Transit Tunnel
+  > Front of Door to Transit Tunnel
       Any of the following:
           Lay Any Bomb
           Out of Bounds Movement (Beginner) and Spider Ball Clip (Beginner) and Use Spider Ball
@@ -49,7 +49,7 @@ Hint Features - Teleporter
   * Extra - actor_name: LE_Platform_Teleporter_04_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_04_01
-  > Door to Transit Tunnel
+  > Front of Door to Transit Tunnel
       Morph Ball
 
 > Door to Transport to Area 3 and Crystal Mines (Top); Heals? False
@@ -89,6 +89,11 @@ Hint Features - Teleporter
   * Charge Beam Door to Transit Tunnel/Door to Caves Intersection Terminal
   * Extra - actor_name: Door007
   * Extra - actor_type: doorchargecharge
+  > Front of Door to Transit Tunnel
+      Trivial
+
+> Front of Door to Transit Tunnel; Heals? False
+  * Layers: default
   > Save Station
       Lay Any Bomb
   > Teleporter
@@ -97,6 +102,8 @@ Hint Features - Teleporter
       Trivial
   > Event - Teleporter Unlocked
       Morph Ball
+  > Door to Transit Tunnel
+      Trivial
 
 > Tunnel to Crumble Catwalk; Heals? False
   * Layers: default
@@ -113,13 +120,13 @@ Hint Features - Teleporter
 > Dock to Amethyst Altars; Heals? False
   * Layers: default
   * Open Passage to Amethyst Altars/Dock to Caves Intersection Terminal
-  > Door to Transit Tunnel
+  > Front of Door to Transit Tunnel
       Trivial
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 4 (Central Caves) - Teleporter Unlocked
-  > Door to Transit Tunnel
+  > Front of Door to Transit Tunnel
       Trivial
 
 > Event - Grapple Block; Heals? False
@@ -139,7 +146,7 @@ Hint Features - Chozo Statue
   * Pickup 84; Category? Major
   * Extra - actor_name: LE_PowerUp_SpazerBeam
   * Extra - actor_type: itemsphere_spazerbeam
-  > Door from Amethyst Altars
+  > Front of Door from Amethyst Altars
       Trivial
 
 > Door from Amethyst Altars; Heals? False
@@ -147,6 +154,11 @@ Hint Features - Chozo Statue
   * Access Closed to Amethyst Altars/Door to Spazer Beam Chamber
   * Extra - actor_name: Door002
   * Extra - actor_type: doorclosedpower
+  > Front of Door from Amethyst Altars
+      Trivial
+
+> Front of Door from Amethyst Altars; Heals? False
+  * Layers: default
   > Pickup (Spazer Beam)
       Trivial
   > Door to Amethyst Altars
@@ -155,19 +167,21 @@ Hint Features - Chozo Statue
           Morph Ball and Unmorph Extend (Intermediate)
   > Start Point
       Trivial
+  > Door from Amethyst Altars
+      Trivial
 
 > Door to Amethyst Altars; Heals? False
   * Layers: default
   * Spazer Beam Door to Amethyst Altars/Door from Spazer Beam Chamber
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerclosed
-  > Door from Amethyst Altars
+  > Front of Door from Amethyst Altars
       Trivial
 
 > Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_CheckPoint_003
-  > Door from Amethyst Altars
+  > Front of Door from Amethyst Altars
       Trivial
 
 ----------------
@@ -180,7 +194,7 @@ Extra - asset_id: collision_camera_004
   * Pickup 81; Category? Minor
   * Extra - actor_name: LE_Item_006
   * Extra - actor_type: item_supermissiletank
-  > Tunnel to Caves Intersection Terminal
+  > Front of Tunnel to Caves Intersection Terminal
       Grapple Beam and Morph Ball
 
 > Door from Caves Intersection Terminal; Heals? False
@@ -188,17 +202,31 @@ Extra - asset_id: collision_camera_004
   * Access Closed to Caves Intersection Terminal/Door to Crumble Catwalk
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerclosed
-  > Tunnel to Caves Intersection Terminal
-      Grapple Beam and Morph Ball
+  > Front of Door from Caves Intersection Terminal
+      Trivial
+
+> Front of Door from Caves Intersection Terminal; Heals? False
+  * Layers: default
   > Hang Ledge
       Any of the following:
           Phase Drift or Space Jump
           # Unmorph from wall to grab ledge
           Movement (Intermediate) and Use Spider Ball
+  > Door from Caves Intersection Terminal
+      Trivial
+  > Front of Tunnel to Caves Intersection Terminal
+      Grapple Beam and Morph Ball
 
 > Tunnel to Caves Intersection Terminal; Heals? False
   * Layers: default
   * Tunnel to Caves Intersection Terminal/Tunnel to Crumble Catwalk
+  > Front of Tunnel to Caves Intersection Terminal
+      Trivial
+
+> Front of Tunnel to Caves Intersection Terminal; Heals? False
+  * Layers: default
+  > Tunnel to Caves Intersection Terminal
+      Trivial
 
 > Hang Ledge; Heals? False
   * Layers: default
@@ -209,7 +237,7 @@ Extra - asset_id: collision_camera_004
               Grapple Beam
               # Lay a PB just above the rightmost Crumble, then use Phase Drift and launch up
               Phase Drift and Spider Boost (Advanced) and Can Spider Boost
-  > Door from Caves Intersection Terminal
+  > Front of Door from Caves Intersection Terminal
       Any of the following:
           Phase Drift or Space Jump
           Spider Boost (Intermediate) and Can Spider Boost
@@ -224,6 +252,11 @@ Extra - asset_id: collision_camera_005
   * Spazer Beam Door to Caves Intersection Terminal/Door to Lava Pond
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Caves Intersection Terminal
+      Trivial
+
+> Front of Door to Caves Intersection Terminal; Heals? False
+  * Layers: default
   > Door to Gamma Arena Access South
       All of the following:
           Morph Ball and Varia Suit
@@ -237,19 +270,21 @@ Extra - asset_id: collision_camera_005
               Spider Boost (Advanced) and Can Spider Boost
   > Start Point
       Varia Suit
+  > Door to Caves Intersection Terminal
+      Trivial
 
 > Door to Gamma Arena Access South; Heals? False
   * Layers: default
   * Power Beam Door to Gamma Arena Access South/Door to Lava Pond
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
-  > Door to Caves Intersection Terminal
+  > Front of Door to Caves Intersection Terminal
       Morph Ball and Varia Suit
 
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Gamma_001C_Checkpoint
-  > Door to Caves Intersection Terminal
+  > Front of Door to Caves Intersection Terminal
       Varia Suit
 
 ----------------
@@ -266,12 +301,17 @@ Hint Features - Chozo Seal, Elevator
   > Next to Pickup
       Trivial
 
-> Elevator to Area 3 Factory Exterior; Heals? False; Spawn Point; Default Node
+> Elevator to Area 3 Factory Exterior; Heals? False; Default Node
   * Layers: default
   * Elevator to Transport to Area 4/Elevator to Area 4 Central Caves; Custom name: Area 4 Chozo Seal Elevator West
   * Extra - actor_name: LE_Platform_Elevator_FromArea03
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea03
+  > Front of Elevator to Area 3 Factory Exterior
+      Trivial
+
+> Front of Elevator to Area 3 Factory Exterior; Heals? False; Spawn Point
+  * Layers: default
   > Chozo Seal Top
       Any of the following:
           All of the following:
@@ -285,13 +325,20 @@ Hint Features - Chozo Seal, Elevator
           Morph Ball and After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Left
   > Event - Grapple Block Right
       Grapple Beam and Morph Ball
+  > Elevator to Area 3 Factory Exterior
+      Trivial
 
-> Elevator to Area 4 Crystal Mines; Heals? False; Spawn Point
+> Elevator to Area 4 Crystal Mines; Heals? False
   * Layers: default
   * Elevator to Transport to Central Caves/Elevator to Area 4 Central Caves; Custom name: Area 4 Chozo Seal Elevator East
   * Extra - actor_name: LE_Platform_Elevator_FromArea05
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea05
+  > Front of Elevator to Area 4 Crystal Mines
+      Trivial
+
+> Front of Elevator to Area 4 Crystal Mines; Heals? False; Spawn Point
+  * Layers: default
   > Chozo Seal Bottom
       All of the following:
           Morph Ball
@@ -299,6 +346,8 @@ Hint Features - Chozo Seal, Elevator
               After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Right
               # Spider Ball Clip
               Out of Bounds Movement (Beginner) and Spider Ball Clip (Intermediate) and Use Spider Ball
+  > Elevator to Area 4 Crystal Mines
+      Trivial
 
 > Chozo Seal Top; Heals? False; Spawn Point
   * Layers: default
@@ -306,22 +355,6 @@ Hint Features - Chozo Seal, Elevator
   * Extra - actor_name: LE_ChozoUnlockAreaDNA_001
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
-  > Elevator to Area 3 Factory Exterior
-      Any of the following:
-          # Spider Boost
-          Spider Boost (Intermediate) and Can Spider Boost
-          All of the following:
-              # Jump across the low ceiling pond
-              Space Jump and Movement (Beginner)
-              # Deal with the Halzyn
-              Lightning Armor or Missile ≥ 3 or Super Missile or Defeat Strong Enemies
-          # Go through the Grapple Pull Path
-          Morph Ball and After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Left
-          All of the following:
-              # Get across large pond via Spider Ball
-              Use Spider Ball
-              # Reach ceiling
-              Mid-Air Morph (Beginner) or Lay Bomb or Use Spring Ball
   > Chozo Seal Bottom
       Any of the following:
           Use Spider Ball
@@ -330,22 +363,6 @@ Hint Features - Chozo Seal, Elevator
               Space Jump and Movement (Beginner)
               # Deal with the Halzyn
               Lightning Armor or Missile ≥ 3 or Super Missile or Defeat Strong Enemies
-  > Door to Caves Intersection Terminal (Bottom)
-      Any of the following:
-          Space Jump or Simple IBJ
-          All of the following:
-              # Intended Path
-              Use Spider Ball
-              Any of the following:
-                  # Get to the little edge
-                  Grapple Beam
-                  # Start Spider Balling at the Grapple Point and then hold right
-                  Mid-Air Morph (Beginner)
-                  All of the following:
-                      High Jump Boots
-                      Super Jump (Intermediate) or Unmorph Extend (Intermediate)
-          # Spider Boost
-          Spider Boost (Intermediate) and Can Spider Boost
   > Tunnel to Transit Tunnel
       Morph Ball and Super Missile and After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Left
   > Event - Grapple Block Pull Left
@@ -365,6 +382,38 @@ Hint Features - Chozo Seal, Elevator
                       Phase Drift and Stand on Frozen Enemy (Intermediate)
   > Event - Grapple Block Left
       Grapple Beam
+  > Front of Elevator to Area 3 Factory Exterior
+      Any of the following:
+          # Spider Boost
+          Spider Boost (Intermediate) and Can Spider Boost
+          All of the following:
+              # Jump across the low ceiling pond
+              Space Jump and Movement (Beginner)
+              # Deal with the Halzyn
+              Lightning Armor or Missile ≥ 3 or Super Missile or Defeat Strong Enemies
+          # Go through the Grapple Pull Path
+          Morph Ball and After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Left
+          All of the following:
+              # Get across large pond via Spider Ball
+              Use Spider Ball
+              # Reach ceiling
+              Mid-Air Morph (Beginner) or Lay Bomb or Use Spring Ball
+  > Front of Door to Caves Intersection Terminal (Bottom)
+      Any of the following:
+          Space Jump or Simple IBJ
+          All of the following:
+              # Intended Path
+              Use Spider Ball
+              Any of the following:
+                  # Get to the little edge
+                  Grapple Beam
+                  # Start Spider Balling at the Grapple Point and then hold right
+                  Mid-Air Morph (Beginner)
+                  All of the following:
+                      High Jump Boots
+                      Super Jump (Intermediate) or Unmorph Extend (Intermediate)
+          # Spider Boost
+          Spider Boost (Intermediate) and Can Spider Boost
 
 > Chozo Seal Bottom; Heals? False; Spawn Point
   * Layers: default
@@ -372,21 +421,6 @@ Hint Features - Chozo Seal, Elevator
   * Extra - actor_name: LE_ChozoUnlockAreaDNA_002
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint_002
-  > Elevator to Area 3 Factory Exterior
-      Lay Any Bomb
-  > Elevator to Area 4 Crystal Mines
-      All of the following:
-          Morph Ball
-          Any of the following:
-              All of the following:
-                  # Normal way
-                  After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Right
-                  Any of the following:
-                      # Get Up
-                      Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
-                      Super Jump (Intermediate) and Unmorph Extend (Beginner)
-              # Space Jump OOB - https://youtu.be/YLPIWNV-5Fc
-              Space Jump and Out of Bounds Movement (Intermediate) and Spider Ball Clip (Beginner) and Use Spider Ball
   > Chozo Seal Top
       Any of the following:
           All of the following:
@@ -404,7 +438,22 @@ Hint Features - Chozo Seal, Elevator
                   High Jump Boots and Use Spring Ball
   > Door to Transport to Area 5
       Trivial
-  > Tunnel to Venomous Pond
+  > Front of Elevator to Area 3 Factory Exterior
+      Lay Any Bomb
+  > Front of Elevator to Area 4 Crystal Mines
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  # Normal way
+                  After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Right
+                  Any of the following:
+                      # Get Up
+                      Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+                      Super Jump (Intermediate) and Unmorph Extend (Beginner)
+              # Space Jump OOB - https://youtu.be/YLPIWNV-5Fc
+              Space Jump and Out of Bounds Movement (Intermediate) and Spider Ball Clip (Beginner) and Use Spider Ball
+  > Front of Tunnel to Venomous Pond
       Lay Any Bomb
 
 > Door to Caves Intersection Terminal (Top); Heals? False
@@ -412,7 +461,7 @@ Hint Features - Chozo Seal, Elevator
   * Spazer Beam Door to Caves Intersection Terminal/Door to Transport to Area 3 and Crystal Mines (Top)
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerpower
-  > Door to Caves Intersection Terminal (Bottom)
+  > Front of Door to Caves Intersection Terminal (Bottom)
       Trivial
 
 > Door to Caves Intersection Terminal (Bottom); Heals? False
@@ -420,6 +469,11 @@ Hint Features - Chozo Seal, Elevator
   * Power Beam Door to Caves Intersection Terminal/Door to Transport to Area 3 and Crystal Mines (Bottom)
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Caves Intersection Terminal (Bottom)
+      Trivial
+
+> Front of Door to Caves Intersection Terminal (Bottom); Heals? False
+  * Layers: default
   > Chozo Seal Top
       Trivial
   > Door to Caves Intersection Terminal (Top)
@@ -433,6 +487,8 @@ Hint Features - Chozo Seal, Elevator
               Any of the following:
                   Wall Jump (Intermediate)
                   Mid-Air Morph (Beginner) and Use Spider Ball
+  > Door to Caves Intersection Terminal (Bottom)
+      Trivial
 
 > Door to Transport to Area 5; Heals? False
   * Layers: default
@@ -451,15 +507,22 @@ Hint Features - Chozo Seal, Elevator
 > Tunnel to Venomous Pond; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Venomous Pond/Tunnel to Transport to Area 3 and Crystal Mines
+  > Front of Tunnel to Venomous Pond
+      Trivial
+
+> Front of Tunnel to Venomous Pond; Heals? False
+  * Layers: default
   > Chozo Seal Bottom
       Lay Any Bomb
   > Tunnel to Transport to Area 5
       Lay Any Bomb and Use Spider Ball
+  > Tunnel to Venomous Pond
+      Trivial
 
 > Tunnel to Transport to Area 5; Heals? False
   * Layers: default
   * Tunnel to Transport to Area 5/Tunnel to Transport to Area 3 and Crystal Mines
-  > Tunnel to Venomous Pond
+  > Front of Tunnel to Venomous Pond
       Lay Any Bomb and Use Spider Ball
 
 > Event - Grapple Block Pull Left; Heals? False
@@ -477,7 +540,7 @@ Hint Features - Chozo Seal, Elevator
 > Event - Grapple Block Right; Heals? False
   * Layers: default
   * Event Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Right
-  > Elevator to Area 3 Factory Exterior
+  > Front of Elevator to Area 3 Factory Exterior
       Trivial
 
 > Next to Pickup; Heals? False
@@ -505,7 +568,9 @@ Extra - asset_id: collision_camera_007
   * Pickup 79; Category? Minor
   * Extra - actor_name: LE_Item_003
   * Extra - actor_type: item_missiletank
-  > Tunnel to Alpha+ Arena Access
+  > Start Point
+      Trivial
+  > Front of Tunnel to Alpha+ Arena Access
       All of the following:
           Morph Ball
           Any of the following:
@@ -516,8 +581,6 @@ Extra - asset_id: collision_camera_007
                   # High Jump
                   High Jump Boots
                   Super Jump (Intermediate) or Unmorph Extend (Intermediate)
-  > Start Point
-      Trivial
 
 > Door to Alpha+ Arena Access; Heals? False
   * Layers: default
@@ -536,10 +599,17 @@ Extra - asset_id: collision_camera_007
 > Tunnel to Alpha+ Arena Access; Heals? False
   * Layers: default
   * Tunnel to Alpha+ Arena Access/Tunnel to Alpha+ Arena
+  > Front of Tunnel to Alpha+ Arena Access
+      Trivial
+
+> Front of Tunnel to Alpha+ Arena Access; Heals? False
+  * Layers: default
   > Pickup (Missile Tank)
       Morph Ball
   > Start Point
       Morph Ball
+  > Tunnel to Alpha+ Arena Access
+      Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -572,7 +642,7 @@ Extra - asset_id: collision_camera_010
   * Charge Beam Door to Caves Intersection Terminal/Door to Transit Tunnel
   * Extra - actor_name: Door007
   * Extra - actor_type: doorchargecharge
-  > Door to Alpha+ Arena Access (Top)
+  > Front of Door to Alpha+ Arena Access (Top)
       Trivial
 
 > Door to Alpha+ Arena Access (Top); Heals? False
@@ -580,12 +650,19 @@ Extra - asset_id: collision_camera_010
   * Access Locked to Alpha+ Arena Access/Door to Transit Tunnel
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerclosed
+  > Front of Door to Alpha+ Arena Access (Top)
+      Trivial
+
+> Front of Door to Alpha+ Arena Access (Top); Heals? False
+  * Layers: default
   > Door to Caves Intersection Terminal
       Trivial
   > Next to Pickup
       Any of the following:
           Lightning Armor or Use Spider Ball
           Hazard Runs (Beginner) and Hazard Damage ≥ 40
+  > Door to Alpha+ Arena Access (Top)
+      Trivial
 
 > Door to Alpha+ Arena Access (Bottom); Heals? False
   * Layers: default
@@ -626,10 +703,6 @@ Extra - asset_id: collision_camera_010
 
 > Next to Pickup; Heals? False
   * Layers: default
-  > Door to Alpha+ Arena Access (Top)
-      Any of the following:
-          Lightning Armor or Use Spider Ball
-          Hazard Runs (Beginner) and Hazard Damage ≥ 40
   > Door to Alpha+ Arena Access (Bottom)
       Any of the following:
           Lay Power Bomb
@@ -642,6 +715,10 @@ Extra - asset_id: collision_camera_010
               Hazard Runs (Beginner) and Hazard Damage ≥ 15
   > Next to Grapple Blocks
       Morph Ball and After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Left
+  > Front of Door to Alpha+ Arena Access (Top)
+      Any of the following:
+          Lightning Armor or Use Spider Ball
+          Hazard Runs (Beginner) and Hazard Damage ≥ 40
 
 ----------------
 Fleech Swarm Cave
@@ -707,7 +784,7 @@ Extra - asset_id: collision_camera_013
   * Pickup 85; Category? Minor
   * Extra - actor_name: HP_ChozoHologram_002
   * Extra - actor_type: item_missiletank
-  > Door to Gamma Arena Access South
+  > Front of Door to Gamma Arena Access South
       Trivial
 
 > Door to Gamma Arena Access South; Heals? False
@@ -718,6 +795,11 @@ Extra - asset_id: collision_camera_013
   * Extra - tile_index: 235
   * Extra - location_y_override: 3100.0
   * Extra - append_entity_group: PostGamma_001
+  > Front of Door to Gamma Arena Access South
+      Trivial
+
+> Front of Door to Gamma Arena Access South; Heals? False
+  * Layers: default
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball and Shoot Any Missile
@@ -726,6 +808,8 @@ Extra - asset_id: collision_camera_013
               Super Jump (Intermediate) and Unmorph Extend (Intermediate)
   > Inside Arena
       Lay Any Bomb
+  > Door to Gamma Arena Access South
+      Trivial
 
 > Event - Gamma Metroid; Heals? False
   * Layers: default
@@ -738,10 +822,10 @@ Extra - asset_id: collision_camera_013
   * Extra - start_point_actor_name: ST_Gamma_001A_Checkpoint
   > Door to Gamma Arena Access North
       Trivial
-  > Door to Gamma Arena Access South
-      Lay Any Bomb
   > Event - Gamma Metroid
       Defeat Gamma Metroid
+  > Front of Door to Gamma Arena Access South
+      Lay Any Bomb
 
 > Pickup (DNA); Heals? False
   * Layers: default
@@ -763,7 +847,7 @@ Hint Features - Baby Blocks
   * Pickup 83; Category? Minor
   * Extra - actor_name: LE_Item_008
   * Extra - actor_type: item_senergytank
-  > Door to Lava Pond
+  > Front of Door to Lava Pond
       All of the following:
           Morph Ball
           Baby Metroid or Lay Any Bomb
@@ -773,6 +857,11 @@ Hint Features - Baby Blocks
   * Power Beam Door to Lava Pond/Door to Gamma Arena Access South
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Lava Pond
+      Trivial
+
+> Front of Door to Lava Pond; Heals? False
+  * Layers: default
   > Pickup (Aeion Tank)
       All of the following:
           Morph Ball
@@ -800,13 +889,15 @@ Hint Features - Baby Blocks
               Any of the following:
                   Mid-Air Morph (Beginner)
                   Diagonal Bomb Jump (Intermediate) and Lay Bomb
-  > Door to Gamma Arena
+  > Door to Lava Pond
+      Trivial
+  > Front of Door to Gamma Arena
       Morph Ball and After Area 4 (Central Caves) - Gamma Arena Access South Grapple Block
 
 > Tunnel to Hostile Hangout; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Hostile Hangout/Tunnel to Gamma Arena Access South
-  > Door to Gamma Arena
+  > Front of Door to Gamma Arena
       Morph Ball
 
 > Door to Outward Climb; Heals? False
@@ -816,7 +907,7 @@ Hint Features - Baby Blocks
   * Extra - actor_type: doorpowerpower
   * Extra - tile_index: 182
   * Extra - location_y_override: 1100.0
-  > Door to Lava Pond
+  > Front of Door to Lava Pond
       Any of the following:
           Lightning Armor
           # Spider Boost
@@ -840,17 +931,24 @@ Hint Features - Baby Blocks
   * Extra - tile_index: 234
   * Extra - location_y_override: 3100.0
   * Extra - append_entity_group: PostGamma_001
-  > Door to Lava Pond
-      Morph Ball and After Area 4 (Central Caves) - Gamma Arena Access South Grapple Block
+  > Front of Door to Gamma Arena
+      Trivial
+
+> Front of Door to Gamma Arena; Heals? False
+  * Layers: default
   > Tunnel to Hostile Hangout
       Lay Any Bomb
   > Event - Grapple Block
       Grapple Beam
+  > Front of Door to Lava Pond
+      Morph Ball and After Area 4 (Central Caves) - Gamma Arena Access South Grapple Block
+  > Door to Gamma Arena
+      Trivial
 
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Area 4 (Central Caves) - Gamma Arena Access South Grapple Block
-  > Door to Gamma Arena
+  > Front of Door to Gamma Arena
       Trivial
 
 ----------------
@@ -888,9 +986,16 @@ Extra - asset_id: collision_camera_016
   * Missile Door to Spazer Beam Chamber/Door from Amethyst Altars
   * Extra - actor_name: Door002
   * Extra - actor_type: doorclosedpower
+  > Front of Door to Spazer Beam Chamber
+      Trivial
+
+> Front of Door to Spazer Beam Chamber; Heals? False
+  * Layers: default
   > Door from Spazer Beam Chamber
       Trivial
   > Below Pickup
+      Trivial
+  > Door to Spazer Beam Chamber
       Trivial
 
 > Door from Spazer Beam Chamber; Heals? False
@@ -898,7 +1003,7 @@ Extra - asset_id: collision_camera_016
   * Access Closed to Spazer Beam Chamber/Door to Amethyst Altars
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerclosed
-  > Door to Spazer Beam Chamber
+  > Front of Door to Spazer Beam Chamber
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -917,8 +1022,6 @@ Extra - asset_id: collision_camera_016
 
 > Below Pickup; Heals? False
   * Layers: default
-  > Door to Spazer Beam Chamber
-      Trivial
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball and Shoot Any Missile
@@ -942,6 +1045,8 @@ Extra - asset_id: collision_camera_016
               Movement (Advanced) and Single-wall Wall Jump (Expert) and Use Spider Ball
   > Dock to Caves Intersection Terminal
       Trivial
+  > Front of Door to Spazer Beam Chamber
+      Trivial
 
 ----------------
 Gamma Arena Access North
@@ -953,6 +1058,11 @@ Extra - asset_id: collision_camera_018
   * Power Beam Door to Gamma Arena/Door to Gamma Arena Access North
   * Extra - actor_name: Door011
   * Extra - actor_type: doorpowerpower
+  > Front of Door to Gamma Arena
+      Trivial
+
+> Front of Door to Gamma Arena; Heals? False
+  * Layers: default
   > Door to Outward Climb
       Any of the following:
           Lightning Armor
@@ -970,6 +1080,8 @@ Extra - asset_id: collision_camera_018
                   Diagonal Bomb Jump (Intermediate) and Lay Bomb
   > Start Point
       Trivial
+  > Door to Gamma Arena
+      Trivial
 
 > Door to Outward Climb; Heals? False
   * Layers: default
@@ -978,7 +1090,7 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_type: doorpowerpower
   * Extra - tile_index: 249
   * Extra - location_y_override: 4300.0
-  > Door to Gamma Arena
+  > Front of Door to Gamma Arena
       Any of the following:
           Lightning Armor
           # Spider Boost
@@ -997,7 +1109,7 @@ Extra - asset_id: collision_camera_018
 > Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Gamma_001
-  > Door to Gamma Arena
+  > Front of Door to Gamma Arena
       Trivial
 
 ----------------
@@ -1010,11 +1122,18 @@ Extra - asset_id: collision_camera_019
   * Power Beam Door to Transit Tunnel/Door to Alpha+ Arena Access (Top)
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerclosed
+  > Front of Door to Transit Tunnel
+      Trivial
+
+> Front of Door to Transit Tunnel; Heals? False
+  * Layers: default
   > Door from Transit Tunnel
       Morph Ball
   > Tunnel to Alpha+ Arena
       Morph Ball
   > Start Point
+      Trivial
+  > Door to Transit Tunnel
       Trivial
 
 > Door from Transit Tunnel; Heals? False
@@ -1022,7 +1141,7 @@ Extra - asset_id: collision_camera_019
   * Access Closed to Transit Tunnel/Door to Alpha+ Arena Access (Bottom)
   * Extra - actor_name: Door009
   * Extra - actor_type: doorclosedpower
-  > Door to Transit Tunnel
+  > Front of Door to Transit Tunnel
       Morph Ball
 
 > Door to Alpha+ Arena; Heals? False
@@ -1030,19 +1149,19 @@ Extra - asset_id: collision_camera_019
   * Power Beam Door to Alpha+ Arena/Door to Alpha+ Arena Access
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
-  > Door to Transit Tunnel
+  > Front of Door to Transit Tunnel
       Morph Ball
 
 > Tunnel to Alpha+ Arena; Heals? False
   * Layers: default
   * Tunnel to Alpha+ Arena/Tunnel to Alpha+ Arena Access
-  > Door to Transit Tunnel
+  > Front of Door to Transit Tunnel
       Morph Ball
 
 > Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_001
-  > Door to Transit Tunnel
+  > Front of Door to Transit Tunnel
       Trivial
 
 ----------------
@@ -1096,16 +1215,23 @@ Extra - total_boundings: {'x1': 10100.0, 'x2': 14150.0, 'y1': -8800.0, 'y2': -66
 Extra - polygon: [[11600.0, -6600.0], [10100.0, -6600.0], [10100.0, -8800.0], [14150.0, -8800.0], [14150.0, -7200.0], [11600.0, -7200.0]]
 Extra - asset_id: collision_camera_023
 Hint Features - Elevator
-> Elevator to Area 5 Tower Lobby; Heals? False; Spawn Point; Default Node
+> Elevator to Area 5 Tower Lobby; Heals? False; Default Node
   * Layers: default
   * Elevator to Transport to Areas 4 and 6/Elevator to Area 4 Central Caves; Custom name: Central Caves Elevator South
   * Extra - actor_name: LE_Platform_Elevator_FromArea06
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06
+  > Front of Elevator to Area 5 Tower Lobby
+      Trivial
+
+> Front of Elevator to Area 5 Tower Lobby; Heals? False; Spawn Point
+  * Layers: default
   > Door to Venomous Pond
       Trivial
   > Next to Grapple Block
       Screw Attack
+  > Elevator to Area 5 Tower Lobby
+      Trivial
 
 > Door to Transport to Area 3 and Crystal Mines; Heals? False
   * Layers: default
@@ -1120,7 +1246,7 @@ Hint Features - Elevator
   * Power Beam Door to Venomous Pond/Door to Transport to Area 5
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 5 Tower Lobby
+  > Front of Elevator to Area 5 Tower Lobby
       Trivial
 
 > Pickup (Super Missile Tank); Heals? False
@@ -1145,11 +1271,6 @@ Hint Features - Elevator
 
 > Next to Grapple Block; Heals? False
   * Layers: default
-  > Elevator to Area 5 Tower Lobby
-      Any of the following:
-          Screw Attack
-          # Freeze and clip off the Tsumuri: https://youtu.be/m85VNBCp2L4
-          Charge Beam and Ice Beam and Morph Ball and Stand on Frozen Enemy (Intermediate) and Melee Clip (Advanced) and Out of Bounds Movement (Beginner)
   > Door to Transport to Area 3 and Crystal Mines
       Morph Ball and After Area 4 (Central Caves) - Transport to Area 5 Grapple Block
   > Pickup (Super Missile Tank)
@@ -1158,4 +1279,9 @@ Hint Features - Elevator
       Morph Ball
   > Event - Grapple Block
       Grapple Beam
+  > Front of Elevator to Area 5 Tower Lobby
+      Any of the following:
+          Screw Attack
+          # Freeze and clip off the Tsumuri: https://youtu.be/m85VNBCp2L4
+          Charge Beam and Ice Beam and Morph Ball and Stand on Frozen Enemy (Intermediate) and Melee Clip (Advanced) and Out of Bounds Movement (Beginner)
 

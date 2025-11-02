@@ -93,7 +93,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Interior Intersection Terminal (Middle)": {
+                        "Front of Door to Interior Intersection Terminal (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -119,7 +119,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_FromArea02A"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 2 Dam Exterior",
@@ -133,6 +133,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Dam Interior Elevator",
                     "connections": {
+                        "Front of Elevator to Area 2 Dam Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Elevator to Area 2 Dam Exterior": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10195.63,
+                        "y": -353.14,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Elevator to Area 2 Dam Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Save Station": {
                             "type": "and",
                             "data": {
@@ -161,7 +192,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Elevator to Area 2 Dam Exterior": {
+                        "Front of Elevator to Area 2 Dam Exterior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -336,14 +367,14 @@
                                 "items": []
                             }
                         },
-                        "Door to Generator Access": {
+                        "Front of Door to Generator Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Interior Intersection Terminal (Bottom)": {
+                        "Front of Door to Interior Intersection Terminal (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -756,7 +787,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Generator Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Generator Access": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5756.31,
+                        "y": -1471.44,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Generator Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -804,7 +866,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Generator Access": {
+                        "Front of Door to Generator Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -845,6 +907,30 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Interior Intersection Terminal (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Interior Intersection Terminal (Bottom)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3363.83,
+                        "y": 250.06,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Save Station": {
                             "type": "resource",
                             "data": {
@@ -854,7 +940,14 @@
                                 "negate": false
                             }
                         },
-                        "Door to Interior Intersection Terminal (Middle)": {
+                        "Door to Interior Intersection Terminal (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Front of Door to Interior Intersection Terminal (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": "Clip using right side of tunnel",
@@ -921,7 +1014,38 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Interior Intersection Terminal (Middle)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Interior Intersection Terminal (Middle)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3370.61,
+                        "y": 710.94,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Pickup (Wave Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Interior Intersection Terminal (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -995,7 +1119,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Interior Intersection Terminal (Middle)": {
+                        "Front of Door to Interior Intersection Terminal (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1061,7 +1185,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Wallfire Corridor": {
+                        "Front of Door to Wallfire Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1100,7 +1224,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Wallfire Corridor": {
+                        "Front of Door to Wallfire Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1139,6 +1263,30 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Wallfire Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Wallfire Corridor": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4144.885060685721,
+                        "y": -730.2303757978011,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Pickup (Varia Suit)": {
                             "type": "and",
                             "data": {
@@ -1153,6 +1301,13 @@
                                 "items": []
                             }
                         },
+                        "Door to Wallfire Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Start Point": {
                             "type": "and",
                             "data": {
@@ -1160,7 +1315,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Interior Intersection Terminal": {
+                        "Front of Dock to Interior Intersection Terminal": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1193,7 +1348,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Dock to Interior Intersection Terminal": {
+                        "Front of Dock to Interior Intersection Terminal": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1221,7 +1376,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Wallfire Corridor": {
+                        "Front of Door to Wallfire Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1257,7 +1412,31 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Wallfire Corridor": {
+                        "Front of Dock to Interior Intersection Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Dock to Interior Intersection Terminal": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1650.0,
+                        "y": -1370.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Front of Door to Wallfire Corridor": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1286,6 +1465,13 @@
                         "Pickup (Super Missile Tank)": {
                             "type": "template",
                             "data": "Lay Any Bomb"
+                        },
+                        "Dock to Interior Intersection Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -1519,7 +1705,7 @@
                                 ]
                             }
                         },
-                        "Dock to Varia Suit Chamber": {
+                        "Front of Dock to Varia Suit Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": "Clip off the platform and unmorph in the tunnel, then clip the wall corner under the platform<br>https://youtu.be/wsBQPUYwblc",
@@ -1845,6 +2031,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Gamma Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Gamma Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1804.46,
+                        "y": -4445.33,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Gamma Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Bottom of Morph Ball Shaft": {
                             "type": "and",
                             "data": {
@@ -2153,7 +2370,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Gamma Arena": {
+                        "Front of Door to Gamma Arena": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -2260,7 +2477,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Varia Suit Chamber": {
+                        "Front of Dock to Varia Suit Chamber": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2298,6 +2515,30 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Dock to Varia Suit Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Dock to Varia Suit Chamber": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1650.0,
+                        "y": -1370.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Right Shaft": {
                             "type": "resource",
                             "data": {
@@ -2305,6 +2546,13 @@
                                 "name": "Screw",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Dock to Varia Suit Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2324,7 +2572,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Gamma Arena": {
+                        "Front of Door to Gamma Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2392,7 +2640,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Gamma Arena": {
+                        "Front of Door to Gamma Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2543,6 +2791,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Gamma Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Gamma Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5818.471564783136,
+                        "y": -4441.367889893925,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Gamma Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Under Pickup": {
                             "type": "resource",
                             "data": {
@@ -2722,7 +3001,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Gamma Arena": {
+                        "Front of Door to Gamma Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2880,7 +3159,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Gamma Arena": {
+                        "Front of Door to Gamma Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3316,6 +3595,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Interior Intersection Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Interior Intersection Terminal": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -250.0,
+                        "y": -2100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Interior Intersection Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Tunnel to Interior Teleporter": {
                             "type": "resource",
                             "data": {
@@ -3358,7 +3668,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Interior Intersection Terminal": {
+                        "Front of Door to Interior Intersection Terminal": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3387,7 +3697,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Interior Intersection Terminal": {
+                        "Front of Door to Interior Intersection Terminal": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -3509,6 +3819,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Fleech Fire Containment": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Fleech Fire Containment": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2264.972251741646,
+                        "y": -5922.281261069785,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Fleech Fire Containment": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Teleporter Storage": {
                             "type": "and",
                             "data": {
@@ -3555,7 +3896,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Fleech Fire Containment": {
+                        "Front of Door to Fleech Fire Containment": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3655,7 +3996,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Fleech Fire Containment": {
+                        "Front of Door to Fleech Fire Containment": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5775,6 +6116,37 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Front of Door to Wave Beam & Transport to Dam Exterior West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Front of Door to Wave Beam & Transport to Dam Exterior West": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5757.651434643995,
+                        "y": -1468.2016767032708,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Wave Beam & Transport to Dam Exterior West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Varia Suit Chamber": {
                             "type": "and",
                             "data": {
@@ -5859,7 +6231,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Wave Beam & Transport to Dam Exterior West": {
+                        "Front of Door to Wave Beam & Transport to Dam Exterior West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5917,7 +6289,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Wave Beam & Transport to Dam Exterior West": {
+                        "Front of Door to Wave Beam & Transport to Dam Exterior West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
