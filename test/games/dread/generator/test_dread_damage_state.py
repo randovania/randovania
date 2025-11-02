@@ -1,8 +1,12 @@
+from typing import TYPE_CHECKING
+
 import pytest
 
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.dread.layout.dread_damage_state import DreadDamageState
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_collection import ResourceCollection
 
 
 @pytest.mark.parametrize(
@@ -33,7 +37,7 @@ def test_apply_collected_resource_difference(dread_game_description, immediate_p
 
     state_after_damage = state.apply_damage(damage)
 
-    old_resources: ResourceCollection = ResourceCollection.with_database(dread_game_description.resource_database)
+    old_resources: ResourceCollection = dread_game_description.create_resource_collection()
     new_resources = old_resources.duplicate()
     new_resources.add_resource_gain([(dread_game_description.get_resource_database_view().get_item(item), count)])
 
@@ -71,7 +75,7 @@ def test_resource_requirements_for_satisfying_damage(
         energy_part_item=energy_part_item,
     )
 
-    old_resources: ResourceCollection = ResourceCollection.with_database(dread_game_description.resource_database)
+    old_resources: ResourceCollection = dread_game_description.create_resource_collection()
     new_resources = old_resources.duplicate()
     new_resources.add_resource_gain([(energy_tank_item, energy_tanks), (energy_part_item, energy_parts)])
 
