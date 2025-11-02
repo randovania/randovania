@@ -173,6 +173,10 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         yield f"{area.name} has multiple valid start nodes {names}, but is not allowed for {game.game.long_name}"
 
     for node in area.nodes:
+        if isinstance(node, DockNode) and len(area.connections.get(node, {})) > 1:
+            yield f"{area.name} - {node.name}: DockNode is connected to more than one area node."
+
+    for node in area.nodes:
         if isinstance(node, DockNode) or area.connections[node]:
             continue
 
