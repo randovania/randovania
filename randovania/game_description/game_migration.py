@@ -396,6 +396,8 @@ def _migrate_v31(data: dict, game: RandovaniaGame) -> None:
 
     for region in data["regions"]:
         for area in region["areas"].values():
+            node_order = list(area["nodes"])
+
             for name, node in list(area["nodes"].items()):
                 if node["node_type"] != "dock":
                     continue
@@ -415,6 +417,7 @@ def _migrate_v31(data: dict, game: RandovaniaGame) -> None:
                         "connections": node["connections"],
                     }
                     node["valid_starting_location"] = False
+                    node_order.insert(node_order.index(name) + 1, new_name)
 
                     # Connect dock and the new node
                     node["connections"] = {new_name: trivial}
@@ -423,6 +426,11 @@ def _migrate_v31(data: dict, game: RandovaniaGame) -> None:
                     for other_name in connections_from[name]:
                         other_conn = area["nodes"][other_name]["connections"]
                         other_conn[new_name] = other_conn.pop(name)
+
+            if node_order != list(area["nodes"]):
+                # new node!
+                old_dict = area["nodes"]
+                area["nodes"] = {name: old_dict[name] for name in node_order}
 
 
 _MIGRATIONS = [
