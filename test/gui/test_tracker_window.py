@@ -392,7 +392,7 @@ async def test_apply_previous_state(
                 teleporter["data"] = {
                     "area": "Agon Energy Controller",
                     "region": "Agon Wastes",
-                    "node": "Door to Controller Access",
+                    "node": "Front of Door to Controller Access",
                 }
         state["configurable_nodes"]["Temple Grounds/Hive Access Tunnel/Translator Gate"] = "violet"
     VersionedPreset.with_preset(preset).save_to_file(tmp_path.joinpath("preset.rdvpreset"))

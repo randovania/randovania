@@ -1,5 +1,5 @@
 {
-    "schema_version": 31,
+    "schema_version": 32,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -360,7 +360,7 @@
                             "extra": {
                                 "dock_index": 0
                             },
-                            "valid_starting_location": true,
+                            "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
                                 "region": "Temple Grounds",
@@ -373,7 +373,35 @@
                             "override_default_open_requirement": null,
                             "override_default_lock_requirement": null,
                             "ui_custom_name": null,
-                            "connections": {}
+                            "connections": {
+                                "Front of Door to Landing Site": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": []
+                                    }
+                                }
+                            }
+                        },
+                        "Front of Door to Landing Site": {
+                            "node_type": "generic",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": true,
+                            "connections": {
+                                "Door to Landing Site": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": []
+                                    }
+                                }
+                            }
                         },
                         "Luminoth Lore": {
                             "node_type": "hint",

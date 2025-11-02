@@ -18,7 +18,7 @@ from randovania.layout.lib.location_list import LocationList
         {
             "encoded": b"\x12\x8a",
             "json": [
-                {"region": "Temple Grounds", "area": "Hall of Honored Dead", "node": "Door to Path of Honor"},
+                {"region": "Temple Grounds", "area": "Hall of Honored Dead", "node": "Front of Door to Path of Honor"},
                 {"region": "Temple Grounds", "area": "Path of Eyes", "node": "Portal from Abandoned Base"},
             ],
         },

@@ -127,7 +127,7 @@ def test_trick_usage_documentation_logic_blank(tmp_path: Path) -> None:
             "# Intro",
             "",
             "## Boss Arena",
-            "### Door to Starting Area -> Event - Boss:",
+            "### Front of Door to Starting Area -> Event - Boss:",
             "- (Documented) Combat (Beginner)",
         ]
     )
