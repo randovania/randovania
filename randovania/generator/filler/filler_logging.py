@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 
 
 def debug_print_collect_event(event: ResourceNode) -> None:
-    if debug.debug_level() > 0:
+    if debug.debug_level() > debug.LogLevel.SILENT:
         print(f"\n--> Collecting {event.full_name()}")
 
 
@@ -27,10 +27,10 @@ def print_retcon_loop_start(
     player: PlayerState,
     pickups_left: Iterable[PickupEntry],
 ) -> None:
-    if debug.debug_level() > 0:
+    if debug.debug_level() > debug.LogLevel.SILENT:
         reach = player.reach
         current_uncollected = UncollectedState.from_reach(reach)
-        if debug.debug_level() > 1:
+        if debug.debug_level() > debug.LogLevel.NORMAL:
             extra = f", pickups_left:\n{sorted({pickup.name for pickup in pickups_left})}"
         else:
             extra = ""
@@ -45,7 +45,7 @@ def print_retcon_loop_start(
             f"{len(current_uncollected.events)} open events{extra}"
         )
 
-        if debug.debug_level() > 3:
+        if debug.debug_level() > debug.LogLevel.MORE_EXTREME:
             print("\nCurrent reach:")
             for node in reach.nodes:
                 print(
@@ -60,7 +60,7 @@ def print_new_resources(
     seen_count: dict[ResourceInfo, int],
     label: str,
 ) -> None:
-    if debug.debug_level() > 1:
+    if debug.debug_level() > debug.LogLevel.NORMAL:
         region_list = game.region_list
         for index, count in seen_count.items():
             if count == 1:
@@ -72,13 +72,13 @@ def print_new_node_identifiers(
     seen_count: dict[NodeIdentifier, int],
     label: str,
 ) -> None:
-    if debug.debug_level() > 1:
+    if debug.debug_level() > debug.LogLevel.NORMAL:
         for identifier, count in seen_count.items():
             if count == 1:
                 print(f"-> New {label}: {identifier.display_name()}")
 
 
 def print_new_pickup_index(player: PlayerState, location: PickupIndex) -> None:
-    if debug.debug_level() > 1:
+    if debug.debug_level() > debug.LogLevel.NORMAL:
         node = player.game.region_list.node_from_pickup_index(location)
         print(f"-> New Pickup Index: {player.name}'s {node.full_name()}")

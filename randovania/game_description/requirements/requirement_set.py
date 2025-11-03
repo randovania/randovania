@@ -50,15 +50,18 @@ class RequirementSet:
     def __repr__(self) -> str:
         return repr(self.alternatives)
 
-    def pretty_print(self, indent: str = "", print_function: typing.Callable[[str], None] = logging.info) -> None:
-        to_print = []
+    @property
+    def as_lines(self) -> Iterator[str]:
         if self == RequirementSet.impossible():
-            to_print.append("Impossible")
+            yield "Impossible"
         elif self == RequirementSet.trivial():
-            to_print.append("Trivial")
+            yield "Trivial"
         else:
-            to_print.extend(str(alternative) for alternative in self.alternatives)
-        for line in sorted(to_print):
+            for alternative in self.alternatives:
+                yield str(alternative)
+
+    def pretty_print(self, indent: str = "", print_function: typing.Callable[[str], None] = logging.info) -> None:
+        for line in sorted(self.as_lines):
             print_function(indent + line)
 
     @property

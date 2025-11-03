@@ -1,13 +1,23 @@
 from __future__ import annotations
 
 import contextlib
+from enum import Enum
 from typing import Protocol
-
-_DEBUG_LEVEL = 0
 
 
 class DebugPrintFunction(Protocol):
     def __call__(self, __s: str) -> None: ...
+
+
+class LogLevel(int, Enum):
+    SILENT = 0
+    NORMAL = 1
+    HIGH = 2
+    EXTREME = 3
+    MORE_EXTREME = 4
+
+
+_DEBUG_LEVEL = LogLevel.SILENT
 
 
 def _print_function(s: str):
@@ -17,20 +27,22 @@ def _print_function(s: str):
 print_function: DebugPrintFunction = _print_function
 
 
-def set_level(level: int):
+def set_level(level: LogLevel):
     global _DEBUG_LEVEL
     if isinstance(level, int):
-        _DEBUG_LEVEL = level
+        # clamp to within the defined log levels
+        level = max(LogLevel.SILENT, min(level, max(LogLevel)))
+        _DEBUG_LEVEL = LogLevel(level)
     else:
-        _DEBUG_LEVEL = 0
+        _DEBUG_LEVEL = LogLevel.SILENT
 
 
-def debug_level() -> int:
+def debug_level() -> LogLevel:
     return _DEBUG_LEVEL
 
 
 @contextlib.contextmanager
-def with_level(level: int):
+def with_level(level: LogLevel):
     current_level = debug_level()
     try:
         set_level(level)
@@ -40,5 +52,5 @@ def with_level(level: int):
 
 
 def debug_print(message: str):
-    if _DEBUG_LEVEL > 0:
+    if _DEBUG_LEVEL > LogLevel.SILENT:
         print_function(message)
