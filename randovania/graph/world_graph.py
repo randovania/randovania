@@ -23,6 +23,7 @@ from randovania.game_description.requirements.resource_requirement import (
     ResourceRequirement,
 )
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
@@ -47,8 +48,16 @@ if typing.TYPE_CHECKING:
 
 class WorldGraphNodeConnection(typing.NamedTuple):
     target: WorldGraphNode
+    """The destination node for this connection."""
+
     requirement: Requirement
+    """The requirements for crossing this connection, with all extras already processed."""
+
     requirement_without_leaving: Requirement
+    """
+    The requirements for crossing this connection, but excluding the nodes `requirement_to_leave`.
+    Useful for the resolver to calculate satisfiable requirements on rollback.
+    """
 
 
 @dataclasses.dataclass(slots=True)
@@ -59,7 +68,7 @@ class WorldGraphNode:
     """The index of this node in WorldGraph.nodes, for quick reference. Does not necessarily match Node.node_index"""
 
     identifier: NodeIdentifier
-    """The NodeIdentifier of `database_node`."""
+    """The name/identification of this node. Matches the identifier of `database_node`, if that exists."""
 
     heal: bool
     """If passing by this node should fully heal."""
@@ -114,6 +123,11 @@ class WorldGraphNode:
     def should_collect(self, context: NodeContext) -> bool:
         result = False
 
+        # TODO: either this or `has_all_resources` can be removed.
+        # But both are used in generator/resolver so that refactor best come later.
+        # But making one of the two use the other might be a good idea!
+        # Benchmark though, these are hot path in generator........
+
         for resource, _ in self.resource_gain:
             if not context.has_resource(resource):
                 result = True
@@ -131,27 +145,12 @@ class WorldGraphNode:
         if self.pickup_entry is not None:
             yield from self.pickup_entry.resource_gain(context.current_resources, force_lock=True)
 
-        # TODO: teleporter network
-
     @property
     def name(self) -> str:
         return self.identifier.as_string
 
     def __repr__(self) -> str:
         return f"GraphNode[{self.name}, {self.node_index}]"
-
-
-@dataclasses.dataclass()
-class WorldGraphNodeProvider(NodeProvider):
-    original_node_provider: NodeProvider
-    original_to_node: dict[int, WorldGraphNode]
-
-    def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
-        original_node = self.original_node_provider.node_by_identifier(identifier)
-        return self.original_to_node[original_node.node_index]
-
-    def get_node_resource_info_for(self, identifier: NodeIdentifier, context: NodeContext) -> ResourceInfo:
-        return NodeResourceInfo.from_node(self.node_by_identifier(identifier), context)
 
 
 @dataclasses.dataclass(slots=True)
@@ -163,13 +162,44 @@ class WorldGraph:
     victory_condition: Requirement
     dangerous_resources: frozenset[ResourceInfo]
     nodes: list[WorldGraphNode]
-    node_provider: WorldGraphNodeProvider
     node_by_pickup_index: dict[PickupIndex, WorldGraphNode]
     original_to_node: dict[int, WorldGraphNode]
+    node_resource_index_offset: int
 
     def victory_condition_as_set(self, context: NodeContext) -> RequirementSet:
         # TODO: calculate this just once
         return self.victory_condition.as_set(context)
+
+    def resource_info_for_node(self, node: WorldGraphNode) -> NodeResourceInfo:
+        return NodeResourceInfo(
+            self.node_resource_index_offset + node.node_index,
+            node.identifier,
+            node.full_name(),
+            node.name,
+        )
+
+    def get_node_by_resource_info(self, info: NodeResourceInfo) -> WorldGraphNode:
+        return self.nodes[info.resource_index - self.node_resource_index_offset]
+
+
+@dataclasses.dataclass()
+class _WorldGraphNodeProvider(NodeProvider):
+    """
+    Not exactly a NodeProvider, but we only use this in NodeContext.node_provider which in turn is only used
+    for node_by_identifier.
+
+    TODO: All this can be fixed by using our own code for `patch_requirements`.
+    """
+
+    graph: WorldGraph
+    database_view: GameDatabaseView
+
+    def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
+        # This is used purely by NodeResourceInfo.from_identifier, when converting NodeRequirement.
+        # In that exact situation, we actually want to return the WorldGraphNode.
+
+        original_node = self.database_view.node_by_identifier(identifier)
+        return self.graph.original_to_node[original_node.node_index]  # type: ignore[return-value]
 
 
 def _get_dock_open_requirement(node: DockNode, weakness: DockWeakness) -> Requirement:
@@ -189,15 +219,15 @@ def _get_dock_lock_requirement(node: DockNode, weakness: DockWeakness) -> Requir
         return weakness.lock.requirement
 
 
-def _add_dock_connections(
+def _create_dock_connection(
     node: WorldGraphNode,
-    original_to_node: dict[int, WorldGraphNode],
+    graph: WorldGraph,
     patches: GamePatches,
-    context: NodeContext,
     simplify_requirement: Callable[[Requirement], Requirement],
 ) -> WorldGraphNodeConnection:
+    """Creates the connection for crossing this dock. Also handles adding the resource gain for breaking locks."""
     assert isinstance(node.database_node, DockNode)
-    target_node = original_to_node[patches.get_dock_connection_for(node.database_node).node_index]
+    target_node = graph.original_to_node[patches.get_dock_connection_for(node.database_node).node_index]
     forward_weakness = patches.get_dock_weakness_for(node.database_node)
 
     back_weakness, back_lock = None, None
@@ -212,10 +242,8 @@ def _add_dock_connections(
     # Requirements needed to open and cross the dock.
     requirement_parts = [_get_dock_open_requirement(node.database_node, forward_weakness)]
 
-    #
-
     if forward_weakness.lock is not None:
-        front_lock_resource = NodeResourceInfo.from_node(node, context)
+        front_lock_resource = graph.resource_info_for_node(node)
         requirement_parts.append(ResourceRequirement.simple(front_lock_resource))
 
         node.is_lock_action = True
@@ -223,9 +251,8 @@ def _add_dock_connections(
         requirement_to_collect = _get_dock_lock_requirement(node.database_node, forward_weakness)
 
     # Handle the different kinds of ways a dock lock can be opened from behind
-
     if back_lock is not None:
-        back_lock_resource = NodeResourceInfo.from_node(target_node, context)
+        back_lock_resource = graph.resource_info_for_node(target_node)
         requirement_parts.append(ResourceRequirement.simple(back_lock_resource))
 
         # Check if we can unlock from the back.
@@ -237,6 +264,8 @@ def _add_dock_connections(
             node.resource_gain.append((back_lock_resource, 1))
 
             if back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST and forward_weakness != back_weakness:
+                assert isinstance(target_node.database_node, DockNode)
+                assert back_weakness is not None
                 requirement_to_collect = RequirementAnd(
                     [requirement_to_collect, _get_dock_lock_requirement(target_node.database_node, back_weakness)]
                 )
@@ -256,9 +285,8 @@ def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
 
 def _connections_from(
     node: WorldGraphNode,
-    original_to_node: dict[int, WorldGraphNode],
+    graph: WorldGraph,
     patches: GamePatches,
-    context: NodeContext,
     simplify_requirement: Callable[[Requirement], Requirement],
     configurable_node_requirements: Mapping[NodeIdentifier, Requirement],
     teleporter_networks: dict[str, list[WorldGraphNode]],
@@ -272,7 +300,7 @@ def _connections_from(
         requirement_to_leave = node.database_node.requirement_to_collect
 
     for target_original_node, requirement in node.area.connections[node.database_node].items():
-        target_node = original_to_node.get(target_original_node.node_index)
+        target_node = graph.original_to_node.get(target_original_node.node_index)
         if target_node is None:
             continue
 
@@ -297,7 +325,7 @@ def _connections_from(
         )
 
     if isinstance(node.database_node, DockNode):
-        yield _add_dock_connections(node, original_to_node, patches, context, simplify_requirement)
+        yield _create_dock_connection(node, graph, patches, simplify_requirement)
 
     if isinstance(node.database_node, TeleporterNetworkNode):
         for other_node in teleporter_networks[node.database_node.network]:
@@ -374,6 +402,23 @@ def create_node(
     )
 
 
+def calculate_node_replacement(database_view: GameDatabaseView) -> dict[Node, Node | None]:
+    """
+    Find all EventPickupNode and mark the associated pickup/event nodes so no WorldGraphNode is created for them.
+    """
+    node_replacement: dict[Node, Node | None] = {}
+
+    for _, _, original_node in database_view.node_iterator():
+        if isinstance(original_node, EventPickupNode):
+            node_replacement[original_node.pickup_node] = original_node
+            node_replacement[original_node.event_node] = None
+
+        if original_node.is_derived_node:
+            node_replacement[original_node] = None
+
+    return node_replacement
+
+
 def create_graph(
     database_view: GameDatabaseView,
     patches: GamePatches,
@@ -384,35 +429,38 @@ def create_graph(
 ) -> WorldGraph:
     nodes: list[WorldGraphNode] = []
 
-    configurable_node_requirements = database_view.get_configurable_node_requirements()
+    resource_database = database_view.get_resource_database_view()
+    assert isinstance(resource_database, ResourceDatabase)
+    node_resource_index_offset = resource_database.first_unused_resource_index()
 
-    # Make Nodes
-
-    node_replacement = {}
     teleporter_networks = collections.defaultdict(list)
+    configurable_node_requirements = database_view.get_configurable_node_requirements()
+    node_replacement = calculate_node_replacement(database_view)
 
-    for _, _, original_node in database_view.node_iterator():
-        if isinstance(original_node, EventPickupNode):
-            node_replacement[original_node.pickup_node] = original_node
-            node_replacement[original_node.event_node] = None
-
-        if original_node.is_derived_node:
-            node_replacement[original_node] = None
-
+    # Create a WorldGraphNode for each node
     for region, area, original_node in database_view.node_iterator():
-        original_node = node_replacement.get(original_node, original_node)
-        if original_node is None:
+        replacement_node = node_replacement.get(original_node, original_node)
+        if replacement_node is None:
             continue
 
-        nodes.append(create_node(len(nodes), patches, original_node, area, region))
-        if isinstance(original_node, TeleporterNetworkNode):
-            assert original_node.requirement_to_activate == Requirement.trivial()
-            teleporter_networks[original_node.network].append(nodes[-1])
+        nodes.append(create_node(len(nodes), patches, replacement_node, area, region))
+        if isinstance(replacement_node, TeleporterNetworkNode):
+            # Only TeleporterNetworkNodes that aren't resource nodes are supported
+            assert replacement_node.requirement_to_activate == Requirement.trivial()
+            teleporter_networks[replacement_node.network].append(nodes[-1])
 
     original_to_node = {node.database_node.node_index: node for node in nodes}
-    node_provider = WorldGraphNodeProvider(database_view, original_to_node)
 
-    context = NodeContext(patches, resources, database_view.get_resource_database_view(), node_provider)
+    graph = WorldGraph(
+        victory_condition=victory_condition,
+        dangerous_resources=frozenset(),
+        nodes=nodes,
+        node_by_pickup_index={node.pickup_index: node for node in nodes if node.pickup_index is not None},
+        original_to_node=original_to_node,
+        node_resource_index_offset=node_resource_index_offset,
+    )
+
+    context = NodeContext(patches, resources, resource_database, _WorldGraphNodeProvider(graph, database_view))
 
     def simplify_requirement_with_as_set(requirement: Requirement) -> Requirement:
         patched = requirement.patch_requirements(damage_multiplier, context)
@@ -425,27 +473,19 @@ def create_graph(
 
     for node in nodes:
         if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
-            node.resource_gain.append((node_provider.get_node_resource_info_for(node.identifier, context), 1))
+            node.resource_gain.append((graph.resource_info_for_node(node), 1))
 
         node.connections.extend(
             _connections_from(
                 node,
-                original_to_node,
+                graph,
                 patches,
-                context,
                 simplify_requirement_with_as_set if flatten_to_set_on_patch else simplify_requirement,
                 configurable_node_requirements,
                 teleporter_networks,
             )
         )
 
-    node_by_pickup_index = {node.pickup_index: node for node in nodes if node.pickup_index is not None}
+    graph.dangerous_resources = frozenset(_dangerous_resources(nodes, context))
 
-    return WorldGraph(
-        victory_condition=victory_condition,
-        dangerous_resources=frozenset(_dangerous_resources(nodes, context)),
-        nodes=nodes,
-        node_by_pickup_index=node_by_pickup_index,
-        node_provider=node_provider,
-        original_to_node=original_to_node,
-    )
+    return graph

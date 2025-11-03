@@ -27,6 +27,7 @@ if TYPE_CHECKING:
     from randovania.resolver.hint_state import ResolverHintState
 
     GraphOrClassicNode = WorldGraphNode | Node
+    GraphOrResourceNode = WorldGraphNode | ResourceNode
     NodeSequence = tuple[GraphOrClassicNode, ...]
 
 
@@ -87,14 +88,13 @@ class State:
         for resource, count in self.resources.as_resource_gain():
             if count > 0 and isinstance(resource, NodeResourceInfo):
                 if isinstance(graph, WorldGraph):
-                    node_index = resource.resource_index - self.resource_database.first_unused_resource_index()
-                    node = graph.nodes[node_index]
-                    if node.pickup_index is not None:
-                        yield node.pickup_index
+                    graph_node = graph.get_node_by_resource_info(resource)
+                    if graph_node.pickup_index is not None:
+                        yield graph_node.pickup_index
                 else:
-                    node = graph.node_by_identifier(resource.node_identifier)
-                    if isinstance(node, PickupNode) and node.pickup_index is not None:
-                        yield node.pickup_index
+                    db_node = graph.node_by_identifier(resource.node_identifier)
+                    if isinstance(db_node, PickupNode) and db_node.pickup_index is not None:
+                        yield db_node.pickup_index
 
     def collected_hints(self, graph: WorldGraph | GameDescription) -> Iterator[NodeIdentifier]:
         for resource, count in self.resources.as_resource_gain():
@@ -142,7 +142,7 @@ class State:
             copy.copy(self.hint_state),
         )
 
-    def collect_resource_node(self, node: ResourceNode | WorldGraphNode, damage_state: DamageState) -> Self:
+    def collect_resource_node(self, node: GraphOrResourceNode, damage_state: DamageState) -> Self:
         """
         Creates a new State that has the given ResourceNode collected.
         :param node:
@@ -167,7 +167,7 @@ class State:
         )
 
     def act_on_node(
-        self, node: GraphOrClassicNode, path: NodeSequence = (), new_damage_state: DamageState | None = None
+        self, node: GraphOrResourceNode, path: NodeSequence = (), new_damage_state: DamageState | None = None
     ) -> Self:
         if new_damage_state is None:
             new_damage_state = self.damage_state
