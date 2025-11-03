@@ -1039,6 +1039,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Inside Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1171,13 +1178,6 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Player Spawn": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Inside Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1341,6 +1341,13 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to High Ground": {
                             "type": "resource",
                             "data": {
@@ -1348,13 +1355,6 @@
                                 "name": "AlinosEchoHallZoomers",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        },
-                        "Door to Alinos Gateway": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         },
                         "Pickup (Energy Tank)": {
@@ -1421,6 +1421,13 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
+                        "Door to Thermal Vast": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to High Ground": {
                             "type": "and",
                             "data": {
@@ -1486,7 +1493,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to High Ground": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1557,13 +1564,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Thermal Vast": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 }
@@ -1614,6 +1614,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Alimbic Gardens": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Alinos Perch": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1684,13 +1691,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Alinos Perch": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -1750,7 +1750,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Alimbic Gardens": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1806,6 +1806,22 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Alinos Perch (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Alinos Perch (Lower)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosCrashSiteForceField",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Force Field Disabled": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1876,22 +1892,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Alinos Perch (Lower)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "AlinosCrashSiteForceField",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Force Field Disabled": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -1951,16 +1951,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Alinos Perch (Upper)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "AlinosCrashSiteForceField",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Pickup (Cartograph Artifact)": {
+                        "Player Spawn": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2019,7 +2010,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Alinos Perch (Lower)": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2044,7 +2035,7 @@
                     "valid_starting_location": false,
                     "event_name": "AlinosCrashSiteForceField",
                     "connections": {
-                        "Door to Alinos Perch (Upper)": {
+                        "Pickup (Cartograph Artifact)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2101,6 +2092,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Portal from High Ground": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (UA Expansion)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2232,13 +2230,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Pickup (UA Expansion)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -2352,6 +2343,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Binary Subcripture Artifact)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2412,13 +2410,6 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Player Spawn": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Binary Subcripture Artifact)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2540,7 +2531,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Morph Ball Door to Processor Core (Entrance)": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2957,6 +2948,31 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Echo Hall": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosHighGroundZoomers1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to High Ground (Lower Level East Door South)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosHighGroundZoomers1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Volt Driver Force Field (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Zoomer Door East Unlocked": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3022,29 +3038,6 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Player Spawn": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to High Ground (Lower Level East Door South)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "AlinosHighGroundZoomers1",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Volt Driver Force Field (South)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Zoomer Door East Unlocked": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3173,7 +3166,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Judicator Force Field (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Elder Passage (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to High Ground (Lower Level East Door South)": {
                     "node_type": "dock",
@@ -3231,13 +3239,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Echo Hall": {
-                            "type": "resource",
+                        "Player Spawn": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "AlinosHighGroundZoomers1",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -3525,14 +3531,14 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Lower Level": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to High Ground (Lower Level East Door North)": {
+                        "Lower Level": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3580,13 +3586,6 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Echo Hall": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Lower Level": {
                             "type": "and",
                             "data": {
@@ -4040,26 +4039,43 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Alimbic Gardens": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "MissileAmmo",
-                                            "amount": 3,
+                                            "type": "events",
+                                            "name": "AlinosHighGroundUpperPlatform",
+                                            "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "MissileJump",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MissileAmmo",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MissileJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4304,7 +4320,7 @@
                     "valid_starting_location": false,
                     "event_name": "AlinosHighGroundZoomers1",
                     "connections": {
-                        "Door to Echo Hall": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4657,7 +4673,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Room Center": {
+                        "Bottom Floor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4722,52 +4738,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Room Center": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Player Spawn": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 307.4486614273848,
-                        "y": 182.13475177304963,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "entity_id": 45,
-                        "position": {
-                            "x": 39.221923828125,
-                            "y": 25.390625,
-                            "z": 12.959716796875
-                        },
-                        "up_vector": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0
-                        },
-                        "facing_vector": {
-                            "x": -0.035400390625,
-                            "y": 0.0,
-                            "z": -0.999267578125
-                        },
-                        "entity_type_data": {
-                            "availabilty": 0,
-                            "active": true
-                        }
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Magmaul Force Field": {
+                        "Bottom Floor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4890,7 +4861,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Room Center": {
+                        "Bottom Floor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4938,13 +4909,6 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Player Spawn": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Pickup (Missile Expansion)": {
                             "type": "and",
                             "data": {
@@ -4952,7 +4916,7 @@
                                 "items": []
                             }
                         },
-                        "Room Center": {
+                        "Bottom Floor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5024,7 +4988,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Room Center": {
+                        "Bottom Floor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5033,19 +4997,40 @@
                         }
                     }
                 },
-                "Room Center": {
+                "Bottom Floor": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 240.1302792153856,
-                        "y": 106.96255830298384,
+                        "x": 307.21,
+                        "y": 182.62,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "entity_id": 45,
+                        "position": {
+                            "x": 39.221923828125,
+                            "y": 25.390625,
+                            "z": 12.959716796875
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.035400390625,
+                            "y": 0.0,
+                            "z": -0.999267578125
+                        },
+                        "entity_type_data": {
+                            "availabilty": 0,
+                            "active": true
+                        }
+                    },
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Crash Site (Upper)": {
@@ -5198,7 +5183,7 @@
                     "valid_starting_location": false,
                     "event_name": "AlinosAlinosPerchGuardian",
                     "connections": {
-                        "Room Center": {
+                        "Bottom Floor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5248,7 +5233,7 @@
                     "valid_starting_location": false,
                     "event_name": "AlinosAlinosPerchSecuritySystem",
                     "connections": {
-                        "Room Center": {
+                        "Bottom Floor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5273,7 +5258,7 @@
                     "valid_starting_location": false,
                     "event_name": "AlinosAlinosPerchEntrancePlatforms",
                     "connections": {
-                        "Room Center": {
+                        "Bottom Floor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5330,6 +5315,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Alinos Perch": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5393,15 +5385,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {
-                        "Inside Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
+                    "connections": {}
                 },
                 "Door to Processor Core": {
                     "node_type": "dock",
@@ -5680,13 +5664,6 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alinos Perch": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
@@ -5797,6 +5774,15 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
+                        "Player Spawn": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosCouncilChamberFireSpawn",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Inside Arena": {
                             "type": "and",
                             "data": {
@@ -6178,6 +6164,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Alimbic Cannon Control Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -6243,13 +6236,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Alimbic Cannon Control Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -6309,7 +6295,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to High Ground": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6366,6 +6352,55 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Council Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Portal to Stronghold Void A (Alinos)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AlinosAArtifact2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AlinosBSArtifact2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "AlinosCArtifact2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Morph Ball Door to Piston Cave (Entrance)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (UA Expansion)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6546,7 +6581,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Council Chamber": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6611,7 +6646,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Council Chamber": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6676,7 +6711,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Council Chamber": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6734,7 +6769,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Council Chamber": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6881,20 +6916,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Ship Deck Portal Unlocked": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Next to Stronghold Portal": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -6956,7 +6977,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Alinos - Elder Passage (Stronghold Void B Portal)",
                     "connections": {
-                        "Next to Stronghold Portal": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7014,51 +7035,6 @@
                     "hint_features": [],
                     "connections": {
                         "Small Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Player Spawn": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 762.534564329546,
-                        "y": 336.2444704078731,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "entity_id": 5,
-                        "position": {
-                            "x": 19.994873046875,
-                            "y": 17.768798828125,
-                            "z": 8.237548828125
-                        },
-                        "up_vector": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0
-                        },
-                        "facing_vector": {
-                            "x": 0.999755859375,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "entity_type_data": {
-                            "availabilty": 0,
-                            "active": true
-                        }
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to High Ground (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7125,7 +7101,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Alinos - Elder Passage (Alinos Gateway Portal)",
                     "connections": {
-                        "Next to Stronghold Portal": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7175,7 +7151,7 @@
                     "valid_starting_location": false,
                     "event_name": "AlinosElderPassagePortal",
                     "connections": {
-                        "Door to High Ground (Top)": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7215,7 +7191,7 @@
                                 "items": []
                             }
                         },
-                        "Next to Stronghold Portal": {
+                        "Player Spawn": {
                             "type": "resource",
                             "data": {
                                 "type": "tricks",
@@ -7226,19 +7202,40 @@
                         }
                     }
                 },
-                "Next to Stronghold Portal": {
+                "Player Spawn": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 576.6570210468619,
-                        "y": 369.2114309146133,
+                        "x": 762.42,
+                        "y": 337.25,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "entity_id": 5,
+                        "position": {
+                            "x": 19.994873046875,
+                            "y": 17.768798828125,
+                            "z": 8.237548828125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.999755859375,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entity_type_data": {
+                            "availabilty": 0,
+                            "active": true
+                        }
+                    },
                     "valid_starting_location": false,
                     "connections": {
                         "Door to High Ground (Top)": {
@@ -7292,6 +7289,13 @@
                                 "name": "AlinosElderPassagePortal",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Event - Ship Deck Portal Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Small Arena": {
@@ -7351,6 +7355,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Portal to Elder Passage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Biodefense Chamber 02": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7423,13 +7434,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Biodefense Chamber 02": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -7489,7 +7493,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Portal to Elder Passage": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7546,6 +7550,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Portal to Processor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Biodefense Chamber 06": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7618,13 +7629,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Biodefense Chamber 06": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -7684,7 +7688,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Portal to Processor Core": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,

@@ -184,6 +184,8 @@ Extra - entity_file: Unit1_C0_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 1, 'active': True})
   > Door to Alinos Gateway
       Trivial
+  > Inside Tunnel
+      Trivial
 
 > Door to High Ground; Heals? False
   * Layers: default
@@ -207,8 +209,6 @@ Extra - entity_file: Unit1_C0_Ent.bin
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 0, 'target_layer_id': 0, 'locked': False, 'out_connector_id': 0, 'out_loader_id': 117, 'entity_filename': 'unit1_Land_Ent.', 'room_name': 'unit1_Land_Ent.'})
   > Player Spawn
-      Trivial
-  > Inside Tunnel
       Trivial
 
 > Pickup (Cartograph Artifact); Heals? False
@@ -241,10 +241,10 @@ Extra - entity_file: Unit1_C0_Ent.bin
 
 > Inside Tunnel; Heals? False
   * Layers: default
+  > Player Spawn
+      Trivial
   > Door to High Ground
       After Alinos - Echo Hall Morph Ball Door Unlocked
-  > Door to Alinos Gateway
-      Trivial
   > Pickup (Energy Tank)
       After Alinos - Echo Hall Morph Ball Door Unlocked
   > Event - Morph Ball Door Unlocked
@@ -261,6 +261,8 @@ Extra - entity_file: Unit1_C1_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 201782.84033203125})
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': False})
+  > Door to Thermal Vast
+      Trivial
   > Door to High Ground
       Trivial
 
@@ -272,7 +274,7 @@ Extra - entity_file: Unit1_C1_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 0.999755859375, 'z': -0.00146484375})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.015625, 'y': -0.00146484375, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 3, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 4, 'out_loader_id': 117, 'entity_filename': 'unit1_C2_Ent.bi', 'room_name': 'unit1_C2_Ent.bi'})
-  > Door to High Ground
+  > Player Spawn
       Trivial
 
 > Door to High Ground; Heals? False
@@ -284,8 +286,6 @@ Extra - entity_file: Unit1_C1_Ent.bin
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 2, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 3, 'out_loader_id': 117, 'entity_filename': 'unit1_RM1_Ent.b', 'room_name': 'unit1_RM1_Ent.b'})
   > Player Spawn
-      Trivial
-  > Door to Thermal Vast
       Trivial
 
 ----------------
@@ -301,6 +301,8 @@ Extra - entity_file: Unit1_C2_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 97, 'active': False})
   > Door to Alimbic Gardens
       Trivial
+  > Door to Alinos Perch
+      Trivial
 
 > Door to Alimbic Gardens; Heals? False
   * Layers: default
@@ -312,8 +314,6 @@ Extra - entity_file: Unit1_C2_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 2, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 4, 'out_loader_id': 117, 'entity_filename': 'unit1_C1_Ent.bi', 'room_name': 'unit1_C1_Ent.bi'})
   > Player Spawn
       Trivial
-  > Door to Alinos Perch
-      Trivial
 
 > Door to Alinos Perch; Heals? False
   * Layers: default
@@ -323,7 +323,7 @@ Extra - entity_file: Unit1_C2_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 3, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 5, 'out_loader_id': 117, 'entity_filename': 'unit1_RM2_Ent.b', 'room_name': 'unit1_RM2_Ent.b'})
-  > Door to Alimbic Gardens
+  > Player Spawn
       Trivial
 
 ----------------
@@ -339,6 +339,10 @@ Extra - entity_file: Unit1_C3_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Door to Alinos Perch (Upper)
       Trivial
+  > Door to Alinos Perch (Lower)
+      After Alinos - Crash Site Deactivate Force Field
+  > Event - Force Field Disabled
+      Trivial
 
 > Door to Alinos Perch (Upper); Heals? False
   * Layers: default
@@ -350,10 +354,6 @@ Extra - entity_file: Unit1_C3_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 2, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 6, 'out_loader_id': 117, 'entity_filename': 'unit1_RM2_Ent.b', 'room_name': 'unit1_RM2_Ent.b'})
   > Player Spawn
       Trivial
-  > Door to Alinos Perch (Lower)
-      After Alinos - Crash Site Deactivate Force Field
-  > Event - Force Field Disabled
-      Trivial
 
 > Door to Alinos Perch (Lower); Heals? False
   * Layers: default
@@ -363,9 +363,7 @@ Extra - entity_file: Unit1_C3_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 2, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 7, 'out_loader_id': 117, 'entity_filename': 'unit1_RM2_Ent.b', 'room_name': 'unit1_RM2_Ent.b'})
-  > Door to Alinos Perch (Upper)
-      After Alinos - Crash Site Deactivate Force Field
-  > Pickup (Cartograph Artifact)
+  > Player Spawn
       After Alinos - Crash Site Deactivate Force Field
 
 > Pickup (Cartograph Artifact); Heals? False
@@ -376,13 +374,13 @@ Extra - entity_file: Unit1_C3_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'model_id': 1, 'artifact_id': 0, 'active': True, 'has_base': False, 'message1_target': -1, 'message1': 0, 'message2_target': -1, 'message2': 0, 'message3_target': -1, 'message3': 0})
-  > Door to Alinos Perch (Lower)
+  > Player Spawn
       Trivial
 
 > Event - Force Field Disabled; Heals? False
   * Layers: default
   * Event Alinos - Crash Site Deactivate Force Field
-  > Door to Alinos Perch (Upper)
+  > Pickup (Cartograph Artifact)
       Trivial
 
 ----------------
@@ -398,6 +396,8 @@ Extra - portal_filename: unit1_C4_Ent
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 398534.84033203125})
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 118, 'active': True})
   > Portal from High Ground
+      Trivial
+  > Pickup (UA Expansion)
       Trivial
 
 > Portal to High Ground; Heals? False
@@ -418,8 +418,6 @@ Extra - portal_filename: unit1_C4_Ent
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.004150390625})
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 11, 'target_index': 11, 'artifact_id': 11, 'active': True, 'invisible': True, 'entity_filename': ' unit1_RM1_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
-      Trivial
-  > Pickup (UA Expansion)
       Trivial
 
 > Pickup (UA Expansion); Heals? False
@@ -446,6 +444,8 @@ Extra - entity_file: Unit1_C5_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Morph Ball Door to Processor Core (Entrance)
       Trivial
+  > Pickup (Binary Subcripture Artifact)
+      Trivial
 
 > Morph Ball Door to Processor Core (Entrance); Heals? False
   * Layers: default
@@ -456,8 +456,6 @@ Extra - entity_file: Unit1_C5_Ent.bin
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 1, 'connector_id': 5, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 11, 'out_loader_id': 117, 'entity_filename': 'unit1_RM5_Ent.b', 'room_name': 'unit1_RM5_Ent.b'})
   > Player Spawn
-      Trivial
-  > Pickup (Binary Subcripture Artifact)
       Trivial
 
 > Morph Ball Door to Processor Core (Exit); Heals? False
@@ -479,7 +477,7 @@ Extra - entity_file: Unit1_C5_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'model_id': 1, 'artifact_id': 2, 'active': True, 'has_base': False, 'message1_target': 36, 'message1': 16, 'message2_target': 35, 'message2': 16, 'message3_target': -1, 'message3': 0})
-  > Morph Ball Door to Processor Core (Entrance)
+  > Player Spawn
       Trivial
   > Morph Ball Door to Processor Core (Exit)
       Trivial
@@ -563,6 +561,12 @@ Extra - portal_filename: unit1_RM1_Ent
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Door to Echo Hall
+      After Alinos - High Ground Zoomer Door East Unlocked
+  > Door to High Ground (Lower Level East Door South)
+      After Alinos - High Ground Zoomer Door East Unlocked
+  > Volt Driver Force Field (East)
+      Trivial
+  > Event - Zoomer Door East Unlocked
       Trivial
 
 > Door to Echo Hall; Heals? False
@@ -574,12 +578,6 @@ Extra - portal_filename: unit1_RM1_Ent
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 0, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 1, 'out_loader_id': 117, 'entity_filename': 'unit1_C0_Ent.bi', 'room_name': 'unit1_C0_Ent.bi'})
   > Player Spawn
-      Trivial
-  > Door to High Ground (Lower Level East Door South)
-      After Alinos - High Ground Zoomer Door East Unlocked
-  > Volt Driver Force Field (South)
-      Trivial
-  > Event - Zoomer Door East Unlocked
       Trivial
 
 > Door to Combat Hall; Heals? False
@@ -601,6 +599,10 @@ Extra - portal_filename: unit1_RM1_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 5, 'door_type': 0, 'connector_id': 3, 'target_layer_id': 1, 'locked': True, 'out_connector_id': 3, 'out_loader_id': 117, 'entity_filename': 'unit1_C1_Ent.bi', 'room_name': 'unit1_C1_Ent.bi'})
+  > Judicator Force Field (Upper)
+      Trivial
+  > Door to Elder Passage (Top)
+      Trivial
 
 > Door to High Ground (Lower Level East Door South); Heals? False
   * Layers: default
@@ -610,8 +612,8 @@ Extra - portal_filename: unit1_RM1_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': 'port_rmTunnelE', 'palette_id': 9, 'door_type': 3, 'connector_id': 255, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 255, 'out_loader_id': 32, 'entity_filename': ' ', 'room_name': ' '})
-  > Door to Echo Hall
-      After Alinos - High Ground Zoomer Door East Unlocked
+  > Player Spawn
+      Trivial
 
 > Door to High Ground (Lower Level North Door East); Heals? False
   * Layers: default
@@ -667,9 +669,9 @@ Extra - portal_filename: unit1_RM1_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'type': 1, 'weapon': 'VoltDriver', 'width': 1.0, 'height': 1.53564453125, 'active': True})
-  > Lower Level
+  > Player Spawn
       Trivial
-  > Door to High Ground (Lower Level East Door North)
+  > Lower Level
       Trivial
 
 > Volt Driver Force Field (South); Heals? False
@@ -680,8 +682,6 @@ Extra - portal_filename: unit1_RM1_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'type': 1, 'weapon': 'VoltDriver', 'width': 1.0, 'height': 1.53564453125, 'active': True})
-  > Door to Echo Hall
-      Trivial
   > Lower Level
       Trivial
 
@@ -774,7 +774,9 @@ Extra - portal_filename: unit1_RM1_Ent
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 3, 'connector_id': 22, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 12, 'out_loader_id': 117, 'entity_filename': 'unit1_RM6_Ent.b', 'room_name': 'unit1_RM6_Ent.b'})
   > Door to Alimbic Gardens
-      Missiles ≥ 3 and Missile Jump (Intermediate)
+      Any of the following:
+          After Alinos - High Ground Upper Platform Activated
+          Missiles ≥ 3 and Missile Jump (Intermediate)
   > Upper Level
       Trivial
 
@@ -824,7 +826,7 @@ Extra - portal_filename: unit1_RM1_Ent
 > Event - Zoomer Door East Unlocked; Heals? False
   * Layers: default
   * Event Alinos - High Ground Zoomer Door East Unlocked
-  > Door to Echo Hall
+  > Player Spawn
       Trivial
 
 > Event - Zoomer Door North Unlocked; Heals? False
@@ -896,7 +898,7 @@ Extra - entity_file: unit1_RM2_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 3, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 7, 'out_loader_id': 117, 'entity_filename': 'unit1_C3_Ent.bi', 'room_name': 'unit1_C3_Ent.bi'})
-  > Room Center
+  > Bottom Floor
       Trivial
 
 > Door to Thermal Vast; Heals? False
@@ -907,17 +909,7 @@ Extra - entity_file: unit1_RM2_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 2, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 5, 'out_loader_id': 117, 'entity_filename': 'unit1_C2_Ent.bi', 'room_name': 'unit1_C2_Ent.bi'})
-  > Room Center
-      Trivial
-
-> Player Spawn; Heals? False; Default Node
-  * Layers: default
-  * Extra - entity_id: 45
-  * Extra - position: frozendict.frozendict({'x': 39.221923828125, 'y': 25.390625, 'z': 12.959716796875})
-  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
-  * Extra - facing_vector: frozendict.frozendict({'x': -0.035400390625, 'y': 0.0, 'z': -0.999267578125})
-  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
-  > Magmaul Force Field
+  > Bottom Floor
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
@@ -939,7 +931,7 @@ Extra - entity_file: unit1_RM2_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 0, 'target_layer_id': 1, 'locked': True, 'out_connector_id': 8, 'out_loader_id': 117, 'entity_filename': 'unit1_RM3_Ent.b', 'room_name': 'unit1_RM3_Ent.b'})
-  > Room Center
+  > Bottom Floor
       Trivial
 
 > Magmaul Force Field; Heals? False
@@ -950,11 +942,9 @@ Extra - entity_file: unit1_RM2_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'type': 6, 'weapon': 'Magmaul', 'width': 1.638671875, 'height': 2.414306640625, 'active': True})
-  > Player Spawn
-      Trivial
   > Pickup (Missile Expansion)
       Trivial
-  > Room Center
+  > Bottom Floor
       Trivial
   > Event - Force Field Platform Moved
       Trivial
@@ -967,11 +957,16 @@ Extra - entity_file: unit1_RM2_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 3, 'target_layer_id': 1, 'locked': True, 'out_connector_id': 6, 'out_loader_id': 117, 'entity_filename': 'unit1_C3_Ent.bi', 'room_name': 'unit1_C3_Ent.bi'})
-  > Room Center
+  > Bottom Floor
       Trivial
 
-> Room Center; Heals? False
+> Bottom Floor; Heals? False
   * Layers: default
+  * Extra - entity_id: 45
+  * Extra - position: frozendict.frozendict({'x': 39.221923828125, 'y': 25.390625, 'z': 12.959716796875})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': -0.035400390625, 'y': 0.0, 'z': -0.999267578125})
+  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Door to Crash Site (Upper)
       After Alinos - Alinos Perch Entrance Platforms Moved and After Alinos - Alinos Perch Security System Deactivated
   > Door to Thermal Vast
@@ -996,7 +991,7 @@ Extra - entity_file: unit1_RM2_Ent.bin
 > Event - Guardian Defeated; Heals? False
   * Layers: default
   * Event Alinos - Alinos Perch Guardian Defeated
-  > Room Center
+  > Bottom Floor
       Trivial
 
 > Event - Force Field Platform Moved; Heals? False
@@ -1008,13 +1003,13 @@ Extra - entity_file: unit1_RM2_Ent.bin
 > Event - Security System Deactivated; Heals? False
   * Layers: default
   * Event Alinos - Alinos Perch Security System Deactivated
-  > Room Center
+  > Bottom Floor
       Trivial
 
 > Event - Entrance Platforms Moved; Heals? False
   * Layers: default
   * Event Alinos - Alinos Perch Entrance Platforms Moved
-  > Room Center
+  > Bottom Floor
       Trivial
 
 ----------------
@@ -1031,6 +1026,8 @@ Extra - portal_filename: unit1_RM3_Ent
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 1, 'active': True})
   > Door to Alinos Perch
       Trivial
+  > Inside Arena
+      Trivial
 
 > Door to Alinos Perch; Heals? False
   * Layers: default
@@ -1040,8 +1037,6 @@ Extra - portal_filename: unit1_RM3_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 1, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 8, 'out_loader_id': 117, 'entity_filename': 'unit1_RM2_Ent.b', 'room_name': 'unit1_RM2_Ent.b'})
-  > Inside Arena
-      Trivial
 
 > Door to Processor Core; Heals? False
   * Layers: default
@@ -1095,8 +1090,6 @@ Extra - portal_filename: unit1_RM3_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'type': 6, 'weapon': 'Magmaul', 'width': 1.6025390625, 'height': 4.0986328125, 'active': True})
-  > Door to Alinos Perch
-      Trivial
   > Pickup (Energy Tank)
       Trivial
   > Inside Arena
@@ -1123,6 +1116,8 @@ Extra - portal_filename: unit1_RM3_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'type': 6, 'weapon': 'Magmaul', 'width': 2.21923828125, 'height': 2.787841796875, 'active': False})
+  > Player Spawn
+      After Alinos - Council Chamber Fire Spawn Defeated
   > Inside Arena
       Trivial
 
@@ -1202,6 +1197,8 @@ Extra - entity_file: unit1_rm4_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Door to High Ground
       Trivial
+  > Door to Alimbic Cannon Control Room
+      Trivial
 
 > Door to High Ground; Heals? False
   * Layers: default
@@ -1213,8 +1210,6 @@ Extra - entity_file: unit1_rm4_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 3, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 2, 'out_loader_id': 117, 'entity_filename': 'unit1_RM1_Ent.b', 'room_name': 'unit1_RM1_Ent.b'})
   > Player Spawn
       Trivial
-  > Door to Alimbic Cannon Control Room
-      Trivial
 
 > Door to Alimbic Cannon Control Room; Heals? False
   * Layers: default
@@ -1224,7 +1219,7 @@ Extra - entity_file: unit1_rm4_Ent.bin
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 0, 'connector_id': 2, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 10, 'out_loader_id': 99, 'entity_filename': 'crystalroom_Ent', 'room_name': 'crystalroom_Ent'})
-  > Door to High Ground
+  > Player Spawn
       Trivial
 
 ----------------
@@ -1240,6 +1235,12 @@ Extra - portal_filename: unit1_RM5_Ent
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Door to Council Chamber
+      Trivial
+  > Portal to Stronghold Void A (Alinos)
+      Alinos Attameter Artifact 2 and Alinos Binary Subscripture Artifact 2 and Alinos Cartograph Artifact 2
+  > Morph Ball Door to Piston Cave (Entrance)
+      Trivial
+  > Pickup (UA Expansion)
       Trivial
 
 > Door to Council Chamber; Heals? False
@@ -1267,7 +1268,7 @@ Extra - portal_filename: unit1_RM5_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 1, 'target_index': 1, 'artifact_id': 1, 'active': False, 'invisible': False, 'entity_filename': 'Unit1_TP2_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
-  > Door to Council Chamber
+  > Player Spawn
       Trivial
 
 > Morph Ball Door to Piston Cave (Entrance); Heals? False
@@ -1278,7 +1279,7 @@ Extra - portal_filename: unit1_RM5_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 1, 'connector_id': 4, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 11, 'out_loader_id': 117, 'entity_filename': 'unit1_C5_Ent.bi', 'room_name': 'unit1_C5_Ent.bi'})
-  > Door to Council Chamber
+  > Player Spawn
       Trivial
 
 > Morph Ball Door to Piston Cave (Exit); Heals? False
@@ -1289,7 +1290,7 @@ Extra - portal_filename: unit1_RM5_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 1, 'connector_id': 6, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 12, 'out_loader_id': 117, 'entity_filename': 'unit1_C5_Ent.bi', 'room_name': 'unit1_C5_Ent.bi'})
-  > Door to Council Chamber
+  > Player Spawn
       Trivial
 
 > Pickup (UA Expansion); Heals? False
@@ -1300,7 +1301,7 @@ Extra - portal_filename: unit1_RM5_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'item_type': 18, 'enabled': True, 'has_base': True, 'always_active': False, 'max_spawn_count': 1, 'spawn_interval': 0, 'spawn_delay': 0, 'notify_entity_id': -1, 'collected_message': 0, 'collected_message_param1': 0, 'collected_message_param2': 0})
-  > Door to Council Chamber
+  > Player Spawn
       Trivial
 
 ----------------
@@ -1329,10 +1330,6 @@ Extra - portal_filename: unit1_RM6_Ent
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 3, 'connector_id': 23, 'target_layer_id': 0, 'locked': True, 'out_connector_id': 12, 'out_loader_id': 117, 'entity_filename': 'unit1_RM1_Ent.b', 'room_name': 'unit1_RM1_Ent.b'})
   > Player Spawn
       Trivial
-  > Event - Ship Deck Portal Unlocked
-      Trivial
-  > Next to Stronghold Portal
-      Trivial
 
 > Portal to Stronghold Void B (Alinos); Heals? False
   * Layers: default
@@ -1342,7 +1339,7 @@ Extra - portal_filename: unit1_RM6_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 0, 'target_index': 0, 'artifact_id': 0, 'active': False, 'invisible': False, 'entity_filename': 'Unit1_TP1_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
-  > Next to Stronghold Portal
+  > Player Spawn
       Trivial
 
 > Pickup (Attameter Artifact); Heals? False
@@ -1356,16 +1353,6 @@ Extra - portal_filename: unit1_RM6_Ent
   > Small Arena
       Trivial
 
-> Player Spawn; Heals? False; Default Node
-  * Layers: default
-  * Extra - entity_id: 5
-  * Extra - position: frozendict.frozendict({'x': 19.994873046875, 'y': 17.768798828125, 'z': 8.237548828125})
-  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
-  * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
-  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
-  > Door to High Ground (Top)
-      Trivial
-
 > Portal to Alinos Gateway; Heals? False
   * Layers: default
   * Portal to Alinos Gateway/Portal to Elder Passage; Custom name: Alinos - Elder Passage (Alinos Gateway Portal)
@@ -1374,7 +1361,7 @@ Extra - portal_filename: unit1_RM6_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.302734375, 'y': 0.0, 'z': -0.952880859375})
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 20, 'target_index': 20, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit1_Land_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
-  > Next to Stronghold Portal
+  > Player Spawn
       Trivial
 
 > Event - Spire Encounter; Heals? False
@@ -1386,7 +1373,7 @@ Extra - portal_filename: unit1_RM6_Ent
 > Event - Ship Deck Portal Unlocked; Heals? False
   * Layers: default
   * Event Alinos - Elder Passage Ship Deck Portal Unlocked
-  > Door to High Ground (Top)
+  > Player Spawn
       Trivial
 
 > Small Arena; Heals? False
@@ -1395,17 +1382,24 @@ Extra - portal_filename: unit1_RM6_Ent
       After Alinos - Elder Passage Spire Encounter
   > Event - Spire Encounter
       Trivial
-  > Next to Stronghold Portal
+  > Player Spawn
       Bomb Jump (Intermediate)
 
-> Next to Stronghold Portal; Heals? False
+> Player Spawn; Heals? False; Default Node
   * Layers: default
+  * Extra - entity_id: 5
+  * Extra - position: frozendict.frozendict({'x': 19.994873046875, 'y': 17.768798828125, 'z': 8.237548828125})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
+  * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Door to High Ground (Top)
       After Alinos - High Ground Spire Defeated
   > Portal to Stronghold Void B (Alinos)
       Alinos Attameter Artifact 1 and Alinos Binary Subscripture Artifact 1 and Alinos Cartograph Artifact 1
   > Portal to Alinos Gateway
       After Alinos - Elder Passage Ship Deck Portal Unlocked
+  > Event - Ship Deck Portal Unlocked
+      Trivial
   > Small Arena
       Trivial
 
@@ -1423,6 +1417,8 @@ Extra - portal_filename: Unit1_TP1_Ent
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Portal to Elder Passage
       Trivial
+  > Door to Biodefense Chamber 02
+      Trivial
 
 > Portal to Elder Passage; Heals? False
   * Layers: default
@@ -1434,8 +1430,6 @@ Extra - portal_filename: Unit1_TP1_Ent
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 0, 'target_index': 0, 'artifact_id': 255, 'active': True, 'invisible': False, 'entity_filename': 'unit1_RM6_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
-  > Door to Biodefense Chamber 02
-      Trivial
 
 > Door to Biodefense Chamber 02; Heals? False
   * Layers: default
@@ -1445,7 +1439,7 @@ Extra - portal_filename: Unit1_TP1_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 2, 'connector_id': 21, 'target_layer_id': 0, 'locked': False, 'out_connector_id': 0, 'out_loader_id': 117, 'entity_filename': 'unit1_b1_Ent.bi', 'room_name': 'unit1_b1_Ent.bi'})
-  > Portal to Elder Passage
+  > Player Spawn
       Trivial
 
 ----------------
@@ -1462,6 +1456,8 @@ Extra - portal_filename: Unit1_TP2_Ent
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Portal to Processor Core
       Trivial
+  > Door to Biodefense Chamber 06
+      Trivial
 
 > Portal to Processor Core; Heals? False
   * Layers: default
@@ -1473,8 +1469,6 @@ Extra - portal_filename: Unit1_TP2_Ent
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 1, 'target_index': 1, 'artifact_id': 255, 'active': True, 'invisible': False, 'entity_filename': 'unit1_RM5_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
-  > Door to Biodefense Chamber 06
-      Trivial
 
 > Door to Biodefense Chamber 06; Heals? False
   * Layers: default
@@ -1484,6 +1478,6 @@ Extra - portal_filename: Unit1_TP2_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'node_name': '', 'palette_id': 9, 'door_type': 2, 'connector_id': 20, 'target_layer_id': 0, 'locked': False, 'out_connector_id': 0, 'out_loader_id': 117, 'entity_filename': 'unit1_b2_Ent.bi', 'room_name': 'unit1_b2_Ent.bi'})
-  > Portal to Processor Core
+  > Player Spawn
       Trivial
 
