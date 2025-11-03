@@ -5,22 +5,13 @@ from unittest.mock import ANY, MagicMock
 
 import pytest
 
-from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.gui.widgets import game_validator_widget
 from randovania.gui.widgets.game_validator_widget import LABEL_IDS, ValidatorWidgetResolverLogger
 from randovania.resolver import debug
+from test.resolver.test_logging import perform_logging
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
-
     from pytest_mock import MockerFixture
-
-    from randovania.game_description.db.resource_node import ResourceNode
-    from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceQuantity
 
 
 @pytest.fixture
@@ -113,82 +104,15 @@ def test_set_filter(widget):
 @pytest.mark.parametrize(
     "verbosity", [debug.LogLevel.SILENT, debug.LogLevel.NORMAL, debug.LogLevel.HIGH, debug.LogLevel.EXTREME]
 )
-async def test_on_start_button_no_task(
-    widget, mocker: MockerFixture, blank_game_description, cancel: bool, verbosity: int
-):
+async def test_on_start_button_no_task(widget, mocker: MockerFixture, blank_game_patches, cancel, verbosity):
     widget._verbosity = verbosity
-
-    def mock_state(
-        node_id: NodeIdentifier,
-        *,
-        resources: ResourceGainTuple = (),
-        target: PickupTarget | None = None,
-        path: Iterable[NodeIdentifier] = (),
-    ) -> MagicMock:
-        state = MagicMock()
-        state.node = blank_game_description.node_by_identifier(node_id)
-        state.game_state_debug_string.return_value = "100/100 Energy"
-        if isinstance(state.node, PickupNode):
-            state.patches.pickup_assignment = {state.node.pickup_index: target}
-        state.path_from_previous_state = tuple(
-            blank_game_description.node_by_identifier(path_node) for path_node in path
-        )
-        return state
-
-    def res(res_type: ResourceType, name: str, amount: int = 1) -> ResourceQuantity:
-        info = SimpleResourceInfo(0, name, name, res_type)
-        return info, amount
-
-    def satisfiable(node: NodeIdentifier) -> tuple[ResourceNode, Any]:
-        return (blank_game_description.node_by_identifier(node), MagicMock())
 
     async def side_effect(logger: ValidatorWidgetResolverLogger, *args: Any):
         assert widget.start_button.text() == "Stop"
         assert widget.status_label.text() == "Running..."
-        logger.logger_start()
 
-        logger.log_action(
-            mock_state(
-                NodeIdentifier("Intro", "Starting Area", "Spawn Point"),
-            )
-        )
-        logger.log_action(
-            mock_state(
-                NodeIdentifier("Intro", "Starting Area", "Pickup (Weapon)"),
-                target=PickupTarget(
-                    blank_game_description.get_pickup_database().standard_pickups["Blue Key"],
-                    player=0,
-                ),
-                resources=(
-                    res(ResourceType.NODE_IDENTIFIER, "Pickup (Weapon)"),
-                    res(ResourceType.ITEM, "Blue Key"),
-                ),
-            )
-        )
-        logger.log_checking_satisfiable(
-            [
-                satisfiable(NodeIdentifier("Intro", "Starting Area", "Lock - Door to Boss Arena")),
-            ]
-        )
-        logger.log_action(
-            mock_state(
-                NodeIdentifier("Intro", "Starting Area", "Spawn Point"),
-                resources=(res(ResourceType.NODE_IDENTIFIER, "Spawn Point"),),
-                path=(NodeIdentifier("Intro", "Back-Only Lock Room", "Door to Starting Area"),),
-            )
-        )
-        logger.log_rollback(
-            mock_state(NodeIdentifier("Intro", "Starting Area", "Spawn Point")),
-            False,
-            False,
-            MagicMock(),
-        )
-        logger.log_action(
-            mock_state(
-                NodeIdentifier("Intro", "Back-Only Lock Room", "Event - Key Switch 1"),
-                resources=(res(ResourceType.EVENT, "Key Switch 1"),),
-            )
-        )
+        perform_logging(blank_game_patches, logger)
+
         if cancel:
             widget._current_task.cancel()
         else:
@@ -207,16 +131,22 @@ async def test_on_start_button_no_task(
     mock_run_validator.assert_awaited_once_with(ANY, verbosity, widget.layout_description)
     assert widget.log_widget.topLevelItemCount() == (1 if verbosity else 0)
 
+    for line in widget.tree_as_lines():
+        print(line)
+
     if verbosity >= debug.LogLevel.NORMAL:
         region_item = widget.log_widget.topLevelItem(0)
-        assert region_item.childCount() == 5
+        assert region_item.childCount() == (9 if verbosity >= debug.LogLevel.HIGH else 7)
         assert region_item.text(LABEL_IDS["Node"]) == "Intro"
 
         assert not region_item.child(0).isExpanded()
 
         pickup_action = region_item.child(1)
+        assert pickup_action.text(LABEL_IDS["Node"]) == "Starting Area/Pickup (Weapon)"
         assert pickup_action.text(LABEL_IDS["Type"]) == "Major"
         assert pickup_action.text(LABEL_IDS["Action"]) == "Blue Key"
+        assert pickup_action.text(LABEL_IDS["Energy"]) == "100/100"
+        assert pickup_action.text(LABEL_IDS["Resources"]) == ("Item: Blue Key, Node: Pickup (Weapon)")
 
         other_action = region_item.child(2)
         assert other_action.text(LABEL_IDS["Type"]) == "Start"
@@ -225,15 +155,52 @@ async def test_on_start_button_no_task(
         rollback = region_item.child(3)
         assert rollback.text(LABEL_IDS["Node"]) == "Rollback Starting Area/Spawn Point"
         assert rollback.text(LABEL_IDS["Type"]) == "Rollback"
+        assert rollback.text(LABEL_IDS["Action"]) == "Had action? False; Possible action? False"
+
+        event_action = region_item.child(4)
+        assert event_action.text(LABEL_IDS["Node"]) == "Back-Only Lock Room/Event - Key Switch 1"
+        assert event_action.text(LABEL_IDS["Type"]) == "Event"
+        assert event_action.text(LABEL_IDS["Action"]) == "Key Switch 1"
+        assert event_action.text(LABEL_IDS["Energy"]) == "100/100"
+        assert event_action.text(LABEL_IDS["Resources"]) == ("Event: Key Switch 1")
+
+        success = region_item.child(5)
+        assert success.text(LABEL_IDS["Node"]) == "Playthrough Complete"
+        assert success.text(LABEL_IDS["Type"]) == "Success"
+        assert success.text(LABEL_IDS["Action"]) == "Game is possible"
+
+        failure = region_item.child(6)
+        assert failure.text(LABEL_IDS["Node"]) == "Playthrough Complete"
+        assert failure.text(LABEL_IDS["Type"]) == "Failure"
+        assert failure.text(LABEL_IDS["Action"]) == "Game is impossible"
 
     if verbosity >= debug.LogLevel.HIGH:
-        child = pickup_action.child(0)
-        assert child.text(0) == "Satisfiable actions"
-        assert child.child(0).text(LABEL_IDS["Node"]) == "• Intro/Starting Area/Lock - Door to Boss Arena"
+        pickup_satisfy = pickup_action.child(0)
+        assert pickup_satisfy.text(0) == "Satisfiable actions"
+        assert pickup_satisfy.child(0).text(0) == "• Intro/Starting Area/Lock - Door to Boss Arena"
+
+        other_satisfy = other_action.child(0)
+        assert other_satisfy.text(0) == "No satisfiable actions"
+        assert other_satisfy.childCount() == 0
+
+        skip1 = region_item.child(7)
+        skip2 = region_item.child(8)
+
+        for skip in (skip1, skip2):
+            assert skip.text(LABEL_IDS["Node"]) == "Skip Back-Only Lock Room/Event - Key Switch 1"
+            assert skip.text(LABEL_IDS["Type"]) == "Skip"
+            assert skip.child(0).text(0) == "Additional Requirement Alternatives"
+            assert skip.child(0).child(0).text(0) == "• Impossible"
+
+        assert skip1.text(LABEL_IDS["Action"]) == "New additional"
+        assert skip1.font(LABEL_IDS["Action"]).bold()
+
+        assert skip2.text(LABEL_IDS["Action"]) == "Same additional"
+        assert not skip2.font(LABEL_IDS["Action"]).bold()
 
     if verbosity >= debug.LogLevel.EXTREME:
-        child = pickup_action.child(1)
-        assert child.text(LABEL_IDS["Node"]) == "↪ Intro/Back-Only Lock Room/Door to Starting Area"
+        pickup_path = pickup_action.child(1)
+        assert pickup_path.text(LABEL_IDS["Node"]) == "↪ Intro/Back-Only Lock Room/Door to Starting Area"
 
     for column in (LABEL_IDS["Energy"], LABEL_IDS["Resources"]):
         assert widget.log_widget.isColumnHidden(column) == (verbosity < debug.LogLevel.HIGH)
