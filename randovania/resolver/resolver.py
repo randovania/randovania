@@ -369,7 +369,7 @@ async def _inner_advance_depth(
         # HACK: sort nodes so they're somewhat more consistent between classic and new graph
         for action, damage_state in sorted(entries, key=_index_for_action_pair)
     ]
-    logic.log_checking_satisfiable(state, actions)
+    logic.logger.log_checking_satisfiable(actions)
     has_action = False
     for _, action, damage_state in actions:
         action_additional_requirements = logic.get_additional_requirements(action)

@@ -18,11 +18,13 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.graph.world_graph import WorldGraphNode
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.layout_description import LayoutDescription
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logging import ActionDetails, ActionLogEntry, RollbackLogEntry, SkipLogEntry
+    from randovania.resolver.resolver import ActionPriority
     from randovania.resolver.state import State
 
 
@@ -319,7 +321,9 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
 
         self.validator_widget.add_log_entry(widget, action_entry.location.identifier)
 
-    def _log_checking_satisfiable(self, actions: Iterable[tuple[ResourceNode, DamageState]]) -> None:
+    def _log_checking_satisfiable(
+        self, actions: Iterable[tuple[ActionPriority, ResourceNode | WorldGraphNode, DamageState]]
+    ) -> None:
         if not self.should_show("CheckSatisfiable", self.log_level):
             return
 
