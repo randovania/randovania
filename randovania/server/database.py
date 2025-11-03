@@ -617,7 +617,7 @@ class AsyncRaceRoom(BaseModel):
             start_date=self.start_datetime,
             end_date=self.end_datetime,
             race_status=self.get_race_status(now),
-            auth_token=sa.encrypt_dict(
+            auth_token=sa.encrypt_and_b85_dict(
                 {
                     "room_id": self.id,
                     "time": now.timestamp(),

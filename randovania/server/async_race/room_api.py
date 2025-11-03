@@ -1,3 +1,4 @@
+import base64
 import datetime
 import json
 import math
@@ -60,7 +61,7 @@ async def _verify_authorization(sa: ServerApp, sid: str, room: AsyncRaceRoom, au
             return
 
         try:
-            auth_data = sa.decrypt_dict(auth_token)
+            auth_data = sa.decrypt_and_b85_dict(auth_token)
             if auth_data["room_id"] != room.id:
                 raise error.NotAuthorizedForActionError
 
@@ -528,8 +529,10 @@ async def get_livesplit_url(sa: ServerApp, sid: str, room_id: int) -> str:
 
     await sa.ensure_in_room(sid, _get_async_race_socketio_room(room, user))
 
+    token = base64.urlsafe_b64encode(sa.encrypt_str(f"{user.id}/{sid}")).decode("ascii")
+
     return str(
-        sa.app.url_path_for("livesplit_integration", room_id=room_id, user_id=user.id, sid=sid).make_absolute_url(
+        sa.app.url_path_for("livesplit_integration", room_id=room_id, token=token).make_absolute_url(
             sa.configuration["server_address"]
         )
     )
@@ -559,14 +562,20 @@ async def emit_async_room_message(sa: ServerApp, room: AsyncRaceRoom, sid: str, 
     pass
 
 
-@router.websocket("/async-race-room/{room_id}/livesplit/{user_id}/{sid}")
+@router.websocket("/async-race-room/{room_id}/livesplit/{token}")
 async def livesplit_integration(
     websocket: WebSocket,
     room_id: int,
-    user_id: int,
-    sid: str,
+    token: str,
 ) -> None:
     app: RdvFastAPI = websocket.app
+
+    # Extract the user id and sid from an encrypted value.
+    # The only way to get a valid token is to call `get_livesplit_url`, which checks if the user is an
+    # active member of the race, solving the lack of authentication needed in this endpoint.
+    user_id_str, sid = app.sa.decrypt_str(base64.urlsafe_b64decode(token)).split("/")
+    user_id = int(user_id_str)
+
     try:
         room = AsyncRaceRoom.get_by_id(room_id)
         user = User.get_by_id(user_id)
@@ -600,7 +609,7 @@ async def livesplit_integration(
             app.sa.logger.info("Received invalid json from livesplit: %s %s", str(e), data)
             continue
 
-        new_state = _livesplit_event_mapping.get(event.get("event"))
+        new_state = _livesplit_event_mapping.get(event.get("event"))  # type: ignore[arg-type]
         if new_state is not None:
             if new_state is AsyncRaceRoomUserStatus.PAUSED and not room.allow_pause:
                 await websocket.send_json({"command": "undoAllPauses"})
@@ -608,7 +617,7 @@ async def livesplit_integration(
 
             try:
                 await perform_state_change(room, user, new_state)
-                await emit_async_room_update(app.sa, room, sid)
+                # await emit_async_room_update(app.sa, room, sid)
             except error.BaseNetworkError as e:
                 app.sa.logger.info("Invalid transition received from livesplit: %s", str(e))
 

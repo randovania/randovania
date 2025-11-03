@@ -403,11 +403,32 @@ class ServerApp:
             return True
         return False
 
-    def encrypt_dict(self, data: dict) -> str:
-        encrypted_session = self.fernet_encrypt.encrypt(json.dumps(data).encode("utf-8"))
-        return base64.b85encode(encrypted_session).decode("ascii")
+    def encrypt_str(self, data: str) -> bytes:
+        """
+        Encrypts a given string using a symmetric algorithm.
 
-    def decrypt_dict(self, data: str) -> dict:
+        Useful to return to the client something it can't use, but we can trust came from us.
+        """
+        return self.fernet_encrypt.encrypt(data.encode("utf-8"))
+
+    def encrypt_and_b85_dict(self, data: dict) -> str:
+        """
+        Json-encodes the given dict and encrypts.
+        The result is then base85 encoded, so it can be efficiently stored in a different json object.
+        """
+        encrypted = self.encrypt_str(json.dumps(data))
+        return base64.b85encode(encrypted).decode("ascii")
+
+    def decrypt_str(self, data: bytes) -> str:
+        """
+        Decrypts a value encrypted by `encrypt_str`.
+        """
+        return self.fernet_encrypt.decrypt(data).decode("utf-8")
+
+    def decrypt_and_b85_dict(self, data: str) -> dict:
+        """
+        Decrypts and decodes a value encrypted by `encrypt_and_b85_dict`.
+        """
         encrypted_session = base64.b85decode(data)
         json_string = self.fernet_encrypt.decrypt(encrypted_session).decode("utf-8")
         return json.loads(json_string)

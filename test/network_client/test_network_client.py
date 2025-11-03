@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import datetime
 import uuid
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -18,9 +19,16 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect, _decode_pickup
 from randovania.network_common import connection_headers, remote_inventory
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
+from randovania.network_common.async_race_room import (
+    AsyncRaceRoomEntry,
+    AsyncRaceRoomRaceStatus,
+    AsyncRaceRoomUserStatus,
+)
 from randovania.network_common.error import InvalidSessionError, RequestTimeoutError, ServerError
+from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, WorldUserInventory
 from randovania.network_common.remote_pickup import RemotePickup
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -405,3 +413,41 @@ async def test_on_world_user_inventory_raw(client: NetworkClient):
             inventory={"MyKey": 4},
         )
     )
+
+
+async def test_async_race_get_livesplit_url(client: NetworkClient):
+    client.server_call = AsyncMock()
+
+    room = MagicMock()
+    room.id = 1234
+
+    # Run
+    result = await client.async_race_get_livesplit_url(room)
+
+    # Assert
+    assert result == client.server_call.return_value
+    client.server_call.assert_awaited_once_with("async_race_get_livesplit_url", 1234)
+
+
+async def test_on_async_race_room_update_raw(client: NetworkClient):
+    client.on_async_race_room_update = AsyncMock()
+
+    room = AsyncRaceRoomEntry(
+        id=1000,
+        name="Async Room",
+        creator="TheCreator",
+        creation_date=datetime.datetime(2020, 1, 1, tzinfo=datetime.UTC),
+        start_date=datetime.datetime(2020, 2, 1, tzinfo=datetime.UTC),
+        end_date=datetime.datetime(2020, 3, 1, tzinfo=datetime.UTC),
+        visibility=MultiplayerSessionVisibility.VISIBLE,
+        race_status=AsyncRaceRoomRaceStatus.ACTIVE,
+        auth_token="Token",
+        game_details=GameDetails(seed_hash="HASH", word_hash="Words Words", spoiler=False),
+        presets_raw=[b""],
+        is_admin=True,
+        self_status=AsyncRaceRoomUserStatus.NOT_MEMBER,
+        allow_pause=False,
+    )
+
+    await client._on_async_race_room_update_raw(room.as_json)
+    client.on_async_race_room_update.assert_awaited_once_with(room)
