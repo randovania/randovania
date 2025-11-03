@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 class IndentedWidget(NamedTuple):
     indent: int
     item: QtWidgets.QTreeWidgetItem
-    action_type: ActionType = ActionType.OTHER
+    action_type: ActionType | str = ActionType.OTHER
     action_visibility_type: str | None = None
 
 
@@ -39,8 +39,8 @@ LABEL_IDS = {label: i for i, label in enumerate(_LABELS)}
 action_type_re = re.compile(r"^(?P<type>.*?) - (?P<action>.*?)$")
 
 
-def get_brush_for_action(action_type: ActionType) -> QtGui.QBrush:
-    ACTION_COLORS = {
+def get_brush_for_action(action_type: ActionType | str) -> QtGui.QBrush:
+    ACTION_COLORS: dict[str, QtGui.QColor] = {
         ActionType.MAJOR_PICKUP: QtGui.QColorConstants.Cyan,
         ActionType.MINOR_PICKUP: QtGui.QColorConstants.DarkCyan,
         ActionType.EVENT: QtGui.QColorConstants.Magenta,
@@ -151,6 +151,28 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         hide = not self.should_item_be_visible(widget)
         widget.item.setHidden(hide)
 
+    def tree_item(
+        self,
+        *,
+        node: str,
+        action_type: str,
+        action_details: str,
+        energy: str = "",
+        resources: str = "",
+    ) -> QtWidgets.QTreeWidgetItem:
+        item = QtWidgets.QTreeWidgetItem()
+        item.setText(LABEL_IDS["Node"], node)
+        item.setText(LABEL_IDS["Type"], action_type)
+        item.setText(LABEL_IDS["Action"], action_details)
+        item.setText(LABEL_IDS["Energy"], energy)
+        item.setText(LABEL_IDS["Resources"], resources)
+        return item
+
+    def add_simple_log_entry(self, text: str, indent: int) -> None:
+        item = self.tree_item(node=text, action_type="", action_details="")
+        widget = IndentedWidget(indent, item)
+        self.add_log_entry(widget)
+
     def add_log_entry(
         self,
         widget: IndentedWidget,
@@ -241,12 +263,12 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
 
 
 class ValidatorWidgetResolverLogger(ResolverLogger):
-    def __init__(self, widget: GameValidatorWidget) -> None:
-        self.widget = widget
+    def __init__(self, validator_widget: GameValidatorWidget) -> None:
+        self.validator_widget = validator_widget
 
     def logger_start(self) -> None:
         super().logger_start()
-        self.log_level = self.widget._verbosity
+        self.log_level = self.validator_widget._verbosity
 
     def action_type_and_text(self, details: ActionDetails) -> tuple[str, str]:
         if isinstance(details, PickupActionDetails):
@@ -255,7 +277,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
                 action_text = "Nothing"
             else:
                 action_text = details.target.pickup.name
-                if self.widget.layout_description.world_count > 1:
+                if self.validator_widget.layout_description.world_count > 1:
                     player_name = self.players.player_names[details.target.player]
                     action_text = f"{player_name}'s {action_text}"
 
@@ -276,50 +298,44 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
 
         item = QtWidgets.QTreeWidgetItem()
 
-        item.setText(LABEL_IDS["Node"], action_entry.location.full_name(False))
-        item.setText(LABEL_IDS["Resources"], action_entry.resource_string(full_types=True))
-        item.setText(LABEL_IDS["Energy"], f"{action_entry.simple_state}")
-
         if action_entry.details is not None:
             action_type, action_text = self.action_type_and_text(action_entry.details)
 
-            item.setText(LABEL_IDS["Type"], action_type)
-            item.setText(LABEL_IDS["Action"], action_text)
-
-            widget = IndentedWidget(0, item, action_type)
-
             if self.should_show("ActionPath", self.log_level):
                 for node in action_entry.path_from_previous:
-                    path_item = QtWidgets.QTreeWidgetItem()
-                    path_item.setText(0, f"↪ {node.identifier.as_string}")
-                    path_widget = IndentedWidget(1, path_item)
-                    self.widget.add_log_entry(path_widget)
+                    self.validator_widget.add_simple_log_entry(
+                        f"↪ {node.identifier.as_string}",
+                        indent=1,
+                    )
         else:
-            item.setText(LABEL_IDS["Type"], "Start")
-            widget = IndentedWidget(0, item)
+            action_type, action_text = "Start", ""
 
-        self.widget.add_log_entry(widget, action_entry.location.identifier)
+        item = self.validator_widget.tree_item(
+            node=action_entry.location.full_name(False),
+            action_type=action_type,
+            action_details=action_text,
+            energy=f"{action_entry.simple_state}",
+            resources=action_entry.resource_string(full_types=True),
+        )
+        widget = IndentedWidget(0, item, action_type)
+
+        self.validator_widget.add_log_entry(widget, action_entry.location.identifier)
 
     def _log_checking_satisfiable(self, actions: Iterable[tuple[ResourceNode, DamageState]]) -> None:
         if not self.should_show("CheckSatisfiable", self.log_level):
             return
 
-        item = QtWidgets.QTreeWidgetItem()
         if not actions:
-            item.setText(0, "No satisfiable actions")
-            widget = IndentedWidget(1, item)
-            self.widget.add_log_entry(widget)
+            self.validator_widget.add_simple_log_entry("No satisifiable actions", 1)
             return
 
-        item.setText(0, "Satisfiable actions")
-        widget = IndentedWidget(1, item)
-        self.widget.add_log_entry(widget)
+        self.validator_widget.add_simple_log_entry("Satisfiable actions", 1)
 
         for node, _ in actions:
-            action_item = QtWidgets.QTreeWidgetItem()
-            action_item.setText(0, f"• {node.identifier.as_string}")
-            action_widget = IndentedWidget(2, action_item)
-            self.widget.add_log_entry(action_widget)
+            self.validator_widget.add_simple_log_entry(
+                f"• {node.identifier.as_string}",
+                indent=1,
+            )
 
     def _log_rollback_or_skip(
         self,
@@ -330,10 +346,11 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
         extra_text_font: QtGui.QFont | None = None,
         show_additional_requirements: bool = True,
     ) -> None:
-        item = QtWidgets.QTreeWidgetItem()
-        item.setText(LABEL_IDS["Node"], f"{negation_type} {entry.location.full_name(False)}")
-        item.setText(LABEL_IDS["Type"], negation_type)
-        item.setText(LABEL_IDS["Action"], extra_text)
+        item = self.validator_widget.tree_item(
+            node=f"{negation_type} {entry.location.full_name(False)}",
+            action_type=negation_type,
+            action_details=extra_text,
+        )
         if extra_text_font is not None:
             item.setFont(LABEL_IDS["Action"], extra_text_font)
 
@@ -343,19 +360,13 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
             underlying_action_type = entry.details.action_type
 
         widget = IndentedWidget(0, item, ActionType.OTHER, underlying_action_type)
-        self.widget.add_log_entry(widget, entry.location.identifier)
+        self.validator_widget.add_log_entry(widget, entry.location.identifier)
 
         if show_additional_requirements:
-            header_item = QtWidgets.QTreeWidgetItem()
-            header_item.setText(0, "Additional Requirement Alternatives")
-            header_widget = IndentedWidget(1, header_item)
-            self.widget.add_log_entry(header_widget)
+            self.validator_widget.add_simple_log_entry("Additional Requirement Alternatives", 1)
 
             for line in entry.additional_requirements.as_lines:
-                req_item = QtWidgets.QTreeWidgetItem()
-                req_item.setText(0, f"• {line}")
-                req_widget = IndentedWidget(2, req_item)
-                self.widget.add_log_entry(req_widget)
+                self.validator_widget.add_simple_log_entry(f"• {line}", 2)
 
     def _log_rollback(self, rollback_entry: RollbackLogEntry) -> None:
         if not self.should_show("Rollback", self.log_level):
@@ -380,7 +391,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
             font = None
         else:
             extra_text = "New additional"
-            font = QtGui.QFont(self.widget.font())
+            font = QtGui.QFont(self.validator_widget.font())
             font.setBold(True)
             self.last_printed_additional[skip_entry.location] = skip_entry.additional_requirements
 
@@ -395,16 +406,19 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
         if not self.should_show("Completion", self.log_level):
             return
 
-        item = QtWidgets.QTreeWidgetItem()
-        item.setText(LABEL_IDS["Node"], "Playthrough Complete")
-
         if state is None:
-            item.setText(LABEL_IDS["Type"], "Failure")
-            item.setText(LABEL_IDS["Action"], "Game is impossible")
+            action_type = "Failure"
+            details = "Game is impossible"
         else:
-            item.setText(LABEL_IDS["Type"], "Success")
-            item.setText(LABEL_IDS["Action"], "Game is possible")
+            action_type = "Success"
+            details = "Game is possible"
+
+        item = self.validator_widget.tree_item(
+            node="Playthrough Complete",
+            action_type=action_type,
+            action_details=details,
+        )
 
         widget = IndentedWidget(0, item)
-        self.widget.add_log_entry(widget)
-        self.widget.resize_columns()
+        self.validator_widget.add_log_entry(widget)
+        self.validator_widget.resize_columns()
