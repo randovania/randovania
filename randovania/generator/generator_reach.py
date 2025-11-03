@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Self
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.db.node import Node, NodeContext, NodeIndex
     from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.requirement_set import RequirementSet
@@ -80,7 +80,7 @@ class GeneratorReach:
     def is_safe_node(self, node: Node) -> bool:
         raise NotImplementedError
 
-    def unreachable_nodes_with_requirements(self) -> dict[Node, RequirementSet]:
+    def unreachable_nodes_with_requirements(self) -> dict[NodeIndex, RequirementSet]:
         raise NotImplementedError
 
     @property

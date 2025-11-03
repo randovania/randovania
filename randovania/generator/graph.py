@@ -10,7 +10,9 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
 
-    from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.game_description.requirements.base import Requirement
+
+    type GraphData = Requirement
 
 
 class BaseGraph:
@@ -20,7 +22,7 @@ class BaseGraph:
     def add_node(self, node: int) -> None:
         raise NotImplementedError
 
-    def add_edge(self, previous_node: int, next_node: int, requirement: RequirementSet) -> None:
+    def add_edge(self, previous_node: int, next_node: int, data: GraphData) -> None:
         raise NotImplementedError
 
     def remove_edge(self, previous: int, target: int) -> None:
@@ -32,13 +34,13 @@ class BaseGraph:
     def __contains__(self, item: int) -> bool:
         raise NotImplementedError
 
-    def edges_data(self) -> Iterator[tuple[int, int, RequirementSet]]:
+    def edges_data(self) -> Iterator[tuple[int, int, GraphData]]:
         raise NotImplementedError
 
     def multi_source_dijkstra(
         self,
         sources: set[int],
-        weight: Callable[[int, int, RequirementSet], int],
+        weight: Callable[[int, int, GraphData], int],
     ) -> tuple[dict[int, int], dict[int, list[int]]]:
         raise NotImplementedError
 
@@ -47,17 +49,17 @@ class BaseGraph:
 
 
 class RandovaniaGraph(BaseGraph):
-    edges: dict[int, dict[int, RequirementSet]]
+    edges: dict[int, dict[int, GraphData]]
 
     @classmethod
     def new(cls) -> typing.Self:
         return cls(defaultdict(dict))
 
-    def __init__(self, edges: dict[int, dict[int, RequirementSet]]):
+    def __init__(self, edges: dict[int, dict[int, GraphData]]):
         self.edges = edges
 
     def copy(self) -> RandovaniaGraph:
-        edges: dict[int, dict[int, RequirementSet]] = defaultdict(dict)
+        edges: dict[int, dict[int, GraphData]] = defaultdict(dict)
         edges.update({source: copy.copy(data) for source, data in self.edges.items()})
         return RandovaniaGraph(edges)
 
@@ -65,8 +67,8 @@ class RandovaniaGraph(BaseGraph):
         if node not in self.edges:
             self.edges[node] = {}
 
-    def add_edge(self, previous_node: int, next_node: int, requirement: RequirementSet) -> None:
-        self.edges[previous_node][next_node] = requirement
+    def add_edge(self, previous_node: int, next_node: int, data: GraphData) -> None:
+        self.edges[previous_node][next_node] = data
 
     def remove_edge(self, previous: int, target: int) -> None:
         self.edges[previous].pop(target)
@@ -77,7 +79,7 @@ class RandovaniaGraph(BaseGraph):
     def __contains__(self, item: int) -> bool:
         return item in self.edges
 
-    def edges_data(self) -> Iterator[tuple[int, int, RequirementSet]]:
+    def edges_data(self) -> Iterator[tuple[int, int, GraphData]]:
         for source, data in self.edges.items():
             for target, requirement in data.items():
                 yield source, target, requirement
@@ -85,7 +87,7 @@ class RandovaniaGraph(BaseGraph):
     def multi_source_dijkstra(
         self,
         sources: set[int],
-        weight: Callable[[int, int, RequirementSet], int],
+        weight: Callable[[int, int, GraphData], int],
     ) -> tuple[dict[int, int], dict[int, list[int]]]:
         paths = {source: [source] for source in sources}  # dictionary of paths
         edges = self.edges
