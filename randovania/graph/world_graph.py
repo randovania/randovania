@@ -169,8 +169,16 @@ class WorldGraph:
     dangerous_resources: frozenset[ResourceInfo]
     nodes: list[WorldGraphNode]
     node_by_pickup_index: dict[PickupIndex, WorldGraphNode]
-    original_to_node: dict[int, WorldGraphNode]
+    original_to_node: dict[int, WorldGraphNode] = dataclasses.field(init=False)
     node_resource_index_offset: int
+
+    def __post_init__(self):
+        self.original_to_node = {}
+
+        for node in self.nodes:
+            if node.database_node is not None:
+                assert node.database_node.node_index not in self.original_to_node
+                self.original_to_node[node.database_node.node_index] = node
 
     def victory_condition_as_set(self, context: NodeContext) -> RequirementSet:
         # TODO: calculate this just once
@@ -485,15 +493,12 @@ def create_graph(
             graph_area_connections[new_node.node_index] = {}
             front_of_dock_mapping[new_node.node_index] = front_node.node_index
 
-    original_to_node = {node.database_node.node_index: node for node in nodes if node.database_node is not None}
-
     graph = WorldGraph(
         game_enum=database_view.get_game_enum(),
         victory_condition=victory_condition,
         dangerous_resources=frozenset(),
         nodes=nodes,
         node_by_pickup_index={node.pickup_index: node for node in nodes if node.pickup_index is not None},
-        original_to_node=original_to_node,
         node_resource_index_offset=node_resource_index_offset,
     )
 
@@ -514,10 +519,10 @@ def create_graph(
 
         converted_area_connections: list[tuple[WorldGraphNode, Requirement]] = []
         for target_db_node, requirement in graph_area_connections[node.node_index].items():
-            if target_db_node.node_index not in original_to_node:
+            if target_db_node.node_index not in graph.original_to_node:
                 continue
 
-            target_index = original_to_node[target_db_node.node_index].node_index
+            target_index = graph.original_to_node[target_db_node.node_index].node_index
 
             # Redirect connections to DockNode to the Front Of node
             target_index = front_of_dock_mapping.get(target_index, target_index)
