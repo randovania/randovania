@@ -7,6 +7,7 @@ from functools import cached_property
 from typing import TYPE_CHECKING, Literal, NamedTuple, Protocol, final
 
 from randovania.game_description.db.dock_lock_node import DockLockNode
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
@@ -14,6 +15,7 @@ from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.graph.world_graph import WorldGraphNode
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
@@ -22,9 +24,9 @@ if TYPE_CHECKING:
     from randovania.game_description.assignment import PickupTarget
     from randovania.game_description.db.node import Node, NodeIndex
     from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceGainTuple
     from randovania.graph.state import GraphOrClassicNode, State
-    from randovania.graph.world_graph import WorldGraphNode
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logic import Logic
     from randovania.resolver.resolver import ActionPriority
@@ -47,29 +49,38 @@ class ActionDetails(Protocol):
     def text(self) -> str: ...
 
 
+def _get_pickup_action_details(state: State, pickup_index: PickupIndex) -> PickupActionDetails:
+    target = state.patches.pickup_assignment.get(pickup_index, None)
+    if target is not None and target.pickup.show_in_credits_spoiler:
+        action_type = ActionType.MAJOR_PICKUP
+    else:
+        action_type = ActionType.MINOR_PICKUP
+    return PickupActionDetails(action_type, target)
+
+
 def action_details_from_state(state: State, node: Node | None = None) -> ActionDetails | None:
     node = node or state.node
+
+    if isinstance(node, WorldGraphNode):
+        if node.pickup_index is not None:
+            return _get_pickup_action_details(state, node.pickup_index)
+        node = node.database_node
+    else:
+        if isinstance(node, EventPickupNode):
+            node = node.pickup_node
+
+        if isinstance(node, PickupNode):
+            return _get_pickup_action_details(state, node.pickup_index)
 
     if not node.is_resource_node:
         return None
     node = typing.cast("ResourceNode", node)
 
-    if isinstance(node, EventPickupNode):
-        node = node.pickup_node
-
-    if isinstance(node, PickupNode):
-        target = state.patches.pickup_assignment.get(node.pickup_index, None)
-        if target is not None and target.pickup.show_in_credits_spoiler:
-            action_type = ActionType.MAJOR_PICKUP
-        else:
-            action_type = ActionType.MINOR_PICKUP
-        return PickupActionDetails(action_type, target)
-
     text = node.name
 
     if isinstance(node, EventNode):
         action_type = ActionType.EVENT
-    elif isinstance(node, DockLockNode):
+    elif isinstance(node, DockNode | DockLockNode):
         action_type = ActionType.LOCK
     elif isinstance(node, HintNode):
         action_type = ActionType.HINT
