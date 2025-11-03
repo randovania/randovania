@@ -7,6 +7,7 @@ import pytest
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.generator.pickup_pool.pool_creator import calculate_pool_results
 from randovania.resolver import debug
@@ -17,8 +18,8 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
     from typing import Any
 
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_patches import GamePatches
+    from randovania.resolver.state import State
 
 
 def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> None:
@@ -30,7 +31,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
         *,
         target: str | None = None,
         path: Iterable[NodeIdentifier] = (),
-    ) -> MagicMock:
+    ) -> State:
         state = starting_state.copy()
 
         state.node = state.region_list.node_by_identifier(node_id)
@@ -44,7 +45,10 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
         return state
 
     def satisfiable(node: NodeIdentifier) -> tuple[ResourceNode, Any]:
-        return (starting_state.region_list.node_by_identifier(node), MagicMock())
+        return (
+            starting_state.region_list.typed_node_by_identifier(node, ResourceNode),
+            MagicMock(),
+        )
 
     logger.logger_start()
 

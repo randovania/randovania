@@ -301,7 +301,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
             else:
                 action_text = details.target.pickup.name
                 if self.validator_widget.layout_description.world_count > 1:
-                    player_name = self.players.player_names[details.target.player]
+                    player_name = self.validator_widget.players.player_names[details.target.player]
                     action_text = f"{player_name}'s {action_text}"
 
         else:
