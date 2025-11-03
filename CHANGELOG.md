@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 - Changed: Energy Parts are now logical.
 
+### Metroid: Samus Returns
+
+#### Logic Database
+
+##### Area 2 Dam Entryway
+- Fixed: Lightning Armor & Transport to Dam Exterior East: You can now logically unlock the door from the Elevator space.
+
 ## [10.3.0] - 2025-11-01
 
 - Added: The Multiworld Session will now display when a world has been beaten. This is supported for the following games:
