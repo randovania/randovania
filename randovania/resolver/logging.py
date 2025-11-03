@@ -4,10 +4,9 @@ import abc
 import typing
 from enum import Enum
 from functools import cached_property
-from typing import TYPE_CHECKING, Literal, NamedTuple, Protocol, Self, final
+from typing import TYPE_CHECKING, Literal, NamedTuple, Protocol, final
 
 from randovania.game_description.db.dock_lock_node import DockLockNode
-from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
@@ -15,7 +14,6 @@ from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.graph.world_graph import WorldGraphNode
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
@@ -24,9 +22,9 @@ if TYPE_CHECKING:
     from randovania.game_description.assignment import PickupTarget
     from randovania.game_description.db.node import Node, NodeIndex
     from randovania.game_description.requirements.requirement_set import RequirementSet
-    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceGainTuple
     from randovania.graph.state import GraphOrClassicNode, State
+    from randovania.graph.world_graph import WorldGraphNode
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logic import Logic
     from randovania.resolver.resolver import ActionPriority
@@ -48,48 +46,39 @@ class ActionDetails(Protocol):
     @property
     def text(self) -> str: ...
 
-    @staticmethod
-    def _get_pickup_action_details(state: State, pickup_index: PickupIndex) -> PickupActionDetails:
-        target = state.patches.pickup_assignment.get(pickup_index, None)
+
+def action_details_from_state(state: State, node: Node | None = None) -> ActionDetails | None:
+    node = node or state.node
+
+    if not node.is_resource_node:
+        return None
+    node = typing.cast("ResourceNode", node)
+
+    if isinstance(node, EventPickupNode):
+        node = node.pickup_node
+
+    if isinstance(node, PickupNode):
+        target = state.patches.pickup_assignment.get(node.pickup_index, None)
         if target is not None and target.pickup.show_in_credits_spoiler:
             action_type = ActionType.MAJOR_PICKUP
         else:
             action_type = ActionType.MINOR_PICKUP
         return PickupActionDetails(action_type, target)
 
-    @staticmethod
-    def from_state(state: State) -> ActionDetails | None:
-        node = state.node
+    text = node.name
 
-        if isinstance(node, WorldGraphNode):
-            if node.pickup_index is not None:
-                return ActionDetails._get_pickup_action_details(state, node.pickup_index)
-            node = node.database_node
-        else:
-            if isinstance(node, EventPickupNode):
-                node = node.pickup_node
+    if isinstance(node, EventNode):
+        action_type = ActionType.EVENT
+    elif isinstance(node, DockLockNode):
+        action_type = ActionType.LOCK
+    elif isinstance(node, HintNode):
+        action_type = ActionType.HINT
+        if not text.startswith("Hint - "):
+            text = f"Hint - {text}"
+    else:
+        action_type = ActionType.OTHER
 
-            if isinstance(node, PickupNode):
-                return ActionDetails._get_pickup_action_details(state, node.pickup_index)
-
-        if not node.is_resource_node:
-            return None
-
-        node = typing.cast("ResourceNode", node)
-        text = node.name
-
-        if isinstance(node, EventNode):
-            action_type = ActionType.EVENT
-        elif isinstance(node, DockNode | DockLockNode):
-            action_type = ActionType.LOCK
-        elif isinstance(node, HintNode):
-            action_type = ActionType.HINT
-            if not text.startswith("Hint - "):
-                text = f"Hint - {text}"
-        else:
-            action_type = ActionType.OTHER
-
-        return GenericActionDetails(action_type, text)
+    return GenericActionDetails(action_type, text)
 
 
 class GenericActionDetails(NamedTuple):
@@ -98,7 +87,7 @@ class GenericActionDetails(NamedTuple):
 
 
 class PickupActionDetails(NamedTuple):
-    action_type: Literal[ActionType.MAJOR_PICKUP, ActionType.MINOR_PICKUP]
+    action_type: ActionType
     target: PickupTarget | None
 
     @property
@@ -114,22 +103,6 @@ class ActionLogEntry(NamedTuple):
     details: ActionDetails | None
     resources: ResourceGainTuple
     path_from_previous: tuple[GraphOrClassicNode, ...]
-
-    @classmethod
-    def from_state(cls, state: State) -> Self:
-        resources = ()
-        if state.node.is_resource_node():
-            assert isinstance(state.node, WorldGraphNode | ResourceNode)
-            context_state = state.previous_state or state
-            resources = tuple(state.node.resource_gain_on_collect(context_state.node_context()))
-
-        return cls(
-            state.node,
-            state.game_state_debug_string(),
-            ActionDetails.from_state(state),
-            resources,
-            state.path_from_previous_state,
-        )
 
     @property
     def simple_state(self) -> str:
@@ -205,7 +178,7 @@ class ResolverLogger(abc.ABC):
     @cached_property
     def _visible_features(self) -> Mapping[debug.LogLevel, frozenset[LogFeature]]:
         """Which features should be displayed at each log level"""
-        visibility: dict[int, frozenset[LogFeature]] = {}
+        visibility: dict[debug.LogLevel, frozenset[LogFeature]] = {}
 
         visibility[debug.LogLevel.SILENT] = frozenset()
 
@@ -246,7 +219,7 @@ class ResolverLogger(abc.ABC):
         if not self.should_perform_logging:
             return
 
-        resources = ()
+        resources: ResourceGainTuple = ()
         if isinstance(state.node, ResourceNode):
             context_state = state.previous_state or state
             resources = tuple(state.node.resource_gain_on_collect(context_state.node_context()))
@@ -255,7 +228,7 @@ class ResolverLogger(abc.ABC):
             ActionLogEntry(
                 state.node,
                 state.game_state_debug_string(),
-                ActionDetails.from_state(state),
+                action_details_from_state(state),
                 resources,
                 state.path_from_previous_state,
             )
@@ -288,7 +261,7 @@ class ResolverLogger(abc.ABC):
         self._log_rollback(
             RollbackLogEntry(
                 state.node,
-                ActionDetails.from_state(state),
+                action_details_from_state(state),
                 has_action,
                 possible_action,
                 logic.get_additional_requirements(state.node),
@@ -307,10 +280,12 @@ class ResolverLogger(abc.ABC):
         """
         if not self.should_perform_logging:
             return
+        details = action_details_from_state(state, node)
+        assert details is not None
         self._log_skip(
             SkipLogEntry(
                 node,
-                ActionDetails.from_state(state),
+                details,
                 logic.get_additional_requirements(node),
             )
         )
@@ -354,7 +329,7 @@ class TextResolverLogger(ResolverLogger):
             return ""
         return f"[action {details.text}] "
 
-    def print_requirement_set(self, requirement_set: RequirementSet, indent: int = 0):
+    def print_requirement_set(self, requirement_set: RequirementSet, indent: int = 0) -> None:
         requirement_set.pretty_print(self._indent(indent), print_function=debug.print_function)
 
     def _log_action(self, action_entry: ActionLogEntry) -> None:

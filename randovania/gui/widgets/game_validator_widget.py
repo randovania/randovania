@@ -14,7 +14,7 @@ from randovania.resolver import debug, resolver
 from randovania.resolver.logging import ActionType, GenericActionDetails, PickupActionDetails, ResolverLogger
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable
+    from collections.abc import Callable, Iterable, Iterator
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.resource_node import ResourceNode
@@ -263,6 +263,29 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             self.start_button.setText("Start")
             self._current_task = None
 
+    def tree_as_lines(self) -> Iterator[str]:
+        """Iterates each item in the log tree as lines of text."""
+
+        def inner_print(item: QtWidgets.QTreeWidgetItem, indent: int = 0) -> Iterator[str]:
+            text = "{}{} | {} | {}".format(
+                " " * indent * 2,
+                item.text(LABEL_IDS["Node"]),
+                item.text(LABEL_IDS["Type"]),
+                item.text(LABEL_IDS["Action"]),
+            )
+            if self._verbosity >= debug.LogLevel.HIGH:
+                text = "{} | {} | {}".format(
+                    text,
+                    item.text(LABEL_IDS["Energy"]),
+                    item.text(LABEL_IDS["Resources"]),
+                )
+            yield text
+            for i in range(item.childCount()):
+                yield from inner_print(item.child(i), indent + 1)
+
+        for i in range(self.log_widget.topLevelItemCount()):
+            yield from inner_print(self.log_widget.topLevelItem(i))
+
 
 class ValidatorWidgetResolverLogger(ResolverLogger):
     def __init__(self, validator_widget: GameValidatorWidget) -> None:
@@ -280,7 +303,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
             else:
                 action_text = details.target.pickup.name
                 if self.validator_widget.layout_description.world_count > 1:
-                    player_name = self.players.player_names[details.target.player]
+                    player_name = self.validator_widget.players.player_names[details.target.player]
                     action_text = f"{player_name}'s {action_text}"
 
         else:
@@ -328,7 +351,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
             return
 
         if not actions:
-            self.validator_widget.add_simple_log_entry("No satisifiable actions", 1)
+            self.validator_widget.add_simple_log_entry("No satisfiable actions", 1)
             return
 
         self.validator_widget.add_simple_log_entry("Satisfiable actions", 1)
