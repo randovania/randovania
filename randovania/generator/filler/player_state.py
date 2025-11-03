@@ -325,10 +325,11 @@ def build_available_indices(
 
     if isinstance(view_or_graph, WorldGraph):
 
-        def get_pickup_node(node: Node) -> PickupNode:
+        def get_pickup_node(node: Node | None) -> PickupNode:
             if isinstance(node, EventPickupNode):
                 return node.pickup_node
             assert isinstance(node, PickupNode)
+            # TODO: maybe get we a list of PickupIndex, then find the PickupNode from that?
             return node
 
         iterable = [

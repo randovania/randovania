@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import collections
+import copy
 import dataclasses
 import typing
 
@@ -27,7 +28,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Callable, Iterator, Mapping
+    from collections.abc import Callable, Iterable, Iterator, Mapping
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
@@ -105,8 +106,8 @@ class WorldGraphNode:
     is_lock_action: bool
     """If this node should be considered a ActionPriority.LOCK_ACTION by the resolver."""
 
-    database_node: Node
-    """The Node instance used to create this WorldGraphNode."""
+    database_node: Node | None
+    """The Node instance used to create this WorldGraphNode. If None, this is a derived node."""
 
     area: Area
     """The Area that contains `database_node`."""
@@ -168,8 +169,16 @@ class WorldGraph:
     dangerous_resources: frozenset[ResourceInfo]
     nodes: list[WorldGraphNode]
     node_by_pickup_index: dict[PickupIndex, WorldGraphNode]
-    original_to_node: dict[int, WorldGraphNode]
+    original_to_node: dict[int, WorldGraphNode] = dataclasses.field(init=False)
     node_resource_index_offset: int
+
+    def __post_init__(self) -> None:
+        self.original_to_node = {}
+
+        for node in self.nodes:
+            if node.database_node is not None:
+                assert node.database_node.node_index not in self.original_to_node
+                self.original_to_node[node.database_node.node_index] = node
 
     def victory_condition_as_set(self, context: NodeContext) -> RequirementSet:
         # TODO: calculate this just once
@@ -222,6 +231,32 @@ def _get_dock_lock_requirement(node: DockNode, weakness: DockWeakness) -> Requir
     else:
         assert weakness.lock is not None
         return weakness.lock.requirement
+
+
+def _has_lock_resource(
+    source_node: DockNode,
+    target_node: Node,
+    patches: GamePatches,
+) -> bool:
+    """Calculates if the given dock node pair will have a lock resource."""
+    forward_weakness = patches.get_dock_weakness_for(source_node)
+    back_weakness, back_lock = None, None
+    if isinstance(target_node, DockNode):
+        back_weakness = patches.get_dock_weakness_for(target_node)
+        back_lock = back_weakness.lock
+
+    if forward_weakness.lock is not None:
+        return True
+
+    if back_lock is not None:
+        # Check if we can unlock from the back.
+        if not (
+            back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE
+            or (back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_IF_MATCHING and forward_weakness != back_weakness)
+        ):
+            return True
+
+    return False
 
 
 def _create_dock_connection(
@@ -295,6 +330,7 @@ def _connections_from(
     simplify_requirement: Callable[[Requirement], Requirement],
     configurable_node_requirements: Mapping[NodeIdentifier, Requirement],
     teleporter_networks: dict[str, list[WorldGraphNode]],
+    connections: Iterable[tuple[WorldGraphNode, Requirement]],
 ) -> Iterator[WorldGraphNodeConnection]:
     requirement_to_leave = Requirement.trivial()
 
@@ -322,11 +358,7 @@ def _connections_from(
                     requirement_without_leaving=other_node.database_node.is_unlocked,
                 )
 
-    for target_original_node, requirement in node.area.connections[node.database_node].items():
-        target_node = graph.original_to_node.get(target_original_node.node_index)
-        if target_node is None:
-            continue
-
+    for target_node, requirement in connections:
         # TODO: good spot to add some heuristic for simplifying requirements in general
         requirement_including_leaving = requirement
         requirement = simplify_requirement(requirement)
@@ -424,6 +456,33 @@ def calculate_node_replacement(database_view: GameDatabaseView) -> dict[Node, No
     return node_replacement
 
 
+def _should_create_front_node(database_view: GameDatabaseView, patches: GamePatches, original_node: DockNode) -> bool:
+    """
+    Decide if we should wrap the dock node with an extra node.
+    Important since crossing ResourceNodes can be problematic in the generator.
+    """
+    target_node = patches.get_dock_connection_for(original_node)
+
+    # Docks without locks don't have resources
+    if not _has_lock_resource(original_node, target_node, patches):
+        return False
+
+    area = database_view.area_from_node(original_node)
+
+    # If we can go to more than one node, it's a possible path
+    if len(area.connections[original_node]) > 1:
+        return True
+
+    # If it's one-way connections, it's fine
+    if not area.connections[original_node]:
+        return False
+
+    # If there's a one-way here, as well as a regular path out it's bad.
+    connections_to = {node for node, connections in area.connections.items() if original_node in connections}
+    connections_to -= set(area.connections[original_node])
+    return len(connections_to) > 0
+
+
 def create_graph(
     database_view: GameDatabaseView,
     patches: GamePatches,
@@ -442,19 +501,50 @@ def create_graph(
     configurable_node_requirements = database_view.get_configurable_node_requirements()
     node_replacement = calculate_node_replacement(database_view)
 
+    graph_area_connections: dict[int, dict[Node, Requirement]] = {}
+    front_of_dock_mapping: dict[int, int] = {}  # Dock to front
+    original_area_connections: dict[Node, dict[Node, Requirement]] = {
+        maybe_node: copy.copy(area.connections[maybe_node]) for _, area, maybe_node in database_view.node_iterator()
+    }
+
     # Create a WorldGraphNode for each node
-    for region, area, original_node in database_view.node_iterator():
-        replacement_node = node_replacement.get(original_node, original_node)
-        if replacement_node is None:
+    for region, area, maybe_node in database_view.node_iterator():
+        original_node = node_replacement.get(maybe_node, maybe_node)
+        if original_node is None:
             continue
 
-        nodes.append(create_node(len(nodes), patches, replacement_node, area, region))
-        if isinstance(replacement_node, TeleporterNetworkNode):
-            # Only TeleporterNetworkNodes that aren't resource nodes are supported
-            assert replacement_node.requirement_to_activate == Requirement.trivial()
-            teleporter_networks[replacement_node.network].append(nodes[-1])
+        nodes.append(new_node := create_node(len(nodes), patches, original_node, area, region))
+        graph_area_connections[new_node.node_index] = original_area_connections[original_node]
 
-    original_to_node = {node.database_node.node_index: node for node in nodes}
+        if isinstance(original_node, TeleporterNetworkNode):
+            # Only TeleporterNetworkNodes that aren't resource nodes are supported
+            assert original_node.requirement_to_activate == Requirement.trivial()
+            teleporter_networks[original_node.network].append(new_node)
+
+        if isinstance(original_node, DockNode) and _should_create_front_node(database_view, patches, original_node):
+            nodes.append(
+                front_node := WorldGraphNode(
+                    node_index=len(nodes),
+                    identifier=original_node.identifier.renamed(f"Front of {original_node.name}"),
+                    heal=original_node.heal,
+                    connections=[WorldGraphNodeConnection(new_node, Requirement.trivial(), Requirement.trivial())],
+                    resource_gain=[],
+                    requirement_to_collect=Requirement.trivial(),
+                    require_collected_to_leave=False,
+                    pickup_index=None,
+                    pickup_entry=None,
+                    is_lock_action=False,
+                    database_node=None,
+                    area=area,
+                    region=region,
+                )
+            )
+            new_node.connections.append(
+                WorldGraphNodeConnection(front_node, Requirement.trivial(), Requirement.trivial())
+            )
+            graph_area_connections[front_node.node_index] = graph_area_connections[new_node.node_index]
+            graph_area_connections[new_node.node_index] = {}
+            front_of_dock_mapping[new_node.node_index] = front_node.node_index
 
     graph = WorldGraph(
         game_enum=database_view.get_game_enum(),
@@ -462,7 +552,6 @@ def create_graph(
         dangerous_resources=frozenset(),
         nodes=nodes,
         node_by_pickup_index={node.pickup_index: node for node in nodes if node.pickup_index is not None},
-        original_to_node=original_to_node,
         node_resource_index_offset=node_resource_index_offset,
     )
 
@@ -481,6 +570,18 @@ def create_graph(
         if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
             node.resource_gain.append((graph.resource_info_for_node(node), 1))
 
+        converted_area_connections: list[tuple[WorldGraphNode, Requirement]] = []
+        for target_db_node, requirement in graph_area_connections[node.node_index].items():
+            if target_db_node.node_index not in graph.original_to_node:
+                continue
+
+            target_index = graph.original_to_node[target_db_node.node_index].node_index
+
+            # Redirect connections to DockNode to the Front Of node
+            target_index = front_of_dock_mapping.get(target_index, target_index)
+
+            converted_area_connections.append((nodes[target_index], requirement))
+
         node.connections.extend(
             _connections_from(
                 node,
@@ -489,6 +590,7 @@ def create_graph(
                 simplify_requirement_with_as_set if flatten_to_set_on_patch else simplify_requirement,
                 configurable_node_requirements,
                 teleporter_networks,
+                converted_area_connections,
             )
         )
 
