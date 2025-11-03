@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.4.0] - 2025-12-??
 
+- Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
+- Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough, especially at high verbosity.
+
 ### Metroid Dread
 - Changed: Energy Parts are now logical.
 

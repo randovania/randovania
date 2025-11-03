@@ -353,7 +353,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
 
             for line in entry.additional_requirements.as_lines:
                 req_item = QtWidgets.QTreeWidgetItem()
-                req_item.setText(0, line)
+                req_item.setText(0, f"• {line}")
                 req_widget = IndentedWidget(2, req_item)
                 self.widget.add_log_entry(req_widget)
 
