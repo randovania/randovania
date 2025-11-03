@@ -18,6 +18,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraphNode
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -25,7 +26,6 @@ if TYPE_CHECKING:
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logging import ActionDetails, ActionLogEntry, RollbackLogEntry, SkipLogEntry
     from randovania.resolver.resolver import ActionPriority
-    from randovania.resolver.state import State
 
 
 class IndentedWidget(NamedTuple):
@@ -356,7 +356,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
 
         self.validator_widget.add_simple_log_entry("Satisfiable actions", 1)
 
-        for node, _ in actions:
+        for _, node, _ in actions:
             self.validator_widget.add_simple_log_entry(
                 f"• {node.identifier.as_string}",
                 indent=2,
@@ -410,7 +410,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
         if not self.should_show("Skip", self.log_level):
             return
 
-        previous = self.last_printed_additional.get(skip_entry.location)
+        previous = self.last_printed_additional.get(skip_entry.location.node_index)
         if previous == skip_entry.additional_requirements:
             extra_text = "Same additional"
             font = None
@@ -418,7 +418,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
             extra_text = "New additional"
             font = QtGui.QFont(self.validator_widget.font())
             font.setBold(True)
-            self.last_printed_additional[skip_entry.location] = skip_entry.additional_requirements
+            self.last_printed_additional[skip_entry.location.node_index] = skip_entry.additional_requirements
 
         self._log_rollback_or_skip(
             skip_entry,

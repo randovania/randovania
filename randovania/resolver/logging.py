@@ -24,6 +24,7 @@ if TYPE_CHECKING:
     from randovania.game_description.assignment import PickupTarget
     from randovania.game_description.db.node import Node, NodeIndex
     from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.game_description.resources.node_resource_info import NodeResourceInfo
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceGainTuple
     from randovania.graph.state import GraphOrClassicNode, State
@@ -125,6 +126,8 @@ class ActionLogEntry(NamedTuple):
         resources: list[str] = []
         for resource, quantity in sorted(self.resources, key=lambda gain: gain[0].resource_type):
             type_name = resource.resource_type.name
+            resource_name = resource.long_name
+
             if not full_types:
                 type_name = type_name[0]
             else:
@@ -132,10 +135,11 @@ class ActionLogEntry(NamedTuple):
                     # "Node_identifier" is a bit too verbose
                     # for something that's user-facing
                     type_name = "Node"
+                    resource_name = typing.cast("NodeResourceInfo", resource).node_identifier.node
                 else:
                     type_name = type_name.capitalize()
 
-            text = f"{type_name}: {resource.long_name}"
+            text = f"{type_name}: {resource_name}"
 
             if quantity > 1:
                 text += f" x{quantity}"

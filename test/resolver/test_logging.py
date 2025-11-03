@@ -10,21 +10,24 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.generator.pickup_pool.pool_creator import calculate_pool_results
+from randovania.graph.world_graph import WorldGraphNode
 from randovania.resolver import debug
 from randovania.resolver.logging import ResolverLogger, TextResolverLogger
-from randovania.resolver.resolver import setup_resolver
+from randovania.resolver.resolver import ActionPriority, setup_resolver
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
     from typing import Any
 
     from randovania.game_description.game_patches import GamePatches
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
 
 
 def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> None:
-    starting_state, _ = setup_resolver(blank_game_patches.configuration, blank_game_patches)
+    starting_state, logic = setup_resolver(blank_game_patches.configuration, blank_game_patches)
     pool_results = calculate_pool_results(blank_game_patches.configuration, blank_game_patches.game)
+
+    nodes_by_id = {node.identifier: node for node in logic.all_nodes if node is not None}
 
     def mock_state(
         node_id: NodeIdentifier,
@@ -34,21 +37,22 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
     ) -> State:
         state = starting_state.copy()
 
-        state.node = state.region_list.node_by_identifier(node_id)
-        if isinstance(state.node, PickupNode):
+        state.node = nodes_by_id[node_id]
+        if isinstance(state.node, PickupNode) or (
+            isinstance(state.node, WorldGraphNode) and state.node.pickup_index is not None
+        ):
             if target is not None:
                 real_target = next(pickup for pickup in pool_results.all_pickups() if pickup.name == target)
                 state.patches = state.patches.assign_own_pickups([(state.node.pickup_index, real_target)])
 
-        state.path_from_previous_state = tuple(state.region_list.node_by_identifier(path_node) for path_node in path)
+        state.path_from_previous_state = tuple(nodes_by_id[path_node] for path_node in path)
 
         return state
 
-    def satisfiable(node: NodeIdentifier) -> tuple[ResourceNode, Any]:
-        return (
-            starting_state.region_list.typed_node_by_identifier(node, ResourceNode),
-            MagicMock(),
-        )
+    def satisfiable(node: NodeIdentifier) -> tuple[ActionPriority, ResourceNode, Any]:
+        n = nodes_by_id[node]
+        assert isinstance(n, WorldGraphNode | ResourceNode)
+        return ActionPriority.EVERYTHING_ELSE, n, MagicMock()
 
     logger.logger_start()
 
@@ -91,7 +95,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
     )
 
     keyswitch_id = NodeIdentifier("Intro", "Back-Only Lock Room", "Event - Key Switch 1")
-    keyswitch = starting_state.region_list.node_by_identifier(keyswitch_id)
+    keyswitch = nodes_by_id[keyswitch_id]
 
     # Event action
     logger.log_action(
@@ -131,7 +135,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
             [
                 "> Intro/Starting Area/Spawn Point for []",
                 " > Intro/Starting Area/Pickup (Weapon) for [action Major - World 0's Blue "
-                "Key] [I: Blue Key, N: Pickup (Weapon)]",
+                "Key] [I: Blue Key, N: Intro/Starting Area/Pickup (Weapon)]",
                 "  > Intro/Starting Area/Spawn Point for []",
                 "   * Rollback Intro/Starting Area/Spawn Point ",
                 "    Had action? False; Possible Action? False",
@@ -144,9 +148,9 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
             [
                 "> Intro/Starting Area/Spawn Point [100/100 Energy] for []",
                 " > Intro/Starting Area/Pickup (Weapon) [100/100 Energy] for [action Major "
-                "- World 0's Blue Key] [I: Blue Key, N: Pickup (Weapon)]",
+                "- World 0's Blue Key] [I: Blue Key, N: Intro/Starting Area/Pickup (Weapon)]",
                 "  # Satisfiable Actions",
-                "   = Intro/Starting Area/Lock - Door to Boss Arena",
+                "   = [EVERYTHING_ELSE] Intro/Starting Area/Lock - Door to Boss Arena",
                 "  : Intro/Back-Only Lock Room/Door to Starting Area",
                 "  > Intro/Starting Area/Spawn Point [100/100 Energy] for []",
                 "   # No Satisfiable Actions",
@@ -166,9 +170,9 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
             [
                 "> Intro/Starting Area/Spawn Point [100/100 Energy] for []",
                 " > Intro/Starting Area/Pickup (Weapon) [100/100 Energy] for [action Major "
-                "- World 0's Blue Key] [I: Blue Key, N: Pickup (Weapon)]",
+                "- World 0's Blue Key] [I: Blue Key, N: Intro/Starting Area/Pickup (Weapon)]",
                 "  # Satisfiable Actions",
-                "   = Intro/Starting Area/Lock - Door to Boss Arena",
+                "   = [EVERYTHING_ELSE] Intro/Starting Area/Lock - Door to Boss Arena",
                 "  : Intro/Back-Only Lock Room/Door to Starting Area",
                 "  > Intro/Starting Area/Spawn Point [100/100 Energy] for []",
                 "   # No Satisfiable Actions",
