@@ -11,7 +11,6 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_type import ResourceType
@@ -22,7 +21,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator, Mapping
 
     from randovania.game_description.assignment import PickupTarget
-    from randovania.game_description.db.node import Node, NodeIndex
+    from randovania.game_description.db.node import NodeIndex
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.node_resource_info import NodeResourceInfo
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -59,7 +58,7 @@ def _get_pickup_action_details(state: State, pickup_index: PickupIndex) -> Picku
     return PickupActionDetails(action_type, target)
 
 
-def action_details_from_state(state: State, node: Node | None = None) -> ActionDetails | None:
+def action_details_from_state(state: State, node: GraphOrClassicNode | None = None) -> ActionDetails | None:
     node = node or state.node
 
     if isinstance(node, WorldGraphNode):
@@ -73,10 +72,6 @@ def action_details_from_state(state: State, node: Node | None = None) -> ActionD
         if isinstance(node, PickupNode):
             return _get_pickup_action_details(state, node.pickup_index)
 
-    if not node.is_resource_node:
-        return None
-    node = typing.cast("ResourceNode", node)
-
     text = node.name
 
     if isinstance(node, EventNode):
@@ -87,6 +82,8 @@ def action_details_from_state(state: State, node: Node | None = None) -> ActionD
         action_type = ActionType.HINT
         if not text.startswith("Hint - "):
             text = f"Hint - {text}"
+    elif not node.is_resource_node:
+        return None
     else:
         action_type = ActionType.OTHER
 
@@ -182,7 +179,7 @@ class ResolverLogger(abc.ABC):
         """Initialize the logger for a new resolver run."""
         self.last_printed_additional = {}
 
-    def node_string(self, node: Node, with_region: bool = True) -> str:
+    def node_string(self, node: GraphOrClassicNode, with_region: bool = True) -> str:
         """Standard display format for nodes."""
         return node.full_name(with_region=with_region) if node is not None else "None"
 
@@ -235,7 +232,7 @@ class ResolverLogger(abc.ABC):
             return
 
         resources: ResourceGainTuple = ()
-        if isinstance(state.node, ResourceNode):
+        if isinstance(state.node, ResourceNode | WorldGraphNode):
             context_state = state.previous_state or state
             resources = tuple(state.node.resource_gain_on_collect(context_state.node_context()))
 
@@ -288,7 +285,7 @@ class ResolverLogger(abc.ABC):
         """Internal logic for logging rollbacks."""
 
     @final
-    def log_skip(self, node: Node, state: State, logic: Logic) -> None:
+    def log_skip(self, node: GraphOrClassicNode, state: State, logic: Logic) -> None:
         """
         Logs an action being skipped by the resolver
         because of missing requirements.
@@ -365,7 +362,9 @@ class TextResolverLogger(ResolverLogger):
 
             debug.print_function(f"{self._indent(1)}> {node_str}{energy_str} for {action_str}[{resources}]")
 
-    def _log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, ResourceNode, DamageState]]) -> None:
+    def _log_checking_satisfiable(
+        self, actions: Iterable[tuple[ActionPriority, GraphOrClassicNode | ResourceNode, DamageState]]
+    ) -> None:
         if self.should_show("CheckSatisfiable", debug.debug_level()):
             if actions:
                 debug.print_function(f"{self._indent()}# Satisfiable Actions")

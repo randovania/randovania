@@ -38,18 +38,20 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
         state = starting_state.copy()
 
         state.node = nodes_by_id[node_id]
-        if isinstance(state.node, PickupNode) or (
-            isinstance(state.node, WorldGraphNode) and state.node.pickup_index is not None
-        ):
-            if target is not None:
+        if target is not None:
+            pickup_index = None
+            if isinstance(state.node, WorldGraphNode | PickupNode):
+                pickup_index = state.node.pickup_index
+
+            if pickup_index is not None:
                 real_target = next(pickup for pickup in pool_results.all_pickups() if pickup.name == target)
-                state.patches = state.patches.assign_own_pickups([(state.node.pickup_index, real_target)])
+                state.patches = state.patches.assign_own_pickups([(pickup_index, real_target)])
 
         state.path_from_previous_state = tuple(nodes_by_id[path_node] for path_node in path)
 
         return state
 
-    def satisfiable(node: NodeIdentifier) -> tuple[ActionPriority, ResourceNode, Any]:
+    def satisfiable(node: NodeIdentifier) -> tuple[ActionPriority, WorldGraphNode | ResourceNode, Any]:
         n = nodes_by_id[node]
         assert isinstance(n, WorldGraphNode | ResourceNode)
         return ActionPriority.EVERYTHING_ELSE, n, MagicMock()
