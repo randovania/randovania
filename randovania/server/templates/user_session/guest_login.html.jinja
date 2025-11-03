@@ -1,0 +1,18 @@
+{% extends "layout.html.jinja" %}
+
+{% block title %}
+	Guest Login
+{% endblock %}
+
+{% block header %}
+	Guest Login
+{% endblock header %}
+
+{% block content %}
+	<div >
+        <form class="form-inline" method="POST" action="{{ url_for('guest_login_post') }}">
+            <input id="name" placeholder="User name to login as" name="name">
+            <button type="submit">Login</button>
+        </form>
+	</div>
+{% endblock content %}

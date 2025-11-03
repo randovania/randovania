@@ -31,6 +31,7 @@ if TYPE_CHECKING:
     from randovania.graph.state import State
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.damage_state import DamageState
+    from randovania.resolver.logging import ResolverLogger
 
 ResolverAction = WorldGraphNode | ResourceNode
 AnyPickupNode = PickupNode | EventPickupNode
@@ -352,7 +353,7 @@ async def _inner_advance_depth(
                         state.node,
                         _simplify_additional_requirement_set(additional, state, resources, progressive_chain_info),
                     )
-                    logic.log_rollback(state, True, True, logic.get_additional_requirements(state.node))
+                    logic.logger.log_rollback(state, True, True, logic)
 
                 # If a safe node was a dead end, we're certainly a dead end as well
                 return new_result
@@ -368,12 +369,12 @@ async def _inner_advance_depth(
         # HACK: sort nodes so they're somewhat more consistent between classic and new graph
         for action, damage_state in sorted(entries, key=_index_for_action_pair)
     ]
-    logic.log_checking_satisfiable_actions(state, actions)
+    logic.log_checking_satisfiable(state, actions)
     has_action = False
     for _, action, damage_state in actions:
         action_additional_requirements = logic.get_additional_requirements(action)
         if not action_additional_requirements.satisfied(context, damage_state.health_for_damage_requirements()):
-            logic.log_skip_action_missing_requirement(action, state.patches)
+            logic.logger.log_skip(action, state, logic)
             continue
 
         new_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
@@ -419,7 +420,7 @@ async def _inner_advance_depth(
         state.node,
         _simplify_additional_requirement_set(additional_requirements, state, resources, progressive_chain_info),
     )
-    logic.log_rollback(state, has_action, False, logic.get_additional_requirements(state.node))
+    logic.logger.log_rollback(state, has_action, False, logic)
 
     return None, has_action
 
@@ -428,7 +429,9 @@ async def advance_depth(
     state: State, logic: Logic, status_update: Callable[[str], None], max_attempts: int | None = None
 ) -> State | None:
     logic.resolver_start()
-    return (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
+    result = (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
+    logic.logger.log_complete(result)
+    return result
 
 
 def _quiet_print(s: Any) -> None:
@@ -459,7 +462,7 @@ async def resolve(
     status_update: Callable[[str], None] | None = None,
     *,
     collect_hint_data: bool = False,
-    fully_indent_log: bool = True,
+    logger: ResolverLogger | None = None,
     use_world_graph: bool = False,
 ) -> State | None:
     if status_update is None:
@@ -474,6 +477,7 @@ async def resolve(
             patches.game,
         )
 
-    logic.increment_indent = fully_indent_log
+    if logger is not None:
+        logic.logger = logger
 
     return await advance_depth(starting_state, logic, status_update)

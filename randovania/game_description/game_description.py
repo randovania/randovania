@@ -35,6 +35,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.resolver.damage_state import DamageState
 
 
 def _requirement_dangerous(requirement: Requirement, context: NodeContext) -> Iterator[ResourceInfo]:
@@ -321,10 +322,9 @@ class GameDescription(GameDatabaseView):
 
 
 def _resources_for_damage(
-    resource: SimpleResourceInfo, database: ResourceDatabase, collection: ResourceCollection
+    resource: SimpleResourceInfo, database: ResourceDatabase, collection: ResourceCollection, damage_state: DamageState
 ) -> Iterator[ResourceInfo]:
-    # FIXME: this should be delegated to DamageState
-    yield database.energy_tank
+    yield from damage_state.resources_for_energy()
     for reduction in database.damage_reductions.get(resource, []):
         if reduction.inventory_item is not None and not collection.has_resource(reduction.inventory_item):
             yield reduction.inventory_item
@@ -340,7 +340,7 @@ def _damage_resource_from_list(requirements: RequirementList) -> SimpleResourceI
 def calculate_interesting_resources(
     satisfiable_requirements: SatisfiableRequirements,
     context: NodeContext,
-    energy: int,
+    damage_state: DamageState,
 ) -> frozenset[ResourceInfo]:
     """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList"""
 
@@ -348,8 +348,8 @@ def calculate_interesting_resources(
         # For each possible requirement list
         for requirement_list in satisfiable_requirements:
             # If it's not satisfied, there's at least one IndividualRequirement in it that can be collected
-            if not requirement_list.satisfied(context, energy):
-                current_energy = energy
+            if not requirement_list.satisfied(context, damage_state.health_for_damage_requirements()):
+                current_energy = damage_state.health_for_damage_requirements()
                 for individual in requirement_list.values():
                     # Ignore those with the `negate` flag. We can't "uncollect" a resource to satisfy these.
                     # Finally, if it's not satisfied then we're interested in collecting it
@@ -357,7 +357,7 @@ def calculate_interesting_resources(
                         if individual.is_damage:
                             assert isinstance(individual.resource, SimpleResourceInfo)
                             yield from _resources_for_damage(
-                                individual.resource, context.database, context.current_resources
+                                individual.resource, context.database, context.current_resources, damage_state
                             )
                         else:
                             yield individual.resource
@@ -368,6 +368,8 @@ def calculate_interesting_resources(
                 # damage constraints are combined from multiple nodes. Each requirement in isolation might be satisfied,
                 # but when combined, the energy might not be sufficient. The satisfiable requirements are assumed to be
                 # unsatisfied.
-                yield from _resources_for_damage(damage_resource, context.database, context.current_resources)
+                yield from _resources_for_damage(
+                    damage_resource, context.database, context.current_resources, damage_state
+                )
 
     return frozenset(helper())

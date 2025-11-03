@@ -82,7 +82,7 @@ async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
 
     state, logic = resolver.setup_resolver(patches.configuration, patches)
 
-    with debug.with_level(0):
+    with debug.with_level(debug.LogLevel.SILENT):
         try:
             return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=1000) is not None
         except exceptions.ResolverTimeoutError:
@@ -212,7 +212,7 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
         assignments[player] = []
 
     def assign_pickup(node_player: int, node: PickupNode, pickup_target: PickupTarget) -> None:
-        if debug.debug_level() > 2:
+        if debug.debug_level() > debug.LogLevel.HIGH:
             print(
                 f"Assigning World {pickup_target.player + 1}'s {pickup_target.pickup.name} "
                 f"to {node_player + 1}'s {node.pickup_index}"

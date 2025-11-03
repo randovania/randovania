@@ -83,7 +83,7 @@ def _get_next_player(
         if not player_state.victory_condition_satisfied() and player_state.potential_actions(locations_weighted)
     }
     if weighted_players:
-        if debug.debug_level() > 1:
+        if debug.debug_level() > debug.LogLevel.NORMAL:
             print(f">>>>> Player Weights: {weighted_players}")
 
         return random_lib.select_element_with_weight(rng, weighted_players)
@@ -218,7 +218,7 @@ def weighted_potential_actions(
         for action, base_weight in actions_weights.items()
     }
 
-    if debug.debug_level() > 1:
+    if debug.debug_level() > debug.LogLevel.NORMAL:
         for action, weight in final_weights.items():
             print(f"{action.name} - {weight}")
 
@@ -309,7 +309,7 @@ def retcon_playthrough_filler(
 
     while True:
         all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
-        if debug.debug_level() > 1:
+        if debug.debug_level() > debug.LogLevel.NORMAL:
             player_health = {
                 player_state: player_state.reach.state.game_state_debug_string() for player_state in player_states
             }
@@ -406,7 +406,7 @@ def _assign_pickup_somewhere(
     usable_locations = current_player.filter_usable_locations(all_locations, action)
 
     if not should_be_starting_pickup(current_player, usable_locations, action):
-        if debug.debug_level() > 2:
+        if debug.debug_level() > debug.LogLevel.HIGH:
             debug_print_weighted_locations(all_locations, player_states)
 
         index_owner_state, pickup_index = usable_locations.select_location(rng)
@@ -493,7 +493,7 @@ def _calculate_weights_for(
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
     potential_unsafe_uncollected = UncollectedState.from_reach_only_unsafe(potential_reach) - current_unsafe_uncollected
 
-    if debug.debug_level() > 2:
+    if debug.debug_level() > debug.LogLevel.HIGH:
         nodes = typing.cast("tuple[Node, ...]", potential_reach.game.region_list.all_nodes)
 
         def print_weight_factors(uncollected: UncollectedState) -> None:

@@ -7,7 +7,7 @@ from unittest.mock import ANY, AsyncMock, MagicMock
 import pytest
 import socketio.exceptions
 
-from randovania.network_common import error
+from randovania.network_common import connection_headers, error
 from test.server.sio_test_client import SocketIOTestClient
 
 if TYPE_CHECKING:
@@ -18,9 +18,7 @@ if TYPE_CHECKING:
 async def sio_test_client_fixture(test_client):
     client = SocketIOTestClient(test_client.sa.sio)
 
-    headers = {
-        "HTTP_X_RANDOVANIA_VERSION": "0.0.0",
-    }
+    headers = {"HTTP_{}".format(k.upper().replace("-", "_")): v for k, v in connection_headers().items()}
     await client.connect(headers=headers)
     return client
 
@@ -32,11 +30,15 @@ async def sio_test_client_fixture(test_client):
         (True, nullcontext()),
     ],
 )
-async def test_sio_connect_version_header(test_client, has_headers: bool, context: AbstractContextManager):
+async def test_sio_connect_version_header(
+    test_client, has_headers: bool, context: AbstractContextManager, is_dev_version
+):
     client = SocketIOTestClient(test_client.sa.sio)
 
     headers = {}
     if has_headers:
+        if not is_dev_version:
+            headers = {"HTTP_{}".format(k.upper().replace("-", "_")): v for k, v in connection_headers().items()}
         headers["HTTP_X_RANDOVANIA_VERSION"] = "0.0.0"
 
     with context:

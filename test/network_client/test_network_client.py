@@ -27,12 +27,26 @@ if TYPE_CHECKING:
 
 
 @pytest.fixture
-def client(tmp_path):
-    return NetworkClient(tmp_path, {"server_address": "http://localhost:5000"})
+async def client(tmp_path):
+    client = NetworkClient(
+        tmp_path,
+        {
+            "server_address": "http://localhost:5000",
+            "socketio_path": "/socket.io",
+        },
+    )
+    yield client
+    await client.http.close()
 
 
 async def test_on_connect_no_restore(tmp_path):
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000"})
+    client = NetworkClient(
+        tmp_path,
+        {
+            "server_address": "http://localhost:5000",
+            "socketio_path": "/socket.io",
+        },
+    )
 
     # Run
     await client.on_connect()
@@ -43,7 +57,13 @@ async def test_on_connect_no_restore(tmp_path):
 
 @pytest.mark.parametrize("valid_session", [False, True])
 async def test_on_connect_restore(tmpdir, valid_session: bool):
-    client = NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000"})
+    client = NetworkClient(
+        Path(tmpdir),
+        {
+            "server_address": "http://localhost:5000",
+            "socketio_path": "/socket.io",
+        },
+    )
     session_data_path = Path(tmpdir) / "9iwAGnskOkqzo_NZ" / "session_persistence.bin"
     session_data_path.parent.mkdir(parents=True)
     session_data_path.write_bytes(b"foo")
@@ -51,6 +71,7 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
     if valid_session:
         call_result = {
             "result": {
+                "sid": 12341234,
                 "user": {
                     "id": 1234,
                     "name": "You",
@@ -67,6 +88,8 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
     await client.on_connect()
 
     # Assert
+    if valid_session:
+        assert client.http.headers["X-Randovania-Sid"] == 12341234
     client.sio.call.assert_awaited_once_with("restore_user_session", b"foo", namespace=None, timeout=30)
 
     if valid_session:

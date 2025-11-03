@@ -45,6 +45,7 @@ class Ui_GameValidatorWidget(object):
         QTreeWidgetItem(self.log_widget)
         QTreeWidgetItem(self.log_widget)
         self.log_widget.setObjectName(u"log_widget")
+        self.log_widget.setUniformRowHeights(True)
         self.log_widget.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.log_widget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.log_widget.setTextElideMode(Qt.ElideNone)
@@ -63,10 +64,6 @@ class Ui_GameValidatorWidget(object):
         self.options_layout.addWidget(self.verbosity_label, 0, 0, 1, 1)
 
         self.verbosity_combo = QComboBox(GameValidatorWidget)
-        self.verbosity_combo.addItem("")
-        self.verbosity_combo.addItem("")
-        self.verbosity_combo.addItem("")
-        self.verbosity_combo.addItem("")
         self.verbosity_combo.setObjectName(u"verbosity_combo")
 
         self.options_layout.addWidget(self.verbosity_combo, 0, 1, 1, 1)
@@ -144,11 +141,6 @@ class Ui_GameValidatorWidget(object):
         self.log_widget.setSortingEnabled(__sortingEnabled)
 
         self.verbosity_label.setText(QCoreApplication.translate("GameValidatorWidget", u"<html><head/><body><p>Verbosity</p></body></html>", None))
-        self.verbosity_combo.setItemText(0, QCoreApplication.translate("GameValidatorWidget", u"Silent", None))
-        self.verbosity_combo.setItemText(1, QCoreApplication.translate("GameValidatorWidget", u"Normal", None))
-        self.verbosity_combo.setItemText(2, QCoreApplication.translate("GameValidatorWidget", u"High", None))
-        self.verbosity_combo.setItemText(3, QCoreApplication.translate("GameValidatorWidget", u"Extreme", None))
-
         self.show_pickups_check.setText(QCoreApplication.translate("GameValidatorWidget", u"Majors", None))
         self.show_minors_check.setText(QCoreApplication.translate("GameValidatorWidget", u"Minors", None))
         self.show_events_check.setText(QCoreApplication.translate("GameValidatorWidget", u"Events", None))

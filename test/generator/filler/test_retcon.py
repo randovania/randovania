@@ -34,7 +34,7 @@ def test_calculate_weights_for_output(capsys, blank_pickup):
     empty_uncollected = UncollectedState(set(), set(), set(), set())
 
     # Run
-    with debug.with_level(3):
+    with debug.with_level(debug.LogLevel.EXTREME):
         weight = _calculate_weights_for(
             evaluated_action,
             empty_uncollected,

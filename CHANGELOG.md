@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.3.0] - 2025-11-??
+## [10.4.0] - 2025-12-??
+
+- Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
+- Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough, especially at high verbosity.
+
+### Metroid Dread
+- Changed: Energy Parts are now logical.
+
+## [10.3.0] - 2025-11-01
 
 - Added: The Multiworld Session will now display when a world has been beaten. This is supported for the following games:
   - Another Metroid 2 Remake
@@ -68,7 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Alcove: Reaching the top right door from the bottom right tunnel by ball jumping out of tunnel edge with either Spring Ball or Bombs and Advanced Walljumps.
 - Added: Alcove: From the bottom right of the room, reaching the top right door with Ludicrous Walljump and Ludicrous Jump Extend via Morphing.
-- Fixed: Alcove: Going from the bottom right of the room to the center with regular Bombs, now requires either Intermediate Mid-Air Morph, Beginner Mid-Air Morph with Hi-Jump, Springball or Intermediate Stand On Frozen Enemy.
+- Fixed: Alcove: Going from the bottom right of the room to the center with regular Bombs, now requires either Intermediate Mid-Air Morph, Beginner Mid-Air Morph with a jump upgrade, Springball or Intermediate Stand On Frozen Enemy.
 - Added: Namihe's Lair: Advanced Walljump and Damage Boost to escape the Pickup area by getting hit by the Namihe's projectile.
 - Added: Namihe's Lair: Expert Shinespark from Checkpoint Crossing Entrance to the Pickup.
 
@@ -409,6 +417,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The generator will now check for the count of major pickups when major/minor split is enabled.
 
 ### Metroid Dread
+
 - Fixed: A crash when attempting to fire Proto EMMI's Omega Blaster while having 0 maximum missiles.
 
 ### Metroid: Samus Returns
