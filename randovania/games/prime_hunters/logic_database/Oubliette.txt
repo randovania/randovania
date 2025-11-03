@@ -55,27 +55,27 @@ Extra - entity_file: gorea_b2_Ent.bin
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 105, 'active': True})
   > Dock to Gorea 1 Arena
       Trivial
+  > Event - Credits
+      After Defeat Gorea 2
+  > Event - Gorea 2 Defeated
+      Trivial
 
 > Dock to Gorea 1 Arena; Heals? False
   * Layers: default
   * Dock to Gorea 1 Arena/Dock to Gorea 2 Arena
   > Player Spawn
       Trivial
-  > Event - Credits
-      After Defeat Gorea 2
-  > Event - Gorea 2 Defeated
-      Trivial
 
 > Event - Credits; Heals? False
   * Layers: default
   * Event Credits
-  > Dock to Gorea 1 Arena
+  > Player Spawn
       Trivial
 
 > Event - Gorea 2 Defeated; Heals? False
   * Layers: default
   * Event Defeat Gorea 2
-  > Dock to Gorea 1 Arena
+  > Player Spawn
       Trivial
 
 ----------------
@@ -260,8 +260,6 @@ Extra - portal_filename: Gorea_Peek_Ent
   * Extra - entity_type_data: frozendict.frozendict({'load_index': 11, 'target_index': 11, 'artifact_id': 11, 'active': True, 'invisible': False, 'entity_filename': 'Gorea_Land_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
-  > Pickup (Energy Tank)
-      Trivial
 
 > Player Spawn; Heals? False; Default Node
   * Layers: default
@@ -272,6 +270,8 @@ Extra - portal_filename: Gorea_Peek_Ent
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 105, 'active': True})
   > Portal to Oubliette Gateway
       Trivial
+  > Pickup (Energy Tank)
+      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -281,6 +281,6 @@ Extra - portal_filename: Gorea_Peek_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
   * Extra - entity_type_data: frozendict.frozendict({'item_type': 4, 'enabled': True, 'has_base': True, 'always_active': False, 'max_spawn_count': 1, 'spawn_interval': 0, 'spawn_delay': 0, 'notify_entity_id': -1, 'collected_message': 0, 'collected_message_param1': 0, 'collected_message_param2': 0})
-  > Portal to Oubliette Gateway
+  > Player Spawn
       Trivial
 
