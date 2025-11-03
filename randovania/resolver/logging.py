@@ -10,12 +10,14 @@ from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Mapping
+    from collections.abc import Iterable, Iterator, Mapping
 
     from randovania.game_description.assignment import PickupTarget
     from randovania.game_description.db.node import Node
@@ -100,12 +102,6 @@ class ActionLogEntry(NamedTuple):
     resources: ResourceGainTuple
     path_from_previous: tuple[Node, ...]
 
-    def should_show(self, log_level: int) -> bool:
-        return log_level > 0
-
-    def should_show_path(self, log_level: int) -> bool:
-        return log_level >= 3
-
     @classmethod
     def from_state(cls, state: State) -> Self:
         resources = ()
@@ -121,6 +117,35 @@ class ActionLogEntry(NamedTuple):
             state.path_from_previous_state,
         )
 
+    @property
+    def simple_state(self) -> str:
+        # FIXME: this is not very resilient against changes
+        # to State.game_state_debug_string()
+        return self.state_string.removesuffix(" Energy")
+
+    def resource_string(self, *, full_types: bool = False) -> str:
+        resources: list[str] = []
+        for resource, quantity in sorted(self.resources, key=lambda gain: gain[0].resource_type):
+            type_name = resource.resource_type.name
+            if not full_types:
+                type_name = type_name[0]
+            else:
+                if resource.resource_type == ResourceType.NODE_IDENTIFIER:
+                    # "Node_identifier" is a bit too verbose
+                    # for something that's user-facing
+                    type_name = "Node"
+                else:
+                    type_name = type_name.capitalize()
+
+            text = f"{type_name}: {resource.long_name}"
+
+            if quantity > 1:
+                text += f" x{quantity}"
+
+            resources.append(text)
+
+        return ", ".join(resources)
+
 
 class RollbackLogEntry(NamedTuple):
     location: Node
@@ -129,20 +154,11 @@ class RollbackLogEntry(NamedTuple):
     possible_action: bool
     additional_requirements: RequirementSet
 
-    def should_show(self, log_level: int) -> bool:
-        return log_level > 0
-
-    def should_show_reqs(self, log_level: int) -> bool:
-        return log_level > 1 and self.additional_requirements
-
 
 class SkipLogEntry(NamedTuple):
     location: Node
     details: ActionDetails
     additional_requirements: RequirementSet
-
-    def should_show(self, log_level: int) -> bool:
-        return log_level > 1
 
 
 LogFeature = Literal[
@@ -153,6 +169,7 @@ LogFeature = Literal[
     "RollbackAdditional",
     "Skip",
     "CheckSatisfiable",
+    "Completion",
 ]
 
 
@@ -167,6 +184,10 @@ class ResolverLogger(abc.ABC):
         """Standard display format for nodes."""
         return node.full_name(with_region=with_region) if node is not None else "None"
 
+    @property
+    def log_levels_used(self) -> Iterator[debug.LogLevel]:
+        yield from self._visible_features.keys()
+
     @cached_property
     def _visible_features(self) -> Mapping[debug.LogLevel, frozenset[LogFeature]]:
         """Which features should be displayed at each log level"""
@@ -177,6 +198,7 @@ class ResolverLogger(abc.ABC):
         visibility[debug.LogLevel.NORMAL] = visibility[debug.LogLevel.SILENT] | {
             "Action",
             "Rollback",
+            "Completion",
         }
 
         visibility[debug.LogLevel.HIGH] = visibility[debug.LogLevel.NORMAL] | {
@@ -189,8 +211,6 @@ class ResolverLogger(abc.ABC):
         visibility[debug.LogLevel.EXTREME] = visibility[debug.LogLevel.HIGH] | {
             "ActionPath",
         }
-
-        visibility[debug.LogLevel.MORE_EXTREME] = visibility[debug.LogLevel.EXTREME]
 
         return visibility
 
@@ -209,7 +229,7 @@ class ResolverLogger(abc.ABC):
     @final
     def log_action(self, state: State) -> None:
         """Logs an action performed by the resolver."""
-        if not self.should_perform_logging():
+        if not self.should_perform_logging:
             return
 
         resources = ()
@@ -230,24 +250,22 @@ class ResolverLogger(abc.ABC):
     @abc.abstractmethod
     def _log_action(self, action_entry: ActionLogEntry) -> None:
         """Internal logic for logging actions."""
-        ...
 
     @final
     def log_checking_satisfiable(self, actions: Iterable[tuple[ResourceNode, DamageState]]) -> None:
         """Logs a list of satisfiable actions at this stage in the resolver process."""
-        if not self.should_perform_logging():
+        if not self.should_perform_logging:
             return
         self._log_checking_satisfiable(actions)
 
     @abc.abstractmethod
     def _log_checking_satisfiable(self, actions: Iterable[tuple[ResourceNode, DamageState]]) -> None:
         """Internal logic for logging checking satisifiable actions."""
-        ...
 
     @final
     def log_rollback(self, state: State, has_action: bool, possible_action: bool, logic: Logic) -> None:
         """Logs an action being rolled back by the resolver."""
-        if not self.should_perform_logging():
+        if not self.should_perform_logging:
             return
         self._log_rollback(
             RollbackLogEntry(
@@ -262,7 +280,6 @@ class ResolverLogger(abc.ABC):
     @abc.abstractmethod
     def _log_rollback(self, rollback_entry: RollbackLogEntry) -> None:
         """Internal logic for logging rollbacks."""
-        ...
 
     @final
     def log_skip(self, node: Node, state: State, logic: Logic) -> None:
@@ -270,7 +287,7 @@ class ResolverLogger(abc.ABC):
         Logs an action being skipped by the resolver
         because of missing requirements.
         """
-        if not self.should_perform_logging():
+        if not self.should_perform_logging:
             return
         self._log_skip(
             SkipLogEntry(
@@ -283,7 +300,21 @@ class ResolverLogger(abc.ABC):
     @abc.abstractmethod
     def _log_skip(self, skip_entry: SkipLogEntry) -> None:
         """Internal logic for logging skipped actions."""
-        ...
+
+    @final
+    def log_complete(self, state: State | None) -> None:
+        """Logs the resolver completing its run."""
+        if not self.should_perform_logging:
+            return
+        self._log_victory(state)
+
+    @abc.abstractmethod
+    def _log_victory(self, state: State | None) -> None:
+        """
+        Internal logic for logging completion.
+
+        :param state: Will be `None` if the run was unsuccesful.
+        """
 
 
 class TextResolverLogger(ResolverLogger):
@@ -316,12 +347,7 @@ class TextResolverLogger(ResolverLogger):
                 for node in action_entry.path_from_previous:
                     debug.print_function(f"{self._indent(1)}: {self.node_string(node)}")
 
-            resources: list[str] = []
-            for resource, quantity in action_entry.resources:
-                text = f"{resource.resource_type.name[0]}: {resource.long_name}"
-                if quantity > 1:
-                    text += f" x{quantity}"
-                resources.append(text)
+            resources = action_entry.resource_string()
 
             node_str = self.node_string(action_entry.location)
             action_str = self.action_string(action_entry.details)
@@ -329,7 +355,7 @@ class TextResolverLogger(ResolverLogger):
                 f" [{action_entry.state_string}]" if self.should_show("ActionEnergy", debug.debug_level()) else ""
             )
 
-            debug.print_function(f"{self._indent(1)}> {node_str}{energy_str} for {action_str}{resources}")
+            debug.print_function(f"{self._indent(1)}> {node_str}{energy_str} for {action_str}[{resources}]")
 
     def _log_checking_satisfiable(self, actions: Iterable[tuple[ResourceNode, DamageState]]) -> None:
         if self.should_show("CheckSatisfiable", debug.debug_level()):
@@ -373,3 +399,6 @@ class TextResolverLogger(ResolverLogger):
                 debug.print_function(f"{base_log}, missing additional:")
                 self.print_requirement_set(skip_entry.additional_requirements, -1)
                 self.last_printed_additional[skip_entry.location] = skip_entry.additional_requirements
+
+    def _log_victory(self, state: State | None) -> None:
+        return
