@@ -93,7 +93,7 @@ class ServerApp:
 
         self.logger = logging.getLogger("uvicorn.asgi")
         self.fernet_encrypt = Fernet(configuration["server_config"]["fernet_key"].encode("ascii"))
-        if configuration["guest_secret"] is not None:
+        if configuration.get("guest_secret") is not None:
             self.guest_encrypt = Fernet(configuration["guest_secret"].encode("ascii"))
 
         self.expected_headers = connection_headers()

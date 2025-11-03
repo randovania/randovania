@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.3.0] - 2025-11-??
+## [10.4.0] - 2025-12-??
+
+### Metroid Dread
+- Changed: Energy Parts are now logical.
+
+## [10.3.0] - 2025-11-01
 
 - Added: The Multiworld Session will now display when a world has been beaten. This is supported for the following games:
   - Another Metroid 2 Remake
@@ -409,6 +414,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The generator will now check for the count of major pickups when major/minor split is enabled.
 
 ### Metroid Dread
+
 - Fixed: A crash when attempting to fire Proto EMMI's Omega Blaster while having 0 maximum missiles.
 
 ### Metroid: Samus Returns
