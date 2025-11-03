@@ -296,17 +296,15 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
         if not self.should_show("Action", self.log_level):
             return
 
-        item = QtWidgets.QTreeWidgetItem()
+        if self.should_show("ActionPath", self.log_level):
+            for node in action_entry.path_from_previous:
+                self.validator_widget.add_simple_log_entry(
+                    f"↪ {node.identifier.as_string}",
+                    indent=1,
+                )
 
         if action_entry.details is not None:
             action_type, action_text = self.action_type_and_text(action_entry.details)
-
-            if self.should_show("ActionPath", self.log_level):
-                for node in action_entry.path_from_previous:
-                    self.validator_widget.add_simple_log_entry(
-                        f"↪ {node.identifier.as_string}",
-                        indent=1,
-                    )
         else:
             action_type, action_text = "Start", ""
 
@@ -334,7 +332,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
         for node, _ in actions:
             self.validator_widget.add_simple_log_entry(
                 f"• {node.identifier.as_string}",
-                indent=1,
+                indent=2,
             )
 
     def _log_rollback_or_skip(
