@@ -280,6 +280,8 @@ def _resource_gain_for_state(state: State) -> list[ResourceInfo]:
 def _index_for_action_pair(pair: tuple[ResolverAction, DamageState]) -> int:
     node = pair[0]
     if isinstance(node, WorldGraphNode):
+        # TODO: probably this entire sorting is pointless when there's only WorldGraph
+        assert node.database_node is not None
         return node.database_node.node_index
     elif isinstance(node, DockLockNode):
         return node.dock.node_index

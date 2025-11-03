@@ -106,8 +106,8 @@ class WorldGraphNode:
     is_lock_action: bool
     """If this node should be considered a ActionPriority.LOCK_ACTION by the resolver."""
 
-    database_node: Node
-    """The Node instance used to create this WorldGraphNode."""
+    database_node: Node | None
+    """The Node instance used to create this WorldGraphNode. If None, this is a derived node."""
 
     area: Area
     """The Area that contains `database_node`."""
@@ -472,8 +472,8 @@ def create_graph(
                     require_collected_to_leave=False,
                     pickup_index=None,
                     pickup_entry=None,
-                    is_lock_action=isinstance(original_node, EventNode | EventPickupNode),
-                    database_node=original_node,
+                    is_lock_action=False,
+                    database_node=None,
                     area=area,
                     region=region,
                 )
@@ -485,7 +485,7 @@ def create_graph(
             graph_area_connections[new_node.node_index] = {}
             front_of_dock_mapping[new_node.node_index] = front_node.node_index
 
-    original_to_node = {node.database_node.node_index: node for node in nodes}
+    original_to_node = {node.database_node.node_index: node for node in nodes if node.database_node is not None}
 
     graph = WorldGraph(
         game_enum=database_view.get_game_enum(),

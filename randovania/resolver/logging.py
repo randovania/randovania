@@ -65,6 +65,8 @@ def action_details_from_state(state: State, node: GraphOrClassicNode | None = No
         if node.pickup_index is not None:
             return _get_pickup_action_details(state, node.pickup_index)
         node = node.database_node
+        if node is None:
+            return None
     else:
         if isinstance(node, EventPickupNode):
             node = node.pickup_node

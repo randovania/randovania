@@ -217,6 +217,8 @@ class State:
     @property
     def database_node(self) -> Node:
         if isinstance(self.node, WorldGraphNode):
+            # FIXME: should expose that it's not guaranteed
+            assert self.node.database_node is not None
             return self.node.database_node
         else:
             return self.node
