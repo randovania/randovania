@@ -7,6 +7,8 @@ import pytest
 
 from randovania.gui.widgets import game_validator_widget
 from randovania.gui.widgets.game_validator_widget import LABEL_IDS, ValidatorWidgetResolverLogger
+from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug
 from test.resolver.test_logging import perform_logging
 
@@ -207,4 +209,21 @@ async def test_on_start_button_no_task(widget, mocker: MockerFixture, blank_game
 
     assert widget.start_button.text() == "Start"
     assert widget.status_label.text() == "Cancelled!" if cancel else "Final result!"
+    assert widget._current_task is None
+
+
+async def test_on_start_button_with_resolver(skip_qtbot, test_files_dir):
+    layout = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "blank/issue-3717.rdvgame"))
+    players = PlayersConfiguration(
+        player_index=0,
+        player_names={0: "Player"},
+    )
+    widget = game_validator_widget.GameValidatorWidget(layout, players)
+    skip_qtbot.addWidget(widget)
+
+    # Run
+    await widget.on_start_button()
+
+    assert widget.start_button.text() == "Start"
+    assert widget.status_label.text().endswith("Game is possible.")
     assert widget._current_task is None
