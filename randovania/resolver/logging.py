@@ -4,7 +4,7 @@ import abc
 import typing
 from enum import Enum
 from functools import cached_property
-from typing import TYPE_CHECKING, Literal, NamedTuple, Protocol, Self, final
+from typing import TYPE_CHECKING, Literal, NamedTuple, Protocol, final
 
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
@@ -101,21 +101,6 @@ class ActionLogEntry(NamedTuple):
     details: ActionDetails | None
     resources: ResourceGainTuple
     path_from_previous: tuple[Node, ...]
-
-    @classmethod
-    def from_state(cls, state: State) -> Self:
-        resources: ResourceGainTuple = ()
-        if isinstance(state.node, ResourceNode):
-            context_state = state.previous_state or state
-            resources = tuple(state.node.resource_gain_on_collect(context_state.node_context()))
-
-        return cls(
-            state.node,
-            state.game_state_debug_string(),
-            action_details_from_state(state),
-            resources,
-            state.path_from_previous_state,
-        )
 
     @property
     def simple_state(self) -> str:
