@@ -2,6 +2,7 @@ name: Benchmark
 
 on:
   pull_request:
+  merge_group:
   push:
     branches:
       - main
@@ -37,10 +38,15 @@ jobs:
 
       - name: run pytest (benchmark)
         uses: CodSpeedHQ/action@v4
+        if: ${{ github.event_name != 'merge_group' }}
         with:
           run: uv run pytest --codspeed --codspeed-max-rounds=2 --skip-gui-tests --test-group=${{ matrix.shard }} --test-group-count=4
           mode: walltime
           token: ${{ secrets.CODSPEED_TOKEN }}
+
+      - name: run pytest (for merge group)
+        if: ${{ github.event_name == 'merge_group' }}
+        run: uv run pytest --codspeed --codspeed-max-rounds=1 --skip-gui-tests --test-group=${{ matrix.shard }} --test-group-count=4
 
   confirm:
     name: Benchmark Confirm
