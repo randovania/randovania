@@ -87,6 +87,13 @@ class WorldGraphNode:
     - EventNode: the event
     - HintNode/PickupNode: the node resource
     - DockLockNode: the dock node resources
+
+    These resources must all provide exactly 1 quantity each.
+    """
+
+    resource_gain_bitmask: int = dataclasses.field(init=False, default=0)
+    """
+    Bitmask of all ResourceInfo indices granted by this node for fast checking.
     """
 
     requirement_to_collect: Requirement
@@ -115,14 +122,26 @@ class WorldGraphNode:
     region: Region
     """The Region that contains `area` and `database_node`."""
 
+    def __post_init__(self) -> None:
+        bitmask = 0
+        for resource, quantity in self.resource_gain:
+            assert quantity == 1
+            bitmask |= 1 << resource.resource_index
+        self.resource_gain_bitmask = bitmask
+
+    def add_resource(self, resource: ResourceInfo) -> None:
+        self.resource_gain.append((resource, 1))
+        self.resource_gain_bitmask |= 1 << resource.resource_index
+
     def is_resource_node(self) -> bool:
-        return len(self.resource_gain) > 0
+        return bool(self.resource_gain)
 
     def full_name(self, with_region: bool = True, separator: str = "/") -> str:
         """The name of this node, including the area and optionally region."""
         return self.identifier.display_name(with_region, separator)
 
     def should_collect(self, context: NodeContext) -> bool:
+        return not self.has_all_resources(context)
         result = False
 
         # TODO: either this or `has_all_resources` can be removed.
@@ -137,6 +156,7 @@ class WorldGraphNode:
         return result
 
     def has_all_resources(self, context: NodeContext) -> bool:
+        return self.resource_gain_bitmask & context.current_resources.resource_bitmask == self.resource_gain_bitmask
         for resource, _ in self.resource_gain:
             if not context.has_resource(resource):
                 return False
@@ -291,7 +311,7 @@ def _create_dock_connection(
         requirement_parts.append(ResourceRequirement.simple(front_lock_resource))
 
         node.is_lock_action = True
-        node.resource_gain.append((front_lock_resource, 1))
+        node.add_resource(front_lock_resource)
         requirement_to_collect = _get_dock_lock_requirement(node.database_node, forward_weakness)
 
     # Handle the different kinds of ways a dock lock can be opened from behind
@@ -305,7 +325,7 @@ def _create_dock_connection(
             or (back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_IF_MATCHING and forward_weakness != back_weakness)
         ):
             node.is_lock_action = True
-            node.resource_gain.append((back_lock_resource, 1))
+            node.add_resource(back_lock_resource)
 
             if back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST and forward_weakness != back_weakness:
                 assert isinstance(target_node.database_node, DockNode)
@@ -579,7 +599,7 @@ def create_graph(
 
     for node in nodes:
         if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
-            node.resource_gain.append((graph.resource_info_for_node(node), 1))
+            node.add_resource(graph.resource_info_for_node(node))
 
         converted_area_connections: list[tuple[WorldGraphNode, Requirement]] = []
         for target_db_node, requirement in graph_area_connections[node.node_index]:
