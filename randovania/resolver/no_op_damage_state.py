@@ -5,8 +5,11 @@ from typing import TYPE_CHECKING, Self, override
 from randovania.resolver.damage_state import DamageState
 
 if TYPE_CHECKING:
+    from collections.abc import Generator
+
     from randovania.game_description.db.node import Node
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
 
 
@@ -16,6 +19,10 @@ class NoOpDamageState(DamageState):
     @override
     def health_for_damage_requirements(self) -> int:
         return 0
+
+    @override
+    def resources_for_energy(self) -> Generator[ItemResourceInfo]:
+        yield from []
 
     @override
     def is_better_than(self, other: DamageState | None) -> bool:
@@ -52,5 +59,5 @@ class NoOpDamageState(DamageState):
     @override
     def resource_requirements_for_satisfying_damage(
         self, damage: int, resources: ResourceCollection
-    ) -> list[list[ResourceRequirement]]:
-        return []
+    ) -> list[list[ResourceRequirement]] | None:
+        return None
