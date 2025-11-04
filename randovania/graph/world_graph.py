@@ -172,7 +172,7 @@ class WorldGraph:
     original_to_node: dict[int, WorldGraphNode] = dataclasses.field(init=False)
     node_resource_index_offset: int
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.original_to_node = {}
 
         for node in self.nodes:
@@ -231,6 +231,32 @@ def _get_dock_lock_requirement(node: DockNode, weakness: DockWeakness) -> Requir
     else:
         assert weakness.lock is not None
         return weakness.lock.requirement
+
+
+def _has_lock_resource(
+    source_node: DockNode,
+    target_node: Node,
+    patches: GamePatches,
+) -> bool:
+    """Calculates if the given dock node pair will have a lock resource."""
+    forward_weakness = patches.get_dock_weakness_for(source_node)
+    back_weakness, back_lock = None, None
+    if isinstance(target_node, DockNode):
+        back_weakness = patches.get_dock_weakness_for(target_node)
+        back_lock = back_weakness.lock
+
+    if forward_weakness.lock is not None:
+        return True
+
+    if back_lock is not None:
+        # Check if we can unlock from the back.
+        if not (
+            back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE
+            or (back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_IF_MATCHING and forward_weakness != back_weakness)
+        ):
+            return True
+
+    return False
 
 
 def _create_dock_connection(
@@ -430,6 +456,33 @@ def calculate_node_replacement(database_view: GameDatabaseView) -> dict[Node, No
     return node_replacement
 
 
+def _should_create_front_node(database_view: GameDatabaseView, patches: GamePatches, original_node: DockNode) -> bool:
+    """
+    Decide if we should wrap the dock node with an extra node.
+    Important since crossing ResourceNodes can be problematic in the generator.
+    """
+    target_node = patches.get_dock_connection_for(original_node)
+
+    # Docks without locks don't have resources
+    if not _has_lock_resource(original_node, target_node, patches):
+        return False
+
+    area = database_view.area_from_node(original_node)
+
+    # If we can go to more than one node, it's a possible path
+    if len(area.connections[original_node]) > 1:
+        return True
+
+    # If it's one-way connections, it's fine
+    if not area.connections[original_node]:
+        return False
+
+    # If there's a one-way here, as well as a regular path out it's bad.
+    connections_to = {node for node, connections in area.connections.items() if original_node in connections}
+    connections_to.remove(list(area.connections[original_node])[0])
+    return len(connections_to) > 0
+
+
 def create_graph(
     database_view: GameDatabaseView,
     patches: GamePatches,
@@ -468,7 +521,7 @@ def create_graph(
             assert original_node.requirement_to_activate == Requirement.trivial()
             teleporter_networks[original_node.network].append(new_node)
 
-        if isinstance(original_node, DockNode):
+        if isinstance(original_node, DockNode) and _should_create_front_node(database_view, patches, original_node):
             nodes.append(
                 front_node := WorldGraphNode(
                     node_index=len(nodes),
