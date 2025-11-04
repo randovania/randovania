@@ -304,7 +304,7 @@ async def qt_main(app: QtWidgets.QApplication, args: argparse.Namespace) -> None
     @qasync.asyncClose
     async def _on_last_window_closed():
         if app.quitOnLastWindowClosed():
-            await app.network_client.disconnect_from_server()
+            await app.network_client.shutdown()
             await app.game_connection.stop()
             logger.info("Last QT window closed")
         else:
