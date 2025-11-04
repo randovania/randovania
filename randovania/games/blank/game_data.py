@@ -9,6 +9,7 @@ import randovania.game.generator
 import randovania.game.gui
 import randovania.game.hints
 import randovania.game.layout
+import randovania.game.test_data
 import randovania.game.web_info
 from randovania.games.blank import layout
 from randovania.layout.preset_describer import GamePresetDescriber
@@ -79,6 +80,12 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
+def _test_data() -> randovania.game.test_data.GameTestData:
+    return randovania.game.test_data.GameTestData(
+        expected_seed_hash=b"w\x06\xc3\xf5\xe4",
+    )
+
+
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Blank",
     long_name="Blank Development Game",
@@ -107,6 +114,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
+    test_data=_test_data,
     multiple_start_nodes_per_area=True,
     defaults_available_in_game_sessions=randovania.is_dev_version(),
 )

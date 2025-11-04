@@ -109,9 +109,11 @@ def test_distribute_remaining_items_no_locations_left(
 @pytest.mark.skip_resolver_tests
 async def test_create_description(preset_manager, game_enum) -> None:
     # Setup
+    game_test_data = game_enum.data.test_data()
+
     preset = preset_manager.default_preset_for_game(game_enum).get_preset()
     generator_parameters = GeneratorParameters(
-        seed_number=0,
+        seed_number=game_test_data.generator_test_seed_number,
         spoiler=True,
         development=True,
         presets=[preset],
@@ -123,4 +125,4 @@ async def test_create_description(preset_manager, game_enum) -> None:
     result = await generator._create_description(generator_parameters, status_update, 0, world_names)
 
     # Assert
-    assert result.shareable_hash_bytes == b""
+    assert result.shareable_hash_bytes == game_test_data.expected_seed_hash

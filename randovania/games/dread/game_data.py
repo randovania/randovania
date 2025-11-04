@@ -81,6 +81,12 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
+def _test_data() -> randovania.game.test_data.GameTestData:
+    return randovania.game.test_data.GameTestData(
+        expected_seed_hash=b"\xf8\xcf\xb2\x1a\x18",
+    )
+
+
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Dread",
     long_name="Metroid Dread",
@@ -164,6 +170,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
+    test_data=_test_data,
     multiple_start_nodes_per_area=True,
     defaults_available_in_game_sessions=True,
 )

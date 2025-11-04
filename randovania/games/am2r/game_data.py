@@ -86,6 +86,12 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
+def _test_data() -> randovania.game.test_data.GameTestData:
+    return randovania.game.test_data.GameTestData(
+        expected_seed_hash=b"h_\xab\xa2\xbf",
+    )
+
+
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="AM2R",
     long_name="Another Metroid 2 Remake",
@@ -184,6 +190,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
+    test_data=_test_data,
     multiple_start_nodes_per_area=False,
     defaults_available_in_game_sessions=True,
     logic_db_integrity=find_am2r_db_errors,
