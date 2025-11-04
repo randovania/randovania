@@ -82,6 +82,7 @@ def test_resource_requirements_for_satisfying_damage(
     new_state = state.apply_collected_resource_difference(new_resources, old_resources)
 
     options = new_state.resource_requirements_for_satisfying_damage(damage, new_resources)
+    assert options is not None
 
     assert len(alternatives) == len(options)
 
