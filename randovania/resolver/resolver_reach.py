@@ -64,23 +64,13 @@ def _combine_leave(
 
 
 def _combine_damage_requirements(
-    heal: bool, requirement: Requirement, satisfied_requirement: Requirement, context: NodeContext
+    requirement: Requirement, satisfied_requirement: Requirement, context: NodeContext
 ) -> Requirement:
     """
     Helper function combining damage requirements from requirement and satisfied_requirement. Other requirements are
-    considered either trivial or impossible. The heal argument can be used to ignore the damage requirements from the
-    satisfied requirement, which is relevant when requirement comes from a connection out of a heal node.
-    :param heal:
-    :param requirement:
-    :param satisfied_requirement:
-    :param context:
-    :return:
+    considered either trivial or impossible.
     """
-    return (
-        requirement
-        if heal
-        else RequirementAnd([requirement, satisfied_requirement]).isolate_damage_requirements(context).simplify()
-    )
+    return RequirementAnd([requirement, satisfied_requirement]).isolate_damage_requirements(context).simplify()
 
 
 class ResolverReach:
@@ -181,14 +171,18 @@ class ResolverReach:
                     satisfied = logic.get_additional_requirements(node).satisfied(context, damage_health)
 
                 if satisfied:
-                    nodes_to_check[target_node_index] = game_state.apply_damage(requirement.damage(context))
+                    new_damage = requirement.damage(context)
+                    nodes_to_check[target_node_index] = game_state.apply_damage(new_damage)
                     path_to_node[target_node_index] = list(path_to_node[node_index])
                     path_to_node[target_node_index].append(node_index)
-                    satisfied_requirement_on_node[target_node_index] = _combine_damage_requirements(
-                        node.heal,
-                        requirement,
-                        satisfied_requirement_on_node[node.node_index],
-                        context,
+                    satisfied_requirement_on_node[target_node_index] = (
+                        requirement
+                        if node.heal or new_damage == 0
+                        else _combine_damage_requirements(
+                            requirement,
+                            satisfied_requirement_on_node[node.node_index],
+                            context,
+                        )
                     )
 
                 elif target_node:
