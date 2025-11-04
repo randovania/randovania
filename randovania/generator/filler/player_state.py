@@ -228,6 +228,7 @@ class PlayerState:
                     )
                 )
 
+        # FIXME: what about actually implementing this? :)
         # teleporters = []
         # teleporter_dock_types = self.reach.game.dock_weakness_database.all_teleporter_dock_types
         # wl = self.reach.game.region_list

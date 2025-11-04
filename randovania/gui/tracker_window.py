@@ -327,7 +327,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     @property
     def _collected_nodes(self) -> set[ResourceNode]:
-        return self._starting_nodes | {action for action in self._actions if action.is_resource_node}
+        return self._starting_nodes | {action for action in self._actions if action.is_resource_node()}
 
     def _pretty_node_name(self, node: Node) -> str:
         region_list = self.game_description.region_list

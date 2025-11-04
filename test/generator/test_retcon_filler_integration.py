@@ -29,12 +29,14 @@ def test_build_available_indices(has_exclusion: bool, default_filler_config, sin
         return result
 
     region_list = MagicMock(spec=RegionList)
-    region_list.all_regions_areas_nodes = [
-        (region_a, MagicMock(), make_pickup(1)),
-        (region_a, MagicMock(), make_pickup(2)),
-        (region_b, MagicMock(), make_pickup(3)),
-        (region_b, MagicMock(), make_pickup(4)),
-    ]
+    region_list.iterate_nodes_of_type = MagicMock(
+        return_value=[
+            (region_a, MagicMock(), make_pickup(1)),
+            (region_a, MagicMock(), make_pickup(2)),
+            (region_b, MagicMock(), make_pickup(3)),
+            (region_b, MagicMock(), make_pickup(4)),
+        ]
+    )
 
     if has_exclusion:
         exclusion = frozenset([PickupIndex(3)])
