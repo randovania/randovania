@@ -221,13 +221,13 @@ class LayoutDescription:
 
         return cached_result
 
-    def as_json(self, *, force_spoiler: bool = False) -> dict:
+    def as_json(self, *, force_spoiler: bool = False, include_permalink_str: bool = True) -> dict:
         result: dict = {
             "schema_version": description_migration.CURRENT_VERSION,
             "info": {
                 "randovania_version": self.randovania_version_text,
                 "randovania_version_git": self.randovania_version_git.hex(),
-                "permalink": self.permalink.as_base64_str,
+                "permalink": self.permalink.as_base64_str if include_permalink_str else None,
                 "has_spoiler": self.has_spoiler,
                 "seed": self.generator_parameters.seed_number,
                 "hash": self.shareable_hash,
