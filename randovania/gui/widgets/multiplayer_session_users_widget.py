@@ -114,6 +114,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         self.setContentsMargins(0, 0, 0, 0)
         self.setFrameShape(QtWidgets.QFrame.Shape.Panel)
         self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Preferred)
+        self.setUniformRowHeights(True)
 
         self.header().setStretchLastSection(False)
         self.headerItem().setText(0, "Name")
