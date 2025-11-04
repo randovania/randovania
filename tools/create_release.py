@@ -104,6 +104,25 @@ async def download_dotnet() -> None:
     script_path.unlink()
 
 
+def remove_unnecessary_modules() -> None:
+    """Removes python modules that should not be included in the final build."""
+
+    # Remove Pillow's support for AVIF images. We currently do not use this format, and it's 7+ mb.
+    try:
+        avif_path = Path(
+            subprocess.run(
+                [sys.executable, "-c", "import PIL._avif; print(PIL._avif.__file__)"],
+                text=True,
+                capture_output=True,
+                check=True,
+            ).stdout
+        )
+        if avif_path.exists():
+            avif_path.unlink()
+    except subprocess.CalledProcessError:
+        pass
+
+
 def write_obfuscator_secret(path: Path, secret: bytes):
     numbers = str(list(secret))
     path.write_text(
@@ -207,6 +226,8 @@ async def main():
     await download_nintendont()
 
     await download_dotnet()
+
+    remove_unnecessary_modules()
 
     # HACK: pyintaller calls lipo/codesign on macOS and frequently timeout in github actions
     # There's also timeouts on Windows so we're expanding this to everyone
