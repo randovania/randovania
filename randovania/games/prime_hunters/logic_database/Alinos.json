@@ -3167,14 +3167,14 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Judicator Force Field (Upper)": {
+                        "Door to Elder Passage (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Elder Passage (Top)": {
+                        "Upper Level": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3775,7 +3775,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Alinos - High Ground (Magma Drop Exit Portal)",
                     "connections": {
-                        "Judicator Force Field (Lower)": {
+                        "Lower Level": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3828,15 +3828,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Door to Alimbic Gardens": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "AlinosHighGroundUpperPlatform",
-                                "amount": 1,
-                                "negate": false
                             }
                         },
                         "Upper Level": {
@@ -3901,21 +3892,7 @@
                                 "items": []
                             }
                         },
-                        "Portal from Magma Drop": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Lower Level": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to High Ground (Lower Level North Door West)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4126,6 +4103,13 @@
                                 "items": []
                             }
                         },
+                        "Portal from Magma Drop": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Judicator Force Field (Lower)": {
                             "type": "and",
                             "data": {
@@ -4288,13 +4272,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Judicator Force Field (Lower)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Lower Level": {
                             "type": "and",
                             "data": {
@@ -4575,6 +4552,15 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Door to Alimbic Gardens": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "AlinosHighGroundUpperPlatform",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Judicator Force Field (Upper)": {
                             "type": "and",
                             "data": {
@@ -5385,7 +5371,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Player Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Processor Core": {
                     "node_type": "dock",
