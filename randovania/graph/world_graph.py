@@ -479,7 +479,7 @@ def _should_create_front_node(database_view: GameDatabaseView, patches: GamePatc
 
     # If there's a one-way here, as well as a regular path out it's bad.
     connections_to = {node for node, connections in area.connections.items() if original_node in connections}
-    connections_to.remove(list(area.connections[original_node])[0])
+    connections_to -= set(area.connections[original_node])
     return len(connections_to) > 0
 
 
