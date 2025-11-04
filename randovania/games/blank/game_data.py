@@ -5,11 +5,11 @@ import typing
 import randovania
 import randovania.game.data
 import randovania.game.development_state
+import randovania.game.game_test_data
 import randovania.game.generator
 import randovania.game.gui
 import randovania.game.hints
 import randovania.game.layout
-import randovania.game.test_data
 import randovania.game.web_info
 from randovania.games.blank import layout
 from randovania.layout.preset_describer import GamePresetDescriber

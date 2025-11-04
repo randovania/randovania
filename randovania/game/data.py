@@ -11,11 +11,11 @@ if TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import PatchDataFactory
     from randovania.game.development_state import DevelopmentState
+    from randovania.game.game_test_data import GameTestData
     from randovania.game.generator import GameGenerator
     from randovania.game.gui import GameGui
     from randovania.game.hints import GameHints
     from randovania.game.layout import GameLayout
-    from randovania.game.test_data import GameTestData
     from randovania.game_description.game_description import GameDescription
     from randovania.interface_common.options import PerGameOptions
 

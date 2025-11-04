@@ -8,6 +8,8 @@ if TYPE_CHECKING:
 
     from randovania.layout.base.trick_level import LayoutTrickLevel
 
+# This file can't be named `test_data` as that causes issues with pytest discovery.
+
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
 class GameTestData:
