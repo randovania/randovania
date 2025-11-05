@@ -61,19 +61,15 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - { name: "Linux", image: ubuntu-latest }
-          - { name: "macOS", image: macos-latest }
-          - { name: "Windows", image: windows-latest }
-        is_merge_queue:
-          - ${{ github.event_name == 'merge_queue' }}
+          - { name: "Linux", image: ubuntu-latest, event_name: "${{ github.event_name }}" }
+          - { name: "macOS", image: macos-latest, event_name: "${{ github.event_name }}" }
+          - { name: "Windows", image: windows-latest, event_name: "${{ github.event_name }}" }
         is_stable:
           - ${{ startsWith(github.ref, 'refs/heads/stable') || startsWith(github.ref, 'refs/tags/v') }}
 
         exclude:
-          - is_merge_queue: "true"
-            os: { name: "Linux", image: ubuntu-latest }
-          - is_merge_queue: "true"
-            os: { name: "macOS", image: macos-latest }
+          - os: { name: "Linux", image: ubuntu-latest, event_name: merge_queue }
+          - os: { name: "macOS", image: macos-latest, event_name: merge_queue }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
@@ -129,20 +125,15 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - { name: "Linux", image: ubuntu-latest }
-          - { name: "macOS", image: macos-latest }
-          - { name: "Windows", image: windows-latest }
-
-        is_merge_queue:
-          - ${{ github.event_name == 'merge_queue' }}
+          - { name: "Linux", image: ubuntu-latest, event_name: "${{ github.event_name }}" }
+          - { name: "macOS", image: macos-latest, event_name: "${{ github.event_name }}" }
+          - { name: "Windows", image: windows-latest, event_name: "${{ github.event_name }}" }
         is_stable:
           - ${{ startsWith(github.ref, 'refs/heads/stable') || startsWith(github.ref, 'refs/tags/v') }}
 
         exclude:
-          - is_merge_queue: "true"
-            os: { name: "Linux", image: ubuntu-latest }
-          - is_merge_queue: "true"
-            os: { name: "macOS", image: macos-latest }
+          - os: { name: "Linux", image: ubuntu-latest, event_name: merge_queue }
+          - os: { name: "macOS", image: macos-latest, event_name: merge_queue }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
