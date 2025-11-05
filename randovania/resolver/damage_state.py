@@ -17,16 +17,20 @@ class DamageState(ABC):
     Interface responsible for keeping track of all data related to Damage requirements.
     """
 
+    @abstractmethod
     def health_for_damage_requirements(self) -> int:
         """How much health is present for purpose of checking damage requirements."""
 
+    @abstractmethod
     def resources_for_energy(self) -> Generator[ItemResourceInfo]:
         """Which items give energy."""
 
+    @abstractmethod
     def is_better_than(self, other: DamageState | None) -> bool:
         """Is this state strictly better than other, regarding damage requirements.
         Always True when other is None."""
 
+    @abstractmethod
     def apply_damage(self, damage: int) -> Self:
         """
         Applies damage accumulated when visiting a new node.
@@ -34,6 +38,7 @@ class DamageState(ABC):
         :return: A new copy with the damage applied.
         """
 
+    @abstractmethod
     def apply_node_heal(self, node: Node, resources: ResourceCollection) -> Self:
         """
         Applies the Node Heal effect, whatever that means for this game.
@@ -43,17 +48,21 @@ class DamageState(ABC):
         :return: A new copy with the effect applied.
         """
 
+    @abstractmethod
     def debug_string(self, resources: ResourceCollection) -> str:
         """A string that represents this state for purpose of resolver and generator logs."""
 
+    @abstractmethod
     def limited_by_maximum(self, resources: ResourceCollection) -> Self:
         """Applies any resource limit, such as maximum life based on life upgrades."""
 
+    @abstractmethod
     def apply_collected_resource_difference(
         self, new_resources: ResourceCollection, old_resources: ResourceCollection
     ) -> Self:
         """Creates a new state after collecting new resources"""
 
+    @abstractmethod
     def apply_new_starting_resource_difference(
         self, new_resources: ResourceCollection, old_resources: ResourceCollection
     ) -> Self:
@@ -63,7 +72,7 @@ class DamageState(ABC):
     @abstractmethod
     def resource_requirements_for_satisfying_damage(
         self, damage: int, resources: ResourceCollection
-    ) -> list[list[ResourceRequirement]]:
+    ) -> list[list[ResourceRequirement]] | None:
         """
         Determines what are the requirements for satisfying a damage requirement with the given value.
         :param damage:
@@ -71,5 +80,5 @@ class DamageState(ABC):
         :return: a list containing lists of resource requirements. Each sublist contains a combination of requirements.
         If two resources can be used, the options can be to satisfy the damage with some number of only the first
         resource, some number of only the second resource, or by any combination of the two resources that together
-        satisfy the damage requirement.
+        satisfy the damage requirement. None if the requirements are already satisfied.
         """

@@ -1315,6 +1315,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Unlock Door from Elevator": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1422,7 +1429,7 @@
                                 "negate": false
                             }
                         },
-                        "Event - Unlock Door": {
+                        "Event - Unlock Door from Lightning Armor": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1553,12 +1560,12 @@
                         }
                     }
                 },
-                "Event - Unlock Door": {
+                "Event - Unlock Door from Lightning Armor": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 8099.305059169248,
-                        "y": -342.47875466603136,
+                        "x": 8135.423325186439,
+                        "y": -575.3305759227924,
                         "z": 0.0
                     },
                     "description": "",
@@ -1671,6 +1678,31 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Unlock Door from Elevator": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8131.04,
+                        "y": 556.46,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door",
+                    "connections": {
+                        "Elevator to Area 2 Dam Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }

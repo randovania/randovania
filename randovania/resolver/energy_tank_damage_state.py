@@ -29,6 +29,10 @@ class EnergyTankDamageState(DamageState):
         return self._duplicate()
 
     @override
+    def health_for_damage_requirements(self) -> int:
+        return self._energy
+
+    @override
     def resources_for_energy(self) -> Generator[ItemResourceInfo]:
         yield self._energy_tank
 
@@ -37,7 +41,7 @@ class EnergyTankDamageState(DamageState):
         return self._starting_energy + (self._energy_per_tank * num_tanks)
 
     def _duplicate(self) -> Self:
-        result = EnergyTankDamageState(
+        result = self.__class__(
             self._starting_energy,
             self._energy_per_tank,
             self._energy_tank,
@@ -49,10 +53,6 @@ class EnergyTankDamageState(DamageState):
         result = self._duplicate()
         result._energy = result._maximum_energy(resources)
         return result
-
-    @override
-    def health_for_damage_requirements(self) -> int:
-        return self._energy
 
     @override
     def is_better_than(self, other: DamageState | None) -> bool:
@@ -109,7 +109,7 @@ class EnergyTankDamageState(DamageState):
     @override
     def resource_requirements_for_satisfying_damage(
         self, damage: int, resources: ResourceCollection
-    ) -> list[list[ResourceRequirement]]:
+    ) -> list[list[ResourceRequirement]] | None:
         # A requirement for many "Energy Tanks" is added,
         # which is then decreased by how many tanks is in the state by pickups_to_solve_list
         # FIXME: get the required items for reductions (aka suits)

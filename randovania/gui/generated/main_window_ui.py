@@ -441,7 +441,7 @@ class Ui_MainWindow(object):
         self.browse_sessions_button.setText(QCoreApplication.translate("MainWindow", u"Browse for a multiworld session", None))
         self.host_new_game_label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Want to play multiworld?</p><p>Host a new online session and invite people!</p></body></html>", None))
         self.host_new_game_button.setText(QCoreApplication.translate("MainWindow", u"Host new multiworld session", None))
-        self.game_connection_label.setText(QCoreApplication.translate("MainWindow", u"Connect Randovania to the many games it support, enabling multiworld or maybe just an automatic tracker.", None))
+        self.game_connection_label.setText(QCoreApplication.translate("MainWindow", u"Connect Randovania to the many games it supports, enabling multiworld, or maybe just an automatic tracker!", None))
         self.game_connection_button.setText(QCoreApplication.translate("MainWindow", u"Connect to games", None))
         self.main_tab_widget.setTabText(self.main_tab_widget.indexOf(self.tab_multiworld), QCoreApplication.translate("MainWindow", u"Multiworld", None))
         self.progress_label.setText("")
