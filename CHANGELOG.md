@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.3.2] - 2025-11-05
 
-- Changed: The Multiworld Session is more responsive in worlds with many worlds.
+- Changed: The Multiworld Session is more responsive in sessions with many worlds.
 - Changed: In a Multiworld Session with many worlds, the server now responds faster when exporting a world.
 
 ### Metroid Prime
