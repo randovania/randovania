@@ -9,7 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Coming soon.
 
-## [10.3.0] - 2025-11-01
+## [10.3.2] - 2025-11-05
+
+- Changed: The Multiworld Session is more responsive in worlds with many worlds.
+- Changed: In a Multiworld Session with many worlds, the server now responds faster when exporting a world.
+
+### Metroid Prime
+
+- Fixed: Artifact Temple teleporter not working when room is reloaded and the warp cutscene is skipped.
+
+## [10.3.1] - 2025-11-01
 
 - Added: The Multiworld Session will now display when a world has been beaten. This is supported for the following games:
   - Another Metroid 2 Remake
@@ -171,6 +180,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Dropped support for Citra and switched to Azahar.
 - Fixed: Reserve Tanks won't be hinted anymore.
 - Removed: The Missile Related, Morph Ball Related, Beam Related and Key pickup features. These were only used if a game in a Multiworld was hinting a Samus Returns pickup.
+
+## [10.3.0]
+
+- Skipped for technical reasons.
 
 ## [10.2.0] - 2025-10-02
 

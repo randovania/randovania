@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import base64
+import copy
+import dataclasses
 import hashlib
 import itertools
 import json
@@ -89,6 +91,7 @@ class LayoutDescription:
     all_patches: dict[int, GamePatches]
     item_order: tuple[str, ...]
     user_modified: bool
+    original_dict: dict | None = dataclasses.field(compare=False, default=None)
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "__cached_serialized_patches", None)
@@ -130,6 +133,7 @@ class LayoutDescription:
         if "game_modifications" not in json_dict:
             raise InvalidLayoutDescription("Unable to read details of a race game file")
 
+        original_dict = copy.deepcopy(json_dict)
         json_dict = description_migration.convert_to_current_version(json_dict)
 
         def get_preset(i: int, p: dict) -> Preset:
@@ -169,6 +173,7 @@ class LayoutDescription:
             all_patches=all_patches,
             item_order=json_dict["item_order"],
             user_modified=expected_checksum != actual_checksum,
+            original_dict=original_dict,
         )
 
     @classmethod
