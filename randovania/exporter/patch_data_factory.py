@@ -88,8 +88,12 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
 
     def _attach_to_sentry(self) -> None:
         with sentry_sdk.isolation_scope() as scope:
+            description_json = self.description.original_dict
+            if description_json is None:
+                description_json = self.description.as_json(force_spoiler=True)
+
             scope.add_attachment(
-                json.dumps(self.description.as_json(force_spoiler=True)).encode("utf-8"),
+                json.dumps(description_json).encode("utf-8"),
                 filename="rdvgame.json",
                 content_type="application/json",
                 add_to_transactions=True,
