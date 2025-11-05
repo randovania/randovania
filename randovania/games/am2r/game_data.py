@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 import randovania.game.data
 import randovania.game.development_state
+import randovania.game.game_test_data
 import randovania.game.generator
 import randovania.game.gui
 import randovania.game.hints
@@ -86,10 +87,10 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
-def _test_data() -> randovania.game.test_data.GameTestData:
+def _test_data() -> randovania.game.game_test_data.GameTestData:
     from randovania.layout.base.trick_level import LayoutTrickLevel
 
-    return randovania.game.test_data.GameTestData(
+    return randovania.game.game_test_data.GameTestData(
         expected_seed_hash=b"h_\xab\xa2\xbf",
         # Some items require shinesparking to reach in vanilla,
         # which due to varying difficulty has been made into a trick

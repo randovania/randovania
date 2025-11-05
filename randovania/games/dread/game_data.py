@@ -81,10 +81,10 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
-def _test_data() -> randovania.game.test_data.GameTestData:
+def _test_data() -> randovania.game.game_test_data.GameTestData:
     from randovania.layout.base.trick_level import LayoutTrickLevel
 
-    return randovania.game.test_data.GameTestData(
+    return randovania.game.game_test_data.GameTestData(
         expected_seed_hash=b"\xf8\xcf\xb2\x1a\x18",
         # Some items require shinesparking to reach in vanilla,
         # which due to varying difficulty has been made into a trick
