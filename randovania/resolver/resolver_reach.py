@@ -47,8 +47,8 @@ def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
 
 
 def _combine_damage_requirements(
-    heal: bool, requirement: Requirement, satisfied_requirement: Requirement, context: NodeContext
-) -> Requirement:
+    heal: bool, requirement: Requirement, satisfied_requirement: tuple[Requirement, bool], context: NodeContext
+) -> tuple[Requirement, bool]:
     """
     Helper function combining damage requirements from requirement and satisfied_requirement. Other requirements are
     considered either trivial or impossible. The heal argument can be used to ignore the damage requirements from the
@@ -57,13 +57,26 @@ def _combine_damage_requirements(
     :param requirement:
     :param satisfied_requirement:
     :param context:
-    :return:
+    :return: The combined requirement and a boolean, indicating if the requirement has non-damage requirements.
     """
-    return (
-        requirement
-        if heal
-        else RequirementAnd([requirement, satisfied_requirement]).isolate_damage_requirements(context).simplify()
+    if heal:
+        return requirement, True
+
+    isolated_requirement = requirement.isolate_damage_requirements(context)
+    isolated_satisfied = (
+        satisfied_requirement[0].isolate_damage_requirements(context)
+        if satisfied_requirement[1]
+        else satisfied_requirement[0]
     )
+
+    if isolated_requirement == Requirement.trivial():
+        result = isolated_satisfied
+    elif isolated_satisfied == Requirement.trivial():
+        result = isolated_requirement
+    else:
+        result = RequirementAnd([isolated_requirement, isolated_satisfied]).simplify()
+
+    return result, False
 
 
 class ResolverReach:
@@ -120,7 +133,9 @@ class ResolverReach:
         path_to_node: dict[int, list[int]] = {
             initial_state.node.node_index: [],
         }
-        satisfied_requirement_on_node: dict[int, Requirement] = {initial_state.node.node_index: Requirement.trivial()}
+        satisfied_requirement_on_node: dict[int, tuple[Requirement, bool]] = {
+            initial_state.node.node_index: (Requirement.trivial(), False)
+        }
 
         while nodes_to_check:
             node_index = next(iter(nodes_to_check))
@@ -176,7 +191,7 @@ class ResolverReach:
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
                     if not requirement.satisfied(context, damage_health):
                         full_requirement_for_target = RequirementAnd(
-                            [requirement, satisfied_requirement_on_node[node.node_index]]
+                            [requirement, satisfied_requirement_on_node[node.node_index][0]]
                         ).simplify()
                         requirements_excluding_leaving_by_node[target_node_index].append(full_requirement_for_target)
 
