@@ -192,7 +192,7 @@ class ResolverReach:
                     if not requirement.satisfied(context, damage_health):
                         full_requirement_for_target = RequirementAnd(
                             [requirement, satisfied_requirement_on_node[node.node_index][0]]
-                        ).simplify()
+                        )
                         requirements_excluding_leaving_by_node[target_node_index].append(full_requirement_for_target)
 
         # Discard satisfiable requirements of nodes reachable by other means
