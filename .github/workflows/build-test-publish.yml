@@ -68,8 +68,8 @@ jobs:
           - ${{ startsWith(github.ref, 'refs/heads/stable') || startsWith(github.ref, 'refs/tags/v') }}
 
         exclude:
-          - os: { name: "Linux", image: ubuntu-latest, event_name: merge_queue }
-          - os: { name: "macOS", image: macos-latest, event_name: merge_queue }
+          - os: { name: "Linux", image: ubuntu-latest, event_name: merge_group }
+          - os: { name: "macOS", image: macos-latest, event_name: merge_group }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
@@ -132,8 +132,8 @@ jobs:
           - ${{ startsWith(github.ref, 'refs/heads/stable') || startsWith(github.ref, 'refs/tags/v') }}
 
         exclude:
-          - os: { name: "Linux", image: ubuntu-latest, event_name: merge_queue }
-          - os: { name: "macOS", image: macos-latest, event_name: merge_queue }
+          - os: { name: "Linux", image: ubuntu-latest, event_name: merge_group }
+          - os: { name: "macOS", image: macos-latest, event_name: merge_group }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
