@@ -476,6 +476,22 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Helm Room (Hallway Door West)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "CAHelmRoomScan",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Unlock Scan Door (West)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -678,22 +694,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Helm Room (Hallway Door West)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "CAHelmRoomScan",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Unlock Scan Door (West)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -753,7 +753,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Celestial Gateway": {
+                        "Player Spawn": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -910,7 +910,7 @@
                     "valid_starting_location": false,
                     "event_name": "CAHelmRoomScan",
                     "connections": {
-                        "Door to Celestial Gateway": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -996,6 +996,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Data Shrine 01": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1061,13 +1068,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Data Shrine 01": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -1127,7 +1127,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Helm Room": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1183,6 +1183,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Data Shrine 01": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Data Shrine 02": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1253,13 +1260,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Data Shrine 02": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -1319,7 +1319,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Data Shrine 01": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1375,6 +1375,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Data Shrine 02": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Data Shrine 03": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1445,13 +1452,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Data Shrine 03": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -1511,7 +1511,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Data Shrine 02": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1535,8 +1535,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 581.7496740547588,
-                        "y": 165.72164276401563,
+                        "x": 581.75,
+                        "y": 165.72,
                         "z": 0.0
                     },
                     "description": "",
@@ -1568,6 +1568,45 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Data Shrine 03": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Synergy Core (Shield Key Room Door West)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Synergy Core (Portal Room Door West)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "StandableTerrain",
+                                "amount": 3,
+                                "negate": false
+                            }
+                        },
+                        "Volt Driver Force Field": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Portal to Celestial Gateway": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "CASynergyCorePortal",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Ship Deck Portal Unlocked": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1860,7 +1899,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Data Shrine 03": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1992,14 +2031,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Data Shrine 03": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Volt Driver Force Field": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2047,7 +2079,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Data Shrine 03": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2121,7 +2153,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Celestial Archives - Synergy Core (Celestial Gateway Portal)",
                     "connections": {
-                        "Door to Data Shrine 03": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2329,7 +2361,7 @@
                     "valid_starting_location": false,
                     "event_name": "CASynergyCorePortal",
                     "connections": {
-                        "Door to Data Shrine 03": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2557,6 +2589,13 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
+                        "Portal to Incubation Vault 03": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Tetra Vista (Portal Room Door South)": {
                             "type": "and",
                             "data": {
@@ -2624,7 +2663,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Tetra Vista (Portal Room Door South)": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2955,13 +2994,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Portal to Incubation Vault 03": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 }
@@ -3013,6 +3045,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Tetra Vista": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to New Arrival Registration (Quadtroid Hallway Door East)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3078,13 +3117,6 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Player Spawn": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to New Arrival Registration (Quadtroid Hallway Door East)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3837,7 +3869,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Tetra Vista": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4456,13 +4488,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Data Shrine 01 (Outer Room Door SE)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -4637,6 +4662,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Data Shrine 01 (Outer Room Door SE)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4696,7 +4728,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Meditation Room": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5042,51 +5074,6 @@
                 "entity_file": "unit2_RM2_Ent.bin"
             },
             "nodes": {
-                "Player Spawn": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 329.1293496520279,
-                        "y": 61.03203743700499,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "entity_id": 0,
-                        "position": {
-                            "x": 0.192626953125,
-                            "y": 3.5341796875,
-                            "z": 29.09521484375
-                        },
-                        "up_vector": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0
-                        },
-                        "facing_vector": {
-                            "x": 0.046875,
-                            "y": 0.0,
-                            "z": -0.998779296875
-                        },
-                        "entity_type_data": {
-                            "availabilty": 0,
-                            "active": true
-                        }
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Fan Room Alpha": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Door to Fan Room Beta": {
                     "node_type": "dock",
                     "heal": false,
@@ -5208,13 +5195,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Player Spawn": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Outer Room": {
                             "type": "and",
                             "data": {
@@ -5721,8 +5701,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 600.6004319654428,
-                        "y": 312.94468442524595,
+                        "x": 328.7948620369347,
+                        "y": 61.17533769544593,
                         "z": 0.0
                     },
                     "description": "",
@@ -6145,7 +6125,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Data Shrine 03 (Outer Room Door NE)": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6267,7 +6247,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Fan Room Beta": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6378,6 +6358,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Fan Room Beta": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Data Shrine 03 (Outer Room Door NE)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6661,23 +6648,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Celestial Archives - Transfer Lock (Synergy Core Portal)",
                     "connections": {
-                        "Portal to Docking Bay": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "CATransferLockPortal",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Portal Unlocked": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (UA Expansion)": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6723,6 +6694,29 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Portal to Synergy Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Portal to Docking Bay": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "CATransferLockPortal",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Portal Unlocked": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (UA Expansion)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6789,7 +6783,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Celestial Archives - Transfer Lock (Docking Bay Portal)",
                     "connections": {
-                        "Portal to Synergy Core": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6814,7 +6808,7 @@
                     "valid_starting_location": false,
                     "event_name": "CATransferLockPortal",
                     "connections": {
-                        "Portal to Synergy Core": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6872,7 +6866,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Portal to Synergy Core": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8978,51 +8972,6 @@
                 "portal_filename": "unit2_RM8_Ent"
             },
             "nodes": {
-                "Player Spawn": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 510.3866090712743,
-                        "y": 369.87149028077755,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "entity_id": 32,
-                        "position": {
-                            "x": 53.4501953125,
-                            "y": 12.03564453125,
-                            "z": -20.7001953125
-                        },
-                        "up_vector": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0
-                        },
-                        "facing_vector": {
-                            "x": -0.058837890625,
-                            "y": 0.0,
-                            "z": 0.998046875
-                        },
-                        "entity_type_data": {
-                            "availabilty": 0,
-                            "active": true
-                        }
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Top of Bridge": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Portal to Incubation Vault 01": {
                     "node_type": "dock",
                     "heal": false,
@@ -9081,7 +9030,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Celestial Archives - Docking Bay (Incubation Vault 01 Portal)",
                     "connections": {
-                        "Top of Bridge": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9148,7 +9097,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Celestial Archives - Docking Bay (Incubation Vault 03 Portal)",
                     "connections": {
-                        "Top of Bridge": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9215,7 +9164,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Celestial Archives - Docking Bay (Incubation Vault 02 Portal)",
                     "connections": {
-                        "Top of Bridge": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9272,7 +9221,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Top of Bridge": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9339,7 +9288,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Celestial Archives - Docking Bay (Transfer Lock Portal)",
                     "connections": {
-                        "Top of Bridge": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9397,7 +9346,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Top of Bridge": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9406,28 +9355,42 @@
                         }
                     }
                 },
-                "Top of Bridge": {
+                "Player Spawn": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 686.9308855291576,
-                        "y": 429.20194384449246,
+                        "x": 510.7,
+                        "y": 371.3,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "entity_id": 32,
+                        "position": {
+                            "x": 53.4501953125,
+                            "y": 12.03564453125,
+                            "z": -20.7001953125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": -0.058837890625,
+                            "y": 0.0,
+                            "z": 0.998046875
+                        },
+                        "entity_type_data": {
+                            "availabilty": 0,
+                            "active": true
+                        }
+                    },
                     "valid_starting_location": false,
                     "connections": {
-                        "Player Spawn": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Portal to Incubation Vault 01": {
                             "type": "and",
                             "data": {
@@ -9544,7 +9507,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Celestial Archives - Docking Bay (Incubation Vault 01 Return Portal)",
                     "connections": {
-                        "Top of Bridge": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9611,7 +9574,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": "Celestial Archives - Docking Bay (Incubation Vault 03 Return Portal)",
                     "connections": {
-                        "Top of Bridge": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9668,6 +9631,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Portal to Synergy Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Biodefense Chamber 01": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9740,13 +9710,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Biodefense Chamber 01": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -9806,7 +9769,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Portal to Synergy Core": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9863,6 +9826,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Portal to New Arrival Registration": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Biodefense Chamber 05": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9935,13 +9905,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Biodefense Chamber 05": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -10001,7 +9964,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Portal to New Arrival Registration": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,

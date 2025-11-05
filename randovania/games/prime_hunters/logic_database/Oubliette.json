@@ -316,6 +316,22 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Credits": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Gorea2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Gorea 2 Defeated": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -352,22 +368,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Credits": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Gorea2",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Gorea 2 Defeated": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -387,7 +387,7 @@
                     "valid_starting_location": false,
                     "event_name": "Credits",
                     "connections": {
-                        "Dock to Gorea 1 Arena": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -412,7 +412,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gorea2",
                     "connections": {
-                        "Dock to Gorea 1 Arena": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1463,13 +1463,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Pickup (Energy Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -1510,6 +1503,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Portal to Oubliette Gateway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1567,7 +1567,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Portal to Oubliette Gateway": {
+                        "Player Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,
