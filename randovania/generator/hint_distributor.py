@@ -770,7 +770,7 @@ def _should_use_resolver_hints(config: BaseConfiguration) -> bool:
 
 async def get_resolver_hint_state(player: int, patches: GamePatches) -> ResolverHintState | None:
     with debug.with_level(debug.LogLevel.SILENT):
-        new_state = await resolver.resolve(patches.configuration, patches, collect_hint_data=True)
+        new_state = await resolver.resolve(patches.configuration, patches, collect_hint_data=True, use_world_graph=True)
 
     if new_state is None:
         logger.warning(

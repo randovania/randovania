@@ -11,7 +11,7 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.node import NodeContext, NodeIndex
 from randovania.game_description.db.node_provider import NodeProvider
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
@@ -501,10 +501,11 @@ def create_graph(
     configurable_node_requirements = database_view.get_configurable_node_requirements()
     node_replacement = calculate_node_replacement(database_view)
 
-    graph_area_connections: dict[int, dict[Node, Requirement]] = {}
+    graph_area_connections: dict[int, list[tuple[Node, Requirement]]] = {}
     front_of_dock_mapping: dict[int, int] = {}  # Dock to front
-    original_area_connections: dict[Node, dict[Node, Requirement]] = {
-        maybe_node: copy.copy(area.connections[maybe_node]) for _, area, maybe_node in database_view.node_iterator()
+    original_area_connections: dict[NodeIndex, list[tuple[Node, Requirement]]] = {
+        maybe_node.node_index: copy.copy(area.connections[maybe_node])
+        for _, area, maybe_node in database_view.node_iterator()
     }
 
     # Create a WorldGraphNode for each node
@@ -514,7 +515,9 @@ def create_graph(
             continue
 
         nodes.append(new_node := create_node(len(nodes), patches, original_node, area, region))
-        graph_area_connections[new_node.node_index] = original_area_connections[original_node]
+        graph_area_connections[new_node.node_index] = [
+            tuple(item) for item in original_area_connections[original_node.node_index].items()
+        ]
 
         if isinstance(original_node, TeleporterNetworkNode):
             # Only TeleporterNetworkNodes that aren't resource nodes are supported
@@ -571,7 +574,7 @@ def create_graph(
             node.resource_gain.append((graph.resource_info_for_node(node), 1))
 
         converted_area_connections: list[tuple[WorldGraphNode, Requirement]] = []
-        for target_db_node, requirement in graph_area_connections[node.node_index].items():
+        for target_db_node, requirement in graph_area_connections[node.node_index]:
             if target_db_node.node_index not in graph.original_to_node:
                 continue
 
