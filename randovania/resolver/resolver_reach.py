@@ -47,20 +47,35 @@ def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
 
 
 def _combine_damage_requirements(
-    heal: bool, requirement: Requirement, satisfied_requirement: tuple[Requirement, bool], context: NodeContext
+    heal: bool,
+    damage: int,
+    requirement: Requirement,
+    satisfied_requirement: tuple[Requirement, bool],
+    context: NodeContext,
 ) -> tuple[Requirement, bool]:
     """
     Helper function combining damage requirements from requirement and satisfied_requirement. Other requirements are
-    considered either trivial or impossible. The heal argument can be used to ignore the damage requirements from the
-    satisfied requirement, which is relevant when requirement comes from a connection out of a heal node.
-    :param heal:
+    considered either trivial or impossible.
+    :param heal: When set, ignore the damage requirements from the satisfied requirement,
+                 which is relevant when requirement comes from a connection out of a heal node.
+    :param damage:
     :param requirement:
     :param satisfied_requirement:
     :param context:
-    :return: The combined requirement and a boolean, indicating if the requirement has non-damage requirements.
+    :return: The combined requirement and a boolean, indicating if the requirement may have non-damage components.
     """
     if heal:
         return requirement, True
+
+    if damage == 0:
+        # If we took no damage here, then one of the following is true:
+        # - There's no damage requirement in this edge
+        # - Our resources allows for alternatives with no damage requirement
+        # - Our resources grants immunity to the damage resources
+        # In all of these cases, we can verify that assumption with the following assertion
+        # assert requirement.isolate_damage_requirements(context) == Requirement.trivial()
+        #
+        return satisfied_requirement
 
     isolated_requirement = requirement.isolate_damage_requirements(context)
     isolated_satisfied = (
@@ -174,13 +189,13 @@ class ResolverReach:
                     satisfied = logic.get_additional_requirements(node).satisfied(context, damage_health)
 
                 if satisfied:
-                    nodes_to_check[target_node_index] = game_state.apply_damage(
-                        requirement_including_leaving.damage(context)
-                    )
+                    damage = requirement_including_leaving.damage(context)
+                    nodes_to_check[target_node_index] = game_state.apply_damage(damage)
                     path_to_node[target_node_index] = list(path_to_node[node_index])
                     path_to_node[target_node_index].append(node_index)
                     satisfied_requirement_on_node[target_node_index] = _combine_damage_requirements(
                         node.heal,
+                        damage,
                         requirement_including_leaving,
                         satisfied_requirement_on_node[node.node_index],
                         context,
