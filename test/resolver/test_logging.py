@@ -11,6 +11,7 @@ from randovania.game_description.requirements.requirement_set import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.pickup_pool.pool_creator import calculate_pool_results
 from randovania.graph.world_graph import WorldGraphNode
+from randovania.layout import filtered_database
 from randovania.resolver import debug
 from randovania.resolver.logging import ResolverLogger, TextResolverLogger
 from randovania.resolver.resolver import ActionPriority, setup_resolver
@@ -37,7 +38,8 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
         "Blue Key",
     )
 
-    starting_state, logic = setup_resolver(game_patches.configuration, game_patches, use_world_graph)
+    game = filtered_database.game_description_for_layout(game_patches.configuration).get_mutable()
+    starting_state, logic = setup_resolver(game, game_patches.configuration, game_patches, use_world_graph)
 
     nodes_by_id = {node.identifier: node for node in logic.all_nodes if node is not None}
 

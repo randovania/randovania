@@ -20,6 +20,7 @@ from randovania.game_description.requirements.requirement_or import RequirementO
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.generator.filler.filler_library import UnableToGenerate
+from randovania.layout import filtered_database
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import random_lib
 from randovania.resolver import debug, exceptions, resolver
@@ -268,6 +269,7 @@ async def _run_resolver(state: State, logic: Logic, max_attempts: int) -> State 
 async def _run_dock_resolver(
     dock: DockNode,
     target: DockNode,
+    filtered_game: GameDescription,
     patches: GamePatches,
     use_world_graph: bool,
 ) -> tuple[State | None, Logic]:
@@ -280,7 +282,9 @@ async def _run_dock_resolver(
     ]
 
     patches = patches.assign_dock_weakness(locks)
-    state, initial_logic = resolver.setup_resolver(patches.configuration, patches, use_world_graph=use_world_graph)
+    state, initial_logic = resolver.setup_resolver(
+        filtered_game, patches.configuration, patches, use_world_graph=use_world_graph
+    )
     logic = DockRandoLogic.from_logic(initial_logic, dock, target)
 
     try:
@@ -383,6 +387,7 @@ async def distribute_post_fill_weaknesses(
     initial_states: dict[int, State] = {}
     docks_placed = 0
     docks_to_place = len(unassigned_docks)
+    filtered_games = {}
 
     start_time = time.perf_counter()
 
@@ -391,7 +396,10 @@ async def distribute_post_fill_weaknesses(
             continue
 
         status_update(f"Preparing door lock randomizer for player {player + 1}.")
-        state, logic = resolver.setup_resolver(patches.configuration, patches, use_world_graph=use_world_graph)
+        filtered_games[player] = filtered_database.game_description_for_layout(patches.configuration).get_mutable()
+        state, logic = resolver.setup_resolver(
+            filtered_games[player], patches.configuration, patches, use_world_graph=use_world_graph
+        )
         initial_states[player] = state
 
         try:
@@ -465,6 +473,7 @@ async def distribute_post_fill_weaknesses(
             new_state, logic = await _run_dock_resolver(
                 dock,
                 target,
+                filtered_games[player],
                 patches,
                 use_world_graph,
             )

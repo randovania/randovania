@@ -26,6 +26,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
 
     from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.graph.state import State
@@ -441,11 +442,12 @@ def _quiet_print(s: Any) -> None:
 
 
 def setup_resolver(
+    filtered_game: GameDescription,
     configuration: BaseConfiguration,
     patches: GamePatches,
     use_world_graph: bool,
 ) -> tuple[State, Logic]:
-    game = filtered_database.game_description_for_layout(configuration).get_mutable()
+    game = filtered_game
     bootstrap = game.game.generator.bootstrap
 
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
@@ -472,7 +474,12 @@ async def resolve(
     if status_update is None:
         status_update = _quiet_print
 
-    starting_state, logic = setup_resolver(configuration, patches, use_world_graph=use_world_graph)
+    starting_state, logic = setup_resolver(
+        filtered_database.game_description_for_layout(configuration).get_mutable(),
+        configuration,
+        patches,
+        use_world_graph=use_world_graph,
+    )
 
     if collect_hint_data:
         logic.prioritize_hints = True

@@ -80,7 +80,12 @@ def _validate_pickup_pool_size(
 async def check_if_beatable(patches: GamePatches, pool: PoolResults, use_world_graph: bool) -> bool:
     patches = patches.assign_extra_starting_pickups(itertools.chain(pool.starting, pool.to_place))
 
-    state, logic = resolver.setup_resolver(patches.configuration, patches, use_world_graph)
+    state, logic = resolver.setup_resolver(
+        filtered_database.game_description_for_layout(patches.configuration).get_mutable(),
+        patches.configuration,
+        patches,
+        use_world_graph,
+    )
 
     with debug.with_level(debug.LogLevel.SILENT):
         try:
