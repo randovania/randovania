@@ -156,6 +156,10 @@ class DamageResourceRequirement(ResourceRequirement):
         return current_energy > self.damage(context)
 
     def isolate_damage_requirements(self, context: NodeContext) -> Requirement:
+        if context.database.get_damage_reduction(self.resource, context.current_resources) == 0:
+            # Common case of reduction-based immunity can be easily calculated,
+            # and returning Trivial allows for shortcuts elsewhere
+            return Requirement.trivial()
         return self
 
     def multiply_amount(self, multiplier: float) -> ResourceRequirement:
