@@ -49,6 +49,11 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         self.ui = Ui_AsyncRaceRoomWindow()
         self.ui.setupUi(self)
 
+        self.ui.game_details_label.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
+        self.ui.name_label.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
+        self.ui.start_end_date_label.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
+        self.ui.participation_label.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
+
         self._refresh_timer = QtCore.QTimer(self)
         self._refresh_timer.setSingleShot(True)
         self._refresh_timer.timeout.connect(self.refresh_data)
