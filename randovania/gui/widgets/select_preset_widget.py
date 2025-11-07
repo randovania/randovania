@@ -124,6 +124,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         # Signals
         self.create_preset_tree.itemSelectionChanged.connect(self._on_select_preset)
         self.create_preset_tree.customContextMenuRequested.connect(self._on_tree_context_menu)
+        self.create_new_preset_button.clicked.connect(self._on_create_new_preset)
 
         self._preset_menu.action_customize.triggered.connect(self._on_customize_preset)
         self._preset_menu.action_delete.triggered.connect(self._on_delete_preset)
@@ -253,6 +254,12 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         old_preset = self._current_preset_data
         new_preset = VersionedPreset.with_preset(old_preset.get_preset().fork())
         self._add_new_preset(new_preset, parent=old_preset.uuid)
+
+    def _on_create_new_preset(self):
+        # Create a new preset based on the starter preset for the current game
+        starter_preset = self._window_manager.preset_manager.default_preset_for_game(self._game)
+        new_preset = VersionedPreset.with_preset(starter_preset.get_preset().fork())
+        self._add_new_preset(new_preset, parent=None)
 
     @asyncSlot()
     async def _on_open_map_tracker_for_preset(self):
