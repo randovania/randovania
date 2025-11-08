@@ -255,11 +255,32 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         new_preset = VersionedPreset.with_preset(old_preset.get_preset().fork())
         self._add_new_preset(new_preset, parent=old_preset.uuid)
 
-    def _on_create_new_preset(self):
+    @asyncSlot()
+    async def _on_create_new_preset(self):
+        if self._logic_settings_window is not None:
+            self._logic_settings_window.raise_()
+            return
+
+        monitoring.metrics.incr("gui_preset_create_new_clicked", tags={"game": self._game.value})
+
         # Create a new preset based on the starter preset for the current game
         starter_preset = self._window_manager.preset_manager.default_preset_for_game(self._game)
-        new_preset = VersionedPreset.with_preset(starter_preset.get_preset().fork())
-        self._add_new_preset(new_preset, parent=None)
+        new_preset = starter_preset.get_preset().fork()
+
+        editor = PresetEditor(new_preset, self._options)
+        self._logic_settings_window = CustomizePresetDialog(self._window_manager, editor)
+        self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
+        editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
+
+        result = await async_dialog.execute_dialog(self._logic_settings_window)
+        self._logic_settings_window.deleteLater()
+        self._logic_settings_window = None
+
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
+            self._add_new_preset(
+                VersionedPreset.with_preset(editor.create_custom_preset_with()),
+                parent=None,
+            )
 
     @asyncSlot()
     async def _on_open_map_tracker_for_preset(self):
