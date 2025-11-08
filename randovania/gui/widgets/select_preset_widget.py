@@ -256,7 +256,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         self._add_new_preset(new_preset, parent=old_preset.uuid)
 
     @asyncSlot()
-    async def _on_create_new_preset(self):
+    async def _on_create_new_preset(self) -> None:
         if self._logic_settings_window is not None:
             self._logic_settings_window.raise_()
             return
