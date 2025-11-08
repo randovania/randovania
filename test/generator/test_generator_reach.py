@@ -49,7 +49,7 @@ if TYPE_CHECKING:
 
 def run_bootstrap(
     preset: Preset, include_tricks: Iterable[tuple[str, LayoutTrickLevel]]
-) -> tuple[GameDescription, State, GeneratorParameters]:
+) -> tuple[GameDescription, WorldGraph, State, GeneratorParameters]:
     game_description = default_database.game_description_for(preset.game)
     configuration = preset.configuration
     for trick in include_tricks:
@@ -73,9 +73,9 @@ def run_bootstrap(
     patches = generator.base_patches_factory.create_base_patches(
         configuration, Random(15000), game, False, player_index=0
     )
-    _, state = generator.bootstrap.logic_bootstrap(configuration, game, patches)
+    graph, state = generator.bootstrap.logic_bootstrap_graph(configuration, game, patches, use_world_graph=True)
 
-    return game, state, parameters
+    return game, graph, state, parameters
 
 
 def _create_reach_with_unsafe(
@@ -97,7 +97,7 @@ def test_database_collectable(
     game_test_data = game_enum.data.test_data()
 
     mocker.patch("randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool")
-    game, state, permalink = run_bootstrap(
+    game, graph, state, permalink = run_bootstrap(
         preset_manager.default_preset_for_game(game_enum).get_preset(),
         game_test_data.database_collectable_include_tricks,
     )
@@ -126,7 +126,7 @@ def test_database_collectable(
         if it.pickup_index.index not in game_test_data.database_collectable_ignore_pickups
     )
 
-    reach = _create_reach_with_unsafe(game, state, default_filler_config)
+    reach = _create_reach_with_unsafe(graph, state, default_filler_config)
     while list(reach_lib.collectable_resource_nodes(reach.nodes, reach)):
         reach.act_on(next(iter(reach_lib.collectable_resource_nodes(reach.nodes, reach))))
         reach = advance_reach_with_possible_unsafe_resources(reach)
