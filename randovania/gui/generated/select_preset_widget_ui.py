@@ -86,7 +86,7 @@ class Ui_SelectPresetWidget(object):
     # setupUi
 
     def retranslateUi(self, SelectPresetWidget):
-        self.create_new_preset_button.setText(QCoreApplication.translate("SelectPresetWidget", u"+ Create New Preset", None))
+        self.create_new_preset_button.setText(QCoreApplication.translate("SelectPresetWidget", u"\uff0b Create New Preset", None))
         self.create_preset_description.setText(QCoreApplication.translate("SelectPresetWidget", u"<html><head/><body><p>This content should have been replaced by code.</p></body></html>", None))
         ___qtreewidgetitem = self.create_preset_tree.headerItem()
         ___qtreewidgetitem.setText(0, QCoreApplication.translate("SelectPresetWidget", u"Presets (Right click for actions)", None));
