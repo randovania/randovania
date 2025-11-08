@@ -27,7 +27,8 @@ if TYPE_CHECKING:
 
 
 @pytest.fixture
-async def client(tmp_path):
+def client(tmp_path, mocker: pytest_mock.MockerFixture):
+    mocker.patch("randovania.lib.http_lib.http_session")
     client = NetworkClient(
         tmp_path,
         {
@@ -35,8 +36,7 @@ async def client(tmp_path):
             "socketio_path": "/socket.io",
         },
     )
-    yield client
-    await client.http.close()
+    return client
 
 
 async def test_on_connect_no_restore(tmp_path):

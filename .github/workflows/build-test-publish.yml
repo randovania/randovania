@@ -38,7 +38,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.7"
+          version: "0.9.8"
           enable-cache: true
 
       - name: Set up Python
@@ -56,65 +56,20 @@ jobs:
             dist/randovania-*.tar.gz
             dist/randovania-*.whl
 
-
-  resolver:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    name: Resolver
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7
-        with:
-          version: "0.9.7"
-          enable-cache: true
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-
-      - name: Apt
-        run: sudo apt-get -q update && sudo apt-get -y install $(cat .github/linux_apt_dependencies.txt)
-
-      - name: Install Python packages
-        run: uv sync --locked --extra gui --extra exporters --extra test
-
-      - name: run pytest
-        run: uv run pytest --cov randovania --cov-append --cov-report=xml --durations=100 -n auto --skip-gui-tests test/resolver/test_resolver.py test/generator/test_generator_reach.py
-
-      - name: codecov
-        uses: Wandalen/wretry.action@master
-        with:
-          action: codecov/codecov-action@v4
-          with: |
-            fail_ci_if_error: false
-            files: ./coverage.xml
-            token: ${{ secrets.CODECOV_TOKEN }}
-          attempt_limit: 5
-          attempt_delay: 10000
-
   pytest:
     strategy:
       fail-fast: false
       matrix:
         os:
-          - { name: "Linux", image: ubuntu-latest }
-          - { name: "macOS", image: macos-latest }
-          - { name: "Windows", image: windows-latest }
-        is_merge_queue:
-          - ${{ github.event_name == 'merge_queue' }}
+          - { name: "Linux", image: ubuntu-latest, event_name: "${{ github.event_name }}" }
+          - { name: "macOS", image: macos-latest, event_name: "${{ github.event_name }}" }
+          - { name: "Windows", image: windows-latest, event_name: "${{ github.event_name }}" }
         is_stable:
           - ${{ startsWith(github.ref, 'refs/heads/stable') || startsWith(github.ref, 'refs/tags/v') }}
 
         exclude:
-          - is_merge_queue: true
-            os: { name: "Linux", image: ubuntu-latest }
-          - is_merge_queue: true
-            os: { name: "macOS", image: macos-latest }
+          - os: { name: "Linux", image: ubuntu-latest, event_name: merge_group }
+          - os: { name: "macOS", image: macos-latest, event_name: merge_group }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
@@ -130,7 +85,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.7"
+          version: "0.9.8"
           enable-cache: true
 
       - name: Set up Python
@@ -170,20 +125,15 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - { name: "Linux", image: ubuntu-latest }
-          - { name: "macOS", image: macos-latest }
-          - { name: "Windows", image: windows-latest }
-
-        is_merge_queue:
-          - ${{ github.event_name == 'merge_queue' }}
+          - { name: "Linux", image: ubuntu-latest, event_name: "${{ github.event_name }}" }
+          - { name: "macOS", image: macos-latest, event_name: "${{ github.event_name }}" }
+          - { name: "Windows", image: windows-latest, event_name: "${{ github.event_name }}" }
         is_stable:
           - ${{ startsWith(github.ref, 'refs/heads/stable') || startsWith(github.ref, 'refs/tags/v') }}
 
         exclude:
-          - is_merge_queue: true
-            os: { name: "Linux", image: ubuntu-latest }
-          - is_merge_queue: true
-            os: { name: "macOS", image: macos-latest }
+          - os: { name: "Linux", image: ubuntu-latest, event_name: merge_group }
+          - os: { name: "macOS", image: macos-latest, event_name: merge_group }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
@@ -199,7 +149,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.7"
+          version: "0.9.8"
           enable-cache: true
 
       - name: Set up Python
@@ -359,7 +309,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.7"
+          version: "0.9.8"
           enable-cache: true
 
       - name: Set up Python
@@ -491,7 +441,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.7"
+          version: "0.9.8"
           enable-cache: true
 
       - name: Set up Python

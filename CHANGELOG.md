@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
 - Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough, especially at high verbosity.
+- Fixed: Reduced the Windows install size by about 7 MB, as a regression from last release.
+- Fixed: Text such as the Seed Hash in the Async Race window is now selectable via mouse.
 
 ### Metroid Dread
 - Changed: Energy Parts are now logical.
@@ -20,7 +22,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Area 2 Dam Entryway
 - Fixed: Lightning Armor & Transport to Dam Exterior East: You can now logically unlock the door from the Elevator space.
 
-## [10.3.0] - 2025-11-01
+## [10.3.2] - 2025-11-05
+
+- Changed: The Multiworld Session is more responsive in sessions with many worlds.
+- Changed: In a Multiworld Session with many worlds, the server now responds faster when exporting a world.
+
+### Metroid Prime
+
+- Fixed: Artifact Temple teleporter not working when room is reloaded and the warp cutscene is skipped.
+
+## [10.3.1] - 2025-11-01
 
 - Added: The Multiworld Session will now display when a world has been beaten. This is supported for the following games:
   - Another Metroid 2 Remake
@@ -182,6 +193,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Dropped support for Citra and switched to Azahar.
 - Fixed: Reserve Tanks won't be hinted anymore.
 - Removed: The Missile Related, Morph Ball Related, Beam Related and Key pickup features. These were only used if a game in a Multiworld was hinting a Samus Returns pickup.
+
+## [10.3.0]
+
+- Skipped for technical reasons.
 
 ## [10.2.0] - 2025-10-02
 
