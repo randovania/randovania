@@ -28,7 +28,7 @@ class NodeResourceInfo:
         return cls(
             context.database.first_unused_resource_index() + node.node_index,
             node.identifier,
-            node.name,
+            node.full_name(),
             node.name,
         )
 

@@ -60,8 +60,8 @@ def test_hint_node_should_collect(hint_node, empty_patches):
         resources = ResourceCollection.from_dict(empty_patches.game, dict.fromkeys(args, 1))
         return NodeContext(empty_patches, resources, db, node_provider)
 
-    assert node.requirement_to_collect().satisfied(ctx(), 0) != has_translator
-    assert node.requirement_to_collect().satisfied(ctx(translator), 0)
+    assert node.requirement_to_collect.satisfied(ctx(), 0) != has_translator
+    assert node.requirement_to_collect.satisfied(ctx(translator), 0)
 
     assert node.should_collect(ctx())
     assert node.should_collect(ctx(translator))

@@ -38,7 +38,7 @@ class DockLockNode(ResourceNode):
             _resource=NodeResourceInfo(
                 resource_db.first_unused_resource_index() + dock.node_index,
                 dock.identifier,
-                dock.name,
+                dock.full_name(),
                 dock.name,
             ),
         )
@@ -48,6 +48,7 @@ class DockLockNode(ResourceNode):
     def __repr__(self) -> str:
         return f"DockLockNode({self.name!r} -> {self.dock.name})"
 
+    @property
     def requirement_to_collect(self) -> Requirement:
         # The requirement is all in the connection from DockNode to this
         return Requirement.trivial()

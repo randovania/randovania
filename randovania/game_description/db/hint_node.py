@@ -43,6 +43,7 @@ class HintNode(ResourceNode):
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
         return self.lock_requirement
 
+    @property
     def requirement_to_collect(self) -> Requirement:
         return self.lock_requirement
 

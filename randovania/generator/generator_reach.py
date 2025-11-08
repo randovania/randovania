@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.generator.filler.filler_configuration import FillerConfiguration
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
 
 
 class GeneratorReach:

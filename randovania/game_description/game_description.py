@@ -20,7 +20,7 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterator, Mapping
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
@@ -315,6 +315,10 @@ class GameDescription(GameDatabaseView):
             for _, area, node in self.iterate_nodes_of_type(PickupNode)
             if (feature in area.hint_features) or (feature in node.hint_features)
         )
+
+    @override
+    def get_configurable_node_requirements(self) -> Mapping[NodeIdentifier, Requirement]:
+        return self.region_list.configurable_nodes
 
 
 def _resources_for_damage(
