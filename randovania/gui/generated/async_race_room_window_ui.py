@@ -37,6 +37,7 @@ class Ui_AsyncRaceRoomWindow(object):
         self.game_details_layout.setContentsMargins(4, 4, 4, 4)
         self.game_details_label = QLabel(self.game_details_group)
         self.game_details_label.setObjectName(u"game_details_label")
+        self.game_details_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
         self.game_details_layout.addWidget(self.game_details_label)
 
@@ -60,6 +61,7 @@ class Ui_AsyncRaceRoomWindow(object):
         self.participation_label = QLabel(self.participation_group)
         self.participation_label.setObjectName(u"participation_label")
         self.participation_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.participation_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
         self.gridLayout_2.addWidget(self.participation_label, 0, 0, 1, 6)
 
@@ -98,11 +100,13 @@ class Ui_AsyncRaceRoomWindow(object):
 
         self.name_label = QLabel(self.centralwidget)
         self.name_label.setObjectName(u"name_label")
+        self.name_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
         self.gridLayout.addWidget(self.name_label, 0, 0, 1, 1)
 
         self.start_end_date_label = QLabel(self.centralwidget)
         self.start_end_date_label.setObjectName(u"start_end_date_label")
+        self.start_end_date_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
         self.gridLayout.addWidget(self.start_end_date_label, 0, 1, 1, 1)
 
