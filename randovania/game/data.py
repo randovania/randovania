@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import PatchDataFactory
     from randovania.game.development_state import DevelopmentState
+    from randovania.game.game_test_data import GameTestData
     from randovania.game.generator import GameGenerator
     from randovania.game.gui import GameGui
     from randovania.game.hints import GameHints
@@ -19,7 +20,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import PerGameOptions
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, kw_only=True)
 class GameData:
     """Contains all game-specific behavior as required by Randovania."""
 
@@ -62,6 +63,9 @@ class GameData:
 
     exporter: Callable[[], GameExporter]
     """Capable of exporting everything needed to play the randomized game."""
+
+    test_data: Callable[[], GameTestData]
+    """Contains data and configuration parameters to allow the test suit to assert things properly for this game."""
 
     defaults_available_in_game_sessions: bool = False
     """If this game is allowed by default in online game sessions."""

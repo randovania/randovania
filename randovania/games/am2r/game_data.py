@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 import randovania.game.data
 import randovania.game.development_state
+import randovania.game.game_test_data
 import randovania.game.generator
 import randovania.game.gui
 import randovania.game.hints
@@ -84,6 +85,17 @@ def _hash_words() -> list[str]:
     from randovania.games.am2r.hash_words import HASH_WORDS
 
     return HASH_WORDS
+
+
+def _test_data() -> randovania.game.game_test_data.GameTestData:
+    from randovania.layout.base.trick_level import LayoutTrickLevel
+
+    return randovania.game.game_test_data.GameTestData(
+        expected_seed_hash=b"h_\xab\xa2\xbf",
+        # Some items require shinesparking to reach in vanilla,
+        # which due to varying difficulty has been made into a trick
+        database_collectable_include_tricks=(("Shinesparking", LayoutTrickLevel.ADVANCED),),
+    )
 
 
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
@@ -184,6 +196,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
+    test_data=_test_data,
     multiple_start_nodes_per_area=False,
     defaults_available_in_game_sessions=True,
     logic_db_integrity=find_am2r_db_errors,
