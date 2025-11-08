@@ -8,6 +8,7 @@ import pytest
 from randovania.generator import generator
 from randovania.generator.filler.filler_configuration import FillerPlayerResult, FillerResults
 from randovania.layout.exceptions import InvalidConfiguration
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 
 if TYPE_CHECKING:
@@ -102,3 +103,26 @@ def test_distribute_remaining_items_no_locations_left(
         InvalidConfiguration, match=r"Received 881 remaining pickups, but there's only \d+ unassigned locations."
     ):
         generator._distribute_remaining_items(rng, filler_results, [default_echoes_preset])
+
+
+@pytest.mark.benchmark
+@pytest.mark.skip_resolver_tests
+async def test_create_description(preset_manager, game_enum) -> None:
+    # Setup
+    game_test_data = game_enum.data.test_data()
+
+    preset = preset_manager.default_preset_for_game(game_enum).get_preset()
+    generator_parameters = GeneratorParameters(
+        seed_number=game_test_data.generator_test_seed_number,
+        spoiler=True,
+        development=True,
+        presets=[preset],
+    )
+    status_update: MagicMock | Callable[[str], None] = MagicMock()
+    world_names = [f"Test {i + 1}" for i in range(generator_parameters.world_count)]
+
+    # Run
+    result = await generator._create_description(generator_parameters, status_update, 0, world_names)
+
+    # Assert
+    assert result.shareable_hash_bytes == game_test_data.expected_seed_hash

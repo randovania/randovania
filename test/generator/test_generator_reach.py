@@ -36,6 +36,8 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable
+
     from randovania.game_description.db.resource_node import ResourceNode
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.generator_reach import GeneratorReach
@@ -43,7 +45,7 @@ if TYPE_CHECKING:
 
 
 def run_bootstrap(
-    preset: Preset, include_tricks: set[tuple[str, LayoutTrickLevel]]
+    preset: Preset, include_tricks: Iterable[tuple[str, LayoutTrickLevel]]
 ) -> tuple[GameDescription, State, GeneratorParameters]:
     game_description = default_database.game_description_for(preset.game)
     configuration = preset.configuration
@@ -111,66 +113,20 @@ def _compare_actions(
     return first_actions, second_actions
 
 
-_ignore_events_for_game = {
-    RandovaniaGame.METROID_PRIME: {"Event33"},
-    RandovaniaGame.METROID_PRIME_ECHOES: {"Event91", "Event92", "Event97"},
-    RandovaniaGame.METROID_DREAD: {},
-    RandovaniaGame.CAVE_STORY: {
-        "camp",
-        "eventBadEnd",
-        "eventBestEnd",
-        "eventCurly",
-        "eventCurly2",
-        "eventCurly3",
-        "eventCurly4",
-        "eventHell4",
-        "eventPress",
-    },
-}
-
-_ignore_pickups_for_game = {
-    # Unknown reason why
-    RandovaniaGame.CAVE_STORY: {30, 31, 41, 45},
-}
-
-_include_tricks_for_game = {
-    # Some items require shinesparking to reach in vanilla, which due to varying difficulty has been made into a trick
-    RandovaniaGame.AM2R: {("Shinesparking", LayoutTrickLevel.ADVANCED)},
-    # Same reasons as above, with some still trickless
-    RandovaniaGame.METROID_DREAD: {("Speedbooster", LayoutTrickLevel.BEGINNER)},
-    # Some items require Spider Boosting to reach in vanilla, but since it is never explained there,
-    # it has been made into a trick.
-    RandovaniaGame.METROID_SAMUS_RETURNS: {("Spider Boost", LayoutTrickLevel.BEGINNER)},
-}
-
-
 @pytest.mark.benchmark
 @pytest.mark.skip_resolver_tests
-@pytest.mark.parametrize(
-    ("game_enum", "ignore_events", "ignore_pickups", "include_tricks"),
-    [
-        pytest.param(
-            game,
-            _ignore_events_for_game.get(game, set()),
-            _ignore_pickups_for_game.get(game, set()),
-            _include_tricks_for_game.get(game, set()),
-            id=game.value,
-        )
-        for game in RandovaniaGame
-    ],
-)
 def test_database_collectable(
     mocker,
     preset_manager,
     game_enum: RandovaniaGame,
-    ignore_events: set[str],
-    ignore_pickups: set[int],
-    include_tricks: set[tuple[str, LayoutTrickLevel]],
     default_filler_config,
 ):
+    game_test_data = game_enum.data.test_data()
+
     mocker.patch("randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool")
     game, state, permalink = run_bootstrap(
-        preset_manager.default_preset_for_game(game_enum).get_preset(), include_tricks
+        preset_manager.default_preset_for_game(game_enum).get_preset(),
+        game_test_data.database_collectable_include_tricks,
     )
 
     all_pickups = set(reach_lib.filter_pickup_nodes(game.region_list.iterate_nodes()))
@@ -184,10 +140,18 @@ def test_database_collectable(
         state.resources.set_resource(trick, LayoutTrickLevel.maximum().as_number)
 
     expected_events = sorted(
-        (event for event in game.resource_database.event if event.short_name not in ignore_events),
+        (
+            event
+            for event in game.resource_database.event
+            if event.short_name not in game_test_data.database_collectable_ignore_events
+        ),
         key=lambda it: it.short_name,
     )
-    expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
+    expected_pickups = sorted(
+        it.pickup_index
+        for it in all_pickups
+        if it.pickup_index.index not in game_test_data.database_collectable_ignore_pickups
+    )
 
     reach = _create_reach_with_unsafe(game, state, default_filler_config)
     while list(reach_lib.collectable_resource_nodes(reach.nodes, reach)):

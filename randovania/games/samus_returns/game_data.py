@@ -99,6 +99,17 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
+def _test_data() -> randovania.game.game_test_data.GameTestData:
+    from randovania.layout.base.trick_level import LayoutTrickLevel
+
+    return randovania.game.game_test_data.GameTestData(
+        expected_seed_hash=b"L\x93\xbb\xee\xa3",
+        # Some items require Spider Boosting to reach in vanilla, but since it is never explained there,
+        # it has been made into a trick.
+        database_collectable_include_tricks=(("Spider Boost", LayoutTrickLevel.BEGINNER),),
+    )
+
+
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="MSR",
     long_name="Metroid: Samus Returns",
@@ -201,6 +212,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
+    test_data=_test_data,
     defaults_available_in_game_sessions=True,
     multiple_start_nodes_per_area=True,
     logic_db_integrity=find_msr_db_errors,
