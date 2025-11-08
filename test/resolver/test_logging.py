@@ -6,9 +6,9 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.pickup_pool.pool_creator import calculate_pool_results
 from randovania.graph.world_graph import WorldGraphNode
 from randovania.resolver import debug
@@ -23,30 +23,32 @@ if TYPE_CHECKING:
     from randovania.graph.state import State
 
 
+def _assign_pickup_by_name(game_patches: GamePatches, index: PickupIndex, name: str) -> GamePatches:
+    pool_results = calculate_pool_results(game_patches.configuration, game_patches.game)
+    real_target = next(pickup for pickup in pool_results.all_pickups() if pickup.name == name)
+    return game_patches.assign_own_pickups([(index, real_target)])
+
+
 def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use_world_graph: bool) -> None:
-    starting_state, logic = setup_resolver(blank_game_patches.configuration, blank_game_patches, use_world_graph)
-    pool_results = calculate_pool_results(blank_game_patches.configuration, blank_game_patches.game)
+    calculate_pool_results(blank_game_patches.configuration, blank_game_patches.game)
+    game_patches = _assign_pickup_by_name(
+        blank_game_patches,
+        PickupIndex(0),
+        "Blue Key",
+    )
+
+    starting_state, logic = setup_resolver(game_patches.configuration, game_patches, use_world_graph)
 
     nodes_by_id = {node.identifier: node for node in logic.all_nodes if node is not None}
 
     def mock_state(
         node_id: NodeIdentifier,
         *,
-        target: str | None = None,
         path: Iterable[NodeIdentifier] = (),
     ) -> State:
         state = starting_state.copy()
 
         state.node = nodes_by_id[node_id]
-        if target is not None:
-            pickup_index = None
-            if isinstance(state.node, WorldGraphNode | PickupNode):
-                pickup_index = state.node.pickup_index
-
-            if pickup_index is not None:
-                real_target = next(pickup for pickup in pool_results.all_pickups() if pickup.name == target)
-                state.patches = state.patches.assign_own_pickups([(pickup_index, real_target)])
-
         state.path_from_previous_state = tuple(nodes_by_id[path_node] for path_node in path)
 
         return state
@@ -55,6 +57,8 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
         n = nodes_by_id[node]
         assert isinstance(n, WorldGraphNode | ResourceNode)
         return ActionPriority.EVERYTHING_ELSE, n, MagicMock()
+
+    lock_prefix = "" if use_world_graph else "Lock - "
 
     logger.logger_start()
 
@@ -69,13 +73,12 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
     logger.log_action(
         mock_state(
             NodeIdentifier("Intro", "Starting Area", "Pickup (Weapon)"),
-            target="Blue Key",
         )
     )
     # Pickup action: check satisfiable (has satisfiable)
     logger.log_checking_satisfiable(
         [
-            satisfiable(NodeIdentifier("Intro", "Starting Area", "Lock - Door to Boss Arena")),
+            satisfiable(NodeIdentifier("Intro", "Starting Area", f"{lock_prefix}Door to Boss Arena")),
         ]
     )
 
@@ -206,5 +209,8 @@ def test_text_resolver_logger(
             perform_logging(blank_game_patches, logger, use_world_graph)
     finally:
         debug.print_function = old_print
+
+    if use_world_graph:
+        expected = [r.replace("/Lock - ", "/") for r in expected]
 
     assert lines == expected

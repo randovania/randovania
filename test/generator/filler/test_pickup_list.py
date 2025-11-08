@@ -252,7 +252,7 @@ async def test_get_pickups_that_solves_unreachable_quad(
             ),
         ),
     )
-    pool = await generator.create_player_pool(Random(0), config, 0, 1, "World 1", MagicMock())
+    pool = await generator.create_player_pool(Random(0), config, 0, 1, "World 1", MagicMock(), True)
     graph, state = pool.game_generator.bootstrap.logic_bootstrap_graph(
         config,
         pool.game,
