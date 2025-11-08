@@ -247,7 +247,8 @@ def test_bit_pack_pickup_entry(
     assert pickup == decoded
 
 
-async def test_round_trip_generated_patches(default_preset):
+@pytest.mark.parametrize("use_world_graph", [False, True])
+async def test_round_trip_generated_patches(default_preset, use_world_graph):
     # Setup
     preset = dataclasses.replace(
         default_preset,
@@ -271,7 +272,7 @@ async def test_round_trip_generated_patches(default_preset):
         status_update=lambda x: None,
         attempts=0,
         world_names=["Test"],
-        use_world_graph=False,
+        use_world_graph=use_world_graph,
     )
     all_patches = description.all_patches
 

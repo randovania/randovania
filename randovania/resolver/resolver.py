@@ -441,7 +441,9 @@ def _quiet_print(s: Any) -> None:
 
 
 def setup_resolver(
-    configuration: BaseConfiguration, patches: GamePatches, use_world_graph: bool = False
+    configuration: BaseConfiguration,
+    patches: GamePatches,
+    use_world_graph: bool,
 ) -> tuple[State, Logic]:
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
     bootstrap = game.game.generator.bootstrap

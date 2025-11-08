@@ -77,10 +77,10 @@ def _validate_pickup_pool_size(
                 )
 
 
-async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
+async def check_if_beatable(patches: GamePatches, pool: PoolResults, use_world_graph: bool) -> bool:
     patches = patches.assign_extra_starting_pickups(itertools.chain(pool.starting, pool.to_place))
 
-    state, logic = resolver.setup_resolver(patches.configuration, patches)
+    state, logic = resolver.setup_resolver(patches.configuration, patches, use_world_graph)
 
     with debug.with_level(debug.LogLevel.SILENT):
         try:
@@ -98,6 +98,7 @@ async def create_player_pool(
     num_players: int,
     world_name: str,
     status_update: Callable[[str], None],
+    use_world_graph: bool,
 ) -> PlayerPool:
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
 
@@ -123,7 +124,9 @@ async def create_player_pool(
         pool_results = pool_creator.calculate_pool_results(configuration, game)
         patches = game_generator.bootstrap.assign_pool_results(rng, configuration, patches, pool_results)
 
-        if configuration.check_if_beatable_after_base_patches and not await check_if_beatable(patches, pool_results):
+        if configuration.check_if_beatable_after_base_patches and not await check_if_beatable(
+            patches, pool_results, use_world_graph
+        ):
             continue
 
         return PlayerPool(
@@ -168,6 +171,7 @@ async def _create_pools_and_fill(
                 len(presets),
                 world_names[player_index],
                 status_update,
+                use_world_graph,
             )
             _validate_pickup_pool_size(new_pool.pickups, new_pool.game, new_pool.configuration)
 
@@ -294,8 +298,10 @@ async def _create_description(
     player_pools, filler_results = pools_results
 
     filler_results = _distribute_remaining_items(rng, filler_results, presets)
-    filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, filler_results, status_update)
-    filler_results = await hint_distributor.distribute_generic_hints(rng, filler_results)
+    filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(
+        rng, filler_results, status_update, use_world_graph
+    )
+    filler_results = await hint_distributor.distribute_generic_hints(rng, filler_results, use_world_graph)
     filler_results = await hint_distributor.distribute_specific_location_hints(rng, filler_results)
 
     return LayoutDescription.create_new(

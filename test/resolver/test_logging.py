@@ -23,8 +23,8 @@ if TYPE_CHECKING:
     from randovania.graph.state import State
 
 
-def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> None:
-    starting_state, logic = setup_resolver(blank_game_patches.configuration, blank_game_patches)
+def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use_world_graph: bool) -> None:
+    starting_state, logic = setup_resolver(blank_game_patches.configuration, blank_game_patches, use_world_graph)
     pool_results = calculate_pool_results(blank_game_patches.configuration, blank_game_patches.game)
 
     nodes_by_id = {node.identifier: node for node in logic.all_nodes if node is not None}
@@ -128,6 +128,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
     )
 
 
+@pytest.mark.parametrize("use_world_graph", [False, True])
 @pytest.mark.parametrize(
     ("verbosity", "expected"),
     [
@@ -191,7 +192,9 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
         ),
     ],
 )
-def test_text_resolver_logger(blank_game_patches, verbosity: debug.LogLevel, expected: list[str]):
+def test_text_resolver_logger(
+    blank_game_patches, verbosity: debug.LogLevel, use_world_graph: bool, expected: list[str]
+):
     logger = TextResolverLogger()
     lines: list[str] = []
 
@@ -200,7 +203,7 @@ def test_text_resolver_logger(blank_game_patches, verbosity: debug.LogLevel, exp
     try:
         debug.print_function = lines.append
         with debug.with_level(verbosity):
-            perform_logging(blank_game_patches, logger)
+            perform_logging(blank_game_patches, logger, use_world_graph)
     finally:
         debug.print_function = old_print
 
