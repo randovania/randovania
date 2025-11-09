@@ -17,7 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Prime 1's Refill Pickups will now use more appropriate models.
 
 ### Metroid Dread
+
 - Changed: Energy Parts are now logical.
+
+#### Logic Database
+
+- Changed: The energy requirements for the Corpius, Kraid, Silver Chozo Robot, Gold Chozo Robot and Gold Chozo Robot have been reduced, so that when using medium damage strictness there available energy is enough to satisfy these fights.
 
 ### Metroid Prime
 
@@ -28,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 ##### Area 2 Dam Entryway
+
 - Fixed: Lightning Armor & Transport to Dam Exterior East: You can now logically unlock the door from the Elevator space.
 
 ## [10.3.2] - 2025-11-05
