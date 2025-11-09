@@ -48,9 +48,9 @@ def test_current_state_report(state_for_blank):
         "* Intro/Ledge Room/Low Ledge: Jump\n"
         "* Intro/Starting Area/Door to Boss Arena: Missile and Weapon\n"
         "\n"
-        # "Accessible teleporters:\n"
-        # "None\n"
-        # "\n"
+        "Accessible teleporters:\n"
+        "None\n"
+        "\n"
         "Reachable nodes:\n"
         "32 nodes total"
     )

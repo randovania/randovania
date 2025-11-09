@@ -5,10 +5,13 @@ import re
 import typing
 from typing import TYPE_CHECKING
 
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_pickup import EventPickupNode
+from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.common import elevators
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.action import Action
@@ -27,7 +30,6 @@ from randovania.resolver import debug
 if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.assignment import PickupTarget
-    from randovania.game_description.db.node import Node
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.location_category import LocationCategory
@@ -228,24 +230,27 @@ class PlayerState:
                     )
                 )
 
-        # FIXME: what about actually implementing this? :)
-        # teleporters = []
-        # teleporter_dock_types = self.reach.game.dock_weakness_database.all_teleporter_dock_types
-        # wl = self.reach.game.region_list
-        #
-        # for node in wl.iterate_nodes_of_type(DockNode):
-        #     if node.dock_type in teleporter_dock_types and self.reach.is_reachable_node(node):
-        #         other = wl.resolve_dock_node(node, s.patches)
-        #         teleporters.append(
-        #             "* {} to {}".format(
-        #                 elevators.get_elevator_or_area_name(self.game, wl, node.identifier, True),
-        #                 (
-        #                     elevators.get_elevator_or_area_name(self.game, wl, node.identifier, True)
-        #                     if other is not None
-        #                     else "<Not connected>"
-        #                 ),
-        #             )
-        #         )
+        teleporters = []
+        teleporter_dock_types = self.game_enum.game_description.dock_weakness_database.all_teleporter_dock_types
+
+        for node in self.reach.iterate_nodes:
+            db_node: Node | None
+            if isinstance(node, Node):
+                db_node = node
+            else:
+                db_node = node.database_node
+
+            if not isinstance(db_node, DockNode):
+                continue
+
+            if db_node.dock_type in teleporter_dock_types and self.reach.is_reachable_node(node):
+                other = s.patches.get_dock_connection_for(db_node)
+                teleporters.append(
+                    "* {} to {}".format(
+                        elevators.get_elevator_or_area_name(db_node, True),
+                        (elevators.get_elevator_or_area_name(other, True) if other is not None else "<Not connected>"),
+                    )
+                )
 
         accessible_nodes = [n.full_name() for n in self.reach.iterate_nodes if self.reach.is_reachable_node(n)]
 
@@ -254,7 +259,7 @@ class PlayerState:
             "Pickups still available: {}\n\n"
             "Resources to progress: {}\n\n"
             "Paths to be opened:\n{}\n\n"
-            # "Accessible teleporters:\n{}\n\n"
+            "Accessible teleporters:\n{}\n\n"
             "Reachable nodes:\n{}"
         ).format(
             self.reach.state.node.full_name(),
@@ -268,7 +273,7 @@ class PlayerState:
             ),
             ", ".join(sorted(to_progress)),
             "\n".join(sorted(paths_to_be_opened)) or "None",
-            # "\n".join(teleporters) or "None",
+            "\n".join(teleporters) or "None",
             "\n".join(accessible_nodes) if len(accessible_nodes) < 15 else f"{len(accessible_nodes)} nodes total",
         )
 

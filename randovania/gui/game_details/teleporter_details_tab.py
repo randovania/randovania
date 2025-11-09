@@ -30,8 +30,6 @@ class TeleporterDetailsTab(BaseConnectionDetailsTab):
             if source.dock_type not in patches.game.dock_weakness_database.all_teleporter_dock_types:
                 continue
             source_region = region_list.region_by_area_location(source.identifier.area_identifier)
-            source_name = elevators.get_elevator_or_area_name(patches.game, region_list, source.identifier, True)
+            source_name = elevators.get_elevator_or_area_name(source, True)
 
-            per_region[source_region.name][source_name] = elevators.get_elevator_or_area_name(
-                patches.game, region_list, destination_loc.identifier, True
-            )
+            per_region[source_region.name][source_name] = elevators.get_elevator_or_area_name(destination_loc, True)

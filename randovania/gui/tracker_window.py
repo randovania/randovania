@@ -547,9 +547,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 nodes_by_region[region.name].append(node)
 
                 location = node.identifier
-                targets[elevators.get_elevator_or_area_name(self.game_description, region_list, location, True)] = (
-                    location
-                )
+                targets[elevators.get_elevator_or_area_name(node, True)] = location
 
         if teleporters_config.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             targets = {}
@@ -564,7 +562,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             nodes = nodes_by_region[region_name]
             nodes_locations = [node.identifier for node in nodes]
             nodes_names = [
-                elevators.get_elevator_or_area_name(self.game_description, region_list, location, False)
+                elevators.get_elevator_or_area_name(self.game_description.node_by_identifier(location), False)
                 for location in nodes_locations
             ]
 
