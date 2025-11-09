@@ -103,7 +103,7 @@ def _test_data() -> randovania.game.game_test_data.GameTestData:
     from randovania.layout.base.trick_level import LayoutTrickLevel
 
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash=b"L\x93\xbb\xee\xa3",
+        expected_seed_hash="JSJ3X3VD",
         # Some items require Spider Boosting to reach in vanilla, but since it is never explained there,
         # it has been made into a trick.
         database_collectable_include_tricks=(("Spider Boost", LayoutTrickLevel.BEGINNER),),

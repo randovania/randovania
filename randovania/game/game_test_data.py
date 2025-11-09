@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 class GameTestData:
     """Contains data and configuration parameters to allow the test suit to assert things properly for this game."""
 
-    expected_seed_hash: bytes
+    expected_seed_hash: str
     """The seed hash expected for the layout generated in test_create_description."""
 
     generator_test_seed_number: int = 0

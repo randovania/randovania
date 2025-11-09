@@ -125,4 +125,4 @@ async def test_create_description(preset_manager, game_enum) -> None:
     result = await generator._create_description(generator_parameters, status_update, 0, world_names)
 
     # Assert
-    assert result.shareable_hash_bytes == game_test_data.expected_seed_hash
+    assert result.shareable_hash == game_test_data.expected_seed_hash
