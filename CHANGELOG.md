@@ -12,8 +12,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Reduced the Windows install size by about 7 MB, as a regression from last release.
 - Fixed: Text such as the Seed Hash in the Async Race window is now selectable via mouse.
 
+### Another Metroid 2 Remake
+
+- Changed: Prime 1's Refill Pickups will now use more appropriate models.
+
 ### Metroid Dread
 - Changed: Energy Parts are now logical.
+
+### Metroid Prime
+
+- Changed: AM2R's Drop Pickups will now use more appropriate models.
 
 ### Metroid: Samus Returns
 
