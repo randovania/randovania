@@ -195,6 +195,9 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
 
     @asyncSlot()
     async def _on_customize_preset(self) -> None:
+        if self._current_preset_data is None:
+            return
+
         monitoring.metrics.incr("gui_preset_customize_clicked", tags={"game": self._game.value})
 
         old_preset = self._current_preset_data.get_preset()
