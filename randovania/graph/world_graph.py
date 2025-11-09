@@ -166,6 +166,9 @@ class WorldGraph:
 
     game_enum: RandovaniaGame
     victory_condition: Requirement
+    _victory_condition_as_set: RequirementSet | None = dataclasses.field(
+        init=False, compare=False, hash=False, default=None
+    )
     dangerous_resources: frozenset[ResourceInfo]
     nodes: list[WorldGraphNode]
     node_by_pickup_index: dict[PickupIndex, WorldGraphNode]
@@ -181,8 +184,9 @@ class WorldGraph:
                 self.original_to_node[node.database_node.node_index] = node
 
     def victory_condition_as_set(self, context: NodeContext) -> RequirementSet:
-        # TODO: calculate this just once
-        return self.victory_condition.as_set(context)
+        if self._victory_condition_as_set is None:
+            self._victory_condition_as_set = self.victory_condition.as_set(context)
+        return self._victory_condition_as_set
 
     def resource_info_for_node(self, node: WorldGraphNode) -> NodeResourceInfo:
         return NodeResourceInfo(
