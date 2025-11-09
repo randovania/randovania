@@ -361,6 +361,7 @@ async def generate_and_validate_description(
             configuration=generator_params.get_preset(0).configuration,
             patches=result.all_patches[0],
             status_update=actual_status_update,
+            use_world_graph=use_world_graph,
         )
         try:
             final_state_by_resolve = await asyncio.wait_for(final_state_async, timeout)

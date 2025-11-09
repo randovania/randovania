@@ -134,6 +134,7 @@ _SERIALIZER_FOR_FIELD = {
     "advanced_validate_seed_after": Serializer(identity, bool),
     "advanced_timeout_during_generation": Serializer(identity, bool),
     "advanced_generate_in_another_process": Serializer(identity, bool),
+    "advanced_use_world_graph": Serializer(identity, bool),
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
     "show_multiworld_banner": Serializer(identity, bool),
@@ -206,6 +207,7 @@ class Options:
     _advanced_validate_seed_after: bool | None = None
     _advanced_timeout_during_generation: bool | None = None
     _advanced_generate_in_another_process: bool | None = None
+    _advanced_use_world_graph: bool | None = None
     _auto_save_spoiler: bool | None = None
     _dark_mode: bool | None = None
     _show_multiworld_banner: bool | None = None
@@ -622,6 +624,14 @@ class Options:
     @advanced_generate_in_another_process.setter
     def advanced_generate_in_another_process(self, value: bool):
         self._edit_field("advanced_generate_in_another_process", value)
+
+    @property
+    def advanced_use_world_graph(self) -> bool:
+        return _return_with_default(self._advanced_use_world_graph, lambda: True)
+
+    @advanced_use_world_graph.setter
+    def advanced_use_world_graph(self, value: bool):
+        self._edit_field("advanced_use_world_graph", value)
 
     ######
 

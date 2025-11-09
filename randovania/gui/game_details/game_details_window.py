@@ -266,6 +266,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
                 self.validator_widget = GameValidatorWidget(self.layout_description, self.players_configuration)
                 self.layout_info_tab.addTab(self.validator_widget, "Spoiler: Playthrough")
+                self.validator_widget.use_world_graph = self._options.advanced_use_world_graph
 
             if not any(preset.configuration.should_hide_generation_log() for preset in description.all_presets):
                 self.layout_info_tab.addTab(

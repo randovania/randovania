@@ -4,7 +4,7 @@ import asyncio
 import multiprocessing
 import operator
 from concurrent.futures import ProcessPoolExecutor
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from randovania import monitoring
 from randovania.generator import generator
@@ -39,6 +39,7 @@ def generate_layout(
     :param progress_update:
     :param retries:
     :param world_names:
+    :param use_world_graph:
     :return:
     """
     with monitoring.start_transaction(op="task", name="generate_layout") as span:
@@ -49,6 +50,7 @@ def generate_layout(
         span.set_tag("unique_games", str(sorted(set(games))))
         span.set_tag("attempts", retries if retries is not None else generator.DEFAULT_ATTEMPTS)
         span.set_tag("validate_after", options.advanced_validate_seed_after)
+        span.set_tag("use_world_graph", options.advanced_use_world_graph)
         span.set_tag(
             "dock_rando",
             any(preset.configuration.dock_rando.mode == DockRandoMode.DOCKS for preset in parameters.presets),
@@ -78,10 +80,11 @@ def generate_layout(
                     tags={"game": preset.game.short_name},
                 )
 
-        extra_args = {
+        extra_args: dict[str, Any] = {
             "generator_params": parameters,
             "validate_after_generation": options.advanced_validate_seed_after,
             "world_names": world_names,
+            "use_world_graph": options.advanced_use_world_graph,
         }
         if not options.advanced_timeout_during_generation:
             extra_args["timeout"] = None

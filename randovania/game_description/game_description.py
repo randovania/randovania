@@ -135,7 +135,7 @@ class GameDescription(GameDatabaseView):
     def __getstate__(self) -> dict:
         state = self.__dict__.copy()
         # Don't pickle _victory_condition_as_set
-        del state["_victory_condition_as_set"]
+        state.pop("_victory_condition_as_set", None)
         return state
 
     def __setstate__(self, state: dict) -> None:

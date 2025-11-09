@@ -21,6 +21,7 @@ def test_generate_helper_success(mocker: pytest_mock.MockerFixture) -> None:
         status_update=None,
         validate_after_generation=True,
         attempts=0,
+        use_world_graph=True,
     )
     assert result == 19
 
@@ -39,6 +40,7 @@ def test_generate_helper_failure(mocker: pytest_mock.MockerFixture) -> None:
         status_update=None,
         validate_after_generation=True,
         attempts=0,
+        use_world_graph=True,
     )
     assert result is None
 
