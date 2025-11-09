@@ -24,6 +24,7 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.options import Options
+    from randovania.layout.preset import Preset
 
 
 class PresetMenu(QtWidgets.QMenu):
@@ -172,7 +173,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         self._update_preset_tree_items()
         self.create_preset_tree.select_preset(preset)
 
-    async def _customize_preset_with_dialog(self, preset, parent_uuid: uuid.UUID | None) -> None:
+    async def _customize_preset_with_dialog(self, preset: Preset, parent_uuid: uuid.UUID | None) -> None:
         if self._logic_settings_window is not None:
             self._logic_settings_window.raise_()
             return
