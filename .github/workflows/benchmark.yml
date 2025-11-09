@@ -52,6 +52,13 @@ jobs:
     name: Benchmark Confirm
     runs-on: 'ubuntu-latest'
     needs: walltime
+    if: always()
     steps:
-      - name: Success
-        run: echo "Benchmark completed successfully"
+      - name: Check walltime results
+        run: |
+          if [[ "${{ needs.walltime.result }}" != "success" ]]; then
+            echo "Walltime benchmark failed or was cancelled"
+            exit 1
+          else
+            echo "Walltime benchmark succeeded"
+          fi
