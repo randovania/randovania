@@ -192,14 +192,14 @@ class DockRandoLogic(Logic):
 
             context = NodeContext(
                 None,
-                None,
+                None,  # type: ignore[arg-type]
                 logic.game.resource_database,
                 logic.game.region_list,
             )
             source_resource = NodeResourceInfo.from_node(dock, context)
             target_resource = NodeResourceInfo.from_node(target, context)
 
-        victory_condition = ResourceRequirement.simple(source_resource)
+        victory_condition: Requirement = ResourceRequirement.simple(source_resource)
         if logic.configuration.two_sided_door_lock_search:
             victory_condition = RequirementOr([victory_condition, ResourceRequirement.simple(target_resource)])
 

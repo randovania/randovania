@@ -498,15 +498,21 @@ def create_graph(
     node_resource_index_offset = resource_database.first_unused_resource_index()
 
     teleporter_networks = collections.defaultdict(list)
-    configurable_node_requirements = database_view.get_configurable_node_requirements()
     node_replacement = calculate_node_replacement(database_view)
-
-    graph_area_connections: dict[int, list[tuple[Node, Requirement]]] = {}
     front_of_dock_mapping: dict[int, int] = {}  # Dock to front
+
+    # Requirements for leaving the ConfigurableNode
+    # TODO: this should be implemented via a GameDatabaseViewProxy
+    configurable_node_requirements = database_view.get_configurable_node_requirements()
+
+    # dict mapping original Node index, to a list of connections to original nodes in the same area.
     original_area_connections: dict[NodeIndex, list[tuple[Node, Requirement]]] = {
-        maybe_node.node_index: copy.copy(area.connections[maybe_node])
+        maybe_node.node_index: list(area.connections[maybe_node].items())
         for _, area, maybe_node in database_view.node_iterator()
     }
+
+    # dict mapping WorldGraphNode index, to a list of connections to original nodes in the same area.
+    graph_area_connections: dict[int, list[tuple[Node, Requirement]]] = {}
 
     # Create a WorldGraphNode for each node
     for region, area, maybe_node in database_view.node_iterator():
@@ -515,9 +521,7 @@ def create_graph(
             continue
 
         nodes.append(new_node := create_node(len(nodes), patches, original_node, area, region))
-        graph_area_connections[new_node.node_index] = [
-            tuple(item) for item in original_area_connections[original_node.node_index].items()
-        ]
+        graph_area_connections[new_node.node_index] = copy.copy(original_area_connections[original_node.node_index])
 
         if isinstance(original_node, TeleporterNetworkNode):
             # Only TeleporterNetworkNodes that aren't resource nodes are supported
@@ -546,7 +550,7 @@ def create_graph(
                 WorldGraphNodeConnection(front_node, Requirement.trivial(), Requirement.trivial())
             )
             graph_area_connections[front_node.node_index] = graph_area_connections[new_node.node_index]
-            graph_area_connections[new_node.node_index] = {}
+            graph_area_connections[new_node.node_index] = []
             front_of_dock_mapping[new_node.node_index] = front_node.node_index
 
     graph = WorldGraph(

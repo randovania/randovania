@@ -31,6 +31,7 @@ from randovania.generator.pickup_pool import pool_creator
 from randovania.generator.reach_lib import advance_reach_with_possible_unsafe_resources
 from randovania.graph import world_graph
 from randovania.graph.state import State
+from randovania.graph.world_graph import WorldGraph
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -43,7 +44,6 @@ if TYPE_CHECKING:
 
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.generator_reach import GeneratorReach
-    from randovania.graph.world_graph import WorldGraph
     from randovania.layout.preset import Preset
 
 
@@ -74,6 +74,7 @@ def run_bootstrap(
         configuration, Random(15000), game, False, player_index=0
     )
     graph, state = generator.bootstrap.logic_bootstrap_graph(configuration, game, patches, use_world_graph=True)
+    assert isinstance(graph, WorldGraph)
 
     return game, graph, state, parameters
 
@@ -217,7 +218,7 @@ def test_basic_search_with_translator_gate(
     resources = ResourceCollection.from_dict(echoes_game_description, {scan_visor: 1 if has_translator else 0})
     graph = world_graph.create_graph(
         game,
-        GamePatches.create_from_game(game, 0, None),
+        GamePatches.create_from_game(game, 0, None),  # type: ignore[arg-type]
         resources,
         1.0,
         Requirement.trivial(),
