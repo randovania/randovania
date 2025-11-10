@@ -951,7 +951,7 @@ def test_and_damage_satisfied(echoes_resource_database):
     assert not and_req.satisfied(_ctx_for(db), 99)
 
 
-def test_isolate(prime1_resource_database):
+def test_isolate_deep(prime1_resource_database):
     req = RequirementAnd(
         [
             RequirementOr(
@@ -969,6 +969,69 @@ def test_isolate(prime1_resource_database):
             ResourceRequirement.simple(prime1_resource_database.get_item("SpaceJump")),
         ]
     )
+
+    isolated = req.isolate_damage_requirements(
+        _ctx_for(
+            prime1_resource_database,
+        )
+    )
+    assert str(isolated) == "Impossible"
+
+    isolated = req.isolate_damage_requirements(
+        _ctx_for(
+            prime1_resource_database,
+            prime1_resource_database.get_item("Charge"),
+            prime1_resource_database.get_item("SpaceJump"),
+        )
+    )
+    assert str(isolated) == "Normal Damage ≥ 135"
+
+
+def test_isolate_flat(prime1_resource_database):
+    dmg = prime1_resource_database.get_damage("Damage")
+    xray = ResourceRequirement.simple(prime1_resource_database.get_item("X-Ray"))
+    charge = ResourceRequirement.simple(prime1_resource_database.get_item("Charge"))
+    sj = ResourceRequirement.simple(prime1_resource_database.get_item("SpaceJump"))
+    no_plasma = ResourceRequirement.create(prime1_resource_database.get_item("Plasma"), 1, True)
+
+    req = RequirementOr(
+        [
+            RequirementAnd(
+                [
+                    no_plasma,
+                    charge,
+                    sj,
+                    xray,
+                    ResourceRequirement.create(dmg, 22, False),
+                ]
+            ),
+            RequirementAnd(
+                [
+                    no_plasma,
+                    charge,
+                    sj,
+                    ResourceRequirement.create(dmg, 135, False),
+                ]
+            ),
+        ]
+    )
+
+    isolated = req.isolate_damage_requirements(
+        _ctx_for(
+            prime1_resource_database,
+        )
+    )
+    assert str(isolated) == "Impossible"
+
+    isolated = req.isolate_damage_requirements(
+        _ctx_for(
+            prime1_resource_database,
+            prime1_resource_database.get_item("Charge"),
+            prime1_resource_database.get_item("SpaceJump"),
+            prime1_resource_database.get_item("Plasma"),
+        )
+    )
+    assert str(isolated) == "Impossible"
 
     isolated = req.isolate_damage_requirements(
         _ctx_for(
