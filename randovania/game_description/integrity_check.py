@@ -156,6 +156,9 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
 
 
 def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
+    fake_context = NodeContext(
+        None, game.resource_database.create_resource_collection(), game.resource_database, game.region_list
+    )
     nodes_with_paths_in: set[Node] = set()
     for node in area.nodes:
         nodes_with_paths_in.update(area.connections[node].keys())
@@ -173,6 +176,11 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         yield f"{area.name} has multiple valid start nodes {names}, but is not allowed for {game.game.long_name}"
 
     for node in area.nodes:
+        for t, req in area.connections[node].items():
+            for indiv in req.iterate_resource_requirements(fake_context):
+                if indiv.negate and indiv.amount > 1:
+                    yield f"{node.name} -> {t.name} has a negate requirement with more than 1"
+
         if isinstance(node, DockNode) or area.connections[node]:
             continue
 
