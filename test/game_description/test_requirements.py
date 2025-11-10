@@ -58,7 +58,7 @@ def _empty_context():
 
 
 def _ctx_for(db: ResourceDatabase, *args: ResourceInfo):
-    collection = ResourceCollection.with_resource_count(len(db.resource_by_index))
+    collection = ResourceCollection(db, len(db.resource_by_index))
     collection.add_resource_gain((it, 1) for it in args)
 
     return NodeContext(

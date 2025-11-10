@@ -144,10 +144,6 @@ class ResourceDatabase(ResourceDatabaseView):
         return self.energy_tank_item
 
     def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection) -> float:
-        cached_result = current_resources.get_damage_reduction_cache(resource)
-        if cached_result is not None:
-            return cached_result
-
         base_reduction = self.base_damage_reduction(self, current_resources)
 
         damage_multiplier = 1.0
@@ -155,10 +151,7 @@ class ResourceDatabase(ResourceDatabaseView):
             if reduction.inventory_item is None or current_resources[reduction.inventory_item] > 0:
                 damage_multiplier = min(damage_multiplier, reduction.damage_multiplier)
 
-        damage_reduction = damage_multiplier * base_reduction
-        current_resources.add_damage_reduction_cache(resource, damage_reduction)
-
-        return damage_reduction
+        return damage_multiplier * base_reduction
 
     def first_unused_resource_index(self) -> int:
         return len(self.resource_by_index)
