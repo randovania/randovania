@@ -11,7 +11,6 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.editor import Editor
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.node_requirement import NodeRequirement
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_database import NamedRequirementTemplate
 
 
@@ -168,5 +167,5 @@ def test_rename_lock_used_in_node_requirement(game_editor: Editor) -> None:
 
     # Assert
     template = game_editor.game.resource_database.requirement_template["Special Requirement Template"]
-    context = game_editor.game.create_node_context(ResourceCollection())
+    context = game_editor.game.create_node_context(game_editor.game.create_resource_collection())
     assert list(template.requirement.iterate_resource_requirements(context)) != []

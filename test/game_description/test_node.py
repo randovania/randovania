@@ -75,7 +75,7 @@ def test_hint_node_resource_gain_on_collect(hint_node, empty_patches):
     # Setup
     db = empty_patches.game.resource_database
     node = hint_node[-1]
-    context = NodeContext(empty_patches, ResourceCollection(), db, MagicMock())
+    context = NodeContext(empty_patches, empty_patches.game.create_resource_collection(), db, MagicMock())
 
     # Run
     gain = node.resource_gain_on_collect(context)

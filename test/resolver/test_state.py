@@ -23,7 +23,7 @@ def test_collected_pickup_indices(state_game_data, empty_patches):
 
     context = NodeContext(
         empty_patches,
-        ResourceCollection(),
+        empty_patches.game.create_resource_collection(),
         empty_patches.game.resource_database,
         empty_patches.game.region_list,
     )
@@ -53,7 +53,7 @@ def test_add_pickup_to_state(state_game_data, empty_patches, generic_pickup_cate
     db = empty_patches.game.resource_database
     starting_node = empty_patches.game.region_list.node_by_identifier(empty_patches.game.starting_location)
     s = state.State(
-        ResourceCollection(),
+        empty_patches.game.create_resource_collection(),
         (),
         state_game_data,
         starting_node,
@@ -98,7 +98,7 @@ def test_assign_pickup_to_starting_items(
     db = empty_patches.game.resource_database
     starting_node = empty_patches.game.region_list.node_by_identifier(empty_patches.game.starting_location)
     starting = state.State(
-        ResourceCollection(),
+        empty_patches.game.create_resource_collection(),
         (),
         state_game_data,
         starting_node,
