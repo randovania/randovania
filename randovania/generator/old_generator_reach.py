@@ -18,7 +18,7 @@ from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 if TYPE_CHECKING:
     from collections.abc import Iterator, Mapping, Sequence
 
-    from randovania.game_description.db.node import NodeContext, NodeIndex
+    from randovania.game_description.db.node import Node, NodeContext, NodeIndex
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
@@ -222,7 +222,10 @@ class OldGeneratorReach(GeneratorReach):
         for component in self._digraph.strongly_connected_components():
             if self._state.node.node_index in component:
                 assert self._safe_nodes is None
-                self._safe_nodes = _SafeNodes(sorted(component), set(component))
+                self._safe_nodes = _SafeNodes(
+                    sorted(component),
+                    set(component),
+                )
 
         assert self._safe_nodes is not None
 
@@ -230,20 +233,27 @@ class OldGeneratorReach(GeneratorReach):
         if self._reachable_paths is not None:
             return
 
-        all_nodes = self.all_nodes
         context = self.node_context()
 
-        @functools.cache
-        def _is_collected(target: int) -> int:
-            node = all_nodes[target]
-            if node.is_resource_node():
-                assert isinstance(node, GraphOrResourceNode)
-                if node.is_collected(context):
-                    return 0
+        if isinstance(self._game, WorldGraph):
+            graph_nodes = self._game.nodes
+
+            @functools.cache
+            def _is_collected(target: int) -> int:
+                return not graph_nodes[target].is_collected(context)
+        else:
+            db_nodes = typing.cast("tuple[Node, ...]", self._game.region_list.all_nodes)
+
+            @functools.cache
+            def _is_collected(target: int) -> int:
+                node = db_nodes[target]
+                if node.is_resource_node():
+                    if typing.cast("ResourceNode", node).is_collected(context):
+                        return 0
+                    else:
+                        return 1
                 else:
-                    return 1
-            else:
-                return 0
+                    return 0
 
         self._reachable_is_collected = _is_collected
 
@@ -266,8 +276,9 @@ class OldGeneratorReach(GeneratorReach):
             self._reachable_costs = {}
 
     def is_reachable_node(self, node: GraphOrClassicNode) -> bool:
-        index = node.node_index
+        return self.is_reachable_node_index(node.node_index)
 
+    def is_reachable_node_index(self, index: int) -> bool:
         cached_value = self._node_reachable_cache.get(index)
         if cached_value is not None:
             return cached_value
@@ -277,7 +288,12 @@ class OldGeneratorReach(GeneratorReach):
         if index not in self._reachable_costs:
             assert self._reachable_paths is not None
             if index in self._reachable_paths:
-                cost = sum(self._reachable_is_collected(it) for it in self._reachable_paths[index])
+                cost = 0
+                for it in self._reachable_paths[index]:
+                    if self._reachable_is_collected(it):
+                        cost += 1
+                        if cost > 1:
+                            break
             else:
                 cost = None
             self._reachable_costs[index] = cost
@@ -288,7 +304,7 @@ class OldGeneratorReach(GeneratorReach):
             if cost == 0:
                 self._node_reachable_cache[index] = True
             elif cost == 1:
-                self._node_reachable_cache[index] = not self._can_advance(node)
+                self._node_reachable_cache[index] = not self._can_advance(self.all_nodes[index])
             else:
                 self._node_reachable_cache[index] = False
 
