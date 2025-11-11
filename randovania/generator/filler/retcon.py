@@ -205,9 +205,11 @@ def weighted_potential_actions(
 
     if sum(actions_weights.values()) == 0:
         debug.debug_print("Using backup weights")
+        current_reachable_nodes = player_state.reach.set_of_reachable_node_indices()
+
         actions_weights = {
             action: action_weights.ADDITIONAL_NODES_WEIGHT_MULTIPLIER
-            * len((UncollectedState.from_reach(evaluation.reach) - current_uncollected).nodes)
+            * len(evaluation.reach.set_of_reachable_node_indices() - current_reachable_nodes)
             for action, evaluation in evaluated_actions.items()
         }
 

@@ -95,3 +95,6 @@ class GeneratorReach:
     @property
     def filler_config(self) -> FillerConfiguration:
         raise NotImplementedError
+
+    def set_of_reachable_node_indices(self) -> set[int]:
+        raise NotImplementedError

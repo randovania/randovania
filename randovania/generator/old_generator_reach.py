@@ -275,6 +275,11 @@ class OldGeneratorReach(GeneratorReach):
             )
             self._reachable_costs = {}
 
+    def set_of_reachable_node_indices(self) -> set[int]:
+        self._calculate_reachable_paths()
+        assert self._reachable_paths is not None
+        return {index for index in self._reachable_paths.keys() if self.is_reachable_node_index(index)}
+
     def is_reachable_node(self, node: GraphOrClassicNode) -> bool:
         return self.is_reachable_node_index(node.node_index)
 
