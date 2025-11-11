@@ -153,7 +153,7 @@ def _pretty_name_for_elevator(
         if original_teleporter_node.default_connection.area_identifier == connection.area_identifier:
             return region_list.nodes_to_area(original_teleporter_node).name
 
-    return f"Transport to {elevators.get_elevator_or_area_name(game, region_list, connection, False)}"
+    return f"Transport to {elevators.get_elevator_or_area_name(game.node_by_identifier(connection), False)}"
 
 
 def _create_elevators_field(patches: GamePatches, game: GameDescription, elevator_type: DockType) -> list:
@@ -236,9 +236,7 @@ def _create_elevator_scan_port_patches(
         if node.extra.get("scan_asset_id") is None:
             continue
 
-        target_area_name = elevators.get_elevator_or_area_name(
-            game, region_list, get_elevator_connection_for(node).identifier, True
-        )
+        target_area_name = elevators.get_elevator_or_area_name(get_elevator_connection_for(node), True)
         yield {
             "asset_id": node.extra["scan_asset_id"],
             "strings": [f"Access to &push;&main-color=#FF3333;{target_area_name}&pop; granted.", ""],
@@ -825,7 +823,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
                     "target_assets": _area_identifier_to_json(self.game.region_list, node_identifier.area_identifier),
                     "target_strg": node.extra["scan_asset_id"],
                     "target_name": elevators.get_elevator_or_area_name(
-                        self.game, self.game.region_list, node_identifier, include_world_name=True
+                        self.game.node_by_identifier(node_identifier), include_region_name=True
                     ),
                 }
             )

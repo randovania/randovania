@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, final, override
 if TYPE_CHECKING:
     from collections.abc import Iterator, Mapping, Sequence
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.dock import DockType, DockWeakness
@@ -180,6 +181,12 @@ class GameDatabaseView(ABC):
     """
 
     @abc.abstractmethod
+    def get_game_enum(self) -> RandovaniaGame:
+        """
+        Returns the RandovaniaGame enum for this game.
+        """
+
+    @abc.abstractmethod
     def node_iterator(self) -> Iterator[tuple[Region, Area, Node]]:
         """
         Iterates over all nodes in the database, including the region and area they belong to
@@ -314,6 +321,10 @@ class GameDatabaseViewProxy(GameDatabaseView):
 
     def __init__(self, original: GameDatabaseView):
         self._original = original
+
+    @override
+    def get_game_enum(self) -> RandovaniaGame:
+        return self._original.get_game_enum()
 
     @override
     def node_iterator(self) -> Iterator[tuple[Region, Area, Node]]:

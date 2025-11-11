@@ -23,7 +23,7 @@ def test_calculate_weights_for_output(capsys, blank_pickup):
     reach.nodes = []
     reach.iterate_nodes = []
     reach.game.region_list.all_nodes = ()
-    reach.game.game.generator.action_weights.DANGEROUS_ACTION_MULTIPLIER = 1.0
+    reach.game.game_enum.generator.action_weights.DANGEROUS_ACTION_MULTIPLIER = 1.0
 
     evaluated_action = EvaluatedAction(
         action=Action([blank_pickup]),

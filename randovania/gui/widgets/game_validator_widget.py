@@ -53,7 +53,9 @@ def get_brush_for_action(action_type: ActionType | str) -> QtGui.QBrush:
     return QtGui.QBrush(ACTION_COLORS.get(action_type, ACTION_COLORS[ActionType.OTHER]))
 
 
-async def _run_validator(logger: ResolverLogger, debug_level: debug.LogLevel, layout: LayoutDescription) -> str:
+async def _run_validator(
+    logger: ResolverLogger, debug_level: debug.LogLevel, layout: LayoutDescription, use_world_graph: bool
+) -> str:
     configuration: BaseConfiguration = layout.get_preset(0).configuration
     patches = layout.all_patches[0]
 
@@ -63,6 +65,7 @@ async def _run_validator(logger: ResolverLogger, debug_level: debug.LogLevel, la
             configuration=configuration,
             patches=patches,
             logger=logger,
+            use_world_graph=use_world_graph,
         )
     after = time.perf_counter()
 
@@ -81,6 +84,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
 
         self.layout_description = layout
         self.players = players
+        self.use_world_graph = False
         self._current_task = None
         self._current_tree: list[IndentedWidget] = []
 
@@ -253,7 +257,9 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
 
         self._current_tree = [IndentedWidget(-2, self.log_widget)]
 
-        self._current_task = asyncio.create_task(_run_validator(self.logger, self._verbosity, self.layout_description))
+        self._current_task = asyncio.create_task(
+            _run_validator(self.logger, self._verbosity, self.layout_description, self.use_world_graph)
+        )
         try:
             time_consumed = await self._current_task
             self.status_label.setText(time_consumed)

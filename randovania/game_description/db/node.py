@@ -77,7 +77,6 @@ class Node:
                 raise ValueError(f"Expected dict for extra, got {type(self.extra)}")
             object.__setattr__(self, "extra", frozen_lib.wrap(self.extra))
 
-    @property
     def is_resource_node(self) -> bool:
         return False
 

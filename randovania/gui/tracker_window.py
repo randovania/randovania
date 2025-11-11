@@ -327,7 +327,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     @property
     def _collected_nodes(self) -> set[ResourceNode]:
-        return self._starting_nodes | {action for action in self._actions if action.is_resource_node}
+        return self._starting_nodes | {action for action in self._actions if action.is_resource_node()}
 
     def _pretty_node_name(self, node: Node) -> str:
         region_list = self.game_description.region_list
@@ -443,7 +443,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     is_visible = node in nodes_in_reach
 
                     node_item = self._node_to_item[node]
-                    if node.is_resource_node:
+                    if node.is_resource_node():
                         resource_node = typing.cast("ResourceNode", node)
 
                         if self._show_only_resource_nodes:
@@ -525,7 +525,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     node_item = QtWidgets.QTreeWidgetItem(area_item)
                     node_item.setText(0, node.name)
                     node_item.node = node
-                    if node.is_resource_node:
+                    if node.is_resource_node():
                         node_item.setFlags(node_item.flags() & ~Qt.ItemIsUserCheckable)
                     self._node_to_item[node] = node_item
 
@@ -547,9 +547,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 nodes_by_region[region.name].append(node)
 
                 location = node.identifier
-                targets[elevators.get_elevator_or_area_name(self.game_description, region_list, location, True)] = (
-                    location
-                )
+                targets[elevators.get_elevator_or_area_name(node, True)] = location
 
         if teleporters_config.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             targets = {}
@@ -564,7 +562,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             nodes = nodes_by_region[region_name]
             nodes_locations = [node.identifier for node in nodes]
             nodes_names = [
-                elevators.get_elevator_or_area_name(self.game_description, region_list, location, False)
+                elevators.get_elevator_or_area_name(self.game_description.node_by_identifier(location), False)
                 for location in nodes_locations
             ]
 
@@ -686,7 +684,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self._initial_state.node = node
 
         def is_resource_node_present(node: Node, state: State) -> typing.TypeGuard[ResourceNode]:
-            if node.is_resource_node:
+            if node.is_resource_node():
                 assert isinstance(node, ResourceNode)
                 is_resource_set = self._initial_state.resources.is_resource_set
                 return all(

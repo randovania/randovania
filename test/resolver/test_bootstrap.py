@@ -12,16 +12,18 @@ from randovania.layout.base.logical_pickup_placement_configuration import Logica
 from randovania.resolver import bootstrap
 
 
-def test_logic_bootstrap(preset_manager, game_enum):
+@pytest.mark.parametrize("use_world_graph", [False, True])
+def test_logic_bootstrap(preset_manager, game_enum, use_world_graph: bool):
     configuration = preset_manager.default_preset_for_game(game_enum).get_preset().configuration
     game = default_database.game_description_for(configuration.game)
 
     patches = game_enum.generator.base_patches_factory.create_base_patches(configuration, Random(1000), game, False, 0)
 
-    new_game, state = game_enum.generator.bootstrap.logic_bootstrap(
+    _, state = game_enum.generator.bootstrap.logic_bootstrap_graph(
         configuration,
         game.get_mutable(),
         patches,
+        use_world_graph=use_world_graph,
     )
 
     for misc_resource in game.resource_database.misc:

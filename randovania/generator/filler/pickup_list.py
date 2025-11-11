@@ -15,11 +15,10 @@ from randovania.resolver import debug
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.generator_reach import GeneratorReach
-    from randovania.graph.state import State
+    from randovania.graph.state import GraphOrResourceNode, State
 
 PickupCombination = tuple[PickupEntry, ...]
 PickupCombinations = tuple[PickupCombination, ...]
@@ -174,7 +173,7 @@ def pickups_to_solve_list(
 def get_pickups_that_solves_unreachable(
     pickups_left: Sequence[PickupEntry],
     reach: GeneratorReach,
-    uncollected_resource_nodes: Sequence[ResourceNode],
+    uncollected_resource_nodes: Sequence[GraphOrResourceNode],
     single_set: bool,
 ) -> PickupCombinations:
     """New logic. Given pickup list and a reach, checks the combination of pickups

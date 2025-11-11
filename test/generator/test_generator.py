@@ -14,7 +14,10 @@ from randovania.layout.layout_description import LayoutDescription
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    import pytest_mock
 
+
+@pytest.mark.parametrize("use_world_graph", [False, True])
 @patch("randovania.generator.generator._validate_pickup_pool_size", autospec=True)
 @patch("randovania.generator.generator.create_player_pool", autospec=True)
 @patch("randovania.generator.generator._distribute_remaining_items", autospec=True)
@@ -22,7 +25,8 @@ async def test_create_patches(
     mock_distribute_remaining_items: MagicMock,
     mock_create_player_pool: MagicMock,
     mock_validate_item_pool_size: MagicMock,
-    mocker,
+    mocker: pytest_mock.MockerFixture,
+    use_world_graph: bool,
 ):
     # Setup
     filler_result = MagicMock()
@@ -59,22 +63,27 @@ async def test_create_patches(
     mock_create_player_pool.side_effect = player_pools
 
     # Run
-    result = await generator._create_description(generator_parameters, status_update, 0, world_names)
+    result = await generator._create_description(
+        generator_parameters, status_update, 0, world_names, use_world_graph=use_world_graph
+    )
 
     # Assert
     generator_parameters.create_rng.assert_called_once_with()
     mock_create_player_pool.assert_has_calls(
-        [call(rng, presets[i].configuration, i, num_players, world_names[i], status_update) for i in range(num_players)]
+        [
+            call(rng, presets[i].configuration, i, num_players, world_names[i], status_update, use_world_graph)
+            for i in range(num_players)
+        ]
     )
     mock_validate_item_pool_size.assert_has_calls(
         [call(player_pools[i].pickups, player_pools[i].game, player_pools[i].configuration) for i in range(num_players)]
     )
     mock_run_filler.assert_awaited_once_with(
-        rng, [player_pools[i] for i in range(num_players)], world_names, status_update
+        rng, [player_pools[i] for i in range(num_players)], world_names, status_update, use_world_graph
     )
     mock_distribute_remaining_items.assert_called_once_with(rng, filler_result, presets)
-    mock_dock_weakness_distributor.assert_called_once_with(rng, filler_result, status_update)
-    mock_generic_hints.assert_called_once_with(rng, filler_result)
+    mock_dock_weakness_distributor.assert_called_once_with(rng, filler_result, status_update, use_world_graph)
+    mock_generic_hints.assert_called_once_with(rng, filler_result, use_world_graph)
     mock_specific_location_hints.assert_called_once_with(rng, filler_result)
 
     assert result == LayoutDescription.create_new(
@@ -122,7 +131,9 @@ async def test_create_description(preset_manager, game_enum) -> None:
     world_names = [f"Test {i + 1}" for i in range(generator_parameters.world_count)]
 
     # Run
-    result = await generator._create_description(generator_parameters, status_update, 0, world_names)
+    result = await generator._create_description(
+        generator_parameters, status_update, 0, world_names, use_world_graph=True
+    )
 
     # Assert
     assert result.shareable_hash == game_test_data.expected_seed_hash

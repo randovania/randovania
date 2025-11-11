@@ -50,6 +50,7 @@ def generate_helper(parameter: GeneratorParameters) -> float | None:
                 status_update=None,
                 validate_after_generation=True,
                 attempts=0,
+                use_world_graph=True,
             )
         )
 

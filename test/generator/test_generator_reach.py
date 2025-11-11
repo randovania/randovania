@@ -15,9 +15,11 @@ from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock import DockWeaknessDatabase
 from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -27,7 +29,9 @@ from randovania.generator import reach_lib
 from randovania.generator.old_generator_reach import OldGeneratorReach
 from randovania.generator.pickup_pool import pool_creator
 from randovania.generator.reach_lib import advance_reach_with_possible_unsafe_resources
+from randovania.graph import world_graph
 from randovania.graph.state import State
+from randovania.graph.world_graph import WorldGraph
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -38,7 +42,6 @@ from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.generator_reach import GeneratorReach
     from randovania.layout.preset import Preset
@@ -46,7 +49,7 @@ if TYPE_CHECKING:
 
 def run_bootstrap(
     preset: Preset, include_tricks: Iterable[tuple[str, LayoutTrickLevel]]
-) -> tuple[GameDescription, State, GeneratorParameters]:
+) -> tuple[GameDescription, WorldGraph, State, GeneratorParameters]:
     game_description = default_database.game_description_for(preset.game)
     configuration = preset.configuration
     for trick in include_tricks:
@@ -70,47 +73,18 @@ def run_bootstrap(
     patches = generator.base_patches_factory.create_base_patches(
         configuration, Random(15000), game, False, player_index=0
     )
-    _, state = generator.bootstrap.logic_bootstrap(configuration, game, patches)
+    graph, state = generator.bootstrap.logic_bootstrap_graph(configuration, game, patches, use_world_graph=True)
+    assert isinstance(graph, WorldGraph)
 
-    return game, state, parameters
+    return game, graph, state, parameters
 
 
 def _create_reach_with_unsafe(
-    game: GameDescription, state: State, filler_config: FillerConfiguration
+    game: GameDescription | WorldGraph, state: State, filler_config: FillerConfiguration
 ) -> GeneratorReach:
     return reach_lib.advance_reach_with_possible_unsafe_resources(
         reach_lib.reach_with_all_safe_resources(game, state, filler_config)
     )
-
-
-def _create_reaches_and_compare(
-    game: GameDescription, state: State, filler_config: FillerConfiguration
-) -> tuple[GeneratorReach, GeneratorReach]:
-    first_reach = _create_reach_with_unsafe(game, state, filler_config)
-    second_reach = _create_reach_with_unsafe(game, first_reach.state, filler_config)
-
-    assert isinstance(first_reach.state.database_node, Node)
-    assert isinstance(second_reach.state.database_node, Node)
-    assert first_reach.is_safe_node(first_reach.state.database_node)
-    assert second_reach.is_safe_node(first_reach.state.database_node)
-    assert first_reach.is_safe_node(second_reach.state.database_node)
-    assert second_reach.is_safe_node(second_reach.state.database_node)
-
-    assert set(first_reach.safe_nodes) == set(second_reach.safe_nodes)
-    assert set(first_reach.nodes) == set(second_reach.nodes)
-
-    return first_reach, second_reach
-
-
-def _compare_actions(
-    first_reach: GeneratorReach,
-    second_reach: GeneratorReach,
-) -> tuple[list[ResourceNode], list[ResourceNode]]:
-    first_actions = reach_lib.get_collectable_resource_nodes_of_reach(first_reach)
-    second_actions = reach_lib.get_collectable_resource_nodes_of_reach(second_reach)
-    assert set(first_actions) == set(second_actions)
-
-    return first_actions, second_actions
 
 
 @pytest.mark.benchmark
@@ -124,12 +98,12 @@ def test_database_collectable(
     game_test_data = game_enum.data.test_data()
 
     mocker.patch("randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool")
-    game, state, permalink = run_bootstrap(
+    game, graph, state, permalink = run_bootstrap(
         preset_manager.default_preset_for_game(game_enum).get_preset(),
         game_test_data.database_collectable_include_tricks,
     )
 
-    all_pickups = set(reach_lib.filter_pickup_nodes(game.region_list.iterate_nodes()))
+    all_pickups = set(game.region_list.iterate_nodes_of_type(PickupNode))
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration, game)
 
     for pickup in pool_results.starting + pool_results.to_place:
@@ -153,7 +127,7 @@ def test_database_collectable(
         if it.pickup_index.index not in game_test_data.database_collectable_ignore_pickups
     )
 
-    reach = _create_reach_with_unsafe(game, state, default_filler_config)
+    reach = _create_reach_with_unsafe(graph, state, default_filler_config)
     while list(reach_lib.collectable_resource_nodes(reach.nodes, reach)):
         reach.act_on(next(iter(reach_lib.collectable_resource_nodes(reach.nodes, reach))))
         reach = advance_reach_with_possible_unsafe_resources(reach)
@@ -241,29 +215,42 @@ def test_basic_search_with_translator_gate(
 
     region_list.configurable_nodes[translator_identif] = ResourceRequirement.simple(scan_visor)
 
+    resources = ResourceCollection.from_dict(echoes_game_description, {scan_visor: 1 if has_translator else 0})
+    graph = world_graph.create_graph(
+        game,
+        GamePatches.create_from_game(game, 0, None),  # type: ignore[arg-type]
+        resources,
+        1.0,
+        Requirement.trivial(),
+        game.region_list.flatten_to_set_on_patch,
+    )
+
     initial_state = State(
-        ResourceCollection.from_dict(echoes_game_description, {scan_visor: 1 if has_translator else 0}),
+        resources,
         (),
         EnergyTankDamageState(
             99,
             100,
             game.resource_database.get_item("EnergyTank"),
         ),
-        node_a,
+        graph.original_to_node[node_a.node_index],
         echoes_game_patches,
         None,
         game.resource_database,
         game.region_list,
     )
 
+    def to_index(*args: Node) -> set[int]:
+        return {graph.original_to_node[n.node_index].node_index for n in args}
+
     # Run
-    reach = reach_lib.reach_with_all_safe_resources(game, initial_state, default_filler_config)
+    reach = reach_lib.reach_with_all_safe_resources(graph, initial_state, default_filler_config)
 
     # Assert
     if has_translator:
-        assert set(reach.safe_nodes) == {node_a, node_b, translator_node, node_c}
+        assert reach.safe_nodes_index_set == to_index(node_a, node_b, node_c, translator_node)
     else:
-        assert set(reach.safe_nodes) == {node_a, node_b}
+        assert reach.safe_nodes_index_set == to_index(node_a, node_b)
 
 
 def test_reach_size_from_start_echoes(

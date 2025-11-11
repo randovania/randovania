@@ -213,6 +213,7 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # added last_changelog_displayed_dev
     _msr_enable_remote_lua,  # removes enable_remote_lua as it'll always be enabled
     _msr_citra_to_azahar,  # migrate from citra to azahar
+    _only_new_fields,  # add advanced_use_world_graph
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

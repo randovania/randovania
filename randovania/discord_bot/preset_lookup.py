@@ -344,6 +344,7 @@ class PermalinkLookupCog(RandovaniaCog):
                     status_update=None,
                     validate_after_generation=False,
                     timeout=60,
+                    use_world_graph=True,
                 ),
                 timeout=60,
             )

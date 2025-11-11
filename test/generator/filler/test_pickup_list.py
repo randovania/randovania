@@ -252,11 +252,12 @@ async def test_get_pickups_that_solves_unreachable_quad(
             ),
         ),
     )
-    pool = await generator.create_player_pool(Random(0), config, 0, 1, "World 1", MagicMock())
-    new_game, state = pool.game_generator.bootstrap.logic_bootstrap(
+    pool = await generator.create_player_pool(Random(0), config, 0, 1, "World 1", MagicMock(), True)
+    graph, state = pool.game_generator.bootstrap.logic_bootstrap_graph(
         config,
         pool.game,
         pool.patches,
+        use_world_graph=True,
     )
     pickups_to_add = []
     if has_light_beam:
@@ -264,7 +265,7 @@ async def test_get_pickups_that_solves_unreachable_quad(
     state = state.assign_pickups_resources(pickups_to_add)
 
     reach = reach_lib.advance_reach_with_possible_unsafe_resources(
-        reach_lib.reach_with_all_safe_resources(new_game, state, default_filler_config)
+        reach_lib.reach_with_all_safe_resources(graph, state, default_filler_config)
     )
 
     # Run

@@ -280,6 +280,8 @@ def _resource_gain_for_state(state: State) -> list[ResourceInfo]:
 def _index_for_action_pair(pair: tuple[ResolverAction, DamageState]) -> int:
     node = pair[0]
     if isinstance(node, WorldGraphNode):
+        # TODO: probably this entire sorting is pointless when there's only WorldGraph
+        assert node.database_node is not None
         return node.database_node.node_index
     elif isinstance(node, DockLockNode):
         return node.dock.node_index
@@ -439,7 +441,9 @@ def _quiet_print(s: Any) -> None:
 
 
 def setup_resolver(
-    configuration: BaseConfiguration, patches: GamePatches, use_world_graph: bool = False
+    configuration: BaseConfiguration,
+    patches: GamePatches,
+    use_world_graph: bool,
 ) -> tuple[State, Logic]:
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
     bootstrap = game.game.generator.bootstrap

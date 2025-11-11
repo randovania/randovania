@@ -35,7 +35,7 @@ async def test_run_filler(
     ]
 
     player_pools = [
-        await create_player_pool(rng, default_blank_configuration, 0, 1, "World 1", MagicMock()),
+        await create_player_pool(rng, default_blank_configuration, 0, 1, "World 1", MagicMock(), True),
     ]
     initial_pickup_count = len(player_pools[0].pickups)
 
@@ -59,7 +59,7 @@ async def test_run_filler(
     )
 
     # Run
-    filler_result = await runner.run_filler(rng, player_pools, ["World 1"], status_update)
+    filler_result = await runner.run_filler(rng, player_pools, ["World 1"], status_update, False)
 
     assert filler_result.action_log == action_log
     assert len(filler_result.player_results) == 1
@@ -89,7 +89,7 @@ async def test_fill_unassigned_hints_empty_assignment(echoes_game_description, e
     hint_state = HintState(filler_config, echoes_game_description)
 
     player_pools = [
-        await create_player_pool(rng, echoes_game_patches.configuration, 0, 1, "World 1", MagicMock()),
+        await create_player_pool(rng, echoes_game_patches.configuration, 0, 1, "World 1", MagicMock(), True),
     ]
 
     # Run
