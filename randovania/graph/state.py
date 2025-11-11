@@ -98,10 +98,9 @@ class State:
 
     def collected_hints(self, graph: WorldGraph | GameDescription) -> Iterator[NodeIdentifier]:
         for resource, count in self.resources.as_resource_gain():
-            if isinstance(resource, NodeResourceInfo) and count > 0:
+            if count > 0 and isinstance(resource, NodeResourceInfo):
                 if isinstance(graph, WorldGraph):
-                    node_index = resource.resource_index - self.resource_database.first_unused_resource_index()
-                    if isinstance(graph.nodes[node_index].database_node, HintNode):
+                    if isinstance(graph.get_node_by_resource_info(resource).database_node, HintNode):
                         yield resource.node_identifier
                 else:
                     node = graph.node_by_identifier(resource.node_identifier)
