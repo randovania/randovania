@@ -17,9 +17,7 @@ def test_calculate_weights_for_output(capsys, blank_pickup):
     # Setup
     reach = MagicMock(spec=GeneratorReach)
     reach.victory_condition_satisfied.return_value = False
-    reach.state.collected_pickup_indices.return_value = []
-    reach.state.collected_hints.return_value = []
-    reach.state.collected_events = []
+    reach.state.collected_pickups_hints_and_events.return_value = [], [], []
     reach.nodes = []
     reach.iterate_nodes = []
     reach.game.region_list.all_nodes = ()
@@ -31,7 +29,7 @@ def test_calculate_weights_for_output(capsys, blank_pickup):
         multiplier=1.0,
         offset=0.0,
     )
-    empty_uncollected = UncollectedState(set(), set(), set(), set())
+    empty_uncollected = UncollectedState(set(), set(), set())
 
     # Run
     with debug.with_level(debug.LogLevel.EXTREME):
@@ -54,7 +52,6 @@ def test_calculate_weights_for_output(capsys, blank_pickup):
         "  indices: set()\n"
         "  events: []\n"
         "  hints: []\n"
-        "nodes: []\n\n"
     )
 
 

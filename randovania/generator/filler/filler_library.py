@@ -16,7 +16,6 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.game_description.assignment import PickupAssignment
-    from randovania.game_description.db.node import Node, NodeIndex
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
@@ -57,29 +56,26 @@ class UncollectedState(NamedTuple):
     pickup_indices: set[PickupIndex]
     hints: set[NodeIdentifier]
     events: set[ResourceInfo]
-    nodes: set[NodeIndex]
 
     @classmethod
     def from_reach(cls, reach: GeneratorReach) -> Self:
         """Creates an UncollectedState reflecting only the safe uncollected resources in the reach."""
 
+        pickups, hints, events = reach.state.collected_pickups_hints_and_events(reach.game)
+
         return cls(
-            _filter_not_in_dict(
-                reach.state.collected_pickup_indices(reach.game), reach.state.patches.pickup_assignment
-            ),
-            _filter_not_in_dict(reach.state.collected_hints(reach.game), reach.state.patches.hints),
-            set(reach.state.collected_events),
-            {node.node_index for node in reach.nodes if reach.is_reachable_node(node)},
+            _filter_not_in_dict(iter(pickups), reach.state.patches.pickup_assignment),
+            _filter_not_in_dict(iter(hints), reach.state.patches.hints),
+            set(events),
         )
 
     @classmethod
     def from_reach_with_unsafe(cls, reach: GeneratorReach) -> Self:
         """Creates an UncollectedState reflecting all safe or unsafe uncollected resources in the reach."""
 
-        base_state = cls.from_reach(reach)
         context = reach.node_context()
 
-        possible_nodes = [node for node in reach.iterate_nodes if node.node_index in base_state.nodes]
+        reachable_indices: set[int] = reach.set_of_reachable_node_indices()
 
         def is_collectable(node: GraphOrResourceNode) -> bool:
             return node.requirement_to_collect.satisfied(
@@ -87,7 +83,7 @@ class UncollectedState(NamedTuple):
             )
 
         if isinstance(reach.game, GameDescription):
-            regular_nodes = typing.cast("list[Node]", possible_nodes)
+            regular_nodes = [reach.game.region_list.all_nodes[node_index] for node_index in reachable_indices]
 
             def all_resource_nodes_of_type[T: ResourceNode](res_type: type[T]) -> Iterator[T]:
                 for node in regular_nodes:
@@ -111,7 +107,7 @@ class UncollectedState(NamedTuple):
                 return {node.resource(context) for node in all_collectable_resource_nodes_of_type(EventNode)}
 
         else:
-            world_graph_nodes = typing.cast("list[WorldGraphNode]", possible_nodes)
+            world_graph_nodes = [reach.game.nodes[node_index] for node_index in reachable_indices]
 
             def all_pickup_indices_in() -> list[PickupIndex]:
                 return [
@@ -148,7 +144,6 @@ class UncollectedState(NamedTuple):
                 reach.state.patches.hints,
             ),
             all_events(),
-            base_state.nodes,
         )
 
     @classmethod
@@ -174,5 +169,4 @@ class UncollectedState(NamedTuple):
             self.pickup_indices - other.pickup_indices,
             self.hints - other.hints,
             self.events - other.events,
-            self.nodes - other.nodes,
         )
