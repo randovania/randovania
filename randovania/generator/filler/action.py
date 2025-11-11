@@ -14,7 +14,8 @@ if TYPE_CHECKING:
 
 def format_action(action: ActionStep) -> str:
     if isinstance(action, PickupEntry):
-        # TODO: can combine the if
+        # TODO: could combine both sides by always using `name`
+        # But maybe instead change how with WorldGraphNode the first letter is always W no matter the kind of node.
         return f"{type(action).__name__[0]}: {action.name}"
     else:
         return f"{type(action).__name__[0]}: {action.identifier}"

@@ -198,7 +198,6 @@ class PlayerState:
             if resource.resource_type == ResourceType.ITEM
         }
 
-        nodes_by_index = {node.node_index: node for node in self.reach.iterate_nodes}
         s = self.reach.state
         ctx = s.node_context()
         nodes_by_index = {node.node_index: node for node in self.reach.iterate_nodes}
@@ -329,7 +328,7 @@ def build_available_indices(
             if isinstance(node, EventPickupNode):
                 return node.pickup_node
             assert isinstance(node, PickupNode)
-            # TODO: maybe get we a list of PickupIndex, then find the PickupNode from that?
+            # TODO: maybe get a list of PickupIndex, then find the PickupNode from that?
             return node
 
         iterable = [

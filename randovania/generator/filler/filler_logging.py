@@ -82,8 +82,8 @@ def print_new_resources(
 
         for index, count in seen_count.items():
             if count == 1:
-                t = find_node_with_resource(index)
-                print(f"-> New {label}: {t.full_name()}")
+                node = find_node_with_resource(index)
+                print(f"-> New {label}: {node.full_name()}")
 
 
 def print_new_node_identifiers(

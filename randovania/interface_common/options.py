@@ -630,7 +630,7 @@ class Options:
         return _return_with_default(self._advanced_use_world_graph, lambda: True)
 
     @advanced_use_world_graph.setter
-    def advanced_use_world_graph(self, value: bool):
+    def advanced_use_world_graph(self, value: bool) -> None:
         self._edit_field("advanced_use_world_graph", value)
 
     ######
