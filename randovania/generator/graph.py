@@ -225,11 +225,15 @@ class RustworkXGraph(BaseGraph):
         def wrap(data: tuple[int, int, GraphData]) -> float:
             return weight(*data)
 
-        return rustworkx.dijkstra_shortest_path_lengths(
-            self._graph,
-            source,
-            edge_cost_fn=wrap,
+        costs = dict(
+            rustworkx.dijkstra_shortest_path_lengths(
+                self._graph,
+                source,
+                edge_cost_fn=wrap,
+            )
         )
+        costs[source] = 0.0
+        return costs
 
     def strongly_connected_components(self) -> Iterable[Collection[int]]:
         return rustworkx.strongly_connected_components(self._graph)
