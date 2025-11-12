@@ -12,7 +12,7 @@ import rustworkx
 from randovania.graph.world_graph import WorldGraph
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Collection, Iterable, Iterator, Mapping, Sequence
+    from collections.abc import Callable, Collection, Iterable, Iterator, Mapping
 
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.base import Requirement
@@ -46,22 +46,12 @@ class BaseGraph:
     def edges_data(self) -> Iterator[tuple[int, int, GraphData]]:
         raise NotImplementedError
 
-    has_multi_source_dijkstra = False
-
-    def multi_source_dijkstra(
-        self,
-        sources: set[int],
-        weight: Callable[[int, int, GraphData], int],
-    ) -> tuple[dict[int, int], Mapping[int, Sequence[int]]]:
-        raise NotImplementedError
-
     def shortest_paths_dijkstra(
         self,
         source: int,
         weight: Callable[[int, int, GraphData], int],
-    ) -> Mapping[int, Sequence[int]]:
-        _, paths = self.multi_source_dijkstra({source}, weight)
-        return paths
+    ) -> Mapping[int, float]:
+        raise NotImplementedError
 
     def strongly_connected_components(self) -> Iterable[Collection[int]]:
         raise NotImplementedError
@@ -104,14 +94,12 @@ class RandovaniaGraph(BaseGraph):
             for target, requirement in data.items():
                 yield source, target, requirement
 
-    has_multi_source_dijkstra = True
-
-    def multi_source_dijkstra(
+    def shortest_paths_dijkstra(
         self,
-        sources: set[int],
+        source: int,
         weight: Callable[[int, int, GraphData], int],
-    ) -> tuple[dict[int, int], Mapping[int, Sequence[int]]]:
-        paths = {source: [source] for source in sources}  # dictionary of paths
+    ) -> Mapping[int, float]:
+        paths = {source: [source]}  # dictionary of paths
         edges = self.edges
 
         push = heappush
@@ -123,9 +111,8 @@ class RandovaniaGraph(BaseGraph):
         # use the count c to avoid comparing nodes (may not be able to)
         c = itertools.count()
         fringe: list[tuple[int, int, int]] = []
-        for source in sources:
-            seen[source] = 0
-            push(fringe, (0, next(c), source))
+        seen[source] = 0
+        push(fringe, (0, next(c), source))
 
         while fringe:
             (d, _, v) = pop(fringe)
@@ -146,7 +133,7 @@ class RandovaniaGraph(BaseGraph):
                     push(fringe, (vu_dist, next(c), u))
                     paths[u] = paths[v] + [u]
 
-        return dist, paths
+        return dist
 
     def strongly_connected_components(self) -> Iterable[Collection[int]]:
         preorder = {}
@@ -230,30 +217,19 @@ class RustworkXGraph(BaseGraph):
     def edges_data(self) -> Iterator[tuple[int, int, GraphData]]:
         yield from self._graph.edges()
 
-    def multi_source_dijkstra(
-        self,
-        sources: set[int],
-        weight: Callable[[int, int, GraphData], int],
-    ) -> tuple[dict[int, int], Mapping[int, Sequence[int]]]:
-        raise NotImplementedError
-
     def shortest_paths_dijkstra(
         self,
         source: int,
         weight: Callable[[int, int, GraphData], int],
-    ) -> Mapping[int, Sequence[int]]:
+    ) -> Mapping[int, float]:
         def wrap(data: tuple[int, int, GraphData]) -> float:
             return weight(*data)
 
-        paths: dict[int, Sequence[int]] = dict(
-            rustworkx.dijkstra_shortest_paths(
-                self._graph,
-                source,
-                weight_fn=wrap,
-            )
+        return rustworkx.dijkstra_shortest_path_lengths(
+            self._graph,
+            source,
+            edge_cost_fn=wrap,
         )
-        paths[source] = [source]
-        return paths
 
     def strongly_connected_components(self) -> Iterable[Collection[int]]:
         return rustworkx.strongly_connected_components(self._graph)

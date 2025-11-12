@@ -69,8 +69,7 @@ class OldGeneratorReach(GeneratorReach):
     _digraph: graph_module.BaseGraph
     _state: State
     _game: GameDescription | WorldGraph
-    _reachable_paths: Mapping[int, Sequence[int]] | None
-    _reachable_costs: dict[int, int | None] | None
+    _reachable_costs: Mapping[int, float] | None
     _node_reachable_cache: dict[int, bool]
     _unreachable_paths: dict[tuple[int, int], Requirement]
     _uncollectable_nodes: dict[int, Requirement]
@@ -83,7 +82,6 @@ class OldGeneratorReach(GeneratorReach):
         reach = OldGeneratorReach(self._game, self._state, self._digraph.copy(), copy.copy(self._filler_config))
         reach._unreachable_paths = copy.copy(self._unreachable_paths)
         reach._uncollectable_nodes = copy.copy(self._uncollectable_nodes)
-        reach._reachable_paths = self._reachable_paths
         reach._reachable_costs = self._reachable_costs
         reach._safe_nodes = self._safe_nodes
 
@@ -108,7 +106,7 @@ class OldGeneratorReach(GeneratorReach):
         self._digraph = graph
         self._unreachable_paths = {}
         self._uncollectable_nodes = {}
-        self._reachable_paths = None
+        self._reachable_costs = None
         self._node_reachable_cache = {}
         self._is_node_safe_cache = {}
         self._filler_config = filler_config
@@ -160,7 +158,7 @@ class OldGeneratorReach(GeneratorReach):
 
     def _expand_graph(self, paths_to_check: list[GraphPath]) -> None:
         # print("!! _expand_graph", len(paths_to_check))
-        self._reachable_paths = None
+        self._reachable_costs = None
         resource_nodes_to_check = set()
 
         context = self._state.node_context()
@@ -229,8 +227,8 @@ class OldGeneratorReach(GeneratorReach):
 
         assert self._safe_nodes is not None
 
-    def _calculate_reachable_paths(self) -> None:
-        if self._reachable_paths is not None:
+    def _calculate_reachable_costs(self) -> None:
+        if self._reachable_costs is not None:
             return
 
         context = self.node_context()
@@ -260,25 +258,17 @@ class OldGeneratorReach(GeneratorReach):
         def weight(source: int, target: int, attributes: graph_module.GraphData) -> int:
             return _is_collected(target)
 
-        if self._digraph.has_multi_source_dijkstra:
-            costs, self._reachable_paths = self._digraph.multi_source_dijkstra(
-                {self._state.node.node_index},
-                weight=weight,
-            )
-            self._reachable_costs = typing.cast("dict[int, int | None]", costs)
-        else:
-            # Having to calculate the costs in python is slower,
-            # but calculating the paths is so much faster it's worth it.
-            self._reachable_paths = self._digraph.shortest_paths_dijkstra(
-                self._state.node.node_index,
-                weight=weight,
-            )
-            self._reachable_costs = {}
+        # Having to calculate the costs in python is slower,
+        # but calculating the paths is so much faster it's worth it.
+        self._reachable_costs = self._digraph.shortest_paths_dijkstra(
+            self._state.node.node_index,
+            weight=weight,
+        )
 
     def set_of_reachable_node_indices(self) -> set[int]:
-        self._calculate_reachable_paths()
-        assert self._reachable_paths is not None
-        return {index for index in self._reachable_paths.keys() if self.is_reachable_node_index(index)}
+        self._calculate_reachable_costs()
+        assert self._reachable_costs is not None
+        return {index for index in self._reachable_costs.keys() if self.is_reachable_node_index(index)}
 
     def is_reachable_node(self, node: GraphOrClassicNode) -> bool:
         return self.is_reachable_node_index(node.node_index)
@@ -288,24 +278,10 @@ class OldGeneratorReach(GeneratorReach):
         if cached_value is not None:
             return cached_value
 
-        self._calculate_reachable_paths()
+        self._calculate_reachable_costs()
         assert self._reachable_costs is not None
-        if index not in self._reachable_costs:
-            assert self._reachable_paths is not None
-            if index in self._reachable_paths:
-                cost = 0
-                for it in self._reachable_paths[index]:
-                    if self._reachable_is_collected(it):
-                        cost += 1
-                        if cost > 1:
-                            break
-            else:
-                cost = None
-            self._reachable_costs[index] = cost
-        else:
+        if index in self._reachable_costs:
             cost = self._reachable_costs[index]
-
-        if cost is not None:
             if cost == 0:
                 self._node_reachable_cache[index] = True
             elif cost == 1:
@@ -323,10 +299,10 @@ class OldGeneratorReach(GeneratorReach):
         An iterator of all nodes there's an path from the reach's starting point. Similar to is_reachable_node
         :return:
         """
-        self._calculate_reachable_paths()
-        assert self._reachable_paths is not None
+        self._calculate_reachable_costs()
+        assert self._reachable_costs is not None
         all_nodes = self.all_nodes
-        for index in self._reachable_paths.keys():
+        for index in self._reachable_costs.keys():
             yield all_nodes[index]
 
     @property
