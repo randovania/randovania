@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
 
 
 class MatplotlibWidget(QtWidgets.QWidget):
@@ -41,7 +41,7 @@ class MatplotlibWidget(QtWidgets.QWidget):
 
         self._region_to_node_positions = {}
 
-    def _positions_for_region(self, region: Region, state: State):
+    def _positions_for_region(self, region: Region, state: State) -> dict:
         g = networkx.DiGraph()
 
         for area in region.areas:
@@ -62,7 +62,7 @@ class MatplotlibWidget(QtWidgets.QWidget):
 
         return networkx.drawing.spring_layout(g)
 
-    def update_for(self, region: Region, state: State, nodes_in_reach: set[Node]):
+    def update_for(self, region: Region, state: State, nodes_in_reach: set[Node]) -> None:
         g = networkx.DiGraph()
 
         for area in region.areas:
