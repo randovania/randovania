@@ -64,23 +64,51 @@ def _combine_leave(
 
 
 def _combine_damage_requirements(
-    heal: bool, requirement: Requirement, satisfied_requirement: Requirement, context: NodeContext
-) -> Requirement:
+    heal: bool,
+    damage: int,
+    requirement: Requirement,
+    satisfied_requirement: tuple[Requirement, bool],
+    context: NodeContext,
+) -> tuple[Requirement, bool]:
     """
     Helper function combining damage requirements from requirement and satisfied_requirement. Other requirements are
-    considered either trivial or impossible. The heal argument can be used to ignore the damage requirements from the
-    satisfied requirement, which is relevant when requirement comes from a connection out of a heal node.
-    :param heal:
+    considered either trivial or impossible.
+    :param heal: When set, ignore the damage requirements from the satisfied requirement,
+                 which is relevant when requirement comes from a connection out of a heal node.
+    :param damage:
     :param requirement:
     :param satisfied_requirement:
     :param context:
-    :return:
+    :return: The combined requirement and a boolean, indicating if the requirement may have non-damage components.
     """
-    return (
-        requirement
-        if heal
-        else RequirementAnd([requirement, satisfied_requirement]).isolate_damage_requirements(context).simplify()
+    if heal:
+        return requirement, True
+
+    if damage == 0:
+        # If we took no damage here, then one of the following is true:
+        # - There's no damage requirement in this edge
+        # - Our resources allows for alternatives with no damage requirement
+        # - Our resources grants immunity to the damage resources
+        # In all of these cases, we can verify that assumption with the following assertion
+        # assert requirement.isolate_damage_requirements(context) == Requirement.trivial()
+        #
+        return satisfied_requirement
+
+    isolated_requirement = requirement.isolate_damage_requirements(context)
+    isolated_satisfied = (
+        satisfied_requirement[0].isolate_damage_requirements(context)
+        if satisfied_requirement[1]
+        else satisfied_requirement[0]
     )
+
+    if isolated_requirement == Requirement.trivial():
+        result = isolated_satisfied
+    elif isolated_satisfied == Requirement.trivial():
+        result = isolated_requirement
+    else:
+        result = RequirementAnd([isolated_requirement, isolated_satisfied]).simplify()
+
+    return result, False
 
 
 class ResolverReach:
@@ -137,7 +165,9 @@ class ResolverReach:
         path_to_node: dict[int, list[int]] = {
             initial_state.node.node_index: [],
         }
-        satisfied_requirement_on_node: dict[int, Requirement] = {initial_state.node.node_index: Requirement.trivial()}
+        satisfied_requirement_on_node: dict[int, tuple[Requirement, bool]] = {
+            initial_state.node.node_index: (Requirement.trivial(), False)
+        }
 
         while nodes_to_check:
             node_index = next(iter(nodes_to_check))
@@ -181,11 +211,13 @@ class ResolverReach:
                     satisfied = logic.get_additional_requirements(node).satisfied(context, damage_health)
 
                 if satisfied:
-                    nodes_to_check[target_node_index] = game_state.apply_damage(requirement.damage(context))
+                    damage = requirement.damage(context)
+                    nodes_to_check[target_node_index] = game_state.apply_damage(damage)
                     path_to_node[target_node_index] = list(path_to_node[node_index])
                     path_to_node[target_node_index].append(node_index)
                     satisfied_requirement_on_node[target_node_index] = _combine_damage_requirements(
                         node.heal,
+                        damage,
                         requirement,
                         satisfied_requirement_on_node[node.node_index],
                         context,
@@ -196,8 +228,8 @@ class ResolverReach:
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
                     if not requirement_without_leaving.satisfied(context, damage_health):
                         full_requirement_for_target = RequirementAnd(
-                            [requirement_without_leaving, satisfied_requirement_on_node[node.node_index]]
-                        ).simplify()
+                            [requirement_without_leaving, satisfied_requirement_on_node[node.node_index][0]]
+                        )
                         requirements_excluding_leaving_by_node[target_node_index].append(full_requirement_for_target)
 
         # Discard satisfiable requirements of nodes reachable by other means
