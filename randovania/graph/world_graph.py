@@ -94,6 +94,7 @@ class WorldGraphNode:
     resource_gain_bitmask: int = dataclasses.field(init=False, default=0)
     """
     Bitmask of all ResourceInfo indices granted by this node for fast checking.
+    Mask is created in the same way as RequirementList and ResourceCollection.
     """
 
     requirement_to_collect: Requirement
@@ -141,26 +142,16 @@ class WorldGraphNode:
         return self.identifier.display_name(with_region, separator)
 
     def should_collect(self, context: NodeContext) -> bool:
+        """Deprecated. Use `has_all_resources` instead. Exists for API compatibility with ResourceNode."""
         return not self.has_all_resources(context)
-        result = False
-
-        # TODO: either this or `has_all_resources` can be removed.
-        # But both are used in generator/resolver so that refactor best come later.
-        # But making one of the two use the other might be a good idea!
-        # Benchmark though, these are hot path in generator........
-
-        for resource, _ in self.resource_gain:
-            if not context.has_resource(resource):
-                result = True
-
-        return result
 
     def has_all_resources(self, context: NodeContext) -> bool:
+        """
+        Checks if all resources given by this node are already collected in the given context.
+        Does not include resources given by a PickupEntry assigned to the location of this node.
+        TODO: Use a RequirementList to represent this.
+        """
         return self.resource_gain_bitmask & context.current_resources.resource_bitmask == self.resource_gain_bitmask
-        for resource, _ in self.resource_gain:
-            if not context.has_resource(resource):
-                return False
-        return True
 
     # TODO: ResourceNode name for compatibility
     is_collected = has_all_resources
