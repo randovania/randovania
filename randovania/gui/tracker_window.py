@@ -25,7 +25,7 @@ from randovania.games.prime2.layout.translator_configuration import LayoutTransl
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.pickup_pool import pool_creator
 from randovania.graph.state import State, add_pickup_to_state
-from randovania.graph.world_graph import WorldGraph, WorldGraphNode
+from randovania.graph.world_graph import WorldGraph, WorldGraphNode, WorldGraphNodeConnection
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib import signal_handling
@@ -614,8 +614,8 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         scan_visor = search.find_resource_info_with_long_name(game.resource_database.item, "Scan Visor")
         scan_visor_req = ResourceRequirement.simple(scan_visor)
 
-        for node in game.region_list.iterate_nodes_of_type(ConfigurableNode):
-            combo = self._translator_gate_to_combo[node.identifier]
+        for configurable_node in game.region_list.iterate_nodes_of_type(ConfigurableNode):
+            combo = self._translator_gate_to_combo[configurable_node.identifier]
             requirement: LayoutTranslatorRequirement | None = combo.currentData()
 
             if requirement is None:
@@ -624,9 +624,22 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 translator = game.resource_database.get_item(requirement.item_name)
                 translator_req = ResourceRequirement.simple(translator)
 
-            game.region_list.configurable_nodes[node.identifier] = RequirementAnd(
+            new_leave_requirement = RequirementAnd(
                 [scan_visor_req, translator_req],
             )
+
+            graph_node = self.graph.original_to_node[configurable_node.node_index]
+            graph_node.connections = [
+                WorldGraphNodeConnection(
+                    conn.target,
+                    RequirementAnd([conn.requirement_without_leaving, new_leave_requirement]),
+                    conn.requirement_without_leaving,
+                )
+                for conn in graph_node.connections
+            ]
+
+            # Not really relevant, but let's keep it
+            game.region_list.configurable_nodes[configurable_node.identifier] = new_leave_requirement
 
     def setup_translator_gates(self) -> None:
         region_list = self.game_description.region_list
