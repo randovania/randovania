@@ -7,12 +7,12 @@ from typing import TYPE_CHECKING
 
 import tenacity
 
-from randovania.game_description.assignment import PickupTarget, PickupTargetAssociation
+from randovania.game_description.assignment import PickupAssignment, PickupTarget, PickupTargetAssociation
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.generator import dock_weakness_distributor, hint_distributor
 from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
-from randovania.generator.filler.filler_library import UnableToGenerate, filter_unassigned_pickup_nodes
+from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.runner import run_filler
 from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.generator.pre_fill_params import PreFillParams
@@ -24,7 +24,7 @@ from randovania.resolver import debug, exceptions, resolver
 from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Iterator
     from random import Random
 
     from randovania.game_description.game_database_view import GameDatabaseView
@@ -199,6 +199,15 @@ async def _create_pools_and_fill(
     return player_pools, results
 
 
+def get_unassigned_pickup_nodes(
+    game_view: GameDatabaseView,
+    pickup_assignment: PickupAssignment,
+) -> Iterator[PickupNode]:
+    for _, _, node in game_view.iterate_nodes_of_type(PickupNode):
+        if node.pickup_index not in pickup_assignment:
+            yield node
+
+
 def _distribute_remaining_items(rng: Random, filler_results: FillerResults, presets: list[Preset]) -> FillerResults:
     major_pickup_nodes: list[tuple[int, PickupNode]] = []
     minor_pickup_nodes: list[tuple[int, PickupNode]] = []
@@ -211,9 +220,7 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
 
     for player, filler_result in filler_results.player_results.items():
         split_major = modes[player] is RandomizationMode.MAJOR_MINOR_SPLIT
-        for pickup_node in filter_unassigned_pickup_nodes(
-            filler_result.game.region_list.iterate_nodes(), filler_result.patches.pickup_assignment
-        ):
+        for pickup_node in get_unassigned_pickup_nodes(filler_result.game, filler_result.patches.pickup_assignment):
             if split_major and pickup_node.location_category == LocationCategory.MAJOR:
                 major_pickup_nodes.append((player, pickup_node))
             else:

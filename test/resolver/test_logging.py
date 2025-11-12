@@ -6,11 +6,9 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.pickup_pool.pool_creator import calculate_pool_results
-from randovania.graph.world_graph import WorldGraphNode
 from randovania.layout import filtered_database
 from randovania.resolver import debug
 from randovania.resolver.logging import ResolverLogger, TextResolverLogger
@@ -22,6 +20,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.game_patches import GamePatches
     from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraphNode
 
 
 def _assign_pickup_by_name(game_patches: GamePatches, index: PickupIndex, name: str) -> GamePatches:
@@ -55,9 +54,8 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
 
         return state
 
-    def satisfiable(node: NodeIdentifier) -> tuple[ActionPriority, WorldGraphNode | ResourceNode, Any]:
+    def satisfiable(node: NodeIdentifier) -> tuple[ActionPriority, WorldGraphNode, Any]:
         n = nodes_by_id[node]
-        assert isinstance(n, WorldGraphNode | ResourceNode)
         return ActionPriority.EVERYTHING_ELSE, n, MagicMock()
 
     lock_prefix = "" if use_world_graph else "Lock - "
@@ -133,7 +131,6 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
     )
 
 
-@pytest.mark.parametrize("use_world_graph", [False, True])
 @pytest.mark.parametrize(
     ("verbosity", "expected"),
     [
@@ -196,9 +193,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
         ),
     ],
 )
-def test_text_resolver_logger(
-    blank_game_patches, verbosity: debug.LogLevel, use_world_graph: bool, expected: list[str]
-):
+def test_text_resolver_logger(blank_game_patches, verbosity: debug.LogLevel, expected: list[str]):
     logger = TextResolverLogger()
     lines: list[str] = []
 
@@ -207,11 +202,9 @@ def test_text_resolver_logger(
     try:
         debug.print_function = lines.append
         with debug.with_level(verbosity):
-            perform_logging(blank_game_patches, logger, use_world_graph)
+            perform_logging(blank_game_patches, logger, True)
     finally:
         debug.print_function = old_print
 
-    if use_world_graph:
-        expected = [r.replace("/Lock - ", "/") for r in expected]
-
+    expected = [r.replace("/Lock - ", "/") for r in expected]
     assert lines == expected

@@ -7,9 +7,9 @@ from randovania.game_description.pickup.pickup_entry import PickupEntry
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
-    from randovania.graph.state import GraphOrResourceNode
+    from randovania.graph.world_graph import WorldGraphNode
 
-    type ActionStep = GraphOrResourceNode | PickupEntry
+    type ActionStep = WorldGraphNode | PickupEntry
 
 
 def format_action(action: ActionStep) -> str:
@@ -42,7 +42,7 @@ class Action:
     def num_steps(self) -> int:
         return len(self.steps)
 
-    def split_pickups(self) -> tuple[list[GraphOrResourceNode], list[PickupEntry]]:
+    def split_pickups(self) -> tuple[list[WorldGraphNode], list[PickupEntry]]:
         pickups = []
         resources = []
         for step in self.steps:

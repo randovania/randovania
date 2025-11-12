@@ -74,28 +74,29 @@ async def test_run_filler(
     assert initial_pickup_count == len(remaining_items) + len(result_patches.pickup_assignment.values())
 
 
-async def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_game_patches):
+async def test_fill_unassigned_hints_empty_assignment(blank_game_description, blank_game_patches, blank_world_graph):
     # Setup
     rng = Random(5000)
     hint_nodes = [
         node
-        for node in echoes_game_description.region_list.iterate_nodes()
-        if isinstance(node, HintNode) and node.kind == HintNodeKind.GENERIC
+        for _, _, node in blank_game_description.iterate_nodes_of_type(HintNode)
+        if node.kind == HintNodeKind.GENERIC
     ]
-    hint_distributor = echoes_game_description.game.hints.hint_distributor
+    assert len(hint_nodes) > 0
+    hint_distributor = blank_game_description.game.hints.hint_distributor
 
     filler_config = MagicMock()
     filler_config.minimum_available_locations_for_hint_placement = 0
-    hint_state = HintState(filler_config, echoes_game_description)
+    hint_state = HintState(filler_config, blank_world_graph)
 
     player_pools = [
-        await create_player_pool(rng, echoes_game_patches.configuration, 0, 1, "World 1", MagicMock(), True),
+        await create_player_pool(rng, blank_game_patches.configuration, 0, 1, "World 1", MagicMock(), True),
     ]
 
     # Run
     result = hint_distributor.fill_unassigned_hints(
-        echoes_game_patches,
-        echoes_game_description.region_list,
+        blank_game_patches,
+        blank_game_description.region_list,
         rng,
         hint_state,
         0,

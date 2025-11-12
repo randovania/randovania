@@ -18,7 +18,6 @@ from randovania.game_description.node_search import distances_to_node
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.layout import filtered_database
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
@@ -155,50 +154,32 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
 
 
 class DockRandoLogic(Logic):
-    dock: DockNode | WorldGraphNode
-    target: DockNode | WorldGraphNode
+    dock: WorldGraphNode
+    target: WorldGraphNode
     _victory_condition: Requirement
 
     def __init__(
         self,
-        game: GameDescription | WorldGraph,
+        graph: WorldGraph,
         configuration: BaseConfiguration,
-        dock: DockNode | WorldGraphNode,
-        target: DockNode | WorldGraphNode,
+        dock: WorldGraphNode,
+        target: WorldGraphNode,
         victory_condition: Requirement,
     ):
-        super().__init__(game, configuration)
+        super().__init__(graph, configuration)
         self.dock = dock
         self.target = target
         self._victory_condition = victory_condition
 
     @classmethod
     def from_logic(cls, logic: Logic, dock: DockNode, target: DockNode) -> Self:
-        final_game: GameDescription | WorldGraph
-        graph_dock: DockNode | WorldGraphNode = dock
-        graph_target: DockNode | WorldGraphNode = target
+        graph_dock = logic.graph.original_to_node[dock.node_index]
+        graph_target = logic.graph.original_to_node[target.node_index]
+        assert graph_dock.is_resource_node()
+        assert graph_target.is_resource_node()
 
-        if logic.graph is not None:
-            graph_dock = logic.graph.original_to_node[dock.node_index]
-            graph_target = logic.graph.original_to_node[target.node_index]
-            assert graph_dock.is_resource_node()
-            assert graph_target.is_resource_node()
-            final_game = logic.graph
-
-            source_resource = logic.graph.resource_info_for_node(graph_dock)
-            target_resource = logic.graph.resource_info_for_node(graph_target)
-        else:
-            assert logic.game is not None
-            final_game = logic.game
-
-            context = NodeContext(
-                None,
-                None,  # type: ignore[arg-type]
-                logic.game.resource_database,
-                logic.game.region_list,
-            )
-            source_resource = NodeResourceInfo.from_node(dock, context)
-            target_resource = NodeResourceInfo.from_node(target, context)
+        source_resource = logic.graph.resource_info_for_node(graph_dock)
+        target_resource = logic.graph.resource_info_for_node(graph_target)
 
         victory_condition = RequirementOr(
             [
@@ -206,7 +187,7 @@ class DockRandoLogic(Logic):
                 ResourceRequirement.simple(target_resource),
             ]
         )
-        return cls(final_game, logic.configuration, graph_dock, graph_target, victory_condition)
+        return cls(logic.graph, logic.configuration, graph_dock, graph_target, victory_condition)
 
     def victory_condition(self, state: State) -> Requirement:
         return self._victory_condition

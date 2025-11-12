@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 
 def bulk_move_node_logic(args):
-    game = RandovaniaGame(args.game)
+    game = RandovaniaGame(args.graph)
 
     path, data = default_data.read_json_then_binary(game)
     gd = data_reader.decode_data(data)

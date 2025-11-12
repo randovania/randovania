@@ -835,11 +835,11 @@ async def distribute_specific_location_hints(
     player_pools = filler_results.player_pools
 
     for player_index, patches in old_patches.items():
-        player_pool = player_pools[player_index]
+        player_pool = filler_results.player_results[player_index]
 
-        hint_distributor = player_pool.game.game.hints.hint_distributor
+        hint_distributor = player_pool.game.game_enum.hints.hint_distributor
         new_patches[player_index] = await hint_distributor.assign_precision_to_hints(
-            patches, rng, player_pool, player_pools, HintNodeKind.SPECIFIC_LOCATION
+            patches, rng, player_pool.pool, player_pools, HintNodeKind.SPECIFIC_LOCATION
         )
 
     return dataclasses.replace(

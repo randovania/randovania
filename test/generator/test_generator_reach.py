@@ -31,7 +31,6 @@ from randovania.generator.pickup_pool import pool_creator
 from randovania.generator.reach_lib import advance_after_action
 from randovania.graph import world_graph
 from randovania.graph.state import State
-from randovania.graph.world_graph import WorldGraph
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -40,10 +39,11 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Iterable, Iterator
 
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.generator_reach import GeneratorReach
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
     from randovania.layout.preset import Preset
 
 
@@ -74,15 +74,11 @@ def run_bootstrap(
         configuration, Random(15000), game, False, player_index=0
     )
     graph, state = generator.bootstrap.logic_bootstrap_graph(configuration, game, patches, use_world_graph=True)
-    assert isinstance(graph, WorldGraph)
-
     return game, graph, state, parameters
 
 
-def _create_reach_with_unsafe(
-    game: GameDescription | WorldGraph, state: State, filler_config: FillerConfiguration
-) -> GeneratorReach:
-    return reach_lib.advance_after_action(reach_lib.reach_with_all_safe_resources(game, state, filler_config))
+def _create_reach_with_unsafe(graph: WorldGraph, state: State, filler_config: FillerConfiguration) -> GeneratorReach:
+    return reach_lib.advance_after_action(reach_lib.reach_with_all_safe_resources(graph, state, filler_config))
 
 
 @pytest.mark.benchmark
@@ -141,7 +137,7 @@ def test_database_collectable(
     #             if isinstance(node, ResourceNode) else "",
     #             game.region_list.node_name(node, with_region=True)))
 
-    collected_indices = set(reach.state.collected_pickup_indices(reach.game))
+    collected_indices = set(reach.state.collected_pickup_indices(reach.graph))
     collected_events = {
         resource
         for resource, quantity in reach.state.resources.as_resource_gain()
@@ -270,15 +266,8 @@ def test_reach_size_from_start_echoes(
     def item(name: str):
         return find_resource_info_with_long_name(game.resource_database.item, name)
 
-    ni = NodeIdentifier.create
-
-    def nodes(*names: str):
-        def get_index(n: Node):
-            return n.node_index
-
-        result = [game.region_list.node_by_identifier(ni(*name.split("/"))) for name in names]
-        result.sort(key=get_index)
-        return result
+    def node_names(nodes: Iterator[WorldGraphNode]) -> list[str]:
+        return [n.name for n in sorted(nodes, key=lambda it: it.node_index)]
 
     layout_configuration = dataclasses.replace(
         default_echoes_configuration,
@@ -310,25 +299,33 @@ def test_reach_size_from_start_echoes(
     )
     generator.bootstrap.apply_game_specific_patches(layout_configuration, game, patches)
 
+    graph = world_graph.create_graph(
+        game,
+        patches,
+        state.resources,
+        1.0,
+        game.victory_condition,
+        False,
+    )
+    state.node = graph.original_to_node[state.node.node_index]
+
     # Run
-    reach = OldGeneratorReach.reach_from_state(game, state, default_filler_config)
+    reach = OldGeneratorReach.reach_from_state(graph, state, default_filler_config)
     reach_lib.collect_all_safe_resources_in_reach(reach)
 
     # Assert
 
-    assert list(reach.nodes) == nodes(
-        "Temple Grounds/Path of Eyes/Front of Translator Gate",
-        "Temple Grounds/Path of Eyes/Lore Scan",
-        "Temple Grounds/Path of Eyes/Translator Gate",
+    assert node_names(reach.nodes) == [
         "Temple Grounds/Path of Eyes/Door to Torvus Transport Access",
+        "Temple Grounds/Path of Eyes/Front of Translator Gate",
+        "Temple Grounds/Path of Eyes/Translator Gate",
+        "Temple Grounds/Path of Eyes/Lore Scan",
         "Temple Grounds/Torvus Transport Access/Door to Path of Eyes",
         "Temple Grounds/Torvus Transport Access/Door to Transport to Torvus Bog",
-        "Temple Grounds/Torvus Transport Access/Lock - Door to Transport to Torvus Bog",
         "Temple Grounds/Transport to Torvus Bog/Door to Torvus Transport Access",
-        "Temple Grounds/Transport to Torvus Bog/Lock - Door to Torvus Transport Access",
         "Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog - Transport to Temple Grounds",
-        "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds - Transport to Torvus Bog",
         "Torvus Bog/Transport to Temple Grounds/Door to Temple Transport Access",
+        "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds - Transport to Torvus Bog",
         "Torvus Bog/Temple Transport Access/Door to Transport to Temple Grounds",
         "Torvus Bog/Temple Transport Access/Door to Torvus Lagoon",
         "Torvus Bog/Torvus Lagoon/Door to Temple Transport Access",
@@ -341,5 +338,5 @@ def test_reach_size_from_start_echoes(
         "Torvus Bog/Path of Roots/Under Lore Scan",
         "Torvus Bog/Path of Roots/Lore Scan",
         "Torvus Bog/Great Bridge/Door to Path of Roots",
-    )
-    assert len(list(reach.safe_nodes)) == 22
+    ]
+    assert len(list(reach.safe_nodes)) == 20

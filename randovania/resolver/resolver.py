@@ -4,12 +4,10 @@ import asyncio
 import enum
 from typing import TYPE_CHECKING, Any
 
-from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -34,7 +32,7 @@ if TYPE_CHECKING:
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logging import ResolverLogger
 
-ResolverAction = WorldGraphNode | ResourceNode
+type ResolverAction = WorldGraphNode
 AnyPickupNode = PickupNode | EventPickupNode
 AnyEventNode = EventNode | EventPickupNode
 
@@ -157,21 +155,7 @@ def _is_dangerous_event(state: State, action: ResolverAction, dangerous_resource
 
 
 def _is_major_or_key_pickup_node(action: ResolverAction, state: State) -> bool:
-    pickup = None
-    if isinstance(action, WorldGraphNode):
-        pickup = action.pickup_entry
-    else:
-        pickup_node: ResourceNode
-        if isinstance(action, EventPickupNode):
-            pickup_node = action.pickup_node
-        else:
-            pickup_node = action
-
-        if isinstance(pickup_node, PickupNode):
-            target = state.patches.pickup_assignment.get(pickup_node.pickup_index)
-            if target is not None:
-                pickup = target.pickup
-
+    pickup = action.pickup_entry
     return (
         pickup is not None
         and pickup.generator_params.preferred_location_category is LocationCategory.MAJOR
@@ -220,25 +204,16 @@ class ActionPriority(enum.IntEnum):
 
 
 def _is_event_node(action: ResolverAction) -> bool:
-    if isinstance(action, WorldGraphNode):
-        return any(it.resource_type == ResourceType.EVENT for it, q in action.resource_gain if q > 0)
-    else:
-        return isinstance(action, AnyEventNode)
+    return any(it.resource_type == ResourceType.EVENT for it, q in action.resource_gain if q > 0)
 
 
 def _is_hint_node(action: ResolverAction) -> bool:
-    if isinstance(action, WorldGraphNode):
-        target_node = action.database_node
-    else:
-        target_node = action
+    target_node = action.database_node
     return isinstance(target_node, HintNode)
 
 
 def _is_lock_action(action: ResolverAction) -> bool:
-    if isinstance(action, WorldGraphNode):
-        return action.is_lock_action
-    else:
-        return isinstance(action, DockLockNode | AnyEventNode)
+    return action.is_lock_action
 
 
 def _priority_for_resource_action(action: ResolverAction, state: State, logic: Logic) -> ActionPriority:
@@ -290,33 +265,20 @@ def _progressive_chain_info(node: Node, context: NodeContext) -> None | tuple[li
 
 
 def _assign_hint_available_locations(state: State, action: ResolverAction, logic: Logic) -> None:
-    if (
-        state.hint_state is not None
-        and isinstance(action, WorldGraphNode | PickupNode)
-        and action.pickup_index is not None
-    ):
+    if state.hint_state is not None and action.pickup_index is not None:
         available = state.hint_state.valid_available_locations_for_hint(state, logic)
         state.hint_state.assign_available_locations(action.pickup_index, available)
 
 
 def _resource_gain_for_state(state: State) -> list[ResourceInfo]:
-    return (
-        [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
-        if isinstance(state.node, ResourceNode | WorldGraphNode)
-        else []
-    )
+    return [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
 
 
 def _index_for_action_pair(pair: tuple[ResolverAction, DamageState]) -> int:
     node = pair[0]
-    if isinstance(node, WorldGraphNode):
-        # TODO: probably this entire sorting is pointless when there's only WorldGraph
-        assert node.database_node is not None
-        return node.database_node.node_index
-    elif isinstance(node, DockLockNode):
-        return node.dock.node_index
-    else:
-        return node.node_index
+    # TODO: probably this entire sorting is pointless when there's only WorldGraph
+    assert node.database_node is not None
+    return node.database_node.node_index
 
 
 async def _inner_advance_depth(
@@ -521,7 +483,7 @@ async def resolve(
         logic.prioritize_hints = True
         starting_state.hint_state = ResolverHintState(
             FillerConfiguration.from_configuration(configuration),
-            patches.game,
+            logic.graph,
         )
 
     if logger is not None:

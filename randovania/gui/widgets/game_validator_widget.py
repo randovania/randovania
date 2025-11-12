@@ -17,7 +17,6 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Iterable, Iterator
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraphNode
     from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -351,9 +350,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
 
         self.validator_widget.add_log_entry(widget, action_entry.location.identifier)
 
-    def _log_checking_satisfiable(
-        self, actions: Iterable[tuple[ActionPriority, ResourceNode | WorldGraphNode, DamageState]]
-    ) -> None:
+    def _log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, WorldGraphNode, DamageState]]) -> None:
         if not self.should_show("CheckSatisfiable", self.log_level):
             return
 

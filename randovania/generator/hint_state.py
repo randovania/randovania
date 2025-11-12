@@ -4,32 +4,31 @@ import collections
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.hint_node import HintNode
-from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
-    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraph
 
 
 class HintState:
     """Tracks necessary state for anything relating to hint placement"""
 
     configuration: FillerConfiguration
-    game: GameDescription | WorldGraph
+    graph: WorldGraph
 
     hint_seen_count: collections.defaultdict[NodeIdentifier, int]
     hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]]
     pickup_available_indices_when_collected: dict[PickupIndex, frozenset[PickupIndex]]
 
-    def __init__(self, config: FillerConfiguration, game: GameDescription | WorldGraph):
+    def __init__(self, config: FillerConfiguration, graph: WorldGraph):
         self.configuration = config
-        self.game = game
+        self.graph = graph
 
         self.hint_seen_count = collections.defaultdict(int)
         self.hint_initial_pickups = {}
@@ -48,11 +47,7 @@ class HintState:
             for hint, pickups in self.hint_initial_pickups.items()
         }
 
-        nodes: list[WorldGraphNode | HintNode]
-        if isinstance(self.game, WorldGraph):
-            nodes = [node for node in self.game.nodes if isinstance(node.database_node, HintNode)]
-        else:
-            nodes = [node for _, _, node in self.game.iterate_nodes_of_type(HintNode)]
+        nodes = [node for node in self.graph.nodes if isinstance(node.database_node, HintNode)]
 
         for node in nodes:
             # ensure all hint nodes are included, even if they have no targets
@@ -62,10 +57,10 @@ class HintState:
 
     def advance_hint_seen_count(self, state: State) -> None:
         """Increases hint seen count each time a hint is collected, and sets initial_pickups the first time"""
-        for hint_identifier in state.collected_hints(self.game):
+        for hint_identifier in state.collected_hints(self.graph):
             self.hint_seen_count[hint_identifier] += 1
             if self.hint_seen_count[hint_identifier] == 1:
-                self.hint_initial_pickups[hint_identifier] = frozenset(state.collected_pickup_indices(self.game))
+                self.hint_initial_pickups[hint_identifier] = frozenset(state.collected_pickup_indices(self.graph))
 
     def assign_available_locations(self, pickup_index: PickupIndex, locations: Iterable[PickupIndex]) -> None:
         """

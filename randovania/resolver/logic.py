@@ -1,10 +1,8 @@
 from __future__ import annotations
 
-import typing
 from typing import TYPE_CHECKING
 
 from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 from randovania.resolver.exceptions import ResolverTimeoutError
 from randovania.resolver.logging import (
     ResolverLogger,
@@ -12,11 +10,11 @@ from randovania.resolver.logging import (
 )
 
 if TYPE_CHECKING:
-    from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_info import ResourceInfo
-    from randovania.graph.state import GraphOrClassicNode, State
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -27,8 +25,8 @@ class Logic:
 
     additional_requirements: list[RequirementSet]
     prioritize_hints: bool
-    all_nodes: tuple[Node, ...] | tuple[WorldGraphNode, ...]
-    graph: WorldGraph | None
+    all_nodes: tuple[WorldGraphNode, ...]
+    graph: WorldGraph
     game: GameDescription | None
 
     logger: ResolverLogger
@@ -37,20 +35,14 @@ class Logic:
 
     def __init__(
         self,
-        graph: WorldGraph | GameDescription,
+        graph: WorldGraph,
         configuration: BaseConfiguration,
         *,
         prioritize_hints: bool = False,
         record_paths: bool = False,
     ):
-        if isinstance(graph, WorldGraph):
-            self.all_nodes = tuple(graph.nodes)
-            self.graph = graph
-            self.game = None
-        else:
-            self.all_nodes = typing.cast("tuple[Node, ...]", graph.region_list.all_nodes)
-            self.graph = None
-            self.game = graph
+        self.all_nodes = tuple(graph.nodes)
+        self.graph = graph
 
         self.configuration = configuration
         self.num_nodes = len(self.all_nodes)
@@ -62,10 +54,10 @@ class Logic:
 
         self.logger = TextResolverLogger()
 
-    def get_additional_requirements(self, node: GraphOrClassicNode) -> RequirementSet:
+    def get_additional_requirements(self, node: WorldGraphNode) -> RequirementSet:
         return self.additional_requirements[node.node_index]
 
-    def set_additional_requirements(self, node: GraphOrClassicNode, req: RequirementSet) -> None:
+    def set_additional_requirements(self, node: WorldGraphNode, req: RequirementSet) -> None:
         self.additional_requirements[node.node_index] = req
 
     def victory_condition(self, state: State) -> Requirement:

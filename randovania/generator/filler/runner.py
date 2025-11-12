@@ -47,7 +47,7 @@ async def run_filler(
         standard_pickups = list(pool.pickups)
         rng.shuffle(standard_pickups)
 
-        new_game, state = pool.game_generator.bootstrap.logic_bootstrap_graph(
+        graph, state = pool.game_generator.bootstrap.logic_bootstrap_graph(
             config,
             pool.game,
             pool.patches,
@@ -58,7 +58,7 @@ async def run_filler(
                 index=index,
                 name=world_names[index],
                 game_enum=pool.game.game,
-                game=new_game,
+                graph=graph,
                 original_game=pool.game,
                 initial_state=state,
                 pickups_left=standard_pickups,
