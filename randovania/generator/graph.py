@@ -14,6 +14,7 @@ from randovania.graph.world_graph import WorldGraph
 if TYPE_CHECKING:
     from collections.abc import Callable, Collection, Iterable, Iterator, Mapping
 
+    from randovania.game_description.db.node import NodeIndex
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.base import Requirement
 
@@ -31,29 +32,42 @@ class BaseGraph:
     def add_node(self, node: int) -> None:
         raise NotImplementedError
 
-    def add_edge(self, previous_node: int, next_node: int, data: GraphData) -> None:
+    def add_edge(self, previous_node: NodeIndex, next_node: NodeIndex, data: GraphData) -> None:
+        """Adds an edge between two nodes."""
         raise NotImplementedError
 
-    def remove_edge(self, previous: int, target: int) -> None:
+    def remove_edge(self, previous_node: NodeIndex, next_node: NodeIndex) -> None:
+        """Removes a previously added edge. Raises if not present."""
         raise NotImplementedError
 
-    def has_edge(self, previous_node: int, next_node: int) -> bool:
+    def has_edge(self, previous_node: NodeIndex, next_node: NodeIndex) -> bool:
+        """Checks if an edge exists between the two given nodes."""
         raise NotImplementedError
 
-    def __contains__(self, item: int) -> bool:
+    def __contains__(self, item: NodeIndex) -> bool:
+        """Checks if a given node index was added via `add_node`."""
         raise NotImplementedError
 
-    def edges_data(self) -> Iterator[tuple[int, int, GraphData]]:
+    def edges_data(self) -> Iterator[tuple[NodeIndex, NodeIndex, GraphData]]:
+        """Iterates over all edges that were added via `add_edge`."""
         raise NotImplementedError
 
     def shortest_paths_dijkstra(
         self,
         source: int,
-        weight: Callable[[int, int, GraphData], int],
+        weight: Callable[[NodeIndex, NodeIndex, GraphData], float],
     ) -> Mapping[int, float]:
+        """
+        Finds all nodes that are reachable from the given starting point.
+        Returns a dict mapping found nodes to the cost of the path, with the cost of an edge being decided by `weight`.
+        """
         raise NotImplementedError
 
-    def strongly_connected_components(self) -> Iterable[Collection[int]]:
+    def strongly_connected_components(self) -> Iterable[Collection[NodeIndex]]:
+        """
+        Returns all strongly connected components of the graph.
+        See https://en.wikipedia.org/wiki/Strongly_connected_component
+        """
         raise NotImplementedError
 
 
@@ -68,49 +82,57 @@ class RandovaniaGraph(BaseGraph):
     def __init__(self, edges: dict[int, dict[int, GraphData]]):
         self.edges = edges
 
+    @override
     def copy(self) -> RandovaniaGraph:
-        edges: dict[int, dict[int, GraphData]] = defaultdict(dict)
+        edges: dict[NodeIndex, dict[NodeIndex, GraphData]] = defaultdict(dict)
         edges.update({source: copy.copy(data) for source, data in self.edges.items()})
         return RandovaniaGraph(edges)
 
-    def add_node(self, node: int) -> None:
+    @override
+    def add_node(self, node: NodeIndex) -> None:
         if node not in self.edges:
             self.edges[node] = {}
 
-    def add_edge(self, previous_node: int, next_node: int, data: GraphData) -> None:
+    @override
+    def add_edge(self, previous_node: NodeIndex, next_node: NodeIndex, data: GraphData) -> None:
         self.edges[previous_node][next_node] = data
 
-    def remove_edge(self, previous: int, target: int) -> None:
-        self.edges[previous].pop(target)
+    @override
+    def remove_edge(self, previous_node: NodeIndex, next_node: NodeIndex) -> None:
+        self.edges[previous_node].pop(next_node)
 
-    def has_edge(self, previous_node: int, next_node: int) -> bool:
+    @override
+    def has_edge(self, previous_node: NodeIndex, next_node: NodeIndex) -> bool:
         return next_node in self.edges.get(previous_node, {})
 
-    def __contains__(self, item: int) -> bool:
+    @override
+    def __contains__(self, item: NodeIndex) -> bool:
         return item in self.edges
 
-    def edges_data(self) -> Iterator[tuple[int, int, GraphData]]:
+    @override
+    def edges_data(self) -> Iterator[tuple[NodeIndex, NodeIndex, GraphData]]:
         for source, data in self.edges.items():
             for target, requirement in data.items():
                 yield source, target, requirement
 
+    @override
     def shortest_paths_dijkstra(
         self,
         source: int,
-        weight: Callable[[int, int, GraphData], int],
-    ) -> Mapping[int, float]:
+        weight: Callable[[NodeIndex, NodeIndex, GraphData], float],
+    ) -> Mapping[NodeIndex, float]:
         paths = {source: [source]}  # dictionary of paths
         edges = self.edges
 
         push = heappush
         pop = heappop
 
-        dist: dict[int, int] = {}  # dictionary of final distances
-        seen = {}
+        dist: dict[int, float] = {}  # dictionary of final distances
+        seen: dict[int, float] = {}
         # fringe is heapq with 3-tuples (distance,c,node)
         # use the count c to avoid comparing nodes (may not be able to)
         c = itertools.count()
-        fringe: list[tuple[int, int, int]] = []
+        fringe: list[tuple[float, int, int]] = []
         seen[source] = 0
         push(fringe, (0, next(c), source))
 
@@ -135,7 +157,8 @@ class RandovaniaGraph(BaseGraph):
 
         return dist
 
-    def strongly_connected_components(self) -> Iterable[Collection[int]]:
+    @override
+    def strongly_connected_components(self) -> Iterable[Collection[NodeIndex]]:
         preorder = {}
         lowlink = {}
         scc_found = set()
@@ -178,7 +201,7 @@ class RandovaniaGraph(BaseGraph):
 
 class RustworkXGraph(BaseGraph):
     _graph: rustworkx.PyDiGraph
-    _added_nodes: set[int]
+    _added_nodes: set[NodeIndex]
 
     @override
     @classmethod
@@ -189,40 +212,52 @@ class RustworkXGraph(BaseGraph):
         else:
             num_nodes = len(game.region_list.all_nodes)
 
+        # rustworkx methods returns indices of the internal node list, instead of the data we passed
+        # when creating the nodes. Instead of having to convert these indices, we'll instead just create all possible
+        # nodes at once to guarantee the indices will always match.
         g.add_nodes_from(list(range(num_nodes)))
         return cls(g, set())
 
-    def __init__(self, graph: rustworkx.PyDiGraph, added_nodes: set[int]):
+    def __init__(self, graph: rustworkx.PyDiGraph, added_nodes: set[NodeIndex]):
         self._graph = graph
         self._added_nodes = added_nodes
 
+    @override
     def copy(self) -> RustworkXGraph:
         return RustworkXGraph(self._graph.copy(), self._added_nodes.copy())
 
-    def add_node(self, node: int) -> None:
+    @override
+    def add_node(self, node: NodeIndex) -> None:
+        # Since `_graph` has all nodes always, we track added nodes separately just for the `__contains__` method.
         self._added_nodes.add(node)
 
-    def add_edge(self, previous_node: int, next_node: int, data: GraphData) -> None:
+    @override
+    def add_edge(self, previous_node: NodeIndex, next_node: NodeIndex, data: GraphData) -> None:
         self._graph.add_edge(previous_node, next_node, (previous_node, next_node, data))
 
-    def remove_edge(self, previous_node: int, next_node: int) -> None:
+    @override
+    def remove_edge(self, previous_node: NodeIndex, next_node: NodeIndex) -> None:
         self._graph.remove_edge(previous_node, next_node)
 
-    def has_edge(self, previous_node: int, next_node: int) -> bool:
+    @override
+    def has_edge(self, previous_node: NodeIndex, next_node: NodeIndex) -> bool:
         return self._graph.has_edge(previous_node, next_node)
 
-    def __contains__(self, item: int) -> bool:
+    @override
+    def __contains__(self, item: NodeIndex) -> bool:
         return item in self._added_nodes
 
-    def edges_data(self) -> Iterator[tuple[int, int, GraphData]]:
+    @override
+    def edges_data(self) -> Iterator[tuple[NodeIndex, NodeIndex, GraphData]]:
         yield from self._graph.edges()
 
+    @override
     def shortest_paths_dijkstra(
         self,
         source: int,
-        weight: Callable[[int, int, GraphData], int],
-    ) -> Mapping[int, float]:
-        def wrap(data: tuple[int, int, GraphData]) -> float:
+        weight: Callable[[NodeIndex, NodeIndex, GraphData], float],
+    ) -> Mapping[NodeIndex, float]:
+        def wrap(data: tuple[NodeIndex, NodeIndex, GraphData]) -> float:
             return weight(*data)
 
         costs = dict(
@@ -232,8 +267,13 @@ class RustworkXGraph(BaseGraph):
                 edge_cost_fn=wrap,
             )
         )
+        # Important to ensure the original node is present in the response
         costs[source] = 0.0
         return costs
 
-    def strongly_connected_components(self) -> Iterable[Collection[int]]:
+    @override
+    def strongly_connected_components(self) -> Iterable[Collection[NodeIndex]]:
+        # Since we added every possible node already, this function returns a
+        # bunch of additional components with just 1 array
+        # All this does is make `_calculate_safe_nodes` slower.
         return rustworkx.strongly_connected_components(self._graph)
