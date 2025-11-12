@@ -10,7 +10,6 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup, create_standard_pickup
 from randovania.generator.pickup_pool.standard_pickup import find_ammo_for
@@ -31,6 +30,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
@@ -209,7 +209,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
             initial_resources,
             (),
             self.create_damage_state(game, configuration).apply_collected_resource_difference(
-                initial_resources, ResourceCollection()
+                initial_resources, game.create_resource_collection()
             ),
             starting_node,
             patches,

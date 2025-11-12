@@ -177,7 +177,7 @@ class GameDescription(GameDatabaseView):
     @property
     def dangerous_resources(self) -> frozenset[ResourceInfo]:
         if self._dangerous_resources is None:
-            context = self.create_node_context(ResourceCollection())
+            context = self.create_node_context(self.create_resource_collection())
             first = _calculate_dangerous_resources_in_areas(context)
             second = _calculate_dangerous_resources_in_db(self.dock_weakness_database, context)
             self._dangerous_resources = frozenset(first) | frozenset(second)
@@ -189,7 +189,7 @@ class GameDescription(GameDatabaseView):
             return self._used_trick_levels
 
         result = collections.defaultdict(set)
-        context = self.create_node_context(ResourceCollection())
+        context = self.create_node_context(self.create_resource_collection())
 
         def process(req: Requirement) -> None:
             for resource_requirement in req.iterate_resource_requirements(context):
