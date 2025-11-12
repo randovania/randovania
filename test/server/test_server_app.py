@@ -8,6 +8,7 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 
 from randovania.network_common import error
+from randovania.network_common.authentication import AuthenticationMethod
 from randovania.server import database
 from randovania.server.server_app import EnforceDiscordRole, ServerLoggingFormatter
 
@@ -138,3 +139,16 @@ def test_custom_formatter():
     result = x.formatMessage(record)
 
     assert result == "DEBUG:    Free [None] in None: the msg"
+
+
+def test_is_authentication_method_supported_both(server_app):
+    assert server_app.is_authentication_method_supported(AuthenticationMethod.GUEST)
+    assert server_app.is_authentication_method_supported(AuthenticationMethod.DISCORD)
+
+
+def test_is_authentication_method_supported_neither(server_app):
+    server_app.app.debug = False
+    server_app.configuration["server_config"]["discord_client_secret"] = ""
+
+    assert not server_app.is_authentication_method_supported(AuthenticationMethod.GUEST)
+    assert not server_app.is_authentication_method_supported(AuthenticationMethod.DISCORD)

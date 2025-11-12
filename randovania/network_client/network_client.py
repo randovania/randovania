@@ -43,6 +43,7 @@ from randovania.network_common.async_race_room import (
     RaceRoomLeaderboard,
 )
 from randovania.network_common.audit import AuditEntry
+from randovania.network_common.authentication import AuthenticationMethod
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionActions,
     MultiplayerSessionAuditLog,
@@ -364,8 +365,10 @@ class NetworkClient:
         if self._restore_session_task is not None:
             self._restore_session_task.cancel()
 
-    async def on_user_session_updated(self, new_session: dict):
-        self.http.headers["X-Randovania-Sid"] = new_session["sid"]
+    async def on_user_session_updated(self, new_session: dict) -> None:
+        if new_session["sid"] is not None:
+            self.http.headers["X-Randovania-Sid"] = new_session["sid"]
+
         self._current_user = CurrentUser.from_json(new_session["user"])
         self._update_reported_username()
 
@@ -738,6 +741,22 @@ class NetworkClient:
     def allow_reporting_username(self, value: bool) -> None:
         self._allow_reporting_username = value
         self._update_reported_username()
+
+    async def query_authentication_methods(self) -> set[AuthenticationMethod]:
+        async with self.server_get("authentication_methods") as response:
+            response.raise_for_status()
+            result = await response.json()
+
+        return {AuthenticationMethod(r) for r in result}
+
+    async def login_as_guest(self, name: str) -> None:
+        async with self.server_post("guest_login", data={"name": name}) as response:
+            response.raise_for_status()
+            new_session = await response.json()
+
+        await self.on_user_session_updated(new_session)
+        if self.connection_state != ConnectionState.Connected:
+            await self.connect_to_server()
 
     def server_get(
         self,
