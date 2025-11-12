@@ -15,16 +15,16 @@ from randovania.game_description.db.dock_node import DockNode
 if TYPE_CHECKING:
     from matplotlib.axes import Axes
 
-    from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraphNode
 
 
 class MatplotlibWidget(QtWidgets.QWidget):
     ax: Axes
 
-    def __init__(self, parent, region_list: RegionList):
+    def __init__(self, parent: QtWidgets.QWidget, region_list: RegionList):
         super().__init__(parent)
 
         self.region_list = region_list
@@ -39,7 +39,7 @@ class MatplotlibWidget(QtWidgets.QWidget):
         self.ax = fig.add_subplot(111)
         self.line, *_ = self.ax.plot([])
 
-        self._region_to_node_positions = {}
+        self._region_to_node_positions: dict[str, dict] = {}
 
     def _positions_for_region(self, region: Region, state: State) -> dict:
         g = networkx.DiGraph()
@@ -62,8 +62,12 @@ class MatplotlibWidget(QtWidgets.QWidget):
 
         return networkx.drawing.spring_layout(g)
 
-    def update_for(self, region: Region, state: State, nodes_in_reach: set[Node]) -> None:
+    def update_for(self, region: Region, state: State, nodes_in_reach: list[WorldGraphNode]) -> None:
         g = networkx.DiGraph()
+
+        original_nodes_in_reach = {
+            node.database_node.node_index for node in nodes_in_reach if node.database_node is not None
+        }
 
         for area in region.areas:
             g.add_node(area)
@@ -72,7 +76,7 @@ class MatplotlibWidget(QtWidgets.QWidget):
         for area in region.areas:
             nearby_areas = set()
             for node in area.nodes:
-                if node not in nodes_in_reach:
+                if node.node_index not in original_nodes_in_reach:
                     continue
 
                 for other_node, requirement in node.connections_from(context):
@@ -87,6 +91,7 @@ class MatplotlibWidget(QtWidgets.QWidget):
         self.ax.clear()
 
         cf = self.ax.get_figure()
+        assert cf is not None
         cf.set_facecolor("w")
 
         if region.name not in self._region_to_node_positions:
