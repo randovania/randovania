@@ -16,9 +16,9 @@ from randovania.graph.state import GraphOrResourceNode
 from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator, Sequence
+    from collections.abc import Iterator, Mapping, Sequence
 
-    from randovania.game_description.db.node import NodeContext, NodeIndex
+    from randovania.game_description.db.node import Node, NodeContext, NodeIndex
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
@@ -69,8 +69,7 @@ class OldGeneratorReach(GeneratorReach):
     _digraph: graph_module.BaseGraph
     _state: State
     _game: GameDescription | WorldGraph
-    _reachable_paths: dict[int, list[int]] | None
-    _reachable_costs: dict[int, int] | None
+    _reachable_costs: Mapping[int, float] | None
     _node_reachable_cache: dict[int, bool]
     _unreachable_paths: dict[tuple[int, int], Requirement]
     _uncollectable_nodes: dict[int, Requirement]
@@ -83,7 +82,6 @@ class OldGeneratorReach(GeneratorReach):
         reach = OldGeneratorReach(self._game, self._state, self._digraph.copy(), copy.copy(self._filler_config))
         reach._unreachable_paths = copy.copy(self._unreachable_paths)
         reach._uncollectable_nodes = copy.copy(self._uncollectable_nodes)
-        reach._reachable_paths = self._reachable_paths
         reach._reachable_costs = self._reachable_costs
         reach._safe_nodes = self._safe_nodes
 
@@ -108,7 +106,7 @@ class OldGeneratorReach(GeneratorReach):
         self._digraph = graph
         self._unreachable_paths = {}
         self._uncollectable_nodes = {}
-        self._reachable_paths = None
+        self._reachable_costs = None
         self._node_reachable_cache = {}
         self._is_node_safe_cache = {}
         self._filler_config = filler_config
@@ -120,7 +118,7 @@ class OldGeneratorReach(GeneratorReach):
         initial_state: State,
         filler_config: FillerConfiguration,
     ) -> Self:
-        reach = cls(game, initial_state, graph_module.RandovaniaGraph.new(), filler_config)
+        reach = cls(game, initial_state, graph_module.RustworkXGraph.new(game), filler_config)
         if isinstance(game, GameDescription):
             game.region_list.ensure_has_node_cache()
         reach._expand_graph([GraphPath(None, initial_state.node, Requirement.trivial())])
@@ -160,7 +158,7 @@ class OldGeneratorReach(GeneratorReach):
 
     def _expand_graph(self, paths_to_check: list[GraphPath]) -> None:
         # print("!! _expand_graph", len(paths_to_check))
-        self._reachable_paths = None
+        self._reachable_costs = None
         resource_nodes_to_check = set()
 
         context = self._state.node_context()
@@ -222,52 +220,70 @@ class OldGeneratorReach(GeneratorReach):
         for component in self._digraph.strongly_connected_components():
             if self._state.node.node_index in component:
                 assert self._safe_nodes is None
-                self._safe_nodes = _SafeNodes(sorted(component), component)
+                self._safe_nodes = _SafeNodes(
+                    sorted(component),
+                    set(component),
+                )
 
         assert self._safe_nodes is not None
 
-    def _calculate_reachable_paths(self) -> None:
-        if self._reachable_paths is not None:
+    def _calculate_reachable_costs(self) -> None:
+        if self._reachable_costs is not None:
             return
 
-        all_nodes = self.all_nodes
         context = self.node_context()
 
-        @functools.cache
-        def _is_collected(target: int) -> int:
-            node = all_nodes[target]
-            if node.is_resource_node():
-                assert isinstance(node, GraphOrResourceNode)
-                if node.is_collected(context):
-                    return 0
+        if isinstance(self._game, WorldGraph):
+            graph_nodes = self._game.nodes
+
+            @functools.cache
+            def _is_collected(target: int) -> int:
+                return not graph_nodes[target].is_collected(context)
+        else:
+            db_nodes = typing.cast("tuple[Node, ...]", self._game.region_list.all_nodes)
+
+            @functools.cache
+            def _is_collected(target: int) -> int:
+                node = db_nodes[target]
+                if node.is_resource_node():
+                    if typing.cast("ResourceNode", node).is_collected(context):
+                        return 0
+                    else:
+                        return 1
                 else:
-                    return 1
-            else:
-                return 0
+                    return 0
+
+        self._reachable_is_collected = _is_collected
 
         def weight(source: int, target: int, attributes: graph_module.GraphData) -> int:
             return _is_collected(target)
 
-        self._reachable_costs, self._reachable_paths = self._digraph.multi_source_dijkstra(
-            {self._state.node.node_index},
+        self._reachable_costs = self._digraph.shortest_paths_dijkstra(
+            self._state.node.node_index,
             weight=weight,
         )
 
-    def is_reachable_node(self, node: GraphOrClassicNode) -> bool:
-        index = node.node_index
+    def set_of_reachable_node_indices(self) -> set[int]:
+        self._calculate_reachable_costs()
+        assert self._reachable_costs is not None
+        return {index for index in self._reachable_costs.keys() if self.is_reachable_node_index(index)}
 
+    def is_reachable_node(self, node: GraphOrClassicNode) -> bool:
+        return self.is_reachable_node_index(node.node_index)
+
+    def is_reachable_node_index(self, index: int) -> bool:
         cached_value = self._node_reachable_cache.get(index)
         if cached_value is not None:
             return cached_value
 
-        self._calculate_reachable_paths()
+        self._calculate_reachable_costs()
         assert self._reachable_costs is not None
-        cost = self._reachable_costs.get(index)
-        if cost is not None:
+        if index in self._reachable_costs:
+            cost = self._reachable_costs[index]
             if cost == 0:
                 self._node_reachable_cache[index] = True
             elif cost == 1:
-                self._node_reachable_cache[index] = not self._can_advance(node)
+                self._node_reachable_cache[index] = not self._can_advance(self.all_nodes[index])
             else:
                 self._node_reachable_cache[index] = False
 
@@ -281,10 +297,10 @@ class OldGeneratorReach(GeneratorReach):
         An iterator of all nodes there's an path from the reach's starting point. Similar to is_reachable_node
         :return:
         """
-        self._calculate_reachable_paths()
-        assert self._reachable_paths is not None
+        self._calculate_reachable_costs()
+        assert self._reachable_costs is not None
         all_nodes = self.all_nodes
-        for index in self._reachable_paths.keys():
+        for index in self._reachable_costs.keys():
             yield all_nodes[index]
 
     @property

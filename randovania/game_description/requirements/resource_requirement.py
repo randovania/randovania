@@ -98,8 +98,14 @@ class ResourceRequirement(Requirement):
             return str(self)
 
     @property
-    def _as_comparison_tuple(self) -> tuple[ResourceType, str, int, bool]:
-        return self.resource.resource_type, self.resource.short_name, self.amount, self.negate
+    def _as_comparison_tuple(self) -> tuple[ResourceType, str, int, bool, int]:
+        return (
+            self.resource.resource_type,
+            self.resource.short_name,
+            self.amount,
+            self.negate,
+            self.resource.resource_index,
+        )
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, ResourceRequirement):

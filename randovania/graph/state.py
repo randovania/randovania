@@ -84,6 +84,43 @@ class State:
             copy.copy(self.hint_state),
         )
 
+    def collected_pickups_hints_and_events(
+        self, graph: WorldGraph | GameDescription
+    ) -> tuple[
+        list[PickupIndex],
+        list[NodeIdentifier],
+        list[ResourceInfo],
+    ]:
+        pickups: list[PickupIndex] = []
+        hints: list[NodeIdentifier] = []
+        events: list[ResourceInfo] = []
+
+        for resource, count in self.resources.as_resource_gain():
+            if count < 1:
+                continue
+
+            if isinstance(resource, NodeResourceInfo):
+                if isinstance(graph, WorldGraph):
+                    graph_node = graph.get_node_by_resource_info(resource)
+                    if graph_node.pickup_index is not None:
+                        pickups.append(graph_node.pickup_index)
+                    if isinstance(graph_node.database_node, HintNode):
+                        hints.append(resource.node_identifier)
+                else:
+                    db_node = graph.node_by_identifier(resource.node_identifier)
+                    if isinstance(db_node, PickupNode) and db_node.pickup_index is not None:
+                        pickups.append(db_node.pickup_index)
+                    if isinstance(db_node, HintNode):
+                        hints.append(resource.node_identifier)
+            elif resource.resource_type == ResourceType.EVENT:
+                events.append(resource)
+
+        return (
+            pickups,
+            hints,
+            events,
+        )
+
     def collected_pickup_indices(self, graph: WorldGraph | GameDescription) -> Iterator[PickupIndex]:
         for resource, count in self.resources.as_resource_gain():
             if count > 0 and isinstance(resource, NodeResourceInfo):
@@ -98,10 +135,9 @@ class State:
 
     def collected_hints(self, graph: WorldGraph | GameDescription) -> Iterator[NodeIdentifier]:
         for resource, count in self.resources.as_resource_gain():
-            if isinstance(resource, NodeResourceInfo) and count > 0:
+            if count > 0 and isinstance(resource, NodeResourceInfo):
                 if isinstance(graph, WorldGraph):
-                    node_index = resource.resource_index - self.resource_database.first_unused_resource_index()
-                    if isinstance(graph.nodes[node_index].database_node, HintNode):
+                    if isinstance(graph.get_node_by_resource_info(resource).database_node, HintNode):
                         yield resource.node_identifier
                 else:
                     node = graph.node_by_identifier(resource.node_identifier)

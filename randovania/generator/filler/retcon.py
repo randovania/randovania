@@ -205,9 +205,11 @@ def weighted_potential_actions(
 
     if sum(actions_weights.values()) == 0:
         debug.debug_print("Using backup weights")
+        current_reachable_nodes = player_state.reach.set_of_reachable_node_indices()
+
         actions_weights = {
             action: action_weights.ADDITIONAL_NODES_WEIGHT_MULTIPLIER
-            * len((UncollectedState.from_reach(evaluation.reach) - current_uncollected).nodes)
+            * len(evaluation.reach.set_of_reachable_node_indices() - current_reachable_nodes)
             for action, evaluation in evaluated_actions.items()
         }
 
@@ -493,7 +495,6 @@ def _calculate_weights_for(
     potential_unsafe_uncollected = UncollectedState.from_reach_only_unsafe(potential_reach) - current_unsafe_uncollected
 
     if debug.debug_level() > debug.LogLevel.HIGH:
-        node_by_index = {n.node_index: n for n in potential_reach.iterate_nodes}
 
         def print_weight_factors(uncollected: UncollectedState) -> None:
             print(f"  indices: {uncollected.pickup_indices}")
@@ -507,9 +508,6 @@ def _calculate_weights_for(
 
         print("unsafe resources:")
         print_weight_factors(potential_unsafe_uncollected)
-
-        print(f"nodes: {[node_by_index[n].identifier.as_string for n in potential_uncollected.nodes]}")
-        print()
 
     # this used to weigh actions according to *how many* resources were unlocked, but we've determined
     # that the results are more fun if we only care about something being unlocked at all
