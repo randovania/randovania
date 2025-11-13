@@ -143,7 +143,13 @@ def batch_distribute_command_logic(args: Namespace) -> None:
 
 def add_batch_distribute_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("batch-distribute", help="Generate multiple layouts in parallel")
-    parser.add_argument("--use-world-graph", default=False, action="store_true", help="Use WorldGraph for database.")
+    parser.add_argument(
+        "--no-world-graph",
+        default=True,
+        dest="use_world_graph",
+        action="store_false",
+        help="Don't use WorldGraph for generator/resolver.",
+    )
 
     parser.add_argument("permalink", type=str, help="The permalink to use")
     parser.add_argument("--process-count", type=int, help="How many processes to use. Defaults to CPU count.")
