@@ -768,11 +768,9 @@ def _should_use_resolver_hints(config: BaseConfiguration) -> bool:
     )
 
 
-async def get_resolver_hint_state(player: int, patches: GamePatches, use_world_graph: bool) -> ResolverHintState | None:
+async def get_resolver_hint_state(player: int, patches: GamePatches) -> ResolverHintState | None:
     with debug.with_level(debug.LogLevel.SILENT):
-        new_state = await resolver.resolve(
-            patches.configuration, patches, collect_hint_data=True, use_world_graph=use_world_graph
-        )
+        new_state = await resolver.resolve(patches.configuration, patches, collect_hint_data=True)
 
     if new_state is None:
         logger.warning(
@@ -787,7 +785,6 @@ async def get_resolver_hint_state(player: int, patches: GamePatches, use_world_g
 async def distribute_generic_hints(
     rng: Random,
     filler_results: FillerResults,
-    use_world_graph: bool,
 ) -> FillerResults:
     """Distribute HintNodeKind.GENERIC hints after all pickups are placed."""
     new_patches: dict[int, GamePatches] = {
@@ -799,7 +796,7 @@ async def distribute_generic_hints(
 
         hint_state: HintState = result.hint_state
         if _should_use_resolver_hints(patches.configuration):
-            resolver_hint_state = await get_resolver_hint_state(player_index, patches, use_world_graph)
+            resolver_hint_state = await get_resolver_hint_state(player_index, patches)
             if resolver_hint_state is not None:
                 hint_state = resolver_hint_state
 

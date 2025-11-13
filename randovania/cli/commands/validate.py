@@ -24,7 +24,6 @@ def validate_command_logic(args: Namespace) -> int:
         raise ValueError("Validator does not support layouts with more than 1 player.")
 
     output_file = None
-    use_world_graph: bool = args.use_world_graph
     write_to: Path | None = args.write_to
     if write_to is not None:
         output_file = write_to.open("w", encoding="utf-8")
@@ -45,7 +44,6 @@ def validate_command_logic(args: Namespace) -> int:
             resolver.resolve(
                 configuration=configuration,
                 patches=patches,
-                use_world_graph=use_world_graph,
                 record_paths=debug.debug_level() > 0,
             )
         )

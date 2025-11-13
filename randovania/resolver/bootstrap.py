@@ -273,18 +273,13 @@ class Bootstrap[Configuration: BaseConfiguration]:
         return db
 
     def logic_bootstrap_graph(
-        self,
-        configuration: Configuration,
-        game: GameDescription,
-        patches: GamePatches,
-        use_world_graph: bool,
+        self, configuration: Configuration, game: GameDescription, patches: GamePatches
     ) -> tuple[world_graph.WorldGraph, State]:
         """
         Core code for starting a new Logic/State.
         :param configuration:
         :param game:
         :param patches:
-        :param use_world_graph:
         :return:
         """
         if not game.mutable:

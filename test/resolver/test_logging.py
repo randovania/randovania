@@ -29,7 +29,7 @@ def _assign_pickup_by_name(game_patches: GamePatches, index: PickupIndex, name: 
     return game_patches.assign_own_pickups([(index, real_target)])
 
 
-def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use_world_graph: bool) -> None:
+def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> None:
     calculate_pool_results(blank_game_patches.configuration, blank_game_patches.game)
     game_patches = _assign_pickup_by_name(
         blank_game_patches,
@@ -38,7 +38,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
     )
 
     game = filtered_database.game_description_for_layout(game_patches.configuration).get_mutable()
-    starting_state, logic = setup_resolver(game, game_patches.configuration, game_patches, use_world_graph)
+    starting_state, logic = setup_resolver(game, game_patches.configuration, game_patches)
 
     nodes_by_id = {node.identifier: node for node in logic.all_nodes if node is not None}
 
@@ -58,8 +58,6 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
         n = nodes_by_id[node]
         return ActionPriority.EVERYTHING_ELSE, n, MagicMock()
 
-    lock_prefix = "" if use_world_graph else "Lock - "
-
     logger.logger_start()
 
     # Start action
@@ -78,7 +76,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
     # Pickup action: check satisfiable (has satisfiable)
     logger.log_checking_satisfiable(
         [
-            satisfiable(NodeIdentifier("Intro", "Starting Area", f"{lock_prefix}Door to Boss Arena")),
+            satisfiable(NodeIdentifier("Intro", "Starting Area", "Door to Boss Arena")),
         ]
     )
 
@@ -202,7 +200,7 @@ def test_text_resolver_logger(blank_game_patches, verbosity: debug.LogLevel, exp
     try:
         debug.print_function = lines.append
         with debug.with_level(verbosity):
-            perform_logging(blank_game_patches, logger, True)
+            perform_logging(blank_game_patches, logger)
     finally:
         debug.print_function = old_print
 

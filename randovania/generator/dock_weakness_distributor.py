@@ -254,7 +254,6 @@ async def _run_dock_resolver(
     target: DockNode,
     filtered_game: GameDescription,
     patches: GamePatches,
-    use_world_graph: bool,
 ) -> tuple[State | None, Logic]:
     """
     Run the resolver with the objective of reaching the dock, assuming the dock is locked.
@@ -265,9 +264,7 @@ async def _run_dock_resolver(
     ]
 
     patches = patches.assign_dock_weakness(locks)
-    state, initial_logic = resolver.setup_resolver(
-        filtered_game, patches.configuration, patches, use_world_graph=use_world_graph
-    )
+    state, initial_logic = resolver.setup_resolver(filtered_game, patches.configuration, patches)
     logic = DockRandoLogic.from_logic(initial_logic, dock, target)
 
     try:
@@ -353,10 +350,7 @@ def _determine_valid_weaknesses(
 
 
 async def distribute_post_fill_weaknesses(
-    rng: Random,
-    filler_results: FillerResults,
-    status_update: Callable[[str], None],
-    use_world_graph: bool,
+    rng: Random, filler_results: FillerResults, status_update: Callable[[str], None]
 ) -> FillerResults:
     """
     Distributes dock weaknesses using a modified assume fill algorithm
@@ -380,9 +374,7 @@ async def distribute_post_fill_weaknesses(
 
         status_update(f"Preparing door lock randomizer for player {player + 1}.")
         filtered_games[player] = filtered_database.game_description_for_layout(patches.configuration).get_mutable()
-        state, logic = resolver.setup_resolver(
-            filtered_games[player], patches.configuration, patches, use_world_graph=use_world_graph
-        )
+        state, logic = resolver.setup_resolver(filtered_games[player], patches.configuration, patches)
         initial_states[player] = state
 
         try:
@@ -453,13 +445,7 @@ async def distribute_post_fill_weaknesses(
 
         else:
             # Determine the reach and possible weaknesses given that reach
-            new_state, logic = await _run_dock_resolver(
-                dock,
-                target,
-                filtered_games[player],
-                patches,
-                use_world_graph,
-            )
+            new_state, logic = await _run_dock_resolver(dock, target, filtered_games[player], patches)
             weighted_weaknesses = _determine_valid_weaknesses(
                 dock, target, dock_type_params, dock_type_state, new_state, logic
             )

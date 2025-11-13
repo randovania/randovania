@@ -158,10 +158,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         self.game_description = game
         graph, self._initial_state = game_generator.bootstrap.logic_bootstrap_graph(
-            self.preset.configuration,
-            game,
-            patches,
-            use_world_graph=True,
+            self.preset.configuration, game, patches
         )
         self.graph = graph
         self.logic = Logic(graph, self.preset.configuration, record_paths=True)

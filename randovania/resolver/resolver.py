@@ -438,7 +438,6 @@ def setup_resolver(
     filtered_game: GameDescription,
     configuration: BaseConfiguration,
     patches: GamePatches,
-    use_world_graph: bool,
     *,
     record_paths: bool = False,
 ) -> tuple[State, Logic]:
@@ -447,9 +446,7 @@ def setup_resolver(
 
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
 
-    game_or_graph, starting_state = bootstrap.logic_bootstrap_graph(
-        configuration, game, patches, use_world_graph=use_world_graph
-    )
+    game_or_graph, starting_state = bootstrap.logic_bootstrap_graph(configuration, game, patches)
     logic = Logic(game_or_graph, configuration)
     logic.record_paths = record_paths
 
@@ -465,7 +462,6 @@ async def resolve(
     *,
     collect_hint_data: bool = False,
     logger: ResolverLogger | None = None,
-    use_world_graph: bool = False,
     record_paths: bool = False,
 ) -> State | None:
     if status_update is None:
@@ -475,7 +471,6 @@ async def resolve(
         filtered_database.game_description_for_layout(configuration).get_mutable(),
         configuration,
         patches,
-        use_world_graph=use_world_graph,
         record_paths=record_paths,
     )
 

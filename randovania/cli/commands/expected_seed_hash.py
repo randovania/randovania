@@ -40,7 +40,6 @@ async def update_expected_seed_hash_logic(args: Namespace) -> int:
             resolve_after_generation=False,
             resolver_timeout=None,
             attempts=0,
-            use_world_graph=True,
         )
 
         if result.shareable_hash != test_data.expected_seed_hash:

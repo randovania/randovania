@@ -37,7 +37,6 @@ def batch_distribute_helper(
     timeout: int,
     validate: bool,
     output_dir: Path,
-    use_world_graph: bool,
 ) -> float:
     from randovania.generator import generator
 
@@ -51,7 +50,6 @@ def batch_distribute_helper(
             resolve_after_generation=validate,
             resolver_timeout=timeout,
             attempts=0,
-            use_world_graph=use_world_graph,
         )
     )
     delta_time = time.perf_counter() - start_time
@@ -71,7 +69,6 @@ def batch_distribute_command_logic(args: Namespace) -> None:
 
     timeout: int = args.timeout
     validate: bool = args.validate
-    use_world_graph: bool = args.use_world_graph
 
     output_dir: Path = args.output_dir
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -129,7 +126,6 @@ def batch_distribute_command_logic(args: Namespace) -> None:
                         timeout,
                         validate,
                         output_dir,
-                        use_world_graph,
                     )
                     result.add_done_callback(functools.partial(with_result, seed_number))
                     all_futures.append(result)
@@ -143,13 +139,6 @@ def batch_distribute_command_logic(args: Namespace) -> None:
 
 def add_batch_distribute_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("batch-distribute", help="Generate multiple layouts in parallel")
-    parser.add_argument(
-        "--no-world-graph",
-        default=True,
-        dest="use_world_graph",
-        action="store_false",
-        help="Don't use WorldGraph for generator/resolver.",
-    )
 
     parser.add_argument("permalink", type=str, help="The permalink to use")
     parser.add_argument("--process-count", type=int, help="How many processes to use. Defaults to CPU count.")

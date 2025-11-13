@@ -39,9 +39,7 @@ def test_batch_distribute_helper(mocker: pytest_mock.MockerFixture):
     mock_perf_counter.side_effect = [1000, 5000]
 
     # Run
-    delta_time = batch_distribute.batch_distribute_helper(
-        base_permalink, seed_number, timeout, validate, output_dir, True
-    )
+    delta_time = batch_distribute.batch_distribute_helper(base_permalink, seed_number, timeout, validate, output_dir)
 
     # Assert
     mock_generate_description.assert_called_once_with(
@@ -50,7 +48,6 @@ def test_batch_distribute_helper(mocker: pytest_mock.MockerFixture):
         resolve_after_generation=validate,
         resolver_timeout=timeout,
         attempts=0,
-        use_world_graph=True,
     )
     mock_run.assert_called_once_with(mock_generate_description.return_value)
 

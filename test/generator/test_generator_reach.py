@@ -73,7 +73,7 @@ def run_bootstrap(
     patches = generator.base_patches_factory.create_base_patches(
         configuration, Random(15000), game, False, player_index=0
     )
-    graph, state = generator.bootstrap.logic_bootstrap_graph(configuration, game, patches, use_world_graph=True)
+    graph, state = generator.bootstrap.logic_bootstrap_graph(configuration, game, patches)
     return game, graph, state, parameters
 
 

@@ -23,7 +23,6 @@ async def run_filler(
     player_pools: Sequence[PlayerPool],
     world_names: list[str],
     status_update: Callable[[str], None],
-    use_world_graph: bool,
 ) -> FillerResults:
     """
     Runs the filler logic for the given configuration and item pool.
@@ -34,7 +33,6 @@ async def run_filler(
     :param player_pools:
     :param world_names:
     :param status_update:
-    :param use_world_graph:
     :return:
     """
 
@@ -51,7 +49,6 @@ async def run_filler(
             config,
             pool.game,
             pool.patches,
-            use_world_graph=use_world_graph,
         )
         player_states.append(
             PlayerState(
