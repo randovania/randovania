@@ -258,8 +258,6 @@ class OldGeneratorReach(GeneratorReach):
         def weight(source: int, target: int, attributes: graph_module.GraphData) -> int:
             return _is_collected(target)
 
-        # Having to calculate the costs in python is slower,
-        # but calculating the paths is so much faster it's worth it.
         self._reachable_costs = self._digraph.shortest_paths_dijkstra(
             self._state.node.node_index,
             weight=weight,
