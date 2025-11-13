@@ -54,7 +54,7 @@ class BaseGraph:
 
     def shortest_paths_dijkstra(
         self,
-        source: int,
+        source: NodeIndex,
         weight: Callable[[NodeIndex, NodeIndex, GraphData], float],
     ) -> Mapping[int, float]:
         """
@@ -118,7 +118,7 @@ class RandovaniaGraph(BaseGraph):
     @override
     def shortest_paths_dijkstra(
         self,
-        source: int,
+        source: NodeIndex,
         weight: Callable[[NodeIndex, NodeIndex, GraphData], float],
     ) -> Mapping[NodeIndex, float]:
         paths = {source: [source]}  # dictionary of paths
@@ -254,7 +254,7 @@ class RustworkXGraph(BaseGraph):
     @override
     def shortest_paths_dijkstra(
         self,
-        source: int,
+        source: NodeIndex,
         weight: Callable[[NodeIndex, NodeIndex, GraphData], float],
     ) -> Mapping[NodeIndex, float]:
         def wrap(data: tuple[NodeIndex, NodeIndex, GraphData]) -> float:
