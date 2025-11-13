@@ -105,12 +105,16 @@ def test_set_filter(widget):
     assert widget.needs_refresh_label.text() == "Please re-run the resolver to update the data"
 
 
+@pytest.mark.parametrize("use_world_graph", [False, True])
 @pytest.mark.parametrize("cancel", [False, True])
 @pytest.mark.parametrize(
     "verbosity", [debug.LogLevel.SILENT, debug.LogLevel.NORMAL, debug.LogLevel.HIGH, debug.LogLevel.EXTREME]
 )
-async def test_on_start_button_no_task(widget, mocker: MockerFixture, blank_game_patches, cancel, verbosity):
+async def test_on_start_button_no_task(
+    widget, mocker: MockerFixture, blank_game_patches, cancel, verbosity, use_world_graph
+):
     widget._verbosity = verbosity
+    widget.use_world_graph = use_world_graph
 
     async def side_effect(logger: ValidatorWidgetResolverLogger, *args: Any):
         assert widget.start_button.text() == "Stop"
