@@ -48,6 +48,8 @@ if TYPE_CHECKING:
     class TypedModelSelect[T](typing.Protocol):
         def where(self, *expressions: Any) -> Self: ...
 
+        def limit(self, value: Any) -> Self: ...
+
         def order_by(self, *values: Any) -> Self: ...
 
         def join(self, dest: Any, join_type: Any = None, on: Any = None) -> Any: ...
@@ -262,7 +264,7 @@ class MultiplayerSession(BaseModel):
     def get_ordered_worlds(self) -> list[World]:
         return list(World.select().where(World.session == self).order_by(World.order.asc()))  # type: ignore[union-attr]
 
-    def describe_actions(self) -> multiplayer_session.MultiplayerSessionActions:
+    def describe_actions(self, last_count: int = 1000) -> multiplayer_session.MultiplayerSessionActions:
         if not self.has_layout_description():
             return multiplayer_session.MultiplayerSessionActions(self.id, [])
 
@@ -289,10 +291,23 @@ class MultiplayerSession(BaseModel):
 
         return multiplayer_session.MultiplayerSessionActions(
             self.id,
-            [
-                _describe_action(action)
-                for action in WorldAction.select().where(WorldAction.session == self).order_by(WorldAction.time.asc())  # type: ignore[attr-defined]
-            ],
+            list(
+                reversed(
+                    [
+                        _describe_action(action)
+                        for action in WorldAction.select()
+                        .where(
+                            WorldAction.session == self,
+                        )
+                        .order_by(
+                            WorldAction.time.desc(),  # type: ignore[attr-defined]
+                        )
+                        .limit(
+                            last_count,
+                        )
+                    ]
+                )
+            ),
         )
 
     def create_session_entry(self) -> multiplayer_session.MultiplayerSessionEntry:
