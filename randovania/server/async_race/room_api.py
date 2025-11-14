@@ -547,12 +547,12 @@ _livesplit_event_mapping = {
 }
 
 
-async def emit_async_room_update(sa: ServerApp, room: AsyncRaceRoom, sid: str) -> None:
-    user = await sa.get_current_user(sid)
+async def emit_async_room_update(sa: ServerApp, room: AsyncRaceRoom, sid_or_user: str | User) -> None:
+    user = await sa.get_current_user(sid_or_user) if isinstance(sid_or_user, str) else sid_or_user
 
     await sa.sio.emit(
         signals.ASYNC_RACE_ROOM_UPDATE,
-        (await room.create_session_entry(sa, sid)).as_json,
+        (await room.create_session_entry(sa, user)).as_json,
         namespace="/",
         to=_get_async_race_socketio_room(room, user),
     )
@@ -617,7 +617,7 @@ async def livesplit_integration(
 
             try:
                 await perform_state_change(room, user, new_state)
-                # await emit_async_room_update(app.sa, room, sid)
+                await emit_async_room_update(app.sa, room, user)
             except error.BaseNetworkError as e:
                 app.sa.logger.info("Invalid transition received from livesplit: %s", str(e))
 
