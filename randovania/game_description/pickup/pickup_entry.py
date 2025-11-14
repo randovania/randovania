@@ -46,7 +46,7 @@ class ResourceLock:
     item_to_lock: ItemResourceInfo
     temporary_item: ItemResourceInfo
 
-    def convert_gain(self, gain: ResourceGain) -> ResourceGain:
+    def convert_gain(self, gain: ResourceGain[ItemResourceInfo]) -> ResourceGain[ItemResourceInfo]:
         for resource, quantity in gain:
             if self.item_to_lock == resource:
                 resource = self.temporary_item
@@ -60,7 +60,7 @@ class ResourceLock:
 class ConditionalResources:
     name: str | None
     item: ItemResourceInfo | None
-    resources: ResourceGainTuple
+    resources: ResourceGainTuple[ItemResourceInfo]
 
 
 @dataclass(frozen=True)
@@ -87,7 +87,7 @@ class PickupEntry:
     progression: tuple[tuple[ItemResourceInfo, int], ...]
     generator_params: PickupGeneratorParams
     start_case: StartingPickupBehavior = StartingPickupBehavior.CAN_BE_STARTING
-    extra_resources: ResourceGainTuple = ()
+    extra_resources: ResourceGainTuple[ItemResourceInfo] = ()
     unlocks_resource: bool = False
     resource_lock: ResourceLock | None = None
     respects_lock: bool = True
@@ -166,13 +166,15 @@ class PickupEntry:
         assert last_conditional is not None
         return last_conditional
 
-    def conversion_resource_gain(self, current_resources: ResourceCollection) -> ResourceGain:
+    def conversion_resource_gain(self, current_resources: ResourceCollection) -> ResourceGain[ItemResourceInfo]:
         for conversion in self.convert_resources:
             quantity = current_resources[conversion.source]
             yield conversion.source, -quantity
             yield conversion.target, quantity
 
-    def resource_gain(self, current_resources: ResourceCollection, force_lock: bool = False) -> ResourceGain:
+    def resource_gain(
+        self, current_resources: ResourceCollection, force_lock: bool = False
+    ) -> ResourceGain[ItemResourceInfo]:
         resources = self.conditional_for_resources(current_resources).resources
 
         if (

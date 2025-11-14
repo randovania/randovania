@@ -971,7 +971,7 @@ class EchoesModelNameMapping:
     jingle_index: dict[str, int]  # 2 for keys, 1 for major items, 0 otherwise
 
 
-def _create_pickup_resources_for(resources: ResourceGain) -> list[dict[str, int]]:
+def _create_pickup_resources_for(resources: ResourceGain[ItemResourceInfo]) -> list[dict[str, int]]:
     return [
         {"index": resource.extra["item_id"], "amount": quantity}
         for resource, quantity in resources
