@@ -350,7 +350,7 @@ class TextResolverLogger(ResolverLogger):
         self.current_indent += 1
 
         if self.should_show("Action", debug.debug_level()):
-            if self.should_show("ActionEnergy", debug.debug_level()):
+            if self.should_show("ActionPath", debug.debug_level()):
                 for node in action_entry.path_from_previous:
                     debug.print_function(f"{self._indent(1)}: {self.node_string(node)}")
 
