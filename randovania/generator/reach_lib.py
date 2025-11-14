@@ -106,7 +106,7 @@ def reach_with_all_safe_resources(
     return reach
 
 
-def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach) -> GeneratorReach:
+def advance_after_action(previous_reach: GeneratorReach) -> GeneratorReach:
     """
     Create a new GeneratorReach that collected actions not considered safe, but expanded the safe_nodes set
     :param previous_reach:
@@ -129,14 +129,14 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
             for resource, _ in action.resource_gain_on_collect(previous_reach.node_context())
         ):
             # print("Non-safe {} was good".format(action.full_name()))
-            return advance_reach_with_possible_unsafe_resources(next_reach)
+            return advance_after_action(next_reach)
 
         next_next_state = next_reach.state.copy()
 
         next_reach = reach_with_all_safe_resources(game, next_next_state, previous_reach.filler_config)
         if next_reach.is_reachable_node(initial_state.node) and previous_safe_nodes <= next_reach.safe_nodes_index_set:
             # print("Non-safe {} could reach back to where we were".format(action.full_name()))
-            return advance_reach_with_possible_unsafe_resources(next_reach)
+            return advance_after_action(next_reach)
         else:
             pass
 
@@ -144,18 +144,3 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
 
     # We couldn't improve this reach, so just return it
     return previous_reach
-
-
-def advance_after_action(potential_reach: GeneratorReach) -> GeneratorReach:
-    """
-    Advances the reach after performing an action, collecting unlocked resources.
-    :param potential_reach: Reach after collecting action
-    :return: Reach after collecting resources
-    """
-
-    if potential_reach.filler_config.consider_possible_unsafe_resources:
-        return advance_reach_with_possible_unsafe_resources(potential_reach)
-
-    else:
-        collect_all_safe_resources_in_reach(potential_reach)
-        return potential_reach

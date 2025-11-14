@@ -187,22 +187,6 @@ def weighted_potential_actions(
         for action, evaluation in evaluated_actions.items()
     }
 
-    # Everything has weight 0, so try collecting potentially unsafe resources
-    # FIXME: this can be removed if `consider_possible_unsafe_resources` is enabled permanently
-    if sum(actions_weights.values()) == 0 and player_state.configuration.fallback_to_reweight_with_unsafe:
-        debug.debug_print("Re-weighting with possible unsafe")
-        options_considered = 0
-        for action, evaluation in evaluated_actions.items():
-            evaluated_actions[action] = evaluation.replace_reach(
-                reach_lib.advance_reach_with_possible_unsafe_resources(evaluation.reach)
-            )
-            update_for_option()
-
-        actions_weights = {
-            action: _calculate_weights_for(evaluation, current_uncollected, current_unsafe_uncollected)
-            for action, evaluation in evaluated_actions.items()
-        }
-
     if sum(actions_weights.values()) == 0:
         debug.debug_print("Using backup weights")
         current_reachable_nodes = player_state.reach.set_of_reachable_node_indices()
@@ -338,7 +322,7 @@ def retcon_playthrough_filler(
             debug.debug_print(f"\n>>> Will place {len(new_pickups)} pickups")
             for i, new_pickup in enumerate(new_pickups):
                 if i > 0:
-                    current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
+                    current_player.reach = reach_lib.advance_after_action(current_player.reach)
                     current_player.hint_state.advance_hint_seen_count(current_player.reach.state)
                     all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
 
@@ -355,7 +339,7 @@ def retcon_playthrough_filler(
 
         last_message = f"{sum(player.num_actions for player in player_states)} actions performed."
         status_update(last_message)
-        current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
+        current_player.reach = reach_lib.advance_after_action(current_player.reach)
         current_player.update_for_new_state()
 
     all_patches = {player_state: player_state.reach.state.patches for player_state in player_states}
