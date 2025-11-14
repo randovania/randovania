@@ -183,13 +183,16 @@ class WorldGraph:
     dangerous_resources: frozenset[ResourceInfo]
     nodes: list[WorldGraphNode]
     node_by_pickup_index: dict[PickupIndex, WorldGraphNode]
+    node_identifier_to_node: dict[NodeIdentifier, WorldGraphNode] = dataclasses.field(init=False)
     original_to_node: dict[int, WorldGraphNode] = dataclasses.field(init=False)
     node_resource_index_offset: int
 
     def __post_init__(self) -> None:
+        self.node_identifier_to_node = {}
         self.original_to_node = {}
 
         for node in self.nodes:
+            self.node_identifier_to_node[node.identifier] = node
             if node.database_node is not None:
                 assert node.database_node.node_index not in self.original_to_node
                 self.original_to_node[node.database_node.node_index] = node
