@@ -408,6 +408,11 @@ async def change_state(sa: ServerApp, sid: str, room_id: int, new_state: str) ->
 
     now = lib.datetime_now()
 
+    # Ignore transitions for doing nothing
+    # These can happen if the client doesn't get updated and the user retries what they did last.
+    if old_state == new_state_:
+        return (await room.create_session_entry(sa, sid)).as_json
+
     things_to_save: list[BaseModel] = [entry]
 
     match (old_state, new_state_):
