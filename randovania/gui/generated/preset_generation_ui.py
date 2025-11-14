@@ -37,7 +37,7 @@ class Ui_PresetGeneration(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_contents = QWidget()
         self.scroll_contents.setObjectName(u"scroll_contents")
-        self.scroll_contents.setGeometry(QRect(0, 0, 542, 1033))
+        self.scroll_contents.setGeometry(QRect(0, -335, 542, 884))
         self.verticalLayout_3 = QVBoxLayout(self.scroll_contents)
         self.verticalLayout_3.setSpacing(6)
         self.verticalLayout_3.setContentsMargins(11, 11, 11, 11)
@@ -170,24 +170,6 @@ class Ui_PresetGeneration(object):
 
         self.verticalLayout_4.addWidget(self.check_if_beatable_after_base_patches_check)
 
-        self.consider_unsafe_line = QFrame(self.logic_group)
-        self.consider_unsafe_line.setObjectName(u"consider_unsafe_line")
-        self.consider_unsafe_line.setFrameShape(QFrame.Shape.HLine)
-        self.consider_unsafe_line.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.verticalLayout_4.addWidget(self.consider_unsafe_line)
-
-        self.consider_unsafe_check = QCheckBox(self.logic_group)
-        self.consider_unsafe_check.setObjectName(u"consider_unsafe_check")
-
-        self.verticalLayout_4.addWidget(self.consider_unsafe_check)
-
-        self.consider_unsafe_description = QLabel(self.logic_group)
-        self.consider_unsafe_description.setObjectName(u"consider_unsafe_description")
-        self.consider_unsafe_description.setWordWrap(True)
-
-        self.verticalLayout_4.addWidget(self.consider_unsafe_description)
-
         self.minimal_logic_line = QFrame(self.logic_group)
         self.minimal_logic_line.setObjectName(u"minimal_logic_line")
         self.minimal_logic_line.setFrameShape(QFrame.Shape.HLine)
@@ -202,7 +184,7 @@ class Ui_PresetGeneration(object):
 
         self.trick_level_minimal_logic_label = QLabel(self.logic_group)
         self.trick_level_minimal_logic_label.setObjectName(u"trick_level_minimal_logic_label")
-        self.trick_level_minimal_logic_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.trick_level_minimal_logic_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
         self.trick_level_minimal_logic_label.setWordWrap(True)
 
         self.verticalLayout_4.addWidget(self.trick_level_minimal_logic_label)
@@ -270,8 +252,6 @@ class Ui_PresetGeneration(object):
 
         self.dangerous_description.setText(QCoreApplication.translate("PresetGeneration", u"<html><head/><body><p>A dangerous action is the act of moving past a lock without the appropriate items needed to head backwards, or doing an action that can only be done once.</p><p><span style=\" font-weight:600;\">Randomly</span>: Dangerous actions might be required by logic.</p><p><span style=\" font-weight:600;\">Last Resort</span>: Only allows dangerous actions to be required if no other option is available for progression.<br/>Warning: Due to how item placement works, certain locations will have progression extremely less often or even never.</p></body></html>", None))
         self.check_if_beatable_after_base_patches_check.setText(QCoreApplication.translate("PresetGeneration", u"[Experimental] Verify if game is beatable after deciding starting location, elevator, etc.", None))
-        self.consider_unsafe_check.setText(QCoreApplication.translate("PresetGeneration", u"[Experimental] Consider possible unsafe resources", None))
-        self.consider_unsafe_description.setText(QCoreApplication.translate("PresetGeneration", u"When determining weights for an action, check to see if the action can collect additional resources by passing through some dangerous connections. This improves the results of generation, but increases generation time.", None))
         self.trick_level_minimal_logic_check.setText(QCoreApplication.translate("PresetGeneration", u"Use Minimal Logic", None))
         self.trick_level_minimal_logic_label.setText(QCoreApplication.translate("PresetGeneration", u"<html><head/><body></p><p>Minimal Logic is a setting that checks for the bare minimum items to create an almost pure random layout. This setting assumes the player has extensive knowledge of the game and will likely require major glitches (e.g. breaking out of bounds) to complete.</p><p>There are no guarantees that a seed will be possible in this case.</p><p>{game_specific_text}</body></html>", None))
         self.damage_strictness_group.setTitle(QCoreApplication.translate("PresetGeneration", u"Damage strictness", None))

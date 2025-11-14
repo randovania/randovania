@@ -62,7 +62,6 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     staggered_multi_pickup_placement: bool
     check_if_beatable_after_base_patches: bool
     logical_pickup_placement: LogicalPickupPlacementConfiguration
-    consider_possible_unsafe_resources: bool
     hints: HintConfiguration
 
     @classmethod
@@ -87,9 +86,6 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
 
         if self.first_progression_must_be_local:
             result.append("Requiring first progression to be local causes increased generation failure.")
-
-        if self.consider_possible_unsafe_resources:
-            result.append("Considering possible unsafe resources will increase generation time.")
 
         if self.logical_pickup_placement == LogicalPickupPlacementConfiguration.ALL:
             result.append(

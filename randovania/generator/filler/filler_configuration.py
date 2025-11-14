@@ -28,7 +28,7 @@ class FillerConfiguration:
     single_set_for_pickups_that_solve: bool
     staggered_multi_pickup_placement: bool
     fallback_to_reweight_with_unsafe: bool
-    consider_possible_unsafe_resources: bool
+    consider_possible_unsafe_resources: bool  # FIXME: remove
 
     @classmethod
     def from_configuration(cls, config: BaseConfiguration) -> Self:
@@ -44,7 +44,7 @@ class FillerConfiguration:
             single_set_for_pickups_that_solve=config.single_set_for_pickups_that_solve,
             staggered_multi_pickup_placement=config.staggered_multi_pickup_placement,
             fallback_to_reweight_with_unsafe=False,
-            consider_possible_unsafe_resources=config.consider_possible_unsafe_resources,
+            consider_possible_unsafe_resources=True,
         )
 
 

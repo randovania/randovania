@@ -21,5 +21,5 @@ def default_filler_config() -> FillerConfiguration:
         single_set_for_pickups_that_solve=False,
         staggered_multi_pickup_placement=False,
         fallback_to_reweight_with_unsafe=False,
-        consider_possible_unsafe_resources=False,
+        consider_possible_unsafe_resources=True,
     )
