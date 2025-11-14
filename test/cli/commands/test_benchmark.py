@@ -19,7 +19,7 @@ def test_generate_helper_success(mocker: pytest_mock.MockerFixture) -> None:
     mock_generate.assert_called_once_with(
         generator_params=parameter,
         status_update=None,
-        validate_after_generation=True,
+        resolve_after_generation=True,
         attempts=0,
         use_world_graph=True,
     )
@@ -38,7 +38,7 @@ def test_generate_helper_failure(mocker: pytest_mock.MockerFixture) -> None:
     mock_generate.assert_called_once_with(
         generator_params=parameter,
         status_update=None,
-        validate_after_generation=True,
+        resolve_after_generation=True,
         attempts=0,
         use_world_graph=True,
     )
