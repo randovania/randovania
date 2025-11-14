@@ -78,7 +78,14 @@ def _validate_pickup_pool_size(
 
 
 async def check_if_beatable(patches: GamePatches, pool: PoolResults, use_world_graph: bool) -> bool:
-    patches = patches.assign_extra_starting_pickups(itertools.chain(pool.starting, pool.to_place))
+    new_pickups = []
+
+    collection = patches.game.create_resource_collection()
+    for pickup in itertools.chain(pool.starting, pool.to_place):
+        if all(quantity >= 0 for _, quantity in pickup.resource_gain(collection)):
+            new_pickups.append(pickup)
+
+    patches = patches.assign_extra_starting_pickups(new_pickups)
 
     state, logic = resolver.setup_resolver(
         filtered_database.game_description_for_layout(patches.configuration).get_mutable(),
