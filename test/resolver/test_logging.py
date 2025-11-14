@@ -159,7 +159,6 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
                 "- World 0's Blue Key] [I: Blue Key, N: Intro/Starting Area/Pickup (Weapon)]",
                 "  # Satisfiable Actions",
                 "   = [EVERYTHING_ELSE] Intro/Starting Area/Lock - Door to Boss Arena",
-                "  : Intro/Back-Only Lock Room/Door to Starting Area",
                 "  > Intro/Starting Area/Spawn Point [100/100 Energy] for []",
                 "   # No Satisfiable Actions",
                 "   * Rollback Intro/Starting Area/Spawn Point ",
