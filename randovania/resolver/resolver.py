@@ -143,7 +143,10 @@ def _simplify_additional_requirement_set(
 
 
 def _is_action_dangerous(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
-    return any(resource in dangerous_resources for resource, _ in action.resource_gain_on_collect(state.node_context()))
+    return any(
+        resource in dangerous_resources or quantity < 0
+        for resource, quantity in action.resource_gain_on_collect(state.node_context())
+    )
 
 
 def _is_dangerous_event(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
