@@ -14,6 +14,7 @@ if TYPE_CHECKING:
 
 
 class EnergyTankDamageState(DamageState):
+    __slots__ = ("_energy", "_starting_energy", "_energy_per_tank", "_energy_tank")
     _energy: int
     _starting_energy: int
     _energy_per_tank: int

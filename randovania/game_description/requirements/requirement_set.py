@@ -23,7 +23,7 @@ class RequirementSet:
     alternatives: frozenset[RequirementList]
     _cached_hash: int | None = None
 
-    def __init__(self, alternatives: Iterable[RequirementList]):
+    def __init__(self, alternatives: Iterable[RequirementList], skip_subset_check: bool = False):
         """
         Constructs a RequirementSet from given iterator of RequirementList.
         Redundant alternatives (Bombs or Bombs + Space Jump) are automatically removed.
@@ -33,7 +33,7 @@ class RequirementSet:
         self.alternatives = frozenset(
             requirement
             for requirement in input_set
-            if not any(other.is_proper_subset_of(requirement) for other in input_set)
+            if skip_subset_check or not any(other.is_proper_subset_of(requirement) for other in input_set)
         )
 
     def __deepcopy__(self, memodict: dict) -> RequirementSet:
