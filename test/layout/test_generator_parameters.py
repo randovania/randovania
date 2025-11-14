@@ -90,7 +90,7 @@ def test_decode(default_blank_preset, mocker, development, extra_data):
     if development:
         encoded = b" \x00\x00\x0f\xa3\x00\x0c\x00"
     else:
-        encoded = b" \x00\x00\x0f\xa2\x00\x0c\x0f\x00"
+        encoded = b" \x00\x00\x0f\xa2\x00\x0c\x1e\x00"
     if extra_data:
         encoded += b"="
 
