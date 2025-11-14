@@ -117,6 +117,11 @@ def _simplify_additional_requirement_set(
     if skip_simplify:
         return RequirementSet(simplified, skip_subset_check=True)
 
+    # Perform the subset check ourselves, but modified.
+    # Since this is called with the combination of `get_additional_requirements` for many nodes,
+    # we tend to get a lot of combinations of `Item or (Item and Event)`.
+    # So we can check for these cases first for a significant speedup
+
     simplified.sort(key=lambda rl: len(rl._items))
     new_alternatives: list[RequirementList] = []
 
