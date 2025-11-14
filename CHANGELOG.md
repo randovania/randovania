@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Logical Pickup placement "All pickups" and expansions with negative amount are now compatible.
 - Fixed: Text such as the Seed Hash in the Async Race window is now selectable via mouse.
 - Removed: The "Consider possible unsafe resources" experimental option has been removed and is now always enabled.
+- Removed: The "Revised door solver" experimental option has been removed and is now always enabled.
 
 ### Another Metroid 2 Remake
 

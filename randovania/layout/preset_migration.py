@@ -1208,6 +1208,7 @@ def _migrate_v108(preset: dict, game: RandovaniaGame) -> None:
 
 def _migrate_v109(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"].pop("consider_possible_unsafe_resources")
+    preset["configuration"].pop("two_sided_door_lock_search")
 
 
 _MIGRATIONS = [
@@ -1319,7 +1320,7 @@ _MIGRATIONS = [
     _migrate_v106,  # add pre-placement to prime
     _migrate_v107,  # fusion remove anti-softlock
     _migrate_v108,  # fusion instant morph
-    _migrate_v109,  # remove consider_possible_unsafe_resources
+    _migrate_v109,  # remove consider_possible_unsafe_resources and two_sided_door_lock_search
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

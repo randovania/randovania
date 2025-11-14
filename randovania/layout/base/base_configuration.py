@@ -56,7 +56,6 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     pickup_model_data_source: PickupModelDataSource
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool
-    two_sided_door_lock_search: bool
     dock_rando: DockRandoConfiguration
     single_set_for_pickups_that_solve: bool
     staggered_multi_pickup_placement: bool

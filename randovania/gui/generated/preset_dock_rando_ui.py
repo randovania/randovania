@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
-    QGridLayout, QGroupBox, QHBoxLayout, QLabel,
-    QMainWindow, QScrollArea, QSizePolicy, QSpacerItem,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
+    QGroupBox, QHBoxLayout, QLabel, QMainWindow,
+    QScrollArea, QSizePolicy, QSpacerItem, QVBoxLayout,
+    QWidget)
 
 class Ui_PresetDockRando(object):
     def setupUi(self, PresetDockRando):
@@ -55,27 +55,15 @@ class Ui_PresetDockRando(object):
         self.gridLayout.setSpacing(6)
         self.gridLayout.setContentsMargins(11, 11, 11, 11)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.multiworld_label = QLabel(self.settings_group)
-        self.multiworld_label.setObjectName(u"multiworld_label")
-
-        self.gridLayout.addWidget(self.multiworld_label, 6, 0, 1, 2)
-
-        self.two_sided_door_search_check = QCheckBox(self.settings_group)
-        self.two_sided_door_search_check.setObjectName(u"two_sided_door_search_check")
-
-        self.gridLayout.addWidget(self.two_sided_door_search_check, 8, 0, 1, 1)
-
         self.mode_combo = QComboBox(self.settings_group)
         self.mode_combo.setObjectName(u"mode_combo")
 
         self.gridLayout.addWidget(self.mode_combo, 0, 1, 1, 1)
 
-        self.line = QFrame(self.settings_group)
-        self.line.setObjectName(u"line")
-        self.line.setFrameShape(QFrame.Shape.HLine)
-        self.line.setFrameShadow(QFrame.Shadow.Sunken)
+        self.multiworld_label = QLabel(self.settings_group)
+        self.multiworld_label.setObjectName(u"multiworld_label")
 
-        self.gridLayout.addWidget(self.line, 5, 0, 1, 2)
+        self.gridLayout.addWidget(self.multiworld_label, 6, 0, 1, 2)
 
         self.mode_label = QLabel(self.settings_group)
         self.mode_label.setObjectName(u"mode_label")
@@ -87,18 +75,12 @@ class Ui_PresetDockRando(object):
 
         self.gridLayout.addWidget(self.mode_description, 2, 0, 1, 2)
 
-        self.two_sided_door_search_label = QLabel(self.settings_group)
-        self.two_sided_door_search_label.setObjectName(u"two_sided_door_search_label")
-        self.two_sided_door_search_label.setWordWrap(True)
+        self.line = QFrame(self.settings_group)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.Shape.HLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
 
-        self.gridLayout.addWidget(self.two_sided_door_search_label, 9, 0, 1, 2)
-
-        self.two_sided_door_search_line = QFrame(self.settings_group)
-        self.two_sided_door_search_line.setObjectName(u"two_sided_door_search_line")
-        self.two_sided_door_search_line.setFrameShape(QFrame.Shape.HLine)
-        self.two_sided_door_search_line.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.gridLayout.addWidget(self.two_sided_door_search_line, 7, 0, 1, 2)
+        self.gridLayout.addWidget(self.line, 5, 0, 1, 2)
 
 
         self.scroll_area_layout.addWidget(self.settings_group)
@@ -151,10 +133,8 @@ class Ui_PresetDockRando(object):
         PresetDockRando.setWindowTitle(QCoreApplication.translate("PresetDockRando", u"Door Locks", None))
         self.settings_group.setTitle(QCoreApplication.translate("PresetDockRando", u"Settings", None))
         self.multiworld_label.setText(QCoreApplication.translate("PresetDockRando", u"<html><head/><body><p>The selected mode is <span style=\" font-weight:700;\">not</span> compatible with multiworld sessions.</p></body></html>", None))
-        self.two_sided_door_search_check.setText(QCoreApplication.translate("PresetDockRando", u"[Experimental] Revised door solver", None))
         self.mode_label.setText(QCoreApplication.translate("PresetDockRando", u"Randomization Mode", None))
         self.mode_description.setText(QCoreApplication.translate("PresetDockRando", u"Original door locks.", None))
-        self.two_sided_door_search_label.setText(QCoreApplication.translate("PresetDockRando", u"<html><head/><body><p>When using the Individual Doors Mode, enables the use of a revised algorithm for deciding what doors can be.</p></body></html>", None))
         self.dock_types_group.setTitle(QCoreApplication.translate("PresetDockRando", u"Door Types", None))
         self.change_from_desc.setText(QCoreApplication.translate("PresetDockRando", u"**Doors to Change**\n"
 "\n"
