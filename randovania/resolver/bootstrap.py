@@ -8,6 +8,7 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
@@ -101,7 +102,13 @@ def victory_condition_for_pickup_placement(
     return RequirementAnd(
         [
             game.victory_condition,
-            *(ResourceRequirement.create(resource[0], resource[1], False) for resource in resources.as_resource_gain()),
+            *(
+                ResourceRequirement.create(resource, quantity, False)
+                for resource, quantity in resources.as_resource_gain()
+                if quantity > 0
+                and isinstance(resource, ItemResourceInfo)
+                and not resource.extra.get("exclude_from_logical_pickup_placement", False)
+            ),
         ]
     ).simplify()
 
