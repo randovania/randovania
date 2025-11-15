@@ -21,7 +21,7 @@ PRIORITY_LIMITS = {
     "if_different": 1.0,
     "min": 0.0,
     "max": 10.0,
-    "precision": 1.0,
+    "precision": 2.0,
 }
 
 
