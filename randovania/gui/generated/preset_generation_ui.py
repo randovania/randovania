@@ -158,12 +158,12 @@ class Ui_PresetGeneration(object):
 
         self.verticalLayout_4.addWidget(self.dangerous_description)
 
-        self.experimental_generator_line = QFrame(self.logic_group)
-        self.experimental_generator_line.setObjectName(u"experimental_generator_line")
-        self.experimental_generator_line.setFrameShape(QFrame.Shape.HLine)
-        self.experimental_generator_line.setFrameShadow(QFrame.Shadow.Sunken)
+        self.check_if_beatable_after_base_patches_line = QFrame(self.logic_group)
+        self.check_if_beatable_after_base_patches_line.setObjectName(u"check_if_beatable_after_base_patches_line")
+        self.check_if_beatable_after_base_patches_line.setFrameShape(QFrame.Shape.HLine)
+        self.check_if_beatable_after_base_patches_line.setFrameShadow(QFrame.Shadow.Sunken)
 
-        self.verticalLayout_4.addWidget(self.experimental_generator_line)
+        self.verticalLayout_4.addWidget(self.check_if_beatable_after_base_patches_line)
 
         self.check_if_beatable_after_base_patches_check = QCheckBox(self.logic_group)
         self.check_if_beatable_after_base_patches_check.setObjectName(u"check_if_beatable_after_base_patches_check")
@@ -251,7 +251,7 @@ class Ui_PresetGeneration(object):
         self.dangerous_combo.setItemText(1, QCoreApplication.translate("PresetGeneration", u"Last Resort", None))
 
         self.dangerous_description.setText(QCoreApplication.translate("PresetGeneration", u"<html><head/><body><p>A dangerous action is the act of moving past a lock without the appropriate items needed to head backwards, or doing an action that can only be done once.</p><p><span style=\" font-weight:600;\">Randomly</span>: Dangerous actions might be required by logic.</p><p><span style=\" font-weight:600;\">Last Resort</span>: Only allows dangerous actions to be required if no other option is available for progression.<br/>Warning: Due to how item placement works, certain locations will have progression extremely less often or even never.</p></body></html>", None))
-        self.check_if_beatable_after_base_patches_check.setText(QCoreApplication.translate("PresetGeneration", u"[Experimental] Verify if game is beatable after deciding starting location, elevator, etc.", None))
+        self.check_if_beatable_after_base_patches_check.setText(QCoreApplication.translate("PresetGeneration", u"Verify if game is beatable after deciding starting location, elevator, etc.", None))
         self.trick_level_minimal_logic_check.setText(QCoreApplication.translate("PresetGeneration", u"Use Minimal Logic", None))
         self.trick_level_minimal_logic_label.setText(QCoreApplication.translate("PresetGeneration", u"<html><head/><body></p><p>Minimal Logic is a setting that checks for the bare minimum items to create an almost pure random layout. This setting assumes the player has extensive knowledge of the game and will likely require major glitches (e.g. breaking out of bounds) to complete.</p><p>There are no guarantees that a seed will be possible in this case.</p><p>{game_specific_text}</body></html>", None))
         self.damage_strictness_group.setTitle(QCoreApplication.translate("PresetGeneration", u"Damage strictness", None))
