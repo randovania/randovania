@@ -224,7 +224,7 @@ def increment_index_age(locations_weighted: WeightedLocations, increment: float)
 
 def _print_header(player_states: list[PlayerState]) -> None:
     def _name_for_index(state: PlayerState, index: PickupIndex) -> str:
-        return state.get_pickup_node_at(index).full_name()
+        return state.get_full_name_for_pickup_node_at(index)
 
     debug.debug_print(
         "{}\nRetcon filler started with standard pickups:\n{}".format(
@@ -349,7 +349,7 @@ def retcon_playthrough_filler(
 def debug_print_weighted_locations(all_locations_weighted: WeightedLocations, player_states: list[PlayerState]) -> None:
     print("==> Weighted Locations")
     for owner, index, weight in all_locations_weighted.all_items():
-        node_name = owner.get_pickup_node_at(index).full_name()
+        node_name = owner.get_full_name_for_pickup_node_at(index)
         print(f"[{player_states[owner.index].name}] {node_name} - {weight}")
 
 
@@ -527,10 +527,9 @@ def pickup_placement_spoiler_entry(
     index_owner: PlayerState,
     add_indices: bool,
 ) -> str:
-    pickup_node = index_owner.get_pickup_node_at(pickup_index)
     return "{}{} at {}{}".format(
         f"{location_owner.name}'s " if add_indices else "",
         action.name,
         f"{index_owner.name}'s " if add_indices else "",
-        pickup_node.full_name(),
+        index_owner.get_full_name_for_pickup_node_at(pickup_index),
     )
