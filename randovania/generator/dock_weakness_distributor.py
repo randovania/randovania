@@ -200,10 +200,12 @@ class DockRandoLogic(Logic):
             source_resource = NodeResourceInfo.from_node(dock, context)
             target_resource = NodeResourceInfo.from_node(target, context)
 
-        victory_condition: Requirement = ResourceRequirement.simple(source_resource)
-        if logic.configuration.two_sided_door_lock_search:
-            victory_condition = RequirementOr([victory_condition, ResourceRequirement.simple(target_resource)])
-
+        victory_condition = RequirementOr(
+            [
+                ResourceRequirement.simple(source_resource),
+                ResourceRequirement.simple(target_resource),
+            ]
+        )
         return cls(final_game, logic.configuration, graph_dock, graph_target, victory_condition)
 
     def victory_condition(self, state: State) -> Requirement:

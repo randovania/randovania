@@ -28,7 +28,7 @@ from randovania.game_description.resources.search import find_resource_info_with
 from randovania.generator import reach_lib
 from randovania.generator.old_generator_reach import OldGeneratorReach
 from randovania.generator.pickup_pool import pool_creator
-from randovania.generator.reach_lib import advance_reach_with_possible_unsafe_resources
+from randovania.generator.reach_lib import advance_after_action
 from randovania.graph import world_graph
 from randovania.graph.state import State
 from randovania.graph.world_graph import WorldGraph
@@ -82,9 +82,7 @@ def run_bootstrap(
 def _create_reach_with_unsafe(
     game: GameDescription | WorldGraph, state: State, filler_config: FillerConfiguration
 ) -> GeneratorReach:
-    return reach_lib.advance_reach_with_possible_unsafe_resources(
-        reach_lib.reach_with_all_safe_resources(game, state, filler_config)
-    )
+    return reach_lib.advance_after_action(reach_lib.reach_with_all_safe_resources(game, state, filler_config))
 
 
 @pytest.mark.benchmark
@@ -130,7 +128,7 @@ def test_database_collectable(
     reach = _create_reach_with_unsafe(graph, state, default_filler_config)
     while list(reach_lib.collectable_resource_nodes(reach.nodes, reach)):
         reach.act_on(next(iter(reach_lib.collectable_resource_nodes(reach.nodes, reach))))
-        reach = advance_reach_with_possible_unsafe_resources(reach)
+        reach = advance_after_action(reach)
 
     # print("\nCurrent reach:")
     # print(game.region_list.node_name(reach.state.node, with_region=True))
