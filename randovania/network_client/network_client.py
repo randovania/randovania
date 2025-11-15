@@ -203,6 +203,7 @@ class NetworkClient:
         self.sio.on(signals.WORLD_PICKUPS_UPDATE, self._on_world_pickups_update_raw)
         self.sio.on(signals.WORLD_BINARY_INVENTORY, self._on_world_user_inventory_raw)
         self.sio.on(signals.WORLD_JSON_INVENTORY, print)
+        self.sio.on(signals.ASYNC_RACE_ROOM_UPDATE, self._on_async_race_room_update_raw)
 
     @property
     def connection_state(self) -> ConnectionState:
@@ -448,6 +449,13 @@ class NetworkClient:
     async def on_world_user_inventory(self, inventory: WorldUserInventory):
         pass
 
+    async def _on_async_race_room_update_raw(self, data: dict) -> None:
+        """Event triggered when the server pushes an e"""
+        await self.on_async_race_room_update(AsyncRaceRoomEntry.from_json(data))
+
+    async def on_async_race_room_update(self, room: AsyncRaceRoomEntry) -> None:
+        pass
+
     def _update_timeout_with(self, request_time: float, success: bool):
         if success:
             if request_time < self._current_timeout - _TIMEOUT_STEP and self._current_timeout > _MINIMUM_TIMEOUT:
@@ -576,6 +584,14 @@ class NetworkClient:
         """
         log_entries = await self.server_call("async_race_get_audit_log", (room.id, room.auth_token))
         return [AuditEntry.from_json(entry) for entry in log_entries]
+
+    async def async_race_get_livesplit_url(self, room: AsyncRaceRoomEntry) -> str:
+        """
+        Gets a URL that lets LiveSplit One control this user's Start/Finish/Pause events.
+        :param room: The room's data from get_async_race_room
+        :return: the URL to configure LiveSplit One with
+        """
+        return await self.server_call("async_race_get_livesplit_url", room.id)
 
     async def async_race_admin_get_admin_data(self, room_id: int) -> AsyncRaceRoomAdminData:
         """

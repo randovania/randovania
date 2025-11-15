@@ -27,21 +27,26 @@ if TYPE_CHECKING:
 
 
 @pytest.fixture
-def empty_database():
+def empty_database(db_path, request: pytest.FixtureRequest):
     old_db = database.db
     try:
-        test_db = SqliteDatabase(":memory:")
+        test_db = SqliteDatabase(db_path)
         database.db = test_db
         with test_db.bind_ctx(database.all_classes):
-            test_db.connect(reuse_if_open=True)
+            # If we connect here, the database file will be created and thus when database_lifespan runs,
+            # it'll see an existing database file and wrongly apply the database migrations
+            if "test_client" not in request.fixturenames:
+                test_db.connect(reuse_if_open=True)
             yield test_db
     finally:
         database.db = old_db
 
 
 @pytest.fixture
-def clean_database(empty_database) -> SqliteDatabase:
-    empty_database.create_tables(database.all_classes)
+def clean_database(empty_database, request: pytest.FixtureRequest) -> SqliteDatabase:
+    # Don't create classes if using test_client, as that will also create the classes
+    if "test_client" not in request.fixturenames:
+        empty_database.create_tables(database.all_classes)
     return empty_database
 
 

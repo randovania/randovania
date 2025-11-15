@@ -597,11 +597,11 @@ class AsyncRaceRoom(BaseModel):
             now,
         )
 
-    async def create_session_entry(self, sa: ServerApp, sid: str) -> async_race_room.AsyncRaceRoomEntry:
+    async def create_session_entry(self, sa: ServerApp, sid_or_user: str | User) -> async_race_room.AsyncRaceRoomEntry:
         game_details = self.game_details()
 
         now = lib.datetime_now()
-        for_user = await sa.get_current_user(sid)
+        for_user = await sa.get_current_user(sid_or_user) if isinstance(sid_or_user, str) else sid_or_user
 
         if (entry := AsyncRaceEntry.entry_for(self, for_user)) is not None:
             status = entry.user_status()
@@ -617,7 +617,7 @@ class AsyncRaceRoom(BaseModel):
             start_date=self.start_datetime,
             end_date=self.end_datetime,
             race_status=self.get_race_status(now),
-            auth_token=sa.encrypt_dict(
+            auth_token=sa.encrypt_and_b85_dict(
                 {
                     "room_id": self.id,
                     "time": now.timestamp(),
