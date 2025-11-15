@@ -139,5 +139,7 @@ async def test_create_description(preset_manager, game_enum) -> None:
     )
 
     # Assert
-    assert result.shareable_hash == game_test_data.expected_seed_hash
-    # For updating this value easily, check the CLI command `randovania development update-expected-seed-hash`
+    assert result.shareable_hash == game_test_data.expected_seed_hash, (
+        "Hash of the generated game does not match the expected value. "
+        "For updating this value easily, check the CLI command `randovania development update-expected-seed-hash`"
+    )
