@@ -181,18 +181,22 @@ class OldGeneratorReach(GeneratorReach):
             path = paths_to_check.pop(0)
 
             if path.is_in_graph(self._digraph):
-                # print(">>> already in graph", self.game.region_list.node_name(path.node))
+                # print(">>> already in graph", path.node.full_name())
                 continue
 
-            # print(">>> will check starting at", self.game.region_list.node_name(path.node))
+            # print(">>> will check starting at", path.node.full_name())
             path.add_to_graph(self._digraph)
 
             if path.node.is_resource_node():
                 resource_nodes_to_check.add(path.node.node_index)
 
             for target_node, requirement in self._potential_nodes_from(path.node, context):
+                # is_in_graph inlined, so we don't need to create GraphPath
+                if self._digraph.has_edge(path.node.node_index, target_node.node_index):
+                    continue
+
                 if requirement.satisfied(context, self._state.health_for_damage_requirements):
-                    # print("* Queue path to", self.game.region_list.node_name(target_node))
+                    # print("* Queue path to", target_node.full_name())
                     paths_to_check.append(GraphPath(path.node, target_node, requirement))
                 else:
                     # print("* Unreachable", self.game.region_list.node_name(target_node), ", missing:",
