@@ -45,11 +45,11 @@ def _extra_requirement_for_node(
 
 class GraphPath:
     __slots__ = ("previous_node", "node", "requirement")
-    previous_node: GraphOrClassicNode | None
-    node: GraphOrClassicNode
+    previous_node: NodeIndex | None
+    node: NodeIndex
     requirement: Requirement
 
-    def __init__(self, previous: GraphOrClassicNode | None, node: GraphOrClassicNode, requirement: Requirement):
+    def __init__(self, previous: NodeIndex | None, node: NodeIndex, requirement: Requirement):
         self.previous_node = previous
         self.node = node
         self.requirement = requirement
@@ -58,12 +58,12 @@ class GraphPath:
         if self.previous_node is None:
             return False
         else:
-            return digraph.has_edge(self.previous_node.node_index, self.node.node_index)
+            return digraph.has_edge(self.previous_node, self.node)
 
     def add_to_graph(self, digraph: graph_module.BaseGraph) -> None:
-        digraph.add_node(self.node.node_index)
+        digraph.add_node(self.node)
         if self.previous_node is not None:
-            digraph.add_edge(self.previous_node.node_index, self.node.node_index, data=self.requirement)
+            digraph.add_edge(self.previous_node, self.node, data=self.requirement)
 
 
 class _SafeNodes:
@@ -131,7 +131,7 @@ class OldGeneratorReach(GeneratorReach):
         reach = cls(game, initial_state, graph_module.RustworkXGraph.new(game), filler_config)
         if isinstance(game, GameDescription):
             game.region_list.ensure_has_node_cache()
-        reach._expand_graph([GraphPath(None, initial_state.node, Requirement.trivial())])
+        reach._expand_graph([GraphPath(None, initial_state.node.node_index, Requirement.trivial())])
         return reach
 
     def _potential_nodes_from(
@@ -175,6 +175,7 @@ class OldGeneratorReach(GeneratorReach):
         self._reachable_costs = None
         resource_nodes_to_check = set()
 
+        all_nodes = self.all_nodes
         context = self._state.node_context()
 
         while paths_to_check:
@@ -187,21 +188,23 @@ class OldGeneratorReach(GeneratorReach):
             # print(">>> will check starting at", path.node.full_name())
             path.add_to_graph(self._digraph)
 
-            if path.node.is_resource_node():
-                resource_nodes_to_check.add(path.node.node_index)
+            if all_nodes[path.node].is_resource_node():
+                resource_nodes_to_check.add(path.node)
 
-            for target_node, requirement in self._potential_nodes_from(path.node, context):
+            for target_node, requirement in self._potential_nodes_from(all_nodes[path.node], context):
+                target_node_index = target_node.node_index
+
                 # is_in_graph inlined, so we don't need to create GraphPath
-                if self._digraph.has_edge(path.node.node_index, target_node.node_index):
+                if self._digraph.has_edge(path.node, target_node_index):
                     continue
 
                 if requirement.satisfied(context, self._state.health_for_damage_requirements):
                     # print("* Queue path to", target_node.full_name())
-                    paths_to_check.append(GraphPath(path.node, target_node, requirement))
+                    paths_to_check.append(GraphPath(path.node, target_node_index, requirement))
                 else:
                     # print("* Unreachable", self.game.region_list.node_name(target_node), ", missing:",
                     #       requirement.as_str)
-                    self._unreachable_paths[path.node.node_index, target_node.node_index] = requirement
+                    self._unreachable_paths[path.node, target_node_index] = requirement
             # print("> done")
 
         for node_index in sorted(resource_nodes_to_check):
@@ -372,7 +375,6 @@ class OldGeneratorReach(GeneratorReach):
 
         self._state = new_state
 
-        all_nodes = self.all_nodes
         paths_to_check: list[GraphPath] = []
 
         edges_to_remove = []
@@ -381,7 +383,7 @@ class OldGeneratorReach(GeneratorReach):
         for edge, requirement in self._unreachable_paths.items():
             if requirement.satisfied(self._state.node_context(), self._state.health_for_damage_requirements):
                 from_index, to_index = edge
-                paths_to_check.append(GraphPath(all_nodes[from_index], all_nodes[to_index], requirement))
+                paths_to_check.append(GraphPath(from_index, to_index, requirement))
                 edges_to_remove.append(edge)
 
         for edge in edges_to_remove:
