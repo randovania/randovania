@@ -481,16 +481,16 @@ def _calculate_weights_for(
     if debug.debug_level() > debug.LogLevel.HIGH:
 
         def print_weight_factors(uncollected: UncollectedState) -> None:
-            print(f"  indices: {uncollected.pickup_indices}")
-            print(f"  events: {[event.long_name for event in uncollected.events]}")
-            print(f"  hints: {[hint.as_string for hint in uncollected.hints]}")
+            print(f"    indices: {uncollected.pickup_indices}")
+            print(f"    events: {[event.long_name for event in uncollected.events]}")
+            print(f"    hints: {[hint.as_string for hint in uncollected.hints]}")
 
         print(f">>> {evaluation.action}")
 
-        print("safe resources:")
+        print("  safe resources:")
         print_weight_factors(potential_uncollected)
 
-        print("unsafe resources:")
+        print("  unsafe resources:")
         print_weight_factors(potential_unsafe_uncollected)
 
     # this used to weigh actions according to *how many* resources were unlocked, but we've determined
