@@ -31,7 +31,7 @@ class NodeLocation:
         assert isinstance(self.z, float)
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(slots=True)
 class NodeContext:
     patches: GamePatches | None  # this shouldn't be None, but certain places can't provide one
     current_resources: ResourceCollection

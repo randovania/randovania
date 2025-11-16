@@ -376,12 +376,14 @@ class OldGeneratorReach(GeneratorReach):
         self._state = new_state
 
         paths_to_check: list[GraphPath] = []
+        health = self._state.health_for_damage_requirements
+        context = self._state.node_context()
 
         edges_to_remove = []
         # Check if we can expand the corners of our graph
         # TODO: check if expensive. We filter by only nodes that depends on a new resource
         for edge, requirement in self._unreachable_paths.items():
-            if requirement.satisfied(self._state.node_context(), self._state.health_for_damage_requirements):
+            if requirement.satisfied(context, health):
                 from_index, to_index = edge
                 paths_to_check.append(GraphPath(from_index, to_index, requirement))
                 edges_to_remove.append(edge)
@@ -390,7 +392,7 @@ class OldGeneratorReach(GeneratorReach):
             del self._unreachable_paths[edge]
 
         for node_index, requirement in list(self._uncollectable_nodes.items()):
-            if requirement.satisfied(self._state.node_context(), self._state.health_for_damage_requirements):
+            if requirement.satisfied(context, health):
                 del self._uncollectable_nodes[node_index]
 
         self._expand_graph(paths_to_check)
