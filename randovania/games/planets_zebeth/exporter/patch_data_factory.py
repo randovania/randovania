@@ -106,6 +106,9 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
             "seed_identifier": self._create_hash_dict(),
             "starting_items": self._create_starting_items_dict(),
             "starting_memo": self._create_starting_memo(),
+            "warp_to_start": False,
+            "open_missile_doors_with_one_missile": False,
+            "allow_downward_shots": False,
             "credits_string": self._credits_spoiler(),
         }
 
@@ -114,6 +117,9 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         return {
             "show_unexplored_map": c.show_unexplored_map,
             "room_names_on_hud": c.show_room_names.value,
+            "disable_low_health_beeping": False,
+            "use_sm_boss_theme": False,
+            "use_alternative_escape_theme": False,
         }
 
     def _get_item_data(self) -> dict:
