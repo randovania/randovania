@@ -44,14 +44,14 @@ def test_calculate_weights_for_output(capsys, blank_pickup):
     assert weight == 0.0
     assert out == (
         ">>> [P: Blank Pickup]\n"
-        "safe resources:\n"
-        "  indices: set()\n"
-        "  events: []\n"
-        "  hints: []\n"
-        "unsafe resources:\n"
-        "  indices: set()\n"
-        "  events: []\n"
-        "  hints: []\n"
+        "  safe resources:\n"
+        "    indices: set()\n"
+        "    events: []\n"
+        "    hints: []\n"
+        "  unsafe resources:\n"
+        "    indices: set()\n"
+        "    events: []\n"
+        "    hints: []\n"
     )
 
 
