@@ -19,6 +19,12 @@ if TYPE_CHECKING:
     ResourceNodeT = typing.TypeVar("ResourceNodeT", bound=ResourceNode)
 
 
+def _get_reach_class() -> type[GeneratorReach]:
+    from randovania.generator.old_generator_reach import OldGeneratorReach
+
+    return OldGeneratorReach
+
+
 def _filter_reachable[NodeT: GraphOrClassicNode](nodes: Iterator[NodeT], reach: GeneratorReach) -> Iterator[NodeT]:
     for node in nodes:
         if reach.is_reachable_node(node):
@@ -71,11 +77,6 @@ def get_collectable_resource_nodes_of_reach(reach: GeneratorReach) -> list[Graph
 
 
 def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
-    """
-
-    :param reach:
-    :return:
-    """
     while True:
         actions = list(_get_safe_resources(reach))
         if not actions:
@@ -98,10 +99,7 @@ def reach_with_all_safe_resources(
     :param filler_config:
     :return:
     """
-    from randovania.generator.old_generator_reach import OldGeneratorReach as GR
-
-    # from randovania.generator.trust_generator_reach import TrustGeneratorReach as GR
-    reach = GR.reach_from_state(game, initial_state, filler_config)
+    reach = _get_reach_class().reach_from_state(game, initial_state, filler_config)
     collect_all_safe_resources_in_reach(reach)
     return reach
 
@@ -131,9 +129,10 @@ def advance_after_action(previous_reach: GeneratorReach) -> GeneratorReach:
             # print("Non-safe {} was good".format(action.full_name()))
             return advance_after_action(next_reach)
 
-        next_next_state = next_reach.state.copy()
+        # No need to call collect_all_safe_resources_in_reach on this new reach, as we've already collected everything
+        # at the start of this loop
+        next_reach = _get_reach_class().reach_from_state(game, next_reach.state.copy(), previous_reach.filler_config)
 
-        next_reach = reach_with_all_safe_resources(game, next_next_state, previous_reach.filler_config)
         if next_reach.is_reachable_node(initial_state.node) and previous_safe_nodes <= next_reach.safe_nodes_index_set:
             # print("Non-safe {} could reach back to where we were".format(action.full_name()))
             return advance_after_action(next_reach)
