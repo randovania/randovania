@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 import functools
 import typing
-from typing import TYPE_CHECKING, NamedTuple, Self, override
+from typing import TYPE_CHECKING, Self, override
 
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.game_description import GameDescription
@@ -16,7 +16,7 @@ from randovania.graph.state import GraphOrResourceNode
 from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator, Mapping, Sequence
+    from collections.abc import Collection, Iterator, Mapping, Sequence
 
     from randovania.game_description.db.node import Node, NodeContext, NodeIndex
     from randovania.game_description.requirements.requirement_set import RequirementSet
@@ -43,10 +43,16 @@ def _extra_requirement_for_node(
     return extra_requirement
 
 
-class GraphPath(NamedTuple):
+class GraphPath:
+    __slots__ = ("previous_node", "node", "requirement")
     previous_node: GraphOrClassicNode | None
     node: GraphOrClassicNode
     requirement: Requirement
+
+    def __init__(self, previous: GraphOrClassicNode | None, node: GraphOrClassicNode, requirement: Requirement):
+        self.previous_node = previous
+        self.node = node
+        self.requirement = requirement
 
     def is_in_graph(self, digraph: graph_module.BaseGraph) -> bool:
         if self.previous_node is None:
@@ -60,9 +66,13 @@ class GraphPath(NamedTuple):
             digraph.add_edge(self.previous_node.node_index, self.node.node_index, data=self.requirement)
 
 
-class _SafeNodes(typing.NamedTuple):
+class _SafeNodes:
     as_list: list[int]
     as_set: set[int]
+
+    def __init__(self, component: Collection[NodeIndex]):
+        self.as_list = sorted(component)
+        self.as_set = set(component)
 
 
 class OldGeneratorReach(GeneratorReach):
@@ -126,13 +136,21 @@ class OldGeneratorReach(GeneratorReach):
 
     def _potential_nodes_from(
         self, node: GraphOrClassicNode, context: NodeContext
-    ) -> Iterator[tuple[GraphOrClassicNode, Requirement]]:
+    ) -> list[tuple[GraphOrClassicNode, Requirement]]:
         extra_requirement = _extra_requirement_for_node(self._game, context, node)
 
         connections: list[tuple[GraphOrClassicNode, Requirement]]
 
         if isinstance(node, WorldGraphNode):
-            connections = [(conn.target, conn.requirement) for conn in node.connections]
+            connections = [
+                (
+                    conn.target,
+                    conn.requirement
+                    if extra_requirement is None
+                    else RequirementAnd([conn.requirement, extra_requirement]),
+                )
+                for conn in node.connections
+            ]
         else:
             assert isinstance(self._game, GameDescription)
             connections = []
@@ -145,16 +163,12 @@ class OldGeneratorReach(GeneratorReach):
                 if requirement_to_leave != Requirement.trivial():
                     requirement = RequirementAnd([requirement, requirement_to_leave])
 
+                if extra_requirement is not None:
+                    requirement = RequirementAnd([requirement, extra_requirement])
+
                 connections.append((target_node, requirement))
 
-        for other, requirement in connections:
-            if extra_requirement is not None:
-                requirement = RequirementAnd([requirement, extra_requirement])
-
-            yield (
-                other,
-                requirement,
-            )
+        return connections
 
     def _expand_graph(self, paths_to_check: list[GraphPath]) -> None:
         # print("!! _expand_graph", len(paths_to_check))
@@ -220,10 +234,7 @@ class OldGeneratorReach(GeneratorReach):
         for component in self._digraph.strongly_connected_components():
             if self._state.node.node_index in component:
                 assert self._safe_nodes is None
-                self._safe_nodes = _SafeNodes(
-                    sorted(component),
-                    set(component),
-                )
+                self._safe_nodes = _SafeNodes(component)
 
         assert self._safe_nodes is not None
 
