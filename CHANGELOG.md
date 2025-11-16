@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Prime 1's Refill Pickups will now use more appropriate models.
 
+### Factorio
+
+- Fixed: Exporting from Flatpak now works.
+
 ### Metroid Dread
 
 - Changed: Energy Parts are now logical.
