@@ -48,8 +48,8 @@ def batch_distribute_helper(
         generator.generate_and_validate_description(
             generator_params=permalink,
             status_update=None,
-            validate_after_generation=validate,
-            timeout=timeout,
+            resolve_after_generation=validate,
+            resolver_timeout=timeout,
             attempts=0,
             use_world_graph=use_world_graph,
         )

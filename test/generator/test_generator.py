@@ -127,13 +127,19 @@ async def test_create_description(preset_manager, game_enum) -> None:
         development=True,
         presets=[preset],
     )
-    status_update: MagicMock | Callable[[str], None] = MagicMock()
-    world_names = [f"Test {i + 1}" for i in range(generator_parameters.world_count)]
 
     # Run
-    result = await generator._create_description(
-        generator_parameters, status_update, 0, world_names, use_world_graph=True
+    result = await generator.generate_and_validate_description(
+        generator_params=generator_parameters,
+        status_update=None,
+        resolve_after_generation=False,
+        resolver_timeout=None,
+        attempts=0,
+        use_world_graph=True,
     )
 
     # Assert
-    assert result.shareable_hash == game_test_data.expected_seed_hash
+    assert result.shareable_hash == game_test_data.expected_seed_hash, (
+        "Hash of the generated game does not match the expected value. "
+        "For updating this value easily, check the CLI command `randovania development update-expected-seed-hash`"
+    )

@@ -47,8 +47,8 @@ def test_batch_distribute_helper(mocker: pytest_mock.MockerFixture):
     mock_generate_description.assert_called_once_with(
         generator_params=expected_permalink,
         status_update=None,
-        validate_after_generation=validate,
-        timeout=timeout,
+        resolve_after_generation=validate,
+        resolver_timeout=timeout,
         attempts=0,
         use_world_graph=True,
     )

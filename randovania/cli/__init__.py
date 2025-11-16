@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import asyncio
+import inspect
 import logging
 import os
 import sys
@@ -54,6 +56,8 @@ def _run_args(parser: ArgumentParser, args: Namespace) -> int:
 
     logging.debug("Executing from args...")
     try:
+        if inspect.iscoroutinefunction(args.func):
+            return asyncio.run(args.func(args)) or 0
         return args.func(args) or 0
     except KeyboardInterrupt:
         print("Quitting due to requested interrupt.")

@@ -82,12 +82,12 @@ def generate_layout(
 
         extra_args: dict[str, Any] = {
             "generator_params": parameters,
-            "validate_after_generation": options.advanced_validate_seed_after,
+            "resolve_after_generation": options.advanced_validate_seed_after,
             "world_names": world_names,
             "use_world_graph": options.advanced_use_world_graph,
         }
         if not options.advanced_timeout_during_generation:
-            extra_args["timeout"] = None
+            extra_args["resolver_timeout"] = None
         if retries is not None:
             extra_args["attempts"] = retries
 
