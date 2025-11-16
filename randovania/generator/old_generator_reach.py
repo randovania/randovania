@@ -67,8 +67,8 @@ class GraphPath:
 
 
 class _SafeNodes:
-    as_list: list[int]
-    as_set: set[int]
+    as_list: list[NodeIndex]
+    as_set: set[NodeIndex]
 
     def __init__(self, component: Collection[NodeIndex]):
         self.as_list = sorted(component)
