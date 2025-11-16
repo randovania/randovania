@@ -39,6 +39,19 @@ def client(tmp_path, mocker: pytest_mock.MockerFixture):
     return client
 
 
+async def test_shutdown(tmp_path):
+    # Explicitly not mocking http_session
+    # The assert is not leaking a resource.
+    client = NetworkClient(
+        tmp_path,
+        {
+            "server_address": "http://localhost:5000",
+            "socketio_path": "/socket.io",
+        },
+    )
+    await client.shutdown()
+
+
 async def test_on_connect_no_restore(tmp_path):
     client = NetworkClient(
         tmp_path,

@@ -294,6 +294,10 @@ class NetworkClient:
         await self.sio.disconnect()
         self.logger.debug("disconnected. sio connected? %s", self.sio.connected)
 
+    async def shutdown(self) -> None:
+        await self.disconnect_from_server()
+        await self.http.close()
+
     async def _restore_session(self):
         persisted_session = await self.read_persisted_session()
         if persisted_session is not None:
