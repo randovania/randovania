@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Text such as the Seed Hash in the Async Race window is now selectable via mouse.
 - Removed: The "Consider possible unsafe resources" experimental option has been removed and is now always enabled.
 - Removed: The "Revised door solver" experimental option has been removed and is now always enabled.
-- Added: Button to create new preset for improved UX.
+- Added: Added "Create New Preset" button to preset menu to improve UX.
 
 ### Another Metroid 2 Remake
 
@@ -25,7 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Factorio
 
 - Fixed: Exporting from Flatpak now works.
-- Added: Added "Create New Preset" button to preset menu to improve UX.
 
 ### Metroid Dread
 
