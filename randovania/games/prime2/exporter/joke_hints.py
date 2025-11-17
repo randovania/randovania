@@ -43,4 +43,10 @@ ECHOES_JOKE_HINTS = GENERIC_JOKE_HINTS + [
     "Morphing and staying still may attract some flying friends.",
     "Amorbis really digs raves.",
     "Navigating Dark Aether with low health causes Agon-y.",
+    "Captain's log, Datecycle 07.014.2. We engaged an unknown Space Pirate frigate. Pursuit initiated.",
+    "Your valor honors the Luminoth... those we have lost, and those we can yet save.",
+    "*Hacker Voice*: I'm in",
+    "Here's a tip: Dasha-way from your enemies.",
+    "War. War never changes.",
+    "Thanks for giving this randomizer a Shot!",
 ]

@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.4.0] - 2025-12-??
 
+- Added: 7 more joke hints.
 - Changed: The generator and resolver now use a faster algorithm. An option was added to use the old one if needed.
 - Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
 - Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough, especially at high verbosity.
@@ -25,9 +26,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The energy requirements for the Corpius, Kraid, Silver Chozo Robot, Gold Chozo Robot and Gold Chozo Robot have been reduced, so that when using medium damage strictness the available energy is enough to satisfy these fights.
 
+### Metroid Fusion
+
+- Added: 3 more joke hints
+
 ### Metroid Prime
 
 - Changed: AM2R's Drop Pickups will now use more appropriate models.
+
+### Metroid Prime 2: Echoes
+
+- Added: 6 more joke hints
 
 ### Metroid: Samus Returns
 
