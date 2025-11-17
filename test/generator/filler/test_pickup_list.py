@@ -199,6 +199,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
 
     state = State(
         resources,
+        {},
         (),
         EnergyTankDamageState(
             99,

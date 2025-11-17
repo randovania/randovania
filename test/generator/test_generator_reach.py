@@ -225,6 +225,7 @@ def test_basic_search_with_translator_gate(
 
     initial_state = State(
         resources,
+        {},
         (),
         EnergyTankDamageState(
             99,
