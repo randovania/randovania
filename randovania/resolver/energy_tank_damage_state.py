@@ -14,17 +14,25 @@ if TYPE_CHECKING:
 
 
 class EnergyTankDamageState(DamageState):
-    __slots__ = ("_energy", "_starting_energy", "_energy_per_tank", "_energy_tank")
+    __slots__ = ("_energy", "_starting_energy", "_energy_per_tank", "_energy_tank", "_damage_reduction_items")
     _energy: int
     _starting_energy: int
     _energy_per_tank: int
     _energy_tank: ItemResourceInfo
+    _damage_reduction_items: list[ItemResourceInfo]
 
-    def __init__(self, starting_energy: int, energy_per_tank: int, energy_tank: ItemResourceInfo):
+    def __init__(
+        self,
+        starting_energy: int,
+        energy_per_tank: int,
+        energy_tank: ItemResourceInfo,
+        damage_reduction_items: list[ItemResourceInfo],
+    ):
         self._energy = starting_energy
         self._starting_energy = starting_energy
         self._energy_per_tank = energy_per_tank
         self._energy_tank = energy_tank
+        self._damage_reduction_items = damage_reduction_items
 
     def __copy__(self) -> Self:
         return self._duplicate()
@@ -34,8 +42,12 @@ class EnergyTankDamageState(DamageState):
         return self._energy
 
     @override
-    def resources_for_energy(self) -> Generator[ItemResourceInfo]:
+    def resources_for_health(self) -> Generator[ItemResourceInfo]:
         yield self._energy_tank
+
+    @override
+    def resources_for_general_reduction(self) -> Generator[ItemResourceInfo]:
+        yield from self._damage_reduction_items
 
     def _maximum_energy(self, resources: ResourceCollection) -> int:
         num_tanks = resources[self._energy_tank]
@@ -46,6 +58,7 @@ class EnergyTankDamageState(DamageState):
             self._starting_energy,
             self._energy_per_tank,
             self._energy_tank,
+            self._damage_reduction_items,
         )
         result._energy = self._energy
         return result

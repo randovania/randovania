@@ -22,8 +22,12 @@ class DamageState(ABC):
         """How much health is present for purpose of checking damage requirements."""
 
     @abstractmethod
-    def resources_for_energy(self) -> Generator[ItemResourceInfo]:
-        """Which items give energy."""
+    def resources_for_health(self) -> Generator[ItemResourceInfo]:
+        """Which items give increases maximum health."""
+
+    @abstractmethod
+    def resources_for_general_reduction(self) -> Generator[ItemResourceInfo]:
+        """Which items give help with the base damage reduction."""
 
     @abstractmethod
     def is_better_than(self, other: DamageState | None) -> bool:

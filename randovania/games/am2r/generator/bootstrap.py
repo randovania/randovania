@@ -38,6 +38,10 @@ class AM2RBootstrap(Bootstrap[AM2RConfiguration]):
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
             game.get_resource_database_view().get_item("Energy Tank"),
+            [
+                game.get_resource_database_view().get_item("Varia Suit"),
+                game.get_resource_database_view().get_item("Gravity Suit"),
+            ],
         )
 
     def _get_enabled_misc_resources(

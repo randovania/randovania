@@ -333,7 +333,7 @@ class GameDescription(GameDatabaseView):
 def _resources_for_damage(
     resource: SimpleResourceInfo, database: ResourceDatabase, collection: ResourceCollection, damage_state: DamageState
 ) -> Iterator[ResourceInfo]:
-    yield from damage_state.resources_for_energy()
+    yield from damage_state.resources_for_health()
     for reduction in database.damage_reductions.get(resource, []):
         if reduction.inventory_item is not None and not collection.has_resource(reduction.inventory_item):
             yield reduction.inventory_item
