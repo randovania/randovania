@@ -444,24 +444,30 @@ class OldGeneratorReach(GeneratorReach):
 
         context = new_state.node_context()
 
-        def _dangerous_requirements(req: Requirement) -> set[ResourceInfo]:
-            return {indiv.resource for indiv in req.iterate_resource_requirements(context) if indiv.negate}
-
         new_dangerous_resources = {
             resource for resource in new_state.new_resources if resource in self.game.dangerous_resources
         }
 
-        if new_dangerous_resources:
-            # TODO: there should be a pre-calculated list of edges with dangerous requirements
-            # And this can easily be part of `advance_to` now.
-            edges_to_remove = []
-            for source, target, requirement in self._digraph.edges_data():
-                if not new_dangerous_resources.isdisjoint(_dangerous_requirements(requirement)):
-                    if not requirement.satisfied(context, new_state.health_for_damage_requirements):
-                        edges_to_remove.append((source, target))
+        edges_to_check = set()
+        for resource in new_dangerous_resources:
+            edges_to_check = edges_to_check.union(self.game.resource_to_dangerous_edges[resource])
 
-            for edge in edges_to_remove:
-                self._digraph.remove_edge(*edge)
+        if not self.game.resource_to_dangerous_edges:
+            # Compat with non-world graph
+            def _dangerous_requirements(req: Requirement) -> set[ResourceInfo]:
+                return {indiv.resource for indiv in req.iterate_resource_requirements(context) if indiv.negate}
+
+            if new_dangerous_resources:
+                for source, target, requirement in self._digraph.edges_data():
+                    if not new_dangerous_resources.isdisjoint(_dangerous_requirements(requirement)):
+                        edges_to_check.add((source, target))
+
+        # TODO: This can easily be part of `advance_to` now.
+        for source, target in edges_to_check:
+            if self._digraph.has_edge(source, target):
+                requirement = self._digraph.get_edge_data(source, target)
+                if not requirement.satisfied(context, new_state.health_for_damage_requirements):
+                    self._digraph.remove_edge(source, target)
 
         self.advance_to(new_state)
 
