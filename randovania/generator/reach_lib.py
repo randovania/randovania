@@ -115,16 +115,23 @@ def advance_after_action(previous_reach: GeneratorReach) -> GeneratorReach:
                 # print("Non-safe {} was good".format(action.full_name()))
                 return advance_after_action(next_reach)
 
-        # No need to call collect_all_safe_resources_in_reach on this new reach, as we've already collected everything
-        # at the start of this loop
-        next_reach = _get_reach_class().reach_from_state(game, next_reach.state.copy(), previous_reach.filler_config)
+            # It'll only be reachable in the new state if it already is in the existing state
+            # And since we already calculated the reachable nodes for this reach, this is a cheap operation!
+            if next_reach.is_reachable_node(initial_state.node):
+                # In this case, the action provides a dangerous resource but collecting it still lets us go back
+                # to where we started and the set of safe nodes didn't shrink
+                # We'll now create an entire new GeneratorReach and check if the safe nodes really didn't shrink.
 
-        if next_reach.is_reachable_node(initial_state.node):
-            if previous_safe_nodes <= next_reach.safe_nodes_index_set:
-                # print("Non-safe {} could reach back to where we were".format(action.full_name()))
-                return advance_after_action(next_reach)
-        else:
-            pass
+                # No need to call collect_all_safe_resources_in_reach on this new reach,
+                # as we've already collected everything at the start of this loop
+                experimental_reach = _get_reach_class().reach_from_state(
+                    game, next_reach.state.copy(), previous_reach.filler_config
+                )
+                # assert experimental_reach.safe_nodes_index_set <= next_reach.safe_nodes_index_set
+
+                if previous_safe_nodes <= experimental_reach.safe_nodes_index_set:
+                    # print("Non-safe {} could reach back to where we were".format(action.full_name()))
+                    return advance_after_action(experimental_reach)
 
         # print("Non-safe {} was skipped".format(action.full_name()))
 
