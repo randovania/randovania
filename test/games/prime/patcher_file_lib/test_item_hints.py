@@ -157,7 +157,7 @@ def test_create_hints_item_joke(echoes_game_patches, players_config):
     result = hints.create_patches_hints({0: patches}, players_config, exporter)
 
     # Assert
-    joke = "Your current Chozo Battle Suit version is SA1-4468-VM6-P."
+    joke = "Your valor honors the Luminoth... those we have lost, and those we can yet save."
     message = f"&push;&main-color=#45F731;{joke}&pop;"
     assert result[0]["strings"][0] == message
     assert result == [{"asset_id": asset_id, "strings": [message, "", message]}]

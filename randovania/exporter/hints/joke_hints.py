@@ -34,4 +34,11 @@ GENERIC_JOKE_HINTS = [
     "What is a hint? A miserable little pile of secrets!",
     "They say that not all hints are useful.",
     "You get nothing! You lose! Good day, sir!",
+    "Your next line is: 'Urgh, a joke hint.'",
+    "All your hints are belong to us.",
+    "A joke hint? In my randomized game? It's more likely than you think!",
+    "A wild joke hint appeared!",
+    "Shorts are comfy and easy to wear.",
+    "Nobody expects a joke hint! Its chief weapon is surprise... and fear.",
+    "Randovania's first release was on the 10th October of 2017.",
 ]
