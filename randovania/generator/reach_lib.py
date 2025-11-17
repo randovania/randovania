@@ -42,7 +42,10 @@ def get_collectable_resource_nodes_of_reach(
 
     result = []
 
-    node_list = typing.cast("Iterator[GraphOrResourceNode]", reach.safe_nodes if use_safe_nodes else reach.nodes)
+    node_list = typing.cast(
+        "Iterator[GraphOrResourceNode]",
+        reach.safe_nodes if use_safe_nodes else (reach.connected_nodes if must_be_reachable else reach.nodes),
+    )
 
     for node in node_list:
         if (
