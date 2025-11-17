@@ -632,7 +632,19 @@ def create_graph(
         for connection in node.connections:
             has_negate = set()
             resource_in_edge = set()
-            for individual in connection.requirement.iterate_resource_requirements(context):
+            requirement = connection.requirement
+
+            if node.is_resource_node():
+                dangerous_extra: list[Requirement] = [
+                    ResourceRequirement.simple(resource)
+                    for resource, quantity in node.resource_gain_on_collect(context)
+                    if resource in graph.dangerous_resources
+                ]
+                if dangerous_extra:
+                    dangerous_extra.append(requirement)
+                    requirement = RequirementAnd(dangerous_extra)
+
+            for individual in requirement.iterate_resource_requirements(context):
                 resource_in_edge.add(individual.resource)
                 if individual.negate:
                     has_negate.add(individual.resource)

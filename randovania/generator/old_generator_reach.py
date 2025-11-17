@@ -242,15 +242,16 @@ class OldGeneratorReach(GeneratorReach):
             if not requirement.satisfied(context, self._state.health_for_damage_requirements):
                 self._uncollectable_nodes[node_index] = requirement
 
-        # TODO: a precalculated mapping of resource -> edge is probably more than enough and saves doing this here
-        for edge in new_edges:
-            resources = {
-                indiv.resource for indiv in self._unreachable_paths[edge].iterate_resource_requirements(context)
-            }
-            for resource in resources:
-                if resource not in self._resource_to_edges:
-                    self._resource_to_edges[resource] = set()
-                self._resource_to_edges[resource].add(edge)
+        if not self.game.resource_to_edges:
+            # Doing this just when it's not world graph
+            for edge in new_edges:
+                resources = {
+                    indiv.resource for indiv in self._unreachable_paths[edge].iterate_resource_requirements(context)
+                }
+                for resource in resources:
+                    if resource not in self._resource_to_edges:
+                        self._resource_to_edges[resource] = set()
+                    self._resource_to_edges[resource].add(edge)
 
         # print("!! _expand_graph finished. Has {} edges".format(sum(1 for _ in self._digraph.edges_data())))
         self._safe_nodes = None
@@ -423,8 +424,13 @@ class OldGeneratorReach(GeneratorReach):
 
         # Collect edges to check based on the new resources
         possible_edges = set()
-        for resource in _new_resources_including_damage(new_state):
-            possible_edges |= self._resource_to_edges.get(resource, set())
+
+        if self.game.resource_to_edges:
+            for resource in _new_resources_including_damage(new_state):
+                possible_edges = possible_edges.union(self.game.resource_to_edges.get(resource, []))
+        else:
+            for resource in _new_resources_including_damage(new_state):
+                possible_edges |= self._resource_to_edges.get(resource, set())
 
         # Check if we can expand the corners of our graph
         paths_to_check: list[GraphPath] = []
@@ -449,10 +455,11 @@ class OldGeneratorReach(GeneratorReach):
         }
 
         edges_to_check = set()
-        for resource in new_dangerous_resources:
-            edges_to_check = edges_to_check.union(self.game.resource_to_dangerous_edges[resource])
 
-        if not self.game.resource_to_dangerous_edges:
+        if self.game.resource_to_dangerous_edges:
+            for resource in new_dangerous_resources:
+                edges_to_check = edges_to_check.union(self.game.resource_to_dangerous_edges[resource])
+        else:
             # Compat with non-world graph
             def _dangerous_requirements(req: Requirement) -> set[ResourceInfo]:
                 return {indiv.resource for indiv in req.iterate_resource_requirements(context) if indiv.negate}
