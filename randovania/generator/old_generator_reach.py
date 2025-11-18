@@ -86,7 +86,6 @@ def _new_resources_including_damage(state: State) -> set[ResourceInfo]:
     if new_resources & set(
         itertools.chain(damage_state.resources_for_health(), damage_state.resources_for_general_reduction())
     ):
-        new_resources |= set(state.resource_database.damage_reductions)
         for damage_res in state.resource_database.damage:
             new_resources.add(damage_res)
     else:
@@ -427,7 +426,7 @@ class OldGeneratorReach(GeneratorReach):
 
         if self.game.resource_to_edges:
             for resource in _new_resources_including_damage(new_state):
-                possible_edges = possible_edges.union(self.game.resource_to_edges.get(resource, []))
+                possible_edges.update(self.game.resource_to_edges.get(resource, []))
         else:
             for resource in _new_resources_including_damage(new_state):
                 possible_edges |= self._resource_to_edges.get(resource, set())
