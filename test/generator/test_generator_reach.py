@@ -126,8 +126,8 @@ def test_database_collectable(
     )
 
     reach = _create_reach_with_unsafe(graph, state, default_filler_config)
-    while list(reach_lib.collectable_resource_nodes(reach.nodes, reach)):
-        reach.act_on(next(iter(reach_lib.collectable_resource_nodes(reach.nodes, reach))))
+    while resource_nodes := reach_lib.get_collectable_resource_nodes_of_reach(reach, must_be_reachable=False):
+        reach.act_on(resource_nodes[0])
         reach = advance_after_action(reach)
 
     # print("\nCurrent reach:")
@@ -147,7 +147,7 @@ def test_database_collectable(
         for resource, quantity in reach.state.resources.as_resource_gain()
         if quantity > 0 and resource.resource_type == ResourceType.EVENT
     }
-    assert list(reach_lib.collectable_resource_nodes(reach.nodes, reach)) == []
+    assert reach_lib.get_collectable_resource_nodes_of_reach(reach, must_be_reachable=False) == []
     assert sorted(collected_indices) == expected_pickups
     assert sorted(collected_events, key=lambda it: it.short_name) == expected_events
 

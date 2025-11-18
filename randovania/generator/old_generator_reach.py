@@ -344,6 +344,13 @@ class OldGeneratorReach(GeneratorReach):
         for i in self._safe_nodes.as_list:
             yield all_nodes[i]
 
+    @property
+    @override
+    def safe_nodes_index_set(self) -> set[int]:
+        self._calculate_safe_nodes()
+        assert self._safe_nodes is not None
+        return self._safe_nodes.as_set
+
     def is_safe_node(self, node: GraphOrClassicNode) -> bool:
         node_index = node.node_index
         is_safe = self._is_node_safe_cache.get(node_index)
