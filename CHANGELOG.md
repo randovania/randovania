@@ -37,6 +37,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: AM2R's Drop Pickups will now use more appropriate models.
 
+#### Logic Database
+
+##### Phazon Mines
+
+- Fixed: Killing Elite Pirates on Hard Mode now requires Missiles instead of Power Beams.
+- Removed: Killing Elite Pirates with Beginner Combat but without Charge Beam or Plasma Beam.
+
 ### Metroid: Samus Returns
 
 #### Logic Database
