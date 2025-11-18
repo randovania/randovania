@@ -4924,7 +4924,7 @@
                             0.0
                         ]
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Chozo Ruins",
@@ -4939,6 +4939,13 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Tower of Light": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Spawn Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4968,6 +4975,30 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {}
+                },
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15.249645181525917,
+                        "y": -10.737209842761366,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Ruined Shrine": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -6698,7 +6729,7 @@
                             90.0
                         ]
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Chozo Ruins",
@@ -6720,7 +6751,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "With Gravity Suit",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6788,7 +6819,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": "https://youtu.be/3S7uWW56RKo",
+                                                                                            "comment": "Wallboost near the right corner: https://youtu.be/3S7uWW56RKo",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "template",
@@ -6821,7 +6852,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Slope Jump at the front wall",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6856,7 +6887,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=YMk1EDV95h0",
+                                            "comment": "NSJ slope jump that only works without Gravity Suit: https://www.youtube.com/watch?v=YMk1EDV95h0",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6908,12 +6939,12 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Intended Path",
                                             "items": [
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Break the Blocks",
                                                         "items": [
                                                             {
                                                                 "type": "and",
@@ -6960,7 +6991,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Get up the platforms",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -6974,7 +7005,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://youtu.be/3ZZH-1R4Cck",
+                                                                    "comment": "Slight diagonal Bomb Jumps: https://youtu.be/3ZZH-1R4Cck",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -7001,7 +7032,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Climb without destroying Missile Blocks",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -7025,7 +7056,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/2jyvwogPSDI",
+                                                                                "comment": "Use Oculus to dash to outer rim: https://youtu.be/2jyvwogPSDI",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -7051,77 +7082,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/nm2qvbKNAIw",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Dash",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "LJump",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Standable",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "https://youtu.be/bJHqj9OAxFo",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Dash",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "SJump",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Standable",
-                                                                                            "amount": 3,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "https://youtu.be/O_dTcT7p-fc",
+                                                                                "comment": "R-Jump onto outer rim: https://youtu.be/O_dTcT7p-fc",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -7154,6 +7115,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -7233,6 +7201,30 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "connections": {
+                        "Door to Tower of Light Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10.385710361329398,
+                        "y": 30.136147832267234,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Tower of Light Access": {
                             "type": "and",
@@ -8066,7 +8058,7 @@
                             90.0
                         ]
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Chozo Ruins",
@@ -8081,6 +8073,13 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Artifact of Lifegiver)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Spawn Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8115,6 +8114,30 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "connections": {
+                        "Door to Tower of Light": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.26597634537933046,
+                        "y": 24.59148123849616,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Tower of Light": {
                             "type": "and",
@@ -9919,7 +9942,7 @@
                             -89.99848
                         ]
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Chozo Ruins",
@@ -9934,6 +9957,13 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Hive Totem": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Spawn Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10012,6 +10042,30 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {}
+                },
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4.950306190419213,
+                        "y": -22.579150536387026,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Ruined Gallery": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },

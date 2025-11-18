@@ -37,6 +37,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: AM2R's Drop Pickups will now use more appropriate models.
 
+#### Logic Database
+
+##### Chozo Ruins
+
+- Removed: Tower of Light: Redundant combination of Combat Dash, L-Jump and Standable Terrain to collect the Pickup.
+- Removed: Tower of Light: Redundant combination of Combat Dash, Slope Jump and Standable Terrain to collect the Pickup.
+
 ### Metroid: Samus Returns
 
 #### Logic Database
