@@ -37,6 +37,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: AM2R's Drop Pickups will now use more appropriate models.
 
+#### Logic Database
+
+##### Chozo Ruins
+
+- Fixed: Watery Hall: Requirements for dealing with the enemies in the room.
+
 ### Metroid: Samus Returns
 
 #### Logic Database

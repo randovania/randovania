@@ -11601,7 +11601,7 @@
                             -89.50709
                         ]
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Chozo Ruins",
@@ -11679,6 +11679,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -11758,6 +11765,30 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "connections": {
+                        "Door to Gathering Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6.036599768957002,
+                        "y": -19.500237872926483,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Gathering Hall": {
                             "type": "and",
@@ -12162,7 +12193,7 @@
                             -89.50709
                         ]
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Chozo Ruins",
@@ -12184,7 +12215,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Deal with Water",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -12236,12 +12267,12 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up",
                                             "items": [
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Bomb Jump",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -12280,7 +12311,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/Jla-gYSErGc",
+                                                        "comment": "Gravless: https://youtu.be/Jla-gYSErGc",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -12324,7 +12355,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Jump up with Space Jump",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -12384,7 +12415,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/HDYJkv3MUVI",
+                                                        "comment": "Wallboost: https://youtu.be/HDYJkv3MUVI",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -12478,21 +12509,112 @@
                             }
                         },
                         "Event - Open gate": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Scan",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Scan",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Dealing with Vines/Blastcaps",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Any Beam"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 14,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Behind Gate": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Event10",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event10",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Deal with Vines",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Any Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Standable",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -12525,10 +12647,24 @@
                     "hint_features": [],
                     "connections": {
                         "Behind Gate": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Deal with Eyons",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 9,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -12712,7 +12848,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/bh18bp4makg",
+                                                        "comment": "Get to the Door via Out of Bounds",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -12748,7 +12884,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "With Space Jump: https://youtu.be/bh18bp4makg?t=47",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -12762,7 +12898,7 @@
                                                                         {
                                                                             "type": "or",
                                                                             "data": {
-                                                                                "comment": "https://www.youtube.com/watch?v=LdBFCaOFDE4",
+                                                                                "comment": "Without Space Jump: https://www.youtube.com/watch?v=LdBFCaOFDE4",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -12789,33 +12925,71 @@
                             }
                         },
                         "Door to Watery Hall Access": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Event10",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Get through Gate",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Event10",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Boost Ball"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ClipThruObjects",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Deal with Vines",
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Use Boost Ball"
+                                                    "data": "Shoot Any Beam"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "ClipThruObjects",
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -12827,6 +13001,30 @@
                             }
                         },
                         "Pickup (Charge Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -21.862934110417797,
+                        "y": -34.25181700007444,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Watery Hall Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13916,7 +14114,7 @@
                             0.0
                         ]
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Chozo Ruins",
@@ -13931,6 +14129,13 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Energy Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Spawn Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13960,6 +14165,30 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {}
+                },
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 21.664690430099895,
+                        "y": -11.587924245080934,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Furnace": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },

@@ -1908,7 +1908,7 @@ Watery Hall Access
 Extra - asset_id: 4008477565
 Extra - size_index: 0.1
 Extra - aabb: [389.6565, -74.64455, 9.903929, 427.8786, 11.788876, 25.766716]
-> Door to Gathering Hall; Heals? False; Spawn Point; Default Node
+> Door to Gathering Hall; Heals? False; Default Node
   * Layers: default
   * Normal Door to Gathering Hall/Door to Watery Hall Access
   * Extra - dock_index: 0
@@ -1921,6 +1921,8 @@ Extra - aabb: [389.6565, -74.64455, 9.903929, 427.8786, 11.788876, 25.766716]
       Any of the following:
           Missile and Shoot Any Beam
           Charge Beam and Knowledge (Beginner) and Shoot Power Beam
+  > Spawn Point
+      Trivial
 
 > Door to Watery Hall; Heals? False
   * Layers: default
@@ -1938,6 +1940,11 @@ Extra - aabb: [389.6565, -74.64455, 9.903929, 427.8786, 11.788876, 25.766716]
   * Extra - position_required: False
   * Extra - pre_placement_weight: 0.6
   * Extra - world_position: (396.773163, -43.946041, 11.48789)
+  > Door to Gathering Hall
+      Trivial
+
+> Spawn Point; Heals? False; Spawn Point
+  * Layers: default
   > Door to Gathering Hall
       Trivial
 
@@ -2017,7 +2024,7 @@ Extra - aabb: [397.9558, -8.934963, 4.7323303, 483.05167, 117.17189, 59.302334]
               Can Use Bombs
               Knowledge (Beginner) and Can Use Power Bombs
 
-> Door to Watery Hall Access; Heals? False; Spawn Point; Default Node
+> Door to Watery Hall Access; Heals? False; Default Node
   * Layers: default
   * Missile Blast Shield (randomprime) to Watery Hall Access/Door to Watery Hall
   * Extra - dock_index: 1
@@ -2027,27 +2034,41 @@ Extra - aabb: [397.9558, -8.934963, 4.7323303, 483.05167, 117.17189, 59.302334]
   > Pickup (Missile Expansion)
       All of the following:
           Any of the following:
+              # Deal with Water
               After Flaahgra or Poisoned Water Damage ≥ 57
               Gravity Suit and Poisoned Water Damage ≥ 25
           Any of the following:
+              # Get up
+              # Bomb Jump
               Gravity Suit and Bomb Jump (Beginner) and Poisoned Water Damage ≥ 15 and Can Use Bombs
-              # https://youtu.be/Jla-gYSErGc
+              # Gravless: https://youtu.be/Jla-gYSErGc
               No Gravity Suit and Slope Jump (Advanced) and Gravityless Underwater Movement (Advanced) and Enabled Allow Dangerous Gravity Suit Logic
               All of the following:
+                  # Jump up with Space Jump
                   Space Jump Boots
                   Any of the following:
                       Gravity Suit
                       Slope Jump (Beginner) and Gravityless Underwater Movement (Beginner)
               All of the following:
-                  # https://youtu.be/HDYJkv3MUVI
+                  # Wallboost: https://youtu.be/HDYJkv3MUVI
                   Gravity Suit and Wall Boost (Beginner) and Can Use Boost Ball
                   Any of the following:
                       Movement (Intermediate) and Poisoned Water Damage ≥ 65
                       Movement (Expert) and Poisoned Water Damage ≥ 20
   > Event - Open gate
-      Scan Visor
+      All of the following:
+          Scan Visor
+          Any of the following:
+              # Dealing with Vines/Blastcaps
+              Shoot Any Beam
+              Combat (Intermediate) and Normal Damage ≥ 14
   > Behind Gate
-      After Watery Hall Gate
+      All of the following:
+          After Watery Hall Gate
+          # Deal with Vines
+          Space Jump Boots or Standable Terrain (Beginner) or Shoot Any Beam
+  > Spawn Point
+      Trivial
 
 > Pickup (Charge Beam); Heals? False
   * Layers: default
@@ -2056,7 +2077,8 @@ Extra - aabb: [397.9558, -8.934963, 4.7323303, 483.05167, 117.17189, 59.302334]
   * Extra - pre_placement_weight: 0.6
   * Extra - world_position: (467.240417, 7.778633, 26.649574)
   > Behind Gate
-      Trivial
+      # Deal with Eyons
+      Normal Damage ≥ 9 or Shoot Any Beam
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
@@ -2085,17 +2107,27 @@ Extra - aabb: [397.9558, -8.934963, 4.7323303, 483.05167, 117.17189, 59.302334]
               Can Use Bombs
               Knowledge (Beginner) and Can Use Power Bombs
               All of the following:
-                  # https://youtu.be/bh18bp4makg
+                  # Get to the Door via Out of Bounds
                   Clip Through Objects (Expert) and Single Room Out of Bounds (Advanced) and Standable Terrain (Advanced) and Can Use Boost Ball
                   Any of the following:
+                      # With Space Jump: https://youtu.be/bh18bp4makg?t=47
                       Space Jump Boots
-                      # https://www.youtube.com/watch?v=LdBFCaOFDE4
+                      # Without Space Jump: https://www.youtube.com/watch?v=LdBFCaOFDE4
                       Movement (Expert)
   > Door to Watery Hall Access
-      Any of the following:
-          After Watery Hall Gate
-          Clip Through Objects (Beginner) and Can Use Boost Ball
+      All of the following:
+          Any of the following:
+              # Get through Gate
+              After Watery Hall Gate
+              Clip Through Objects (Beginner) and Can Use Boost Ball
+          # Deal with Vines
+          Space Jump Boots or Normal Damage or Shoot Any Beam
   > Pickup (Charge Beam)
+      Trivial
+
+> Spawn Point; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Watery Hall Access
       Trivial
 
 ----------------
@@ -2309,7 +2341,7 @@ Extra - aabb: [572.72375, -196.47711, 43.99083, 616.3443, -165.0573, 49.753304]
   > Door to Furnace
       Trivial
 
-> Door to Furnace; Heals? False; Spawn Point; Default Node
+> Door to Furnace; Heals? False; Default Node
   * Layers: default
   * Normal Door to Furnace/Door to West Furnace Access
   * Extra - dock_index: 1
@@ -2318,11 +2350,18 @@ Extra - aabb: [572.72375, -196.47711, 43.99083, 616.3443, -165.0573, 49.753304]
   * Extra - world_rotation: (0.0, -0.0, 0.0)
   > Door to Energy Core
       Trivial
+  > Spawn Point
+      Trivial
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
   * Pickup 129; Category? Minor
   * Extra - position_required: True
+
+> Spawn Point; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Furnace
+      Trivial
 
 ----------------
 Burn Dome
