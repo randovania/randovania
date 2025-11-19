@@ -66,6 +66,7 @@ async def _run_validator(
             patches=patches,
             logger=logger,
             use_world_graph=use_world_graph,
+            record_paths=True,
         )
     after = time.perf_counter()
 
