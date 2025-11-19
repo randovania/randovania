@@ -8,6 +8,7 @@ from open_prime_rando.dol_patching.prime1 import dol_patches
 
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.prime1.patcher import prime_items
 
 if TYPE_CHECKING:
@@ -17,7 +18,6 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.inventory import Inventory
-    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 
 def format_received_item(item_name: str, player_name: str) -> str:
@@ -112,6 +112,8 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         for item, delta in resources_to_give.as_resource_gain():
             if delta == 0:
                 continue
+
+            assert isinstance(item, ItemResourceInfo)
 
             if item.short_name not in prime_items.ARTIFACT_ITEMS:
                 if item.extra.get("max_increase", None) == 0:

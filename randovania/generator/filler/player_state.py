@@ -2,14 +2,12 @@ from __future__ import annotations
 
 import collections
 import re
-import typing
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
 from randovania.generator import reach_lib
@@ -22,7 +20,7 @@ from randovania.generator.filler.pickup_list import (
     interesting_resources_for_reach,
 )
 from randovania.generator.hint_state import HintState
-from randovania.graph.world_graph import WorldGraph, WorldGraphNode
+from randovania.graph.world_graph import WorldGraph
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.resolver import debug
@@ -31,6 +29,7 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.assignment import PickupTarget
     from randovania.game_description.game_database_view import GameDatabaseView
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.location_category import LocationCategory
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -92,7 +91,7 @@ class PlayerState:
         self.game = game
         self.original_game = original_game
 
-        self.reach = reach_lib.advance_reach_with_possible_unsafe_resources(
+        self.reach = reach_lib.advance_after_action(
             reach_lib.reach_with_all_safe_resources(game, initial_state, configuration)
         )
         self.pickups_left = pickups_left
@@ -292,19 +291,11 @@ class PlayerState:
     def count_self_locations(self, locations: WeightedLocations) -> int:
         return locations.count_for_player(self)
 
-    def get_pickup_node_at(self, location: PickupIndex) -> WorldGraphNode | PickupNode:
-        if isinstance(self.game, GameDescription):
-            return self.game.region_list.node_from_pickup_index(location)
-        else:
-            return self.game.node_by_pickup_index[location]
+    def get_full_name_for_pickup_node_at(self, location: PickupIndex) -> str:
+        return self.original_game.node_from_pickup_index(location).full_name()
 
     def get_location_category(self, index: PickupIndex) -> LocationCategory:
-        node = self.get_pickup_node_at(index)
-        if isinstance(node, WorldGraphNode):
-            pickup_node = typing.cast("PickupNode", node.database_node)
-        else:
-            pickup_node = node
-        return pickup_node.location_category
+        return self.original_game.node_from_pickup_index(index).location_category
 
     def can_place_pickup_at(self, pickup: PickupEntry, index: PickupIndex) -> bool:
         if self.configuration.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:

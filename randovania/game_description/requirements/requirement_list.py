@@ -15,10 +15,6 @@ if typing.TYPE_CHECKING:
 _ItemKey = tuple[int, int, bool]
 
 
-def _key_hash(req: ResourceRequirement) -> _ItemKey:
-    return req.resource.resource_index, req.amount, req.negate
-
-
 class RequirementList:
     __slots__ = ("_bitmask", "_items", "_extra", "_cached_hash")
     _bitmask: int
@@ -39,9 +35,10 @@ class RequirementList:
         self._cached_hash = None
 
         for it in items:
-            self._items[_key_hash(it)] = it
+            index = it.resource.resource_index
+            self._items[(index, it.amount, it.negate)] = it
             if it.amount == 1 and not it.negate and not it.is_damage:
-                self._bitmask |= 1 << it.resource.resource_index
+                self._bitmask |= 1 << index
             else:
                 self._extra.append(it)
 
@@ -130,6 +127,9 @@ class RequirementList:
 
         if self._items == other._items:
             return False
+
+        if not self._extra and not other._extra:
+            return self._bitmask & other._bitmask == self._bitmask
 
         return all(
             key in other._items or any(req.is_obsoleted_by(other_req) for other_req in other._items.values())

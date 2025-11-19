@@ -14,6 +14,7 @@ if TYPE_CHECKING:
 
 
 class EnergyTankDamageState(DamageState):
+    __slots__ = ("_energy", "_starting_energy", "_energy_per_tank", "_energy_tank")
     _energy: int
     _starting_energy: int
     _energy_per_tank: int
@@ -50,19 +51,24 @@ class EnergyTankDamageState(DamageState):
         return result
 
     def _at_maximum_energy(self, resources: ResourceCollection) -> Self:
-        result = self._duplicate()
-        result._energy = result._maximum_energy(resources)
-        return result
+        maximum_energy = self._maximum_energy(resources)
+        if maximum_energy == self._energy:
+            return self
+        else:
+            result = self._duplicate()
+            result._energy = maximum_energy
+            return result
 
     @override
     def is_better_than(self, other: DamageState | None) -> bool:
         if other is None:
             return True
-        assert isinstance(other, EnergyTankDamageState)
-        return self._energy > other._energy
+        return self._energy > other._energy  # type: ignore[attr-defined]
 
     @override
     def apply_damage(self, damage: int) -> Self:
+        if damage <= 0:
+            return self
         result = self._duplicate()
         result._energy -= damage
         return result

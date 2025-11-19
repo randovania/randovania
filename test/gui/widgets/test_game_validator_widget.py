@@ -55,6 +55,7 @@ async def test_run_validator(mocker, success):
         patches=layout.all_patches[0],
         logger=logger,
         use_world_graph=True,
+        record_paths=True,
     )
     assert result == "Took 1.000 seconds. Game is {}.".format("possible" if success else "impossible")
     assert debug.print_function is old_print_function

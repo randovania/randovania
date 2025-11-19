@@ -47,7 +47,7 @@ def print_retcon_loop_start(
             f"{len(current_uncollected.events)} open events{extra}"
         )
 
-        if debug.debug_level() > debug.LogLevel.MORE_EXTREME:
+        if debug.debug_level() > debug.LogLevel.EXTREME:
             print("\nCurrent reach:")
             for node in reach.nodes:
                 print(
@@ -98,5 +98,5 @@ def print_new_node_identifiers(
 
 def print_new_pickup_index(player: PlayerState, location: PickupIndex) -> None:
     if debug.debug_level() > debug.LogLevel.NORMAL:
-        node = player.get_pickup_node_at(location)
-        print(f"-> New Pickup Index: {player.name}'s {node.full_name()}")
+        name = player.get_full_name_for_pickup_node_at(location)
+        print(f"-> New Pickup Index: {player.name}'s {name}")

@@ -165,7 +165,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         )
         assert isinstance(graph, WorldGraph)
         self.graph = graph
-        self.logic = Logic(graph, self.preset.configuration)
+        self.logic = Logic(graph, self.preset.configuration, record_paths=True)
         self.map_canvas.select_game(graph.game_enum)
 
         self._initial_state.resources.add_self_as_requirement_to_resources = True

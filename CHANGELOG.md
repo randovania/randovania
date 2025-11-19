@@ -8,14 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [10.4.0] - 2025-12-??
 
 - Changed: The generator and resolver now use a faster algorithm. An option was added to use the old one if needed.
+- Changed: The "Verify if game is beatable after ..." option is no longer experimental.
 - Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
 - Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough, especially at high verbosity.
 - Fixed: Reduced the Windows install size by about 7 MB, as a regression from last release.
+- Fixed: Logical Pickup placement "All pickups" and expansions with negative amount are now compatible.
 - Fixed: Text such as the Seed Hash in the Async Race window is now selectable via mouse.
+- Removed: The "Consider possible unsafe resources" experimental option has been removed and is now always enabled.
+- Removed: The "Revised door solver" experimental option has been removed and is now always enabled.
 
 ### Another Metroid 2 Remake
 
 - Changed: Prime 1's Refill Pickups will now use more appropriate models.
+
+### Factorio
+
+- Fixed: Exporting from Flatpak now works.
 
 ### Metroid Dread
 

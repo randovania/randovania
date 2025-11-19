@@ -12,6 +12,7 @@ from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer
 from randovania.games.fusion.exporter.joke_hints import FUSION_JOKE_HINTS
 from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
@@ -140,6 +141,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         }
 
         for item, quantity in self.patches.starting_resources().as_resource_gain():
+            assert isinstance(item, ItemResourceInfo)
+
             match item.extra["StartingItemCategory"]:
                 case "Metroids":
                     continue

@@ -42,7 +42,12 @@ def validate_command_logic(args: Namespace) -> int:
     for _ in range(args.repeat):
         before = time.perf_counter()
         final_state_by_resolve = asyncio.run(
-            resolver.resolve(configuration=configuration, patches=patches, use_world_graph=use_world_graph)
+            resolver.resolve(
+                configuration=configuration,
+                patches=patches,
+                use_world_graph=use_world_graph,
+                record_paths=debug.debug_level() > 0,
+            )
         )
         after = time.perf_counter()
         total_times.append(after - before)
@@ -64,7 +69,13 @@ def validate_command_logic(args: Namespace) -> int:
 def add_validate_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("validate", help="Validate a rdvgame file.")
     add_debug_argument(parser)
-    parser.add_argument("--use-world-graph", action="store_true", help="Uses the experimental new resolver")
+    parser.add_argument(
+        "--no-world-graph",
+        default=True,
+        dest="use_world_graph",
+        action="store_false",
+        help="Don't use WorldGraph for generator/resolver.",
+    )
     parser.add_argument("--repeat", default=1, type=int, help="Validate multiple times. Used for benchmarking.")
     parser.add_argument("layout_file", type=Path, help="The rdvgame file to validate.")
     parser.add_argument("--write-to", type=Path, help="Write debug output to")

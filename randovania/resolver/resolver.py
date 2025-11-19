@@ -75,8 +75,10 @@ def _simplify_requirement_list(
                 damage_reqs.append(item)
                 current_energy -= item_damage
             continue
+
         elif item.negate and item.resource in node_resources:
             return None
+
         elif _is_later_progression_item(item.resource, progressive_item_info):
             assert progressive_item_info is not None
             items.append(_downgrade_progressive_item(item.resource, progressive_item_info))
@@ -103,21 +105,48 @@ def _simplify_additional_requirement_set(
     state: State,
     node_resources: list[ResourceInfo],
     progressive_chain_info: None | tuple[list[ResourceInfo], int],
+    skip_simplify: bool,
 ) -> RequirementSet:
-    new_alternatives = [
-        _simplify_requirement_list(alternative, state, node_resources, progressive_chain_info)
+    simplified = [
+        simplified
         for alternative in alternatives
+        if (simplified := _simplify_requirement_list(alternative, state, node_resources, progressive_chain_info))
+        is not None
     ]
-    return RequirementSet(
-        alternative
-        for alternative in new_alternatives
-        # RequirementList.simplify may return None
-        if alternative is not None
-    )
+
+    if skip_simplify:
+        return RequirementSet(simplified, skip_subset_check=True)
+
+    # Perform the subset check ourselves, but modified.
+    # Since this is called with the combination of `get_additional_requirements` for many nodes,
+    # we tend to get a lot of combinations of `Item or (Item and Event)`.
+    # So we can check for these cases first for a significant speedup
+
+    simplified.sort(key=lambda rl: len(rl._items))
+    new_alternatives: list[RequirementList] = []
+
+    single_req_mask = 0
+
+    for alternative in simplified:
+        if not alternative._extra:
+            if alternative._bitmask & single_req_mask:
+                # We already have a requirement that is just one of these resources
+                continue
+
+            if len(alternative._items) == 1:
+                single_req_mask |= alternative._bitmask
+
+        if not any(other.is_proper_subset_of(alternative) for other in new_alternatives):
+            new_alternatives.append(alternative)
+
+    return RequirementSet(new_alternatives, skip_subset_check=True)
 
 
 def _is_action_dangerous(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
-    return any(resource in dangerous_resources for resource, _ in action.resource_gain_on_collect(state.node_context()))
+    return any(
+        resource in dangerous_resources or quantity < 0
+        for resource, quantity in action.resource_gain_on_collect(state.node_context())
+    )
 
 
 def _is_dangerous_event(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
@@ -354,7 +383,9 @@ async def _inner_advance_depth(
 
                     logic.set_additional_requirements(
                         state.node,
-                        _simplify_additional_requirement_set(additional, state, resources, progressive_chain_info),
+                        _simplify_additional_requirement_set(
+                            additional, state, resources, progressive_chain_info, True
+                        ),
                     )
                     logic.logger.log_rollback(state, True, True, logic)
 
@@ -421,7 +452,7 @@ async def _inner_advance_depth(
 
     logic.set_additional_requirements(
         state.node,
-        _simplify_additional_requirement_set(additional_requirements, state, resources, progressive_chain_info),
+        _simplify_additional_requirement_set(additional_requirements, state, resources, progressive_chain_info, False),
     )
     logic.logger.log_rollback(state, has_action, False, logic)
 
@@ -446,6 +477,8 @@ def setup_resolver(
     configuration: BaseConfiguration,
     patches: GamePatches,
     use_world_graph: bool,
+    *,
+    record_paths: bool = False,
 ) -> tuple[State, Logic]:
     game = filtered_game
     bootstrap = game.game.generator.bootstrap
@@ -456,6 +489,7 @@ def setup_resolver(
         configuration, game, patches, use_world_graph=use_world_graph
     )
     logic = Logic(game_or_graph, configuration)
+    logic.record_paths = record_paths
 
     starting_state.resources.add_self_as_requirement_to_resources = True
 
@@ -470,6 +504,7 @@ async def resolve(
     collect_hint_data: bool = False,
     logger: ResolverLogger | None = None,
     use_world_graph: bool = False,
+    record_paths: bool = False,
 ) -> State | None:
     if status_update is None:
         status_update = _quiet_print
@@ -479,6 +514,7 @@ async def resolve(
         configuration,
         patches,
         use_world_graph=use_world_graph,
+        record_paths=record_paths,
     )
 
     if collect_hint_data:
