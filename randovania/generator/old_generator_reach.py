@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import functools
+import itertools
 import typing
 from typing import TYPE_CHECKING, Self, override
 
@@ -75,6 +76,26 @@ class _SafeNodes:
         self.as_set = set(component)
 
 
+def _new_resources_including_damage(state: State) -> set[ResourceInfo]:
+    """
+    Returns all new resources of the given state, plus any damage resources that are impacted by
+    having more health or more damage reduction (global or specific).
+    """
+    damage_state = state.damage_state
+    new_resources = set(state.new_resources)
+    if new_resources & set(
+        itertools.chain(damage_state.resources_for_health(), damage_state.resources_for_general_reduction())
+    ):
+        for damage_res in state.resource_database.damage:
+            new_resources.add(damage_res)
+    else:
+        for damage_res, reductions in state.resource_database.damage_reductions.items():
+            if any(reduction.inventory_item in new_resources for reduction in reductions):
+                new_resources.add(damage_res)
+
+    return new_resources
+
+
 class OldGeneratorReach(GeneratorReach):
     _digraph: graph_module.BaseGraph
     _state: State
@@ -83,6 +104,7 @@ class OldGeneratorReach(GeneratorReach):
     _node_reachable_cache: dict[int, bool]
     _unreachable_paths: dict[tuple[int, int], Requirement]
     _uncollectable_nodes: dict[int, Requirement]
+    _resource_to_edges: dict[ResourceInfo, set[tuple[int, int]]]
     _safe_nodes: _SafeNodes | None
     _is_node_safe_cache: dict[int, bool]
     _filler_config: FillerConfiguration
@@ -92,6 +114,7 @@ class OldGeneratorReach(GeneratorReach):
         reach = OldGeneratorReach(self._game, self._state, self._digraph.copy(), copy.copy(self._filler_config))
         reach._unreachable_paths = copy.copy(self._unreachable_paths)
         reach._uncollectable_nodes = copy.copy(self._uncollectable_nodes)
+        reach._resource_to_edges = copy.copy(self._resource_to_edges)
         reach._reachable_costs = self._reachable_costs
         reach._safe_nodes = self._safe_nodes
 
@@ -116,6 +139,7 @@ class OldGeneratorReach(GeneratorReach):
         self._digraph = graph
         self._unreachable_paths = {}
         self._uncollectable_nodes = {}
+        self._resource_to_edges = {}
         self._reachable_costs = None
         self._node_reachable_cache = {}
         self._is_node_safe_cache = {}
@@ -177,6 +201,7 @@ class OldGeneratorReach(GeneratorReach):
 
         all_nodes = self.all_nodes
         context = self._state.node_context()
+        new_edges = []
 
         while paths_to_check:
             path = paths_to_check.pop(0)
@@ -205,6 +230,7 @@ class OldGeneratorReach(GeneratorReach):
                     # print("* Unreachable", self.game.region_list.node_name(target_node), ", missing:",
                     #       requirement.as_str)
                     self._unreachable_paths[path.node, target_node_index] = requirement
+                    new_edges.append((path.node, target_node_index))
             # print("> done")
 
         for node_index in sorted(resource_nodes_to_check):
@@ -214,6 +240,17 @@ class OldGeneratorReach(GeneratorReach):
             requirement = node.requirement_to_collect
             if not requirement.satisfied(context, self._state.health_for_damage_requirements):
                 self._uncollectable_nodes[node_index] = requirement
+
+        if not self.game.resource_to_edges:
+            # Doing this just when it's not world graph
+            for edge in new_edges:
+                resources = {
+                    indiv.resource for indiv in self._unreachable_paths[edge].iterate_resource_requirements(context)
+                }
+                for resource in resources:
+                    if resource not in self._resource_to_edges:
+                        self._resource_to_edges[resource] = set()
+                    self._resource_to_edges[resource].add(edge)
 
         # print("!! _expand_graph finished. Has {} edges".format(sum(1 for _ in self._digraph.edges_data())))
         self._safe_nodes = None
@@ -381,75 +418,88 @@ class OldGeneratorReach(GeneratorReach):
             self._is_node_safe_cache = {}
 
         self._state = new_state
-
-        paths_to_check: list[GraphPath] = []
         health = self._state.health_for_damage_requirements
         context = self._state.node_context()
 
-        edges_to_remove = []
+        # Collect edges to check based on the new resources
+        possible_edges = set()
+
+        if self.game.resource_to_edges:
+            for resource in _new_resources_including_damage(new_state):
+                possible_edges.update(self.game.resource_to_edges.get(resource, []))
+        else:
+            for resource in _new_resources_including_damage(new_state):
+                possible_edges |= self._resource_to_edges.get(resource, set())
+
         # Check if we can expand the corners of our graph
-        # TODO: check if expensive. We filter by only nodes that depends on a new resource
-        for edge, requirement in self._unreachable_paths.items():
-            if requirement.satisfied(context, health):
+        paths_to_check: list[GraphPath] = []
+        for edge in possible_edges:
+            requirement = self._unreachable_paths.get(edge)
+            if requirement is not None and requirement.satisfied(context, health):
                 from_index, to_index = edge
                 paths_to_check.append(GraphPath(from_index, to_index, requirement))
-                edges_to_remove.append(edge)
+                del self._unreachable_paths[edge]
 
-        for edge in edges_to_remove:
-            del self._unreachable_paths[edge]
-
-        for node_index, requirement in list(self._uncollectable_nodes.items()):
-            if requirement.satisfied(context, health):
-                del self._uncollectable_nodes[node_index]
+        # Delay updating _uncollectable_nodes until it's used, as it's faster that way
 
         self._expand_graph(paths_to_check)
 
     def act_on(self, node: GraphOrResourceNode) -> None:
-        new_dangerous_resources = {
-            resource
-            for resource, quantity in node.resource_gain_on_collect(self._state.node_context())
-            if resource in self.game.dangerous_resources
-        }
         new_state = self._state.act_on_node(node)
 
         context = new_state.node_context()
 
-        def _dangerous_requirements(req: Requirement) -> set[ResourceInfo]:
-            return {indiv.resource for indiv in req.iterate_resource_requirements(context) if indiv.negate}
+        new_dangerous_resources = {
+            resource for resource in new_state.new_resources if resource in self.game.dangerous_resources
+        }
 
-        if new_dangerous_resources:
-            edges_to_remove = []
-            for source, target, requirement in self._digraph.edges_data():
-                if not new_dangerous_resources.isdisjoint(_dangerous_requirements(requirement)):
-                    if not requirement.satisfied(context, new_state.health_for_damage_requirements):
-                        edges_to_remove.append((source, target))
+        edges_to_check: set[tuple[NodeIndex, NodeIndex]] = set()
 
-            for edge in edges_to_remove:
-                self._digraph.remove_edge(*edge)
+        if self.game.resource_to_dangerous_edges:
+            for resource in new_dangerous_resources:
+                edges_to_check.update(self.game.resource_to_dangerous_edges[resource])
+        else:
+            # Compat with non-world graph
+            def _dangerous_requirements(req: Requirement) -> set[ResourceInfo]:
+                return {indiv.resource for indiv in req.iterate_resource_requirements(context) if indiv.negate}
+
+            if new_dangerous_resources:
+                for source, target, requirement in self._digraph.edges_data():
+                    if not new_dangerous_resources.isdisjoint(_dangerous_requirements(requirement)):
+                        edges_to_check.add((source, target))
+
+        # TODO: This can easily be part of `advance_to` now.
+        for source, target in edges_to_check:
+            if self._digraph.has_edge(source, target):
+                requirement = self._digraph.get_edge_data(source, target)
+                if not requirement.satisfied(context, new_state.health_for_damage_requirements):
+                    self._digraph.remove_edge(source, target)
 
         self.advance_to(new_state)
 
     def unreachable_nodes_with_requirements(self) -> dict[NodeIndex, RequirementSet]:
         results: dict[NodeIndex, RequirementSet] = {}
-        all_nodes = self.all_nodes
         context = self._state.node_context()
 
-        to_check = [
-            (all_nodes[node_index], requirement) for node_index, requirement in self._uncollectable_nodes.items()
-        ]
+        to_check: list[tuple[NodeIndex, Requirement]] = []
+
+        # Check uncollectable nodes. It might be outdated since advance_to skips updating, so handle that
+        for node_index, requirement in list(self._uncollectable_nodes.items()):
+            if requirement.satisfied(context, self._state.health_for_damage_requirements):
+                self._uncollectable_nodes.pop(node_index, None)
+            else:
+                to_check.append((node_index, requirement))
 
         for (source_node_index, target_node_index), requirement in self._unreachable_paths.items():
-            source_node = all_nodes[source_node_index]
-            target_node = all_nodes[target_node_index]
-            if self.is_reachable_node(source_node) and not self.is_reachable_node(target_node):
-                to_check.append((target_node, requirement))
+            if self.is_reachable_node_index(source_node_index) and not self.is_reachable_node_index(target_node_index):
+                to_check.append((target_node_index, requirement))
 
-        for node, requirement in to_check:
+        for node_index, requirement in to_check:
             requirements = requirement.patch_requirements(1.0, context).as_set(context)
-            if node.node_index in results:
-                results[node.node_index] = results[node.node_index].expand_alternatives(requirements)
+            if node_index in results:
+                results[node_index] = results[node_index].expand_alternatives(requirements)
             else:
-                results[node.node_index] = requirements
+                results[node_index] = requirements
 
         return results
 

@@ -186,6 +186,16 @@ class WorldGraph:
     original_to_node: dict[int, WorldGraphNode] = dataclasses.field(init=False)
     node_resource_index_offset: int
 
+    resource_to_edges: dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]] = dataclasses.field(
+        init=False, default_factory=dict
+    )
+    """A mapping of resource to a list of every node -> node edge it's used."""
+
+    resource_to_dangerous_edges: dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]] = dataclasses.field(
+        init=False, default_factory=dict
+    )
+    """A mapping of resource to a list of every node -> node edge it's used with a negate condition."""
+
     def __post_init__(self) -> None:
         self.original_to_node = {}
 
@@ -617,5 +627,36 @@ def create_graph(
         )
 
     graph.dangerous_resources = frozenset(_dangerous_resources(nodes, context))
+
+    for node in nodes:
+        for connection in node.connections:
+            has_negate = set()
+            resource_in_edge = set()
+            requirement = connection.requirement
+
+            if node.is_resource_node():
+                dangerous_extra: list[Requirement] = [
+                    ResourceRequirement.simple(resource)
+                    for resource, quantity in node.resource_gain_on_collect(context)
+                    if resource in graph.dangerous_resources
+                ]
+                if dangerous_extra:
+                    dangerous_extra.append(requirement)
+                    requirement = RequirementAnd(dangerous_extra)
+
+            for individual in requirement.iterate_resource_requirements(context):
+                resource_in_edge.add(individual.resource)
+                if individual.negate:
+                    has_negate.add(individual.resource)
+
+            for resource in resource_in_edge:
+                mappings = [graph.resource_to_edges]
+                if resource in has_negate:
+                    mappings.append(graph.resource_to_dangerous_edges)
+
+                for mapping in mappings:
+                    if resource not in mapping:
+                        mapping[resource] = []
+                    mapping[resource].append((node.node_index, connection.target.node_index))
 
     return graph

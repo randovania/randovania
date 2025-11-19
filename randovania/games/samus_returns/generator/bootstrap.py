@@ -59,6 +59,7 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
             game.get_resource_database_view().get_item("ETank"),
+            [game.get_resource_database_view().get_item(suit) for suit in ["Varia", "Gravity"]],
         )
 
     def _get_enabled_misc_resources(
@@ -130,10 +131,7 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
                 yield resource_database.get_event(name), 1
 
     def _damage_reduction(self, db: ResourceDatabaseView, current_resources: ResourceCollection) -> float:
-        num_suits = sum(
-            (1 if current_resources[db.get_item_by_display_name(suit)] else 0)
-            for suit in ("Varia Suit", "Gravity Suit")
-        )
+        num_suits = sum((1 if current_resources[db.get_item(suit)] else 0) for suit in ("Varia", "Gravity"))
         dr = 1.0
         if num_suits == 1:
             dr = 0.50
