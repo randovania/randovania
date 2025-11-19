@@ -453,7 +453,7 @@ class OldGeneratorReach(GeneratorReach):
             resource for resource in new_state.new_resources if resource in self.game.dangerous_resources
         }
 
-        edges_to_check = set()
+        edges_to_check: set[tuple[NodeIndex, NodeIndex]] = set()
 
         if self.game.resource_to_dangerous_edges:
             for resource in new_dangerous_resources:
