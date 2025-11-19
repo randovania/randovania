@@ -457,7 +457,7 @@ class OldGeneratorReach(GeneratorReach):
 
         if self.game.resource_to_dangerous_edges:
             for resource in new_dangerous_resources:
-                edges_to_check = edges_to_check.union(self.game.resource_to_dangerous_edges[resource])
+                edges_to_check.update(self.game.resource_to_dangerous_edges[resource])
         else:
             # Compat with non-world graph
             def _dangerous_requirements(req: Requirement) -> set[ResourceInfo]:
