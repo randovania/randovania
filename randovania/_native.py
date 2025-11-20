@@ -23,6 +23,7 @@ if typing.TYPE_CHECKING:
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraphNode
     from randovania.resolver.damage_state import DamageState
+    from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
     from randovania.resolver.logic import Logic
 
 # ruff: noqa: UP046
@@ -1156,6 +1157,7 @@ class ProcessNodesResponse(typing.NamedTuple):
     path_to_node: dict[int, list[int]]
 
 
+@cython.ccall
 def _combine_damage_requirements(
     damage: float,
     requirement: GraphRequirementSet,
@@ -1242,6 +1244,7 @@ def resolver_reach_process_nodes(
 ) -> ProcessNodesResponse:
     all_nodes: Sequence[WorldGraphNode] = logic.all_nodes
     resources: ResourceCollection = initial_state.resources
+    additional_requirements_list: list[GraphRequirementSet] = logic.additional_requirements
 
     record_paths: cython.bint = logic.record_paths
     initial_node_index: cython.int = initial_state.node.node_index
@@ -1257,13 +1260,25 @@ def resolver_reach_process_nodes(
         initial_node_index: [],
     }
 
+    # Fast path detection for EnergyTankDamageState
+    first_state: EnergyTankDamageState = next(iter(nodes_to_check.values()))  # type: ignore[assignment]
+    use_energy_fast_path: cython.bint = hasattr(first_state, "_energy")
+    fast_path_maximum_energy: cython.int = 0
+    if use_energy_fast_path:
+        fast_path_maximum_energy = first_state._maximum_energy(resources)
+
     while nodes_to_check:
         node_index: cython.int = next(iter(nodes_to_check))
         node: WorldGraphNode = all_nodes[node_index]
-        game_state: DamageState = nodes_to_check.pop(node_index)
+        game_state: EnergyTankDamageState = nodes_to_check.pop(node_index)  # type: ignore[assignment]
 
         if node.heal:
-            game_state = game_state.apply_node_heal(node, initial_state.resources)
+            if use_energy_fast_path:
+                if game_state._energy != fast_path_maximum_energy:
+                    game_state = game_state._duplicate()
+                    game_state._energy = fast_path_maximum_energy
+            else:
+                game_state = game_state.apply_node_heal(node, initial_state.resources)
 
         checked_nodes[node_index] = game_state
         if node_index != initial_node_index:
@@ -1277,28 +1292,38 @@ def resolver_reach_process_nodes(
             target_node_index = connection[0].node_index
             requirement: GraphRequirementSet = connection[1]
 
-            # a >= b -> !(b > a)
-            checked_target = checked_nodes.get(target_node_index)
-            if checked_target is not None and not game_state.is_better_than(checked_target):
-                continue
-
-            queued_target = nodes_to_check.get(target_node_index)
-            if queued_target is not None and not game_state.is_better_than(queued_target):
+            if not _is_damage_state_strictly_better(
+                game_state,
+                target_node_index,
+                use_energy_fast_path,
+                checked_nodes,
+                nodes_to_check,
+            ):
                 continue
 
             satisfied = can_leave_node
-            damage_health: cython.int = game_state.health_for_damage_requirements()
+            if use_energy_fast_path:
+                damage_health = game_state._energy
+            else:
+                damage_health = game_state.health_for_damage_requirements()
 
             if satisfied:
                 # Check if the normal requirements to reach that node is satisfied
                 satisfied = requirement.satisfied(resources, damage_health)
                 if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
-                    satisfied = logic.get_additional_requirements(node).satisfied(resources, damage_health)
+                    satisfied = additional_requirements_list[node_index].satisfied(resources, damage_health)
 
             if satisfied:
                 damage: cython.float = requirement.damage(resources)
-                nodes_to_check[target_node_index] = game_state.apply_damage(damage)
+                if damage <= 0:
+                    nodes_to_check[target_node_index] = game_state
+                elif use_energy_fast_path:
+                    new_damage_state = game_state._duplicate()
+                    new_damage_state._energy -= int(damage)
+                    nodes_to_check[target_node_index] = new_damage_state
+                else:
+                    nodes_to_check[target_node_index] = game_state.apply_damage(damage)
 
                 if node.heal:
                     satisfied_requirement_on_node[target_node_index] = (requirement, True)
