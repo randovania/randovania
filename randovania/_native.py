@@ -1244,16 +1244,17 @@ def resolver_reach_process_nodes(
     resources: ResourceCollection = initial_state.resources
 
     record_paths: cython.bint = logic.record_paths
+    initial_node_index: cython.int = initial_state.node.node_index
 
     checked_nodes: dict[int, DamageState] = {}
     satisfied_requirement_on_node: dict[int, tuple[GraphRequirementSet, bool]] = {
-        initial_state.node.node_index: (GraphRequirementSet.trivial(), False)
+        initial_node_index: (GraphRequirementSet.trivial(), False)
     }
 
     reach_nodes: dict[int, DamageState] = {}
     requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]] = {}
     path_to_node: dict[int, list[int]] = {
-        initial_state.node.node_index: [],
+        initial_node_index: [],
     }
 
     while nodes_to_check:
@@ -1265,7 +1266,7 @@ def resolver_reach_process_nodes(
             game_state = game_state.apply_node_heal(node, initial_state.resources)
 
         checked_nodes[node_index] = game_state
-        if node_index != initial_state.node.node_index:
+        if node_index != initial_node_index:
             reach_nodes[node_index] = game_state
 
         can_leave_node: cython.bint = True
@@ -1273,16 +1274,19 @@ def resolver_reach_process_nodes(
             can_leave_node = node.resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
 
         for connection in node.connections:
-            target_node_index: cython.int = connection[0].node_index
+            target_node_index = connection[0].node_index
             requirement: GraphRequirementSet = connection[1]
 
             # a >= b -> !(b > a)
-            if not game_state.is_better_than(checked_nodes.get(target_node_index)) or not game_state.is_better_than(
-                nodes_to_check.get(target_node_index)
-            ):
+            checked_target = checked_nodes.get(target_node_index)
+            if checked_target is not None and not game_state.is_better_than(checked_target):
                 continue
 
-            satisfied: cython.bint = can_leave_node
+            queued_target = nodes_to_check.get(target_node_index)
+            if queued_target is not None and not game_state.is_better_than(queued_target):
+                continue
+
+            satisfied = can_leave_node
             damage_health: cython.int = game_state.health_for_damage_requirements()
 
             if satisfied:
