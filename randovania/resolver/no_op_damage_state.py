@@ -33,7 +33,7 @@ class NoOpDamageState(DamageState):
         return other is None
 
     @override
-    def apply_damage(self, damage: int) -> Self:
+    def apply_damage(self, damage: float) -> Self:
         return self
 
     @override

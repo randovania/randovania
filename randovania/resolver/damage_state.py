@@ -35,7 +35,7 @@ class DamageState(ABC):
         Always True when other is None."""
 
     @abstractmethod
-    def apply_damage(self, damage: int) -> Self:
+    def apply_damage(self, damage: float) -> Self:
         """
         Applies damage accumulated when visiting a new node.
         :param damage: The damage to be applied, as returned from `Requirements.damage`.
