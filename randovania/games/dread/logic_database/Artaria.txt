@@ -1664,6 +1664,9 @@ Extra - asset_id: collision_camera_015
           Any of the following:
               After Artaria - EMMI Spinner Rotated Again
               Before Artaria - EMMI Spinner Pulled and Enabled Door Lock Randomizer and Enabled Highly Dangerous Logic
+  > Event - EMMI Spinner Rotated
+      # This connection is here to help the generator see that flipping the spinner is safe by opening the one way door.
+      After Artaria - EMMI Spinner Rotated
   > Event - EMMI Spinner Pulled
       Grapple Beam and After Artaria - EMMI Spinner Rotated
 
@@ -4271,10 +4274,8 @@ Extra - asset_id: collision_camera_070
   * EMMI Door to Teleport to Dairon/Dock to Arbitrary Enky Room (Upper)
   * Extra - actor_name: DoorEmmy07
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door to Navigation Station North (Upper)
-      Any of the following:
-          Morph Ball
-          Before Artaria - ArbEnky Blob West and Can Slide
+  > Start Point
+      Can Slide
 
 > Event - ArbEnky Blob West; Heals? False
   * Layers: default
