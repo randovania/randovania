@@ -5,6 +5,7 @@ requires = [
     "wheel>=0.37.0",
     "dulwich",
     "randovania-scm-version-schema",
+    "cython",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -63,6 +64,8 @@ dependencies = [
     "zstandard",
     # For consistent HTTPS certificate availability across platforms
     "certifi",
+    # speedup GraphRequirement
+    "cython",
 ]
 
 [project.optional-dependencies]
@@ -281,6 +284,7 @@ runtime-evaluated-decorators = [
 
 [tool.mypy]
 files = [
+    "randovania/_native.py",
     "randovania/bitpacking/",
     "randovania/cli/",
     "randovania/discord_bot/preset_lookup.py",

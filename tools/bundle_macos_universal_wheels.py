@@ -128,6 +128,10 @@ def select_best_wheels(matching_wheels: list[dict[str, Any]]) -> list[dict[str, 
 
     # Only return if we have both architectures
     if len(selected_wheels) == 2:
+        if selected_wheels[0]["wheel_info"]["abi_tag"] != selected_wheels[1]["wheel_info"]["abi_tag"]:
+            print("  ✗ Selected wheels have different ABI tags, cannot merge.")
+            return None
+
         return selected_wheels
 
     return None
@@ -343,6 +347,9 @@ async def main() -> int:
                 wheel_info = wheel_data["wheel_info"]
                 arch, version = parse_macos_platform(wheel_info["platform_tag"])
                 print(f"    - {wheel_info['filename']} ({arch}, macOS {version[0]}.{version[1]})")
+
+            if pure_wheel:
+                print(f"    - {pure_wheel['wheel_info']['filename']} (pure python)")
 
             # Prefer universal2 wheel if available, especially when platform-specific wheels also exist
             if universal2_wheel:
