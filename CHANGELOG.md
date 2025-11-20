@@ -37,6 +37,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: AM2R's Drop Pickups will now use more appropriate models.
 
+#### Logic Database
+
+##### Tallon Overworld
+
+- Added: Alcove: Escaping the pit with a Beginner Wallboost.
+
 ### Metroid: Samus Returns
 
 #### Logic Database
