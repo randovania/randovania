@@ -3,6 +3,7 @@ from __future__ import annotations
 import collections
 import copy
 import dataclasses
+import functools
 import typing
 
 from randovania.game_description.db.configurable_node import ConfigurableNode
@@ -508,6 +509,12 @@ def _should_create_front_node(database_view: GameDatabaseView, patches: GamePatc
     return len(connections_to) > 0
 
 
+@functools.cache
+def _cached_simplify(requirement: Requirement) -> Requirement:
+    """Cache globally, to help with DLR recreating world graph every time"""
+    return requirement.simplify()
+
+
 def create_graph(
     database_view: GameDatabaseView,
     patches: GamePatches,
@@ -589,14 +596,20 @@ def create_graph(
 
     context = NodeContext(patches, resources, resource_database, _WorldGraphNodeProvider(graph, database_view))
 
+    # Cache internally, to catch the same requirement being used multiple times in the same world graph
+
+    @functools.cache
     def simplify_requirement_with_as_set(requirement: Requirement) -> Requirement:
         patched = requirement.patch_requirements(damage_multiplier, context)
-        return RequirementOr(
-            [RequirementAnd(alternative.values()) for alternative in patched.as_set(context).alternatives]
-        ).simplify()
+        return _cached_simplify(
+            RequirementOr(
+                [RequirementAnd(alternative.values()) for alternative in patched.as_set(context).alternatives]
+            )
+        )
 
+    @functools.cache
     def simplify_requirement(requirement: Requirement) -> Requirement:
-        return requirement.patch_requirements(damage_multiplier, context).simplify()
+        return _cached_simplify(requirement.patch_requirements(damage_multiplier, context))
 
     for node in nodes:
         if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
