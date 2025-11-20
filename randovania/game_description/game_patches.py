@@ -33,7 +33,6 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.hint import Hint
-    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -55,10 +54,6 @@ class GamePatches:
     hints: dict[NodeIdentifier, Hint]
     custom_patcher_data: list
     game_specific: dict
-
-    cached_dock_connections_from: list[tuple[tuple[Node, Requirement], ...] | None] = dataclasses.field(
-        hash=False, compare=False
-    )
 
     def __post_init__(self) -> None:
         if isinstance(self.starting_equipment, ResourceCollection | list):
@@ -88,7 +83,6 @@ class GamePatches:
             starting_equipment=[],
             starting_location=game.starting_location,
             hints={},
-            cached_dock_connections_from=[None] * len(game.region_list.all_nodes),
             custom_patcher_data=[],
             game_specific={},
         )
@@ -138,28 +132,23 @@ class GamePatches:
     # Dock Connection
     def assign_dock_connections(self, assignment: Iterable[tuple[DockNode, Node]]) -> GamePatches:
         connections = list(self.dock_connection)
-        cached_dock_connections = list(self.cached_dock_connections_from)
 
         for source, target in assignment:
             connections[source.node_index] = target.node_index
-            cached_dock_connections[source.node_index] = None
-            # TODO: maybe this should set the other side too?
 
         return dataclasses.replace(
-            self, dock_connection=connections, cached_dock_connections_from=cached_dock_connections
+            self,
+            dock_connection=connections,
         )
 
-    def get_dock_connection_for(self, node: DockNode) -> Node:
+    def get_dock_connection_for(self, node: DockNode) -> NodeIdentifier:
         target_index = self.dock_connection[node.node_index]
         if target_index is None:
-            target_index = node.cache_default_connection
-            if target_index is None:
-                target_index = self.game.region_list.node_by_identifier(node.default_connection).node_index
-                object.__setattr__(node, "cache_default_connection", target_index)
+            return node.default_connection
 
         result = self.game.region_list.all_nodes[target_index]
         assert result is not None
-        return result
+        return result.identifier
 
     def all_dock_connections(self) -> Iterator[tuple[DockNode, Node]]:
         nodes = self.game.region_list.all_nodes
@@ -174,16 +163,11 @@ class GamePatches:
     # Dock Weakness
     def assign_dock_weakness(self, weaknesses: Iterable[tuple[DockNode, DockWeakness]]) -> GamePatches:
         new_weakness = list(self.dock_weakness)
-        cached_dock_connections = list(self.cached_dock_connections_from)
 
         for node, weakness in weaknesses:
             new_weakness[node.node_index] = weakness
-            cached_dock_connections[node.node_index] = None
-            cached_dock_connections[self.get_dock_connection_for(node).node_index] = None
 
-        return dataclasses.replace(
-            self, dock_weakness=new_weakness, cached_dock_connections_from=cached_dock_connections
-        )
+        return dataclasses.replace(self, dock_weakness=new_weakness)
 
     def assign_weaknesses_to_shuffle(self, weaknesses: Iterable[tuple[DockNode, bool]]) -> GamePatches:
         new_to_shuffle = list(self.weaknesses_to_shuffle)
@@ -232,14 +216,3 @@ class GamePatches:
             for it in self.starting_equipment:
                 result.add_resource_gain(it.resource_gain(result))
             return result
-
-    # Cache things
-    def get_cached_dock_connections_from(self, node: DockNode) -> tuple[tuple[Node, Requirement], ...] | None:
-        return self.cached_dock_connections_from[node.node_index]
-
-    def set_cached_dock_connections_from(self, node: DockNode, cache: tuple[tuple[Node, Requirement], ...]) -> None:
-        self.cached_dock_connections_from[node.node_index] = cache
-
-    def reset_cached_dock_connections_from(self) -> None:
-        for i in range(len(self.cached_dock_connections_from)):
-            self.cached_dock_connections_from[i] = None

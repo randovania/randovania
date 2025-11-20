@@ -11,7 +11,6 @@ from frozendict import frozendict
 
 from randovania.game_description import default_database
 from randovania.game_description.db.dock import DockLock, DockLockType, DockRandoParams, DockWeakness
-from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.node_search import distances_to_node
@@ -302,8 +301,7 @@ def _determine_valid_weaknesses(
     if state is not None:
         reach = ResolverReach.calculate_reach(logic, state)
         state_node = state.database_node
-        state_dock = state_node.dock if isinstance(state_node, DockLockNode) else state_node
-        if state_dock == target:
+        if state_node == target:
             # When using two sided door search, the state could be pointing at either dock or target.
             # Simply swap dock and target if we found the target side.
             target, dock = dock, target

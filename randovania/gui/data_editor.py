@@ -21,7 +21,6 @@ from randovania.game_description import (
     integrity_check,
     pretty_print,
 )
-from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import GenericNode, Node, NodeContext, NodeLocation
@@ -464,12 +463,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 return
             self.replace_node_with(area, node_edit_popup.node, new_node)
 
-            if isinstance(new_node, DockNode) and not hasattr(new_node, "lock_node"):
-                lock_node = DockLockNode.create_from_dock(
-                    new_node, self.editor.new_node_index(), self.resource_database
-                )
-                self.editor.add_node(area, lock_node)
-
     def update_selected_node(self) -> None:
         node = self.current_node
         self.node_info_group.setEnabled(node is not None)
@@ -814,19 +807,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.editor.add_node(current_area, new_node_this_area)
         self.editor.add_node(target_area, new_node_other_area)
-
-        new_node_this_lock = DockLockNode.create_from_dock(
-            new_node_this_area,
-            self.editor.new_node_index(),
-            self.resource_database,
-        )
-        new_node_other_lock = DockLockNode.create_from_dock(
-            new_node_other_area,
-            self.editor.new_node_index(),
-            self.resource_database,
-        )
-        self.editor.add_node(current_area, new_node_this_lock)
-        self.editor.add_node(target_area, new_node_other_lock)
 
         if source_count == 1:
             source_node = current_area.node_with_name(source_name_base)

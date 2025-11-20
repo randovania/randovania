@@ -6,7 +6,6 @@ from enum import Enum
 from functools import cached_property
 from typing import TYPE_CHECKING, Literal, NamedTuple, Protocol, final
 
-from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import HintNode
@@ -69,7 +68,7 @@ def action_details_from_state(state: State, node: WorldGraphNode | None = None) 
 
     if isinstance(db_node, EventNode):
         action_type = ActionType.EVENT
-    elif isinstance(db_node, DockNode | DockLockNode):
+    elif isinstance(db_node, DockNode):
         action_type = ActionType.LOCK
     elif isinstance(db_node, HintNode):
         action_type = ActionType.HINT

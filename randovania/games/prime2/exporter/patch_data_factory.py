@@ -229,14 +229,16 @@ def _apply_translator_gate_patches(specific_patches: dict, elevator_shuffle_mode
 def _create_elevator_scan_port_patches(
     game: GameDescription,
     region_list: RegionList,
-    get_elevator_connection_for: Callable[[DockNode], Node],
+    get_elevator_connection_for: Callable[[DockNode], NodeIdentifier],
     elevator_dock_type: DockType,
 ) -> Iterator[dict]:
     for node in _get_nodes_by_teleporter_id(region_list, elevator_dock_type):
         if node.extra.get("scan_asset_id") is None:
             continue
 
-        target_area_name = elevators.get_elevator_or_area_name(get_elevator_connection_for(node), True)
+        target_area_name = elevators.get_elevator_or_area_name(
+            game.node_by_identifier(get_elevator_connection_for(node)), True
+        )
         yield {
             "asset_id": node.extra["scan_asset_id"],
             "strings": [f"Access to &push;&main-color=#FF3333;{target_area_name}&pop; granted.", ""],

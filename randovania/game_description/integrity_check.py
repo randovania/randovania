@@ -4,7 +4,6 @@ import re
 import typing
 from typing import TYPE_CHECKING
 
-from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import Node, NodeContext
@@ -202,8 +201,6 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
     graph = networkx.DiGraph()
 
     for node in game.region_list.iterate_nodes():
-        if isinstance(node, DockLockNode):
-            continue
         graph.add_node(node)
 
     context = _create_node_context(game)

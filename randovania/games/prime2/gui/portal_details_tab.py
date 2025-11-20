@@ -9,7 +9,7 @@ from randovania.games.prime2.layout.echoes_configuration import EchoesConfigurat
 from randovania.gui.game_details.base_connection_details_tab import BaseConnectionDetailsTab
 
 if TYPE_CHECKING:
-    from randovania.game_description.db.node import Node
+    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_patches import GamePatches
     from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -43,21 +43,19 @@ class PortalDetailsTab(BaseConnectionDetailsTab):
         for region, area, node in region_list.all_regions_areas_nodes:
             if isinstance(node, DockNode) and node.dock_type.short_name == "portal":
                 portal_count_in_area[region.name][area.name] += 1
-                destination = patches.get_dock_connection_for(node)
+                destination = region_list.node_by_identifier(patches.get_dock_connection_for(node))
                 if dark_aether_helper.is_region_light(region):
                     per_area[region.name][area.name].add(node)
                 else:
                     # All docks are two-way between light and dark aether right now
                     assert isinstance(destination, DockNode)
-                    assert patches.get_dock_connection_for(destination) == node
+                    assert region_list.node_by_identifier(patches.get_dock_connection_for(destination)) == node
 
-        def name_for(target: Node) -> str:
-            target_region, target_area = region_list.region_and_area_by_area_identifier(
-                target.identifier.area_identifier
-            )
+        def name_for(target: NodeIdentifier) -> str:
+            target_region, target_area = region_list.region_and_area_by_area_identifier(target.area_identifier)
             target_name = target_area.name
             if portal_count_in_area[target_region.name][target_area.name] > 1:
-                target_name += f" - {target.name}"
+                target_name += f" - {target.node}"
             return target_name
 
         for region_name, areas in per_area.items():

@@ -296,7 +296,7 @@ def _create_dock_connection(
 ) -> WorldGraphNodeConnection:
     """Creates the connection for crossing this dock. Also handles adding the resource gain for breaking locks."""
     assert isinstance(node.database_node, DockNode)
-    target_node = graph.original_to_node[patches.get_dock_connection_for(node.database_node).node_index]
+    target_node = graph.node_identifier_to_node[patches.get_dock_connection_for(node.database_node)]
     forward_weakness = patches.get_dock_weakness_for(node.database_node)
 
     back_weakness, back_lock = None, None
