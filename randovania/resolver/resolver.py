@@ -23,9 +23,12 @@ from randovania.resolver.resolver_reach import ResolverReach
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
 
-    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.graph.state import State
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -102,7 +105,7 @@ def _simplify_additional_requirement_set(
     alternatives: Iterable[RequirementList],
     state: State,
     node_resources: list[ResourceInfo],
-    progressive_chain_info: None | tuple[list[ResourceInfo], int],
+    progressive_chain_info: None | tuple[list[ItemResourceInfo], int],
     skip_simplify: bool,
 ) -> RequirementSet:
     simplified = [
@@ -229,26 +232,22 @@ def _priority_for_resource_action(action: ResolverAction, state: State, logic: L
         return ActionPriority.EVERYTHING_ELSE
 
 
-def _progressive_chain_info_from_pickup_node(
-    node: PickupNode, context: NodeContext
-) -> None | tuple[list[ResourceInfo], int]:
+def _progressive_chain_info_from_pickup_entry(
+    pickup: PickupEntry, resources: ResourceCollection
+) -> None | tuple[list[ItemResourceInfo], int]:
     """
-
-    :param node:
-    :param context:
-    :return: When the node is a PickUp Node that has been assigned a Progressive item: Tuple containing the items in
+    :param pickup:
+    :param resources:
+    :return: When the PickupEntry is a Progressive item: Tuple containing the items in
      that item chain, as well as an index pointing to last one of those items that has been obtained. If there is no
       progressive item on that node or none of the progressive items have been obtained, then returns None.
     """
-    patches = context.patches
-    assert patches is not None
-    target = patches.pickup_assignment.get(node.pickup_index)
-    if target is not None and target.player == patches.player_index and len(target.pickup.progression) > 1:
-        progressives: list[ResourceInfo] = [item for item, _ in target.pickup.progression if item is not None]
+    if len(pickup.progression) > 1:
+        progressives: list[ItemResourceInfo] = [item for item, _ in pickup.progression if item is not None]
 
         last_obtained_index = -1
         for index, item in enumerate(progressives):
-            if context.current_resources[item] == 0:
+            if resources[item] == 0:
                 break
             last_obtained_index = index
         return (progressives, last_obtained_index) if last_obtained_index > -1 else None
@@ -256,11 +255,12 @@ def _progressive_chain_info_from_pickup_node(
     return None
 
 
-def _progressive_chain_info(node: Node, context: NodeContext) -> None | tuple[list[ResourceInfo], int]:
-    if isinstance(node, EventPickupNode):
-        return _progressive_chain_info_from_pickup_node(node.pickup_node, context)
-    if isinstance(node, PickupNode):
-        return _progressive_chain_info_from_pickup_node(node, context)
+def _progressive_chain_info(node: WorldGraphNode, context: NodeContext) -> None | tuple[list[ItemResourceInfo], int]:
+    """
+    When the node has a PickupEntry, returns _progressive_chain_info_from_pickup_entry for it.
+    """
+    if node.pickup_entry is not None:
+        return _progressive_chain_info_from_pickup_entry(node.pickup_entry, context.current_resources)
     return None
 
 
@@ -341,7 +341,7 @@ async def _inner_advance_depth(
                     additional = logic.get_additional_requirements(action).alternatives
 
                     resources = _resource_gain_for_state(state)
-                    progressive_chain_info = _progressive_chain_info(state.database_node, state.node_context())
+                    progressive_chain_info = _progressive_chain_info(state.node, state.node_context())
 
                     logic.set_additional_requirements(
                         state.node,
@@ -410,7 +410,7 @@ async def _inner_advance_depth(
         additional_requirements = additional_requirements.union(additional_alts)
 
     resources = _resource_gain_for_state(state)
-    progressive_chain_info = _progressive_chain_info(state.database_node, state.node_context())
+    progressive_chain_info = _progressive_chain_info(state.node, state.node_context())
 
     logic.set_additional_requirements(
         state.node,
