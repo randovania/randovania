@@ -8,7 +8,6 @@ from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
@@ -340,11 +339,8 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
 
     def _build_teleporter_name_dict(self) -> dict[str, dict[str, str]]:
         cc_dict: dict = {}
-        for node, connection in self.patches.all_dock_connections():
-            if (
-                isinstance(node, DockNode)
-                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
-            ):
+        for node, connection in self.patches.all_dock_connections(self.game):
+            if node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types:
                 src_region, src_area = self.game.region_list.region_and_area_by_area_identifier(
                     node.identifier.area_identifier
                 )
@@ -525,10 +521,9 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
                 "destination": self._start_point_ref_for(connection),
                 "connection_name": _get_destination_room_for_teleportal(connection),
             }
-            for node, connection in self.patches.all_dock_connections()
+            for node, connection in self.patches.all_dock_connections(self.game)
             if (
-                isinstance(node, DockNode)
-                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+                node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
                 or node.dock_type.extra.get("is_teleportal", False)
             )
         ]

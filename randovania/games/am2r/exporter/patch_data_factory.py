@@ -9,7 +9,6 @@ from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.db.dock_node import DockNode
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.exporter.joke_hints import AM2R_JOKE_HINTS
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
@@ -526,11 +525,8 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
                     "map_name"
                 ],
             }
-            for node, connection in self.patches.all_dock_connections()
-            if (
-                isinstance(node, DockNode)
-                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
-            )
+            for node, connection in self.patches.all_dock_connections(self.game)
+            if (node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types)
         }
 
         return {

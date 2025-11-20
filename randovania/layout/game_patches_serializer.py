@@ -108,7 +108,7 @@ def serialize_single(world_index: int, num_worlds: int, patches: GamePatches) ->
         },
         "starting_location": patches.starting_location.as_string,
         "dock_connections": {
-            dock.identifier.as_string: target.identifier.as_string for dock, target in patches.all_dock_connections()
+            dock.as_string: target.as_string for dock, target in patches.all_dock_connections_identifiers()
         },
         "dock_weakness": {
             dock.identifier.as_string: {

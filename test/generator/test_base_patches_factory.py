@@ -286,7 +286,7 @@ def test_add_elevator_connections_to_dock_connections_random(
     def generator(give_me_a_type):
         return [
             (dock_node, node)
-            for dock_node, node in give_me_a_type.all_dock_connections()
+            for dock_node, node in give_me_a_type.all_dock_connections(echoes_game_patches.game)
             if dock_node.dock_type in teleporter_dock_types
         ]
 

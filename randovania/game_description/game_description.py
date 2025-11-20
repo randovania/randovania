@@ -143,15 +143,14 @@ class GameDescription(GameDatabaseView):
             self.region_list,
         )
 
-    def get_prefilled_docks(self) -> list[int | None]:
-        region_list = self.region_list
-        dock_connection = [None] * len(region_list.all_nodes)
-        connections: list[int | None] = list(dock_connection)
+    def get_prefilled_docks(self) -> dict[NodeIdentifier, NodeIdentifier]:
+        connections: dict[NodeIdentifier, NodeIdentifier] = {}
+
         teleporter_dock_types = self.dock_weakness_database.all_teleporter_dock_types
-        for source in region_list.iterate_nodes_of_type(DockNode):
+        for _, _, source in self.iterate_nodes_of_type(DockNode):
             if source.dock_type in teleporter_dock_types:
-                target = region_list.node_by_identifier(source.default_connection)
-                connections[source.node_index] = target.node_index
+                connections[source.identifier] = source.default_connection
+
         return connections
 
     @property

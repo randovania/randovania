@@ -31,6 +31,7 @@ if typing.TYPE_CHECKING:
     )
     from randovania.game_description.db.dock import DockWeakness
     from randovania.game_description.db.node import Node
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.hint import Hint
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -46,7 +47,7 @@ class GamePatches:
     player_index: int
     configuration: BaseConfiguration
     pickup_assignment: dict[PickupIndex, PickupTarget]
-    dock_connection: list[int | None]
+    dock_connection: dict[NodeIdentifier, NodeIdentifier]
     dock_weakness: list[DockWeakness | None]
     weaknesses_to_shuffle: list[bool]
     starting_equipment: StartingEquipment
@@ -131,10 +132,10 @@ class GamePatches:
 
     # Dock Connection
     def assign_dock_connections(self, assignment: Iterable[tuple[DockNode, Node]]) -> GamePatches:
-        connections = list(self.dock_connection)
+        connections = self.dock_connection.copy()
 
         for source, target in assignment:
-            connections[source.node_index] = target.node_index
+            connections[source.identifier] = target.identifier
 
         return dataclasses.replace(
             self,
@@ -142,23 +143,14 @@ class GamePatches:
         )
 
     def get_dock_connection_for(self, node: DockNode) -> NodeIdentifier:
-        target_index = self.dock_connection[node.node_index]
-        if target_index is None:
-            return node.default_connection
+        return self.dock_connection.get(node.identifier, node.default_connection)
 
-        result = self.game.region_list.all_nodes[target_index]
-        assert result is not None
-        return result.identifier
+    def all_dock_connections_identifiers(self) -> Iterator[tuple[NodeIdentifier, NodeIdentifier]]:
+        return iter(self.dock_connection.items())
 
-    def all_dock_connections(self) -> Iterator[tuple[DockNode, Node]]:
-        nodes = self.game.region_list.all_nodes
-        for index, target in enumerate(self.dock_connection):
-            if target is not None:
-                node = nodes[index]
-                other = nodes[target]
-                assert isinstance(node, DockNode)
-                assert other is not None
-                yield node, other
+    def all_dock_connections(self, view: GameDatabaseView) -> Iterator[tuple[DockNode, Node]]:
+        for source, target in self.dock_connection.items():
+            yield view.typed_node_by_identifier(source, DockNode), view.node_by_identifier(target)
 
     # Dock Weakness
     def assign_dock_weakness(self, weaknesses: Iterable[tuple[DockNode, DockWeakness]]) -> GamePatches:

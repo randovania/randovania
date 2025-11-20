@@ -167,7 +167,7 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
 
     elevator_fields = []
 
-    for node, connection in patches.all_dock_connections():
+    for node, connection in patches.all_dock_connections(game):
         if isinstance(node, DockNode) and node.dock_type == elevator_type:
             target_area_location = connection.identifier.area_identifier
             elevator_fields.append(
@@ -777,7 +777,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
     def add_dock_connection_changes(self, regions_patch_data: dict) -> None:
         portal_changes: dict[DockNode, Node] = {
             source: target
-            for source, target in self.patches.all_dock_connections()
+            for source, target in self.patches.all_dock_connections(self.game)
             if source.dock_type.short_name == "portal" and source.default_connection != target.identifier
         }
 
@@ -815,7 +815,9 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
     def add_new_patcher_elevators(self, regions_patch_data: dict) -> None:
         elevator_type = self.elevator_dock_type()
-        all_teleporters = [pair for pair in self.patches.all_dock_connections() if pair[0].dock_type == elevator_type]
+        all_teleporters = [
+            pair for pair in self.patches.all_dock_connections(self.game) if pair[0].dock_type == elevator_type
+        ]
         for node, connection in all_teleporters:
             node_identifier = connection.identifier
             area_patches, area = self._add_area_to_regions_patch(regions_patch_data, node)
