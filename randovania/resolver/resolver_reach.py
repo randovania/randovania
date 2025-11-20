@@ -40,7 +40,9 @@ def _build_satisfiable_requirements(
 
         for a in set_param:
             for b in additional:
-                data.append(a.copy_and_with(b))
+                new_list = a.copy_then_and_with(b)
+                if new_list is not None:
+                    data.append(new_list)
 
     return frozenset(data)
 
@@ -95,7 +97,7 @@ def _combine_damage_requirements(
     elif isolated_satisfied == GraphRequirementSet.trivial():
         result = isolated_requirement
     else:
-        result = isolated_requirement.copy_and_with_set(isolated_satisfied)
+        result = isolated_requirement.copy_then_and_with_set(isolated_satisfied)
 
     return result, False
 
@@ -147,6 +149,7 @@ class ResolverReach:
         checked_nodes: dict[int, DamageState] = {}
         resources = initial_state.resources
         context = initial_state.node_context()
+        resources = initial_state.resources
 
         # Keys: nodes to check
         # Value: how much energy was available when visiting that node
@@ -168,16 +171,14 @@ class ResolverReach:
             game_state = nodes_to_check.pop(node_index)
 
             if node.heal:
-                game_state = game_state.apply_node_heal(node, initial_state.resources)
+                game_state = game_state.apply_node_heal(node, resources)
 
             checked_nodes[node_index] = game_state
             if node_index != initial_state.node.node_index:
                 reach_nodes[node_index] = game_state
 
-            for target_node, requirement, requirement_without_leaving in node.connections:
-                requirement: GraphRequirementSet
-                requirement_without_leaving: GraphRequirementSet
-                target_node_index = target_node.node_index
+            for connection in node.connections:
+                target_node_index = connection.target.node_index
 
                 # a >= b -> !(b > a)
                 if not game_state.is_better_than(checked_nodes.get(target_node_index)) or not game_state.is_better_than(
@@ -189,34 +190,34 @@ class ResolverReach:
                 if node.require_collected_to_leave:
                     satisfied = node.has_all_resources(resources)
 
+                requirement = connection.requirement
                 damage_health = game_state.health_for_damage_requirements()
+
                 # Check if the normal requirements to reach that node is satisfied
-                satisfied = satisfied and requirement.satisfied(context.current_resources, damage_health)
+                satisfied = satisfied and requirement.satisfied(resources, damage_health)
                 if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
-                    satisfied = logic.get_additional_requirements(node).satisfied(
-                        context.current_resources, damage_health
-                    )
+                    satisfied = logic.get_additional_requirements(node).satisfied(resources, damage_health)
 
                 if satisfied:
-                    damage = requirement.damage(context.current_resources)
+                    damage = requirement.damage(resources)
                     nodes_to_check[target_node_index] = game_state.apply_damage(damage)
                     satisfied_requirement_on_node[target_node_index] = _combine_damage_requirements(
                         node.heal,
                         damage,
                         requirement,
                         satisfied_requirement_on_node[node.node_index],
-                        context.current_resources,
+                        resources,
                     )
                     if logic.record_paths:
                         path_to_node[target_node_index] = list(path_to_node[node_index])
                         path_to_node[target_node_index].append(node_index)
 
-                elif target_node:
+                else:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
-                    if not requirement_without_leaving.satisfied(context.current_resources, damage_health):
-                        full_requirement_for_target = requirement_without_leaving.copy_and_with_set(
+                    if not connection.requirement_without_leaving.satisfied(resources, damage_health):
+                        full_requirement_for_target = connection.requirement_without_leaving.copy_then_and_with_set(
                             satisfied_requirement_on_node[node.node_index][0]
                         )
                         requirements_excluding_leaving_by_node[target_node_index].append(full_requirement_for_target)
@@ -239,7 +240,7 @@ class ResolverReach:
         for node in self.collectable_resource_nodes(ctx):
             additional_requirements = self._logic.get_additional_requirements(node)
             game_state = self._game_state_at_node[node.node_index]
-            if additional_requirements.satisfied(ctx.current_resources, game_state.health_for_damage_requirements()):
+            if additional_requirements.satisfied(state.resources, game_state.health_for_damage_requirements()):
                 yield node, game_state
             else:
                 self._satisfiable_requirements_for_additionals = self._satisfiable_requirements_for_additionals.union(

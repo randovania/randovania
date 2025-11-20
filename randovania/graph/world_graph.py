@@ -11,7 +11,6 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.base import Requirement
@@ -38,7 +37,6 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import (
@@ -167,10 +165,7 @@ class WorldGraph:
     """
 
     game_enum: RandovaniaGame
-    victory_condition: Requirement
-    _victory_condition_as_set: RequirementSet | None = dataclasses.field(
-        init=False, compare=False, hash=False, default=None
-    )
+    victory_condition: GraphRequirementSet
     dangerous_resources: frozenset[ResourceInfo]
     nodes: list[WorldGraphNode]
     node_by_pickup_index: dict[PickupIndex, WorldGraphNode]
@@ -197,11 +192,6 @@ class WorldGraph:
             if node.database_node is not None:
                 assert node.database_node.node_index not in self.original_to_node
                 self.original_to_node[node.database_node.node_index] = node
-
-    def victory_condition_as_set(self, context: NodeContext) -> RequirementSet:
-        if self._victory_condition_as_set is None:
-            self._victory_condition_as_set = self.victory_condition.as_set(context)
-        return self._victory_condition_as_set
 
     def resource_info_for_node(self, node: WorldGraphNode) -> NodeResourceInfo:
         return NodeResourceInfo(
@@ -400,7 +390,9 @@ def _dangerous_resources(nodes: list[WorldGraphNode]) -> Iterator[ResourceInfo]:
     for node in nodes:
         for connection in node.connections:
             for graph_requirement in connection.requirement.alternatives:
-                yield from graph_requirement.negate_resources
+                for resource_info in graph_requirement.all_resources(include_damage=False):
+                    if graph_requirement.get_requirement_for(resource_info)[1]:
+                        yield resource_info
 
 
 def create_node(
@@ -573,16 +565,17 @@ def create_graph(
 
     graph = WorldGraph(
         game_enum=database_view.get_game_enum(),
-        victory_condition=victory_condition,
+        victory_condition=GraphRequirementSet.trivial(),
         dangerous_resources=frozenset(),
         nodes=nodes,
         node_by_pickup_index={node.pickup_index: node for node in nodes if node.pickup_index is not None},
         node_resource_index_offset=node_resource_index_offset,
     )
     converter = GraphRequirementConverter(resource_database, graph, static_resources, damage_multiplier)
-    NodeContext(None, static_resources, None, None)
 
     simplify_requirement = converter.convert_db
+    graph.victory_condition = simplify_requirement(victory_condition)
+
     for node in nodes:
         if isinstance(node.requirement_to_collect, Requirement):
             node.requirement_to_collect = simplify_requirement(node.requirement_to_collect)
@@ -630,12 +623,15 @@ def create_graph(
                     if resource in graph.dangerous_resources:
                         dangerous_extra.add_resource(resource, 1, False)
 
-                if dangerous_extra.set_resources:
-                    requirement_set.all_alternative_and_with(dangerous_extra)
+                if dangerous_extra.all_resources():
+                    requirement_set = requirement_set.copy_then_all_alternative_and_with(dangerous_extra)
 
             for alternative in requirement_set.alternatives:
-                resource_in_edge |= alternative.all_resources()
-                has_negate.update(alternative.negate_resources)
+                all_resources = alternative.all_resources()
+                resource_in_edge.update(all_resources)
+                has_negate.update(
+                    resource for resource in all_resources if alternative.get_requirement_for(resource)[1]
+                )
 
             for resource in resource_in_edge:
                 mappings = [graph.resource_to_edges]

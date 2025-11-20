@@ -13,7 +13,6 @@ if TYPE_CHECKING:
     from collections.abc import Sequence
 
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
@@ -62,7 +61,7 @@ class Logic:
     def set_additional_requirements(self, node: WorldGraphNode, req: GraphRequirementSet) -> None:
         self.additional_requirements[node.node_index] = req
 
-    def victory_condition(self, state: State) -> Requirement:
+    def victory_condition(self, state: State) -> GraphRequirementSet:
         return self._victory_condition
 
     def get_attempts(self) -> int:

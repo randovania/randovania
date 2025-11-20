@@ -47,7 +47,7 @@ def get_collectable_resource_nodes_of_reach(
         if (
             node.is_resource_node()
             and not node.has_all_resources(resources)
-            and node.requirement_to_collect.satisfied(context, health)
+            and node.requirement_to_collect.satisfied(context.current_resources, health)
             and (
                 include_with_dangerous_resources
                 or (_action_has_no_dangerous_resources(node, dangerous_resources, resources))

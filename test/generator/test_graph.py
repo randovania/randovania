@@ -1,7 +1,7 @@
 import pytest
 
-from randovania.game_description.requirements.base import Requirement
 from randovania.generator import graph
+from randovania.graph.graph_requirement import GraphRequirementSet
 
 
 @pytest.mark.parametrize(
@@ -18,15 +18,15 @@ def test_graph_module(cls: type[graph.BaseGraph], blank_game_description):
     g.add_node(5)
     g.add_node(7)
     g.add_node(8)
-    g.add_edge(1, 5, Requirement.trivial())
-    g.add_edge(7, 8, Requirement.trivial())
+    g.add_edge(1, 5, GraphRequirementSet.trivial())
+    g.add_edge(7, 8, GraphRequirementSet.trivial())
 
     assert g.has_edge(1, 5)
 
     result = list(g.edges_data())
     assert result == [
-        (1, 5, Requirement.trivial()),
-        (7, 8, Requirement.trivial()),
+        (1, 5, GraphRequirementSet.trivial()),
+        (7, 8, GraphRequirementSet.trivial()),
     ]
 
     assert g.shortest_paths_dijkstra(1, lambda a, b, c: 0) == {1: 0, 5: 0}

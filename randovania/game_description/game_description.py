@@ -13,7 +13,6 @@ from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
-from randovania.game_description.requirements.resource_requirement import DamageResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -29,7 +28,6 @@ if TYPE_CHECKING:
     from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.requirements.base import Requirement
-    from randovania.game_description.requirements.requirement_list import RequirementList
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -267,19 +265,12 @@ class GameDescription(GameDatabaseView):
 
 
 def _resources_for_damage(
-    resource: SimpleResourceInfo, database: ResourceDatabase, collection: ResourceCollection, damage_state: DamageState
+    resource: ResourceInfo, database: ResourceDatabase, collection: ResourceCollection, damage_state: DamageState
 ) -> Iterator[ResourceInfo]:
     yield from damage_state.resources_for_health()
     for reduction in database.damage_reductions.get(resource, []):
         if reduction.inventory_item is not None and not collection.has_resource(reduction.inventory_item):
             yield reduction.inventory_item
-
-
-def _damage_resource_from_list(requirements: RequirementList) -> SimpleResourceInfo | None:
-    for individual in requirements.values():
-        if isinstance(individual, DamageResourceRequirement):
-            return individual.resource
-    return None
 
 
 def calculate_interesting_resources(
@@ -289,13 +280,16 @@ def calculate_interesting_resources(
 ) -> frozenset[ResourceInfo]:
     """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList"""
 
+    from randovania.game_description.requirements.requirement_list import RequirementList
+
     def helper() -> Iterator[ResourceInfo]:
         # For each possible requirement list
         for requirement_list in satisfiable_requirements:
             # If it's not satisfied, there's at least one IndividualRequirement in it that can be collected
-            if not requirement_list.satisfied(context, damage_state.health_for_damage_requirements()):
+            if not requirement_list.satisfied(context.current_resources, damage_state.health_for_damage_requirements()):
                 current_energy = damage_state.health_for_damage_requirements()
-                for individual in requirement_list.values():
+
+                for individual in RequirementList.from_graph_requirement_list(requirement_list).values():
                     # Ignore those with the `negate` flag. We can't "uncollect" a resource to satisfy these.
                     # Finally, if it's not satisfied then we're interested in collecting it
                     if not individual.negate and not individual.satisfied(context, current_energy):
@@ -308,13 +302,17 @@ def calculate_interesting_resources(
                             yield individual.resource
                     elif individual.is_damage and individual.satisfied(context, current_energy):
                         current_energy -= individual.damage(context)
-            elif damage_resource := _damage_resource_from_list(requirement_list):
+
+            elif damage_resources := {
+                resource for resource in requirement_list.all_resources() if resource.resource_type.is_damage()
+            }:
                 # This part is here to make sure that resources for damage are considered interesting for cases where
                 # damage constraints are combined from multiple nodes. Each requirement in isolation might be satisfied,
                 # but when combined, the energy might not be sufficient. The satisfiable requirements are assumed to be
                 # unsatisfied.
-                yield from _resources_for_damage(
-                    damage_resource, context.database, context.current_resources, damage_state
-                )
+                for damage_resource in damage_resources:
+                    yield from _resources_for_damage(
+                        damage_resource, context.database, context.current_resources, damage_state
+                    )
 
     return frozenset(helper())

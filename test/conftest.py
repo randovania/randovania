@@ -571,6 +571,11 @@ def world_database(tmp_path: Path):
     return WorldDatabase(tmp_path.joinpath("world_database"))
 
 
+@pytest.fixture
+def resource_collection(blank_resource_db):
+    return blank_resource_db.create_resource_collection()
+
+
 def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption(
         "--skip-generation-tests",

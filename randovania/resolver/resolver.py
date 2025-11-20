@@ -92,7 +92,10 @@ def _simplify_requirement_list(
 
     if self.damage(current_resources) >= state.health_for_damage_requirements:
         something_set = True
-        result.damage_resources.update(self.damage_resources)
+        # FIXME: better api for this
+        for resource in self.all_resources():
+            if resource.resource_type.is_damage():
+                result.add_resource(resource, self.get_requirement_for(resource)[0], False)
 
     if not something_set:
         return None
@@ -282,7 +285,7 @@ async def _inner_advance_depth(
     if state.hint_state is not None:
         state.hint_state.advance_hint_seen_count(state)
 
-    if logic.victory_condition(state).satisfied(context, state.health_for_damage_requirements):
+    if logic.victory_condition(state).satisfied(state.resources, state.health_for_damage_requirements):
         return state, True
 
     # Yield back to the asyncio runner, so cancel can do something
@@ -368,7 +371,9 @@ async def _inner_advance_depth(
         else:
             has_action = True
 
-    additional_requirements = reach.satisfiable_requirements_for_additionals
+    additional_requirements: set[GraphRequirementList] | frozenset[GraphRequirementList] = (
+        reach.satisfiable_requirements_for_additionals
+    )
     old_additional_requirements = logic.get_additional_requirements(state.node)
 
     if (

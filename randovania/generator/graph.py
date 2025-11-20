@@ -16,9 +16,9 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node import NodeIndex
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.requirements.base import Requirement
+    from randovania.graph.graph_requirement import GraphRequirementSet
 
-    type GraphData = Requirement
+    type GraphData = GraphRequirementSet
 
 
 class BaseGraph:

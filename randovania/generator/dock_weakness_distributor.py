@@ -14,9 +14,8 @@ from randovania.game_description.db.dock import DockLock, DockLockType, DockRand
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.node_search import distances_to_node
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.requirement_or import RequirementOr
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.generator.filler.filler_library import UnableToGenerate
+from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
 from randovania.layout import filtered_database
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import random_lib
@@ -154,7 +153,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
 class DockRandoLogic(Logic):
     dock: WorldGraphNode
     target: WorldGraphNode
-    _victory_condition: Requirement
+    _victory_condition: GraphRequirementSet
 
     def __init__(
         self,
@@ -162,7 +161,7 @@ class DockRandoLogic(Logic):
         configuration: BaseConfiguration,
         dock: WorldGraphNode,
         target: WorldGraphNode,
-        victory_condition: Requirement,
+        victory_condition: GraphRequirementSet,
     ):
         super().__init__(graph, configuration)
         self.dock = dock
@@ -179,15 +178,16 @@ class DockRandoLogic(Logic):
         source_resource = logic.graph.resource_info_for_node(graph_dock)
         target_resource = logic.graph.resource_info_for_node(graph_target)
 
-        victory_condition = RequirementOr(
-            [
-                ResourceRequirement.simple(source_resource),
-                ResourceRequirement.simple(target_resource),
-            ]
-        )
+        source_list = GraphRequirementList()
+        source_list.add_resource(source_resource, 1, False)
+        target_list = GraphRequirementList()
+        target_list.add_resource(target_resource, 1, False)
+        victory_condition = GraphRequirementSet()
+        victory_condition.add_alternative(source_list)
+        victory_condition.add_alternative(target_list)
         return cls(logic.graph, logic.configuration, graph_dock, graph_target, victory_condition)
 
-    def victory_condition(self, state: State) -> Requirement:
+    def victory_condition(self, state: State) -> GraphRequirementSet:
         return self._victory_condition
 
     @staticmethod

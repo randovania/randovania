@@ -63,5 +63,5 @@ def test_possible_actions_with_event():
     event.has_all_resources.assert_called_once_with(state.node_context.return_value.current_resources)
     logic.get_additional_requirements.assert_called_once_with(event)
     logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(
-        state.node_context(), damage_state.health_for_damage_requirements.return_value
+        state.resources, damage_state.health_for_damage_requirements.return_value
     )
