@@ -43,7 +43,7 @@ class FactorioBasePatchesFactory(BasePatchesFactory[FactorioConfiguration]):
         item_cost["rocket-part"].material /= 5
 
         # Get all tech that are present in the preset
-        collection = game.create_resource_collection()
+        collection = game.get_resource_database_view().create_resource_collection()
         for pickup in pool_creator.calculate_pool_results(configuration, game).all_pickups():
             collection.add_resource_gain(pickup.resource_gain(collection))
 

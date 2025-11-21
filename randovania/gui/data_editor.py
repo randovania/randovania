@@ -896,7 +896,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
             resources = self.connection_filters.selected_tricks()
             if resources and self.use_trick_filters_check.isChecked():
-                self._collection_for_filtering = ResourceCollection.from_resource_gain(game, resources.items())
+                self._collection_for_filtering = ResourceCollection.from_resource_gain(
+                    game.resource_database, resources.items()
+                )
             else:
                 self._collection_for_filtering = None
 

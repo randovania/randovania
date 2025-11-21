@@ -32,7 +32,7 @@ def find_locations_that_gives_items(
                 continue
 
             # TODO: iterate over all tiers of progression
-            resources = patches.game.create_resource_collection()
+            resources = patches.game.get_resource_database_view().create_resource_collection()
             resources.add_resource_gain(target.pickup.resource_gain(resources))
             for resource, quantity in resources.as_resource_gain():
                 if quantity > 0 and _resource_in_item_list(resource, result):

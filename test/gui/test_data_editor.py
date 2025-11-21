@@ -229,11 +229,11 @@ def test_ui_patch_and_simplify_impossible_in_and(echoes_resource_database):
     )
 
 
-def test_ui_patch_and_simplify_remove_present_resources(echoes_resource_database, echoes_game_description):
+def test_ui_patch_and_simplify_remove_present_resources(echoes_resource_database):
     db = echoes_resource_database
 
     # Remove present resources, plus trivial in And
-    col = echoes_game_description.create_resource_collection()
+    col = db.create_resource_collection()
     col.set_resource(db.get_item("Seekers"), 1)
     assert _ui_patch_and_simplify(
         RequirementAnd(
@@ -248,7 +248,7 @@ def test_ui_patch_and_simplify_remove_present_resources(echoes_resource_database
     ) == RequirementAnd([ResourceRequirement.simple(db.get_item("ScrewAttack"))])
 
 
-def test_ui_patch_and_simplify_template(echoes_resource_database, echoes_game_description):
+def test_ui_patch_and_simplify_template(echoes_resource_database):
     db = echoes_resource_database
 
     def context(collection):
@@ -258,7 +258,7 @@ def test_ui_patch_and_simplify_template(echoes_resource_database, echoes_game_de
         RequirementTemplate("Use Screw Attack (No Space Jump)"), context(ResourceCollection.with_resource_count(db, 0))
     ) == RequirementTemplate("Use Screw Attack (No Space Jump)")
 
-    col = echoes_game_description.create_resource_collection()
+    col = db.create_resource_collection()
     col.set_resource(db.get_item("ScrewAttack"), 1)
     assert _ui_patch_and_simplify(
         RequirementTemplate("Use Screw Attack (No Space Jump)"), context(col)

@@ -114,7 +114,7 @@ def test_simplify_requirement_set_static(blank_game_description, blank_game_patc
     def ctx(resources):
         return NodeContext(
             blank_game_patches,
-            ResourceCollection.from_dict(blank_game_description, resources),
+            ResourceCollection.from_dict(db, resources),
             db,
             blank_game_description.region_list,
         )
@@ -762,7 +762,7 @@ def test_requirement_damage(damage, items, requirement, echoes_game_description)
     rdb = echoes_game_description.resource_database
     req = data_reader.read_requirement(requirement, rdb)
 
-    collection = ResourceCollection.from_dict(echoes_game_description, {rdb.get_item(item): 1 for item in items})
+    collection = ResourceCollection.from_dict(rdb, {rdb.get_item(item): 1 for item in items})
 
     assert req.damage(NodeContext(MagicMock(), collection, rdb, MagicMock())) == damage
 

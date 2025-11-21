@@ -40,8 +40,8 @@ def test_add_resources_into_another(blank_game_description, a, b, result):
     b = wrap(blank_resource_db, b)
     result = wrap(blank_resource_db, result)
 
-    ac = ResourceCollection.from_dict(blank_game_description, a)
-    bc = ResourceCollection.from_dict(blank_game_description, b)
+    ac = ResourceCollection.from_dict(blank_resource_db, a)
+    bc = ResourceCollection.from_dict(blank_resource_db, b)
 
     ac.add_resource_gain(bc.as_resource_gain())
 
@@ -87,13 +87,13 @@ def test_add_resource_gain_to_current_resources_convert(blank_resource_db, blank
         ([("Ammo", 5), ("Ammo", -5)], {"Ammo": 0}),
     ],
 )
-def test_convert_resource_gain_to_current_resources(blank_game_description, resource_gain, expected):
+def test_convert_resource_gain_to_current_resources(blank_resource_db, resource_gain, expected):
     # Setup
-    resource_gain = wrap(blank_game_description.resource_database, resource_gain)
-    expected = wrap(blank_game_description.resource_database, expected)
+    resource_gain = wrap(blank_resource_db, resource_gain)
+    expected = wrap(blank_resource_db, expected)
 
     # Run
-    result = ResourceCollection.from_resource_gain(blank_game_description, resource_gain)
+    result = ResourceCollection.from_resource_gain(blank_resource_db, resource_gain)
 
     # Assert
     assert dict(result.as_resource_gain()) == expected

@@ -4,10 +4,11 @@ from randovania.game_description.resources.resource_collection import ResourceCo
 
 
 def test_remove_resource_exists(echoes_game_description):
-    m = echoes_game_description.resource_database.get_item("Missile")
-    beam = echoes_game_description.resource_database.get_item("Light")
+    db = echoes_game_description.resource_database
+    m = db.get_item("Missile")
+    beam = db.get_item("Light")
     col = ResourceCollection.from_dict(
-        echoes_game_description,
+        db,
         {
             m: 10,
             beam: 1,
@@ -19,10 +20,11 @@ def test_remove_resource_exists(echoes_game_description):
 
 
 def test_remove_resource_missing(echoes_game_description):
-    m = echoes_game_description.resource_database.get_item("Missile")
-    beam = echoes_game_description.resource_database.get_item("Light")
+    db = echoes_game_description.resource_database
+    m = db.get_item("Missile")
+    beam = db.get_item("Light")
     col = ResourceCollection.from_dict(
-        echoes_game_description,
+        db,
         {
             beam: 1,
         },

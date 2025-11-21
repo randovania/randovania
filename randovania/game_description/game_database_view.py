@@ -118,6 +118,12 @@ class ResourceDatabaseView(ABC):
         """
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def create_resource_collection(self) -> ResourceCollection:
+        """
+        Creates a new ResourceCollection
+        """
+
 
 class ResourceDatabaseViewProxy(ResourceDatabaseView):
     """
@@ -171,6 +177,10 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
     @override
     def get_pickup_model(self, name: str) -> PickupModel:
         return self._original.get_pickup_model(name)
+
+    @override
+    def create_resource_collection(self) -> ResourceCollection:
+        return self._original.create_resource_collection()
 
 
 class GameDatabaseView(ABC):
@@ -232,12 +242,6 @@ class GameDatabaseView(ABC):
     def assert_pickup_index_exists(self, index: PickupIndex) -> None:
         """
         If the PickupIndex does not exist, this function raises an Exception
-        """
-
-    @abc.abstractmethod
-    def create_resource_collection(self) -> ResourceCollection:
-        """
-        Creates a new ResourceCollection
         """
 
     @abc.abstractmethod
@@ -337,10 +341,6 @@ class GameDatabaseViewProxy(GameDatabaseView):
     @override
     def assert_pickup_index_exists(self, index: PickupIndex) -> None:
         return self._original.assert_pickup_index_exists(index)
-
-    @override
-    def create_resource_collection(self) -> ResourceCollection:
-        return self._original.create_resource_collection()
 
     @override
     def default_starting_location(self) -> NodeIdentifier:

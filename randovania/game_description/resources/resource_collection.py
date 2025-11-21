@@ -4,7 +4,7 @@ import copy
 from typing import TYPE_CHECKING, Self
 
 if TYPE_CHECKING:
-    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
 
 
@@ -95,13 +95,13 @@ class ResourceCollection:
             self.resource_bitmask -= mask
 
     @classmethod
-    def from_dict(cls, view: GameDatabaseView, resources: dict[ResourceInfo, int]) -> ResourceCollection:
+    def from_dict(cls, view: ResourceDatabaseView, resources: dict[ResourceInfo, int]) -> ResourceCollection:
         result = view.create_resource_collection()
         result.add_resource_gain(resources.items())
         return result
 
     @classmethod
-    def from_resource_gain(cls, game: GameDatabaseView, resource_gain: ResourceGain) -> ResourceCollection:
+    def from_resource_gain(cls, game: ResourceDatabaseView, resource_gain: ResourceGain) -> ResourceCollection:
         result = game.create_resource_collection()
         result.add_resource_gain(resource_gain)
         return result

@@ -25,8 +25,9 @@ if TYPE_CHECKING:
     ],
 )
 def test_apply_collected_resource_difference(dread_game_description, immediate_parts, damage, item, count, energy):
-    energy_tank_item = dread_game_description.get_resource_database_view().get_item("ETank")
-    energy_part_item = dread_game_description.get_resource_database_view().get_item("EFragment")
+    resource_db = dread_game_description.get_resource_database_view()
+    energy_tank_item = resource_db.get_item("ETank")
+    energy_part_item = resource_db.get_item("EFragment")
     state: DreadDamageState = DreadDamageState(
         starting_energy=99,
         energy_per_tank=100,
@@ -37,9 +38,9 @@ def test_apply_collected_resource_difference(dread_game_description, immediate_p
 
     state_after_damage = state.apply_damage(damage)
 
-    old_resources: ResourceCollection = dread_game_description.create_resource_collection()
+    old_resources: ResourceCollection = resource_db.create_resource_collection()
     new_resources = old_resources.duplicate()
-    new_resources.add_resource_gain([(dread_game_description.get_resource_database_view().get_item(item), count)])
+    new_resources.add_resource_gain([(resource_db.get_item(item), count)])
 
     new_state = state_after_damage.apply_collected_resource_difference(new_resources, old_resources)
 
@@ -65,8 +66,9 @@ def test_apply_collected_resource_difference(dread_game_description, immediate_p
 def test_resource_requirements_for_satisfying_damage(
     dread_game_description, immediate_parts, damage, energy_tanks, energy_parts, alternatives
 ):
-    energy_tank_item = dread_game_description.get_resource_database_view().get_item("ETank")
-    energy_part_item = dread_game_description.get_resource_database_view().get_item("EFragment")
+    resource_db = dread_game_description.get_resource_database_view()
+    energy_tank_item = resource_db.get_item("ETank")
+    energy_part_item = resource_db.get_item("EFragment")
     state: DreadDamageState = DreadDamageState(
         starting_energy=99,
         energy_per_tank=100,
@@ -75,7 +77,7 @@ def test_resource_requirements_for_satisfying_damage(
         energy_part_item=energy_part_item,
     )
 
-    old_resources: ResourceCollection = dread_game_description.create_resource_collection()
+    old_resources: ResourceCollection = resource_db.create_resource_collection()
     new_resources = old_resources.duplicate()
     new_resources.add_resource_gain([(energy_tank_item, energy_tanks), (energy_part_item, energy_parts)])
 
