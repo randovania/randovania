@@ -160,7 +160,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             game,
             patches,
         )
-        self.logic = Logic(self.game_description, self.preset.configuration)
+        self.logic = Logic(self.game_description, self.preset.configuration, record_paths=True)
         self.map_canvas.select_game(self.game_description.game)
 
         self._initial_state.resources.add_self_as_requirement_to_resources = True
