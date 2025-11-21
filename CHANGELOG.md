@@ -41,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Chozo Ruins
 
-- Changed: Totem Access: There are now requirements for dealing with the Plazmites should you not have a beam.
+- Fixed: Totem Access: Requirements for dealing with the enemies in the room.
 - Fixed: Tower of Light: Climbing up the tower via an Oculus dash now requires you to have a visor.
 - Removed: Tower of Light: Redundant combination of Combat Dash, L-Jump and Standable Terrain to collect the Pickup.
 - Removed: Tower of Light: Redundant combination of Combat Dash, Slope Jump and Standable Terrain to collect the Pickup.
