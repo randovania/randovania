@@ -225,11 +225,13 @@ def test_basic_search_with_translator_gate(
 
     initial_state = State(
         resources,
+        {},
         (),
         EnergyTankDamageState(
             99,
             100,
             game.resource_database.get_item("EnergyTank"),
+            [],
         ),
         graph.original_to_node[node_a.node_index],
         echoes_game_patches,

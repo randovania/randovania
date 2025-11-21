@@ -41,6 +41,7 @@ class Logic:
         configuration: BaseConfiguration,
         *,
         prioritize_hints: bool = False,
+        record_paths: bool = False,
     ):
         if isinstance(graph, WorldGraph):
             self.all_nodes = tuple(graph.nodes)
@@ -57,6 +58,7 @@ class Logic:
         self.dangerous_resources = graph.dangerous_resources
         self.additional_requirements = [RequirementSet.trivial()] * self.num_nodes
         self.prioritize_hints = prioritize_hints
+        self.record_paths = record_paths
 
         self.logger = TextResolverLogger()
 

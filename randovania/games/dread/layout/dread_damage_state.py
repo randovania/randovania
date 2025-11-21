@@ -24,7 +24,7 @@ class DreadDamageState(EnergyTankDamageState):
         use_immediate_energy_parts: bool,
         energy_part_item: ItemResourceInfo,
     ):
-        super().__init__(starting_energy, energy_per_tank, energy_tank)
+        super().__init__(starting_energy, energy_per_tank, energy_tank, [])
         self._use_immediate_energy_parts = use_immediate_energy_parts
         self._energy_part_item = energy_part_item
 
@@ -32,7 +32,7 @@ class DreadDamageState(EnergyTankDamageState):
         return self._duplicate()
 
     @override
-    def resources_for_energy(self) -> Generator[ItemResourceInfo]:
+    def resources_for_health(self) -> Generator[ItemResourceInfo]:
         yield self._energy_tank
         yield self._energy_part_item
 

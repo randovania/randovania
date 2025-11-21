@@ -14,17 +14,25 @@ if TYPE_CHECKING:
 
 
 class EnergyTankDamageState(DamageState):
-    __slots__ = ("_energy", "_starting_energy", "_energy_per_tank", "_energy_tank")
+    __slots__ = ("_energy", "_starting_energy", "_energy_per_tank", "_energy_tank", "_damage_reduction_items")
     _energy: int
     _starting_energy: int
     _energy_per_tank: int
     _energy_tank: ItemResourceInfo
+    _damage_reduction_items: list[ItemResourceInfo]
 
-    def __init__(self, starting_energy: int, energy_per_tank: int, energy_tank: ItemResourceInfo):
+    def __init__(
+        self,
+        starting_energy: int,
+        energy_per_tank: int,
+        energy_tank: ItemResourceInfo,
+        damage_reduction_items: list[ItemResourceInfo],
+    ):
         self._energy = starting_energy
         self._starting_energy = starting_energy
         self._energy_per_tank = energy_per_tank
         self._energy_tank = energy_tank
+        self._damage_reduction_items = damage_reduction_items
 
     def __copy__(self) -> Self:
         return self._duplicate()
@@ -34,8 +42,12 @@ class EnergyTankDamageState(DamageState):
         return self._energy
 
     @override
-    def resources_for_energy(self) -> Generator[ItemResourceInfo]:
+    def resources_for_health(self) -> Generator[ItemResourceInfo]:
         yield self._energy_tank
+
+    @override
+    def resources_for_general_reduction(self) -> Generator[ItemResourceInfo]:
+        yield from self._damage_reduction_items
 
     def _maximum_energy(self, resources: ResourceCollection) -> int:
         num_tanks = resources[self._energy_tank]
@@ -46,24 +58,30 @@ class EnergyTankDamageState(DamageState):
             self._starting_energy,
             self._energy_per_tank,
             self._energy_tank,
+            self._damage_reduction_items,
         )
         result._energy = self._energy
         return result
 
     def _at_maximum_energy(self, resources: ResourceCollection) -> Self:
-        result = self._duplicate()
-        result._energy = result._maximum_energy(resources)
-        return result
+        maximum_energy = self._maximum_energy(resources)
+        if maximum_energy == self._energy:
+            return self
+        else:
+            result = self._duplicate()
+            result._energy = maximum_energy
+            return result
 
     @override
     def is_better_than(self, other: DamageState | None) -> bool:
         if other is None:
             return True
-        assert isinstance(other, EnergyTankDamageState)
-        return self._energy > other._energy
+        return self._energy > other._energy  # type: ignore[attr-defined]
 
     @override
     def apply_damage(self, damage: int) -> Self:
+        if damage <= 0:
+            return self
         result = self._duplicate()
         result._energy -= damage
         return result

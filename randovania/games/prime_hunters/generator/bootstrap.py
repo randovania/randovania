@@ -34,6 +34,7 @@ class HuntersBootstrap(Bootstrap[HuntersConfiguration]):
             99,
             100,
             game.get_resource_database_view().get_item("EnergyTank"),
+            [],
         )
 
     def assign_pool_results(
