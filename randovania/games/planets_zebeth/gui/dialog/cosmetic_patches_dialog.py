@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import dataclasses
 from typing import TYPE_CHECKING, override
 
 from randovania.games.planets_zebeth.gui.generated.planets_zebeth_cosmetic_patches_dialog_ui import (
@@ -35,11 +36,24 @@ class PlanetsZebethCosmeticPatchesDialog(
 
     def connect_signals(self) -> None:
         super().connect_signals()
-        # More signals here!
+
+        self._persist_check_field(self.disable_low_health_beeping_check, "disable_low_health_beeping")
+        self.room_name_dropdown.currentIndexChanged.connect(self._on_room_name_update)
+        self._persist_check_field(self.show_unexplored_map_check, "show_unexplored_map")
+        self._persist_check_field(self.use_alternative_escape_theme_check, "use_alternative_escape_theme")
+        self._persist_check_field(self.use_sm_boss_theme_check, "use_sm_boss_theme")
+
+    def _on_room_name_update(self) -> None:
+        self._cosmetic_patches = dataclasses.replace(
+            self._cosmetic_patches, show_room_names=self.room_name_dropdown.currentData()
+        )
 
     def on_new_cosmetic_patches(self, patches: PlanetsZebethCosmeticPatches) -> None:
-        # Update fields with the new values
-        pass
+        self.disable_low_health_beeping_check.setChecked(patches.disable_low_health_beeping)
+        self.room_name_dropdown.setCurrentIndex(PlanetsZebethRoomGuiType.get_index(patches.show_room_names))
+        self.show_unexplored_map_check.setChecked(patches.show_unexplored_map)
+        self.use_alternative_escape_theme_check.setChecked(patches.use_alternative_escape_theme)
+        self.use_sm_boss_theme_check.setChecked(patches.use_sm_boss_theme)
 
     @property
     def cosmetic_patches(self) -> PlanetsZebethCosmeticPatches:
