@@ -205,7 +205,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             parent_uuid = old_preset.uuid
             old_preset = old_preset.fork()
         else:
-            parent_uuid = self._options.get_parent_for_preset(old_preset.uuid)
+            parent_uuid: uuid.UUID | None = self._options.get_parent_for_preset(old_preset.uuid)
 
         await self._customize_preset_with_dialog(old_preset, parent_uuid)
 
