@@ -21,7 +21,11 @@ class NoOpDamageState(DamageState):
         return 0
 
     @override
-    def resources_for_energy(self) -> Generator[ItemResourceInfo]:
+    def resources_for_health(self) -> Generator[ItemResourceInfo]:
+        yield from []
+
+    @override
+    def resources_for_general_reduction(self) -> Generator[ItemResourceInfo]:
         yield from []
 
     @override

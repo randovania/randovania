@@ -42,7 +42,12 @@ def validate_command_logic(args: Namespace) -> int:
     for _ in range(args.repeat):
         before = time.perf_counter()
         final_state_by_resolve = asyncio.run(
-            resolver.resolve(configuration=configuration, patches=patches, use_world_graph=use_world_graph)
+            resolver.resolve(
+                configuration=configuration,
+                patches=patches,
+                use_world_graph=use_world_graph,
+                record_paths=debug.debug_level() > 0,
+            )
         )
         after = time.perf_counter()
         total_times.append(after - before)

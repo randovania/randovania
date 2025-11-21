@@ -48,6 +48,10 @@ class BaseGraph:
         """Checks if a given node index was added via `add_node`."""
         raise NotImplementedError
 
+    def get_edge_data(self, previous_node: NodeIndex, next_node: NodeIndex) -> GraphData:
+        """Gets the data that was added along the edge of the two given nodes."""
+        raise NotImplementedError
+
     def edges_data(self) -> Iterator[tuple[NodeIndex, NodeIndex, GraphData]]:
         """Iterates over all edges that were added via `add_edge`."""
         raise NotImplementedError
@@ -246,6 +250,9 @@ class RustworkXGraph(BaseGraph):
     @override
     def __contains__(self, item: NodeIndex) -> bool:
         return item in self._added_nodes
+
+    def get_edge_data(self, previous_node: NodeIndex, next_node: NodeIndex) -> GraphData:
+        return self._graph.get_edge_data(previous_node, next_node)[2]
 
     @override
     def edges_data(self) -> Iterator[tuple[NodeIndex, NodeIndex, GraphData]]:

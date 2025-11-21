@@ -39,6 +39,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Tallon Overworld
+
+- Added: Alcove: Escaping the pit with a Beginner Wallboost.
+
+##### Chozo Ruins
+
+- Changed: Revised the requirements for fighting Chozo Ghosts and made them consistent. Fighting multiple of them without Charge Beam is now Intermediate Combat, fighting a single one is still Beginner Combat.
+
 ##### Phazon Mines
 
 - Fixed: Killing Elite Pirates on Hard Mode now requires Missiles instead of Power Beams.
