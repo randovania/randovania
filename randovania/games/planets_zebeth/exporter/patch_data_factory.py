@@ -101,14 +101,16 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         }
 
     def _create_game_config_dict(self):
+        c = self.patches.configuration
+        assert isinstance(c, PlanetsZebethConfiguration)
         return {
             "starting_room": self._create_starting_location(),
             "seed_identifier": self._create_hash_dict(),
             "starting_items": self._create_starting_items_dict(),
             "starting_memo": self._create_starting_memo(),
-            "warp_to_start": False,
-            "open_missile_doors_with_one_missile": False,
-            "allow_downward_shots": False,
+            "warp_to_start": c.warp_to_start,
+            "open_missile_doors_with_one_missile": c.open_missile_doors_with_one_missile,
+            "allow_downward_shots": c.allow_downward_shots,
             "credits_string": self._credits_spoiler(),
         }
 
