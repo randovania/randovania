@@ -1,7 +1,11 @@
+from __future__ import annotations
+
 import datetime
+import logging
+from typing import TYPE_CHECKING, override
 
 import humanize
-from PySide6 import QtCore, QtWidgets
+from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui import game_specific_gui
@@ -12,17 +16,19 @@ from randovania.gui.dialog.async_race_settings_dialog import AsyncRaceSettingsDi
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.async_race_room_window_ui import Ui_AsyncRaceRoomWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
-from randovania.gui.lib.qt_network_client import QtNetworkClient
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.audit_log_model import AuditEntryListDatabaseModel
-from randovania.interface_common.options import Options
 from randovania.layout import preset_describer
-from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.async_race_room import (
     AsyncRaceRoomEntry,
     AsyncRaceRoomRaceStatus,
     AsyncRaceRoomUserStatus,
 )
+
+if TYPE_CHECKING:
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.options import Options
+    from randovania.layout.versioned_preset import VersionedPreset
 
 
 class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
@@ -83,6 +89,16 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         self.ui.forfeit_button.clicked.connect(self._on_forfeit)
         self.ui.submit_proof_button.clicked.connect(self._on_submit_proof)
         self.on_room_details(room)
+
+    @override
+    def closeEvent(self, event: QtGui.QCloseEvent) -> None:
+        try:
+            self._network_client.AsyncRaceRoomUpdated.disconnect(self.on_data_from_server)
+        except Exception as e:
+            logging.exception(f"Unable to disconnect: {e}")
+
+        self.CloseEvent.emit()
+        super().closeEvent(event)
 
     def on_room_details(self, room: AsyncRaceRoomEntry) -> None:
         self.room = room
