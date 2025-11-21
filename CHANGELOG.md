@@ -42,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Phazon Mines
 
 - Fixed: Killing Elite Pirates on Hard Mode now requires Missiles instead of Power Beams.
-- Removed: Killing Elite Pirates with Beginner Combat but without Charge Beam or Plasma Beam.
+- Changed: Killing Elite Pirates with Beginner Combat but now requires Charge Beam or Plasma Beam, but less health.
 
 ### Metroid: Samus Returns
 
