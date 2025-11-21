@@ -115,11 +115,11 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
     def _create_cosmetics(self) -> dict:
         c = self.cosmetic_patches
         return {
-            "show_unexplored_map": c.show_unexplored_map,
+            "disable_low_health_beeping": c.disable_low_health_beeping,
             "room_names_on_hud": c.show_room_names.value,
-            "disable_low_health_beeping": False,
-            "use_sm_boss_theme": False,
-            "use_alternative_escape_theme": False,
+            "show_unexplored_map": c.show_unexplored_map,
+            "use_alternative_escape_theme": c.use_alternative_escape_theme,
+            "use_sm_boss_theme": c.use_sm_boss_theme,
         }
 
     def _get_item_data(self) -> dict:
