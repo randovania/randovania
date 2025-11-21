@@ -21,7 +21,7 @@ from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable
+    from collections.abc import Callable, Iterable, Sequence
 
     from randovania.game_description.db.node import NodeContext
     from randovania.game_description.game_description import GameDescription
@@ -41,7 +41,7 @@ AnyEventNode = EventNode | EventPickupNode
 
 
 def _is_later_progression_item(
-    resource: ResourceInfo, progressive_chain_info: None | tuple[list[ResourceInfo], int]
+    resource: ResourceInfo, progressive_chain_info: None | tuple[Sequence[ResourceInfo], int]
 ) -> bool:
     if not progressive_chain_info:
         return False
@@ -50,7 +50,7 @@ def _is_later_progression_item(
 
 
 def _downgrade_progressive_item(
-    item_resource: ResourceInfo, progressive_chain_info: tuple[list[ResourceInfo], int]
+    item_resource: ResourceInfo, progressive_chain_info: tuple[Sequence[ResourceInfo], int]
 ) -> ResourceRequirement:
     progressive_chain, _ = progressive_chain_info
     return ResourceRequirement.simple(progressive_chain[progressive_chain.index(item_resource) - 1])
@@ -59,8 +59,8 @@ def _downgrade_progressive_item(
 def _simplify_requirement_list(
     self: RequirementList,
     state: State,
-    node_resources: list[ResourceInfo],
-    progressive_item_info: None | tuple[list[ResourceInfo], int],
+    node_resources: Sequence[ResourceInfo],
+    progressive_item_info: None | tuple[Sequence[ResourceInfo], int],
 ) -> RequirementList | None:
     items: list[ResourceRequirement] = []
     damage_reqs = []
