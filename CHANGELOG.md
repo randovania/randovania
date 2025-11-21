@@ -42,6 +42,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Minor adjustment related to Kraid to increase seed variety.
 
+### Metroid Fusion
+
+- Fixed: Sector 2 (TRO) "Oasis" is now included in the "Pillars" feature hint.
+
 ### Metroid Prime
 
 - Changed: AM2R's Drop Pickups will now use more appropriate models.
