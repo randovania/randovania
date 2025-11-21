@@ -801,7 +801,7 @@ Extra - aabb: [-149.03557, -2.303732, 18.729618, -95.536766, 27.518578, 26.91997
   > Door to Ruined Shrine
       Trivial
 
-> Door to Ruined Shrine; Heals? False; Spawn Point; Default Node
+> Door to Ruined Shrine; Heals? False; Default Node
   * Layers: default
   * Normal Door to Ruined Shrine/Door to Tower of Light Access
   * Extra - dock_index: 1
@@ -810,11 +810,18 @@ Extra - aabb: [-149.03557, -2.303732, 18.729618, -95.536766, 27.518578, 26.91997
   * Extra - world_rotation: (0.0, -0.0, 0.0)
   > Door to Tower of Light
       Trivial
+  > Spawn Point
+      Trivial
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
   * Pickup 110; Category? Minor
   * Extra - position_required: True
+
+> Spawn Point; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Ruined Shrine
+      Trivial
 
 ----------------
 Ruined Nursery
@@ -1091,7 +1098,7 @@ Tower of Light
 Extra - asset_id: 225636855
 Extra - size_index: 0.6
 Extra - aabb: [-174.46513, -93.0821, 4.8231506, -114.339874, 2.7153168, 129.34042]
-> Door to Tower of Light Access; Heals? False; Spawn Point; Default Node
+> Door to Tower of Light Access; Heals? False; Default Node
   * Layers: default
   * Wave Door to Tower of Light Access/Door to Tower of Light
   * Extra - dock_index: 0
@@ -1101,6 +1108,7 @@ Extra - aabb: [-174.46513, -93.0821, 4.8231506, -114.339874, 2.7153168, 129.3404
   > Door to Tower Chamber
       Any of the following:
           All of the following:
+              # With Gravity Suit
               Gravity Suit
               Any of the following:
                   Space Jump Boots
@@ -1108,33 +1116,36 @@ Extra - aabb: [-174.46513, -93.0821, 4.8231506, -114.339874, 2.7153168, 129.3404
                       Morph Ball
                       Any of the following:
                           Bomb Jump (Beginner) and Can Use Bombs
-                          # https://youtu.be/3S7uWW56RKo
+                          # Wallboost near the right corner: https://youtu.be/3S7uWW56RKo
                           Wall Boost (Expert) and Can Use Boost Ball
+          # Slope Jump at the front wall
           Space Jump Boots and Slope Jump (Beginner) and Gravityless Underwater Movement (Beginner)
-          # https://www.youtube.com/watch?v=YMk1EDV95h0
+          # NSJ slope jump that only works without Gravity Suit: https://www.youtube.com/watch?v=YMk1EDV95h0
           No Gravity Suit and Slope Jump (Intermediate) and Gravityless Underwater Movement (Intermediate) and Enabled Allow Dangerous Gravity Suit Logic
   > Pickup (Wavebuster)
       Any of the following:
           All of the following:
+              # Intended Path
               Shoot Any Beam
               Any of the following:
+                  # Break the Blocks
                   Missile ≥ 72
                   Missile ≥ 36 and Disabled Hard Mode
               Any of the following:
+                  # Get up the platforms
                   Space Jump Boots
-                  # https://youtu.be/3ZZH-1R4Cck
+                  # Laddered Bomb Jumps: https://youtu.be/3ZZH-1R4Cck
                   Bomb Jump (Expert) and Can Use Bombs
           All of the following:
+              # Climb without destroying Missile Blocks
               Space Jump Boots
               Any of the following:
-                  # https://youtu.be/2jyvwogPSDI
-                  Combat/Scan Dash (Intermediate) and Standable Terrain (Beginner)
-                  # https://youtu.be/nm2qvbKNAIw
-                  Combat/Scan Dash (Intermediate) and L-Jump (Intermediate) and Standable Terrain (Intermediate)
-                  # https://youtu.be/bJHqj9OAxFo
-                  Combat/Scan Dash (Intermediate) and Slope Jump (Beginner) and Standable Terrain (Advanced)
-                  # https://youtu.be/O_dTcT7p-fc
+                  # Use Oculus to dash to outer rim: https://youtu.be/2jyvwogPSDI
+                  Combat/Scan Dash (Intermediate) and Standable Terrain (Beginner) and Has Any Visor
+                  # R-Jump onto outer rim: https://youtu.be/O_dTcT7p-fc
                   R-Jump (Advanced) and Standable Terrain (Beginner)
+  > Spawn Point
+      Trivial
 
 > Door to Tower Chamber; Heals? False
   * Layers: default
@@ -1152,6 +1163,11 @@ Extra - aabb: [-174.46513, -93.0821, 4.8231506, -114.339874, 2.7153168, 129.3404
   * Extra - position_required: False
   * Extra - pre_placement_weight: 0.6
   * Extra - world_position: (-144.555801, -40.385406, 103.713394)
+  > Door to Tower of Light Access
+      Trivial
+
+> Spawn Point; Heals? False; Spawn Point
+  * Layers: default
   > Door to Tower of Light Access
       Trivial
 
@@ -1330,7 +1346,7 @@ Tower Chamber
 Extra - asset_id: 297624503
 Extra - size_index: 0.1
 Extra - aabb: [-155.05084, -107.00887, 20.431095, -134.34949, -86.75725, 35.564354]
-> Door to Tower of Light; Heals? False; Spawn Point; Default Node
+> Door to Tower of Light; Heals? False; Default Node
   * Layers: default
   * Wave Door to Tower of Light/Door to Tower Chamber
   * Extra - dock_index: 0
@@ -1339,6 +1355,8 @@ Extra - aabb: [-155.05084, -107.00887, 20.431095, -134.34949, -86.75725, 35.5643
   * Extra - world_rotation: (-179.50708, -0.0, 90.0)
   > Pickup (Artifact of Lifegiver)
       Trivial
+  > Spawn Point
+      Trivial
 
 > Pickup (Artifact of Lifegiver); Heals? False
   * Layers: default
@@ -1346,6 +1364,11 @@ Extra - aabb: [-155.05084, -107.00887, 20.431095, -134.34949, -86.75725, 35.5643
   * Extra - position_required: False
   * Extra - pre_placement_weight: 0.6
   * Extra - world_position: (-144.519394, -103.535721, 24.189125)
+  > Door to Tower of Light
+      Trivial
+
+> Spawn Point; Heals? False; Spawn Point
+  * Layers: default
   > Door to Tower of Light
       Trivial
 
@@ -1644,7 +1667,7 @@ Totem Access
 Extra - asset_id: 3934929011
 Extra - size_index: 0.3
 Extra - aabb: [-22.001799, 235.39693, -1.5920587, 41.40501, 292.60748, 11.864963]
-> Door to Ruined Gallery; Heals? False; Spawn Point; Default Node
+> Door to Ruined Gallery; Heals? False; Default Node
   * Layers: default
   * Normal Door to Ruined Gallery/Door to Totem Access
   * Extra - dock_index: 0
@@ -1652,6 +1675,9 @@ Extra - aabb: [-22.001799, 235.39693, -1.5920587, 41.40501, 292.60748, 11.864963
   * Extra - world_position: (-3.3281457, 238.12419, 12.309431)
   * Extra - world_rotation: (0.01903269, 0.12722364, -89.99848)
   > Door to Hive Totem
+      # Deal with Plazmites
+      Morph Ball or Combat (Intermediate) or Shoot Any Beam
+  > Spawn Point
       Trivial
 
 > Door to Hive Totem; Heals? False
@@ -1662,12 +1688,18 @@ Extra - aabb: [-22.001799, 235.39693, -1.5920587, 41.40501, 292.60748, 11.864963
   * Extra - world_position: (41.405014, 287.56403, -3.6304498)
   * Extra - world_rotation: (-8.872797, -0.0, 0.0)
   > Door to Ruined Gallery
-      Trivial
+      # Deal with Plazmites
+      Morph Ball or Combat (Intermediate) or Shoot Any Beam
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
   * Pickup 120; Category? Minor
   * Extra - position_required: True
+
+> Spawn Point; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Ruined Gallery
+      Trivial
 
 ----------------
 Map Station

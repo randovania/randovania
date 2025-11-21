@@ -48,6 +48,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Chozo Ruins
+
+- Fixed: Totem Access: Requirements for dealing with the enemies in the room.
+- Fixed: Tower of Light: Climbing up the tower via an Oculus dash now requires you to have a visor.
+- Removed: Tower of Light: Redundant combination of Combat Dash, L-Jump and Standable Terrain to collect the Pickup.
+- Removed: Tower of Light: Redundant combination of Combat Dash, Slope Jump and Standable Terrain to collect the Pickup.
+
 ##### Tallon Overworld
 
 - Added: Alcove: Escaping the pit with a Beginner Wallboost.
