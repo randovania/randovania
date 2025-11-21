@@ -20,7 +20,9 @@ class PlanetsZebethArtifactConfig(BitPackDataclass, JsonDataclass):
 class PlanetsZebethConfiguration(BaseConfiguration):
     artifacts: PlanetsZebethArtifactConfig
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
-    include_extra_pickups: bool
+    warp_to_start: bool
+    open_missile_doors_with_one_missile: bool
+    allow_downward_shots: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
@@ -28,8 +30,5 @@ class PlanetsZebethConfiguration(BaseConfiguration):
 
     def active_layers(self) -> set[str]:
         result = super().active_layers()
-
-        # if self.include_extra_pickups:
-        #    result.add("extra_pickups")
 
         return result
