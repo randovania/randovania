@@ -529,7 +529,7 @@ async def get_livesplit_url(sa: ServerApp, sid: str, room_id: int) -> str:
 
     await sa.ensure_in_room(sid, _get_async_race_socketio_room(room, user))
 
-    token = base64.urlsafe_b64encode(sa.encrypt_str(f"{user.id}/{sid}")).decode("ascii")
+    token = base64.urlsafe_b64encode(sa.encrypt_str(f"{user.id}/{room_id}")).decode("ascii")
 
     return str(
         sa.app.url_path_for("livesplit_integration", room_id=room_id, token=token).make_absolute_url(
@@ -558,10 +558,6 @@ async def emit_async_room_update(sa: ServerApp, room: AsyncRaceRoom, sid_or_user
     )
 
 
-async def emit_async_room_message(sa: ServerApp, room: AsyncRaceRoom, sid: str, message: str) -> None:
-    pass
-
-
 @router.websocket("/async-race-room/{room_id}/livesplit/{token}")
 async def livesplit_integration(
     websocket: WebSocket,
@@ -570,11 +566,15 @@ async def livesplit_integration(
 ) -> None:
     app: RdvFastAPI = websocket.app
 
-    # Extract the user id and sid from an encrypted value.
+    # Extract the user id and room_id from an encrypted value.
     # The only way to get a valid token is to call `get_livesplit_url`, which checks if the user is an
     # active member of the race, solving the lack of authentication needed in this endpoint.
-    user_id_str, sid = app.sa.decrypt_str(base64.urlsafe_b64decode(token)).split("/")
+    user_id_str, room_id_confirm = app.sa.decrypt_str(base64.urlsafe_b64decode(token)).split("/")
     user_id = int(user_id_str)
+
+    if room_id != int(room_id_confirm):
+        await websocket.close(reason="Invalid url")
+        return
 
     try:
         room = AsyncRaceRoom.get_by_id(room_id)

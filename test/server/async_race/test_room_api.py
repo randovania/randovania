@@ -830,7 +830,7 @@ async def test_livesplit_socket(test_client, simple_room, can_pause: bool, caplo
     entry.save()
 
     test_client.sa.logger.setLevel(logging.INFO)
-    token = base64.urlsafe_b64encode(test_client.sa.encrypt_str("1235/TheSid")).decode("ascii")
+    token = base64.urlsafe_b64encode(test_client.sa.encrypt_str("1235/1")).decode("ascii")
 
     with test_client.websocket_connect(f"/async-race-room/1/livesplit/{token}") as websocket:
         websocket.send_json({"event": "Finished"})
@@ -856,7 +856,7 @@ async def test_livesplit_socket(test_client, simple_room, can_pause: bool, caplo
 
 
 async def test_livesplit_socket_no_room(test_client):
-    token = base64.urlsafe_b64encode(test_client.sa.encrypt_str("1235/TheSid")).decode("ascii")
+    token = base64.urlsafe_b64encode(test_client.sa.encrypt_str("1235/1")).decode("ascii")
 
     with pytest.raises(WebSocketDisconnect) as exc:
         with test_client.websocket_connect(f"/async-race-room/1/livesplit/{token}") as websocket:
@@ -864,11 +864,18 @@ async def test_livesplit_socket_no_room(test_client):
     assert exc.value.reason == "Invalid url"
 
 
-#
+async def test_livesplit_socket_different_room_id(test_client, simple_room):
+    token = base64.urlsafe_b64encode(test_client.sa.encrypt_str("1234/2")).decode("ascii")
+
+    with pytest.raises(WebSocketDisconnect) as exc:
+        with test_client.websocket_connect(f"/async-race-room/1/livesplit/{token}") as websocket:
+            websocket.close()
+
+    assert exc.value.reason == "Invalid url"
 
 
 async def test_livesplit_socket_not_a_member(test_client, simple_room):
-    token = base64.urlsafe_b64encode(test_client.sa.encrypt_str("1234/TheSid")).decode("ascii")
+    token = base64.urlsafe_b64encode(test_client.sa.encrypt_str("1234/1")).decode("ascii")
 
     with pytest.raises(WebSocketDisconnect) as exc:
         with test_client.websocket_connect(f"/async-race-room/1/livesplit/{token}") as websocket:
