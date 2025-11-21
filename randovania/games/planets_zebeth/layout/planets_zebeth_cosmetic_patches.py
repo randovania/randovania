@@ -19,10 +19,6 @@ class PlanetsZebethRoomGuiType(Enum):
     WITH_FADE = "WITH_FADE"
     ALWAYS = "ALWAYS"
 
-    @classmethod
-    def get_index(cls, type_):
-        return list(cls).index(type_)
-
 
 enum_lib.add_long_name(
     PlanetsZebethRoomGuiType,
