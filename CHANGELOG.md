@@ -50,6 +50,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Chozo Ruins
 
+- Added: Watery Hall: Going to the Missile Expansion via an Intermediate Wall Boost without Gravity Suit.
+- Changed: Watery Hall: Going to the Missile Expansion by going through Poison Water has had several changes: it is now gated behind Beginner Movement, it has slightly more accurate damage numbers now and it increases the difficulty of the tricks.
+- Changed: Watery Hall: Doing the Bomb Jump to get the Missile Expansion is now Intermediate.
+- Fixed: Watery Hall: Going to the Missile Expansion via a Bomb Jump is now possible without taking damage after Flaaghra has been defeated.
+- Fixed: Watery Hall: Requirements for dealing with the enemies in the room.
 - Fixed: Totem Access: Requirements for dealing with the enemies in the room.
 - Fixed: Tower of Light: Climbing up the tower via an Oculus dash now requires you to have a visor.
 - Removed: Tower of Light: Redundant combination of Combat Dash, L-Jump and Standable Terrain to collect the Pickup.

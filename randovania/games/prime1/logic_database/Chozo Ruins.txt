@@ -1941,7 +1941,7 @@ Watery Hall Access
 Extra - asset_id: 4008477565
 Extra - size_index: 0.1
 Extra - aabb: [389.6565, -74.64455, 9.903929, 427.8786, 11.788876, 25.766716]
-> Door to Gathering Hall; Heals? False; Spawn Point; Default Node
+> Door to Gathering Hall; Heals? False; Default Node
   * Layers: default
   * Normal Door to Gathering Hall/Door to Watery Hall Access
   * Extra - dock_index: 0
@@ -1954,6 +1954,8 @@ Extra - aabb: [389.6565, -74.64455, 9.903929, 427.8786, 11.788876, 25.766716]
       Any of the following:
           Missile and Shoot Any Beam
           Charge Beam and Knowledge (Beginner) and Shoot Power Beam
+  > Spawn Point
+      Trivial
 
 > Door to Watery Hall; Heals? False
   * Layers: default
@@ -1971,6 +1973,11 @@ Extra - aabb: [389.6565, -74.64455, 9.903929, 427.8786, 11.788876, 25.766716]
   * Extra - position_required: False
   * Extra - pre_placement_weight: 0.6
   * Extra - world_position: (396.773163, -43.946041, 11.48789)
+  > Door to Gathering Hall
+      Trivial
+
+> Spawn Point; Heals? False; Spawn Point
+  * Layers: default
   > Door to Gathering Hall
       Trivial
 
@@ -2050,7 +2057,7 @@ Extra - aabb: [397.9558, -8.934963, 4.7323303, 483.05167, 117.17189, 59.302334]
               Can Use Bombs
               Knowledge (Beginner) and Can Use Power Bombs
 
-> Door to Watery Hall Access; Heals? False; Spawn Point; Default Node
+> Door to Watery Hall Access; Heals? False; Default Node
   * Layers: default
   * Missile Blast Shield (randomprime) to Watery Hall Access/Door to Watery Hall
   * Extra - dock_index: 1
@@ -2058,29 +2065,115 @@ Extra - aabb: [397.9558, -8.934963, 4.7323303, 483.05167, 117.17189, 59.302334]
   * Extra - world_position: (423.2647, 11.7888775, 15.547949)
   * Extra - world_rotation: (0.0, -0.0, -89.50709)
   > Pickup (Missile Expansion)
-      All of the following:
-          Any of the following:
-              After Flaahgra or Poisoned Water Damage ≥ 57
-              Gravity Suit and Poisoned Water Damage ≥ 25
-          Any of the following:
-              Gravity Suit and Bomb Jump (Beginner) and Poisoned Water Damage ≥ 15 and Can Use Bombs
-              # https://youtu.be/Jla-gYSErGc
+      Any of the following:
+          # For all the poison water damage attempts, the numbers are too far away for the builtin leniency multipler
+          All of the following:
+              # Intended way
+              Gravity Suit and Space Jump Boots
+              Any of the following:
+                  # Deal with water
+                  After Flaahgra
+                  Movement (Beginner) and Poisoned Water Damage ≥ 17
+          All of the following:
+              # Gravless Slope Jump: https://youtu.be/MxHzwUaFvaY
               No Gravity Suit and Slope Jump (Advanced) and Gravityless Underwater Movement (Advanced) and Enabled Allow Dangerous Gravity Suit Logic
+              Any of the following:
+                  # Deal with water
+                  After Flaahgra
+                  All of the following:
+                      Movement (Beginner)
+                      Any of the following:
+                          # Either multiple or 1 attempt
+                          Poisoned Water Damage ≥ 136
+                          Slope Jump (Expert) and Poisoned Water Damage ≥ 64
+          All of the following:
+              # Space Jump Slope Jump
+              Space Jump Boots and Slope Jump (Beginner) and Gravityless Underwater Movement (Beginner)
+              Any of the following:
+                  # Deal with Water
+                  After Flaahgra
+                  All of the following:
+                      Movement (Beginner) and Slope Jump (Intermediate)
+                      Any of the following:
+                          # Either multiple or 1 attempt
+                          Poisoned Water Damage ≥ 103
+                          Slope Jump (Advanced) and Poisoned Water Damage ≥ 49
+          All of the following:
+              # Wallboost
+              Can Use Boost Ball
+              Any of the following:
+                  All of the following:
+                      # With Gravity: https://youtu.be/HDYJkv3MUVI
+                      Gravity Suit and Wall Boost (Beginner)
+                      Any of the following:
+                          # Deal with Water
+                          After Flaahgra
+                          All of the following:
+                              Movement (Beginner) and Wall Boost (Intermediate)
+                              Any of the following:
+                                  # Either multiple or 1 attempt
+                                  Poisoned Water Damage ≥ 103
+                                  Wall Boost (Advanced) and Poisoned Water Damage ≥ 20
+                  All of the following:
+                      # Without Gravity
+                      Gravityless Underwater Movement (Intermediate) and Wall Boost (Intermediate)
+                      Any of the following:
+                          After Flaahgra
+                          All of the following:
+                              Movement (Beginner) and Wall Boost (Advanced)
+                              Any of the following:
+                                  # Either multiple or 1 attempt
+                                  Poisoned Water Damage ≥ 106
+                                  Wall Boost (Expert) and Poisoned Water Damage ≥ 36
+          All of the following:
+              # Bomb Jump up
+              Gravity Suit and Bomb Jump (Intermediate) and Can Use Bombs
+              Any of the following:
+                  # Deal with Water
+                  After Flaahgra
+                  All of the following:
+                      Movement (Beginner)
+                      Any of the following:
+                          Poisoned Water Damage ≥ 66
+                          Bomb Jump (Advanced) and Poisoned Water Damage ≥ 32
+  > Event - Open gate
+      All of the following:
+          Scan Visor
+          Any of the following:
+              # Dealing with Vines/Blastcaps
+              Shoot Any Beam
+              All of the following:
+                  # Tank Blastcap and get back by jumping through water
+                  Combat (Beginner) and Normal Damage ≥ 13
+                  After Flaahgra or Poisoned Water Damage
+              All of the following:
+                  # Destroy Blastcap with bombs and get back by jumping through water
+                  Combat (Beginner)
+                  Can Use Bombs or Can Use Power Bombs
+                  After Flaahgra or Poisoned Water Damage
+  > Behind Gate
+      All of the following:
+          After Watery Hall Gate
+          Any of the following:
+              # Deal with Vines
+              Standable Terrain (Intermediate) or Shoot Any Beam
               All of the following:
                   Space Jump Boots
-                  Any of the following:
-                      Gravity Suit
-                      Slope Jump (Beginner) and Gravityless Underwater Movement (Beginner)
+                  Combat (Beginner) or Standable Terrain (Beginner)
+              # Lower Path
+              Space Jump Boots and Standable Terrain (Beginner) and Standable Terrain (Intermediate)
               All of the following:
-                  # https://youtu.be/HDYJkv3MUVI
-                  Gravity Suit and Wall Boost (Beginner) and Can Use Boost Ball
+                  # Upper Path
+                  # Get past first Reaper Vine
+                  Combat (Beginner) or Shoot Any Beam
                   Any of the following:
-                      Movement (Intermediate) and Poisoned Water Damage ≥ 65
-                      Movement (Expert) and Poisoned Water Damage ≥ 20
-  > Event - Open gate
-      Scan Visor
-  > Behind Gate
-      After Watery Hall Gate
+                      # Get past second Reaper Vine / Jump to the gate
+                      Space Jump Boots or L-Jump (Expert) or Shoot Any Beam
+                      Combat/Scan Dash (Intermediate) and Has Any Visor
+                      # Bunny Hop
+                      Movement (Expert)
+  > Spawn Point
+      Trivial
 
 > Pickup (Charge Beam); Heals? False
   * Layers: default
@@ -2089,7 +2182,10 @@ Extra - aabb: [397.9558, -8.934963, 4.7323303, 483.05167, 117.17189, 59.302334]
   * Extra - pre_placement_weight: 0.6
   * Extra - world_position: (467.240417, 7.778633, 26.649574)
   > Behind Gate
-      Trivial
+      Any of the following:
+          # Deal with Eyons
+          Shoot Any Beam
+          Combat (Beginner) and Normal Damage ≥ 9
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
@@ -2098,8 +2194,13 @@ Extra - aabb: [397.9558, -8.934963, 4.7323303, 483.05167, 117.17189, 59.302334]
   * Extra - world_position: (447.610901, 113.443604, 15.656483)
   > Door to Watery Hall Access
       Any of the following:
-          After Flaahgra or Poisoned Water Damage ≥ 42
-          Gravity Suit and Poisoned Water Damage ≥ 25
+          After Flaahgra
+          All of the following:
+              # Damage run through it
+              Movement (Beginner)
+              Any of the following:
+                  Poisoned Water Damage ≥ 42
+                  Gravity Suit and Poisoned Water Damage ≥ 25
 
 > Event - Open gate; Heals? False
   * Layers: default
@@ -2118,17 +2219,32 @@ Extra - aabb: [397.9558, -8.934963, 4.7323303, 483.05167, 117.17189, 59.302334]
               Can Use Bombs
               Knowledge (Beginner) and Can Use Power Bombs
               All of the following:
-                  # https://youtu.be/bh18bp4makg
+                  # Get to the Door via Out of Bounds
                   Clip Through Objects (Expert) and Single Room Out of Bounds (Advanced) and Standable Terrain (Advanced) and Can Use Boost Ball
                   Any of the following:
+                      # With Space Jump: https://youtu.be/bh18bp4makg?t=47
                       Space Jump Boots
-                      # https://www.youtube.com/watch?v=LdBFCaOFDE4
+                      # Without Space Jump: https://www.youtube.com/watch?v=LdBFCaOFDE4
                       Movement (Expert)
   > Door to Watery Hall Access
-      Any of the following:
-          After Watery Hall Gate
-          Clip Through Objects (Beginner) and Can Use Boost Ball
+      All of the following:
+          Any of the following:
+              # Get through Gate
+              After Watery Hall Gate
+              Clip Through Objects (Beginner) and Can Use Boost Ball
+          Any of the following:
+              # Deal with Vines
+              Space Jump Boots or Normal Damage or Shoot Any Beam
+              # Jump through water
+              After Flaahgra or Poisoned Water Damage
+              # Dash Across with the help of the Reaper Vine
+              Combat/Scan Dash (Expert) and Has Any Visor
   > Pickup (Charge Beam)
+      Trivial
+
+> Spawn Point; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Watery Hall Access
       Trivial
 
 ----------------
@@ -2342,7 +2458,7 @@ Extra - aabb: [572.72375, -196.47711, 43.99083, 616.3443, -165.0573, 49.753304]
   > Door to Furnace
       Trivial
 
-> Door to Furnace; Heals? False; Spawn Point; Default Node
+> Door to Furnace; Heals? False; Default Node
   * Layers: default
   * Normal Door to Furnace/Door to West Furnace Access
   * Extra - dock_index: 1
@@ -2351,11 +2467,18 @@ Extra - aabb: [572.72375, -196.47711, 43.99083, 616.3443, -165.0573, 49.753304]
   * Extra - world_rotation: (0.0, -0.0, 0.0)
   > Door to Energy Core
       Trivial
+  > Spawn Point
+      Trivial
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
   * Pickup 129; Category? Minor
   * Extra - position_required: True
+
+> Spawn Point; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Furnace
+      Trivial
 
 ----------------
 Burn Dome
