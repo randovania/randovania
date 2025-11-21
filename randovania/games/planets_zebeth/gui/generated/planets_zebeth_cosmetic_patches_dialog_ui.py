@@ -145,6 +145,5 @@ class Ui_PlanetsZebethCosmeticPatchesDialog(object):
         self.use_sm_boss_theme_label.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Makes the game play SM boss themes instead of Nestroid boss themes.", None))
         self.use_alternative_escape_theme_check.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Use alternative escape theme", None))
         self.use_alternative_escape_theme_label.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Makes the game play SM escape theme instead of Nestroid escape theme.", None))
-
     # retranslateUi
 
