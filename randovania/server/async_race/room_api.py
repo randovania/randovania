@@ -424,8 +424,8 @@ async def perform_state_change(
 
     # Ignore transitions for doing nothing
     # These can happen if the client doesn't get updated and the user retries what they did last.
-    if old_state == new_state_:
-        return (await room.create_session_entry(sa, sid)).as_json
+    if old_state == new_state:
+        return
 
     things_to_save: list[BaseModel] = [entry]
 
