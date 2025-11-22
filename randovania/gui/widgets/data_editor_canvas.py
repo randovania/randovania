@@ -283,11 +283,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         return result
 
     def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
-        # Start panning with middle mouse button or Ctrl+Left click
-        if event.button() == QtCore.Qt.MouseButton.MiddleButton or (
-            event.button() == QtCore.Qt.MouseButton.LeftButton
-            and event.modifiers() & QtCore.Qt.KeyboardModifier.ControlModifier
-        ):
+        if event.button() in (QtCore.Qt.MouseButton.LeftButton, QtCore.Qt.MouseButton.MiddleButton):
             self._last_pan_point = event.pos()
             self.setCursor(QtCore.Qt.CursorShape.ClosedHandCursor)
             event.accept()
@@ -307,10 +303,10 @@ class DataEditorCanvas(QtWidgets.QWidget):
             super().mouseMoveEvent(event)
 
     def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
-        # Stop panning
-        if self._last_pan_point is not None and (
-            event.button() == QtCore.Qt.MouseButton.MiddleButton or event.button() == QtCore.Qt.MouseButton.LeftButton
-        ):
+        # Check if we were panning - if so, stop panning and don't process as a click
+        was_panning = self._last_pan_point is not None
+
+        if was_panning and event.button() in (QtCore.Qt.MouseButton.LeftButton, QtCore.Qt.MouseButton.MiddleButton):
             self._last_pan_point = None
             self.setCursor(QtCore.Qt.CursorShape.ArrowCursor)
             event.accept()
