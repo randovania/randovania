@@ -450,8 +450,6 @@ def setup_resolver(
     logic = Logic(game_or_graph, configuration)
     logic.record_paths = record_paths
 
-    starting_state.resources.add_self_as_requirement_to_resources = True
-
     return starting_state, logic
 
 

@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 
 if TYPE_CHECKING:
@@ -44,12 +43,6 @@ class PickupNode(ResourceNode):
 
     def __repr__(self) -> str:
         return f"PickupNode({self.name!r} -> {self.pickup_index.index})"
-
-    def requirement_to_leave(self, context: NodeContext) -> Requirement:
-        if context.current_resources.add_self_as_requirement_to_resources:
-            return ResourceRequirement.simple(self.resource(context))
-        else:
-            return Requirement.trivial()
 
     @property
     def requirement_to_collect(self) -> Requirement:

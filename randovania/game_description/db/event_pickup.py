@@ -53,9 +53,6 @@ class EventPickupNode(ResourceNode):
     def resource(self, context: NodeContext) -> ResourceInfo:
         return self.pickup_node.resource(context)
 
-    def requirement_to_leave(self, context: NodeContext) -> Requirement:
-        return self.pickup_node.requirement_to_leave(context)
-
     @property
     def requirement_to_collect(self) -> Requirement:
         # Both PickupNode and EventNode has this as trivial, so don't bother recursing

@@ -31,25 +31,6 @@ def hint_node(request, blank_game_description):
     return has_translator, translator, node
 
 
-def test_hint_node_requirements_to_leave(hint_node, empty_patches):
-    # Setup
-    has_translator, translator, node = hint_node
-    db = empty_patches.game.resource_database
-
-    def ctx(resources):
-        return NodeContext(empty_patches, resources, db, empty_patches.game.region_list)
-
-    # Run
-    to_leave = node.requirement_to_leave(ctx({}))
-
-    # Assert
-    rc2 = ResourceCollection.from_resource_gain(db, [])
-    rc3 = ResourceCollection.from_resource_gain(db, [(translator, 1)])
-
-    assert to_leave.satisfied(ctx(rc2), 99) != has_translator
-    assert to_leave.satisfied(ctx(rc3), 99)
-
-
 def test_hint_node_should_collect(hint_node, empty_patches):
     # Setup
     db = empty_patches.game.resource_database

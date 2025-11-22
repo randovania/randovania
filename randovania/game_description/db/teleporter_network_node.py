@@ -5,8 +5,6 @@ import typing
 
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 
 if typing.TYPE_CHECKING:
@@ -39,9 +37,6 @@ class TeleporterNetworkNode(ResourceNode):
     is_unlocked: Requirement
     network: str
     requirement_to_activate: Requirement
-
-    def requirement_to_leave(self, context: NodeContext) -> Requirement:
-        return RequirementAnd([self.is_unlocked, ResourceRequirement.simple(self.resource(context))])
 
     @property
     def requirement_to_collect(self) -> Requirement:

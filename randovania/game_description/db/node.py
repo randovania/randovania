@@ -5,13 +5,13 @@ import typing
 
 from frozendict import frozendict
 
-from randovania.game_description.requirements.base import Requirement
 from randovania.lib import frozen_lib
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.node_provider import NodeProvider
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
@@ -84,9 +84,6 @@ class Node:
     def is_derived_node(self) -> bool:
         """If True, this node was created dynamically from other nodes."""
         return False
-
-    def requirement_to_leave(self, context: NodeContext) -> Requirement:
-        return Requirement.trivial()
 
     def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
         """

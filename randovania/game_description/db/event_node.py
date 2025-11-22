@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import NodeContext
@@ -18,12 +17,6 @@ class EventNode(ResourceNode):
 
     def __repr__(self) -> str:
         return f"EventNode({self.name!r} -> {self.event.long_name})"
-
-    def requirement_to_leave(self, context: NodeContext) -> Requirement:
-        if context.current_resources.add_self_as_requirement_to_resources:
-            return ResourceRequirement.simple(self.event)
-        else:
-            return Requirement.trivial()
 
     @property
     def requirement_to_collect(self) -> Requirement:

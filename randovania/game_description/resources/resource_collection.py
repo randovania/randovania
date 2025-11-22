@@ -13,14 +13,12 @@ class ResourceCollection:
         "resource_bitmask",
         "_resource_array",
         "_existing_resources",
-        "add_self_as_requirement_to_resources",
         "_damage_reduction_cache",
         "_resource_database",
     )
     resource_bitmask: int
     _resource_array: list[int]
     _existing_resources: dict[int, ResourceInfo]
-    add_self_as_requirement_to_resources: bool
     _damage_reduction_cache: dict[int, float] | None
     _resource_database: ResourceDatabaseView
 
@@ -28,7 +26,6 @@ class ResourceCollection:
         self.resource_bitmask = 0
         self._resource_array = [0] * resource_count
         self._existing_resources = {}
-        self.add_self_as_requirement_to_resources = False
         self._damage_reduction_cache = None
         self._resource_database = resource_database
 
@@ -50,8 +47,8 @@ class ResourceCollection:
         return f"<ResourceCollection with {self.num_resources} resources>"
 
     @property
-    def _comparison_tuple(self) -> tuple[ResourceGainTuple, bool]:
-        return tuple(self.as_resource_gain()), self.add_self_as_requirement_to_resources
+    def _comparison_tuple(self) -> ResourceGainTuple:
+        return tuple(self.as_resource_gain())
 
     def __hash__(self) -> int:
         return hash(self._comparison_tuple)
@@ -150,7 +147,6 @@ class ResourceCollection:
         result._existing_resources.update(self._existing_resources)
         result._resource_array = copy.copy(self._resource_array)
         result.resource_bitmask = self.resource_bitmask
-        result.add_self_as_requirement_to_resources = self.add_self_as_requirement_to_resources
         return result
 
     def get_damage_reduction(self, resource: ResourceInfo) -> float:
