@@ -949,3 +949,32 @@ def test_and_damage_satisfied(echoes_resource_database):
     and_req = RequirementAnd([req, req])
 
     assert not and_req.satisfied(_ctx_for(db), 99)
+
+
+def test_isolate(prime1_resource_database):
+    req = RequirementAnd(
+        [
+            RequirementOr(
+                [
+                    RequirementAnd(
+                        [
+                            ResourceRequirement.create(prime1_resource_database.get_damage("Damage"), 22, False),
+                            ResourceRequirement.simple(prime1_resource_database.get_item("X-Ray")),
+                        ]
+                    ),
+                    ResourceRequirement.create(prime1_resource_database.get_damage("Damage"), 135, False),
+                ]
+            ),
+            ResourceRequirement.simple(prime1_resource_database.get_item("Charge")),
+            ResourceRequirement.simple(prime1_resource_database.get_item("SpaceJump")),
+        ]
+    )
+
+    isolated = req.isolate_damage_requirements(
+        _ctx_for(
+            prime1_resource_database,
+            prime1_resource_database.get_item("Charge"),
+            prime1_resource_database.get_item("SpaceJump"),
+        )
+    )
+    assert str(isolated) == "Normal Damage ≥ 135"

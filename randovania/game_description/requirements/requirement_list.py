@@ -4,6 +4,7 @@ import itertools
 import typing
 
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.lib.bitmask import Bitmask
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
@@ -17,7 +18,7 @@ _ItemKey = tuple[int, int, bool]
 
 class RequirementList:
     __slots__ = ("_bitmask", "_items", "_extra", "_cached_hash")
-    _bitmask: int
+    _bitmask: Bitmask
     _items: dict[_ItemKey, ResourceRequirement]
     _extra: list[ResourceRequirement]
     _cached_hash: int | None
@@ -31,14 +32,14 @@ class RequirementList:
     def __init__(self, items: Iterable[ResourceRequirement]):
         self._items = {}
         self._extra = []
-        self._bitmask = 0
+        self._bitmask = Bitmask.create()
         self._cached_hash = None
 
         for it in items:
             index = it.resource.resource_index
             self._items[(index, it.amount, it.negate)] = it
             if it.amount == 1 and not it.negate and not it.is_damage:
-                self._bitmask |= 1 << index
+                self._bitmask.set_bit(index)
             else:
                 self._extra.append(it)
 
@@ -77,7 +78,7 @@ class RequirementList:
         :param current_energy:
         :return:
         """
-        if self._bitmask & context.current_resources.resource_bitmask != self._bitmask:
+        if not self._bitmask.is_subset_of(context.current_resources.resource_bitmask):
             return False
 
         energy = current_energy
@@ -129,7 +130,7 @@ class RequirementList:
             return False
 
         if not self._extra and not other._extra:
-            return self._bitmask & other._bitmask == self._bitmask
+            return self._bitmask.is_subset_of(other._bitmask)
 
         return all(
             key in other._items or any(req.is_obsoleted_by(other_req) for other_req in other._items.values())
