@@ -74,7 +74,7 @@ def action_details_from_state(state: State, node: GraphOrClassicNode | None = No
         if isinstance(node, PickupNode):
             return _get_pickup_action_details(state, node.pickup_index)
 
-    text = node.name
+    text = node.identifier.node
 
     if isinstance(node, EventNode):
         action_type = ActionType.EVENT

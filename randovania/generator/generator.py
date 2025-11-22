@@ -78,7 +78,14 @@ def _validate_pickup_pool_size(
 
 
 async def check_if_beatable(patches: GamePatches, pool: PoolResults, use_world_graph: bool) -> bool:
-    patches = patches.assign_extra_starting_pickups(itertools.chain(pool.starting, pool.to_place))
+    new_pickups = []
+
+    collection = patches.game.create_resource_collection()
+    for pickup in itertools.chain(pool.starting, pool.to_place):
+        if all(quantity >= 0 for _, quantity in pickup.resource_gain(collection)):
+            new_pickups.append(pickup)
+
+    patches = patches.assign_extra_starting_pickups(new_pickups)
 
     state, logic = resolver.setup_resolver(
         filtered_database.game_description_for_layout(patches.configuration).get_mutable(),
@@ -319,8 +326,8 @@ async def _create_description(
 async def generate_and_validate_description(
     generator_params: GeneratorParameters,
     status_update: Callable[[str], None] | None,
-    validate_after_generation: bool,
-    timeout: int | None = 600,
+    resolve_after_generation: bool,
+    resolver_timeout: int | None = 600,
     attempts: int = DEFAULT_ATTEMPTS,
     world_names: list[str] | None = None,
     use_world_graph: bool = False,
@@ -329,8 +336,8 @@ async def generate_and_validate_description(
     Creates a LayoutDescription for the given Permalink.
     :param generator_params:
     :param status_update:
-    :param validate_after_generation:
-    :param timeout: Abort generation after this many seconds.
+    :param resolve_after_generation:
+    :param resolver_timeout: Abort the resolver after this many seconds.
     :param attempts: Attempt this many generations.
     :param world_names: Name for each world. Used for error and status messages.
     :param use_world_graph: Use WorldGraph for database backend.
@@ -361,7 +368,7 @@ async def generate_and_validate_description(
             "Could not generate a game with the given settings", generator_params=generator_params, source=e
         ) from e
 
-    if validate_after_generation and generator_params.world_count == 1:
+    if resolve_after_generation and generator_params.world_count == 1:
         final_state_async = resolver.resolve(
             configuration=generator_params.get_preset(0).configuration,
             patches=result.all_patches[0],
@@ -369,7 +376,7 @@ async def generate_and_validate_description(
             use_world_graph=use_world_graph,
         )
         try:
-            final_state_by_resolve = await asyncio.wait_for(final_state_async, timeout)
+            final_state_by_resolve = await asyncio.wait_for(final_state_async, resolver_timeout)
         except TimeoutError as e:
             raise ImpossibleForSolver(
                 "Timeout reached when validating possibility", generator_params=generator_params, layout=result

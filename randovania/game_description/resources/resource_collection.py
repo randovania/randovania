@@ -43,8 +43,7 @@ class ResourceCollection:
         try:
             return self._resource_array[resource_index]
         except IndexError:
-            self._resize_array_to(resource_index)
-            return self._resource_array[resource_index]
+            return 0
 
     def __str__(self) -> str:
         return f"<ResourceCollection with {self.num_resources} resources>"
@@ -78,6 +77,7 @@ class ResourceCollection:
         """Sets the quantity of the given resource to be exactly the given value.
         This method should be used in exceptional cases only. For common usage, use `add_resource_gain`.
         """
+        quantity = max(quantity, 0)
         resource_index = resource.resource_index
         self._damage_reduction_cache = None
         try:
@@ -110,10 +110,12 @@ class ResourceCollection:
         for resource, quantity in resource_gain:
             resource_index = resource.resource_index
             try:
-                self._resource_array[resource_index] += quantity
+                current_amount = self._resource_array[resource_index]
             except IndexError:
                 self._resize_array_to(resource_index)
-                self._resource_array[resource_index] += quantity
+                current_amount = self._resource_array[resource_index]
+
+            self._resource_array[resource_index] = max(current_amount + quantity, 0)
             self._existing_resources[resource_index] = resource
 
             mask = 1 << resource_index

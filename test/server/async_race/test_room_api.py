@@ -442,7 +442,7 @@ async def test_change_state(
         assert AsyncRaceEntry.entry_for(room, user).user_status() == before_state
 
     valid_transition = (before_state, after_state) in VALID_TRANSITIONS
-    if valid_transition:
+    if valid_transition or (before_state == after_state and before_state != AsyncRaceRoomUserStatus.NOT_MEMBER):
         expectation = contextlib.nullcontext()
         expected_after = after_state
     else:

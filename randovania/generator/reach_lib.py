@@ -5,79 +5,71 @@ import typing
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Container, Iterator
 
-    from randovania.game_description.db.node import Node, NodeContext
-    from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.generator_reach import GeneratorReach
-    from randovania.graph.state import GraphOrClassicNode, GraphOrResourceNode, State
+    from randovania.graph.state import GraphOrResourceNode, State
     from randovania.graph.world_graph import WorldGraph
 
-    NodeT = typing.TypeVar("NodeT", bound=Node)
-    ResourceNodeT = typing.TypeVar("ResourceNodeT", bound=ResourceNode)
+
+def _get_reach_class() -> type[GeneratorReach]:
+    from randovania.generator.old_generator_reach import OldGeneratorReach
+
+    return OldGeneratorReach
 
 
-def _filter_reachable[NodeT: GraphOrClassicNode](nodes: Iterator[NodeT], reach: GeneratorReach) -> Iterator[NodeT]:
-    for node in nodes:
-        if reach.is_reachable_node(node):
-            yield node
-
-
-def _filter_out_dangerous_actions[ResourceNodeT: GraphOrResourceNode](
-    resource_nodes: Iterator[ResourceNodeT],
-    game: GameDescription | WorldGraph,
+def _action_has_no_dangerous_resources(
+    node: GraphOrResourceNode,
+    dangerous_resources: Container[ResourceInfo],
     context: NodeContext,
-) -> Iterator[ResourceNodeT]:
-    for resource_node in resource_nodes:
-        if all(
-            resource not in game.dangerous_resources for resource, _ in resource_node.resource_gain_on_collect(context)
-        ):
-            yield resource_node
+) -> bool:
+    return all(resource not in dangerous_resources for resource, _ in node.resource_gain_on_collect(context))
 
 
-def _get_safe_resources(reach: GeneratorReach) -> Iterator[GraphOrResourceNode]:
-    yield from _filter_reachable(
-        _filter_out_dangerous_actions(
-            collectable_resource_nodes(reach.safe_nodes, reach), reach.game, reach.node_context()
-        ),
-        reach,
+def get_collectable_resource_nodes_of_reach(
+    reach: GeneratorReach,
+    use_safe_nodes: bool = False,
+    include_with_dangerous_resources: bool = True,
+    must_be_reachable: bool = True,
+) -> list[GraphOrResourceNode]:
+    context = reach.node_context()
+    health = reach.state.health_for_damage_requirements
+    dangerous_resources = reach.game.dangerous_resources
+
+    result = []
+
+    node_list = typing.cast(
+        "Iterator[GraphOrResourceNode]",
+        reach.safe_nodes if use_safe_nodes else (reach.connected_nodes if must_be_reachable else reach.nodes),
     )
 
+    for node in node_list:
+        if (
+            node.is_resource_node()
+            and node.should_collect(context)
+            and node.requirement_to_collect.satisfied(context, health)
+            and (
+                include_with_dangerous_resources
+                or (_action_has_no_dangerous_resources(node, dangerous_resources, context))
+            )
+            and (not must_be_reachable or reach.is_reachable_node(node))
+        ):
+            result.append(node)
 
-def collectable_resource_nodes(
-    nodes: Iterator[GraphOrClassicNode], reach: GeneratorReach
-) -> Iterator[GraphOrResourceNode]:
-    """
-    Filters the given iterable of nodes, to only those that:
-      - Are Resource Nodes
-      - the `should_collect` says True
-      - their `requirement_to_collect` is satisfied
-    """
-    context = reach.node_context()
-
-    for node in nodes:
-        if node.is_resource_node():
-            resource_node = typing.cast("GraphOrResourceNode", node)
-            if resource_node.should_collect(context) and resource_node.requirement_to_collect.satisfied(
-                context, reach.state.health_for_damage_requirements
-            ):
-                yield resource_node
-
-
-def get_collectable_resource_nodes_of_reach(reach: GeneratorReach) -> list[GraphOrResourceNode]:
-    return list(collectable_resource_nodes(_filter_reachable(reach.nodes, reach), reach))
+    return result
 
 
 def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
-    """
-
-    :param reach:
-    :return:
-    """
     while True:
-        actions = list(_get_safe_resources(reach))
+        actions = get_collectable_resource_nodes_of_reach(
+            reach,
+            use_safe_nodes=True,
+            include_with_dangerous_resources=False,
+        )
         if not actions:
             break
 
@@ -98,15 +90,12 @@ def reach_with_all_safe_resources(
     :param filler_config:
     :return:
     """
-    from randovania.generator.old_generator_reach import OldGeneratorReach as GR
-
-    # from randovania.generator.trust_generator_reach import TrustGeneratorReach as GR
-    reach = GR.reach_from_state(game, initial_state, filler_config)
+    reach = _get_reach_class().reach_from_state(game, initial_state, filler_config)
     collect_all_safe_resources_in_reach(reach)
     return reach
 
 
-def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach) -> GeneratorReach:
+def advance_after_action(previous_reach: GeneratorReach) -> GeneratorReach:
     """
     Create a new GeneratorReach that collected actions not considered safe, but expanded the safe_nodes set
     :param previous_reach:
@@ -124,38 +113,30 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
         next_reach.act_on(action)
         collect_all_safe_resources_in_reach(next_reach)
 
-        if previous_safe_nodes <= next_reach.safe_nodes_index_set and all(
-            resource not in game.dangerous_resources
-            for resource, _ in action.resource_gain_on_collect(previous_reach.node_context())
-        ):
-            # print("Non-safe {} was good".format(action.full_name()))
-            return advance_reach_with_possible_unsafe_resources(next_reach)
+        if previous_safe_nodes <= next_reach.safe_nodes_index_set:
+            if _action_has_no_dangerous_resources(action, game.dangerous_resources, previous_reach.node_context()):
+                # print("Non-safe {} was good".format(action.full_name()))
+                return advance_after_action(next_reach)
 
-        next_next_state = next_reach.state.copy()
+            # It'll only be reachable in the new state if it already is in the existing state
+            # And since we already calculated the reachable nodes for this reach, this is a cheap operation!
+            if next_reach.is_reachable_node(initial_state.node):
+                # In this case, the action provides a dangerous resource but collecting it still lets us go back
+                # to where we started and the set of safe nodes didn't shrink
+                # We'll now create an entire new GeneratorReach and check if the safe nodes really didn't shrink.
 
-        next_reach = reach_with_all_safe_resources(game, next_next_state, previous_reach.filler_config)
-        if next_reach.is_reachable_node(initial_state.node) and previous_safe_nodes <= next_reach.safe_nodes_index_set:
-            # print("Non-safe {} could reach back to where we were".format(action.full_name()))
-            return advance_reach_with_possible_unsafe_resources(next_reach)
-        else:
-            pass
+                # No need to call collect_all_safe_resources_in_reach on this new reach,
+                # as we've already collected everything at the start of this loop
+                experimental_reach = _get_reach_class().reach_from_state(
+                    game, next_reach.state.copy(), previous_reach.filler_config
+                )
+                # assert experimental_reach.safe_nodes_index_set <= next_reach.safe_nodes_index_set
+
+                if previous_safe_nodes <= experimental_reach.safe_nodes_index_set:
+                    # print("Non-safe {} could reach back to where we were".format(action.full_name()))
+                    return advance_after_action(experimental_reach)
 
         # print("Non-safe {} was skipped".format(action.full_name()))
 
     # We couldn't improve this reach, so just return it
     return previous_reach
-
-
-def advance_after_action(potential_reach: GeneratorReach) -> GeneratorReach:
-    """
-    Advances the reach after performing an action, collecting unlocked resources.
-    :param potential_reach: Reach after collecting action
-    :return: Reach after collecting resources
-    """
-
-    if potential_reach.filler_config.consider_possible_unsafe_resources:
-        return advance_reach_with_possible_unsafe_resources(potential_reach)
-
-    else:
-        collect_all_safe_resources_in_reach(potential_reach)
-        return potential_reach

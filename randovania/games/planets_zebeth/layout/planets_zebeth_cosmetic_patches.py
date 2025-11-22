@@ -32,8 +32,11 @@ enum_lib.add_long_name(
 
 @dataclasses.dataclass(frozen=True)
 class PlanetsZebethCosmeticPatches(BaseCosmeticPatches):
-    show_unexplored_map: bool = True
+    disable_low_health_beeping: bool = False
     show_room_names: PlanetsZebethRoomGuiType = PlanetsZebethRoomGuiType.WITH_FADE
+    show_unexplored_map: bool = True
+    use_alternative_escape_theme: bool = False
+    use_sm_boss_theme: bool = False
 
     @classmethod
     def game(cls) -> RandovaniaGame:

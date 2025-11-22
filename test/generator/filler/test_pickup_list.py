@@ -199,11 +199,13 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
 
     state = State(
         resources,
+        {},
         (),
         EnergyTankDamageState(
             99,
             100,
             db.get_item("EnergyTank"),
+            [],
         ),
         MagicMock(),
         echoes_game_patches,
@@ -264,9 +266,7 @@ async def test_get_pickups_that_solves_unreachable_quad(
         pickups_to_add.append(next(p for p in pool.pickups if p.name == "Light Beam"))
     state = state.assign_pickups_resources(pickups_to_add)
 
-    reach = reach_lib.advance_reach_with_possible_unsafe_resources(
-        reach_lib.reach_with_all_safe_resources(graph, state, default_filler_config)
-    )
+    reach = reach_lib.advance_after_action(reach_lib.reach_with_all_safe_resources(graph, state, default_filler_config))
 
     # Run
     result = pickup_list.get_pickups_that_solves_unreachable(pool.pickups, reach, [], False)

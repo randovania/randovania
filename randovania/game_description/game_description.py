@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, override
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
-from randovania.game_description.db.node import Node, NodeContext
+from randovania.game_description.db.node import Node, NodeContext, NodeIndex
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
@@ -329,11 +329,21 @@ class GameDescription(GameDatabaseView):
     def get_configurable_node_requirements(self) -> Mapping[NodeIdentifier, Requirement]:
         return self.region_list.configurable_nodes
 
+    @property
+    def resource_to_dangerous_edges(self) -> dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]]:
+        # Only implemented in World Graph
+        return {}
+
+    @property
+    def resource_to_edges(self) -> dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]]:
+        # Only implemented in World Graph
+        return {}
+
 
 def _resources_for_damage(
     resource: SimpleResourceInfo, database: ResourceDatabase, collection: ResourceCollection, damage_state: DamageState
 ) -> Iterator[ResourceInfo]:
-    yield from damage_state.resources_for_energy()
+    yield from damage_state.resources_for_health()
     for reduction in database.damage_reductions.get(resource, []):
         if reduction.inventory_item is not None and not collection.has_resource(reduction.inventory_item):
             yield reduction.inventory_item

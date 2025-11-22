@@ -143,7 +143,10 @@ def _simplify_additional_requirement_set(
 
 
 def _is_action_dangerous(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
-    return any(resource in dangerous_resources for resource, _ in action.resource_gain_on_collect(state.node_context()))
+    return any(
+        resource in dangerous_resources or quantity < 0
+        for resource, quantity in action.resource_gain_on_collect(state.node_context())
+    )
 
 
 def _is_dangerous_event(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
@@ -474,6 +477,8 @@ def setup_resolver(
     configuration: BaseConfiguration,
     patches: GamePatches,
     use_world_graph: bool,
+    *,
+    record_paths: bool = False,
 ) -> tuple[State, Logic]:
     game = filtered_game
     bootstrap = game.game.generator.bootstrap
@@ -484,6 +489,7 @@ def setup_resolver(
         configuration, game, patches, use_world_graph=use_world_graph
     )
     logic = Logic(game_or_graph, configuration)
+    logic.record_paths = record_paths
 
     starting_state.resources.add_self_as_requirement_to_resources = True
 
@@ -498,6 +504,7 @@ async def resolve(
     collect_hint_data: bool = False,
     logger: ResolverLogger | None = None,
     use_world_graph: bool = False,
+    record_paths: bool = False,
 ) -> State | None:
     if status_update is None:
         status_update = _quiet_print
@@ -507,6 +514,7 @@ async def resolve(
         configuration,
         patches,
         use_world_graph=use_world_graph,
+        record_paths=record_paths,
     )
 
     if collect_hint_data:

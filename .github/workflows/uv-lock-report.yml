@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Report
-        uses: mw-root/uv-lock-report@v0.12.1
+        uses: mw-root/uv-lock-report@v0.13.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}

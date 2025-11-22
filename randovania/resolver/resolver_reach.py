@@ -133,7 +133,10 @@ class ResolverReach:
 
     def path_to_node(self, node: GraphOrClassicNode) -> tuple[GraphOrClassicNode, ...]:
         all_nodes = self._logic.all_nodes
-        return tuple(all_nodes[part] for part in self._path_to_node[node.node_index])
+        if node.node_index in self._path_to_node:
+            return tuple(all_nodes[part] for part in self._path_to_node[node.node_index])
+        else:
+            return ()
 
     def __init__(
         self,
@@ -213,8 +216,6 @@ class ResolverReach:
                 if satisfied:
                     damage = requirement.damage(context)
                     nodes_to_check[target_node_index] = game_state.apply_damage(damage)
-                    path_to_node[target_node_index] = list(path_to_node[node_index])
-                    path_to_node[target_node_index].append(node_index)
                     satisfied_requirement_on_node[target_node_index] = _combine_damage_requirements(
                         node.heal,
                         damage,
@@ -222,6 +223,9 @@ class ResolverReach:
                         satisfied_requirement_on_node[node.node_index],
                         context,
                     )
+                    if logic.record_paths:
+                        path_to_node[target_node_index] = list(path_to_node[node_index])
+                        path_to_node[target_node_index].append(node_index)
 
                 elif target_node:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.

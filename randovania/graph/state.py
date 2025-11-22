@@ -33,6 +33,7 @@ NodeSequence = tuple[GraphOrClassicNode, ...]
 
 class State:
     resources: ResourceCollection
+    new_resources: dict[ResourceInfo, int]
     collected_resource_nodes: NodeSequence
     damage_state: DamageState
     node: GraphOrClassicNode
@@ -49,6 +50,7 @@ class State:
     def __init__(
         self,
         resources: ResourceCollection,
+        new_resources: dict[ResourceInfo, int],
         collected_resource_nodes: NodeSequence,
         damage_state: DamageState,
         node: GraphOrClassicNode,
@@ -59,6 +61,7 @@ class State:
         hint_state: ResolverHintState | None = None,
     ):
         self.resources = resources
+        self.new_resources = new_resources
         self.collected_resource_nodes = collected_resource_nodes
         self.node = node
         self.patches = patches
@@ -74,6 +77,7 @@ class State:
     def copy(self) -> Self:
         return self.__class__(
             self.resources.duplicate(),
+            copy.copy(self.new_resources),
             self.collected_resource_nodes,
             self.damage_state,
             self.node,
@@ -162,12 +166,14 @@ class State:
     def _advance_to(
         self,
         new_resources: ResourceCollection,
+        modified_resources: Iterable[ResourceInfo],
         new_collected_resource_nodes: NodeSequence,
         damage_state: DamageState,
         patches: GamePatches,
     ) -> Self:
         return self.__class__(
             new_resources,
+            {resource: new_resources[resource] - self.resources[resource] for resource in modified_resources},
             self.collected_resource_nodes + new_collected_resource_nodes,
             damage_state,
             self.node,
@@ -192,11 +198,13 @@ class State:
         ):
             raise ValueError(f"Trying to collect an uncollectable node'{node}'")
 
+        gain = list(node.resource_gain_on_collect(context))
         new_resources = self.resources.duplicate()
-        new_resources.add_resource_gain(node.resource_gain_on_collect(context))
+        new_resources.add_resource_gain(gain)
 
         return self._advance_to(
             new_resources,
+            [resource for resource, _ in gain],
             (node,),
             damage_state.apply_collected_resource_difference(new_resources, self.resources),
             self.patches,
@@ -216,12 +224,18 @@ class State:
         return self.assign_pickups_resources([pickup])
 
     def assign_pickups_resources(self, pickups: Iterable[PickupEntry]) -> Self:
+        delta = []
         new_resources = self.resources.duplicate()
         for pickup in pickups:
-            new_resources.add_resource_gain(pickup.resource_gain(new_resources, force_lock=True))
+            gain = list(pickup.resource_gain(new_resources, force_lock=True))
+            new_resources.add_resource_gain(gain)
+            for resource, _ in gain:
+                if resource not in delta:
+                    delta.append(resource)
 
         return self._advance_to(
             new_resources,
+            delta,
             (),
             self.damage_state.apply_collected_resource_difference(new_resources, self.resources),
             self.patches,
@@ -237,6 +251,7 @@ class State:
 
         return self._advance_to(
             new_resources,
+            [resource for resource, _ in pickup_resources.as_resource_gain()],
             (),
             self.damage_state.apply_new_starting_resource_difference(new_resources, self.resources),
             self.patches.assign_extra_starting_pickups([pickup]),

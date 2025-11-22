@@ -28,7 +28,7 @@ from randovania.game_description.resources.search import find_resource_info_with
 from randovania.generator import reach_lib
 from randovania.generator.old_generator_reach import OldGeneratorReach
 from randovania.generator.pickup_pool import pool_creator
-from randovania.generator.reach_lib import advance_reach_with_possible_unsafe_resources
+from randovania.generator.reach_lib import advance_after_action
 from randovania.graph import world_graph
 from randovania.graph.state import State
 from randovania.graph.world_graph import WorldGraph
@@ -82,9 +82,7 @@ def run_bootstrap(
 def _create_reach_with_unsafe(
     game: GameDescription | WorldGraph, state: State, filler_config: FillerConfiguration
 ) -> GeneratorReach:
-    return reach_lib.advance_reach_with_possible_unsafe_resources(
-        reach_lib.reach_with_all_safe_resources(game, state, filler_config)
-    )
+    return reach_lib.advance_after_action(reach_lib.reach_with_all_safe_resources(game, state, filler_config))
 
 
 @pytest.mark.benchmark
@@ -128,9 +126,9 @@ def test_database_collectable(
     )
 
     reach = _create_reach_with_unsafe(graph, state, default_filler_config)
-    while list(reach_lib.collectable_resource_nodes(reach.nodes, reach)):
-        reach.act_on(next(iter(reach_lib.collectable_resource_nodes(reach.nodes, reach))))
-        reach = advance_reach_with_possible_unsafe_resources(reach)
+    while resource_nodes := reach_lib.get_collectable_resource_nodes_of_reach(reach, must_be_reachable=False):
+        reach.act_on(resource_nodes[0])
+        reach = advance_after_action(reach)
 
     # print("\nCurrent reach:")
     # print(game.region_list.node_name(reach.state.node, with_region=True))
@@ -149,7 +147,7 @@ def test_database_collectable(
         for resource, quantity in reach.state.resources.as_resource_gain()
         if quantity > 0 and resource.resource_type == ResourceType.EVENT
     }
-    assert list(reach_lib.collectable_resource_nodes(reach.nodes, reach)) == []
+    assert reach_lib.get_collectable_resource_nodes_of_reach(reach, must_be_reachable=False) == []
     assert sorted(collected_indices) == expected_pickups
     assert sorted(collected_events, key=lambda it: it.short_name) == expected_events
 
@@ -227,11 +225,13 @@ def test_basic_search_with_translator_gate(
 
     initial_state = State(
         resources,
+        {},
         (),
         EnergyTankDamageState(
             99,
             100,
             game.resource_database.get_item("EnergyTank"),
+            [],
         ),
         graph.original_to_node[node_a.node_index],
         echoes_game_patches,

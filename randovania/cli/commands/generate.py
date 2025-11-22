@@ -40,8 +40,8 @@ def common_generate_logic(args: Namespace, permalink: Permalink) -> None:
             generator.generate_and_validate_description(
                 generator_params=permalink.parameters,
                 status_update=status_update,
-                validate_after_generation=args.validate,
-                timeout=None,
+                resolve_after_generation=args.validate,
+                resolver_timeout=None,
                 attempts=attempts,
                 use_world_graph=args.use_world_graph,
             )

@@ -3,6 +3,7 @@ from __future__ import annotations
 import collections
 import copy
 import dataclasses
+import functools
 import typing
 
 from randovania.game_description.db.configurable_node import ConfigurableNode
@@ -183,13 +184,26 @@ class WorldGraph:
     dangerous_resources: frozenset[ResourceInfo]
     nodes: list[WorldGraphNode]
     node_by_pickup_index: dict[PickupIndex, WorldGraphNode]
+    node_identifier_to_node: dict[NodeIdentifier, WorldGraphNode] = dataclasses.field(init=False)
     original_to_node: dict[int, WorldGraphNode] = dataclasses.field(init=False)
     node_resource_index_offset: int
 
+    resource_to_edges: dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]] = dataclasses.field(
+        init=False, default_factory=dict
+    )
+    """A mapping of resource to a list of every node -> node edge it's used."""
+
+    resource_to_dangerous_edges: dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]] = dataclasses.field(
+        init=False, default_factory=dict
+    )
+    """A mapping of resource to a list of every node -> node edge it's used with a negate condition."""
+
     def __post_init__(self) -> None:
+        self.node_identifier_to_node = {}
         self.original_to_node = {}
 
         for node in self.nodes:
+            self.node_identifier_to_node[node.identifier] = node
             if node.database_node is not None:
                 assert node.database_node.node_index not in self.original_to_node
                 self.original_to_node[node.database_node.node_index] = node
@@ -498,6 +512,12 @@ def _should_create_front_node(database_view: GameDatabaseView, patches: GamePatc
     return len(connections_to) > 0
 
 
+@functools.cache
+def _cached_simplify(requirement: Requirement) -> Requirement:
+    """Cache globally, to help with DLR recreating world graph every time"""
+    return requirement.simplify()
+
+
 def create_graph(
     database_view: GameDatabaseView,
     patches: GamePatches,
@@ -579,14 +599,20 @@ def create_graph(
 
     context = NodeContext(patches, resources, resource_database, _WorldGraphNodeProvider(graph, database_view))
 
+    # Cache internally, to catch the same requirement being used multiple times in the same world graph
+
+    @functools.cache
     def simplify_requirement_with_as_set(requirement: Requirement) -> Requirement:
         patched = requirement.patch_requirements(damage_multiplier, context)
-        return RequirementOr(
-            [RequirementAnd(alternative.values()) for alternative in patched.as_set(context).alternatives]
-        ).simplify()
+        return _cached_simplify(
+            RequirementOr(
+                [RequirementAnd(alternative.values()) for alternative in patched.as_set(context).alternatives]
+            )
+        )
 
+    @functools.cache
     def simplify_requirement(requirement: Requirement) -> Requirement:
-        return requirement.patch_requirements(damage_multiplier, context).simplify()
+        return _cached_simplify(requirement.patch_requirements(damage_multiplier, context))
 
     for node in nodes:
         if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
@@ -617,5 +643,36 @@ def create_graph(
         )
 
     graph.dangerous_resources = frozenset(_dangerous_resources(nodes, context))
+
+    for node in nodes:
+        for connection in node.connections:
+            has_negate = set()
+            resource_in_edge = set()
+            requirement = connection.requirement
+
+            if node.is_resource_node():
+                dangerous_extra: list[Requirement] = [
+                    ResourceRequirement.simple(resource)
+                    for resource, quantity in node.resource_gain_on_collect(context)
+                    if resource in graph.dangerous_resources
+                ]
+                if dangerous_extra:
+                    dangerous_extra.append(requirement)
+                    requirement = RequirementAnd(dangerous_extra)
+
+            for individual in requirement.iterate_resource_requirements(context):
+                resource_in_edge.add(individual.resource)
+                if individual.negate:
+                    has_negate.add(individual.resource)
+
+            for resource in resource_in_edge:
+                mappings = [graph.resource_to_edges]
+                if resource in has_negate:
+                    mappings.append(graph.resource_to_dangerous_edges)
+
+                for mapping in mappings:
+                    if resource not in mapping:
+                        mapping[resource] = []
+                    mapping[resource].append((node.node_index, connection.target.node_index))
 
     return graph

@@ -9,14 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Integration with LiveSplit One for Async Races - after some configuration, starting, pausing and finishing in LiveSplit One will update your status in the Async Race.
 - Changed: The generator and resolver now use a faster algorithm. An option was added to use the old one if needed.
+- Changed: The "Verify if game is beatable after ..." option is no longer experimental.
 - Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
 - Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough, especially at high verbosity.
 - Fixed: Reduced the Windows install size by about 7 MB, as a regression from last release.
+- Fixed: Logical Pickup placement "All pickups" and expansions with negative amount are now compatible.
 - Fixed: Text such as the Seed Hash in the Async Race window is now selectable via mouse.
+- Removed: The "Consider possible unsafe resources" experimental option has been removed and is now always enabled.
+- Removed: The "Revised door solver" experimental option has been removed and is now always enabled.
 
 ### Another Metroid 2 Remake
 
 - Changed: Prime 1's Refill Pickups will now use more appropriate models.
+
+### Factorio
+
+- Fixed: Exporting from Flatpak now works.
 
 ### Metroid Dread
 
@@ -26,9 +34,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The energy requirements for the Corpius, Kraid, Silver Chozo Robot, Gold Chozo Robot and Gold Chozo Robot have been reduced, so that when using medium damage strictness the available energy is enough to satisfy these fights.
 
+##### Artaria
+
+- Changed: Minor adjustment in Arbitrary Enky Room to increase seed variety.
+- Changed: Minor adjustment related to the EMMI Zone Spinner, to increase seed variety.
+
+##### Cataris
+
+- Changed: Minor adjustment related to Kraid to increase seed variety.
+
 ### Metroid Prime
 
 - Changed: AM2R's Drop Pickups will now use more appropriate models.
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Added: Watery Hall: Going to the Missile Expansion via an Intermediate Wall Boost without Gravity Suit.
+- Changed: Watery Hall: Going to the Missile Expansion by going through Poison Water has had several changes: it is now gated behind Beginner Movement, it has slightly more accurate damage numbers now and it increases the difficulty of the tricks.
+- Changed: Watery Hall: Doing the Bomb Jump to get the Missile Expansion is now Intermediate.
+- Fixed: Watery Hall: Going to the Missile Expansion via a Bomb Jump is now possible without taking damage after Flaaghra has been defeated.
+- Fixed: Watery Hall: Requirements for dealing with the enemies in the room.
+- Fixed: Totem Access: Requirements for dealing with the enemies in the room.
+- Fixed: Tower of Light: Climbing up the tower via an Oculus dash now requires you to have a visor.
+- Removed: Tower of Light: Redundant combination of Combat Dash, L-Jump and Standable Terrain to collect the Pickup.
+- Removed: Tower of Light: Redundant combination of Combat Dash, Slope Jump and Standable Terrain to collect the Pickup.
+
+##### Tallon Overworld
+
+- Added: Alcove: Escaping the pit with a Beginner Wallboost.
+
+##### Chozo Ruins
+
+- Changed: Revised the requirements for fighting Chozo Ghosts and made them consistent. Fighting multiple of them without Charge Beam is now Intermediate Combat, fighting a single one is still Beginner Combat.
+
+##### Phazon Mines
+
+- Fixed: Killing Elite Pirates on Hard Mode now requires Missiles instead of Power Beams.
+- Changed: Killing Elite Pirates with Beginner Combat but now requires Charge Beam or Plasma Beam, but less health.
 
 ### Metroid: Samus Returns
 
