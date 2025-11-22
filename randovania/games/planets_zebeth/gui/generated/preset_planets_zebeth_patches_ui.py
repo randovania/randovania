@@ -103,6 +103,6 @@ class Ui_PresetPlanetsZebethPatches(object):
         self.open_missile_doors_with_one_missile_check.setText(QCoreApplication.translate("PresetPlanetsZebethPatches", u"Open Missile doors with one Missile", None))
         self.open_missile_doors_with_one_missile_label.setText(QCoreApplication.translate("PresetPlanetsZebethPatches", u"With this option enabled, only one missile is required to open red doors instead of 5.", None))
         self.allow_downward_shots_check.setText(QCoreApplication.translate("PresetPlanetsZebethPatches", u"Allow downward shots", None))
-        self.allow_downward_shots_label.setText(QCoreApplication.translate("PresetPlanetsZebethPatches", u"Allows the player to shoot below.<br><span style=\" font-weight:700;\">Warning :</span> This isn't in logic yet.", None))
+        self.allow_downward_shots_label.setText(QCoreApplication.translate("PresetPlanetsZebethPatches", u"Allows the player to shoot below.", None))
     # retranslateUi
 
