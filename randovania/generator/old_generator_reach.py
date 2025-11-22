@@ -89,9 +89,9 @@ def _new_resources_including_damage(state: State) -> set[ResourceInfo]:
         for damage_res in state.resource_database.damage:
             new_resources.add(damage_res)
     else:
-        for damage_res, reductions in state.resource_database.damage_reductions.items():
+        for res, reductions in state.resource_database.damage_reductions.items():
             if any(reduction.inventory_item in new_resources for reduction in reductions):
-                new_resources.add(damage_res)
+                new_resources.add(res)
 
     return new_resources
 

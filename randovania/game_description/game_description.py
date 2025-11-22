@@ -278,7 +278,9 @@ class GameDescription(GameDatabaseView):
 
     @override
     def create_resource_collection(self) -> ResourceCollection:
-        return ResourceCollection(self.resource_database, len(self.resource_database.resource_by_index))
+        return ResourceCollection.with_resource_count(
+            self.resource_database, len(self.resource_database.resource_by_index)
+        )
 
     @override
     def default_starting_location(self) -> NodeIdentifier:

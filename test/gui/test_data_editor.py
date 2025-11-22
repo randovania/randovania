@@ -196,7 +196,12 @@ def test_ui_patch_and_simplify_trivial_in_or(echoes_resource_database):
                 ],
                 comment="COM",
             ),
-            NodeContext(None, ResourceCollection(), echoes_resource_database, None),
+            NodeContext(
+                None,
+                ResourceCollection.with_resource_count(echoes_resource_database, 0),
+                echoes_resource_database,
+                None,
+            ),
         )
         == Requirement.trivial()
     )
@@ -213,7 +218,12 @@ def test_ui_patch_and_simplify_impossible_in_and(echoes_resource_database):
                 ],
                 comment="COM",
             ),
-            NodeContext(None, ResourceCollection(), echoes_resource_database, None),
+            NodeContext(
+                None,
+                ResourceCollection.with_resource_count(echoes_resource_database, 0),
+                echoes_resource_database,
+                None,
+            ),
         )
         == Requirement.impossible()
     )
@@ -245,7 +255,7 @@ def test_ui_patch_and_simplify_template(echoes_resource_database, echoes_game_de
         return NodeContext(None, collection, db, None)
 
     assert _ui_patch_and_simplify(
-        RequirementTemplate("Use Screw Attack (No Space Jump)"), context(ResourceCollection())
+        RequirementTemplate("Use Screw Attack (No Space Jump)"), context(ResourceCollection.with_resource_count(db, 0))
     ) == RequirementTemplate("Use Screw Attack (No Space Jump)")
 
     col = echoes_game_description.create_resource_collection()

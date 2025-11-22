@@ -90,7 +90,7 @@ class ResourceDatabaseView(ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection) -> float:
+    def get_damage_reduction(self, resource: ResourceInfo, current_resources: ResourceCollection) -> float:
         """
         Gets the damage reduction for given resource with the given current resources.
         """
@@ -157,7 +157,7 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
         return self._original.get_damage(short_name)
 
     @override
-    def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection) -> float:
+    def get_damage_reduction(self, resource: ResourceInfo, current_resources: ResourceCollection) -> float:
         return self._original.get_damage_reduction(resource, current_resources)
 
     @override

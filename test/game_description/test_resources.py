@@ -68,7 +68,7 @@ def test_add_resource_gain_to_current_resources_convert(blank_resource_db, blank
         resource_lock=ResourceLock(resource_b, resource_b, resource_a),
         unlocks_resource=True,
     )
-    current_resources = ResourceCollection()
+    current_resources = ResourceCollection.with_resource_count(blank_resource_db, 0)
     current_resources.add_resource_gain([(resource_a, 5)])
 
     # Run
@@ -116,7 +116,7 @@ def test_resources_for_unsatisfied_damage_as_interesting(echoes_resource_databas
     )
     context = NodeContext(
         MagicMock(),
-        ResourceCollection(),
+        ResourceCollection.with_resource_count(db, 0),
         db,
         MagicMock(),
     )
@@ -148,7 +148,7 @@ def test_resources_for_satisfied_damage_as_interesting(echoes_resource_database)
 
     context = NodeContext(
         MagicMock(),
-        ResourceCollection(),
+        ResourceCollection.with_resource_count(db, 0),
         db,
         MagicMock(),
     )

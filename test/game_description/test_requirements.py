@@ -51,14 +51,17 @@ def database() -> ResourceDatabase:
 def _empty_context():
     return NodeContext(
         MagicMock(),
-        ResourceCollection(),
+        ResourceCollection.with_resource_count(
+            None,  # type: ignore[arg-type]
+            0,
+        ),
         MagicMock(),
         MagicMock(),
     )
 
 
 def _ctx_for(db: ResourceDatabase, *args: ResourceInfo):
-    collection = ResourceCollection(db, len(db.resource_by_index))
+    collection = ResourceCollection.with_resource_count(db, len(db.resource_by_index))
     collection.add_resource_gain((it, 1) for it in args)
 
     return NodeContext(
