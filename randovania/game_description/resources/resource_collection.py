@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import copy
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 if TYPE_CHECKING:
-    from randovania.game_description.game_database_view import GameDatabaseView
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
 
 
@@ -15,25 +15,26 @@ class ResourceCollection:
         "_existing_resources",
         "add_self_as_requirement_to_resources",
         "_damage_reduction_cache",
+        "_resource_database",
     )
     resource_bitmask: int
     _resource_array: list[int]
     _existing_resources: dict[int, ResourceInfo]
     add_self_as_requirement_to_resources: bool
     _damage_reduction_cache: dict[int, float] | None
+    _resource_database: ResourceDatabaseView
 
-    def __init__(self) -> None:
+    def __init__(self, resource_database: ResourceDatabaseView, resource_count: int = 1) -> None:
         self.resource_bitmask = 0
-        self._resource_array = [0]
+        self._resource_array = [0] * resource_count
         self._existing_resources = {}
         self.add_self_as_requirement_to_resources = False
         self._damage_reduction_cache = None
+        self._resource_database = resource_database
 
     @classmethod
-    def with_resource_count(cls, count: int) -> ResourceCollection:
-        result = cls()
-        result._resource_array = [0] * count
-        return result
+    def with_resource_count(cls, resource_database: ResourceDatabaseView, count: int) -> Self:
+        return cls(resource_database, count)
 
     def _resize_array_to(self, size: int) -> None:
         self._resource_array.extend(0 for _ in range(len(self._resource_array), size + 1))
@@ -94,13 +95,13 @@ class ResourceCollection:
             self.resource_bitmask -= mask
 
     @classmethod
-    def from_dict(cls, view: GameDatabaseView, resources: dict[ResourceInfo, int]) -> ResourceCollection:
+    def from_dict(cls, view: ResourceDatabaseView, resources: dict[ResourceInfo, int]) -> ResourceCollection:
         result = view.create_resource_collection()
         result.add_resource_gain(resources.items())
         return result
 
     @classmethod
-    def from_resource_gain(cls, game: GameDatabaseView, resource_gain: ResourceGain) -> ResourceCollection:
+    def from_resource_gain(cls, game: ResourceDatabaseView, resource_gain: ResourceGain) -> ResourceCollection:
         result = game.create_resource_collection()
         result.add_resource_gain(resource_gain)
         return result
@@ -145,22 +146,24 @@ class ResourceCollection:
             self.resource_bitmask -= mask
 
     def duplicate(self) -> ResourceCollection:
-        result = ResourceCollection()
+        result = ResourceCollection(self._resource_database)
         result._existing_resources.update(self._existing_resources)
         result._resource_array = copy.copy(self._resource_array)
         result.resource_bitmask = self.resource_bitmask
         result.add_self_as_requirement_to_resources = self.add_self_as_requirement_to_resources
         return result
 
-    def get_damage_reduction_cache(self, resource: ResourceInfo) -> float | None:
-        if self._damage_reduction_cache is not None:
-            return self._damage_reduction_cache.get(resource.resource_index)
-        return None
-
-    def add_damage_reduction_cache(self, resource: ResourceInfo, multiplier: float) -> None:
+    def get_damage_reduction(self, resource: ResourceInfo) -> float:
         if self._damage_reduction_cache is None:
             self._damage_reduction_cache = {}
-        self._damage_reduction_cache[resource.resource_index] = multiplier
+
+        reduction: float | None = self._damage_reduction_cache.get(resource.resource_index)
+
+        if reduction is None:
+            reduction = self._resource_database.get_damage_reduction(resource, self)
+            self._damage_reduction_cache[resource.resource_index] = reduction
+
+        return reduction
 
     def __copy__(self) -> ResourceCollection:
         return self.duplicate()

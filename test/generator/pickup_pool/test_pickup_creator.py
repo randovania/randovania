@@ -307,9 +307,7 @@ def test_create_ammo_expansion(
 
 
 @pytest.mark.parametrize("include_before", [False, True])
-def test_missile_expansion_before_launcher(
-    include_before, echoes_pickup_database, echoes_resource_database, echoes_game_description
-):
+def test_missile_expansion_before_launcher(include_before, echoes_pickup_database, echoes_resource_database):
     # Setup
     ammo = echoes_pickup_database.ammo_pickups["Missile Expansion"]
     standard_pickup = echoes_pickup_database.standard_pickups["Missile Launcher"]
@@ -328,7 +326,7 @@ def test_missile_expansion_before_launcher(
     def to_dict(col: ResourceCollection):
         return dict(col.as_resource_gain())
 
-    collection = echoes_game_description.create_resource_collection()
+    collection = echoes_resource_database.create_resource_collection()
 
     if include_before:
         # Ammo Expansion

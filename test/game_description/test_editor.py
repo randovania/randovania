@@ -167,5 +167,5 @@ def test_rename_lock_used_in_node_requirement(game_editor: Editor) -> None:
 
     # Assert
     template = game_editor.game.resource_database.requirement_template["Special Requirement Template"]
-    context = game_editor.game.create_node_context(game_editor.game.create_resource_collection())
+    context = game_editor.game.create_node_context(game_editor.game.resource_database.create_resource_collection())
     assert list(template.requirement.iterate_resource_requirements(context)) != []

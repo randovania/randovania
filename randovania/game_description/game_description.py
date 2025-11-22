@@ -14,7 +14,6 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
 from randovania.game_description.requirements.resource_requirement import DamageResourceRequirement
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -33,6 +32,7 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.resolver.damage_state import DamageState
@@ -177,7 +177,7 @@ class GameDescription(GameDatabaseView):
     @property
     def dangerous_resources(self) -> frozenset[ResourceInfo]:
         if self._dangerous_resources is None:
-            context = self.create_node_context(self.create_resource_collection())
+            context = self.create_node_context(self.resource_database.create_resource_collection())
             first = _calculate_dangerous_resources_in_areas(context)
             second = _calculate_dangerous_resources_in_db(self.dock_weakness_database, context)
             self._dangerous_resources = frozenset(first) | frozenset(second)
@@ -189,7 +189,7 @@ class GameDescription(GameDatabaseView):
             return self._used_trick_levels
 
         result = collections.defaultdict(set)
-        context = self.create_node_context(self.create_resource_collection())
+        context = self.create_node_context(self.resource_database.create_resource_collection())
 
         def process(req: Requirement) -> None:
             for resource_requirement in req.iterate_resource_requirements(context):
@@ -275,10 +275,6 @@ class GameDescription(GameDatabaseView):
     @override
     def assert_pickup_index_exists(self, index: PickupIndex) -> None:
         self.region_list.node_from_pickup_index(index)
-
-    @override
-    def create_resource_collection(self) -> ResourceCollection:
-        return ResourceCollection.with_resource_count(len(self.resource_database.resource_by_index))
 
     @override
     def default_starting_location(self) -> NodeIdentifier:

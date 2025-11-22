@@ -30,7 +30,7 @@ class DebugRemoteConnector(RemoteConnector):
         self._last_inventory_event = Inventory({})
 
         self.messages = []
-        self.item_collection = game.game_description.create_resource_collection()
+        self.item_collection = game.game_description.resource_database.create_resource_collection()
         self._last_remote_pickup = 0
 
     @property

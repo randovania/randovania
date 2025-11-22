@@ -38,7 +38,7 @@ layer_name_re = re.compile(r"[a-zA-Z0-9 _-]+")
 def _create_node_context(game: GameDescription) -> NodeContext:
     return NodeContext(
         patches=GamePatches.create_from_game(game, 0, typing.cast("BaseConfiguration", None)),
-        current_resources=game.create_resource_collection(),
+        current_resources=game.resource_database.create_resource_collection(),
         database=game.resource_database,
         node_provider=game.region_list,
     )
@@ -179,7 +179,7 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         # FIXME: cannot implement this for PickupNodes because their resource gain depends on GamePatches
         if isinstance(node, EventNode):
             # if this node would satisfy the victory condition, it does not need outgoing connections
-            current = game.create_resource_collection()
+            current = game.resource_database.create_resource_collection()
             current.set_resource(node.event, 1)
             if game.victory_condition.satisfied(game.create_node_context(current), 0):
                 continue

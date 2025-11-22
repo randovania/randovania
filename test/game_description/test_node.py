@@ -43,8 +43,8 @@ def test_hint_node_requirements_to_leave(hint_node, empty_patches):
     to_leave = node.requirement_to_leave(ctx({}))
 
     # Assert
-    rc2 = ResourceCollection.from_resource_gain(empty_patches.game, [])
-    rc3 = ResourceCollection.from_resource_gain(empty_patches.game, [(translator, 1)])
+    rc2 = ResourceCollection.from_resource_gain(db, [])
+    rc3 = ResourceCollection.from_resource_gain(db, [(translator, 1)])
 
     assert to_leave.satisfied(ctx(rc2), 99) != has_translator
     assert to_leave.satisfied(ctx(rc3), 99)
@@ -57,7 +57,7 @@ def test_hint_node_should_collect(hint_node, empty_patches):
     node_provider = MagicMock()
 
     def ctx(*args: ResourceInfo):
-        resources = ResourceCollection.from_dict(empty_patches.game, dict.fromkeys(args, 1))
+        resources = ResourceCollection.from_dict(db, dict.fromkeys(args, 1))
         return NodeContext(empty_patches, resources, db, node_provider)
 
     assert node.requirement_to_collect.satisfied(ctx(), 0) != has_translator
@@ -75,7 +75,7 @@ def test_hint_node_resource_gain_on_collect(hint_node, empty_patches):
     # Setup
     db = empty_patches.game.resource_database
     node = hint_node[-1]
-    context = NodeContext(empty_patches, empty_patches.game.create_resource_collection(), db, MagicMock())
+    context = NodeContext(empty_patches, db.create_resource_collection(), db, MagicMock())
 
     # Run
     gain = node.resource_gain_on_collect(context)

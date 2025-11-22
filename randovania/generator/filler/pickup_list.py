@@ -137,7 +137,6 @@ def pickups_to_solve_list(
 ) -> list[PickupEntry] | None:
     pickups = []
 
-    game = state.patches.game
     context = dataclasses.replace(state.node_context(), current_resources=state.resources.duplicate())
     pickups_for_this = list(pickup_pool)
 
@@ -153,9 +152,9 @@ def pickups_to_solve_list(
         # Create another copy of the list, so we can remove elements while iterating
         for pickup in list(pickups_for_this):
             new_resources = ResourceCollection.from_resource_gain(
-                game, pickup.resource_gain(context.current_resources, force_lock=True)
+                state.resource_database, pickup.resource_gain(context.current_resources, force_lock=True)
             )
-            pickup_progression = ResourceCollection.from_resource_gain(game, pickup.progression)
+            pickup_progression = ResourceCollection.from_resource_gain(state.resource_database, pickup.progression)
             if new_resources[individual.resource] + pickup_progression[individual.resource] > 0:
                 pickups.append(pickup)
                 pickups_for_this.remove(pickup)

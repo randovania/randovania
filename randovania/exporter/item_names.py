@@ -71,7 +71,7 @@ def additional_starting_pickups(
 def additional_starting_items(
     layout_configuration: BaseConfiguration, game: GameDatabaseView, starting_items: ResourceCollection
 ) -> list[str]:
-    initial_items = game.create_resource_collection()
+    initial_items = game.get_resource_database_view().create_resource_collection()
     for pickup in calculate_pool_results(layout_configuration, game).starting:
         initial_items.add_resource_gain(pickup.resource_gain(initial_items))
 

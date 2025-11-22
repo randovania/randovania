@@ -305,7 +305,7 @@ class PrimeRemoteConnector(RemoteConnector):
         Returns a displayable item name and its resources for a PickupEntry based on the inventory.
         """
 
-        inventory_resources = self.game.create_resource_collection()
+        inventory_resources = self.game.resource_database.create_resource_collection()
         inventory_resources.add_resource_gain(inventory.as_resource_gain())
         conditional = pickup.conditional_for_resources(inventory_resources)
         if conditional.name is not None:
@@ -313,7 +313,7 @@ class PrimeRemoteConnector(RemoteConnector):
         else:
             item_name = pickup.name
 
-        resources_to_give = self.game.create_resource_collection()
+        resources_to_give = self.game.resource_database.create_resource_collection()
 
         if (
             pickup.respects_lock

@@ -187,7 +187,7 @@ class MercuryConnector(RemoteConnector):
         pickup: PickupEntry,
         inventory: Inventory,
     ) -> tuple[str, list[list[dict]]]:
-        inventory_resources = view.create_resource_collection()
+        inventory_resources = view.get_resource_database_view().create_resource_collection()
         inventory_resources.add_resource_gain(inventory.as_resource_gain())
         conditional = pickup.conditional_for_resources(inventory_resources)
         if conditional.name is not None:

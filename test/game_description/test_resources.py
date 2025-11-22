@@ -40,8 +40,8 @@ def test_add_resources_into_another(blank_game_description, a, b, result):
     b = wrap(blank_resource_db, b)
     result = wrap(blank_resource_db, result)
 
-    ac = ResourceCollection.from_dict(blank_game_description, a)
-    bc = ResourceCollection.from_dict(blank_game_description, b)
+    ac = ResourceCollection.from_dict(blank_resource_db, a)
+    bc = ResourceCollection.from_dict(blank_resource_db, b)
 
     ac.add_resource_gain(bc.as_resource_gain())
 
@@ -68,7 +68,7 @@ def test_add_resource_gain_to_current_resources_convert(blank_resource_db, blank
         resource_lock=ResourceLock(resource_b, resource_b, resource_a),
         unlocks_resource=True,
     )
-    current_resources = ResourceCollection()
+    current_resources = ResourceCollection.with_resource_count(blank_resource_db, 0)
     current_resources.add_resource_gain([(resource_a, 5)])
 
     # Run
@@ -87,13 +87,13 @@ def test_add_resource_gain_to_current_resources_convert(blank_resource_db, blank
         ([("Ammo", 5), ("Ammo", -5)], {"Ammo": 0}),
     ],
 )
-def test_convert_resource_gain_to_current_resources(blank_game_description, resource_gain, expected):
+def test_convert_resource_gain_to_current_resources(blank_resource_db, resource_gain, expected):
     # Setup
-    resource_gain = wrap(blank_game_description.resource_database, resource_gain)
-    expected = wrap(blank_game_description.resource_database, expected)
+    resource_gain = wrap(blank_resource_db, resource_gain)
+    expected = wrap(blank_resource_db, expected)
 
     # Run
-    result = ResourceCollection.from_resource_gain(blank_game_description, resource_gain)
+    result = ResourceCollection.from_resource_gain(blank_resource_db, resource_gain)
 
     # Assert
     assert dict(result.as_resource_gain()) == expected
@@ -116,7 +116,7 @@ def test_resources_for_unsatisfied_damage_as_interesting(echoes_resource_databas
     )
     context = NodeContext(
         MagicMock(),
-        ResourceCollection(),
+        ResourceCollection.with_resource_count(db, 0),
         db,
         MagicMock(),
     )
@@ -148,7 +148,7 @@ def test_resources_for_satisfied_damage_as_interesting(echoes_resource_database)
 
     context = NodeContext(
         MagicMock(),
-        ResourceCollection(),
+        ResourceCollection.with_resource_count(db, 0),
         db,
         MagicMock(),
     )
