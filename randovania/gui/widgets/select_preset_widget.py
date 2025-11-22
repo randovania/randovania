@@ -24,6 +24,7 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.options import Options
+    from randovania.layout.preset import Preset
 
 
 class PresetMenu(QtWidgets.QMenu):
@@ -124,6 +125,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         # Signals
         self.create_preset_tree.itemSelectionChanged.connect(self._on_select_preset)
         self.create_preset_tree.customContextMenuRequested.connect(self._on_tree_context_menu)
+        self.create_new_preset_button.clicked.connect(self._on_create_new_preset)
 
         self._preset_menu.action_customize.triggered.connect(self._on_customize_preset)
         self._preset_menu.action_delete.triggered.connect(self._on_delete_preset)
@@ -171,22 +173,12 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         self._update_preset_tree_items()
         self.create_preset_tree.select_preset(preset)
 
-    @asyncSlot()
-    async def _on_customize_preset(self):
+    async def _customize_preset_with_dialog(self, preset: Preset, parent_uuid: uuid.UUID | None) -> None:
         if self._logic_settings_window is not None:
             self._logic_settings_window.raise_()
             return
 
-        monitoring.metrics.incr("gui_preset_customize_clicked", tags={"game": self._game.value})
-
-        old_preset = self._current_preset_data.get_preset()
-        if self._current_preset_data.is_included_preset:
-            parent_uuid = old_preset.uuid
-            old_preset = old_preset.fork()
-        else:
-            parent_uuid = self._options.get_parent_for_preset(old_preset.uuid)
-
-        editor = PresetEditor(old_preset, self._options)
+        editor = PresetEditor(preset, self._options)
         self._logic_settings_window = CustomizePresetDialog(self._window_manager, editor)
         self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
         editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
@@ -200,6 +192,23 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
                 VersionedPreset.with_preset(editor.create_custom_preset_with()),
                 parent=parent_uuid,
             )
+
+    @asyncSlot()
+    async def _on_customize_preset(self) -> None:
+        if self._current_preset_data is None:
+            return
+
+        monitoring.metrics.incr("gui_preset_customize_clicked", tags={"game": self._game.value})
+
+        old_preset = self._current_preset_data.get_preset()
+        parent_uuid: uuid.UUID | None
+        if self._current_preset_data.is_included_preset:
+            parent_uuid = old_preset.uuid
+            old_preset = old_preset.fork()
+        else:
+            parent_uuid = self._options.get_parent_for_preset(old_preset.uuid)
+
+        await self._customize_preset_with_dialog(old_preset, parent_uuid)
 
     @asyncSlot()
     async def _on_delete_preset(self):
@@ -253,6 +262,15 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         old_preset = self._current_preset_data
         new_preset = VersionedPreset.with_preset(old_preset.get_preset().fork())
         self._add_new_preset(new_preset, parent=old_preset.uuid)
+
+    @asyncSlot()
+    async def _on_create_new_preset(self) -> None:
+        monitoring.metrics.incr("gui_preset_create_new_clicked", tags={"game": self._game.value})
+
+        starter_preset = self._window_manager.preset_manager.default_preset_for_game(self._game)
+        new_preset = starter_preset.get_preset().fork()
+
+        await self._customize_preset_with_dialog(new_preset, None)
 
     @asyncSlot()
     async def _on_open_map_tracker_for_preset(self):

@@ -16,8 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractItemView, QApplication, QGridLayout, QHeaderView,
-    QLabel, QScrollArea, QSizePolicy, QTreeWidgetItem,
-    QVBoxLayout, QWidget)
+    QLabel, QPushButton, QScrollArea, QSizePolicy,
+    QTreeWidgetItem, QVBoxLayout, QWidget)
 
 from randovania.gui.widgets.preset_tree_widget import PresetTreeWidget
 
@@ -31,6 +31,11 @@ class Ui_SelectPresetWidget(object):
         self.create_layout.setContentsMargins(11, 11, 11, 11)
         self.create_layout.setObjectName(u"create_layout")
         self.create_layout.setContentsMargins(0, 0, 0, 0)
+        self.create_new_preset_button = QPushButton(SelectPresetWidget)
+        self.create_new_preset_button.setObjectName(u"create_new_preset_button")
+
+        self.create_layout.addWidget(self.create_new_preset_button, 0, 0, 1, 2)
+
         self.create_scroll_area = QScrollArea(SelectPresetWidget)
         self.create_scroll_area.setObjectName(u"create_scroll_area")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
@@ -81,6 +86,7 @@ class Ui_SelectPresetWidget(object):
     # setupUi
 
     def retranslateUi(self, SelectPresetWidget):
+        self.create_new_preset_button.setText(QCoreApplication.translate("SelectPresetWidget", u"\uff0b Create New Preset", None))
         self.create_preset_description.setText(QCoreApplication.translate("SelectPresetWidget", u"<html><head/><body><p>This content should have been replaced by code.</p></body></html>", None))
         ___qtreewidgetitem = self.create_preset_tree.headerItem()
         ___qtreewidgetitem.setText(0, QCoreApplication.translate("SelectPresetWidget", u"Presets (Right click for actions)", None));
