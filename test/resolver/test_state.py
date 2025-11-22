@@ -23,12 +23,12 @@ def test_collected_pickup_indices(state_game_data, empty_patches, blank_world_gr
 
     context = NodeContext(
         empty_patches,
-        empty_patches.game.create_resource_collection(),
+        empty_patches.game.resource_database.create_resource_collection(),
         empty_patches.game.resource_database,
         empty_patches.game.region_list,
     )
     resources = ResourceCollection.from_dict(
-        empty_patches.game, {db.item[0]: 5, pickup_nodes[0].resource(context): 1, pickup_nodes[1].resource(context): 1}
+        db, {db.item[0]: 5, pickup_nodes[0].resource(context): 1, pickup_nodes[1].resource(context): 1}
     )
     s = state.State(
         resources,
@@ -54,7 +54,7 @@ def test_add_pickup_to_state(state_game_data, empty_patches, generic_pickup_cate
     db = empty_patches.game.resource_database
     starting_node = empty_patches.game.region_list.node_by_identifier(empty_patches.game.starting_location)
     s = state.State(
-        empty_patches.game.create_resource_collection(),
+        db.create_resource_collection(),
         {},
         (),
         state_game_data,
@@ -85,7 +85,7 @@ def test_add_pickup_to_state(state_game_data, empty_patches, generic_pickup_cate
 
     # Assert
     assert s.resources == ResourceCollection.from_dict(
-        empty_patches.game,
+        db,
         {
             resource_a: 1,
             resource_b: 1,
@@ -100,7 +100,7 @@ def test_assign_pickup_to_starting_items(
     db = empty_patches.game.resource_database
     starting_node = empty_patches.game.region_list.node_by_identifier(empty_patches.game.starting_location)
     starting = state.State(
-        empty_patches.game.create_resource_collection(),
+        db.create_resource_collection(),
         {},
         (),
         state_game_data,
@@ -130,7 +130,5 @@ def test_assign_pickup_to_starting_items(
 
     # Assert
     assert final.patches.starting_equipment == [p]
-    assert final.patches.starting_resources() == ResourceCollection.from_dict(
-        empty_patches.game, {resource_a: 5, resource_b: 0}
-    )
-    assert final.resources == ResourceCollection.from_dict(empty_patches.game, {resource_a: 5, resource_b: 0})
+    assert final.patches.starting_resources() == ResourceCollection.from_dict(db, {resource_a: 5, resource_b: 0})
+    assert final.resources == ResourceCollection.from_dict(db, {resource_a: 5, resource_b: 0})

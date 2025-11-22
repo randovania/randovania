@@ -82,11 +82,9 @@ def _add_pickup_to_inventory(inventory: bytes, pickup: PickupEntry, game: Randov
     if isinstance(decoded_or_err, construct.ConstructError):
         return inventory
 
-    game_view = game.game_description
-    collection = game_view.create_resource_collection()
-    collection.add_resource_gain(
-        (game_view.get_resource_database_view().get_item(name), quantity) for name, quantity in decoded_or_err.items()
-    )
+    database_view = game.game_description.get_resource_database_view()
+    collection = database_view.create_resource_collection()
+    collection.add_resource_gain((database_view.get_item(name), quantity) for name, quantity in decoded_or_err.items())
     collection.add_resource_gain(pickup.resource_gain(collection))
 
     return remote_inventory.inventory_to_encoded_remote(Inventory.from_collection(collection))

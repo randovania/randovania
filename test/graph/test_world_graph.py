@@ -7,7 +7,7 @@ def test_create_graph(
     blank_game_description,
     blank_game_patches,
 ) -> None:
-    starting_resources = blank_game_description.create_resource_collection()
+    starting_resources = blank_game_description.resource_database.create_resource_collection()
     graph = world_graph.create_graph(
         blank_game_description,
         blank_game_patches,

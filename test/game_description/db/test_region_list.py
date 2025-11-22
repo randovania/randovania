@@ -94,7 +94,7 @@ def test_connections_from_dock_blast_shield(empty_patches: GamePatches):
 
     context = NodeContext(
         patches=patches,
-        current_resources=patches.game.create_resource_collection(),
+        current_resources=patches.game.resource_database.create_resource_collection(),
         database=patches.game.resource_database,
         node_provider=region_list,
     )

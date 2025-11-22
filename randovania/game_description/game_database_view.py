@@ -90,7 +90,7 @@ class ResourceDatabaseView(ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection) -> float:
+    def get_damage_reduction(self, resource: ResourceInfo, current_resources: ResourceCollection) -> float:
         """
         Gets the damage reduction for given resource with the given current resources.
         """
@@ -117,6 +117,12 @@ class ResourceDatabaseView(ABC):
         Gets a model with the given name.
         """
         raise NotImplementedError
+
+    @abc.abstractmethod
+    def create_resource_collection(self) -> ResourceCollection:
+        """
+        Creates a new ResourceCollection
+        """
 
 
 class ResourceDatabaseViewProxy(ResourceDatabaseView):
@@ -157,7 +163,7 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
         return self._original.get_damage(short_name)
 
     @override
-    def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection) -> float:
+    def get_damage_reduction(self, resource: ResourceInfo, current_resources: ResourceCollection) -> float:
         return self._original.get_damage_reduction(resource, current_resources)
 
     @override
@@ -171,6 +177,10 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
     @override
     def get_pickup_model(self, name: str) -> PickupModel:
         return self._original.get_pickup_model(name)
+
+    @override
+    def create_resource_collection(self) -> ResourceCollection:
+        return self._original.create_resource_collection()
 
 
 class GameDatabaseView(ABC):
@@ -232,12 +242,6 @@ class GameDatabaseView(ABC):
     def assert_pickup_index_exists(self, index: PickupIndex) -> None:
         """
         If the PickupIndex does not exist, this function raises an Exception
-        """
-
-    @abc.abstractmethod
-    def create_resource_collection(self) -> ResourceCollection:
-        """
-        Creates a new ResourceCollection
         """
 
     @abc.abstractmethod
@@ -337,10 +341,6 @@ class GameDatabaseViewProxy(GameDatabaseView):
     @override
     def assert_pickup_index_exists(self, index: PickupIndex) -> None:
         return self._original.assert_pickup_index_exists(index)
-
-    @override
-    def create_resource_collection(self) -> ResourceCollection:
-        return self._original.create_resource_collection()
 
     @override
     def default_starting_location(self) -> NodeIdentifier:

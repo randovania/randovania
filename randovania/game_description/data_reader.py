@@ -120,7 +120,7 @@ def read_damage_reductions(data: list[dict], items: list[ItemResourceInfo]) -> t
 def read_resource_reductions_dict(
     data: list[dict],
     db: ResourceDatabase,
-) -> dict[SimpleResourceInfo, list[DamageReduction]]:
+) -> dict[ResourceInfo, list[DamageReduction]]:
     return {db.get_damage(item["name"]): list(read_damage_reductions(item["reductions"], db.item)) for item in data}
 
 

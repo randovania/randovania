@@ -222,7 +222,7 @@ class State:
 
     def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> Self:
         pickup_resources = ResourceCollection.from_resource_gain(
-            self.patches.game, pickup.resource_gain(self.resources, force_lock=True)
+            self.resource_database, pickup.resource_gain(self.resources, force_lock=True)
         )
 
         new_resources = self.resources.duplicate()

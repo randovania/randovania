@@ -80,7 +80,7 @@ def _validate_pickup_pool_size(
 async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
     new_pickups = []
 
-    collection = patches.game.create_resource_collection()
+    collection = patches.game.get_resource_database_view().create_resource_collection()
     for pickup in itertools.chain(pool.starting, pool.to_place):
         if all(quantity >= 0 for _, quantity in pickup.resource_gain(collection)):
             new_pickups.append(pickup)

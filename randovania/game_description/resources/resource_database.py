@@ -7,6 +7,7 @@ from typing import override
 from randovania.game_description.game_database_view import ResourceDatabaseView
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources import search
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
@@ -16,7 +17,6 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.damage_reduction import DamageReduction
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -52,7 +52,7 @@ class ResourceDatabase(ResourceDatabaseView):
     version: list[SimpleResourceInfo]
     misc: list[SimpleResourceInfo]
     requirement_template: dict[str, NamedRequirementTemplate]
-    damage_reductions: dict[SimpleResourceInfo, list[DamageReduction]]
+    damage_reductions: dict[ResourceInfo, list[DamageReduction]]
     energy_tank_item: ItemResourceInfo
     base_damage_reduction: Callable[[ResourceDatabaseView, ResourceCollection], float] = default_base_damage_reduction
     resource_by_index: list[ResourceInfo | None] = dataclasses.field(default_factory=list)
@@ -143,11 +143,7 @@ class ResourceDatabase(ResourceDatabaseView):
     def energy_tank(self) -> ItemResourceInfo:
         return self.energy_tank_item
 
-    def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection) -> float:
-        cached_result = current_resources.get_damage_reduction_cache(resource)
-        if cached_result is not None:
-            return cached_result
-
+    def get_damage_reduction(self, resource: ResourceInfo, current_resources: ResourceCollection) -> float:
         base_reduction = self.base_damage_reduction(self, current_resources)
 
         damage_multiplier = 1.0
@@ -155,10 +151,11 @@ class ResourceDatabase(ResourceDatabaseView):
             if reduction.inventory_item is None or current_resources[reduction.inventory_item] > 0:
                 damage_multiplier = min(damage_multiplier, reduction.damage_multiplier)
 
-        damage_reduction = damage_multiplier * base_reduction
-        current_resources.add_damage_reduction_cache(resource, damage_reduction)
-
-        return damage_reduction
+        return damage_multiplier * base_reduction
 
     def first_unused_resource_index(self) -> int:
         return len(self.resource_by_index)
+
+    @override
+    def create_resource_collection(self) -> ResourceCollection:
+        return ResourceCollection.with_resource_count(self, len(self.resource_by_index))

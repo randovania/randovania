@@ -209,7 +209,7 @@ def test_basic_search_with_translator_gate(
 
     region_list.configurable_nodes[translator_identif] = ResourceRequirement.simple(scan_visor)
 
-    resources = ResourceCollection.from_dict(echoes_game_description, {scan_visor: 1 if has_translator else 0})
+    resources = ResourceCollection.from_dict(echoes_resource_database, {scan_visor: 1 if has_translator else 0})
     graph = world_graph.create_graph(
         game,
         GamePatches.create_from_game(game, 0, None),  # type: ignore[arg-type]

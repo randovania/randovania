@@ -118,14 +118,16 @@ def test_requirement_lists_without_satisfied_resources(
 
 
 def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
+    resource_db = echoes_game_description.get_resource_database_view()
+
     def item(name):
-        return search.find_resource_info_with_long_name(echoes_game_description.resource_database.item, name)
+        return resource_db.get_item_by_display_name(name)
 
     mock_req_lists: MagicMock = mocker.patch(
         "randovania.generator.filler.pickup_list._requirement_lists_without_satisfied_resources"
     )
 
-    collection = echoes_game_description.create_resource_collection()
+    collection = resource_db.create_resource_collection()
     pickups_left: list[PickupEntry] = []
     reach = MagicMock()
     reach.state.node_context.return_value = NodeContext(
@@ -193,7 +195,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
         ]
     )
 
-    resources = echoes_game_description.create_resource_collection()
+    resources = db.create_resource_collection()
     resources.set_resource(db.get_item("MissileLauncher"), 1)
     resources.set_resource(db.get_item("Missile"), 5)
 
