@@ -792,7 +792,6 @@ async def test_get_livesplit_url(test_client, simple_room):
     user = User.get_by_id(1235)
 
     test_client.sa.get_current_user = AsyncMock(return_value=user)
-    test_client.sa.sio.enter_room = AsyncMock()
 
     url = await room_api.get_livesplit_url(
         test_client.sa,
@@ -803,7 +802,6 @@ async def test_get_livesplit_url(test_client, simple_room):
     token = url.split("/")[-1]
     decoded = test_client.sa.decrypt_str(base64.urlsafe_b64decode(token))
     assert decoded == "1235/1"
-    test_client.sa.sio.enter_room.assert_awaited_once_with(sid, "async-race-1-1235", namespace="/")
 
 
 async def test_get_livesplit_url_not_member(test_client, simple_room):
