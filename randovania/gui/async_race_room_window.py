@@ -468,3 +468,12 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
     def on_data_from_server(self, room: AsyncRaceRoomEntry) -> None:
         if room.id == self.room.id:
             self.on_room_details(room)
+
+    @asyncSlot()
+    async def _stop_listening_room_update_events(self) -> None:
+        await self._network_client.server_call("async_race_listen_to_room", (self.room.id, False))
+
+    async def request_room_update_events(self) -> None:
+        # TODO: this does not restart the listener if we disconnect from the server
+        await self._network_client.server_call("async_race_listen_to_room", (self.room.id, True))
+        self.CloseEvent.connect(self._stop_listening_room_update_events)

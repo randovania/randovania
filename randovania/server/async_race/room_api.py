@@ -192,6 +192,17 @@ async def change_room_settings(sa: ServerApp, sid: str, room_id: int, settings_j
     return (await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, sid)).as_json
 
 
+async def listen_to_room(sa: ServerApp, sid: str, room_id: int, listen: bool) -> None:
+    room = AsyncRaceRoom.get_by_id(room_id)
+    user = await sa.get_current_user(sid)
+    socketio_room = _get_async_race_socketio_room(room, user)
+
+    if listen:
+        await sa.sio.enter_room(sid, socketio_room)
+    else:
+        await sa.sio.leave_room(sid, socketio_room)
+
+
 async def get_room(sa: ServerApp, sid: str, room_id: int, password: str | None) -> JsonObject_RO:
     """
     Gets details about the given room id
@@ -527,8 +538,6 @@ async def get_livesplit_url(sa: ServerApp, sid: str, room_id: int) -> str:
     if entry is None:
         raise error.NotAuthorizedForActionError
 
-    await sa.ensure_in_room(sid, _get_async_race_socketio_room(room, user))
-
     token = base64.urlsafe_b64encode(sa.encrypt_str(f"{user.id}/{room_id}")).decode("ascii")
 
     return str(
@@ -619,7 +628,7 @@ async def livesplit_integration(
                 await perform_state_change(room, user, new_state)
                 await emit_async_room_update(app.sa, room, user)
             except error.BaseNetworkError as e:
-                app.sa.logger.info("Invalid transition received from livesplit: %s", str(e))
+                app.sa.logger.info("Invalid transition to %s received from livesplit: %s", str(new_state), str(e))
 
 
 def setup_app(sa: ServerApp) -> None:
@@ -627,6 +636,7 @@ def setup_app(sa: ServerApp) -> None:
     sa.on("async_race_list_rooms", list_rooms, with_header_check=True)
     sa.on("async_race_create_room", create_room, with_header_check=True)
     sa.on("async_race_change_room_settings", change_room_settings, with_header_check=True)
+    sa.on("async_race_listen_to_room", listen_to_room, with_header_check=True)
     sa.on("async_race_get_room", get_room, with_header_check=True)
     sa.on("async_race_refresh_room", refresh_room, with_header_check=True)
     sa.on("async_race_get_leaderboard", get_leaderboard, with_header_check=True)

@@ -273,6 +273,27 @@ async def test_change_room_settings_valid(simple_room, mocker: pytest_mock.MockF
     }
 
 
+@pytest.mark.parametrize("listen", [False, True])
+async def test_listen_to_room(simple_room, mock_sa, listen):
+    user = User.get_by_id(1234)
+    mock_sa.get_current_user.return_value = user
+    room_name = f"async-race-{simple_room.id}-{user.id}"
+
+    # Run
+    await room_api.listen_to_room(mock_sa, "TheSid", 1, listen)
+
+    # Assert
+    if listen:
+        mock_sa.sio.enter_room.assert_awaited_once_with("TheSid", room_name)
+    else:
+        mock_sa.sio.enter_room.assert_not_called()
+
+    if not listen:
+        mock_sa.sio.leave_room.assert_awaited_once_with("TheSid", room_name)
+    else:
+        mock_sa.sio.leave_room.assert_not_called()
+
+
 @pytest.mark.parametrize("password", [None, "Something"])
 async def test_get_room_valid_password(simple_room, mocker: pytest_mock.MockFixture, password: str | None):
     # Setup
@@ -781,7 +802,7 @@ async def test_get_livesplit_url(test_client, simple_room):
     assert url.startswith("ws://127.0.0.1:5000/async-race-room/1/livesplit/")
     token = url.split("/")[-1]
     decoded = test_client.sa.decrypt_str(base64.urlsafe_b64decode(token))
-    assert decoded == "1235/TheSid"
+    assert decoded == "1235/1"
     test_client.sa.sio.enter_room.assert_awaited_once_with(sid, "async-race-1-1235", namespace="/")
 
 
@@ -850,7 +871,8 @@ async def test_livesplit_socket(test_client, simple_room, can_pause: bool, caplo
         assert entry.user_status() == AsyncRaceRoomUserStatus.FINISHED
 
     assert caplog.messages == [
-        "Invalid transition received from livesplit: Invalid Action: Unsupported state transition",
+        "Invalid transition to AsyncRaceRoomUserStatus.FINISHED received from livesplit:"
+        " Invalid Action: Unsupported state transition",
         "Received invalid json from livesplit: Expecting value: line 1 column 1 (char 0) bad data",
     ]
 

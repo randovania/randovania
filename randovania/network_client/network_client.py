@@ -471,7 +471,7 @@ class NetworkClient:
     async def server_call(
         self,
         event: str,
-        data: JsonType | bytes | None = None,
+        data: JsonType | bytes | tuple[JsonType | bytes, ...] | None = None,
         *,
         namespace: str | None = None,
         handle_invalid_session: bool = True,
