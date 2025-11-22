@@ -31,6 +31,15 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         return PlanetsZebethHintNamer
 
     def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], _rng: Random) -> dict:
+        def get_locked_ammo_text(ammo_item: str) -> str:
+            text = "MISSING TEXT, PLEASE REPORT THIS!"
+            for pickup in pickup_list:
+                if pickup.original_pickup.name != ammo_item:
+                    continue
+                text = pickup.collection_text[0]
+                break
+            return text
+
         pickup_map_dict = {}
         for pickup in pickup_list:
             quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.is_for_remote_player else 0
@@ -68,6 +77,27 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
                     ),
                 },
             }
+
+            if pickup.name == "Missile Launcher":
+                pickup_map_dict[object_id].update(
+                    {
+                        "is_launcher": True,
+                    }
+                )
+
+            # aka Big Missile Tank and Missile Tank
+            if pickup.name.endswith("Missile Tank"):
+                pickup_map_dict[object_id].update(
+                    {
+                        "locked_text": {
+                            "header": f"Locked {acquired_msg}",
+                            "description": textwrap.wrap(
+                                get_locked_ammo_text(pickup.name),
+                                width=MAX_CHARS_LIMIT_FOR_INGAME_MESSAGE_BOX,
+                            ),
+                        }
+                    }
+                )
 
         return pickup_map_dict
 
