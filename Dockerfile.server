@@ -19,9 +19,9 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # Copy the project into the image
 COPY . .
 
-# Sync the project
+# Sync the project and create pyc for faster startup
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --locked --extra server --extra exporters
+    uv sync --locked --extra server --extra exporters --compile-bytecode
 
 VOLUME ["/data"]
 ENTRYPOINT ["/usr/src/app/.venv/bin/python", "-m", "randovania"]
