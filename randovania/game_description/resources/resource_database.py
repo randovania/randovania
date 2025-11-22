@@ -105,8 +105,16 @@ class ResourceDatabase(ResourceDatabaseView):
         return search.find_resource_info_with_long_name(self.item, name)
 
     @override
+    def get_all_items(self) -> Sequence[ItemResourceInfo]:
+        return self.item
+
+    @override
     def get_event(self, short_name: str) -> SimpleResourceInfo:
         return search.find_resource_info_with_id(self.event, short_name, ResourceType.EVENT)
+
+    @override
+    def get_all_events(self) -> Sequence[SimpleResourceInfo]:
+        return self.event
 
     @override
     def get_misc(self, short_name: str) -> SimpleResourceInfo:

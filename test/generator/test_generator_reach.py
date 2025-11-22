@@ -24,7 +24,6 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.generator import reach_lib
 from randovania.generator.old_generator_reach import OldGeneratorReach
 from randovania.generator.pickup_pool import pool_creator
@@ -264,7 +263,7 @@ def test_reach_size_from_start_echoes(
     specific_levels = {trick.short_name: LayoutTrickLevel.maximum() for trick in game.resource_database.trick}
 
     def item(name: str):
-        return find_resource_info_with_long_name(game.resource_database.item, name)
+        return game.resource_database.get_item_by_display_name(name)
 
     def node_names(nodes: Iterator[WorldGraphNode]) -> list[str]:
         return [n.name for n in sorted(nodes, key=lambda it: it.node_index)]
@@ -282,7 +281,11 @@ def test_reach_size_from_start_echoes(
     patches = generator.base_patches_factory.create_base_patches(
         layout_configuration, Random(15000), game, False, player_index=0
     )
-    state = generator.bootstrap.calculate_starting_state(game, patches, layout_configuration)
+    graph, state = generator.bootstrap.logic_bootstrap_graph(
+        layout_configuration,
+        game,
+        patches,
+    )
     state.resources.add_resource_gain(
         [
             (item("Combat Visor"), 1),
@@ -297,24 +300,12 @@ def test_reach_size_from_start_echoes(
             (item("Missile"), 5),
         ]
     )
-    generator.bootstrap.apply_game_specific_patches(layout_configuration, game, patches)
-
-    graph = world_graph.create_graph(
-        game,
-        patches,
-        state.resources,
-        1.0,
-        game.victory_condition,
-        False,
-    )
-    state.node = graph.original_to_node[state.node.node_index]
 
     # Run
     reach = OldGeneratorReach.reach_from_state(graph, state, default_filler_config)
     reach_lib.collect_all_safe_resources_in_reach(reach)
 
     # Assert
-
     assert node_names(reach.nodes) == [
         "Temple Grounds/Path of Eyes/Door to Torvus Transport Access",
         "Temple Grounds/Path of Eyes/Front of Translator Gate",
@@ -329,6 +320,7 @@ def test_reach_size_from_start_echoes(
         "Torvus Bog/Temple Transport Access/Door to Transport to Temple Grounds",
         "Torvus Bog/Temple Transport Access/Door to Torvus Lagoon",
         "Torvus Bog/Torvus Lagoon/Door to Temple Transport Access",
+        "Torvus Bog/Torvus Lagoon/Door to Save Station A",
         "Torvus Bog/Torvus Lagoon/Door to Path of Roots",
         "Torvus Bog/Torvus Lagoon/Keybearer Corpse (S-Dly)",
         "Torvus Bog/Path of Roots/Door to Torvus Lagoon",
@@ -337,6 +329,8 @@ def test_reach_size_from_start_echoes(
         "Torvus Bog/Path of Roots/Next to Pickup",
         "Torvus Bog/Path of Roots/Under Lore Scan",
         "Torvus Bog/Path of Roots/Lore Scan",
+        "Torvus Bog/Save Station A/Save Station",
+        "Torvus Bog/Save Station A/Door to Torvus Lagoon",
         "Torvus Bog/Great Bridge/Door to Path of Roots",
     ]
-    assert len(list(reach.safe_nodes)) == 20
+    assert len(list(reach.safe_nodes)) == 23
