@@ -26,6 +26,7 @@ from randovania.game_description.requirements.resource_requirement import (
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.lib.bitmask import Bitmask
 
 if typing.TYPE_CHECKING:
     from collections.abc import Callable, Iterable, Iterator, Mapping
@@ -91,7 +92,7 @@ class WorldGraphNode:
     These resources must all provide exactly 1 quantity each.
     """
 
-    resource_gain_bitmask: int = dataclasses.field(init=False, default=0)
+    resource_gain_bitmask: Bitmask = dataclasses.field(init=False, default_factory=Bitmask.create)
     """
     Bitmask of all ResourceInfo indices granted by this node for fast checking.
     Mask is created in the same way as RequirementList and ResourceCollection.
@@ -124,15 +125,13 @@ class WorldGraphNode:
     """The Region that contains `area` and `database_node`."""
 
     def __post_init__(self) -> None:
-        bitmask = 0
         for resource, quantity in self.resource_gain:
             assert quantity == 1
-            bitmask |= 1 << resource.resource_index
-        self.resource_gain_bitmask = bitmask
+            self.resource_gain_bitmask.set_bit(resource.resource_index)
 
     def add_resource(self, resource: ResourceInfo) -> None:
         self.resource_gain.append((resource, 1))
-        self.resource_gain_bitmask |= 1 << resource.resource_index
+        self.resource_gain_bitmask.set_bit(resource.resource_index)
 
     def is_resource_node(self) -> bool:
         return bool(self.resource_gain)
@@ -147,7 +146,7 @@ class WorldGraphNode:
         Does not include resources given by a PickupEntry assigned to the location of this node.
         TODO: Use a RequirementList to represent this.
         """
-        return self.resource_gain_bitmask & resources.resource_bitmask == self.resource_gain_bitmask
+        return self.resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
 
     def resource_gain_on_collect(self, resources: ResourceCollection) -> ResourceGain:
         yield from self.resource_gain

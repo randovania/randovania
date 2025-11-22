@@ -16,6 +16,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.graph.world_graph import WorldGraphNode
 from randovania.layout import filtered_database
+from randovania.lib.bitmask import Bitmask
 from randovania.resolver.hint_state import ResolverHintState
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
@@ -126,16 +127,16 @@ def _simplify_additional_requirement_set(
     simplified.sort(key=lambda rl: len(rl._items))
     new_alternatives: list[RequirementList] = []
 
-    single_req_mask = 0
+    single_req_mask = Bitmask.create()
 
     for alternative in simplified:
         if not alternative._extra:
-            if alternative._bitmask & single_req_mask:
+            if alternative._bitmask.share_at_least_one_bit(single_req_mask):
                 # We already have a requirement that is just one of these resources
                 continue
 
             if len(alternative._items) == 1:
-                single_req_mask |= alternative._bitmask
+                single_req_mask.union(alternative._bitmask)
 
         if not any(other.is_proper_subset_of(alternative) for other in new_alternatives):
             new_alternatives.append(alternative)
