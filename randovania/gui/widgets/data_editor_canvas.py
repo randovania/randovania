@@ -284,7 +284,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
         if event.button() in (QtCore.Qt.MouseButton.LeftButton, QtCore.Qt.MouseButton.MiddleButton):
-            self._last_pan_point = event.pos()
+            self._last_pan_point = QPointF(event.pos())
             self.setCursor(QtCore.Qt.CursorShape.ClosedHandCursor)
             event.accept()
         else:
@@ -293,10 +293,10 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
         # Handle panning
         if self._last_pan_point is not None:
-            delta = event.pos() - self._last_pan_point
+            delta = QPointF(event.pos()) - self._last_pan_point
             self.pan_offset_x += delta.x()
             self.pan_offset_y += delta.y()
-            self._last_pan_point = event.pos()
+            self._last_pan_point = QPointF(event.pos())
             self.update()
             event.accept()
         else:
