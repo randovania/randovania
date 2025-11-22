@@ -29,6 +29,7 @@ if TYPE_CHECKING:
     from pytestqt.qtbot import QtBot
 
     from randovania.gui.dialog.async_race_admin_dialog import AsyncRaceAdminDialog
+    from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
     from randovania.interface_common.options import Options
     from randovania.layout.preset import Preset
 
@@ -60,6 +61,10 @@ def create_room(
 
 def create_window(skip_qtbot: QtBot, room: AsyncRaceRoomEntry, options: Options) -> AsyncRaceRoomWindow:
     window = AsyncRaceRoomWindow(room, MagicMock(spec=QtNetworkClient), options, MagicMock())
+    window._refresh_timer.stop()
+    window._update_time_labels_timer.stop()
+    window._refresh_timer = MagicMock()
+    window._update_time_labels_timer = MagicMock()
     skip_qtbot.add_widget(window)
     return window
 
@@ -335,3 +340,41 @@ async def test_on_view_audit_log(skip_qtbot, options, default_blank_preset, mock
     model = table_view.model()
     assert isinstance(model, AuditEntryListDatabaseModel)
     assert len(model.db) == 2
+
+
+async def test_get_livesplit_url(skip_qtbot, options, default_blank_preset, mocker: pytest_mock.MockFixture):
+    mock_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog")
+    mock_set_clipboard = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
+
+    window = create_window(
+        skip_qtbot, create_room(default_blank_preset, self_status=AsyncRaceRoomUserStatus.JOINED), options
+    )
+    window._network_client.async_race_get_livesplit_url.return_value = "https://server/the-url"
+
+    # Run
+    await window._get_livesplit_url()
+
+    # Assert
+    mock_set_clipboard.assert_called_once_with("https://server/the-url")
+    mock_dialog.assert_awaited_once()
+    dialog: TextPromptDialog = mock_dialog.call_args[0][0]
+    assert dialog.text_value == "https://server/the-url"
+
+
+@pytest.mark.parametrize("same_id", [False, True])
+async def test_on_data_from_server(skip_qtbot, options, default_blank_preset, same_id):
+    window = create_window(
+        skip_qtbot, create_room(default_blank_preset, self_status=AsyncRaceRoomUserStatus.JOINED), options
+    )
+    window.on_room_details = MagicMock()
+    new_room = MagicMock()
+    new_room.id = 1000 if same_id else 50
+
+    # Run
+    window.on_data_from_server(new_room)
+
+    # Assert
+    if same_id:
+        window.on_room_details.assert_called_once_with(new_room)
+    else:
+        window.on_room_details.assert_not_called()
