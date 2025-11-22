@@ -19,6 +19,6 @@ class PlanetsZebethPresetPickupPool(MetroidPresetPickupPool):
                     ammo_widget.require_main_item_check.stateChanged.connect(self.on_required_missiles_changed)
                     self.ammo_widgets.append(ammo_widget.require_main_item_check)
 
-    def on_required_missiles_changed(self, state: int):
+    def on_required_missiles_changed(self, state: int) -> None:
         for ammo_widget in self.ammo_widgets:
             ammo_widget.setChecked(state == Qt.CheckState.Checked.value)
