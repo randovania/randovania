@@ -99,6 +99,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def __init__(self, parent: QtWidgets.QWidget | None = None):
         super().__init__(parent)
 
+        self.setMouseTracking(True)
+
         self._show_all_connections_action = QtGui.QAction("Show all node connections", self)
         self._show_all_connections_action.setCheckable(True)
         self._show_all_connections_action.setChecked(False)
@@ -283,16 +285,18 @@ class DataEditorCanvas(QtWidgets.QWidget):
         return result
 
     def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
+        super().mousePressEvent(event)
         if event.button() in (QtCore.Qt.MouseButton.LeftButton, QtCore.Qt.MouseButton.MiddleButton):
             self._last_pan_point = QPointF(event.pos())
             self.setCursor(QtCore.Qt.CursorShape.ClosedHandCursor)
             event.accept()
-        else:
-            super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
+        super().mouseMoveEvent(event)
         # Handle panning
         if self._last_pan_point is not None:
+            # Dragging - show closed hand
+            self.setCursor(QtCore.Qt.CursorShape.ClosedHandCursor)
             delta = QPointF(event.pos()) - self._last_pan_point
             self.pan_offset_x += delta.x()
             self.pan_offset_y += delta.y()
@@ -300,7 +304,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
             self.update()
             event.accept()
         else:
-            super().mouseMoveEvent(event)
+            # Not dragging - check if hovering over a node
+            local_pos = QPointF(event.pos()) - self.get_area_canvas_offset()
+            nodes_at_mouse = self._nodes_at_position(local_pos)
+            if nodes_at_mouse:
+                self.setCursor(QtCore.Qt.CursorShape.ArrowCursor)
+            else:
+                self.setCursor(QtCore.Qt.CursorShape.OpenHandCursor)
 
     def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
         # Check if we were panning - if so, stop panning and don't process as a click
