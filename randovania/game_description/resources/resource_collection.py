@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 import copy
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 if TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
-    from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
 
 class ResourceCollection:
@@ -32,6 +31,10 @@ class ResourceCollection:
         self.add_self_as_requirement_to_resources = False
         self._damage_reduction_cache = None
         self._resource_database = resource_database
+
+    @classmethod
+    def with_resource_count(cls, resource_database: ResourceDatabaseView, count: int) -> Self:
+        return cls(resource_database, count)
 
     def _resize_array_to(self, size: int) -> None:
         self._resource_array.extend(0 for _ in range(len(self._resource_array), size + 1))
@@ -150,11 +153,11 @@ class ResourceCollection:
         result.add_self_as_requirement_to_resources = self.add_self_as_requirement_to_resources
         return result
 
-    def get_damage_reduction(self, resource: SimpleResourceInfo) -> float:
+    def get_damage_reduction(self, resource: ResourceInfo) -> float:
         if self._damage_reduction_cache is None:
             self._damage_reduction_cache = {}
 
-        reduction = self._damage_reduction_cache.get(resource.resource_index)
+        reduction: float | None = self._damage_reduction_cache.get(resource.resource_index)
 
         if reduction is None:
             reduction = self._resource_database.get_damage_reduction(resource, self)
