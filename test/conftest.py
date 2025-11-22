@@ -513,7 +513,7 @@ def blank_world_graph(blank_game_description, empty_patches) -> WorldGraph:
     return create_graph(
         database_view=blank_game_description,
         patches=empty_patches,
-        resources=blank_game_description.create_resource_collection(),
+        resources=blank_game_description.resource_database.create_resource_collection(),
         damage_multiplier=1.0,
         victory_condition=blank_game_description.victory_condition,
         flatten_to_set_on_patch=False,
