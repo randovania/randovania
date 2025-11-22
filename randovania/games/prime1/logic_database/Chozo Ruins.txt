@@ -1294,7 +1294,11 @@ Extra - aabb: [279.84372, -45.27577, 55.823124, 300.77795, 16.10456, 70.44933]
   * Extra - world_position: (288.38824, -45.27577, 55.870693)
   * Extra - world_rotation: (0.0, -0.0, -89.87678)
   > Door to Sunchamber Access
-      Trivial
+      Any of the following:
+          # Deal with Weed and Vines
+          Shoot Any Beam
+          Combat (Beginner) and Normal Damage ≥ 32
+          Combat (Advanced) and Normal Damage ≥ 9
 
 > Door to Sunchamber Access; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -1304,7 +1308,11 @@ Extra - aabb: [279.84372, -45.27577, 55.823124, 300.77795, 16.10456, 70.44933]
   * Extra - world_position: (284.20767, 16.104553, 60.87069)
   * Extra - world_rotation: (0.0, 0.0, 90.12323)
   > Door to Arboretum
-      Trivial
+      Any of the following:
+          # Deal with Weed and Vines
+          Shoot Any Beam
+          Combat (Beginner) and Normal Damage ≥ 26
+          Combat (Advanced) and Normal Damage ≥ 6
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
@@ -1571,7 +1579,11 @@ Extra - aabb: [275.33786, 16.10455, 59.97493, 293.06842, 76.59607, 79.606064]
   * Extra - world_position: (284.11926, 76.59607, 66.355156)
   * Extra - world_rotation: (0.0, 0.0, 90.12323)
   > Door to Sunchamber Lobby
-      Trivial
+      Any of the following:
+          # Dealing with the Weed and Vines
+          Shoot Any Beam
+          Combat (Beginner) and Normal Damage ≥ 26
+          Combat (Advanced) and Normal Damage ≥ 2
 
 > Door to Sunchamber Lobby; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -1581,9 +1593,16 @@ Extra - aabb: [275.33786, 16.10455, 59.97493, 293.06842, 76.59607, 79.606064]
   * Extra - world_position: (284.20596, 16.10456, 60.87069)
   * Extra - world_rotation: (0.0, -0.0, -89.87678)
   > Door to Sunchamber
-      Any of the following:
-          Before Flaahgra
-          After Flaahgra and After Chozo Ghosts (Sunchamber)
+      All of the following:
+          Any of the following:
+              # Being able to access the door
+              Before Flaahgra
+              After Flaahgra and After Chozo Ghosts (Sunchamber)
+          Any of the following:
+              # Dealing with the Weed and Vines
+              Shoot Any Beam
+              Combat (Beginner) and Normal Damage ≥ 36
+              Combat (Advanced) and Normal Damage ≥ 2
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
@@ -1837,8 +1856,6 @@ Extra - aabb: [225.01727, 76.59607, 54.75615, 343.10974, 209.55296, 138.8626]
   * Extra - nonstandard: True
   * Extra - world_position: (284.12915, 209.55296, 75.517555)
   * Extra - world_rotation: (0.0, -0.0, 90.24647)
-  > In Arena (Front)
-      Trivial
   > In Arena (Back)
       Trivial
 
@@ -1886,55 +1903,97 @@ Extra - aabb: [225.01727, 76.59607, 54.75615, 343.10974, 209.55296, 138.8626]
 > In Arena (Front); Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - world_position: (285.036987, 83.419861, 66.368805)
-  > Door to Sun Tower Access
-      After Flaahgra or After Chozo Ghosts (Sunchamber)
   > Door to Sunchamber Access
-      After Chozo Ghosts (Sunchamber)
+      After Flaahgra and After Chozo Ghosts (Sunchamber)
   > Event - Flaahgra
       Any of the following:
           All of the following:
-              Morph Ball
-              Any of the following:
-                  # Requirements for destroying the bomb slots
-                  Can Use Bombs
-                  Power Bomb ≥ 4 and Combat (Beginner) and Can Use Power Bombs
-              Any of the following:
-                  # Requirements for getting to the bomb slots
-                  Shoot Power Beam
-                  Missile ≥ 10 and Shoot Any Beam
-                  Space Jump Boots and Combat (Beginner) and L-Jump (Beginner)
-                  Combat (Intermediate) and Combat/Scan Dash (Advanced)
+              # Normal Fight
+              Morph Ball and Has Any Visor
               Any of the following:
                   # Requirements for shooting the first dish
                   Shoot Power Beam
-                  Missile and Shoot Any Beam
+                  Missile and Combat (Beginner) and Shoot Any Beam
+              Any of the following:
+                  # Requirements for reaching the Bomb Slots
+                  All of the following:
+                      # Shoot down the dishes to make the tentacles retract
+                      Any of the following:
+                          Shoot Power Beam
+                          All of the following:
+                              # Shoot dishes with only Missiles
+                              Combat (Beginner) and Shoot Any Beam
+                              Any of the following:
+                                  Missile ≥ 10
+                                  Missile ≥ 4 and Combat (Advanced)
+                      Any of the following:
+                          # Health requirements
+                          Combat (Intermediate) or Normal Damage ≥ 80
+                          Combat (Beginner) and Normal Damage ≥ 25
+                  All of the following:
+                      # Jump directly to the Bomb Slots. Dashing is done from dishes/tentacles
+                      Knowledge (Beginner)
+                      Any of the following:
+                          All of the following:
+                              # With Space Jump
+                              Space Jump Boots
+                              Combat/Scan Dash (Intermediate) or L-Jump (Beginner)
+                          # NSJ
+                          Combat (Intermediate) and Combat/Scan Dash (Advanced)
+                      # Health Requirements
+                      Combat (Advanced) or Normal Damage ≥ 35
+              Any of the following:
+                  # Requirements for destroying the Bomb Slots
+                  Can Use Bombs
+                  Power Bomb ≥ 4 and Knowledge (Beginner) and Can Use Power Bombs
           All of the following:
+              # Wavebuster fight. It deals direct damage to Flaaghra
               Charge Beam and Wavebuster and Combat (Intermediate) and Knowledge (Advanced) and Shoot Wave Beam
               Any of the following:
                   Missile ≥ 460
                   Missile ≥ 230 and Disabled Hard Mode
+                  # Flaaghra gives refills after getting up due to a dish getting knocked down
+                  Missile ≥ 20 and Combat (Ludicrous)
   > Event - Chozo Ghosts
-      All of the following:
-          # Kill Chozo Ghosts
-          After Sunchamber Chozo Ghosts Layer Activated and Kill Multiple Chozo Ghosts
-          # Reach the pickup
-          Space Jump Boots or L-Jump (Beginner)
+      # Kill Chozo Ghosts
+      After Sunchamber Chozo Ghosts Layer Activated and After Flaahgra and Kill Multiple Chozo Ghosts
+  > In Arena (Back)
+      After Flaahgra or After Chozo Ghosts (Sunchamber)
 
 > In Arena (Back); Heals? False
   * Layers: default
   * Extra - world_position: (275.376892, 193.421051, 80.388443)
+  > Door to Sun Tower Access
+      Trivial
   > Event - Flaahgra
       All of the following:
           # Flahgra can be defeated without shooting the first dish if coming from Sun Tower Access and before starting the fight
           Morph Ball and Knowledge (Beginner)
           Any of the following:
               # Requirements for destroying the bomb slots
-              Can Use Bombs
-              Power Bomb ≥ 4 and Can Use Power Bombs
+              All of the following:
+                  # With Bombs
+                  Can Use Bombs
+                  Combat (Intermediate) or Normal Damage ≥ 20
+              All of the following:
+                  # With Power Bombs
+                  Can Use Power Bombs
+                  Any of the following:
+                      Power Bomb ≥ 4
+                      # You can hit multiple bomb slots at once
+                      Power Bomb ≥ 2 and Knowledge (Intermediate)
           Any of the following:
               # Requirements for getting to the center island
-              Combat/Scan Dash (Advanced)
-              Space Jump Boots and L-Jump (Beginner)
+              All of the following:
+                  # With SJ
+                  Space Jump Boots
+                  Any of the following:
+                      L-Jump (Beginner)
+                      Scan Visor and Combat/Scan Dash (Beginner)
+              # NSJ
+              Scan Visor and Combat/Scan Dash (Intermediate)
+  > In Arena (Front)
+      Trivial
 
 ----------------
 Watery Hall Access
