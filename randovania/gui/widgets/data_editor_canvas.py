@@ -99,6 +99,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def __init__(self, parent: QtWidgets.QWidget | None = None):
         super().__init__(parent)
 
+        # Enable mouse tracking to update cursor when hovering
         self.setMouseTracking(True)
 
         self._show_all_connections_action = QtGui.QAction("Show all node connections", self)
@@ -295,8 +296,6 @@ class DataEditorCanvas(QtWidgets.QWidget):
         super().mouseMoveEvent(event)
         # Handle panning
         if self._last_pan_point is not None:
-            # Dragging - show closed hand
-            self.setCursor(QtCore.Qt.CursorShape.ClosedHandCursor)
             delta = QPointF(event.pos()) - self._last_pan_point
             self.pan_offset_x += delta.x()
             self.pan_offset_y += delta.y()
@@ -304,13 +303,14 @@ class DataEditorCanvas(QtWidgets.QWidget):
             self.update()
             event.accept()
         else:
-            # Not dragging - check if hovering over a node
+            # Update cursor based on what's under the mouse
             local_pos = QPointF(event.pos()) - self.get_area_canvas_offset()
-            nodes_at_mouse = self._nodes_at_position(local_pos)
-            if nodes_at_mouse:
-                self.setCursor(QtCore.Qt.CursorShape.ArrowCursor)
+            areas_at_mouse = self._other_areas_at_position(local_pos)
+
+            if areas_at_mouse:
+                self.setCursor(QtCore.Qt.CursorShape.PointingHandCursor)
             else:
-                self.setCursor(QtCore.Qt.CursorShape.OpenHandCursor)
+                self.setCursor(QtCore.Qt.CursorShape.ArrowCursor)
 
     def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
         # Check if we were panning - if so, stop panning and don't process as a click
