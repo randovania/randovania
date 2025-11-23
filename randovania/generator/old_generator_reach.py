@@ -487,7 +487,7 @@ class OldGeneratorReach(GeneratorReach):
         for node_index, requirement in list(self._uncollectable_nodes.items()):
             if requirement.satisfied(context, self._state.health_for_damage_requirements):
                 self._uncollectable_nodes.pop(node_index, None)
-            else:
+            elif self.is_reachable_node_index(node_index):
                 to_check.append((node_index, requirement))
 
         for (source_node_index, target_node_index), requirement in self._unreachable_paths.items():
