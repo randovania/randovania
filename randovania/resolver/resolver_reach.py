@@ -1,20 +1,22 @@
 from __future__ import annotations
 
-import itertools
 import typing
 from collections import defaultdict
 
-from randovania.game_description.requirements import fast_as_set
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import PositiveResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.graph.graph_requirement import (
+    GraphRequirementList,
+    GraphRequirementSet,
+)
+from randovania.graph.world_graph import WorldGraphNode
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterator, Sequence
 
     from randovania.game_description.db.node import NodeContext
-    from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraphNode
     from randovania.resolver.damage_state import DamageState
@@ -25,18 +27,22 @@ def _build_satisfiable_requirements(
     logic: Logic,
     all_nodes: Sequence[WorldGraphNode],
     context: NodeContext,
-    requirements_by_node: dict[int, list[Requirement]],
-) -> SatisfiableRequirements:
-    def _for_node(node_index: int, reqs: list[Requirement]) -> Iterator[RequirementList]:
+    requirements_by_node: dict[int, list[GraphRequirementSet]],
+) -> frozenset[GraphRequirementList]:
+    data = []
+
+    for node_index, reqs in requirements_by_node.items():
         additional = logic.get_additional_requirements(all_nodes[node_index]).alternatives
 
-        set_param: set[RequirementList] = set()
-        for req in set(reqs):
-            set_param.update(fast_as_set.fast_as_alternatives(req, context))
+        set_param: set[GraphRequirementList] = set()
+        for req in reqs:
+            set_param.update(req.alternatives)
 
-        yield from (a.union(b) for a in set_param for b in additional)
+        for a in set_param:
+            for b in additional:
+                data.append(a.copy_and_with(b))
 
-    return frozenset(itertools.chain.from_iterable(_for_node(*it) for it in requirements_by_node.items()))
+    return frozenset(data)
 
 
 def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
@@ -49,10 +55,10 @@ def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
 def _combine_damage_requirements(
     heal: bool,
     damage: int,
-    requirement: Requirement,
-    satisfied_requirement: tuple[Requirement, bool],
-    context: NodeContext,
-) -> tuple[Requirement, bool]:
+    requirement: GraphRequirementSet,
+    satisfied_requirement: tuple[GraphRequirementSet, bool],
+    resources: ResourceCollection,
+) -> tuple[GraphRequirementSet, bool]:
     """
     Helper function combining damage requirements from requirement and satisfied_requirement. Other requirements are
     considered either trivial or impossible.
@@ -61,7 +67,7 @@ def _combine_damage_requirements(
     :param damage:
     :param requirement:
     :param satisfied_requirement:
-    :param context:
+    :param resources:
     :return: The combined requirement and a boolean, indicating if the requirement may have non-damage components.
     """
     if heal:
@@ -77,19 +83,19 @@ def _combine_damage_requirements(
         #
         return satisfied_requirement
 
-    isolated_requirement = requirement.isolate_damage_requirements(context)
+    isolated_requirement = requirement.isolate_damage_requirements(resources)
     isolated_satisfied = (
-        satisfied_requirement[0].isolate_damage_requirements(context)
+        satisfied_requirement[0].isolate_damage_requirements(resources)
         if satisfied_requirement[1]
         else satisfied_requirement[0]
     )
 
-    if isolated_requirement == Requirement.trivial():
+    if isolated_requirement == GraphRequirementSet.trivial():
         result = isolated_satisfied
-    elif isolated_satisfied == Requirement.trivial():
+    elif isolated_satisfied == GraphRequirementSet.trivial():
         result = isolated_requirement
     else:
-        result = RequirementAnd([isolated_requirement, isolated_satisfied]).simplify()
+        result = isolated_requirement.copy_and_with_set(isolated_satisfied)
 
     return result, False
 
@@ -98,7 +104,7 @@ class ResolverReach:
     _node_indices: tuple[int, ...]
     _game_state_at_node: dict[int, DamageState]
     _path_to_node: dict[int, list[int]]
-    _satisfiable_requirements_for_additionals: SatisfiableRequirements
+    _satisfiable_requirements_for_additionals: frozenset[GraphRequirementList]
     _logic: Logic
 
     @property
@@ -111,7 +117,7 @@ class ResolverReach:
         return self._game_state_at_node[index]
 
     @property
-    def satisfiable_requirements_for_additionals(self) -> SatisfiableRequirements:
+    def satisfiable_requirements_for_additionals(self) -> frozenset[GraphRequirementList]:
         return self._satisfiable_requirements_for_additionals
 
     def path_to_node(self, node: WorldGraphNode) -> tuple[WorldGraphNode, ...]:
@@ -125,7 +131,7 @@ class ResolverReach:
         self,
         nodes: dict[int, DamageState],
         path_to_node: dict[int, list[int]],
-        requirements_for_additionals: SatisfiableRequirements,
+        requirements_for_additionals: frozenset[GraphRequirementList],
         logic: Logic,
     ):
         self._node_indices = tuple(nodes.keys())
@@ -147,13 +153,13 @@ class ResolverReach:
         nodes_to_check: dict[int, DamageState] = {initial_state.node.node_index: initial_state.damage_state}
 
         reach_nodes: dict[int, DamageState] = {}
-        requirements_excluding_leaving_by_node: dict[int, list[Requirement]] = defaultdict(list)
+        requirements_excluding_leaving_by_node: dict[int, list[GraphRequirementSet]] = defaultdict(list)
 
         path_to_node: dict[int, list[int]] = {
             initial_state.node.node_index: [],
         }
-        satisfied_requirement_on_node: dict[int, tuple[Requirement, bool]] = {
-            initial_state.node.node_index: (Requirement.trivial(), False)
+        satisfied_requirement_on_node: dict[int, tuple[GraphRequirementSet, bool]] = {
+            initial_state.node.node_index: (GraphRequirementSet.trivial(), False)
         }
 
         while nodes_to_check:
@@ -169,6 +175,8 @@ class ResolverReach:
                 reach_nodes[node_index] = game_state
 
             for target_node, requirement, requirement_without_leaving in node.connections:
+                requirement: GraphRequirementSet
+                requirement_without_leaving: GraphRequirementSet
                 target_node_index = target_node.node_index
 
                 # a >= b -> !(b > a)
@@ -183,20 +191,22 @@ class ResolverReach:
 
                 damage_health = game_state.health_for_damage_requirements()
                 # Check if the normal requirements to reach that node is satisfied
-                satisfied = satisfied and requirement.satisfied(context, damage_health)
+                satisfied = satisfied and requirement.satisfied(context.current_resources, damage_health)
                 if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
-                    satisfied = logic.get_additional_requirements(node).satisfied(context, damage_health)
+                    satisfied = logic.get_additional_requirements(node).satisfied(
+                        context.current_resources, damage_health
+                    )
 
                 if satisfied:
-                    damage = requirement.damage(context)
+                    damage = requirement.damage(context.current_resources)
                     nodes_to_check[target_node_index] = game_state.apply_damage(damage)
                     satisfied_requirement_on_node[target_node_index] = _combine_damage_requirements(
                         node.heal,
                         damage,
                         requirement,
                         satisfied_requirement_on_node[node.node_index],
-                        context,
+                        context.current_resources,
                     )
                     if logic.record_paths:
                         path_to_node[target_node_index] = list(path_to_node[node_index])
@@ -205,9 +215,9 @@ class ResolverReach:
                 elif target_node:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
-                    if not requirement_without_leaving.satisfied(context, damage_health):
-                        full_requirement_for_target = RequirementAnd(
-                            [requirement_without_leaving, satisfied_requirement_on_node[node.node_index][0]]
+                    if not requirement_without_leaving.satisfied(context.current_resources, damage_health):
+                        full_requirement_for_target = requirement_without_leaving.copy_and_with_set(
+                            satisfied_requirement_on_node[node.node_index][0]
                         )
                         requirements_excluding_leaving_by_node[target_node_index].append(full_requirement_for_target)
 
@@ -229,7 +239,7 @@ class ResolverReach:
         for node in self.collectable_resource_nodes(ctx):
             additional_requirements = self._logic.get_additional_requirements(node)
             game_state = self._game_state_at_node[node.node_index]
-            if additional_requirements.satisfied(ctx, game_state.health_for_damage_requirements()):
+            if additional_requirements.satisfied(ctx.current_resources, game_state.health_for_damage_requirements()):
                 yield node, game_state
             else:
                 self._satisfiable_requirements_for_additionals = self._satisfiable_requirements_for_additionals.union(
@@ -243,7 +253,8 @@ class ResolverReach:
                 node.is_resource_node()
                 and not node.has_all_resources(context.current_resources)
                 and node.requirement_to_collect.satisfied(
-                    context, self._game_state_at_node[node.node_index].health_for_damage_requirements()
+                    context.current_resources,
+                    self._game_state_at_node[node.node_index].health_for_damage_requirements(),
                 )
             ):
                 yield node

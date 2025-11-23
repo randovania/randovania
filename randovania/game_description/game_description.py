@@ -29,11 +29,12 @@ if TYPE_CHECKING:
     from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.requirements.base import Requirement
-    from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
+    from randovania.game_description.requirements.requirement_list import RequirementList
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.graph.graph_requirement import GraphRequirementList
     from randovania.resolver.damage_state import DamageState
 
 
@@ -282,7 +283,7 @@ def _damage_resource_from_list(requirements: RequirementList) -> SimpleResourceI
 
 
 def calculate_interesting_resources(
-    satisfiable_requirements: SatisfiableRequirements,
+    satisfiable_requirements: frozenset[GraphRequirementList],
     context: NodeContext,
     damage_state: DamageState,
 ) -> frozenset[ResourceInfo]:

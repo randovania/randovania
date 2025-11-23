@@ -8,15 +8,12 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.requirements.requirement_list import RequirementList
-from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.filler.filler_configuration import FillerConfiguration
+from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
 from randovania.graph.world_graph import WorldGraphNode
 from randovania.layout import filtered_database
-from randovania.lib.bitmask import Bitmask
 from randovania.resolver.hint_state import ResolverHintState
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
@@ -51,104 +48,84 @@ def _is_later_progression_item(
 
 
 def _downgrade_progressive_item(
-    item_resource: ResourceInfo, progressive_chain_info: tuple[Sequence[ResourceInfo], int]
-) -> ResourceRequirement:
+    item_resource: ResourceInfo, progressive_chain_info: tuple[Sequence[ItemResourceInfo], int]
+) -> ItemResourceInfo:
     progressive_chain, _ = progressive_chain_info
-    return ResourceRequirement.simple(progressive_chain[progressive_chain.index(item_resource) - 1])
+    return progressive_chain[progressive_chain.index(item_resource) - 1]
 
 
 def _simplify_requirement_list(
-    self: RequirementList,
+    self: GraphRequirementList,
     state: State,
     node_resources: Sequence[ResourceInfo],
-    progressive_item_info: None | tuple[Sequence[ResourceInfo], int],
-) -> RequirementList | None:
-    items: list[ResourceRequirement] = []
-    damage_reqs = []
-    current_energy = state.health_for_damage_requirements
-    are_damage_reqs_satisfied = True
-    ctx = state.node_context()
+    progressive_item_info: None | tuple[Sequence[ItemResourceInfo], int],
+) -> GraphRequirementList | None:
+    current_resources = state.resources
 
-    for item in self.values():
-        item_damage = item.damage(ctx)
+    result = GraphRequirementList()
+    something_set = False
 
-        if item.satisfied(ctx, current_energy):
-            if item_damage:
-                damage_reqs.append(item)
-                current_energy -= item_damage
-            continue
+    for resource in self.all_resources(include_damage=False):
+        amount, negate = self.get_requirement_for(resource)
 
-        elif item.negate and item.resource in node_resources:
-            return None
+        if negate:
+            if current_resources[resource] == 0:
+                continue
+            if resource in node_resources:
+                return None
+        else:
+            if current_resources[resource] >= amount:
+                continue
 
-        elif _is_later_progression_item(item.resource, progressive_item_info):
+        if _is_later_progression_item(resource, progressive_item_info):
             assert progressive_item_info is not None
-            items.append(_downgrade_progressive_item(item.resource, progressive_item_info))
-            continue
+            result.add_resource(
+                _downgrade_progressive_item(resource, progressive_item_info),
+                1,
+                False,
+            )
+            something_set = True
 
-        if item_damage:
-            are_damage_reqs_satisfied = False
-            damage_reqs.append(item)
-            continue
+        else:
+            something_set = True
+            result.add_resource(resource, amount, negate)
 
-        items.append(item)
+    if self.damage(current_resources) >= state.health_for_damage_requirements:
+        something_set = True
+        result.damage_resources.update(self.damage_resources)
 
-    if not are_damage_reqs_satisfied:
-        items.extend(damage_reqs)
-
-    if not items:
+    if not something_set:
         return None
 
-    return RequirementList(items)
+    return result
 
 
 def _simplify_additional_requirement_set(
-    alternatives: Iterable[RequirementList],
+    alternatives: Iterable[GraphRequirementList],
     state: State,
     node_resources: list[ResourceInfo],
     progressive_chain_info: None | tuple[list[ItemResourceInfo], int],
     skip_simplify: bool,
-) -> RequirementSet:
-    simplified = [
+) -> GraphRequirementSet:
+    new_alternatives = [
         simplified
         for alternative in alternatives
         if (simplified := _simplify_requirement_list(alternative, state, node_resources, progressive_chain_info))
         is not None
     ]
+    r = GraphRequirementSet()
+    r.extend_alternatives(new_alternatives)
 
-    if skip_simplify:
-        return RequirementSet(simplified, skip_subset_check=True)
+    # TODO: do our simpler logic again?
+    if not skip_simplify:
+        r.optimize_alternatives()
+    r.freeze()
 
-    # Perform the subset check ourselves, but modified.
-    # Since this is called with the combination of `get_additional_requirements` for many nodes,
-    # we tend to get a lot of combinations of `Item or (Item and Event)`.
-    # So we can check for these cases first for a significant speedup
-
-    simplified.sort(key=lambda rl: len(rl._items))
-    new_alternatives: list[RequirementList] = []
-
-    single_req_mask = Bitmask.create()
-
-    for alternative in simplified:
-        if not alternative._extra:
-            if alternative._bitmask.share_at_least_one_bit(single_req_mask):
-                # We already have a requirement that is just one of these resources
-                continue
-
-            if len(alternative._items) == 1:
-                single_req_mask.union(alternative._bitmask)
-
-        if not any(other.is_proper_subset_of(alternative) for other in new_alternatives):
-            new_alternatives.append(alternative)
-
-    return RequirementSet(new_alternatives, skip_subset_check=True)
+    return r
 
 
 def _is_action_dangerous(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
-    return any(
-        resource in dangerous_resources or quantity < 0
-        for resource, quantity in action.resource_gain_on_collect(state.resources)
-    )
+    return any(resource in dangerous_resources for resource, _ in action.resource_gain_on_collect(state.resources))
 
 
 def _is_dangerous_event(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
@@ -370,7 +347,9 @@ async def _inner_advance_depth(
     has_action = False
     for _, action, damage_state in actions:
         action_additional_requirements = logic.get_additional_requirements(action)
-        if not action_additional_requirements.satisfied(context, damage_state.health_for_damage_requirements()):
+        if not action_additional_requirements.satisfied(
+            context.current_resources, damage_state.health_for_damage_requirements()
+        ):
             logic.logger.log_skip(action, state, logic)
             continue
 
@@ -393,20 +372,20 @@ async def _inner_advance_depth(
     old_additional_requirements = logic.get_additional_requirements(state.node)
 
     if (
-        old_additional_requirements != RequirementSet.trivial()
-        and additional_requirements == RequirementSet.impossible().alternatives
+        not old_additional_requirements.is_trivial()
+        and not additional_requirements  # same as == RequirementSet.impossible().alternatives
     ):
         # If a negated requirement is an additional before rolling back the negated resource, then the entire branch
         # will look trivial after rolling back that resource. However, upon exploring that branch again, the inside will
         # still have the old additional requirements, and these will all be skipped if the additional requirements
         # aren't met yet. To avoid marking the inside of branch as impossible on the second pass, we have to make use of
         # the old additional requirements from a previous iteration.
-        additional_requirements = old_additional_requirements.alternatives
+        additional_requirements = set(old_additional_requirements.alternatives)
 
     if has_action:
-        additional_alts: set[RequirementList] = set()
+        additional_alts: set[GraphRequirementList] = set()
         for resource_node in reach.collectable_resource_nodes(context):
-            additional_alts |= logic.get_additional_requirements(resource_node).alternatives
+            additional_alts |= set(logic.get_additional_requirements(resource_node).alternatives)
 
         additional_requirements = additional_requirements.union(additional_alts)
 

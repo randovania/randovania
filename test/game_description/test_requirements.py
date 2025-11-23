@@ -951,6 +951,18 @@ def test_and_damage_satisfied(echoes_resource_database):
     assert not and_req.satisfied(_ctx_for(db), 99)
 
 
+def test_damage_satisfied(echoes_resource_database):
+    db = echoes_resource_database
+    req = ResourceRequirement.create(
+        db.get_by_type_and_index(ResourceType.DAMAGE, "Damage"),
+        50,
+        False,
+    )
+    assert req.satisfied(_ctx_for(db), 99)
+    assert req.satisfied(_ctx_for(db), 51)
+    assert not req.satisfied(_ctx_for(db), 50)
+
+
 def test_isolate_deep(prime1_resource_database):
     req = RequirementAnd(
         [

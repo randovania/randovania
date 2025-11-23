@@ -12,6 +12,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.graph.graph_requirement import GraphRequirementList
 
 _ItemKey = tuple[int, int, bool]
 
@@ -42,6 +43,18 @@ class RequirementList:
                 self._bitmask.set_bit(index)
             else:
                 self._extra.append(it)
+
+    @classmethod
+    def from_graph_requirement_list(cls, graph_list: GraphRequirementList) -> typing.Self:
+        from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+
+        entries = []
+
+        for resource in graph_list.all_resources():
+            amount, negate = graph_list.get_requirement_for(resource)
+            entries.append(ResourceRequirement.create(resource, amount, negate))
+
+        return cls(entries)
 
     def __reduce__(self) -> tuple[type[RequirementList], tuple[ResourceRequirement, ...]]:
         return RequirementList, tuple(self._items.values())
@@ -136,6 +149,3 @@ class RequirementList:
             key in other._items or any(req.is_obsoleted_by(other_req) for other_req in other._items.values())
             for key, req in self._items.items()
         )
-
-
-SatisfiableRequirements = frozenset[RequirementList]

@@ -3,7 +3,6 @@ from __future__ import annotations
 import collections
 import copy
 import dataclasses
-import functools
 import typing
 
 from randovania.game_description.db.configurable_node import ConfigurableNode
@@ -12,13 +11,11 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node import NodeContext, NodeIndex
-from randovania.game_description.db.node_provider import NodeProvider
+from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.resource_requirement import (
     PositiveResourceRequirement,
     ResourceRequirement,
@@ -26,6 +23,8 @@ from randovania.game_description.requirements.resource_requirement import (
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
+from randovania.graph.requirement_converter import GraphRequirementConverter
 from randovania.lib.bitmask import Bitmask
 
 if typing.TYPE_CHECKING:
@@ -33,7 +32,7 @@ if typing.TYPE_CHECKING:
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
-    from randovania.game_description.db.node import Node
+    from randovania.game_description.db.node import Node, NodeIndex
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_database_view import GameDatabaseView
@@ -53,10 +52,10 @@ class WorldGraphNodeConnection(typing.NamedTuple):
     target: WorldGraphNode
     """The destination node for this connection."""
 
-    requirement: Requirement
+    requirement: GraphRequirementSet
     """The requirements for crossing this connection, with all extras already processed."""
 
-    requirement_without_leaving: Requirement
+    requirement_without_leaving: GraphRequirementSet
     """
     The requirements for crossing this connection, but excluding the nodes `requirement_to_leave`.
     Useful for the resolver to calculate satisfiable requirements on rollback.
@@ -98,7 +97,7 @@ class WorldGraphNode:
     Mask is created in the same way as RequirementList and ResourceCollection.
     """
 
-    requirement_to_collect: Requirement
+    requirement_to_collect: GraphRequirementSet
     """
     A requirement that must be satisfied before being able to collect
     """
@@ -216,26 +215,6 @@ class WorldGraph:
         return self.nodes[info.resource_index - self.node_resource_index_offset]
 
 
-@dataclasses.dataclass()
-class _WorldGraphNodeProvider(NodeProvider):
-    """
-    Not exactly a NodeProvider, but we only use this in NodeContext.node_provider which in turn is only used
-    for node_by_identifier.
-
-    TODO: All this can be fixed by using our own code for `patch_requirements`.
-    """
-
-    graph: WorldGraph
-    database_view: GameDatabaseView
-
-    def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
-        # This is used purely by NodeResourceInfo.from_identifier, when converting NodeRequirement.
-        # In that exact situation, we actually want to return the WorldGraphNode.
-
-        original_node = self.database_view.node_by_identifier(identifier)
-        return self.graph.original_to_node[original_node.node_index]  # type: ignore[return-value]
-
-
 def _get_dock_open_requirement(node: DockNode, weakness: DockWeakness) -> Requirement:
     """Gets the weakness requirement for opening, but allows the DockNode to override if it's default."""
     if weakness is node.default_dock_weakness and node.override_default_open_requirement is not None:
@@ -284,7 +263,7 @@ def _create_dock_connection(
     node: WorldGraphNode,
     graph: WorldGraph,
     patches: GamePatches,
-    simplify_requirement: Callable[[Requirement], Requirement],
+    simplify_requirement: Callable[[Requirement], GraphRequirementSet],
 ) -> WorldGraphNodeConnection:
     """Creates the connection for crossing this dock. Also handles adding the resource gain for breaking locks."""
     assert isinstance(node.database_node, DockNode)
@@ -297,7 +276,7 @@ def _create_dock_connection(
         back_lock = back_weakness.lock
 
     # Requirements needed to break the lock. Both locks if relevant
-    assert node.requirement_to_collect == Requirement.trivial()  # DockNodes shouldn't have this set
+    # assert node.requirement_to_collect.is_trivial()  # DockNodes shouldn't have this set
     requirement_to_collect = Requirement.trivial()
 
     # Requirements needed to open and cross the dock.
@@ -348,7 +327,7 @@ def _connections_from(
     node: WorldGraphNode,
     graph: WorldGraph,
     patches: GamePatches,
-    simplify_requirement: Callable[[Requirement], Requirement],
+    simplify_requirement: Callable[[Requirement], GraphRequirementSet],
     configurable_node_requirements: Mapping[NodeIdentifier, Requirement],
     teleporter_networks: dict[str, list[WorldGraphNode]],
     connections: Iterable[tuple[WorldGraphNode, Requirement]],
@@ -370,43 +349,58 @@ def _connections_from(
                 assert isinstance(other_node.database_node, TeleporterNetworkNode)
                 yield WorldGraphNodeConnection(
                     target=other_node,
-                    requirement=RequirementAnd(
-                        [
-                            node.database_node.is_unlocked,
-                            other_node.database_node.is_unlocked,
-                        ]
+                    requirement=simplify_requirement(
+                        RequirementAnd(
+                            [
+                                node.database_node.is_unlocked,
+                                other_node.database_node.is_unlocked,
+                            ]
+                        )
                     ),
-                    requirement_without_leaving=other_node.database_node.is_unlocked,
+                    requirement_without_leaving=simplify_requirement(other_node.database_node.is_unlocked),
                 )
 
     for target_node, requirement in connections:
         # TODO: good spot to add some heuristic for simplifying requirements in general
-        requirement_including_leaving = requirement
-        requirement = simplify_requirement(requirement)
 
         if requirement_to_leave != Requirement.trivial():
-            requirement_including_leaving = simplify_requirement(
-                RequirementAnd([requirement_including_leaving, requirement_to_leave])
-            )
             if _is_requirement_viable_as_additional(requirement_to_leave):
-                requirement = requirement_including_leaving
+                requirement_including_leaving = requirement_without_leaving = simplify_requirement(
+                    RequirementAnd([requirement, requirement_to_leave])
+                )
+            else:
+                requirement_without_leaving = simplify_requirement(requirement)
+                requirement_to_leave_s = simplify_requirement(requirement_to_leave)
+
+                if isinstance(requirement_to_leave_s, GraphRequirementList):
+                    requirement_including_leaving = copy.copy(requirement_without_leaving)
+                    requirement_including_leaving.all_alternative_and_with(requirement_to_leave_s)
+
+                elif isinstance(requirement_without_leaving, GraphRequirementList):
+                    requirement_including_leaving = copy.copy(requirement_to_leave_s)
+                    requirement_including_leaving.all_alternative_and_with(requirement_without_leaving)
+
+                else:
+                    # TODO
+                    requirement_including_leaving = simplify_requirement(
+                        RequirementAnd([requirement, requirement_to_leave])
+                    )
 
         else:
-            requirement_including_leaving = requirement
+            requirement_including_leaving = requirement_without_leaving = simplify_requirement(requirement)
 
         yield WorldGraphNodeConnection(
             target=target_node,
             requirement=requirement_including_leaving,
-            requirement_without_leaving=requirement,
+            requirement_without_leaving=requirement_without_leaving,
         )
 
 
-def _dangerous_resources(nodes: list[WorldGraphNode], context: NodeContext) -> Iterator[ResourceInfo]:
+def _dangerous_resources(nodes: list[WorldGraphNode]) -> Iterator[ResourceInfo]:
     for node in nodes:
         for connection in node.connections:
-            for individual in connection.requirement.iterate_resource_requirements(context):
-                if individual.negate:
-                    yield individual.resource
+            for graph_requirement in connection.requirement.alternatives:
+                yield from graph_requirement.negate_resources
 
 
 def create_node(
@@ -449,7 +443,8 @@ def create_node(
         heal=original_node.heal,
         connections=[],  # to be filled by `create_graph`, after all nodes are created.
         resource_gain=resource_gain,
-        requirement_to_collect=requirement_to_collect,
+        # FIXME: ugly hack leaving a regular Requirement here...
+        requirement_to_collect=requirement_to_collect,  # type: ignore[arg-type]
         require_collected_to_leave=isinstance(original_node, EventNode | PickupNode | EventPickupNode),
         pickup_index=pickup_index,
         pickup_entry=pickup_entry,
@@ -504,16 +499,10 @@ def _should_create_front_node(database_view: GameDatabaseView, patches: GamePatc
     return len(connections_to) > 0
 
 
-@functools.cache
-def _cached_simplify(requirement: Requirement) -> Requirement:
-    """Cache globally, to help with DLR recreating world graph every time"""
-    return requirement.simplify()
-
-
 def create_graph(
     database_view: GameDatabaseView,
     patches: GamePatches,
-    resources: ResourceCollection,
+    static_resources: ResourceCollection,
     damage_multiplier: float,
     victory_condition: Requirement,
     flatten_to_set_on_patch: bool,
@@ -561,9 +550,11 @@ def create_graph(
                     node_index=len(nodes),
                     identifier=original_node.identifier.renamed(f"Front of {original_node.name}"),
                     heal=original_node.heal,
-                    connections=[WorldGraphNodeConnection(new_node, Requirement.trivial(), Requirement.trivial())],
+                    connections=[
+                        WorldGraphNodeConnection(new_node, GraphRequirementSet.trivial(), GraphRequirementSet.trivial())
+                    ],
                     resource_gain=[],
-                    requirement_to_collect=Requirement.trivial(),
+                    requirement_to_collect=GraphRequirementSet.trivial(),
                     require_collected_to_leave=False,
                     pickup_index=None,
                     pickup_entry=None,
@@ -574,7 +565,7 @@ def create_graph(
                 )
             )
             new_node.connections.append(
-                WorldGraphNodeConnection(front_node, Requirement.trivial(), Requirement.trivial())
+                WorldGraphNodeConnection(front_node, GraphRequirementSet.trivial(), GraphRequirementSet.trivial())
             )
             graph_area_connections[front_node.node_index] = graph_area_connections[new_node.node_index]
             graph_area_connections[new_node.node_index] = []
@@ -588,23 +579,13 @@ def create_graph(
         node_by_pickup_index={node.pickup_index: node for node in nodes if node.pickup_index is not None},
         node_resource_index_offset=node_resource_index_offset,
     )
+    converter = GraphRequirementConverter(resource_database, graph, static_resources, damage_multiplier)
+    NodeContext(None, static_resources, None, None)
 
-    context = NodeContext(patches, resources, resource_database, _WorldGraphNodeProvider(graph, database_view))
-
-    # Cache internally, to catch the same requirement being used multiple times in the same world graph
-
-    @functools.cache
-    def simplify_requirement_with_as_set(requirement: Requirement) -> Requirement:
-        patched = requirement.patch_requirements(damage_multiplier, context)
-        return _cached_simplify(
-            RequirementOr(
-                [RequirementAnd(alternative.values()) for alternative in patched.as_set(context).alternatives]
-            )
-        )
-
-    @functools.cache
-    def simplify_requirement(requirement: Requirement) -> Requirement:
-        return _cached_simplify(requirement.patch_requirements(damage_multiplier, context))
+    simplify_requirement = converter.convert_db
+    for node in nodes:
+        if isinstance(node.requirement_to_collect, Requirement):
+            node.requirement_to_collect = simplify_requirement(node.requirement_to_collect)
 
     for node in nodes:
         if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
@@ -627,35 +608,34 @@ def create_graph(
                 node,
                 graph,
                 patches,
-                simplify_requirement_with_as_set if flatten_to_set_on_patch else simplify_requirement,
+                simplify_requirement,
                 configurable_node_requirements,
                 teleporter_networks,
                 converted_area_connections,
             )
         )
 
-    graph.dangerous_resources = frozenset(_dangerous_resources(nodes, context))
+    graph.dangerous_resources = frozenset(_dangerous_resources(nodes))
 
     for node in nodes:
         for connection in node.connections:
-            has_negate = set()
+            has_negate: set[ResourceInfo] = set()
             resource_in_edge = set()
-            requirement = connection.requirement
+            requirement_set = connection.requirement
 
             if node.is_resource_node():
-                dangerous_extra: list[Requirement] = [
-                    ResourceRequirement.simple(resource)
-                    for resource, quantity in node.resource_gain_on_collect(resources)
-                    if resource in graph.dangerous_resources
-                ]
-                if dangerous_extra:
-                    dangerous_extra.append(requirement)
-                    requirement = RequirementAnd(dangerous_extra)
+                dangerous_extra = GraphRequirementList()
 
-            for individual in requirement.iterate_resource_requirements(context):
-                resource_in_edge.add(individual.resource)
-                if individual.negate:
-                    has_negate.add(individual.resource)
+                for resource, quantity in node.resource_gain_on_collect(static_resources):
+                    if resource in graph.dangerous_resources:
+                        dangerous_extra.add_resource(resource, 1, False)
+
+                if dangerous_extra.set_resources:
+                    requirement_set.all_alternative_and_with(dangerous_extra)
+
+            for alternative in requirement_set.alternatives:
+                resource_in_edge |= alternative.all_resources()
+                has_negate.update(alternative.negate_resources)
 
             for resource in resource_in_edge:
                 mappings = [graph.resource_to_edges]

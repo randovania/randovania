@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.graph.graph_requirement import GraphRequirementSet
 from randovania.resolver.exceptions import ResolverTimeoutError
 from randovania.resolver.logging import (
     ResolverLogger,
@@ -25,7 +25,7 @@ class Logic:
 
     dangerous_resources: frozenset[ResourceInfo]
 
-    additional_requirements: list[RequirementSet]
+    additional_requirements: list[GraphRequirementSet]
     prioritize_hints: bool
     all_nodes: Sequence[WorldGraphNode]
     graph: WorldGraph
@@ -50,16 +50,16 @@ class Logic:
         self.num_nodes = len(self.all_nodes)
         self._victory_condition = graph.victory_condition
         self.dangerous_resources = graph.dangerous_resources
-        self.additional_requirements = [RequirementSet.trivial()] * self.num_nodes
+        self.additional_requirements = [GraphRequirementSet.trivial()] * self.num_nodes
         self.prioritize_hints = prioritize_hints
         self.record_paths = record_paths
 
         self.logger = TextResolverLogger()
 
-    def get_additional_requirements(self, node: WorldGraphNode) -> RequirementSet:
+    def get_additional_requirements(self, node: WorldGraphNode) -> GraphRequirementSet:
         return self.additional_requirements[node.node_index]
 
-    def set_additional_requirements(self, node: WorldGraphNode, req: RequirementSet) -> None:
+    def set_additional_requirements(self, node: WorldGraphNode, req: GraphRequirementSet) -> None:
         self.additional_requirements[node.node_index] = req
 
     def victory_condition(self, state: State) -> Requirement:

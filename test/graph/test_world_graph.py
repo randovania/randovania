@@ -7,10 +7,10 @@ import pytest
 
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.graph import world_graph
+from randovania.graph.graph_requirement import create_requirement_list, create_requirement_set
 from randovania.graph.world_graph import WorldGraphNodeConnection
 
 if TYPE_CHECKING:
@@ -46,7 +46,9 @@ def test_connections_from_dock_blast_shield(blank_world_graph):
     node_1 = blank_world_graph.node_identifier_to_node[node_1_identifier]
     node_2 = blank_world_graph.node_identifier_to_node[node_2_identifier]
 
-    req = ResourceRequirement.simple(blank_world_graph.resource_info_for_node(node_2))
+    req = create_requirement_set(
+        [create_requirement_list([ResourceRequirement.simple(blank_world_graph.resource_info_for_node(node_2))])]
+    )
 
     # Run
     # Already converted!
@@ -55,13 +57,9 @@ def test_connections_from_dock_blast_shield(blank_world_graph):
     outside_1 = [con for con in node_1.connections if con.target.area != node_1.area]
     outside_2 = [con for con in node_2.connections if con.target.area != node_2.area]
 
-    assert outside_1 == [
-        WorldGraphNodeConnection(
-            blank_world_graph.node_identifier_to_node[node_3_identifier], Requirement.trivial(), Requirement.trivial()
-        )
-    ]
+    assert outside_1 == [WorldGraphNodeConnection.trivial(blank_world_graph.node_identifier_to_node[node_3_identifier])]
     assert outside_2 == [
-        WorldGraphNodeConnection(blank_world_graph.node_identifier_to_node[node_4_identifier], req, req)
+        WorldGraphNodeConnection(blank_world_graph.node_identifier_to_node[node_4_identifier], req, req, req)
     ]
 
 
@@ -92,8 +90,8 @@ def test_hint_node_should_collect(hint_node, empty_patches, blank_world_graph):
     def ctx(*args: ResourceInfo):
         return NodeContext(empty_patches, col(*args), db, node_provider)
 
-    assert node.requirement_to_collect.satisfied(ctx(), 0) != has_translator
-    assert node.requirement_to_collect.satisfied(ctx(translator), 0)
+    assert node.requirement_to_collect.satisfied(col(), 0) != has_translator
+    assert node.requirement_to_collect.satisfied(col(translator), 0)
 
     assert not node.has_all_resources(col())
     assert not node.has_all_resources(col(translator))

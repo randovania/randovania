@@ -172,9 +172,7 @@ class State:
         """
         if not (
             not node.has_all_resources(self.resources)
-            and node.requirement_to_collect.satisfied(
-                self.node_context(), damage_state.health_for_damage_requirements()
-            )
+            and node.requirement_to_collect.satisfied(self.resources, damage_state.health_for_damage_requirements())
         ):
             raise ValueError(f"Trying to collect an uncollectable node'{node}'")
 
