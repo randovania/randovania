@@ -446,11 +446,9 @@ def setup_resolver(
 
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
 
-    game_or_graph, starting_state = bootstrap.logic_bootstrap_graph(configuration, game, patches)
-    logic = Logic(game_or_graph, configuration)
+    graph, starting_state = bootstrap.logic_bootstrap_graph(configuration, game, patches)
+    logic = Logic(graph, configuration)
     logic.record_paths = record_paths
-
-    starting_state.resources.add_self_as_requirement_to_resources = True
 
     return starting_state, logic
 

@@ -4,11 +4,11 @@ import re
 import typing
 from typing import TYPE_CHECKING
 
-from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.requirements.array_base import RequirementArrayBase
@@ -201,28 +201,37 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
 
     graph = networkx.DiGraph()
 
-    for node in game.region_list.iterate_nodes():
-        if isinstance(node, DockLockNode):
-            continue
+    for _, _, node in game.node_iterator():
         graph.add_node(node)
 
-    context = _create_node_context(game)
-
-    for node in game.region_list.iterate_nodes():
+    for region, area, node in game.node_iterator():
         if node not in graph:
             continue
 
-        try:
-            for other, req in game.region_list.potential_nodes_from(node, context):
-                if other not in graph:
-                    continue
+        for other, req in area.connections.get(node, {}).items():
+            if other not in graph:
+                continue
 
-                if req != Requirement.impossible():
+            if req != Requirement.impossible():
+                graph.add_edge(node, other)
+
+        if isinstance(node, TeleporterNetworkNode):
+            for other in game.region_list.nodes_in_network(node.network):
+                if other in graph and node != other and other.is_unlocked != Requirement.impossible():
                     graph.add_edge(node, other)
 
-        except KeyError:
-            # Broken docks
-            continue
+        if isinstance(node, DockNode):
+            try:
+                maybe_other = game.node_by_identifier(node.default_connection)
+            except KeyError:
+                maybe_other = None
+
+            requirement = node.override_default_open_requirement
+            if not requirement:
+                requirement = node.default_dock_weakness.requirement
+
+            if maybe_other is not None and maybe_other in graph and requirement != Requirement.impossible():
+                graph.add_edge(node, maybe_other)
 
     starting_node = game.region_list.node_by_identifier(game.starting_location)
 
@@ -328,6 +337,16 @@ def _does_requirement_contain_resource(req: Requirement, resource: str) -> bool:
     return False
 
 
+def get_possible_connections(game: GameDescription) -> Iterator[tuple[str, Requirement]]:
+    for dock_type in game.dock_weakness_database.dock_types:
+        for weakness in game.dock_weakness_database.weaknesses[dock_type].values():
+            yield f"DockWeakness {weakness.name} ({dock_type.long_name}", weakness.requirement
+
+    for region, area, source_node in game.node_iterator():
+        for destination_node, req in area.connections.get(source_node, {}).items():
+            yield f"{source_node.identifier.as_string} -> {destination_node.identifier.as_string}", req
+
+
 def check_for_items_to_be_replaced_by_templates(
     game: GameDescription, items_to_templates: dict[str, str]
 ) -> Iterator[str]:
@@ -342,20 +361,10 @@ def check_for_items_to_be_replaced_by_templates(
     like this: "Can Jump High or Can Jump Very High"
     :return: Error messages of requirements which don't pass the check.
     """
-    context = _create_node_context(game)
-
-    for source_node in game.region_list.iterate_nodes():
-        try:
-            for destination_node, req in game.region_list.potential_nodes_from(source_node, context):
-                for resource, template in items_to_templates.items():
-                    if _does_requirement_contain_resource(req, resource):
-                        yield (
-                            f"{source_node.identifier.as_string} -> {destination_node.identifier.as_string} is using "
-                            f'the resource "{resource}" directly than using the template "{template}".'
-                        )
-        except KeyError:
-            # Broken docks
-            continue
+    for label, requirement in get_possible_connections(game):
+        for resource, template in items_to_templates.items():
+            if _does_requirement_contain_resource(requirement, resource):
+                yield (f'{label} is using the resource "{resource}" directly than using the template "{template}".')
 
 
 def check_for_resources_to_use_together(
@@ -373,20 +382,12 @@ def check_for_resources_to_use_together(
     context = _create_node_context(game)
     requirement_cache: dict[Requirement, tuple[RequirementList, ...]] = {}
 
-    for source_node in game.region_list.iterate_nodes():
-        try:
-            for destination_node, req in game.region_list.potential_nodes_from(source_node, context):
-                for resource_key, resource_value in combined_resources.items():
-                    if _needed_resources_partly_satisfied(
-                        req, (resource_key, resource_value), context, requirement_cache
-                    ):
-                        yield (
-                            f"{source_node.identifier.as_string} -> {destination_node.identifier.as_string} contains "
-                            f'"{resource_key}" but not "{resource_value}"'
-                        )
-        except KeyError:
-            # Broken docks
-            continue
+    for label, requirement in get_possible_connections(game):
+        for resource_key, resource_value in combined_resources.items():
+            if _needed_resources_partly_satisfied(
+                requirement, (resource_key, resource_value), context, requirement_cache
+            ):
+                yield (f'{label} contains "{resource_key}" but not "{resource_value}"')
 
 
 def find_incompatible_video_links(game: GameDescription) -> Iterator[str]:

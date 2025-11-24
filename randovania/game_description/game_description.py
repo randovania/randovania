@@ -37,30 +37,6 @@ if TYPE_CHECKING:
     from randovania.resolver.damage_state import DamageState
 
 
-def _requirement_dangerous(requirement: Requirement, context: NodeContext) -> Iterator[ResourceInfo]:
-    for individual in requirement.iterate_resource_requirements(context):
-        if individual.negate:
-            yield individual.resource
-
-
-def _calculate_dangerous_resources_in_db(
-    db: DockWeaknessDatabase,
-    context: NodeContext,
-) -> Iterator[ResourceInfo]:
-    for dock_type in db.dock_types:
-        for dock_weakness in db.weaknesses[dock_type].values():
-            yield from _requirement_dangerous(context.node_provider.open_requirement_for(dock_weakness), context)
-            if dock_weakness.lock is not None:
-                yield from _requirement_dangerous(context.node_provider.lock_requirement_for(dock_weakness), context)
-
-
-def _calculate_dangerous_resources_in_areas(context: NodeContext) -> Iterator[ResourceInfo]:
-    for area in context.node_provider.all_areas:
-        for node in area.nodes:
-            for _, requirement in context.node_provider.area_connections_from(node):
-                yield from _requirement_dangerous(requirement, context)
-
-
 @dataclasses.dataclass(frozen=True)
 class IndexWithReason:
     name: str
@@ -143,26 +119,15 @@ class GameDescription(GameDatabaseView):
             self.region_list,
         )
 
-    def get_prefilled_docks(self) -> list[int | None]:
-        region_list = self.region_list
-        dock_connection = [None] * len(region_list.all_nodes)
-        connections: list[int | None] = list(dock_connection)
+    def get_prefilled_docks(self) -> dict[NodeIdentifier, NodeIdentifier]:
+        connections: dict[NodeIdentifier, NodeIdentifier] = {}
+
         teleporter_dock_types = self.dock_weakness_database.all_teleporter_dock_types
-        for source in region_list.iterate_nodes_of_type(DockNode):
+        for _, _, source in self.iterate_nodes_of_type(DockNode):
             if source.dock_type in teleporter_dock_types:
-                target = region_list.node_by_identifier(source.default_connection)
-                connections[source.node_index] = target.node_index
+                connections[source.identifier] = source.default_connection
+
         return connections
-
-    @property
-    def dangerous_resources(self) -> frozenset[ResourceInfo]:
-        if self._dangerous_resources is None:
-            context = self.create_node_context(self.resource_database.create_resource_collection())
-            first = _calculate_dangerous_resources_in_areas(context)
-            second = _calculate_dangerous_resources_in_db(self.dock_weakness_database, context)
-            self._dangerous_resources = frozenset(first) | frozenset(second)
-
-        return self._dangerous_resources
 
     def get_used_trick_levels(self, *, ignore_cache: bool = False) -> dict[TrickResourceInfo, set[int]]:
         if self._used_trick_levels is not None and not ignore_cache:

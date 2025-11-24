@@ -242,7 +242,7 @@ class PlayerState:
                 continue
 
             if db_node.dock_type in teleporter_dock_types and self.reach.is_reachable_node(node):
-                other = s.patches.get_dock_connection_for(db_node)
+                other = self.original_game.node_by_identifier(s.patches.get_dock_connection_for(db_node))
                 teleporters.append(
                     "* {} to {}".format(
                         elevators.get_elevator_or_area_name(db_node, True),

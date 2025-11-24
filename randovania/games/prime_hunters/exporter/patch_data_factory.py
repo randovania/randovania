@@ -7,7 +7,6 @@ from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory, PatcherDataMeta
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -158,12 +157,8 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
     def _get_portals_for_area(self, area: Area) -> list:
         portals = []
 
-        for node, connection in self.patches.all_dock_connections():
-            if (
-                isinstance(node, DockNode)
-                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
-                and node in area.nodes
-            ):
+        for node, connection in self.patches.all_dock_connections(self.game):
+            if node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types and node in area.nodes:
                 portal: dict = {}
 
                 portal["entity_id"] = node.extra["entity_id"]
