@@ -5,13 +5,10 @@ from enum import Enum
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
-    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.base import Requirement
-    from randovania.game_description.resources.resource_info import ResourceGain
 
 
 class HintNodeKind(Enum):
@@ -39,9 +36,3 @@ class HintNode(ResourceNode):
 
     def __repr__(self) -> str:
         return f"HintNode({self.name!r})"
-
-    def resource(self, context: NodeContext) -> NodeResourceInfo:
-        return NodeResourceInfo.from_node(self, context)
-
-    def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
-        yield self.resource(context), 1

@@ -6,8 +6,7 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.resource_node import ResourceNode
 
 if TYPE_CHECKING:
-    from randovania.game_description.db.node import NodeContext
-    from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
@@ -16,6 +15,3 @@ class EventNode(ResourceNode):
 
     def __repr__(self) -> str:
         return f"EventNode({self.name!r} -> {self.event.long_name})"
-
-    def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
-        yield self.event, 1

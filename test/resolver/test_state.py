@@ -21,15 +21,18 @@ def test_collected_pickup_indices(state_game_data, empty_patches, blank_world_gr
     starting = empty_patches.game.region_list.node_by_identifier(empty_patches.game.starting_location)
     pickup_nodes = [node for node in empty_patches.game.region_list.all_nodes if isinstance(node, PickupNode)]
 
-    context = NodeContext(
+    NodeContext(
         empty_patches,
         empty_patches.game.resource_database.create_resource_collection(),
         empty_patches.game.resource_database,
         empty_patches.game.region_list,
     )
-    resources = ResourceCollection.from_dict(
-        db, {db.item[0]: 5, pickup_nodes[0].resource(context): 1, pickup_nodes[1].resource(context): 1}
-    )
+    pickup_node_resources = {
+        blank_world_graph.resource_info_for_node(blank_world_graph.original_to_node[node.node_index]): 1
+        for node in [pickup_nodes[0], pickup_nodes[1]]
+    }
+
+    resources = ResourceCollection.from_dict(db, {db.item[0]: 5, **pickup_node_resources})
     s = state.State(
         resources,
         {},
