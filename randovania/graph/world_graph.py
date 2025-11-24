@@ -210,11 +210,12 @@ class WorldGraph:
     victory_condition: GraphRequirementSet
     dangerous_resources: frozenset[ResourceInfo]
     nodes: list[WorldGraphNode]
-    node_by_pickup_index: dict[PickupIndex, WorldGraphNode]
-    node_identifier_to_node: dict[NodeIdentifier, WorldGraphNode] = dataclasses.field(init=False)
-    original_to_node: dict[int, WorldGraphNode] = dataclasses.field(init=False)
     node_resource_index_offset: int
     converter: GraphRequirementConverter | None = dataclasses.field(init=False, default=None)
+
+    node_by_pickup_index: dict[PickupIndex, WorldGraphNode] = dataclasses.field(init=False)
+    node_identifier_to_node: dict[NodeIdentifier, WorldGraphNode] = dataclasses.field(init=False)
+    original_to_node: dict[int, WorldGraphNode] = dataclasses.field(init=False)
 
     front_of_dock_mapping: dict[NodeIndex, NodeIndex]
     """A mapping of nodes to the created `Front of` node."""
@@ -232,9 +233,14 @@ class WorldGraph:
     def __post_init__(self) -> None:
         self.node_identifier_to_node = {}
         self.original_to_node = {}
+        self.node_by_pickup_index = {}
 
         for node in self.nodes:
             self.node_identifier_to_node[node.identifier] = node
+            if node.pickup_index is not None:
+                assert node.pickup_index not in self.node_by_pickup_index
+                self.node_by_pickup_index[node.pickup_index] = node
+
             if node.database_node is not None:
                 assert node.database_node.node_index not in self.original_to_node
                 self.original_to_node[node.database_node.node_index] = node
@@ -569,7 +575,6 @@ def create_patchless_graph(
         victory_condition=GraphRequirementSet.trivial(),
         dangerous_resources=frozenset(),
         nodes=nodes,
-        node_by_pickup_index={node.pickup_index: node for node in nodes if node.pickup_index is not None},
         node_resource_index_offset=node_resource_index_offset,
         front_of_dock_mapping=front_of_dock_mapping,
     )
@@ -667,7 +672,7 @@ def _replace_target(conn: WorldGraphNodeConnection, node: WorldGraphNode) -> Wor
     return WorldGraphNodeConnection(node, *conn[1:])
 
 
-def adjust_graph_for_patches(
+def _adjust_graph_for_patches(
     graph: WorldGraph,
     patches: GamePatches,
 ) -> None:
@@ -745,6 +750,48 @@ def _redirect_connections_to_front_node(
         front_node.back_connections.append(back_node_index)
 
 
+def duplicate_and_adjust_graph_for_patches(
+    base_graph: WorldGraph,
+    patches: GamePatches,
+) -> WorldGraph:
+    """Creates a copy of the given WorldGraph and applies patches to it."""
+
+    nodes = []
+    for base_node in base_graph.nodes:
+        nodes.append(
+            new_node := WorldGraphNode(
+                node_index=base_node.node_index,
+                identifier=base_node.identifier,
+                heal=base_node.heal,
+                connections=copy.copy(base_node.connections),
+                resource_gain=[],
+                requirement_to_collect=copy.copy(base_node.requirement_to_collect),
+                require_collected_to_leave=base_node.require_collected_to_leave,
+                pickup_index=base_node.pickup_index,
+                pickup_entry=None,
+                is_lock_action=base_node.is_lock_action,
+                database_node=base_node.database_node,
+                area=base_node.area,
+                region=base_node.region,
+            )
+        )
+        new_node.back_connections.extend(base_node.back_connections)
+        for resource, _ in base_node.resource_gain:
+            new_node.add_resource(resource)
+
+    new_graph = WorldGraph(
+        game_enum=base_graph.game_enum,
+        victory_condition=base_graph.victory_condition,
+        dangerous_resources=frozenset(),
+        nodes=nodes,
+        node_resource_index_offset=base_graph.node_resource_index_offset,
+        front_of_dock_mapping=base_graph.front_of_dock_mapping,
+    )
+    new_graph.converter = base_graph.converter
+    _adjust_graph_for_patches(new_graph, patches)
+    return new_graph
+
+
 def create_graph(
     database_view: GameDatabaseView,
     patches: GamePatches,
@@ -760,5 +807,5 @@ def create_graph(
         victory_condition,
         flatten_to_set_on_patch,
     )
-    adjust_graph_for_patches(graph, patches)
+    _adjust_graph_for_patches(graph, patches)
     return graph
