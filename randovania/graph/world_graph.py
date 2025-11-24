@@ -190,7 +190,7 @@ class WorldGraphNode:
 
     def add_connection(self, graph: WorldGraph, connection: WorldGraphNodeConnection) -> None:
         self.connections.append(connection)
-        graph.nodes[connection.target].back_connections.append(self.node_index)
+        graph.editable_node(connection.target).back_connections.append(self.node_index)
 
     @property
     def name(self) -> str:
@@ -198,6 +198,27 @@ class WorldGraphNode:
 
     def __repr__(self) -> str:
         return f"GraphNode[{self.name}, {self.node_index}]"
+
+    def duplicate(self) -> WorldGraphNode:
+        new_node = WorldGraphNode(
+            node_index=self.node_index,
+            identifier=self.identifier,
+            heal=self.heal,
+            connections=list(self.connections),
+            resource_gain=[],
+            requirement_to_collect=self.requirement_to_collect,
+            require_collected_to_leave=self.require_collected_to_leave,
+            pickup_index=self.pickup_index,
+            pickup_entry=None,
+            is_lock_action=self.is_lock_action,
+            database_node=self.database_node,
+            area=self.area,
+            region=self.region,
+        )
+        new_node.back_connections.extend(self.back_connections)
+        for resource, _ in self.resource_gain:
+            new_node.add_resource(resource)
+        return new_node
 
 
 @dataclasses.dataclass(slots=True)
@@ -219,6 +240,9 @@ class WorldGraph:
 
     front_of_dock_mapping: dict[NodeIndex, NodeIndex]
     """A mapping of nodes to the created `Front of` node."""
+
+    copied_nodes: set[NodeIndex] | None = None
+    """If set, this graph is a copy and these are the nodes that were already copied."""
 
     resource_to_edges: dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]] = dataclasses.field(
         init=False, default_factory=dict
@@ -255,6 +279,15 @@ class WorldGraph:
 
     def get_node_by_resource_info(self, info: NodeResourceInfo) -> WorldGraphNode:
         return self.nodes[info.resource_index - self.node_resource_index_offset]
+
+    def editable_node(self, index: NodeIndex) -> WorldGraphNode:
+        """Gets a node you can edit, handling if this is a copied graph."""
+        base = self.nodes[index]
+        if self.copied_nodes is not None and index not in self.copied_nodes:
+            base = base.duplicate()
+            self.copied_nodes.add(index)
+            self.nodes[index] = base
+        return base
 
 
 def _get_dock_open_requirement(node: DockNode, weakness: DockWeakness) -> Requirement:
@@ -643,7 +676,7 @@ def graph_precache(graph: WorldGraph) -> None:
 
                 if dangerous_extra.all_resources():
                     requirement_set = requirement_set.copy_then_all_alternative_and_with(dangerous_extra)
-                    node.connections[index] = WorldGraphNodeConnection(
+                    graph.editable_node(node.node_index).connections[index] = WorldGraphNodeConnection(
                         target=connection.target,
                         requirement=connection.requirement,
                         requirement_with_self_dangerous=requirement_set,
@@ -676,12 +709,14 @@ def _adjust_graph_for_patches(
     graph: WorldGraph,
     patches: GamePatches,
 ) -> None:
-    nodes_by_area: dict[int, list[WorldGraphNode]] = collections.defaultdict(list)
-
+    """
+    Edits the given
+    :param graph:
+    :param patches:
+    :return:
+    """
     # Add pickup entries from patches
     for node in graph.nodes:
-        nodes_by_area[id(node.area)].append(node)
-
         if node.pickup_index is not None:
             target = patches.pickup_assignment.get(node.pickup_index)
             if target is not None and target.player == patches.player_index:
@@ -719,7 +754,8 @@ def _redirect_connections_to_front_node(
     :param connections_to_skip: Which connections should not be touched, usually the proper dock connections.
     :return:
     """
-    front_node = graph.nodes[graph.front_of_dock_mapping[node.node_index]]
+
+    front_node = graph.editable_node(graph.front_of_dock_mapping[node.node_index])
 
     # Change `node` to only connect to `front_node`, except for their DockNode connection
     front_node.back_connections.append(node.node_index)
@@ -729,7 +765,7 @@ def _redirect_connections_to_front_node(
         if (node.node_index, conn.target) in connections_to_skip:
             new_node_connections.append(conn)
         else:
-            graph.nodes[conn.target].back_connections.remove(node.node_index)
+            graph.editable_node(conn.target).back_connections.remove(node.node_index)
             front_node.add_connection(graph, conn)
 
     node.connections = new_node_connections
@@ -740,7 +776,7 @@ def _redirect_connections_to_front_node(
             # Don't redirect dock connections
             continue
 
-        back_node = graph.nodes[back_node_index]
+        back_node = graph.editable_node(back_node_index)
         back_connection_index, back_connection = next(
             (i, conn) for i, conn in enumerate(back_node.connections) if conn.target == node.node_index
         )
@@ -756,28 +792,19 @@ def duplicate_and_adjust_graph_for_patches(
 ) -> WorldGraph:
     """Creates a copy of the given WorldGraph and applies patches to it."""
 
+    copied_nodes = set()
     nodes = []
     for base_node in base_graph.nodes:
-        nodes.append(
-            new_node := WorldGraphNode(
-                node_index=base_node.node_index,
-                identifier=base_node.identifier,
-                heal=base_node.heal,
-                connections=copy.copy(base_node.connections),
-                resource_gain=[],
-                requirement_to_collect=copy.copy(base_node.requirement_to_collect),
-                require_collected_to_leave=base_node.require_collected_to_leave,
-                pickup_index=base_node.pickup_index,
-                pickup_entry=None,
-                is_lock_action=base_node.is_lock_action,
-                database_node=base_node.database_node,
-                area=base_node.area,
-                region=base_node.region,
-            )
-        )
-        new_node.back_connections.extend(base_node.back_connections)
-        for resource, _ in base_node.resource_gain:
-            new_node.add_resource(resource)
+        is_dock_node = isinstance(base_node.database_node, DockNode)
+        should_copy = is_dock_node or base_node.pickup_index is not None
+
+        if should_copy:
+            new_node = base_node.duplicate()
+            copied_nodes.add(base_node.node_index)
+        else:
+            new_node = base_node
+
+        nodes.append(new_node)
 
     new_graph = WorldGraph(
         game_enum=base_graph.game_enum,
@@ -786,6 +813,7 @@ def duplicate_and_adjust_graph_for_patches(
         nodes=nodes,
         node_resource_index_offset=base_graph.node_resource_index_offset,
         front_of_dock_mapping=base_graph.front_of_dock_mapping,
+        copied_nodes=copied_nodes,
     )
     new_graph.converter = base_graph.converter
     _adjust_graph_for_patches(new_graph, patches)
