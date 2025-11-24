@@ -339,20 +339,23 @@ def check_for_items_to_be_replaced_by_templates(
     like this: "Can Jump High or Can Jump Very High"
     :return: Error messages of requirements which don't pass the check.
     """
-    context = _create_node_context(game)
+    for dock_type in game.dock_weakness_database.dock_types:
+        for weakness in game.dock_weakness_database.weaknesses[dock_type].values():
+            for resource, template in items_to_templates.items():
+                if _does_requirement_contain_resource(weakness.requirement, resource):
+                    yield (
+                        f"DockWeakness {weakness.name} ({dock_type.long_name} is using "
+                        f'the resource "{resource}" directly than using the template "{template}".'
+                    )
 
-    for source_node in game.region_list.iterate_nodes():
-        try:
-            for destination_node, req in game.region_list.potential_nodes_from(source_node, context):
-                for resource, template in items_to_templates.items():
-                    if _does_requirement_contain_resource(req, resource):
-                        yield (
-                            f"{source_node.identifier.as_string} -> {destination_node.identifier.as_string} is using "
-                            f'the resource "{resource}" directly than using the template "{template}".'
-                        )
-        except KeyError:
-            # Broken docks
-            continue
+    for region, area, source_node in game.node_iterator():
+        for destination_node, req in area.connections.get(source_node, {}).items():
+            for resource, template in items_to_templates.items():
+                if _does_requirement_contain_resource(req, resource):
+                    yield (
+                        f"{source_node.identifier.as_string} -> {destination_node.identifier.as_string} is using "
+                        f'the resource "{resource}" directly than using the template "{template}".'
+                    )
 
 
 def check_for_resources_to_use_together(
