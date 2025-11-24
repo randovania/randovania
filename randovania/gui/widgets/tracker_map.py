@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import collections
 import logging
 from typing import TYPE_CHECKING
 
@@ -15,6 +16,7 @@ from randovania.game_description.db.dock_node import DockNode
 if TYPE_CHECKING:
     from matplotlib.axes import Axes
 
+    from randovania.game_description.db.area import Area
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.graph.state import State
@@ -65,28 +67,27 @@ class MatplotlibWidget(QtWidgets.QWidget):
     def update_for(self, region: Region, state: State, nodes_in_reach: list[WorldGraphNode]) -> None:
         g = networkx.DiGraph()
 
-        original_nodes_in_reach = {
-            node.database_node.node_index for node in nodes_in_reach if node.database_node is not None
-        }
-
         for area in region.areas:
             g.add_node(area)
 
         context = state.node_context()
-        for area in region.areas:
-            nearby_areas = set()
-            for node in area.nodes:
-                if node.node_index not in original_nodes_in_reach:
+
+        nearby_areas_by_area: dict[Area, set[Area]] = collections.defaultdict(set)
+
+        for node in nodes_in_reach:
+            if node.area not in region.areas:
+                continue
+
+            for connection in node.connections:
+                if connection.target.area is node.area or connection.target.area not in region.areas:
                     continue
 
-                for other_node, requirement in node.connections_from(context):
-                    if requirement.satisfied(context, state.health_for_damage_requirements):
-                        other_area = self.region_list.nodes_to_area(other_node)
-                        if other_area in region.areas:
-                            nearby_areas.add(other_area)
+                if connection.requirement.satisfied(context, state.health_for_damage_requirements):
+                    nearby_areas_by_area[node.area].add(connection.target.area)
 
-            for other_area in nearby_areas:
-                g.add_edge(area, other_area)
+        for source_area, area_list in nearby_areas_by_area.items():
+            for target_area in area_list:
+                g.add_edge(source_area, target_area)
 
         self.ax.clear()
 
