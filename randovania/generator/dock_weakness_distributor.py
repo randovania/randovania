@@ -226,7 +226,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
         player_docks: list[tuple[int, DockNode]] = []
 
         ctx = NodeContext(patches, patches.starting_resources(), game.resource_database, game.region_list)
-        for dock in patches.all_weaknesses_to_shuffle():
+        for dock in patches.all_weaknesses_to_shuffle(game):
             if (player, dock.get_target_node(ctx)) not in player_docks:
                 player_docks.append((player, dock))
 

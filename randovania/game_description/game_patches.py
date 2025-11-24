@@ -49,7 +49,7 @@ class GamePatches:
     pickup_assignment: dict[PickupIndex, PickupTarget]
     dock_connection: dict[NodeIdentifier, NodeIdentifier]
     dock_weakness: dict[NodeIdentifier, DockWeakness]
-    weaknesses_to_shuffle: list[bool]
+    weaknesses_to_shuffle: set[NodeIdentifier]
     starting_equipment: StartingEquipment
     starting_location: NodeIdentifier
     hints: dict[NodeIdentifier, Hint]
@@ -80,7 +80,7 @@ class GamePatches:
             pickup_assignment={},
             dock_connection=game.get_prefilled_docks(),
             dock_weakness={},
-            weaknesses_to_shuffle=[False] * len(game.region_list.all_nodes),
+            weaknesses_to_shuffle=set(),
             starting_equipment=[],
             starting_location=game.starting_location,
             hints={},
@@ -162,10 +162,13 @@ class GamePatches:
         return dataclasses.replace(self, dock_weakness=new_weakness)
 
     def assign_weaknesses_to_shuffle(self, weaknesses: Iterable[tuple[DockNode, bool]]) -> GamePatches:
-        new_to_shuffle = list(self.weaknesses_to_shuffle)
+        new_to_shuffle = self.weaknesses_to_shuffle.copy()
 
         for node, shuffle in weaknesses:
-            new_to_shuffle[node.node_index] = shuffle
+            if shuffle:
+                new_to_shuffle.add(node.identifier)
+            elif node.identifier in new_to_shuffle:
+                new_to_shuffle.remove(node.identifier)
 
         return dataclasses.replace(self, weaknesses_to_shuffle=new_to_shuffle)
 
@@ -179,7 +182,7 @@ class GamePatches:
         return self.get_dock_weakness_for(node) == node.default_dock_weakness
 
     def should_shuffle_weakness(self, node: DockNode) -> bool:
-        return self.weaknesses_to_shuffle[node.node_index]
+        return node.identifier in self.weaknesses_to_shuffle
 
     def all_dock_weaknesses(self, game_view: GameDatabaseView) -> Iterator[DockWeaknessAssociation]:
         for _, _, node in game_view.iterate_nodes_of_type(DockNode):
@@ -187,12 +190,9 @@ class GamePatches:
             if weakness is not None:
                 yield node, weakness
 
-    def all_weaknesses_to_shuffle(self) -> Iterator[DockNode]:
-        nodes = self.game.region_list.all_nodes
-        for index, shuffle in enumerate(self.weaknesses_to_shuffle):
-            if shuffle:
-                node = nodes[index]
-                assert isinstance(node, DockNode)
+    def all_weaknesses_to_shuffle(self, game_view: GameDatabaseView) -> Iterator[DockNode]:
+        for _, _, node in game_view.iterate_nodes_of_type(DockNode):
+            if node.identifier in self.weaknesses_to_shuffle:
                 yield node
 
     def starting_resources(self) -> ResourceCollection:
