@@ -53,14 +53,6 @@ class EventPickupNode(ResourceNode):
     def resource(self, context: NodeContext) -> ResourceInfo:
         return self.pickup_node.resource(context)
 
-    def should_collect(self, context: NodeContext) -> bool:
-        event_collect = self.event_node.should_collect(context)
-        pickup_collect = self.pickup_node.should_collect(context)
-        return event_collect or pickup_collect
-
-    def is_collected(self, context: NodeContext) -> bool:
-        return self.event_node.is_collected(context) and self.pickup_node.is_collected(context)
-
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
         yield from self.event_node.resource_gain_on_collect(context)
         yield from self.pickup_node.resource_gain_on_collect(context)

@@ -43,8 +43,5 @@ class HintNode(ResourceNode):
     def resource(self, context: NodeContext) -> NodeResourceInfo:
         return NodeResourceInfo.from_node(self, context)
 
-    def is_collected(self, context: NodeContext) -> bool:
-        return context.has_resource(self.resource(context))
-
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
         yield self.resource(context), 1
