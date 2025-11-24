@@ -44,6 +44,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Minor adjustment related to Kraid to increase seed variety.
 
+### Metroid Fusion
+
+#### Logic Database
+
+##### Main Deck
+- Changed: Habitation Deck: It's now possible to move from the top right door to the top left entrance after the animals have been freed.
+
 ### Metroid Prime
 
 - Changed: AM2R's Drop Pickups will now use more appropriate models.
