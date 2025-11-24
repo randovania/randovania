@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, override
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
-from randovania.game_description.db.node import Node, NodeContext, NodeIndex
+from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
@@ -30,7 +30,6 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
-    from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -90,7 +89,6 @@ class GameDescription(GameDatabaseView):
     region_list: RegionList
     _used_trick_levels: dict[TrickResourceInfo, set[int]] | None = None
     mutable: bool = False
-    _victory_condition_as_set: RequirementSet | None = None
 
     def __deepcopy__(self, memodict: dict) -> GameDescription:
         new_game = GameDescription(
@@ -132,16 +130,6 @@ class GameDescription(GameDatabaseView):
         self.region_list = region_list
         self._used_trick_levels = used_trick_levels
 
-    def __getstate__(self) -> dict:
-        state = self.__dict__.copy()
-        # Don't pickle _victory_condition_as_set
-        state.pop("_victory_condition_as_set", None)
-        return state
-
-    def __setstate__(self, state: dict) -> None:
-        self.__dict__.update(state)
-        self._victory_condition_as_set = None
-
     @property
     def game_enum(self) -> RandovaniaGame:
         # compatibility with WorldGraph
@@ -154,14 +142,6 @@ class GameDescription(GameDatabaseView):
             self.resource_database,
             self.region_list,
         )
-
-    def patch_requirements(self, resources: ResourceCollection, damage_multiplier: float) -> None:
-        if not self.mutable:
-            raise ValueError("self is not mutable")
-
-        context = self.create_node_context(resources)
-        self.region_list.patch_requirements(damage_multiplier, context, self.dock_weakness_database)
-        self._dangerous_resources = None
 
     def get_prefilled_docks(self) -> list[int | None]:
         region_list = self.region_list
@@ -237,12 +217,6 @@ class GameDescription(GameDatabaseView):
             )
             result.mutable = True
             return result
-
-    def victory_condition_as_set(self, context: NodeContext) -> RequirementSet:
-        if self._victory_condition_as_set is None:
-            self._victory_condition_as_set = self.victory_condition.as_set(context)
-        return self._victory_condition_as_set
-        # return self.victory_condition.as_set(context)
 
     def _has_hint_with_kind(self, kind: HintNodeKind) -> bool:
         return any(node.kind == kind for node in self.region_list.iterate_nodes_of_type(HintNode))
@@ -324,16 +298,6 @@ class GameDescription(GameDatabaseView):
     @override
     def get_configurable_node_requirements(self) -> Mapping[NodeIdentifier, Requirement]:
         return self.region_list.configurable_nodes
-
-    @property
-    def resource_to_dangerous_edges(self) -> dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]]:
-        # Only implemented in World Graph
-        return {}
-
-    @property
-    def resource_to_edges(self) -> dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]]:
-        # Only implemented in World Graph
-        return {}
 
 
 def _resources_for_damage(

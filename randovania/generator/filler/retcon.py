@@ -405,7 +405,7 @@ def _assign_pickup_somewhere(
         increment_index_age(all_locations, action.generator_params.index_age_impact)
         all_locations.remove(index_owner_state, pickup_index)
 
-        if pickup_index in index_owner_state.reach.state.collected_pickup_indices(index_owner_state.reach.game):
+        if pickup_index in index_owner_state.reach.state.collected_pickup_indices(index_owner_state.reach.graph):
             current_player.reach.advance_to(current_player.reach.state.assign_pickup_resources(action))
         else:
             # FIXME: isn't that condition always true?
@@ -470,7 +470,7 @@ def _calculate_weights_for(
     Calculate a weight to be used for this action, based on what's collected in the reach.
     """
     potential_reach = evaluation.reach
-    action_weights = potential_reach.game.game_enum.generator.action_weights
+    action_weights = potential_reach.graph.game_enum.generator.action_weights
 
     if potential_reach.victory_condition_satisfied():
         return action_weights.VICTORY_WEIGHT

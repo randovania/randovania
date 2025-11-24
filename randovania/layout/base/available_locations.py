@@ -76,7 +76,7 @@ class AvailableLocationsConfiguration(BitPackValue):
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
-        game = metadata["reference"].game
+        game = metadata["reference"].graph
         db = default_database.game_description_for(game)
 
         randomization_mode = RandomizationMode.bit_pack_unpack(decoder, metadata)

@@ -95,7 +95,6 @@ def test_generate_logic(
                 resolve_after_generation=args.validate,
                 resolver_timeout=None,
                 attempts=attempts,
-                use_world_graph=args.use_world_graph,
             )
         ]
         * repeat

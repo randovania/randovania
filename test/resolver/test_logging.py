@@ -6,11 +6,9 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.pickup_pool.pool_creator import calculate_pool_results
-from randovania.graph.world_graph import WorldGraphNode
 from randovania.layout import filtered_database
 from randovania.resolver import debug
 from randovania.resolver.logging import ResolverLogger, TextResolverLogger
@@ -22,6 +20,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.game_patches import GamePatches
     from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraphNode
 
 
 def _assign_pickup_by_name(game_patches: GamePatches, index: PickupIndex, name: str) -> GamePatches:
@@ -30,7 +29,7 @@ def _assign_pickup_by_name(game_patches: GamePatches, index: PickupIndex, name: 
     return game_patches.assign_own_pickups([(index, real_target)])
 
 
-def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use_world_graph: bool) -> None:
+def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> None:
     calculate_pool_results(blank_game_patches.configuration, blank_game_patches.game)
     game_patches = _assign_pickup_by_name(
         blank_game_patches,
@@ -39,7 +38,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
     )
 
     game = filtered_database.game_description_for_layout(game_patches.configuration).get_mutable()
-    starting_state, logic = setup_resolver(game, game_patches.configuration, game_patches, use_world_graph)
+    starting_state, logic = setup_resolver(game, game_patches.configuration, game_patches)
 
     nodes_by_id = {node.identifier: node for node in logic.all_nodes if node is not None}
 
@@ -55,12 +54,9 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
 
         return state
 
-    def satisfiable(node: NodeIdentifier) -> tuple[ActionPriority, WorldGraphNode | ResourceNode, Any]:
+    def satisfiable(node: NodeIdentifier) -> tuple[ActionPriority, WorldGraphNode, Any]:
         n = nodes_by_id[node]
-        assert isinstance(n, WorldGraphNode | ResourceNode)
         return ActionPriority.EVERYTHING_ELSE, n, MagicMock()
-
-    lock_prefix = "" if use_world_graph else "Lock - "
 
     logger.logger_start()
 
@@ -80,7 +76,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
     # Pickup action: check satisfiable (has satisfiable)
     logger.log_checking_satisfiable(
         [
-            satisfiable(NodeIdentifier("Intro", "Starting Area", f"{lock_prefix}Door to Boss Arena")),
+            satisfiable(NodeIdentifier("Intro", "Starting Area", "Door to Boss Arena")),
         ]
     )
 
@@ -133,7 +129,6 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
     )
 
 
-@pytest.mark.parametrize("use_world_graph", [False, True])
 @pytest.mark.parametrize(
     ("verbosity", "expected"),
     [
@@ -196,9 +191,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger, use
         ),
     ],
 )
-def test_text_resolver_logger(
-    blank_game_patches, verbosity: debug.LogLevel, use_world_graph: bool, expected: list[str]
-):
+def test_text_resolver_logger(blank_game_patches, verbosity: debug.LogLevel, expected: list[str]):
     logger = TextResolverLogger()
     lines: list[str] = []
 
@@ -207,11 +200,9 @@ def test_text_resolver_logger(
     try:
         debug.print_function = lines.append
         with debug.with_level(verbosity):
-            perform_logging(blank_game_patches, logger, use_world_graph)
+            perform_logging(blank_game_patches, logger)
     finally:
         debug.print_function = old_print
 
-    if use_world_graph:
-        expected = [r.replace("/Lock - ", "/") for r in expected]
-
+    expected = [r.replace("/Lock - ", "/") for r in expected]
     assert lines == expected

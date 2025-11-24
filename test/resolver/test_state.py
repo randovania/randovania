@@ -15,7 +15,7 @@ def state_game_data(empty_patches) -> NoOpDamageState:
     return NoOpDamageState()
 
 
-def test_collected_pickup_indices(state_game_data, empty_patches):
+def test_collected_pickup_indices(state_game_data, empty_patches, blank_world_graph):
     # Setup
     db = empty_patches.game.resource_database
     starting = empty_patches.game.region_list.node_by_identifier(empty_patches.game.starting_location)
@@ -43,7 +43,7 @@ def test_collected_pickup_indices(state_game_data, empty_patches):
     )
 
     # Run
-    indices = list(s.collected_pickup_indices(empty_patches.game))
+    indices = list(s.collected_pickup_indices(blank_world_graph))
 
     # Assert
     assert indices == [pickup_nodes[0].pickup_index, pickup_nodes[1].pickup_index]

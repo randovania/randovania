@@ -56,7 +56,6 @@ def test_generate_layout(mocker: pytest_mock.MockerFixture, another_process, spo
         "generator_params": parameters,
         "resolve_after_generation": options.advanced_validate_seed_after,
         "world_names": world_names,
-        "use_world_graph": options.advanced_use_world_graph,
     }
 
     if not timeout:
@@ -85,7 +84,6 @@ def test_general_blank_layout(default_blank_preset):
     options.advanced_validate_seed_after = True
     options.advanced_timeout_during_generation = True
     options.advanced_generate_in_another_process = True
-    options.advanced_use_world_graph = True
 
     parameters = GeneratorParameters(
         seed_number=1000,

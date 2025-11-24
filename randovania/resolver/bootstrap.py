@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, NamedTuple, cast
+from typing import TYPE_CHECKING, NamedTuple
 
 from randovania.game_description import default_database
 from randovania.game_description.db.node import NodeContext
@@ -273,18 +273,13 @@ class Bootstrap[Configuration: BaseConfiguration]:
         return db
 
     def logic_bootstrap_graph(
-        self,
-        configuration: Configuration,
-        game: GameDescription,
-        patches: GamePatches,
-        use_world_graph: bool,
-    ) -> tuple[GameDescription | world_graph.WorldGraph, State]:
+        self, configuration: Configuration, game: GameDescription, patches: GamePatches
+    ) -> tuple[world_graph.WorldGraph, State]:
         """
         Core code for starting a new Logic/State.
         :param configuration:
         :param game:
         :param patches:
-        :param use_world_graph:
         :return:
         """
         if not game.mutable:
@@ -318,54 +313,34 @@ class Bootstrap[Configuration: BaseConfiguration]:
             enabled_pickups(game, configuration), game, configuration.logical_pickup_placement
         )
 
-        if use_world_graph:
-            graph = world_graph.create_graph(
-                database_view=game,
-                patches=patches,
-                resources=starting_state.resources,
-                damage_multiplier=configuration.damage_strictness.value,
-                victory_condition=game.victory_condition,
-                flatten_to_set_on_patch=game.region_list.flatten_to_set_on_patch,
-            )
-            starting_state.node = graph.original_to_node[starting_state.node.node_index]
+        graph = world_graph.create_graph(
+            database_view=game,
+            patches=patches,
+            resources=starting_state.resources,
+            damage_multiplier=configuration.damage_strictness.value,
+            victory_condition=game.victory_condition,
+            flatten_to_set_on_patch=game.region_list.flatten_to_set_on_patch,
+        )
+        starting_state.node = graph.original_to_node[starting_state.node.node_index]
 
-            context = starting_state.node_context()
-            new_resources = []
+        context = starting_state.node_context()
+        new_resources = []
 
-            for resource, quantity in list(starting_state.resources.as_resource_gain()):
-                if resource.resource_type == ResourceType.NODE_IDENTIFIER:
-                    starting_state.resources.remove_resource(resource)
-                    new_resources.append(
-                        (
-                            NodeResourceInfo.from_node(
-                                graph.original_to_node[resource.to_node(context).node_index],
-                                context,
-                            ),
-                            quantity,
-                        )
+        for resource, quantity in list(starting_state.resources.as_resource_gain()):
+            if resource.resource_type == ResourceType.NODE_IDENTIFIER:
+                starting_state.resources.remove_resource(resource)
+                new_resources.append(
+                    (
+                        NodeResourceInfo.from_node(
+                            graph.original_to_node[resource.to_node(context).node_index],
+                            context,
+                        ),
+                        quantity,
                     )
-            starting_state.resources.add_resource_gain(new_resources)
+                )
+        starting_state.resources.add_resource_gain(new_resources)
 
-            return graph, starting_state
-        else:
-            game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
-            return game, starting_state
-
-    def logic_bootstrap(
-        self,
-        configuration: Configuration,
-        game: GameDescription,
-        patches: GamePatches,
-    ) -> tuple[GameDescription, State]:
-        """
-        Core code for starting a new Logic/State.
-        :param configuration:
-        :param game:
-        :param patches:
-        :return:
-        """
-        game, starting_state = self.logic_bootstrap_graph(configuration, game, patches, False)
-        return cast("GameDescription", game), starting_state
+        return graph, starting_state
 
     def apply_game_specific_patches(
         self, configuration: Configuration, game: GameDescription, patches: GamePatches

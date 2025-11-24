@@ -173,7 +173,7 @@ async def display_window_for(app: QtWidgets.QApplication, options: Options, comm
     elif command == "main":
         await show_main_window(app, options, args.preview, args.instantly_quit)
     elif command == "data_editor":
-        show_data_editor(app, options, RandovaniaGame(args.game))
+        show_data_editor(app, options, RandovaniaGame(args.graph))
     elif command == "game":
         await show_game_details(app, options, args.rdvgame)
     else:

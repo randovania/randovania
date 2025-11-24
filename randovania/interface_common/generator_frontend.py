@@ -39,7 +39,6 @@ def generate_layout(
     :param progress_update:
     :param retries:
     :param world_names:
-    :param use_world_graph:
     :return:
     """
     with monitoring.start_transaction(op="task", name="generate_layout") as span:
@@ -50,7 +49,7 @@ def generate_layout(
         span.set_tag("unique_games", str(sorted(set(games))))
         span.set_tag("attempts", retries if retries is not None else generator.DEFAULT_ATTEMPTS)
         span.set_tag("validate_after", options.advanced_validate_seed_after)
-        span.set_tag("use_world_graph", options.advanced_use_world_graph)
+        span.set_tag("use_world_graph", True)
         span.set_tag(
             "dock_rando",
             any(preset.configuration.dock_rando.mode == DockRandoMode.DOCKS for preset in parameters.presets),
@@ -84,7 +83,6 @@ def generate_layout(
             "generator_params": parameters,
             "resolve_after_generation": options.advanced_validate_seed_after,
             "world_names": world_names,
-            "use_world_graph": options.advanced_use_world_graph,
         }
         if not options.advanced_timeout_during_generation:
             extra_args["resolver_timeout"] = None
@@ -163,9 +161,4 @@ def generate_in_host_process(
     extra_args: dict,
 ) -> LayoutDescription:
     with debug.with_level(debug_level):
-        return asyncio.run(
-            generator.generate_and_validate_description(
-                **extra_args,
-                status_update=status_update,
-            )
-        )
+        return asyncio.run(generator.generate_and_validate_description(status_update=status_update, **extra_args))

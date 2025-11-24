@@ -4,12 +4,10 @@ import asyncio
 import enum
 from typing import TYPE_CHECKING, Any
 
-from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -23,24 +21,27 @@ from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable
+    from collections.abc import Callable, Iterable, Sequence
 
-    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.graph.state import State
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logging import ResolverLogger
 
-ResolverAction = WorldGraphNode | ResourceNode
+type ResolverAction = WorldGraphNode
 AnyPickupNode = PickupNode | EventPickupNode
 AnyEventNode = EventNode | EventPickupNode
 
 
 def _is_later_progression_item(
-    resource: ResourceInfo, progressive_chain_info: None | tuple[list[ResourceInfo], int]
+    resource: ResourceInfo, progressive_chain_info: None | tuple[Sequence[ResourceInfo], int]
 ) -> bool:
     if not progressive_chain_info:
         return False
@@ -49,7 +50,7 @@ def _is_later_progression_item(
 
 
 def _downgrade_progressive_item(
-    item_resource: ResourceInfo, progressive_chain_info: tuple[list[ResourceInfo], int]
+    item_resource: ResourceInfo, progressive_chain_info: tuple[Sequence[ResourceInfo], int]
 ) -> ResourceRequirement:
     progressive_chain, _ = progressive_chain_info
     return ResourceRequirement.simple(progressive_chain[progressive_chain.index(item_resource) - 1])
@@ -58,8 +59,8 @@ def _downgrade_progressive_item(
 def _simplify_requirement_list(
     self: RequirementList,
     state: State,
-    node_resources: list[ResourceInfo],
-    progressive_item_info: None | tuple[list[ResourceInfo], int],
+    node_resources: Sequence[ResourceInfo],
+    progressive_item_info: None | tuple[Sequence[ResourceInfo], int],
 ) -> RequirementList | None:
     items: list[ResourceRequirement] = []
     damage_reqs = []
@@ -104,7 +105,7 @@ def _simplify_additional_requirement_set(
     alternatives: Iterable[RequirementList],
     state: State,
     node_resources: list[ResourceInfo],
-    progressive_chain_info: None | tuple[list[ResourceInfo], int],
+    progressive_chain_info: None | tuple[list[ItemResourceInfo], int],
     skip_simplify: bool,
 ) -> RequirementSet:
     simplified = [
@@ -157,21 +158,7 @@ def _is_dangerous_event(state: State, action: ResolverAction, dangerous_resource
 
 
 def _is_major_or_key_pickup_node(action: ResolverAction, state: State) -> bool:
-    pickup = None
-    if isinstance(action, WorldGraphNode):
-        pickup = action.pickup_entry
-    else:
-        pickup_node: ResourceNode
-        if isinstance(action, EventPickupNode):
-            pickup_node = action.pickup_node
-        else:
-            pickup_node = action
-
-        if isinstance(pickup_node, PickupNode):
-            target = state.patches.pickup_assignment.get(pickup_node.pickup_index)
-            if target is not None:
-                pickup = target.pickup
-
+    pickup = action.pickup_entry
     return (
         pickup is not None
         and pickup.generator_params.preferred_location_category is LocationCategory.MAJOR
@@ -220,25 +207,16 @@ class ActionPriority(enum.IntEnum):
 
 
 def _is_event_node(action: ResolverAction) -> bool:
-    if isinstance(action, WorldGraphNode):
-        return any(it.resource_type == ResourceType.EVENT for it, q in action.resource_gain if q > 0)
-    else:
-        return isinstance(action, AnyEventNode)
+    return any(it.resource_type == ResourceType.EVENT for it, q in action.resource_gain if q > 0)
 
 
 def _is_hint_node(action: ResolverAction) -> bool:
-    if isinstance(action, WorldGraphNode):
-        target_node = action.database_node
-    else:
-        target_node = action
+    target_node = action.database_node
     return isinstance(target_node, HintNode)
 
 
 def _is_lock_action(action: ResolverAction) -> bool:
-    if isinstance(action, WorldGraphNode):
-        return action.is_lock_action
-    else:
-        return isinstance(action, DockLockNode | AnyEventNode)
+    return action.is_lock_action
 
 
 def _priority_for_resource_action(action: ResolverAction, state: State, logic: Logic) -> ActionPriority:
@@ -254,26 +232,22 @@ def _priority_for_resource_action(action: ResolverAction, state: State, logic: L
         return ActionPriority.EVERYTHING_ELSE
 
 
-def _progressive_chain_info_from_pickup_node(
-    node: PickupNode, context: NodeContext
-) -> None | tuple[list[ResourceInfo], int]:
+def _progressive_chain_info_from_pickup_entry(
+    pickup: PickupEntry, resources: ResourceCollection
+) -> None | tuple[list[ItemResourceInfo], int]:
     """
-
-    :param node:
-    :param context:
-    :return: When the node is a PickUp Node that has been assigned a Progressive item: Tuple containing the items in
+    :param pickup:
+    :param resources:
+    :return: When the PickupEntry is a Progressive item: Tuple containing the items in
      that item chain, as well as an index pointing to last one of those items that has been obtained. If there is no
       progressive item on that node or none of the progressive items have been obtained, then returns None.
     """
-    patches = context.patches
-    assert patches is not None
-    target = patches.pickup_assignment.get(node.pickup_index)
-    if target is not None and target.player == patches.player_index and len(target.pickup.progression) > 1:
-        progressives: list[ResourceInfo] = [item for item, _ in target.pickup.progression if item is not None]
+    if len(pickup.progression) > 1:
+        progressives: list[ItemResourceInfo] = [item for item, _ in pickup.progression if item is not None]
 
         last_obtained_index = -1
         for index, item in enumerate(progressives):
-            if context.current_resources[item] == 0:
+            if resources[item] == 0:
                 break
             last_obtained_index = index
         return (progressives, last_obtained_index) if last_obtained_index > -1 else None
@@ -281,42 +255,30 @@ def _progressive_chain_info_from_pickup_node(
     return None
 
 
-def _progressive_chain_info(node: Node, context: NodeContext) -> None | tuple[list[ResourceInfo], int]:
-    if isinstance(node, EventPickupNode):
-        return _progressive_chain_info_from_pickup_node(node.pickup_node, context)
-    if isinstance(node, PickupNode):
-        return _progressive_chain_info_from_pickup_node(node, context)
+def _progressive_chain_info(node: WorldGraphNode, context: NodeContext) -> None | tuple[list[ItemResourceInfo], int]:
+    """
+    When the node has a PickupEntry, returns _progressive_chain_info_from_pickup_entry for it.
+    """
+    if node.pickup_entry is not None:
+        return _progressive_chain_info_from_pickup_entry(node.pickup_entry, context.current_resources)
     return None
 
 
 def _assign_hint_available_locations(state: State, action: ResolverAction, logic: Logic) -> None:
-    if (
-        state.hint_state is not None
-        and isinstance(action, WorldGraphNode | PickupNode)
-        and action.pickup_index is not None
-    ):
+    if state.hint_state is not None and action.pickup_index is not None:
         available = state.hint_state.valid_available_locations_for_hint(state, logic)
         state.hint_state.assign_available_locations(action.pickup_index, available)
 
 
 def _resource_gain_for_state(state: State) -> list[ResourceInfo]:
-    return (
-        [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
-        if isinstance(state.node, ResourceNode | WorldGraphNode)
-        else []
-    )
+    return [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
 
 
 def _index_for_action_pair(pair: tuple[ResolverAction, DamageState]) -> int:
     node = pair[0]
-    if isinstance(node, WorldGraphNode):
-        # TODO: probably this entire sorting is pointless when there's only WorldGraph
-        assert node.database_node is not None
-        return node.database_node.node_index
-    elif isinstance(node, DockLockNode):
-        return node.dock.node_index
-    else:
-        return node.node_index
+    # TODO: probably this entire sorting is pointless when there's only WorldGraph
+    assert node.database_node is not None
+    return node.database_node.node_index
 
 
 async def _inner_advance_depth(
@@ -379,7 +341,7 @@ async def _inner_advance_depth(
                     additional = logic.get_additional_requirements(action).alternatives
 
                     resources = _resource_gain_for_state(state)
-                    progressive_chain_info = _progressive_chain_info(state.database_node, state.node_context())
+                    progressive_chain_info = _progressive_chain_info(state.node, state.node_context())
 
                     logic.set_additional_requirements(
                         state.node,
@@ -448,7 +410,7 @@ async def _inner_advance_depth(
         additional_requirements = additional_requirements.union(additional_alts)
 
     resources = _resource_gain_for_state(state)
-    progressive_chain_info = _progressive_chain_info(state.database_node, state.node_context())
+    progressive_chain_info = _progressive_chain_info(state.node, state.node_context())
 
     logic.set_additional_requirements(
         state.node,
@@ -476,7 +438,6 @@ def setup_resolver(
     filtered_game: GameDescription,
     configuration: BaseConfiguration,
     patches: GamePatches,
-    use_world_graph: bool,
     *,
     record_paths: bool = False,
 ) -> tuple[State, Logic]:
@@ -485,9 +446,7 @@ def setup_resolver(
 
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
 
-    game_or_graph, starting_state = bootstrap.logic_bootstrap_graph(
-        configuration, game, patches, use_world_graph=use_world_graph
-    )
+    game_or_graph, starting_state = bootstrap.logic_bootstrap_graph(configuration, game, patches)
     logic = Logic(game_or_graph, configuration)
     logic.record_paths = record_paths
 
@@ -503,7 +462,6 @@ async def resolve(
     *,
     collect_hint_data: bool = False,
     logger: ResolverLogger | None = None,
-    use_world_graph: bool = False,
     record_paths: bool = False,
 ) -> State | None:
     if status_update is None:
@@ -513,7 +471,6 @@ async def resolve(
         filtered_database.game_description_for_layout(configuration).get_mutable(),
         configuration,
         patches,
-        use_world_graph=use_world_graph,
         record_paths=record_paths,
     )
 
@@ -521,7 +478,7 @@ async def resolve(
         logic.prioritize_hints = True
         starting_state.hint_state = ResolverHintState(
             FillerConfiguration.from_configuration(configuration),
-            patches.game,
+            logic.graph,
         )
 
     if logger is not None:

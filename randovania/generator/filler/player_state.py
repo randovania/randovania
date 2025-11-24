@@ -28,7 +28,6 @@ from randovania.resolver import debug
 if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.assignment import PickupTarget
-    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.location_category import LocationCategory
@@ -36,7 +35,8 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.filler.weighted_locations import WeightedLocations
-    from randovania.graph.state import GraphOrResourceNode, State
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 
 class GeneratorHintState(HintState):
@@ -64,12 +64,12 @@ class GeneratorHintState(HintState):
 
 class PlayerState:
     index: int
-    game: GameDescription | WorldGraph
+    graph: WorldGraph
     pickups_left: list[PickupEntry]
     configuration: FillerConfiguration
     pickup_index_ages: collections.defaultdict[PickupIndex, float]
     event_seen_count: dict[ResourceInfo, int]
-    _unfiltered_potential_actions: tuple[PickupCombinations, tuple[GraphOrResourceNode, ...]]
+    _unfiltered_potential_actions: tuple[PickupCombinations, tuple[WorldGraphNode, ...]]
     num_starting_pickups_placed: int
     num_assigned_pickups: int
     hint_state: GeneratorHintState
@@ -79,7 +79,7 @@ class PlayerState:
         index: int,
         name: str,
         game_enum: RandovaniaGame,
-        game: GameDescription | WorldGraph,
+        graph: WorldGraph,
         original_game: GameDescription,
         initial_state: State,
         pickups_left: list[PickupEntry],
@@ -88,11 +88,11 @@ class PlayerState:
         self.index = index
         self.name = name
         self.game_enum = game_enum
-        self.game = game
+        self.graph = graph
         self.original_game = original_game
 
         self.reach = reach_lib.advance_after_action(
-            reach_lib.reach_with_all_safe_resources(game, initial_state, configuration)
+            reach_lib.reach_with_all_safe_resources(graph, initial_state, configuration)
         )
         self.pickups_left = pickups_left
         self.configuration = configuration
@@ -102,9 +102,9 @@ class PlayerState:
         self.num_starting_pickups_placed = 0
         self.num_assigned_pickups = 0
         self.num_actions = 0
-        self.indices_groups, self.all_indices = build_available_indices(game, configuration)
+        self.indices_groups, self.all_indices = build_available_indices(graph, configuration)
 
-        self.hint_state = GeneratorHintState(configuration, game)
+        self.hint_state = GeneratorHintState(configuration, graph)
 
     def __repr__(self) -> str:
         return f"PlayerState {self.name}"
@@ -122,10 +122,10 @@ class PlayerState:
             if resource.resource_type == ResourceType.EVENT and quantity > 0:
                 self.event_seen_count[resource] += 1
 
-        filler_logging.print_new_resources(self.game, self.reach, self.event_seen_count, "Events")
+        filler_logging.print_new_resources(self.graph, self.reach, self.event_seen_count, "Events")
 
     def _log_new_pickup_index(self) -> None:
-        for index in self.reach.state.collected_pickup_indices(self.game):
+        for index in self.reach.state.collected_pickup_indices(self.graph):
             if index not in self.pickup_index_ages:
                 self.pickup_index_ages[index] = 0.0
                 filler_logging.print_new_pickup_index(self, index)
@@ -163,7 +163,7 @@ class PlayerState:
 
     def victory_condition_satisfied(self) -> bool:
         context = self.reach.state.node_context()
-        return self.game.victory_condition_as_set(context).satisfied(
+        return self.graph.victory_condition_as_set(context).satisfied(
             context, self.reach.state.health_for_damage_requirements
         )
 
@@ -305,7 +305,7 @@ class PlayerState:
 
 
 def build_available_indices(
-    view_or_graph: GameDatabaseView | WorldGraph,
+    graph: WorldGraph,
     configuration: FillerConfiguration,
 ) -> tuple[list[set[PickupIndex]], set[PickupIndex]]:
     """
@@ -313,22 +313,18 @@ def build_available_indices(
     """
     named_index_group = collections.defaultdict(set)
 
-    if isinstance(view_or_graph, WorldGraph):
+    def get_pickup_node(node: Node | None) -> PickupNode:
+        if isinstance(node, EventPickupNode):
+            return node.pickup_node
+        assert isinstance(node, PickupNode)
+        # TODO: maybe get a list of PickupIndex, then find the PickupNode from that?
+        return node
 
-        def get_pickup_node(node: Node | None) -> PickupNode:
-            if isinstance(node, EventPickupNode):
-                return node.pickup_node
-            assert isinstance(node, PickupNode)
-            # TODO: maybe get a list of PickupIndex, then find the PickupNode from that?
-            return node
-
-        iterable = [
-            (node.region, node.area, get_pickup_node(node.database_node))
-            for node in view_or_graph.nodes
-            if node.pickup_index is not None
-        ]
-    else:
-        iterable = list(view_or_graph.iterate_nodes_of_type(PickupNode))
+    iterable = [
+        (node.region, node.area, get_pickup_node(node.database_node))
+        for node in graph.nodes
+        if node.pickup_index is not None
+    ]
 
     for region, area, node in iterable:
         if node.pickup_index not in configuration.indices_to_exclude:
