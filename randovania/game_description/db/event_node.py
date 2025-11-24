@@ -17,8 +17,5 @@ class EventNode(ResourceNode):
     def __repr__(self) -> str:
         return f"EventNode({self.name!r} -> {self.event.long_name})"
 
-    def resource(self, context: NodeContext) -> ResourceInfo:
-        return self.event
-
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
         yield self.event, 1
