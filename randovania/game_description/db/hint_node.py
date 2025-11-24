@@ -40,10 +40,6 @@ class HintNode(ResourceNode):
     def __repr__(self) -> str:
         return f"HintNode({self.name!r})"
 
-    @property
-    def requirement_to_collect(self) -> Requirement:
-        return self.lock_requirement
-
     def resource(self, context: NodeContext) -> NodeResourceInfo:
         return NodeResourceInfo.from_node(self, context)
 

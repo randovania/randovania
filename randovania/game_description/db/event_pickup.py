@@ -6,10 +6,10 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.requirements.base import Requirement
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
 
 
@@ -52,11 +52,6 @@ class EventPickupNode(ResourceNode):
 
     def resource(self, context: NodeContext) -> ResourceInfo:
         return self.pickup_node.resource(context)
-
-    @property
-    def requirement_to_collect(self) -> Requirement:
-        # Both PickupNode and EventNode has this as trivial, so don't bother recursing
-        return Requirement.trivial()
 
     def should_collect(self, context: NodeContext) -> bool:
         event_collect = self.event_node.should_collect(context)

@@ -15,7 +15,6 @@ from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import NodeContext, NodeIndex
 from randovania.game_description.db.node_provider import NodeProvider
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -368,7 +367,7 @@ def _connections_from(
         requirement_to_leave = configurable_node_requirements[node.database_node.identifier]
 
     elif isinstance(node.database_node, HintNode):
-        requirement_to_leave = node.database_node.requirement_to_collect
+        requirement_to_leave = node.database_node.lock_requirement
 
     elif isinstance(node.database_node, DockNode):
         yield _create_dock_connection(node, graph, patches, simplify_requirement)
@@ -432,8 +431,8 @@ def create_node(
     resource_gain: list[ResourceQuantity] = []
     requirement_to_collect = Requirement.trivial()
 
-    if isinstance(original_node, ResourceNode):
-        requirement_to_collect = original_node.requirement_to_collect
+    if isinstance(original_node, HintNode):
+        requirement_to_collect = original_node.lock_requirement
 
     if isinstance(original_node, EventNode):
         resource_gain.append((original_node.event, 1))

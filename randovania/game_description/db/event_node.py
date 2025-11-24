@@ -4,7 +4,6 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.requirements.base import Requirement
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import NodeContext
@@ -17,10 +16,6 @@ class EventNode(ResourceNode):
 
     def __repr__(self) -> str:
         return f"EventNode({self.name!r} -> {self.event.long_name})"
-
-    @property
-    def requirement_to_collect(self) -> Requirement:
-        return Requirement.trivial()
 
     def resource(self, context: NodeContext) -> ResourceInfo:
         return self.event

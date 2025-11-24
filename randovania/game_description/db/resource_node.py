@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.node import Node, NodeContext
 
 if TYPE_CHECKING:
-    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
 
 
@@ -16,10 +15,6 @@ class ResourceNode(Node):
         return True
 
     def resource(self, context: NodeContext) -> ResourceInfo:
-        raise NotImplementedError
-
-    @property
-    def requirement_to_collect(self) -> Requirement:
         raise NotImplementedError
 
     def should_collect(self, context: NodeContext) -> bool:
