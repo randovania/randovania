@@ -4,7 +4,7 @@ import copy
 import dataclasses
 import typing
 
-from randovania.game_description.db.node import Node, NodeContext, NodeIndex
+from randovania.game_description.db.node import Node, NodeIndex
 from randovania.game_description.db.node_provider import NodeProvider
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
@@ -38,7 +38,6 @@ class RegionList(NodeProvider):
     _nodes: _NodesTuple | None
     _pickup_index_to_node: dict[PickupIndex, PickupNode]
     _identifier_to_node: dict[NodeIdentifier, Node]
-    _patched_node_connections: dict[NodeIndex, dict[NodeIndex, Requirement]] | None
     _patches_dock_open_requirements: list[Requirement] | None
     _patches_dock_lock_requirements: list[Requirement | None] | None
     _teleporter_network_cache: dict[str, list[TeleporterNetworkNode]]
@@ -54,7 +53,6 @@ class RegionList(NodeProvider):
     def __init__(self, regions: list[Region], flatten_to_set_on_patch: bool = False):
         self.regions = regions
         self.flatten_to_set_on_patch = flatten_to_set_on_patch
-        self._patched_node_connections = None
         self._patches_dock_open_requirements = None
         self._patches_dock_lock_requirements = None
         self.configurable_nodes = {}
@@ -142,36 +140,6 @@ class RegionList(NodeProvider):
     def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Node:
         # FIXME delete
         return self.node_by_identifier(patches.get_dock_connection_for(node))
-
-    def area_connections_from(self, node: Node) -> Iterator[tuple[Node, Requirement]]:
-        """
-        Queries all nodes from the same area you can go from a given node.
-        :param node:
-        :return: Generator of pairs Node + Requirement for going to that node
-        """
-        if self._patched_node_connections is not None:
-            all_nodes = self._nodes
-            assert all_nodes is not None
-            for target_index, requirements in self._patched_node_connections[node.node_index].items():
-                n = all_nodes[target_index]
-                assert n is not None
-                yield n, requirements
-        else:
-            area = self.nodes_to_area(node)
-            for target_node, requirements in area.connections[node].items():
-                yield target_node, requirements
-
-    def potential_nodes_from(
-        self, node: Node, context: NodeContext, *, include_to_leave: bool = False
-    ) -> Iterator[tuple[Node, Requirement]]:
-        """
-        Queries all nodes you can go from a given node, checking doors, teleporters and other nodes in the same area.
-        :param node:
-        :param context:
-        :return: Generator of pairs Node + Requirement for going to that node
-        """
-        yield from node.connections_from(context)
-        yield from self.area_connections_from(node)
 
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
         cache_result = self._identifier_to_node.get(identifier)
