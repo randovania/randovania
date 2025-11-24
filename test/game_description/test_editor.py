@@ -170,5 +170,5 @@ def test_rename_lock_used_in_node_requirement(game_editor: Editor) -> None:
     context = game_editor.game.create_node_context(game_editor.game.resource_database.create_resource_collection())
     assert (
         str(list(template.requirement.iterate_resource_requirements(context)))
-        == "[Great Temple/Transport A Access/Door to Temple Sanctuary (Weird) = 1]"
+        == "[Great Temple/Transport A Access/Door to Temple Sanctuary (Weird) ≥ 1]"
     )

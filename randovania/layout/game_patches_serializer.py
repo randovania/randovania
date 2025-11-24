@@ -115,7 +115,7 @@ def serialize_single(world_index: int, num_worlds: int, patches: GamePatches) ->
                 "type": dock_weakness_to_type[weakness].short_name,
                 "name": weakness.name,
             }
-            for dock, weakness in patches.all_dock_weaknesses()
+            for dock, weakness in patches.all_dock_weaknesses(game)
         },
         "locations": _pickup_assignment_to_pickup_locations(
             region_list, patches.pickup_assignment, world_index, num_worlds

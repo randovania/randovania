@@ -351,7 +351,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
                 "is_dock": True if node.default_dock_weakness.extra.get("is_dock", None) is not None else False,
                 "facing_direction": node.extra["facing"] if node.extra.get("facing", None) is not None else "invalid",
             }
-            for node, weakness in self.patches.all_dock_weaknesses()
+            for node, weakness in self.patches.all_dock_weaknesses(self.game)
         }
 
     def _create_hints(self, rng: Random) -> dict:

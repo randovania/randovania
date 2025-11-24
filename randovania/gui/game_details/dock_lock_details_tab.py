@@ -27,7 +27,7 @@ class DockLockDetailsTab(BaseConnectionDetailsTab):
         game: GameDatabaseView,
         patches: GamePatches,
     ):
-        for source, weakness in patches.all_dock_weaknesses():
+        for source, weakness in patches.all_dock_weaknesses(game):
             source_region = source.identifier.region
             source_area = source.identifier.area
             if source_area not in per_region[source_region]:

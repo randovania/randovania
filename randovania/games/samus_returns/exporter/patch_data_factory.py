@@ -597,7 +597,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
     def _add_custom_doors(self) -> list[dict]:
         custom_doors: list = []
 
-        for node, weakness in self.patches.all_dock_weaknesses():
+        for node, weakness in self.patches.all_dock_weaknesses(self.game):
             assert node.location is not None
             if not isinstance(node, DockNode):
                 continue
@@ -642,7 +642,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         result: list = []
         used_actors: dict[str, str] = {}
 
-        for node, weakness in self.patches.all_dock_weaknesses():
+        for node, weakness in self.patches.all_dock_weaknesses(self.game):
             if "type" not in weakness.extra:
                 raise ValueError(
                     f"Unable to change door {node.full_name()} into {weakness.name}: incompatible door weakness"

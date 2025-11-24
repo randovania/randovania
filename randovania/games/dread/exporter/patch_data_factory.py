@@ -420,7 +420,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         result = []
         used_actors = {}
 
-        for node, weakness in self.patches.all_dock_weaknesses():
+        for node, weakness in self.patches.all_dock_weaknesses(self.game):
             if "type" not in weakness.extra:
                 raise ValueError(
                     f"Unable to change door {node.full_name()} into {weakness.name}: incompatible door weakness"

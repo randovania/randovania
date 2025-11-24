@@ -270,6 +270,7 @@ def _has_lock_resource(
     """Calculates if the given dock node pair will have a lock resource."""
     forward_weakness = patches.get_dock_weakness_for(source_node)
     back_weakness, back_lock = None, None
+
     if isinstance(target_node, DockNode):
         back_weakness = patches.get_dock_weakness_for(target_node)
         back_lock = back_weakness.lock
@@ -490,7 +491,7 @@ def _should_create_front_node(database_view: GameDatabaseView, patches: GamePatc
     Decide if we should wrap the dock node with an extra node.
     Important since crossing ResourceNodes can be problematic in the generator.
     """
-    target_node = patches.get_dock_connection_for(original_node)
+    target_node = database_view.node_by_identifier(patches.get_dock_connection_for(original_node))
 
     # Docks without locks don't have resources
     if not _has_lock_resource(original_node, target_node, patches):

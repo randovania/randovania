@@ -805,7 +805,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
                 "old_door_type": dock.default_dock_weakness.extra["door_type"],
                 "new_door_type": weakness.extra["door_type"],
             }
-            for dock, weakness in self.patches.all_dock_weaknesses()
+            for dock, weakness in self.patches.all_dock_weaknesses(self.game)
             if dock.default_dock_weakness != weakness
         }
 
