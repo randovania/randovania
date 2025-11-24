@@ -27,7 +27,7 @@ from randovania.graph.requirement_converter import GraphRequirementConverter
 from randovania.lib.bitmask import Bitmask
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Callable, Iterable, Iterator, Mapping
+    from collections.abc import Iterable, Iterator, Mapping
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
@@ -205,6 +205,7 @@ class WorldGraph:
     node_identifier_to_node: dict[NodeIdentifier, WorldGraphNode] = dataclasses.field(init=False)
     original_to_node: dict[int, WorldGraphNode] = dataclasses.field(init=False)
     node_resource_index_offset: int
+    converter: GraphRequirementConverter | None = None
 
     resource_to_edges: dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]] = dataclasses.field(
         init=False, default_factory=dict
@@ -286,7 +287,6 @@ def _create_dock_connection(
     node: WorldGraphNode,
     graph: WorldGraph,
     patches: GamePatches,
-    simplify_requirement: Callable[[Requirement], GraphRequirementSet],
 ) -> WorldGraphNodeConnection:
     """Creates the connection for crossing this dock. Also handles adding the resource gain for breaking locks."""
     assert isinstance(node.database_node, DockNode)
@@ -333,8 +333,8 @@ def _create_dock_connection(
                     [requirement_to_collect, _get_dock_lock_requirement(target_node.database_node, back_weakness)]
                 )
 
-    final_requirement = simplify_requirement(RequirementAnd(requirement_parts))
-    node.requirement_to_collect = simplify_requirement(requirement_to_collect)
+    final_requirement = graph.converter.convert_db(RequirementAnd(requirement_parts))
+    node.requirement_to_collect = graph.converter.convert_db(requirement_to_collect)
 
     return WorldGraphNodeConnection(target_node, final_requirement, final_requirement, final_requirement)
 
@@ -350,7 +350,6 @@ def _connections_from(
     node: WorldGraphNode,
     graph: WorldGraph,
     patches: GamePatches,
-    simplify_requirement: Callable[[Requirement], GraphRequirementSet],
     configurable_node_requirements: Mapping[NodeIdentifier, Requirement],
     teleporter_networks: dict[str, list[WorldGraphNode]],
     connections: Iterable[tuple[WorldGraphNode, Requirement]],
@@ -364,13 +363,13 @@ def _connections_from(
         requirement_to_leave = node.database_node.lock_requirement
 
     elif isinstance(node.database_node, DockNode):
-        yield _create_dock_connection(node, graph, patches, simplify_requirement)
+        yield _create_dock_connection(node, graph, patches)
 
     elif isinstance(node.database_node, TeleporterNetworkNode):
         for other_node in teleporter_networks[node.database_node.network]:
             if node != other_node:
                 assert isinstance(other_node.database_node, TeleporterNetworkNode)
-                leaving_requirement = simplify_requirement(
+                leaving_requirement = graph.converter.convert_db(
                     RequirementAnd(
                         [
                             node.database_node.is_unlocked,
@@ -382,7 +381,7 @@ def _connections_from(
                     target=other_node,
                     requirement=leaving_requirement,
                     requirement_with_self_dangerous=leaving_requirement,
-                    requirement_without_leaving=simplify_requirement(other_node.database_node.is_unlocked),
+                    requirement_without_leaving=graph.converter.convert_db(other_node.database_node.is_unlocked),
                 )
 
     for target_node, requirement in connections:
@@ -390,12 +389,12 @@ def _connections_from(
 
         if requirement_to_leave != Requirement.trivial():
             if _is_requirement_viable_as_additional(requirement_to_leave):
-                requirement_including_leaving = requirement_without_leaving = simplify_requirement(
+                requirement_including_leaving = requirement_without_leaving = graph.converter.convert_db(
                     RequirementAnd([requirement, requirement_to_leave])
                 )
             else:
-                requirement_without_leaving = simplify_requirement(requirement)
-                requirement_to_leave_s = simplify_requirement(requirement_to_leave)
+                requirement_without_leaving = graph.converter.convert_db(requirement)
+                requirement_to_leave_s = graph.converter.convert_db(requirement_to_leave)
 
                 if isinstance(requirement_to_leave_s, GraphRequirementList):
                     requirement_including_leaving = copy.copy(requirement_without_leaving)
@@ -407,12 +406,12 @@ def _connections_from(
 
                 else:
                     # TODO
-                    requirement_including_leaving = simplify_requirement(
+                    requirement_including_leaving = graph.converter.convert_db(
                         RequirementAnd([requirement, requirement_to_leave])
                     )
 
         else:
-            requirement_including_leaving = requirement_without_leaving = simplify_requirement(requirement)
+            requirement_including_leaving = requirement_without_leaving = graph.converter.convert_db(requirement)
 
         yield WorldGraphNodeConnection(
             target=target_node,
@@ -443,7 +442,7 @@ def create_node(
     """
 
     resource_gain: list[ResourceQuantity] = []
-    requirement_to_collect = Requirement.trivial()
+    requirement_to_collect = GraphRequirementSet.trivial()
 
     if isinstance(original_node, HintNode):
         requirement_to_collect = original_node.lock_requirement
@@ -603,14 +602,13 @@ def create_graph(
         node_by_pickup_index={node.pickup_index: node for node in nodes if node.pickup_index is not None},
         node_resource_index_offset=node_resource_index_offset,
     )
-    converter = GraphRequirementConverter(resource_database, graph, static_resources, damage_multiplier)
-
-    simplify_requirement = converter.convert_db
-    graph.victory_condition = simplify_requirement(victory_condition)
+    graph.converter = GraphRequirementConverter(resource_database, graph, static_resources, damage_multiplier)
+    graph.victory_condition = graph.converter.convert_db(victory_condition)
 
     for node in nodes:
         if isinstance(node.requirement_to_collect, Requirement):
-            node.requirement_to_collect = simplify_requirement(node.requirement_to_collect)
+            # FIXME: this is just for HintNode
+            node.requirement_to_collect = graph.converter.convert_db(node.requirement_to_collect)
 
     for node in nodes:
         if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
@@ -633,7 +631,6 @@ def create_graph(
                 node,
                 graph,
                 patches,
-                simplify_requirement,
                 configurable_node_requirements,
                 teleporter_networks,
                 converted_area_connections,
@@ -651,7 +648,7 @@ def create_graph(
             if node.has_resources:
                 dangerous_extra = GraphRequirementList()
 
-                for resource, _ in node.resource_gain_on_collect(static_resources):
+                for resource, _ in node.resource_gain_on_collect(graph.converter.static_resources):
                     if resource in graph.dangerous_resources:
                         dangerous_extra.add_resource(resource, 1, False)
 
