@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed: The "Consider possible unsafe resources" experimental option has been removed and is now always enabled.
 - Removed: The "Revised door solver" experimental option has been removed and is now always enabled.
 - Added: Added "Create New Preset" button to preset menu to improve UX.
+- Added: Added the ability to pan maps in the data visualizer by dragging with left or center click.
 
 ### Another Metroid 2 Remake
 
