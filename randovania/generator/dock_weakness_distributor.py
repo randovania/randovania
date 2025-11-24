@@ -15,6 +15,7 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.node_search import distances_to_node
 from randovania.game_description.requirements.base import Requirement
 from randovania.generator.filler.filler_library import UnableToGenerate
+from randovania.graph import world_graph
 from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
 from randovania.layout import filtered_database
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
@@ -27,6 +28,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
     from random import Random
 
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.filler.filler_configuration import FillerResults
@@ -250,7 +252,8 @@ async def _run_resolver(state: State, logic: Logic, max_attempts: int) -> State 
 async def _run_dock_resolver(
     dock: DockNode,
     target: DockNode,
-    filtered_game: GameDescription,
+    base_graph: WorldGraph,
+    filtered_game: GameDatabaseView,
     patches: GamePatches,
 ) -> tuple[State | None, Logic]:
     """
@@ -262,7 +265,24 @@ async def _run_dock_resolver(
     ]
 
     patches = patches.assign_dock_weakness(locks)
-    state, initial_logic = resolver.setup_resolver(filtered_game, patches.configuration, patches)
+
+    graph = world_graph.duplicate_and_adjust_graph_for_patches(
+        base_graph,
+        patches,
+    )
+
+    bootstrap = filtered_game.get_game_enum().generator.bootstrap
+    state = bootstrap.calculate_starting_state(
+        graph.converter.static_resources,
+        graph,
+        filtered_game,
+        patches.configuration,
+        patches,
+    )
+
+    initial_logic = Logic(graph, patches.configuration)
+    state.resources.add_self_as_requirement_to_resources = True
+
     logic = DockRandoLogic.from_logic(initial_logic, dock, target)
 
     try:
@@ -361,17 +381,22 @@ async def distribute_post_fill_weaknesses(
     initial_states: dict[int, State] = {}
     docks_placed = 0
     docks_to_place = len(unassigned_docks)
-    filtered_games = {}
+    filtered_games: dict[int, GameDescription] = {}
+    base_graphs: dict[int, WorldGraph] = {}
 
     start_time = time.perf_counter()
 
     for player, patches in new_patches.items():
-        if patches.configuration.dock_rando.mode != DockRandoMode.DOCKS:
+        configuration = patches.configuration
+        if configuration.dock_rando.mode != DockRandoMode.DOCKS:
             continue
 
         status_update(f"Preparing door lock randomizer for player {player + 1}.")
-        filtered_games[player] = filtered_database.game_description_for_layout(patches.configuration).get_mutable()
-        state, logic = resolver.setup_resolver(filtered_games[player], patches.configuration, patches)
+        filtered_games[player] = filtered_database.game_description_for_layout(configuration).get_mutable()
+
+        # setup_resolver does the inplace resource_database patching, apply_game_specific_patches
+        # and custom victory_condition
+        state, logic = resolver.setup_resolver(filtered_games[player], configuration, patches)
         initial_states[player] = state
 
         try:
@@ -387,6 +412,16 @@ async def distribute_post_fill_weaknesses(
             raise UnableToGenerate(f"Unable to solve game for player {player + 1} with all doors unlocked.")
         else:
             debug.debug_print(f">> Player {player + 1} is solve-able with all doors unlocked.")
+
+        base_graphs[player] = world_graph.create_patchless_graph(
+            database_view=filtered_games[player],
+            static_resources=configuration.game.generator.bootstrap.starting_resources_for_patches(
+                configuration, filtered_games[player].get_resource_database_view(), patches
+            ),
+            damage_multiplier=configuration.damage_strictness.value,
+            victory_condition=filtered_games[player].victory_condition,
+            flatten_to_set_on_patch=filtered_games[player].region_list.flatten_to_set_on_patch,
+        )
 
     path_to_area = {
         player: distances_to_node(
@@ -433,7 +468,9 @@ async def distribute_post_fill_weaknesses(
 
         else:
             # Determine the reach and possible weaknesses given that reach
-            new_state, logic = await _run_dock_resolver(dock, target, filtered_games[player], patches)
+            new_state, logic = await _run_dock_resolver(
+                dock, target, base_graphs[player], filtered_games[player], patches
+            )
             weighted_weaknesses = _determine_valid_weaknesses(
                 dock, target, dock_type_params, dock_type_state, new_state, logic
             )
