@@ -222,16 +222,16 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
 
         if isinstance(node, DockNode):
             try:
-                other = game.node_by_identifier(node.default_connection)
+                maybe_other = game.node_by_identifier(node.default_connection)
             except KeyError:
-                other = None
+                maybe_other = None
 
             requirement = node.override_default_open_requirement
             if not requirement:
                 requirement = node.default_dock_weakness.requirement
 
-            if other in graph and requirement != Requirement.impossible():
-                graph.add_edge(node, other)
+            if maybe_other is not None and maybe_other in graph and requirement != Requirement.impossible():
+                graph.add_edge(node, maybe_other)
 
     starting_node = game.region_list.node_by_identifier(game.starting_location)
 
@@ -337,7 +337,7 @@ def _does_requirement_contain_resource(req: Requirement, resource: str) -> bool:
     return False
 
 
-def get_possible_connections(game: GameDescription):
+def get_possible_connections(game: GameDescription) -> Iterator[tuple[str, Requirement]]:
     for dock_type in game.dock_weakness_database.dock_types:
         for weakness in game.dock_weakness_database.weaknesses[dock_type].values():
             yield f"DockWeakness {weakness.name} ({dock_type.long_name}", weakness.requirement
