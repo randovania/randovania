@@ -26,10 +26,13 @@ class DockLockDetailsTab(BaseConnectionDetailsTab):
         per_region: dict[str, dict[str, str | dict[str, str]]],
         game: GameDatabaseView,
         patches: GamePatches,
-    ):
+    ) -> None:
         for source, weakness in patches.all_dock_weaknesses(game):
             source_region = source.identifier.region
             source_area = source.identifier.area
             if source_area not in per_region[source_region]:
                 per_region[source_region][source_area] = {}
-            per_region[source_region][source_area][source.name] = weakness.long_name
+
+            target = per_region[source_region][source_area]
+            assert isinstance(target, dict)
+            target[source.name] = weakness.long_name
