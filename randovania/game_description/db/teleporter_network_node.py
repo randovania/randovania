@@ -7,7 +7,7 @@ from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_info import ResourceGain
 
@@ -45,8 +45,3 @@ class TeleporterNetworkNode(ResourceNode):
         for node in context.node_provider.nodes_in_network(self.network):
             if node.is_unlocked.satisfied(context, 0):
                 yield node.resource(context), 1
-
-    def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
-        for node in context.node_provider.nodes_in_network(self.network):
-            if node != self:
-                yield node, node.is_unlocked

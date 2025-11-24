@@ -12,7 +12,6 @@ from frozendict import frozendict
 from randovania.game_description import default_database
 from randovania.game_description.db.dock import DockLock, DockLockType, DockRandoParams, DockWeakness
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import NodeContext
 from randovania.game_description.node_search import distances_to_node
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
@@ -225,9 +224,9 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
         patches = results.patches
         player_docks: list[tuple[int, DockNode]] = []
 
-        ctx = NodeContext(patches, patches.starting_resources(), game.resource_database, game.region_list)
         for dock in patches.all_weaknesses_to_shuffle(game):
-            if (player, dock.get_target_node(ctx)) not in player_docks:
+            target_node = game.node_by_identifier(patches.get_dock_connection_for(dock))
+            if (player, target_node) not in player_docks:
                 player_docks.append((player, dock))
 
         to_shuffle_proportion = game.dock_weakness_database.dock_rando_config.to_shuffle_proportion
@@ -410,16 +409,7 @@ async def distribute_post_fill_weaknesses(
         game = filler_results.player_results[player].game
         patches = new_patches[player]
 
-        target = dock.get_target_node(
-            NodeContext(
-                patches,
-                patches.starting_resources(),
-                game.resource_database,
-                game.region_list,
-            )
-        )
-        assert isinstance(target, DockNode)
-
+        target = game.typed_node_by_identifier(patches.get_dock_connection_for(dock), DockNode)
         dock_type_params = game.dock_weakness_database.dock_rando_params[dock.dock_type]
         dock_type_state = patches.configuration.dock_rando.types_state[dock.dock_type]
 

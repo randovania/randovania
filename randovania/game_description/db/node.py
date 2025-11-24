@@ -11,7 +11,6 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.node_provider import NodeProvider
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
@@ -84,14 +83,6 @@ class Node:
     def is_derived_node(self) -> bool:
         """If True, this node was created dynamically from other nodes."""
         return False
-
-    def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
-        """
-        Queries all nodes from other areas you can go from a given node. Aka, doors and teleporters
-        :param context:
-        :return: Generator of pairs Node + Requirement for going to that node
-        """
-        yield from []
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
