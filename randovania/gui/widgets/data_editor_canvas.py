@@ -305,9 +305,10 @@ class DataEditorCanvas(QtWidgets.QWidget):
         else:
             # Update cursor based on what's under the mouse
             local_pos = QPointF(event.pos()) - self.get_area_canvas_offset()
+            nodes_at_mouse = self._nodes_at_position(local_pos)
             areas_at_mouse = self._other_areas_at_position(local_pos)
 
-            if areas_at_mouse:
+            if nodes_at_mouse or areas_at_mouse:
                 self.setCursor(QtCore.Qt.CursorShape.PointingHandCursor)
             else:
                 self.setCursor(QtCore.Qt.CursorShape.ArrowCursor)
