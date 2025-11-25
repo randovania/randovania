@@ -34,8 +34,19 @@ def test_requirement_lists_without_satisfied_resources(
     def item(name):
         return search.find_resource_info_with_long_name(echoes_game_description.resource_database.item, name)
 
-    state = echoes_game_description.game.generator.bootstrap.calculate_starting_state(
-        echoes_game_description, echoes_game_patches, default_echoes_preset.configuration
+    state = State(
+        echoes_game_description.resource_database.create_resource_collection(),
+        {},
+        (),
+        echoes_game_description.game.generator.bootstrap.create_damage_state(
+            echoes_game_description, default_echoes_preset.configuration
+        ),
+        None,  # type: ignore[arg-type]
+        echoes_game_patches,
+        None,
+        echoes_game_description.resource_database,
+        echoes_game_description.region_list,
+        hint_state=None,
     )
     state.resources.add_resource_gain(
         [

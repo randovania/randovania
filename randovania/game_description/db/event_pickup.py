@@ -8,9 +8,8 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 
 if TYPE_CHECKING:
-    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.db.node import Node
     from randovania.game_description.requirements.base import Requirement
-    from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
 
 
 @dataclasses.dataclass(frozen=True)
@@ -49,13 +48,6 @@ class EventPickupNode(ResourceNode):
     @property
     def is_derived_node(self) -> bool:
         return True
-
-    def resource(self, context: NodeContext) -> ResourceInfo:
-        return self.pickup_node.resource(context)
-
-    def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
-        yield from self.event_node.resource_gain_on_collect(context)
-        yield from self.pickup_node.resource_gain_on_collect(context)
 
 
 def find_nodes_to_combine(

@@ -51,10 +51,24 @@ class ResourceDatabaseView(ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_all_items(self) -> Sequence[ItemResourceInfo]:
+        """
+        Gets a list of all ItemResourceInfo
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_event(self, short_name: str) -> SimpleResourceInfo:
         """
         Gets a ResourceInfo of type EVENT, using internal name
         Raises KeyError if it doesn't exist.
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_all_events(self) -> Sequence[SimpleResourceInfo]:
+        """
+        Gets a list of resources of type EVENT
         """
         raise NotImplementedError
 
@@ -143,8 +157,16 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
         return self._original.get_item_by_display_name(name)
 
     @override
+    def get_all_items(self) -> Sequence[ItemResourceInfo]:
+        return self._original.get_all_items()
+
+    @override
     def get_event(self, short_name: str) -> SimpleResourceInfo:
         return self._original.get_event(short_name)
+
+    @override
+    def get_all_events(self) -> Sequence[SimpleResourceInfo]:
+        return self._original.get_all_events()
 
     @override
     def get_misc(self, short_name: str) -> SimpleResourceInfo:

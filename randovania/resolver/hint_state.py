@@ -9,7 +9,7 @@ from randovania.resolver.logic import Logic
 
 class ResolverHintState(HintState):
     def __copy__(self) -> Self:
-        other = ResolverHintState(
+        other = self.__class__(
             self.configuration,
             self.graph,
         )

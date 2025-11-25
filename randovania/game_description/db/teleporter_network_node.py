@@ -4,12 +4,9 @@ import dataclasses
 import typing
 
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.base import Requirement
-    from randovania.game_description.resources.resource_info import ResourceGain
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
@@ -37,11 +34,3 @@ class TeleporterNetworkNode(ResourceNode):
     is_unlocked: Requirement
     network: str
     requirement_to_activate: Requirement
-
-    def resource(self, context: NodeContext) -> NodeResourceInfo:
-        return NodeResourceInfo.from_node(self, context)
-
-    def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
-        for node in context.node_provider.nodes_in_network(self.network):
-            if node.is_unlocked.satisfied(context, 0):
-                yield node.resource(context), 1
