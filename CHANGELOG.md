@@ -60,6 +60,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sector 6
 
 - Changed: Clogged Cavern: Going down via the Speed Booster Blocks doesn't require Charge Beam or Intermediate Shinesparking anymore.
+- Changed: Nocturnal Shaft: Going from the bottom door to the topmost door is now trivial.
+- Changed: Warehouse: Going from the bottom level to the top level is now trivial.
 
 ### Metroid Prime
 
