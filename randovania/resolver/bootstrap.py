@@ -30,7 +30,7 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.game_description.resources.resource_info import ResourceGain, ResourceQuantity
     from randovania.generator.pickup_pool import PoolResults
     from randovania.graph.world_graph import WorldGraph
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -148,7 +148,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
         resource_database: ResourceDatabaseView,
         standard_pickups: StandardPickupConfiguration,
     ) -> ResourceGain:
-        resource_gain = []
+        resource_gain: list[ResourceQuantity] = []
 
         items_to_skip = set()
 
