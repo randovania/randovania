@@ -52,6 +52,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Main Deck
 - Changed: Habitation Deck: It's now possible to move from the top right door to the top left entrance after the animals have been freed.
 
+##### Sector 2 (TRO)
+- Fixed: Oasis is now included in the "near an extendable pillar" featural hint category.
+
 ### Metroid Prime
 
 - Changed: AM2R's Drop Pickups will now use more appropriate models.
