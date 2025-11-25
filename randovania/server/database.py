@@ -65,7 +65,7 @@ class MonitoredDb(peewee.SqliteDatabase):
             return super().execute_sql(sql, params, commit)
 
 
-db = MonitoredDb(None, pragmas={"foreign_keys": 1})
+db = MonitoredDb(None, pragmas={"foreign_keys": 1}, autoconnect=False)
 
 
 def is_boolean(field: Any, value: bool) -> bool:

@@ -22,7 +22,7 @@ def test_admin_sessions(test_client, solo_two_world_session) -> None:
     assert whitespace.join(entry) in result.text
 
 
-def test_admin_sessions_paginated(test_client) -> None:
+def test_admin_sessions_paginated(test_client, clean_database) -> None:
     # Setup
     user = database.User.create(id=1234, name="The Name", admin=True)
     for i in range(50):

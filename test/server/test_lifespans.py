@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pathlib import Path
 from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock
 
@@ -129,12 +130,13 @@ async def test_socketio_lifespan(
 
 
 async def test_database_lifespan(
-    mocker: pytest_mock.MockerFixture,
     lifespan_sa,
-    db_path,
+    tmp_path: Path,
 ):
+    db_path = tmp_path.joinpath("db.db")
+    lifespan_sa.configuration["server_config"]["database_path"] = str(db_path)
     async with database_lifespan(lifespan_sa.app):
-        assert db_path.exists()
+        assert Path(db_path).exists()
 
 
 async def test_server_lifespan(

@@ -875,7 +875,7 @@ async def test_livesplit_socket(test_client, simple_room, can_pause: bool, caplo
     ]
 
 
-async def test_livesplit_socket_no_room(test_client):
+async def test_livesplit_socket_no_room(test_client, clean_database):
     token = base64.urlsafe_b64encode(test_client.sa.encrypt_str("1235/1")).decode("ascii")
 
     with pytest.raises(WebSocketDisconnect) as exc:

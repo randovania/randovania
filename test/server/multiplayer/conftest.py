@@ -31,7 +31,9 @@ def solo_two_world_session_layout(test_files_dir):
 
 
 @pytest.fixture
-def solo_two_world_session(test_files_dir, solo_two_world_session_layout) -> database.MultiplayerSession:
+def solo_two_world_session(
+    clean_database, test_files_dir, solo_two_world_session_layout
+) -> database.MultiplayerSession:
     description = solo_two_world_session_layout
     preset_0 = VersionedPreset.with_preset(description.get_preset(0))
     preset_1 = VersionedPreset.with_preset(description.get_preset(1))
