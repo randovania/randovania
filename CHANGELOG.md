@@ -55,6 +55,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sector 2 (TRO)
 - Fixed: Oasis is now included in the "near an extendable pillar" featural hint category.
 
+##### Sector 6
+
+- Changed: Nocturnal Shaft: Going from the bottom door to the topmost door is now trivial.
+- Changed: Warehouse: Going from the bottom level to the top level is now trivial.
+
 ### Metroid Prime
 
 - Changed: AM2R's Drop Pickups will now use more appropriate models.
