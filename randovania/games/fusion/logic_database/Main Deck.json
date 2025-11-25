@@ -12501,15 +12501,15 @@
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "or",
                             "data": {
-                                "comment": "Animals causes issues in generation with DLR, removed as an event for now",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "misc",
-                                            "name": "GeneratorHack",
+                                            "type": "events",
+                                            "name": "Animals",
                                             "amount": 1,
-                                            "negate": true
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -12598,13 +12598,13 @@
                         "Door to Habitation Deck Entrance (Upper)": {
                             "type": "or",
                             "data": {
-                                "comment": "Animals causes issues in generation with DLR, removed as an event for now",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "misc",
-                                            "name": "GeneratorHack",
+                                            "type": "events",
+                                            "name": "Animals",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -12612,7 +12612,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Save the Animals)": {
+                        "Event - Activate Animal Controls": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12748,6 +12748,31 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Activate Animal Controls": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 200.68454661558107,
+                        "y": 376.59770114942535,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Animals",
+                    "connections": {
+                        "Pickup (Save the Animals)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }

@@ -42,7 +42,7 @@ if typing.TYPE_CHECKING:
     from pathlib import Path
 
     from randovania.game_description.db.area import Area
-    from randovania.game_description.db.node import Node, NodeIndex
+    from randovania.game_description.db.node import NodeIndex
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_description import GameDescription
@@ -158,17 +158,11 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         self.game_description = game
         graph, self._initial_state = game_generator.bootstrap.logic_bootstrap_graph(
-            self.preset.configuration,
-            game,
-            patches,
-            use_world_graph=True,
+            self.preset.configuration, game, patches
         )
-        assert isinstance(graph, WorldGraph)
         self.graph = graph
         self.logic = Logic(graph, self.preset.configuration, record_paths=True)
         self.map_canvas.select_game(graph.game_enum)
-
-        self._initial_state.resources.add_self_as_requirement_to_resources = True
 
         self.menu_reset_action.triggered.connect(self._confirm_reset)
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
@@ -220,9 +214,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 return
 
             VersionedPreset.with_preset(self.preset).save_to_file(_persisted_preset_path(self.persistence_path))
-            node = self._initial_state.node
-            assert isinstance(node, WorldGraphNode)
-            self._add_new_action(node)
+            self._add_new_action(self._initial_state.node)
 
     def apply_previous_state(self, previous_state: dict | None) -> bool:
         if previous_state is None:
@@ -291,7 +283,6 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self._add_new_actions(previous_actions)
 
         node = self.state_for_current_configuration().node
-        assert isinstance(node, WorldGraphNode)
         self.focus_on_region(node.region)
         self.focus_on_area(node.area)
 
@@ -372,7 +363,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         if target is None:
             return
 
-        node: Node | None = getattr(target, "node", None)
+        node: WorldGraphNode | None = getattr(target, "node", None)
         if node is not None:
             reach = ResolverReach.calculate_reach(self.logic, self.state_for_current_configuration())
             try:

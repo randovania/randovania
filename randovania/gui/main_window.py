@@ -297,7 +297,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
         self.menu_action_generate_in_another_process.triggered.connect(self._on_generate_in_another_process_change)
-        self.menu_action_use_world_graph.triggered.connect(self._on_use_world_graph_change)
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
         self.menu_action_show_multiworld_banner.triggered.connect(self._on_menu_action_show_multiworld_banner)
         self.menu_action_experimental_settings.triggered.connect(self._on_menu_action_experimental_settings)
@@ -609,7 +608,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             self._options.advanced_timeout_during_generation
         )
         self.menu_action_generate_in_another_process.setChecked(self._options.advanced_generate_in_another_process)
-        self.menu_action_use_world_graph.setChecked(self._options.advanced_use_world_graph)
         self.menu_action_dark_mode.setChecked(self._options.dark_mode)
         self.menu_action_show_multiworld_banner.setChecked(self._options.show_multiworld_banner)
         self.menu_action_experimental_settings.setChecked(self._options.experimental_settings)
@@ -781,10 +779,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         with self._options as options:
             options.advanced_generate_in_another_process = new_value
-
-    def _on_use_world_graph_change(self) -> None:
-        with self._options as options:
-            options.advanced_use_world_graph = self.menu_action_use_world_graph.isChecked()
 
     def _on_menu_action_dark_mode(self):
         with self._options as options:

@@ -7,10 +7,10 @@ from randovania.resolver.damage_state import DamageState
 if TYPE_CHECKING:
     from collections.abc import Generator
 
-    from randovania.game_description.db.node import Node
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
+    from randovania.graph.world_graph import WorldGraphNode
 
 
 class NoOpDamageState(DamageState):
@@ -37,7 +37,7 @@ class NoOpDamageState(DamageState):
         return self
 
     @override
-    def apply_node_heal(self, node: Node, resources: ResourceCollection) -> Self:
+    def apply_node_heal(self, node: WorldGraphNode, resources: ResourceCollection) -> Self:
         return self
 
     @override

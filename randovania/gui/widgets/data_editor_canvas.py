@@ -92,8 +92,15 @@ class DataEditorCanvas(QtWidgets.QWidget):
     state: State | None = None
     visible_nodes: set[Node] | None = None
 
+    pan_offset_x: float = 0.0
+    pan_offset_y: float = 0.0
+    _last_pan_point: QPointF | None = None
+
     def __init__(self, parent: QtWidgets.QWidget | None = None):
         super().__init__(parent)
+
+        # Enable mouse tracking to update cursor when hovering
+        self.setMouseTracking(True)
 
         self._show_all_connections_action = QtGui.QAction("Show all node connections", self)
         self._show_all_connections_action.setCheckable(True)
@@ -168,6 +175,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     def select_area(self, area: Area | None) -> None:
         self.area = area
+        self.pan_offset_x = 0.0
+        self.pan_offset_y = 0.0
         if area is None:
             return
 
@@ -276,7 +285,44 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         return result
 
+    def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
+        super().mousePressEvent(event)
+        if event.button() in (QtCore.Qt.MouseButton.LeftButton, QtCore.Qt.MouseButton.MiddleButton):
+            self._last_pan_point = QPointF(event.pos())
+            self.setCursor(QtCore.Qt.CursorShape.ClosedHandCursor)
+            event.accept()
+
+    def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
+        super().mouseMoveEvent(event)
+        # Handle panning
+        if self._last_pan_point is not None:
+            delta = QPointF(event.pos()) - self._last_pan_point
+            self.pan_offset_x += delta.x()
+            self.pan_offset_y += delta.y()
+            self._last_pan_point = QPointF(event.pos())
+            self.update()
+            event.accept()
+        else:
+            # Update cursor based on what's under the mouse
+            local_pos = QPointF(event.pos()) - self.get_area_canvas_offset()
+            nodes_at_mouse = self._nodes_at_position(local_pos)
+            areas_at_mouse = self._other_areas_at_position(local_pos)
+
+            if nodes_at_mouse or areas_at_mouse:
+                self.setCursor(QtCore.Qt.CursorShape.PointingHandCursor)
+            else:
+                self.setCursor(QtCore.Qt.CursorShape.ArrowCursor)
+
     def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
+        # Check if we were panning - if so, stop panning and don't process as a click
+        was_panning = self._last_pan_point is not None
+
+        if was_panning and event.button() in (QtCore.Qt.MouseButton.LeftButton, QtCore.Qt.MouseButton.MiddleButton):
+            self._last_pan_point = None
+            self.setCursor(QtCore.Qt.CursorShape.ArrowCursor)
+            event.accept()
+            return
+
         local_pos = QPointF(self.mapFromGlobal(event.globalPos()))
         local_pos -= self.get_area_canvas_offset()
 
@@ -414,8 +460,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     def get_area_canvas_offset(self) -> QPointF:
         return QPointF(
-            (self.width() - self.area_size.width() * self.scale) / 2,
-            (self.height() - self.area_size.height() * self.scale) / 2,
+            (self.width() - self.area_size.width() * self.scale) / 2 + self.pan_offset_x,
+            (self.height() - self.area_size.height() * self.scale) / 2 + self.pan_offset_y,
         )
 
     def paintEvent(self, event: QtGui.QPaintEvent) -> None:

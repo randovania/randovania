@@ -59,5 +59,8 @@ class ResourceType(enum.IntEnum):
         else:
             return ""
 
+    def is_damage(self) -> bool:
+        return self == ResourceType.DAMAGE
+
 
 _NAME_TO_TYPE = {name: resource_type for resource_type, name in ResourceType.names().items()}

@@ -264,7 +264,9 @@ def _list_paths_with_resource(
     from randovania.game_description.db.node import NodeContext
 
     count = 0
-    context = NodeContext(None, game.create_resource_collection(), game.resource_database, game.region_list)
+    context = NodeContext(
+        None, game.resource_database.create_resource_collection(), game.resource_database, game.region_list
+    )
 
     for area in game.region_list.all_areas:
         area_had_resource = False
@@ -302,7 +304,9 @@ def list_paths_with_dangerous_logic(args: Namespace) -> None:
 
     from randovania.game_description.db.node import NodeContext
 
-    context = NodeContext(None, game.create_resource_collection(), game.resource_database, game.region_list)
+    context = NodeContext(
+        None, game.resource_database.create_resource_collection(), game.resource_database, game.region_list
+    )
 
     for area in game.region_list.all_areas:
         area_had_resource = False

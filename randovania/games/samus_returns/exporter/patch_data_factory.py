@@ -582,9 +582,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
     def _build_elevator_dict(self) -> dict[str, dict[str, dict[str, str]]]:
         # generate a 2D dictionary of source (scenario, actor) => target (scenario, actor)
         elevator_dict: dict = {}
-        for node, connection in self.patches.all_dock_connections():
-            if not isinstance(node, DockNode):
-                continue
+        for node, connection in self.patches.all_dock_connections(self.game):
             if node.dock_type not in self.game.dock_weakness_database.all_teleporter_dock_types:
                 continue
 
@@ -599,7 +597,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
     def _add_custom_doors(self) -> list[dict]:
         custom_doors: list = []
 
-        for node, weakness in self.patches.all_dock_weaknesses():
+        for node, weakness in self.patches.all_dock_weaknesses(self.game):
             assert node.location is not None
             if not isinstance(node, DockNode):
                 continue
@@ -644,7 +642,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         result: list = []
         used_actors: dict[str, str] = {}
 
-        for node, weakness in self.patches.all_dock_weaknesses():
+        for node, weakness in self.patches.all_dock_weaknesses(self.game):
             if "type" not in weakness.extra:
                 raise ValueError(
                     f"Unable to change door {node.full_name()} into {weakness.name}: incompatible door weakness"

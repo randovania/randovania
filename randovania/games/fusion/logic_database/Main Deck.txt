@@ -2047,8 +2047,7 @@ Hint Features - 1-way Shutter
   > Door to Habitation Deck Entrance (Middle)
       Trivial
   > Other to Habitation Ventilation (Upper)
-      # Animals causes issues in generation with DLR, removed as an event for now
-      Disabled Generator Workaround
+      After Main Deck Animal Controls
   > Above Pickup
       Trivial
 
@@ -2064,9 +2063,8 @@ Hint Features - 1-way Shutter
   * Open Passage to Habitation Ventilation/Other to Habitation Deck (Upper)
   * Extra - door_idx: (163,)
   > Door to Habitation Deck Entrance (Upper)
-      # Animals causes issues in generation with DLR, removed as an event for now
-      Enabled Generator Workaround
-  > Pickup (Save the Animals)
+      After Main Deck Animal Controls
+  > Event - Activate Animal Controls
       Trivial
 
 > Pickup (Save the Animals); Heals? False
@@ -2097,6 +2095,12 @@ Hint Features - 1-way Shutter
       Trivial
   > Other to Habitation Ventilation (Lower)
       Wave Beam
+
+> Event - Activate Animal Controls; Heals? False
+  * Layers: default
+  * Event Main Deck Animal Controls
+  > Pickup (Save the Animals)
+      Trivial
 
 ----------------
 Hornoad Hallway

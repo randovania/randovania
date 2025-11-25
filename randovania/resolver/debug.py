@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import contextlib
 from enum import Enum
-from typing import Protocol
+from typing import TYPE_CHECKING, Protocol
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 
 class DebugPrintFunction(Protocol):
@@ -20,14 +23,14 @@ class LogLevel(int, Enum):
 _DEBUG_LEVEL = LogLevel.SILENT
 
 
-def _print_function(s: str):
+def _print_function(s: str) -> None:
     print(s)
 
 
 print_function: DebugPrintFunction = _print_function
 
 
-def set_level(level: LogLevel):
+def set_level(level: LogLevel) -> None:
     global _DEBUG_LEVEL
     if isinstance(level, int):
         # clamp to within the defined log levels
@@ -42,7 +45,7 @@ def debug_level() -> LogLevel:
 
 
 @contextlib.contextmanager
-def with_level(level: LogLevel):
+def with_level(level: LogLevel) -> Iterator:
     current_level = debug_level()
     try:
         set_level(level)
@@ -51,6 +54,6 @@ def with_level(level: LogLevel):
         set_level(current_level)
 
 
-def debug_print(message: str):
+def debug_print(message: str) -> None:
     if _DEBUG_LEVEL > LogLevel.SILENT:
         print_function(message)

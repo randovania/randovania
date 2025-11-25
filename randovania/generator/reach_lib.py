@@ -1,19 +1,17 @@
 from __future__ import annotations
 
 import copy
-import typing
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from collections.abc import Container, Iterator
+    from collections.abc import Container
 
     from randovania.game_description.db.node import NodeContext
-    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.generator_reach import GeneratorReach
-    from randovania.graph.state import GraphOrResourceNode, State
-    from randovania.graph.world_graph import WorldGraph
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 
 def _get_reach_class() -> type[GeneratorReach]:
@@ -23,7 +21,7 @@ def _get_reach_class() -> type[GeneratorReach]:
 
 
 def _action_has_no_dangerous_resources(
-    node: GraphOrResourceNode,
+    node: WorldGraphNode,
     dangerous_resources: Container[ResourceInfo],
     context: NodeContext,
 ) -> bool:
@@ -35,17 +33,14 @@ def get_collectable_resource_nodes_of_reach(
     use_safe_nodes: bool = False,
     include_with_dangerous_resources: bool = True,
     must_be_reachable: bool = True,
-) -> list[GraphOrResourceNode]:
+) -> list[WorldGraphNode]:
     context = reach.node_context()
     health = reach.state.health_for_damage_requirements
-    dangerous_resources = reach.game.dangerous_resources
+    dangerous_resources = reach.graph.dangerous_resources
 
     result = []
 
-    node_list = typing.cast(
-        "Iterator[GraphOrResourceNode]",
-        reach.safe_nodes if use_safe_nodes else (reach.connected_nodes if must_be_reachable else reach.nodes),
-    )
+    node_list = reach.safe_nodes if use_safe_nodes else (reach.connected_nodes if must_be_reachable else reach.nodes)
 
     for node in node_list:
         if (
@@ -81,16 +76,16 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
 
 
 def reach_with_all_safe_resources(
-    game: GameDescription | WorldGraph, initial_state: State, filler_config: FillerConfiguration
+    graph: WorldGraph, initial_state: State, filler_config: FillerConfiguration
 ) -> GeneratorReach:
     """
     Creates a new GeneratorReach using the given state and then collect all safe resources
-    :param game:
+    :param graph:
     :param initial_state:
     :param filler_config:
     :return:
     """
-    reach = _get_reach_class().reach_from_state(game, initial_state, filler_config)
+    reach = _get_reach_class().reach_from_state(graph, initial_state, filler_config)
     collect_all_safe_resources_in_reach(reach)
     return reach
 
@@ -101,7 +96,7 @@ def advance_after_action(previous_reach: GeneratorReach) -> GeneratorReach:
     :param previous_reach:
     :return:
     """
-    game = previous_reach.game
+    graph = previous_reach.graph
     collect_all_safe_resources_in_reach(previous_reach)
     initial_state = previous_reach.state
 
@@ -114,7 +109,7 @@ def advance_after_action(previous_reach: GeneratorReach) -> GeneratorReach:
         collect_all_safe_resources_in_reach(next_reach)
 
         if previous_safe_nodes <= next_reach.safe_nodes_index_set:
-            if _action_has_no_dangerous_resources(action, game.dangerous_resources, previous_reach.node_context()):
+            if _action_has_no_dangerous_resources(action, graph.dangerous_resources, previous_reach.node_context()):
                 # print("Non-safe {} was good".format(action.full_name()))
                 return advance_after_action(next_reach)
 
@@ -128,7 +123,7 @@ def advance_after_action(previous_reach: GeneratorReach) -> GeneratorReach:
                 # No need to call collect_all_safe_resources_in_reach on this new reach,
                 # as we've already collected everything at the start of this loop
                 experimental_reach = _get_reach_class().reach_from_state(
-                    game, next_reach.state.copy(), previous_reach.filler_config
+                    graph, next_reach.state.copy(), previous_reach.filler_config
                 )
                 # assert experimental_reach.safe_nodes_index_set <= next_reach.safe_nodes_index_set
 

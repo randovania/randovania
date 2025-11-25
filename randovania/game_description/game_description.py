@@ -9,12 +9,11 @@ from typing import TYPE_CHECKING, override
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
-from randovania.game_description.db.node import Node, NodeContext, NodeIndex
+from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
 from randovania.game_description.requirements.resource_requirement import DamageResourceRequirement
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -31,35 +30,11 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
-    from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.resolver.damage_state import DamageState
-
-
-def _requirement_dangerous(requirement: Requirement, context: NodeContext) -> Iterator[ResourceInfo]:
-    for individual in requirement.iterate_resource_requirements(context):
-        if individual.negate:
-            yield individual.resource
-
-
-def _calculate_dangerous_resources_in_db(
-    db: DockWeaknessDatabase,
-    context: NodeContext,
-) -> Iterator[ResourceInfo]:
-    for dock_type in db.dock_types:
-        for dock_weakness in db.weaknesses[dock_type].values():
-            yield from _requirement_dangerous(context.node_provider.open_requirement_for(dock_weakness), context)
-            if dock_weakness.lock is not None:
-                yield from _requirement_dangerous(context.node_provider.lock_requirement_for(dock_weakness), context)
-
-
-def _calculate_dangerous_resources_in_areas(context: NodeContext) -> Iterator[ResourceInfo]:
-    for area in context.node_provider.all_areas:
-        for node in area.nodes:
-            for _, requirement in context.node_provider.area_connections_from(node):
-                yield from _requirement_dangerous(requirement, context)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -90,7 +65,6 @@ class GameDescription(GameDatabaseView):
     region_list: RegionList
     _used_trick_levels: dict[TrickResourceInfo, set[int]] | None = None
     mutable: bool = False
-    _victory_condition_as_set: RequirementSet | None = None
 
     def __deepcopy__(self, memodict: dict) -> GameDescription:
         new_game = GameDescription(
@@ -132,16 +106,6 @@ class GameDescription(GameDatabaseView):
         self.region_list = region_list
         self._used_trick_levels = used_trick_levels
 
-    def __getstate__(self) -> dict:
-        state = self.__dict__.copy()
-        # Don't pickle _victory_condition_as_set
-        state.pop("_victory_condition_as_set", None)
-        return state
-
-    def __setstate__(self, state: dict) -> None:
-        self.__dict__.update(state)
-        self._victory_condition_as_set = None
-
     @property
     def game_enum(self) -> RandovaniaGame:
         # compatibility with WorldGraph
@@ -155,41 +119,22 @@ class GameDescription(GameDatabaseView):
             self.region_list,
         )
 
-    def patch_requirements(self, resources: ResourceCollection, damage_multiplier: float) -> None:
-        if not self.mutable:
-            raise ValueError("self is not mutable")
+    def get_prefilled_docks(self) -> dict[NodeIdentifier, NodeIdentifier]:
+        connections: dict[NodeIdentifier, NodeIdentifier] = {}
 
-        context = self.create_node_context(resources)
-        self.region_list.patch_requirements(damage_multiplier, context, self.dock_weakness_database)
-        self._dangerous_resources = None
-
-    def get_prefilled_docks(self) -> list[int | None]:
-        region_list = self.region_list
-        dock_connection = [None] * len(region_list.all_nodes)
-        connections: list[int | None] = list(dock_connection)
         teleporter_dock_types = self.dock_weakness_database.all_teleporter_dock_types
-        for source in region_list.iterate_nodes_of_type(DockNode):
+        for _, _, source in self.iterate_nodes_of_type(DockNode):
             if source.dock_type in teleporter_dock_types:
-                target = region_list.node_by_identifier(source.default_connection)
-                connections[source.node_index] = target.node_index
+                connections[source.identifier] = source.default_connection
+
         return connections
-
-    @property
-    def dangerous_resources(self) -> frozenset[ResourceInfo]:
-        if self._dangerous_resources is None:
-            context = self.create_node_context(self.create_resource_collection())
-            first = _calculate_dangerous_resources_in_areas(context)
-            second = _calculate_dangerous_resources_in_db(self.dock_weakness_database, context)
-            self._dangerous_resources = frozenset(first) | frozenset(second)
-
-        return self._dangerous_resources
 
     def get_used_trick_levels(self, *, ignore_cache: bool = False) -> dict[TrickResourceInfo, set[int]]:
         if self._used_trick_levels is not None and not ignore_cache:
             return self._used_trick_levels
 
         result = collections.defaultdict(set)
-        context = self.create_node_context(self.create_resource_collection())
+        context = self.create_node_context(self.resource_database.create_resource_collection())
 
         def process(req: Requirement) -> None:
             for resource_requirement in req.iterate_resource_requirements(context):
@@ -238,12 +183,6 @@ class GameDescription(GameDatabaseView):
             result.mutable = True
             return result
 
-    def victory_condition_as_set(self, context: NodeContext) -> RequirementSet:
-        if self._victory_condition_as_set is None:
-            self._victory_condition_as_set = self.victory_condition.as_set(context)
-        return self._victory_condition_as_set
-        # return self.victory_condition.as_set(context)
-
     def _has_hint_with_kind(self, kind: HintNodeKind) -> bool:
         return any(node.kind == kind for node in self.region_list.iterate_nodes_of_type(HintNode))
 
@@ -275,10 +214,6 @@ class GameDescription(GameDatabaseView):
     @override
     def assert_pickup_index_exists(self, index: PickupIndex) -> None:
         self.region_list.node_from_pickup_index(index)
-
-    @override
-    def create_resource_collection(self) -> ResourceCollection:
-        return ResourceCollection.with_resource_count(len(self.resource_database.resource_by_index))
 
     @override
     def default_starting_location(self) -> NodeIdentifier:
@@ -328,16 +263,6 @@ class GameDescription(GameDatabaseView):
     @override
     def get_configurable_node_requirements(self) -> Mapping[NodeIdentifier, Requirement]:
         return self.region_list.configurable_nodes
-
-    @property
-    def resource_to_dangerous_edges(self) -> dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]]:
-        # Only implemented in World Graph
-        return {}
-
-    @property
-    def resource_to_edges(self) -> dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]]:
-        # Only implemented in World Graph
-        return {}
 
 
 def _resources_for_damage(

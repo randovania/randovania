@@ -7,12 +7,12 @@ from typing import TYPE_CHECKING
 
 import tenacity
 
-from randovania.game_description.assignment import PickupTarget, PickupTargetAssociation
+from randovania.game_description.assignment import PickupAssignment, PickupTarget, PickupTargetAssociation
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.generator import dock_weakness_distributor, hint_distributor
 from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
-from randovania.generator.filler.filler_library import UnableToGenerate, filter_unassigned_pickup_nodes
+from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.runner import run_filler
 from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.generator.pre_fill_params import PreFillParams
@@ -24,7 +24,7 @@ from randovania.resolver import debug, exceptions, resolver
 from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Iterator
     from random import Random
 
     from randovania.game_description.game_database_view import GameDatabaseView
@@ -77,10 +77,10 @@ def _validate_pickup_pool_size(
                 )
 
 
-async def check_if_beatable(patches: GamePatches, pool: PoolResults, use_world_graph: bool) -> bool:
+async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
     new_pickups = []
 
-    collection = patches.game.create_resource_collection()
+    collection = patches.game.get_resource_database_view().create_resource_collection()
     for pickup in itertools.chain(pool.starting, pool.to_place):
         if all(quantity >= 0 for _, quantity in pickup.resource_gain(collection)):
             new_pickups.append(pickup)
@@ -91,7 +91,6 @@ async def check_if_beatable(patches: GamePatches, pool: PoolResults, use_world_g
         filtered_database.game_description_for_layout(patches.configuration).get_mutable(),
         patches.configuration,
         patches,
-        use_world_graph,
     )
 
     with debug.with_level(debug.LogLevel.SILENT):
@@ -99,8 +98,6 @@ async def check_if_beatable(patches: GamePatches, pool: PoolResults, use_world_g
             return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=1000) is not None
         except exceptions.ResolverTimeoutError:
             return False
-        finally:
-            patches.reset_cached_dock_connections_from()
 
 
 async def create_player_pool(
@@ -110,7 +107,6 @@ async def create_player_pool(
     num_players: int,
     world_name: str,
     status_update: Callable[[str], None],
-    use_world_graph: bool,
 ) -> PlayerPool:
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
 
@@ -136,9 +132,7 @@ async def create_player_pool(
         pool_results = pool_creator.calculate_pool_results(configuration, game)
         patches = game_generator.bootstrap.assign_pool_results(rng, configuration, patches, pool_results)
 
-        if configuration.check_if_beatable_after_base_patches and not await check_if_beatable(
-            patches, pool_results, use_world_graph
-        ):
+        if configuration.check_if_beatable_after_base_patches and not await check_if_beatable(patches, pool_results):
             continue
 
         return PlayerPool(
@@ -161,7 +155,6 @@ async def _create_pools_and_fill(
     presets: list[Preset],
     status_update: Callable[[str], None],
     world_names: list[str],
-    use_world_graph: bool,
 ) -> tuple[list[PlayerPool], FillerResults]:
     """
     Runs the rng-dependant parts of the generation, with retries
@@ -183,7 +176,6 @@ async def _create_pools_and_fill(
                 len(presets),
                 world_names[player_index],
                 status_update,
-                use_world_graph,
             )
             _validate_pickup_pool_size(new_pool.pickups, new_pool.game, new_pool.configuration)
 
@@ -195,8 +187,17 @@ async def _create_pools_and_fill(
                 raise config
             raise
 
-    results = await run_filler(rng, player_pools, world_names, status_update, use_world_graph)
+    results = await run_filler(rng, player_pools, world_names, status_update)
     return player_pools, results
+
+
+def get_unassigned_pickup_nodes(
+    game_view: GameDatabaseView,
+    pickup_assignment: PickupAssignment,
+) -> Iterator[PickupNode]:
+    for _, _, node in game_view.iterate_nodes_of_type(PickupNode):
+        if node.pickup_index not in pickup_assignment:
+            yield node
 
 
 def _distribute_remaining_items(rng: Random, filler_results: FillerResults, presets: list[Preset]) -> FillerResults:
@@ -211,9 +212,7 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
 
     for player, filler_result in filler_results.player_results.items():
         split_major = modes[player] is RandomizationMode.MAJOR_MINOR_SPLIT
-        for pickup_node in filter_unassigned_pickup_nodes(
-            filler_result.game.region_list.iterate_nodes(), filler_result.patches.pickup_assignment
-        ):
+        for pickup_node in get_unassigned_pickup_nodes(filler_result.game, filler_result.patches.pickup_assignment):
             if split_major and pickup_node.location_category == LocationCategory.MAJOR:
                 major_pickup_nodes.append((player, pickup_node))
             else:
@@ -280,7 +279,6 @@ async def _create_description(
     status_update: Callable[[str], None],
     attempts: int,
     world_names: list[str],
-    use_world_graph: bool,
 ) -> LayoutDescription:
     """
     :param generator_params:
@@ -305,15 +303,12 @@ async def _create_description(
         presets,
         status_update,
         world_names,
-        use_world_graph=use_world_graph,
     )
     player_pools, filler_results = pools_results
 
     filler_results = _distribute_remaining_items(rng, filler_results, presets)
-    filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(
-        rng, filler_results, status_update, use_world_graph
-    )
-    filler_results = await hint_distributor.distribute_generic_hints(rng, filler_results, use_world_graph)
+    filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, filler_results, status_update)
+    filler_results = await hint_distributor.distribute_generic_hints(rng, filler_results)
     filler_results = await hint_distributor.distribute_specific_location_hints(rng, filler_results)
 
     return LayoutDescription.create_new(
@@ -330,7 +325,6 @@ async def generate_and_validate_description(
     resolver_timeout: int | None = 600,
     attempts: int = DEFAULT_ATTEMPTS,
     world_names: list[str] | None = None,
-    use_world_graph: bool = False,
 ) -> LayoutDescription:
     """
     Creates a LayoutDescription for the given Permalink.
@@ -340,7 +334,6 @@ async def generate_and_validate_description(
     :param resolver_timeout: Abort the resolver after this many seconds.
     :param attempts: Attempt this many generations.
     :param world_names: Name for each world. Used for error and status messages.
-    :param use_world_graph: Use WorldGraph for database backend.
     :return:
     """
     actual_status_update: Callable[[str], None]
@@ -361,7 +354,6 @@ async def generate_and_validate_description(
             status_update=actual_status_update,
             attempts=attempts,
             world_names=world_names,
-            use_world_graph=use_world_graph,
         )
     except UnableToGenerate as e:
         raise GenerationFailure(
@@ -373,7 +365,6 @@ async def generate_and_validate_description(
             configuration=generator_params.get_preset(0).configuration,
             patches=result.all_patches[0],
             status_update=actual_status_update,
-            use_world_graph=use_world_graph,
         )
         try:
             final_state_by_resolve = await asyncio.wait_for(final_state_async, resolver_timeout)

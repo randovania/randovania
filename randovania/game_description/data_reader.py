@@ -18,7 +18,6 @@ from randovania.game_description.db.dock import (
     DockWeakness,
     DockWeaknessDatabase,
 )
-from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
@@ -120,7 +119,7 @@ def read_damage_reductions(data: list[dict], items: list[ItemResourceInfo]) -> t
 def read_resource_reductions_dict(
     data: list[dict],
     db: ResourceDatabase,
-) -> dict[SimpleResourceInfo, list[DamageReduction]]:
+) -> dict[ResourceInfo, list[DamageReduction]]:
     return {db.get_damage(item["name"]): list(read_damage_reductions(item["reductions"], db.item)) for item in data}
 
 
@@ -419,13 +418,6 @@ class RegionReader:
                     connections[origin][nodes_by_name[target_name]] = the_set
                 except (MissingResource, KeyError) as e:
                     raise type(e)(f"In area {area_name}, connection from {origin.name} to {target_name} got error: {e}")
-
-        for node in list(nodes):
-            if isinstance(node, DockNode):
-                lock_node = DockLockNode.create_from_dock(node, self.next_node_index, self.resource_database)
-                nodes.append(lock_node)
-                connections[lock_node] = {}
-                self.next_node_index += 1
 
         for combo in event_pickup.find_nodes_to_combine(nodes, connections):
             combo_node = event_pickup.EventPickupNode.create_from(self.next_node_index, *combo)

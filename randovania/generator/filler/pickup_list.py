@@ -18,7 +18,8 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.generator_reach import GeneratorReach
-    from randovania.graph.state import GraphOrResourceNode, State
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraphNode
 
 PickupCombination = tuple[PickupEntry, ...]
 PickupCombinations = tuple[PickupCombination, ...]
@@ -137,7 +138,6 @@ def pickups_to_solve_list(
 ) -> list[PickupEntry] | None:
     pickups = []
 
-    game = state.patches.game
     context = dataclasses.replace(state.node_context(), current_resources=state.resources.duplicate())
     pickups_for_this = list(pickup_pool)
 
@@ -153,9 +153,9 @@ def pickups_to_solve_list(
         # Create another copy of the list, so we can remove elements while iterating
         for pickup in list(pickups_for_this):
             new_resources = ResourceCollection.from_resource_gain(
-                game, pickup.resource_gain(context.current_resources, force_lock=True)
+                state.resource_database, pickup.resource_gain(context.current_resources, force_lock=True)
             )
-            pickup_progression = ResourceCollection.from_resource_gain(game, pickup.progression)
+            pickup_progression = ResourceCollection.from_resource_gain(state.resource_database, pickup.progression)
             if new_resources[individual.resource] + pickup_progression[individual.resource] > 0:
                 pickups.append(pickup)
                 pickups_for_this.remove(pickup)
@@ -173,7 +173,7 @@ def pickups_to_solve_list(
 def get_pickups_that_solves_unreachable(
     pickups_left: Sequence[PickupEntry],
     reach: GeneratorReach,
-    uncollected_resource_nodes: Sequence[GraphOrResourceNode],
+    uncollected_resource_nodes: Sequence[WorldGraphNode],
     single_set: bool,
 ) -> PickupCombinations:
     """New logic. Given pickup list and a reach, checks the combination of pickups
@@ -183,7 +183,7 @@ def get_pickups_that_solves_unreachable(
     state = reach.state
     possible_sets = [v for v in reach.unreachable_nodes_with_requirements().values() if v.alternatives]
     context = reach.node_context()
-    possible_sets.append(reach.game.victory_condition_as_set(context))
+    possible_sets.append(reach.graph.victory_condition_as_set(context))
 
     uncollected_resources = set()
     for node in uncollected_resource_nodes:

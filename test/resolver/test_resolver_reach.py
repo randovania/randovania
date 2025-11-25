@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock
 
-from randovania.game_description.db.event_node import EventNode
+from randovania.graph.world_graph import WorldGraphNode
 from randovania.resolver.resolver_reach import ResolverReach
 
 
@@ -45,7 +45,7 @@ def test_possible_actions_with_event():
     logic.graph = None
     state = MagicMock()
 
-    event = MagicMock(spec=EventNode, name="event node")
+    event = MagicMock(spec=WorldGraphNode, name="event node")
     event.node_index = 0
     event.is_resource_node = prop = MagicMock(return_value=True)
     event.should_collect.return_value = True

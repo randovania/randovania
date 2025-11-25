@@ -1,41 +1,17 @@
 from __future__ import annotations
 
-import typing
 from typing import TYPE_CHECKING, Any, NamedTuple, Self, TypeVar
 
-from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.graph.world_graph import WorldGraphNode
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
-
-    from randovania.game_description.assignment import PickupAssignment
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.weights import ActionWeights
     from randovania.generator.generator_reach import GeneratorReach
-    from randovania.graph.state import GraphOrClassicNode, GraphOrResourceNode
-
-
-def filter_unassigned_pickup_nodes(
-    nodes: Iterator[GraphOrClassicNode],
-    pickup_assignment: PickupAssignment,
-) -> Iterator[PickupNode]:
-    for node in nodes:
-        if isinstance(node, PickupNode):
-            if node.pickup_index not in pickup_assignment:
-                yield node
-
-        elif isinstance(node, WorldGraphNode):
-            if node.pickup_index is not None and node.pickup_index not in pickup_assignment:
-                yield typing.cast("PickupNode", node.database_node)
+    from randovania.graph.world_graph import WorldGraphNode
 
 
 class UnableToGenerate(Exception):
@@ -46,10 +22,10 @@ X = TypeVar("X")
 
 
 def _filter_not_in_dict(
-    elements: Iterator[X],
+    elements: set[X],
     dictionary: dict[X, Any],
 ) -> set[X]:
-    return set(elements) - set(dictionary.keys())
+    return elements - set(dictionary.keys())
 
 
 class UncollectedState(NamedTuple):
@@ -61,86 +37,58 @@ class UncollectedState(NamedTuple):
     def from_reach(cls, reach: GeneratorReach) -> Self:
         """Creates an UncollectedState reflecting only the safe uncollected resources in the reach."""
 
-        pickups, hints, events = reach.state.collected_pickups_hints_and_events(reach.game)
+        pickups, hints, events = reach.state.collected_pickups_hints_and_events(reach.graph)
 
         return cls(
-            _filter_not_in_dict(iter(pickups), reach.state.patches.pickup_assignment),
-            _filter_not_in_dict(iter(hints), reach.state.patches.hints),
+            _filter_not_in_dict(set(pickups), reach.state.patches.pickup_assignment),
+            _filter_not_in_dict(set(hints), reach.state.patches.hints),
             set(events),
         )
 
     @classmethod
     def from_reach_with_unsafe(cls, reach: GeneratorReach) -> Self:
         """Creates an UncollectedState reflecting all safe or unsafe uncollected resources in the reach."""
-
         context = reach.node_context()
 
-        reachable_indices: set[int] = reach.set_of_reachable_node_indices()
-
-        def is_collectable(node: GraphOrResourceNode) -> bool:
+        def is_collectable(node: WorldGraphNode) -> bool:
             return node.requirement_to_collect.satisfied(
                 context, reach.state.damage_state.health_for_damage_requirements()
             )
 
-        if isinstance(reach.game, GameDescription):
-            regular_nodes = [reach.game.region_list.all_nodes[node_index] for node_index in reachable_indices]
+        world_graph_nodes = [reach.graph.nodes[node_index] for node_index in reach.set_of_reachable_node_indices()]
 
-            def all_resource_nodes_of_type[T: ResourceNode](res_type: type[T]) -> Iterator[T]:
-                for node in regular_nodes:
-                    if isinstance(node, res_type):
-                        yield node
-                    elif (res_type is PickupNode) and isinstance(node, EventPickupNode):
-                        yield node.pickup_node  # type: ignore[misc]
-                    elif (res_type is EventNode) and isinstance(node, EventPickupNode):
-                        yield node.event_node  # type: ignore[misc]
+        def all_pickup_indices_in() -> set[PickupIndex]:
+            return {
+                node.pickup_index
+                for node in world_graph_nodes
+                if node.pickup_index is not None and is_collectable(node)
+            }
 
-            def all_collectable_resource_nodes_of_type[T: ResourceNode](res_type: type[T]) -> Iterator[T]:
-                yield from (node for node in all_resource_nodes_of_type(res_type) if is_collectable(node))
+        def all_hint_node_identifiers() -> set[NodeIdentifier]:
+            return {
+                node.identifier
+                for node in world_graph_nodes
+                if isinstance(node.database_node, HintNode) and is_collectable(node)
+            }
 
-            def all_pickup_indices_in() -> list[PickupIndex]:
-                return [node.pickup_index for node in all_collectable_resource_nodes_of_type(PickupNode)]
-
-            def all_hint_node_identifiers() -> list[NodeIdentifier]:
-                return [node.identifier for node in all_collectable_resource_nodes_of_type(HintNode)]
-
-            def all_events() -> set[ResourceInfo]:
-                return {node.resource(context) for node in all_collectable_resource_nodes_of_type(EventNode)}
-
-        else:
-            world_graph_nodes = [reach.game.nodes[node_index] for node_index in reachable_indices]
-
-            def all_pickup_indices_in() -> list[PickupIndex]:
-                return [
-                    node.pickup_index
-                    for node in world_graph_nodes
-                    if node.pickup_index is not None and is_collectable(node)
+        def all_events() -> set[ResourceInfo]:
+            result = set()
+            for node in world_graph_nodes:
+                events = [
+                    resource for resource, _ in node.resource_gain if resource.resource_type == ResourceType.EVENT
                 ]
+                if events and is_collectable(node):
+                    result |= set(events)
 
-            def all_hint_node_identifiers() -> list[NodeIdentifier]:
-                return [
-                    node.identifier
-                    for node in world_graph_nodes
-                    if isinstance(node.database_node, HintNode) and is_collectable(node)
-                ]
-
-            def all_events() -> set[ResourceInfo]:
-                result = set()
-                for node in world_graph_nodes:
-                    events = [
-                        resource for resource, _ in node.resource_gain if resource.resource_type == ResourceType.EVENT
-                    ]
-                    if events and is_collectable(node):
-                        result |= set(events)
-
-                return result
+            return result
 
         return cls(
             _filter_not_in_dict(
-                iter(all_pickup_indices_in()),
+                all_pickup_indices_in(),
                 reach.state.patches.pickup_assignment,
             ),
             _filter_not_in_dict(
-                iter(all_hint_node_identifiers()),
+                all_hint_node_identifiers(),
                 reach.state.patches.hints,
             ),
             all_events(),

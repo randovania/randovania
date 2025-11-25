@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.4.0] - 2025-12-??
 
+- Added: Integration with LiveSplit One for Async Races - after some configuration, starting, pausing and finishing in LiveSplit One will update your status in the Async Race.
 - Changed: The generator and resolver now use a faster algorithm. An option was added to use the old one if needed.
 - Changed: The "Verify if game is beatable after ..." option is no longer experimental.
 - Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
@@ -16,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Text such as the Seed Hash in the Async Race window is now selectable via mouse.
 - Removed: The "Consider possible unsafe resources" experimental option has been removed and is now always enabled.
 - Removed: The "Revised door solver" experimental option has been removed and is now always enabled.
+- Added: Added "Create New Preset" button to preset menu to improve UX.
+- Added: Added the ability to pan maps in the data visualizer by dragging with left or center click.
 
 ### Another Metroid 2 Remake
 
@@ -44,7 +47,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
-- Fixed: Sector 2 (TRO) "Oasis" is now included in the "Pillars" feature hint.
+#### Logic Database
+
+##### Main Deck
+- Changed: Habitation Deck: It's now possible to move from the top right door to the top left entrance after the animals have been freed.
+
+##### Sector 2 (TRO)
+- Fixed: Oasis is now included in the "near an extendable pillar" featural hint category.
 
 ### Metroid Prime
 

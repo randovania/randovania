@@ -15,7 +15,6 @@ from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import NodeContext, NodeIndex
 from randovania.game_description.db.node_provider import NodeProvider
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -270,6 +269,7 @@ def _has_lock_resource(
     """Calculates if the given dock node pair will have a lock resource."""
     forward_weakness = patches.get_dock_weakness_for(source_node)
     back_weakness, back_lock = None, None
+
     if isinstance(target_node, DockNode):
         back_weakness = patches.get_dock_weakness_for(target_node)
         back_lock = back_weakness.lock
@@ -296,7 +296,7 @@ def _create_dock_connection(
 ) -> WorldGraphNodeConnection:
     """Creates the connection for crossing this dock. Also handles adding the resource gain for breaking locks."""
     assert isinstance(node.database_node, DockNode)
-    target_node = graph.original_to_node[patches.get_dock_connection_for(node.database_node).node_index]
+    target_node = graph.node_identifier_to_node[patches.get_dock_connection_for(node.database_node)]
     forward_weakness = patches.get_dock_weakness_for(node.database_node)
 
     back_weakness, back_lock = None, None
@@ -367,7 +367,7 @@ def _connections_from(
         requirement_to_leave = configurable_node_requirements[node.database_node.identifier]
 
     elif isinstance(node.database_node, HintNode):
-        requirement_to_leave = node.database_node.requirement_to_collect
+        requirement_to_leave = node.database_node.lock_requirement
 
     elif isinstance(node.database_node, DockNode):
         yield _create_dock_connection(node, graph, patches, simplify_requirement)
@@ -431,8 +431,8 @@ def create_node(
     resource_gain: list[ResourceQuantity] = []
     requirement_to_collect = Requirement.trivial()
 
-    if isinstance(original_node, ResourceNode):
-        requirement_to_collect = original_node.requirement_to_collect
+    if isinstance(original_node, HintNode):
+        requirement_to_collect = original_node.lock_requirement
 
     if isinstance(original_node, EventNode):
         resource_gain.append((original_node.event, 1))
@@ -490,7 +490,7 @@ def _should_create_front_node(database_view: GameDatabaseView, patches: GamePatc
     Decide if we should wrap the dock node with an extra node.
     Important since crossing ResourceNodes can be problematic in the generator.
     """
-    target_node = patches.get_dock_connection_for(original_node)
+    target_node = database_view.node_by_identifier(patches.get_dock_connection_for(original_node))
 
     # Docks without locks don't have resources
     if not _has_lock_resource(original_node, target_node, patches):

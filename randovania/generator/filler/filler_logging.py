@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.game_description import GameDescription
 from randovania.generator.filler.filler_library import UncollectedState
 from randovania.resolver import debug
 
@@ -16,11 +14,10 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.player_state import PlayerState
     from randovania.generator.generator_reach import GeneratorReach
-    from randovania.graph.state import GraphOrResourceNode
-    from randovania.graph.world_graph import WorldGraph
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 
-def debug_print_collect_event(event: GraphOrResourceNode) -> None:
+def debug_print_collect_event(event: WorldGraphNode) -> None:
     if debug.debug_level() > debug.LogLevel.SILENT:
         print(f"\n--> Collecting {event.full_name()}")
 
@@ -57,28 +54,18 @@ def print_retcon_loop_start(
 
 
 def print_new_resources(
-    game: GameDescription | WorldGraph,
+    graph: WorldGraph,
     reach: GeneratorReach,
     seen_count: dict[ResourceInfo, int],
     label: str,
 ) -> None:
     if debug.debug_level() > debug.LogLevel.NORMAL:
-        context = reach.node_context()
 
-        if isinstance(game, GameDescription):
-
-            def find_node_with_resource(resource: ResourceInfo) -> GraphOrResourceNode:
-                for _, _, node in game.iterate_nodes_of_type(ResourceNode):
-                    if node.resource(context) == resource:
-                        return node
-                raise ValueError(f"Could not find a node with resource {resource}")
-        else:
-
-            def find_node_with_resource(resource: ResourceInfo) -> GraphOrResourceNode:
-                for node in game.nodes:
-                    if any(r == resource for r, _ in node.resource_gain):
-                        return node
-                raise ValueError(f"Could not find a node with resource {resource}")
+        def find_node_with_resource(resource: ResourceInfo) -> WorldGraphNode:
+            for node in graph.nodes:
+                if any(r == resource for r, _ in node.resource_gain):
+                    return node
+            raise ValueError(f"Could not find a node with resource {resource}")
 
         for index, count in seen_count.items():
             if count == 1:

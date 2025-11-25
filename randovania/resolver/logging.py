@@ -6,15 +6,10 @@ from enum import Enum
 from functools import cached_property
 from typing import TYPE_CHECKING, Literal, NamedTuple, Protocol, final
 
-from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.graph.world_graph import WorldGraphNode
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
@@ -26,7 +21,8 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.node_resource_info import NodeResourceInfo
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceGainTuple
-    from randovania.graph.state import GraphOrClassicNode, State
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraphNode
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logic import Logic
     from randovania.resolver.resolver import ActionPriority
@@ -58,33 +54,27 @@ def _get_pickup_action_details(state: State, pickup_index: PickupIndex) -> Picku
     return PickupActionDetails(action_type, target)
 
 
-def action_details_from_state(state: State, node: GraphOrClassicNode | None = None) -> ActionDetails | None:
+def action_details_from_state(state: State, node: WorldGraphNode | None = None) -> ActionDetails | None:
     node = node or state.node
 
-    if isinstance(node, WorldGraphNode):
-        if node.pickup_index is not None:
-            return _get_pickup_action_details(state, node.pickup_index)
-        node = node.database_node
-        if node is None:
-            return None
-    else:
-        if isinstance(node, EventPickupNode):
-            node = node.pickup_node
+    if node.pickup_index is not None:
+        return _get_pickup_action_details(state, node.pickup_index)
 
-        if isinstance(node, PickupNode):
-            return _get_pickup_action_details(state, node.pickup_index)
+    db_node = node.database_node
+    if db_node is None:
+        return None
 
     text = node.identifier.node
 
-    if isinstance(node, EventNode):
+    if isinstance(db_node, EventNode):
         action_type = ActionType.EVENT
-    elif isinstance(node, DockNode | DockLockNode):
+    elif isinstance(db_node, DockNode):
         action_type = ActionType.LOCK
-    elif isinstance(node, HintNode):
+    elif isinstance(db_node, HintNode):
         action_type = ActionType.HINT
         if not text.startswith("Hint - "):
             text = f"Hint - {text}"
-    elif not node.is_resource_node():
+    elif not db_node.is_resource_node():
         return None
     else:
         action_type = ActionType.OTHER
@@ -109,11 +99,11 @@ class PickupActionDetails(NamedTuple):
 
 
 class ActionLogEntry(NamedTuple):
-    location: GraphOrClassicNode
+    location: WorldGraphNode
     state_string: str
     details: ActionDetails | None
     resources: ResourceGainTuple
-    path_from_previous: tuple[GraphOrClassicNode, ...]
+    path_from_previous: tuple[WorldGraphNode, ...]
 
     @property
     def simple_state(self) -> str:
@@ -149,7 +139,7 @@ class ActionLogEntry(NamedTuple):
 
 
 class RollbackLogEntry(NamedTuple):
-    location: GraphOrClassicNode
+    location: WorldGraphNode
     details: ActionDetails | None
     has_action: bool
     possible_action: bool
@@ -157,7 +147,7 @@ class RollbackLogEntry(NamedTuple):
 
 
 class SkipLogEntry(NamedTuple):
-    location: GraphOrClassicNode
+    location: WorldGraphNode
     details: ActionDetails
     additional_requirements: RequirementSet
 
@@ -181,7 +171,7 @@ class ResolverLogger(abc.ABC):
         """Initialize the logger for a new resolver run."""
         self.last_printed_additional = {}
 
-    def node_string(self, node: GraphOrClassicNode, with_region: bool = True) -> str:
+    def node_string(self, node: WorldGraphNode, with_region: bool = True) -> str:
         """Standard display format for nodes."""
         return node.full_name(with_region=with_region) if node is not None else "None"
 
@@ -233,10 +223,8 @@ class ResolverLogger(abc.ABC):
         if not self.should_perform_logging:
             return
 
-        resources: ResourceGainTuple = ()
-        if isinstance(state.node, ResourceNode | WorldGraphNode):
-            context_state = state.previous_state or state
-            resources = tuple(state.node.resource_gain_on_collect(context_state.node_context()))
+        context_state = state.previous_state or state
+        resources = tuple(state.node.resource_gain_on_collect(context_state.node_context()))
 
         self._log_action(
             ActionLogEntry(
@@ -253,18 +241,14 @@ class ResolverLogger(abc.ABC):
         """Internal logic for logging actions."""
 
     @final
-    def log_checking_satisfiable(
-        self, actions: Iterable[tuple[ActionPriority, ResourceNode | WorldGraphNode, DamageState]]
-    ) -> None:
+    def log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, WorldGraphNode, DamageState]]) -> None:
         """Logs a list of satisfiable actions at this stage in the resolver process."""
         if not self.should_perform_logging:
             return
         self._log_checking_satisfiable(actions)
 
     @abc.abstractmethod
-    def _log_checking_satisfiable(
-        self, actions: Iterable[tuple[ActionPriority, ResourceNode | WorldGraphNode, DamageState]]
-    ) -> None:
+    def _log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, WorldGraphNode, DamageState]]) -> None:
         """Internal logic for logging checking satisifiable actions."""
 
     @final
@@ -287,7 +271,7 @@ class ResolverLogger(abc.ABC):
         """Internal logic for logging rollbacks."""
 
     @final
-    def log_skip(self, node: GraphOrClassicNode, state: State, logic: Logic) -> None:
+    def log_skip(self, node: WorldGraphNode, state: State, logic: Logic) -> None:
         """
         Logs an action being skipped by the resolver
         because of missing requirements.
@@ -364,9 +348,7 @@ class TextResolverLogger(ResolverLogger):
 
             debug.print_function(f"{self._indent(1)}> {node_str}{energy_str} for {action_str}[{resources}]")
 
-    def _log_checking_satisfiable(
-        self, actions: Iterable[tuple[ActionPriority, GraphOrClassicNode | ResourceNode, DamageState]]
-    ) -> None:
+    def _log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, WorldGraphNode, DamageState]]) -> None:
         if self.should_show("CheckSatisfiable", debug.debug_level()):
             if actions:
                 debug.print_function(f"{self._indent()}# Satisfiable Actions")

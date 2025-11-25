@@ -128,7 +128,7 @@ class TrickDetailsPopup(BaseResourceDetailsPopup):
     ):
         context = NodeContext(
             None,
-            game_description.create_resource_collection(),
+            game_description.resource_database.create_resource_collection(),
             game_description.resource_database,
             game_description.region_list,
         )
@@ -163,7 +163,7 @@ class ResourceDetailsPopup(BaseResourceDetailsPopup):
 
         context = NodeContext(
             None,
-            game_description.create_resource_collection(),
+            game_description.resource_database.create_resource_collection(),
             game_description.resource_database,
             game_description.region_list,
         )

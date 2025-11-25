@@ -36,6 +36,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.graph.world_graph import WorldGraph
 
 
 class TestFilesDir:
@@ -503,6 +504,20 @@ def dataclass_test_lib() -> DataclassTestLib:
 def empty_patches(default_blank_configuration, blank_game_description) -> GamePatches:
     configuration = default_blank_configuration
     return GamePatches.create_from_game(blank_game_description, 0, configuration)
+
+
+@pytest.fixture
+def blank_world_graph(blank_game_description, empty_patches) -> WorldGraph:
+    from randovania.graph.world_graph import create_graph
+
+    return create_graph(
+        database_view=blank_game_description,
+        patches=empty_patches,
+        resources=blank_game_description.resource_database.create_resource_collection(),
+        damage_multiplier=1.0,
+        victory_condition=blank_game_description.victory_condition,
+        flatten_to_set_on_patch=False,
+    )
 
 
 @pytest.fixture

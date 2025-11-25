@@ -22,9 +22,9 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.graph.world_graph import WorldGraphNode
 
 
 def test_requirement_lists_without_satisfied_resources(
@@ -34,8 +34,19 @@ def test_requirement_lists_without_satisfied_resources(
     def item(name):
         return search.find_resource_info_with_long_name(echoes_game_description.resource_database.item, name)
 
-    state = echoes_game_description.game.generator.bootstrap.calculate_starting_state(
-        echoes_game_description, echoes_game_patches, default_echoes_preset.configuration
+    state = State(
+        echoes_game_description.resource_database.create_resource_collection(),
+        {},
+        (),
+        echoes_game_description.game.generator.bootstrap.create_damage_state(
+            echoes_game_description, default_echoes_preset.configuration
+        ),
+        None,  # type: ignore[arg-type]
+        echoes_game_patches,
+        None,
+        echoes_game_description.resource_database,
+        echoes_game_description.region_list,
+        hint_state=None,
     )
     state.resources.add_resource_gain(
         [
@@ -118,14 +129,16 @@ def test_requirement_lists_without_satisfied_resources(
 
 
 def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
+    resource_db = echoes_game_description.get_resource_database_view()
+
     def item(name):
-        return search.find_resource_info_with_long_name(echoes_game_description.resource_database.item, name)
+        return resource_db.get_item_by_display_name(name)
 
     mock_req_lists: MagicMock = mocker.patch(
         "randovania.generator.filler.pickup_list._requirement_lists_without_satisfied_resources"
     )
 
-    collection = echoes_game_description.create_resource_collection()
+    collection = resource_db.create_resource_collection()
     pickups_left: list[PickupEntry] = []
     reach = MagicMock()
     reach.state.node_context.return_value = NodeContext(
@@ -138,7 +151,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     resource = MagicMock()
     uncollected_resource_node = MagicMock()
     uncollected_resource_node.resource_gain_on_collect.return_value = [(resource, 1)]
-    uncollected_resource_nodes: list[ResourceNode] = [uncollected_resource_node]
+    uncollected_resource_nodes: list[WorldGraphNode] = [uncollected_resource_node]
 
     mock_req_lists.return_value = {
         RequirementList(
@@ -171,7 +184,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
 
     # Assert
     mock_req_lists.assert_called_once_with(
-        reach.state, [possible_set, reach.game.victory_condition_as_set.return_value], {resource}
+        reach.state, [possible_set, reach.graph.victory_condition_as_set.return_value], {resource}
     )
     assert result == ()
 
@@ -193,7 +206,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
         ]
     )
 
-    resources = echoes_game_description.create_resource_collection()
+    resources = db.create_resource_collection()
     resources.set_resource(db.get_item("MissileLauncher"), 1)
     resources.set_resource(db.get_item("Missile"), 5)
 
@@ -254,13 +267,8 @@ async def test_get_pickups_that_solves_unreachable_quad(
             ),
         ),
     )
-    pool = await generator.create_player_pool(Random(0), config, 0, 1, "World 1", MagicMock(), True)
-    graph, state = pool.game_generator.bootstrap.logic_bootstrap_graph(
-        config,
-        pool.game,
-        pool.patches,
-        use_world_graph=True,
-    )
+    pool = await generator.create_player_pool(Random(0), config, 0, 1, "World 1", MagicMock())
+    graph, state = pool.game_generator.bootstrap.logic_bootstrap_graph(config, pool.game, pool.patches)
     pickups_to_add = []
     if has_light_beam:
         pickups_to_add.append(next(p for p in pool.pickups if p.name == "Light Beam"))

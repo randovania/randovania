@@ -1,17 +1,21 @@
+import base64
 import datetime
 import json
 import math
 import typing
 from collections.abc import Sequence
 
+import fastapi
+import peewee
 from peewee import Case
 from retro_data_structures.json_util import JsonArray
+from starlette.websockets import WebSocket, WebSocketDisconnect
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.json_lib import JsonObject, JsonObject_RO
-from randovania.network_common import error
+from randovania.network_common import error, signals
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
     AsyncRaceRoomAdminData,
@@ -33,9 +37,15 @@ from randovania.server.database import (
     BaseModel,
     User,
 )
-from randovania.server.server_app import ServerApp
+from randovania.server.server_app import RdvFastAPI, ServerApp
 
 MAX_AUTH_TOKEN_LENGTH = 3600 * 24
+
+router = fastapi.APIRouter()
+
+
+def _get_async_race_socketio_room(room: AsyncRaceRoom, user: User) -> str:
+    return f"async-race-{room.id}-{user.id}"
 
 
 async def _verify_authorization(sa: ServerApp, sid: str, room: AsyncRaceRoom, auth_token: str) -> None:
@@ -51,7 +61,7 @@ async def _verify_authorization(sa: ServerApp, sid: str, room: AsyncRaceRoom, au
             return
 
         try:
-            auth_data = sa.decrypt_dict(auth_token)
+            auth_data = sa.decrypt_and_b85_dict(auth_token)
             if auth_data["room_id"] != room.id:
                 raise error.NotAuthorizedForActionError
 
@@ -180,6 +190,17 @@ async def change_room_settings(sa: ServerApp, sid: str, room_id: int, settings_j
 
     # TODO: Reusing the `room` after we set start_datetime/end_datetime breaks create_session_entry
     return (await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, sid)).as_json
+
+
+async def listen_to_room(sa: ServerApp, sid: str, room_id: int, listen: bool) -> None:
+    room = AsyncRaceRoom.get_by_id(room_id)
+    user = await sa.get_current_user(sid)
+    socketio_room = _get_async_race_socketio_room(room, user)
+
+    if listen:
+        await sa.sio.enter_room(sid, socketio_room)
+    else:
+        await sa.sio.leave_room(sid, socketio_room)
 
 
 async def get_room(sa: ServerApp, sid: str, room_id: int, password: str | None) -> JsonObject_RO:
@@ -389,33 +410,26 @@ async def join_and_export(
         raise error.InvalidActionError(f"Unable to export game: {e}")
 
 
-async def change_state(sa: ServerApp, sid: str, room_id: int, new_state: str) -> JsonObject_RO:
-    """
-    Adjusts the start date, finish date or forfeit flag of the user's entry based on the requested state.
-    :param sa:
-    :param room_id:
-    :param new_state:
-    :return:
-    """
-    room = AsyncRaceRoom.get_by_id(room_id)
-    user = await sa.get_current_user(sid)
+async def perform_state_change(
+    room: AsyncRaceRoom,
+    user: User,
+    new_state: AsyncRaceRoomUserStatus,
+) -> None:
     entry = database.AsyncRaceEntry.entry_for(room, user)
     if entry is None:
         raise error.NotAuthorizedForActionError
-
     old_state = entry.user_status()
-    new_state_ = AsyncRaceRoomUserStatus(new_state)
 
     now = lib.datetime_now()
 
     # Ignore transitions for doing nothing
     # These can happen if the client doesn't get updated and the user retries what they did last.
-    if old_state == new_state_:
-        return (await room.create_session_entry(sa, sid)).as_json
+    if old_state == new_state:
+        return
 
     things_to_save: list[BaseModel] = [entry]
 
-    match (old_state, new_state_):
+    match (old_state, new_state):
         case (AsyncRaceRoomUserStatus.JOINED, AsyncRaceRoomUserStatus.STARTED):
             entry.start_datetime = now
             # FIXME: limit distance of start date from join date
@@ -461,10 +475,25 @@ async def change_state(sa: ServerApp, sid: str, room_id: int, new_state: str) ->
 
     with database.db.atomic():
         database.AsyncRaceAuditEntry.create(
-            room=room, user=user, message=f"Changed state from {old_state.value} to {new_state_.value}"
+            room=room, user=user, message=f"Changed state from {old_state.value} to {new_state.value}"
         )
         for it in things_to_save:
             it.save()
+
+
+async def change_state(sa: ServerApp, sid: str, room_id: int, new_state: str) -> JsonObject_RO:
+    """
+    Adjusts the start date, finish date or forfeit flag of the user's entry based on the requested state.
+    :param sa:
+    :param room_id:
+    :param sid:
+    :param new_state:
+    :return:
+    """
+    room = AsyncRaceRoom.get_by_id(room_id)
+    user = await sa.get_current_user(sid)
+
+    await perform_state_change(room, user, AsyncRaceRoomUserStatus(new_state))
 
     return (await room.create_session_entry(sa, sid)).as_json
 
@@ -507,10 +536,112 @@ async def submit_proof(sa: ServerApp, sid: str, room_id: int, submission_notes: 
     entry.save()
 
 
+async def get_livesplit_url(sa: ServerApp, sid: str, room_id: int) -> str:
+    room = AsyncRaceRoom.get_by_id(room_id)
+    user = await sa.get_current_user(sid)
+    entry = database.AsyncRaceEntry.entry_for(room, user)
+    if entry is None:
+        raise error.NotAuthorizedForActionError
+
+    token = base64.urlsafe_b64encode(sa.encrypt_str(f"{user.id}/{room_id}")).decode("ascii")
+
+    return str(
+        sa.app.url_path_for("livesplit_integration", room_id=room_id, token=token).make_absolute_url(
+            sa.configuration["server_address"]
+        )
+    )
+
+
+_livesplit_event_mapping = {
+    "Reset": AsyncRaceRoomUserStatus.JOINED,
+    "Started": AsyncRaceRoomUserStatus.STARTED,
+    "Paused": AsyncRaceRoomUserStatus.PAUSED,
+    "Resumed": AsyncRaceRoomUserStatus.STARTED,
+    "Finished": AsyncRaceRoomUserStatus.FINISHED,
+}
+
+
+async def emit_async_room_update(sa: ServerApp, room: AsyncRaceRoom, sid_or_user: str | User) -> None:
+    user = await sa.get_current_user(sid_or_user) if isinstance(sid_or_user, str) else sid_or_user
+
+    await sa.sio.emit(
+        signals.ASYNC_RACE_ROOM_UPDATE,
+        (await room.create_session_entry(sa, user)).as_json,
+        namespace="/",
+        to=_get_async_race_socketio_room(room, user),
+    )
+
+
+@router.websocket("/async-race-room/{room_id}/livesplit/{token}")
+async def livesplit_integration(
+    websocket: WebSocket,
+    room_id: int,
+    token: str,
+) -> None:
+    app: RdvFastAPI = websocket.app
+
+    # Extract the user id and room_id from an encrypted value.
+    # The only way to get a valid token is to call `get_livesplit_url`, which checks if the user is an
+    # active member of the race, solving the lack of authentication needed in this endpoint.
+    user_id_str, room_id_confirm = app.sa.decrypt_str(base64.urlsafe_b64decode(token)).split("/")
+    user_id = int(user_id_str)
+
+    if room_id != int(room_id_confirm):
+        await websocket.close(reason="Invalid url")
+        return
+
+    try:
+        room = AsyncRaceRoom.get_by_id(room_id)
+        user = User.get_by_id(user_id)
+
+    except peewee.DoesNotExist:
+        await websocket.close(reason="Invalid url")
+        return
+
+    entry = database.AsyncRaceEntry.entry_for(room, user)
+    if entry is None:
+        await websocket.close(reason="Not a member")
+        return
+
+    await websocket.accept()
+    while True:
+        try:
+            data = await websocket.receive_text()
+        except WebSocketDisconnect:
+            return
+
+        # The LiveSplit One API is documented in their source code:
+        # https://github.com/LiveSplit/livesplit-core/blob/master/src/networking/server_protocol.rs
+        #
+        # While the messages sent from them to us are handled in this handleEvent function:
+        # https://github.com/LiveSplit/LiveSplitOne/blob/master/src/ui/LiveSplit.tsx#L904
+        # And events defined here: https://github.com/LiveSplit/livesplit-core/blob/master/src/event.rs
+
+        try:
+            event: dict = json.loads(data)
+        except json.JSONDecodeError as e:
+            app.sa.logger.info("Received invalid json from livesplit: %s %s", str(e), data)
+            continue
+
+        new_state = _livesplit_event_mapping.get(event.get("event"))  # type: ignore[arg-type]
+        if new_state is not None:
+            if new_state is AsyncRaceRoomUserStatus.PAUSED and not room.allow_pause:
+                await websocket.send_json({"command": "undoAllPauses"})
+                continue
+
+            try:
+                await perform_state_change(room, user, new_state)
+                await emit_async_room_update(app.sa, room, user)
+            except error.BaseNetworkError as e:
+                app.sa.logger.info("Invalid transition to %s received from livesplit: %s", str(new_state), str(e))
+
+
 def setup_app(sa: ServerApp) -> None:
+    sa.app.include_router(router)
     sa.on("async_race_list_rooms", list_rooms, with_header_check=True)
     sa.on("async_race_create_room", create_room, with_header_check=True)
     sa.on("async_race_change_room_settings", change_room_settings, with_header_check=True)
+    sa.on("async_race_listen_to_room", listen_to_room, with_header_check=True)
     sa.on("async_race_get_room", get_room, with_header_check=True)
     sa.on("async_race_refresh_room", refresh_room, with_header_check=True)
     sa.on("async_race_get_leaderboard", get_leaderboard, with_header_check=True)
@@ -522,3 +653,4 @@ def setup_app(sa: ServerApp) -> None:
     sa.on("async_race_change_state", change_state, with_header_check=True)
     sa.on("async_race_get_own_proof", get_own_proof, with_header_check=True)
     sa.on("async_race_submit_proof", submit_proof, with_header_check=True)
+    sa.on("async_race_get_livesplit_url", get_livesplit_url, with_header_check=True)

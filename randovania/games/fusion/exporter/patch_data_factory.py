@@ -175,7 +175,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
     def _create_door_locks(self) -> list[dict]:
         result = []
-        for node, weakness in self.patches.all_dock_weaknesses():
+        for node, weakness in self.patches.all_dock_weaknesses(self.game):
             for id in node.extra["door_idx"]:
                 result.append(
                     {

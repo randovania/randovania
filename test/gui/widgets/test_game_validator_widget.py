@@ -25,7 +25,6 @@ def widget(skip_qtbot):
     players.player_names = {0: "Player"}
     players.player_index = 0
     widget = game_validator_widget.GameValidatorWidget(layout, players)
-    widget.use_world_graph = True
     skip_qtbot.addWidget(widget)
     return widget
 
@@ -47,14 +46,13 @@ async def test_run_validator(mocker, success):
 
     # Run
     with debug.with_level(debug.LogLevel.SILENT):
-        result = await game_validator_widget._run_validator(logger, debug_level, layout, True)
+        result = await game_validator_widget._run_validator(logger, debug_level, layout)
 
     # Assert
     mock_resolve.assert_awaited_once_with(
         configuration=layout.get_preset(0).configuration,
         patches=layout.all_patches[0],
         logger=logger,
-        use_world_graph=True,
         record_paths=True,
     )
     assert result == "Took 1.000 seconds. Game is {}.".format("possible" if success else "impossible")
@@ -120,7 +118,7 @@ async def test_on_start_button_no_task(
         assert widget.start_button.text() == "Stop"
         assert widget.status_label.text() == "Running..."
 
-        perform_logging(blank_game_patches, logger, widget.use_world_graph)
+        perform_logging(blank_game_patches, logger)
 
         if cancel:
             widget._current_task.cancel()
@@ -128,7 +126,6 @@ async def test_on_start_button_no_task(
             assert widget._current_task is not None
         return "Final result!"
 
-    lock_prefix = "" if widget.use_world_graph else "Lock - "
     mock_run_validator = mocker.patch(
         "randovania.gui.widgets.game_validator_widget._run_validator",
         side_effect=side_effect,
@@ -138,7 +135,7 @@ async def test_on_start_button_no_task(
     await widget.on_start_button()
 
     # Assert
-    mock_run_validator.assert_awaited_once_with(ANY, verbosity, widget.layout_description, widget.use_world_graph)
+    mock_run_validator.assert_awaited_once_with(ANY, verbosity, widget.layout_description)
     assert widget.log_widget.topLevelItemCount() == (1 if verbosity else 0)
 
     for line in widget.tree_as_lines():
@@ -187,7 +184,7 @@ async def test_on_start_button_no_task(
     if verbosity >= debug.LogLevel.HIGH:
         pickup_satisfy = pickup_action.child(0)
         assert pickup_satisfy.text(0) == "Satisfiable actions"
-        assert pickup_satisfy.child(0).text(0) == f"• Intro/Starting Area/{lock_prefix}Door to Boss Arena"
+        assert pickup_satisfy.child(0).text(0) == "• Intro/Starting Area/Door to Boss Arena"
 
         other_satisfy = other_action.child(0)
         assert other_satisfy.text(0) == "No satisfiable actions"

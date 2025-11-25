@@ -20,8 +20,8 @@ def test_calculate_weights_for_output(capsys, blank_pickup):
     reach.state.collected_pickups_hints_and_events.return_value = [], [], []
     reach.nodes = []
     reach.iterate_nodes = []
-    reach.game.region_list.all_nodes = ()
-    reach.game.game_enum.generator.action_weights.DANGEROUS_ACTION_MULTIPLIER = 1.0
+    reach.graph.nodes = ()
+    reach.graph.game_enum.generator.action_weights.DANGEROUS_ACTION_MULTIPLIER = 1.0
 
     evaluated_action = EvaluatedAction(
         action=Action([blank_pickup]),

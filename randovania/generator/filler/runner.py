@@ -23,7 +23,6 @@ async def run_filler(
     player_pools: Sequence[PlayerPool],
     world_names: list[str],
     status_update: Callable[[str], None],
-    use_world_graph: bool,
 ) -> FillerResults:
     """
     Runs the filler logic for the given configuration and item pool.
@@ -34,7 +33,6 @@ async def run_filler(
     :param player_pools:
     :param world_names:
     :param status_update:
-    :param use_world_graph:
     :return:
     """
 
@@ -47,18 +45,17 @@ async def run_filler(
         standard_pickups = list(pool.pickups)
         rng.shuffle(standard_pickups)
 
-        new_game, state = pool.game_generator.bootstrap.logic_bootstrap_graph(
+        graph, state = pool.game_generator.bootstrap.logic_bootstrap_graph(
             config,
             pool.game,
             pool.patches,
-            use_world_graph=use_world_graph,
         )
         player_states.append(
             PlayerState(
                 index=index,
                 name=world_names[index],
                 game_enum=pool.game.game,
-                game=new_game,
+                graph=graph,
                 original_game=pool.game,
                 initial_state=state,
                 pickups_left=standard_pickups,
