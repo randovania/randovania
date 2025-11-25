@@ -11,6 +11,8 @@ from randovania.server import database
 
 
 def test_admin_sessions(test_client, solo_two_world_session) -> None:
+    test_client.set_logged_in_user(1234)
+
     # Run
     result = test_client.get("/sessions")
 
@@ -46,6 +48,7 @@ def test_admin_sessions_paginated(test_client) -> None:
 
 def test_admin_session_missing(test_client, solo_two_world_session) -> None:
     # Setup
+    test_client.set_logged_in_user(1234)
 
     # Run
     result = test_client.get("/session/2403")
@@ -57,6 +60,7 @@ def test_admin_session_missing(test_client, solo_two_world_session) -> None:
 
 def test_admin_session_exists(test_client, solo_two_world_session) -> None:
     # Setup
+    test_client.set_logged_in_user(1234)
     assoc = database.WorldUserAssociation.get_by_instances(world=1, user=1234)
     assoc.inventory = construct_pack.encode(
         {"Charge": 1},
@@ -82,6 +86,9 @@ def test_admin_session_exists(test_client, solo_two_world_session) -> None:
 
 
 def test_delete_session_get(test_client, solo_two_world_session) -> None:
+    # Setup
+    test_client.set_logged_in_user(1234)
+
     # Run
     session = database.MultiplayerSession.get_by_id(1)
     result = test_client.get("/session/1/delete")
@@ -93,6 +100,9 @@ def test_delete_session_get(test_client, solo_two_world_session) -> None:
 
 
 def test_toggle_admin_status_doesnt_exist(test_client, solo_two_world_session) -> None:
+    # Setup
+    test_client.set_logged_in_user(1234)
+
     # Run
     result = test_client.post("/session/9999/user/0/toggle_admin")
 
@@ -103,6 +113,7 @@ def test_toggle_admin_status_doesnt_exist(test_client, solo_two_world_session) -
 @pytest.mark.parametrize("initial_admin", [False, True])
 def test_toggle_admin_status(test_client, solo_two_world_session, initial_admin) -> None:
     # Setup
+    test_client.set_logged_in_user(1234)
     membership = database.MultiplayerMembership.get_by_ids(1234, 1)
     membership.admin = initial_admin
     membership.save()
@@ -126,6 +137,9 @@ def test_toggle_admin_status(test_client, solo_two_world_session, initial_admin)
 
 
 def test_delete_session_post(test_client, solo_two_world_session) -> None:
+    # Setup
+    test_client.set_logged_in_user(1234)
+
     # Run
     result = test_client.post("/session/1/delete")
     result.raise_for_status()

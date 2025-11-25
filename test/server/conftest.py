@@ -61,8 +61,11 @@ def default_game_list(is_dev_version):
 
 
 @pytest.fixture(name="db_path")
-def db_path_fixture(tmp_path: Path):
-    return tmp_path.joinpath("database.db")
+def db_path_fixture(tmp_path: Path, request: pytest.FixtureRequest):
+    if "test_client" in request.fixturenames:
+        return tmp_path.joinpath("database.db")
+    else:
+        return ":memory:"
 
 
 @pytest.fixture(name="server_app")
