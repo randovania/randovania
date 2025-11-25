@@ -187,7 +187,7 @@ def get_pickups_that_solves_unreachable(
 
     uncollected_resources = set()
     for node in uncollected_resource_nodes:
-        for resource, _ in node.resource_gain_on_collect(context):
+        for resource, _ in node.resource_gain_on_collect(state.resources):
             uncollected_resources.add(resource)
 
     if single_set:

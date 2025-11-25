@@ -19,7 +19,7 @@ def test_possible_actions_no_resources():
     state = MagicMock()
     node_a = MagicMock(name="node_a")
     node_b = MagicMock(name="node_b")
-    node_b.should_collect.return_value = False
+    node_b.has_all_resources.return_value = True
     logic = MagicMock()
     logic.all_nodes = [node_a, node_b]
     logic.graph = None
@@ -37,7 +37,7 @@ def test_possible_actions_no_resources():
     assert options == []
     prop_a.assert_called_once_with()
     prop_b.assert_called_once_with()
-    node_b.should_collect.assert_called_once_with(state.node_context.return_value)
+    node_b.has_all_resources.assert_called_once_with(state.node_context.return_value.current_resources)
 
 
 def test_possible_actions_with_event():
@@ -48,7 +48,7 @@ def test_possible_actions_with_event():
     event = MagicMock(spec=WorldGraphNode, name="event node")
     event.node_index = 0
     event.is_resource_node = prop = MagicMock(return_value=True)
-    event.should_collect.return_value = True
+    event.has_all_resources.return_value = False
 
     logic.all_nodes = [event]
     damage_state = MagicMock()
@@ -60,7 +60,7 @@ def test_possible_actions_with_event():
     # Assert
     assert options == [event]
     prop.assert_called_once_with()
-    event.should_collect.assert_called_once_with(state.node_context.return_value)
+    event.has_all_resources.assert_called_once_with(state.node_context.return_value.current_resources)
     logic.get_additional_requirements.assert_called_once_with(event)
     logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(
         state.node_context(), damage_state.health_for_damage_requirements.return_value

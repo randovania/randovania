@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from collections.abc import Container
 
-    from randovania.game_description.db.node import NodeContext
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.generator_reach import GeneratorReach
@@ -23,9 +23,9 @@ def _get_reach_class() -> type[GeneratorReach]:
 def _action_has_no_dangerous_resources(
     node: WorldGraphNode,
     dangerous_resources: Container[ResourceInfo],
-    context: NodeContext,
+    resources: ResourceCollection,
 ) -> bool:
-    return all(resource not in dangerous_resources for resource, _ in node.resource_gain_on_collect(context))
+    return all(resource not in dangerous_resources for resource, _ in node.resource_gain_on_collect(resources))
 
 
 def get_collectable_resource_nodes_of_reach(
@@ -34,6 +34,7 @@ def get_collectable_resource_nodes_of_reach(
     include_with_dangerous_resources: bool = True,
     must_be_reachable: bool = True,
 ) -> list[WorldGraphNode]:
+    resources = reach.state.resources
     context = reach.node_context()
     health = reach.state.health_for_damage_requirements
     dangerous_resources = reach.graph.dangerous_resources
@@ -45,11 +46,11 @@ def get_collectable_resource_nodes_of_reach(
     for node in node_list:
         if (
             node.is_resource_node()
-            and node.should_collect(context)
+            and not node.has_all_resources(resources)
             and node.requirement_to_collect.satisfied(context, health)
             and (
                 include_with_dangerous_resources
-                or (_action_has_no_dangerous_resources(node, dangerous_resources, context))
+                or (_action_has_no_dangerous_resources(node, dangerous_resources, resources))
             )
             and (not must_be_reachable or reach.is_reachable_node(node))
         ):
@@ -70,7 +71,7 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
 
         for action in actions:
             # requirement_to_collect was checked in `_get_safe_resources`, so we're assuming it's already satisfied
-            if action.should_collect(reach.node_context()):
+            if not action.has_all_resources(reach.state.resources):
                 # assert reach.is_safe_node(action)
                 reach.advance_to(reach.state.act_on_node(action), is_safe=True)
 
@@ -109,7 +110,7 @@ def advance_after_action(previous_reach: GeneratorReach) -> GeneratorReach:
         collect_all_safe_resources_in_reach(next_reach)
 
         if previous_safe_nodes <= next_reach.safe_nodes_index_set:
-            if _action_has_no_dangerous_resources(action, graph.dangerous_resources, previous_reach.node_context()):
+            if _action_has_no_dangerous_resources(action, graph.dangerous_resources, initial_state.resources):
                 # print("Non-safe {} was good".format(action.full_name()))
                 return advance_after_action(next_reach)
 

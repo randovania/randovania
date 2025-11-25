@@ -139,6 +139,7 @@ class ResolverReach:
         # all_nodes is only accessed via indices that guarantee a non-None result
         all_nodes = logic.all_nodes
         checked_nodes: dict[int, DamageState] = {}
+        resources = initial_state.resources
         context = initial_state.node_context()
 
         # Keys: nodes to check
@@ -178,7 +179,7 @@ class ResolverReach:
 
                 satisfied = True
                 if node.require_collected_to_leave:
-                    satisfied = node.has_all_resources(context)
+                    satisfied = node.has_all_resources(resources)
 
                 damage_health = game_state.health_for_damage_requirements()
                 # Check if the normal requirements to reach that node is satisfied
@@ -240,7 +241,7 @@ class ResolverReach:
         for node in self.nodes:
             if (
                 node.is_resource_node()
-                and node.should_collect(context)
+                and not node.has_all_resources(context.current_resources)
                 and node.requirement_to_collect.satisfied(
                     context, self._game_state_at_node[node.node_index].health_for_damage_requirements()
                 )

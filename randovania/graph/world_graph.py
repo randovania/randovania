@@ -141,25 +141,18 @@ class WorldGraphNode:
         """The name of this node, including the area and optionally region."""
         return self.identifier.display_name(with_region, separator)
 
-    def should_collect(self, context: NodeContext) -> bool:
-        """Deprecated. Use `has_all_resources` instead. Exists for API compatibility with ResourceNode."""
-        return not self.has_all_resources(context)
-
-    def has_all_resources(self, context: NodeContext) -> bool:
+    def has_all_resources(self, resources: ResourceCollection) -> bool:
         """
         Checks if all resources given by this node are already collected in the given context.
         Does not include resources given by a PickupEntry assigned to the location of this node.
         TODO: Use a RequirementList to represent this.
         """
-        return self.resource_gain_bitmask & context.current_resources.resource_bitmask == self.resource_gain_bitmask
+        return self.resource_gain_bitmask & resources.resource_bitmask == self.resource_gain_bitmask
 
-    # TODO: ResourceNode name for compatibility
-    is_collected = has_all_resources
-
-    def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
+    def resource_gain_on_collect(self, resources: ResourceCollection) -> ResourceGain:
         yield from self.resource_gain
         if self.pickup_entry is not None:
-            yield from self.pickup_entry.resource_gain(context.current_resources, force_lock=True)
+            yield from self.pickup_entry.resource_gain(resources, force_lock=True)
 
     @property
     def name(self) -> str:
@@ -653,7 +646,7 @@ def create_graph(
             if node.is_resource_node():
                 dangerous_extra: list[Requirement] = [
                     ResourceRequirement.simple(resource)
-                    for resource, quantity in node.resource_gain_on_collect(context)
+                    for resource, quantity in node.resource_gain_on_collect(resources)
                     if resource in graph.dangerous_resources
                 ]
                 if dangerous_extra:

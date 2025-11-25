@@ -170,14 +170,15 @@ class State:
         :param damage_state: The state you should have when collecting this resource. Will add new resources to it.
         :return:
         """
-        context = self.node_context()
         if not (
-            node.should_collect(context)
-            and node.requirement_to_collect.satisfied(context, damage_state.health_for_damage_requirements())
+            not node.has_all_resources(self.resources)
+            and node.requirement_to_collect.satisfied(
+                self.node_context(), damage_state.health_for_damage_requirements()
+            )
         ):
             raise ValueError(f"Trying to collect an uncollectable node'{node}'")
 
-        gain = list(node.resource_gain_on_collect(context))
+        gain = list(node.resource_gain_on_collect(self.resources))
         new_resources = self.resources.duplicate()
         new_resources.add_resource_gain(gain)
 

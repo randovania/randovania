@@ -86,18 +86,20 @@ def test_hint_node_should_collect(hint_node, empty_patches, blank_world_graph):
     has_translator, translator, node = hint_node
     node_provider = MagicMock()
 
+    def col(*args: ResourceInfo):
+        return ResourceCollection.from_dict(db, dict.fromkeys(args, 1))
+
     def ctx(*args: ResourceInfo):
-        resources = ResourceCollection.from_dict(db, dict.fromkeys(args, 1))
-        return NodeContext(empty_patches, resources, db, node_provider)
+        return NodeContext(empty_patches, col(*args), db, node_provider)
 
     assert node.requirement_to_collect.satisfied(ctx(), 0) != has_translator
     assert node.requirement_to_collect.satisfied(ctx(translator), 0)
 
-    assert not node.has_all_resources(ctx())
-    assert not node.has_all_resources(ctx(translator))
+    assert not node.has_all_resources(col())
+    assert not node.has_all_resources(col(translator))
 
     resource = blank_world_graph.resource_info_for_node(node)
-    assert node.has_all_resources(ctx(resource))
-    assert node.has_all_resources(ctx(resource, translator))
+    assert node.has_all_resources(col(resource))
+    assert node.has_all_resources(col(resource, translator))
 
     assert node.resource_gain == [(resource, 1)]

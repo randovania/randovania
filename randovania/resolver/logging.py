@@ -224,7 +224,7 @@ class ResolverLogger(abc.ABC):
             return
 
         context_state = state.previous_state or state
-        resources = tuple(state.node.resource_gain_on_collect(context_state.node_context()))
+        resources = tuple(state.node.resource_gain_on_collect(context_state.resources))
 
         self._log_action(
             ActionLogEntry(
