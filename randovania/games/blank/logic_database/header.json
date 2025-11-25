@@ -79,6 +79,10 @@
             "Damage": {
                 "long_name": "Normal Damage",
                 "extra": {}
+            },
+            "Caltrops": {
+                "long_name": "Caltrops Damage",
+                "extra": {}
             }
         },
         "versions": {
@@ -119,7 +123,21 @@
                 }
             }
         },
-        "damage_reductions": [],
+        "damage_reductions": [
+            {
+                "name": "Caltrops",
+                "reductions": [
+                    {
+                        "name": "Jump",
+                        "multiplier": 0.5
+                    },
+                    {
+                        "name": "DoubleJump",
+                        "multiplier": 0.0
+                    }
+                ]
+            }
+        ],
         "energy_tank_item_index": "Health"
     },
     "layers": [
