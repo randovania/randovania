@@ -25,9 +25,16 @@ def mock_audit(mocker) -> AsyncMock:
     return mocker.patch("randovania.server.multiplayer.session_common.add_audit_entry", autospec=True)
 
 
-@pytest.fixture(name="solo_two_world_session")
-def solo_two_world_session_fixture(test_client, test_files_dir) -> database.MultiplayerSession:
-    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame"))
+@pytest.fixture(scope="session")
+def solo_two_world_session_layout(test_files_dir):
+    return LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame"))
+
+
+@pytest.fixture
+def solo_two_world_session(
+    clean_database, test_files_dir, solo_two_world_session_layout
+) -> database.MultiplayerSession:
+    description = solo_two_world_session_layout
     preset_0 = VersionedPreset.with_preset(description.get_preset(0))
     preset_1 = VersionedPreset.with_preset(description.get_preset(1))
 
@@ -65,13 +72,7 @@ def solo_two_world_session_fixture(test_client, test_files_dir) -> database.Mult
         world=w2, user=user1, last_activity=datetime.datetime(2022, 5, 6, 12, 0, tzinfo=datetime.UTC)
     )
     database.WorldAction.create(provider=w2, location=0, receiver=w1, session=session)
-    test_client.set_logged_in_user(1234)
     return session
-
-
-@pytest.fixture
-def solo_two_world_session(clean_database, solo_two_world_session_setup) -> database.MultiplayerSession:
-    return solo_two_world_session_setup()
 
 
 @pytest.fixture

@@ -348,7 +348,7 @@ async def test_restore_user_session_invalid_key(mock_sa, fernet):
         await user_session.restore_user_session(mock_sa, "TheSid", b"")
 
 
-async def test_me_json(test_client):
+async def test_me_json(test_client, clean_database):
     # Setup
     user = User.create(id=1234, name="The Name")
     test_client.set_logged_in_user(user.id)
@@ -361,7 +361,7 @@ async def test_me_json(test_client):
     assert response.json() == user.as_json
 
 
-async def test_get_discord_user(test_client):
+async def test_get_discord_user(test_client, clean_database):
     discord_user = MagicMock()
     discord_user.id = "123412341234"
 
@@ -391,7 +391,7 @@ async def test_guest_login_form(test_client):
     assert '<input id="name" placeholder="User name to login as" name="name">' in response.text
 
 
-async def test_guest_login_post_valid_json(test_client):
+async def test_guest_login_post_valid_json(test_client, clean_database):
     response = test_client.post("/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo"})
     response.raise_for_status()
     assert response.json() == {
@@ -402,7 +402,7 @@ async def test_guest_login_post_valid_json(test_client):
     assert User.get_by_id(1).name == "Guest: Foo"
 
 
-async def test_guest_login_post_valid_web(test_client):
+async def test_guest_login_post_valid_web(test_client, clean_database):
     response = test_client.post("/guest_login", data={"name": "Foo"}, follow_redirects=False)
     assert response.status_code == 303
     assert response.headers["Location"] == "http://testserver/me"

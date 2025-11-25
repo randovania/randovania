@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import uuid
 from typing import TYPE_CHECKING
 from unittest.mock import NonCallableMagicMock
 
@@ -19,7 +20,6 @@ from randovania.server.fastapi_discord import DiscordOAuthClient
 
 if TYPE_CHECKING:
     from collections.abc import Generator
-    from pathlib import Path
 
     from pytest_mock import MockerFixture
 
@@ -33,10 +33,7 @@ def empty_database(db_path, request: pytest.FixtureRequest):
         test_db = SqliteDatabase(db_path)
         database.db = test_db
         with test_db.bind_ctx(database.all_classes):
-            # If we connect here, the database file will be created and thus when database_lifespan runs,
-            # it'll see an existing database file and wrongly apply the database migrations
-            if "test_client" not in request.fixturenames:
-                test_db.connect(reuse_if_open=True)
+            assert test_db.connect(reuse_if_open=False)
             yield test_db
     finally:
         database.db = old_db
@@ -44,9 +41,7 @@ def empty_database(db_path, request: pytest.FixtureRequest):
 
 @pytest.fixture
 def clean_database(empty_database, request: pytest.FixtureRequest) -> SqliteDatabase:
-    # Don't create classes if using test_client, as that will also create the classes
-    if "test_client" not in request.fixturenames:
-        empty_database.create_tables(database.all_classes)
+    empty_database.create_tables(database.all_classes)
     return empty_database
 
 
@@ -61,21 +56,26 @@ def default_game_list(is_dev_version):
 
 
 @pytest.fixture(name="db_path")
-def db_path_fixture(tmp_path: Path):
-    return tmp_path.joinpath("database.db")
+def db_path_fixture():
+    # Use cache=shared, so multiple threads can use the same in-memory database
+    # Use a unique per-test file name as the file name is how they're shared
+    return f"file:{uuid.uuid4()}?mode=memory&cache=shared"
 
 
 @pytest.fixture(name="server_app")
-def server_app_fixture(db_path, mocker: MockerFixture):
+def server_app_fixture(mocker: MockerFixture):
     pytest.importorskip("engineio.async_drivers.threading")
     from randovania.server.server_app import ServerApp
+
+    # Don't let test_client create the database
+    mocker.patch("randovania.server.server_app.database_lifespan")
 
     server_config = ServerConfiguration(
         secret_key="key",
         discord_client_secret="5678",
         fernet_key="s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
         client_version_checking="ignore",
-        database_path=str(db_path),
+        database_path=":INVALID:",
     )
     configuration = NetworkConfiguration(
         server_address="http://127.0.0.1:5000",
@@ -109,9 +109,6 @@ class RdvTestClient(TestClient):
 def test_client_fixture(server_app) -> Generator[RdvTestClient, None, None]:
     client = RdvTestClient(server_app.app)
     with client:
-        database.db.database = client.sa.db.database
-        database.db.close()
-        assert database.db.connect()
         yield client
 
 
