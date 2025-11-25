@@ -146,14 +146,14 @@ def _simplify_additional_requirement_set(
 def _is_action_dangerous(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
     return any(
         resource in dangerous_resources or quantity < 0
-        for resource, quantity in action.resource_gain_on_collect(state.node_context())
+        for resource, quantity in action.resource_gain_on_collect(state.resources)
     )
 
 
 def _is_dangerous_event(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
     return any(
         (resource in dangerous_resources and resource.resource_type == ResourceType.EVENT)
-        for resource, _ in action.resource_gain_on_collect(state.node_context())
+        for resource, _ in action.resource_gain_on_collect(state.resources)
     )
 
 
@@ -271,7 +271,7 @@ def _assign_hint_available_locations(state: State, action: ResolverAction, logic
 
 
 def _resource_gain_for_state(state: State) -> list[ResourceInfo]:
-    return [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
+    return [x for x, _ in state.node.resource_gain_on_collect(state.resources)]
 
 
 def _index_for_action_pair(pair: tuple[ResolverAction, DamageState]) -> int:

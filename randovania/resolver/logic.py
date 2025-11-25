@@ -10,6 +10,8 @@ from randovania.resolver.logging import (
 )
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_info import ResourceInfo
@@ -25,7 +27,7 @@ class Logic:
 
     additional_requirements: list[RequirementSet]
     prioritize_hints: bool
-    all_nodes: tuple[WorldGraphNode, ...]
+    all_nodes: Sequence[WorldGraphNode]
     graph: WorldGraph
     game: GameDescription | None
 
@@ -41,7 +43,7 @@ class Logic:
         prioritize_hints: bool = False,
         record_paths: bool = False,
     ):
-        self.all_nodes = tuple(graph.nodes)
+        self.all_nodes = graph.nodes
         self.graph = graph
 
         self.configuration = configuration

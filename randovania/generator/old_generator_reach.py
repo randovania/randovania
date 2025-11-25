@@ -14,21 +14,24 @@ from randovania.generator.generator_reach import GeneratorReach
 if TYPE_CHECKING:
     from collections.abc import Collection, Iterator, Mapping, Sequence
 
-    from randovania.game_description.db.node import NodeContext, NodeIndex
+    from randovania.game_description.db.node import NodeIndex
     from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 
-def _extra_requirement_for_node(game: WorldGraph, context: NodeContext, node: WorldGraphNode) -> Requirement | None:
+def _extra_requirement_for_node(
+    game: WorldGraph, resources: ResourceCollection, node: WorldGraphNode
+) -> Requirement | None:
     extra_requirement = None
 
     if node.is_resource_node():
         dangerous_extra = [
             ResourceRequirement.simple(resource)
-            for resource, quantity in node.resource_gain_on_collect(context)
+            for resource, quantity in node.resource_gain_on_collect(resources)
             if resource in game.dangerous_resources
         ]
         if dangerous_extra:
@@ -144,9 +147,9 @@ class OldGeneratorReach(GeneratorReach):
         return reach
 
     def _potential_nodes_from(
-        self, node: WorldGraphNode, context: NodeContext
+        self, node: WorldGraphNode, resources: ResourceCollection
     ) -> list[tuple[WorldGraphNode, Requirement]]:
-        extra_requirement = _extra_requirement_for_node(self._graph, context, node)
+        extra_requirement = _extra_requirement_for_node(self._graph, resources, node)
 
         return [
             (
@@ -164,6 +167,7 @@ class OldGeneratorReach(GeneratorReach):
         resource_nodes_to_check = set()
 
         all_nodes = self.all_nodes
+        resources = self._state.resources
         context = self._state.node_context()
         new_edges = []
 
@@ -180,7 +184,7 @@ class OldGeneratorReach(GeneratorReach):
             if all_nodes[path.node].is_resource_node():
                 resource_nodes_to_check.add(path.node)
 
-            for target_node, requirement in self._potential_nodes_from(all_nodes[path.node], context):
+            for target_node, requirement in self._potential_nodes_from(all_nodes[path.node], resources):
                 target_node_index = target_node.node_index
 
                 # is_in_graph inlined, so we don't need to create GraphPath
@@ -217,10 +221,7 @@ class OldGeneratorReach(GeneratorReach):
         :return:
         """
         # We can't advance past a resource node if we haven't collected it
-        if node.is_resource_node():
-            return node.is_collected(self.node_context())
-        else:
-            return True
+        return node.has_all_resources(self.state.resources)
 
     def _calculate_safe_nodes(self) -> None:
         if self._safe_nodes is not None:
@@ -237,18 +238,15 @@ class OldGeneratorReach(GeneratorReach):
         if self._reachable_costs is not None:
             return
 
-        context = self.node_context()
+        resources = self.state.resources
 
         @functools.cache
         def _is_collected(target: int) -> int:
             node = self.all_nodes[target]
-            if node.is_resource_node():
-                if node.is_collected(context):
-                    return 0
-                else:
-                    return 1
-            else:
+            if node.has_all_resources(resources):
                 return 0
+            else:
+                return 1
 
         self._reachable_is_collected = _is_collected
 

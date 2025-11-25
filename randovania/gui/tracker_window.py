@@ -429,6 +429,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.update_translator_gates()
 
         state = self.state_for_current_configuration()
+        resources = state.resources
         context = state.node_context()
         nodes_in_reach = self.current_nodes_in_reach(state)
 
@@ -445,12 +446,12 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 if self._show_only_resource_nodes:
                     is_visible = is_visible and not isinstance(node.database_node, ConfigurableNode)
 
-                is_collected = node.is_collected(context)
+                is_collected = node.has_all_resources(resources)
                 is_visible = is_visible and not (self._hide_collected_resources and is_collected)
 
                 node_item.setDisabled(
                     not (
-                        node.should_collect(context)
+                        not node.has_all_resources(resources)
                         and node.requirement_to_collect.satisfied(context, state.health_for_damage_requirements)
                     )
                 )
@@ -696,9 +697,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         def is_resource_node_present(node: WorldGraphNode, state: State) -> typing.TypeGuard[ResourceNode]:
             if node.is_resource_node():
                 is_resource_set = self._initial_state.resources.is_resource_set
-                return all(
-                    is_resource_set(resource) for resource, _ in node.resource_gain_on_collect(state.node_context())
-                )
+                return all(is_resource_set(resource) for resource, _ in node.resource_gain_on_collect(state.resources))
             return False
 
         self._starting_nodes_indices = {
@@ -853,7 +852,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 add_pickup_to_state(state, pickup)
 
         for node in self._collected_nodes:
-            state.resources.add_resource_gain(node.resource_gain_on_collect(state.node_context()))
+            state.resources.add_resource_gain(node.resource_gain_on_collect(state.resources))
 
         return state
 
