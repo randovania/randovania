@@ -50,10 +50,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 ##### Main Deck
+
 - Changed: Habitation Deck: It's now possible to move from the top right door to the top left entrance after the animals have been freed.
 
 ##### Sector 2 (TRO)
+
 - Fixed: Oasis is now included in the "near an extendable pillar" featural hint category.
+
+##### Sector 6
+
+- Changed: Clogged Cavern: Going down via the Speed Booster Blocks doesn't require Charge Beam or Intermediate Shinesparking anymore.
 
 ### Metroid Prime
 
