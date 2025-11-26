@@ -20,6 +20,10 @@ if typing.TYPE_CHECKING:
 
     from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraphNode
+    from randovania.resolver.damage_state import DamageState
+    from randovania.resolver.logic import Logic
 
 # ruff: noqa: UP046
 
@@ -939,7 +943,7 @@ class GraphRequirementSet:
             raise RuntimeError("Cannot modify a frozen GraphRequirementSet")
 
     @property
-    def alternatives(self) -> Sequence[GraphRequirementList]:
+    def alternatives(self) -> tuple[GraphRequirementList, ...]:
         return tuple(self._alternatives)
 
     def add_alternative(self, alternative: GraphRequirementList) -> None:
@@ -953,7 +957,7 @@ class GraphRequirementSet:
     @cython.locals(idx=cython.int, alt=GraphRequirementList)
     @cython.ccall
     # @cython.exceptval(check=False)
-    def satisfied(self, resources: ResourceCollection, energy: cython.int) -> cython.bint:
+    def satisfied(self, resources: ResourceCollection, energy: cython.float) -> cython.bint:
         """Checks if the given resources and health satisfies at least one alternative."""
         alternatives: list[GraphRequirementList] = self._alternatives
 
@@ -1144,3 +1148,212 @@ class GraphRequirementSet:
                     result._alternatives.append(isolated)
 
         return result
+
+
+class ProcessNodesResponse(typing.NamedTuple):
+    reach_nodes: dict[int, DamageState]
+    requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]]
+    path_to_node: dict[int, list[int]]
+
+
+def _combine_damage_requirements(
+    damage: float,
+    requirement: GraphRequirementSet,
+    satisfied_requirement: tuple[GraphRequirementSet, bool],
+    resources: ResourceCollection,
+) -> tuple[GraphRequirementSet, bool]:
+    """
+    Helper function combining damage requirements from requirement and satisfied_requirement. Other requirements are
+    considered either trivial or impossible.
+    :param damage:
+    :param requirement:
+    :param satisfied_requirement:
+    :param resources:
+    :return: The combined requirement and a boolean, indicating if the requirement may have non-damage components.
+    """
+    if damage == 0:
+        # If we took no damage here, then one of the following is true:
+        # - There's no damage requirement in this edge
+        # - Our resources allows for alternatives with no damage requirement
+        # - Our resources grants immunity to the damage resources
+        # In all of these cases, we can verify that assumption with the following assertion
+        # assert requirement.isolate_damage_requirements(context) == Requirement.trivial()
+        #
+        return satisfied_requirement
+
+    isolated_requirement = requirement.isolate_damage_requirements(resources)
+    isolated_satisfied = (
+        satisfied_requirement[0].isolate_damage_requirements(resources)
+        if satisfied_requirement[1]
+        else satisfied_requirement[0]
+    )
+
+    if isolated_requirement == GraphRequirementSet.trivial():
+        result = isolated_satisfied
+    elif isolated_satisfied == GraphRequirementSet.trivial():
+        result = isolated_requirement
+    else:
+        result = isolated_requirement.copy_then_and_with_set(isolated_satisfied)
+
+    return result, False
+
+
+@cython.ccall
+def _is_damage_state_strictly_better(
+    game_state: DamageState,
+    target_node_index: cython.int,
+    use_energy_fast_path: cython.bint,
+    checked_nodes: dict[cython.int, DamageState],
+    nodes_to_check: dict[int, DamageState],
+) -> cython.bint:
+    # a >= b -> !(b > a)
+    checked_target = checked_nodes.get(target_node_index)
+    if checked_target is not None:
+        if use_energy_fast_path:
+            if game_state._energy <= checked_target._energy:  # type: ignore[attr-defined]
+                return False
+        elif not game_state.is_better_than(checked_target):
+            return False
+
+    queued_target = nodes_to_check.get(target_node_index)
+    if queued_target is not None:
+        if use_energy_fast_path:
+            if game_state._energy <= queued_target._energy:  # type: ignore[attr-defined]
+                return False
+        elif not game_state.is_better_than(queued_target):
+            return False
+
+    return True
+
+
+@cython.locals(
+    node_index=cython.int,
+    target_node_index=cython.int,
+    damage_health=cython.int,
+    satisfied=cython.bint,
+    can_leave_node=cython.bint,
+    record_paths=cython.bint,
+    damage=cython.float,
+)
+def resolver_reach_process_nodes(
+    logic: Logic,
+    initial_state: State,
+    nodes_to_check: dict[int, DamageState],
+) -> ProcessNodesResponse:
+    all_nodes: Sequence[WorldGraphNode] = logic.all_nodes
+    resources: ResourceCollection = initial_state.resources
+
+    record_paths: cython.bint = logic.record_paths
+
+    checked_nodes: dict[int, DamageState] = {}
+    satisfied_requirement_on_node: dict[int, tuple[GraphRequirementSet, bool]] = {
+        initial_state.node.node_index: (GraphRequirementSet.trivial(), False)
+    }
+
+    reach_nodes: dict[int, DamageState] = {}
+    requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]] = {}
+    path_to_node: dict[int, list[int]] = {
+        initial_state.node.node_index: [],
+    }
+
+    while nodes_to_check:
+        node_index: cython.int = next(iter(nodes_to_check))
+        node: WorldGraphNode = all_nodes[node_index]
+        game_state: DamageState = nodes_to_check.pop(node_index)
+
+        if node.heal:
+            game_state = game_state.apply_node_heal(node, initial_state.resources)
+
+        checked_nodes[node_index] = game_state
+        if node_index != initial_state.node.node_index:
+            reach_nodes[node_index] = game_state
+
+        can_leave_node: cython.bint = True
+        if node.require_collected_to_leave:
+            can_leave_node = node.resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
+
+        for connection in node.connections:
+            target_node_index: cython.int = connection[0].node_index
+            requirement: GraphRequirementSet = connection[1]
+
+            # a >= b -> !(b > a)
+            if not game_state.is_better_than(checked_nodes.get(target_node_index)) or not game_state.is_better_than(
+                nodes_to_check.get(target_node_index)
+            ):
+                continue
+
+            satisfied: cython.bint = can_leave_node
+            damage_health: cython.int = game_state.health_for_damage_requirements()
+
+            if satisfied:
+                # Check if the normal requirements to reach that node is satisfied
+                satisfied = requirement.satisfied(resources, damage_health)
+                if satisfied:
+                    # If it is, check if we additional requirements figured out by backtracking is satisfied
+                    satisfied = logic.get_additional_requirements(node).satisfied(resources, damage_health)
+
+            if satisfied:
+                damage: cython.float = requirement.damage(resources)
+                nodes_to_check[target_node_index] = game_state.apply_damage(damage)
+
+                if node.heal:
+                    satisfied_requirement_on_node[target_node_index] = (requirement, True)
+                else:
+                    satisfied_requirement_on_node[target_node_index] = _combine_damage_requirements(
+                        damage,
+                        requirement,
+                        satisfied_requirement_on_node[node.node_index],
+                        resources,
+                    )
+                if record_paths:
+                    path_to_node[target_node_index] = list(path_to_node[node_index])
+                    path_to_node[target_node_index].append(node_index)
+
+            else:
+                # If we can't go to this node, store the reason in order to build the satisfiable requirements.
+                # Note we ignore the 'additional requirements' here because it'll be added on the end.
+                if not connection.requirement_without_leaving.satisfied(resources, damage_health):
+                    if target_node_index not in requirements_excluding_leaving_by_node:
+                        requirements_excluding_leaving_by_node[target_node_index] = []
+
+                    requirements_excluding_leaving_by_node[target_node_index].append(
+                        (
+                            connection.requirement_without_leaving,
+                            satisfied_requirement_on_node[node.node_index][0],
+                        )
+                    )
+
+    return ProcessNodesResponse(
+        reach_nodes=reach_nodes,
+        requirements_excluding_leaving_by_node=requirements_excluding_leaving_by_node,
+        path_to_node=path_to_node,
+    )
+
+
+@cython.locals(node_index=cython.int, a=GraphRequirementList, b=GraphRequirementList)
+@cython.ccall
+def build_satisfiable_requirements(
+    logic: Logic,
+    requirements_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]],
+) -> frozenset[GraphRequirementList]:
+    data: list[GraphRequirementList] = []
+
+    additional_requirements_list: list[GraphRequirementSet] = logic.additional_requirements
+
+    for node_index, reqs in requirements_by_node.items():
+        set_param: set[GraphRequirementList] = set()
+
+        for req_a, req_b in reqs:
+            for alt in itertools.product(req_a.alternatives, req_b.alternatives):
+                new_alt = alt[0].copy_then_and_with(alt[1])
+                if new_alt is not None:
+                    set_param.add(new_alt)
+
+        additional_alts: tuple[GraphRequirementList, ...] = additional_requirements_list[node_index].alternatives
+        for a in set_param:
+            for b in additional_alts:
+                new_list = a.copy_then_and_with(b)
+                if new_list is not None:
+                    data.append(new_list)
+
+    return frozenset(data)
