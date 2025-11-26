@@ -413,6 +413,24 @@ class ResourceCollection:
         return self.duplicate()
 
 
+@cython.ccall
+def _is_later_progression_item(
+    resource: ResourceInfo, progressive_chain_info: None | tuple[Sequence[ResourceInfo], int]
+) -> bool:
+    if not progressive_chain_info:
+        return False
+    progressive_chain, index = progressive_chain_info
+    return resource in progressive_chain and progressive_chain.index(resource) > index
+
+
+@cython.ccall
+def _downgrade_progressive_item(
+    item_resource: ResourceInfo, progressive_chain_info: tuple[Sequence[ResourceInfo], int]
+) -> ResourceInfo:
+    progressive_chain, _ = progressive_chain_info
+    return progressive_chain[progressive_chain.index(item_resource) - 1]
+
+
 @cython.cclass
 class GraphRequirementList:
     """
@@ -803,6 +821,53 @@ class GraphRequirementList:
 
         # Remove duplicates
         return True
+
+    @cython.ccall
+    def simplify_requirement_list(
+        self,
+        resources: ResourceCollection,
+        health_for_damage_requirements: cython.float,
+        node_resources: Sequence[ResourceInfo],
+        progressive_item_info: None | tuple[Sequence[ResourceInfo], int],
+    ) -> GraphRequirementList | None:
+        """Used by resolver.py for `_simplify_additional_requirement_set`"""
+
+        result = GraphRequirementList()
+        something_set: cython.bint = False
+
+        for resource in itertools.chain(self._set_resources, self._negate_resources):
+            amount, negate = self.get_requirement_for(resource)
+
+            if negate:
+                if resources.get(resource) == 0:
+                    continue
+                if resource in node_resources:
+                    return None
+            else:
+                if resources.get(resource) >= amount:
+                    continue
+
+            if _is_later_progression_item(resource, progressive_item_info):
+                assert progressive_item_info is not None
+                result.add_resource(
+                    _downgrade_progressive_item(resource, progressive_item_info),
+                    1,
+                    False,
+                )
+                something_set = True
+
+            else:
+                something_set = True
+                result.add_resource(resource, amount, negate)
+
+        if self.damage(resources) >= health_for_damage_requirements:
+            something_set = True
+            result._damage_resources = copy.copy(self._damage_resources)
+
+        if not something_set:
+            return None
+
+        return result
 
 
 @cython.cclass

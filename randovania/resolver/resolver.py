@@ -19,7 +19,7 @@ from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable, Sequence
+    from collections.abc import Callable, Iterable
 
     from randovania.game_description.db.node import NodeContext
     from randovania.game_description.game_description import GameDescription
@@ -38,71 +38,6 @@ AnyPickupNode = PickupNode | EventPickupNode
 AnyEventNode = EventNode | EventPickupNode
 
 
-def _is_later_progression_item(
-    resource: ResourceInfo, progressive_chain_info: None | tuple[Sequence[ResourceInfo], int]
-) -> bool:
-    if not progressive_chain_info:
-        return False
-    progressive_chain, index = progressive_chain_info
-    return resource in progressive_chain and progressive_chain.index(resource) > index
-
-
-def _downgrade_progressive_item(
-    item_resource: ResourceInfo, progressive_chain_info: tuple[Sequence[ItemResourceInfo], int]
-) -> ItemResourceInfo:
-    progressive_chain, _ = progressive_chain_info
-    return progressive_chain[progressive_chain.index(item_resource) - 1]
-
-
-def _simplify_requirement_list(
-    self: GraphRequirementList,
-    state: State,
-    node_resources: Sequence[ResourceInfo],
-    progressive_item_info: None | tuple[Sequence[ItemResourceInfo], int],
-) -> GraphRequirementList | None:
-    current_resources = state.resources
-
-    result = GraphRequirementList()
-    something_set = False
-
-    for resource in self.all_resources(include_damage=False):
-        amount, negate = self.get_requirement_for(resource)
-
-        if negate:
-            if current_resources[resource] == 0:
-                continue
-            if resource in node_resources:
-                return None
-        else:
-            if current_resources[resource] >= amount:
-                continue
-
-        if _is_later_progression_item(resource, progressive_item_info):
-            assert progressive_item_info is not None
-            result.add_resource(
-                _downgrade_progressive_item(resource, progressive_item_info),
-                1,
-                False,
-            )
-            something_set = True
-
-        else:
-            something_set = True
-            result.add_resource(resource, amount, negate)
-
-    if self.damage(current_resources) >= state.health_for_damage_requirements:
-        something_set = True
-        # FIXME: better api for this
-        for resource in self.all_resources():
-            if resource.resource_type.is_damage():
-                result.add_resource(resource, self.get_requirement_for(resource)[0], False)
-
-    if not something_set:
-        return None
-
-    return result
-
-
 def _simplify_additional_requirement_set(
     alternatives: Iterable[GraphRequirementList],
     state: State,
@@ -110,14 +45,14 @@ def _simplify_additional_requirement_set(
     progressive_chain_info: None | tuple[list[ItemResourceInfo], int],
     skip_simplify: bool,
 ) -> GraphRequirementSet:
-    new_alternatives = [
-        simplified
-        for alternative in alternatives
-        if (simplified := _simplify_requirement_list(alternative, state, node_resources, progressive_chain_info))
-        is not None
-    ]
     r = GraphRequirementSet()
-    r.extend_alternatives(new_alternatives)
+    resources = state.resources
+    health = state.health_for_damage_requirements
+
+    for alternative in alternatives:
+        simplified = alternative.simplify_requirement_list(resources, health, node_resources, progressive_chain_info)
+        if simplified is not None:
+            r.add_alternative(simplified)
 
     # TODO: do our simpler logic again?
     if not skip_simplify:
