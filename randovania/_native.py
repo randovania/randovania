@@ -869,6 +869,27 @@ class GraphRequirementList:
 
         return result
 
+    @cython.ccall
+    def _single_resource_optimize_logic(self, single_req_mask: Bitmask) -> cython.int:
+        """
+        Specialized logic for GraphRequirementSet.optimize_alternatives.
+
+        :param single_req_mask: A bitmask used internally to keep track of single-requirement alternatives.
+        :return:
+            0 if this requirement shares a requirement with a single-requirement alternative
+            1 if this is a single-requirement alternative
+            2 if nothing was decided, calculate is_superset normally.
+        """
+        if self._set_bitmask.share_at_least_one_bit(single_req_mask):
+            # We already have a requirement that is just one of these resources
+            return 0
+
+        if self.num_requirements() == 1 and not self._set_bitmask.is_empty():
+            single_req_mask.union(self._set_bitmask)
+            return 1
+        else:
+            return 2
+
 
 @cython.cclass
 class GraphRequirementSet:
@@ -1039,15 +1060,12 @@ class GraphRequirementSet:
         single_req_mask = Bitmask.create()
 
         for current in sorted_alternatives:
-            if current._set_bitmask.share_at_least_one_bit(single_req_mask):
-                # We already have a requirement that is just one of these resources
+            case = current._single_resource_optimize_logic(single_req_mask)
+            if case == 0:
                 continue
-
-            if current.num_requirements() == 1 and not current._set_bitmask.is_empty():
-                single_req_mask.union(current._set_bitmask)
+            elif case == 1:
                 is_superset = False
             else:
-                # Check if current is a superset of any requirement already in result
                 is_superset = any(current.is_requirement_superset(existing) for existing in result)
 
             if not is_superset:
