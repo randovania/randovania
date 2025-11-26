@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import copy
-import functools
 import itertools
 import typing
 from typing import TYPE_CHECKING, Self, override
@@ -71,15 +70,12 @@ class RustworkXGraph:
     def shortest_paths_dijkstra(
         self,
         source: NodeIndex,
-        weight: Callable[[NodeIndex, NodeIndex, GraphData], float],
+        weight: Callable[tuple[NodeIndex, NodeIndex, GraphData], float],
     ) -> Mapping[NodeIndex, float]:
-        def wrap(data: tuple[NodeIndex, NodeIndex, GraphData]) -> float:
-            return weight(*data)
-
         return rustworkx.digraph_dijkstra_shortest_path_lengths(
             self.graph,
             source,
-            edge_cost_fn=wrap,
+            edge_cost_fn=weight,
         )
 
     def strongly_connected_components(self) -> Sequence[Sequence[NodeIndex]]:
@@ -200,18 +196,6 @@ class OldGeneratorReach(GeneratorReach):
         # print("!! _expand_graph finished. Has {} edges".format(sum(1 for _ in self._digraph.edges_data())))
         self._safe_nodes = None
 
-    def _can_advance(
-        self,
-        node: WorldGraphNode,
-    ) -> bool:
-        """
-        Calculates if we can advance past a given node
-        :param node:
-        :return:
-        """
-        # We can't advance past a resource node if we haven't collected it
-        return node.has_all_resources(self.state.resources)
-
     def _calculate_safe_nodes(self) -> None:
         if self._safe_nodes is None:
             self._safe_nodes = _SafeNodes(
@@ -221,26 +205,10 @@ class OldGeneratorReach(GeneratorReach):
             )
 
     def _calculate_reachable_costs(self) -> None:
-        if self._reachable_costs is not None:
-            return
-
-        resources = self.state.resources
-
-        @functools.cache
-        def _is_collected(target: int) -> int:
-            node = self.all_nodes[target]
-            if node.has_all_resources(resources):
-                return 0
-            else:
-                return 1
-
-        def weight(source: int, target: int, attributes: GraphData) -> int:
-            return _is_collected(target)
-
-        self._reachable_costs = self._digraph.shortest_paths_dijkstra(
-            self._state.node.node_index,
-            weight=weight,
-        )
+        if self._reachable_costs is None:
+            self._reachable_costs = _native.generator_reach_calculate_reachable_costs(
+                self._digraph, self._graph, self._state
+            )
 
     def set_of_reachable_node_indices(self) -> set[int]:
         self._calculate_reachable_costs()
@@ -264,7 +232,8 @@ class OldGeneratorReach(GeneratorReach):
             if cost == 0:
                 self._node_reachable_cache[index] = True
             elif cost == 1:
-                self._node_reachable_cache[index] = not self._can_advance(self.all_nodes[index])
+                # Calculates if we can advance past a given node
+                self._node_reachable_cache[index] = not self.all_nodes[index].has_all_resources(self.state.resources)
             else:
                 self._node_reachable_cache[index] = False
 

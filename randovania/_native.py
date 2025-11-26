@@ -10,14 +10,14 @@ import logging
 import typing
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator, Sequence
+    from collections.abc import Iterable, Iterator, Mapping, Sequence
 
     # The package is named `Cython`, so in a case-sensitive system mypy fails to find cython with just `import cython`
     import Cython as cython
 
     from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
-    from randovania.generator.old_generator_reach import GraphPath, RustworkXGraph
+    from randovania.generator.old_generator_reach import GraphData, GraphPath, RustworkXGraph
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
     from randovania.resolver.damage_state import DamageState
@@ -1472,3 +1472,30 @@ def generator_reach_find_strongly_connected_components_for(
         if node_index in component:
             return component
     raise RuntimeError("node_index not found in strongly_connected_components")
+
+
+def generator_reach_calculate_reachable_costs(
+    digraph: RustworkXGraph,
+    world_graph: WorldGraph,
+    state: State,
+) -> Mapping[int, float]:
+    """Calculate the reachable costs for GeneratorReach."""
+    resources: ResourceCollection = state.resources
+    nodes: list[WorldGraphNode] = world_graph.nodes
+
+    is_collected: vector[cython.int] = vector[cython.int]()
+    is_collected.resize(len(nodes), 2)
+
+    def weight(data: tuple[int, int, GraphData]) -> int:
+        node_index: cython.int = data[1]
+        result: cython.int = is_collected[node_index]
+        if result == 2:
+            result: cython.bint = not nodes[node_index].resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
+            is_collected[node_index] = result
+
+        return result
+
+    return digraph.shortest_paths_dijkstra(
+        state.node.node_index,
+        weight=weight,
+    )
