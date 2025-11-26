@@ -35,6 +35,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.filler.weighted_locations import WeightedLocations
+    from randovania.generator.generator_reach import GeneratorReach
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
@@ -115,7 +116,7 @@ class PlayerState:
         self.hint_state.advance_hint_seen_count(self.reach.state)
         self._advance_event_seen_count()
         self._log_new_pickup_index()
-        self._calculate_potential_actions()
+        self._calculate_and_set_potential_actions_at_loop_start()
 
     def _advance_event_seen_count(self) -> None:
         for resource, quantity in self.reach.state.resources.as_resource_gain():
@@ -130,18 +131,34 @@ class PlayerState:
                 self.pickup_index_ages[index] = 0.0
                 filler_logging.print_new_pickup_index(self, index)
 
-    def _calculate_potential_actions(self) -> None:
-        uncollected_resource_nodes = reach_lib.get_collectable_resource_nodes_of_reach(self.reach)
+    def calculate_potential_actions(
+        self, reach: GeneratorReach | None = None
+    ) -> tuple[PickupCombinations, tuple[WorldGraphNode, ...], list[PickupEntry]]:
+        if not reach:
+            reach_to_use = self.reach
+        else:
+            reach_to_use = reach
+
+        uncollected_resource_nodes = reach_lib.get_collectable_resource_nodes_of_reach(reach_to_use)
 
         usable_pickups = [
             pickup for pickup in self.pickups_left if self.num_actions >= pickup.generator_params.required_progression
         ]
         pickups = get_pickups_that_solves_unreachable(
-            usable_pickups, self.reach, uncollected_resource_nodes, self.configuration.single_set_for_pickups_that_solve
+            usable_pickups,
+            reach_to_use,
+            uncollected_resource_nodes,
+            self.configuration.single_set_for_pickups_that_solve,
         )
+
+        return pickups, tuple(uncollected_resource_nodes), usable_pickups
+
+    def _calculate_and_set_potential_actions_at_loop_start(self) -> None:
+        pickups, uncollected_resource_nodes, usable_pickups = self.calculate_potential_actions()
+
         filler_logging.print_retcon_loop_start(self, usable_pickups)
 
-        self._unfiltered_potential_actions = pickups, tuple(uncollected_resource_nodes)
+        self._unfiltered_potential_actions = pickups, uncollected_resource_nodes
 
     def potential_actions(self, locations_weighted: WeightedLocations) -> list[Action]:
         extra_indices = self.configuration.maximum_random_starting_pickups - self.num_starting_pickups_placed

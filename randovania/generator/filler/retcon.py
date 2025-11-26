@@ -115,7 +115,7 @@ class EvaluatedAction(typing.NamedTuple):
         return EvaluatedAction(self.action, new_reach, self.multiplier, self.offset)
 
 
-def _evaluate_action(base_reach: GeneratorReach, action_weights: ActionWeights, action: Action) -> EvaluatedAction:
+def _evaluate_action(player_state: PlayerState, action_weights: ActionWeights, action: Action) -> EvaluatedAction:
     """
     Calculates the weight offsets and multipliers for the given action, as well as the reach
     you'd get by collecting all resources and pickups of the given action.
@@ -126,6 +126,8 @@ def _evaluate_action(base_reach: GeneratorReach, action_weights: ActionWeights, 
     multiplier = 1.0
     offset = 0.0
 
+    base_reach = player_state.reach
+
     potential_reach = copy.deepcopy(base_reach)
 
     resources, pickups = action.split_pickups()
@@ -134,6 +136,14 @@ def _evaluate_action(base_reach: GeneratorReach, action_weights: ActionWeights, 
         for resource in resources:
             potential_reach.act_on(resource)
         multiplier *= action_weights.DANGEROUS_ACTION_MULTIPLIER
+        pickups_that_solve, uncollected_resource_nodes, _ = player_state.calculate_potential_actions(potential_reach)
+        # If our potential reach does not allow us to progress in any way, don't try to consider it.
+        if (
+            not pickups_that_solve
+            and not uncollected_resource_nodes
+            and not potential_reach.victory_condition_satisfied()
+        ):
+            multiplier = 0.0
 
     if pickups:
         potential_reach.advance_to(potential_reach.state.assign_pickups_resources(pickups), is_safe=True)
@@ -179,7 +189,7 @@ def weighted_potential_actions(
 
     options_considered = 0
     for action in actions:
-        evaluated_actions[action] = _evaluate_action(player_state.reach, action_weights, action)
+        evaluated_actions[action] = _evaluate_action(player_state, action_weights, action)
         update_for_option()
 
     actions_weights = {
