@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import itertools
 import typing
 from collections import defaultdict
 
@@ -27,7 +28,7 @@ def _build_satisfiable_requirements(
     logic: Logic,
     all_nodes: Sequence[WorldGraphNode],
     context: NodeContext,
-    requirements_by_node: dict[int, list[GraphRequirementSet]],
+    requirements_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]],
 ) -> frozenset[GraphRequirementList]:
     data = []
 
@@ -35,8 +36,11 @@ def _build_satisfiable_requirements(
         additional = logic.get_additional_requirements(all_nodes[node_index]).alternatives
 
         set_param: set[GraphRequirementList] = set()
-        for req in reqs:
-            set_param.update(req.alternatives)
+        for req_a, req_b in reqs:
+            for alt in itertools.product(req_a.alternatives, req_b.alternatives):
+                new_alt = alt[0].copy_then_and_with(alt[1])
+                if new_alt is not None:
+                    set_param.add(new_alt)
 
         for a in set_param:
             for b in additional:
@@ -156,7 +160,9 @@ class ResolverReach:
         nodes_to_check: dict[int, DamageState] = {initial_state.node.node_index: initial_state.damage_state}
 
         reach_nodes: dict[int, DamageState] = {}
-        requirements_excluding_leaving_by_node: dict[int, list[GraphRequirementSet]] = defaultdict(list)
+        requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]] = (
+            defaultdict(list)
+        )
 
         path_to_node: dict[int, list[int]] = {
             initial_state.node.node_index: [],
@@ -217,10 +223,14 @@ class ResolverReach:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
                     if not connection.requirement_without_leaving.satisfied(resources, damage_health):
-                        full_requirement_for_target = connection.requirement_without_leaving.copy_then_and_with_set(
-                            satisfied_requirement_on_node[node.node_index][0]
+                        # Don't combine the two requirements now, that's expensive
+                        # and the entire index could be discarded
+                        requirements_excluding_leaving_by_node[target_node_index].append(
+                            (
+                                connection.requirement_without_leaving,
+                                satisfied_requirement_on_node[node.node_index][0],
+                            )
                         )
-                        requirements_excluding_leaving_by_node[target_node_index].append(full_requirement_for_target)
 
         # Discard satisfiable requirements of nodes reachable by other means
         for node_index in set(reach_nodes.keys()).intersection(requirements_excluding_leaving_by_node.keys()):
