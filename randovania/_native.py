@@ -1,4 +1,5 @@
 # distutils: language=c++
+# cython: profile=True
 
 from __future__ import annotations
 
