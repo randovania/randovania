@@ -246,8 +246,7 @@ class ResolverReach:
         return ResolverReach(reach_nodes, path_to_node, satisfiable_requirements_for_additionals, logic)
 
     def possible_actions(self, state: State) -> Iterator[tuple[WorldGraphNode, DamageState]]:
-        ctx = state.node_context()
-        for node in self.collectable_resource_nodes(ctx):
+        for node in self.collectable_resource_nodes(state.resources):
             additional_requirements = self._logic.get_additional_requirements(node)
             game_state = self._game_state_at_node[node.node_index]
             if additional_requirements.satisfied(state.resources, game_state.health_for_damage_requirements()):
@@ -258,10 +257,10 @@ class ResolverReach:
                 )
                 self._logic.logger.log_skip(node, state, self._logic)
 
-    def collectable_resource_nodes(self, context: NodeContext) -> Iterator[WorldGraphNode]:
+    def collectable_resource_nodes(self, resources: ResourceCollection) -> Iterator[WorldGraphNode]:
         for node in self.nodes:
-            if not node.has_all_resources(context.current_resources) and node.requirement_to_collect.satisfied(
-                context.current_resources,
+            if not node.has_all_resources(resources) and node.requirement_to_collect.satisfied(
+                resources,
                 self._game_state_at_node[node.node_index].health_for_damage_requirements(),
             ):
                 yield node
