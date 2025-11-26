@@ -324,7 +324,7 @@ async def _inner_advance_depth(
 
     if has_action:
         additional_alts: set[GraphRequirementList] = set()
-        for resource_node in reach.collectable_resource_nodes(context):
+        for resource_node in reach.collectable_resource_nodes(state.resources):
             additional_alts |= set(logic.get_additional_requirements(resource_node).alternatives)
 
         additional_requirements = additional_requirements.union(additional_alts)
