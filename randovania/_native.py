@@ -1461,3 +1461,14 @@ def generator_reach_expand_graph(
         requirement = all_nodes[node_index].requirement_to_collect
         if not requirement.satisfied(resources, health):
             uncollectable_nodes[node_index] = requirement
+
+
+def generator_reach_find_strongly_connected_components_for(
+    digraph: RustworkXGraph,
+    node_index: cython.int,
+) -> Sequence[int]:
+    """Finds the strongly connected component with the given node"""
+    for component in digraph.strongly_connected_components():
+        if node_index in component:
+            return component
+    raise RuntimeError("node_index not found in strongly_connected_components")

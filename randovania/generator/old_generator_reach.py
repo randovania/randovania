@@ -13,7 +13,7 @@ from randovania.generator.generator_reach import GeneratorReach
 from randovania.graph.graph_requirement import GraphRequirementSet
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Collection, Iterable, Iterator, Mapping, Sequence
+    from collections.abc import Callable, Collection, Iterator, Mapping, Sequence
 
     from randovania.game_description.db.node import NodeIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
@@ -82,7 +82,7 @@ class RustworkXGraph:
             edge_cost_fn=wrap,
         )
 
-    def strongly_connected_components(self) -> Iterable[Collection[NodeIndex]]:
+    def strongly_connected_components(self) -> Sequence[Sequence[NodeIndex]]:
         # Since we added every possible node already, this function returns a
         # bunch of additional components with just 1 array
         # All this does is make `_calculate_safe_nodes` slower.
@@ -213,15 +213,12 @@ class OldGeneratorReach(GeneratorReach):
         return node.has_all_resources(self.state.resources)
 
     def _calculate_safe_nodes(self) -> None:
-        if self._safe_nodes is not None:
-            return
-
-        for component in self._digraph.strongly_connected_components():
-            if self._state.node.node_index in component:
-                assert self._safe_nodes is None
-                self._safe_nodes = _SafeNodes(component)
-
-        assert self._safe_nodes is not None
+        if self._safe_nodes is None:
+            self._safe_nodes = _SafeNodes(
+                _native.generator_reach_find_strongly_connected_components_for(
+                    self._digraph, self._state.node.node_index
+                )
+            )
 
     def _calculate_reachable_costs(self) -> None:
         if self._reachable_costs is not None:
