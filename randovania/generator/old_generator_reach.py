@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Self, override
 
 import rustworkx
 
+from randovania import _native
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.graph.graph_requirement import GraphRequirementSet
 
@@ -24,7 +25,7 @@ if TYPE_CHECKING:
 
 
 class RustworkXGraph:
-    _graph: rustworkx.PyDiGraph
+    graph: rustworkx.PyDiGraph
     _added_nodes: set[NodeIndex]
 
     @classmethod
@@ -39,33 +40,33 @@ class RustworkXGraph:
         return cls(g, set())
 
     def __init__(self, graph: rustworkx.PyDiGraph, added_nodes: set[NodeIndex]):
-        self._graph = graph
+        self.graph = graph
         self._added_nodes = added_nodes
 
     def copy(self) -> RustworkXGraph:
-        return RustworkXGraph(self._graph.copy(), self._added_nodes.copy())
+        return RustworkXGraph(self.graph.copy(), self._added_nodes.copy())
 
     def add_node(self, node: NodeIndex) -> None:
         # Since `_graph` has all nodes always, we track added nodes separately just for the `__contains__` method.
         self._added_nodes.add(node)
 
     def add_edge(self, previous_node: NodeIndex, next_node: NodeIndex, data: GraphData) -> None:
-        self._graph.add_edge(previous_node, next_node, (previous_node, next_node, data))
+        self.graph.add_edge(previous_node, next_node, (previous_node, next_node, data))
 
     def remove_edge(self, previous_node: NodeIndex, next_node: NodeIndex) -> None:
-        self._graph.remove_edge(previous_node, next_node)
+        self.graph.remove_edge(previous_node, next_node)
 
     def has_edge(self, previous_node: NodeIndex, next_node: NodeIndex) -> bool:
-        return self._graph.has_edge(previous_node, next_node)
+        return self.graph.has_edge(previous_node, next_node)
 
     def __contains__(self, item: NodeIndex) -> bool:
         return item in self._added_nodes
 
     def get_edge_data(self, previous_node: NodeIndex, next_node: NodeIndex) -> GraphData:
-        return self._graph.get_edge_data(previous_node, next_node)[2]
+        return self.graph.get_edge_data(previous_node, next_node)[2]
 
     def edges_data(self) -> Iterator[tuple[NodeIndex, NodeIndex, GraphData]]:
-        yield from self._graph.edges()
+        yield from self.graph.edges()
 
     def shortest_paths_dijkstra(
         self,
@@ -77,7 +78,7 @@ class RustworkXGraph:
 
         costs = dict(
             rustworkx.dijkstra_shortest_path_lengths(
-                self._graph,
+                self.graph,
                 source,
                 edge_cost_fn=wrap,
             )
@@ -90,7 +91,7 @@ class RustworkXGraph:
         # Since we added every possible node already, this function returns a
         # bunch of additional components with just 1 array
         # All this does is make `_calculate_safe_nodes` slower.
-        return rustworkx.strongly_connected_components(self._graph)
+        return rustworkx.strongly_connected_components(self.graph)
 
 
 class GraphPath:
@@ -103,17 +104,6 @@ class GraphPath:
         self.previous_node = previous
         self.node = node
         self.requirement = requirement
-
-    def is_in_graph(self, digraph: RustworkXGraph) -> bool:
-        if self.previous_node is None:
-            return False
-        else:
-            return digraph.has_edge(self.previous_node, self.node)
-
-    def add_to_graph(self, digraph: RustworkXGraph) -> None:
-        digraph.add_node(self.node)
-        if self.previous_node is not None:
-            digraph.add_edge(self.previous_node, self.node, data=self.requirement)
 
 
 class _SafeNodes:
@@ -173,14 +163,14 @@ class OldGeneratorReach(GeneratorReach):
         self,
         game: WorldGraph,
         state: State,
-        graph: RustworkXGraph,
+        digraph: RustworkXGraph,
         filler_config: FillerConfiguration,
     ):
         self._graph = game
         self.all_nodes = game.nodes
 
         self._state = state
-        self._digraph = graph
+        self._digraph = digraph
         self._unreachable_paths = {}
         self._uncollectable_nodes = {}
         self._reachable_costs = None
@@ -202,49 +192,15 @@ class OldGeneratorReach(GeneratorReach):
     def _expand_graph(self, paths_to_check: list[GraphPath]) -> None:
         # print("!! _expand_graph", len(paths_to_check))
         self._reachable_costs = None
-        resource_nodes_to_check: set[NodeIndex] = set()
 
-        all_nodes = self.all_nodes
-        resources = self._state.resources
-        new_edges = []
-
-        while paths_to_check:
-            path = paths_to_check.pop(0)
-
-            if path.is_in_graph(self._digraph):
-                # print(">>> already in graph", path.node.full_name())
-                continue
-
-            # print(">>> will check starting at", path.node.full_name())
-            path.add_to_graph(self._digraph)
-
-            if all_nodes[path.node].has_resources:
-                resource_nodes_to_check.add(path.node)
-
-            for connection in all_nodes[path.node].connections:
-                target_node_index = connection.target.node_index
-                requirement = connection.requirement_with_self_dangerous
-
-                # is_in_graph inlined, so we don't need to create GraphPath
-                if self._digraph.has_edge(path.node, target_node_index):
-                    continue
-
-                if requirement.satisfied(resources, self._state.health_for_damage_requirements):
-                    # print("* Queue path to", target_node.full_name())
-                    paths_to_check.append(GraphPath(path.node, target_node_index, requirement))
-                else:
-                    # print("* Unreachable", self.game.region_list.node_name(target_node), ", missing:",
-                    #       requirement.as_str)
-                    self._unreachable_paths[path.node, target_node_index] = requirement
-                    new_edges.append((path.node, target_node_index))
-            # print("> done")
-
-        for node_index in sorted(resource_nodes_to_check):
-            node = self.all_nodes[node_index]
-
-            requirement = node.requirement_to_collect
-            if not requirement.satisfied(resources, self._state.health_for_damage_requirements):
-                self._uncollectable_nodes[node_index] = requirement
+        _native.generator_reach_expand_graph(
+            self._state,
+            self._graph,
+            self._digraph,
+            paths_to_check,
+            self._unreachable_paths,
+            self._uncollectable_nodes,
+        )
 
         # print("!! _expand_graph finished. Has {} edges".format(sum(1 for _ in self._digraph.edges_data())))
         self._safe_nodes = None
@@ -398,7 +354,7 @@ class OldGeneratorReach(GeneratorReach):
         resources = self._state.resources
 
         # Collect edges to check based on the new resources
-        possible_edges = set()
+        possible_edges: set[tuple[int, int]] = set()
 
         for resource in _new_resources_including_damage(new_state):
             possible_edges.update(self.graph.resource_to_edges.get(resource, []))

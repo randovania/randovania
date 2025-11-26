@@ -9,22 +9,22 @@ import logging
 import typing
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator, Sequence
+
     # The package is named `Cython`, so in a case-sensitive system mypy fails to find cython with just `import cython`
     import Cython as cython
-else:
-    # However cython's compiler seems to expect the import o be this way, otherwise `cython.compiled` breaks
-    import cython
-
-if typing.TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator, Sequence
 
     from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
+    from randovania.generator.old_generator_reach import GraphPath, RustworkXGraph
     from randovania.graph.state import State
-    from randovania.graph.world_graph import WorldGraphNode
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
     from randovania.resolver.logic import Logic
+else:
+    # However cython's compiler seems to expect the import o be this way, otherwise `cython.compiled` breaks
+    import cython
 
 # ruff: noqa: UP046
 
@@ -1386,3 +1386,78 @@ def build_satisfiable_requirements(
                     data.append(new_list)
 
     return frozenset(data)
+
+
+if cython.compiled:
+    _NativeGraphPath = cython.struct(
+        previous_node=cython.int,
+        node=cython.int,
+        requirement=GraphRequirementSet,
+    )
+else:
+
+    class _NativeGraphPath(typing.NamedTuple):
+        previous_node: cython.int
+        node: cython.int
+        requirement: GraphRequirementSet
+
+
+def generator_reach_expand_graph(
+    state: State,
+    world_graph: WorldGraph,
+    digraph: RustworkXGraph,
+    initial_paths_to_check: list[GraphPath],
+    unreachable_paths: dict[tuple[int, int], GraphRequirementSet],
+    uncollectable_nodes: dict[int, GraphRequirementSet],
+) -> None:
+    # print("!! _expand_graph", len(paths_to_check))
+    resource_nodes_to_check: set[cython.int] = set()
+
+    health = state.health_for_damage_requirements
+    resources = state.resources
+    all_nodes = world_graph.nodes
+    new_edges = []
+
+    paths_to_check: list[_NativeGraphPath] = []
+
+    for initial_path in initial_paths_to_check:
+        previous_node = initial_path.previous_node if initial_path.previous_node is not None else -1
+        paths_to_check.append(_NativeGraphPath(previous_node, initial_path.node, initial_path.requirement))
+
+    while paths_to_check:
+        path = paths_to_check.pop(0)
+
+        if path.previous_node >= 0 and digraph.has_edge(path.previous_node, path.node):
+            # print(">>> already in graph", path.node.full_name())
+            continue
+
+        # print(">>> will check starting at", path.node.full_name())
+        digraph.add_node(path.node)
+        if path.previous_node >= 0:
+            digraph.add_edge(path.previous_node, path.node, data=path.requirement)
+
+        if all_nodes[path.node].has_resources:
+            resource_nodes_to_check.add(path.node)
+
+        for connection in all_nodes[path.node].connections:
+            target_node_index = connection.target.node_index
+            requirement = connection.requirement_with_self_dangerous
+
+            # is_in_graph inlined, so we don't need to create GraphPath
+            if digraph.has_edge(path.node, target_node_index):
+                continue
+
+            if requirement.satisfied(resources, health):
+                # print("* Queue path to", target_node.full_name())
+                paths_to_check.append(_NativeGraphPath(path.node, target_node_index, requirement))
+            else:
+                # print("* Unreachable", self.game.region_list.node_name(target_node), ", missing:",
+                #       requirement.as_str)
+                unreachable_paths[path.node, target_node_index] = requirement
+                new_edges.append((path.node, target_node_index))
+        # print("> done")
+
+    for node_index in sorted(resource_nodes_to_check):
+        requirement = all_nodes[node_index].requirement_to_collect
+        if not requirement.satisfied(resources, health):
+            uncollectable_nodes[node_index] = requirement
