@@ -148,10 +148,16 @@ def pickups_to_solve_list(
 
         # Create another copy of the list, so we can remove elements while iterating
         for pickup in list(pickups_for_this):
-            new_resources = ResourceCollection.from_resource_gain(
-                state.resource_database, pickup.resource_gain(context.current_resources, force_lock=True)
+            new_resources = ResourceCollection.with_resource_count(
+                state.resource_database, state.resources.current_array_size()
             )
-            pickup_progression = ResourceCollection.from_resource_gain(state.resource_database, pickup.progression)
+            pickup_progression = ResourceCollection.with_resource_count(
+                state.resource_database, state.resources.current_array_size()
+            )
+
+            new_resources.add_resource_gain(pickup.resource_gain(context.current_resources, force_lock=True))
+            pickup_progression.add_resource_gain(pickup.progression)
+
             if new_resources[individual.resource] + pickup_progression[individual.resource] > 0:
                 pickups.append(pickup)
                 pickups_for_this.remove(pickup)
@@ -178,7 +184,6 @@ def get_pickups_that_solves_unreachable(
     """
     state = reach.state
     possible_sets = [v for v in reach.unreachable_nodes_with_requirements().values() if v.alternatives]
-    reach.node_context()
     possible_sets.append(reach.graph.victory_condition)
 
     uncollected_resources = set()
