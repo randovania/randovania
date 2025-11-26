@@ -45,13 +45,24 @@ class RequirementList:
                 self._extra.append(it)
 
     @classmethod
-    def from_graph_requirement_list(cls, graph_list: GraphRequirementList) -> typing.Self:
+    def from_graph_requirement_list(
+        cls, graph_list: GraphRequirementList, *, add_multiple_as_single: bool = False
+    ) -> typing.Self:
+        """
+        Converts a GraphRequirementList into a RequirementList.
+        :param graph_list:
+        :param add_multiple_as_single: When set, any non-damage resource present with an amount higher
+            than 1 is also present as 1. This improves `pickups_to_solve_list`.
+        :return:
+        """
         from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 
         entries = []
 
         for resource in graph_list.all_resources():
             amount, negate = graph_list.get_requirement_for(resource)
+            if add_multiple_as_single and amount > 1 and not resource.resource_type.is_damage():
+                entries.append(ResourceRequirement.create(resource, 1, negate))
             entries.append(ResourceRequirement.create(resource, amount, negate))
 
         return cls(entries)

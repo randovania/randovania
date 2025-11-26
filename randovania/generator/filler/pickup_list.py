@@ -67,7 +67,7 @@ def _unsatisfied_requirements_in_list(
     items = []
     context = state.node_context()
 
-    for individual in RequirementList.from_graph_requirement_list(alternative).values():
+    for individual in RequirementList.from_graph_requirement_list(alternative, add_multiple_as_single=True).values():
         if individual.resource.resource_type == ResourceType.DAMAGE:
             continue
 

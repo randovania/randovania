@@ -105,6 +105,7 @@ def test_requirement_lists_without_satisfied_resources(
         RequirementList(
             [
                 ResourceRequirement.simple(item("Dark Visor")),
+                ResourceRequirement.create(item("Missile"), 1, False),
                 ResourceRequirement.create(item("Missile"), 5, False),
             ]
         ),
