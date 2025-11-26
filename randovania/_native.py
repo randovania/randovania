@@ -360,23 +360,30 @@ class ResourceCollection:
         return result
 
     @cython.locals(resource=object, quantity=cython.int)
-    def add_resource_gain(self, resource_gain: ResourceGain) -> None:
+    @cython.ccall
+    def add_resource(self, resource: ResourceInfo, quantity: cython.int) -> None:
         self._damage_reduction_cache = None
+
+        resource_index: cython.size_t = resource.resource_index
+        if self._resource_array.size() <= resource_index:
+            self._resize_array_to_fit(resource_index + 1)
+
+        new_amount: cython.int = self._resource_array[resource_index] + quantity
+        if new_amount < 0:
+            new_amount = 0
+        self._resource_array[resource_index] = new_amount
+        self._existing_resources[resource_index] = resource
+
+        if new_amount > 0:
+            self.resource_bitmask.set_bit(resource_index)
+        else:
+            self.resource_bitmask.unset_bit(resource_index)
+
+    @cython.locals(resource=object, quantity=cython.int)
+    @cython.ccall
+    def add_resource_gain(self, resource_gain: ResourceGain) -> None:
         for resource, quantity in resource_gain:
-            resource_index: cython.size_t = resource.resource_index
-            if self._resource_array.size() <= resource_index:
-                self._resize_array_to_fit(resource_index + 1)
-
-            new_amount: cython.int = self._resource_array[resource_index] + quantity
-            if new_amount < 0:
-                new_amount = 0
-            self._resource_array[resource_index] = new_amount
-            self._existing_resources[resource_index] = resource
-
-            if new_amount > 0:
-                self.resource_bitmask.set_bit(resource_index)
-            else:
-                self.resource_bitmask.unset_bit(resource_index)
+            self.add_resource(resource, quantity)
 
     def as_resource_gain(self) -> ResourceGain:
         for index, resource in self._existing_resources.items():
@@ -1499,3 +1506,22 @@ def generator_reach_calculate_reachable_costs(
         state.node.node_index,
         weight=weight,
     )
+
+
+def state_collect_resource_node(
+    node: WorldGraphNode, resources: ResourceCollection, health: cython.float
+) -> tuple[ResourceCollection, list[ResourceInfo]]:
+    """
+    Creates the new ResourceCollection and finds the modified resources, for State.collect_resource_node
+    """
+    modified_resources: list[ResourceInfo] = []
+    new_resources = resources.duplicate()
+
+    if not (not node.has_all_resources(resources) and node.requirement_to_collect.satisfied(resources, health)):
+        raise ValueError(f"Trying to collect an uncollectable node'{node}'")
+
+    for resource, quantity in node.resource_gain_on_collect(resources):
+        new_resources.add_resource(resource, quantity)
+        modified_resources.append(resource)
+
+    return new_resources, modified_resources
