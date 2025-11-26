@@ -144,7 +144,7 @@ class OldGeneratorReach(GeneratorReach):
             # print(">>> will check starting at", path.node.full_name())
             path.add_to_graph(self._digraph)
 
-            if all_nodes[path.node].is_resource_node():
+            if all_nodes[path.node].has_resources:
                 resource_nodes_to_check.add(path.node)
 
             for connection in all_nodes[path.node].connections:

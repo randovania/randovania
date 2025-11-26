@@ -73,6 +73,10 @@ class WorldGraphNodeConnection(typing.NamedTuple):
         )
 
 
+def _empty_has_all_resources(resources: ResourceCollection) -> bool:
+    return True
+
+
 @dataclasses.dataclass(slots=True)
 class WorldGraphNode:
     """A node of a WorldGraph. Focused on being a very efficient data structures for the resolver and generator."""
@@ -100,6 +104,19 @@ class WorldGraphNode:
     - DockLockNode: the dock node resources
 
     These resources must all provide exactly 1 quantity each.
+    """
+
+    has_resources: bool = dataclasses.field(init=False, default=False)
+    """If this node provides any resources at all."""
+
+    has_all_resources: typing.Callable[[ResourceCollection], bool] = dataclasses.field(
+        init=False, default=_empty_has_all_resources
+    )
+    """
+    Checks if all resources given by this node are already collected in the given collection.
+    Does not include resources given by a PickupEntry assigned to the location of this node.
+
+    This is method so it can be optimised based on the number of resources this node provides.
     """
 
     resource_gain_bitmask: Bitmask = dataclasses.field(init=False, default_factory=Bitmask.create)
@@ -137,26 +154,29 @@ class WorldGraphNode:
     def __post_init__(self) -> None:
         for resource, quantity in self.resource_gain:
             assert quantity == 1
-            self.resource_gain_bitmask.set_bit(resource.resource_index)
+            self._post_add_resource(resource)
 
     def add_resource(self, resource: ResourceInfo) -> None:
         self.resource_gain.append((resource, 1))
+        self._post_add_resource(resource)
+
+    def _post_add_resource(self, resource: ResourceInfo) -> None:
         self.resource_gain_bitmask.set_bit(resource.resource_index)
+        self.has_resources = True
+        if len(self.resource_gain) == 1:
+            resource_index = resource.resource_index
+            self.has_all_resources = lambda resources: resources.resource_bitmask.is_set(resource_index)
+        else:
+            self.has_all_resources = lambda resources: self.resource_gain_bitmask.is_subset_of(
+                resources.resource_bitmask
+            )
 
     def is_resource_node(self) -> bool:
-        return bool(self.resource_gain)
+        return self.has_resources
 
     def full_name(self, with_region: bool = True, separator: str = "/") -> str:
         """The name of this node, including the area and optionally region."""
         return self.identifier.display_name(with_region, separator)
-
-    def has_all_resources(self, resources: ResourceCollection) -> bool:
-        """
-        Checks if all resources given by this node are already collected in the given context.
-        Does not include resources given by a PickupEntry assigned to the location of this node.
-        TODO: Use a RequirementList to represent this.
-        """
-        return self.resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
 
     def resource_gain_on_collect(self, resources: ResourceCollection) -> ResourceGain:
         yield from self.resource_gain
@@ -628,7 +648,7 @@ def create_graph(
             resource_in_edge = set()
             requirement_set = connection.requirement
 
-            if node.is_resource_node():
+            if node.has_resources:
                 dangerous_extra = GraphRequirementList()
 
                 for resource, _ in node.resource_gain_on_collect(static_resources):

@@ -35,7 +35,6 @@ def get_collectable_resource_nodes_of_reach(
     must_be_reachable: bool = True,
 ) -> list[WorldGraphNode]:
     resources = reach.state.resources
-    context = reach.node_context()
     health = reach.state.health_for_damage_requirements
     dangerous_resources = reach.graph.dangerous_resources
 
@@ -45,9 +44,8 @@ def get_collectable_resource_nodes_of_reach(
 
     for node in node_list:
         if (
-            node.is_resource_node()
-            and not node.has_all_resources(resources)
-            and node.requirement_to_collect.satisfied(context.current_resources, health)
+            not node.has_all_resources(resources)
+            and node.requirement_to_collect.satisfied(resources, health)
             and (
                 include_with_dangerous_resources
                 or (_action_has_no_dangerous_resources(node, dangerous_resources, resources))

@@ -250,12 +250,8 @@ class ResolverReach:
 
     def collectable_resource_nodes(self, context: NodeContext) -> Iterator[WorldGraphNode]:
         for node in self.nodes:
-            if (
-                node.is_resource_node()
-                and not node.has_all_resources(context.current_resources)
-                and node.requirement_to_collect.satisfied(
-                    context.current_resources,
-                    self._game_state_at_node[node.node_index].health_for_damage_requirements(),
-                )
+            if not node.has_all_resources(context.current_resources) and node.requirement_to_collect.satisfied(
+                context.current_resources,
+                self._game_state_at_node[node.node_index].health_for_damage_requirements(),
             ):
                 yield node
