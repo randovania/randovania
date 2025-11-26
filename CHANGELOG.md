@@ -49,6 +49,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Fixed: Typo on "Boss Ridley Defeated" event.
+
 ##### Main Deck
 
 - Changed: Habitation Deck: It's now possible to move from the top right door to the top left entrance after the animals have been freed.
