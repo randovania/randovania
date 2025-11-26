@@ -1388,7 +1388,7 @@ def build_satisfiable_requirements(
     return frozenset(data)
 
 
-if cython.compiled:
+if False:  # For now
     _NativeGraphPath = cython.struct(
         previous_node=cython.int,
         node=cython.int,
@@ -1427,34 +1427,33 @@ def generator_reach_expand_graph(
     while paths_to_check:
         path = paths_to_check.pop(0)
 
-        if path.previous_node >= 0 and digraph.has_edge(path.previous_node, path.node):
-            # print(">>> already in graph", path.node.full_name())
+        previous_node: cython.int = path.previous_node
+        current_node_index: cython.int = path.node
+
+        if previous_node >= 0 and digraph.has_edge(previous_node, current_node_index):
             continue
 
-        # print(">>> will check starting at", path.node.full_name())
-        digraph.add_node(path.node)
-        if path.previous_node >= 0:
-            digraph.add_edge(path.previous_node, path.node, data=path.requirement)
+        digraph.add_node(current_node_index)
+        if previous_node >= 0:
+            digraph.add_edge(previous_node, current_node_index, data=path.requirement)
 
-        if all_nodes[path.node].has_resources:
-            resource_nodes_to_check.add(path.node)
+        node: WorldGraphNode = all_nodes[current_node_index]
+        if node.has_resources:
+            resource_nodes_to_check.add(current_node_index)
 
-        for connection in all_nodes[path.node].connections:
-            target_node_index = connection.target.node_index
-            requirement = connection.requirement_with_self_dangerous
+        for connection in node.connections:
+            target_node_index: cython.int = connection.target.node_index
+            requirement: GraphRequirementSet = connection.requirement_with_self_dangerous
 
-            # is_in_graph inlined, so we don't need to create GraphPath
-            if digraph.has_edge(path.node, target_node_index):
+            if digraph.has_edge(current_node_index, target_node_index):
                 continue
 
             if requirement.satisfied(resources, health):
                 # print("* Queue path to", target_node.full_name())
-                paths_to_check.append(_NativeGraphPath(path.node, target_node_index, requirement))
+                paths_to_check.append(_NativeGraphPath(current_node_index, target_node_index, requirement))
             else:
-                # print("* Unreachable", self.game.region_list.node_name(target_node), ", missing:",
-                #       requirement.as_str)
-                unreachable_paths[path.node, target_node_index] = requirement
-                new_edges.append((path.node, target_node_index))
+                unreachable_paths[current_node_index, target_node_index] = requirement
+                new_edges.append((current_node_index, target_node_index))
         # print("> done")
 
     for node_index in sorted(resource_nodes_to_check):
