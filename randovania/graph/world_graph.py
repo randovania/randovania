@@ -53,11 +53,24 @@ class WorldGraphNodeConnection(typing.NamedTuple):
     requirement: GraphRequirementSet
     """The requirements for crossing this connection, with all extras already processed."""
 
+    requirement_with_self_dangerous: GraphRequirementSet
+    """`requirement` combined with any resources provided by the source node that are dangerous."""
+
     requirement_without_leaving: GraphRequirementSet
     """
     The requirements for crossing this connection, but excluding the nodes `requirement_to_leave`.
     Useful for the resolver to calculate satisfiable requirements on rollback.
     """
+
+    @classmethod
+    def trivial(cls, target: WorldGraphNode) -> WorldGraphNodeConnection:
+        trivial_requirement = GraphRequirementSet.trivial()
+        return cls(
+            target,
+            trivial_requirement,
+            trivial_requirement,
+            trivial_requirement,
+        )
 
 
 @dataclasses.dataclass(slots=True)
@@ -303,7 +316,7 @@ def _create_dock_connection(
     final_requirement = simplify_requirement(RequirementAnd(requirement_parts))
     node.requirement_to_collect = simplify_requirement(requirement_to_collect)
 
-    return WorldGraphNodeConnection(target_node, final_requirement, final_requirement)
+    return WorldGraphNodeConnection(target_node, final_requirement, final_requirement, final_requirement)
 
 
 def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
@@ -337,16 +350,18 @@ def _connections_from(
         for other_node in teleporter_networks[node.database_node.network]:
             if node != other_node:
                 assert isinstance(other_node.database_node, TeleporterNetworkNode)
+                leaving_requirement = simplify_requirement(
+                    RequirementAnd(
+                        [
+                            node.database_node.is_unlocked,
+                            other_node.database_node.is_unlocked,
+                        ]
+                    )
+                )
                 yield WorldGraphNodeConnection(
                     target=other_node,
-                    requirement=simplify_requirement(
-                        RequirementAnd(
-                            [
-                                node.database_node.is_unlocked,
-                                other_node.database_node.is_unlocked,
-                            ]
-                        )
-                    ),
+                    requirement=leaving_requirement,
+                    requirement_with_self_dangerous=leaving_requirement,
                     requirement_without_leaving=simplify_requirement(other_node.database_node.is_unlocked),
                 )
 
@@ -382,6 +397,7 @@ def _connections_from(
         yield WorldGraphNodeConnection(
             target=target_node,
             requirement=requirement_including_leaving,
+            requirement_with_self_dangerous=requirement_including_leaving,
             requirement_without_leaving=requirement_without_leaving,
         )
 
@@ -542,9 +558,7 @@ def create_graph(
                     node_index=len(nodes),
                     identifier=original_node.identifier.renamed(f"Front of {original_node.name}"),
                     heal=original_node.heal,
-                    connections=[
-                        WorldGraphNodeConnection(new_node, GraphRequirementSet.trivial(), GraphRequirementSet.trivial())
-                    ],
+                    connections=[WorldGraphNodeConnection.trivial(new_node)],
                     resource_gain=[],
                     requirement_to_collect=GraphRequirementSet.trivial(),
                     require_collected_to_leave=False,
@@ -556,9 +570,7 @@ def create_graph(
                     region=region,
                 )
             )
-            new_node.connections.append(
-                WorldGraphNodeConnection(front_node, GraphRequirementSet.trivial(), GraphRequirementSet.trivial())
-            )
+            new_node.connections.append(WorldGraphNodeConnection.trivial(front_node))
             graph_area_connections[front_node.node_index] = graph_area_connections[new_node.node_index]
             graph_area_connections[new_node.node_index] = []
             front_of_dock_mapping[new_node.node_index] = front_node.node_index
@@ -611,7 +623,7 @@ def create_graph(
     graph.dangerous_resources = frozenset(_dangerous_resources(nodes))
 
     for node in nodes:
-        for connection in node.connections:
+        for index, connection in enumerate(node.connections):
             has_negate: set[ResourceInfo] = set()
             resource_in_edge = set()
             requirement_set = connection.requirement
@@ -619,12 +631,18 @@ def create_graph(
             if node.is_resource_node():
                 dangerous_extra = GraphRequirementList()
 
-                for resource, quantity in node.resource_gain_on_collect(static_resources):
+                for resource, _ in node.resource_gain_on_collect(static_resources):
                     if resource in graph.dangerous_resources:
                         dangerous_extra.add_resource(resource, 1, False)
 
                 if dangerous_extra.all_resources():
                     requirement_set = requirement_set.copy_then_all_alternative_and_with(dangerous_extra)
+                    node.connections[index] = WorldGraphNodeConnection(
+                        target=connection.target,
+                        requirement=connection.requirement,
+                        requirement_with_self_dangerous=requirement_set,
+                        requirement_without_leaving=connection.requirement_without_leaving,
+                    )
 
             for alternative in requirement_set.alternatives:
                 all_resources = alternative.all_resources()

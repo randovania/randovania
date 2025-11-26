@@ -7,36 +7,16 @@ from typing import TYPE_CHECKING, Self, override
 
 from randovania.generator import graph as graph_module
 from randovania.generator.generator_reach import GeneratorReach
-from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
+from randovania.graph.graph_requirement import GraphRequirementSet
 
 if TYPE_CHECKING:
     from collections.abc import Collection, Iterator, Mapping, Sequence
 
     from randovania.game_description.db.node import NodeIndex
-    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
-
-
-def _extra_requirement_for_node(
-    game: WorldGraph, resources: ResourceCollection, node: WorldGraphNode
-) -> GraphRequirementSet | None:
-    any_set = False
-    requirement_list = GraphRequirementList()
-
-    for resource, quantity in node.resource_gain_on_collect(resources):
-        if resource in game.dangerous_resources:
-            requirement_list.add_resource(resource, 1, False)
-            any_set = True
-
-    if not any_set:
-        return None
-
-    result = GraphRequirementSet()
-    result.add_alternative(requirement_list)
-    return result
 
 
 class GraphPath:
@@ -145,21 +125,6 @@ class OldGeneratorReach(GeneratorReach):
         reach._expand_graph([GraphPath(None, initial_state.node.node_index, GraphRequirementSet.trivial())])
         return reach
 
-    def _potential_nodes_from(
-        self, node: WorldGraphNode, resources: ResourceCollection
-    ) -> list[tuple[WorldGraphNode, GraphRequirementSet]]:
-        extra_requirement = _extra_requirement_for_node(self._graph, resources, node)
-
-        return [
-            (
-                conn.target,
-                conn.requirement
-                if extra_requirement is None
-                else conn.requirement.copy_and_with_set(extra_requirement),
-            )
-            for conn in node.connections
-        ]
-
     def _expand_graph(self, paths_to_check: list[GraphPath]) -> None:
         # print("!! _expand_graph", len(paths_to_check))
         self._reachable_costs = None
@@ -182,8 +147,9 @@ class OldGeneratorReach(GeneratorReach):
             if all_nodes[path.node].is_resource_node():
                 resource_nodes_to_check.add(path.node)
 
-            for target_node, requirement in self._potential_nodes_from(all_nodes[path.node], resources):
-                target_node_index = target_node.node_index
+            for connection in all_nodes[path.node].connections:
+                target_node_index = connection.target.node_index
+                requirement = connection.requirement_with_self_dangerous
 
                 # is_in_graph inlined, so we don't need to create GraphPath
                 if self._digraph.has_edge(path.node, target_node_index):
