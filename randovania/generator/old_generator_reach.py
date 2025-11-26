@@ -163,11 +163,9 @@ class OldGeneratorReach(GeneratorReach):
     def _expand_graph(self, paths_to_check: list[GraphPath]) -> None:
         # print("!! _expand_graph", len(paths_to_check))
         self._reachable_costs = None
-        resource_nodes_to_check = set()
+        resource_nodes_to_check: set[NodeIndex] = set()
 
         all_nodes = self.all_nodes
-        resources = self._state.resources
-        self._state.node_context()
         resources = self._state.resources
         new_edges = []
 
