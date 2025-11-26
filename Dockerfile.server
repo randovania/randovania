@@ -21,7 +21,7 @@ COPY . .
 
 # Sync the project and create pyc for faster startup
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --locked --extra server --extra exporters --compile-bytecode
+    RANDOVANIA_COMPILE="1" uv sync --locked --extra server --extra exporters --compile-bytecode
 
 VOLUME ["/data"]
 ENTRYPOINT ["/usr/src/app/.venv/bin/python", "-m", "randovania"]

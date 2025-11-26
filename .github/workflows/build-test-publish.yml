@@ -60,6 +60,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        compiled:
+          - { env_var: "1", suffix: "", event_name: "${{ github.event_name }}" }
+          - { env_var: "0", suffix: " (Pure)", event_name: "${{ github.event_name }}" }
         os:
           - { name: "Linux", image: ubuntu-latest, event_name: "${{ github.event_name }}" }
           - { name: "macOS", image: macos-latest, event_name: "${{ github.event_name }}" }
@@ -70,11 +73,12 @@ jobs:
         exclude:
           - os: { name: "Linux", image: ubuntu-latest, event_name: merge_group }
           - os: { name: "macOS", image: macos-latest, event_name: merge_group }
+          - compiled: { env_var: "0", suffix: " (Pure)", event_name: merge_group }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
 
-    name: ${{ matrix.os.name }}
+    name: ${{ matrix.os.name }}${{ matrix.compiled.suffix }}
 
     steps:
       - name: Checkout
@@ -97,6 +101,8 @@ jobs:
 
       - name: Install Python packages
         run: uv sync --locked --all-extras
+        env:
+          RANDOVANIA_COMPILE: "${{ matrix.compiled.env_var }}"
 
       - name: create test game
         run: uv run coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
@@ -161,6 +167,8 @@ jobs:
 
       - name: Install Python packages
         run: uv sync --locked --extra gui --extra exporters --extra test --group installer
+        env:
+          RANDOVANIA_COMPILE: "1"
 
       - name: Prepare macOS venv for universal2 build
         run: uv run tools/bundle_macos_universal_wheels.py && uv pip install universal_wheels/*.whl

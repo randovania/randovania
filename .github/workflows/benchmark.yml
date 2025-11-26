@@ -35,6 +35,8 @@ jobs:
 
       - name: Install Python packages
         run: uv sync --locked --extra exporters --extra gui --extra server --extra test
+        env:
+          RANDOVANIA_COMPILE: "1"
 
       - name: run pytest (benchmark)
         uses: CodSpeedHQ/action@v4
