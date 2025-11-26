@@ -3,20 +3,94 @@ from __future__ import annotations
 import copy
 import functools
 import itertools
+import typing
 from typing import TYPE_CHECKING, Self, override
 
-from randovania.generator import graph as graph_module
+import rustworkx
+
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.graph.graph_requirement import GraphRequirementSet
 
 if TYPE_CHECKING:
-    from collections.abc import Collection, Iterator, Mapping, Sequence
+    from collections.abc import Callable, Collection, Iterable, Iterator, Mapping, Sequence
 
     from randovania.game_description.db.node import NodeIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
+
+    type GraphData = GraphRequirementSet
+
+
+class RustworkXGraph:
+    _graph: rustworkx.PyDiGraph
+    _added_nodes: set[NodeIndex]
+
+    @classmethod
+    def new(cls, game: WorldGraph) -> typing.Self:
+        g = rustworkx.PyDiGraph()
+        num_nodes = len(game.nodes)
+
+        # rustworkx methods returns indices of the internal node list, instead of the data we passed
+        # when creating the nodes. Instead of having to convert these indices, we'll instead just create all possible
+        # nodes at once to guarantee the indices will always match.
+        g.add_nodes_from(list(range(num_nodes)))
+        return cls(g, set())
+
+    def __init__(self, graph: rustworkx.PyDiGraph, added_nodes: set[NodeIndex]):
+        self._graph = graph
+        self._added_nodes = added_nodes
+
+    def copy(self) -> RustworkXGraph:
+        return RustworkXGraph(self._graph.copy(), self._added_nodes.copy())
+
+    def add_node(self, node: NodeIndex) -> None:
+        # Since `_graph` has all nodes always, we track added nodes separately just for the `__contains__` method.
+        self._added_nodes.add(node)
+
+    def add_edge(self, previous_node: NodeIndex, next_node: NodeIndex, data: GraphData) -> None:
+        self._graph.add_edge(previous_node, next_node, (previous_node, next_node, data))
+
+    def remove_edge(self, previous_node: NodeIndex, next_node: NodeIndex) -> None:
+        self._graph.remove_edge(previous_node, next_node)
+
+    def has_edge(self, previous_node: NodeIndex, next_node: NodeIndex) -> bool:
+        return self._graph.has_edge(previous_node, next_node)
+
+    def __contains__(self, item: NodeIndex) -> bool:
+        return item in self._added_nodes
+
+    def get_edge_data(self, previous_node: NodeIndex, next_node: NodeIndex) -> GraphData:
+        return self._graph.get_edge_data(previous_node, next_node)[2]
+
+    def edges_data(self) -> Iterator[tuple[NodeIndex, NodeIndex, GraphData]]:
+        yield from self._graph.edges()
+
+    def shortest_paths_dijkstra(
+        self,
+        source: NodeIndex,
+        weight: Callable[[NodeIndex, NodeIndex, GraphData], float],
+    ) -> Mapping[NodeIndex, float]:
+        def wrap(data: tuple[NodeIndex, NodeIndex, GraphData]) -> float:
+            return weight(*data)
+
+        costs = dict(
+            rustworkx.dijkstra_shortest_path_lengths(
+                self._graph,
+                source,
+                edge_cost_fn=wrap,
+            )
+        )
+        # Important to ensure the original node is present in the response
+        costs[source] = 0.0
+        return costs
+
+    def strongly_connected_components(self) -> Iterable[Collection[NodeIndex]]:
+        # Since we added every possible node already, this function returns a
+        # bunch of additional components with just 1 array
+        # All this does is make `_calculate_safe_nodes` slower.
+        return rustworkx.strongly_connected_components(self._graph)
 
 
 class GraphPath:
@@ -30,13 +104,13 @@ class GraphPath:
         self.node = node
         self.requirement = requirement
 
-    def is_in_graph(self, digraph: graph_module.BaseGraph) -> bool:
+    def is_in_graph(self, digraph: RustworkXGraph) -> bool:
         if self.previous_node is None:
             return False
         else:
             return digraph.has_edge(self.previous_node, self.node)
 
-    def add_to_graph(self, digraph: graph_module.BaseGraph) -> None:
+    def add_to_graph(self, digraph: RustworkXGraph) -> None:
         digraph.add_node(self.node)
         if self.previous_node is not None:
             digraph.add_edge(self.previous_node, self.node, data=self.requirement)
@@ -72,7 +146,7 @@ def _new_resources_including_damage(state: State) -> set[ResourceInfo]:
 
 
 class OldGeneratorReach(GeneratorReach):
-    _digraph: graph_module.BaseGraph
+    _digraph: RustworkXGraph
     _state: State
     _graph: WorldGraph
     _reachable_costs: Mapping[int, float] | None
@@ -99,7 +173,7 @@ class OldGeneratorReach(GeneratorReach):
         self,
         game: WorldGraph,
         state: State,
-        graph: graph_module.BaseGraph,
+        graph: RustworkXGraph,
         filler_config: FillerConfiguration,
     ):
         self._graph = game
@@ -121,7 +195,7 @@ class OldGeneratorReach(GeneratorReach):
         initial_state: State,
         filler_config: FillerConfiguration,
     ) -> Self:
-        reach = cls(graph, initial_state, graph_module.RustworkXGraph.new(graph), filler_config)
+        reach = cls(graph, initial_state, RustworkXGraph.new(graph), filler_config)
         reach._expand_graph([GraphPath(None, initial_state.node.node_index, GraphRequirementSet.trivial())])
         return reach
 
@@ -212,9 +286,7 @@ class OldGeneratorReach(GeneratorReach):
             else:
                 return 1
 
-        self._reachable_is_collected = _is_collected
-
-        def weight(source: int, target: int, attributes: graph_module.GraphData) -> int:
+        def weight(source: int, target: int, attributes: GraphData) -> int:
             return _is_collected(target)
 
         self._reachable_costs = self._digraph.shortest_paths_dijkstra(
