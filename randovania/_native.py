@@ -1396,18 +1396,19 @@ def build_satisfiable_requirements(
     return frozenset(data)
 
 
-if False:  # For now
-    _NativeGraphPath = cython.struct(
-        previous_node=cython.int,
-        node=cython.int,
-        requirement=GraphRequirementSet,
-    )
-else:
+# if False:  # For now
+#     _NativeGraphPath = cython.struct(
+#         previous_node=cython.int,
+#         node=cython.int,
+#         requirement=GraphRequirementSet,
+#     )
+# else:
 
-    class _NativeGraphPath(typing.NamedTuple):
-        previous_node: cython.int
-        node: cython.int
-        requirement: GraphRequirementSet
+
+class _NativeGraphPath(typing.NamedTuple):
+    previous_node: cython.int
+    node: cython.int
+    requirement: GraphRequirementSet
 
 
 def generator_reach_expand_graph(
@@ -1428,6 +1429,8 @@ def generator_reach_expand_graph(
 
     paths_to_check: list[_NativeGraphPath] = []
 
+    previous_node: cython.int
+
     for initial_path in initial_paths_to_check:
         previous_node = initial_path.previous_node if initial_path.previous_node is not None else -1
         paths_to_check.append(_NativeGraphPath(previous_node, initial_path.node, initial_path.requirement))
@@ -1435,7 +1438,7 @@ def generator_reach_expand_graph(
     while paths_to_check:
         path = paths_to_check.pop(0)
 
-        previous_node: cython.int = path.previous_node
+        previous_node = path.previous_node
         current_node_index: cython.int = path.node
 
         if previous_node >= 0 and digraph.has_edge(previous_node, current_node_index):
@@ -1497,7 +1500,7 @@ def generator_reach_calculate_reachable_costs(
         node_index: cython.int = data[1]
         result: cython.int = is_collected[node_index]
         if result == 2:
-            result: cython.bint = not nodes[node_index].resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
+            result = not nodes[node_index].resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
             is_collected[node_index] = result
 
         return result
