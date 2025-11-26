@@ -76,16 +76,11 @@ class RustworkXGraph:
         def wrap(data: tuple[NodeIndex, NodeIndex, GraphData]) -> float:
             return weight(*data)
 
-        costs = dict(
-            rustworkx.dijkstra_shortest_path_lengths(
-                self.graph,
-                source,
-                edge_cost_fn=wrap,
-            )
+        return rustworkx.digraph_dijkstra_shortest_path_lengths(
+            self.graph,
+            source,
+            edge_cost_fn=wrap,
         )
-        # Important to ensure the original node is present in the response
-        costs[source] = 0.0
-        return costs
 
     def strongly_connected_components(self) -> Iterable[Collection[NodeIndex]]:
         # Since we added every possible node already, this function returns a
@@ -174,7 +169,7 @@ class OldGeneratorReach(GeneratorReach):
         self._unreachable_paths = {}
         self._uncollectable_nodes = {}
         self._reachable_costs = None
-        self._node_reachable_cache = {}
+        self._node_reachable_cache = {self._state.node.node_index: True}
         self._is_node_safe_cache = {}
         self._filler_config = filler_config
 
@@ -253,7 +248,9 @@ class OldGeneratorReach(GeneratorReach):
     def set_of_reachable_node_indices(self) -> set[int]:
         self._calculate_reachable_costs()
         assert self._reachable_costs is not None
-        return {index for index in self._reachable_costs.keys() if self.is_reachable_node_index(index)}
+        result = {index for index in self._reachable_costs.keys() if self.is_reachable_node_index(index)}
+        result.add(self._state.node.node_index)
+        return result
 
     def is_reachable_node(self, node: WorldGraphNode) -> bool:
         return self.is_reachable_node_index(node.node_index)
@@ -350,6 +347,7 @@ class OldGeneratorReach(GeneratorReach):
             self._is_node_safe_cache = {}
 
         self._state = new_state
+        self._node_reachable_cache[self._state.node.node_index] = True
         health = self._state.health_for_damage_requirements
         resources = self._state.resources
 
