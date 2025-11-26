@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import gc
 from typing import TYPE_CHECKING
 
 from randovania.generator.filler.filler_configuration import (
@@ -23,6 +24,8 @@ async def run_filler(
     player_pools: Sequence[PlayerPool],
     world_names: list[str],
     status_update: Callable[[str], None],
+    *,
+    disable_gc_during: bool = True,
 ) -> FillerResults:
     """
     Runs the filler logic for the given configuration and item pool.
@@ -33,6 +36,7 @@ async def run_filler(
     :param player_pools:
     :param world_names:
     :param status_update:
+    :param disable_gc_during: If true, we disable the GC before the filler and re-enable it after.
     :return:
     """
 
@@ -64,6 +68,10 @@ async def run_filler(
         )
 
     try:
+        # The GC is a significant amount of CPU time during the generation.
+        if disable_gc_during:
+            gc.disable()
+
         filler_result, actions_log = retcon_playthrough_filler(rng, player_states, status_update=status_update)
     except UnableToGenerate as e:
         message = "{}\n\n{}".format(
@@ -72,6 +80,9 @@ async def run_filler(
         )
         debug.debug_print(message)
         raise UnableToGenerate(message) from e
+    finally:
+        if disable_gc_during:
+            gc.enable()
 
     results = {}
     for player_state, patches in filler_result.items():
