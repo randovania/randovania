@@ -337,8 +337,8 @@ def test_reach_size_from_start_echoes(
     assert len(list(reach.safe_nodes)) == 23
 
 
-def test_graph_module(blank_game_description):
-    g = RustworkXGraph.new(blank_game_description)
+def test_graph_module(blank_world_graph):
+    g = RustworkXGraph.new(blank_world_graph)
 
     g.add_node(1)
     g.add_node(5)
@@ -355,7 +355,7 @@ def test_graph_module(blank_game_description):
         (7, 8, GraphRequirementSet.trivial()),
     ]
 
-    assert g.shortest_paths_dijkstra(1, lambda a, b, c: 0) == {1: 0, 5: 0}
+    assert g.shortest_paths_dijkstra(1, lambda data: 0) == {5: 0}
 
     components = {tuple(component) for component in g.strongly_connected_components()}
     assert {(5,), (1,), (8,), (7,)}.issubset(components)
