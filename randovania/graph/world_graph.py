@@ -637,9 +637,29 @@ def create_graph(
             )
         )
 
-    graph.dangerous_resources = frozenset(_dangerous_resources(nodes))
+    graph_precache(graph)
+    return graph
 
-    for node in nodes:
+
+def graph_precache(graph: WorldGraph) -> None:
+    """Pre-calculates values that can be used for faster operations later on."""
+
+    # Set of all resources that have a negate condition somewhere in the graph
+    dangerous_resources = set()
+
+    for node in graph.nodes:
+        for connection in node.connections:
+            for graph_requirement in connection.requirement.alternatives:
+                for resource_info in graph_requirement.all_resources(include_damage=False):
+                    if graph_requirement.get_requirement_for(resource_info)[1]:
+                        dangerous_resources.add(resource_info)
+
+    # TODO: make dangerous_resources set not depend on GamePatches
+    graph.dangerous_resources = frozenset(dangerous_resources)
+
+    # Mapping of resource to all edges that require it
+    # And an additional equivalent mapping, but only for dangerous resources
+    for node in graph.nodes:
         for index, connection in enumerate(node.connections):
             has_negate: set[ResourceInfo] = set()
             resource_in_edge = set()
