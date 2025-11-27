@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import os
-import uuid
 from typing import TYPE_CHECKING
 from unittest.mock import NonCallableMagicMock
 
@@ -30,7 +29,7 @@ if TYPE_CHECKING:
 def empty_database(db_path, request: pytest.FixtureRequest):
     old_db = database.db
     try:
-        test_db = SqliteDatabase(db_path)
+        test_db = SqliteDatabase(db_path, uri=True)
         database.db = test_db
         with test_db.bind_ctx(database.all_classes):
             assert test_db.connect(reuse_if_open=False)
@@ -56,10 +55,10 @@ def default_game_list(is_dev_version):
 
 
 @pytest.fixture(name="db_path")
-def db_path_fixture():
+def db_path_fixture(tmp_path):
     # Use cache=shared, so multiple threads can use the same in-memory database
     # Use a unique per-test file name as the file name is how they're shared
-    return f"file:{uuid.uuid4()}?mode=memory&cache=shared"
+    return f"file:{tmp_path.joinpath('db')}?mode=memory&cache=shared"
 
 
 @pytest.fixture(name="server_app")
