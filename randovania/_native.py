@@ -1258,28 +1258,42 @@ def _combine_damage_requirements(
 
 
 @cython.ccall
-def _is_damage_state_strictly_better(
+def _generic_is_damage_state_strictly_better(
     game_state: DamageState,
     target_node_index: cython.int,
-    use_energy_fast_path: cython.bint,
     checked_nodes: dict[cython.int, DamageState],
     nodes_to_check: dict[int, DamageState],
 ) -> cython.bint:
     # a >= b -> !(b > a)
     checked_target = checked_nodes.get(target_node_index)
     if checked_target is not None:
-        if use_energy_fast_path:
-            if game_state._energy <= checked_target._energy:  # type: ignore[attr-defined]
-                return False
-        elif not game_state.is_better_than(checked_target):
+        if not game_state.is_better_than(checked_target):
             return False
 
     queued_target = nodes_to_check.get(target_node_index)
     if queued_target is not None:
-        if use_energy_fast_path:
-            if game_state._energy <= queued_target._energy:  # type: ignore[attr-defined]
-                return False
-        elif not game_state.is_better_than(queued_target):
+        if not game_state.is_better_than(queued_target):
+            return False
+
+    return True
+
+
+@cython.ccall
+def _energy_is_damage_state_strictly_better(
+    game_state: DamageState,
+    target_node_index: cython.int,
+    checked_nodes: dict[cython.int, DamageState],
+    nodes_to_check: dict[int, DamageState],
+) -> cython.bint:
+    # a >= b -> !(b > a)
+    checked_target = checked_nodes.get(target_node_index)
+    if checked_target is not None:
+        if game_state._energy <= checked_target._energy:  # type: ignore[attr-defined]
+            return False
+
+    queued_target = nodes_to_check.get(target_node_index)
+    if queued_target is not None:
+        if game_state._energy <= queued_target._energy:  # type: ignore[attr-defined]
             return False
 
     return True
@@ -1317,12 +1331,19 @@ def resolver_reach_process_nodes(
         initial_node_index: [],
     }
 
+    damage_state_better_func: typing.Callable[
+        [DamageState, cython.int, dict[cython.int, DamageState], dict[cython.int, DamageState]], cython.bint
+    ]
+
     # Fast path detection for EnergyTankDamageState
     first_state: EnergyTankDamageState = next(iter(nodes_to_check.values()))  # type: ignore[assignment]
     use_energy_fast_path: cython.bint = hasattr(first_state, "_energy")
     fast_path_maximum_energy: cython.int = 0
     if use_energy_fast_path:
         fast_path_maximum_energy = first_state._maximum_energy(resources)
+        damage_state_better_func = _energy_is_damage_state_strictly_better
+    else:
+        damage_state_better_func = _generic_is_damage_state_strictly_better
 
     while nodes_to_check:
         node_index: cython.int = next(iter(nodes_to_check))
@@ -1349,10 +1370,9 @@ def resolver_reach_process_nodes(
             target_node_index: cython.int = connection[0]
             requirement: GraphRequirementSet = connection[1]
 
-            if not _is_damage_state_strictly_better(
+            if not damage_state_better_func(
                 game_state,
                 target_node_index,
-                use_energy_fast_path,
                 checked_nodes,
                 nodes_to_check,
             ):
@@ -1503,13 +1523,13 @@ def generator_reach_expand_graph(
 
     # Check if we can expand the corners of our graph
     for edge in possible_edges:
-        requirement = unreachable_paths.get(edge)
-        if requirement is not None and requirement.satisfied(resources, health):
+        edge_requirement = unreachable_paths.get(edge)
+        if edge_requirement is not None and edge_requirement.satisfied(resources, health):
             paths_to_check.push_back(
                 _NativeGraphPath(
                     edge[0],
                     edge[1],
-                    cython.cast(cython.pointer[PyObject], requirement) if cython.compiled else requirement,
+                    cython.cast(cython.pointer[PyObject], edge_requirement) if cython.compiled else edge_requirement,
                 )
             )
             del unreachable_paths[edge]
