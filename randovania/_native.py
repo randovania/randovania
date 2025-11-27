@@ -1331,19 +1331,12 @@ def resolver_reach_process_nodes(
         initial_node_index: [],
     }
 
-    damage_state_better_func: typing.Callable[
-        [DamageState, cython.int, dict[cython.int, DamageState], dict[cython.int, DamageState]], cython.bint
-    ]
-
     # Fast path detection for EnergyTankDamageState
     first_state: EnergyTankDamageState = next(iter(nodes_to_check.values()))  # type: ignore[assignment]
     use_energy_fast_path: cython.bint = hasattr(first_state, "_energy")
     fast_path_maximum_energy: cython.int = 0
     if use_energy_fast_path:
         fast_path_maximum_energy = first_state._maximum_energy(resources)
-        damage_state_better_func = _energy_is_damage_state_strictly_better
-    else:
-        damage_state_better_func = _generic_is_damage_state_strictly_better
 
     while nodes_to_check:
         node_index: cython.int = next(iter(nodes_to_check))
@@ -1370,13 +1363,22 @@ def resolver_reach_process_nodes(
             target_node_index: cython.int = connection[0]
             requirement: GraphRequirementSet = connection[1]
 
-            if not damage_state_better_func(
-                game_state,
-                target_node_index,
-                checked_nodes,
-                nodes_to_check,
-            ):
-                continue
+            if use_energy_fast_path:
+                if not _energy_is_damage_state_strictly_better(
+                    game_state,
+                    target_node_index,
+                    checked_nodes,
+                    nodes_to_check,
+                ):
+                    continue
+            else:
+                if not _generic_is_damage_state_strictly_better(
+                    game_state,
+                    target_node_index,
+                    checked_nodes,
+                    nodes_to_check,
+                ):
+                    continue
 
             satisfied = can_leave_node
             if use_energy_fast_path:
