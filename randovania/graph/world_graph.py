@@ -640,24 +640,35 @@ def create_patchless_graph(
         ):
             node.add_connection(graph, connection)
 
+    _calculate_dangerous_resources(graph)
+
     return graph
+
+
+def _calculate_dangerous_resources(graph: WorldGraph) -> None:
+    # Set of all resources that have a negate condition somewhere in the graph
+    dangerous_resources = set()
+
+    def process_requirement(requirement: GraphRequirementSet) -> None:
+        for graph_requirement in requirement.alternatives:
+            for resource_info in graph_requirement.all_resources(include_damage=False):
+                if graph_requirement.get_requirement_for(resource_info)[1]:
+                    dangerous_resources.add(resource_info)
+
+    for node in graph.nodes:
+        for connection in node.connections:
+            process_requirement(connection.requirement)
+
+    for weakness in graph.game_enum.game_description.dock_weakness_database.all_weaknesses:
+        process_requirement(graph.converter.convert_db(weakness.requirement))
+        if weakness.lock is not None:
+            process_requirement(graph.converter.convert_db(weakness.lock.requirement))
+
+    graph.dangerous_resources = frozenset(dangerous_resources)
 
 
 def graph_precache(graph: WorldGraph) -> None:
     """Pre-calculates values that can be used for faster operations later on."""
-
-    # Set of all resources that have a negate condition somewhere in the graph
-    dangerous_resources = set()
-
-    for node in graph.nodes:
-        for connection in node.connections:
-            for graph_requirement in connection.requirement.alternatives:
-                for resource_info in graph_requirement.all_resources(include_damage=False):
-                    if graph_requirement.get_requirement_for(resource_info)[1]:
-                        dangerous_resources.add(resource_info)
-
-    # TODO: make dangerous_resources set not depend on GamePatches
-    graph.dangerous_resources = frozenset(dangerous_resources)
 
     # Mapping of resource to all edges that require it
     # And an additional equivalent mapping, but only for dangerous resources
@@ -809,7 +820,7 @@ def duplicate_and_adjust_graph_for_patches(
     new_graph = WorldGraph(
         game_enum=base_graph.game_enum,
         victory_condition=base_graph.victory_condition,
-        dangerous_resources=frozenset(),
+        dangerous_resources=base_graph.dangerous_resources,
         nodes=nodes,
         node_resource_index_offset=base_graph.node_resource_index_offset,
         front_of_dock_mapping=base_graph.front_of_dock_mapping,
