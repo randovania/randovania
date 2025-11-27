@@ -323,8 +323,6 @@ class ResourceCollection:
         return isinstance(other, ResourceCollection) and (self._comparison_tuple == other._comparison_tuple)
 
     @property
-    @cython.ccall
-    @cython.inline
     def num_resources(self) -> int:
         return len(self._existing_resources)
 
