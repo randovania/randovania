@@ -37,6 +37,9 @@ class EnergyTankDamageState(DamageState):
     def __copy__(self) -> Self:
         return self._duplicate()
 
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}[{self._energy}]"
+
     @override
     def health_for_damage_requirements(self) -> int:
         return self._energy

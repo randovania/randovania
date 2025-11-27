@@ -1,5 +1,8 @@
 # distutils: language=c++
-# cython: profile=True
+# cython: profile=False
+# pyright: reportPossiblyUnboundVariable=false
+# pyright: reportReturnType=false
+# mypy: disable-error-code="return"
 
 from __future__ import annotations
 
@@ -24,24 +27,35 @@ if typing.TYPE_CHECKING:
     from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
     from randovania.resolver.logic import Logic
 else:
-    # However cython's compiler seems to expect the import o be this way, otherwise `cython.compiled` breaks
+    # However cython's compiler seems to expect the import to be this way, otherwise `cython.compiled` breaks
     import cython
 
 # ruff: noqa: UP046
 
-if typing.TYPE_CHECKING:
-    from randovania._native_helper import Deque as deque
-    from randovania._native_helper import Vector as vector
-    from randovania._native_helper import popcount
-
-elif cython.compiled:
-    from cython.cimports.cpython.ref import PyObject
-    from cython.cimports.libcpp.bit import popcount
-    from cython.cimports.libcpp.deque import deque
-    from cython.cimports.libcpp.vector import vector
+if cython.compiled:
+    if not typing.TYPE_CHECKING:
+        from cython.cimports.cpython.ref import PyObject
+        from cython.cimports.libcpp.bit import popcount
+        from cython.cimports.libcpp.deque import deque
+        from cython.cimports.libcpp.utility import pair
+        from cython.cimports.libcpp.vector import vector
 else:
     from randovania._native_helper import Deque as deque
+    from randovania._native_helper import Pair as pair
+    from randovania._native_helper import PyImmutableRef, PyRef, popcount
     from randovania._native_helper import Vector as vector
+
+    if typing.TYPE_CHECKING:
+        DamageStateRef = PyRef[DamageState]
+        GraphRequirementSetRef = PyRef["GraphRequirementSet"]
+        ResourceInfoRef = PyImmutableRef[ResourceInfo]
+        GameStateForNodes = pair[list[vector[cython.p_void]], list[vector[DamageStateRef]]]
+    else:
+        DamageStateRef = PyRef
+        GraphRequirementSetRef = PyRef
+        ResourceInfoRef = PyImmutableRef
+        GameStateForNodes = pair
+
 
 if cython.compiled:
 
@@ -117,10 +131,10 @@ if cython.compiled:
             else:
                 return False
 
-        @cython.locals(idx=cython.size_t)
         @cython.ccall
         def union(self, other: Bitmask) -> None:
             """For every bit set in other, also set in self"""
+            idx: cython.size_t
             last_shared: cython.size_t = min(self._masks.size(), other._masks.size())
 
             if other._masks.size() > self._masks.size():
@@ -131,6 +145,7 @@ if cython.compiled:
                 self._masks[idx] |= other._masks[idx]
 
         @cython.locals(idx=cython.size_t)
+        @cython.ccall
         def share_at_least_one_bit(self, other: Bitmask) -> cython.bint:
             last_shared: cython.size_t = min(self._masks.size(), other._masks.size())
             for idx in range(last_shared):
@@ -157,6 +172,7 @@ if cython.compiled:
             """Gets a list of all set bit indices."""
             result: list[int] = []
 
+            idx: cython.size_t
             for idx in range(self._masks.size()):
                 mask: cython.ulonglong = self._masks[idx]
                 if mask != 0:
@@ -250,7 +266,6 @@ else:
         def num_set_bits(self) -> cython.int:
             return bin(self._mask).count("1")
 
-        @cython.ccall
         def is_empty(self) -> cython.bint:
             return self._mask == 0
 
@@ -531,7 +546,7 @@ class GraphRequirementList:
         """Prevents any further modifications to this GraphRequirementList. Copies won't be frozen."""
         self._frozen = True
 
-    @cython.ccall
+    @cython.cfunc
     @cython.inline
     def _check_can_write(self) -> None:
         if self._frozen:
@@ -802,7 +817,6 @@ class GraphRequirementList:
         if amount > 1:
             self._other_resources[resource] = max(self._other_resources.get(resource, 0), amount)
 
-    @cython.final
     @cython.ccall
     def isolate_damage_requirements(self, resources: ResourceCollection) -> GraphRequirementList | None:
         """
@@ -834,7 +848,6 @@ class GraphRequirementList:
 
         return result
 
-    @cython.final
     @cython.ccall
     def is_requirement_superset(self, subset_req: GraphRequirementList) -> cython.bint:
         """Check if self is a strict superset of subset_req.
@@ -862,7 +875,6 @@ class GraphRequirementList:
         # Remove duplicates
         return True
 
-    @cython.final
     @cython.ccall
     def simplify_requirement_list(
         self,
@@ -910,8 +922,8 @@ class GraphRequirementList:
 
         return result
 
-    @cython.final
-    @cython.ccall
+    @cython.cfunc
+    @cython.inline
     def _single_resource_optimize_logic(self, single_req_mask: Bitmask) -> cython.int:
         """
         Specialized logic for GraphRequirementSet.optimize_alternatives.
@@ -982,14 +994,19 @@ class GraphRequirementSet:
             it.freeze()
 
     @cython.inline
-    @cython.ccall
+    @cython.cfunc
     def _check_can_write(self) -> None:
         if self._frozen:
             raise RuntimeError("Cannot modify a frozen GraphRequirementSet")
 
     @property
-    def alternatives(self) -> tuple[GraphRequirementList, ...]:
+    def alternatives(self) -> Sequence[GraphRequirementList]:
         return tuple(self._alternatives)
+
+    @cython.cfunc
+    @cython.inline
+    def native_alternatives(self) -> list[GraphRequirementList]:
+        return self._alternatives
 
     @cython.ccall
     @cython.inline
@@ -1077,10 +1094,11 @@ class GraphRequirementSet:
         else:
             result = GraphRequirementSet()
 
-            for alt in itertools.product(self._alternatives, right._alternatives):
-                new_alt = alt[0].copy_then_and_with(alt[1])
-                if new_alt is not None:
-                    result._alternatives.append(new_alt)
+            for left_alt in self._alternatives:
+                for right_alt in right._alternatives:
+                    new_alt = left_alt.copy_then_and_with(right_alt)
+                    if new_alt is not None:
+                        result._alternatives.append(new_alt)
 
             return result
 
@@ -1114,6 +1132,9 @@ class GraphRequirementSet:
         result: list[GraphRequirementList] = []
 
         single_req_mask = Bitmask.create()
+
+        current: GraphRequirementList
+        existing: GraphRequirementList
 
         for current in sorted_alternatives:
             case = current._single_resource_optimize_logic(single_req_mask)
@@ -1214,7 +1235,7 @@ class ProcessNodesResponse(typing.NamedTuple):
     path_to_node: dict[int, list[int]]
 
 
-@cython.ccall
+@cython.cfunc
 def _combine_damage_requirements(
     damage: float,
     requirement: GraphRequirementSet,
@@ -1247,6 +1268,7 @@ def _combine_damage_requirements(
         else satisfied_requirement[0]
     )
 
+    result: GraphRequirementSet
     if isolated_requirement == GraphRequirementSet.trivial():
         result = isolated_satisfied
     elif isolated_satisfied == GraphRequirementSet.trivial():
@@ -1327,16 +1349,16 @@ def resolver_reach_process_nodes(
     }
 
     # Fast path detection for EnergyTankDamageState
-    first_state: EnergyTankDamageState = next(iter(nodes_to_check.values()))  # type: ignore[assignment]
-    use_energy_fast_path: cython.bint = hasattr(first_state, "_energy")
+    game_state: EnergyTankDamageState = next(iter(nodes_to_check.values()))  # type: ignore[assignment]
+    use_energy_fast_path: cython.bint = hasattr(game_state, "_energy")
     fast_path_maximum_energy: cython.int = 0
     if use_energy_fast_path:
-        fast_path_maximum_energy = first_state._maximum_energy(resources)
+        fast_path_maximum_energy = game_state._maximum_energy(resources)
 
     while nodes_to_check:
         node_index: cython.int = next(iter(nodes_to_check))
         node: WorldGraphNode = all_nodes[node_index]
-        game_state: EnergyTankDamageState = nodes_to_check.pop(node_index)  # type: ignore[assignment]
+        game_state = nodes_to_check.pop(node_index)  # type: ignore[assignment]
         damage_health: cython.float
 
         if node.heal:
@@ -1391,7 +1413,8 @@ def resolver_reach_process_nodes(
                 satisfied = requirement.satisfied(resources, damage_health)
                 if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
-                    satisfied = additional_requirements_list[node_index].satisfied(resources, damage_health)
+                    additional_list: GraphRequirementSet = additional_requirements_list[node_index]
+                    satisfied = additional_list.satisfied(resources, damage_health)
 
             if satisfied:
                 damage: cython.float = requirement.damage(resources)
@@ -1452,14 +1475,19 @@ def build_satisfiable_requirements(
 
     for node_index, reqs in requirements_by_node.items():
         set_param: set[GraphRequirementList] = set()
+        new_list: GraphRequirementList | None
 
+        req_a: GraphRequirementSet
+        req_b: GraphRequirementSet
         for req_a, req_b in reqs:
-            for alt in itertools.product(req_a.alternatives, req_b.alternatives):
-                new_alt = alt[0].copy_then_and_with(alt[1])
-                if new_alt is not None:
-                    set_param.add(new_alt)
+            for a in req_a.native_alternatives():
+                for b in req_b.native_alternatives():
+                    new_list = a.copy_then_and_with(b)
+                    if new_list is not None:
+                        set_param.add(new_list)
 
-        additional_alts: tuple[GraphRequirementList, ...] = additional_requirements_list[node_index].alternatives
+        additional_set: GraphRequirementSet = additional_requirements_list[node_index]
+        additional_alts: list[GraphRequirementList] = additional_set.native_alternatives()
         for a in set_param:
             for b in additional_alts:
                 new_list = a.copy_then_and_with(b)
