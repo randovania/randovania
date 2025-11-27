@@ -424,10 +424,13 @@ async def _inner_advance_depth(
 async def advance_depth(
     state: State, logic: Logic, status_update: Callable[[str], None], max_attempts: int | None = None
 ) -> State | None:
-    logic.resolver_start()
-    result = (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
-    logic.logger.log_complete(result)
-    return result
+    try:
+        logic.resolver_start()
+        result = (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
+        logic.logger.log_complete(result)
+        return result
+    finally:
+        logic.resolver_quit()
 
 
 def _quiet_print(s: Any) -> None:

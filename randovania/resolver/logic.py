@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import gc
 from typing import TYPE_CHECKING
 
 from randovania.game_description.requirements.requirement_set import RequirementSet
@@ -42,6 +43,7 @@ class Logic:
         *,
         prioritize_hints: bool = False,
         record_paths: bool = False,
+        disable_gc: bool = True,
     ):
         self.all_nodes = graph.nodes
         self.graph = graph
@@ -53,6 +55,7 @@ class Logic:
         self.additional_requirements = [RequirementSet.trivial()] * self.num_nodes
         self.prioritize_hints = prioritize_hints
         self.record_paths = record_paths
+        self.disable_gc = disable_gc
 
         self.logger = TextResolverLogger()
 
@@ -70,11 +73,19 @@ class Logic:
 
     def resolver_start(self) -> None:
         self._attempts = 0
+        if self.disable_gc:
+            gc.disable()
         self.logger.logger_start()
+
+    def resolver_quit(self) -> None:
+        if self.disable_gc:
+            gc.enable()
 
     def start_new_attempt(self, state: State, max_attempts: int | None) -> None:
         if max_attempts is not None and self._attempts >= max_attempts:
             raise ResolverTimeoutError(f"Timed out after {max_attempts} attempts")
 
         self._attempts += 1
+        if self.disable_gc and self._attempts % 50 == 0:
+            gc.collect(1)
         self.logger.log_action(state)
