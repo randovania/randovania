@@ -19,7 +19,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
     from randovania.generator.old_generator_reach import GraphData, RustworkXGraph
     from randovania.graph.state import State
-    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode, WorldGraphNodeConnection
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
     from randovania.resolver.logic import Logic
@@ -1307,6 +1307,7 @@ def resolver_reach_process_nodes(
 ) -> ProcessNodesResponse:
     all_nodes: Sequence[WorldGraphNode] = logic.all_nodes
     resources: ResourceCollection = initial_state.resources
+    resource_bitmask: Bitmask = resources.resource_bitmask
     additional_requirements_list: list[GraphRequirementSet] = logic.additional_requirements
 
     record_paths: cython.bint = logic.record_paths
@@ -1345,7 +1346,7 @@ def resolver_reach_process_nodes(
                     game_state = game_state._duplicate()
                     game_state._energy = fast_path_maximum_energy
             else:
-                game_state = game_state.apply_node_heal(node, initial_state.resources)
+                game_state = game_state.apply_node_heal(node, resources)
                 damage_health = game_state.health_for_damage_requirements()
         else:
             if use_energy_fast_path:
@@ -1358,9 +1359,11 @@ def resolver_reach_process_nodes(
 
         can_leave_node: cython.bint = True
         if node.require_collected_to_leave:
-            can_leave_node = node.resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
+            resource_gain_bitmask: Bitmask = node.resource_gain_bitmask
+            can_leave_node = resource_gain_bitmask.is_subset_of(resource_bitmask)
 
-        for connection in node.connections:
+        node_connections: list[WorldGraphNodeConnection] = node.connections
+        for connection in node_connections:
             target_node_index: cython.int = connection[0]
             requirement: GraphRequirementSet = connection[1]
 
