@@ -96,6 +96,11 @@ class WorldGraphNode:
     such as in-area connections, Dock connections, TeleporterNetwork connections and requirement_to_leave.
     """
 
+    back_connections: list[NodeIndex] = dataclasses.field(init=False, default_factory=list)
+    """
+    A list of nodes that connects to this one.
+    """
+
     resource_gain: list[ResourceQuantity]
     """
     All the resources provided by collecting this node.
@@ -183,6 +188,10 @@ class WorldGraphNode:
         if self.pickup_entry is not None:
             yield from self.pickup_entry.resource_gain(resources, force_lock=True)
 
+    def add_connection(self, connection: WorldGraphNodeConnection) -> None:
+        self.connections.append(connection)
+        connection.target.back_connections.append(self.node_index)
+
     @property
     def name(self) -> str:
         return self.identifier.as_string
@@ -205,7 +214,10 @@ class WorldGraph:
     node_identifier_to_node: dict[NodeIdentifier, WorldGraphNode] = dataclasses.field(init=False)
     original_to_node: dict[int, WorldGraphNode] = dataclasses.field(init=False)
     node_resource_index_offset: int
-    converter: GraphRequirementConverter | None = None
+    converter: GraphRequirementConverter | None = dataclasses.field(init=False, default=None)
+
+    front_of_dock_mapping: dict[NodeIndex, NodeIndex]
+    """A mapping of nodes to the created `Front of` node."""
 
     resource_to_edges: dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]] = dataclasses.field(
         init=False, default_factory=dict
@@ -254,33 +266,6 @@ def _get_dock_lock_requirement(node: DockNode, weakness: DockWeakness) -> Requir
     else:
         assert weakness.lock is not None
         return weakness.lock.requirement
-
-
-def _has_lock_resource(
-    source_node: DockNode,
-    target_node: Node,
-    patches: GamePatches,
-) -> bool:
-    """Calculates if the given dock node pair will have a lock resource."""
-    forward_weakness = patches.get_dock_weakness_for(source_node)
-    back_weakness, back_lock = None, None
-
-    if isinstance(target_node, DockNode):
-        back_weakness = patches.get_dock_weakness_for(target_node)
-        back_lock = back_weakness.lock
-
-    if forward_weakness.lock is not None:
-        return True
-
-    if back_lock is not None:
-        # Check if we can unlock from the back.
-        if not (
-            back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE
-            or (back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_IF_MATCHING and forward_weakness != back_weakness)
-        ):
-            return True
-
-    return False
 
 
 def _create_dock_connection(
@@ -484,12 +469,6 @@ def _should_create_front_node(database_view: GameDatabaseView, original_node: Do
     Decide if we should wrap the dock node with an extra node.
     Important since crossing ResourceNodes can be problematic in the generator.
     """
-    # target_node = database_view.node_by_identifier(patches.get_dock_connection_for(original_node))
-
-    # # Docks without locks don't have resources
-    # if not _has_lock_resource(original_node, target_node, patches):
-    #     return False
-
     area = database_view.area_from_node(original_node)
 
     # If we can go to more than one node, it's a possible path
@@ -568,9 +547,7 @@ def create_patchless_graph(
                     region=region,
                 )
             )
-            new_node.connections.append(WorldGraphNodeConnection.trivial(front_node))
-            graph_area_connections[front_node.node_index] = graph_area_connections[new_node.node_index]
-            graph_area_connections[new_node.node_index] = []
+            graph_area_connections[front_node.node_index] = []
             front_of_dock_mapping[new_node.node_index] = front_node.node_index
 
     graph = WorldGraph(
@@ -580,6 +557,7 @@ def create_patchless_graph(
         nodes=nodes,
         node_by_pickup_index={node.pickup_index: node for node in nodes if node.pickup_index is not None},
         node_resource_index_offset=node_resource_index_offset,
+        front_of_dock_mapping=front_of_dock_mapping,
     )
     graph.converter = GraphRequirementConverter(resource_database, graph, static_resources, damage_multiplier)
     graph.victory_condition = graph.converter.convert_db(victory_condition)
@@ -599,21 +577,16 @@ def create_patchless_graph(
                 continue
 
             target_index = graph.original_to_node[target_db_node.node_index].node_index
-
-            # Redirect connections to DockNode to the Front Of node
-            target_index = front_of_dock_mapping.get(target_index, target_index)
-
             converted_area_connections.append((nodes[target_index], requirement))
 
-        node.connections.extend(
-            _connections_from(
-                node,
-                graph,
-                configurable_node_requirements,
-                teleporter_networks,
-                converted_area_connections,
-            )
-        )
+        for connection in _connections_from(
+            node,
+            graph,
+            configurable_node_requirements,
+            teleporter_networks,
+            converted_area_connections,
+        ):
+            node.add_connection(connection)
 
     return graph
 
@@ -676,30 +649,86 @@ def graph_precache(graph: WorldGraph) -> None:
                     mapping[resource].append((node.node_index, connection.target.node_index))
 
 
+def _replace_target(conn: WorldGraphNodeConnection, node: WorldGraphNode) -> WorldGraphNodeConnection:
+    return WorldGraphNodeConnection(node, *conn[1:])
+
+
 def adjust_graph_for_patches(
     graph: WorldGraph,
     patches: GamePatches,
 ) -> None:
+    nodes_by_area: dict[int, list[WorldGraphNode]] = collections.defaultdict(list)
+
     # Add pickup entries from patches
     for node in graph.nodes:
+        nodes_by_area[id(node.area)].append(node)
+
         if node.pickup_index is not None:
             target = patches.pickup_assignment.get(node.pickup_index)
             if target is not None and target.player == patches.player_index:
                 node.pickup_entry = target.pickup
 
+    dock_connections: set[tuple[int, int]] = set()
+    redirect_to_front_of_node: list[WorldGraphNode] = []
+
     # Add dock connections
     for node in graph.nodes:
         if isinstance(node.database_node, DockNode):
-            # FIXME: If the there's no lock and there's a "Front Of" node, remove the front of node
-            node.connections.append(
-                _create_dock_connection(
-                    node,
-                    graph,
-                    patches,
-                )
-            )
+            connection = _create_dock_connection(node, graph, patches)
+            node.add_connection(connection)
+            dock_connections.add((node.node_index, connection.target.node_index))
+
+            if node.node_index in graph.front_of_dock_mapping:
+                if node.has_resources:
+                    redirect_to_front_of_node.append(node)
+
+    for node in redirect_to_front_of_node:
+        _redirect_connections_to_front_node(graph, node, dock_connections)
 
     graph_precache(graph)
+
+
+def _redirect_connections_to_front_node(
+    graph: WorldGraph,
+    node: WorldGraphNode,
+    connections_to_skip: set[tuple[NodeIndex, NodeIndex]],
+) -> None:
+    """
+    Redirects all connections to the given node to instead be it's associated `Front of` node.
+    :param graph:
+    :param node:
+    :param connections_to_skip: Which connections should not be touched, usually the proper dock connections.
+    :return:
+    """
+    front_node = graph.nodes[graph.front_of_dock_mapping[node.node_index]]
+
+    # Change `node` to only connect to `front_node`, except for their DockNode connection
+    front_node.back_connections.append(node.node_index)
+
+    new_node_connections = [WorldGraphNodeConnection.trivial(front_node)]
+    for conn in node.connections:
+        if (node.node_index, conn.target.node_index) in connections_to_skip:
+            new_node_connections.append(conn)
+        else:
+            conn.target.back_connections.remove(node.node_index)
+            front_node.add_connection(conn)
+
+    node.connections = new_node_connections
+
+    # Change everything that connects to `node` to instead go to `front_node`.
+    for back_node_index in list(node.back_connections):
+        if (back_node_index, node.node_index) in connections_to_skip:
+            # Don't redirect dock connections
+            continue
+
+        back_node = graph.nodes[back_node_index]
+        back_connection_index, back_connection = next(
+            (i, conn) for i, conn in enumerate(back_node.connections) if conn.target == node
+        )
+
+        back_node.connections[back_connection_index] = _replace_target(back_connection, front_node)
+        node.back_connections.remove(back_node_index)
+        front_node.back_connections.append(back_node_index)
 
 
 def create_graph(
