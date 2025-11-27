@@ -45,6 +45,7 @@ else:
 
 if cython.compiled:
 
+    @cython.final
     @cython.cclass
     class Bitmask:
         _masks = cython.declare(vector[cython.ulonglong], visibility="public")
@@ -104,6 +105,7 @@ if cython.compiled:
                         self._masks.pop_back()
 
         @cython.ccall
+        @cython.inline
         def is_set(self, index: cython.longlong) -> cython.bint:
             one: cython.ulonglong = 1
 
@@ -259,6 +261,7 @@ else:
     PyObject = object
 
 
+@cython.final
 @cython.cclass
 class ResourceCollection:
     resource_bitmask = cython.declare(Bitmask, visibility="public")
@@ -320,13 +323,18 @@ class ResourceCollection:
         return isinstance(other, ResourceCollection) and (self._comparison_tuple == other._comparison_tuple)
 
     @property
+    @cython.ccall
+    @cython.inline
     def num_resources(self) -> int:
         return len(self._existing_resources)
 
     @cython.ccall
+    @cython.inline
     def has_resource(self, resource: ResourceInfo) -> cython.bint:
         return self.get(resource) > 0
 
+    @cython.ccall
+    @cython.inline
     def is_resource_set(self, resource: ResourceInfo) -> cython.bint:
         """
         Checks if the given resource has a value explicitly set, instead of using the fallback of 0.
@@ -386,6 +394,7 @@ class ResourceCollection:
 
     @cython.locals(resource=object, quantity=cython.int)
     @cython.ccall
+    @cython.inline
     def add_resource_gain(self, resource_gain: ResourceGain) -> None:
         for resource, quantity in resource_gain:
             self.add_resource(resource, quantity)
@@ -449,6 +458,7 @@ def _downgrade_progressive_item(
     return progressive_chain[progressive_chain.index(item_resource) - 1]
 
 
+@cython.final
 @cython.cclass
 class GraphRequirementList:
     """
@@ -511,19 +521,27 @@ class GraphRequirementList:
             )
         )
 
+    @cython.ccall
+    @cython.inline
     def is_frozen(self) -> cython.bint:
         """Returns True if `freeze` was previously called."""
         return self._frozen
 
+    @cython.ccall
+    @cython.inline
     def freeze(self) -> None:
         """Prevents any further modifications to this GraphRequirementList. Copies won't be frozen."""
         self._frozen = True
 
+    @cython.ccall
+    @cython.inline
     def _check_can_write(self) -> None:
         if self._frozen:
             raise RuntimeError("Cannot modify a frozen GraphRequirementList")
 
-    def complexity_key_for_simplify(self: GraphRequirementList) -> tuple[int, int, int]:
+    @cython.cfunc
+    @cython.inline
+    def _complexity_key_for_simplify(self) -> tuple[int, int, int]:
         """
         A value that indicates how "complex" this requirement is. Used for sorting the alternatives in
         GraphRequirementSet.optimize_alternatives
@@ -561,11 +579,13 @@ class GraphRequirementList:
             return "Trivial"
 
     @cython.ccall
+    @cython.inline
     def num_requirements(self) -> cython.int:
         """Returns the total number of resource requirements in this list."""
         return self._set_bitmask.num_set_bits() + self._negate_bitmask.num_set_bits() + len(self._damage_resources)
 
     @cython.ccall
+    @cython.inline
     def all_resources(self, *, include_damage: cython.bint = True) -> set[ResourceInfo]:
         """Returns a set of all resources involved in this requirement."""
         result = set(self._set_resources)
@@ -574,6 +594,7 @@ class GraphRequirementList:
             result.update(self._damage_resources)
         return result
 
+    @cython.final
     @cython.ccall
     def get_requirement_for(
         self, resource: ResourceInfo, include_damage: cython.bint = True
@@ -600,6 +621,7 @@ class GraphRequirementList:
         return 0, False
 
     @cython.locals(amount=cython.int, other=object, resource_index=cython.int, health=cython.float)
+    @cython.final
     @cython.ccall
     # @cython.exceptval(check=False)
     def satisfied(self, resources: ResourceCollection, health: cython.float) -> cython.bint:
@@ -782,6 +804,7 @@ class GraphRequirementList:
         if amount > 1:
             self._other_resources[resource] = max(self._other_resources.get(resource, 0), amount)
 
+    @cython.final
     @cython.ccall
     def isolate_damage_requirements(self, resources: ResourceCollection) -> GraphRequirementList | None:
         """
@@ -813,6 +836,7 @@ class GraphRequirementList:
 
         return result
 
+    @cython.final
     @cython.ccall
     def is_requirement_superset(self, subset_req: GraphRequirementList) -> cython.bint:
         """Check if self is a strict superset of subset_req.
@@ -840,6 +864,7 @@ class GraphRequirementList:
         # Remove duplicates
         return True
 
+    @cython.final
     @cython.ccall
     def simplify_requirement_list(
         self,
@@ -887,6 +912,7 @@ class GraphRequirementList:
 
         return result
 
+    @cython.final
     @cython.ccall
     def _single_resource_optimize_logic(self, single_req_mask: Bitmask) -> cython.int:
         """
@@ -909,6 +935,7 @@ class GraphRequirementList:
             return 2
 
 
+@cython.final
 @cython.cclass
 class GraphRequirementSet:
     """
@@ -942,16 +969,22 @@ class GraphRequirementSet:
     def equals_to(self, other: GraphRequirementSet) -> cython.bint:
         return self._alternatives == other._alternatives
 
+    @cython.inline
+    @cython.ccall
     def is_frozen(self) -> cython.bint:
         """Returns True if `freeze` was previously called."""
         return self._frozen
 
+    @cython.inline
+    @cython.ccall
     def freeze(self) -> None:
         """Prevents any further modifications to this GraphRequirementSet and any nested GraphRequirementList."""
         self._frozen = True
         for it in self._alternatives:
             it.freeze()
 
+    @cython.inline
+    @cython.ccall
     def _check_can_write(self) -> None:
         if self._frozen:
             raise RuntimeError("Cannot modify a frozen GraphRequirementSet")
@@ -960,15 +993,20 @@ class GraphRequirementSet:
     def alternatives(self) -> tuple[GraphRequirementList, ...]:
         return tuple(self._alternatives)
 
+    @cython.ccall
+    @cython.inline
     def add_alternative(self, alternative: GraphRequirementList) -> None:
         self._check_can_write()
         self._alternatives.append(alternative)
 
+    @cython.ccall
+    @cython.inline
     def extend_alternatives(self, alternatives: Iterable[GraphRequirementList]) -> None:
         self._check_can_write()
         self._alternatives.extend(alternatives)
 
     @cython.locals(idx=cython.int, alt=GraphRequirementList)
+    @cython.final
     @cython.ccall
     # @cython.exceptval(check=False)
     def satisfied(self, resources: ResourceCollection, energy: cython.float) -> cython.bint:
@@ -983,6 +1021,7 @@ class GraphRequirementSet:
         return False
 
     @cython.locals(idx=cython.int, alt=GraphRequirementList, new_dmg=cython.float, damage=cython.float)
+    @cython.final
     @cython.ccall
     # @cython.exceptval(check=False)
     def damage(self, resources: ResourceCollection) -> cython.float:
@@ -1057,6 +1096,7 @@ class GraphRequirementSet:
                 result._alternatives.append(new_entry)
         return result
 
+    @cython.ccall
     def optimize_alternatives(self: GraphRequirementSet) -> None:
         """Remove redundant alternatives that are supersets of other alternatives."""
 
@@ -1071,7 +1111,7 @@ class GraphRequirementSet:
                 return
 
         # Sort by "complexity" - simpler requirements first (fewer total constraints)
-        sorted_alternatives = sorted(self._alternatives, key=GraphRequirementList.complexity_key_for_simplify)
+        sorted_alternatives = sorted(self._alternatives, key=GraphRequirementList._complexity_key_for_simplify)
 
         result: list[GraphRequirementList] = []
 
@@ -1084,7 +1124,11 @@ class GraphRequirementSet:
             elif case == 1:
                 is_superset = False
             else:
-                is_superset = any(current.is_requirement_superset(existing) for existing in result)
+                is_superset = False
+                for existing in result:
+                    if current.is_requirement_superset(existing):
+                        is_superset = True
+                        break
 
             if not is_superset:
                 # Also need to remove any existing requirements that current makes obsolete
@@ -1116,6 +1160,7 @@ class GraphRequirementSet:
         r.freeze()
         return r
 
+    @cython.ccall
     def is_trivial(self) -> cython.bint:
         return self == GraphRequirementSet.trivial()
 
@@ -1130,6 +1175,7 @@ class GraphRequirementSet:
         r.freeze()
         return r
 
+    @cython.ccall
     def is_impossible(self) -> cython.bint:
         return self == GraphRequirementSet.impossible()
 
