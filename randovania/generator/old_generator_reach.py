@@ -12,7 +12,7 @@ from randovania.generator.generator_reach import GeneratorReach
 from randovania.graph.graph_requirement import GraphRequirementSet
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Collection, Iterator, Mapping, Sequence
+    from collections.abc import Callable, Iterator, Mapping, Sequence
 
     from randovania.game_description.db.node import NodeIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
@@ -97,15 +97,6 @@ class GraphPath:
         self.requirement = requirement
 
 
-class _SafeNodes:
-    as_list: list[NodeIndex]
-    as_set: set[NodeIndex]
-
-    def __init__(self, component: Collection[NodeIndex]):
-        self.as_list = sorted(component)
-        self.as_set = set(component)
-
-
 def _new_resources_including_damage(state: State) -> set[ResourceInfo]:
     """
     Returns all new resources of the given state, plus any damage resources that are impacted by
@@ -134,7 +125,7 @@ class OldGeneratorReach(GeneratorReach):
     _node_reachable_cache: dict[int, bool]
     _unreachable_paths: dict[tuple[int, int], GraphRequirementSet]
     _uncollectable_nodes: dict[int, GraphRequirementSet]
-    _safe_nodes: _SafeNodes | None
+    _safe_nodes: set[NodeIndex] | None
     _is_node_safe_cache: dict[int, bool]
     _filler_config: FillerConfiguration
     all_nodes: Sequence[WorldGraphNode]
@@ -198,7 +189,7 @@ class OldGeneratorReach(GeneratorReach):
 
     def _calculate_safe_nodes(self) -> None:
         if self._safe_nodes is None:
-            self._safe_nodes = _SafeNodes(
+            self._safe_nodes = set(
                 _native.generator_reach_find_strongly_connected_components_for(
                     self._digraph, self._state.node.node_index
                 )
@@ -273,7 +264,7 @@ class OldGeneratorReach(GeneratorReach):
         assert self._safe_nodes is not None
 
         all_nodes = self.all_nodes
-        for i in self._safe_nodes.as_list:
+        for i in self._safe_nodes:
             yield all_nodes[i]
 
     @property
@@ -281,7 +272,7 @@ class OldGeneratorReach(GeneratorReach):
     def safe_nodes_index_set(self) -> set[int]:
         self._calculate_safe_nodes()
         assert self._safe_nodes is not None
-        return self._safe_nodes.as_set
+        return self._safe_nodes
 
     def is_safe_node(self, node: WorldGraphNode) -> bool:
         node_index = node.node_index
@@ -291,7 +282,7 @@ class OldGeneratorReach(GeneratorReach):
 
         self._calculate_safe_nodes()
         assert self._safe_nodes is not None
-        self._is_node_safe_cache[node_index] = node_index in self._safe_nodes.as_set
+        self._is_node_safe_cache[node_index] = node_index in self._safe_nodes
         return self._is_node_safe_cache[node_index]
 
     def advance_to(
