@@ -281,7 +281,6 @@ async def _run_dock_resolver(
     )
 
     initial_logic = Logic(graph, patches.configuration)
-    state.resources.add_self_as_requirement_to_resources = True
 
     logic = DockRandoLogic.from_logic(initial_logic, dock, target)
 

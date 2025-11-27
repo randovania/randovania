@@ -50,16 +50,19 @@ def test_connections_from_dock_blast_shield(blank_world_graph):
         [create_requirement_list([ResourceRequirement.simple(blank_world_graph.resource_info_for_node(node_2))])]
     )
 
+    def get(index):
+        return blank_world_graph.nodes[index]
+
     # Run
     # Already converted!
 
     # Assert
-    outside_1 = [con for con in node_1.connections if con.target.area != node_1.area]
-    outside_2 = [con for con in node_2.connections if con.target.area != node_2.area]
+    outside_1 = [con for con in node_1.connections if get(con.target).area != node_1.area]
+    outside_2 = [con for con in node_2.connections if get(con.target).area != node_2.area]
 
     assert outside_1 == [WorldGraphNodeConnection.trivial(blank_world_graph.node_identifier_to_node[node_3_identifier])]
     assert outside_2 == [
-        WorldGraphNodeConnection(blank_world_graph.node_identifier_to_node[node_4_identifier], req, req, req)
+        WorldGraphNodeConnection(blank_world_graph.node_identifier_to_node[node_4_identifier].node_index, req, req, req)
     ]
 
 

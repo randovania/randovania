@@ -47,7 +47,7 @@ if typing.TYPE_CHECKING:
 
 
 class WorldGraphNodeConnection(typing.NamedTuple):
-    target: WorldGraphNode
+    target: NodeIndex
     """The destination node for this connection."""
 
     requirement: GraphRequirementSet
@@ -66,7 +66,7 @@ class WorldGraphNodeConnection(typing.NamedTuple):
     def trivial(cls, target: WorldGraphNode) -> WorldGraphNodeConnection:
         trivial_requirement = GraphRequirementSet.trivial()
         return cls(
-            target,
+            target.node_index,
             trivial_requirement,
             trivial_requirement,
             trivial_requirement,
@@ -188,9 +188,9 @@ class WorldGraphNode:
         if self.pickup_entry is not None:
             yield from self.pickup_entry.resource_gain(resources, force_lock=True)
 
-    def add_connection(self, connection: WorldGraphNodeConnection) -> None:
+    def add_connection(self, graph: WorldGraph, connection: WorldGraphNodeConnection) -> None:
         self.connections.append(connection)
-        connection.target.back_connections.append(self.node_index)
+        graph.nodes[connection.target].back_connections.append(self.node_index)
 
     @property
     def name(self) -> str:
@@ -327,7 +327,7 @@ def _create_dock_connection(
     final_requirement = graph.converter.convert_db(RequirementAnd(requirement_parts))
     node.requirement_to_collect = graph.converter.convert_db(requirement_to_collect)
 
-    return WorldGraphNodeConnection(target_node, final_requirement, final_requirement, final_requirement)
+    return WorldGraphNodeConnection(target_node.node_index, final_requirement, final_requirement, final_requirement)
 
 
 def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
@@ -365,7 +365,7 @@ def _connections_from(
                     )
                 )
                 yield WorldGraphNodeConnection(
-                    target=other_node,
+                    target=other_node.node_index,
                     requirement=leaving_requirement,
                     requirement_with_self_dangerous=leaving_requirement,
                     requirement_without_leaving=graph.converter.convert_db(other_node.database_node.is_unlocked),
@@ -401,7 +401,7 @@ def _connections_from(
             requirement_including_leaving = requirement_without_leaving = graph.converter.convert_db(requirement)
 
         yield WorldGraphNodeConnection(
-            target=target_node,
+            target=target_node.node_index,
             requirement=requirement_including_leaving,
             requirement_with_self_dangerous=requirement_including_leaving,
             requirement_without_leaving=requirement_without_leaving,
@@ -605,7 +605,7 @@ def create_patchless_graph(
             teleporter_networks,
             converted_area_connections,
         ):
-            node.add_connection(connection)
+            node.add_connection(graph, connection)
 
     return graph
 
@@ -665,11 +665,11 @@ def graph_precache(graph: WorldGraph) -> None:
                 for mapping in mappings:
                     if resource not in mapping:
                         mapping[resource] = []
-                    mapping[resource].append((node.node_index, connection.target.node_index))
+                    mapping[resource].append((node.node_index, connection.target))
 
 
 def _replace_target(conn: WorldGraphNodeConnection, node: WorldGraphNode) -> WorldGraphNodeConnection:
-    return WorldGraphNodeConnection(node, *conn[1:])
+    return WorldGraphNodeConnection(node.node_index, *conn[1:])
 
 
 def _adjust_graph_for_patches(
@@ -694,8 +694,8 @@ def _adjust_graph_for_patches(
     for node in graph.nodes:
         if isinstance(node.database_node, DockNode):
             connection = _create_dock_connection(node, graph, patches)
-            node.add_connection(connection)
-            dock_connections.add((node.node_index, connection.target.node_index))
+            node.add_connection(graph, connection)
+            dock_connections.add((node.node_index, connection.target))
 
             if node.node_index in graph.front_of_dock_mapping:
                 if node.has_resources:
@@ -726,11 +726,11 @@ def _redirect_connections_to_front_node(
 
     new_node_connections = [WorldGraphNodeConnection.trivial(front_node)]
     for conn in node.connections:
-        if (node.node_index, conn.target.node_index) in connections_to_skip:
+        if (node.node_index, conn.target) in connections_to_skip:
             new_node_connections.append(conn)
         else:
-            conn.target.back_connections.remove(node.node_index)
-            front_node.add_connection(conn)
+            graph.nodes[conn.target].back_connections.remove(node.node_index)
+            front_node.add_connection(graph, conn)
 
     node.connections = new_node_connections
 
@@ -742,7 +742,7 @@ def _redirect_connections_to_front_node(
 
         back_node = graph.nodes[back_node_index]
         back_connection_index, back_connection = next(
-            (i, conn) for i, conn in enumerate(back_node.connections) if conn.target == node
+            (i, conn) for i, conn in enumerate(back_node.connections) if conn.target == node.node_index
         )
 
         back_node.connections[back_connection_index] = _replace_target(back_connection, front_node)

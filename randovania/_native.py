@@ -1348,7 +1348,7 @@ def resolver_reach_process_nodes(
             can_leave_node = node.resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
 
         for connection in node.connections:
-            target_node_index = connection[0].node_index
+            target_node_index: cython.int = connection[0]
             requirement: GraphRequirementSet = connection[1]
 
             if not _is_damage_state_strictly_better(
@@ -1535,7 +1535,7 @@ def generator_reach_expand_graph(
             resource_nodes_to_check.add(current_node_index)
 
         for connection in node.connections:
-            target_node_index: cython.int = connection.target.node_index
+            target_node_index: cython.int = connection.target
             requirement = connection.requirement_with_self_dangerous
 
             if digraph.graph.has_edge(current_node_index, target_node_index):
