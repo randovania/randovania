@@ -1448,7 +1448,10 @@ Extra - aabb: [203.54953, 323.97684, 5.845402, 266.79828, 366.83566, 99.515015]
   * Extra - nonstandard: False
   * Extra - world_position: (266.79828, 345.40536, 75.51757)
   * Extra - world_rotation: (0.0, -0.0, 0.0)
+  > Door to Transport to Magmoor Caverns North
+      Trivial
   > Event - Activate Sunchamber Ghosts From Top
+      # This trigger only exists after Flaaghra has been killed
       After Flaahgra
 
 > Door to Transport to Magmoor Caverns North; Heals? False
@@ -1464,18 +1467,16 @@ Extra - aabb: [203.54953, 323.97684, 5.845402, 266.79828, 366.83566, 99.515015]
           Any of the following:
               After Sun Tower Spider Track Unlocked
               All of the following:
+                  # Skip doing Gate Puzzle
                   Any of the following:
-                      # https://youtu.be/h2Ma9F4CYuA
+                      # Sesshomaru Bomb Jump: https://youtu.be/h2Ma9F4CYuA
                       Space Jump Boots and Complex Bomb Jump (Ludicrous) and Movement (Advanced)
-                      # https://youtu.be/A1MgdWHbUZ8
+                      # Sesshomaru Bomb Jump NSJ: https://youtu.be/A1MgdWHbUZ8
                       Complex Bomb Jump (Ludicrous) and Movement (Ludicrous)
                   Any of the following:
+                      # Dealing with Wasps. Nests only take 1 missile, even on Hard mode.
                       Combat (Ludicrous)
-                      All of the following:
-                          Shoot Any Beam
-                          Any of the following:
-                              Missile ≥ 8
-                              Missile ≥ 4 and Disabled Hard Mode
+                      Missile ≥ 4 and Shoot Any Beam
   > Event - Unlock spider track
       Scan Visor and Shoot Super Missile
   > Event - Activate Sunchamber Ghosts From Bottom
@@ -1496,11 +1497,11 @@ Extra - aabb: [203.54953, 323.97684, 5.845402, 266.79828, 366.83566, 99.515015]
       All of the following:
           Morph Ball and Knowledge (Intermediate)
           Any of the following:
-              # https://youtu.be/spZZY6E95ZU
-              Complex Bomb Jump (Intermediate) and Normal Damage ≥ 20 and Can Use Bombs
-              # Roll down to the gap in the track and back up to trigger ghosts, skipping super missiles. This connection makes fighting Flaahgra without Spider Ball a dangerous action.
+              # Early Wild: https://youtu.be/spZZY6E95ZU
+              Complex Bomb Jump (Advanced) and Normal Damage ≥ 20 and Can Use Bombs
+              # Roll down to the gap in the track and back up to trigger ghosts, skipping super missiles.
               Can Use Spider Ball
-              # https://youtu.be/pEruOGbEteI
+              # Buffer an Instant Unmorph Jump: https://youtu.be/pEruOGbEteI
               Space Jump Boots and Instant Unmorph Jump (Ludicrous)
   > Door to Transport to Magmoor Caverns North
       Trivial
@@ -1509,8 +1510,6 @@ Extra - aabb: [203.54953, 323.97684, 5.845402, 266.79828, 366.83566, 99.515015]
   * Layers: default
   * Event Sunchamber Chozo Ghosts Layer Activated
   * Extra - world_position: (236.98616, 341.62854, 67.207886)
-  > Door to Sun Tower Access
-      Can Use Bombs and Can Use Spider Ball
   > Door to Transport to Magmoor Caverns North
       Trivial
 
@@ -3261,6 +3260,7 @@ Extra - aabb: [673.9764, -306.40494, 82.517944, 754.19855, -285.93994, 96.718056
           Morph Ball
           Any of the following:
               Can Use Bombs
+              # Stand on the Save Station and roll into hole
               Space Jump Boots and Movement (Advanced) and Standable Terrain (Intermediate)
               # https://youtu.be/AFDSEx16464
               Wall Boost (Expert) and Can Use Boost Ball

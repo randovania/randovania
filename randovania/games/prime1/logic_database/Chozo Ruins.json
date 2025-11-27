@@ -8532,10 +8532,17 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Event - Activate Sunchamber Ghosts From Top": {
+                        "Door to Transport to Magmoor Caverns North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Activate Sunchamber Ghosts From Top": {
+                            "type": "or",
+                            "data": {
+                                "comment": "This trigger only exists after Flaaghra has been killed",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8621,7 +8628,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Skip doing Gate Puzzle",
                                                         "items": [
                                                             {
                                                                 "type": "or",
@@ -8631,7 +8638,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/h2Ma9F4CYuA",
+                                                                                "comment": "Sesshomaru Bomb Jump: https://youtu.be/h2Ma9F4CYuA",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -8666,7 +8673,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/A1MgdWHbUZ8",
+                                                                                "comment": "Sesshomaru Bomb Jump NSJ: https://youtu.be/A1MgdWHbUZ8",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -8695,7 +8702,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Dealing with Wasps. Nests only take 1 missile, even on Hard mode.",
                                                                     "items": [
                                                                         {
                                                                             "type": "and",
@@ -8707,46 +8714,12 @@
                                                                                         "data": "Shoot Any Beam"
                                                                                     },
                                                                                     {
-                                                                                        "type": "or",
+                                                                                        "type": "resource",
                                                                                         "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "and",
-                                                                                                    "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "items",
-                                                                                                                    "name": "Missile",
-                                                                                                                    "amount": 4,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "misc",
-                                                                                                                    "name": "hard_mode",
-                                                                                                                    "amount": 1,
-                                                                                                                    "negate": true
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "Missile",
-                                                                                                        "amount": 8,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
+                                                                                            "type": "items",
+                                                                                            "name": "Missile",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -8905,7 +8878,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/spZZY6E95ZU",
+                                                        "comment": "Early Wild: https://youtu.be/spZZY6E95ZU",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -8916,7 +8889,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "CBJ",
-                                                                    "amount": 2,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -8935,7 +8908,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Roll down to the gap in the track and back up to trigger ghosts, skipping super missiles. This connection makes fighting Flaahgra without Spider Ball a dangerous action.",
+                                                        "comment": "Roll down to the gap in the track and back up to trigger ghosts, skipping super missiles.",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -8947,7 +8920,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/pEruOGbEteI",
+                                                        "comment": "Buffer an Instant Unmorph Jump: https://youtu.be/pEruOGbEteI",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -9016,22 +8989,6 @@
                     "valid_starting_location": false,
                     "event_name": "Event6",
                     "connections": {
-                        "Door to Sun Tower Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Spider Ball"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Transport to Magmoor Caverns North": {
                             "type": "and",
                             "data": {
@@ -19928,7 +19885,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Stand on the Save Station and roll into hole",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
