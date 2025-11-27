@@ -9,7 +9,6 @@ import rustworkx
 
 from randovania import _native
 from randovania.generator.generator_reach import GeneratorReach
-from randovania.graph.graph_requirement import GraphRequirementSet
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator, Mapping, Sequence
@@ -17,6 +16,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import NodeIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
+    from randovania.graph.graph_requirement import GraphRequirementSet
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
@@ -125,7 +125,7 @@ class OldGeneratorReach(GeneratorReach):
     _node_reachable_cache: dict[int, bool]
     _unreachable_paths: dict[tuple[int, int], GraphRequirementSet]
     _uncollectable_nodes: dict[int, GraphRequirementSet]
-    _safe_nodes: set[NodeIndex] | None
+    _safe_nodes: set[NodeIndex] | None = None
     _is_node_safe_cache: dict[int, bool]
     _filler_config: FillerConfiguration
     all_nodes: Sequence[WorldGraphNode]
@@ -168,24 +168,16 @@ class OldGeneratorReach(GeneratorReach):
         filler_config: FillerConfiguration,
     ) -> Self:
         reach = cls(graph, initial_state, RustworkXGraph.new(graph), filler_config)
-        reach._expand_graph([GraphPath(None, initial_state.node.node_index, GraphRequirementSet.trivial())])
-        return reach
-
-    def _expand_graph(self, paths_to_check: list[GraphPath]) -> None:
-        # print("!! _expand_graph", len(paths_to_check))
-        self._reachable_costs = None
-
         _native.generator_reach_expand_graph(
-            self._state,
-            self._graph,
-            self._digraph,
-            paths_to_check,
-            self._unreachable_paths,
-            self._uncollectable_nodes,
+            reach._state,
+            reach._graph,
+            reach._digraph,
+            reach._unreachable_paths,
+            reach._uncollectable_nodes,
+            for_initial_state=True,
+            possible_edges=set(),
         )
-
-        # print("!! _expand_graph finished. Has {} edges".format(sum(1 for _ in self._digraph.edges_data())))
-        self._safe_nodes = None
+        return reach
 
     def _calculate_safe_nodes(self) -> None:
         if self._safe_nodes is None:
@@ -305,8 +297,6 @@ class OldGeneratorReach(GeneratorReach):
 
         self._state = new_state
         self._node_reachable_cache[self._state.node.node_index] = True
-        health = self._state.health_for_damage_requirements
-        resources = self._state.resources
 
         # Collect edges to check based on the new resources
         possible_edges: set[tuple[int, int]] = set()
@@ -314,18 +304,19 @@ class OldGeneratorReach(GeneratorReach):
         for resource in _new_resources_including_damage(new_state):
             possible_edges.update(self.graph.resource_to_edges.get(resource, []))
 
-        # Check if we can expand the corners of our graph
-        paths_to_check: list[GraphPath] = []
-        for edge in possible_edges:
-            requirement = self._unreachable_paths.get(edge)
-            if requirement is not None and requirement.satisfied(resources, health):
-                from_index, to_index = edge
-                paths_to_check.append(GraphPath(from_index, to_index, requirement))
-                del self._unreachable_paths[edge]
-
         # Delay updating _uncollectable_nodes until it's used, as it's faster that way
 
-        self._expand_graph(paths_to_check)
+        _native.generator_reach_expand_graph(
+            self._state,
+            self._graph,
+            self._digraph,
+            self._unreachable_paths,
+            self._uncollectable_nodes,
+            for_initial_state=False,
+            possible_edges=possible_edges,
+        )
+        self._reachable_costs = None
+        self._safe_nodes = None
 
     def act_on(self, node: WorldGraphNode) -> None:
         new_state = self._state.act_on_node(node)

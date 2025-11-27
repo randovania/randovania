@@ -17,7 +17,7 @@ if typing.TYPE_CHECKING:
 
     from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
-    from randovania.generator.old_generator_reach import GraphData, GraphPath, RustworkXGraph
+    from randovania.generator.old_generator_reach import GraphData, RustworkXGraph
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
     from randovania.resolver.damage_state import DamageState
@@ -1429,9 +1429,11 @@ def generator_reach_expand_graph(
     state: State,
     world_graph: WorldGraph,
     digraph: RustworkXGraph,
-    initial_paths_to_check: list[GraphPath],
     unreachable_paths: dict[tuple[int, int], GraphRequirementSet],
     uncollectable_nodes: dict[int, GraphRequirementSet],
+    *,
+    for_initial_state: cython.bint,
+    possible_edges: set[tuple[cython.int, cython.int]],
 ) -> None:
     # print("!! _expand_graph", len(paths_to_check))
 
@@ -1443,18 +1445,30 @@ def generator_reach_expand_graph(
     resource_nodes_to_check: set[cython.int] = set()
 
     previous_node: cython.int
+    requirement: GraphRequirementSet
 
-    for initial_path in initial_paths_to_check:
-        previous_node = initial_path.previous_node if initial_path.previous_node is not None else -1
+    if for_initial_state:
+        requirement = GraphRequirementSet.trivial()
         paths_to_check.push_back(
             _NativeGraphPath(
-                previous_node,
-                initial_path.node,
-                cython.cast(cython.pointer[PyObject], initial_path.requirement)
-                if cython.compiled
-                else initial_path.requirement,
+                -1,
+                state.node.node_index,
+                cython.cast(cython.pointer[PyObject], requirement) if cython.compiled else requirement,
             )
         )
+
+    # Check if we can expand the corners of our graph
+    for edge in possible_edges:
+        requirement = unreachable_paths.get(edge)
+        if requirement is not None and requirement.satisfied(resources, health):
+            paths_to_check.push_back(
+                _NativeGraphPath(
+                    edge[0],
+                    edge[1],
+                    cython.cast(cython.pointer[PyObject], requirement) if cython.compiled else requirement,
+                )
+            )
+            del unreachable_paths[edge]
 
     while not paths_to_check.empty():
         path = paths_to_check[0]
@@ -1476,7 +1490,7 @@ def generator_reach_expand_graph(
 
         for connection in node.connections:
             target_node_index: cython.int = connection.target.node_index
-            requirement: GraphRequirementSet = connection.requirement_with_self_dangerous
+            requirement = connection.requirement_with_self_dangerous
 
             if digraph.graph.has_edge(current_node_index, target_node_index):
                 continue
