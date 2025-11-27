@@ -349,7 +349,6 @@ def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
 def _connections_from(
     node: WorldGraphNode,
     graph: WorldGraph,
-    patches: GamePatches,
     configurable_node_requirements: Mapping[NodeIdentifier, Requirement],
     teleporter_networks: dict[str, list[WorldGraphNode]],
     connections: Iterable[tuple[WorldGraphNode, Requirement]],
@@ -361,9 +360,6 @@ def _connections_from(
 
     elif isinstance(node.database_node, HintNode):
         requirement_to_leave = node.database_node.lock_requirement
-
-    elif isinstance(node.database_node, DockNode):
-        yield _create_dock_connection(node, graph, patches)
 
     elif isinstance(node.database_node, TeleporterNetworkNode):
         for other_node in teleporter_networks[node.database_node.network]:
@@ -421,18 +417,8 @@ def _connections_from(
         )
 
 
-def _dangerous_resources(nodes: list[WorldGraphNode]) -> Iterator[ResourceInfo]:
-    for node in nodes:
-        for connection in node.connections:
-            for graph_requirement in connection.requirement.alternatives:
-                for resource_info in graph_requirement.all_resources(include_damage=False):
-                    if graph_requirement.get_requirement_for(resource_info)[1]:
-                        yield resource_info
-
-
 def create_node(
     node_index: int,
-    patches: GamePatches,
     original_node: Node,
     area: Area,
     region: Region,
@@ -458,12 +444,6 @@ def create_node(
     elif isinstance(original_node, EventPickupNode):
         pickup_index = original_node.pickup_node.pickup_index
 
-    pickup_entry = None
-    if pickup_index is not None:
-        target = patches.pickup_assignment.get(pickup_index)
-        if target is not None and target.player == patches.player_index:
-            pickup_entry = target.pickup
-
     return WorldGraphNode(
         node_index=node_index,
         identifier=original_node.identifier,
@@ -474,7 +454,7 @@ def create_node(
         requirement_to_collect=requirement_to_collect,  # type: ignore[arg-type]
         require_collected_to_leave=isinstance(original_node, EventNode | PickupNode | EventPickupNode),
         pickup_index=pickup_index,
-        pickup_entry=pickup_entry,
+        pickup_entry=None,
         is_lock_action=isinstance(original_node, EventNode | EventPickupNode),
         database_node=original_node,
         area=area,
@@ -499,16 +479,16 @@ def calculate_node_replacement(database_view: GameDatabaseView) -> dict[Node, No
     return node_replacement
 
 
-def _should_create_front_node(database_view: GameDatabaseView, patches: GamePatches, original_node: DockNode) -> bool:
+def _should_create_front_node(database_view: GameDatabaseView, original_node: DockNode) -> bool:
     """
     Decide if we should wrap the dock node with an extra node.
     Important since crossing ResourceNodes can be problematic in the generator.
     """
-    target_node = database_view.node_by_identifier(patches.get_dock_connection_for(original_node))
+    # target_node = database_view.node_by_identifier(patches.get_dock_connection_for(original_node))
 
-    # Docks without locks don't have resources
-    if not _has_lock_resource(original_node, target_node, patches):
-        return False
+    # # Docks without locks don't have resources
+    # if not _has_lock_resource(original_node, target_node, patches):
+    #     return False
 
     area = database_view.area_from_node(original_node)
 
@@ -526,9 +506,8 @@ def _should_create_front_node(database_view: GameDatabaseView, patches: GamePatc
     return len(connections_to) > 0
 
 
-def create_graph(
+def create_patchless_graph(
     database_view: GameDatabaseView,
-    patches: GamePatches,
     static_resources: ResourceCollection,
     damage_multiplier: float,
     victory_condition: Requirement,
@@ -563,7 +542,7 @@ def create_graph(
         if original_node is None:
             continue
 
-        nodes.append(new_node := create_node(len(nodes), patches, original_node, area, region))
+        nodes.append(new_node := create_node(len(nodes), original_node, area, region))
         graph_area_connections[new_node.node_index] = copy.copy(original_area_connections[original_node.node_index])
 
         if isinstance(original_node, TeleporterNetworkNode):
@@ -571,7 +550,7 @@ def create_graph(
             assert original_node.requirement_to_activate == Requirement.trivial()
             teleporter_networks[original_node.network].append(new_node)
 
-        if isinstance(original_node, DockNode) and _should_create_front_node(database_view, patches, original_node):
+        if isinstance(original_node, DockNode) and _should_create_front_node(database_view, original_node):
             nodes.append(
                 front_node := WorldGraphNode(
                     node_index=len(nodes),
@@ -630,14 +609,12 @@ def create_graph(
             _connections_from(
                 node,
                 graph,
-                patches,
                 configurable_node_requirements,
                 teleporter_networks,
                 converted_area_connections,
             )
         )
 
-    graph_precache(graph)
     return graph
 
 
@@ -698,4 +675,47 @@ def graph_precache(graph: WorldGraph) -> None:
                         mapping[resource] = []
                     mapping[resource].append((node.node_index, connection.target.node_index))
 
+
+def adjust_graph_for_patches(
+    graph: WorldGraph,
+    patches: GamePatches,
+) -> None:
+    # Add pickup entries from patches
+    for node in graph.nodes:
+        if node.pickup_index is not None:
+            target = patches.pickup_assignment.get(node.pickup_index)
+            if target is not None and target.player == patches.player_index:
+                node.pickup_entry = target.pickup
+
+    # Add dock connections
+    for node in graph.nodes:
+        if isinstance(node.database_node, DockNode):
+            # FIXME: If the there's no lock and there's a "Front Of" node, remove the front of node
+            node.connections.append(
+                _create_dock_connection(
+                    node,
+                    graph,
+                    patches,
+                )
+            )
+
+    graph_precache(graph)
+
+
+def create_graph(
+    database_view: GameDatabaseView,
+    patches: GamePatches,
+    static_resources: ResourceCollection,
+    damage_multiplier: float,
+    victory_condition: Requirement,
+    flatten_to_set_on_patch: bool,
+) -> WorldGraph:
+    graph = create_patchless_graph(
+        database_view,
+        static_resources,
+        damage_multiplier,
+        victory_condition,
+        flatten_to_set_on_patch,
+    )
+    adjust_graph_for_patches(graph, patches)
     return graph
