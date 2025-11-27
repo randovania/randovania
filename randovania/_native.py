@@ -1261,13 +1261,13 @@ def _combine_damage_requirements(
 def _generic_is_damage_state_strictly_better(
     game_state: DamageState,
     target_node_index: cython.int,
-    checked_nodes: dict[cython.int, DamageState],
+    checked_nodes: cython.pointer[vector[cython.p_void]],
     nodes_to_check: dict[int, DamageState],
 ) -> cython.bint:
     # a >= b -> !(b > a)
-    checked_target = checked_nodes.get(target_node_index)
-    if checked_target is not None:
-        if not game_state.is_better_than(checked_target):
+    checked_target: cython.p_void = checked_nodes[0][target_node_index]
+    if checked_target != cython.NULL:
+        if not game_state.is_better_than(cython.cast(object, checked_target)):  # type: ignore[arg-type]
             return False
 
     queued_target = nodes_to_check.get(target_node_index)
@@ -1282,13 +1282,13 @@ def _generic_is_damage_state_strictly_better(
 def _energy_is_damage_state_strictly_better(
     game_state: DamageState,
     target_node_index: cython.int,
-    checked_nodes: dict[cython.int, DamageState],
+    checked_nodes: cython.pointer[vector[cython.p_void]],
     nodes_to_check: dict[int, DamageState],
 ) -> cython.bint:
     # a >= b -> !(b > a)
-    checked_target = checked_nodes.get(target_node_index)
-    if checked_target is not None:
-        if game_state._energy <= checked_target._energy:  # type: ignore[attr-defined]
+    checked_target: cython.p_void = checked_nodes[0][target_node_index]
+    if checked_target != cython.NULL:
+        if game_state._energy <= cython.cast(object, checked_target)._energy:  # type: ignore[attr-defined]
             return False
 
     queued_target = nodes_to_check.get(target_node_index)
@@ -1320,7 +1320,9 @@ def resolver_reach_process_nodes(
     record_paths: cython.bint = logic.record_paths
     initial_node_index: cython.int = initial_state.node.node_index
 
-    checked_nodes: dict[int, DamageState] = {}
+    checked_nodes: vector[cython.p_void] = vector[cython.p_void]()
+    checked_nodes.resize(len(all_nodes), cython.NULL)
+
     satisfied_requirement_on_node: dict[int, tuple[GraphRequirementSet, bool]] = {
         initial_node_index: (GraphRequirementSet.trivial(), False)
     }
@@ -1351,9 +1353,8 @@ def resolver_reach_process_nodes(
             else:
                 game_state = game_state.apply_node_heal(node, initial_state.resources)
 
-        checked_nodes[node_index] = game_state
-        if node_index != initial_node_index:
-            reach_nodes[node_index] = game_state
+        reach_nodes[node_index] = game_state
+        checked_nodes[node_index] = cython.cast(cython.p_void, game_state) if cython.compiled else game_state  # type: ignore[assignment]
 
         can_leave_node: cython.bint = True
         if node.require_collected_to_leave:
@@ -1367,7 +1368,7 @@ def resolver_reach_process_nodes(
                 if not _energy_is_damage_state_strictly_better(
                     game_state,
                     target_node_index,
-                    checked_nodes,
+                    cython.address(checked_nodes) if cython.compiled else [checked_nodes],
                     nodes_to_check,
                 ):
                     continue
@@ -1375,7 +1376,7 @@ def resolver_reach_process_nodes(
                 if not _generic_is_damage_state_strictly_better(
                     game_state,
                     target_node_index,
-                    checked_nodes,
+                    cython.address(checked_nodes) if cython.compiled else [checked_nodes],
                     nodes_to_check,
                 ):
                     continue
@@ -1430,6 +1431,8 @@ def resolver_reach_process_nodes(
                             satisfied_requirement_on_node[node.node_index][0],
                         )
                     )
+
+    reach_nodes.pop(initial_node_index, None)
 
     return ProcessNodesResponse(
         reach_nodes=reach_nodes,
