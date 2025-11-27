@@ -62,6 +62,14 @@ cdef extern from *:
     typedef PyRef GraphRequirementSetRef;
     typedef PyRef ResourceInfoRef;
     using GameStateForNodes = std::pair<std::vector<void*>*, std::vector<DamageStateRef>*>;
+
+    struct ProcessNodesState {
+        std::vector<PyObject*> checked_nodes;
+        std::deque<int> nodes_to_check;
+        std::vector<DamageStateRef> game_states_to_check;
+        std::vector<std::pair<GraphRequirementSetRef, bool>> satisfied_requirement_on_node;
+    };
+
     """
     cdef cppclass PyRef:
         PyRef()
@@ -75,6 +83,13 @@ cdef extern from *:
     ctypedef PyRef DamageStateRef
     ctypedef PyRef GraphRequirementSetRef
     ctypedef PyRef ResourceInfoRef
+   
+    cdef cppclass ProcessNodesState:
+        vector[PyObject*] checked_nodes
+        deque[int] nodes_to_check
+        vector[DamageStateRef] game_states_to_check
+        vector[pair[GraphRequirementSetRef, bool]] satisfied_requirement_on_node
+
     ctypedef vector[void*]* VoidPtrVectorPtr
     ctypedef vector[DamageStateRef]* DamageStateRefVectorPtr
     ctypedef pair[VoidPtrVectorPtr, DamageStateRefVectorPtr] GameStateForNodes

@@ -57,14 +57,9 @@ class ResolverReach:
 
     @classmethod
     def calculate_reach(cls, logic: Logic, initial_state: State) -> ResolverReach:
-        # Keys: nodes to check
-        # Value: how much energy was available when visiting that node
-        nodes_to_check: dict[int, DamageState] = {initial_state.node.node_index: initial_state.damage_state}
-
         response = _native.resolver_reach_process_nodes(
             logic,
             initial_state,
-            nodes_to_check,
         )
         reach_nodes = response.reach_nodes
         requirements_excluding_leaving_by_node = response.requirements_excluding_leaving_by_node

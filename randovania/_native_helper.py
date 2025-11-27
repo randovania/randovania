@@ -1,9 +1,15 @@
 from __future__ import annotations
 
+import collections
 import typing
+
+import cython
 
 if typing.TYPE_CHECKING:
     from collections.abc import Callable
+
+    from randovania._native import GraphRequirementSet
+    from randovania.resolver.damage_state import DamageState
 
 T = typing.TypeVar("T")
 
@@ -61,13 +67,13 @@ class Vector[T](list[T]):
 
 
 class Deque[T]:
-    _data: list[T]
+    _data: collections.deque[T]
 
     def __init__(self) -> None:
-        self._data = []
+        self._data = collections.deque()
 
     def pop_front(self) -> None:
-        self._data.pop(0)
+        self._data.popleft()
 
     def push_back(self, item: T) -> None:
         self._data.append(item)
@@ -164,3 +170,19 @@ class Pair[T, U]:
     def __init__(self, first: T, second: U) -> None:
         self.first = first
         self.second = second
+
+
+class ProcessNodesState:
+    checked_nodes: Vector[cython.p_void]
+    nodes_to_check: Deque[int]
+    game_states_to_check: Vector[PyRef[DamageState]]
+    satisfied_requirement_on_node: Vector[Pair[PyRef[GraphRequirementSet], bool]]
+
+    def __init__(self) -> None:
+        self.checked_nodes = Vector[cython.p_void]()
+        self.nodes_to_check = Deque[int]()
+
+        self.game_states_to_check = collections.defaultdict(PyRef["DamageState"])  # type: ignore[assignment]
+        self.satisfied_requirement_on_node = collections.defaultdict(  # type: ignore[assignment]
+            lambda: Pair(PyRef["GraphRequirementSet"](), False)
+        )
