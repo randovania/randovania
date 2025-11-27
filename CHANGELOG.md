@@ -50,6 +50,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Chozo Ruins
 
+- Changed: Revised the requirements for fighting Chozo Ghosts and made them consistent. Fighting multiple of them without Charge Beam is now Intermediate Combat, fighting a single one is still Beginner Combat.
+- Fixed: Sunchamber Access: Requirements for dealing with the enemies in the room.
+- Fixed: Sunchamber Lobby: Requirements for dealing with the enemies in the room.
+- Changed: Sunchamber: Jumping onto the plant after defeating the Chozo Ghosts is now trivial.
+- Changed: Sunchamber: Reworked the Flaaghra fight. Key points are:
+    - Killing Flaaghra with only Missiles is now Combat Beginner
+    - There is now a way to kill Flaaghra with only 4 Missiles, gated behind Combat Advanced
+    - Adjusted health requirements
+    - Destroying the Bomb slots from outside is now Knowledge Intermediate
+    - Destroying the Bomb Slots with Power Bombs is now Knowledge Beginner
+    - Added a way to kill Flaaghra with Wavebuster, 20 Missiles and Ludicrous Combat
+    - When fighting Flaaghra from the back, there is now an Intermediate Knowledge trick for using only 2 Power Bombs
+    - When fighting Flaaghra from the back, you can now get to the platform via either an Intermediate Scan Dash, or a Beginner Scan Dash with Space Jump
 - Added: Watery Hall: Going to the Missile Expansion via an Intermediate Wall Boost without Gravity Suit.
 - Changed: Watery Hall: Going to the Missile Expansion by going through Poison Water has had several changes: it is now gated behind Beginner Movement, it has slightly more accurate damage numbers now and it increases the difficulty of the tricks.
 - Changed: Watery Hall: Doing the Bomb Jump to get the Missile Expansion is now Intermediate.
@@ -63,10 +76,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Tallon Overworld
 
 - Added: Alcove: Escaping the pit with a Beginner Wallboost.
-
-##### Chozo Ruins
-
-- Changed: Revised the requirements for fighting Chozo Ghosts and made them consistent. Fighting multiple of them without Charge Beam is now Intermediate Combat, fighting a single one is still Beginner Combat.
 
 ##### Phazon Mines
 
