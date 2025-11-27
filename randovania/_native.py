@@ -303,7 +303,7 @@ class ResourceCollection:
 
     @cython.ccall
     def get(self, item: ResourceInfo) -> cython.int:
-        resource_index: cython.int = item.resource_index
+        resource_index: cython.size_t = item.resource_index
         if resource_index < self._resource_array.size():
             return self._resource_array[resource_index]
         else:
@@ -346,7 +346,7 @@ class ResourceCollection:
         This method should be used in exceptional cases only. For common usage, use `add_resource_gain`.
         """
         quantity = max(quantity, 0)
-        resource_index: cython.int = resource.resource_index
+        resource_index: cython.size_t = resource.resource_index
         self._damage_reduction_cache = None
         if self._resource_array.size() <= resource_index:
             self._resize_array_to_fit(resource_index + 1)
@@ -406,7 +406,7 @@ class ResourceCollection:
         Removes the given resource, making `is_resource_set` return False for it.
         This should be used in exceptional cases only. Consider `add_resource_gain` with negative gain instead.
         """
-        resource_index: cython.int = resource.resource_index
+        resource_index: cython.size_t = resource.resource_index
         self._existing_resources.pop(resource_index, None)
 
         if resource_index < self._resource_array.size():
@@ -1257,7 +1257,7 @@ def _combine_damage_requirements(
     return result, False
 
 
-@cython.ccall
+@cython.cfunc
 def _generic_is_damage_state_strictly_better(
     game_state: DamageState,
     target_node_index: cython.int,
@@ -1278,7 +1278,7 @@ def _generic_is_damage_state_strictly_better(
     return True
 
 
-@cython.ccall
+@cython.cfunc
 def _energy_is_damage_state_strictly_better(
     game_state: DamageState,
     target_node_index: cython.int,
