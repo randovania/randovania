@@ -30,13 +30,17 @@ else:
 # ruff: noqa: UP046
 
 if typing.TYPE_CHECKING:
+    from randovania._native_helper import Deque as deque
     from randovania._native_helper import Vector as vector
     from randovania._native_helper import popcount
 
 elif cython.compiled:
+    from cython.cimports.cpython.ref import PyObject
     from cython.cimports.libcpp.bit import popcount
+    from cython.cimports.libcpp.deque import deque
     from cython.cimports.libcpp.vector import vector
 else:
+    from randovania._native_helper import Deque as deque
     from randovania._native_helper import Vector as vector
 
 if cython.compiled:
@@ -252,6 +256,7 @@ else:
             return self.__class__(self._mask)
 
     Bitmask = BitmaskInt  # type: ignore[assignment, misc]
+    PyObject = object
 
 
 @cython.cclass
@@ -1396,19 +1401,28 @@ def build_satisfiable_requirements(
     return frozenset(data)
 
 
-# if False:  # For now
-#     _NativeGraphPath = cython.struct(
-#         previous_node=cython.int,
-#         node=cython.int,
-#         requirement=GraphRequirementSet,
-#     )
-# else:
-
-
-class _NativeGraphPath(typing.NamedTuple):
+class _NativeGraphPathDef(typing.NamedTuple):
     previous_node: cython.int
     node: cython.int
-    requirement: GraphRequirementSet
+    requirement: GraphRequirementSet | cython.pointer[PyObject]
+
+
+if cython.compiled:
+    _NativeGraphPath = cython.struct(
+        previous_node=cython.int,
+        node=cython.int,
+        requirement=cython.pointer[PyObject],
+    )
+
+    @cython.cfunc
+    def _get_requirement_from_path(path: _NativeGraphPath) -> GraphRequirementSet:  # type: ignore[valid-type]
+        return cython.cast(GraphRequirementSet, path.requirement)  # type: ignore[attr-defined]
+
+else:
+    _NativeGraphPath = _NativeGraphPathDef
+
+    def _get_requirement_from_path(path: _NativeGraphPathDef) -> GraphRequirementSet:
+        return path.requirement  # type: ignore[return-value]
 
 
 def generator_reach_expand_graph(
@@ -1420,33 +1434,41 @@ def generator_reach_expand_graph(
     uncollectable_nodes: dict[int, GraphRequirementSet],
 ) -> None:
     # print("!! _expand_graph", len(paths_to_check))
-    resource_nodes_to_check: set[cython.int] = set()
 
-    health = state.health_for_damage_requirements
+    health: cython.float = state.health_for_damage_requirements
     resources = state.resources
     all_nodes = world_graph.nodes
-    new_edges = []
 
-    paths_to_check: list[_NativeGraphPath] = []
+    paths_to_check: deque[_NativeGraphPath] = deque[_NativeGraphPath]()  # type: ignore[valid-type]
+    resource_nodes_to_check: set[cython.int] = set()
 
     previous_node: cython.int
 
     for initial_path in initial_paths_to_check:
         previous_node = initial_path.previous_node if initial_path.previous_node is not None else -1
-        paths_to_check.append(_NativeGraphPath(previous_node, initial_path.node, initial_path.requirement))
+        paths_to_check.push_back(
+            _NativeGraphPath(
+                previous_node,
+                initial_path.node,
+                cython.cast(cython.pointer[PyObject], initial_path.requirement)
+                if cython.compiled
+                else initial_path.requirement,
+            )
+        )
 
-    while paths_to_check:
-        path = paths_to_check.pop(0)
+    while not paths_to_check.empty():
+        path = paths_to_check[0]
+        paths_to_check.pop_front()
 
-        previous_node = path.previous_node
-        current_node_index: cython.int = path.node
+        previous_node = path.previous_node  # type: ignore[attr-defined]
+        current_node_index: cython.int = path.node  # type: ignore[attr-defined]
 
         if previous_node >= 0 and digraph.has_edge(previous_node, current_node_index):
             continue
 
         digraph.add_node(current_node_index)
         if previous_node >= 0:
-            digraph.add_edge(previous_node, current_node_index, data=path.requirement)
+            digraph.add_edge(previous_node, current_node_index, data=_get_requirement_from_path(path))
 
         node: WorldGraphNode = all_nodes[current_node_index]
         if node.has_resources:
@@ -1456,15 +1478,20 @@ def generator_reach_expand_graph(
             target_node_index: cython.int = connection.target.node_index
             requirement: GraphRequirementSet = connection.requirement_with_self_dangerous
 
-            if digraph.has_edge(current_node_index, target_node_index):
+            if digraph.graph.has_edge(current_node_index, target_node_index):
                 continue
 
             if requirement.satisfied(resources, health):
                 # print("* Queue path to", target_node.full_name())
-                paths_to_check.append(_NativeGraphPath(current_node_index, target_node_index, requirement))
+                paths_to_check.push_back(
+                    _NativeGraphPath(
+                        current_node_index,
+                        target_node_index,
+                        cython.cast(cython.pointer[PyObject], requirement) if cython.compiled else requirement,
+                    )
+                )
             else:
                 unreachable_paths[current_node_index, target_node_index] = requirement
-                new_edges.append((current_node_index, target_node_index))
         # print("> done")
 
     for node_index in sorted(resource_nodes_to_check):

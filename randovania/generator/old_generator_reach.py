@@ -72,7 +72,7 @@ class RustworkXGraph:
         source: NodeIndex,
         weight: Callable[[tuple[NodeIndex, NodeIndex, GraphData]], float],
     ) -> Mapping[NodeIndex, float]:
-        return rustworkx.digraph_dijkstra_shortest_path_lengths(
+        return rustworkx.dijkstra_shortest_path_lengths(
             self.graph,
             source,
             edge_cost_fn=weight,

@@ -48,6 +48,28 @@ class Vector[T]:
         return str(self._data)
 
 
+class Deque[T]:
+    _data: list[T]
+
+    def __init__(self) -> None:
+        self._data = []
+
+    def pop_front(self) -> None:
+        self._data.pop(0)
+
+    def push_back(self, item: T) -> None:
+        self._data.append(item)
+
+    def __getitem__(self, idx: int) -> T:
+        return self._data[idx]
+
+    def __setitem__(self, key: int, value: T) -> None:
+        self._data[key] = value
+
+    def empty(self) -> bool:
+        return not self._data
+
+
 class bitmask_int(int):
     _data: int
 
