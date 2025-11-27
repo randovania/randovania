@@ -8542,7 +8542,7 @@
                         "Event - Activate Sunchamber Ghosts From Top": {
                             "type": "or",
                             "data": {
-                                "comment": "This trigger only exists after Flaaghra has been killed",
+                                "comment": "This trigger only exists after Flaaghra has been killed.",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8766,40 +8766,6 @@
                                     }
                                 ]
                             }
-                        },
-                        "Event - Activate Sunchamber Ghosts From Bottom": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Spider Ball"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event5",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event7",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
                         }
                     }
                 },
@@ -8838,11 +8804,11 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -14.13039171999278,
-                        "y": 24.483473439016635,
+                        "x": -14.13,
+                        "y": 24.48,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "Note that logic can expect you to hit this from the bottom by climbing up,\nfalling down and hitting the trigger, and climbing back up again. This is not\nan issue, as in-game if you are able to climb up the room from the bottom once,\nyou can do that multiple times.",
                     "layers": [
                         "default"
                     ],
@@ -8958,37 +8924,6 @@
                                 ]
                             }
                         },
-                        "Door to Transport to Magmoor Caverns North": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Activate Sunchamber Ghosts From Bottom": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 13.207590628074875,
-                        "y": -22.57938224879604,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "world_position": [
-                            236.98616,
-                            341.62854,
-                            67.207886
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "Event6",
-                    "connections": {
                         "Door to Transport to Magmoor Caverns North": {
                             "type": "and",
                             "data": {

@@ -1451,7 +1451,7 @@ Extra - aabb: [203.54953, 323.97684, 5.845402, 266.79828, 366.83566, 99.515015]
   > Door to Transport to Magmoor Caverns North
       Trivial
   > Event - Activate Sunchamber Ghosts From Top
-      # This trigger only exists after Flaaghra has been killed
+      # This trigger only exists after Flaaghra has been killed.
       After Flaahgra
 
 > Door to Transport to Magmoor Caverns North; Heals? False
@@ -1479,8 +1479,6 @@ Extra - aabb: [203.54953, 323.97684, 5.845402, 266.79828, 366.83566, 99.515015]
                       Missile ≥ 4 and Shoot Any Beam
   > Event - Unlock spider track
       Scan Visor and Shoot Super Missile
-  > Event - Activate Sunchamber Ghosts From Bottom
-      After Sun Tower Spider Track Unlocked and After Flaahgra and Can Use Bombs and Can Use Spider Ball
 
 > Event - Unlock spider track; Heals? False
   * Layers: default
@@ -1492,6 +1490,10 @@ Extra - aabb: [203.54953, 323.97684, 5.845402, 266.79828, 366.83566, 99.515015]
 > Event - Activate Sunchamber Ghosts From Top; Heals? False
   * Layers: default
   * Event Sunchamber Chozo Ghosts Layer Activated
+  * Note that logic can expect you to hit this from the bottom by climbing up,
+falling down and hitting the trigger, and climbing back up again. This is not
+an issue, as in-game if you are able to climb up the room from the bottom once,
+you can do that multiple times.
   * Extra - world_position: (245.750122, 348.2229, 67.207886)
   > Door to Sun Tower Access
       All of the following:
@@ -1503,13 +1505,6 @@ Extra - aabb: [203.54953, 323.97684, 5.845402, 266.79828, 366.83566, 99.515015]
               Can Use Spider Ball
               # Buffer an Instant Unmorph Jump: https://youtu.be/pEruOGbEteI
               Space Jump Boots and Instant Unmorph Jump (Ludicrous)
-  > Door to Transport to Magmoor Caverns North
-      Trivial
-
-> Event - Activate Sunchamber Ghosts From Bottom; Heals? False
-  * Layers: default
-  * Event Sunchamber Chozo Ghosts Layer Activated
-  * Extra - world_position: (236.98616, 341.62854, 67.207886)
   > Door to Transport to Magmoor Caverns North
       Trivial
 
