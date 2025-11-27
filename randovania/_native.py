@@ -1280,7 +1280,7 @@ def _generic_is_damage_state_strictly_better(
 
 @cython.cfunc
 def _energy_is_damage_state_strictly_better(
-    game_state: DamageState,
+    damage_health: cython.float,
     target_node_index: cython.int,
     checked_nodes: cython.pointer[vector[cython.p_void]],
     nodes_to_check: dict[int, DamageState],
@@ -1288,26 +1288,18 @@ def _energy_is_damage_state_strictly_better(
     # a >= b -> !(b > a)
     checked_target: cython.p_void = checked_nodes[0][target_node_index]
     if checked_target != cython.NULL:
-        if game_state._energy <= cython.cast(object, checked_target)._energy:  # type: ignore[attr-defined]
+        target_health: cython.float = cython.cast(object, checked_target)._energy  # type: ignore[attr-defined]
+        if damage_health <= target_health:
             return False
 
     queued_target = nodes_to_check.get(target_node_index)
     if queued_target is not None:
-        if game_state._energy <= queued_target._energy:  # type: ignore[attr-defined]
+        if damage_health <= queued_target._energy:  # type: ignore[attr-defined]
             return False
 
     return True
 
 
-@cython.locals(
-    node_index=cython.int,
-    target_node_index=cython.int,
-    damage_health=cython.int,
-    satisfied=cython.bint,
-    can_leave_node=cython.bint,
-    record_paths=cython.bint,
-    damage=cython.float,
-)
 def resolver_reach_process_nodes(
     logic: Logic,
     initial_state: State,
@@ -1344,14 +1336,22 @@ def resolver_reach_process_nodes(
         node_index: cython.int = next(iter(nodes_to_check))
         node: WorldGraphNode = all_nodes[node_index]
         game_state: EnergyTankDamageState = nodes_to_check.pop(node_index)  # type: ignore[assignment]
+        damage_health: cython.float
 
         if node.heal:
             if use_energy_fast_path:
+                damage_health = fast_path_maximum_energy
                 if game_state._energy != fast_path_maximum_energy:
                     game_state = game_state._duplicate()
                     game_state._energy = fast_path_maximum_energy
             else:
                 game_state = game_state.apply_node_heal(node, initial_state.resources)
+                damage_health = game_state.health_for_damage_requirements()
+        else:
+            if use_energy_fast_path:
+                damage_health = game_state._energy
+            else:
+                damage_health = game_state.health_for_damage_requirements()
 
         reach_nodes[node_index] = game_state
         checked_nodes[node_index] = cython.cast(cython.p_void, game_state) if cython.compiled else game_state  # type: ignore[assignment]
@@ -1366,7 +1366,7 @@ def resolver_reach_process_nodes(
 
             if use_energy_fast_path:
                 if not _energy_is_damage_state_strictly_better(
-                    game_state,
+                    damage_health,
                     target_node_index,
                     cython.address(checked_nodes) if cython.compiled else [checked_nodes],
                     nodes_to_check,
@@ -1381,11 +1381,7 @@ def resolver_reach_process_nodes(
                 ):
                     continue
 
-            satisfied = can_leave_node
-            if use_energy_fast_path:
-                damage_health = game_state._energy
-            else:
-                damage_health = game_state.health_for_damage_requirements()
+            satisfied: cython.bint = can_leave_node
 
             if satisfied:
                 # Check if the normal requirements to reach that node is satisfied
