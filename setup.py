@@ -35,6 +35,8 @@ class CustomBuild(build):
 ext_modules = None
 
 if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
+    debug_mode = os.getenv("RANDOVANIA_DEBUG", "0") != "0"
+
     if sys.platform == "win32":
         # MSVC
         extra_compile_args = [
@@ -42,9 +44,13 @@ if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
             # Cython boilerplate triggers warning "function call missing argument list", unrelated to our code
             "/wd4551",
         ]
+        if debug_mode:
+            extra_compile_args.extend(["/Od", "/Zi"])  # Disable optimizations, add debug info
     else:
         # GCC/Clang
         extra_compile_args = ["-std=c++20"]
+        if debug_mode:
+            extra_compile_args.extend(["-g", "-O0", "-fno-omit-frame-pointer"])  # Debug symbols, no optimization
 
     ext_modules = cythonize(
         [
@@ -53,9 +59,11 @@ if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
                 sources=["randovania/_native.py"],
                 language="c++",
                 extra_compile_args=extra_compile_args,
+                extra_link_args=["-g"] if debug_mode and sys.platform != "win32" else [],
             ),
         ],
         annotate=True,
+        gdb_debug=debug_mode,  # Add Cython debugging support
     )
 
 setup(
