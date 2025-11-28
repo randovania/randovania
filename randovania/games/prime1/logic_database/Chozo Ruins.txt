@@ -254,7 +254,10 @@ Extra - aabb: [125.6711, -36.277424, 14.305037, 215.75589, 1.6999655, 32.09845]
   * Extra - world_position: (131.03343, -5.633053, 20.067863)
   * Extra - world_rotation: (0.0, -0.0, 90.0)
   > Door to Ruined Fountain
-      Morph Ball
+      All of the following:
+          Morph Ball
+          # Deal with Scarabs
+          Combat (Beginner) or Shoot Any Beam
 
 > Door to Ruined Fountain; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -264,7 +267,10 @@ Extra - aabb: [125.6711, -36.277424, 14.305037, 215.75589, 1.6999655, 32.09845]
   * Extra - world_position: (210.69885, -27.044916, 20.067858)
   * Extra - world_rotation: (0.0, -0.0, -89.50709)
   > Door to Main Plaza
-      Morph Ball
+      All of the following:
+          Morph Ball
+          # Deal with Scarabs
+          Combat (Beginner) or Shoot Any Beam
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
@@ -432,10 +438,10 @@ Extra - aabb: [176.48764, -97.459984, 12.558006, 249.91162, -27.044916, 41.39785
           Can Use Spider Ball
           Any of the following:
               After Flaahgra
-              # https://youtu.be/OcHxU-t-WYk
+              # SJ, climb above Ruined Fountain Access, then jump onto spider track: https://youtu.be/OcHxU-t-WYk
               Space Jump Boots and Standable Terrain (Intermediate)
-              # https://youtu.be/SbmRjJ04Lfk
-              Combat/Scan Dash (Advanced) and Standable Terrain (Advanced)
+              # NSJ, climb above Ruined Fountain Access, dash off of Plazmite/Fountain onto spider track: https://youtu.be/SbmRjJ04Lfk
+              Combat/Scan Dash (Advanced) and Standable Terrain (Advanced) and Has Any Visor
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
@@ -837,7 +843,8 @@ Extra - aabb: [-67.94035, 108.50368, 4.5828886, -17.112804, 159.27057, 27.74823]
   * Extra - world_position: (-63.328213, 122.83002, 14.802788)
   * Extra - world_rotation: (-0.0003290219, -0.05092235, -89.50709)
   > Door to North Atrium
-      Trivial
+      # Deal with Wasps
+      Combat (Beginner) or Shoot Any Beam
 
 > Door to North Atrium; Heals? False
   * Layers: default
@@ -847,8 +854,12 @@ Extra - aabb: [-67.94035, 108.50368, 4.5828886, -17.112804, 159.27057, 27.74823]
   * Extra - world_position: (-43.32731, 159.2923, 12.264568)
   * Extra - world_rotation: (0.00010967263, 0.05092329, 90.0)
   > Door to Save Station 1
-      Trivial
+      # Deal with Wasps
+      Combat (Beginner) or Shoot Any Beam
   > Door to Eyon Tunnel
+      # Deal with Wasps
+      Combat (Beginner) or Shoot Any Beam
+  > Event - Activate Main Plaza Wasps
       Trivial
 
 > Door to Eyon Tunnel; Heals? False; Spawn Point; Default Node
@@ -859,23 +870,33 @@ Extra - aabb: [-67.94035, 108.50368, 4.5828886, -17.112804, 159.27057, 27.74823]
   * Extra - world_position: (-17.077309, 118.036064, 5.3013606)
   * Extra - world_rotation: (-0.05092341, -0.0, 0.0)
   > Door to North Atrium
-      Trivial
+      # Deal with Wasps
+      Combat (Beginner) or Shoot Any Beam
   > Pickup (Missile Expansion)
       All of the following:
           Morph Ball
           Any of the following:
-              Can Use Bombs
               All of the following:
+                  # Intended way
+                  Can Use Bombs
+                  # Deal with Wasps
+                  Combat (Beginner) or Shoot Any Beam
+              All of the following:
+                  # Roll from pillar to the pickup
                   Any of the following:
-                      # https://youtu.be/GXPhNsNJG9E
+                      # Climb up the pillar on the right of the pickup
+                      # NSJ: https://youtu.be/GXPhNsNJG9E
                       Standable Terrain (Advanced)
-                      # https://youtu.be/y1qS7oPqynY
+                      # SJ: https://youtu.be/y1qS7oPqynY
                       Space Jump Boots and Standable Terrain (Intermediate)
                   Any of the following:
-                      # https://youtu.be/y1qS7oPqynY?t=12
+                      # Get into the tunnel
+                      # Jump, Morph and roll in: https://youtu.be/y1qS7oPqynY?t=12
                       Movement (Expert)
-                      # https://youtu.be/0GiZ4ckMg7o
-                      Movement (Intermediate) and Can Use Boost Ball
+                      # Boost into it: https://youtu.be/0GiZ4ckMg7o
+                      Movement (Advanced) and Can Use Boost Ball
+                  # Deal with Wasps
+                  Combat (Advanced) or Shoot Any Beam
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
@@ -884,6 +905,12 @@ Extra - aabb: [-67.94035, 108.50368, 4.5828886, -17.112804, 159.27057, 27.74823]
   * Extra - pre_placement_weight: 0.6
   * Extra - world_position: (-24.978611, 109.534653, 16.866739)
   > Door to Eyon Tunnel
+      Trivial
+
+> Event - Activate Main Plaza Wasps; Heals? False
+  * Layers: default
+  * Event Activate Main Plaza Wasps
+  > Door to North Atrium
       Trivial
 
 ----------------
@@ -1394,18 +1421,25 @@ Extra - aabb: [-26.830738, 190.67865, 4.1988316, 30.514803, 245.44357, 28.549793
   * Extra - world_position: (-3.2820818, 190.6858, 12.236646)
   * Extra - world_rotation: (-0.0003290219, -0.05092235, -89.50709)
   > Door to Totem Access
-      Trivial
+      # Deal with Wasps
+      Combat (Beginner) or Shoot Any Beam
   > Door to Map Station
-      Trivial
+      # Deal with Wasps
+      Combat (Beginner) or Shoot Any Beam
   > Pickup (Missile Expansion)
       Missile and Shoot Any Beam
   > Pickup (Missile Expansion 2)
       All of the following:
           Morph Ball
           Any of the following:
+              # Get into the Tunnel
               Can Use Bombs
               # https://youtu.be/u1g4iTohZHk
               Wall Boost (Advanced) and Can Use Boost Ball
+          Any of the following:
+              # Deal with Wasps
+              Combat (Advanced) or Shoot Any Beam
+              Combat (Beginner) and Can Use Bombs
 
 > Door to Totem Access; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -1415,7 +1449,8 @@ Extra - aabb: [-26.830738, 190.67865, 4.1988316, 30.514803, 245.44357, 28.549793
   * Extra - world_position: (-3.326408, 238.11482, 12.194317)
   * Extra - world_rotation: (0.00010967263, 0.05092329, 90.0)
   > Door to North Atrium
-      Trivial
+      # Deal with Wasps
+      Combat (Beginner) or Shoot Any Beam
 
 > Door to Map Station; Heals? False
   * Layers: default
@@ -1425,7 +1460,8 @@ Extra - aabb: [-26.830738, 190.67865, 4.1988316, 30.514803, 245.44357, 28.549793
   * Extra - world_position: (-18.541641, 201.89496, 5.231552)
   * Extra - world_rotation: (0.05092294, -0.00021934473, -179.50708)
   > Door to North Atrium
-      Trivial
+      # Deal with Wasps
+      Combat (Beginner) or Shoot Any Beam
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
@@ -3244,13 +3280,14 @@ Extra - aabb: [754.19855, -343.01227, 58.286064, 793.17523, -254.9616, 100.00249
               Any of the following:
                   All of the following:
                       After Reflecting Pool Water Drained
-                      # https://youtu.be/rPgTD35efHo
+                      # Get sucked by the Stone Toad to the upper level: https://youtu.be/rPgTD35efHo
                       Movement (Advanced) or Can Use Boost Ball
                   All of the following:
-                      Standable Terrain (Advanced) and Can Use Bombs
+                      # Stand on Stone Toad, then Bomb Jump off of it
+                      Jump Off Enemies (Advanced) and Can Use Bombs
                       Bomb Space Jump (Expert) or Complex Bomb Jump (Expert)
-          # https://youtu.be/NRtv6aOpssk
-          Space Jump Boots and Slope Jump (Beginner) and Standable Terrain (Beginner)
+          # Slope Jump off of the Stone Toad's back: https://youtu.be/NRtv6aOpssk
+          Space Jump Boots and Slope Jump (Beginner) and Jump Off Enemies (Beginner)
   > Event - Drain water
       All of the following:
           Morph Ball

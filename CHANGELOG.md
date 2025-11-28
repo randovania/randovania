@@ -75,6 +75,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Chozo Ruins
 
 - Changed: Revised the requirements for fighting Chozo Ghosts and made them consistent. Fighting multiple of them without Charge Beam is now Intermediate Combat, fighting a single one is still Beginner Combat.
+- Changed: Reflecting Pool: Jumping off of the Stone Toad has been changed from the Standable trick to the Jump Off Enemies trick.
+- Fixed: Ruined Gallery: Requirements for dealing with the enemies in the room.
+- Changed: Ruined Nursery: The boost into the tunnel from the standable pillar was changed from Intermediate Movement to Advanced Movement.
+- Fixed: Ruined Nursery: Requirements for dealing with the enemies in the room.
+- Fixed: Ruined Fountain: The NSJ Dash over to the pickup now requires a visor.
+- Fixed: Ruined Fountain Access: Requirements for dealing with the enemies in the room.
 - Fixed: Sunchamber Access: Requirements for dealing with the enemies in the room.
 - Fixed: Sunchamber Lobby: Requirements for dealing with the enemies in the room.
 - Changed: Sunchamber: Jumping onto the plant after defeating the Chozo Ghosts is now trivial.
