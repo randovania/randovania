@@ -28,7 +28,6 @@ if TYPE_CHECKING:
     from collections.abc import Callable
     from random import Random
 
-    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.filler.filler_configuration import FillerResults
@@ -253,7 +252,7 @@ async def _run_dock_resolver(
     dock: DockNode,
     target: DockNode,
     base_graph: WorldGraph,
-    filtered_game: GameDatabaseView,
+    filtered_game: GameDescription,
     patches: GamePatches,
 ) -> tuple[State | None, Logic]:
     """

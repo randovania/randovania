@@ -232,8 +232,8 @@ class WorldGraph:
     dangerous_resources: frozenset[ResourceInfo]
     nodes: list[WorldGraphNode]
     node_resource_index_offset: int
-    converter: GraphRequirementConverter | None = dataclasses.field(init=False, default=None)
 
+    converter: GraphRequirementConverter = dataclasses.field(init=False)
     node_by_pickup_index: dict[PickupIndex, WorldGraphNode] = dataclasses.field(init=False)
     node_identifier_to_node: dict[NodeIdentifier, WorldGraphNode] = dataclasses.field(init=False)
     original_to_node: dict[int, WorldGraphNode] = dataclasses.field(init=False)
@@ -452,7 +452,7 @@ def create_node(
     """
 
     resource_gain: list[ResourceQuantity] = []
-    requirement_to_collect = GraphRequirementSet.trivial()
+    requirement_to_collect: GraphRequirementSet | Requirement = GraphRequirementSet.trivial()
 
     if isinstance(original_node, HintNode):
         requirement_to_collect = original_node.lock_requirement
