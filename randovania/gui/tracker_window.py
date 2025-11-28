@@ -42,7 +42,7 @@ if typing.TYPE_CHECKING:
     from pathlib import Path
 
     from randovania.game_description.db.area import Area
-    from randovania.game_description.db.node import NodeIndex
+    from randovania.game_description.db.node import Node, NodeIndex
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_description import GameDescription
@@ -190,7 +190,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.map_area_combo.currentIndexChanged.connect(self.on_map_area_combo)
         self.map_canvas.set_edit_mode(False)
         self.map_canvas.SelectAreaRequest.connect(self.focus_on_area)
-        self.map_canvas.SelectNodeRequest.connect(self._add_new_action)
+        self.map_canvas.SelectNodeRequest.connect(self._on_map_select_node)
 
         # Graph Map
         from randovania.gui.widgets.tracker_map import MatplotlibWidget
@@ -337,6 +337,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.undo_last_action_button.setEnabled(len(self._actions) > 1)
         self.current_location_label.setText(f"Current location: {self._pretty_node_name(self._actions[-1])}")
         self.update_locations_tree_for_reachable_nodes()
+
+    def _on_map_select_node(self, node: Node) -> None:
+        self._add_new_action(self.graph.original_to_node[node.node_index])
 
     def _add_new_action(self, node: WorldGraphNode) -> None:
         self._add_new_actions([node])
