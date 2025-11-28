@@ -685,7 +685,7 @@ def graph_precache(graph: WorldGraph) -> None:
                     if resource in graph.dangerous_resources:
                         dangerous_extra.add_resource(resource, 1, False)
 
-                if dangerous_extra.all_resources():
+                if dangerous_extra.num_requirements() > 0:
                     requirement_set = requirement_set.copy_then_all_alternative_and_with(dangerous_extra)
                     graph.editable_node(node.node_index).connections[index] = WorldGraphNodeConnection(
                         target=connection.target,
