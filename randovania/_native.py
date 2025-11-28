@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import copy
 import functools
-import itertools
 import logging
 import typing
 
@@ -489,8 +488,8 @@ class GraphRequirementList:
     _other_resources: dict[ResourceInfo, cython.int]
     _damage_resources: dict[ResourceInfo, cython.int]
 
-    _set_resources: list[ResourceInfo]
-    _negate_resources: list[ResourceInfo]
+    _set_resources: vector[ResourceInfoRef]
+    _negate_resources: vector[ResourceInfoRef]
 
     _frozen: cython.bint
 
@@ -500,8 +499,8 @@ class GraphRequirementList:
         self._other_resources: dict[ResourceInfo, cython.int] = {}
         self._damage_resources: dict[ResourceInfo, cython.int] = {}
 
-        self._set_resources = []
-        self._negate_resources = []
+        self._set_resources = vector[ResourceInfoRef]()
+        self._negate_resources = vector[ResourceInfoRef]()
 
         self._frozen = False
 
@@ -571,18 +570,26 @@ class GraphRequirementList:
         result._negate_bitmask = self._negate_bitmask.copy()
         result._other_resources = copy.copy(self._other_resources)
         result._damage_resources = copy.copy(self._damage_resources)
-        result._set_resources = copy.copy(self._set_resources)
-        result._negate_resources = copy.copy(self._negate_resources)
+        if cython.compiled:
+            result._set_resources = self._set_resources
+            result._negate_resources = self._negate_resources
+        else:
+            result._set_resources = vector[ResourceInfoRef](self._set_resources)
+            result._negate_resources = vector[ResourceInfoRef](self._negate_resources)
         return result
 
     def __str__(self) -> str:
         parts = sorted(
             f"{resource.resource_type.non_negated_prefix}{resource}"
-            for resource in self._set_resources
-            if resource not in self._other_resources
+            for resource_ref in self._set_resources
+            if (resource := resource_ref.get()) not in self._other_resources
         )
         parts.extend(
-            sorted(f"{resource.resource_type.negated_prefix}{resource}" for resource in self._negate_resources)
+            sorted(
+                f"{resource.resource_type.negated_prefix}{resource}"
+                for resource_ref in self._negate_resources
+                if (resource := resource_ref.get()) is not None
+            )
         )
         parts.extend(sorted(f"{resource} ≥ {amount}" for resource, amount in self._other_resources.items()))
         parts.extend(sorted(f"{resource} ≥ {amount}" for resource, amount in self._damage_resources.items()))
@@ -601,8 +608,11 @@ class GraphRequirementList:
     @cython.inline
     def all_resources(self, *, include_damage: cython.bint = True) -> set[ResourceInfo]:
         """Returns a set of all resources involved in this requirement."""
-        result = set(self._set_resources)
-        result.update(self._negate_resources)
+        result = set()
+        for ref in self._set_resources:
+            result.add(ref.get())
+        for ref in self._negate_resources:
+            result.add(ref.get())
         if include_damage:
             result.update(self._damage_resources)
         return result
@@ -692,14 +702,14 @@ class GraphRequirementList:
         if self._set_bitmask.share_at_least_one_bit(merge._negate_bitmask):
             return False
 
-        for resource in merge._set_resources:
-            if not self._set_bitmask.is_set(resource.resource_index):
-                self._set_resources.append(resource)
+        for ref in merge._set_resources:
+            if not self._set_bitmask.is_set(ref.get().resource_index):
+                self._set_resources.push_back(ref)
         self._set_bitmask.union(merge._set_bitmask)
 
-        for resource in merge._negate_resources:
-            if not self._negate_bitmask.is_set(resource.resource_index):
-                self._negate_resources.append(resource)
+        for ref in merge._negate_resources:
+            if not self._negate_bitmask.is_set(ref.get().resource_index):
+                self._negate_resources.push_back(ref)
         self._negate_bitmask.union(merge._negate_bitmask)
 
         amount: cython.int
@@ -731,15 +741,20 @@ class GraphRequirementList:
             return None
 
         # Union _set_resources and _negate_resources (avoiding duplicates using bitmask)
-        result._set_resources = list(self._set_resources)
-        for resource in right._set_resources:
-            if not self._set_bitmask.is_set(resource.resource_index):
-                result._set_resources.append(resource)
+        if cython.compiled:
+            result._set_resources = self._set_resources
+            result._negate_resources = self._negate_resources
+        else:
+            result._set_resources = vector[ResourceInfoRef](self._set_resources)
+            result._negate_resources = vector[ResourceInfoRef](self._negate_resources)
 
-        result._negate_resources = list(self._negate_resources)
-        for resource in right._negate_resources:
-            if not self._negate_bitmask.is_set(resource.resource_index):
-                result._negate_resources.append(resource)
+        for ref in right._set_resources:
+            if not self._set_bitmask.is_set(ref.get().resource_index):
+                result._set_resources.push_back(ref)
+
+        for ref in right._negate_resources:
+            if not self._negate_bitmask.is_set(ref.get().resource_index):
+                result._negate_resources.push_back(ref)
 
         # Merge _other_resources with max values
         result._other_resources = dict(self._other_resources)
@@ -799,11 +814,9 @@ class GraphRequirementList:
         resource_index: cython.int = resource.resource_index
 
         if negate:
-            target_list = self._negate_resources
             target_bitmask = self._negate_bitmask
             other_bitmask = self._set_bitmask
         else:
-            target_list = self._set_resources
             target_bitmask = self._set_bitmask
             other_bitmask = self._negate_bitmask
 
@@ -811,7 +824,10 @@ class GraphRequirementList:
             raise ValueError("Cannot add resource requirement that conflicts with existing requirements")
 
         if not target_bitmask.is_set(resource_index):
-            target_list.append(resource)
+            if negate:
+                self._negate_resources.push_back(ResourceInfoRef(resource))
+            else:
+                self._set_resources.push_back(ResourceInfoRef(resource))
 
         target_bitmask.set_bit(resource_index)
         if amount > 1:
@@ -875,6 +891,24 @@ class GraphRequirementList:
         # Remove duplicates
         return True
 
+    @cython.cfunc
+    def _simplify_handle_resource(
+        self,
+        resource: ResourceInfo,
+        amount: cython.int,
+        negate: cython.bint,
+        progressive_item_info: None | tuple[Sequence[ResourceInfo], int],
+    ) -> cython.void:
+        if _is_later_progression_item(resource, progressive_item_info):
+            assert progressive_item_info is not None
+            self.add_resource(
+                _downgrade_progressive_item(resource, progressive_item_info),
+                1,
+                False,
+            )
+        else:
+            self.add_resource(resource, amount, negate)
+
     @cython.ccall
     def simplify_requirement_list(
         self,
@@ -888,30 +922,22 @@ class GraphRequirementList:
         result = GraphRequirementList()
         something_set: cython.bint = False
 
-        for resource in itertools.chain(self._set_resources, self._negate_resources):
-            amount, negate = self.get_requirement_for(resource)
+        for ref in self._set_resources:
+            resource = ref.get()
+            amount = self._other_resources.get(resource, 1)
+            if resources.get(resource) >= amount:
+                continue
+            result._simplify_handle_resource(resource, amount, False, progressive_item_info)
+            something_set = True
 
-            if negate:
-                if resources.get(resource) == 0:
-                    continue
-                if resource in node_resources:
-                    return None
-            else:
-                if resources.get(resource) >= amount:
-                    continue
-
-            if _is_later_progression_item(resource, progressive_item_info):
-                assert progressive_item_info is not None
-                result.add_resource(
-                    _downgrade_progressive_item(resource, progressive_item_info),
-                    1,
-                    False,
-                )
-                something_set = True
-
-            else:
-                something_set = True
-                result.add_resource(resource, amount, negate)
+        for ref in self._negate_resources:
+            resource = ref.get()
+            if resources.get(resource) == 0:
+                continue
+            if resource in node_resources:
+                return None
+            result._simplify_handle_resource(resource, 1, True, progressive_item_info)
+            something_set = True
 
         if self.damage(resources) >= health_for_damage_requirements:
             something_set = True

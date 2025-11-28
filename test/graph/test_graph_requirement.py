@@ -32,6 +32,7 @@ def test_add_simple_resource(mock_resources):
 
     assert req.all_resources() == {resource}
     assert req.get_requirement_for(resource) == (1, False)
+    assert str(req) == "Missile"
 
 
 def test_cant_add_resource_when_frozen(mock_resources):
