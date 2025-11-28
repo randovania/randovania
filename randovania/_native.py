@@ -1,4 +1,5 @@
 # distutils: language=c++
+# cython: profile=True
 
 from __future__ import annotations
 
@@ -9,32 +10,42 @@ import logging
 import typing
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator, Mapping, Sequence
+
     # The package is named `Cython`, so in a case-sensitive system mypy fails to find cython with just `import cython`
     import Cython as cython
+
+    from randovania.game_description.game_database_view import ResourceDatabaseView
+    from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
+    from randovania.generator.old_generator_reach import GraphData, RustworkXGraph
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode, WorldGraphNodeConnection
+    from randovania.resolver.damage_state import DamageState
+    from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
+    from randovania.resolver.logic import Logic
 else:
     # However cython's compiler seems to expect the import o be this way, otherwise `cython.compiled` breaks
     import cython
 
-if typing.TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator, Sequence
-
-    from randovania.game_description.game_database_view import ResourceDatabaseView
-    from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
-
 # ruff: noqa: UP046
 
 if typing.TYPE_CHECKING:
+    from randovania._native_helper import Deque as deque
     from randovania._native_helper import Vector as vector
     from randovania._native_helper import popcount
 
 elif cython.compiled:
+    from cython.cimports.cpython.ref import PyObject
     from cython.cimports.libcpp.bit import popcount
+    from cython.cimports.libcpp.deque import deque
     from cython.cimports.libcpp.vector import vector
 else:
+    from randovania._native_helper import Deque as deque
     from randovania._native_helper import Vector as vector
 
 if cython.compiled:
 
+    @cython.final
     @cython.cclass
     class Bitmask:
         _masks = cython.declare(vector[cython.ulonglong], visibility="public")
@@ -94,6 +105,7 @@ if cython.compiled:
                         self._masks.pop_back()
 
         @cython.ccall
+        @cython.inline
         def is_set(self, index: cython.longlong) -> cython.bint:
             one: cython.ulonglong = 1
 
@@ -246,8 +258,10 @@ else:
             return self.__class__(self._mask)
 
     Bitmask = BitmaskInt  # type: ignore[assignment, misc]
+    PyObject = object
 
 
+@cython.final
 @cython.cclass
 class ResourceCollection:
     resource_bitmask = cython.declare(Bitmask, visibility="public")
@@ -289,7 +303,7 @@ class ResourceCollection:
 
     @cython.ccall
     def get(self, item: ResourceInfo) -> cython.int:
-        resource_index: cython.int = item.resource_index
+        resource_index: cython.size_t = item.resource_index
         if resource_index < self._resource_array.size():
             return self._resource_array[resource_index]
         else:
@@ -313,9 +327,12 @@ class ResourceCollection:
         return len(self._existing_resources)
 
     @cython.ccall
+    @cython.inline
     def has_resource(self, resource: ResourceInfo) -> cython.bint:
         return self.get(resource) > 0
 
+    @cython.ccall
+    @cython.inline
     def is_resource_set(self, resource: ResourceInfo) -> cython.bint:
         """
         Checks if the given resource has a value explicitly set, instead of using the fallback of 0.
@@ -329,7 +346,7 @@ class ResourceCollection:
         This method should be used in exceptional cases only. For common usage, use `add_resource_gain`.
         """
         quantity = max(quantity, 0)
-        resource_index: cython.int = resource.resource_index
+        resource_index: cython.size_t = resource.resource_index
         self._damage_reduction_cache = None
         if self._resource_array.size() <= resource_index:
             self._resize_array_to_fit(resource_index + 1)
@@ -354,23 +371,31 @@ class ResourceCollection:
         return result
 
     @cython.locals(resource=object, quantity=cython.int)
-    def add_resource_gain(self, resource_gain: ResourceGain) -> None:
+    @cython.ccall
+    def add_resource(self, resource: ResourceInfo, quantity: cython.int) -> None:
         self._damage_reduction_cache = None
+
+        resource_index: cython.size_t = resource.resource_index
+        if self._resource_array.size() <= resource_index:
+            self._resize_array_to_fit(resource_index + 1)
+
+        new_amount: cython.int = self._resource_array[resource_index] + quantity
+        if new_amount < 0:
+            new_amount = 0
+        self._resource_array[resource_index] = new_amount
+        self._existing_resources[resource_index] = resource
+
+        if new_amount > 0:
+            self.resource_bitmask.set_bit(resource_index)
+        else:
+            self.resource_bitmask.unset_bit(resource_index)
+
+    @cython.locals(resource=object, quantity=cython.int)
+    @cython.ccall
+    @cython.inline
+    def add_resource_gain(self, resource_gain: ResourceGain) -> None:
         for resource, quantity in resource_gain:
-            resource_index: cython.size_t = resource.resource_index
-            if self._resource_array.size() <= resource_index:
-                self._resize_array_to_fit(resource_index + 1)
-
-            new_amount: cython.int = self._resource_array[resource_index] + quantity
-            if new_amount < 0:
-                new_amount = 0
-            self._resource_array[resource_index] = new_amount
-            self._existing_resources[resource_index] = resource
-
-            if new_amount > 0:
-                self.resource_bitmask.set_bit(resource_index)
-            else:
-                self.resource_bitmask.unset_bit(resource_index)
+            self.add_resource(resource, quantity)
 
     def as_resource_gain(self) -> ResourceGain:
         for index, resource in self._existing_resources.items():
@@ -381,7 +406,7 @@ class ResourceCollection:
         Removes the given resource, making `is_resource_set` return False for it.
         This should be used in exceptional cases only. Consider `add_resource_gain` with negative gain instead.
         """
-        resource_index: cython.int = resource.resource_index
+        resource_index: cython.size_t = resource.resource_index
         self._existing_resources.pop(resource_index, None)
 
         if resource_index < self._resource_array.size():
@@ -431,6 +456,7 @@ def _downgrade_progressive_item(
     return progressive_chain[progressive_chain.index(item_resource) - 1]
 
 
+@cython.final
 @cython.cclass
 class GraphRequirementList:
     """
@@ -493,19 +519,27 @@ class GraphRequirementList:
             )
         )
 
+    @cython.ccall
+    @cython.inline
     def is_frozen(self) -> cython.bint:
         """Returns True if `freeze` was previously called."""
         return self._frozen
 
+    @cython.ccall
+    @cython.inline
     def freeze(self) -> None:
         """Prevents any further modifications to this GraphRequirementList. Copies won't be frozen."""
         self._frozen = True
 
+    @cython.ccall
+    @cython.inline
     def _check_can_write(self) -> None:
         if self._frozen:
             raise RuntimeError("Cannot modify a frozen GraphRequirementList")
 
-    def complexity_key_for_simplify(self: GraphRequirementList) -> tuple[int, int, int]:
+    @cython.cfunc
+    @cython.inline
+    def _complexity_key_for_simplify(self) -> tuple[int, int, int]:
         """
         A value that indicates how "complex" this requirement is. Used for sorting the alternatives in
         GraphRequirementSet.optimize_alternatives
@@ -543,11 +577,13 @@ class GraphRequirementList:
             return "Trivial"
 
     @cython.ccall
+    @cython.inline
     def num_requirements(self) -> cython.int:
         """Returns the total number of resource requirements in this list."""
         return self._set_bitmask.num_set_bits() + self._negate_bitmask.num_set_bits() + len(self._damage_resources)
 
     @cython.ccall
+    @cython.inline
     def all_resources(self, *, include_damage: cython.bint = True) -> set[ResourceInfo]:
         """Returns a set of all resources involved in this requirement."""
         result = set(self._set_resources)
@@ -556,6 +592,7 @@ class GraphRequirementList:
             result.update(self._damage_resources)
         return result
 
+    @cython.final
     @cython.ccall
     def get_requirement_for(
         self, resource: ResourceInfo, include_damage: cython.bint = True
@@ -582,6 +619,7 @@ class GraphRequirementList:
         return 0, False
 
     @cython.locals(amount=cython.int, other=object, resource_index=cython.int, health=cython.float)
+    @cython.final
     @cython.ccall
     # @cython.exceptval(check=False)
     def satisfied(self, resources: ResourceCollection, health: cython.float) -> cython.bint:
@@ -764,6 +802,7 @@ class GraphRequirementList:
         if amount > 1:
             self._other_resources[resource] = max(self._other_resources.get(resource, 0), amount)
 
+    @cython.final
     @cython.ccall
     def isolate_damage_requirements(self, resources: ResourceCollection) -> GraphRequirementList | None:
         """
@@ -795,6 +834,7 @@ class GraphRequirementList:
 
         return result
 
+    @cython.final
     @cython.ccall
     def is_requirement_superset(self, subset_req: GraphRequirementList) -> cython.bint:
         """Check if self is a strict superset of subset_req.
@@ -822,6 +862,7 @@ class GraphRequirementList:
         # Remove duplicates
         return True
 
+    @cython.final
     @cython.ccall
     def simplify_requirement_list(
         self,
@@ -869,6 +910,7 @@ class GraphRequirementList:
 
         return result
 
+    @cython.final
     @cython.ccall
     def _single_resource_optimize_logic(self, single_req_mask: Bitmask) -> cython.int:
         """
@@ -891,6 +933,7 @@ class GraphRequirementList:
             return 2
 
 
+@cython.final
 @cython.cclass
 class GraphRequirementSet:
     """
@@ -924,36 +967,47 @@ class GraphRequirementSet:
     def equals_to(self, other: GraphRequirementSet) -> cython.bint:
         return self._alternatives == other._alternatives
 
+    @cython.inline
+    @cython.ccall
     def is_frozen(self) -> cython.bint:
         """Returns True if `freeze` was previously called."""
         return self._frozen
 
+    @cython.inline
+    @cython.ccall
     def freeze(self) -> None:
         """Prevents any further modifications to this GraphRequirementSet and any nested GraphRequirementList."""
         self._frozen = True
         for it in self._alternatives:
             it.freeze()
 
+    @cython.inline
+    @cython.ccall
     def _check_can_write(self) -> None:
         if self._frozen:
             raise RuntimeError("Cannot modify a frozen GraphRequirementSet")
 
     @property
-    def alternatives(self) -> Sequence[GraphRequirementList]:
+    def alternatives(self) -> tuple[GraphRequirementList, ...]:
         return tuple(self._alternatives)
 
+    @cython.ccall
+    @cython.inline
     def add_alternative(self, alternative: GraphRequirementList) -> None:
         self._check_can_write()
         self._alternatives.append(alternative)
 
+    @cython.ccall
+    @cython.inline
     def extend_alternatives(self, alternatives: Iterable[GraphRequirementList]) -> None:
         self._check_can_write()
         self._alternatives.extend(alternatives)
 
     @cython.locals(idx=cython.int, alt=GraphRequirementList)
+    @cython.final
     @cython.ccall
     # @cython.exceptval(check=False)
-    def satisfied(self, resources: ResourceCollection, energy: cython.int) -> cython.bint:
+    def satisfied(self, resources: ResourceCollection, energy: cython.float) -> cython.bint:
         """Checks if the given resources and health satisfies at least one alternative."""
         alternatives: list[GraphRequirementList] = self._alternatives
 
@@ -965,6 +1019,7 @@ class GraphRequirementSet:
         return False
 
     @cython.locals(idx=cython.int, alt=GraphRequirementList, new_dmg=cython.float, damage=cython.float)
+    @cython.final
     @cython.ccall
     # @cython.exceptval(check=False)
     def damage(self, resources: ResourceCollection) -> cython.float:
@@ -1039,6 +1094,7 @@ class GraphRequirementSet:
                 result._alternatives.append(new_entry)
         return result
 
+    @cython.ccall
     def optimize_alternatives(self: GraphRequirementSet) -> None:
         """Remove redundant alternatives that are supersets of other alternatives."""
 
@@ -1053,7 +1109,7 @@ class GraphRequirementSet:
                 return
 
         # Sort by "complexity" - simpler requirements first (fewer total constraints)
-        sorted_alternatives = sorted(self._alternatives, key=GraphRequirementList.complexity_key_for_simplify)
+        sorted_alternatives = sorted(self._alternatives, key=GraphRequirementList._complexity_key_for_simplify)
 
         result: list[GraphRequirementList] = []
 
@@ -1066,7 +1122,11 @@ class GraphRequirementSet:
             elif case == 1:
                 is_superset = False
             else:
-                is_superset = any(current.is_requirement_superset(existing) for existing in result)
+                is_superset = False
+                for existing in result:
+                    if current.is_requirement_superset(existing):
+                        is_superset = True
+                        break
 
             if not is_superset:
                 # Also need to remove any existing requirements that current makes obsolete
@@ -1098,6 +1158,7 @@ class GraphRequirementSet:
         r.freeze()
         return r
 
+    @cython.ccall
     def is_trivial(self) -> cython.bint:
         return self == GraphRequirementSet.trivial()
 
@@ -1112,6 +1173,7 @@ class GraphRequirementSet:
         r.freeze()
         return r
 
+    @cython.ccall
     def is_impossible(self) -> cython.bint:
         return self == GraphRequirementSet.impossible()
 
@@ -1144,3 +1206,436 @@ class GraphRequirementSet:
                     result._alternatives.append(isolated)
 
         return result
+
+
+class ProcessNodesResponse(typing.NamedTuple):
+    reach_nodes: dict[int, DamageState]
+    requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]]
+    path_to_node: dict[int, list[int]]
+
+
+@cython.ccall
+def _combine_damage_requirements(
+    damage: float,
+    requirement: GraphRequirementSet,
+    satisfied_requirement: tuple[GraphRequirementSet, bool],
+    resources: ResourceCollection,
+) -> tuple[GraphRequirementSet, bool]:
+    """
+    Helper function combining damage requirements from requirement and satisfied_requirement. Other requirements are
+    considered either trivial or impossible.
+    :param damage:
+    :param requirement:
+    :param satisfied_requirement:
+    :param resources:
+    :return: The combined requirement and a boolean, indicating if the requirement may have non-damage components.
+    """
+    if damage == 0:
+        # If we took no damage here, then one of the following is true:
+        # - There's no damage requirement in this edge
+        # - Our resources allows for alternatives with no damage requirement
+        # - Our resources grants immunity to the damage resources
+        # In all of these cases, we can verify that assumption with the following assertion
+        # assert requirement.isolate_damage_requirements(context) == Requirement.trivial()
+        #
+        return satisfied_requirement
+
+    isolated_requirement = requirement.isolate_damage_requirements(resources)
+    isolated_satisfied = (
+        satisfied_requirement[0].isolate_damage_requirements(resources)
+        if satisfied_requirement[1]
+        else satisfied_requirement[0]
+    )
+
+    if isolated_requirement == GraphRequirementSet.trivial():
+        result = isolated_satisfied
+    elif isolated_satisfied == GraphRequirementSet.trivial():
+        result = isolated_requirement
+    else:
+        result = isolated_requirement.copy_then_and_with_set(isolated_satisfied)
+
+    return result, False
+
+
+@cython.cfunc
+def _generic_is_damage_state_strictly_better(
+    game_state: DamageState,
+    target_node_index: cython.int,
+    checked_nodes: cython.pointer[vector[cython.p_void]],
+    nodes_to_check: dict[int, DamageState],
+) -> cython.bint:
+    # a >= b -> !(b > a)
+    checked_target: cython.p_void = checked_nodes[0][target_node_index]
+    if checked_target != cython.NULL:
+        if not game_state.is_better_than(cython.cast(object, checked_target)):  # type: ignore[arg-type]
+            return False
+
+    queued_target = nodes_to_check.get(target_node_index)
+    if queued_target is not None:
+        if not game_state.is_better_than(queued_target):
+            return False
+
+    return True
+
+
+@cython.cfunc
+def _energy_is_damage_state_strictly_better(
+    damage_health: cython.float,
+    target_node_index: cython.int,
+    checked_nodes: cython.pointer[vector[cython.p_void]],
+    nodes_to_check: dict[int, DamageState],
+) -> cython.bint:
+    # a >= b -> !(b > a)
+    checked_target: cython.p_void = checked_nodes[0][target_node_index]
+    if checked_target != cython.NULL:
+        target_health: cython.float = cython.cast(object, checked_target)._energy  # type: ignore[attr-defined]
+        if damage_health <= target_health:
+            return False
+
+    queued_target = nodes_to_check.get(target_node_index)
+    if queued_target is not None:
+        if damage_health <= queued_target._energy:  # type: ignore[attr-defined]
+            return False
+
+    return True
+
+
+def resolver_reach_process_nodes(
+    logic: Logic,
+    initial_state: State,
+    nodes_to_check: dict[int, DamageState],
+) -> ProcessNodesResponse:
+    all_nodes: Sequence[WorldGraphNode] = logic.all_nodes
+    resources: ResourceCollection = initial_state.resources
+    resource_bitmask: Bitmask = resources.resource_bitmask
+    additional_requirements_list: list[GraphRequirementSet] = logic.additional_requirements
+
+    record_paths: cython.bint = logic.record_paths
+    initial_node_index: cython.int = initial_state.node.node_index
+
+    checked_nodes: vector[cython.p_void] = vector[cython.p_void]()
+    checked_nodes.resize(len(all_nodes), cython.NULL)
+
+    satisfied_requirement_on_node: dict[int, tuple[GraphRequirementSet, bool]] = {
+        initial_node_index: (GraphRequirementSet.trivial(), False)
+    }
+
+    reach_nodes: dict[int, DamageState] = {}
+    requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]] = {}
+    path_to_node: dict[int, list[int]] = {
+        initial_node_index: [],
+    }
+
+    # Fast path detection for EnergyTankDamageState
+    first_state: EnergyTankDamageState = next(iter(nodes_to_check.values()))  # type: ignore[assignment]
+    use_energy_fast_path: cython.bint = hasattr(first_state, "_energy")
+    fast_path_maximum_energy: cython.int = 0
+    if use_energy_fast_path:
+        fast_path_maximum_energy = first_state._maximum_energy(resources)
+
+    while nodes_to_check:
+        node_index: cython.int = next(iter(nodes_to_check))
+        node: WorldGraphNode = all_nodes[node_index]
+        game_state: EnergyTankDamageState = nodes_to_check.pop(node_index)  # type: ignore[assignment]
+        damage_health: cython.float
+
+        if node.heal:
+            if use_energy_fast_path:
+                damage_health = fast_path_maximum_energy
+                if game_state._energy != fast_path_maximum_energy:
+                    game_state = game_state._duplicate()
+                    game_state._energy = fast_path_maximum_energy
+            else:
+                game_state = game_state.apply_node_heal(node, resources)
+                damage_health = game_state.health_for_damage_requirements()
+        else:
+            if use_energy_fast_path:
+                damage_health = game_state._energy
+            else:
+                damage_health = game_state.health_for_damage_requirements()
+
+        reach_nodes[node_index] = game_state
+        checked_nodes[node_index] = cython.cast(cython.p_void, game_state) if cython.compiled else game_state  # type: ignore[assignment]
+
+        can_leave_node: cython.bint = True
+        if node.require_collected_to_leave:
+            resource_gain_bitmask: Bitmask = node.resource_gain_bitmask
+            can_leave_node = resource_gain_bitmask.is_subset_of(resource_bitmask)
+
+        node_connections: list[WorldGraphNodeConnection] = node.connections
+        for connection in node_connections:
+            target_node_index: cython.int = connection[0]
+            requirement: GraphRequirementSet = connection[1]
+
+            if use_energy_fast_path:
+                if not _energy_is_damage_state_strictly_better(
+                    damage_health,
+                    target_node_index,
+                    cython.address(checked_nodes) if cython.compiled else [checked_nodes],
+                    nodes_to_check,
+                ):
+                    continue
+            else:
+                if not _generic_is_damage_state_strictly_better(
+                    game_state,
+                    target_node_index,
+                    cython.address(checked_nodes) if cython.compiled else [checked_nodes],
+                    nodes_to_check,
+                ):
+                    continue
+
+            satisfied: cython.bint = can_leave_node
+
+            if satisfied:
+                # Check if the normal requirements to reach that node is satisfied
+                satisfied = requirement.satisfied(resources, damage_health)
+                if satisfied:
+                    # If it is, check if we additional requirements figured out by backtracking is satisfied
+                    satisfied = additional_requirements_list[node_index].satisfied(resources, damage_health)
+
+            if satisfied:
+                damage: cython.float = requirement.damage(resources)
+                if damage <= 0:
+                    nodes_to_check[target_node_index] = game_state
+                elif use_energy_fast_path:
+                    new_damage_state = game_state._duplicate()
+                    new_damage_state._energy -= int(damage)
+                    nodes_to_check[target_node_index] = new_damage_state
+                else:
+                    nodes_to_check[target_node_index] = game_state.apply_damage(damage)
+
+                if node.heal:
+                    satisfied_requirement_on_node[target_node_index] = (requirement, True)
+                else:
+                    satisfied_requirement_on_node[target_node_index] = _combine_damage_requirements(
+                        damage,
+                        requirement,
+                        satisfied_requirement_on_node[node.node_index],
+                        resources,
+                    )
+                if record_paths:
+                    path_to_node[target_node_index] = list(path_to_node[node_index])
+                    path_to_node[target_node_index].append(node_index)
+
+            else:
+                # If we can't go to this node, store the reason in order to build the satisfiable requirements.
+                # Note we ignore the 'additional requirements' here because it'll be added on the end.
+                if not connection.requirement_without_leaving.satisfied(resources, damage_health):
+                    if target_node_index not in requirements_excluding_leaving_by_node:
+                        requirements_excluding_leaving_by_node[target_node_index] = []
+
+                    requirements_excluding_leaving_by_node[target_node_index].append(
+                        (
+                            connection.requirement_without_leaving,
+                            satisfied_requirement_on_node[node.node_index][0],
+                        )
+                    )
+
+    reach_nodes.pop(initial_node_index, None)
+
+    return ProcessNodesResponse(
+        reach_nodes=reach_nodes,
+        requirements_excluding_leaving_by_node=requirements_excluding_leaving_by_node,
+        path_to_node=path_to_node,
+    )
+
+
+@cython.locals(node_index=cython.int, a=GraphRequirementList, b=GraphRequirementList)
+@cython.ccall
+def build_satisfiable_requirements(
+    logic: Logic,
+    requirements_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]],
+) -> frozenset[GraphRequirementList]:
+    data: list[GraphRequirementList] = []
+
+    additional_requirements_list: list[GraphRequirementSet] = logic.additional_requirements
+
+    for node_index, reqs in requirements_by_node.items():
+        set_param: set[GraphRequirementList] = set()
+
+        for req_a, req_b in reqs:
+            for alt in itertools.product(req_a.alternatives, req_b.alternatives):
+                new_alt = alt[0].copy_then_and_with(alt[1])
+                if new_alt is not None:
+                    set_param.add(new_alt)
+
+        additional_alts: tuple[GraphRequirementList, ...] = additional_requirements_list[node_index].alternatives
+        for a in set_param:
+            for b in additional_alts:
+                new_list = a.copy_then_and_with(b)
+                if new_list is not None:
+                    data.append(new_list)
+
+    return frozenset(data)
+
+
+class _NativeGraphPathDef(typing.NamedTuple):
+    previous_node: cython.int
+    node: cython.int
+    requirement: GraphRequirementSet | cython.pointer[PyObject]
+
+
+if cython.compiled:
+    _NativeGraphPath = cython.struct(
+        previous_node=cython.int,
+        node=cython.int,
+        requirement=cython.pointer[PyObject],
+    )
+
+    @cython.cfunc
+    def _get_requirement_from_path(path: _NativeGraphPath) -> GraphRequirementSet:  # type: ignore[valid-type]
+        return cython.cast(GraphRequirementSet, path.requirement)  # type: ignore[attr-defined]
+
+else:
+    _NativeGraphPath = _NativeGraphPathDef
+
+    def _get_requirement_from_path(path: _NativeGraphPathDef) -> GraphRequirementSet:
+        return path.requirement  # type: ignore[return-value]
+
+
+def generator_reach_expand_graph(
+    state: State,
+    world_graph: WorldGraph,
+    digraph: RustworkXGraph,
+    unreachable_paths: dict[tuple[int, int], GraphRequirementSet],
+    uncollectable_nodes: dict[int, GraphRequirementSet],
+    *,
+    for_initial_state: cython.bint,
+    possible_edges: set[tuple[cython.int, cython.int]],
+) -> None:
+    # print("!! _expand_graph", len(paths_to_check))
+
+    health: cython.float = state.health_for_damage_requirements
+    resources = state.resources
+    all_nodes = world_graph.nodes
+
+    paths_to_check: deque[_NativeGraphPath] = deque[_NativeGraphPath]()  # type: ignore[valid-type]
+    resource_nodes_to_check: set[cython.int] = set()
+
+    previous_node: cython.int
+    requirement: GraphRequirementSet
+
+    if for_initial_state:
+        requirement = GraphRequirementSet.trivial()
+        paths_to_check.push_back(
+            _NativeGraphPath(
+                -1,
+                state.node.node_index,
+                cython.cast(cython.pointer[PyObject], requirement) if cython.compiled else requirement,
+            )
+        )
+
+    # Check if we can expand the corners of our graph
+    for edge in possible_edges:
+        edge_requirement = unreachable_paths.get(edge)
+        if edge_requirement is not None and edge_requirement.satisfied(resources, health):
+            paths_to_check.push_back(
+                _NativeGraphPath(
+                    edge[0],
+                    edge[1],
+                    cython.cast(cython.pointer[PyObject], edge_requirement) if cython.compiled else edge_requirement,
+                )
+            )
+            del unreachable_paths[edge]
+
+    while not paths_to_check.empty():
+        path = paths_to_check[0]
+        paths_to_check.pop_front()
+
+        previous_node = path.previous_node  # type: ignore[attr-defined]
+        current_node_index: cython.int = path.node  # type: ignore[attr-defined]
+
+        if previous_node >= 0 and digraph.has_edge(previous_node, current_node_index):
+            continue
+
+        digraph.add_node(current_node_index)
+        if previous_node >= 0:
+            digraph.add_edge(previous_node, current_node_index, data=_get_requirement_from_path(path))
+
+        node: WorldGraphNode = all_nodes[current_node_index]
+        if node.has_resources:
+            resource_nodes_to_check.add(current_node_index)
+
+        for connection in node.connections:
+            target_node_index: cython.int = connection.target
+            requirement = connection.requirement_with_self_dangerous
+
+            if digraph.graph.has_edge(current_node_index, target_node_index):
+                continue
+
+            if requirement.satisfied(resources, health):
+                # print("* Queue path to", target_node.full_name())
+                paths_to_check.push_back(
+                    _NativeGraphPath(
+                        current_node_index,
+                        target_node_index,
+                        cython.cast(cython.pointer[PyObject], requirement) if cython.compiled else requirement,
+                    )
+                )
+            else:
+                unreachable_paths[current_node_index, target_node_index] = requirement
+        # print("> done")
+
+    for node_index in sorted(resource_nodes_to_check):
+        requirement = all_nodes[node_index].requirement_to_collect
+        if not requirement.satisfied(resources, health):
+            uncollectable_nodes[node_index] = requirement
+
+
+def generator_reach_find_strongly_connected_components_for(
+    digraph: RustworkXGraph,
+    node_index: cython.int,
+) -> Sequence[int]:
+    """Finds the strongly connected component with the given node"""
+    all_components = digraph.strongly_connected_components()
+    idx: cython.int
+    for idx in range(len(all_components)):
+        if node_index in all_components[idx]:
+            return all_components[idx]
+    raise RuntimeError("node_index not found in strongly_connected_components")
+
+
+def generator_reach_calculate_reachable_costs(
+    digraph: RustworkXGraph,
+    world_graph: WorldGraph,
+    state: State,
+) -> Mapping[int, float]:
+    """Calculate the reachable costs for GeneratorReach."""
+    resources: ResourceCollection = state.resources
+    nodes: list[WorldGraphNode] = world_graph.nodes
+
+    is_collected: vector[cython.int] = vector[cython.int]()
+    is_collected.resize(len(nodes), 2)
+
+    def weight(data: tuple[int, int, GraphData]) -> int:
+        node_index: cython.int = data[1]
+        result: cython.int = is_collected[node_index]
+        if result == 2:
+            result = not nodes[node_index].resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
+            is_collected[node_index] = result
+
+        return result
+
+    return digraph.shortest_paths_dijkstra(
+        state.node.node_index,
+        weight=weight,
+    )
+
+
+def state_collect_resource_node(
+    node: WorldGraphNode, resources: ResourceCollection, health: cython.float
+) -> tuple[ResourceCollection, list[ResourceInfo]]:
+    """
+    Creates the new ResourceCollection and finds the modified resources, for State.collect_resource_node
+    """
+    modified_resources: list[ResourceInfo] = []
+    new_resources = resources.duplicate()
+
+    if not (not node.has_all_resources(resources) and node.requirement_to_collect.satisfied(resources, health)):
+        raise ValueError(f"Trying to collect an uncollectable node'{node}'")
+
+    for resource, quantity in node.resource_gain_on_collect(resources):
+        new_resources.add_resource(resource, quantity)
+        modified_resources.append(resource)
+
+    return new_resources, modified_resources

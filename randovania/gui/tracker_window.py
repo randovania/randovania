@@ -403,6 +403,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             self.graph_map_region_combo.currentData(),
             self.state_for_current_configuration(),
             nodes_in_reach,
+            self.graph,
         )
 
     def on_graph_map_region_combo(self) -> None:

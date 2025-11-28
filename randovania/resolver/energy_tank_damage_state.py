@@ -79,11 +79,11 @@ class EnergyTankDamageState(DamageState):
         return self._energy > other._energy  # type: ignore[attr-defined]
 
     @override
-    def apply_damage(self, damage: int) -> Self:
+    def apply_damage(self, damage: float) -> Self:
         if damage <= 0:
             return self
         result = self._duplicate()
-        result._energy -= damage
+        result._energy -= int(damage)
         return result
 
     @override
