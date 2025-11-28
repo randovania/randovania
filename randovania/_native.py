@@ -93,7 +93,7 @@ if cython.compiled:
             return hash(result)
 
         @cython.ccall
-        def set_bit(self, index: cython.longlong) -> None:
+        def set_bit(self, index: cython.longlong) -> cython.void:
             one: cython.ulonglong = 1
 
             arr_idx: cython.size_t = index >> 6
@@ -105,7 +105,7 @@ if cython.compiled:
             self._masks[arr_idx] |= one << bit_idx
 
         @cython.ccall
-        def unset_bit(self, index: cython.longlong) -> None:
+        def unset_bit(self, index: cython.longlong) -> cython.void:
             one: cython.ulonglong = 1
 
             arr_idx: cython.size_t = index >> 6
@@ -132,7 +132,7 @@ if cython.compiled:
                 return False
 
         @cython.ccall
-        def union(self, other: Bitmask) -> None:
+        def union(self, other: Bitmask) -> cython.void:
             """For every bit set in other, also set in self"""
             idx: cython.size_t
             last_shared: cython.size_t = min(self._masks.size(), other._masks.size())
@@ -302,7 +302,7 @@ class ResourceCollection:
         return result
 
     @cython.ccall
-    def _resize_array_to_fit(self, size: cython.size_t) -> None:
+    def _resize_array_to_fit(self, size: cython.size_t) -> cython.void:
         target_size: cython.size_t = self._resource_array.size()
         if target_size < 10:
             target_size = 10
@@ -356,7 +356,7 @@ class ResourceCollection:
         """
         return resource.resource_index in self._existing_resources
 
-    def set_resource(self, resource: ResourceInfo, quantity: cython.int) -> None:
+    def set_resource(self, resource: ResourceInfo, quantity: cython.int) -> cython.void:
         """Sets the quantity of the given resource to be exactly the given value.
         This method should be used in exceptional cases only. For common usage, use `add_resource_gain`.
         """
@@ -387,7 +387,7 @@ class ResourceCollection:
 
     @cython.locals(resource=object, quantity=cython.int)
     @cython.ccall
-    def add_resource(self, resource: ResourceInfo, quantity: cython.int) -> None:
+    def add_resource(self, resource: ResourceInfo, quantity: cython.int) -> cython.void:
         self._damage_reduction_cache = None
 
         resource_index: cython.size_t = resource.resource_index
@@ -408,7 +408,7 @@ class ResourceCollection:
     @cython.locals(resource=object, quantity=cython.int)
     @cython.ccall
     @cython.inline
-    def add_resource_gain(self, resource_gain: ResourceGain) -> None:
+    def add_resource_gain(self, resource_gain: ResourceGain) -> cython.void:
         for resource, quantity in resource_gain:
             self.add_resource(resource, quantity)
 
@@ -416,7 +416,7 @@ class ResourceCollection:
         for index, resource in self._existing_resources.items():
             yield resource, self._resource_array[index]
 
-    def remove_resource(self, resource: ResourceInfo) -> None:
+    def remove_resource(self, resource: ResourceInfo) -> cython.void:
         """
         Removes the given resource, making `is_resource_set` return False for it.
         This should be used in exceptional cases only. Consider `add_resource_gain` with negative gain instead.
@@ -542,13 +542,13 @@ class GraphRequirementList:
 
     @cython.ccall
     @cython.inline
-    def freeze(self) -> None:
+    def freeze(self) -> cython.void:
         """Prevents any further modifications to this GraphRequirementList. Copies won't be frozen."""
         self._frozen = True
 
     @cython.cfunc
     @cython.inline
-    def _check_can_write(self) -> None:
+    def _check_can_write(self) -> cython.void:
         if self._frozen:
             raise RuntimeError("Cannot modify a frozen GraphRequirementList")
 
@@ -780,7 +780,7 @@ class GraphRequirementList:
         return result
 
     @cython.ccall
-    def add_resource(self, resource: ResourceInfo, amount: cython.int, negate: cython.bint) -> None:
+    def add_resource(self, resource: ResourceInfo, amount: cython.int, negate: cython.bint) -> cython.void:
         """
         Adds a new resource requirement to this.
         If negate is set, amount must be 1.
@@ -788,13 +788,13 @@ class GraphRequirementList:
         self._check_can_write()
 
         if amount == 0:
-            return
+            return  # type: ignore[return-value]
 
         assert not negate or amount == 1
 
         if resource.resource_type.is_damage():
             self._damage_resources[resource] = self._damage_resources.get(resource, 0) + amount
-            return
+            return  # type: ignore[return-value]
 
         resource_index: cython.int = resource.resource_index
 
@@ -995,7 +995,7 @@ class GraphRequirementSet:
 
     @cython.inline
     @cython.cfunc
-    def _check_can_write(self) -> None:
+    def _check_can_write(self) -> cython.void:
         if self._frozen:
             raise RuntimeError("Cannot modify a frozen GraphRequirementSet")
 
@@ -1010,13 +1010,13 @@ class GraphRequirementSet:
 
     @cython.ccall
     @cython.inline
-    def add_alternative(self, alternative: GraphRequirementList) -> None:
+    def add_alternative(self, alternative: GraphRequirementList) -> cython.void:
         self._check_can_write()
         self._alternatives.append(alternative)
 
     @cython.ccall
     @cython.inline
-    def extend_alternatives(self, alternatives: Iterable[GraphRequirementList]) -> None:
+    def extend_alternatives(self, alternatives: Iterable[GraphRequirementList]) -> cython.void:
         self._check_can_write()
         self._alternatives.extend(alternatives)
 
@@ -1056,7 +1056,7 @@ class GraphRequirementSet:
         return damage
 
     @cython.ccall
-    def all_alternative_and_with(self, merge: GraphRequirementList) -> None:
+    def all_alternative_and_with(self, merge: GraphRequirementList) -> cython.void:
         """
         Calls `and_with` for every alternative.
         If `and_with` returns False, that alternative is removed.
@@ -1113,18 +1113,18 @@ class GraphRequirementSet:
         return result
 
     @cython.ccall
-    def optimize_alternatives(self: GraphRequirementSet) -> None:
+    def optimize_alternatives(self: GraphRequirementSet) -> cython.void:
         """Remove redundant alternatives that are supersets of other alternatives."""
 
         self._check_can_write()
         if len(self._alternatives) <= 1:
-            return
+            return  # type: ignore[return-value]
 
         for alt in self._alternatives:
             if alt.num_requirements() == 0:
                 # Trivial requirement - everything else is redundant
                 self._alternatives = [alt]
-                return
+                return  # type: ignore[return-value]
 
         # Sort by "complexity" - simpler requirements first (fewer total constraints)
         sorted_alternatives = sorted(self._alternatives, key=GraphRequirementList._complexity_key_for_simplify)
