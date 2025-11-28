@@ -84,7 +84,7 @@ class GraphRequirementConverter:
             return self._internal_convert(requirement.items[0])
 
         nested_or: list[GraphRequirementSet] = []
-        nested_and = GraphRequirementList()
+        nested_and = GraphRequirementList(self.resource_database)
 
         for item in requirement.items:
             converted = self._internal_convert(item)
@@ -139,12 +139,12 @@ class GraphRequirementConverter:
                 if resource.resource_type.is_damage():
                     amount = int(amount * self.damage_multiplier)
 
-            result = GraphRequirementList()
+            result = GraphRequirementList(self.resource_database)
             result.add_resource(resource, amount, negate)
 
             if self.static_resources.is_resource_set(resource):
                 if result.satisfied(self.static_resources, 0):
-                    return GraphRequirementList()
+                    return GraphRequirementList(self.resource_database)
                 elif not isinstance(resource, ItemResourceInfo) or resource.max_capacity <= 1:
                     return GraphRequirementSet.impossible()
 

@@ -497,9 +497,10 @@ class GraphRequirementList:
     _set_resources: vector[ResourceInfoRef]
     _negate_resources: vector[ResourceInfoRef]
 
+    _resource_db: ResourceDatabaseView
     _frozen: cython.bint
 
-    def __init__(self) -> None:
+    def __init__(self, resource_db: ResourceDatabaseView) -> None:
         self._set_bitmask = Bitmask.create()
         self._negate_bitmask = Bitmask.create()
         self._other_resources: dict[ResourceInfo, cython.int] = {}
@@ -508,11 +509,13 @@ class GraphRequirementList:
         self._set_resources = vector[ResourceInfoRef]()
         self._negate_resources = vector[ResourceInfoRef]()
 
+        self._resource_db = resource_db
         self._frozen = False
 
     @staticmethod
     @cython.cfunc
     def from_components(
+        resource_db: ResourceDatabaseView,
         set_bitmask: Bitmask,
         negate_bitmask: Bitmask,
         other_resources: dict[ResourceInfo, cython.int],
@@ -528,6 +531,7 @@ class GraphRequirementList:
         result._damage_resources = damage_resources
         result._set_resources = set_resources
         result._negate_resources = negate_resources
+        result._resource_db = resource_db
         result._frozen = False
         return result
 
@@ -592,7 +596,7 @@ class GraphRequirementList:
         )
 
     def __copy__(self) -> GraphRequirementList:
-        result = GraphRequirementList()
+        result = GraphRequirementList(self._resource_db)
         result._set_bitmask = self._set_bitmask.copy()
         result._negate_bitmask = self._negate_bitmask.copy()
         result._other_resources = copy.copy(self._other_resources)
@@ -719,7 +723,6 @@ class GraphRequirementList:
         Modifies this requirement to also check for all the requirements in `merge`.
         Returns False if the combination is impossible to satisfy (mix of set and negate requirements).
         """
-
         self._check_can_write()
 
         # Check if there's any conflict between set and negate requirements
@@ -755,9 +758,13 @@ class GraphRequirementList:
         Copies this requirement and then performs `and_with`, but more efficiently.
         Returns None if the combination is impossible to satisfy (mix of set and negate requirements).
         """
+        db = self._resource_db
+        if db is None:
+            db = right._resource_db
 
         if cython.compiled:
             result = GraphRequirementList.from_components(
+                db,
                 self._set_bitmask.copy(),
                 self._negate_bitmask.copy(),
                 dict(self._other_resources),
@@ -767,6 +774,7 @@ class GraphRequirementList:
             )
         else:
             result = GraphRequirementList.from_components(
+                db,
                 self._set_bitmask.copy(),
                 self._negate_bitmask.copy(),
                 dict(self._other_resources),
@@ -806,7 +814,7 @@ class GraphRequirementList:
     def copy_then_remove_entries_for_set_resources(self, resources: ResourceCollection) -> GraphRequirementList | None:
         from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
-        result = GraphRequirementList()
+        result = GraphRequirementList(self._resource_db)
 
         for resource in self.all_resources(include_damage=False):
             amount, negate = self.get_requirement_for(resource)
@@ -888,11 +896,11 @@ class GraphRequirementList:
             if resources.get(other) < amount:
                 return None
 
-        result = GraphRequirementList()
+        result = GraphRequirementList(self._resource_db)
 
         for other, amount in self._damage_resources.items():
             if resources.get_damage_reduction(other) == 0:
-                return GraphRequirementList()
+                return GraphRequirementList(self._resource_db)
 
             result._damage_resources[other] = amount
 
@@ -953,7 +961,7 @@ class GraphRequirementList:
     ) -> GraphRequirementList | None:
         """Used by resolver.py for `_simplify_additional_requirement_set`"""
 
-        result = GraphRequirementList()
+        result = GraphRequirementList(self._resource_db)
         something_set: cython.bint = False
 
         for ref in self._set_resources:
@@ -1235,7 +1243,7 @@ class GraphRequirementSet:
         A GraphRequirementSet that is always satisfied.
         """
         r = cls()
-        r.add_alternative(GraphRequirementList())
+        r.add_alternative(GraphRequirementList(None))
         r.freeze()
         return r
 

@@ -31,11 +31,13 @@ def test_requirement_lists_without_satisfied_resources(
     echoes_game_description, default_echoes_preset, echoes_game_patches
 ):
     # Setup
+    db = echoes_game_description.resource_database
+
     def item(name):
-        return search.find_resource_info_with_long_name(echoes_game_description.resource_database.item, name)
+        return search.find_resource_info_with_long_name(db.item, name)
 
     state = State(
-        echoes_game_description.resource_database.create_resource_collection(),
+        db.create_resource_collection(),
         {},
         (),
         echoes_game_description.game.generator.bootstrap.create_damage_state(
@@ -44,7 +46,7 @@ def test_requirement_lists_without_satisfied_resources(
         None,  # type: ignore[arg-type]
         echoes_game_patches,
         None,
-        echoes_game_description.resource_database,
+        db,
         echoes_game_description.region_list,
         hint_state=None,
     )
@@ -59,39 +61,44 @@ def test_requirement_lists_without_satisfied_resources(
         create_requirement_set(
             [
                 create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Dark Visor")),
                         ResourceRequirement.create(item("Missile"), 5, False),
                         ResourceRequirement.simple(item("Seeker Launcher")),
-                    ]
+                    ],
                 ),
                 create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Screw Attack")),
                         ResourceRequirement.simple(item("Space Jump Boots")),
-                    ]
+                    ],
                 ),
                 create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Power Bomb")),
                         ResourceRequirement.simple(item("Boost Ball")),
-                    ]
+                    ],
                 ),
             ]
         ),
         create_requirement_set(
             [
                 create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Power Bomb")),
                         ResourceRequirement.simple(item("Boost Ball")),
-                    ]
+                    ],
                 ),
                 create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Spider Ball")),
                         ResourceRequirement.simple(item("Boost Ball")),
-                    ]
+                    ],
                 ),
             ]
         ),

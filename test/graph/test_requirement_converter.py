@@ -132,8 +132,8 @@ def test_convert_2(converter) -> None:
 def test_requirement_as_set_0(converter):
     expected = create_requirement_set(
         [
-            create_requirement_list([_req("A"), _req("B")]),
-            create_requirement_list([_req("A"), _req("C")]),
+            create_requirement_list(converter.resource_database, [_req("A"), _req("B")]),
+            create_requirement_list(converter.resource_database, [_req("A"), _req("C")]),
         ]
     )
     req = RequirementAnd(
@@ -151,10 +151,10 @@ def test_requirement_as_set_0(converter):
 def test_requirement_as_set_1(converter):
     expected = create_requirement_set(
         [
-            create_requirement_list([_req("A"), _req("B"), _req("D")]),
-            create_requirement_list([_req("A"), _req("B"), _req("E")]),
-            create_requirement_list([_req("A"), _req("C"), _req("D")]),
-            create_requirement_list([_req("A"), _req("C"), _req("E")]),
+            create_requirement_list(converter.resource_database, [_req("A"), _req("B"), _req("D")]),
+            create_requirement_list(converter.resource_database, [_req("A"), _req("B"), _req("E")]),
+            create_requirement_list(converter.resource_database, [_req("A"), _req("C"), _req("D")]),
+            create_requirement_list(converter.resource_database, [_req("A"), _req("C"), _req("E")]),
         ]
     )
     req = RequirementAnd(
@@ -172,7 +172,7 @@ def test_requirement_as_set_1(converter):
 def test_requirement_as_set_2(converter):
     expected = create_requirement_set(
         [
-            create_requirement_list([_req("A")]),
+            create_requirement_list(converter.resource_database, [_req("A")]),
         ]
     )
     req = RequirementAnd(
@@ -189,7 +189,7 @@ def test_requirement_as_set_2(converter):
 def test_requirement_as_set_3(converter):
     expected = create_requirement_set(
         [
-            create_requirement_list([_req("A")]),
+            create_requirement_list(converter.resource_database, [_req("A")]),
         ]
     )
     req = RequirementOr(
@@ -206,13 +206,13 @@ def test_requirement_as_set_3(converter):
 def test_requirement_as_set_4(converter):
     expected_bad = create_requirement_set(
         [
-            create_requirement_list([_req("A")]),
-            create_requirement_list([]),
+            create_requirement_list(converter.resource_database, [_req("A")]),
+            create_requirement_list(converter.resource_database, []),
         ]
     )
     expected_opt = create_requirement_set(
         [
-            create_requirement_list([]),
+            create_requirement_list(converter.resource_database, []),
         ]
     )
     req = RequirementOr(
@@ -234,7 +234,7 @@ def test_requirement_as_set_4(converter):
 def test_requirement_as_set_5(converter):
     expected = create_requirement_set(
         [
-            create_requirement_list([_req("A"), _req("B"), _req("C")]),
+            create_requirement_list(converter.resource_database, [_req("A"), _req("B"), _req("C")]),
         ]
     )
     req = RequirementAnd(
@@ -252,8 +252,8 @@ def test_requirement_as_set_5(converter):
 def test_requirement_as_set_6(converter):
     expected = create_requirement_set(
         [
-            create_requirement_list([_req("A"), _req("B"), _req("C")]),
-            create_requirement_list([_req("A"), _req("B"), _req("D"), _req("E")]),
+            create_requirement_list(converter.resource_database, [_req("A"), _req("B"), _req("C")]),
+            create_requirement_list(converter.resource_database, [_req("A"), _req("B"), _req("D"), _req("E")]),
         ]
     )
     req = RequirementAnd(

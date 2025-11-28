@@ -179,9 +179,9 @@ class DockRandoLogic(Logic):
         source_resource = logic.graph.resource_info_for_node(graph_dock)
         target_resource = logic.graph.resource_info_for_node(graph_target)
 
-        source_list = GraphRequirementList()
+        source_list = GraphRequirementList(logic.graph.converter.resource_database)
         source_list.add_resource(source_resource, 1, False)
-        target_list = GraphRequirementList()
+        target_list = GraphRequirementList(logic.graph.converter.resource_database)
         target_list.add_resource(target_resource, 1, False)
         victory_condition = GraphRequirementSet()
         victory_condition.add_alternative(source_list)

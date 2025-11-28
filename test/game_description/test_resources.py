@@ -51,7 +51,7 @@ def test_resources_for_unsatisfied_damage_as_interesting(echoes_resource_databas
     )
 
     interesting_resources = calculate_interesting_resources(
-        frozenset([create_requirement_list([req])]), context, damage_state
+        frozenset([create_requirement_list(db, [req])]), context, damage_state
     )
     d_suit = db.get_item_by_display_name("Dark Suit")
     l_suit = db.get_item_by_display_name("Light Suit")
@@ -84,7 +84,7 @@ def test_resources_for_satisfied_damage_as_interesting(echoes_resource_database)
         [],
     )
     interesting_resources = calculate_interesting_resources(
-        frozenset([create_requirement_list([req])]), context, damage_state
+        frozenset([create_requirement_list(db, [req])]), context, damage_state
     )
     d_suit = db.get_item_by_display_name("Dark Suit")
     l_suit = db.get_item_by_display_name("Light Suit")

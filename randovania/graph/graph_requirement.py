@@ -8,11 +8,14 @@ from randovania._native import GraphRequirementList, GraphRequirementSet
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 
 
-def create_requirement_list(resource_requirements: Sequence[ResourceRequirement]) -> GraphRequirementList:
-    result = GraphRequirementList()
+def create_requirement_list(
+    db: ResourceDatabaseView, resource_requirements: Sequence[ResourceRequirement]
+) -> GraphRequirementList:
+    result = GraphRequirementList(db)
     for it in resource_requirements:
         result.add_resource(it.resource, it.amount, it.negate)
     return result

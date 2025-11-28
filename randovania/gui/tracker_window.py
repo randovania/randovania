@@ -619,7 +619,14 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 WorldGraphNodeConnection(
                     conn.target,
                     conn.requirement_without_leaving.copy_then_and_with_set(
-                        create_requirement_set([create_requirement_list([scan_visor_req, translator_req])])
+                        create_requirement_set(
+                            [
+                                create_requirement_list(
+                                    self.graph.converter.resource_database,
+                                    [scan_visor_req, translator_req],
+                                )
+                            ]
+                        )
                     )
                     if translator_req is not None
                     else GraphRequirementSet.impossible(),

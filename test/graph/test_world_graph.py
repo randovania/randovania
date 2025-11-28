@@ -47,7 +47,12 @@ def test_connections_from_dock_blast_shield(blank_world_graph):
     node_2 = blank_world_graph.node_identifier_to_node[node_2_identifier]
 
     req = create_requirement_set(
-        [create_requirement_list([ResourceRequirement.simple(blank_world_graph.resource_info_for_node(node_2))])]
+        [
+            create_requirement_list(
+                blank_world_graph.converter.resource_database,
+                [ResourceRequirement.simple(blank_world_graph.resource_info_for_node(node_2))],
+            )
+        ]
     )
 
     def get(index):

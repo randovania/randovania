@@ -679,7 +679,7 @@ def graph_precache(graph: WorldGraph) -> None:
             requirement_set = connection.requirement
 
             if node.has_resources:
-                dangerous_extra = GraphRequirementList()
+                dangerous_extra = GraphRequirementList(graph.converter.resource_database)
 
                 for resource, _ in node.resource_gain_on_collect(graph.converter.static_resources):
                     if resource in graph.dangerous_resources:
