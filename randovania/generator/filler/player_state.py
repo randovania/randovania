@@ -8,6 +8,7 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
 from randovania.generator import reach_lib
@@ -180,8 +181,8 @@ class PlayerState:
 
     def victory_condition_satisfied(self) -> bool:
         context = self.reach.state.node_context()
-        return self.graph.victory_condition_as_set(context).satisfied(
-            context, self.reach.state.health_for_damage_requirements
+        return self.graph.victory_condition.satisfied(
+            context.current_resources, self.reach.state.health_for_damage_requirements
         )
 
     def assign_pickup(
@@ -222,13 +223,14 @@ class PlayerState:
         for node_index, requirement in self.reach.unreachable_nodes_with_requirements().items():
             node = nodes_by_index[node_index]
             for alternative in requirement.alternatives:
+                req_list = RequirementList.from_graph_requirement_list(alternative)
                 if any(
                     r.negate
                     or (
                         r.resource.resource_type != ResourceType.ITEM
                         and not r.satisfied(ctx, s.health_for_damage_requirements)
                     )
-                    for r in alternative.values()
+                    for r in req_list.values()
                 ):
                     continue
 
@@ -238,7 +240,7 @@ class PlayerState:
                         " and ".join(
                             sorted(
                                 r.pretty_text
-                                for r in alternative.values()
+                                for r in req_list.values()
                                 if not r.satisfied(ctx, s.health_for_damage_requirements)
                             )
                         ),

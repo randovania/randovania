@@ -300,7 +300,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
         graph = world_graph.create_graph(
             database_view=game,
             patches=patches,
-            resources=static_resources,
+            static_resources=static_resources,
             damage_multiplier=configuration.damage_strictness.value,
             victory_condition=game.victory_condition,
             flatten_to_set_on_patch=game.region_list.flatten_to_set_on_patch,
