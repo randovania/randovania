@@ -2,6 +2,7 @@ import cython
 from cpython.ref cimport PyObject, Py_INCREF, Py_DECREF
 from cython.cimports.libcpp.utility import pair
 from cython.cimports.libcpp.vector import vector
+from cython.cimports.libcpp.deque import deque
 
 cdef extern from *:
     """
@@ -61,13 +62,15 @@ cdef extern from *:
     typedef PyRef DamageStateRef;
     typedef PyRef GraphRequirementSetRef;
     typedef PyRef ResourceInfoRef;
-    using GameStateForNodes = std::pair<std::vector<void*>*, std::vector<DamageStateRef>*>;
 
-    struct ProcessNodesState {
-        std::vector<PyObject*> checked_nodes;
+    class ProcessNodesState {
+    public:
+        std::vector<void*> checked_nodes;
         std::deque<int> nodes_to_check;
         std::vector<DamageStateRef> game_states_to_check;
         std::vector<std::pair<GraphRequirementSetRef, bool>> satisfied_requirement_on_node;
+
+        ProcessNodesState() {}
     };
 
     """
@@ -85,12 +88,10 @@ cdef extern from *:
     ctypedef PyRef ResourceInfoRef
    
     cdef cppclass ProcessNodesState:
-        vector[PyObject*] checked_nodes
+        vector[void*] checked_nodes
         deque[int] nodes_to_check
         vector[DamageStateRef] game_states_to_check
         vector[pair[GraphRequirementSetRef, bool]] satisfied_requirement_on_node
 
-    ctypedef vector[void*]* VoidPtrVectorPtr
-    ctypedef vector[DamageStateRef]* DamageStateRefVectorPtr
-    ctypedef pair[VoidPtrVectorPtr, DamageStateRefVectorPtr] GameStateForNodes
+        ProcessNodesState()
 

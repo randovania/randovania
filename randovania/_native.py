@@ -48,12 +48,10 @@ else:
         DamageStateRef = PyRef[DamageState]
         GraphRequirementSetRef = PyRef["GraphRequirementSet"]
         ResourceInfoRef = PyImmutableRef[ResourceInfo]
-        GameStateForNodes = pair[list[vector[cython.p_void]], list[vector[DamageStateRef]]]
     else:
         DamageStateRef = PyRef
         GraphRequirementSetRef = PyRef
         ResourceInfoRef = PyImmutableRef
-        GameStateForNodes = pair
 
 
 if cython.compiled:
@@ -1346,7 +1344,7 @@ def _energy_is_damage_state_strictly_better(
 
     queued_target = state_ptr[0].game_states_to_check[target_node_index]
     if queued_target.has_value():
-        target_health = queued_target.get()._energy  # type: ignore[attr-defined]
+        target_health = queued_target.get()._energy  # type: ignore[union-attr]
         if damage_health <= target_health:
             return False
 
@@ -1376,10 +1374,10 @@ def resolver_reach_process_nodes(
         state.satisfied_requirement_on_node.resize(
             len(all_nodes), pair[GraphRequirementSetRef, cython.bint](GraphRequirementSetRef(), False)
         )
-        state_ptr = cython.address(state)
+        state_ptr = cython.address(state)  # type: ignore[assignment]
     else:
         # Pure Mode cheats and uses different containers completely
-        state_ptr = [state]
+        state_ptr = [state]  # type: ignore[assignment]
 
     state.game_states_to_check[initial_node_index].set(game_state)
     state.satisfied_requirement_on_node[initial_node_index].first.set(GraphRequirementSet.trivial())
@@ -1497,11 +1495,10 @@ def resolver_reach_process_nodes(
                     if target_node_index not in requirements_excluding_leaving_by_node:
                         requirements_excluding_leaving_by_node[target_node_index] = []
 
+                    new_set: GraphRequirementSet | None = state.satisfied_requirement_on_node[node_index].first.get()
+                    assert new_set is not None
                     requirements_excluding_leaving_by_node[target_node_index].append(
-                        (
-                            connection.requirement_without_leaving,
-                            state.satisfied_requirement_on_node[node.node_index].first.get(),
-                        )
+                        (connection.requirement_without_leaving, new_set)
                     )
 
     reach_nodes.pop(initial_node_index, None)
