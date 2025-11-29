@@ -36,6 +36,7 @@ ext_modules = None
 
 if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
     debug_mode = os.getenv("RANDOVANIA_DEBUG", "0") != "0"
+    profiling_mode = os.getenv("RANDOVANIA_PROFILE", "0") != "0"
 
     if sys.platform == "win32":
         # MSVC
@@ -44,13 +45,44 @@ if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
             # Cython boilerplate triggers warning "function call missing argument list", unrelated to our code
             "/wd4551",
         ]
-        if debug_mode:
+        extra_link_args = []
+
+        if profiling_mode:
+            # Add profiling flags for MSVC
+            extra_compile_args.extend(
+                [
+                    "/Zi",  # Generate debug info (PDB)
+                    "/O2",  # Optimize for speed (but keep symbols)
+                    "/Oy-",  # Disable frame pointer omission
+                ]
+            )
+            extra_link_args.extend(
+                [
+                    "/DEBUG",  # Generate PDB file
+                    "/PROFILE",  # Enable profiling
+                ]
+            )
+        elif debug_mode:
             extra_compile_args.extend(["/Od", "/Zi"])  # Disable optimizations, add debug info
     else:
         # GCC/Clang
         extra_compile_args = ["-std=c++20"]
-        if debug_mode:
+        extra_link_args = []
+
+        if profiling_mode:
+            # Add profiling flags for GCC/Clang
+            extra_compile_args.extend(
+                [
+                    "-g",  # Debug symbols
+                    "-O2",  # Optimize but keep symbols
+                    "-fno-omit-frame-pointer",  # Keep frame pointers
+                    "-fno-inline-functions",  # Don't inline (for clearer profiling)
+                ]
+            )
+            extra_link_args.append("-g")
+        elif debug_mode:
             extra_compile_args.extend(["-g", "-O0", "-fno-omit-frame-pointer"])  # Debug symbols, no optimization
+            extra_link_args.append("-g")
 
     ext_modules = cythonize(
         [
@@ -59,10 +91,14 @@ if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
                 sources=["randovania/_native.py"],
                 language="c++",
                 extra_compile_args=extra_compile_args,
-                extra_link_args=["-g"] if debug_mode and sys.platform != "win32" else [],
+                extra_link_args=extra_link_args,
             ),
         ],
         annotate=True,
+        compiler_directives={
+            "linetrace": profiling_mode or debug_mode,  # Enable line tracing for profiling
+            "profile": profiling_mode,  # Enable profiling hooks
+        },
         gdb_debug=debug_mode,  # Add Cython debugging support
     )
 
