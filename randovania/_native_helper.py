@@ -89,8 +89,9 @@ class Deque[T]:
 
 
 class UnorderedMap[K, V](dict[K, V]):
-    def __iter__(self) -> Iterator[tuple[K, V]]:
-        return self.items().__iter__()
+    def __iter__(self) -> Iterator[Pair[K, V]]:
+        for k, v in self.items():
+            yield Pair(k, v)
 
     def size(self) -> int:
         return len(self)
