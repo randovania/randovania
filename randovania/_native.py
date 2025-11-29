@@ -1351,6 +1351,25 @@ def _energy_is_damage_state_strictly_better(
     return True
 
 
+if not cython.compiled:
+
+    def _pure_energy_is_damage_state_strictly_better(
+        damage_health: cython.float,
+        target_node_index: cython.int,
+        state: ProcessNodesState,
+    ) -> cython.bint:
+        checked_target: cython.p_void = state.checked_nodes[target_node_index]
+        if checked_target != cython.NULL:
+            if damage_health <= checked_target._energy:  # type: ignore[attr-defined]
+                return False
+
+        if target := state.game_states_to_check[target_node_index].get():
+            if damage_health <= target._energy:  # type: ignore[union-attr]
+                return False
+
+        return True
+
+
 def resolver_reach_process_nodes(
     logic: Logic,
     initial_state: State,
@@ -1434,18 +1453,14 @@ def resolver_reach_process_nodes(
             requirement: GraphRequirementSet = connection[1]
 
             if use_energy_fast_path:
-                if not _energy_is_damage_state_strictly_better(
-                    damage_health,
-                    target_node_index,
-                    state_ptr,
-                ):
-                    continue
+                if cython.compiled:
+                    if not _energy_is_damage_state_strictly_better(damage_health, target_node_index, state_ptr):
+                        continue
+                else:
+                    if not _pure_energy_is_damage_state_strictly_better(damage_health, target_node_index, state):
+                        continue
             else:
-                if not _generic_is_damage_state_strictly_better(
-                    game_state,
-                    target_node_index,
-                    state_ptr,
-                ):
+                if not _generic_is_damage_state_strictly_better(game_state, target_node_index, state_ptr):
                     continue
 
             satisfied: cython.bint = can_leave_node
