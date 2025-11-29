@@ -298,7 +298,7 @@ class ResourceCollection:
         if cython.compiled:
             result._resize_array_to_fit(count)
         else:
-            result._resource_array._data = [0] * count
+            result._resource_array = vector([0]) * count
         return result
 
     @cython.ccall

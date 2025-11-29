@@ -52,6 +52,13 @@ class Vector[T](list[T]):
     def py_resize(self, count: int, factory: Callable[[], T]) -> None:
         self.extend([factory() for _ in range(count - len(self))])
 
+    def __mul__(self, other: typing.SupportsIndex) -> Vector[T]:
+        result = Vector[T](list.__mul__(self, other))
+        return result
+
+    def __rmul__(self, other: typing.SupportsIndex) -> Vector[T]:
+        return self.__mul__(other)
+
 
 class Deque[T]:
     _data: list[T]
