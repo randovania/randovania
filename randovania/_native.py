@@ -250,14 +250,15 @@ else:
         def get_set_bits(self) -> list[int]:
             """Gets a list of all set bit indices."""
             result: list[int] = []
-            if self._mask != 0:
-                bit_pos = 0
-                temp_mask = self._mask
-                while temp_mask != 0:
-                    if temp_mask & 1:
-                        result.append(bit_pos)
-                    temp_mask >>= 1
-                    bit_pos += 1
+
+            mask_str = bin(self._mask)[2:]
+            idx = len(mask_str)
+            bit_inverse = idx - 1
+            while idx != -1:
+                idx = mask_str.rfind("1", 0, idx)
+                if idx != -1:
+                    result.append(bit_inverse - idx)
+
             return result
 
         def num_set_bits(self) -> cython.int:
