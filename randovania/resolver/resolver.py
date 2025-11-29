@@ -25,7 +25,6 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.graph.state import State
@@ -41,8 +40,8 @@ AnyEventNode = EventNode | EventPickupNode
 def _simplify_additional_requirement_set(
     alternatives: Iterable[GraphRequirementList],
     state: State,
-    node_resources: list[ResourceInfo],
-    progressive_chain_info: None | tuple[list[ItemResourceInfo], int],
+    node_resources: list[int],
+    progressive_chain_info: None | tuple[list[int], int],
     skip_simplify: bool,
 ) -> GraphRequirementSet:
     r = GraphRequirementSet()
@@ -150,7 +149,7 @@ def _priority_for_resource_action(action: ResolverAction, state: State, logic: L
 
 def _progressive_chain_info_from_pickup_entry(
     pickup: PickupEntry, resources: ResourceCollection
-) -> None | tuple[list[ItemResourceInfo], int]:
+) -> None | tuple[list[int], int]:
     """
     :param pickup:
     :param resources:
@@ -159,11 +158,11 @@ def _progressive_chain_info_from_pickup_entry(
       progressive item on that node or none of the progressive items have been obtained, then returns None.
     """
     if len(pickup.progression) > 1:
-        progressives: list[ItemResourceInfo] = [item for item, _ in pickup.progression if item is not None]
+        progressives: list[int] = [item.resource_index for item, _ in pickup.progression if item is not None]
 
         last_obtained_index = -1
         for index, item in enumerate(progressives):
-            if resources[item] == 0:
+            if resources.get_index(item) == 0:
                 break
             last_obtained_index = index
         return (progressives, last_obtained_index) if last_obtained_index > -1 else None
@@ -171,7 +170,7 @@ def _progressive_chain_info_from_pickup_entry(
     return None
 
 
-def _progressive_chain_info(node: WorldGraphNode, context: NodeContext) -> None | tuple[list[ItemResourceInfo], int]:
+def _progressive_chain_info(node: WorldGraphNode, context: NodeContext) -> None | tuple[list[int], int]:
     """
     When the node has a PickupEntry, returns _progressive_chain_info_from_pickup_entry for it.
     """
@@ -186,8 +185,8 @@ def _assign_hint_available_locations(state: State, action: ResolverAction, logic
         state.hint_state.assign_available_locations(action.pickup_index, available)
 
 
-def _resource_gain_for_state(state: State) -> list[ResourceInfo]:
-    return [x for x, _ in state.node.resource_gain_on_collect(state.resources)]
+def _resource_gain_for_state(state: State) -> list[int]:
+    return [x.resource_index for x, _ in state.node.resource_gain_on_collect(state.resources)]
 
 
 def _index_for_action_pair(pair: tuple[ResolverAction, DamageState]) -> int:

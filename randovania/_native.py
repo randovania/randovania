@@ -444,15 +444,16 @@ class ResourceCollection:
 
     @cython.ccall
     # @cython.exceptval(check=False)
-    def get_damage_reduction(self, resource: ResourceInfo) -> cython.float:
+    def get_damage_reduction(self, resource_index: cython.size_t) -> cython.float:
         if self._damage_reduction_cache is None:
             self._damage_reduction_cache = {}
 
-        reduction: float | None = self._damage_reduction_cache.get(resource.resource_index)
-
+        reduction: float | None = self._damage_reduction_cache.get(resource_index)
         if reduction is None:
-            reduction = self._resource_database.get_damage_reduction(resource, self)
-            self._damage_reduction_cache[resource.resource_index] = reduction
+            reduction = self._resource_database.get_damage_reduction(
+                getattr(self._resource_database, "_resource_mapping")[resource_index], self
+            )
+            self._damage_reduction_cache[resource_index] = reduction
 
         return reduction
 
@@ -462,20 +463,20 @@ class ResourceCollection:
 
 @cython.ccall
 def _is_later_progression_item(
-    resource: ResourceInfo, progressive_chain_info: None | tuple[Sequence[ResourceInfo], int]
+    resource_index: cython.size_t, progressive_chain_info: None | tuple[Sequence[cython.size_t], int]
 ) -> bool:
     if not progressive_chain_info:
         return False
     progressive_chain, index = progressive_chain_info
-    return resource in progressive_chain and progressive_chain.index(resource) > index
+    return resource_index in progressive_chain and progressive_chain.index(resource_index) > index
 
 
 @cython.ccall
 def _downgrade_progressive_item(
-    item_resource: ResourceInfo, progressive_chain_info: tuple[Sequence[ResourceInfo], int]
-) -> ResourceInfo:
+    resource_index: cython.size_t, progressive_chain_info: tuple[Sequence[cython.size_t], int]
+) -> cython.size_t:
     progressive_chain, _ = progressive_chain_info
-    return progressive_chain[progressive_chain.index(item_resource) - 1]
+    return progressive_chain[progressive_chain.index(resource_index) - 1]
 
 
 @cython.final
@@ -547,14 +548,42 @@ class GraphRequirementList:
         # if not self._frozen:
         #     raise RuntimeError("Cannot hash a non-frozen GraphRequirementList")
 
-        return hash(
-            (
-                self._set_bitmask,
-                self._negate_bitmask,
-                tuple(key for key in self._other_resources),
-                tuple(key for key in self._damage_resources),
-            )
-        )
+        # Hash the bitmasks
+        result: cython.ulonglong = hash(self._set_bitmask)
+        result ^= hash(self._negate_bitmask) * 31
+
+        if cython.compiled:
+            # Hash the unordered_maps using pure C arithmetic
+            # Use a commutative operation (XOR) since map iteration order is unspecified
+            key: cython.size_t
+            value: cython.int
+            hash_contribution: cython.ulonglong
+
+            for entry in self._other_resources:
+                key = entry.first
+                value = entry.second
+                # Combine key and value using C integer arithmetic with type casts
+                hash_contribution = cython.cast(cython.ulonglong, key) * cython.cast(
+                    cython.ulonglong, 0x9E3779B97F4A7C15
+                )
+                hash_contribution ^= cython.cast(cython.ulonglong, value) * cython.cast(
+                    cython.ulonglong, 0x517CC1B727220A95
+                )
+                result ^= hash_contribution
+
+            for entry in self._damage_resources:
+                key = entry.first
+                value = entry.second
+                # Use different multipliers to distinguish from _other_resources
+                hash_contribution = cython.cast(cython.ulonglong, key) * cython.cast(cython.ulonglong, 0x85EBCA6B)
+                hash_contribution ^= cython.cast(cython.ulonglong, value) * cython.cast(cython.ulonglong, 0xC2B2AE35)
+                result ^= hash_contribution
+        else:
+            # Pure Python mode: use simple tuple hashing
+            result ^= hash(tuple(sorted(self._other_resources.items())))
+            result ^= hash(tuple(sorted(self._damage_resources.items()))) * 37
+
+        return hash(result)
 
     def _resource_mapping(self) -> dict[int, ResourceInfo]:
         if self._resource_db is None:
@@ -697,7 +726,7 @@ class GraphRequirementList:
                 return False
 
         for entry in self._damage_resources:
-            health -= entry.second * resources.get_damage_reduction(self._resource_mapping()[entry.first])
+            health -= entry.second * resources.get_damage_reduction(entry.first)
             if health <= 0:
                 return False
 
@@ -713,7 +742,7 @@ class GraphRequirementList:
         result: cython.float = 0
 
         for entry in self._damage_resources:
-            result += entry.second * resources.get_damage_reduction(self._resource_mapping()[entry.first])
+            result += entry.second * resources.get_damage_reduction(entry.first)
         return result
 
     @cython.ccall
@@ -898,7 +927,7 @@ class GraphRequirementList:
         result = GraphRequirementList(self._resource_db)
 
         for entry in self._damage_resources:
-            if resources.get_damage_reduction(self._resource_mapping()[entry.first]) == 0:
+            if resources.get_damage_reduction(entry.first) == 0:
                 return GraphRequirementList(self._resource_db)
 
             result._damage_resources[entry.first] = entry.second
@@ -934,49 +963,47 @@ class GraphRequirementList:
     @cython.cfunc
     def _simplify_handle_resource(
         self,
-        resource: ResourceInfo,
+        resource_index: cython.size_t,
         amount: cython.int,
         negate: cython.bint,
-        progressive_item_info: None | tuple[Sequence[ResourceInfo], int],
+        progressive_item_info: None | tuple[Sequence[cython.size_t], int],
     ) -> cython.void:
-        if _is_later_progression_item(resource, progressive_item_info):
+        if _is_later_progression_item(resource_index, progressive_item_info):
             assert progressive_item_info is not None
-            self.add_resource(
-                _downgrade_progressive_item(resource, progressive_item_info),
+            self.add_resource_index(
+                _downgrade_progressive_item(resource_index, progressive_item_info),
                 1,
                 False,
             )
         else:
-            self.add_resource(resource, amount, negate)
+            self.add_resource_index(resource_index, amount, negate)
 
     @cython.ccall
     def simplify_requirement_list(
         self,
         resources: ResourceCollection,
         health_for_damage_requirements: cython.float,
-        node_resources: Sequence[ResourceInfo],
-        progressive_item_info: None | tuple[Sequence[ResourceInfo], int],
+        node_resources: Sequence[cython.size_t],
+        progressive_item_info: None | tuple[Sequence[cython.size_t], int],
     ) -> GraphRequirementList | None:
         """Used by resolver.py for `_simplify_additional_requirement_set`"""
 
         result = GraphRequirementList(self._resource_db)
         something_set: cython.bint = False
-        resource_mapping = self._resource_mapping()
 
         for resource_index in self._set_bitmask.get_set_bits():
             amount = self._other_resources[resource_index] if self._other_resources.contains(resource_index) else 1
             if resources.get_index(resource_index) >= amount:
                 continue
-            result._simplify_handle_resource(resource_mapping[resource_index], amount, False, progressive_item_info)
+            result._simplify_handle_resource(resource_index, amount, False, progressive_item_info)
             something_set = True
 
         for resource_index in self._negate_bitmask.get_set_bits():
             if resources.get_index(resource_index) == 0:
                 continue
-            resource = resource_mapping[resource_index]
-            if resource in node_resources:
+            if resource_index in node_resources:
                 return None
-            result._simplify_handle_resource(resource, 1, True, progressive_item_info)
+            result._simplify_handle_resource(resource_index, 1, True, progressive_item_info)
             something_set = True
 
         if self.damage(resources) >= health_for_damage_requirements:
