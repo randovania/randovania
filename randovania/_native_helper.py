@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import copy
 import typing
 
 if typing.TYPE_CHECKING:
@@ -9,55 +8,49 @@ if typing.TYPE_CHECKING:
 T = typing.TypeVar("T")
 
 
-class Vector[T]:
-    _data: list[T]
+class VectorProtocol[T](typing.Protocol):
+    def size(self) -> int: ...
 
-    def __init__(self) -> None:
-        self._data = []
+    def push_back(self, item: T) -> None: ...
 
-    def __copy__(self) -> Vector[T]:
-        result = Vector()
-        result._data = copy.copy(self._data)
-        return result
+    def __getitem__(self, idx: int) -> T: ...
 
+    def __setitem__(self, key: int, value: T) -> None: ...
+
+    def __iter__(self) -> typing.Iterator[T]: ...
+
+    def __len__(self) -> int: ...
+
+    def empty(self) -> bool: ...
+
+    def back(self) -> T: ...
+
+    def pop_back(self) -> None: ...
+
+    def resize(self, count: int, value: T) -> None: ...
+
+    def clear(self) -> None: ...
+
+
+class Vector[T](list[T]):
     def size(self) -> int:
-        return len(self._data)
+        return len(self)
 
-    def push_back(self, item: T) -> None:
-        self._data.append(item)
-
-    def __getitem__(self, idx: int) -> T:
-        return self._data[idx]
-
-    def __setitem__(self, key: int, value: T) -> None:
-        self._data[key] = value
-
-    def __iter__(self) -> typing.Iterator[T]:
-        return iter(self._data)
-
-    def __len__(self) -> int:
-        return len(self._data)
+    push_back = list.append
 
     def empty(self) -> bool:
-        return not self._data
+        return not self
 
     def back(self) -> T:
-        return self._data[-1]
+        return self[-1]
 
-    def pop_back(self) -> None:
-        self._data.pop()
+    pop_back = list.pop
 
     def resize(self, count: int, value: T) -> None:
-        self._data.extend([value] * (count - len(self._data)))
+        self.extend([value] * (count - len(self)))
 
     def py_resize(self, count: int, factory: Callable[[], T]) -> None:
-        self._data.extend([factory() for _ in range(count - len(self._data))])
-
-    def clear(self) -> None:
-        self._data.clear()
-
-    def __str__(self) -> str:
-        return str(self._data)
+        self.extend([factory() for _ in range(count - len(self))])
 
 
 class Deque[T]:
