@@ -6,7 +6,7 @@ import typing
 import cython
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Iterator
 
     from randovania._native import GraphRequirementSet
     from randovania.resolver.damage_state import DamageState
@@ -86,6 +86,17 @@ class Deque[T]:
 
     def empty(self) -> bool:
         return not self._data
+
+
+class UnorderedMap[K, V](dict[K, V]):
+    def __iter__(self) -> Iterator[tuple[K, V]]:
+        return self.items().__iter__()
+
+    def size(self) -> int:
+        return len(self)
+
+    def contains(self, key: K) -> bool:
+        return key in self
 
 
 class bitmask_int(int):
