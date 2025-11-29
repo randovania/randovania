@@ -1364,7 +1364,7 @@ if not cython.compiled:
                 return False
 
         if target := state.game_states_to_check[target_node_index].get():
-            if damage_health <= target._energy:  # type: ignore[union-attr]
+            if damage_health <= target._energy:  # type: ignore[attr-defined]
                 return False
 
         return True
