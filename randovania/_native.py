@@ -502,6 +502,27 @@ class GraphRequirementList:
 
         self._frozen = False
 
+    @staticmethod
+    @cython.cfunc
+    def from_components(
+        set_bitmask: Bitmask,
+        negate_bitmask: Bitmask,
+        other_resources: dict[ResourceInfo, cython.int],
+        damage_resources: dict[ResourceInfo, cython.int],
+        set_resources: vector[ResourceInfoRef],
+        negate_resources: vector[ResourceInfoRef],
+    ) -> GraphRequirementList:
+        """Alternative constructor that accepts all components directly."""
+        result: GraphRequirementList = GraphRequirementList.__new__(GraphRequirementList)
+        result._set_bitmask = set_bitmask
+        result._negate_bitmask = negate_bitmask
+        result._other_resources = other_resources
+        result._damage_resources = damage_resources
+        result._set_resources = set_resources
+        result._negate_resources = negate_resources
+        result._frozen = False
+        return result
+
     def __eq__(self, other: object) -> cython.bint:
         if isinstance(other, GraphRequirementList):
             return self.equals_to(other)
@@ -726,12 +747,28 @@ class GraphRequirementList:
         Copies this requirement and then performs `and_with`, but more efficiently.
         Returns None if the combination is impossible to satisfy (mix of set and negate requirements).
         """
-        result = GraphRequirementList()
+
+        if cython.compiled:
+            result = GraphRequirementList.from_components(
+                self._set_bitmask.copy(),
+                self._negate_bitmask.copy(),
+                dict(self._other_resources),
+                dict(self._damage_resources),
+                self._set_resources,
+                self._negate_resources,
+            )
+        else:
+            result = GraphRequirementList.from_components(
+                self._set_bitmask.copy(),
+                self._negate_bitmask.copy(),
+                dict(self._other_resources),
+                dict(self._damage_resources),
+                vector[ResourceInfoRef](self._set_resources),
+                vector[ResourceInfoRef](self._negate_resources),
+            )
 
         # Copy and union bitmasks
-        result._set_bitmask = self._set_bitmask.copy()
         result._set_bitmask.union(right._set_bitmask)
-        result._negate_bitmask = self._negate_bitmask.copy()
         result._negate_bitmask.union(right._negate_bitmask)
 
         # Check if there's any conflict between set and negate requirements
@@ -739,13 +776,6 @@ class GraphRequirementList:
             return None
 
         # Union _set_resources and _negate_resources (avoiding duplicates using bitmask)
-        if cython.compiled:
-            result._set_resources = self._set_resources
-            result._negate_resources = self._negate_resources
-        else:
-            result._set_resources = vector[ResourceInfoRef](self._set_resources)
-            result._negate_resources = vector[ResourceInfoRef](self._negate_resources)
-
         for ref in right._set_resources:
             if not self._set_bitmask.is_set(ref.get().resource_index):
                 result._set_resources.push_back(ref)
@@ -755,12 +785,10 @@ class GraphRequirementList:
                 result._negate_resources.push_back(ref)
 
         # Merge _other_resources with max values
-        result._other_resources = dict(self._other_resources)
         for resource, amount in right._other_resources.items():
             result._other_resources[resource] = max(result._other_resources.get(resource, 0), amount)
 
         # Merge _damage_resources with sum
-        result._damage_resources = dict(self._damage_resources)
         for resource, damage in right._damage_resources.items():
             result._damage_resources[resource] = result._damage_resources.get(resource, 0) + damage
 
