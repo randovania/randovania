@@ -1111,6 +1111,11 @@ class GraphRequirementSet:
         if self._frozen:
             raise RuntimeError("Cannot modify a frozen GraphRequirementSet")
 
+    @cython.inline
+    @cython.ccall
+    def num_alternatives(self) -> cython.int:
+        return len(self._alternatives)
+
     @property
     def alternatives(self) -> Sequence[GraphRequirementList]:
         return tuple(self._alternatives)
@@ -1385,16 +1390,36 @@ def _combine_damage_requirements(
     isolated_requirement: GraphRequirementSet = requirement.isolate_damage_requirements(resources)
     isolated_satisfied: GraphRequirementSet | None = state_ptr[0].satisfied_requirement_on_node[input_index].first.get()
     assert isolated_satisfied is not None
-    if state_ptr[0].satisfied_requirement_on_node[input_index].second:
+
+    should_isolate_satisfied: cython.bint = state_ptr[0].satisfied_requirement_on_node[input_index].second
+    if should_isolate_satisfied:
         isolated_satisfied = isolated_satisfied.isolate_damage_requirements(resources)
 
+    # do `isolated_requirement` and `isolated_satisfied`, but figure out how to avoid the expensive operation
     result: GraphRequirementSet
     if isolated_requirement.is_trivial():
         result = isolated_satisfied
     elif isolated_satisfied.is_trivial():
         result = isolated_requirement
     else:
-        result = isolated_requirement.copy_then_and_with_set(isolated_satisfied)
+        # Neither side is trivial, but one alternative is the majority of the time and that path can avoid copy
+        if isolated_satisfied.num_alternatives() == 1:
+            # `isolated_requirement` is always the result of `isolate_damage_requirements`, so a new, mutable, copy.
+            # (or trivial, but that case is above)
+            isolated_requirement.all_alternative_and_with(isolated_satisfied.alternatives[0])
+            result = isolated_requirement
+
+        elif isolated_requirement.num_alternatives() == 1:
+            if should_isolate_satisfied:
+                # Same as `isolated_requirement` above
+                result = isolated_satisfied
+                isolated_satisfied.all_alternative_and_with(isolated_requirement.alternatives[0])
+            else:
+                # But it's already been isolated before and stored in satisfied_requirement_on_node
+                # so don't modify it. Still faster than the full copy_then_and_with_set
+                result = isolated_satisfied.copy_then_all_alternative_and_with(isolated_requirement.alternatives[0])
+        else:
+            result = isolated_requirement.copy_then_and_with_set(isolated_satisfied)
 
     state_ptr[0].satisfied_requirement_on_node[output_index].first.set(result)
     state_ptr[0].satisfied_requirement_on_node[output_index].second = False
