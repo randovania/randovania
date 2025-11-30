@@ -322,6 +322,13 @@ class ResourceCollection:
         else:
             return 0
 
+    @cython.ccall
+    def get_index(self, resource_index: cython.size_t) -> cython.int:
+        if resource_index < self._resource_array.size():
+            return self._resource_array[resource_index]
+        else:
+            return 0
+
     def __str__(self) -> str:
         return f"<ResourceCollection with {self.num_resources} resources>"
 
