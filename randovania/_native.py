@@ -1176,10 +1176,14 @@ class GraphRequirementSet:
     def satisfied(self, resources: ResourceCollection, energy: cython.float) -> cython.bint:
         """Checks if the given resources and health satisfies at least one alternative."""
 
-        for alt in self._alternatives:
-            alt_entry: GraphRequirementList = alt.get()
-            if alt_entry.satisfied(resources, energy):
-                return True
+        if cython.compiled:
+            for alt in self._alternatives:
+                if cython.cast(GraphRequirementList, alt.get()).satisfied(resources, energy):
+                    return True
+        else:
+            for alt in self._alternatives:
+                if alt.get().satisfied(resources, energy):
+                    return True
 
         return False
 
@@ -1192,7 +1196,7 @@ class GraphRequirementSet:
         damage: cython.float = float("inf")
 
         for alt in self._alternatives:
-            new_dmg: cython.float = alt.get().damage(resources)
+            new_dmg: cython.float = cython.cast(GraphRequirementList, alt.get()).damage(resources)
             if new_dmg <= 0.0:
                 return new_dmg
             if new_dmg < damage:
