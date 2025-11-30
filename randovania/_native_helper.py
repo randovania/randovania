@@ -99,6 +99,9 @@ class UnorderedMap[K, V](dict[K, V]):
     def contains(self, key: K) -> bool:
         return key in self
 
+    def empty(self) -> bool:
+        return not self
+
 
 class bitmask_int(int):
     _data: int

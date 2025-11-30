@@ -659,6 +659,17 @@ class GraphRequirementList:
 
     @cython.ccall
     @cython.inline
+    def is_trivial(self) -> cython.bint:
+        """Returns True if this requirement is trivial (always satisfied)."""
+        return (
+            self._set_bitmask.is_empty()
+            and self._negate_bitmask.is_empty()
+            and self._other_resources.empty()
+            and self._damage_resources.empty()
+        )
+
+    @cython.ccall
+    @cython.inline
     def all_resources(self, *, include_damage: cython.bint = True) -> set[ResourceInfo]:
         """Returns a set of all resources involved in this requirement."""
         mapping = self._resource_mapping()
@@ -1275,7 +1286,9 @@ class GraphRequirementSet:
 
     @cython.ccall
     def is_trivial(self) -> cython.bint:
-        return self == GraphRequirementSet.trivial()
+        if len(self._alternatives) == 1:
+            return self._alternatives[0].is_trivial()
+        return False
 
     @classmethod
     @functools.cache
@@ -1290,7 +1303,7 @@ class GraphRequirementSet:
 
     @cython.ccall
     def is_impossible(self) -> cython.bint:
-        return self == GraphRequirementSet.impossible()
+        return len(self._alternatives) == 0
 
     @property
     def as_lines(self) -> Iterator[str]:
@@ -1315,8 +1328,10 @@ class GraphRequirementSet:
             isolated: GraphRequirementList | None = alternative.isolate_damage_requirements(resources)
 
             if isolated is not None:
-                if isolated.equals_to(GraphRequirementSet.trivial().alternatives[0]):
-                    return GraphRequirementSet.trivial()
+                if isolated.is_trivial():
+                    result._alternatives.clear()
+                    result._alternatives.append(isolated)
+                    break
                 else:
                     result._alternatives.append(isolated)
 
@@ -1367,9 +1382,9 @@ def _combine_damage_requirements(
         isolated_satisfied = isolated_satisfied.isolate_damage_requirements(resources)
 
     result: GraphRequirementSet
-    if isolated_requirement == GraphRequirementSet.trivial():
+    if isolated_requirement.is_trivial():
         result = isolated_satisfied
-    elif isolated_satisfied == GraphRequirementSet.trivial():
+    elif isolated_satisfied.is_trivial():
         result = isolated_requirement
     else:
         result = isolated_requirement.copy_then_and_with_set(isolated_satisfied)
