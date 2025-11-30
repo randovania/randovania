@@ -64,12 +64,16 @@ if cython.compiled:
         _masks = cython.declare(vector[cython.ulonglong], visibility="public")
 
         def __init__(self, masks: vector[cython.ulonglong]):
-            assert cython.compiled
             self._masks = masks
 
         @classmethod
-        def create(cls) -> typing.Self:
-            return cls(vector[cython.ulonglong]())
+        def create(cls) -> Bitmask:
+            return Bitmask.__new__(Bitmask)
+
+        @staticmethod
+        @cython.cfunc
+        def create_native() -> Bitmask:
+            return Bitmask.__new__(Bitmask)
 
         def __eq__(self, other: object) -> cython.bint:
             return isinstance(other, Bitmask) and self.equals_to(other)
@@ -203,8 +207,11 @@ if cython.compiled:
         def is_empty(self) -> cython.bint:
             return self._masks.empty()
 
-        def copy(self) -> typing.Self:
-            return self.__class__(self._masks)
+        @cython.ccall
+        def copy(self) -> Bitmask:
+            result: Bitmask = Bitmask.__new__(Bitmask)
+            result._masks = self._masks
+            return result
 
 else:
 
@@ -286,7 +293,7 @@ class ResourceCollection:
     _resource_database: ResourceDatabaseView = cython.declare(object)  # type: ignore[assignment]
 
     def __init__(self, resource_database: ResourceDatabaseView, resource_array: vector[cython.int]) -> None:
-        self.resource_bitmask = Bitmask.create()
+        self.resource_bitmask = Bitmask.create_native()
         self._resource_array = resource_array
         self._existing_resources = {}
         self._damage_reduction_cache = None
@@ -1248,7 +1255,7 @@ class GraphRequirementSet:
 
         result: list[GraphRequirementList] = []
 
-        single_req_mask = Bitmask.create()
+        single_req_mask = Bitmask.create_native()
 
         current: GraphRequirementList
         existing: GraphRequirementList
