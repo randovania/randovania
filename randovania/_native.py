@@ -564,6 +564,11 @@ class GraphRequirementList:
             )
         )
 
+    def _resource_mapping(self) -> dict[int, ResourceInfo]:
+        if self._resource_db is None:
+            return {}
+        return getattr(self._resource_db, "_resource_mapping")
+
     @cython.ccall
     @cython.inline
     def is_frozen(self) -> cython.bint:
@@ -639,11 +644,13 @@ class GraphRequirementList:
     @cython.inline
     def all_resources(self, *, include_damage: cython.bint = True) -> set[ResourceInfo]:
         """Returns a set of all resources involved in this requirement."""
+        mapping = self._resource_mapping()
+
         result = set()
-        for ref in self._set_resources:
-            result.add(ref.get())
-        for ref in self._negate_resources:
-            result.add(ref.get())
+        for resource_index in self._set_bitmask.get_set_bits():
+            result.add(mapping[resource_index])
+        for resource_index in self._negate_bitmask.get_set_bits():
+            result.add(mapping[resource_index])
         if include_damage:
             result.update(self._damage_resources)
         return result
@@ -849,11 +856,12 @@ class GraphRequirementList:
 
         assert not negate or amount == 1
 
+        resource_index: cython.int = resource.resource_index
+        self._resource_mapping()[resource_index] = resource
+
         if resource.resource_type.is_damage():
             self._damage_resources[resource] = self._damage_resources.get(resource, 0) + amount
             return  # type: ignore[return-value]
-
-        resource_index: cython.int = resource.resource_index
 
         if negate:
             target_bitmask = self._negate_bitmask
