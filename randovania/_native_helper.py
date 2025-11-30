@@ -34,6 +34,8 @@ class VectorProtocol[T](typing.Protocol):
 
     def clear(self) -> None: ...
 
+    def erase(self, idx: int) -> None: ...
+
 
 class Vector[T](list[T]):
     def size(self) -> int:
@@ -46,6 +48,13 @@ class Vector[T](list[T]):
 
     def back(self) -> T:
         return self[-1]
+
+    def erase(self, idx: int) -> None:
+        self.pop(idx)
+
+    def begin(self) -> int:
+        # Very wrong, but simpler for our use case
+        return 0
 
     pop_back = list.pop
 

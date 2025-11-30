@@ -59,6 +59,7 @@ cdef extern from *:
 
         int has_value() const {return obj != NULL;}
     };
+    typedef PyRef GraphRequirementListRef;
     typedef PyRef GraphRequirementSetRef;
     typedef PyRef ResourceInfoRef;
 
@@ -82,6 +83,7 @@ cdef extern from *:
         void set(object set_obj)
         int has_value()
 
+    ctypedef PyRef GraphRequirementListRef
     ctypedef PyRef GraphRequirementSetRef
     ctypedef PyRef ResourceInfoRef
    

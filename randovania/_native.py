@@ -47,9 +47,11 @@ else:
     from randovania._native_helper import Vector as vector
 
     if typing.TYPE_CHECKING:
+        GraphRequirementListRef = PyImmutableRef["GraphRequirementList"]
         GraphRequirementSetRef = PyRef["GraphRequirementSet"]
         ResourceInfoRef = PyImmutableRef[ResourceInfo]
     else:
+        GraphRequirementListRef = PyImmutableRef
         GraphRequirementSetRef = PyRef
         ResourceInfoRef = PyImmutableRef
 
@@ -1089,17 +1091,17 @@ class GraphRequirementSet:
     These two classes together represents a `Requirement` in disjunctive normal form.
     """
 
-    _alternatives: list[GraphRequirementList] = cython.declare(list[GraphRequirementList])
+    _alternatives: vector[GraphRequirementListRef]
     _frozen: cython.bint
 
     def __init__(self) -> None:
-        self._alternatives = []
+        self._alternatives = vector[GraphRequirementListRef]()
         self._frozen = False
 
     def __copy__(self) -> GraphRequirementSet:
         result = GraphRequirementSet()
         for it in self._alternatives:
-            result._alternatives.append(copy.copy(it))
+            result._alternatives.push_back(GraphRequirementListRef(copy.copy(it.get())))
         return result
 
     __hash__ = None  # type: ignore[assignment]
@@ -1112,7 +1114,12 @@ class GraphRequirementSet:
     @cython.ccall
     # @cython.exceptval(check=False)
     def equals_to(self, other: GraphRequirementSet) -> cython.bint:
-        return self._alternatives == other._alternatives
+        if self._alternatives.size() != other._alternatives.size():
+            return False
+        for idx in range(self._alternatives.size()):
+            if self._alternatives[idx].get() != other._alternatives[idx].get():
+                return False
+        return True
 
     @cython.inline
     @cython.ccall
@@ -1126,7 +1133,7 @@ class GraphRequirementSet:
         """Prevents any further modifications to this GraphRequirementSet and any nested GraphRequirementList."""
         self._frozen = True
         for it in self._alternatives:
-            it.freeze()
+            it.get().freeze()
 
     @cython.inline
     @cython.cfunc
@@ -1137,57 +1144,52 @@ class GraphRequirementSet:
     @cython.inline
     @cython.ccall
     def num_alternatives(self) -> cython.int:
-        return len(self._alternatives)
+        return self._alternatives.size()
 
     @property
     def alternatives(self) -> Sequence[GraphRequirementList]:
-        return tuple(self._alternatives)
+        return [it.get() for it in self._alternatives]
 
     @cython.cfunc
     @cython.inline
-    def native_alternatives(self) -> list[GraphRequirementList]:
+    def native_alternatives(self) -> vector[GraphRequirementListRef]:
         return self._alternatives
 
     @cython.ccall
     @cython.inline
     def add_alternative(self, alternative: GraphRequirementList) -> cython.void:
         self._check_can_write()
-        self._alternatives.append(alternative)
+        self._alternatives.push_back(GraphRequirementListRef(alternative))
 
     @cython.ccall
     @cython.inline
     def extend_alternatives(self, alternatives: Iterable[GraphRequirementList]) -> cython.void:
         self._check_can_write()
-        self._alternatives.extend(alternatives)
+        for it in alternatives:
+            self._alternatives.push_back(GraphRequirementListRef(it))
 
-    @cython.locals(idx=cython.int, alt=GraphRequirementList)
-    @cython.final
     @cython.ccall
     # @cython.exceptval(check=False)
     def satisfied(self, resources: ResourceCollection, energy: cython.float) -> cython.bint:
         """Checks if the given resources and health satisfies at least one alternative."""
-        alternatives: list[GraphRequirementList] = self._alternatives
 
-        for idx in range(len(alternatives)):
-            alt: GraphRequirementList = alternatives[idx]
-            if alt.satisfied(resources, energy):
+        for alt in self._alternatives:
+            alt_entry: GraphRequirementList = alt.get()
+            if alt_entry.satisfied(resources, energy):
                 return True
 
         return False
 
-    @cython.locals(idx=cython.int, alt=GraphRequirementList, new_dmg=cython.float, damage=cython.float)
-    @cython.final
     @cython.ccall
     # @cython.exceptval(check=False)
     def damage(self, resources: ResourceCollection) -> cython.float:
         """
         The least amount of damage from any alternative.
         """
-        damage = float("inf")
+        damage: cython.float = float("inf")
 
-        for idx in range(len(self._alternatives)):
-            alt = self._alternatives[idx]
-            new_dmg = alt.damage(resources)
+        for alt in self._alternatives:
+            new_dmg: cython.float = alt.get().damage(resources)
             if new_dmg <= 0.0:
                 return new_dmg
             if new_dmg < damage:
@@ -1202,13 +1204,17 @@ class GraphRequirementSet:
         If `and_with` returns False, that alternative is removed.
         """
         self._check_can_write()
-        self._alternatives = [it for it in self._alternatives if it.and_with(merge)]
+
+        idx: cython.size_t
+        for idx in range(self._alternatives.size() - 1, -1, -1):
+            if not self._alternatives[idx].get().and_with(merge):
+                self._alternatives.erase(self._alternatives.begin() + idx)
 
     @cython.ccall
     def copy_then_all_alternative_and_with(self, merge: GraphRequirementList) -> GraphRequirementSet:
         result = GraphRequirementSet()
         for it in self._alternatives:
-            new_alt = it.copy_then_and_with(merge)
+            new_alt = it.get().copy_then_and_with(merge)
             if new_alt is not None:
                 result.add_alternative(new_alt)
         return result
@@ -1219,16 +1225,16 @@ class GraphRequirementSet:
         Given two `GraphRequirementSet` A and B, creates a new GraphRequirementSet that is only satisfied when
         both A and B are satisfied.
         """
-        if len(right._alternatives) == 1:
+        if right._alternatives.size() == 1:
             result = GraphRequirementSet()
             right_req = right._alternatives[0]
             for left_alt in self._alternatives:
-                new_alt = left_alt.copy_then_and_with(right_req)
+                new_alt = left_alt.get().copy_then_and_with(right_req.get())
                 if new_alt is not None:
-                    result._alternatives.append(new_alt)
+                    result._alternatives.push_back(GraphRequirementListRef(new_alt))
             return result
 
-        elif len(self._alternatives) == 1:
+        elif self._alternatives.size() == 1:
             return right.copy_then_and_with_set(self)
 
         else:
@@ -1236,9 +1242,9 @@ class GraphRequirementSet:
 
             for left_alt in self._alternatives:
                 for right_alt in right._alternatives:
-                    new_alt = left_alt.copy_then_and_with(right_alt)
+                    new_alt = left_alt.get().copy_then_and_with(right_alt.get())
                     if new_alt is not None:
-                        result._alternatives.append(new_alt)
+                        result._alternatives.push_back(GraphRequirementListRef(new_alt))
 
             return result
 
@@ -1246,10 +1252,10 @@ class GraphRequirementSet:
     def copy_then_remove_entries_for_set_resources(self, resources: ResourceCollection) -> GraphRequirementSet:
         result = GraphRequirementSet()
         for alternative in self._alternatives:
-            new_entry = alternative.copy_then_remove_entries_for_set_resources(resources)
+            new_entry = alternative.get().copy_then_remove_entries_for_set_resources(resources)
             if new_entry is not None:
                 # TODO: short circuit for trivial
-                result._alternatives.append(new_entry)
+                result._alternatives.push_back(GraphRequirementListRef(new_entry))
         return result
 
     @cython.ccall
@@ -1257,17 +1263,18 @@ class GraphRequirementSet:
         """Remove redundant alternatives that are supersets of other alternatives."""
 
         self._check_can_write()
-        if len(self._alternatives) <= 1:
+        if self._alternatives.size() <= 1:
             return  # type: ignore[return-value]
 
         for alt in self._alternatives:
-            if alt.num_requirements() == 0:
+            if alt.get().num_requirements() == 0:
                 # Trivial requirement - everything else is redundant
-                self._alternatives = [alt]
+                self._alternatives.clear()
+                self._alternatives.push_back(alt)
                 return  # type: ignore[return-value]
 
         # Sort by "complexity" - simpler requirements first (fewer total constraints)
-        sorted_alternatives = sorted(self._alternatives, key=GraphRequirementList._complexity_key_for_simplify)
+        sorted_alternatives = sorted(self.alternatives, key=GraphRequirementList._complexity_key_for_simplify)
 
         result: list[GraphRequirementList] = []
 
@@ -1294,12 +1301,14 @@ class GraphRequirementSet:
                 result = [req for req in result if not req.is_requirement_superset(current)]
                 result.append(current)
 
-        self._alternatives = result
+        self._alternatives.clear()
+        for it in result:
+            self._alternatives.push_back(GraphRequirementListRef(it))
 
     def __str__(self) -> str:
-        if len(self._alternatives) == 1:
-            return str(self._alternatives[0])
-        parts = [f"({part})" for part in self._alternatives]
+        if self._alternatives.size() == 1:
+            return str(self._alternatives[0].get())
+        parts = [f"({part.get()})" for part in self._alternatives]
         if not parts:
             return "Impossible"
         return " or ".join(parts)
@@ -1321,8 +1330,8 @@ class GraphRequirementSet:
 
     @cython.ccall
     def is_trivial(self) -> cython.bint:
-        if len(self._alternatives) == 1:
-            return self._alternatives[0].is_trivial()
+        if self._alternatives.size() == 1:
+            return self._alternatives[0].get().is_trivial()
         return False
 
     @classmethod
@@ -1338,7 +1347,7 @@ class GraphRequirementSet:
 
     @cython.ccall
     def is_impossible(self) -> cython.bint:
-        return len(self._alternatives) == 0
+        return self._alternatives.empty()
 
     @property
     def as_lines(self) -> Iterator[str]:
@@ -1348,7 +1357,7 @@ class GraphRequirementSet:
             yield "Trivial"
         else:
             for alternative in self._alternatives:
-                yield str(alternative)
+                yield str(alternative.get())
 
     def pretty_print(self, indent: str = "", print_function: typing.Callable[[str], None] = logging.info) -> None:
         for line in sorted(self.as_lines):
@@ -1360,15 +1369,15 @@ class GraphRequirementSet:
 
         for alternative in self._alternatives:
             # None means impossible
-            isolated: GraphRequirementList | None = alternative.isolate_damage_requirements(resources)
+            isolated: GraphRequirementList | None = alternative.get().isolate_damage_requirements(resources)
 
             if isolated is not None:
                 if isolated.is_trivial():
                     result._alternatives.clear()
-                    result._alternatives.append(isolated)
+                    result._alternatives.push_back(GraphRequirementListRef(isolated))
                     break
                 else:
-                    result._alternatives.append(isolated)
+                    result._alternatives.push_back(GraphRequirementListRef(isolated))
 
         return result
 
@@ -1510,7 +1519,7 @@ def resolver_reach_process_nodes(
     initial_node_index: cython.int = initial_state.node.node_index
 
     state: ProcessNodesState = ProcessNodesState()
-    state.checked_nodes.resize(len(all_nodes), 0)
+    state.checked_nodes.resize(len(all_nodes), -1)
     state.nodes_to_check.push_back(initial_node_index)
     state.game_states_to_check.resize(len(all_nodes), -1)
 
@@ -1527,7 +1536,7 @@ def resolver_reach_process_nodes(
     state.game_states_to_check[initial_node_index] = initial_game_state.health_for_damage_requirements()
     state.satisfied_requirement_on_node[initial_node_index].first.set(GraphRequirementSet.trivial())
 
-    reach_nodes: dict[int, int] = {}
+    found_node_order: vector[cython.size_t] = vector[cython.size_t]()
     requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]] = {}
     path_to_node: dict[int, list[int]] = {
         initial_node_index: [],
@@ -1545,7 +1554,7 @@ def resolver_reach_process_nodes(
 
         damage_health_int: cython.int = state.game_states_to_check[node_index]
         damage_health: cython.float = damage_health_int
-        state.game_states_to_check[node_index] = 0
+        state.game_states_to_check[node_index] = -1
 
         node: WorldGraphNode = all_nodes[node_index]
         current_game_state: DamageState
@@ -1560,7 +1569,7 @@ def resolver_reach_process_nodes(
             else:
                 current_game_state = initial_game_state.with_health(damage_health)
 
-        reach_nodes[node_index] = damage_health_int
+        found_node_order.push_back(node_index)
         state.checked_nodes[node_index] = damage_health_int
 
         can_leave_node: cython.bint = True
@@ -1637,7 +1646,11 @@ def resolver_reach_process_nodes(
                         (connection.requirement_without_leaving, new_set)
                     )
 
-    reach_nodes.pop(initial_node_index, None)
+    reach_nodes: dict[int, int] = {
+        node_index: state.checked_nodes[node_index]
+        for node_index in found_node_order
+        if node_index != initial_node_index
+    }
 
     return ProcessNodesResponse(
         reach_nodes=reach_nodes,
@@ -1646,7 +1659,7 @@ def resolver_reach_process_nodes(
     )
 
 
-@cython.locals(node_index=cython.int, a=GraphRequirementList, b=GraphRequirementList)
+@cython.locals(node_index=cython.int)
 @cython.ccall
 def build_satisfiable_requirements(
     logic: Logic,
@@ -1663,17 +1676,16 @@ def build_satisfiable_requirements(
         req_a: GraphRequirementSet
         req_b: GraphRequirementSet
         for req_a, req_b in reqs:
-            for a in req_a.native_alternatives():
-                for b in req_b.native_alternatives():
-                    new_list = a.copy_then_and_with(b)
+            for a_ref in req_a.native_alternatives():
+                for b_ref in req_b.native_alternatives():
+                    new_list = a_ref.get().copy_then_and_with(b_ref.get())
                     if new_list is not None:
                         set_param.add(new_list)
 
-        additional_set: GraphRequirementSet = additional_requirements_list[node_index]
-        additional_alts: list[GraphRequirementList] = additional_set.native_alternatives()
+        additional: GraphRequirementSet = additional_requirements_list[node_index]
         for a in set_param:
-            for b in additional_alts:
-                new_list = a.copy_then_and_with(b)
+            for b in additional.native_alternatives():
+                new_list = a.copy_then_and_with(b.get())
                 if new_list is not None:
                     data.append(new_list)
 
