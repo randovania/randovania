@@ -295,7 +295,7 @@ class ResourceCollection:
     resource_bitmask = cython.declare(Bitmask, visibility="public")
     _resource_array = cython.declare(vector[cython.int])
     _existing_resources: dict[int, ResourceInfo] = cython.declare(dict[int, object])  # type: ignore[arg-type]
-    _damage_reduction_cache: unordered_map[cython.size_t, cython.float]  # type: ignore[call-overload]
+    _damage_reduction_cache: unordered_map[cython.size_t, cython.float]
     _resource_database: ResourceDatabaseView = cython.declare(object)  # type: ignore[assignment]
 
     def __init__(self, resource_database: ResourceDatabaseView, resource_array: vector[cython.int]) -> None:
@@ -459,9 +459,9 @@ class ResourceCollection:
     # @cython.exceptval(check=False)
     def get_damage_reduction(self, resource_index: cython.size_t) -> cython.float:
         if cython.compiled:
-            it = self._damage_reduction_cache.find(resource_index)
-            if it != self._damage_reduction_cache.end():
-                return cython.operator.dereference(it).second
+            it = self._damage_reduction_cache.find(resource_index)  # type: ignore[attr-defined]
+            if it != self._damage_reduction_cache.end():  # type: ignore[attr-defined]
+                return cython.operator.dereference(it).second  # type: ignore[attr-defined]
         else:
             if resource_index in self._damage_reduction_cache:
                 return self._damage_reduction_cache[resource_index]
@@ -1471,7 +1471,7 @@ def _generic_is_damage_state_strictly_better(
     state_ptr: cython.pointer[ProcessNodesState],
 ) -> cython.bint:
     # a >= b -> !(b > a)
-    if not game_state.is_better_than(state_ptr[0].checked_nodes[target_node_index]):  # type: ignore[arg-type]
+    if not game_state.is_better_than(state_ptr[0].checked_nodes[target_node_index]):
         return False
 
     if not game_state.is_better_than(state_ptr[0].game_states_to_check[target_node_index]):
@@ -1574,7 +1574,7 @@ def resolver_reach_process_nodes(
                 current_game_state = initial_game_state.apply_node_heal(node, resources)
                 damage_health = damage_health_int = current_game_state.health_for_damage_requirements()
             else:
-                current_game_state = initial_game_state.with_health(damage_health)
+                current_game_state = initial_game_state.with_health(damage_health_int)
 
         found_node_order.push_back(node_index)
         state.checked_nodes[node_index] = damage_health_int
