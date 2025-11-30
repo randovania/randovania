@@ -100,6 +100,7 @@ if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
             "profile": profiling_mode,  # Enable profiling hooks
         },
         gdb_debug=debug_mode,  # Add Cython debugging support
+        emit_linenums=True,
     )
 
 setup(
