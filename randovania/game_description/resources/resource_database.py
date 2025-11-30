@@ -56,6 +56,7 @@ class ResourceDatabase(ResourceDatabaseView):
     energy_tank_item: ItemResourceInfo
     base_damage_reduction: Callable[[ResourceDatabaseView, ResourceCollection], float] = default_base_damage_reduction
     resource_by_index: list[ResourceInfo | None] = dataclasses.field(default_factory=list)
+    _resource_mapping: dict[int, ResourceInfo] = dataclasses.field(default_factory=dict)
 
     def __post_init__(self) -> None:
         # Reserve index 0 as a placeholder for things without index
