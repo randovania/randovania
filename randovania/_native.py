@@ -224,6 +224,10 @@ else:
         def create(cls) -> typing.Self:
             return cls(0)
 
+        @staticmethod
+        def create_native() -> BitmaskInt:
+            return BitmaskInt(0)
+
         def __eq__(self, other: object) -> cython.bint:
             return isinstance(other, BitmaskInt) and self.equals_to(other)
 
@@ -1508,10 +1512,10 @@ def resolver_reach_process_nodes(
     state: ProcessNodesState = ProcessNodesState()
     state.checked_nodes.resize(len(all_nodes), 0)
     state.nodes_to_check.push_back(initial_node_index)
+    state.game_states_to_check.resize(len(all_nodes), -1)
 
     state_ptr: cython.pointer[ProcessNodesState]
     if cython.compiled:
-        state.game_states_to_check.resize(len(all_nodes), -1)
         state.satisfied_requirement_on_node.resize(
             len(all_nodes), pair[GraphRequirementSetRef, cython.bint](GraphRequirementSetRef(), False)
         )

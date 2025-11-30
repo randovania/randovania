@@ -193,8 +193,8 @@ class ProcessNodesState:
     def __init__(self) -> None:
         self.checked_nodes = Vector[int]()
         self.nodes_to_check = Deque[int]()
+        self.game_states_to_check = Vector[int]()
 
-        self.game_states_to_check = collections.defaultdict(int)  # type: ignore[assignment]
         self.satisfied_requirement_on_node = collections.defaultdict(  # type: ignore[assignment]
             lambda: Pair(PyRef["GraphRequirementSet"](), False)
         )
