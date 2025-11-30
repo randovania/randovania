@@ -295,14 +295,14 @@ class ResourceCollection:
     resource_bitmask = cython.declare(Bitmask, visibility="public")
     _resource_array = cython.declare(vector[cython.int])
     _existing_resources: dict[int, ResourceInfo] = cython.declare(dict[int, object])  # type: ignore[arg-type]
-    _damage_reduction_cache = cython.declare(dict[int, float] | None)  # type: ignore[call-overload]
+    _damage_reduction_cache: unordered_map[cython.size_t, cython.float]  # type: ignore[call-overload]
     _resource_database: ResourceDatabaseView = cython.declare(object)  # type: ignore[assignment]
 
     def __init__(self, resource_database: ResourceDatabaseView, resource_array: vector[cython.int]) -> None:
         self.resource_bitmask = Bitmask.create_native()
         self._resource_array = resource_array
         self._existing_resources = {}
-        self._damage_reduction_cache = None
+        self._damage_reduction_cache = unordered_map[cython.size_t, cython.float]()
         self._resource_database = resource_database
 
     @classmethod
@@ -382,7 +382,7 @@ class ResourceCollection:
         """
         quantity = max(quantity, 0)
         resource_index: cython.size_t = resource.resource_index
-        self._damage_reduction_cache = None
+        self._damage_reduction_cache.clear()
         if self._resource_array.size() <= resource_index:
             self._resize_array_to_fit(resource_index + 1)
         self._resource_array[resource_index] = quantity
@@ -408,7 +408,7 @@ class ResourceCollection:
     @cython.locals(resource=object, quantity=cython.int)
     @cython.ccall
     def add_resource(self, resource: ResourceInfo, quantity: cython.int) -> cython.void:
-        self._damage_reduction_cache = None
+        self._damage_reduction_cache.clear()
 
         resource_index: cython.size_t = resource.resource_index
         if self._resource_array.size() <= resource_index:
@@ -458,16 +458,17 @@ class ResourceCollection:
     @cython.ccall
     # @cython.exceptval(check=False)
     def get_damage_reduction(self, resource_index: cython.size_t) -> cython.float:
-        if self._damage_reduction_cache is None:
-            self._damage_reduction_cache = {}
+        if cython.compiled:
+            it = self._damage_reduction_cache.find(resource_index)
+            if it != self._damage_reduction_cache.end():
+                return cython.operator.dereference(it).second
+        else:
+            if resource_index in self._damage_reduction_cache:
+                return self._damage_reduction_cache[resource_index]
 
-        reduction: float | None = self._damage_reduction_cache.get(resource_index)
-        if reduction is None:
-            reduction = self._resource_database.get_damage_reduction(
-                getattr(self._resource_database, "_resource_mapping")[resource_index], self
-            )
-            self._damage_reduction_cache[resource_index] = reduction
-
+        resource: ResourceInfo = getattr(self._resource_database, "_resource_mapping")[resource_index]
+        reduction: cython.float = self._resource_database.get_damage_reduction(resource, self)
+        self._damage_reduction_cache[resource_index] = reduction
         return reduction
 
     def __copy__(self) -> ResourceCollection:
