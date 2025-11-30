@@ -935,6 +935,9 @@ class GraphRequirementList:
             if resources.get_index(entry.first) < entry.second:
                 return None
 
+        if self._damage_resources.empty():
+            return _trivial_list
+
         result = GraphRequirementList(self._resource_db)
 
         for entry in self._damage_resources:
@@ -1048,6 +1051,10 @@ class GraphRequirementList:
             return 1
         else:
             return 2
+
+
+_trivial_list: GraphRequirementList = GraphRequirementList(None)
+_trivial_list.freeze()
 
 
 @cython.final
