@@ -504,12 +504,12 @@ class GraphRequirementList:
     _other_resources: unordered_map[cython.size_t, cython.int]
     _damage_resources: unordered_map[cython.size_t, cython.int]
 
-    _resource_db: ResourceDatabaseView
+    _resource_db: ResourceDatabaseView | None
     _frozen: cython.bint
 
-    def __init__(self, resource_db: ResourceDatabaseView) -> None:
-        self._set_bitmask = Bitmask.create()
-        self._negate_bitmask = Bitmask.create()
+    def __init__(self, resource_db: ResourceDatabaseView | None) -> None:
+        self._set_bitmask = Bitmask.create_native()
+        self._negate_bitmask = Bitmask.create_native()
         self._other_resources = unordered_map[cython.size_t, cython.int]()
         self._damage_resources = unordered_map[cython.size_t, cython.int]()
 
@@ -519,7 +519,7 @@ class GraphRequirementList:
     @staticmethod
     @cython.cfunc
     def from_components(
-        resource_db: ResourceDatabaseView,
+        resource_db: ResourceDatabaseView | None,
         set_bitmask: Bitmask,
         negate_bitmask: Bitmask,
         other_resources: unordered_map[cython.size_t, cython.int],
@@ -531,6 +531,20 @@ class GraphRequirementList:
         result._negate_bitmask = negate_bitmask
         result._other_resources = other_resources
         result._damage_resources = damage_resources
+        result._resource_db = resource_db
+        result._frozen = False
+        return result
+
+    @staticmethod
+    @cython.cfunc
+    def create_empty(resource_db: ResourceDatabaseView | None) -> GraphRequirementList:
+        """Fast path for creating empty instances without __init__ overhead."""
+        result: GraphRequirementList = GraphRequirementList.__new__(GraphRequirementList)
+        result._set_bitmask = Bitmask.create_native()
+        result._negate_bitmask = Bitmask.create_native()
+        if not cython.compiled:
+            result._other_resources = unordered_map[cython.size_t, cython.int]()
+            result._damage_resources = unordered_map[cython.size_t, cython.int]()
         result._resource_db = resource_db
         result._frozen = False
         return result
@@ -629,7 +643,7 @@ class GraphRequirementList:
         )
 
     def __copy__(self) -> GraphRequirementList:
-        result = GraphRequirementList(self._resource_db)
+        result = GraphRequirementList.create_empty(self._resource_db)
         result._set_bitmask = self._set_bitmask.copy()
         result._negate_bitmask = self._negate_bitmask.copy()
         result._other_resources = copy.copy(self._other_resources)
@@ -848,7 +862,7 @@ class GraphRequirementList:
     def copy_then_remove_entries_for_set_resources(self, resources: ResourceCollection) -> GraphRequirementList | None:
         from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
-        result = GraphRequirementList(self._resource_db)
+        result = GraphRequirementList.create_empty(self._resource_db)
 
         for resource in self.all_resources(include_damage=False):
             amount, negate = self.get_requirement_for(resource)
@@ -945,11 +959,11 @@ class GraphRequirementList:
         if self._damage_resources.empty():
             return _trivial_list
 
-        result = GraphRequirementList(self._resource_db)
+        result = GraphRequirementList.create_empty(self._resource_db)
 
         for entry in self._damage_resources:
             if resources.get_damage_reduction(entry.first) == 0:
-                return GraphRequirementList(self._resource_db)
+                return GraphRequirementList.create_empty(self._resource_db)
 
             result._damage_resources[entry.first] = entry.second
         return result
@@ -1009,7 +1023,7 @@ class GraphRequirementList:
     ) -> GraphRequirementList | None:
         """Used by resolver.py for `_simplify_additional_requirement_set`"""
 
-        result = GraphRequirementList(self._resource_db)
+        result = GraphRequirementList.create_empty(self._resource_db)
         something_set: cython.bint = False
 
         for resource_index in self._set_bitmask.get_set_bits():
