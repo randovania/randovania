@@ -30,7 +30,7 @@ class NoOpDamageState(DamageState):
 
     @override
     def is_better_than(self, other: int) -> bool:
-        return False
+        return other < 0
 
     @override
     def with_health(self, health: int) -> Self:

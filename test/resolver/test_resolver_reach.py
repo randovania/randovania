@@ -57,6 +57,4 @@ def test_possible_actions_with_event():
     assert options == [event]
     event.has_all_resources.assert_called_once_with(state.resources)
     logic.get_additional_requirements.assert_called_once_with(event)
-    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(
-        state.resources, damage_state.health_for_damage_requirements.return_value
-    )
+    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(state.resources, damage_state)
