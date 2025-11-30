@@ -157,7 +157,7 @@ if cython.compiled:
 
             return False
 
-        @cython.locals(idx=cython.size_t)
+        @cython.locals(idx=cython.size_t, self_mask=cython.ulonglong, other_mask=cython.ulonglong)
         @cython.ccall
         # @cython.exceptval(check=False)
         def is_subset_of(self, other: Bitmask) -> cython.bint:
@@ -165,7 +165,9 @@ if cython.compiled:
                 return False
 
             for idx in range(self._masks.size()):
-                if self._masks[idx] & other._masks[idx] != self._masks[idx]:
+                self_mask = self._masks[idx]
+                other_mask = other._masks[idx]
+                if self_mask & other_mask != self_mask:
                     return False
 
             return True
