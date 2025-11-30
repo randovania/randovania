@@ -242,7 +242,7 @@ async def _inner_advance_depth(
 
             # If we can go back to where we were without worsening the damage state, it's a simple safe node
             if state.node in potential_reach.nodes and not state.damage_state.is_better_than(
-                potential_reach.game_state_at_node(state.node.node_index)
+                potential_reach.health_for_damage_requirements_at_node(state.node.node_index)
             ):
                 new_result = await _inner_advance_depth(
                     state=potential_state,

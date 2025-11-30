@@ -76,10 +76,14 @@ class EnergyTankDamageState(DamageState):
             return result
 
     @override
-    def is_better_than(self, other: DamageState | None) -> bool:
-        if other is None:
-            return True
-        return self._energy > other._energy  # type: ignore[attr-defined]
+    def is_better_than(self, other: int) -> bool:
+        return self._energy > other
+
+    @override
+    def with_health(self, health: int) -> Self:
+        result = self._duplicate()
+        result._energy = health
+        return result
 
     @override
     def apply_damage(self, damage: float) -> Self:

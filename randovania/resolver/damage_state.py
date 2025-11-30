@@ -30,9 +30,12 @@ class DamageState(ABC):
         """Which items give help with the base damage reduction."""
 
     @abstractmethod
-    def is_better_than(self, other: DamageState | None) -> bool:
-        """Is this state strictly better than other, regarding damage requirements.
-        Always True when other is None."""
+    def is_better_than(self, other: int) -> bool:
+        """Is this state strictly better than other, via the `health_for_damage_requirements` value."""
+
+    @abstractmethod
+    def with_health(self, health: int) -> Self:
+        """Creates a new copy of this state but with the given health value."""
 
     @abstractmethod
     def apply_damage(self, damage: float) -> Self:

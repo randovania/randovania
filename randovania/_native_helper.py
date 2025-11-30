@@ -3,13 +3,10 @@ from __future__ import annotations
 import collections
 import typing
 
-import cython
-
 if typing.TYPE_CHECKING:
     from collections.abc import Callable, Iterator
 
     from randovania._native import GraphRequirementSet
-    from randovania.resolver.damage_state import DamageState
 
 T = typing.TypeVar("T")
 
@@ -188,16 +185,16 @@ class Pair[T, U]:
 
 
 class ProcessNodesState:
-    checked_nodes: Vector[cython.p_void]
+    checked_nodes: Vector[int]
     nodes_to_check: Deque[int]
-    game_states_to_check: Vector[PyRef[DamageState]]
+    game_states_to_check: Vector[int]
     satisfied_requirement_on_node: Vector[Pair[PyRef[GraphRequirementSet], bool]]
 
     def __init__(self) -> None:
-        self.checked_nodes = Vector[cython.p_void]()
+        self.checked_nodes = Vector[int]()
         self.nodes_to_check = Deque[int]()
 
-        self.game_states_to_check = collections.defaultdict(PyRef["DamageState"])  # type: ignore[assignment]
+        self.game_states_to_check = collections.defaultdict(int)  # type: ignore[assignment]
         self.satisfied_requirement_on_node = collections.defaultdict(  # type: ignore[assignment]
             lambda: Pair(PyRef["GraphRequirementSet"](), False)
         )

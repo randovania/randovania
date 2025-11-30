@@ -338,7 +338,9 @@ def _determine_valid_weaknesses(
             # Small optimization to only calculate the reach back, if the locked door is even a viable option
             state_from_target = state.copy()
             state_from_target.node = target_graph
-            state_from_target.damage_state = reach.game_state_at_node(target_graph.node_index)
+            state_from_target.damage_state = state.damage_state.with_health(
+                reach.health_for_damage_requirements_at_node(target_graph.node_index)
+            )
             reach_from_target = ResolverReach.calculate_reach(logic, state_from_target)
             is_source_reachable_from_target = dock_graph in reach_from_target.nodes
 

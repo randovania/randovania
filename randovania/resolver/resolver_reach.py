@@ -17,7 +17,7 @@ if typing.TYPE_CHECKING:
 
 class ResolverReach:
     _node_indices: tuple[int, ...]
-    _game_state_at_node: dict[int, DamageState]
+    _health_at_node: dict[int, int]
     _path_to_node: dict[int, list[int]]
     _satisfiable_requirements_for_additionals: frozenset[GraphRequirementList]
     _logic: Logic
@@ -28,8 +28,8 @@ class ResolverReach:
         for index in self._node_indices:
             yield all_nodes[index]
 
-    def game_state_at_node(self, index: int) -> DamageState:
-        return self._game_state_at_node[index]
+    def health_for_damage_requirements_at_node(self, index: int) -> int:
+        return self._health_at_node[index]
 
     @property
     def satisfiable_requirements_for_additionals(self) -> frozenset[GraphRequirementList]:
@@ -44,13 +44,13 @@ class ResolverReach:
 
     def __init__(
         self,
-        nodes: dict[int, DamageState],
+        nodes: dict[int, int],
         path_to_node: dict[int, list[int]],
         requirements_for_additionals: frozenset[GraphRequirementList],
         logic: Logic,
     ):
         self._node_indices = tuple(nodes.keys())
-        self._game_state_at_node = nodes
+        self._health_at_node = nodes
         self._logic = logic
         self._path_to_node = path_to_node
         self._satisfiable_requirements_for_additionals = requirements_for_additionals
@@ -81,8 +81,9 @@ class ResolverReach:
     def possible_actions(self, state: State) -> Iterator[tuple[WorldGraphNode, DamageState]]:
         for node in self.collectable_resource_nodes(state.resources):
             additional_requirements = self._logic.get_additional_requirements(node)
-            game_state = self._game_state_at_node[node.node_index]
-            if additional_requirements.satisfied(state.resources, game_state.health_for_damage_requirements()):
+            health = self.health_for_damage_requirements_at_node(node.node_index)
+            game_state = state.damage_state.with_health(health)
+            if additional_requirements.satisfied(state.resources, health):
                 yield node, game_state
             else:
                 self._satisfiable_requirements_for_additionals = self._satisfiable_requirements_for_additionals.union(
@@ -94,6 +95,6 @@ class ResolverReach:
         for node in self.nodes:
             if not node.has_all_resources(resources) and node.requirement_to_collect.satisfied(
                 resources,
-                self._game_state_at_node[node.node_index].health_for_damage_requirements(),
+                self.health_for_damage_requirements_at_node(node.node_index),
             ):
                 yield node

@@ -59,15 +59,14 @@ cdef extern from *:
 
         int has_value() const {return obj != NULL;}
     };
-    typedef PyRef DamageStateRef;
     typedef PyRef GraphRequirementSetRef;
     typedef PyRef ResourceInfoRef;
 
     class ProcessNodesState {
     public:
-        std::vector<void*> checked_nodes;
+        std::vector<int> checked_nodes;
         std::deque<int> nodes_to_check;
-        std::vector<DamageStateRef> game_states_to_check;
+        std::vector<int> game_states_to_check;
         std::vector<std::pair<GraphRequirementSetRef, bool>> satisfied_requirement_on_node;
 
         ProcessNodesState() {}
@@ -83,14 +82,13 @@ cdef extern from *:
         void set(object set_obj)
         int has_value()
 
-    ctypedef PyRef DamageStateRef
     ctypedef PyRef GraphRequirementSetRef
     ctypedef PyRef ResourceInfoRef
    
     cdef cppclass ProcessNodesState:
-        vector[void*] checked_nodes
+        vector[int] checked_nodes
         deque[int] nodes_to_check
-        vector[DamageStateRef] game_states_to_check
+        vector[int] game_states_to_check
         vector[pair[GraphRequirementSetRef, bool]] satisfied_requirement_on_node
 
         ProcessNodesState()
