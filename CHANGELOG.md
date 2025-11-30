@@ -75,6 +75,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Chozo Ruins
 
 - Changed: Revised the requirements for fighting Chozo Ghosts and made them consistent. Fighting multiple of them without Charge Beam is now Intermediate Combat, fighting a single one is still Beginner Combat.
+- Added: Ruined Shrine: Path from the Tower of Light Access Door to the  Ruined Shrine Access Door via a Beginner Bomb Jump and Spider Ball
+- Added: Ruined Shrine: Multiple ways to go from the Tower of Light Access Door to the top of the Half-Pipe near the pickup:
+    - Space Jump and Intermediate Standable Terrain
+    - No Space Jump, Expert Standable Terrain and an Intermediate L-Jump
+- Added: Ruined Shrine: An Intermediate dash from the top of the Half-Pipe to the Tower of Light Access Door with Space Jump.
+- Changed: Ruined Shrine: Scan Dashing from the Ruined Shrine Access Door over the fight trigger to the Pedestal now also requires Intermediate Knowledge.
+- Changed: Ruined Shrine: The NSJ escape from the pit now requires an Intermediate Dash, Intermediate L-Jump and Intermediate Standable Terrain.
+- Added: Ruined Shrine: Health requirements for dealing with the Beetles
+- Changed: Ruined Shrine: Defeating the Beetles with only Bombs has been bumped to Expert Combat.
+- Changed: Ruined Shrine: Getting the Morph Pickup after triggering the beetle fight via escaping the pit and dashing over the wall to the item now requires an Intermediate L-Jump, Intermediate Standable Terrain and either an Expert Combat Dash or an Advanced Scan Dash.
+- Fixed: Ruined Shrine Access: Requirements for dealing with the enemies in the room.
 - Fixed: Sunchamber Access: Requirements for dealing with the enemies in the room.
 - Fixed: Sunchamber Lobby: Requirements for dealing with the enemies in the room.
 - Changed: Sunchamber: Jumping onto the plant after defeating the Chozo Ghosts is now trivial.
