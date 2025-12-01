@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import copy
+import dataclasses
 import functools
 import logging
 import typing
@@ -21,7 +22,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
     from randovania.generator.old_generator_reach import GraphData, RustworkXGraph
     from randovania.graph.state import State
-    from randovania.graph.world_graph import WorldGraph, WorldGraphNode, WorldGraphNodeConnection
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
     from randovania.resolver.logic import Logic
@@ -1407,6 +1408,36 @@ class GraphRequirementSet:
         return result
 
 
+@cython.final
+@cython.cclass
+@dataclasses.dataclass()
+class WorldGraphNodeConnection:
+    target: cython.int
+    """The destination node for this connection."""
+
+    requirement: GraphRequirementSet
+    """The requirements for crossing this connection, with all extras already processed."""
+
+    requirement_with_self_dangerous: GraphRequirementSet
+    """`requirement` combined with any resources provided by the source node that are dangerous."""
+
+    requirement_without_leaving: GraphRequirementSet
+    """
+    The requirements for crossing this connection, but excluding the nodes `requirement_to_leave`.
+    Useful for the resolver to calculate satisfiable requirements on rollback.
+    """
+
+    @classmethod
+    def trivial(cls, target: WorldGraphNode) -> WorldGraphNodeConnection:
+        trivial_requirement = GraphRequirementSet.trivial()
+        return cls(
+            target.node_index,
+            trivial_requirement,
+            trivial_requirement,
+            trivial_requirement,
+        )
+
+
 class ProcessNodesResponse(typing.NamedTuple):
     reach_nodes: dict[int, int]
     requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]]
@@ -1605,9 +1636,10 @@ def resolver_reach_process_nodes(
             can_leave_node = resource_gain_bitmask.is_subset_of(resource_bitmask)
 
         node_connections: list[WorldGraphNodeConnection] = node.connections
+        connection: WorldGraphNodeConnection
         for connection in node_connections:
-            target_node_index: cython.int = connection[0]
-            requirement: GraphRequirementSet = connection[1]
+            target_node_index: cython.int = connection.target
+            requirement: GraphRequirementSet = connection.requirement
 
             if use_energy_fast_path:
                 if cython.compiled:
