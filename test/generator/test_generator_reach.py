@@ -28,7 +28,7 @@ from randovania.generator import reach_lib
 from randovania.generator.old_generator_reach import OldGeneratorReach, RustworkXGraph
 from randovania.generator.pickup_pool import pool_creator
 from randovania.generator.reach_lib import advance_after_action
-from randovania.graph import world_graph
+from randovania.graph import world_graph_factory
 from randovania.graph.graph_requirement import GraphRequirementSet
 from randovania.graph.state import State
 from randovania.layout import filtered_database
@@ -210,7 +210,7 @@ def test_basic_search_with_translator_gate(
     region_list.configurable_nodes[translator_identif] = ResourceRequirement.simple(scan_visor)
 
     resources = ResourceCollection.from_dict(echoes_resource_database, {scan_visor: 1 if has_translator else 0})
-    graph = world_graph.create_graph(
+    graph = world_graph_factory.create_graph(
         game,
         GamePatches.create_from_game(game, 0, None),  # type: ignore[arg-type]
         resources,

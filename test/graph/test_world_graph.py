@@ -9,7 +9,7 @@ from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.graph import world_graph
+from randovania.graph import world_graph_factory
 from randovania.graph.graph_requirement import create_requirement_list, create_requirement_set
 from randovania.graph.world_graph import WorldGraphNodeConnection
 
@@ -22,7 +22,7 @@ def test_create_graph(
     blank_game_patches,
 ) -> None:
     starting_resources = blank_game_description.resource_database.create_resource_collection()
-    graph = world_graph.create_graph(
+    graph = world_graph_factory.create_graph(
         blank_game_description,
         blank_game_patches,
         starting_resources,
