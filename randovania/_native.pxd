@@ -18,6 +18,9 @@ cdef extern from *:
             Py_INCREF(obj);
             return obj;
         }
+        PyObject* raw() {
+            return obj;
+        }
         PyRef() {obj = NULL;}
         PyRef(PyObject* set_obj) {
             Py_XINCREF(set_obj); 
@@ -79,6 +82,7 @@ cdef extern from *:
         PyRef(PyObject* set_obj)
         PyRef(object set_obj)
         object get()
+        PyObject* raw()
         void release()
         void set(object set_obj)
         int has_value()

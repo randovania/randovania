@@ -6,6 +6,8 @@ import typing
 if typing.TYPE_CHECKING:
     from collections.abc import Callable, Iterator
 
+    import cython
+
     from randovania._native import GraphRequirementSet
 
 T = typing.TypeVar("T")
@@ -176,6 +178,9 @@ class PyImmutableRef[T: object]:
         self._data = value
 
     def get(self) -> T:
+        return self._data
+
+    def raw(self) -> cython.p_void:
         return self._data
 
 

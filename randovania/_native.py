@@ -1101,8 +1101,19 @@ class GraphRequirementSet:
         self._alternatives = vector[GraphRequirementListRef]()
         self._frozen = False
 
+    @cython.cfunc
+    @cython.inline
+    @staticmethod
+    def create_empty() -> GraphRequirementSet:
+        """Fast path for creating empty instances without __init__ overhead."""
+        result: GraphRequirementSet = GraphRequirementSet.__new__(GraphRequirementSet)
+        if not cython.compiled:
+            result._alternatives = vector[GraphRequirementListRef]()
+        result._frozen = False
+        return result
+
     def __copy__(self) -> GraphRequirementSet:
-        result = GraphRequirementSet()
+        result = GraphRequirementSet.create_empty()
         for it in self._alternatives:
             result._alternatives.push_back(GraphRequirementListRef(copy.copy(it.get())))
         return result
@@ -1153,10 +1164,10 @@ class GraphRequirementSet:
     def alternatives(self) -> Sequence[GraphRequirementList]:
         return [it.get() for it in self._alternatives]
 
-    @cython.cfunc
+    @cython.ccall
     @cython.inline
-    def native_alternatives(self) -> vector[GraphRequirementListRef]:
-        return self._alternatives
+    def get_alternative(self, index: cython.int) -> GraphRequirementList:
+        return self._alternatives[index].get()
 
     @cython.ccall
     @cython.inline
@@ -1178,7 +1189,7 @@ class GraphRequirementSet:
 
         if cython.compiled:
             for alt in self._alternatives:
-                if cython.cast(GraphRequirementList, alt.get()).satisfied(resources, energy):
+                if cython.cast(GraphRequirementList, alt.raw()).satisfied(resources, energy):
                     return True
         else:
             for alt in self._alternatives:
@@ -1196,7 +1207,7 @@ class GraphRequirementSet:
         damage: cython.float = float("inf")
 
         for alt in self._alternatives:
-            new_dmg: cython.float = cython.cast(GraphRequirementList, alt.get()).damage(resources)
+            new_dmg: cython.float = cython.cast(GraphRequirementList, alt.raw()).damage(resources)
             if new_dmg <= 0.0:
                 return new_dmg
             if new_dmg < damage:
@@ -1214,14 +1225,14 @@ class GraphRequirementSet:
 
         idx: cython.size_t
         for idx in range(self._alternatives.size() - 1, -1, -1):
-            if not self._alternatives[idx].get().and_with(merge):
+            if not cython.cast(GraphRequirementList, self._alternatives[idx].raw()).and_with(merge):
                 self._alternatives.erase(self._alternatives.begin() + idx)
 
     @cython.ccall
     def copy_then_all_alternative_and_with(self, merge: GraphRequirementList) -> GraphRequirementSet:
-        result = GraphRequirementSet()
+        result = GraphRequirementSet.create_empty()
         for it in self._alternatives:
-            new_alt = it.get().copy_then_and_with(merge)
+            new_alt = cython.cast(GraphRequirementList, it.raw()).copy_then_and_with(merge)
             if new_alt is not None:
                 result.add_alternative(new_alt)
         return result
@@ -1232,11 +1243,14 @@ class GraphRequirementSet:
         Given two `GraphRequirementSet` A and B, creates a new GraphRequirementSet that is only satisfied when
         both A and B are satisfied.
         """
+        result: GraphRequirementSet
         if right._alternatives.size() == 1:
-            result = GraphRequirementSet()
+            result = GraphRequirementSet.create_empty()
             right_req = right._alternatives[0]
             for left_alt in self._alternatives:
-                new_alt = left_alt.get().copy_then_and_with(right_req.get())
+                new_alt = cython.cast(GraphRequirementList, left_alt.raw()).copy_then_and_with(
+                    cython.cast(GraphRequirementList, right_req.raw())
+                )
                 if new_alt is not None:
                     result._alternatives.push_back(GraphRequirementListRef(new_alt))
             return result
@@ -1245,11 +1259,13 @@ class GraphRequirementSet:
             return right.copy_then_and_with_set(self)
 
         else:
-            result = GraphRequirementSet()
+            result = GraphRequirementSet.create_empty()
 
             for left_alt in self._alternatives:
                 for right_alt in right._alternatives:
-                    new_alt = left_alt.get().copy_then_and_with(right_alt.get())
+                    new_alt = cython.cast(GraphRequirementList, left_alt.raw()).copy_then_and_with(
+                        cython.cast(GraphRequirementList, right_alt.raw())
+                    )
                     if new_alt is not None:
                         result._alternatives.push_back(GraphRequirementListRef(new_alt))
 
@@ -1257,7 +1273,7 @@ class GraphRequirementSet:
 
     @cython.ccall
     def copy_then_remove_entries_for_set_resources(self, resources: ResourceCollection) -> GraphRequirementSet:
-        result = GraphRequirementSet()
+        result = GraphRequirementSet.create_empty()
         for alternative in self._alternatives:
             new_entry = alternative.get().copy_then_remove_entries_for_set_resources(resources)
             if new_entry is not None:
@@ -1372,11 +1388,13 @@ class GraphRequirementSet:
 
     @cython.ccall
     def isolate_damage_requirements(self, resources: ResourceCollection) -> GraphRequirementSet:
-        result = GraphRequirementSet()
+        result = GraphRequirementSet.create_empty()
 
         for alternative in self._alternatives:
             # None means impossible
-            isolated: GraphRequirementList | None = alternative.get().isolate_damage_requirements(resources)
+            isolated: GraphRequirementList | None = cython.cast(
+                GraphRequirementList, alternative.raw()
+            ).isolate_damage_requirements(resources)
 
             if isolated is not None:
                 if isolated.is_trivial():
@@ -1445,18 +1463,18 @@ def _combine_damage_requirements(
         if isolated_satisfied.num_alternatives() == 1:
             # `isolated_requirement` is always the result of `isolate_damage_requirements`, so a new, mutable, copy.
             # (or trivial, but that case is above)
-            isolated_requirement.all_alternative_and_with(isolated_satisfied.alternatives[0])
+            isolated_requirement.all_alternative_and_with(isolated_satisfied._alternatives[0].get())
             result = isolated_requirement
 
         elif isolated_requirement.num_alternatives() == 1:
             if should_isolate_satisfied:
                 # Same as `isolated_requirement` above
                 result = isolated_satisfied
-                isolated_satisfied.all_alternative_and_with(isolated_requirement.alternatives[0])
+                isolated_satisfied.all_alternative_and_with(isolated_requirement.get_alternative(0))
             else:
                 # But it's already been isolated before and stored in satisfied_requirement_on_node
                 # so don't modify it. Still faster than the full copy_then_and_with_set
-                result = isolated_satisfied.copy_then_all_alternative_and_with(isolated_requirement.alternatives[0])
+                result = isolated_satisfied.copy_then_all_alternative_and_with(isolated_requirement.get_alternative(0))
         else:
             result = isolated_requirement.copy_then_and_with_set(isolated_satisfied)
 
@@ -1680,18 +1698,19 @@ def build_satisfiable_requirements(
         set_param: set[GraphRequirementList] = set()
         new_list: GraphRequirementList | None
 
-        req_a: GraphRequirementSet
-        req_b: GraphRequirementSet
-        for req_a, req_b in reqs:
-            for a_ref in req_a.native_alternatives():
-                for b_ref in req_b.native_alternatives():
+        for idx in range(len(reqs)):
+            entry: tuple[GraphRequirementSet, GraphRequirementSet] = reqs[idx]
+            req_a: GraphRequirementSet = entry[0]
+            req_b: GraphRequirementSet = entry[1]
+            for a_ref in req_a._alternatives:
+                for b_ref in req_b._alternatives:
                     new_list = a_ref.get().copy_then_and_with(b_ref.get())
                     if new_list is not None:
                         set_param.add(new_list)
 
         additional: GraphRequirementSet = additional_requirements_list[node_index]
         for a in set_param:
-            for b in additional.native_alternatives():
+            for b in additional._alternatives:
                 new_list = a.copy_then_and_with(b.get())
                 if new_list is not None:
                     data.append(new_list)
