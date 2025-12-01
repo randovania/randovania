@@ -70,6 +70,7 @@ cythonize_files = [
     "randovania/lib/bitmask.py",
     "randovania/game_description/resources/resource_collection.py",
     "randovania/graph/graph_requirement.py",
+    "randovania/graph/world_graph.py",
     "randovania/graph/state_native.py",
     "randovania/resolver/resolver_native.py",
     "randovania/generator/generator_native.py",

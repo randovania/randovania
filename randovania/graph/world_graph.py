@@ -3,6 +3,8 @@ from __future__ import annotations
 import dataclasses
 import typing
 
+import cython
+
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.graph.graph_requirement import GraphRequirementSet
 from randovania.lib.bitmask import Bitmask
@@ -25,8 +27,10 @@ if typing.TYPE_CHECKING:
 
 
 @dataclasses.dataclass()
+@cython.final
+@cython.cclass
 class WorldGraphNodeConnection:
-    target: NodeIndex
+    target: cython.int
     """The destination node for this connection."""
 
     requirement: GraphRequirementSet
@@ -52,19 +56,15 @@ class WorldGraphNodeConnection:
         )
 
 
-def _empty_has_all_resources(resources: ResourceCollection) -> bool:
+def _empty_has_all_resources(self, resources: ResourceCollection) -> bool:
     return True
 
 
-@dataclasses.dataclass(slots=True)
-class WorldGraphNode:
-    """A node of a WorldGraph. Focused on being a very efficient data structures for the resolver and generator."""
-
+@dataclasses.dataclass()
+@cython.cclass
+class BaseWorldGraphNode:
     node_index: int
     """The index of this node in WorldGraph.nodes, for quick reference. Does not necessarily match Node.node_index"""
-
-    identifier: NodeIdentifier
-    """The name/identification of this node. Matches the identifier of `database_node`, if that exists."""
 
     heal: bool
     """If passing by this node should fully heal."""
@@ -74,6 +74,23 @@ class WorldGraphNode:
     Which nodes can be reached from this one and the requirements for so,
     such as in-area connections, Dock connections, TeleporterNetwork connections and requirement_to_leave.
     """
+
+    resource_gain_bitmask: Bitmask = dataclasses.field(init=False, default_factory=Bitmask.create)
+    """
+    Bitmask of all ResourceInfo indices granted by this node for fast checking.
+    Mask is created in the same way as RequirementList and ResourceCollection.
+    """
+
+    require_collected_to_leave: bool
+    """When set, leaving this node requires it to have been collected."""
+
+
+@dataclasses.dataclass()
+class WorldGraphNode(BaseWorldGraphNode):
+    """A node of a WorldGraph. Focused on being a very efficient data structures for the resolver and generator."""
+
+    identifier: NodeIdentifier
+    """The name/identification of this node. Matches the identifier of `database_node`, if that exists."""
 
     back_connections: list[NodeIndex] = dataclasses.field(init=False, default_factory=list)
     """
@@ -103,19 +120,10 @@ class WorldGraphNode:
     This is method so it can be optimised based on the number of resources this node provides.
     """
 
-    resource_gain_bitmask: Bitmask = dataclasses.field(init=False, default_factory=Bitmask.create)
-    """
-    Bitmask of all ResourceInfo indices granted by this node for fast checking.
-    Mask is created in the same way as RequirementList and ResourceCollection.
-    """
-
     requirement_to_collect: GraphRequirementSet
     """
     A requirement that must be satisfied before being able to collect
     """
-
-    require_collected_to_leave: bool
-    """When set, leaving this node requires it to have been collected."""
 
     pickup_index: PickupIndex | None
     """The pickup index associated with this node."""
