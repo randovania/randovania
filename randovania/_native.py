@@ -1498,6 +1498,7 @@ def _generic_is_damage_state_strictly_better(
     return True
 
 
+@cython.exceptval(check=False)
 @cython.cfunc
 def _energy_is_damage_state_strictly_better(
     damage_health: cython.float,
@@ -1582,13 +1583,14 @@ def resolver_reach_process_nodes(
         state.game_states_to_check[node_index] = -1
 
         node: WorldGraphNode = all_nodes[node_index]
+        node_heal: cython.bint = node.heal
         current_game_state: DamageState
 
         if use_energy_fast_path:
-            if node.heal:
+            if node_heal:
                 damage_health = damage_health_int = fast_path_maximum_energy
         else:
-            if node.heal:
+            if node_heal:
                 current_game_state = initial_game_state.apply_node_heal(node, resources)
                 damage_health = damage_health_int = current_game_state.health_for_damage_requirements()
             else:
@@ -1636,13 +1638,14 @@ def resolver_reach_process_nodes(
                 if damage <= 0:
                     state.game_states_to_check[target_node_index] = damage_health_int
                 elif use_energy_fast_path:
-                    state.game_states_to_check[target_node_index] = max(damage_health_int - int(damage), 0)
+                    damage_int: cython.int = int(damage)
+                    state.game_states_to_check[target_node_index] = max(damage_health_int - damage_int, 0)
                 else:
                     state.game_states_to_check[target_node_index] = current_game_state.apply_damage(
                         damage
                     ).health_for_damage_requirements()
 
-                if node.heal:
+                if node_heal:
                     state.satisfied_requirement_on_node[target_node_index].first.set(requirement)
                     state.satisfied_requirement_on_node[target_node_index].second = True
                 else:
@@ -1661,13 +1664,16 @@ def resolver_reach_process_nodes(
             else:
                 # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                 # Note we ignore the 'additional requirements' here because it'll be added on the end.
-                if not connection.requirement_without_leaving.satisfied(resources, damage_health):
-                    if target_node_index not in requirements_excluding_leaving_by_node:
-                        requirements_excluding_leaving_by_node[target_node_index] = []
+                if not cython.cast(GraphRequirementSet, connection.requirement_without_leaving).satisfied(
+                    resources, damage_health
+                ):
+                    target_node_index_py: int = target_node_index
+                    if target_node_index_py not in requirements_excluding_leaving_by_node:
+                        requirements_excluding_leaving_by_node[target_node_index_py] = []
 
                     new_set: GraphRequirementSet | None = state.satisfied_requirement_on_node[node_index].first.get()
                     assert new_set is not None
-                    requirements_excluding_leaving_by_node[target_node_index].append(
+                    requirements_excluding_leaving_by_node[target_node_index_py].append(
                         (connection.requirement_without_leaving, new_set)
                     )
 
