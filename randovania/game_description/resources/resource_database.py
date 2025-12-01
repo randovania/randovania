@@ -72,6 +72,7 @@ class ResourceDatabase(ResourceDatabaseView):
                 assert resource.resource_type == resource_type
                 assert self.resource_by_index[resource.resource_index] is None
                 self.resource_by_index[resource.resource_index] = resource
+                self._resource_mapping[resource.resource_index] = resource
 
     def get_by_type(
         self,
