@@ -5,7 +5,6 @@ import copy
 import dataclasses
 import typing
 
-from randovania._native import WorldGraphNodeConnection
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock import DockLockType, DockWeakness
 from randovania.game_description.db.dock_node import DockNode
@@ -45,6 +44,34 @@ if typing.TYPE_CHECKING:
         ResourceInfo,
         ResourceQuantity,
     )
+
+
+@dataclasses.dataclass()
+class WorldGraphNodeConnection:
+    target: NodeIndex
+    """The destination node for this connection."""
+
+    requirement: GraphRequirementSet
+    """The requirements for crossing this connection, with all extras already processed."""
+
+    requirement_with_self_dangerous: GraphRequirementSet
+    """`requirement` combined with any resources provided by the source node that are dangerous."""
+
+    requirement_without_leaving: GraphRequirementSet
+    """
+    The requirements for crossing this connection, but excluding the nodes `requirement_to_leave`.
+    Useful for the resolver to calculate satisfiable requirements on rollback.
+    """
+
+    @classmethod
+    def trivial(cls, target: WorldGraphNode) -> WorldGraphNodeConnection:
+        trivial_requirement = GraphRequirementSet.trivial()
+        return cls(
+            target.node_index,
+            trivial_requirement,
+            trivial_requirement,
+            trivial_requirement,
+        )
 
 
 def _empty_has_all_resources(resources: ResourceCollection) -> bool:

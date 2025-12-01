@@ -114,6 +114,13 @@ if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
                 extra_compile_args=extra_compile_args,
                 extra_link_args=extra_link_args,
             ),
+            Extension(
+                "randovania.resolver.resolver_native",
+                sources=["randovania/resolver/resolver_native.py"],
+                language="c++",
+                extra_compile_args=extra_compile_args,
+                extra_link_args=extra_link_args,
+            ),
         ],
         annotate=True,
         compiler_directives={

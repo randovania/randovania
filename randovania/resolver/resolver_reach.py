@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import typing
 
-from randovania import _native
+from randovania.resolver import resolver_native
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterator
@@ -57,7 +57,7 @@ class ResolverReach:
 
     @classmethod
     def calculate_reach(cls, logic: Logic, initial_state: State) -> ResolverReach:
-        response = _native.resolver_reach_process_nodes(
+        response = resolver_native.resolver_reach_process_nodes(
             logic,
             initial_state,
         )
@@ -69,7 +69,7 @@ class ResolverReach:
             requirements_excluding_leaving_by_node.pop(node_index)
 
         if requirements_excluding_leaving_by_node:
-            satisfiable_requirements_for_additionals = _native.build_satisfiable_requirements(
+            satisfiable_requirements_for_additionals = resolver_native.build_satisfiable_requirements(
                 logic,
                 requirements_excluding_leaving_by_node,
             )
