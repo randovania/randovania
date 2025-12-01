@@ -62,7 +62,7 @@ def _combine_damage_requirements(
     state_ptr: cython.pointer[ProcessNodesState],
     input_index: cython.int,
     output_index: cython.int,
-) -> None:
+) -> cython.void:
     """
     Helper function combining damage requirements from requirement and satisfied_requirement. Other requirements are
     considered either trivial or impossible.
@@ -86,8 +86,9 @@ def _combine_damage_requirements(
         return
 
     isolated_requirement: GraphRequirementSet = requirement.isolate_damage_requirements(resources)
-    isolated_satisfied: GraphRequirementSet | None = state_ptr[0].satisfied_requirement_on_node[input_index].first.get()
-    assert isolated_satisfied is not None
+    isolated_satisfied: GraphRequirementSet = cython.cast(
+        GraphRequirementSet, state_ptr[0].satisfied_requirement_on_node[input_index].first.raw()
+    )
 
     should_isolate_satisfied: cython.bint = state_ptr[0].satisfied_requirement_on_node[input_index].second
     if should_isolate_satisfied:
@@ -104,14 +105,18 @@ def _combine_damage_requirements(
         if isolated_satisfied.num_alternatives() == 1:
             # `isolated_requirement` is always the result of `isolate_damage_requirements`, so a new, mutable, copy.
             # (or trivial, but that case is above)
-            isolated_requirement.all_alternative_and_with(isolated_satisfied._alternatives[0].get())
+            isolated_requirement.all_alternative_and_with(
+                cython.cast(GraphRequirementList, isolated_satisfied._alternatives[0].raw())
+            )
             result = isolated_requirement
 
         elif isolated_requirement.num_alternatives() == 1:
             if should_isolate_satisfied:
                 # Same as `isolated_requirement` above
+                isolated_satisfied.all_alternative_and_with(
+                    cython.cast(GraphRequirementList, isolated_requirement._alternatives[0].raw())
+                )
                 result = isolated_satisfied
-                isolated_satisfied.all_alternative_and_with(isolated_requirement.get_alternative(0))
             else:
                 # But it's already been isolated before and stored in satisfied_requirement_on_node
                 # so don't modify it. Still faster than the full copy_then_and_with_set
