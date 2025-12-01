@@ -94,6 +94,13 @@ if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
                 extra_link_args=extra_link_args,
             ),
             Extension(
+                "randovania.game_description.resources.resource_collection",
+                sources=["randovania/game_description/resources/resource_collection.py"],
+                language="c++",
+                extra_compile_args=extra_compile_args,
+                extra_link_args=extra_link_args,
+            ),
+            Extension(
                 "randovania._native",
                 sources=["randovania/_native.py"],
                 language="c++",
