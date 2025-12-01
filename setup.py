@@ -87,6 +87,13 @@ if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
     ext_modules = cythonize(
         [
             Extension(
+                "randovania.lib.bitmask",
+                sources=["randovania/lib/bitmask.py"],
+                language="c++",
+                extra_compile_args=extra_compile_args,
+                extra_link_args=extra_link_args,
+            ),
+            Extension(
                 "randovania._native",
                 sources=["randovania/_native.py"],
                 language="c++",
