@@ -1,5 +1,7 @@
 from cython.cimports.libcpp.vector import vector
+cimport cython
 
+@cython.final
 cdef class Bitmask:
     cdef public vector[ulonglong] _masks
 
