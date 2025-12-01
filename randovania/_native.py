@@ -1299,7 +1299,7 @@ def _generic_is_damage_state_strictly_better(
     return True
 
 
-@cython.exceptval(check=False)
+@cython.exceptval(check=False)  # type: ignore[call-arg]
 @cython.cfunc
 def _energy_is_damage_state_strictly_better(
     damage_health: cython.float,
