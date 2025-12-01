@@ -4,7 +4,7 @@ from cython.cimports.libcpp.utility import pair
 from cython.cimports.libcpp.vector import vector
 from cython.cimports.libcpp.deque import deque
 
-from cython.cimports.randovania._native_helper import PyRef
+from cython.cimports.randovania.lib.cython_helper import PyRef
 from cython.cimports.randovania.graph.graph_requirement import (
     GraphRequirementSetRef
 )

@@ -3,12 +3,12 @@ from __future__ import annotations
 import copy
 from typing import TYPE_CHECKING, Self
 
-from randovania import _native
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.graph import state_native
 from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 if TYPE_CHECKING:
@@ -172,7 +172,7 @@ class State:
         :return:
         """
 
-        new_resources, modified_resources = _native.state_collect_resource_node(
+        new_resources, modified_resources = state_native.state_collect_resource_node(
             node, self.resources, damage_state.health_for_damage_requirements()
         )
 

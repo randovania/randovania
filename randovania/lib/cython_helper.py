@@ -8,8 +8,6 @@ if typing.TYPE_CHECKING:
 
     import cython
 
-    from randovania._native import GraphRequirementSet
-
 T = typing.TypeVar("T")
 
 
@@ -97,7 +95,7 @@ class Deque[T]:
 
 
 class UnorderedMap[K, V](dict[K, V]):
-    def __iter__(self) -> Iterator[Pair[K, V]]:
+    def __iter__(self) -> Iterator[Pair[K, V]]:  # type: ignore[override]
         for k, v in self.items():
             yield Pair(k, v)
 
@@ -167,7 +165,7 @@ class PyRef[T: object]:
     def has_value(self) -> bool:
         return self._data is not None
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"PyRef[{self._data!r}]"
 
 
@@ -181,7 +179,7 @@ class PyImmutableRef[T: object]:
         return self._data
 
     def raw(self) -> cython.p_void:
-        return self._data
+        return self._data  # type: ignore[return-value]
 
 
 def popcount(value: int) -> int:
@@ -196,19 +194,3 @@ class Pair[T, U]:
     def __init__(self, first: T, second: U) -> None:
         self.first = first
         self.second = second
-
-
-class ProcessNodesState:
-    checked_nodes: Vector[int]
-    nodes_to_check: Deque[int]
-    game_states_to_check: Vector[int]
-    satisfied_requirement_on_node: Vector[Pair[PyRef[GraphRequirementSet], bool]]
-
-    def __init__(self) -> None:
-        self.checked_nodes = Vector[int]()
-        self.nodes_to_check = Deque[int]()
-        self.game_states_to_check = Vector[int]()
-
-        self.satisfied_requirement_on_node = collections.defaultdict(  # type: ignore[assignment]
-            lambda: Pair(PyRef["GraphRequirementSet"](), False)
-        )

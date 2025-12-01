@@ -36,10 +36,10 @@ if cython.compiled:
         )
         from cython.cimports.randovania.lib.bitmask import Bitmask
 else:
-    from randovania._native_helper import PyImmutableRef, PyRef
-    from randovania._native_helper import UnorderedMap as unordered_map
-    from randovania._native_helper import Vector as vector
     from randovania.lib.bitmask import Bitmask
+    from randovania.lib.cython_helper import PyImmutableRef, PyRef
+    from randovania.lib.cython_helper import UnorderedMap as unordered_map
+    from randovania.lib.cython_helper import Vector as vector
 
     if typing.TYPE_CHECKING:
         from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -986,6 +986,3 @@ def create_requirement_set(
     else:
         result.extend_alternatives(entries)
     return result
-
-
-__all__ = ["GraphRequirementList", "GraphRequirementSet", "create_requirement_list", "create_requirement_set"]

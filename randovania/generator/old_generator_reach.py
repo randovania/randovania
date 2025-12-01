@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Self, override
 
 import rustworkx
 
-from randovania import _native
+from randovania.generator import generator_native
 from randovania.generator.generator_reach import GeneratorReach
 
 if TYPE_CHECKING:
@@ -168,7 +168,7 @@ class OldGeneratorReach(GeneratorReach):
         filler_config: FillerConfiguration,
     ) -> Self:
         reach = cls(graph, initial_state, RustworkXGraph.new(graph), filler_config)
-        _native.generator_reach_expand_graph(
+        generator_native.generator_reach_expand_graph(
             reach._state,
             reach._graph,
             reach._digraph,
@@ -182,14 +182,14 @@ class OldGeneratorReach(GeneratorReach):
     def _calculate_safe_nodes(self) -> None:
         if self._safe_nodes is None:
             self._safe_nodes = set(
-                _native.generator_reach_find_strongly_connected_components_for(
+                generator_native.generator_reach_find_strongly_connected_components_for(
                     self._digraph, self._state.node.node_index
                 )
             )
 
     def _calculate_reachable_costs(self) -> None:
         if self._reachable_costs is None:
-            self._reachable_costs = _native.generator_reach_calculate_reachable_costs(
+            self._reachable_costs = generator_native.generator_reach_calculate_reachable_costs(
                 self._digraph, self._graph, self._state
             )
 
@@ -306,7 +306,7 @@ class OldGeneratorReach(GeneratorReach):
 
         # Delay updating _uncollectable_nodes until it's used, as it's faster that way
 
-        _native.generator_reach_expand_graph(
+        generator_native.generator_reach_expand_graph(
             self._state,
             self._graph,
             self._digraph,

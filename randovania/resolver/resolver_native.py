@@ -35,14 +35,14 @@ if cython.compiled:
         )
         from cython.cimports.randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
 else:
-    from randovania._native_helper import Pair as pair
-    from randovania._native_helper import ProcessNodesState
-    from randovania._native_helper import Vector as vector
     from randovania.graph.graph_requirement import (
         GraphRequirementList,
         GraphRequirementSet,
         GraphRequirementSetRef,
     )
+    from randovania.lib.cython_helper import Pair as pair
+    from randovania.lib.cython_helper import Vector as vector
+    from randovania.resolver.process_nodes_state import ProcessNodesState
 
     if typing.TYPE_CHECKING:
         from randovania.game_description.resources.resource_collection import ResourceCollection

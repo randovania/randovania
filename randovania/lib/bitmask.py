@@ -22,8 +22,8 @@ if cython.compiled:
         from cython.cimports.libcpp.bit import popcount
         from cython.cimports.libcpp.vector import vector
 else:
-    from randovania._native_helper import Vector as vector
-    from randovania._native_helper import popcount
+    from randovania.lib.cython_helper import Vector as vector
+    from randovania.lib.cython_helper import popcount
 
 if cython.compiled:
 

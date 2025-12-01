@@ -27,9 +27,9 @@ if cython.compiled:
         from cython.cimports.libcpp.vector import vector
         from cython.cimports.randovania.lib.bitmask import Bitmask
 else:
-    from randovania._native_helper import UnorderedMap as unordered_map
-    from randovania._native_helper import Vector as vector
     from randovania.lib.bitmask import Bitmask
+    from randovania.lib.cython_helper import UnorderedMap as unordered_map
+    from randovania.lib.cython_helper import Vector as vector
 
 
 @cython.final
