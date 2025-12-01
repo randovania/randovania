@@ -15,7 +15,6 @@ if typing.TYPE_CHECKING:
     import Cython as cython
 
     from randovania.graph.state import State
-    from randovania.graph.world_graph import WorldGraphNode, WorldGraphNodeConnection
     from randovania.lib.bitmask import Bitmask
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
@@ -34,6 +33,7 @@ if cython.compiled:
             ResourceCollection,  # noqa: TC002
         )
         from cython.cimports.randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
+        from cython.cimports.randovania.graph.world_graph import BaseWorldGraphNode, WorldGraphNodeConnection
 else:
     from randovania.graph.graph_requirement import (
         GraphRequirementList,
@@ -46,6 +46,7 @@ else:
 
     if typing.TYPE_CHECKING:
         from randovania.game_description.resources.resource_collection import ResourceCollection
+        from randovania.graph.world_graph import BaseWorldGraphNode, WorldGraphNodeConnection
 
 
 class ProcessNodesResponse(typing.NamedTuple):
@@ -181,7 +182,7 @@ def resolver_reach_process_nodes(
     logic: Logic,
     initial_state: State,
 ) -> ProcessNodesResponse:
-    all_nodes: Sequence[WorldGraphNode] = logic.all_nodes
+    all_nodes: Sequence[BaseWorldGraphNode] = logic.all_nodes
     resources: ResourceCollection = initial_state.resources
     initial_game_state: EnergyTankDamageState = initial_state.damage_state  # type: ignore[assignment]
     resource_bitmask: Bitmask = resources.resource_bitmask
@@ -228,7 +229,7 @@ def resolver_reach_process_nodes(
         damage_health: cython.float = damage_health_int
         state.game_states_to_check[node_index] = -1
 
-        node: WorldGraphNode = all_nodes[node_index]
+        node: BaseWorldGraphNode = all_nodes[node_index]
         node_heal: cython.bint = node.heal
         current_game_state: DamageState
 
