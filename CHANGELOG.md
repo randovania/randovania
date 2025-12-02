@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Logical Pickup placement "All pickups" and expansions with negative amount are now compatible.
 - Fixed: Impossible generation cases that are caused due to walking into a point of no return that's impossible to escape from.
 - Fixed: Text such as the Seed Hash in the Async Race window is now selectable via mouse.
+- Fixed: Saving previous versions of presets when modififying no longer fails on certain cases.
 - Removed: The "Consider possible unsafe resources" experimental option has been removed and is now always enabled.
 - Removed: The "Revised door solver" experimental option has been removed and is now always enabled.
 - Added: Added "Create New Preset" button to preset menu to improve UX.

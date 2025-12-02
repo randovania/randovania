@@ -48,7 +48,11 @@ def _commit(message: str, file_path: Path, repository: Path, remove: bool):
         dulwich.porcelain.add(repository, [file_path])
 
     dulwich.porcelain.commit(
-        repository, message=f"{message} using Randovania v{randovania.VERSION}", author=author, committer=author
+        repository,
+        message=f"{message} using Randovania v{randovania.VERSION}",
+        author=author,
+        committer=author,
+        sign=False,
     )
 
 
