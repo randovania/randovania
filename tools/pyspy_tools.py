@@ -172,6 +172,39 @@ def cmd_collect(args):
 # ============================================================================
 
 
+def remove_std_allocator(frame: str) -> str:
+    """
+    Remove std::allocator<...> from C++ template names.
+    Handles nested templates by counting angle brackets.
+    """
+    result = []
+    i = 0
+    while i < len(frame):
+        # Look for "std::allocator<"
+        if frame[i:].startswith("std::allocator<"):
+            # Find the matching closing >
+            depth = 1
+            j = i + len("std::allocator<")
+            while j < len(frame) and depth > 0:
+                if frame[j] == "<":
+                    depth += 1
+                elif frame[j] == ">":
+                    depth -= 1
+                j += 1
+
+            # Skip the allocator and any following comma+space
+            i = j
+            if i < len(frame) and frame[i : i + 2] == ", ":
+                i += 2
+            elif i < len(frame) and frame[i] == ",":
+                i += 1
+        else:
+            result.append(frame[i])
+            i += 1
+
+    return "".join(result)
+
+
 def cmd_filter(args):
     """Filter py-spy raw format to remove noise."""
     file = args.raw_file.open() if args.raw_file.name != "-" else sys.stdin
@@ -194,6 +227,11 @@ def cmd_filter(args):
                 continue
             if args.exclude_python_api and "(python312.dll)" in frame:
                 continue
+            if args.exclude_python_exe and "(python.exe)" in frame:
+                continue
+
+            # Remove std::allocator from C++ template names
+            frame = remove_std_allocator(frame)
 
             filtered_frames.append(frame)
 
@@ -522,6 +560,9 @@ def main():
     filter_parser.add_argument(
         "--keep-python-api", action="store_true", help="Keep Python C API frames (default: exclude)"
     )
+    filter_parser.add_argument(
+        "--keep-python-exe", action="store_true", help="Keep python.exe frames (default: exclude)"
+    )
 
     # CHECK-FUNCTION subcommand
     check_parser = subparsers.add_parser("check-function", help="Analyze where time is spent in a specific function")
@@ -554,6 +595,7 @@ def main():
         args.exclude_frozen = not args.keep_frozen
         args.exclude_asyncio = not args.keep_asyncio
         args.exclude_python_api = not args.keep_python_api
+        args.exclude_python_exe = not args.keep_python_exe
         cmd_filter(args)
     elif args.command == "check-function":
         cmd_check_function(args)
