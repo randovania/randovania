@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The generator and resolver now use a faster algorithm. An option was added to use the old one if needed.
 - Changed: The "Verify if game is beatable after ..." option is no longer experimental.
 - Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
+- Changed: When hiding item models or scans, the preset summary no longer references an ETM.
 - Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough, especially at high verbosity.
 - Fixed: Reduced the Windows install size by about 7 MB, as a regression from last release.
 - Fixed: Logical Pickup placement "All pickups" and expansions with negative amount are now compatible.
