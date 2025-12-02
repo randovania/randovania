@@ -29,6 +29,7 @@ def test_build_available_indices(has_exclusion: bool, default_filler_config, sin
 
         graph_node = MagicMock(spec=WorldGraphNode)
         graph_node.region = region
+        graph_node.area = None
         graph_node.database_node = result
         graph_node.pickup_index = result.pickup_index
         return graph_node

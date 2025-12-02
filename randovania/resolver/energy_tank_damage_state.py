@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.graph.world_graph import WorldGraphNode
+    from randovania.graph.world_graph import BaseWorldGraphNode
 
 
 class EnergyTankDamageState(DamageState):
@@ -94,7 +94,7 @@ class EnergyTankDamageState(DamageState):
         return result
 
     @override
-    def apply_node_heal(self, node: WorldGraphNode, resources: ResourceCollection) -> Self:
+    def apply_node_heal(self, node: BaseWorldGraphNode, resources: ResourceCollection) -> Self:
         return self._at_maximum_energy(resources)
 
     @override

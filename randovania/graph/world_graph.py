@@ -56,7 +56,7 @@ class WorldGraphNodeConnection:
         )
 
 
-def _empty_has_all_resources(self, resources: ResourceCollection) -> bool:
+def _empty_has_all_resources(node: BaseWorldGraphNode, resources: ResourceCollection) -> bool:
     return True
 
 
@@ -112,7 +112,7 @@ class WorldGraphNode(BaseWorldGraphNode):
 
     has_all_resources: typing.Callable[[ResourceCollection], bool] = dataclasses.field(
         init=False, default=_empty_has_all_resources
-    )
+    )  # type: ignore[assignment]
     """
     Checks if all resources given by this node are already collected in the given collection.
     Does not include resources given by a PickupEntry assigned to the location of this node.
