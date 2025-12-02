@@ -470,10 +470,13 @@ def cmd_chart(args):
             func_name = extract_function_name(last_frame)
             last_frame_all[func_name] += 1
 
-            # Check if it belongs to randovania/
-            _, file, _ = format_frame(last_frame)
+        # Check last frame that belongs to randovania/
+        for frame in reversed(trace):
+            _, file, _ = format_frame(frame)
             if file.startswith("randovania/"):
+                func_name = extract_function_name(frame)
                 last_frame_randovania[func_name] += 1
+                break
 
     # Sort by selected column
     if args.sort_by == "last-frame":
