@@ -71,6 +71,9 @@ class Vector[T](list[T]):
     def __rmul__(self, other: typing.SupportsIndex) -> Vector[T]:
         return self.__mul__(other)
 
+    def copy(self) -> Vector[T]:
+        return Vector[T](self)
+
 
 class Deque[T]:
     _data: collections.deque[T]
@@ -92,6 +95,22 @@ class Deque[T]:
 
     def empty(self) -> bool:
         return not self._data
+
+
+class UnorderedSet[T](set[T]):
+    def size(self) -> int:
+        return len(self)
+
+    def contains(self, key: T) -> bool:
+        return key in self
+
+    def empty(self) -> bool:
+        return not self
+
+    insert = set.add
+
+    def copy(self) -> UnorderedSet[T]:
+        return UnorderedSet[T](self)
 
 
 class UnorderedMap[K, V](dict[K, V]):
@@ -197,3 +216,9 @@ class Pair[T, U]:
     def __init__(self, first: T, second: U) -> None:
         self.first = first
         self.second = second
+
+    def __repr__(self) -> str:
+        return f"Pair({self.first!r}, {self.second!r})"
+
+    def __str__(self) -> str:
+        return f"({self.first}, {self.second})"
