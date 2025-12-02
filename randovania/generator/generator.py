@@ -20,6 +20,7 @@ from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
+from randovania.lib import profiler
 from randovania.resolver import debug, exceptions, resolver
 from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
 
@@ -291,6 +292,8 @@ async def _create_description(
     presets = [generator_params.get_preset(i) for i in range(generator_params.world_count)]
     if not presets:
         raise InvalidConfiguration("Must have at least one World")
+
+    profiler.wait_for_profiler()
 
     retrying = tenacity.AsyncRetrying(
         stop=tenacity.stop_after_attempt(attempts),
