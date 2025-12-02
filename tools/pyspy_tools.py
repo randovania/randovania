@@ -6,14 +6,17 @@ Commands:
     collect     - Profile a Python process with py-spy
     filter      - Filter py-spy raw output to remove noise
     check-function - Analyze where time is spent in a specific function
+    chart       - Generate function statistics chart from raw profile
 
 Examples:
     python pyspy_tools.py collect -o profile.raw -f raw -- -m randovania layout generate-from-presets ...
     python pyspy_tools.py filter profile.raw > profile.filtered
     python pyspy_tools.py check-function profile.raw my_function_name
+    python pyspy_tools.py chart profile.raw
 """
 
 import argparse
+import csv
 import os
 import re
 import subprocess
@@ -380,6 +383,109 @@ def cmd_check_function(args):
 
 
 # ============================================================================
+# CHART COMMAND - Generate function statistics chart
+# ============================================================================
+
+
+def extract_function_name(frame: str) -> str:
+    """
+    Extract function name from frame string.
+    Format: {name} ({file}:{line})
+    Function name is: {file}:{name}
+    """
+    func, file, line = format_frame(frame)
+    if file:
+        return f"{file}:{func}"
+    return func
+
+
+def cmd_chart(args):
+    """Generate statistics chart for all functions in the profile."""
+    raw_file = args.raw_file
+
+    # Parse the raw profile
+    file = raw_file.open() if raw_file.name != "-" else sys.stdin
+    traces = parse_raw_profile(file)
+    print(f"Total samples in profile: {len(traces)}")
+    print()
+
+    # Statistics tracking
+    appears_in_trace = Counter()  # How many traces contain this function
+    last_frame_all = Counter()  # How many times this function is the last frame
+    last_frame_randovania = Counter()  # How many times it's last frame and belongs to randovania/
+
+    for trace in traces:
+        # Track unique functions in this trace
+        functions_in_trace = set()
+
+        for frame in trace:
+            func_name = extract_function_name(frame)
+            functions_in_trace.add(func_name)
+
+        # Count appearances
+        for func_name in functions_in_trace:
+            appears_in_trace[func_name] += 1
+
+        # Check last frame
+        if trace:
+            last_frame = trace[-1]
+            func_name = extract_function_name(last_frame)
+            last_frame_all[func_name] += 1
+
+            # Check if it belongs to randovania/
+            _, file, _ = format_frame(last_frame)
+            if file.startswith("randovania/"):
+                last_frame_randovania[func_name] += 1
+
+    # Sort by selected column
+    if args.sort_by == "last-frame":
+        sorted_functions = sorted(last_frame_all.items(), key=lambda x: x[1], reverse=True)
+    elif args.sort_by == "last-randovania":
+        sorted_functions = sorted(last_frame_randovania.items(), key=lambda x: x[1], reverse=True)
+    else:  # "in-trace"
+        sorted_functions = sorted(appears_in_trace.items(), key=lambda x: x[1], reverse=True)
+
+    # Export to CSV if requested
+    if args.csv:
+        with args.csv.open("w", newline="", encoding="utf-8") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(["Function", "In Trace", "Last Frame", "Last (randovania/)"])
+
+            for func_name, appears_count in sorted_functions:
+                last_all = last_frame_all.get(func_name, 0)
+                last_rando = last_frame_randovania.get(func_name, 0)
+                writer.writerow([func_name, appears_count, last_all, last_rando])
+
+        print(f"Data exported to: {args.csv}")
+        return
+
+    # Calculate the maximum function name length for alignment
+    display_functions = sorted_functions[:50]  # Show top 50
+    if args.no_truncate:
+        max_name_len = max(len(func_name) for func_name, _ in display_functions)
+    else:
+        max_name_len = min(60, max(len(func_name) for func_name, _ in display_functions))
+
+    # Ensure minimum width for header
+    max_name_len = max(max_name_len, len("Function"))
+
+    print(f"{'Function':<{max_name_len}} {'In Trace':<12} {'Last Frame':<12} {'Last (randovania/)':<12}")
+    print("-" * (max_name_len + 12 + 12 + 12 + 3))
+
+    for func_name, appears_count in display_functions:
+        last_all = last_frame_all.get(func_name, 0)
+        last_rando = last_frame_randovania.get(func_name, 0)
+
+        # Truncate long function names unless --no-truncate is set
+        if args.no_truncate:
+            display_name = func_name
+        else:
+            display_name = func_name if len(func_name) <= 60 else func_name[:57] + "..."
+
+        print(f"{display_name:<{max_name_len}} {appears_count:<12} {last_all:<12} {last_rando:<12}")
+
+
+# ============================================================================
 # MAIN - Command router
 # ============================================================================
 
@@ -422,6 +528,22 @@ def main():
     check_parser.add_argument("raw_file", type=Path, help="Path to the py-spy raw profile file (or - for stdin)")
     check_parser.add_argument("function_name", help="Name of the function to analyze")
 
+    # CHART subcommand
+    chart_parser = subparsers.add_parser("chart", help="Generate function statistics chart from raw profile")
+    chart_parser.add_argument("raw_file", type=Path, help="Path to the py-spy raw profile file (or - for stdin)")
+    chart_parser.add_argument("--csv", type=Path, help="Export data to CSV file")
+    chart_parser.add_argument(
+        "--sort-by",
+        choices=["in-trace", "last-frame", "last-randovania"],
+        default="in-trace",
+        help="Column to sort by (default: in-trace)",
+    )
+    chart_parser.add_argument(
+        "--no-truncate",
+        action="store_true",
+        help="Don't truncate long function names in console output",
+    )
+
     args = parser.parse_args()
 
     # Route to appropriate command
@@ -435,6 +557,8 @@ def main():
         cmd_filter(args)
     elif args.command == "check-function":
         cmd_check_function(args)
+    elif args.command == "chart":
+        cmd_chart(args)
     else:
         raise ValueError(f"Unknown command: {args.command}")
 
