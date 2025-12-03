@@ -9,6 +9,8 @@ from Cython.Build import cythonize
 from setuptools import Command, Extension, setup
 from setuptools.command.build import build
 
+should_compile = os.getenv("RANDOVANIA_COMPILE", "0") != "0"
+
 
 class CopyReadmeCommand(Command):
     """Custom build command."""
@@ -25,16 +27,55 @@ class CopyReadmeCommand(Command):
         shutil.copy2(parent.joinpath("README.md"), parent.joinpath("randovania", "data", "README.md"))
 
 
+class DeleteUnknownNativeCommand(Command):
+    """Custom build command."""
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        parent = Path(__file__).parent
+        root = parent.joinpath("randovania")
+
+        cython_files: list[Path] = []
+
+        for path, dirnames, filenames in root.walk():
+            relative = path.relative_to(parent)
+            if len(relative.parts) < 2 or relative.parts[1] != "data":
+                for file in filenames:
+                    if file.endswith((".pyd", ".cpp", ".so")):
+                        cython_files.append(relative.joinpath(file))
+
+        for file in cython_files:
+            associated_py_file = file.as_posix().split(".", 1)[0] + ".py"
+            if not should_compile or associated_py_file not in cythonize_files:
+                print("Deleting", file)
+                file.unlink()
+
+
 class CustomBuild(build):
     sub_commands = [
         ("copy_readme", None),
+        ("delete_unknown_native", None),
         *build.sub_commands,
     ]
 
 
+cythonize_files = [
+    "randovania/lib/bitmask.py",
+    "randovania/game_description/resources/resource_collection.py",
+    "randovania/graph/graph_requirement.py",
+    "randovania/graph/state_native.py",
+    "randovania/resolver/resolver_native.py",
+    "randovania/generator/generator_native.py",
+]
+
 ext_modules = None
 
-if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
+if should_compile:
     debug_mode = os.getenv("RANDOVANIA_DEBUG", "0") != "0"
     profiling_mode = os.getenv("RANDOVANIA_PROFILE", "0") != "0"
 
@@ -42,6 +83,7 @@ if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
         # MSVC
         extra_compile_args = [
             "/std:c++20",
+            "/Zi",  # Generate debug info (PDB)
             # Cython boilerplate triggers warning "function call missing argument list", unrelated to our code
             "/wd4551",
         ]
@@ -51,7 +93,6 @@ if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
             # Add profiling flags for MSVC
             extra_compile_args.extend(
                 [
-                    "/Zi",  # Generate debug info (PDB)
                     "/O2",  # Optimize for speed (but keep symbols)
                     "/Oy-",  # Disable frame pointer omission
                 ]
@@ -63,71 +104,37 @@ if os.getenv("RANDOVANIA_COMPILE", "0") != "0":
                 ]
             )
         elif debug_mode:
-            extra_compile_args.extend(["/Od", "/Zi"])  # Disable optimizations, add debug info
+            extra_compile_args.extend(["/Od"])  # Disable optimizations
     else:
         # GCC/Clang
-        extra_compile_args = ["-std=c++20"]
-        extra_link_args = []
+        extra_compile_args = [
+            "-std=c++20",
+            "-g",  # Debug symbols
+        ]
+        extra_link_args = ["-g"]
 
         if profiling_mode:
             # Add profiling flags for GCC/Clang
             extra_compile_args.extend(
                 [
-                    "-g",  # Debug symbols
                     "-O2",  # Optimize but keep symbols
                     "-fno-omit-frame-pointer",  # Keep frame pointers
                     "-fno-inline-functions",  # Don't inline (for clearer profiling)
                 ]
             )
-            extra_link_args.append("-g")
         elif debug_mode:
-            extra_compile_args.extend(["-g", "-O0", "-fno-omit-frame-pointer"])  # Debug symbols, no optimization
-            extra_link_args.append("-g")
+            extra_compile_args.extend(["-O0", "-fno-omit-frame-pointer"])  # no optimization
 
     ext_modules = cythonize(
         [
             Extension(
-                "randovania.lib.bitmask",
-                sources=["randovania/lib/bitmask.py"],
+                file.replace("/", ".")[:-3],
+                sources=[file],
                 language="c++",
                 extra_compile_args=extra_compile_args,
                 extra_link_args=extra_link_args,
-            ),
-            Extension(
-                "randovania.game_description.resources.resource_collection",
-                sources=["randovania/game_description/resources/resource_collection.py"],
-                language="c++",
-                extra_compile_args=extra_compile_args,
-                extra_link_args=extra_link_args,
-            ),
-            Extension(
-                "randovania.graph.graph_requirement",
-                sources=["randovania/graph/graph_requirement.py"],
-                language="c++",
-                extra_compile_args=extra_compile_args,
-                extra_link_args=extra_link_args,
-            ),
-            Extension(
-                "randovania.graph.state_native",
-                sources=["randovania/graph/state_native.py"],
-                language="c++",
-                extra_compile_args=extra_compile_args,
-                extra_link_args=extra_link_args,
-            ),
-            Extension(
-                "randovania.resolver.resolver_native",
-                sources=["randovania/resolver/resolver_native.py"],
-                language="c++",
-                extra_compile_args=extra_compile_args,
-                extra_link_args=extra_link_args,
-            ),
-            Extension(
-                "randovania.generator.generator_native",
-                sources=["randovania/generator/generator_native.py"],
-                language="c++",
-                extra_compile_args=extra_compile_args,
-                extra_link_args=extra_link_args,
-            ),
+            )
+            for file in cythonize_files
         ],
         annotate=True,
         compiler_directives={
@@ -142,6 +149,7 @@ setup(
     ext_modules=ext_modules,
     cmdclass={
         "copy_readme": CopyReadmeCommand,
+        "delete_unknown_native": DeleteUnknownNativeCommand,
         "build": CustomBuild,
     },
 )
