@@ -56,6 +56,30 @@ def parse_raw_profile(file: typing.TextIO) -> list[list[str]]:
     return traces
 
 
+def write_raw_profile(file: typing.TextIO, traces: list[list[str]]) -> None:
+    """Write a list of stack traces to a py-spy raw format file."""
+
+    count = 1
+    for i, frames in enumerate(traces):
+        if i + 1 < len(traces) and traces[i + 1] == frames:
+            # Skip duplicate consecutive traces
+            count += 1
+            continue
+
+        file.write(f"{';'.join(frames)} {count}\n")
+        count = 1
+
+
+def open_input_and_parse(args) -> list[list[str]]:
+    """Open the input file and parse the raw profile."""
+    raw_file = args.raw_file
+    file = raw_file.open() if raw_file.name != "-" else sys.stdin
+    traces = parse_raw_profile(file)
+    if "filter" in args and args.filter:
+        traces = filter_traces(traces)
+    return traces
+
+
 # ============================================================================
 # COLLECT COMMAND - Profile with py-spy
 # ============================================================================
@@ -280,29 +304,38 @@ def remove_std_allocator(frame: str) -> str:
     return "".join(result)
 
 
-def cmd_filter(args):
-    """Filter py-spy raw format to remove noise."""
-    file = args.raw_file.open() if args.raw_file.name != "-" else sys.stdin
-    traces = parse_raw_profile(file)
+def filter_traces(
+    traces: list[list[str]],
+    *,
+    exclude_frozen: bool = True,
+    exclude_asyncio: bool = True,
+    exclude_python_api: bool = True,
+    exclude_python_exe: bool = True,
+    flatten_successive_identical: bool = True,
+    flatten_immediate_recursion: bool = True,
+) -> list[list[str]]:
+    """Filter traces based on the given arguments."""
+    result = []
 
-    count = 1
-
-    for i, frames in enumerate(traces):
-        if i + 1 < len(traces) and traces[i + 1] == frames:
-            # Skip duplicate consecutive traces
-            count += 1
-            continue
-
+    for frames in traces:
         filtered_frames = []
 
         for frame in frames:
-            if args.exclude_frozen and "<frozen " in frame:
+            if exclude_frozen and "<frozen " in frame:
                 continue
-            if args.exclude_asyncio and ("(asyncio/" in frame or "_asyncio.pyd" in frame):
+            if exclude_asyncio and ("(asyncio/" in frame or "_asyncio.pyd" in frame):
                 continue
-            if args.exclude_python_api and "(python312.dll)" in frame:
+            if exclude_python_api and "(python312.dll)" in frame:
                 continue
-            if args.exclude_python_exe and "(python.exe)" in frame:
+            if exclude_python_exe and "(python.exe)" in frame:
+                continue
+            if flatten_successive_identical and filtered_frames and filtered_frames[-1] == frame:
+                continue
+            if (
+                flatten_immediate_recursion
+                and filtered_frames
+                and extract_function_name(filtered_frames[-1]) == extract_function_name(frame)
+            ):
                 continue
 
             # Remove std::allocator from C++ template names
@@ -310,8 +343,24 @@ def cmd_filter(args):
 
             filtered_frames.append(frame)
 
-        print(f"{';'.join(filtered_frames)} {count}")
-        count = 1
+        result.append(filtered_frames)
+
+    return result
+
+
+def cmd_filter(args):
+    """Filter py-spy raw format to remove noise."""
+    traces = open_input_and_parse(args)
+    filtered = filter_traces(
+        traces,
+        exclude_frozen=args.exclude_frozen,
+        exclude_asyncio=args.exclude_asyncio,
+        exclude_python_api=args.exclude_python_api,
+        exclude_python_exe=args.exclude_python_exe,
+        flatten_successive_identical=args.flatten_successive_identical,
+        flatten_immediate_recursion=args.flatten_immediate_recursion,
+    )
+    write_raw_profile(sys.stdout, filtered)
 
 
 # ============================================================================
@@ -414,15 +463,10 @@ def map_cpp_to_python_line(cpp_file: Path, cpp_line: int, context_lines: int = 5
 
 def cmd_check_function(args):
     """Analyze where time is spent in a specific function."""
-    raw_file = args.raw_file
     function_name = args.function_name
 
-    print(f"Analyzing '{raw_file}' for function '{function_name}'...")
-    print()
-
     # Parse the raw profile
-    file = raw_file.open() if raw_file.name != "-" else sys.stdin
-    traces = parse_raw_profile(file)
+    traces = open_input_and_parse(args)
     print(f"Total samples in profile: {len(traces)}")
 
     # Extract traces containing the function
@@ -514,11 +558,7 @@ def extract_function_name(frame: str) -> str:
 
 def cmd_chart(args):
     """Generate statistics chart for all functions in the profile."""
-    raw_file = args.raw_file
-
-    # Parse the raw profile
-    file = raw_file.open() if raw_file.name != "-" else sys.stdin
-    traces = parse_raw_profile(file)
+    traces = open_input_and_parse(args)
     print(f"Total samples in profile: {len(traces)}")
     print()
 
@@ -617,39 +657,77 @@ def main():
     collect_parser = subparsers.add_parser(
         "collect", help="Profile a Python process with py-spy", formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    collect_parser.add_argument(
-        "-o", "--output", default="profile_native.svg", help="Output file (default: profile_native.svg)"
-    )
+    collect_parser.add_argument("-o", "--output", default="profile.raw", help="Output file (default: profile.raw)")
     collect_parser.add_argument("-r", "--rate", type=int, default=100, help="Sampling rate in Hz (default: 100)")
     collect_parser.add_argument(
         "-f",
         "--format",
         choices=["flamegraph", "raw", "speedscope"],
-        default="flamegraph",
-        help="Output format (default: flamegraph)",
+        default="raw",
+        help="Output format (default: raw)",
     )
     collect_parser.add_argument("python_command", nargs="+", help="Command and arguments to pass to Python")
 
     # FILTER subcommand
     filter_parser = subparsers.add_parser("filter", help="Filter py-spy raw output to remove noise")
     filter_parser.add_argument("raw_file", type=Path, help="Path to the py-spy raw profile file (or - for stdin)")
-    filter_parser.add_argument("--keep-frozen", action="store_true", help="Keep <frozen> frames (default: exclude)")
-    filter_parser.add_argument("--keep-asyncio", action="store_true", help="Keep asyncio frames (default: exclude)")
     filter_parser.add_argument(
-        "--keep-python-api", action="store_true", help="Keep Python C API frames (default: exclude)"
+        "--keep-frozen",
+        action="store_false",
+        dest="exclude_frozen",
+        default=True,
+        help="Keep <frozen> frames (default: exclude)",
     )
     filter_parser.add_argument(
-        "--keep-python-exe", action="store_true", help="Keep python.exe frames (default: exclude)"
+        "--keep-asyncio",
+        action="store_false",
+        dest="exclude_asyncio",
+        default=True,
+        help="Keep asyncio frames (default: exclude)",
+    )
+    filter_parser.add_argument(
+        "--keep-python-api",
+        action="store_false",
+        dest="exclude_python_api",
+        default=True,
+        help="Keep Python C API frames (default: exclude)",
+    )
+    filter_parser.add_argument(
+        "--keep-python-exe",
+        action="store_false",
+        dest="exclude_python_exe",
+        default=True,
+        help="Keep python.exe frames (default: exclude)",
+    )
+    filter_parser.add_argument(
+        "--keep-successive-identical",
+        action="store_false",
+        dest="flatten_successive_identical",
+        default=True,
+        help="Keep successive identical frames (default: exclude)",
+    )
+    filter_parser.add_argument(
+        "--keep-immediate-recursion",
+        action="store_false",
+        dest="flatten_immediate_recursion",
+        default=True,
+        help="Keep immediate recursion frames (default: exclude)",
     )
 
     # CHECK-FUNCTION subcommand
     check_parser = subparsers.add_parser("check-function", help="Analyze where time is spent in a specific function")
     check_parser.add_argument("raw_file", type=Path, help="Path to the py-spy raw profile file (or - for stdin)")
+    check_parser.add_argument(
+        "--filter", action="store_true", help="Apply filtering before analysis. Uses all filters."
+    )
     check_parser.add_argument("function_name", help="Name of the function to analyze")
 
     # CHART subcommand
     chart_parser = subparsers.add_parser("chart", help="Generate function statistics chart from raw profile")
     chart_parser.add_argument("raw_file", type=Path, help="Path to the py-spy raw profile file (or - for stdin)")
+    chart_parser.add_argument(
+        "--filter", action="store_true", help="Apply filtering before analysis. Uses all filters."
+    )
     chart_parser.add_argument("--csv", type=Path, help="Export data to CSV file")
     chart_parser.add_argument(
         "--sort-by",
@@ -669,11 +747,6 @@ def main():
     if args.command == "collect":
         cmd_collect(args)
     elif args.command == "filter":
-        # Invert the keep flags to exclude flags
-        args.exclude_frozen = not args.keep_frozen
-        args.exclude_asyncio = not args.keep_asyncio
-        args.exclude_python_api = not args.keep_python_api
-        args.exclude_python_exe = not args.keep_python_exe
         cmd_filter(args)
     elif args.command == "check-function":
         cmd_check_function(args)
