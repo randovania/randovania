@@ -41,7 +41,7 @@ def _commit(message: str, file_path: Path, repository: Path, remove: bool):
             Path(r.index_path()).unlink()
             r.reset_index()
 
-    author = "randovania <nobody@example.com>"
+    author = b"randovania <nobody@example.com>"
     if remove:
         dulwich.porcelain.remove(repository, [file_path])
     else:
