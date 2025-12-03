@@ -528,7 +528,7 @@ class GraphRequirementList:
                 return None
 
         if self._damage_resources.empty():
-            return _trivial_list
+            return TRIVIAL_LIST
 
         result = GraphRequirementList.create_empty(self._resource_db)
 
@@ -645,8 +645,8 @@ class GraphRequirementList:
             return 2
 
 
-_trivial_list: GraphRequirementList = GraphRequirementList(None)
-_trivial_list.freeze()
+TRIVIAL_LIST: GraphRequirementList = GraphRequirementList(None)
+TRIVIAL_LIST.freeze()
 
 
 @cython.final
@@ -747,6 +747,9 @@ class GraphRequirementSet:
     # @cython.exceptval(check=False)
     def satisfied(self, resources: ResourceCollection, energy: cython.float) -> cython.bint:
         """Checks if the given resources and health satisfies at least one alternative."""
+
+        if self is TRIVIAL_SET:
+            return True
 
         if cython.compiled:
             for alt in self._alternatives:
@@ -907,10 +910,7 @@ class GraphRequirementSet:
         """
         A GraphRequirementSet that is always satisfied.
         """
-        r = cls()
-        r.add_alternative(GraphRequirementList(None))
-        r.freeze()
-        return r
+        return TRIVIAL_SET
 
     @cython.ccall
     def is_trivial(self) -> cython.bint:
@@ -925,9 +925,7 @@ class GraphRequirementSet:
         A GraphRequirementSet that is never satisfied.
         """
         # No alternatives makes satisfied always return False
-        r = cls()
-        r.freeze()
-        return r
+        return IMPOSSIBLE_SET
 
     @cython.ccall
     def is_impossible(self) -> cython.bint:
@@ -959,13 +957,20 @@ class GraphRequirementSet:
 
             if isolated is not None:
                 if isolated.is_trivial():
-                    result._alternatives.clear()
-                    result._alternatives.push_back(GraphRequirementListRef(isolated))
-                    break
+                    return TRIVIAL_SET
                 else:
                     result._alternatives.push_back(GraphRequirementListRef(isolated))
 
         return result
+
+
+TRIVIAL_SET = GraphRequirementSet()
+TRIVIAL_SET.add_alternative(TRIVIAL_LIST)
+TRIVIAL_SET.freeze()
+
+# No alternatives makes satisfied always return False
+IMPOSSIBLE_SET = GraphRequirementSet()
+IMPOSSIBLE_SET.freeze()
 
 
 def create_requirement_list(

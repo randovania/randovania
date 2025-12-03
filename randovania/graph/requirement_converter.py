@@ -159,11 +159,16 @@ class GraphRequirementConverter:
             req_set = GraphRequirementSet()
             req_set.add_alternative(result)
             req_set.freeze()
+            if req_set.is_trivial():
+                req_set = GraphRequirementSet.trivial()
             self._cache[requirement] = req_set
             return req_set
         else:
             if not result.is_frozen():
                 result.optimize_alternatives()
                 result.freeze()
+
+            if result.is_trivial():
+                result = GraphRequirementSet.trivial()
             self._cache[requirement] = result
             return result
