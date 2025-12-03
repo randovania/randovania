@@ -7,12 +7,14 @@ Commands:
     filter      - Filter py-spy raw output to remove noise
     check-function - Analyze where time is spent in a specific function
     chart       - Generate function statistics chart from raw profile
+    flamegraph  - Generate a flamegraph from raw profile using inferno-flamegraph
 
 Examples:
     python pyspy_tools.py collect -o profile.raw -f raw -- -m randovania layout generate-from-presets ...
     python pyspy_tools.py filter profile.raw > profile.filtered
     python pyspy_tools.py check-function profile.raw my_function_name
     python pyspy_tools.py chart profile.raw
+    python pyspy_tools.py flamegraph profile.raw -o flamegraph.svg
 """
 
 import argparse
@@ -343,7 +345,8 @@ def filter_traces(
 
             filtered_frames.append(frame)
 
-        result.append(filtered_frames)
+        if filtered_frames:
+            result.append(filtered_frames)
 
     return result
 
@@ -642,6 +645,52 @@ def cmd_chart(args):
 
 
 # ============================================================================
+# FLAMEGRAPH COMMAND - Generate flamegraph using inferno-flamegraph
+# ============================================================================
+
+
+def cmd_flamegraph(args):
+    """Generate a flamegraph from raw profile using inferno-flamegraph."""
+    traces = open_input_and_parse(args)
+
+    # Start inferno-flamegraph process
+    try:
+        inferno_process = subprocess.Popen(
+            ["inferno-flamegraph", "-i"],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+    except FileNotFoundError:
+        print("Error: inferno-flamegraph not found.", file=sys.stderr)
+        print("Please install it with: cargo install inferno", file=sys.stderr)
+        sys.exit(1)
+
+    # Write filtered traces to inferno-flamegraph
+    write_raw_profile(inferno_process.stdin, traces)
+    inferno_process.stdin.close()
+
+    # Read output
+    stdout, stderr = inferno_process.communicate()
+
+    # Check for errors
+    if inferno_process.returncode != 0:
+        print(f"Error: inferno-flamegraph failed with exit code {inferno_process.returncode}", file=sys.stderr)
+        if stderr:
+            print(stderr, file=sys.stderr)
+        sys.exit(inferno_process.returncode)
+
+    # Write output to file or stdout
+    if args.output:
+        with args.output.open("w") as f:
+            f.write(stdout)
+        print(f"Flamegraph saved to: {args.output}")
+    else:
+        print(stdout)
+
+
+# ============================================================================
 # MAIN - Command router
 # ============================================================================
 
@@ -668,9 +717,16 @@ def main():
     )
     collect_parser.add_argument("python_command", nargs="+", help="Command and arguments to pass to Python")
 
+    def add_input_file_argument(subparser, include_filter: bool = True):
+        subparser.add_argument("raw_file", type=Path, help="Path to the py-spy raw profile file (or - for stdin)")
+        if include_filter:
+            subparser.add_argument(
+                "--filter", action="store_true", help="Apply filtering before analysis. Uses all filters."
+            )
+
     # FILTER subcommand
     filter_parser = subparsers.add_parser("filter", help="Filter py-spy raw output to remove noise")
-    filter_parser.add_argument("raw_file", type=Path, help="Path to the py-spy raw profile file (or - for stdin)")
+    add_input_file_argument(filter_parser, include_filter=False)
     filter_parser.add_argument(
         "--keep-frozen",
         action="store_false",
@@ -716,23 +772,17 @@ def main():
 
     # CHECK-FUNCTION subcommand
     check_parser = subparsers.add_parser("check-function", help="Analyze where time is spent in a specific function")
-    check_parser.add_argument("raw_file", type=Path, help="Path to the py-spy raw profile file (or - for stdin)")
-    check_parser.add_argument(
-        "--filter", action="store_true", help="Apply filtering before analysis. Uses all filters."
-    )
+    add_input_file_argument(check_parser, include_filter=True)
     check_parser.add_argument("function_name", help="Name of the function to analyze")
 
     # CHART subcommand
     chart_parser = subparsers.add_parser("chart", help="Generate function statistics chart from raw profile")
-    chart_parser.add_argument("raw_file", type=Path, help="Path to the py-spy raw profile file (or - for stdin)")
-    chart_parser.add_argument(
-        "--filter", action="store_true", help="Apply filtering before analysis. Uses all filters."
-    )
+    add_input_file_argument(chart_parser, include_filter=True)
     chart_parser.add_argument("--csv", type=Path, help="Export data to CSV file")
     chart_parser.add_argument(
         "--sort-by",
         choices=["in-trace", "last-frame", "last-randovania"],
-        default="in-trace",
+        default="last-frame",
         help="Column to sort by (default: in-trace)",
     )
     chart_parser.add_argument(
@@ -740,6 +790,13 @@ def main():
         action="store_true",
         help="Don't truncate long function names in console output",
     )
+
+    # FLAMEGRAPH subcommand
+    flamegraph_parser = subparsers.add_parser(
+        "flamegraph", help="Generate a flamegraph from raw profile using inferno-flamegraph"
+    )
+    add_input_file_argument(flamegraph_parser, include_filter=True)
+    flamegraph_parser.add_argument("-o", "--output", type=Path, help="Output file (default: stdout)")
 
     args = parser.parse_args()
 
@@ -752,6 +809,8 @@ def main():
         cmd_check_function(args)
     elif args.command == "chart":
         cmd_chart(args)
+    elif args.command == "flamegraph":
+        cmd_flamegraph(args)
     else:
         raise ValueError(f"Unknown command: {args.command}")
 
