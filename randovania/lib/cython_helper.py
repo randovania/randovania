@@ -156,6 +156,9 @@ class PyRef[T: object]:
     def get(self) -> T | None:
         return self._data
 
+    def raw(self) -> cython.p_void:
+        return self._data  # type: ignore[return-value]
+
     def set(self, value: T) -> None:
         self._data = value
 
