@@ -18,10 +18,11 @@ Examples:
 import argparse
 import csv
 import os
+import platform
 import re
 import subprocess
 import sys
-import time
+import threading
 import typing
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -60,6 +61,19 @@ def parse_raw_profile(file: typing.TextIO) -> list[list[str]]:
 # ============================================================================
 
 
+def stream_output(
+    pipe: typing.TextIO, printer: typing.Callable[[str], None], stop_streaming_event: threading.Event
+) -> None:
+    """Stream output from a pipe with a prefix."""
+    try:
+        for line in pipe:
+            if stop_streaming_event.is_set():
+                break
+            printer(line)
+    except Exception:
+        pass
+
+
 def cmd_collect(args):
     """Profile Randovania with py-spy."""
     # Set environment variables
@@ -67,7 +81,15 @@ def cmd_collect(args):
     env["WAIT_FOR_PROFILER"] = "1"
     env["PYTHONUNBUFFERED"] = "1"  # Disable Python output buffering
 
-    print("Starting Randovania process...", flush=True)
+    def target_printer(s: str) -> None:
+        print(f"[TARGET] {s}", end="", flush=True)
+
+    def pyspy_printer(s: str) -> None:
+        if s.strip():
+            s = s.replace("py-spy> ", "")
+            print(f"[PY-SPY] {s}", end="", flush=True)
+
+    print("[ HOST ] Starting Randovania process...", flush=True)
 
     # Start the Python process
     process = subprocess.Popen(
@@ -79,14 +101,14 @@ def cmd_collect(args):
         bufsize=1,
     )
 
-    print(f"Process started with PID: {process.pid}")
+    print(f"[ HOST ] Process started with PID: {process.pid}")
 
     # Wait for the process to print the ready message
-    print("Waiting for process to reach profiling point...")
+    print("[ HOST ] Waiting for process to reach profiling point...")
     target_pid = None
 
     for line in process.stdout:
-        print(line, end="", flush=True)
+        target_printer(line)
         if "Process ID:" in line:
             # Extract PID from the line
             try:
@@ -96,17 +118,16 @@ def cmd_collect(args):
                 pass
 
     if target_pid is None:
-        print("Failed to detect process ready state")
+        print("!! Failed to detect process ready state")
         process.terminate()
         sys.exit(1)
 
-    print("\nStarting py-spy profiler...")
+    print("[ HOST ] Starting py-spy profiler...")
 
     # Build py-spy command
     pyspy_cmd = [
         "py-spy",
         "record",
-        "--native",
         "--pid",
         str(target_pid),
         "--rate",
@@ -117,54 +138,108 @@ def cmd_collect(args):
         args.output,
     ]
 
-    # Start py-spy
-    pyspy_process = subprocess.Popen(pyspy_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    # Add --native flag on non-macOS platforms
+    if platform.system() != "Darwin":
+        pyspy_cmd.insert(2, "--native")
+    else:
+        # On macOS, py-spy requires sudo
+        pyspy_cmd.insert(0, "sudo")
 
-    print(f"py-spy attached to process {target_pid}")
-    print(f"Profiling to: {args.output}")
+    # Start py-spy
+    pyspy_process = subprocess.Popen(
+        pyspy_cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        bufsize=1,
+    )
+
+    # Wait for py-spy to actually start profiling
+    # Look for confirmation in its output
+    print("[ HOST ] Waiting for py-spy to start...")
+    pyspy_started = False
+    for line in pyspy_process.stdout:
+        pyspy_printer(line)
+        if "Sampling process" in line or "sampling process" in line:
+            pyspy_started = True
+            break
+        # Check if py-spy failed to start
+        if pyspy_process.poll() is not None:
+            print(f"\nError: py-spy failed to start (exit code: {pyspy_process.poll()})")
+            process.terminate()
+            sys.exit(1)
+
+    if not pyspy_started:
+        print("[ HOST ] Warning: Could not confirm py-spy started, proceeding anyway...")
+
+    print(f"[ HOST ] py-spy attached to process {target_pid}")
 
     # Signal the main process to continue
     signal_file = Path(".profiler_ready")
     signal_file.touch()
 
-    print()
-    print("Process continuing execution...")
-    print()
+    # Set up streaming threads for both processes
+    stop_streaming_event = threading.Event()
 
-    # Continue streaming output from the main process
+    target_streaming_thread = threading.Thread(
+        target=stream_output,
+        args=(process.stdout, target_printer, stop_streaming_event),
+        daemon=True,
+    )
+
+    pyspy_streaming_thread = threading.Thread(
+        target=stream_output,
+        args=(pyspy_process.stdout, pyspy_printer, stop_streaming_event),
+        daemon=True,
+    )
+
+    target_streaming_thread.start()
+    pyspy_streaming_thread.start()
+
+    # Wait for either process to complete using threading
+    target_exit_code = None
+
+    def wait_for_target() -> None:
+        nonlocal target_exit_code
+        target_exit_code = process.wait()
+
+    def wait_for_pyspy() -> None:
+        pyspy_exit_code = pyspy_process.wait()
+        if target_exit_code is None:
+            # py-spy exited first, terminate target process
+            print(f"\n[ HOST ] Error: py-spy exited early with code: {pyspy_exit_code}")
+            print("[ HOST ] Terminating target process...")
+            process.terminate()
+
+    target_waiter = threading.Thread(target=wait_for_target)
+    pyspy_waiter = threading.Thread(target=wait_for_pyspy)
+
     try:
-        if process.stdout:
-            for line in process.stdout:
-                print(line, end="", flush=True)
+        target_waiter.start()
+        pyspy_waiter.start()
+
+        # Wait for target process (which we care about most)
+        target_waiter.join()
     except KeyboardInterrupt:
-        print("\nInterrupted by user")
+        print("[ HOST ] Interrupted by user")
         process.terminate()
         pyspy_process.terminate()
+        stop_streaming_event.set()
+        sys.exit(1)
 
-    # Wait for process to complete
-    exit_code = process.wait()
+    print(f"[ HOST ] Process completed with exit code: {target_exit_code}")
 
-    print()
-    print(f"Process completed with exit code: {exit_code}")
-
-    # Wait for py-spy to finish writing
-    time.sleep(1)
-    pyspy_process.terminate()
     pyspy_process.wait()
 
-    # Print py-spy output
-    if pyspy_process.stdout:
-        pyspy_output = pyspy_process.stdout.read()
-        if pyspy_output:
-            print("\npy-spy output:")
-            print(pyspy_output)
+    # Stop the streaming threads
+    stop_streaming_event.set()
+    target_streaming_thread.join(timeout=1)
+    pyspy_streaming_thread.join(timeout=1)
 
     if Path(args.output).exists():
-        print(f"Profile saved to: {args.output}")
+        print(f"[ HOST ] Profile saved to: {args.output}")
     else:
-        print("Warning: Profile file not found")
-
-    sys.exit(exit_code)
+        print("[ HOST ] Warning: Profile file not found")
 
 
 # ============================================================================
