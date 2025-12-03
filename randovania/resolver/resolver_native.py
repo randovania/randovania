@@ -83,7 +83,7 @@ def _combine_damage_requirements(
         state_ptr[0].satisfied_requirement_on_node[output_index] = state_ptr[0].satisfied_requirement_on_node[
             input_index
         ]
-        return
+        return  # type: ignore[return-value]
 
     isolated_requirement: GraphRequirementSet = requirement.isolate_damage_requirements(resources)
     isolated_satisfied: GraphRequirementSet = cython.cast(

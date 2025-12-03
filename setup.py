@@ -9,7 +9,12 @@ from Cython.Build import cythonize
 from setuptools import Command, Extension, setup
 from setuptools.command.build import build
 
-should_compile = os.getenv("RANDOVANIA_COMPILE", "0") != "0"
+parent = Path(__file__).parent
+should_compile_env = os.getenv("RANDOVANIA_COMPILE")
+if should_compile_env is None:
+    should_compile = parent.joinpath("randovania", "enable-cython").is_file()
+else:
+    should_compile = should_compile_env != "0"
 
 
 class CopyReadmeCommand(Command):
@@ -22,8 +27,6 @@ class CopyReadmeCommand(Command):
         pass
 
     def run(self):
-        parent = Path(__file__).parent
-
         shutil.copy2(parent.joinpath("README.md"), parent.joinpath("randovania", "data", "README.md"))
 
 
@@ -37,7 +40,6 @@ class DeleteUnknownNativeCommand(Command):
         pass
 
     def run(self):
-        parent = Path(__file__).parent
         root = parent.joinpath("randovania")
 
         cython_files: list[Path] = []
