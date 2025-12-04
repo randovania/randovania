@@ -67,10 +67,12 @@ def _is_action_dangerous(action: ResolverAction) -> bool:
 
 
 def _is_dangerous_event(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
-    return any(
-        (resource in dangerous_resources and resource.resource_type == ResourceType.EVENT)
-        for resource, _ in action.resource_gain(state.resource_database)
-    )
+    if action.has_event_resource and not action.dangerous_resources.is_empty():
+        return any(
+            (resource in dangerous_resources and resource.resource_type == ResourceType.EVENT)
+            for resource, _ in action.resource_gain(state.resource_database)
+        )
+    return False
 
 
 def _is_major_or_key_pickup_node(action: ResolverAction, state: State) -> bool:
@@ -125,7 +127,7 @@ class ActionPriority(enum.IntEnum):
 
 
 def _is_event_node(action: ResolverAction, resource_database: ResourceDatabaseView) -> bool:
-    return any(it.resource_type == ResourceType.EVENT for it, q in action.resource_gain(resource_database) if q > 0)
+    return action.has_event_resource
 
 
 def _is_hint_node(action: ResolverAction) -> bool:
