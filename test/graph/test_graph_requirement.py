@@ -307,7 +307,15 @@ def test_and_with_complex_resources(blank_resource_db):
     req2.add_resource(ammo, 2, False)
     req2.add_resource(damage, 100, False)
 
+    assert str(req1) == "Weapon and No Blue Key and Missile ≥ 5 and Normal Damage ≥ 100"
+    assert str(req2) == "Jump and Missile ≥ 2 and Normal Damage ≥ 100"
+
     copied = req1.copy_then_and_with(req2)
+
+    assert str(req1) == "Weapon and No Blue Key and Missile ≥ 5 and Normal Damage ≥ 100"
+    assert str(req2) == "Jump and Missile ≥ 2 and Normal Damage ≥ 100"
+    assert str(copied) == "Jump and Weapon and No Blue Key and Missile ≥ 5 and Normal Damage ≥ 200"
+
     assert req1.and_with(req2)
 
     assert req1 == copied
