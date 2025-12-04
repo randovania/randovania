@@ -6,6 +6,7 @@ import typing
 import cython
 
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.graph.graph_requirement import GraphRequirementSet
 from randovania.lib.bitmask import Bitmask
 
@@ -119,6 +120,9 @@ class WorldGraphNode(BaseWorldGraphNode):
     pickup_entry: PickupEntry | None
     """The pickup entry of the GamePatches for this node's pickup_index at the time of creation."""
 
+    has_event_resource: bool = dataclasses.field(init=False, default=False)
+    """If this node gives a resource of type EVENT."""
+
     is_lock_action: bool
     """If this node should be considered a ActionPriority.LOCK_ACTION by the resolver."""
 
@@ -159,6 +163,7 @@ class WorldGraphNode(BaseWorldGraphNode):
         self.requirement_to_collect = requirement_to_collect
         self.pickup_index = pickup_index
         self.pickup_entry = pickup_entry
+        self.has_event_resource = False
         self.is_lock_action = is_lock_action
         self.database_node = database_node
         self.area = area
@@ -169,6 +174,8 @@ class WorldGraphNode(BaseWorldGraphNode):
         mapping[resource.resource_index] = resource
         self.resource_gain_bitmask.set_bit(resource.resource_index)
         self.has_resources = True
+        if resource.resource_type == ResourceType.EVENT:
+            self.has_event_resource = True
 
     def resource_gain(self, database: ResourceDatabaseView) -> ResourceGain:
         """
@@ -227,6 +234,7 @@ class WorldGraphNode(BaseWorldGraphNode):
             new_node.resource_gain_bitmask.union(self.resource_gain_bitmask)
             new_node.dangerous_resources.union(self.dangerous_resources)
             new_node.has_resources = True
+            new_node.has_event_resource = self.has_event_resource
         return new_node
 
 
