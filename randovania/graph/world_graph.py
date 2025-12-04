@@ -56,10 +56,6 @@ class WorldGraphNodeConnection:
         )
 
 
-def _empty_has_all_resources(node: BaseWorldGraphNode, resources: ResourceCollection) -> bool:
-    return True
-
-
 @dataclasses.dataclass()
 @cython.cclass
 class BaseWorldGraphNode:
@@ -84,8 +80,16 @@ class BaseWorldGraphNode:
     require_collected_to_leave: bool
     """When set, leaving this node requires it to have been collected."""
 
+    @cython.ccall
+    def has_all_resources(self, resources: ResourceCollection) -> bool:
+        """
+        Checks if all resources given by this node are already collected in the given collection.
+        Does not include resources given by a PickupEntry assigned to the location of this node.
+        """
+        return self.resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
 
-@dataclasses.dataclass()
+
+@dataclasses.dataclass(slots=True)
 class WorldGraphNode(BaseWorldGraphNode):
     """A node of a WorldGraph. Focused on being a very efficient data structures for the resolver and generator."""
 
@@ -109,16 +113,6 @@ class WorldGraphNode(BaseWorldGraphNode):
 
     has_resources: bool = dataclasses.field(init=False, default=False)
     """If this node provides any resources at all."""
-
-    has_all_resources: typing.Callable[[ResourceCollection], bool] = dataclasses.field(
-        init=False, default=_empty_has_all_resources
-    )  # type: ignore[assignment]
-    """
-    Checks if all resources given by this node are already collected in the given collection.
-    Does not include resources given by a PickupEntry assigned to the location of this node.
-
-    This is method so it can be optimised based on the number of resources this node provides.
-    """
 
     requirement_to_collect: GraphRequirementSet
     """
@@ -155,13 +149,6 @@ class WorldGraphNode(BaseWorldGraphNode):
     def _post_add_resource(self, resource: ResourceInfo) -> None:
         self.resource_gain_bitmask.set_bit(resource.resource_index)
         self.has_resources = True
-        if len(self.resource_gain) == 1:
-            resource_index = resource.resource_index
-            self.has_all_resources = lambda resources: resources.resource_bitmask.is_set(resource_index)
-        else:
-            self.has_all_resources = lambda resources: self.resource_gain_bitmask.is_subset_of(
-                resources.resource_bitmask
-            )
 
     def is_resource_node(self) -> bool:
         return self.has_resources
