@@ -22,6 +22,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
 
     from randovania.game_description.db.node import NodeContext
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -61,14 +62,14 @@ def _simplify_additional_requirement_set(
     return r
 
 
-def _is_action_dangerous(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
-    return any(resource in dangerous_resources for resource, _ in action.resource_gain_on_collect(state.resources))
+def _is_action_dangerous(action: ResolverAction) -> bool:
+    return not action.dangerous_resources.is_empty()
 
 
 def _is_dangerous_event(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
     return any(
         (resource in dangerous_resources and resource.resource_type == ResourceType.EVENT)
-        for resource, _ in action.resource_gain_on_collect(state.resources)
+        for resource, _ in action.resource_gain(state.resource_database)
     )
 
 
@@ -91,8 +92,10 @@ def _should_check_if_action_is_safe(
     :param dangerous_resources:
     :return:
     """
-    return not _is_action_dangerous(state, action, dangerous_resources) and (
-        _is_event_node(action) or _is_major_or_key_pickup_node(action, state) or _is_hint_node(action)
+    return not _is_action_dangerous(action) and (
+        _is_event_node(action, state.resource_database)
+        or _is_major_or_key_pickup_node(action, state)
+        or _is_hint_node(action)
     )
 
 
@@ -121,8 +124,8 @@ class ActionPriority(enum.IntEnum):
     """This node grants a dangerous resource"""
 
 
-def _is_event_node(action: ResolverAction) -> bool:
-    return any(it.resource_type == ResourceType.EVENT for it, q in action.resource_gain if q > 0)
+def _is_event_node(action: ResolverAction, resource_database: ResourceDatabaseView) -> bool:
+    return any(it.resource_type == ResourceType.EVENT for it, q in action.resource_gain(resource_database) if q > 0)
 
 
 def _is_hint_node(action: ResolverAction) -> bool:

@@ -15,13 +15,13 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.node import Node, NodeIndex
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import (
         ResourceGain,
         ResourceInfo,
-        ResourceQuantity,
     )
     from randovania.graph.requirement_converter import GraphRequirementConverter
 
@@ -73,8 +73,12 @@ class BaseWorldGraphNode:
 
     resource_gain_bitmask: Bitmask = dataclasses.field(init=False, default_factory=Bitmask.create)
     """
-    Bitmask of all ResourceInfo indices granted by this node for fast checking.
-    Mask is created in the same way as RequirementList and ResourceCollection.
+    Bitmask of all ResourceInfo indices granted by this node for fast checking. Does not include the pickup.
+    """
+
+    dangerous_resources: Bitmask = dataclasses.field(init=False, default_factory=Bitmask.create)
+    """
+    Bitmask representing all dangerous resources provided by this node, including any pickup.
     """
 
     require_collected_to_leave: bool
@@ -99,16 +103,6 @@ class WorldGraphNode(BaseWorldGraphNode):
     back_connections: list[NodeIndex] = dataclasses.field(init=False, default_factory=list)
     """
     A list of nodes that connects to this one.
-    """
-
-    resource_gain: list[ResourceQuantity]
-    """
-    All the resources provided by collecting this node.
-    - EventNode: the event
-    - HintNode/PickupNode: the node resource
-    - DockLockNode: the dock node resources
-
-    These resources must all provide exactly 1 quantity each.
     """
 
     has_resources: bool = dataclasses.field(init=False, default=False)
@@ -141,7 +135,6 @@ class WorldGraphNode(BaseWorldGraphNode):
         self,
         *,
         identifier: NodeIdentifier,
-        resource_gain: list[ResourceQuantity],
         requirement_to_collect: GraphRequirementSet,
         pickup_index: PickupIndex | None,
         pickup_entry: PickupEntry | None,
@@ -162,7 +155,6 @@ class WorldGraphNode(BaseWorldGraphNode):
         )
         self.identifier = identifier
         self.back_connections = []
-        self.resource_gain = resource_gain
         self.has_resources = False
         self.requirement_to_collect = requirement_to_collect
         self.pickup_index = pickup_index
@@ -172,17 +164,25 @@ class WorldGraphNode(BaseWorldGraphNode):
         self.area = area
         self.region = region
 
-        for resource, quantity in self.resource_gain:
-            assert quantity == 1
-            self._post_add_resource(resource.resource_index)
-
-    def add_resource(self, resource: ResourceInfo) -> None:
-        self.resource_gain.append((resource, 1))
-        self._post_add_resource(resource.resource_index)
-
-    def _post_add_resource(self, resource_index: cython.int) -> None:
-        self.resource_gain_bitmask.set_bit(resource_index)
+    def add_resource(self, resource: ResourceInfo, database: ResourceDatabaseView) -> None:
+        mapping: dict[int, ResourceInfo] = getattr(database, "_resource_mapping")
+        mapping[resource.resource_index] = resource
+        self.resource_gain_bitmask.set_bit(resource.resource_index)
         self.has_resources = True
+
+    def resource_gain(self, database: ResourceDatabaseView) -> ResourceGain:
+        """
+        All the resources provided by collecting this node.
+        - EventNode: the event
+        - HintNode/PickupNode: the node resource
+        - DockLockNode: the dock node resources
+
+        These resources all provide exactly 1 quantity each.
+        """
+
+        mapping: dict[int, ResourceInfo] = getattr(database, "_resource_mapping")
+        for index in self.resource_gain_bitmask.get_set_bits():
+            yield mapping[index], 1
 
     def is_resource_node(self) -> bool:
         return self.has_resources
@@ -192,7 +192,7 @@ class WorldGraphNode(BaseWorldGraphNode):
         return self.identifier.display_name(with_region, separator)
 
     def resource_gain_on_collect(self, resources: ResourceCollection) -> ResourceGain:
-        yield from self.resource_gain
+        yield from self.resource_gain(resources._resource_database)
         if self.pickup_entry is not None:
             yield from self.pickup_entry.resource_gain(resources, force_lock=True)
 
@@ -213,7 +213,6 @@ class WorldGraphNode(BaseWorldGraphNode):
             identifier=self.identifier,
             heal=self.heal,
             connections=list(self.connections),
-            resource_gain=[],
             requirement_to_collect=self.requirement_to_collect,
             require_collected_to_leave=self.require_collected_to_leave,
             pickup_index=self.pickup_index,
@@ -224,8 +223,10 @@ class WorldGraphNode(BaseWorldGraphNode):
             region=self.region,
         )
         new_node.back_connections.extend(self.back_connections)
-        for resource, _ in self.resource_gain:
-            new_node.add_resource(resource)
+        if self.has_resources:
+            new_node.resource_gain_bitmask.union(self.resource_gain_bitmask)
+            new_node.dangerous_resources.union(self.dangerous_resources)
+            new_node.has_resources = True
         return new_node
 
 
@@ -237,7 +238,8 @@ class WorldGraph:
 
     game_enum: RandovaniaGame
     victory_condition: GraphRequirementSet
-    dangerous_resources: frozenset[ResourceInfo]
+    dangerous_resources: frozenset[ResourceInfo] = dataclasses.field(init=False)
+    dangerous_resources_by_index: frozenset[int] = dataclasses.field(init=False)
     nodes: list[WorldGraphNode]
     node_resource_index_offset: int
 

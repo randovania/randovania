@@ -22,6 +22,7 @@ cdef class BaseWorldGraphNode:
     cdef public bint heal
     cdef public list[WorldGraphNodeConnection] connections
     cdef public Bitmask resource_gain_bitmask
+    cdef public Bitmask dangerous_resources
     cdef public bint require_collected_to_leave
 
     cpdef bint has_all_resources(self, ResourceCollection resources)
