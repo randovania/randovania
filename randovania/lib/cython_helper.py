@@ -237,4 +237,4 @@ class Pair[T, U]:
     def __copy__(self) -> Pair[T, U]:
         return Pair[T, U](self.first, self.second)
 
-    __hash__ = None
+    __hash__ = None  # type: ignore[assignment]

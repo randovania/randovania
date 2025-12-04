@@ -448,15 +448,16 @@ class GraphRequirementList:
         if result._set_bitmask.share_at_least_one_bit(result._negate_bitmask):
             return None
 
+        idx: cython.int
         for entry in right._other_resources:
-            idx: cython.int = result._find_other_idx(entry.first)
+            idx = result._find_other_idx(entry.first)
             if idx != -1:
                 result._other_resources[idx].second = max(result._other_resources[idx].second, entry.second)
             else:
                 result._other_resources.push_back(pair[cython.size_t, cython.int](entry))
 
         for entry in right._damage_resources:
-            idx: cython.int = result._find_damage_idx(entry.first)
+            idx = result._find_damage_idx(entry.first)
             if idx != -1:
                 result._damage_resources[idx].second += entry.second
             else:
@@ -591,15 +592,16 @@ class GraphRequirementList:
         if not subset_req._negate_bitmask.is_subset_of(self._negate_bitmask):
             return False
 
+        idx: cython.int
         # Check _other_resources - superset must have >= amounts for all resources in subset
         for subset_entry in subset_req._other_resources:
-            idx: cython.int = self._find_other_idx(subset_entry.first)
+            idx = self._find_other_idx(subset_entry.first)
             if idx == -1 or self._other_resources[idx].second < subset_entry.second:
                 return False
 
         # Check _damage_resources - superset must have >= amounts for all damage in subset
         for subset_entry in subset_req._damage_resources:
-            idx: cython.int = self._find_damage_idx(subset_entry.first)
+            idx = self._find_damage_idx(subset_entry.first)
             if idx == -1 or self._damage_resources[idx].second < subset_entry.second:
                 return False
 
