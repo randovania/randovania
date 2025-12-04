@@ -17,7 +17,6 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import (
     PositiveResourceRequirement,
-    ResourceRequirement,
 )
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
@@ -75,11 +74,12 @@ def _create_dock_connection(
     requirement_to_collect = Requirement.trivial()
 
     # Requirements needed to open and cross the dock.
-    requirement_parts = [_get_dock_open_requirement(node.database_node, forward_weakness)]
+    open_requirement = graph.converter.convert_db(_get_dock_open_requirement(node.database_node, forward_weakness))
+    lock_resources = []
 
     if forward_weakness.lock is not None:
         front_lock_resource = graph.resource_info_for_node(node)
-        requirement_parts.append(ResourceRequirement.simple(front_lock_resource))
+        lock_resources.append(front_lock_resource)
 
         node.is_lock_action = True
         node.add_resource(front_lock_resource)
@@ -88,7 +88,7 @@ def _create_dock_connection(
     # Handle the different kinds of ways a dock lock can be opened from behind
     if back_lock is not None:
         back_lock_resource = graph.resource_info_for_node(target_node)
-        requirement_parts.append(ResourceRequirement.simple(back_lock_resource))
+        lock_resources.append(back_lock_resource)
 
         # Check if we can unlock from the back.
         if not (
@@ -105,10 +105,15 @@ def _create_dock_connection(
                     [requirement_to_collect, _get_dock_lock_requirement(target_node.database_node, back_weakness)]
                 )
 
-    final_requirement = graph.converter.convert_db(RequirementAnd(requirement_parts))
-    node.requirement_to_collect = graph.converter.convert_db(requirement_to_collect)
+    if lock_resources:
+        lock_list = GraphRequirementList(graph.converter.resource_database)
+        for resource in lock_resources:
+            lock_list.add_resource(resource, 1, False)
 
-    return WorldGraphNodeConnection(target_node.node_index, final_requirement, final_requirement, final_requirement)
+        open_requirement = open_requirement.copy_then_all_alternative_and_with(lock_list)
+
+    node.requirement_to_collect = graph.converter.convert_db(requirement_to_collect)
+    return WorldGraphNodeConnection(target_node.node_index, open_requirement, open_requirement, open_requirement)
 
 
 def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
