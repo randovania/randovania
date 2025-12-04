@@ -198,12 +198,7 @@ def create_node(
     """
     Creates one WorldGraphNode based on one original node.
     """
-
     resource_gain: list[ResourceQuantity] = []
-    requirement_to_collect: GraphRequirementSet | Requirement = GraphRequirementSet.trivial()
-
-    if isinstance(original_node, HintNode):
-        requirement_to_collect = original_node.lock_requirement
 
     if isinstance(original_node, EventNode):
         resource_gain.append((original_node.event, 1))
@@ -222,8 +217,7 @@ def create_node(
         heal=original_node.heal,
         connections=[],  # to be filled by `create_graph`, after all nodes are created.
         resource_gain=resource_gain,
-        # FIXME: ugly hack leaving a regular Requirement here...
-        requirement_to_collect=requirement_to_collect,  # type: ignore[arg-type]
+        requirement_to_collect=GraphRequirementSet.trivial(),
         require_collected_to_leave=isinstance(original_node, EventNode | PickupNode | EventPickupNode),
         pickup_index=pickup_index,
         pickup_entry=None,
@@ -363,9 +357,8 @@ def create_patchless_graph(
     graph.victory_condition = graph.converter.convert_db(victory_condition)
 
     for node in nodes:
-        if isinstance(node.requirement_to_collect, Requirement):
-            # FIXME: this is just for HintNode
-            node.requirement_to_collect = graph.converter.convert_db(node.requirement_to_collect)
+        if isinstance(node.database_node, HintNode):
+            node.requirement_to_collect = graph.converter.convert_db(node.database_node.lock_requirement)
 
     for node in nodes:
         if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
