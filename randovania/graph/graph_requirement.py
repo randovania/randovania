@@ -1009,6 +1009,30 @@ class GraphRequirementSet:
 
         return result
 
+    def get_all_used_resources(self) -> tuple[set[int], set[int]]:
+        """
+        :return: A tuple with two sets of resource indices.
+        The first is all resources used by any of the alternatives.
+        The second is all resources used in at least one negate requirement.
+        """
+        set_resources: set[int] = set()
+        resources_with_negate: set[int] = set()
+
+        for ref in self._alternatives:
+            alternative: GraphRequirementList = cython.cast(GraphRequirementList, ref.raw())
+
+            for resource_index in alternative._set_bitmask.get_set_bits():
+                set_resources.add(resource_index)
+
+            for resource_index in alternative._negate_bitmask.get_set_bits():
+                set_resources.add(resource_index)
+                resources_with_negate.add(resource_index)
+
+            for entry in alternative._damage_resources:
+                set_resources.add(entry.first)
+
+        return set_resources, resources_with_negate
+
 
 TRIVIAL_SET = GraphRequirementSet()
 TRIVIAL_SET.add_alternative(TRIVIAL_LIST)

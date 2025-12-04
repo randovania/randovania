@@ -430,41 +430,33 @@ def graph_precache(graph: WorldGraph) -> None:
     # And an additional equivalent mapping, but only for dangerous resources
     for node in graph.nodes:
         for index, connection in enumerate(node.connections):
-            has_negate: set[ResourceInfo] = set()
-            resource_in_edge = set()
             requirement_set = connection.requirement
 
-            if node.has_resources:
+            if not node.dangerous_resources.is_empty():
                 dangerous_extra = GraphRequirementList(graph.converter.resource_database)
 
                 for resource_index in node.dangerous_resources.get_set_bits():
                     dangerous_extra.add_resource_index(resource_index, 1, False)
 
-                if not dangerous_extra.is_trivial():
-                    requirement_set = requirement_set.copy_then_all_alternative_and_with(dangerous_extra)
-                    graph.editable_node(node.node_index).connections[index] = WorldGraphNodeConnection(
-                        target=connection.target,
-                        requirement=connection.requirement,
-                        requirement_with_self_dangerous=requirement_set,
-                        requirement_without_leaving=connection.requirement_without_leaving,
-                    )
-
-            for alternative in requirement_set.alternatives:
-                all_resources = alternative.all_resources()
-                resource_in_edge.update(all_resources)
-                has_negate.update(
-                    resource for resource in all_resources if alternative.get_requirement_for(resource)[1]
+                requirement_set = requirement_set.copy_then_all_alternative_and_with(dangerous_extra)
+                graph.editable_node(node.node_index).connections[index] = WorldGraphNodeConnection(
+                    target=connection.target,
+                    requirement=connection.requirement,
+                    requirement_with_self_dangerous=requirement_set,
+                    requirement_without_leaving=connection.requirement_without_leaving,
                 )
 
-            for resource in resource_in_edge:
+            used_resources, used_resources_with_negate = requirement_set.get_all_used_resources()
+
+            for resource_index in used_resources:
                 mappings = [graph.resource_to_edges]
-                if resource in has_negate:
+                if resource_index in used_resources_with_negate:
                     mappings.append(graph.resource_to_dangerous_edges)
 
                 for mapping in mappings:
-                    if resource not in mapping:
-                        mapping[resource] = []
-                    mapping[resource].append((node.node_index, connection.target))
+                    if resource_index not in mapping:
+                        mapping[resource_index] = []
+                    mapping[resource_index].append((node.node_index, connection.target))
 
 
 def _replace_target(conn: WorldGraphNodeConnection, node: WorldGraphNode) -> WorldGraphNodeConnection:

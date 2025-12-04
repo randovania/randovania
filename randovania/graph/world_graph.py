@@ -262,12 +262,12 @@ class WorldGraph:
     copied_nodes: set[NodeIndex] | None = None
     """If set, this graph is a copy and these are the nodes that were already copied."""
 
-    resource_to_edges: dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]] = dataclasses.field(
+    resource_to_edges: dict[int, list[tuple[NodeIndex, NodeIndex]]] = dataclasses.field(
         init=False, default_factory=dict
     )
     """A mapping of resource to a list of every node -> node edge it's used."""
 
-    resource_to_dangerous_edges: dict[ResourceInfo, list[tuple[NodeIndex, NodeIndex]]] = dataclasses.field(
+    resource_to_dangerous_edges: dict[int, list[tuple[NodeIndex, NodeIndex]]] = dataclasses.field(
         init=False, default_factory=dict
     )
     """A mapping of resource to a list of every node -> node edge it's used with a negate condition."""
