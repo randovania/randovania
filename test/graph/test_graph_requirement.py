@@ -307,7 +307,15 @@ def test_and_with_complex_resources(blank_resource_db):
     req2.add_resource(ammo, 2, False)
     req2.add_resource(damage, 100, False)
 
+    assert str(req1) == "Weapon and No Blue Key and Missile ≥ 5 and Normal Damage ≥ 100"
+    assert str(req2) == "Jump and Missile ≥ 2 and Normal Damage ≥ 100"
+
     copied = req1.copy_then_and_with(req2)
+
+    assert str(req1) == "Weapon and No Blue Key and Missile ≥ 5 and Normal Damage ≥ 100"
+    assert str(req2) == "Jump and Missile ≥ 2 and Normal Damage ≥ 100"
+    assert str(copied) == "Jump and Weapon and No Blue Key and Missile ≥ 5 and Normal Damage ≥ 200"
+
     assert req1.and_with(req2)
 
     assert req1 == copied
@@ -319,6 +327,184 @@ def test_and_with_complex_resources(blank_resource_db):
         ammo: (5, False),
         damage: (200, False),
     }
+
+
+def test_copy_then_and_with_independence(blank_resource_db):
+    """Test that copy_then_and_with creates truly independent copies."""
+    weapon = blank_resource_db.get_item("Weapon")
+    ammo = blank_resource_db.get_item("Ammo")
+    jump = blank_resource_db.get_item("Jump")
+
+    req1 = GraphRequirementList(blank_resource_db)
+    req1.add_resource(weapon, 5, False)
+
+    req2 = GraphRequirementList(blank_resource_db)
+    req2.add_resource(ammo, 3, False)
+
+    # Create a copy using copy_then_and_with
+    copied = req1.copy_then_and_with(req2)
+
+    # Verify initial state
+    assert copied.get_requirement_for(weapon, False) == (5, False)
+    assert copied.get_requirement_for(ammo, False) == (3, False)
+
+    # Now modify req1 by adding more resources
+    req1.add_resource(jump, 2, False)
+
+    # The copied version should NOT be affected
+    assert copied.get_requirement_for(jump, False) == (0, False)
+    assert copied.get_requirement_for(weapon, False) == (5, False)
+
+    # And modifying req2 shouldn't affect the copy either
+    req2.add_resource(weapon, 10, False)  # This changes ammo count in req2
+
+    # Verify copied is still independent
+    assert copied.get_requirement_for(ammo, False) == (3, False)
+    assert copied.get_requirement_for(weapon, False) == (5, False)
+
+
+def test_copy_then_and_with_vector_mutation(blank_resource_db):
+    """Test that copy_then_and_with doesn't share mutable vector state."""
+    weapon = blank_resource_db.get_item("Weapon")
+    ammo = blank_resource_db.get_item("Ammo")
+
+    req1 = GraphRequirementList(blank_resource_db)
+    req1.add_resource(weapon, 5, False)
+
+    req2 = GraphRequirementList(blank_resource_db)
+    req2.add_resource(ammo, 3, False)
+
+    # Store the original values via the public API
+    req1_weapon_before = req1.get_requirement_for(weapon, False)
+
+    # Create a copy using copy_then_and_with
+    copied = req1.copy_then_and_with(req2)
+
+    # Verify req1's values are unchanged via public API
+    req1_weapon_after = req1.get_requirement_for(weapon, False)
+    assert req1_weapon_before == req1_weapon_after
+
+    # Verify the copied has both resources
+    assert copied.get_requirement_for(weapon, False) == (5, False)
+    assert copied.get_requirement_for(ammo, False) == (3, False)
+
+
+def test_and_with_multiple_times(blank_resource_db):
+    """Test that and_with can be called multiple times without corruption."""
+    weapon = blank_resource_db.get_item("Weapon")
+    ammo = blank_resource_db.get_item("Ammo")
+    jump = blank_resource_db.get_item("Jump")
+
+    req1 = GraphRequirementList(blank_resource_db)
+    req1.add_resource(weapon, 2, False)
+
+    req2 = GraphRequirementList(blank_resource_db)
+    req2.add_resource(ammo, 3, False)
+
+    req3 = GraphRequirementList(blank_resource_db)
+    req3.add_resource(jump, 1, False)
+
+    # Call and_with multiple times
+    assert req1.and_with(req2)
+    assert req1.get_requirement_for(weapon, False) == (2, False)
+    assert req1.get_requirement_for(ammo, False) == (3, False)
+
+    assert req1.and_with(req3)
+    assert req1.get_requirement_for(weapon, False) == (2, False)
+    assert req1.get_requirement_for(ammo, False) == (3, False)
+    assert req1.get_requirement_for(jump, False) == (1, False)
+
+    # Now test with amounts > 1
+    req4 = GraphRequirementList(blank_resource_db)
+    req4.add_resource(weapon, 5, False)  # Should update to max(2, 5) = 5
+
+    assert req1.and_with(req4)
+    assert req1.get_requirement_for(weapon, False) == (5, False)
+    assert req1.get_requirement_for(ammo, False) == (3, False)
+    assert req1.get_requirement_for(jump, False) == (1, False)
+
+
+def test_damage_resource_copy_independence(blank_resource_db):
+    """Test that damage resources are properly copied and independent."""
+    damage = blank_resource_db.get_damage("Damage")
+    weapon = blank_resource_db.get_item("Weapon")
+
+    req1 = GraphRequirementList(blank_resource_db)
+    req1.add_resource(damage, 50, False)
+
+    req2 = GraphRequirementList(blank_resource_db)
+    req2.add_resource(weapon, 1, False)
+    req2.add_resource(damage, 30, False)
+
+    # Use copy_then_and_with
+    copied = req1.copy_then_and_with(req2)
+
+    # Verify damage is combined (50 + 30 = 80 for damage resources)
+    assert copied.get_requirement_for(damage, True) == (80, False)
+
+    # Now modify req1's damage
+    req1.add_resource(damage, 20, False)  # This adds 20 more, so req1 now has 70 total
+
+    # copied should still have 80, not be affected
+    assert copied.get_requirement_for(damage, True) == (80, False)
+    assert req1.get_requirement_for(damage, True) == (70, False)
+
+
+def test_and_with_mutation_independence(blank_resource_db):
+    """Test that and_with doesn't mutate through shared Pair references."""
+    weapon = blank_resource_db.get_item("Weapon")
+    ammo = blank_resource_db.get_item("Ammo")
+
+    req1 = GraphRequirementList(blank_resource_db)
+    req1.add_resource(weapon, 5, False)
+    req1.add_resource(ammo, 3, False)
+
+    # Store the original values
+    original_weapon_amount = req1.get_requirement_for(weapon, False)[0]
+    original_ammo_amount = req1.get_requirement_for(ammo, False)[0]
+
+    req2 = GraphRequirementList(blank_resource_db)
+    req2.add_resource(weapon, 10, False)  # This should update to max(5, 10) = 10
+
+    # Use copy_then_and_with
+    copied = req1.copy_then_and_with(req2)
+
+    # Verify copied has the max
+    assert copied.get_requirement_for(weapon, False) == (10, False)
+    assert copied.get_requirement_for(ammo, False) == (3, False)
+
+    # Verify req1 is UNCHANGED - this is the key test
+    assert req1.get_requirement_for(weapon, False) == (original_weapon_amount, False)
+    assert req1.get_requirement_for(ammo, False) == (original_ammo_amount, False)
+
+
+def test_copy_then_and_with_does_not_mutate_original_vectors(blank_resource_db):
+    """Test that copy_then_and_with creates independent copies."""
+    weapon = blank_resource_db.get_item("Weapon")
+    ammo = blank_resource_db.get_item("Ammo")
+
+    req1 = GraphRequirementList(blank_resource_db)
+    req1.add_resource(weapon, 5, False)
+
+    req2 = GraphRequirementList(blank_resource_db)
+    req2.add_resource(ammo, 3, False)
+
+    # Store the original values
+    req1_weapon_original = req1.get_requirement_for(weapon, False)
+
+    # Create a copy using copy_then_and_with
+    copied = req1.copy_then_and_with(req2)
+
+    # Verify req1's values weren't mutated during the copy
+    req1_weapon_after = req1.get_requirement_for(weapon, False)
+    assert req1_weapon_original == req1_weapon_after
+
+    # Verify the copied has the correct values
+    assert copied.get_requirement_for(weapon, False) == (5, False)
+    assert copied.get_requirement_for(ammo, False) == (3, False)
+
+    # Verify req1 still has only weapon, not ammo
+    assert req1.get_requirement_for(ammo, False) == (0, False)
 
 
 def test_str_empty(blank_resource_db):

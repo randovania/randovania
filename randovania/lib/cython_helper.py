@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import collections
+import copy
 import typing
 
 if typing.TYPE_CHECKING:
@@ -73,6 +74,9 @@ class Vector[T](list[T]):
 
     def copy(self) -> Vector[T]:
         return Vector[T](self)
+
+    def copy_elements(self) -> Vector[T]:
+        return Vector[T](copy.copy(it) for it in self)
 
 
 class Deque[T]:
@@ -213,12 +217,24 @@ class Pair[T, U]:
     first: T
     second: U
 
-    def __init__(self, first: T, second: U) -> None:
-        self.first = first
-        self.second = second
+    def __init__(self, first: T | Pair[T, U], second: U | None = None) -> None:
+        if isinstance(first, Pair) and second is None:
+            self.first = first.first
+            self.second = first.second
+        else:
+            self.first = first  # type: ignore[assignment]
+            self.second = second  # type: ignore[assignment]
 
     def __repr__(self) -> str:
         return f"Pair({self.first!r}, {self.second!r})"
 
     def __str__(self) -> str:
         return f"({self.first}, {self.second})"
+
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, Pair) and self.first == other.first and self.second == other.second
+
+    def __copy__(self) -> Pair[T, U]:
+        return Pair[T, U](self.first, self.second)
+
+    __hash__ = None
