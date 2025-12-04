@@ -89,7 +89,7 @@ class BaseWorldGraphNode:
         return self.resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
 
 
-@dataclasses.dataclass(slots=True)
+@dataclasses.dataclass(init=False)
 class WorldGraphNode(BaseWorldGraphNode):
     """A node of a WorldGraph. Focused on being a very efficient data structures for the resolver and generator."""
 
@@ -137,17 +137,51 @@ class WorldGraphNode(BaseWorldGraphNode):
     region: Region
     """The Region that contains `area` and `database_node`."""
 
-    def __post_init__(self) -> None:
+    def __init__(
+        self,
+        *,
+        identifier: NodeIdentifier,
+        resource_gain: list[ResourceQuantity],
+        requirement_to_collect: GraphRequirementSet,
+        pickup_index: PickupIndex | None,
+        pickup_entry: PickupEntry | None,
+        is_lock_action: bool,
+        database_node: Node | None,
+        area: Area,
+        region: Region,
+        node_index: NodeIndex,
+        heal: bool,
+        connections: list[WorldGraphNodeConnection],
+        require_collected_to_leave: bool,
+    ) -> None:
+        super(WorldGraphNode, self).__init__(
+            node_index,
+            heal,
+            connections,
+            require_collected_to_leave,
+        )
+        self.identifier = identifier
+        self.back_connections = []
+        self.resource_gain = resource_gain
+        self.has_resources = False
+        self.requirement_to_collect = requirement_to_collect
+        self.pickup_index = pickup_index
+        self.pickup_entry = pickup_entry
+        self.is_lock_action = is_lock_action
+        self.database_node = database_node
+        self.area = area
+        self.region = region
+
         for resource, quantity in self.resource_gain:
             assert quantity == 1
-            self._post_add_resource(resource)
+            self._post_add_resource(resource.resource_index)
 
     def add_resource(self, resource: ResourceInfo) -> None:
         self.resource_gain.append((resource, 1))
-        self._post_add_resource(resource)
+        self._post_add_resource(resource.resource_index)
 
-    def _post_add_resource(self, resource: ResourceInfo) -> None:
-        self.resource_gain_bitmask.set_bit(resource.resource_index)
+    def _post_add_resource(self, resource_index: cython.int) -> None:
+        self.resource_gain_bitmask.set_bit(resource_index)
         self.has_resources = True
 
     def is_resource_node(self) -> bool:
