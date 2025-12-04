@@ -357,11 +357,16 @@ def build_satisfiable_requirements(
             entry: tuple[GraphRequirementSet, GraphRequirementSet] = reqs[idx]
             req_a: GraphRequirementSet = entry[0]
             req_b: GraphRequirementSet = entry[1]
-            for a_ref in req_a._alternatives:
-                for b_ref in req_b._alternatives:
-                    new_list = a_ref.get().copy_then_and_with(b_ref.get())
-                    if new_list is not None:
-                        set_param.add(new_list)
+            # req_a is never trivial, but req_b mostly is
+            if req_b is trivial_set:
+                for a_ref in req_a._alternatives:
+                    set_param.add(a_ref.get())
+            else:
+                for a_ref in req_a._alternatives:
+                    for b_ref in req_b._alternatives:
+                        new_list = a_ref.get().copy_then_and_with(b_ref.get())
+                        if new_list is not None:
+                            set_param.add(new_list)
 
         additional: GraphRequirementSet = additional_requirements_list[node_index]
         if additional is trivial_set:
