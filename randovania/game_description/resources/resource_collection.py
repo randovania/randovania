@@ -6,7 +6,6 @@
 
 from __future__ import annotations
 
-import copy
 import typing
 
 if typing.TYPE_CHECKING:
@@ -36,6 +35,11 @@ else:
 @cython.cclass
 class ResourceCollection:
     # Attributes defined in resource_collection.pxd
+    # cdef public Bitmask resource_bitmask
+    # cdef vector[int] _resource_array
+    # cdef dict[int, object] _existing_resources
+    # cdef unordered_map[size_t, float] _damage_reduction_cache
+    # cdef object _resource_database
 
     def __init__(self, resource_database: ResourceDatabaseView, resource_array: vector[cython.int]) -> None:
         self.resource_bitmask = Bitmask.create_native()
@@ -46,12 +50,36 @@ class ResourceCollection:
 
     @classmethod
     def with_resource_count(cls, resource_database: ResourceDatabaseView, count: cython.size_t) -> ResourceCollection:
-        result = cls(resource_database, vector[cython.int]())
+        result: ResourceCollection = ResourceCollection.__new__(ResourceCollection)
+        result.resource_bitmask = Bitmask.create_native()
+        result._existing_resources = {}
+        result._resource_database = resource_database
+
         if cython.compiled:
             result._resize_array_to_fit(count)
         else:
             result._resource_array = vector([0]) * count
+            result._damage_reduction_cache = unordered_map[cython.size_t, cython.float]()
         return result
+
+    @cython.ccall
+    def duplicate(self) -> ResourceCollection:
+        result: ResourceCollection = ResourceCollection.__new__(ResourceCollection)
+        result.resource_bitmask = self.resource_bitmask.copy()
+        result._existing_resources = self._existing_resources.copy()
+        result._resource_database = self._resource_database
+
+        if cython.compiled:
+            result._resource_array = self._resource_array
+            # ignoring _damage_reduction_cache
+        else:
+            result._resource_array = self._resource_array.copy()
+            result._damage_reduction_cache = unordered_map[cython.size_t, cython.float]()
+
+        return result
+
+    def __copy__(self) -> ResourceCollection:
+        return self.duplicate()
 
     @cython.ccall
     def _resize_array_to_fit(self, size: cython.size_t) -> cython.void:
@@ -188,12 +216,6 @@ class ResourceCollection:
 
         self.resource_bitmask.unset_bit(resource_index)
 
-    def duplicate(self) -> ResourceCollection:
-        result: ResourceCollection = ResourceCollection(self._resource_database, copy.copy(self._resource_array))
-        result._existing_resources.update(self._existing_resources)
-        result.resource_bitmask = self.resource_bitmask.copy()
-        return result
-
     @cython.ccall
     # @cython.exceptval(check=False)
     def get_damage_reduction(self, resource_index: cython.size_t) -> cython.float:
@@ -209,6 +231,3 @@ class ResourceCollection:
         reduction: cython.float = self._resource_database.get_damage_reduction(resource, self)
         self._damage_reduction_cache[resource_index] = reduction
         return reduction
-
-    def __copy__(self) -> ResourceCollection:
-        return self.duplicate()
