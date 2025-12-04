@@ -347,6 +347,7 @@ def build_satisfiable_requirements(
     data: list[GraphRequirementList] = []
 
     additional_requirements_list: list[GraphRequirementSet] = logic.additional_requirements
+    trivial_set: GraphRequirementSet = GraphRequirementSet.trivial()
 
     for node_index, reqs in requirements_by_node.items():
         set_param: set[GraphRequirementList] = set()
@@ -363,10 +364,13 @@ def build_satisfiable_requirements(
                         set_param.add(new_list)
 
         additional: GraphRequirementSet = additional_requirements_list[node_index]
-        for a in set_param:
-            for b in additional._alternatives:
-                new_list = a.copy_then_and_with(b.get())
-                if new_list is not None:
-                    data.append(new_list)
+        if additional is trivial_set:
+            data.extend(set_param)
+        else:
+            for a in set_param:
+                for b in additional._alternatives:
+                    new_list = a.copy_then_and_with(b.get())
+                    if new_list is not None:
+                        data.append(new_list)
 
     return frozenset(data)
