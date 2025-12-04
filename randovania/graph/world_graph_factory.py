@@ -227,7 +227,6 @@ def create_node(
         requirement_to_collect=GraphRequirementSet.trivial(),
         require_collected_to_leave=isinstance(original_node, EventNode | PickupNode | EventPickupNode),
         pickup_index=pickup_index,
-        pickup_entry=None,
         is_lock_action=isinstance(original_node, EventNode | EventPickupNode),
         database_node=original_node,
         area=area,
@@ -344,7 +343,6 @@ def create_patchless_graph(
                     requirement_to_collect=GraphRequirementSet.trivial(),
                     require_collected_to_leave=False,
                     pickup_index=None,
-                    pickup_entry=None,
                     is_lock_action=False,
                     database_node=None,
                     area=area,
@@ -417,7 +415,7 @@ def _calculate_dangerous_resources(graph: WorldGraph) -> None:
     graph.dangerous_resources_by_index = frozenset(resource.resource_index for resource in graph.dangerous_resources)
 
     for node in graph.nodes:
-        if node.has_resources:
+        if node.is_resource_node():
             for index in node.resource_gain_bitmask.get_set_bits():
                 if index in graph.dangerous_resources_by_index:
                     node.dangerous_resources.set_bit(index)
@@ -495,7 +493,7 @@ def _adjust_graph_for_patches(
             dock_connections.add((node.node_index, connection.target))
 
             if node.node_index in graph.front_of_dock_mapping:
-                if node.has_resources:
+                if node.is_resource_node():
                     redirect_to_front_of_node.append(node)
 
     for node in redirect_to_front_of_node:

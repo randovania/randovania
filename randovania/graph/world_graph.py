@@ -106,9 +106,6 @@ class WorldGraphNode(BaseWorldGraphNode):
     A list of nodes that connects to this one.
     """
 
-    has_resources: bool = dataclasses.field(init=False, default=False)
-    """If this node provides any resources at all."""
-
     requirement_to_collect: GraphRequirementSet
     """
     A requirement that must be satisfied before being able to collect
@@ -117,7 +114,7 @@ class WorldGraphNode(BaseWorldGraphNode):
     pickup_index: PickupIndex | None
     """The pickup index associated with this node."""
 
-    pickup_entry: PickupEntry | None
+    pickup_entry: PickupEntry | None = dataclasses.field(init=False, default=None)
     """The pickup entry of the GamePatches for this node's pickup_index at the time of creation."""
 
     has_event_resource: bool = dataclasses.field(init=False, default=False)
@@ -138,18 +135,17 @@ class WorldGraphNode(BaseWorldGraphNode):
     def __init__(
         self,
         *,
-        identifier: NodeIdentifier,
-        requirement_to_collect: GraphRequirementSet,
-        pickup_index: PickupIndex | None,
-        pickup_entry: PickupEntry | None,
-        is_lock_action: bool,
-        database_node: Node | None,
-        area: Area,
-        region: Region,
         node_index: NodeIndex,
         heal: bool,
         connections: list[WorldGraphNodeConnection],
         require_collected_to_leave: bool,
+        identifier: NodeIdentifier,
+        requirement_to_collect: GraphRequirementSet,
+        pickup_index: PickupIndex | None,
+        is_lock_action: bool,
+        database_node: Node | None,
+        area: Area,
+        region: Region,
     ) -> None:
         super(WorldGraphNode, self).__init__(
             node_index,
@@ -159,10 +155,9 @@ class WorldGraphNode(BaseWorldGraphNode):
         )
         self.identifier = identifier
         self.back_connections = []
-        self.has_resources = False
         self.requirement_to_collect = requirement_to_collect
         self.pickup_index = pickup_index
-        self.pickup_entry = pickup_entry
+        self.pickup_entry = None
         self.has_event_resource = False
         self.is_lock_action = is_lock_action
         self.database_node = database_node
@@ -173,7 +168,6 @@ class WorldGraphNode(BaseWorldGraphNode):
         mapping: dict[int, ResourceInfo] = getattr(database, "_resource_mapping")
         mapping[resource.resource_index] = resource
         self.resource_gain_bitmask.set_bit(resource.resource_index)
-        self.has_resources = True
         if resource.resource_type == ResourceType.EVENT:
             self.has_event_resource = True
 
@@ -192,7 +186,7 @@ class WorldGraphNode(BaseWorldGraphNode):
             yield mapping[index], 1
 
     def is_resource_node(self) -> bool:
-        return self.has_resources
+        return not self.resource_gain_bitmask.is_empty()
 
     def full_name(self, with_region: bool = True, separator: str = "/") -> str:
         """The name of this node, including the area and optionally region."""
@@ -223,17 +217,15 @@ class WorldGraphNode(BaseWorldGraphNode):
             requirement_to_collect=self.requirement_to_collect,
             require_collected_to_leave=self.require_collected_to_leave,
             pickup_index=self.pickup_index,
-            pickup_entry=None,
             is_lock_action=self.is_lock_action,
             database_node=self.database_node,
             area=self.area,
             region=self.region,
         )
         new_node.back_connections.extend(self.back_connections)
-        if self.has_resources:
+        if self.is_resource_node():
             new_node.resource_gain_bitmask.union(self.resource_gain_bitmask)
             new_node.dangerous_resources.union(self.dangerous_resources)
-            new_node.has_resources = True
             new_node.has_event_resource = self.has_event_resource
         return new_node
 
