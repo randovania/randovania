@@ -31,10 +31,10 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node, NodeIndex
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
-    from randovania.game_description.game_database_view import GameDatabaseView
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_info import ResourceInfo, ResourceQuantity
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 def _get_dock_open_requirement(node: DockNode, weakness: DockWeakness) -> Requirement:
@@ -60,6 +60,8 @@ def _create_dock_connection(
     patches: GamePatches,
 ) -> WorldGraphNodeConnection:
     """Creates the connection for crossing this dock. Also handles adding the resource gain for breaking locks."""
+    resource_database = graph.converter.resource_database
+
     assert isinstance(node.database_node, DockNode)
     target_node = graph.node_identifier_to_node[patches.get_dock_connection_for(node.database_node)]
     forward_weakness = patches.get_dock_weakness_for(node.database_node)
@@ -82,7 +84,7 @@ def _create_dock_connection(
         lock_resources.append(front_lock_resource)
 
         node.is_lock_action = True
-        node.add_resource(front_lock_resource)
+        node.add_resource(front_lock_resource, resource_database)
         requirement_to_collect = _get_dock_lock_requirement(node.database_node, forward_weakness)
 
     # Handle the different kinds of ways a dock lock can be opened from behind
@@ -96,7 +98,7 @@ def _create_dock_connection(
             or (back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_IF_MATCHING and forward_weakness != back_weakness)
         ):
             node.is_lock_action = True
-            node.add_resource(back_lock_resource)
+            node.add_resource(back_lock_resource, resource_database)
 
             if back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST and forward_weakness != back_weakness:
                 assert isinstance(target_node.database_node, DockNode)
@@ -199,16 +201,17 @@ def create_node(
     original_node: Node,
     area: Area,
     region: Region,
+    database: ResourceDatabaseView,
 ) -> WorldGraphNode:
     """
     Creates one WorldGraphNode based on one original node.
     """
-    resource_gain: list[ResourceQuantity] = []
+    resources: list[ResourceInfo] = []
 
     if isinstance(original_node, EventNode):
-        resource_gain.append((original_node.event, 1))
+        resources.append(original_node.event)
     elif isinstance(original_node, EventPickupNode):
-        resource_gain.append((original_node.event_node.event, 1))
+        resources.append(original_node.event_node.event)
 
     pickup_index = None
     if isinstance(original_node, PickupNode):
@@ -216,12 +219,11 @@ def create_node(
     elif isinstance(original_node, EventPickupNode):
         pickup_index = original_node.pickup_node.pickup_index
 
-    return WorldGraphNode(
+    node = WorldGraphNode(
         node_index=node_index,
         identifier=original_node.identifier,
         heal=original_node.heal,
         connections=[],  # to be filled by `create_graph`, after all nodes are created.
-        resource_gain=resource_gain,
         requirement_to_collect=GraphRequirementSet.trivial(),
         require_collected_to_leave=isinstance(original_node, EventNode | PickupNode | EventPickupNode),
         pickup_index=pickup_index,
@@ -231,6 +233,9 @@ def create_node(
         area=area,
         region=region,
     )
+    for resource in resources:
+        node.add_resource(resource, database)
+    return node
 
 
 def calculate_node_replacement(database_view: GameDatabaseView) -> dict[Node, Node | None]:
@@ -321,7 +326,7 @@ def create_patchless_graph(
         if original_node is None:
             continue
 
-        nodes.append(new_node := create_node(len(nodes), original_node, area, region))
+        nodes.append(new_node := create_node(len(nodes), original_node, area, region, resource_database))
         graph_area_connections[new_node.node_index] = copy.copy(original_area_connections[original_node.node_index])
 
         if isinstance(original_node, TeleporterNetworkNode):
@@ -336,7 +341,6 @@ def create_patchless_graph(
                     identifier=original_node.identifier.renamed(f"Front of {original_node.name}"),
                     heal=original_node.heal,
                     connections=[WorldGraphNodeConnection.trivial(new_node)],
-                    resource_gain=[],
                     requirement_to_collect=GraphRequirementSet.trivial(),
                     require_collected_to_leave=False,
                     pickup_index=None,
@@ -353,7 +357,6 @@ def create_patchless_graph(
     graph = WorldGraph(
         game_enum=database_view.get_game_enum(),
         victory_condition=GraphRequirementSet.trivial(),
-        dangerous_resources=frozenset(),
         nodes=nodes,
         node_resource_index_offset=node_resource_index_offset,
         front_of_dock_mapping=front_of_dock_mapping,
@@ -367,7 +370,7 @@ def create_patchless_graph(
 
     for node in nodes:
         if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
-            node.add_resource(graph.resource_info_for_node(node))
+            node.add_resource(graph.resource_info_for_node(node), resource_database)
 
         converted_area_connections: list[tuple[WorldGraphNode, Requirement]] = []
         for target_db_node, requirement in graph_area_connections[node.node_index]:
@@ -393,7 +396,7 @@ def create_patchless_graph(
 
 def _calculate_dangerous_resources(graph: WorldGraph) -> None:
     # Set of all resources that have a negate condition somewhere in the graph
-    dangerous_resources = set()
+    dangerous_resources: set[ResourceInfo] = set()
 
     def process_requirement(requirement: GraphRequirementSet) -> None:
         for graph_requirement in requirement.alternatives:
@@ -411,6 +414,13 @@ def _calculate_dangerous_resources(graph: WorldGraph) -> None:
             process_requirement(graph.converter.convert_db(weakness.lock.requirement))
 
     graph.dangerous_resources = frozenset(dangerous_resources)
+    graph.dangerous_resources_by_index = frozenset(resource.resource_index for resource in graph.dangerous_resources)
+
+    for node in graph.nodes:
+        if node.has_resources:
+            for index in node.resource_gain_bitmask.get_set_bits():
+                if index in graph.dangerous_resources_by_index:
+                    node.dangerous_resources.set_bit(index)
 
 
 def graph_precache(graph: WorldGraph) -> None:
@@ -427,11 +437,10 @@ def graph_precache(graph: WorldGraph) -> None:
             if node.has_resources:
                 dangerous_extra = GraphRequirementList(graph.converter.resource_database)
 
-                for resource, _ in node.resource_gain_on_collect(graph.converter.static_resources):
-                    if resource in graph.dangerous_resources:
-                        dangerous_extra.add_resource(resource, 1, False)
+                for resource_index in node.dangerous_resources.get_set_bits():
+                    dangerous_extra.add_resource_index(resource_index, 1, False)
 
-                if dangerous_extra.num_requirements() > 0:
+                if not dangerous_extra.is_trivial():
                     requirement_set = requirement_set.copy_then_all_alternative_and_with(dangerous_extra)
                     graph.editable_node(node.node_index).connections[index] = WorldGraphNodeConnection(
                         target=connection.target,
@@ -478,6 +487,10 @@ def _adjust_graph_for_patches(
             target = patches.pickup_assignment.get(node.pickup_index)
             if target is not None and target.player == patches.player_index:
                 node.pickup_entry = target.pickup
+
+                for resource, _ in node.pickup_entry.all_resources:
+                    if resource in graph.dangerous_resources:
+                        node.dangerous_resources.set_bit(resource.resource_index)
 
     dock_connections: set[tuple[int, int]] = set()
     redirect_to_front_of_node: list[WorldGraphNode] = []
@@ -566,12 +579,14 @@ def duplicate_and_adjust_graph_for_patches(
     new_graph = WorldGraph(
         game_enum=base_graph.game_enum,
         victory_condition=base_graph.victory_condition,
-        dangerous_resources=base_graph.dangerous_resources,
         nodes=nodes,
         node_resource_index_offset=base_graph.node_resource_index_offset,
         front_of_dock_mapping=base_graph.front_of_dock_mapping,
         copied_nodes=copied_nodes,
     )
+    new_graph.dangerous_resources = base_graph.dangerous_resources
+    new_graph.dangerous_resources_by_index = base_graph.dangerous_resources_by_index
+
     new_graph.converter = base_graph.converter
     _adjust_graph_for_patches(new_graph, patches)
     return new_graph

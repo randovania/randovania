@@ -138,6 +138,13 @@ class ResourceDatabaseView(ABC):
         Creates a new ResourceCollection
         """
 
+    @abc.abstractmethod
+    def get_resource_mapping(self) -> dict[int, ResourceInfo]:
+        """
+        A dict where resources are stored by index.
+        TODO: improve this
+        """
+
 
 class ResourceDatabaseViewProxy(ResourceDatabaseView):
     """
@@ -203,6 +210,10 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
     @override
     def create_resource_collection(self) -> ResourceCollection:
         return self._original.create_resource_collection()
+
+    @override
+    def get_resource_mapping(self) -> dict[int, ResourceInfo]:
+        return self._original.get_resource_mapping()
 
 
 class GameDatabaseView(ABC):

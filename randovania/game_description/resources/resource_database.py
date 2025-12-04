@@ -169,3 +169,7 @@ class ResourceDatabase(ResourceDatabaseView):
     @override
     def create_resource_collection(self) -> ResourceCollection:
         return ResourceCollection.with_resource_count(self, len(self.resource_by_index))
+
+    @override
+    def get_resource_mapping(self) -> dict[int, ResourceInfo]:
+        return self._resource_mapping
