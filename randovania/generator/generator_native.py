@@ -254,7 +254,7 @@ if cython.compiled:
 else:
     import rustworkx
 
-    class GeneratorDiGraph:
+    class GeneratorDiGraphFallback:
         graph: rustworkx.PyDiGraph
         _added_nodes: set[int]
 
@@ -273,8 +273,8 @@ else:
             self.graph = graph
             self._added_nodes = added_nodes
 
-        def copy(self) -> GeneratorDiGraph:
-            return GeneratorDiGraph(self.graph.copy(), self._added_nodes.copy())
+        def copy(self) -> GeneratorDiGraphFallback:
+            return GeneratorDiGraphFallback(self.graph.copy(), self._added_nodes.copy())
 
         def add_node(self, node: int) -> None:
             # Since `_graph` has all nodes always, we track added nodes separately just for the `__contains__` method.
@@ -334,6 +334,8 @@ else:
                     return set(component)
 
             raise ValueError("SCC not found")
+
+    GeneratorDiGraph = GeneratorDiGraphFallback  # type: ignore[misc, assignment]
 
 
 class _NativeGraphPathDef(typing.NamedTuple):

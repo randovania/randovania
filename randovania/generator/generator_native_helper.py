@@ -6,7 +6,6 @@ import typing
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable
-    from numbers import Number
 
     from _typeshed import SupportsRichComparison
 
@@ -41,6 +40,6 @@ class MinPriorityQueue[T: SupportsRichComparison]:
 class DistancesMapping(typing.Protocol):
     def keys(self) -> Iterable[int]: ...
 
-    def __getitem__(self, item: int) -> Number: ...
+    def __getitem__(self, item: int) -> int | float: ...
 
     def __contains__(self, item: int) -> bool: ...

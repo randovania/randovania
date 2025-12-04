@@ -234,4 +234,4 @@ class Pair[T, U]:
     def __eq__(self, other: object) -> bool:
         return isinstance(other, Pair) and self.first == other.first and self.second == other.second
 
-    __hash__ = None
+    __hash__ = None  # type: ignore[assignment]

@@ -263,7 +263,7 @@ class GraphRequirementList:
         return -1
 
     @cython.cfunc
-    @cython.exceptval(check=False)
+    @cython.exceptval(check=False)  # type: ignore[call-arg]
     def _find_damage_idx(self, resource_index: cython.int) -> cython.int:
         """
         Searches self._damage_resources for an entry with the given resource_index.
@@ -444,15 +444,16 @@ class GraphRequirementList:
         if result._set_bitmask.share_at_least_one_bit(result._negate_bitmask):
             return None
 
+        idx: cython.int
         for other_entry in right._other_resources:
-            idx: cython.int = result._find_other_idx(other_entry.first)
+            idx = result._find_other_idx(other_entry.first)
             if idx == -1:
                 result._other_resources.push_back(pair[cython.size_t, cython.int](other_entry))
             else:
                 result._other_resources[idx].second = max(result._other_resources[idx].second, other_entry.second)
 
         for other_entry in right._damage_resources:
-            idx: cython.int = result._find_damage_idx(other_entry.first)
+            idx = result._find_damage_idx(other_entry.first)
             if idx == -1:
                 result._damage_resources.push_back(pair[cython.size_t, cython.int](other_entry))
             else:
@@ -586,15 +587,16 @@ class GraphRequirementList:
         if not subset_req._negate_bitmask.is_subset_of(self._negate_bitmask):
             return False
 
+        idx: cython.int
         # Check _other_resources - superset must have >= amounts for all resources in subset
         for subset_entry in subset_req._other_resources:
-            idx: cython.int = self._find_other_idx(subset_entry.first)
+            idx = self._find_other_idx(subset_entry.first)
             if idx == -1 or self._other_resources[idx].second < subset_entry.second:
                 return False
 
         # Check _damage_resources - superset must have >= amounts for all damage in subset
         for subset_entry in subset_req._damage_resources:
-            idx: cython.int = self._find_damage_idx(subset_entry.first)
+            idx = self._find_damage_idx(subset_entry.first)
             if idx == -1 or self._damage_resources[idx].second < subset_entry.second:
                 return False
 
