@@ -68,10 +68,15 @@ def _is_action_dangerous(action: ResolverAction) -> bool:
 
 def _is_dangerous_event(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
     if action.has_event_resource and not action.dangerous_resources.is_empty():
-        return any(
-            (resource in dangerous_resources and resource.resource_type == ResourceType.EVENT)
-            for resource, _ in action.resource_gain(state.resource_database)
-        )
+        resource_indices = action.resource_gain_bitmask.get_set_bits()
+        if len(resource_indices) > 1:
+            mapping = state.resource_database.get_resource_mapping()
+            for resource_index in resource_indices:
+                resource = mapping[resource_index]
+                if resource.resource_type == ResourceType.EVENT and resource in dangerous_resources:
+                    return True
+        else:
+            return True
     return False
 
 
@@ -95,9 +100,7 @@ def _should_check_if_action_is_safe(
     :return:
     """
     return not _is_action_dangerous(action) and (
-        _is_event_node(action, state.resource_database)
-        or _is_major_or_key_pickup_node(action, state)
-        or _is_hint_node(action)
+        action.has_event_resource or _is_major_or_key_pickup_node(action, state) or _is_hint_node(action)
     )
 
 
@@ -135,10 +138,6 @@ def _is_hint_node(action: ResolverAction) -> bool:
     return isinstance(target_node, HintNode)
 
 
-def _is_lock_action(action: ResolverAction) -> bool:
-    return action.is_lock_action
-
-
 def _priority_for_resource_action(action: ResolverAction, state: State, logic: Logic) -> ActionPriority:
     if _is_dangerous_event(state, action, logic.dangerous_resources):
         return ActionPriority.DANGEROUS
@@ -146,7 +145,7 @@ def _priority_for_resource_action(action: ResolverAction, state: State, logic: L
         return ActionPriority.PRIORITIZED_HINT
     elif _is_major_or_key_pickup_node(action, state):
         return ActionPriority.MAJOR_PICKUP
-    elif _is_lock_action(action):
+    elif action.is_lock_action:
         return ActionPriority.LOCK_ACTION
     else:
         return ActionPriority.EVERYTHING_ELSE

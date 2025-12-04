@@ -421,8 +421,8 @@ def generator_reach_expand_graph(
         if previous_node >= 0:
             digraph.add_edge(previous_node, current_node_index, data=_get_requirement_from_path(path))
 
-        node: WorldGraphNode = all_nodes[current_node_index]
-        if node.has_resources:
+        node: BaseWorldGraphNode = all_nodes[current_node_index]
+        if not node.resource_gain_bitmask.is_empty():
             resource_nodes_to_check.add(current_node_index)
 
         for connection in node.connections:
