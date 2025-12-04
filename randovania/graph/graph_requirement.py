@@ -261,7 +261,7 @@ class GraphRequirementList:
         Returns the index of the found entry, or -1 if not.
         """
         i: cython.int
-        for i in range(len(self._other_resources)):
+        for i in range(self._other_resources.size()):
             if self._other_resources[i].first == resource_index:
                 return i
         return -1
@@ -274,7 +274,7 @@ class GraphRequirementList:
         Returns the index of the found entry, or -1 if not.
         """
         i: cython.int
-        for i in range(len(self._damage_resources)):
+        for i in range(self._damage_resources.size()):
             if self._damage_resources[i].first == resource_index:
                 return i
         return -1
@@ -283,7 +283,7 @@ class GraphRequirementList:
     @cython.inline
     def num_requirements(self) -> cython.int:
         """Returns the total number of resource requirements in this list."""
-        return self._set_bitmask.num_set_bits() + self._negate_bitmask.num_set_bits() + len(self._damage_resources)
+        return self._set_bitmask.num_set_bits() + self._negate_bitmask.num_set_bits() + self._damage_resources.size()
 
     @cython.ccall
     @cython.inline
