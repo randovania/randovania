@@ -11,10 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The generator and resolver now use a faster algorithm. An option was added to use the old one if needed.
 - Changed: The "Verify if game is beatable after ..." option is no longer experimental.
 - Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
+- Changed: When hiding item models or scans, the preset summary no longer references an ETM.
 - Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough, especially at high verbosity.
 - Fixed: Reduced the Windows install size by about 7 MB, as a regression from last release.
 - Fixed: Logical Pickup placement "All pickups" and expansions with negative amount are now compatible.
+- Fixed: Impossible generation cases that are caused due to walking into a point of no return that's impossible to escape from.
 - Fixed: Text such as the Seed Hash in the Async Race window is now selectable via mouse.
+- Fixed: Saving previous versions of presets when modififying no longer fails on certain cases.
 - Removed: The "Consider possible unsafe resources" experimental option has been removed and is now always enabled.
 - Removed: The "Revised door solver" experimental option has been removed and is now always enabled.
 - Added: Added "Create New Preset" button to preset menu to improve UX.
@@ -73,6 +76,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Chozo Ruins
 
+- Changed: Revised the requirements for fighting Chozo Ghosts and made them consistent. Fighting multiple of them without Charge Beam is now Intermediate Combat, fighting a single one is still Beginner Combat.
+- Fixed: Sunchamber Access: Requirements for dealing with the enemies in the room.
+- Fixed: Sunchamber Lobby: Requirements for dealing with the enemies in the room.
+- Changed: Sunchamber: Jumping onto the plant after defeating the Chozo Ghosts is now trivial.
+- Changed: Sunchamber: Reworked the Flaaghra fight. Key points are:
+    - Killing Flaaghra with only Missiles is now Combat Beginner
+    - There is now a way to kill Flaaghra with only 4 Missiles, gated behind Combat Advanced
+    - Adjusted health requirements
+    - Destroying the Bomb slots from outside is now Knowledge Intermediate
+    - Destroying the Bomb Slots with Power Bombs is now Knowledge Beginner
+    - Added a way to kill Flaaghra with Wavebuster, 20 Missiles and Ludicrous Combat
+    - When fighting Flaaghra from the back, there is now an Intermediate Knowledge trick for using only 2 Power Bombs
+    - When fighting Flaaghra from the back, you can now get to the platform via either an Intermediate Scan Dash, or a Beginner Scan Dash with Space Jump
 - Added: Watery Hall: Going to the Missile Expansion via an Intermediate Wall Boost without Gravity Suit.
 - Changed: Watery Hall: Going to the Missile Expansion by going through Poison Water has had several changes: it is now gated behind Beginner Movement, it has slightly more accurate damage numbers now and it increases the difficulty of the tricks.
 - Changed: Watery Hall: Doing the Bomb Jump to get the Missile Expansion is now Intermediate.
@@ -86,10 +102,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Tallon Overworld
 
 - Added: Alcove: Escaping the pit with a Beginner Wallboost.
-
-##### Chozo Ruins
-
-- Changed: Revised the requirements for fighting Chozo Ghosts and made them consistent. Fighting multiple of them without Charge Beam is now Intermediate Combat, fighting a single one is still Beginner Combat.
 
 ##### Phazon Mines
 
