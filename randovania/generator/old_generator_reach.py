@@ -233,7 +233,7 @@ class OldGeneratorReach(GeneratorReach):
         possible_edges: set[tuple[int, int]] = set()
 
         for resource in _new_resources_including_damage(new_state):
-            possible_edges.update(self.graph.resource_to_edges.get(resource, []))
+            possible_edges.update(self.graph.resource_to_edges.get(resource.resource_index, []))
 
         # Delay updating _uncollectable_nodes until it's used, as it's faster that way
 
@@ -260,7 +260,7 @@ class OldGeneratorReach(GeneratorReach):
         edges_to_check: set[tuple[NodeIndex, NodeIndex]] = set()
 
         for resource in new_dangerous_resources:
-            edges_to_check.update(self.graph.resource_to_dangerous_edges[resource])
+            edges_to_check.update(self.graph.resource_to_dangerous_edges[resource.resource_index])
 
         # TODO: This can easily be part of `advance_to` now.
         for source, target in edges_to_check:
