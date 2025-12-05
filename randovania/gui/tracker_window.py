@@ -14,16 +14,14 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources import search
 from randovania.games.common import elevators
 from randovania.games.prime2.layout import translator_configuration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.pickup_pool import pool_creator
+from randovania.graph.graph_requirement import GraphRequirementSet, create_requirement_list, create_requirement_set
 from randovania.graph.state import State, add_pickup_to_state
 from randovania.graph.world_graph import WorldGraph, WorldGraphNode, WorldGraphNodeConnection
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
@@ -408,6 +406,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             self.graph_map_region_combo.currentData(),
             self.state_for_current_configuration(),
             nodes_in_reach,
+            self.graph,
         )
 
     def on_graph_map_region_combo(self) -> None:
@@ -433,7 +432,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         state = self.state_for_current_configuration()
         resources = state.resources
-        context = state.node_context()
+        state.node_context()
         nodes_in_reach = self.current_nodes_in_reach(state)
 
         if self.map_tab_widget.currentWidget() == self.tab_graph_map:
@@ -455,7 +454,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 node_item.setDisabled(
                     not (
                         not node.has_all_resources(resources)
-                        and node.requirement_to_collect.satisfied(context, state.health_for_damage_requirements)
+                        and node.requirement_to_collect.satisfied(state.resources, state.health_for_damage_requirements)
                     )
                 )
                 node_item.setCheckState(
@@ -606,35 +605,39 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         if game.game != RandovaniaGame.METROID_PRIME_ECHOES:
             return
 
-        scan_visor = search.find_resource_info_with_long_name(game.resource_database.item, "Scan Visor")
+        scan_visor = game.resource_database.get_item("Scan")
         scan_visor_req = ResourceRequirement.simple(scan_visor)
 
         for configurable_node in game.region_list.iterate_nodes_of_type(ConfigurableNode):
             combo = self._translator_gate_to_combo[configurable_node.identifier]
             requirement: LayoutTranslatorRequirement | None = combo.currentData()
+            translator_req: ResourceRequirement | None = None
 
-            if requirement is None:
-                translator_req = Requirement.impossible()
-            else:
+            if requirement is not None:
                 translator = game.resource_database.get_item(requirement.item_name)
                 translator_req = ResourceRequirement.simple(translator)
-
-            new_leave_requirement = RequirementAnd(
-                [scan_visor_req, translator_req],
-            )
 
             graph_node = self.graph.original_to_node[configurable_node.node_index]
             graph_node.connections = [
                 WorldGraphNodeConnection(
                     conn.target,
-                    RequirementAnd([conn.requirement_without_leaving, new_leave_requirement]),
+                    conn.requirement_without_leaving.copy_then_and_with_set(
+                        create_requirement_set(
+                            [
+                                create_requirement_list(
+                                    self.graph.converter.resource_database,
+                                    [scan_visor_req, translator_req],
+                                )
+                            ]
+                        )
+                    )
+                    if translator_req is not None
+                    else GraphRequirementSet.impossible(),
+                    conn.requirement_without_leaving,
                     conn.requirement_without_leaving,
                 )
                 for conn in graph_node.connections
             ]
-
-            # Not really relevant, but let's keep it
-            game.region_list.configurable_nodes[configurable_node.identifier] = new_leave_requirement
 
     def setup_translator_gates(self) -> None:
         region_list = self.game_description.region_list

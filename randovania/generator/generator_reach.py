@@ -6,8 +6,8 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.game_description.db.node import NodeContext, NodeIndex
-    from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.generator.filler.filler_configuration import FillerConfiguration
+    from randovania.graph.graph_requirement import GraphRequirementSet
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
@@ -29,10 +29,7 @@ class GeneratorReach:
         raise NotImplementedError
 
     def victory_condition_satisfied(self) -> bool:
-        context = self.state.node_context()
-        return self.graph.victory_condition_as_set(context).satisfied(
-            context, self.state.health_for_damage_requirements
-        )
+        return self.graph.victory_condition.satisfied(self.state.resources, self.state.health_for_damage_requirements)
 
     @property
     def iterate_nodes(self) -> Iterator[WorldGraphNode]:
@@ -85,7 +82,7 @@ class GeneratorReach:
     def is_safe_node(self, node: WorldGraphNode) -> bool:
         raise NotImplementedError
 
-    def unreachable_nodes_with_requirements(self) -> dict[NodeIndex, RequirementSet]:
+    def unreachable_nodes_with_requirements(self) -> dict[NodeIndex, GraphRequirementSet]:
         raise NotImplementedError
 
     @property

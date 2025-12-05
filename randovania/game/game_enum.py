@@ -113,7 +113,7 @@ class RandovaniaGame(BitPackEnum, Enum):
     def exporter(self) -> GameExporter:
         return self.data.exporter()
 
-    @cached_property
+    @property
     def game_description(self) -> GameDescription:
         from randovania.game_description import default_database
 

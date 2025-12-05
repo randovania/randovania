@@ -3,7 +3,7 @@ from __future__ import annotations
 import gc
 from typing import TYPE_CHECKING
 
-from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.graph.graph_requirement import GraphRequirementSet
 from randovania.resolver.exceptions import ResolverTimeoutError
 from randovania.resolver.logging import (
     ResolverLogger,
@@ -14,7 +14,6 @@ if TYPE_CHECKING:
     from collections.abc import Sequence
 
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
@@ -26,7 +25,7 @@ class Logic:
 
     dangerous_resources: frozenset[ResourceInfo]
 
-    additional_requirements: list[RequirementSet]
+    additional_requirements: list[GraphRequirementSet]
     prioritize_hints: bool
     all_nodes: Sequence[WorldGraphNode]
     graph: WorldGraph
@@ -52,20 +51,20 @@ class Logic:
         self.num_nodes = len(self.all_nodes)
         self._victory_condition = graph.victory_condition
         self.dangerous_resources = graph.dangerous_resources
-        self.additional_requirements = [RequirementSet.trivial()] * self.num_nodes
+        self.additional_requirements = [GraphRequirementSet.trivial()] * self.num_nodes
         self.prioritize_hints = prioritize_hints
         self.record_paths = record_paths
         self.disable_gc = disable_gc
 
         self.logger = TextResolverLogger()
 
-    def get_additional_requirements(self, node: WorldGraphNode) -> RequirementSet:
+    def get_additional_requirements(self, node: WorldGraphNode) -> GraphRequirementSet:
         return self.additional_requirements[node.node_index]
 
-    def set_additional_requirements(self, node: WorldGraphNode, req: RequirementSet) -> None:
+    def set_additional_requirements(self, node: WorldGraphNode, req: GraphRequirementSet) -> None:
         self.additional_requirements[node.node_index] = req
 
-    def victory_condition(self, state: State) -> Requirement:
+    def victory_condition(self, state: State) -> GraphRequirementSet:
         return self._victory_condition
 
     def get_attempts(self) -> int:

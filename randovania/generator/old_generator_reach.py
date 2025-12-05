@@ -1,75 +1,100 @@
 from __future__ import annotations
 
 import copy
-import functools
 import itertools
+import typing
 from typing import TYPE_CHECKING, Self, override
 
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.generator import graph as graph_module
+import rustworkx
+
+from randovania.generator import generator_native
 from randovania.generator.generator_reach import GeneratorReach
 
 if TYPE_CHECKING:
-    from collections.abc import Collection, Iterator, Mapping, Sequence
+    from collections.abc import Callable, Iterator, Mapping, Sequence
 
     from randovania.game_description.db.node import NodeIndex
-    from randovania.game_description.requirements.requirement_set import RequirementSet
-    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
+    from randovania.graph.graph_requirement import GraphRequirementSet
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
+    type GraphData = GraphRequirementSet
 
-def _extra_requirement_for_node(
-    game: WorldGraph, resources: ResourceCollection, node: WorldGraphNode
-) -> Requirement | None:
-    extra_requirement = None
 
-    if node.is_resource_node():
-        dangerous_extra = [
-            ResourceRequirement.simple(resource)
-            for resource, quantity in node.resource_gain_on_collect(resources)
-            if resource in game.dangerous_resources
-        ]
-        if dangerous_extra:
-            extra_requirement = RequirementAnd(dangerous_extra)
+class RustworkXGraph:
+    graph: rustworkx.PyDiGraph
+    _added_nodes: set[NodeIndex]
 
-    return extra_requirement
+    @classmethod
+    def new(cls, game: WorldGraph) -> typing.Self:
+        g = rustworkx.PyDiGraph()
+        num_nodes = len(game.nodes)
+
+        # rustworkx methods returns indices of the internal node list, instead of the data we passed
+        # when creating the nodes. Instead of having to convert these indices, we'll instead just create all possible
+        # nodes at once to guarantee the indices will always match.
+        g.add_nodes_from(list(range(num_nodes)))
+        return cls(g, set())
+
+    def __init__(self, graph: rustworkx.PyDiGraph, added_nodes: set[NodeIndex]):
+        self.graph = graph
+        self._added_nodes = added_nodes
+
+    def copy(self) -> RustworkXGraph:
+        return RustworkXGraph(self.graph.copy(), self._added_nodes.copy())
+
+    def add_node(self, node: NodeIndex) -> None:
+        # Since `_graph` has all nodes always, we track added nodes separately just for the `__contains__` method.
+        self._added_nodes.add(node)
+
+    def add_edge(self, previous_node: NodeIndex, next_node: NodeIndex, data: GraphData) -> None:
+        self.graph.add_edge(previous_node, next_node, (previous_node, next_node, data))
+
+    def remove_edge(self, previous_node: NodeIndex, next_node: NodeIndex) -> None:
+        self.graph.remove_edge(previous_node, next_node)
+
+    def has_edge(self, previous_node: NodeIndex, next_node: NodeIndex) -> bool:
+        return self.graph.has_edge(previous_node, next_node)
+
+    def __contains__(self, item: NodeIndex) -> bool:
+        return item in self._added_nodes
+
+    def get_edge_data(self, previous_node: NodeIndex, next_node: NodeIndex) -> GraphData:
+        return self.graph.get_edge_data(previous_node, next_node)[2]
+
+    def edges_data(self) -> Iterator[tuple[NodeIndex, NodeIndex, GraphData]]:
+        yield from self.graph.edges()
+
+    def shortest_paths_dijkstra(
+        self,
+        source: NodeIndex,
+        weight: Callable[[tuple[NodeIndex, NodeIndex, GraphData]], float],
+    ) -> Mapping[NodeIndex, float]:
+        return rustworkx.dijkstra_shortest_path_lengths(
+            self.graph,
+            source,
+            edge_cost_fn=weight,
+        )
+
+    def strongly_connected_components(self) -> Sequence[Sequence[NodeIndex]]:
+        # Since we added every possible node already, this function returns a
+        # bunch of additional components with just 1 array
+        # All this does is make `_calculate_safe_nodes` slower.
+        return rustworkx.strongly_connected_components(self.graph)
 
 
 class GraphPath:
     __slots__ = ("previous_node", "node", "requirement")
     previous_node: NodeIndex | None
     node: NodeIndex
-    requirement: Requirement
+    requirement: GraphRequirementSet
 
-    def __init__(self, previous: NodeIndex | None, node: NodeIndex, requirement: Requirement):
+    def __init__(self, previous: NodeIndex | None, node: NodeIndex, requirement: GraphRequirementSet):
         self.previous_node = previous
         self.node = node
         self.requirement = requirement
-
-    def is_in_graph(self, digraph: graph_module.BaseGraph) -> bool:
-        if self.previous_node is None:
-            return False
-        else:
-            return digraph.has_edge(self.previous_node, self.node)
-
-    def add_to_graph(self, digraph: graph_module.BaseGraph) -> None:
-        digraph.add_node(self.node)
-        if self.previous_node is not None:
-            digraph.add_edge(self.previous_node, self.node, data=self.requirement)
-
-
-class _SafeNodes:
-    as_list: list[NodeIndex]
-    as_set: set[NodeIndex]
-
-    def __init__(self, component: Collection[NodeIndex]):
-        self.as_list = sorted(component)
-        self.as_set = set(component)
 
 
 def _new_resources_including_damage(state: State) -> set[ResourceInfo]:
@@ -93,14 +118,14 @@ def _new_resources_including_damage(state: State) -> set[ResourceInfo]:
 
 
 class OldGeneratorReach(GeneratorReach):
-    _digraph: graph_module.BaseGraph
+    _digraph: RustworkXGraph
     _state: State
     _graph: WorldGraph
     _reachable_costs: Mapping[int, float] | None
     _node_reachable_cache: dict[int, bool]
-    _unreachable_paths: dict[tuple[int, int], Requirement]
-    _uncollectable_nodes: dict[int, Requirement]
-    _safe_nodes: _SafeNodes | None
+    _unreachable_paths: dict[tuple[int, int], GraphRequirementSet]
+    _uncollectable_nodes: dict[int, GraphRequirementSet]
+    _safe_nodes: set[NodeIndex] | None = None
     _is_node_safe_cache: dict[int, bool]
     _filler_config: FillerConfiguration
     all_nodes: Sequence[WorldGraphNode]
@@ -120,18 +145,18 @@ class OldGeneratorReach(GeneratorReach):
         self,
         game: WorldGraph,
         state: State,
-        graph: graph_module.BaseGraph,
+        digraph: RustworkXGraph,
         filler_config: FillerConfiguration,
     ):
         self._graph = game
         self.all_nodes = game.nodes
 
         self._state = state
-        self._digraph = graph
+        self._digraph = digraph
         self._unreachable_paths = {}
         self._uncollectable_nodes = {}
         self._reachable_costs = None
-        self._node_reachable_cache = {}
+        self._node_reachable_cache = {self._state.node.node_index: True}
         self._is_node_safe_cache = {}
         self._filler_config = filler_config
 
@@ -142,126 +167,38 @@ class OldGeneratorReach(GeneratorReach):
         initial_state: State,
         filler_config: FillerConfiguration,
     ) -> Self:
-        reach = cls(graph, initial_state, graph_module.RustworkXGraph.new(graph), filler_config)
-        reach._expand_graph([GraphPath(None, initial_state.node.node_index, Requirement.trivial())])
+        reach = cls(graph, initial_state, RustworkXGraph.new(graph), filler_config)
+        generator_native.generator_reach_expand_graph(
+            reach._state,
+            reach._graph,
+            reach._digraph,
+            reach._unreachable_paths,
+            reach._uncollectable_nodes,
+            for_initial_state=True,
+            possible_edges=set(),
+        )
         return reach
 
-    def _potential_nodes_from(
-        self, node: WorldGraphNode, resources: ResourceCollection
-    ) -> list[tuple[WorldGraphNode, Requirement]]:
-        extra_requirement = _extra_requirement_for_node(self._graph, resources, node)
-
-        return [
-            (
-                conn.target,
-                conn.requirement
-                if extra_requirement is None
-                else RequirementAnd([conn.requirement, extra_requirement]),
-            )
-            for conn in node.connections
-        ]
-
-    def _expand_graph(self, paths_to_check: list[GraphPath]) -> None:
-        # print("!! _expand_graph", len(paths_to_check))
-        self._reachable_costs = None
-        resource_nodes_to_check = set()
-
-        all_nodes = self.all_nodes
-        resources = self._state.resources
-        context = self._state.node_context()
-        new_edges = []
-
-        while paths_to_check:
-            path = paths_to_check.pop(0)
-
-            if path.is_in_graph(self._digraph):
-                # print(">>> already in graph", path.node.full_name())
-                continue
-
-            # print(">>> will check starting at", path.node.full_name())
-            path.add_to_graph(self._digraph)
-
-            if all_nodes[path.node].is_resource_node():
-                resource_nodes_to_check.add(path.node)
-
-            for target_node, requirement in self._potential_nodes_from(all_nodes[path.node], resources):
-                target_node_index = target_node.node_index
-
-                # is_in_graph inlined, so we don't need to create GraphPath
-                if self._digraph.has_edge(path.node, target_node_index):
-                    continue
-
-                if requirement.satisfied(context, self._state.health_for_damage_requirements):
-                    # print("* Queue path to", target_node.full_name())
-                    paths_to_check.append(GraphPath(path.node, target_node_index, requirement))
-                else:
-                    # print("* Unreachable", self.game.region_list.node_name(target_node), ", missing:",
-                    #       requirement.as_str)
-                    self._unreachable_paths[path.node, target_node_index] = requirement
-                    new_edges.append((path.node, target_node_index))
-            # print("> done")
-
-        for node_index in sorted(resource_nodes_to_check):
-            node = self.all_nodes[node_index]
-
-            requirement = node.requirement_to_collect
-            if not requirement.satisfied(context, self._state.health_for_damage_requirements):
-                self._uncollectable_nodes[node_index] = requirement
-
-        # print("!! _expand_graph finished. Has {} edges".format(sum(1 for _ in self._digraph.edges_data())))
-        self._safe_nodes = None
-
-    def _can_advance(
-        self,
-        node: WorldGraphNode,
-    ) -> bool:
-        """
-        Calculates if we can advance past a given node
-        :param node:
-        :return:
-        """
-        # We can't advance past a resource node if we haven't collected it
-        return node.has_all_resources(self.state.resources)
-
     def _calculate_safe_nodes(self) -> None:
-        if self._safe_nodes is not None:
-            return
-
-        for component in self._digraph.strongly_connected_components():
-            if self._state.node.node_index in component:
-                assert self._safe_nodes is None
-                self._safe_nodes = _SafeNodes(component)
-
-        assert self._safe_nodes is not None
+        if self._safe_nodes is None:
+            self._safe_nodes = set(
+                generator_native.generator_reach_find_strongly_connected_components_for(
+                    self._digraph, self._state.node.node_index
+                )
+            )
 
     def _calculate_reachable_costs(self) -> None:
-        if self._reachable_costs is not None:
-            return
-
-        resources = self.state.resources
-
-        @functools.cache
-        def _is_collected(target: int) -> int:
-            node = self.all_nodes[target]
-            if node.has_all_resources(resources):
-                return 0
-            else:
-                return 1
-
-        self._reachable_is_collected = _is_collected
-
-        def weight(source: int, target: int, attributes: graph_module.GraphData) -> int:
-            return _is_collected(target)
-
-        self._reachable_costs = self._digraph.shortest_paths_dijkstra(
-            self._state.node.node_index,
-            weight=weight,
-        )
+        if self._reachable_costs is None:
+            self._reachable_costs = generator_native.generator_reach_calculate_reachable_costs(
+                self._digraph, self._graph, self._state
+            )
 
     def set_of_reachable_node_indices(self) -> set[int]:
         self._calculate_reachable_costs()
         assert self._reachable_costs is not None
-        return {index for index in self._reachable_costs.keys() if self.is_reachable_node_index(index)}
+        result = {index for index in self._reachable_costs.keys() if self.is_reachable_node_index(index)}
+        result.add(self._state.node.node_index)
+        return result
 
     def is_reachable_node(self, node: WorldGraphNode) -> bool:
         return self.is_reachable_node_index(node.node_index)
@@ -278,7 +215,8 @@ class OldGeneratorReach(GeneratorReach):
             if cost == 0:
                 self._node_reachable_cache[index] = True
             elif cost == 1:
-                self._node_reachable_cache[index] = not self._can_advance(self.all_nodes[index])
+                # Calculates if we can advance past a given node
+                self._node_reachable_cache[index] = not self.all_nodes[index].has_all_resources(self.state.resources)
             else:
                 self._node_reachable_cache[index] = False
 
@@ -318,7 +256,7 @@ class OldGeneratorReach(GeneratorReach):
         assert self._safe_nodes is not None
 
         all_nodes = self.all_nodes
-        for i in self._safe_nodes.as_list:
+        for i in self._safe_nodes:
             yield all_nodes[i]
 
     @property
@@ -326,7 +264,7 @@ class OldGeneratorReach(GeneratorReach):
     def safe_nodes_index_set(self) -> set[int]:
         self._calculate_safe_nodes()
         assert self._safe_nodes is not None
-        return self._safe_nodes.as_set
+        return self._safe_nodes
 
     def is_safe_node(self, node: WorldGraphNode) -> bool:
         node_index = node.node_index
@@ -336,7 +274,7 @@ class OldGeneratorReach(GeneratorReach):
 
         self._calculate_safe_nodes()
         assert self._safe_nodes is not None
-        self._is_node_safe_cache[node_index] = node_index in self._safe_nodes.as_set
+        self._is_node_safe_cache[node_index] = node_index in self._safe_nodes
         return self._is_node_safe_cache[node_index]
 
     def advance_to(
@@ -358,32 +296,31 @@ class OldGeneratorReach(GeneratorReach):
             self._is_node_safe_cache = {}
 
         self._state = new_state
-        health = self._state.health_for_damage_requirements
-        context = self._state.node_context()
+        self._node_reachable_cache[self._state.node.node_index] = True
 
         # Collect edges to check based on the new resources
-        possible_edges = set()
+        possible_edges: set[tuple[int, int]] = set()
 
         for resource in _new_resources_including_damage(new_state):
             possible_edges.update(self.graph.resource_to_edges.get(resource, []))
 
-        # Check if we can expand the corners of our graph
-        paths_to_check: list[GraphPath] = []
-        for edge in possible_edges:
-            requirement = self._unreachable_paths.get(edge)
-            if requirement is not None and requirement.satisfied(context, health):
-                from_index, to_index = edge
-                paths_to_check.append(GraphPath(from_index, to_index, requirement))
-                del self._unreachable_paths[edge]
-
         # Delay updating _uncollectable_nodes until it's used, as it's faster that way
 
-        self._expand_graph(paths_to_check)
+        generator_native.generator_reach_expand_graph(
+            self._state,
+            self._graph,
+            self._digraph,
+            self._unreachable_paths,
+            self._uncollectable_nodes,
+            for_initial_state=False,
+            possible_edges=possible_edges,
+        )
+        self._reachable_costs = None
+        self._safe_nodes = None
 
     def act_on(self, node: WorldGraphNode) -> None:
         new_state = self._state.act_on_node(node)
-
-        context = new_state.node_context()
+        resources = new_state.resources
 
         new_dangerous_resources = {
             resource for resource in new_state.new_resources if resource in self.graph.dangerous_resources
@@ -398,20 +335,20 @@ class OldGeneratorReach(GeneratorReach):
         for source, target in edges_to_check:
             if self._digraph.has_edge(source, target):
                 requirement = self._digraph.get_edge_data(source, target)
-                if not requirement.satisfied(context, new_state.health_for_damage_requirements):
+                if not requirement.satisfied(resources, new_state.health_for_damage_requirements):
                     self._digraph.remove_edge(source, target)
 
         self.advance_to(new_state)
 
-    def unreachable_nodes_with_requirements(self) -> dict[NodeIndex, RequirementSet]:
-        results: dict[NodeIndex, RequirementSet] = {}
-        context = self._state.node_context()
+    def unreachable_nodes_with_requirements(self) -> dict[NodeIndex, GraphRequirementSet]:
+        results: dict[NodeIndex, GraphRequirementSet] = {}
+        resources = self._state.resources
 
-        to_check: list[tuple[NodeIndex, Requirement]] = []
+        to_check: list[tuple[NodeIndex, GraphRequirementSet]] = []
 
         # Check uncollectable nodes. It might be outdated since advance_to skips updating, so handle that
         for node_index, requirement in list(self._uncollectable_nodes.items()):
-            if requirement.satisfied(context, self._state.health_for_damage_requirements):
+            if requirement.satisfied(resources, self._state.health_for_damage_requirements):
                 self._uncollectable_nodes.pop(node_index, None)
             elif self.is_reachable_node_index(node_index):
                 to_check.append((node_index, requirement))
@@ -421,19 +358,16 @@ class OldGeneratorReach(GeneratorReach):
                 to_check.append((target_node_index, requirement))
 
         for node_index, requirement in to_check:
-            requirements = requirement.patch_requirements(1.0, context).as_set(context)
+            # Remove individual resources from `requirement` that are already present
+            # TODO: might actually be completely useless!
+            requirement = requirement.copy_then_remove_entries_for_set_resources(resources)
             if node_index in results:
-                results[node_index] = results[node_index].expand_alternatives(requirements)
+                results[node_index].extend_alternatives(requirement.alternatives)
+                # TODO: check if calling optimize_alternatives helps
             else:
-                results[node_index] = requirements
+                results[node_index] = requirement
 
         return results
-
-    def victory_condition_satisfied(self) -> bool:
-        context = self._state.node_context()
-        return self.graph.victory_condition_as_set(context).satisfied(
-            context, self._state.health_for_damage_requirements
-        )
 
     @override
     @property

@@ -156,13 +156,13 @@ class DamageResourceRequirement(ResourceRequirement):
         return True
 
     def damage(self, context: NodeContext) -> int:
-        return ceil(context.current_resources.get_damage_reduction(self.resource) * self.amount)
+        return ceil(context.current_resources.get_damage_reduction(self.resource.resource_index) * self.amount)
 
     def satisfied(self, context: NodeContext, current_energy: int) -> bool:
         return current_energy > self.damage(context)
 
     def isolate_damage_requirements(self, context: NodeContext) -> Requirement:
-        if context.current_resources.get_damage_reduction(self.resource) == 0:
+        if context.current_resources.get_damage_reduction(self.resource.resource_index) == 0:
             # Common case of reduction-based immunity can be easily calculated,
             # and returning Trivial allows for shortcuts elsewhere
             return Requirement.trivial()

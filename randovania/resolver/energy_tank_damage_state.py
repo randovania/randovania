@@ -37,6 +37,9 @@ class EnergyTankDamageState(DamageState):
     def __copy__(self) -> Self:
         return self._duplicate()
 
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}[{self._energy}]"
+
     @override
     def health_for_damage_requirements(self) -> int:
         return self._energy
@@ -73,17 +76,21 @@ class EnergyTankDamageState(DamageState):
             return result
 
     @override
-    def is_better_than(self, other: DamageState | None) -> bool:
-        if other is None:
-            return True
-        return self._energy > other._energy  # type: ignore[attr-defined]
+    def is_better_than(self, other: int) -> bool:
+        return self._energy > other
 
     @override
-    def apply_damage(self, damage: int) -> Self:
+    def with_health(self, health: int) -> Self:
+        result = self._duplicate()
+        result._energy = health
+        return result
+
+    @override
+    def apply_damage(self, damage: float) -> Self:
         if damage <= 0:
             return self
         result = self._duplicate()
-        result._energy -= damage
+        result._energy -= int(damage)
         return result
 
     @override

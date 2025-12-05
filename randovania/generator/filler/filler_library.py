@@ -52,7 +52,7 @@ class UncollectedState(NamedTuple):
 
         def is_collectable(node: WorldGraphNode) -> bool:
             return node.requirement_to_collect.satisfied(
-                context, reach.state.damage_state.health_for_damage_requirements()
+                context.current_resources, reach.state.damage_state.health_for_damage_requirements()
             )
 
         world_graph_nodes = [reach.graph.nodes[node_index] for node_index in reach.set_of_reachable_node_indices()]

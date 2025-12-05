@@ -10,12 +10,12 @@ import pytest
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.requirement_list import RequirementList
-from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.generator import generator, reach_lib
 from randovania.generator.filler import pickup_list
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.graph.graph_requirement import create_requirement_list, create_requirement_set
 from randovania.graph.state import State
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.standard_pickup_state import StandardPickupState
@@ -31,11 +31,13 @@ def test_requirement_lists_without_satisfied_resources(
     echoes_game_description, default_echoes_preset, echoes_game_patches
 ):
     # Setup
+    db = echoes_game_description.resource_database
+
     def item(name):
-        return search.find_resource_info_with_long_name(echoes_game_description.resource_database.item, name)
+        return search.find_resource_info_with_long_name(db.item, name)
 
     state = State(
-        echoes_game_description.resource_database.create_resource_collection(),
+        db.create_resource_collection(),
         {},
         (),
         echoes_game_description.game.generator.bootstrap.create_damage_state(
@@ -44,7 +46,7 @@ def test_requirement_lists_without_satisfied_resources(
         None,  # type: ignore[arg-type]
         echoes_game_patches,
         None,
-        echoes_game_description.resource_database,
+        db,
         echoes_game_description.region_list,
         hint_state=None,
     )
@@ -56,42 +58,47 @@ def test_requirement_lists_without_satisfied_resources(
     )
     uncollected_resources: set[ResourceInfo] = set()
     possible_sets = [
-        RequirementSet(
+        create_requirement_set(
             [
-                RequirementList(
+                create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Dark Visor")),
                         ResourceRequirement.create(item("Missile"), 5, False),
                         ResourceRequirement.simple(item("Seeker Launcher")),
-                    ]
+                    ],
                 ),
-                RequirementList(
+                create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Screw Attack")),
                         ResourceRequirement.simple(item("Space Jump Boots")),
-                    ]
+                    ],
                 ),
-                RequirementList(
+                create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Power Bomb")),
                         ResourceRequirement.simple(item("Boost Ball")),
-                    ]
+                    ],
                 ),
             ]
         ),
-        RequirementSet(
+        create_requirement_set(
             [
-                RequirementList(
+                create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Power Bomb")),
                         ResourceRequirement.simple(item("Boost Ball")),
-                    ]
+                    ],
                 ),
-                RequirementList(
+                create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Spider Ball")),
                         ResourceRequirement.simple(item("Boost Ball")),
-                    ]
+                    ],
                 ),
             ]
         ),
@@ -105,6 +112,7 @@ def test_requirement_lists_without_satisfied_resources(
         RequirementList(
             [
                 ResourceRequirement.simple(item("Dark Visor")),
+                ResourceRequirement.create(item("Missile"), 1, False),
                 ResourceRequirement.create(item("Missile"), 5, False),
             ]
         ),
@@ -183,9 +191,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     result = pickup_list.get_pickups_that_solves_unreachable(pickups_left, reach, uncollected_resource_nodes, False)
 
     # Assert
-    mock_req_lists.assert_called_once_with(
-        reach.state, [possible_set, reach.graph.victory_condition_as_set.return_value], {resource}
-    )
+    mock_req_lists.assert_called_once_with(reach.state, [possible_set, reach.graph.victory_condition], {resource})
     assert result == ()
 
 
@@ -277,7 +283,7 @@ async def test_get_pickups_that_solves_unreachable_quad(
     reach = reach_lib.advance_after_action(reach_lib.reach_with_all_safe_resources(graph, state, default_filler_config))
 
     # Run
-    result = pickup_list.get_pickups_that_solves_unreachable(pool.pickups, reach, [], False)
+    result = pickup_list.get_pickups_that_solves_unreachable(pool.pickups, reach, [], True)
     r2 = sorted(sorted(a.name for a in it) for it in result)
     base = ["Boost Ball", "Echo Visor"]
     bomb = "Morph Ball Bomb"

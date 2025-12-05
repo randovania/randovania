@@ -29,11 +29,15 @@ class NoOpDamageState(DamageState):
         yield from []
 
     @override
-    def is_better_than(self, other: DamageState | None) -> bool:
-        return other is None
+    def is_better_than(self, other: int) -> bool:
+        return other < 0
 
     @override
-    def apply_damage(self, damage: int) -> Self:
+    def with_health(self, health: int) -> Self:
+        return self
+
+    @override
+    def apply_damage(self, damage: float) -> Self:
         return self
 
     @override
