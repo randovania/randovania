@@ -24,7 +24,8 @@ cdef extern from *:
             obj = set_obj;}
         
         ~PyRef() {
-            Py_XDECREF(obj);obj = NULL;
+            Py_XDECREF(obj);
+            obj = NULL;
         }
 
         PyRef(const PyRef& other)  {
@@ -34,9 +35,11 @@ cdef extern from *:
         PyRef(PyRef&& other) {obj = other.obj; other.obj = NULL;}
 
         PyRef& operator=(const PyRef& other) {
-            Py_XDECREF(obj); 
-            Py_XINCREF(other.obj); 
-            obj = other.obj;
+            if (other.obj != obj) {
+                Py_XINCREF(other.obj);
+                Py_XDECREF(obj);
+                obj = other.obj;
+            }
             return *this;
         }
         PyRef& operator=(PyRef&& other) {
@@ -52,9 +55,11 @@ cdef extern from *:
         }
 
         void set(PyObject* set_obj) {
-            Py_XDECREF(obj); 
-            Py_XINCREF(set_obj); 
-            obj = set_obj;
+            if (set_obj != obj) {
+                Py_XINCREF(set_obj);
+                Py_XDECREF(obj);
+                obj = set_obj;
+            }
         }
 
         int has_value() const {return obj != NULL;}
