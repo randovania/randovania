@@ -6,7 +6,7 @@ import typing
 if typing.TYPE_CHECKING:
     from collections.abc import Callable, Iterator
 
-    import cython
+    import Cython as cython
 
 T = typing.TypeVar("T")
 
