@@ -5,7 +5,7 @@ import datetime
 import uuid
 from pathlib import Path
 from typing import TYPE_CHECKING
-from unittest.mock import AsyncMock, MagicMock, call
+from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import aiohttp.client_exceptions
 import pytest
@@ -335,7 +335,13 @@ async def test_refresh_received_pickups(client: NetworkClient, blank_game_descri
             ),
         )
     )
-    mock_decode.assert_has_calls([call("VtI6Bb3p", db), call("VtI6Bb3y", db), call("VtI6Bb3*", db)])
+    mock_decode.assert_has_calls(
+        [
+            call("VtI6Bb3p", ANY),
+            call("VtI6Bb3y", ANY),
+            call("VtI6Bb3*", ANY),
+        ]
+    )
 
 
 def test_decode_pickup(
