@@ -23,27 +23,31 @@ class ItemCost:
     categories: set[str]
     max_amount: int | None = None
     is_fluid: bool = False
+    count: int = 0
 
     def combine(self, material: float, complexity: int, categories: set[str]) -> ItemCost:
         return ItemCost(
-            self.material + material, self.complexity + complexity, self.steps + 1, self.categories | categories
+            self.material + material,
+            self.complexity + complexity,
+            self.steps + 1,
+            self.categories | categories,
+            count=self.count,
         )
 
-    def ingredient_cost(self, amount: int) -> tuple[float, float]:
-        return amount * self.material, self.complexity + _COMPLEXITY_PER_INGREDIENT
 
-
-def cost_for_ingredient_list(ingredients: list[tuple[ItemCost, int]]) -> tuple[float, float]:
+def cost_for_ingredient_list(ingredients: list[tuple[ItemCost, int]]) -> tuple[float, float, int]:
     material = 0.0
     complexity = 1.0
+    count = 0
 
     for ingredient, amount in ingredients:
         material += ingredient.material * amount
         complexity += ingredient.complexity * 0.1
+        count += amount
 
     complexity *= 0.5 + len(ingredients) / 2
 
-    return material, complexity
+    return material, complexity, count
 
 
 def cost_calculator(recipes_raw: dict[str, dict], techs_raw: dict[str, dict]) -> dict[str, ItemCost]:
@@ -89,9 +93,9 @@ def cost_calculator(recipes_raw: dict[str, dict], techs_raw: dict[str, dict]) ->
             steps = max(steps, nested.steps)
             categories |= nested.categories
 
-        material, complexity = cost_for_ingredient_list(ingredients)
+        material, complexity, count = cost_for_ingredient_list(ingredients)
 
-        return ItemCost(material, complexity, steps + 1, categories)
+        return ItemCost(material, complexity, steps + 1, categories, count=count)
 
     def cost_for_item(item_name: str) -> ItemCost:
         if item_name in item_costs:

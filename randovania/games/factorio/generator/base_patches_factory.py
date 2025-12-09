@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pprint
 import typing
 from typing import TYPE_CHECKING
 
@@ -37,10 +38,17 @@ class FactorioBasePatchesFactory(BasePatchesFactory[FactorioConfiguration]):
         techs_raw = data_parser.load_techs_raw()
         item_cost = cost_calculator(recipes_raw, techs_raw)
 
+        divide_count = {
+            "rocket-part": 5,
+            "rocket-silo": 50,
+        }
+
         # Choose a random recipe for rocket parts as if it's 5 times cheaper.
         # We'll later multiply what we get by 5. This means the recipe will always involve items in bulk,
         # making it harder to build a rocket with just freebies.
-        item_cost["rocket-part"].material /= 5
+        for key, mult in divide_count.items():
+            item_cost[key].material /= mult
+            item_cost[key].count /= mult
 
         # Get all tech that are present in the preset
         collection = game.get_resource_database_view().create_resource_collection()
@@ -76,19 +84,23 @@ class FactorioBasePatchesFactory(BasePatchesFactory[FactorioConfiguration]):
             "utility-science-pack": (all_items, 2),
             "rocket-part": (all_items, 0),
             "satellite": (all_items, 3),
+            "rocket-silo": (all_items, 3),
         }
         custom_recipes = {}
 
         for target_item, (items, max_fluid) in to_change.items():
             ingredients = recipes.make_random_recipe(rng, items, target_item, item_cost, max_fluid=max_fluid)
-            multiplier = 5 if target_item == "rocket-part" else 1
+            multiplier = divide_count.get(target_item, 1)
             custom_recipes[target_item] = {
                 "ingredients": {
                     item_name: (amount * 10 if item_cost[item_name].is_fluid else amount) * multiplier
                     for item_name, amount in ingredients
                 }
             }
+            print(target_item, end=": ")
+            pprint.pp(custom_recipes[target_item]["ingredients"], width=120)
 
+        raise SystemExit
         return {
             "recipes": custom_recipes,
         }

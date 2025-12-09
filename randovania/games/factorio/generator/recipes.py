@@ -44,9 +44,7 @@ class RecipeAlgorithm(pyeasyga.GeneticAlgorithm):
         )
 
     def create_individual(self, seed_data: list[ItemCost]) -> pyeasyga.Genes:
-        genes = [0] * len(seed_data)
-        genes[self.random.randint(0, len(seed_data) - 1)] = 1
-        return genes
+        raise NotImplementedError
 
     def create_individual_from_indices(self, indices: tuple[int, ...]) -> pyeasyga.Genes:
         genes = [0] * len(self.seed_data)
@@ -55,15 +53,31 @@ class RecipeAlgorithm(pyeasyga.GeneticAlgorithm):
         return genes
 
     def mutate_function(self, individual: list[int]) -> None:
-        if self.random.randrange(4) == 0:
-            # 25% chance of increasing the ingredient cost of an existing ingredient
+        mutate_enum = self.random.randrange(100)
+
+        if mutate_enum < 20:
+            # 20% chance adding a random element
+            idx = [i for i, v in enumerate(individual) if v == 0]
+            if idx:
+                individual[self.random.choice(idx)] = 1
+
+        elif mutate_enum < 60:
+            # 40% chance of increasing the ingredient cost of an existing ingredient
             idx = [i for i, v in enumerate(individual) if v > 0]
             if idx:
                 individual[self.random.choice(idx)] += 1
-                return
 
-        mutate_index = self.random.randrange(len(individual))
-        individual[mutate_index] = (0, 1)[individual[mutate_index] == 0]
+        elif mutate_enum < 80:
+            # 20% chance of increasing all incredients by 10x
+            for i in range(len(individual)):
+                if individual[i] > 0:
+                    individual[i] *= self.random.randrange(1, 10)
+
+        else:
+            # 20% chance of removing a random element
+            idx = [i for i, v in enumerate(individual) if v > 0]
+            if idx:
+                individual[self.random.choice(idx)] = 0
 
     def fitness_function(self, individual: list[int], data: list[ItemCost]) -> float:
         item_count = 0
@@ -89,12 +103,13 @@ class RecipeAlgorithm(pyeasyga.GeneticAlgorithm):
 
                 ingredients.append((item, selected))
 
-        material, complexity = cost_for_ingredient_list(ingredients)
+        material, complexity, count = cost_for_ingredient_list(ingredients)
 
         material_distance = math.fabs(self.target_cost.material - material) / self.target_cost.material
         complexity_distance = math.fabs(self.target_cost.complexity - complexity) / self.target_cost.complexity
+        count_distance = math.fabs(self.target_cost.count - count) / max(self.target_cost.count, 1)
 
-        return material_distance + complexity_distance
+        return material_distance + complexity_distance + count_distance
 
     def create_initial_population(self) -> None:
         """Create a population with all combinations of items, of increasing size."""
@@ -165,10 +180,26 @@ def make_random_recipe(
 
     grouped_solutions = group_by_items(sorted(ga.all_good_solutions))
 
-    result_key = rng.choice(list(grouped_solutions.keys()))
-    best_solution = min(grouped_solutions[result_key], key=lambda it: ga.fitness_function(it, ga.seed_data))
-    result = ingredient_from_genes(best_solution)
+    if grouped_solutions:
+        result_key = rng.choice(list(grouped_solutions.keys()))
+        best_solution = min(grouped_solutions[result_key], key=lambda it: ga.fitness_function(it, ga.seed_data))
+    else:
+        best_solution = ga.current_generation[0].genes
 
+        print("TARGET IS!", target_item)
+        print("Cost:", target_cost)
+
+        for it in ga.current_generation[:10]:
+            ingredients = ingredient_from_genes(it.genes)
+            material, complexity, count = cost_for_ingredient_list(
+                [(item_costs[item_name], amount) for item_name, amount in ingredients]
+            )
+            print(
+                f"Fitness: {it.fitness}, Cost: material={material}, complexity={complexity}, count={count};"
+                f" Items: {ingredients}"
+            )
+
+    result = ingredient_from_genes(best_solution)
     return result
 
 
