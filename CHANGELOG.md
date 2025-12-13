@@ -90,7 +90,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - When fighting Flaaghra from the back, there is now an Intermediate Knowledge trick for using only 2 Power Bombs
     - When fighting Flaaghra from the back, you can now get to the platform via either an Intermediate Scan Dash, or a Beginner Scan Dash with Space Jump
 - Fixed: Sun Tower: Being able to go down Sun Tower without having killed Flaaghra.
-- Changed: Sun Tower: Doing the Early Wild Complex Bomb Jump is now Advanced.
 - Added: Watery Hall: Going to the Missile Expansion via an Intermediate Wall Boost without Gravity Suit.
 - Changed: Watery Hall: Going to the Missile Expansion by going through Poison Water has had several changes: it is now gated behind Beginner Movement, it has slightly more accurate damage numbers now and it increases the difficulty of the tricks.
 - Changed: Watery Hall: Doing the Bomb Jump to get the Missile Expansion is now Intermediate.
