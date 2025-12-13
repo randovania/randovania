@@ -25,10 +25,11 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator import reach_lib
-from randovania.generator.old_generator_reach import OldGeneratorReach
+from randovania.generator.old_generator_reach import OldGeneratorReach, RustworkXGraph
 from randovania.generator.pickup_pool import pool_creator
 from randovania.generator.reach_lib import advance_after_action
 from randovania.graph import world_graph
+from randovania.graph.graph_requirement import GraphRequirementSet
 from randovania.graph.state import State
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import StartingLocationList
@@ -334,3 +335,27 @@ def test_reach_size_from_start_echoes(
         "Torvus Bog/Great Bridge/Door to Path of Roots",
     ]
     assert len(list(reach.safe_nodes)) == 23
+
+
+def test_graph_module(blank_world_graph):
+    g = RustworkXGraph.new(blank_world_graph)
+
+    g.add_node(1)
+    g.add_node(5)
+    g.add_node(7)
+    g.add_node(8)
+    g.add_edge(1, 5, GraphRequirementSet.trivial())
+    g.add_edge(7, 8, GraphRequirementSet.trivial())
+
+    assert g.has_edge(1, 5)
+
+    result = list(g.edges_data())
+    assert result == [
+        (1, 5, GraphRequirementSet.trivial()),
+        (7, 8, GraphRequirementSet.trivial()),
+    ]
+
+    assert g.shortest_paths_dijkstra(1, lambda data: 0) == {5: 0}
+
+    components = {tuple(component) for component in g.strongly_connected_components()}
+    assert {(5,), (1,), (8,), (7,)}.issubset(components)

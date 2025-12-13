@@ -8,6 +8,7 @@ from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.graph import state_native
 from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 if TYPE_CHECKING:
@@ -170,21 +171,14 @@ class State:
         :param damage_state: The state you should have when collecting this resource. Will add new resources to it.
         :return:
         """
-        if not (
-            not node.has_all_resources(self.resources)
-            and node.requirement_to_collect.satisfied(
-                self.node_context(), damage_state.health_for_damage_requirements()
-            )
-        ):
-            raise ValueError(f"Trying to collect an uncollectable node'{node}'")
 
-        gain = list(node.resource_gain_on_collect(self.resources))
-        new_resources = self.resources.duplicate()
-        new_resources.add_resource_gain(gain)
+        new_resources, modified_resources = state_native.state_collect_resource_node(
+            node, self.resources, damage_state.health_for_damage_requirements()
+        )
 
         return self._advance_to(
             new_resources,
-            [resource for resource, _ in gain],
+            modified_resources,
             (node,),
             damage_state.apply_collected_resource_difference(new_resources, self.resources),
             self.patches,

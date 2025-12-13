@@ -513,7 +513,7 @@ def blank_world_graph(blank_game_description, empty_patches) -> WorldGraph:
     return create_graph(
         database_view=blank_game_description,
         patches=empty_patches,
-        resources=blank_game_description.resource_database.create_resource_collection(),
+        static_resources=blank_game_description.resource_database.create_resource_collection(),
         damage_multiplier=1.0,
         victory_condition=blank_game_description.victory_condition,
         flatten_to_set_on_patch=False,
@@ -569,6 +569,11 @@ def world_database(tmp_path: Path):
     from randovania.interface_common.world_database import WorldDatabase
 
     return WorldDatabase(tmp_path.joinpath("world_database"))
+
+
+@pytest.fixture
+def resource_collection(blank_resource_db):
+    return blank_resource_db.create_resource_collection()
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:

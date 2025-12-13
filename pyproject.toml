@@ -5,6 +5,7 @@ requires = [
     "wheel>=0.37.0",
     "dulwich",
     "randovania-scm-version-schema",
+    "cython",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -63,6 +64,8 @@ dependencies = [
     "zstandard",
     # For consistent HTTPS certificate availability across platforms
     "certifi",
+    # speedup GraphRequirement
+    "cython",
 ]
 
 [project.optional-dependencies]
@@ -347,6 +350,7 @@ files = [
     "test/games/test_hashes.py",
     "test/games/test_prime_binary_decoder.py",
     "test/generator/",
+    "test/graph/",
     "test/gui/dialog/test_connections_editor.py",
     "test/gui/widgets/test_node_selector_widget.py",
     "test/lib/",
