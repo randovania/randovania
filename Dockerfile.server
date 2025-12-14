@@ -19,9 +19,11 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # Copy the project into the image
 COPY . .
 
+RUN touch randovania/enable-cython
+
 # Sync the project and create pyc for faster startup
 RUN --mount=type=cache,target=/root/.cache/uv \
-    RANDOVANIA_COMPILE="1" uv sync --locked --extra server --extra exporters --compile-bytecode
+    uv sync --locked --extra server --extra exporters --compile-bytecode
 
 VOLUME ["/data"]
 ENTRYPOINT ["/usr/src/app/.venv/bin/python", "-m", "randovania"]
