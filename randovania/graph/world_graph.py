@@ -3,7 +3,10 @@ from __future__ import annotations
 import dataclasses
 import typing
 
-import cython
+if typing.TYPE_CHECKING:
+    import Cython as cython
+else:
+    import cython
 
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
