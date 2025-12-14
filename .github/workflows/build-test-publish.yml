@@ -106,6 +106,7 @@ jobs:
       - name: Disable Cython
         if: matrix.compiled.env_var == '0'
         run: rm -f randovania/enable-cython
+        shell: bash
 
       - name: Install Python packages
         run: uv sync --locked --all-extras
