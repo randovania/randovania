@@ -99,10 +99,16 @@ jobs:
         run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server $(cat .github/linux_apt_dependencies.txt)
         if: matrix.os.image == 'ubuntu-latest'
 
+      - name: Enable Cython
+        if: matrix.compiled.env_var == '1'
+        run: touch randovania/enable-cython
+
+      - name: Disable Cython
+        if: matrix.compiled.env_var == '0'
+        run: rm -f randovania/enable-cython
+
       - name: Install Python packages
         run: uv sync --locked --all-extras
-        env:
-          RANDOVANIA_COMPILE: "${{ matrix.compiled.env_var }}"
 
       - name: create test game
         run: uv run coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
@@ -165,10 +171,11 @@ jobs:
         run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server x11-utils gnumeric libxcb-cursor0 libxkbcommon-x11-0
         if: matrix.os.image == 'ubuntu-latest'
 
+      - name: Enable Cython
+        run: touch randovania/enable-cython
+
       - name: Install Python packages
         run: uv sync --locked --extra gui --extra exporters --extra test --group installer
-        env:
-          RANDOVANIA_COMPILE: "1"
 
       - name: Prepare macOS venv for universal2 build
         run: uv run tools/bundle_macos_universal_wheels.py && uv pip install universal_wheels/*.whl

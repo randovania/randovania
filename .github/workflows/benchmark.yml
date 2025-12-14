@@ -33,10 +33,11 @@ jobs:
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install $(cat .github/linux_apt_dependencies.txt)
 
+      - name: Enable Cython
+        run: touch randovania/enable-cython
+
       - name: Install Python packages
         run: uv sync --locked --extra exporters --extra gui --extra server --extra test
-        env:
-          RANDOVANIA_COMPILE: "1"
 
       - name: run pytest (benchmark)
         uses: CodSpeedHQ/action@v4
