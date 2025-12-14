@@ -60,9 +60,22 @@ class WorldGraphNodeConnection:
         )
 
 
-@dataclasses.dataclass()
 @cython.cclass
 class BaseWorldGraphNode:
+    def __init__(
+        self,
+        node_index: NodeIndex,
+        heal: bool,
+        connections: list[WorldGraphNodeConnection],
+        require_collected_to_leave: bool,
+    ) -> None:
+        self.node_index = node_index
+        self.heal = heal
+        self.connections = connections
+        self.require_collected_to_leave = require_collected_to_leave
+        self.resource_gain_bitmask = Bitmask.create()
+        self.dangerous_resources = Bitmask.create()
+
     node_index: int
     """The index of this node in WorldGraph.nodes, for quick reference. Does not necessarily match Node.node_index"""
 
@@ -75,12 +88,12 @@ class BaseWorldGraphNode:
     such as in-area connections, Dock connections, TeleporterNetwork connections and requirement_to_leave.
     """
 
-    resource_gain_bitmask: Bitmask = dataclasses.field(init=False, default_factory=Bitmask.create)
+    resource_gain_bitmask: Bitmask
     """
     Bitmask of all ResourceInfo indices granted by this node for fast checking. Does not include the pickup.
     """
 
-    dangerous_resources: Bitmask = dataclasses.field(init=False, default_factory=Bitmask.create)
+    dangerous_resources: Bitmask
     """
     Bitmask representing all dangerous resources provided by this node, including any pickup.
     """
@@ -97,14 +110,13 @@ class BaseWorldGraphNode:
         return self.resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
 
 
-@dataclasses.dataclass(init=False)
 class WorldGraphNode(BaseWorldGraphNode):
     """A node of a WorldGraph. Focused on being a very efficient data structures for the resolver and generator."""
 
     identifier: NodeIdentifier
     """The name/identification of this node. Matches the identifier of `database_node`, if that exists."""
 
-    back_connections: list[NodeIndex] = dataclasses.field(init=False, default_factory=list)
+    back_connections: list[NodeIndex]
     """
     A list of nodes that connects to this one.
     """
@@ -117,10 +129,10 @@ class WorldGraphNode(BaseWorldGraphNode):
     pickup_index: PickupIndex | None
     """The pickup index associated with this node."""
 
-    pickup_entry: PickupEntry | None = dataclasses.field(init=False, default=None)
+    pickup_entry: PickupEntry | None
     """The pickup entry of the GamePatches for this node's pickup_index at the time of creation."""
 
-    has_event_resource: bool = dataclasses.field(init=False, default=False)
+    has_event_resource: bool
     """If this node gives a resource of type EVENT."""
 
     is_lock_action: bool
