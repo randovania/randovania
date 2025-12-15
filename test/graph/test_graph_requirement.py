@@ -23,16 +23,24 @@ def test_create_empty(blank_resource_db):
     assert req.all_resources() == set()
 
 
-def test_add_simple_resource(mock_resources, blank_resource_db):
-    """Test adding a simple resource requirement (amount = 1)."""
+@pytest.mark.parametrize(
+    ("amount", "negate", "expected_str"),
+    [
+        (1, False, "Missile"),
+        (1, True, "No Missile"),
+        (5, False, "Missile ≥ 5"),
+    ],
+)
+def test_add_resource(mock_resources, blank_resource_db, amount, negate, expected_str):
+    """Test adding resource requirements with different amounts and negation."""
     req = GraphRequirementList(blank_resource_db)
     resource = mock_resources["item_a"]
 
-    req.add_resource(resource, 1, False)
+    req.add_resource(resource, amount, negate)
 
     assert req.all_resources() == {resource}
-    assert req.get_requirement_for(resource) == (1, False)
-    assert str(req) == "Missile"
+    assert req.get_requirement_for(resource) == (amount, negate)
+    assert str(req) == expected_str
 
 
 def test_cant_add_resource_when_frozen(mock_resources, blank_resource_db):
@@ -45,28 +53,6 @@ def test_cant_add_resource_when_frozen(mock_resources, blank_resource_db):
         req.add_resource(resource, 1, False)
 
     assert req.all_resources() == set()
-
-
-def test_add_negate_resource(mock_resources, blank_resource_db):
-    """Test adding a negated resource requirement."""
-    req = GraphRequirementList(blank_resource_db)
-    resource = mock_resources["item_a"]
-
-    req.add_resource(resource, 1, True)
-
-    assert req.all_resources() == {resource}
-    assert req.get_requirement_for(resource) == (1, True)
-
-
-def test_add_resource_with_amount(mock_resources, blank_resource_db):
-    """Test adding a resource requirement with amount > 1."""
-    req = GraphRequirementList(blank_resource_db)
-    resource = mock_resources["item_a"]
-
-    req.add_resource(resource, 5, False)
-
-    assert req.all_resources() == {resource}
-    assert req.get_requirement_for(resource) == (5, False)
 
 
 def test_add_resource_amount_zero_ignored(mock_resources, blank_resource_db):
@@ -100,36 +86,29 @@ def test_add_resource_max_amount(mock_resources, blank_resource_db):
     assert req.get_requirement_for(resource) == (5, False)
 
 
-def test_equality_empty(blank_resource_db):
-    """Test equality of empty requirement lists."""
+@pytest.mark.parametrize(
+    ("add_to_req1", "add_to_req2", "should_equal"),
+    [
+        ([], [], True),  # Both empty
+        ([("item_a", 1, False)], [("item_a", 1, False)], True),  # Same requirements
+        ([("item_a", 1, False)], [("item_b", 1, False)], False),  # Different requirements
+    ],
+)
+def test_equality(mock_resources, blank_resource_db, add_to_req1, add_to_req2, should_equal):
+    """Test equality/inequality of requirement lists."""
     req1 = GraphRequirementList(blank_resource_db)
     req2 = GraphRequirementList(blank_resource_db)
 
-    assert req1 == req2
-    assert req1.equals_to(req2)
+    for item_key, amount, negate in add_to_req1:
+        req1.add_resource(mock_resources[item_key], amount, negate)
+    for item_key, amount, negate in add_to_req2:
+        req2.add_resource(mock_resources[item_key], amount, negate)
 
-
-def test_equality_same_requirements(mock_resources, blank_resource_db):
-    """Test equality with same requirements."""
-    req1 = GraphRequirementList(blank_resource_db)
-    req2 = GraphRequirementList(blank_resource_db)
-
-    resource = mock_resources["item_a"]
-    req1.add_resource(resource, 1, False)
-    req2.add_resource(resource, 1, False)
-
-    assert req1 == req2
-
-
-def test_inequality_different_requirements(mock_resources, blank_resource_db):
-    """Test inequality with different requirements."""
-    req1 = GraphRequirementList(blank_resource_db)
-    req2 = GraphRequirementList(blank_resource_db)
-
-    req1.add_resource(mock_resources["item_a"], 1, False)
-    req2.add_resource(mock_resources["item_b"], 1, False)
-
-    assert req1 != req2
+    if should_equal:
+        assert req1 == req2
+        assert req1.equals_to(req2)
+    else:
+        assert req1 != req2
 
 
 def test_hash_consistency(mock_resources, blank_resource_db):
@@ -507,27 +486,21 @@ def test_copy_then_and_with_does_not_mutate_original_vectors(blank_resource_db):
     assert req1.get_requirement_for(ammo, False) == (0, False)
 
 
-def test_str_empty(blank_resource_db):
-    """Test string representation of empty requirement."""
+@pytest.mark.parametrize(
+    ("resources_to_add", "expected_str"),
+    [
+        ([], "Trivial"),
+        ([("item_a", 1, False)], "Missile"),
+        ([("item_a", 1, False), ("item_b", 5, False)], "Missile and Health ≥ 5"),
+    ],
+)
+def test_str_representation(mock_resources, blank_resource_db, resources_to_add, expected_str):
+    """Test string representation with various requirements."""
     req = GraphRequirementList(blank_resource_db)
-    assert str(req) == "Trivial"
+    for item_key, amount, negate in resources_to_add:
+        req.add_resource(mock_resources[item_key], amount, negate)
 
-
-def test_str_simple(mock_resources, blank_resource_db):
-    """Test string representation with simple requirement."""
-    req = GraphRequirementList(blank_resource_db)
-    req.add_resource(mock_resources["item_a"], 1, False)
-
-    assert str(req) == "Missile"
-
-
-def test_str_multiple(mock_resources, blank_resource_db):
-    """Test string representation with multiple requirements."""
-    req = GraphRequirementList(blank_resource_db)
-    req.add_resource(mock_resources["item_a"], 1, False)
-    req.add_resource(mock_resources["item_b"], 5, False)
-
-    assert str(req) == "Missile and Health ≥ 5"
+    assert str(req) == expected_str
 
 
 def test_complex_requirements_combination(blank_resource_db):
@@ -702,57 +675,48 @@ def test_is_requirement_superset_negate_not_in_superset(mock_resources, blank_re
     assert not req2.is_requirement_superset(req1)
 
 
-def test_is_requirement_superset_other_resources(mock_resources, blank_resource_db):
-    """Test superset with resources requiring amount > 1."""
+@pytest.mark.parametrize(
+    ("req1_amount", "req2_amount", "req1_is_superset", "req2_is_superset"),
+    [
+        (5, 3, True, False),  # req1 requires more
+        (5, 5, True, True),  # Equal amounts
+    ],
+)
+def test_is_requirement_superset_other_resources(
+    mock_resources, blank_resource_db, req1_amount, req2_amount, req1_is_superset, req2_is_superset
+):
+    """Test superset with resources requiring various amounts."""
     req1 = GraphRequirementList(blank_resource_db)
-    req1.add_resource(mock_resources["item_a"], 5, False)
+    req1.add_resource(mock_resources["item_a"], req1_amount, False)
 
     req2 = GraphRequirementList(blank_resource_db)
-    req2.add_resource(mock_resources["item_a"], 3, False)
+    req2.add_resource(mock_resources["item_a"], req2_amount, False)
 
-    # req1 requires more of the same resource
-    assert req1.is_requirement_superset(req2)
-    assert not req2.is_requirement_superset(req1)
-
-
-def test_is_requirement_superset_other_resources_equal(mock_resources, blank_resource_db):
-    """Test superset when other_resources have equal amounts."""
-    req1 = GraphRequirementList(blank_resource_db)
-    req1.add_resource(mock_resources["item_a"], 5, False)
-
-    req2 = GraphRequirementList(blank_resource_db)
-    req2.add_resource(mock_resources["item_a"], 5, False)
-
-    assert req1.is_requirement_superset(req2)
-    assert req2.is_requirement_superset(req1)
+    assert req1.is_requirement_superset(req2) == req1_is_superset
+    assert req2.is_requirement_superset(req1) == req2_is_superset
 
 
-def test_is_requirement_superset_damage_resources(blank_resource_db):
-    """Test superset with damage resources."""
+@pytest.mark.parametrize(
+    ("req1_amount", "req2_amount", "req1_is_superset", "req2_is_superset"),
+    [
+        (150, 100, True, False),  # req1 requires more damage
+        (100, 100, True, True),  # Equal damage amounts
+    ],
+)
+def test_is_requirement_superset_damage_resources(
+    blank_resource_db, req1_amount, req2_amount, req1_is_superset, req2_is_superset
+):
+    """Test superset with damage resources at various amounts."""
     damage = blank_resource_db.get_damage("Damage")
 
     req1 = GraphRequirementList(blank_resource_db)
-    req1.add_resource(damage, 150, False)
+    req1.add_resource(damage, req1_amount, False)
 
     req2 = GraphRequirementList(blank_resource_db)
-    req2.add_resource(damage, 100, False)
+    req2.add_resource(damage, req2_amount, False)
 
-    assert req1.is_requirement_superset(req2)
-    assert not req2.is_requirement_superset(req1)
-
-
-def test_is_requirement_superset_damage_resources_equal(blank_resource_db):
-    """Test superset with equal damage amounts."""
-    damage = blank_resource_db.get_damage("Damage")
-
-    req1 = GraphRequirementList(blank_resource_db)
-    req1.add_resource(damage, 100, False)
-
-    req2 = GraphRequirementList(blank_resource_db)
-    req2.add_resource(damage, 100, False)
-
-    assert req1.is_requirement_superset(req2)
-    assert req2.is_requirement_superset(req1)
+    assert req1.is_requirement_superset(req2) == req1_is_superset
+    assert req2.is_requirement_superset(req1) == req2_is_superset
 
 
 def test_is_requirement_superset_mixed_requirements(blank_resource_db):
@@ -899,105 +863,38 @@ def test_isolate_damage_requirements_multiple_damage(blank_resource_db):
     assert str(isolated) == "Caltrops Damage ≥ 100 and Normal Damage ≥ 50"
 
 
-def test_isolate_damage_requirements_with_satisfied_set_resource(blank_resource_db):
-    """Test isolate_damage_requirements with satisfied set resource."""
-    weapon = blank_resource_db.get_item("Weapon")
+@pytest.mark.parametrize(
+    ("resource_type", "resource_name", "req_amount", "negate", "provided_amount", "expected_result"),
+    [
+        ("item", "Weapon", 1, False, 1, "Normal Damage ≥ 100"),  # Satisfied set resource
+        ("item", "Weapon", 1, False, 0, None),  # Unsatisfied set resource
+        ("item", "Weapon", 1, True, 0, "Normal Damage ≥ 100"),  # Satisfied negate resource (absent)
+        ("item", "Weapon", 1, True, 1, None),  # Unsatisfied negate resource (present)
+        ("item", "Ammo", 5, False, 10, "Normal Damage ≥ 100"),  # Satisfied other resource (sufficient)
+        ("item", "Ammo", 10, False, 5, None),  # Unsatisfied other resource (insufficient)
+    ],
+)
+def test_isolate_damage_requirements_with_non_damage_resources(
+    blank_resource_db, resource_type, resource_name, req_amount, negate, provided_amount, expected_result
+):
+    """Test isolate_damage_requirements with various non-damage resource satisfaction states."""
+    resource = blank_resource_db.get_item(resource_name)
     damage = blank_resource_db.get_damage("Damage")
 
     req = GraphRequirementList(blank_resource_db)
-    req.add_resource(weapon, 1, False)
+    req.add_resource(resource, req_amount, negate)
     req.add_resource(damage, 100, False)
 
     resources = blank_resource_db.create_resource_collection()
-    resources.add_resource_gain([(weapon, 1)])
+    if provided_amount > 0:
+        resources.add_resource_gain([(resource, provided_amount)])
 
     isolated = req.isolate_damage_requirements(resources)
 
-    assert str(isolated) == "Normal Damage ≥ 100"
-
-
-def test_isolate_damage_requirements_with_unsatisfied_set_resource(blank_resource_db):
-    """Test isolate_damage_requirements returns None with unsatisfied set resource."""
-    weapon = blank_resource_db.get_item("Weapon")
-    damage = blank_resource_db.get_damage("Damage")
-
-    req = GraphRequirementList(blank_resource_db)
-    req.add_resource(weapon, 1, False)
-    req.add_resource(damage, 100, False)
-
-    resources = blank_resource_db.create_resource_collection()
-
-    isolated = req.isolate_damage_requirements(resources)
-
-    assert isolated is None
-
-
-def test_isolate_damage_requirements_with_satisfied_negate_resource(blank_resource_db):
-    """Test isolate_damage_requirements with satisfied negate resource (resource absent)."""
-    weapon = blank_resource_db.get_item("Weapon")
-    damage = blank_resource_db.get_damage("Damage")
-
-    req = GraphRequirementList(blank_resource_db)
-    req.add_resource(weapon, 1, True)
-    req.add_resource(damage, 100, False)
-
-    resources = blank_resource_db.create_resource_collection()
-    # weapon is not present, so negation is satisfied
-
-    isolated = req.isolate_damage_requirements(resources)
-
-    assert str(isolated) == "Normal Damage ≥ 100"
-
-
-def test_isolate_damage_requirements_with_unsatisfied_negate_resource(blank_resource_db):
-    """Test isolate_damage_requirements returns None with unsatisfied negate resource (resource present)."""
-    weapon = blank_resource_db.get_item("Weapon")
-    damage = blank_resource_db.get_damage("Damage")
-
-    req = GraphRequirementList(blank_resource_db)
-    req.add_resource(weapon, 1, True)
-    req.add_resource(damage, 100, False)
-
-    resources = blank_resource_db.create_resource_collection()
-    resources.add_resource_gain([(weapon, 1)])
-
-    isolated = req.isolate_damage_requirements(resources)
-
-    assert isolated is None
-
-
-def test_isolate_damage_requirements_with_satisfied_other_resource(blank_resource_db):
-    """Test isolate_damage_requirements with satisfied other resource (amount)."""
-    ammo = blank_resource_db.get_item("Ammo")
-    damage = blank_resource_db.get_damage("Damage")
-
-    req = GraphRequirementList(blank_resource_db)
-    req.add_resource(ammo, 5, False)
-    req.add_resource(damage, 100, False)
-
-    resources = blank_resource_db.create_resource_collection()
-    resources.add_resource_gain([(ammo, 10)])
-
-    isolated = req.isolate_damage_requirements(resources)
-
-    assert str(isolated) == "Normal Damage ≥ 100"
-
-
-def test_isolate_damage_requirements_with_unsatisfied_other_resource(blank_resource_db):
-    """Test isolate_damage_requirements returns None with unsatisfied other resource."""
-    ammo = blank_resource_db.get_item("Ammo")
-    damage = blank_resource_db.get_damage("Damage")
-
-    req = GraphRequirementList(blank_resource_db)
-    req.add_resource(ammo, 10, False)
-    req.add_resource(damage, 100, False)
-
-    resources = blank_resource_db.create_resource_collection()
-    resources.add_resource_gain([(ammo, 5)])
-
-    isolated = req.isolate_damage_requirements(resources)
-
-    assert isolated is None
+    if expected_result is None:
+        assert isolated is None
+    else:
+        assert str(isolated) == expected_result
 
 
 def test_isolate_damage_requirements_complex_all_satisfied(blank_resource_db):
