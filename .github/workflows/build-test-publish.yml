@@ -101,7 +101,7 @@ jobs:
 
       - name: Enable Cython
         if: matrix.compiled.env_var == '1'
-        run: touch randovania/enable-cython
+        run: echo "linetrace" > randovania/enable-cython
 
       - name: Disable Cython
         if: matrix.compiled.env_var == '0'
