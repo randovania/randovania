@@ -535,7 +535,6 @@ class GraphRequirementList:
             else:
                 self._other_resources.push_back(pair[cython.size_t, cython.int](resource_index, amount))
 
-
     @cython.ccall
     def add_damage(self, resource_index: cython.int, amount: cython.int) -> cython.void:
         self._check_can_write()

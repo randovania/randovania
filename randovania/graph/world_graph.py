@@ -162,7 +162,7 @@ class WorldGraphNode(BaseWorldGraphNode):
         area: Area,
         region: Region,
     ) -> None:
-        super(WorldGraphNode, self).__init__(
+        super().__init__(
             node_index,
             heal,
             connections,
