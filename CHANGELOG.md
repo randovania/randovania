@@ -54,6 +54,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Fixed: Typo on "Boss Ridley Defeated" event.
+- Fixed: Getting the Operations Deck Navigation Hint now requires the L1-Keycard.
+- Fixed: Getting the Restricted Sector Navigation Hint now requires the L4-Keycard.
 
 ##### Main Deck
 
