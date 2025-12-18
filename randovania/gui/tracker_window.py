@@ -46,6 +46,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.gui.widgets.data_editor_canvas import DataEditorCanvas
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.preset import Preset
 
@@ -105,6 +106,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     # Confirmation to open the tracker
     confirm_open = True
+
+    # HACK: Mypy has issues parsing setupUi from Ui_TrackerWindow, so we manually specify the type here
+    map_canvas: DataEditorCanvas
 
     @classmethod
     async def create_new(cls, persistence_path: Path, preset: Preset) -> TrackerWindow:
@@ -472,7 +476,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             item.setHidden(key not in visible_areas)
 
         self.map_canvas.set_state(state)
-        self.map_canvas.set_visible_nodes(nodes_in_reach)
+        self.map_canvas.set_visible_nodes({n.database_node for n in nodes_in_reach if n.database_node is not None})
 
         # Persist the current state
         self.persist_current_state()
