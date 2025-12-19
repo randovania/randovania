@@ -49,6 +49,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Minor adjustment related to Kraid to increase seed variety.
 
+##### Ferenia
+
+- Fixed: Removed Diffusion Abuse trick to push Wide Beam Block in Purple EMMI Arena. This one is impossible because when you want to aim you automatically enable the Omega Cannon.
+
 ### Metroid Fusion
 
 #### Logic Database
