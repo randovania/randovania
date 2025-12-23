@@ -8,6 +8,7 @@ import typing
 import cryptography.fernet
 import jwt
 import oauthlib
+import oauthlib.oauth2.rfc6749.errors
 import peewee
 from fastapi import APIRouter, Form, Query, Request, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
