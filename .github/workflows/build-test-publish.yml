@@ -115,8 +115,9 @@ jobs:
         run: uv run coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
         if: ${{ !matrix.is_stable }}
 
+      # Don't use `-n auto` as it causes issues with Cython coverage
       - name: run pytest
-        run: $PREFIX uv run pytest --cov randovania --cov-append --cov-report=xml --skip-resolver-tests -n auto --durations=100
+        run: $PREFIX uv run pytest --cov randovania --cov-append --cov-report=xml --skip-resolver-tests --durations=100
         shell: bash
         env:
           QT_QPA_PLATFORM: "${{ matrix.os.image == 'ubuntu-latest' && 'xcb' || '' }}"
