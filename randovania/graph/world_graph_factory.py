@@ -363,6 +363,10 @@ def create_patchless_graph(
     graph.victory_condition = graph.converter.convert_db(victory_condition)
 
     for node in nodes:
+        resource = graph.resource_info_for_node(node)
+        resource_database.get_resource_mapping()[resource.resource_index] = resource
+
+    for node in nodes:
         if isinstance(node.database_node, HintNode):
             node.requirement_to_collect = graph.converter.convert_db(node.database_node.lock_requirement)
 

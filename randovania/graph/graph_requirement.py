@@ -188,7 +188,7 @@ class GraphRequirementList:
     def _resource_mapping(self) -> dict[int, ResourceInfo]:
         if self._resource_db is None:
             return {}
-        return getattr(self._resource_db, "_resource_mapping")
+        return self._resource_db.get_resource_mapping()
 
     @cython.ccall
     def is_frozen(self) -> cython.bint:
@@ -498,7 +498,6 @@ class GraphRequirementList:
         Adds a new resource requirement to this.
         If negate is set, amount must be 1.
         """
-        self._resource_mapping()[resource.resource_index] = resource
         if resource.resource_type.is_damage():
             self.add_damage(resource.resource_index, amount)
         else:

@@ -180,7 +180,7 @@ class WorldGraphNode(BaseWorldGraphNode):
         self.region = region
 
     def add_resource(self, resource: ResourceInfo, database: ResourceDatabaseView) -> None:
-        mapping: dict[int, ResourceInfo] = getattr(database, "_resource_mapping")
+        mapping: dict[int, ResourceInfo] = database.get_resource_mapping()
         mapping[resource.resource_index] = resource
         self.resource_gain_bitmask.set_bit(resource.resource_index)
         if resource.resource_type == ResourceType.EVENT:
@@ -196,7 +196,7 @@ class WorldGraphNode(BaseWorldGraphNode):
         These resources all provide exactly 1 quantity each.
         """
 
-        mapping: dict[int, ResourceInfo] = getattr(database, "_resource_mapping")
+        mapping: dict[int, ResourceInfo] = database.get_resource_mapping()
         for index in self.resource_gain_bitmask.get_set_bits():
             yield mapping[index], 1
 

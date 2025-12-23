@@ -227,7 +227,7 @@ class ResourceCollection:
             if resource_index in self._damage_reduction_cache:
                 return self._damage_reduction_cache[resource_index]
 
-        resource: ResourceInfo = getattr(self._resource_database, "_resource_mapping")[resource_index]
+        resource: ResourceInfo = self._resource_database.get_resource_mapping()[resource_index]
         reduction: cython.float = self._resource_database.get_damage_reduction(resource, self)
         self._damage_reduction_cache[resource_index] = reduction
         return reduction
