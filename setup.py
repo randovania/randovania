@@ -26,6 +26,8 @@ else:
 
 # Enable coverage tracing only if enable-cython contains "linetrace"
 enable_coverage_tracing = "linetrace" in enable_cython_content
+if enable_coverage_tracing:
+    print("Cython coverage tracing enabled")
 
 
 class CopyReadmeCommand(Command):
