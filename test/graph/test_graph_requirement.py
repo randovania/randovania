@@ -881,3 +881,35 @@ def test_isolate_damage_requirements_with_reduction(blank_resource_db):
     resources.add_resource_gain([(double_jump, 1)])
     isolated2 = req.isolate_damage_requirements(resources)
     assert str(isolated2) == "Trivial"
+
+
+def test_hash(mock_resources, blank_resource_db):
+    """Test that the hash function is consistent and unique for different requirements."""
+    damage = blank_resource_db.get_damage("Damage")
+
+    req1 = GraphRequirementList(blank_resource_db)
+    req1.add_resource(mock_resources["item_a"], 1, False)
+    req1.add_resource(mock_resources["item_b"], 3, False)
+    req1.add_resource(damage, 100, False)
+
+    req2 = GraphRequirementList(blank_resource_db)
+    req2.add_resource(mock_resources["item_a"], 1, False)
+    req2.add_resource(mock_resources["item_b"], 3, False)
+    req2.add_resource(damage, 100, False)
+
+    req3 = GraphRequirementList(blank_resource_db)
+    req3.add_resource(mock_resources["item_a"], 2, False)
+    req3.add_resource(mock_resources["item_b"], 3, False)
+    req3.add_resource(damage, 100, False)
+
+    req4 = copy.copy(req1)
+    req4.add_resource(damage, 100, False)
+
+    req1.freeze()
+    req2.freeze()
+    req3.freeze()
+    req4.freeze()
+
+    assert hash(req1) == hash(req2)
+    assert hash(req1) != hash(req3)
+    assert hash(req1) != hash(req4)

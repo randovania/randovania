@@ -10,11 +10,24 @@ from setuptools import Command, Extension, setup
 from setuptools.command.build import build
 
 parent = Path(__file__).parent
+
+# Check if enable-cython file exists and read its content
+enable_cython_file = parent.joinpath("randovania", "enable-cython")
+if enable_cython_file.is_file():
+    enable_cython_content = enable_cython_file.read_text().strip()
+else:
+    enable_cython_content = ""
+
 should_compile_env = os.getenv("RANDOVANIA_COMPILE")
 if should_compile_env is None:
-    should_compile = parent.joinpath("randovania", "enable-cython").is_file()
+    should_compile = enable_cython_file.is_file()
 else:
     should_compile = should_compile_env != "0"
+
+# Enable coverage tracing only if enable-cython contains "linetrace"
+enable_coverage_tracing = "linetrace" in enable_cython_content
+if enable_coverage_tracing:
+    print("Cython coverage tracing enabled")
 
 
 class CopyReadmeCommand(Command):
@@ -127,6 +140,9 @@ if should_compile:
         elif debug_mode:
             extra_compile_args.extend(["-O0", "-fno-omit-frame-pointer"])  # no optimization
 
+    # Conditionally add coverage tracing macros
+    define_macros = [("CYTHON_TRACE", "1"), ("CYTHON_TRACE_NOGIL", "1")] if enable_coverage_tracing else []
+
     ext_modules = cythonize(
         [
             Extension(
@@ -135,12 +151,13 @@ if should_compile:
                 language="c++",
                 extra_compile_args=extra_compile_args,
                 extra_link_args=extra_link_args,
+                define_macros=define_macros,
             )
             for file in cythonize_files
         ],
         annotate=True,
         compiler_directives={
-            "linetrace": profiling_mode or debug_mode,  # Enable line tracing for profiling
+            "linetrace": enable_coverage_tracing,  # Enable line tracing only when needed for coverage
             "profile": profiling_mode,  # Enable profiling hooks
         },
         gdb_debug=debug_mode,  # Add Cython debugging support

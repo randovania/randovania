@@ -7,8 +7,9 @@ extras_group = parser.add_mutually_exclusive_group()
 extras_group.add_argument("--thin", action="store_true")
 extras_group.add_argument("--full", action="store_true")
 native_group = parser.add_mutually_exclusive_group()
-native_group.add_argument("--native", action="store_true", help="Requests that native code is compiled.")
 native_group.add_argument("--pure", action="store_true", help="Use the pure python mode. Default.")
+native_group.add_argument("--native", action="store_true", help="Requests that native code is compiled.")
+native_group.add_argument("--trace", action="store_true", help="Enables native mode with line tracing for coverage.")
 args = parser.parse_args()
 
 if args.full:
@@ -28,8 +29,12 @@ Please follow the instructions in the README:
 enable_file = pathlib.Path("randovania/enable-cython")
 if args.pure:
     enable_file.unlink(missing_ok=True)
-else:
+elif args.trace:
+    enable_file.write_bytes(b"linetrace")
+elif args.native:
     enable_file.write_bytes(b"")
+else:
+    raise SystemExit("Either --pure, --native or --trace must be specified.")
 
 try:
     subprocess.run(
