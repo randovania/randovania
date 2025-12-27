@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.graph.world_graph import WorldGraphNode
+    from randovania.graph.world_graph import BaseWorldGraphNode
 
 
 class DamageState(ABC):
@@ -46,7 +46,7 @@ class DamageState(ABC):
         """
 
     @abstractmethod
-    def apply_node_heal(self, node: WorldGraphNode, resources: ResourceCollection) -> Self:
+    def apply_node_heal(self, node: BaseWorldGraphNode, resources: ResourceCollection) -> Self:
         """
         Applies the Node Heal effect, whatever that means for this game.
         Called when visiting a Node with the heal flag set.
