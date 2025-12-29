@@ -17,10 +17,10 @@ if TYPE_CHECKING:
 
     from randovania.game_description.assignment import PickupTarget
     from randovania.game_description.db.node import NodeIndex
-    from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.node_resource_info import NodeResourceInfo
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceGainTuple
+    from randovania.graph.graph_requirement import GraphRequirementSet
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraphNode
     from randovania.resolver.damage_state import DamageState
@@ -143,13 +143,13 @@ class RollbackLogEntry(NamedTuple):
     details: ActionDetails | None
     has_action: bool
     possible_action: bool
-    additional_requirements: RequirementSet
+    additional_requirements: GraphRequirementSet
 
 
 class SkipLogEntry(NamedTuple):
     location: WorldGraphNode
     details: ActionDetails
-    additional_requirements: RequirementSet
+    additional_requirements: GraphRequirementSet
 
 
 LogFeature = Literal[
@@ -165,7 +165,7 @@ LogFeature = Literal[
 
 
 class ResolverLogger(abc.ABC):
-    last_printed_additional: dict[NodeIndex, RequirementSet]
+    last_printed_additional: dict[NodeIndex, GraphRequirementSet]
 
     def logger_start(self) -> None:
         """Initialize the logger for a new resolver run."""
@@ -327,7 +327,7 @@ class TextResolverLogger(ResolverLogger):
             return ""
         return f"[action {details.text}] "
 
-    def print_requirement_set(self, requirement_set: RequirementSet, indent: int = 0) -> None:
+    def print_requirement_set(self, requirement_set: GraphRequirementSet, indent: int = 0) -> None:
         requirement_set.pretty_print(self._indent(indent), print_function=debug.print_function)
 
     def _log_action(self, action_entry: ActionLogEntry) -> None:

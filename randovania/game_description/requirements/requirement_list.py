@@ -4,6 +4,7 @@ import itertools
 import typing
 
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.lib.bitmask import Bitmask
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
@@ -11,13 +12,14 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.graph.graph_requirement import GraphRequirementList
 
 _ItemKey = tuple[int, int, bool]
 
 
 class RequirementList:
     __slots__ = ("_bitmask", "_items", "_extra", "_cached_hash")
-    _bitmask: int
+    _bitmask: Bitmask
     _items: dict[_ItemKey, ResourceRequirement]
     _extra: list[ResourceRequirement]
     _cached_hash: int | None
@@ -31,16 +33,39 @@ class RequirementList:
     def __init__(self, items: Iterable[ResourceRequirement]):
         self._items = {}
         self._extra = []
-        self._bitmask = 0
+        self._bitmask = Bitmask.create()
         self._cached_hash = None
 
         for it in items:
             index = it.resource.resource_index
             self._items[(index, it.amount, it.negate)] = it
             if it.amount == 1 and not it.negate and not it.is_damage:
-                self._bitmask |= 1 << index
+                self._bitmask.set_bit(index)
             else:
                 self._extra.append(it)
+
+    @classmethod
+    def from_graph_requirement_list(
+        cls, graph_list: GraphRequirementList, *, add_multiple_as_single: bool = False
+    ) -> typing.Self:
+        """
+        Converts a GraphRequirementList into a RequirementList.
+        :param graph_list:
+        :param add_multiple_as_single: When set, any non-damage resource present with an amount higher
+            than 1 is also present as 1. This improves `pickups_to_solve_list`.
+        :return:
+        """
+        from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+
+        entries = []
+
+        for resource in graph_list.all_resources():
+            amount, negate = graph_list.get_requirement_for(resource)
+            if add_multiple_as_single and amount > 1 and not resource.resource_type.is_damage():
+                entries.append(ResourceRequirement.create(resource, 1, negate))
+            entries.append(ResourceRequirement.create(resource, amount, negate))
+
+        return cls(entries)
 
     def __reduce__(self) -> tuple[type[RequirementList], tuple[ResourceRequirement, ...]]:
         return RequirementList, tuple(self._items.values())
@@ -77,7 +102,7 @@ class RequirementList:
         :param current_energy:
         :return:
         """
-        if self._bitmask & context.current_resources.resource_bitmask != self._bitmask:
+        if not self._bitmask.is_subset_of(context.current_resources.resource_bitmask):
             return False
 
         energy = current_energy
@@ -129,12 +154,9 @@ class RequirementList:
             return False
 
         if not self._extra and not other._extra:
-            return self._bitmask & other._bitmask == self._bitmask
+            return self._bitmask.is_subset_of(other._bitmask)
 
         return all(
             key in other._items or any(req.is_obsoleted_by(other_req) for other_req in other._items.values())
             for key, req in self._items.items()
         )
-
-
-SatisfiableRequirements = frozenset[RequirementList]

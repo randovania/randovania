@@ -19,6 +19,8 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # Copy the project into the image
 COPY . .
 
+RUN touch randovania/enable-cython
+
 # Sync the project and create pyc for faster startup
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked --extra server --extra exporters --compile-bytecode

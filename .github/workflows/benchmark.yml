@@ -24,7 +24,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.13"
+          version: "0.9.18"
           enable-cache: true
 
       - name: Set up Python
@@ -32,6 +32,9 @@ jobs:
 
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install $(cat .github/linux_apt_dependencies.txt)
+
+      - name: Enable Cython
+        run: touch randovania/enable-cython
 
       - name: Install Python packages
         run: uv sync --locked --extra exporters --extra gui --extra server --extra test

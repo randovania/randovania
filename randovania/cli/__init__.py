@@ -54,6 +54,10 @@ def _run_args(parser: ArgumentParser, args: Namespace) -> int:
         parser.print_help()
         raise SystemExit(1)
 
+    from randovania.lib import profiler
+
+    profiler.wait_for_profiler()
+
     logging.debug("Executing from args...")
     try:
         if inspect.iscoroutinefunction(args.func):

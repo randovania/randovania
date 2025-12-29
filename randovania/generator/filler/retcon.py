@@ -485,7 +485,8 @@ def _calculate_weights_for(
     if potential_reach.victory_condition_satisfied():
         return action_weights.VICTORY_WEIGHT
 
-    potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
+    potential_uncollected = UncollectedState.from_reach(potential_reach)
+    potential_uncollected_diff = potential_uncollected - current_uncollected
     potential_unsafe_uncollected = UncollectedState.from_reach_only_unsafe(potential_reach) - current_unsafe_uncollected
 
     if debug.debug_level() > debug.LogLevel.HIGH:
@@ -498,16 +499,16 @@ def _calculate_weights_for(
         print(f">>> {evaluation.action}")
 
         print("  safe resources:")
-        print_weight_factors(potential_uncollected)
+        print_weight_factors(potential_uncollected_diff)
 
         print("  unsafe resources:")
         print_weight_factors(potential_unsafe_uncollected)
 
     # this used to weigh actions according to *how many* resources were unlocked, but we've determined
     # that the results are more fun if we only care about something being unlocked at all
-    pickups_weight = potential_uncollected.pickups_weight(action_weights)
-    events_weight = potential_uncollected.events_weight(action_weights)
-    hints_weight = potential_uncollected.hints_weight(action_weights)
+    pickups_weight = potential_uncollected_diff.pickups_weight(action_weights)
+    events_weight = potential_uncollected_diff.events_weight(action_weights)
+    hints_weight = potential_uncollected_diff.hints_weight(action_weights)
 
     # if there were no safe resources of that type, check again for unsafe resources but weigh them as dangerous
     if not pickups_weight:
@@ -526,6 +527,13 @@ def _calculate_weights_for(
 
     # hints are actually an added bonus, so they get *added* to the total weight
     total_weight += hints_weight
+
+    # If this action fills all remaining Pickup Locations, then we prefer actions that directly unlock more locations
+    old_spots_for_pickups = len(current_uncollected.pickup_indices)
+    new_spots_for_pickups = len(potential_uncollected.pickup_indices)
+    action_consumes_all_spots = old_spots_for_pickups > 0 and old_spots_for_pickups <= evaluation.action.num_pickups
+    if action_consumes_all_spots and new_spots_for_pickups <= evaluation.action.num_pickups:
+        total_weight = 0.0
 
     return total_weight
 

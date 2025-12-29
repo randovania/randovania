@@ -11,11 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The generator and resolver now use a faster algorithm. An option was added to use the old one if needed.
 - Changed: The "Verify if game is beatable after ..." option is no longer experimental.
 - Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
+- Changed: When hiding item models or scans, the preset summary no longer references an ETM.
 - Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough, especially at high verbosity.
 - Fixed: Reduced the Windows install size by about 7 MB, as a regression from last release.
 - Fixed: Logical Pickup placement "All pickups" and expansions with negative amount are now compatible.
 - Fixed: Impossible generation cases that are caused due to walking into a point of no return that's impossible to escape from.
 - Fixed: Text such as the Seed Hash in the Async Race window is now selectable via mouse.
+- Fixed: Saving previous versions of presets when modififying no longer fails on certain cases.
+- Fixed: Certain scenarios at the start of generation with low possible actions are now less likely to fail.
 - Removed: The "Consider possible unsafe resources" experimental option has been removed and is now always enabled.
 - Removed: The "Revised door solver" experimental option has been removed and is now always enabled.
 - Added: Added "Create New Preset" button to preset menu to improve UX.
@@ -46,11 +49,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Minor adjustment related to Kraid to increase seed variety.
 
+##### Ferenia
+
+- Fixed: Removed Diffusion Abuse trick to push Wide Beam Block in Purple EMMI Arena. This one is impossible because when you want to aim you automatically enable the Omega Cannon.
+
 ### Metroid Fusion
 
 #### Logic Database
 
 - Fixed: Typo on "Boss Ridley Defeated" event.
+- Fixed: Getting the Operations Deck Navigation Hint now requires the L1-Keycard.
+- Fixed: Getting the Restricted Sector Navigation Hint now requires the L4-Keycard.
 
 ##### Main Deck
 
@@ -81,6 +90,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Ruined Nursery: Requirements for dealing with the enemies in the room.
 - Fixed: Ruined Fountain: The NSJ Dash over to the pickup now requires a visor.
 - Fixed: Ruined Fountain Access: Requirements for dealing with the enemies in the room.
+- Added: Ruined Shrine: Path from the Tower of Light Access Door to the Ruined Shrine Access Door via a Beginner Bomb Jump and Spider Ball.
+- Added: Ruined Shrine: Multiple ways to go from the Tower of Light Access Door to the top of the Half-Pipe near the pickup:
+    - Space Jump and Intermediate Standable Terrain
+    - No Space Jump, Expert Standable Terrain and an Intermediate L-Jump
+- Added: Ruined Shrine: An Intermediate dash from the top of the Half-Pipe to the Tower of Light Access Door with Space Jump.
+- Changed: Ruined Shrine: Scan Dashing from the Ruined Shrine Access Door over the fight trigger to the Pedestal now also requires Intermediate Knowledge.
+- Changed: Ruined Shrine: The NSJ escape from the pit now requires an Intermediate Dash, Intermediate L-Jump and Advanced Standable Terrain.
+- Added: Ruined Shrine: Health requirements for dealing with the Beetles
+- Changed: Ruined Shrine: Defeating the Beetles with only Bombs has been bumped to Expert Combat.
+- Changed: Ruined Shrine: Getting the Morph Pickup after triggering the beetle fight via escaping the pit and dashing over the wall to the item now requires an Intermediate L-Jump, Advanced Standable Terrain and either an Expert Combat Dash or an Advanced Scan Dash.
+- Fixed: Ruined Shrine Access: Requirements for dealing with the enemies in the room.
 - Fixed: Sunchamber Access: Requirements for dealing with the enemies in the room.
 - Fixed: Sunchamber Lobby: Requirements for dealing with the enemies in the room.
 - Changed: Sunchamber: Jumping onto the plant after defeating the Chozo Ghosts is now trivial.
@@ -93,9 +113,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Added a way to kill Flaaghra with Wavebuster, 20 Missiles and Ludicrous Combat
     - When fighting Flaaghra from the back, there is now an Intermediate Knowledge trick for using only 2 Power Bombs
     - When fighting Flaaghra from the back, you can now get to the platform via either an Intermediate Scan Dash, or a Beginner Scan Dash with Space Jump
+- Fixed: Sun Tower: Being able to go down Sun Tower without having killed Flaaghra.
 - Added: Watery Hall: Going to the Missile Expansion via an Intermediate Wall Boost without Gravity Suit.
 - Changed: Watery Hall: Going to the Missile Expansion by going through Poison Water has had several changes: it is now gated behind Beginner Movement, it has slightly more accurate damage numbers now and it increases the difficulty of the tricks.
-- Changed: Watery Hall: Doing the Bomb Jump to get the Missile Expansion is now Intermediate.
 - Fixed: Watery Hall: Going to the Missile Expansion via a Bomb Jump is now possible without taking damage after Flaaghra has been defeated.
 - Fixed: Watery Hall: Requirements for dealing with the enemies in the room.
 - Fixed: Totem Access: Requirements for dealing with the enemies in the room.

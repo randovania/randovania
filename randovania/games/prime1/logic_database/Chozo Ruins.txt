@@ -290,7 +290,14 @@ Extra - aabb: [-22.250595, -23.954498, -0.26727685, 69.75792, 7.14781, 10.956715
   * Extra - world_position: (-22.250595, 2.500869, 0.005375)
   * Extra - world_rotation: (0.0, 0.0, -179.50708)
   > Door to Main Plaza
-      Trivial
+      Any of the following:
+          # Deal with Scarabs
+          Shoot Any Beam
+          All of the following:
+              Combat (Beginner)
+              Any of the following:
+                  Normal Damage ≥ 52
+                  Morph Ball and Normal Damage ≥ 2
 
 > Door to Main Plaza; Heals? False
   * Layers: default
@@ -300,7 +307,14 @@ Extra - aabb: [-22.250595, -23.954498, -0.26727685, 69.75792, 7.14781, 10.956715
   * Extra - world_position: (69.75792, 2.500867, 0.005375)
   * Extra - world_rotation: (0.0, -0.0, 0.0)
   > Door to Ruined Shrine
-      Trivial
+      Any of the following:
+          # Deal with Scarabs
+          Shoot Any Beam
+          All of the following:
+              Combat (Beginner)
+              Any of the following:
+                  Normal Damage ≥ 58
+                  Morph Ball and Normal Damage ≥ 2
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
@@ -465,19 +479,21 @@ Extra - aabb: [-95.53676, -38.609608, -1.0693345, -22.250599, 43.303684, 30.2103
   * Extra - world_position: (-95.53676, 2.316649, 18.996088)
   * Extra - world_rotation: (0.0, 0.0, -179.50708)
   > Door to Ruined Shrine Access
-      Scan Visor and Combat/Scan Dash (Intermediate)
-  > Pickup (Missile Expansion Half Pipe)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              # https://youtu.be/mmOJBhUouY4
-              Space Jump Boots and L-Jump (Beginner)
-              # https://youtu.be/lkdoZR7aZ5s?t=27
-              Scan Visor and Combat/Scan Dash (Intermediate)
+      Bomb Jump (Beginner) and Can Use Bombs and Can Use Spider Ball
   > Pit
       Trivial
   > Event - Ruined Shrine Item (Morph Ball)
       Trivial
+  > Top of Half Pipe near pickup
+      Any of the following:
+          # L-Jump to ledge: https://youtu.be/mmOJBhUouY4
+          Space Jump Boots and L-Jump (Beginner)
+          # Dash off of spider track: https://youtu.be/lkdoZR7aZ5s?t=27
+          Scan Visor and Combat/Scan Dash (Intermediate)
+          # SJ standable by using the glow-lamps, the other side of the half-pipe, and the chandelier roots
+          Space Jump Boots and Standable Terrain (Intermediate)
+          # Standable NSJ by using the outer rim (Also possible in Non-NTSC) https://youtu.be/2YM21Ql50P0?t=26
+          L-Jump (Intermediate) and Standable Terrain (Expert)
 
 > Door to Ruined Shrine Access; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -489,29 +505,23 @@ Extra - aabb: [-95.53676, -38.609608, -1.0693345, -22.250599, 43.303684, 30.2103
   > Door to Tower of Light Access
       Any of the following:
           Can Use Boost Ball and Can Use Spider Ball
-          # https://youtu.be/93RLiYdob9Q
-          Space Jump Boots and Standable Terrain (Beginner)
-          # https://youtu.be/lkdoZR7aZ5s
-          Scan Visor and Combat/Scan Dash (Advanced) and Standable Terrain (Advanced)
-          # NTSC ONLY NSJ https://youtu.be/lkdoZR7aZ5s?t=35
-          L-Jump (Intermediate) and Standable Terrain (Advanced)
           # Non-NTSC NSJ https://www.youtube.com/watch?v=2YM21Ql50P0
           L-Jump (Intermediate) and Standable Terrain (Expert)
-  > Pickup (Missile Expansion Half Pipe)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Can Use Boost Ball
-              # https://youtu.be/93RLiYdob9Q
-              Space Jump Boots and Standable Terrain (Beginner)
-              # https://youtu.be/w0TIiZwv3Gk
-              L-Jump (Intermediate) and Standable Terrain (Advanced)
-              Complex Bomb Jump (Ludicrous) and Can Use Bombs
   > Pit
       Trivial
   > Event - Ruined Shrine Item (Morph Ball)
-      # https://youtu.be/3lkjUSO9tN4
-      Scan Visor and Combat/Scan Dash (Intermediate)
+      # Dash over the fight trigger: https://youtu.be/3lkjUSO9tN4
+      Scan Visor and Combat/Scan Dash (Intermediate) and Knowledge (Intermediate)
+  > Top of Half Pipe near pickup
+      Any of the following:
+          Can Use Boost Ball
+          # Use petruding root: https://youtu.be/93RLiYdob9Q
+          Space Jump Boots and Standable Terrain (Beginner)
+          # NTSC-only NSJ: https://youtu.be/w0TIiZwv3Gk
+          L-Jump (Intermediate) and Standable Terrain (Advanced)
+          Complex Bomb Jump (Ludicrous) and Can Use Bombs
+          # Slope Jump up
+          Space Jump Boots and Slope Jump (Advanced)
 
 > Pickup (Morph Ball); Heals? False
   * Layers: default
@@ -527,7 +537,7 @@ Extra - aabb: [-95.53676, -38.609608, -1.0693345, -22.250599, 43.303684, 30.2103
   * Pickup 6; Category? Minor
   * Extra - pre_placement_weight: 0.6
   * Extra - world_position: (-54.394249, -36.025082, 21.112289)
-  > Door to Ruined Shrine Access
+  > Top of Half Pipe near pickup
       Trivial
 
 > Pickup (Missile Expansion Bomb Wall); Heals? False
@@ -544,12 +554,12 @@ Extra - aabb: [-95.53676, -38.609608, -1.0693345, -22.250599, 43.303684, 30.2103
   > Door to Ruined Shrine Access
       Any of the following:
           Space Jump Boots
-          # https://www.youtube.com/watch?v=nJVx6BVzXNc
-          Combat/Scan Dash (Intermediate) and Standable Terrain (Intermediate)
-          L-Jump (Intermediate) and Standable Terrain (Intermediate)
+          # NSJ escape: https://www.youtube.com/watch?v=nJVx6BVzXNc
+          Combat/Scan Dash (Intermediate) and L-Jump (Intermediate) and Standable Terrain (Advanced)
           All of the following:
               Morph Ball
               Any of the following:
+                  # Invisible Wall blocking exit until item collection.
                   After Ruined Shrine Item (Morph Ball)
                   Bomb Jump (Beginner) and Can Use Bombs
   > Pickup (Missile Expansion Bomb Wall)
@@ -559,22 +569,27 @@ Extra - aabb: [-95.53676, -38.609608, -1.0693345, -22.250599, 43.303684, 30.2103
               Can Use Bombs
               Knowledge (Beginner) and Can Use Power Bombs
   > Event - Beetle Battle
-      Any of the following:
-          Shoot Any Beam
-          All of the following:
-              Morph Ball and Combat (Intermediate)
-              Any of the following:
-                  Can Use Bombs
-                  Power Bomb ≥ 4 and Can Use Power Bombs
+      All of the following:
+          Any of the following:
+              # Dealing with Beetles
+              Shoot Any Beam
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Power Bomb ≥ 4 and Combat (Intermediate) and Can Use Power Bombs
+                      Combat (Expert) and Can Use Bombs
+          # Health
+          Combat (Beginner) or Normal Damage ≥ 35
   > Event - Ruined Shrine Item (Morph Ball)
       Any of the following:
           Space Jump Boots or After Beetle Battle
           Bomb Jump (Beginner) and Can Use Bombs
           All of the following:
-              Standable Terrain (Intermediate)
+              # NSJ escape the pit, then dash over the risen wall. Dash either off of Beetles or something scannable.
+              L-Jump (Intermediate) and Standable Terrain (Advanced)
               Any of the following:
-                  Combat/Scan Dash (Advanced)
-                  Scan Visor and Combat/Scan Dash (Intermediate)
+                  Combat/Scan Dash (Expert)
+                  Scan Visor and Combat/Scan Dash (Advanced)
 
 > Event - Beetle Battle; Heals? False
   * Layers: default
@@ -589,6 +604,25 @@ Extra - aabb: [-95.53676, -38.609608, -1.0693345, -22.250599, 43.303684, 30.2103
   * Extra - world_position: (-82.553703, 2.512589, 0.253769)
   > Pickup (Morph Ball)
       Trivial
+
+> Top of Half Pipe near pickup; Heals? False
+  * Layers: default
+  > Door to Tower of Light Access
+      Any of the following:
+          # SJ Standables: https://youtu.be/93RLiYdob9Q?t=11
+          Space Jump Boots and Standable Terrain (Beginner)
+          All of the following:
+              # Dash off of half-pipe: https://youtu.be/lkdoZR7aZ5s?t=16
+              Scan Visor
+              Any of the following:
+                  Combat/Scan Dash (Advanced)
+                  Space Jump Boots and Combat/Scan Dash (Intermediate)
+          # NSJ standables: https://youtu.be/lkdoZR7aZ5s?t=35
+          L-Jump (Intermediate) and Standable Terrain (Intermediate)
+  > Door to Ruined Shrine Access
+      Trivial
+  > Pickup (Missile Expansion Half Pipe)
+      Morph Ball
 
 ----------------
 Eyon Tunnel
@@ -1492,7 +1526,10 @@ Extra - aabb: [203.54953, 323.97684, 5.845402, 266.79828, 366.83566, 99.515015]
   * Extra - nonstandard: False
   * Extra - world_position: (266.79828, 345.40536, 75.51757)
   * Extra - world_rotation: (0.0, -0.0, 0.0)
+  > Door to Transport to Magmoor Caverns North
+      Trivial
   > Event - Activate Sunchamber Ghosts From Top
+      # This trigger only exists after Flaaghra has been killed.
       After Flaahgra
 
 > Door to Transport to Magmoor Caverns North; Heals? False
@@ -1508,22 +1545,18 @@ Extra - aabb: [203.54953, 323.97684, 5.845402, 266.79828, 366.83566, 99.515015]
           Any of the following:
               After Sun Tower Spider Track Unlocked
               All of the following:
+                  # Skip doing Gate Puzzle
                   Any of the following:
-                      # https://youtu.be/h2Ma9F4CYuA
+                      # Sesshomaru Bomb Jump: https://youtu.be/h2Ma9F4CYuA
                       Space Jump Boots and Complex Bomb Jump (Ludicrous) and Movement (Advanced)
-                      # https://youtu.be/A1MgdWHbUZ8
+                      # Sesshomaru Bomb Jump NSJ: https://youtu.be/A1MgdWHbUZ8
                       Complex Bomb Jump (Ludicrous) and Movement (Ludicrous)
                   Any of the following:
+                      # Dealing with Wasps. Nests only take 1 missile, even on Hard mode.
                       Combat (Ludicrous)
-                      All of the following:
-                          Shoot Any Beam
-                          Any of the following:
-                              Missile ≥ 8
-                              Missile ≥ 4 and Disabled Hard Mode
+                      Missile ≥ 4 and Shoot Any Beam
   > Event - Unlock spider track
       Scan Visor and Shoot Super Missile
-  > Event - Activate Sunchamber Ghosts From Bottom
-      After Sun Tower Spider Track Unlocked and After Flaahgra and Can Use Bombs and Can Use Spider Ball
 
 > Event - Unlock spider track; Heals? False
   * Layers: default
@@ -1535,26 +1568,21 @@ Extra - aabb: [203.54953, 323.97684, 5.845402, 266.79828, 366.83566, 99.515015]
 > Event - Activate Sunchamber Ghosts From Top; Heals? False
   * Layers: default
   * Event Sunchamber Chozo Ghosts Layer Activated
+  * Note that logic can expect you to hit this from the bottom by climbing up,
+falling down and hitting the trigger, and climbing back up again. This is not
+an issue, as in-game if you are able to climb up the room from the bottom once,
+you can do that multiple times.
   * Extra - world_position: (245.750122, 348.2229, 67.207886)
   > Door to Sun Tower Access
       All of the following:
           Morph Ball and Knowledge (Intermediate)
           Any of the following:
-              # https://youtu.be/spZZY6E95ZU
+              # Early Wild: https://youtu.be/spZZY6E95ZU
               Complex Bomb Jump (Intermediate) and Normal Damage ≥ 20 and Can Use Bombs
-              # Roll down to the gap in the track and back up to trigger ghosts, skipping super missiles. This connection makes fighting Flaahgra without Spider Ball a dangerous action.
+              # Roll down to the gap in the track and back up to trigger ghosts, skipping super missiles.
               Can Use Spider Ball
-              # https://youtu.be/pEruOGbEteI
+              # Roll and fall into the corner with vines, then Instant Unmorph Jump: https://youtu.be/pEruOGbEteI
               Space Jump Boots and Instant Unmorph Jump (Ludicrous)
-  > Door to Transport to Magmoor Caverns North
-      Trivial
-
-> Event - Activate Sunchamber Ghosts From Bottom; Heals? False
-  * Layers: default
-  * Event Sunchamber Chozo Ghosts Layer Activated
-  * Extra - world_position: (236.98616, 341.62854, 67.207886)
-  > Door to Sun Tower Access
-      Can Use Bombs and Can Use Spider Ball
   > Door to Transport to Magmoor Caverns North
       Trivial
 
@@ -2224,8 +2252,8 @@ Extra - aabb: [397.9558, -8.934963, 4.7323303, 483.05167, 117.17189, 59.302334]
                                   Poisoned Water Damage ≥ 106
                                   Wall Boost (Expert) and Poisoned Water Damage ≥ 36
           All of the following:
-              # Bomb Jump up
-              Gravity Suit and Bomb Jump (Intermediate) and Can Use Bombs
+              # Bomb Jump up. Note, that you need to be a bit away from the wall in order to make it.
+              Gravity Suit and Bomb Jump (Beginner) and Can Use Bombs
               Any of the following:
                   # Deal with Water
                   After Flaahgra
@@ -2233,7 +2261,7 @@ Extra - aabb: [397.9558, -8.934963, 4.7323303, 483.05167, 117.17189, 59.302334]
                       Movement (Beginner)
                       Any of the following:
                           Poisoned Water Damage ≥ 66
-                          Bomb Jump (Advanced) and Poisoned Water Damage ≥ 32
+                          Bomb Jump (Intermediate) and Poisoned Water Damage ≥ 32
   > Event - Open gate
       All of the following:
           Scan Visor
@@ -3359,6 +3387,7 @@ Extra - aabb: [673.9764, -306.40494, 82.517944, 754.19855, -285.93994, 96.718056
           Morph Ball
           Any of the following:
               Can Use Bombs
+              # Stand on the Save Station and roll into hole
               Space Jump Boots and Movement (Advanced) and Standable Terrain (Intermediate)
               # https://youtu.be/AFDSEx16464
               Wall Boost (Expert) and Can Use Boost Ball

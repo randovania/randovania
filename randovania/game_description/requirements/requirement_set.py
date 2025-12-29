@@ -81,11 +81,17 @@ class RequirementSet:
         # empty RequirementList.satisfied is True
         return cls([RequirementList([])])
 
+    def is_trivial(self) -> bool:
+        return self == RequirementSet.trivial()
+
     @classmethod
     @lru_cache
     def impossible(cls) -> RequirementSet:
         # No alternatives makes satisfied always return False
         return cls([])
+
+    def is_impossible(self) -> bool:
+        return self == RequirementSet.impossible()
 
     def satisfied(self, context: NodeContext, current_energy: int) -> bool:
         """
