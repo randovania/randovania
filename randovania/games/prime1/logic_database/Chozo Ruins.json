@@ -5520,6 +5520,44 @@
                             }
                         },
                         "Door to Eyon Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Purposefully avoid hitting the Main Plaza Trigger",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Deal with Wasps",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Any Beam"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Activate Main Plaza Wasps": {
                             "type": "or",
                             "data": {
                                 "comment": "Deal with Wasps",
@@ -5538,13 +5576,6 @@
                                         "data": "Shoot Any Beam"
                                     }
                                 ]
-                            }
-                        },
-                        "Event - Activate Main Plaza Wasps": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -5590,22 +5621,94 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to North Atrium": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "Deal with Wasps",
+                                "comment": "Purposefully avoid hitting the Main Plaza Trigger",
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 1,
+                                            "name": "Knowledge",
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Any Beam"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Deal with Wasps",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Any Beam"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Climb up",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Double Bomb Jump",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "BJ",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Jump onto the branch with red leaves and from there to the platform",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Standable",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -5809,6 +5912,27 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Activate Main Plaza Wasps": {
+                            "type": "or",
+                            "data": {
+                                "comment": "Deal with Wasps",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -5865,6 +5989,13 @@
                     "event_name": "ActivateMainPlazaWasps",
                     "connections": {
                         "Door to North Atrium": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Eyon Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
