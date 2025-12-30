@@ -12,6 +12,7 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.remote_activation_node import RemoteActivationNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -443,31 +444,39 @@ def _connections_from(
 
 
 def create_node(
-    node_index: int,
-    original_node: Node,
-    area: Area,
-    region: Region,
+    node_index: int, original_node: Node, area: Area, region: Region, database_view: GameDatabaseView
 ) -> WorldGraphNode:
     """
     Creates one WorldGraphNode based on one original node.
     """
 
-    resource_gain: list[ResourceQuantity] = []
-    requirement_to_collect: GraphRequirementSet | Requirement = GraphRequirementSet.trivial()
+    def resources_and_requirements_for_node(
+        node: Node,
+    ) -> tuple[list[ResourceQuantity], GraphRequirementSet | Requirement, PickupIndex | None]:
+        resource_gain: list[ResourceQuantity] = []
+        requirement_to_collect: GraphRequirementSet | Requirement = GraphRequirementSet.trivial()
 
-    if isinstance(original_node, HintNode):
-        requirement_to_collect = original_node.lock_requirement
+        if isinstance(node, HintNode):
+            requirement_to_collect = node.lock_requirement
 
-    if isinstance(original_node, EventNode):
-        resource_gain.append((original_node.event, 1))
-    elif isinstance(original_node, EventPickupNode):
-        resource_gain.append((original_node.event_node.event, 1))
+        if isinstance(node, EventNode):
+            resource_gain.append((node.event, 1))
+        elif isinstance(node, EventPickupNode):
+            resource_gain.append((node.event_node.event, 1))
 
-    pickup_index = None
-    if isinstance(original_node, PickupNode):
-        pickup_index = original_node.pickup_index
-    elif isinstance(original_node, EventPickupNode):
-        pickup_index = original_node.pickup_node.pickup_index
+        pickup_index = None
+        if isinstance(node, PickupNode):
+            pickup_index = node.pickup_index
+        elif isinstance(node, EventPickupNode):
+            pickup_index = node.pickup_node.pickup_index
+
+        return resource_gain, requirement_to_collect, pickup_index
+
+    node_to_get_resources = original_node
+    if isinstance(original_node, RemoteActivationNode):
+        node_to_get_resources = database_view.node_by_identifier(original_node.remote_node)
+
+    resource_gain, requirement_to_collect, pickup_index = resources_and_requirements_for_node(node_to_get_resources)
 
     return WorldGraphNode(
         node_index=node_index,
@@ -575,7 +584,7 @@ def create_patchless_graph(
         if original_node is None:
             continue
 
-        nodes.append(new_node := create_node(len(nodes), original_node, area, region))
+        nodes.append(new_node := create_node(len(nodes), original_node, area, region, database_view))
         graph_area_connections[new_node.node_index] = copy.copy(original_area_connections[original_node.node_index])
 
         if isinstance(original_node, TeleporterNetworkNode):
@@ -621,7 +630,11 @@ def create_patchless_graph(
             node.requirement_to_collect = graph.converter.convert_db(node.requirement_to_collect)
 
     for node in nodes:
-        if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
+        db_node = node.database_node
+        if isinstance(node.database_node, RemoteActivationNode):
+            db_node = database_view.node_by_identifier(node.database_node.remote_node)
+
+        if isinstance(db_node, HintNode | PickupNode | EventPickupNode):
             node.add_resource(graph.resource_info_for_node(node))
 
         converted_area_connections: list[tuple[WorldGraphNode, Requirement]] = []
@@ -739,7 +752,11 @@ def _adjust_graph_for_patches(
 
     # Add dock connections
     for node in graph.nodes:
-        if isinstance(node.database_node, DockNode):
+        db_node = node.database_node
+        if isinstance(node.database_node, RemoteActivationNode):
+            db_node = graph.node_identifier_to_node[node.database_node.remote_node]
+
+        if isinstance(db_node, DockNode):
             connection = _create_dock_connection(node, graph, patches)
             node.add_connection(graph, connection)
             dock_connections.add((node.node_index, connection.target))

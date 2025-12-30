@@ -489,7 +489,7 @@ def _calculate_weights_for(
     potential_uncollected_diff = potential_uncollected - current_uncollected
     potential_unsafe_uncollected = UncollectedState.from_reach_only_unsafe(potential_reach) - current_unsafe_uncollected
 
-    if debug.debug_level() > debug.LogLevel.HIGH:
+    if debug.debug_level() > debug.LogLevel.NORMAL:
 
         def print_weight_factors(uncollected: UncollectedState) -> None:
             print(f"    indices: {uncollected.pickup_indices}")

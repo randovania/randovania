@@ -488,6 +488,43 @@ class Ui_NodeDetailsPopup(object):
         self.teleporter_network_layout.addWidget(self.teleporter_network_activate_button, 5, 0, 1, 2)
 
         self.tab_widget.addTab(self.tab_teleporter_network, "")
+        self.tab_remote_activation = QWidget()
+        self.tab_remote_activation.setObjectName(u"tab_remote_activation")
+        self.verticalLayout = QVBoxLayout(self.tab_remote_activation)
+        self.verticalLayout.setSpacing(6)
+        self.verticalLayout.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(2, 2, 2, 2)
+        self.remote_activation_group = QGroupBox(self.tab_remote_activation)
+        self.remote_activation_group.setObjectName(u"remote_activation_group")
+        self.remote_activation_layout = QHBoxLayout(self.remote_activation_group)
+        self.remote_activation_layout.setSpacing(6)
+        self.remote_activation_layout.setContentsMargins(11, 11, 11, 11)
+        self.remote_activation_layout.setObjectName(u"remote_activation_layout")
+        self.remote_activation_layout.setContentsMargins(2, 4, 2, 2)
+        self.remote_activation_region_combo = QComboBox(self.remote_activation_group)
+        self.remote_activation_region_combo.setObjectName(u"remote_activation_region_combo")
+
+        self.remote_activation_layout.addWidget(self.remote_activation_region_combo)
+
+        self.remote_activation_area_combo = QComboBox(self.remote_activation_group)
+        self.remote_activation_area_combo.setObjectName(u"remote_activation_area_combo")
+
+        self.remote_activation_layout.addWidget(self.remote_activation_area_combo)
+
+        self.remote_activation_node_combo = QComboBox(self.remote_activation_group)
+        self.remote_activation_node_combo.setObjectName(u"remote_activation_node_combo")
+
+        self.remote_activation_layout.addWidget(self.remote_activation_node_combo)
+
+
+        self.verticalLayout.addWidget(self.remote_activation_group)
+
+        self.verticalSpacer_8 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer_8)
+
+        self.tab_widget.addTab(self.tab_remote_activation, "")
 
         self.main_layout.addWidget(self.tab_widget)
 
@@ -558,5 +595,7 @@ class Ui_NodeDetailsPopup(object):
         self.teleporter_network_activate_group.setTitle("")
         self.teleporter_network_activate_button.setText(QCoreApplication.translate("NodeDetailsPopup", u"Edit requirement to activate", None))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_teleporter_network), QCoreApplication.translate("NodeDetailsPopup", u"Teleporter Network", None))
+        self.remote_activation_group.setTitle(QCoreApplication.translate("NodeDetailsPopup", u"Remote Node", None))
+        self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_remote_activation), QCoreApplication.translate("NodeDetailsPopup", u"Remote Activation", None))
     # retranslateUi
 
