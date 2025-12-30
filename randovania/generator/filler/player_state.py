@@ -8,6 +8,7 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.remote_activation_node import RemoteActivationNode
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
@@ -335,6 +336,10 @@ def build_available_indices(
     def get_pickup_node(node: Node | None) -> PickupNode:
         if isinstance(node, EventPickupNode):
             return node.pickup_node
+        if isinstance(node, RemoteActivationNode):
+            n = graph.node_identifier_to_node[node.remote_node].database_node
+            assert isinstance(n, PickupNode)
+            return n
         assert isinstance(node, PickupNode)
         # TODO: maybe get a list of PickupIndex, then find the PickupNode from that?
         return node

@@ -263,7 +263,7 @@ class WorldGraph:
 
         for node in self.nodes:
             self.node_identifier_to_node[node.identifier] = node
-            if node.pickup_index is not None:
+            if node.pickup_index is not None and node.pickup_index not in self.node_by_pickup_index:
                 assert node.pickup_index not in self.node_by_pickup_index
                 self.node_by_pickup_index[node.pickup_index] = node
 

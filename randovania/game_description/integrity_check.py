@@ -8,6 +8,7 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.remote_activation_node import RemoteActivationNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import fast_as_set
@@ -122,6 +123,12 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
             yield f"{node.name} is a Pickup Node, but naming doesn't match 'Pickup (...)'"
     elif pickup_node_re.match(node.name) is not None:
         yield f"{node.name} is not a Pickup Node, but naming matches 'Pickup (...)'"
+
+    if isinstance(node, RemoteActivationNode):
+        if not node.name.startswith("Remote -"):
+            yield f"{node.name} is a Remote Activation Node, but naming doesn't start with 'Remote -'"
+    elif node.name.startswith("Remote -"):
+        yield f"{node.name} is not a Remote Activation Node, but naming suggests it is"
 
     if isinstance(node, DockNode):
         valid_name = dock_has_correct_name(area, node)

@@ -14,4 +14,4 @@ class RemoteActivationNode(ResourceNode):
     remote_node: NodeIdentifier
 
     def __repr__(self) -> str:
-        return f"RemoteActivationNode({self.name!r} -> {self.remote_node.node!r})"
+        return f"RemoteActivationNode({self.name!r})"

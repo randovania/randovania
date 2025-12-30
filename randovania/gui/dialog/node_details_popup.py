@@ -397,7 +397,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         empty = True
         if area is not None:
             for node in area.nodes:
-                if isinstance(node, (ResourceNode, DockNode)):
+                if isinstance(node, (ResourceNode, DockNode)) and not isinstance(node, RemoteActivationNode):
                     self.remote_activation_node_combo.addItem(node.name, userData=node)
                     empty = False
         if empty:
@@ -558,6 +558,20 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 self._unlocked_by_requirement,
                 self.teleporter_network_edit.text(),
                 self._activated_by_requirement,
+            )
+
+        elif node_type == RemoteActivationNode:
+            remote_node: Node = self.remote_activation_node_combo.currentData()
+            return RemoteActivationNode(
+                identifier,
+                node_index,
+                heal,
+                location,
+                description,
+                layers,
+                extra,
+                valid_starting_location,
+                remote_node.identifier,
             )
 
         else:
