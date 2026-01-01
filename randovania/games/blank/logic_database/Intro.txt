@@ -25,6 +25,8 @@ Hint Features - Hint Feature 1
       Trivial
   > Event - Post Weapon
       Collected Intro/Starting Area/Pickup (Weapon)
+  > Door to Crane Room
+      Trivial
 
 > Pickup (Weapon); Heals? False
   * Layers: default
@@ -89,6 +91,12 @@ Hint Features - Hint Feature 1
 > Event - Post Weapon; Heals? False
   * Layers: default
   * Event Post Weapon
+  > Spawn Point
+      Trivial
+
+> Door to Crane Room; Heals? False
+  * Layers: default
+  * Normal Door to Crane Room/Door to Starting Area
   > Spawn Point
       Trivial
 
@@ -297,6 +305,57 @@ Extra - map_name: Square
   * Pickup 8; Category? Major
   * Hint Features - Ledge
   > Low Ledge
+      Trivial
+
+----------------
+Crane Room
+Extra - map_name: Square
+> Door to Starting Area; Heals? False
+  * Layers: default
+  * Normal Door to Starting Area/Door to Crane Room
+  > Near Claw Machine
+      Blue Key
+  > Behind Wall
+      Explosive or After Crane Wall Destroyed
+
+> Near Claw Machine; Heals? False
+  * Layers: default
+  > Door to Starting Area
+      Trivial
+  > Remote - Get Crane Game
+      Trivial
+  > Remote - Lower Wall
+      Trivial
+
+> Pickup (Crane Game); Heals? False
+  * Layers: default
+  * Pickup 9; Category? Minor
+  > Behind Wall
+      Trivial
+
+> Event - Lower Crane Wall; Heals? False
+  * Layers: default
+  * Event Crane Wall Destroyed
+  > Behind Wall
+      Trivial
+
+> Remote - Get Crane Game; Heals? False
+  * Layers: default
+  > Near Claw Machine
+      Trivial
+
+> Remote - Lower Wall; Heals? False
+  * Layers: default
+  > Near Claw Machine
+      Trivial
+
+> Behind Wall; Heals? False
+  * Layers: default
+  > Door to Starting Area
+      Explosive or After Crane Wall Destroyed
+  > Pickup (Crane Game)
+      Trivial
+  > Event - Lower Crane Wall
       Trivial
 
 ----------------

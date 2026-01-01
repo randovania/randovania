@@ -498,7 +498,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.update_other_node_connection()
 
         for button, source_node in self.radio_button_to_node.items():
-            button.setStyleSheet("font-weight: bold;" if node in self.current_area.connections[source_node] else "")
+            button.setStyleSheet(
+                "font-weight: bold;" if node in self.current_area.connections[source_node] else ""
+            )  # TODO: doesnt seem to handle renaming remoate activation nodes :(
 
         self._previous_selected_node = node
 

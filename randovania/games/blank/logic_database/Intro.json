@@ -120,6 +120,13 @@
                                 "area": "Starting Area",
                                 "node": "Pickup (Weapon)"
                             }
+                        },
+                        "Door to Crane Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -472,6 +479,42 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "PostWeapon",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Crane Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 566.4680569347898,
+                        "y": 80.17212843429331,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Crane Room",
+                        "node": "Door to Starting Area"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Spawn Point": {
                             "type": "and",
@@ -1517,6 +1560,285 @@
                     ],
                     "connections": {
                         "Low Ledge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Crane Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Square"
+            },
+            "nodes": {
+                "Door to Starting Area": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 129.84,
+                        "y": 30.93,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Starting Area",
+                        "node": "Door to Crane Room"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Near Claw Machine": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "BlueKey",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Behind Wall": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Explosive",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "CraneWall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Near Claw Machine": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 78.76951222722367,
+                        "y": 99.99276106241282,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Starting Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Remote - Get Crane Game": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Remote - Lower Wall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Crane Game)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 159.06,
+                        "y": 182.58,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "pickup_index": 9,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Behind Wall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Lower Crane Wall": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 201.37,
+                        "y": 153.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "CraneWall",
+                    "connections": {
+                        "Behind Wall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Remote - Get Crane Game": {
+                    "node_type": "remote_activation",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 51.85,
+                        "y": 164.35,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "remote_identifier": {
+                        "region": "Intro",
+                        "area": "Crane Room",
+                        "node": "Pickup (Crane Game)"
+                    },
+                    "connections": {
+                        "Near Claw Machine": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Remote - Lower Wall": {
+                    "node_type": "remote_activation",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18.55,
+                        "y": 128.43,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "remote_identifier": {
+                        "region": "Intro",
+                        "area": "Crane Room",
+                        "node": "Event - Lower Crane Wall"
+                    },
+                    "connections": {
+                        "Near Claw Machine": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Behind Wall": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 176.48,
+                        "y": 113.18,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Starting Area": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Explosive",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "CraneWall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Crane Game)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Lower Crane Wall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
