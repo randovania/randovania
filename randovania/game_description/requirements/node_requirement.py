@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node import NodeContext
     from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 class NodeRequirement(Requirement):
@@ -55,5 +56,5 @@ class NodeRequirement(Requirement):
     def as_resource_requirement(self, context: NodeContext) -> ResourceRequirement:
         return ResourceRequirement.simple(NodeResourceInfo.from_identifier(self.node_identifier, context))
 
-    def iterate_resource_requirements(self, context: NodeContext) -> Iterator[ResourceRequirement]:
-        yield self.as_resource_requirement(context)
+    def iterate_resource_requirements(self, database: ResourceDatabase) -> Iterator[ResourceRequirement]:
+        yield from []

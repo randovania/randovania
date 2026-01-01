@@ -6,8 +6,8 @@ from functools import lru_cache
 if typing.TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 class Requirement:
@@ -41,5 +41,8 @@ class Requirement:
     def __lt__(self, other: Requirement) -> bool:
         return str(self) < str(other)
 
-    def iterate_resource_requirements(self, context: NodeContext) -> Iterator[ResourceRequirement]:
+    def iterate_resource_requirements(self, database: ResourceDatabase) -> Iterator[ResourceRequirement]:
+        """
+        Finds all ResourceRequirements contained in this Requirement, excluding NodeRequirements.
+        """
         raise NotImplementedError

@@ -9,7 +9,6 @@ from randovania.game_description.requirements.base import Requirement
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
@@ -96,7 +95,7 @@ class ResourceRequirement(Requirement):
     def multiply_amount(self, multiplier: float) -> ResourceRequirement:
         return self
 
-    def iterate_resource_requirements(self, context: NodeContext) -> Iterator[ResourceRequirement]:
+    def iterate_resource_requirements(self, database: ResourceDatabase) -> Iterator[ResourceRequirement]:
         yield self
 
     def is_obsoleted_by(self, other: ResourceRequirement) -> bool:

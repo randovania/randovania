@@ -133,10 +133,9 @@ class GameDescription(GameDatabaseView):
             return self._used_trick_levels
 
         result = collections.defaultdict(set)
-        context = self.create_node_context(self.resource_database.create_resource_collection())
 
         def process(req: Requirement) -> None:
-            for resource_requirement in req.iterate_resource_requirements(context):
+            for resource_requirement in req.iterate_resource_requirements(self.resource_database):
                 resource = resource_requirement.resource
                 if resource.resource_type == ResourceType.TRICK:
                     assert isinstance(resource, TrickResourceInfo)

@@ -16,12 +16,13 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games import default_data
 from randovania.gui.data_editor import DataEditorWindow, _ui_patch_and_simplify
 
 if TYPE_CHECKING:
     import pytest_mock
+
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 def test_select_area_by_name(
@@ -185,7 +186,7 @@ def test_create_new_dock(skip_qtbot, tmp_path, blank_game_data):
     assert target_area.node_with_name("Dock to Back-Only Lock Room") is not None
 
 
-def test_ui_patch_and_simplify_trivial_in_or(echoes_resource_database):
+def test_ui_patch_and_simplify_trivial_in_or(echoes_resource_database: ResourceDatabase):
     # Trivial in Or
     assert (
         _ui_patch_and_simplify(
@@ -196,18 +197,14 @@ def test_ui_patch_and_simplify_trivial_in_or(echoes_resource_database):
                 ],
                 comment="COM",
             ),
-            NodeContext(
-                None,
-                ResourceCollection.with_resource_count(echoes_resource_database, 0),
-                echoes_resource_database,
-                None,
-            ),
+            echoes_resource_database.create_resource_collection(),
+            echoes_resource_database,
         )
         == Requirement.trivial()
     )
 
 
-def test_ui_patch_and_simplify_impossible_in_and(echoes_resource_database):
+def test_ui_patch_and_simplify_impossible_in_and(echoes_resource_database: ResourceDatabase):
     # Impossible in And
     assert (
         _ui_patch_and_simplify(
@@ -218,18 +215,14 @@ def test_ui_patch_and_simplify_impossible_in_and(echoes_resource_database):
                 ],
                 comment="COM",
             ),
-            NodeContext(
-                None,
-                ResourceCollection.with_resource_count(echoes_resource_database, 0),
-                echoes_resource_database,
-                None,
-            ),
+            echoes_resource_database.create_resource_collection(),
+            echoes_resource_database,
         )
         == Requirement.impossible()
     )
 
 
-def test_ui_patch_and_simplify_remove_present_resources(echoes_resource_database):
+def test_ui_patch_and_simplify_remove_present_resources(echoes_resource_database: ResourceDatabase):
     db = echoes_resource_database
 
     # Remove present resources, plus trivial in And
@@ -244,22 +237,25 @@ def test_ui_patch_and_simplify_remove_present_resources(echoes_resource_database
             ],
             comment="COM",
         ),
-        NodeContext(None, col, db, None),
+        col,
+        db,
     ) == RequirementAnd([ResourceRequirement.simple(db.get_item("ScrewAttack"))])
 
 
-def test_ui_patch_and_simplify_template(echoes_resource_database):
+def test_ui_patch_and_simplify_template(echoes_resource_database: ResourceDatabase):
     db = echoes_resource_database
 
     def context(collection):
         return NodeContext(None, collection, db, None)
 
     assert _ui_patch_and_simplify(
-        RequirementTemplate("Use Screw Attack (No Space Jump)"), context(ResourceCollection.with_resource_count(db, 0))
+        RequirementTemplate("Use Screw Attack (No Space Jump)"), db.create_resource_collection(), db
     ) == RequirementTemplate("Use Screw Attack (No Space Jump)")
 
     col = db.create_resource_collection()
     col.set_resource(db.get_item("ScrewAttack"), 1)
     assert _ui_patch_and_simplify(
-        RequirementTemplate("Use Screw Attack (No Space Jump)"), context(col)
+        RequirementTemplate("Use Screw Attack (No Space Jump)"),
+        col,
+        db,
     ) == RequirementAnd([ResourceRequirement.simple(db.get_item("MorphBall"))])
