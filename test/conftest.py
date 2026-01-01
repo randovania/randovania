@@ -508,7 +508,7 @@ def empty_patches(default_blank_configuration, blank_game_description) -> GamePa
 
 @pytest.fixture
 def blank_world_graph(blank_game_description, empty_patches) -> WorldGraph:
-    from randovania.graph.world_graph import create_graph
+    from randovania.graph.world_graph_factory import create_graph
 
     return create_graph(
         database_view=blank_game_description,

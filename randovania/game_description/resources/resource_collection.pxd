@@ -11,6 +11,7 @@ cdef class ResourceCollection:
     cdef object _resource_database
 
     cpdef void _resize_array_to_fit(self, size_t size)
+    cpdef ResourceCollection duplicate(self)
     cpdef int get(self, object item)
     cpdef int get_index(self, size_t resource_index)
     cpdef bint has_resource(self, object resource)

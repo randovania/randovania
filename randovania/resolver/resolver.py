@@ -22,6 +22,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
 
     from randovania.game_description.db.node import NodeContext
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -61,15 +62,22 @@ def _simplify_additional_requirement_set(
     return r
 
 
-def _is_action_dangerous(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
-    return any(resource in dangerous_resources for resource, _ in action.resource_gain_on_collect(state.resources))
+def _is_action_dangerous(action: ResolverAction) -> bool:
+    return not action.dangerous_resources.is_empty()
 
 
 def _is_dangerous_event(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
-    return any(
-        (resource in dangerous_resources and resource.resource_type == ResourceType.EVENT)
-        for resource, _ in action.resource_gain_on_collect(state.resources)
-    )
+    if action.has_event_resource and not action.dangerous_resources.is_empty():
+        resource_indices = action.resource_gain_bitmask.get_set_bits()
+        if len(resource_indices) > 1:
+            mapping = state.resource_database.get_resource_mapping()
+            for resource_index in resource_indices:
+                resource = mapping[resource_index]
+                if resource.resource_type == ResourceType.EVENT and resource in dangerous_resources:
+                    return True
+        else:
+            return True
+    return False
 
 
 def _is_major_or_key_pickup_node(action: ResolverAction, state: State) -> bool:
@@ -91,8 +99,8 @@ def _should_check_if_action_is_safe(
     :param dangerous_resources:
     :return:
     """
-    return not _is_action_dangerous(state, action, dangerous_resources) and (
-        _is_event_node(action) or _is_major_or_key_pickup_node(action, state) or _is_hint_node(action)
+    return not _is_action_dangerous(action) and (
+        action.has_event_resource or _is_major_or_key_pickup_node(action, state) or _is_hint_node(action)
     )
 
 
@@ -121,17 +129,13 @@ class ActionPriority(enum.IntEnum):
     """This node grants a dangerous resource"""
 
 
-def _is_event_node(action: ResolverAction) -> bool:
-    return any(it.resource_type == ResourceType.EVENT for it, q in action.resource_gain if q > 0)
+def _is_event_node(action: ResolverAction, resource_database: ResourceDatabaseView) -> bool:
+    return action.has_event_resource
 
 
 def _is_hint_node(action: ResolverAction) -> bool:
     target_node = action.database_node
     return isinstance(target_node, HintNode)
-
-
-def _is_lock_action(action: ResolverAction) -> bool:
-    return action.is_lock_action
 
 
 def _priority_for_resource_action(action: ResolverAction, state: State, logic: Logic) -> ActionPriority:
@@ -141,7 +145,7 @@ def _priority_for_resource_action(action: ResolverAction, state: State, logic: L
         return ActionPriority.PRIORITIZED_HINT
     elif _is_major_or_key_pickup_node(action, state):
         return ActionPriority.MAJOR_PICKUP
-    elif _is_lock_action(action):
+    elif action.is_lock_action:
         return ActionPriority.LOCK_ACTION
     else:
         return ActionPriority.EVERYTHING_ELSE

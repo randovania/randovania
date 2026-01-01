@@ -63,7 +63,7 @@ def print_new_resources(
 
         def find_node_with_resource(resource: ResourceInfo) -> WorldGraphNode:
             for node in graph.nodes:
-                if any(r == resource for r, _ in node.resource_gain):
+                if any(r == resource for r, _ in node.resource_gain(graph.converter.resource_database)):
                     return node
             raise ValueError(f"Could not find a node with resource {resource}")
 
