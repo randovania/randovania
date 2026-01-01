@@ -322,7 +322,6 @@ def _determine_valid_weaknesses(
             # When using two sided door search, the state could be pointing at either dock or target.
             # Simply swap dock and target if we found the target side.
             target, dock = dock, target
-        ctx = state.node_context()
 
         exclusions: set[DockWeakness] = set()
         exclusions.update(dock.incompatible_dock_weaknesses)
@@ -349,15 +348,19 @@ def _determine_valid_weaknesses(
 
         exclusions.update(weighted_weaknesses.keys())
 
+        converter = logic.graph.converter.convert_db
+
         weighted_weaknesses.update(
             {
                 weakness: 1.0
                 for weakness in sorted(dock_type_state.can_change_to.difference(exclusions))
                 if (
-                    weakness.requirement.satisfied(ctx, state.health_for_damage_requirements)
+                    converter(weakness.requirement).satisfied(state.resources, state.health_for_damage_requirements)
                     and (
                         weakness.lock is None
-                        or weakness.lock.requirement.satisfied(ctx, state.health_for_damage_requirements)
+                        or converter(weakness.lock.requirement).satisfied(
+                            state.resources, state.health_for_damage_requirements
+                        )
                     )
                 )
             }

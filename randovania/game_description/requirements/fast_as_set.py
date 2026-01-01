@@ -10,23 +10,23 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 class UnableToAvoidError(Exception):
     pass
 
 
-def _internal_fast_as(req: Requirement, context: NodeContext) -> list[RequirementList]:
+def _internal_fast_as(req: Requirement, database: ResourceDatabase) -> list[RequirementList]:
     if isinstance(req, RequirementTemplate):
-        req = req.template_requirement(context.database)
+        req = req.template_requirement(database)
 
     if isinstance(req, ResourceRequirement):
         return [RequirementList([req])]
 
     elif isinstance(req, RequirementAnd):
-        parts = [_internal_fast_as(it, context) for it in req.items]
+        parts = [_internal_fast_as(it, database) for it in req.items]
         product = itertools.product(*parts)
 
         return [RequirementList(itertools.chain(*[k.values() for k in branch])) for branch in product]
@@ -34,19 +34,15 @@ def _internal_fast_as(req: Requirement, context: NodeContext) -> list[Requiremen
     elif isinstance(req, RequirementOr):
         result = []
         for it in req.items:
-            result.extend(_internal_fast_as(it, context))
+            result.extend(_internal_fast_as(it, database))
         return result
 
     else:
         raise UnableToAvoidError
 
 
-def fast_as_alternatives(req: Requirement, context: NodeContext) -> typing.Iterable[RequirementList]:
+def fast_as_alternatives(req: Requirement, database: ResourceDatabase) -> typing.Iterable[RequirementList]:
     """
     Equivalent to req.as_set(db).alternatives, but attempt to be faster
     """
-    try:
-        return _internal_fast_as(req, context)
-
-    except UnableToAvoidError:
-        return req.as_set(context).alternatives
+    return tuple(_internal_fast_as(req, database))

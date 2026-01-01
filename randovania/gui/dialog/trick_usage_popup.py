@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import NodeContext
+from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.generated.trick_usage_popup_ui import Ui_TrickUsagePopup
@@ -20,8 +20,9 @@ if TYPE_CHECKING:
     from PySide6.QtWidgets import QWidget
 
     from randovania.game_description.db.area import Area
-    from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.game_description.requirements.requirement_list import RequirementList
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.layout.preset import Preset
@@ -29,8 +30,8 @@ if TYPE_CHECKING:
 
 def _area_requirement_sets(
     area: Area,
-    context: NodeContext,
-) -> Iterator[RequirementSet]:
+    database: ResourceDatabase,
+) -> Iterator[RequirementList]:
     """
     Checks the area RequirementSet in the given Area uses the given trick at the given level.
     :param area:
@@ -40,26 +41,25 @@ def _area_requirement_sets(
 
     for node in area.nodes:
         if isinstance(node, DockNode):
-            yield node.default_dock_weakness.requirement.as_set(context)
+            yield from fast_as_set.fast_as_alternatives(node.default_dock_weakness.requirement, database)
 
         for req in area.connections[node].values():
-            yield req.as_set(context)
+            yield from fast_as_set.fast_as_alternatives(req, database)
 
 
-def _check_used_tricks(area: Area, trick_resources: ResourceCollection, context: NodeContext) -> list[str]:
+def _check_used_tricks(area: Area, trick_resources: ResourceCollection, database: ResourceDatabase) -> list[str]:
     result = set()
 
-    for s in _area_requirement_sets(area, context):
-        for alternative in s.alternatives:
-            tricks: dict[TrickResourceInfo, ResourceRequirement] = {
-                req.resource: req for req in alternative.values() if req.resource.resource_type == ResourceType.TRICK
-            }
-            if tricks and all(trick_resources[trick] >= tricks[trick].amount for trick in tricks):
-                line = [
-                    f"{trick.long_name} ({LayoutTrickLevel.from_number(req.amount).long_name})"
-                    for trick, req in tricks.items()
-                ]
-                result.add(" and ".join(sorted(line)))
+    for alternative in set(_area_requirement_sets(area, database)):
+        tricks: dict[TrickResourceInfo, ResourceRequirement] = {
+            req.resource: req for req in alternative.values() if req.resource.resource_type == ResourceType.TRICK
+        }
+        if tricks and all(trick_resources[trick] >= tricks[trick].amount for trick in tricks):
+            line = [
+                f"{trick.long_name} ({LayoutTrickLevel.from_number(req.amount).long_name})"
+                for trick, req in tricks.items()
+            ]
+            result.add(" and ".join(sorted(line)))
 
     return sorted(result)
 
@@ -113,13 +113,11 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
         trick_resources = ResourceCollection.from_resource_gain(
             database, bootstrap.trick_resources_for_configuration(trick_level, database)
         )
-        context = NodeContext(None, trick_resources, database, self._game_description.region_list)
-
         lines = []
 
         for region in sorted(self._game_description.region_list.regions, key=lambda it: it.name):
             for area in sorted(region.areas, key=lambda it: it.name):
-                used_tricks = _check_used_tricks(area, trick_resources, context)
+                used_tricks = _check_used_tricks(area, trick_resources, database)
                 if used_tricks:
                     lines.append(data_editor_href(region, area) + f"<br />{'<br />'.join(used_tricks)}</p>")
 
