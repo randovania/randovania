@@ -1,40 +1,11 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 from randovania.game_description.requirements.array_base import RequirementArrayBase, expand_items, mergeable_array
-from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.requirement_set import RequirementSet
-
-if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
-
-    from randovania.game_description.db.node import NodeContext
-    from randovania.game_description.requirements.requirement_list import RequirementList
-
-
-def _halt_damage_on_zero(items: Iterable[Requirement], context: NodeContext) -> Iterator[int]:
-    for item in items:
-        dmg = item.damage(context)
-        yield dmg
-        if dmg == 0:
-            break
 
 
 class RequirementOr(RequirementArrayBase):
-    def damage(self, context: NodeContext) -> int:
-        try:
-            return min(_halt_damage_on_zero(self.items, context))
-        except ValueError:
-            return MAX_DAMAGE
-
-    def satisfied(self, context: NodeContext, current_energy: int) -> bool:
-        for item in self.items:
-            if item.satisfied(context, current_energy):
-                return True
-        return False
-
     def simplify(self, keep_comments: bool = False) -> Requirement:
         new_items = expand_items(self.items, RequirementOr, Requirement.impossible(), keep_comments)
         if Requirement.trivial() in new_items and mergeable_array(self, keep_comments):
@@ -79,22 +50,6 @@ class RequirementOr(RequirementArrayBase):
             return final_items[0]
 
         return RequirementOr(final_items, comment=self.comment)
-
-    def isolate_damage_requirements(self, context: NodeContext) -> Requirement:
-        isolated_items = []
-        for item in self.items:
-            potential_item = item.isolate_damage_requirements(context)
-            if potential_item == Requirement.trivial():
-                return Requirement.trivial()
-            if potential_item != Requirement.impossible():
-                isolated_items.append(potential_item)
-        return isolated_items[0] if len(isolated_items) == 1 else RequirementOr(isolated_items)
-
-    def as_set(self, context: NodeContext) -> RequirementSet:
-        alternatives: set[RequirementList] = set()
-        for item in self.items:
-            alternatives |= item.as_set(context).alternatives
-        return RequirementSet(alternatives)
 
     @classmethod
     def combinator(cls) -> str:

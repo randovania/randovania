@@ -1,22 +1,19 @@
 from __future__ import annotations
 
 import functools
-from math import ceil
+import math
 from typing import TYPE_CHECKING
 
-from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
-from randovania.game_description.requirements.requirement_list import RequirementList
-from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.requirements.base import Requirement
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.game_description.db.node import NodeContext
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
-    from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+    from randovania.game_description.resources.resource_type import ResourceType
 
 
 class ResourceRequirement(Requirement):
@@ -24,9 +21,6 @@ class ResourceRequirement(Requirement):
     resource: ResourceInfo
     amount: int
     negate: bool
-
-    def __post_init__(self) -> None:
-        assert TypeError("No ResourceRequirement should be directly created")
 
     def __copy__(self) -> ResourceRequirement:
         return type(self)(self.resource, self.amount, self.negate)
@@ -38,17 +32,10 @@ class ResourceRequirement(Requirement):
         self.resource = resource
         self.amount = amount
         self.negate = negate
-        self.__post_init__()
 
     @classmethod
     def create(cls, resource: ResourceInfo, amount: int, negate: bool) -> ResourceRequirement:
-        if resource.resource_type == ResourceType.DAMAGE:
-            return DamageResourceRequirement(resource, amount, negate)
-
-        if negate:
-            return NegatedResourceRequirement(resource, amount, negate)
-
-        return PositiveResourceRequirement(resource, amount, negate)
+        return ResourceRequirement(resource, amount, negate)
 
     @classmethod
     @functools.cache
@@ -67,23 +54,10 @@ class ResourceRequirement(Requirement):
 
     @property
     def is_damage(self) -> bool:
-        return False
-
-    def damage(self, context: NodeContext) -> int:
-        if self.satisfied(context, MAX_DAMAGE):
-            return 0
-        else:
-            return MAX_DAMAGE
-
-    def satisfied(self, context: NodeContext, current_energy: int) -> bool:
-        """Checks if a given resource collection satisfies this requirement"""
-        raise NotImplementedError
+        return self.resource.resource_type.is_damage()
 
     def simplify(self, keep_comments: bool = False) -> Requirement:
         return self
-
-    def isolate_damage_requirements(self, context: NodeContext) -> Requirement:
-        return Requirement.trivial() if self.satisfied(context, 0) else Requirement.impossible()
 
     def __repr__(self) -> str:
         return "{} {} {}".format(self.resource, "<" if self.negate else "≥", self.amount)
@@ -122,75 +96,19 @@ class ResourceRequirement(Requirement):
     def multiply_amount(self, multiplier: float) -> ResourceRequirement:
         return self
 
-    def patch_requirements(self, damage_multiplier: float, context: NodeContext) -> Requirement:
-        if context.current_resources.is_resource_set(self.resource):
-            if self.satisfied(context, 0):
-                return Requirement.trivial()
-            elif not isinstance(self.resource, ItemResourceInfo) or self.resource.max_capacity <= 1:
-                return Requirement.impossible()
-            else:
-                return self
-        else:
-            return self.multiply_amount(damage_multiplier)
-
-    def as_set(self, context: NodeContext) -> RequirementSet:
-        return RequirementSet([RequirementList([self])])
-
     def iterate_resource_requirements(self, context: NodeContext) -> Iterator[ResourceRequirement]:
         yield self
 
     def is_obsoleted_by(self, other: ResourceRequirement) -> bool:
         return self.resource == other.resource and self.negate == other.negate and self.amount <= other.amount
 
+    def damage(self, resources: ResourceCollection) -> int:
+        return math.ceil(resources.get_damage_reduction(self.resource.resource_index) * self.amount)
 
-class DamageResourceRequirement(ResourceRequirement):
-    resource: SimpleResourceInfo
-
-    def __post_init__(self) -> None:
-        # Make sure this requirement received an actual resource
-        assert self.resource.resource_type == ResourceType.DAMAGE
-        assert not self.negate, "Damage requirements shouldn't have the negate flag"
-
-    @property
-    def is_damage(self) -> bool:
-        return True
-
-    def damage(self, context: NodeContext) -> int:
-        return ceil(context.current_resources.get_damage_reduction(self.resource.resource_index) * self.amount)
-
-    def satisfied(self, context: NodeContext, current_energy: int) -> bool:
-        return current_energy > self.damage(context)
-
-    def isolate_damage_requirements(self, context: NodeContext) -> Requirement:
-        if context.current_resources.get_damage_reduction(self.resource.resource_index) == 0:
-            # Common case of reduction-based immunity can be easily calculated,
-            # and returning Trivial allows for shortcuts elsewhere
-            return Requirement.trivial()
-        return self
-
-    def multiply_amount(self, multiplier: float) -> ResourceRequirement:
-        return DamageResourceRequirement(
-            self.resource,
-            int(self.amount * multiplier),
-            self.negate,
-        )
-
-
-class NegatedResourceRequirement(ResourceRequirement):
-    def __post_init__(self) -> None:
-        # Make sure this requirement received an actual resource
-        assert self.resource.resource_type != ResourceType.DAMAGE
-        assert self.negate
-
-    def satisfied(self, context: NodeContext, current_energy: int) -> bool:
-        return context.current_resources[self.resource] < self.amount
-
-
-class PositiveResourceRequirement(ResourceRequirement):
-    def __post_init__(self) -> None:
-        # Make sure this requirement received an actual resource
-        assert self.resource.resource_type != ResourceType.DAMAGE
-        assert not self.negate
-
-    def satisfied(self, context: NodeContext, current_energy: int) -> bool:
-        return context.current_resources[self.resource] >= self.amount
+    def satisfied(self, resources: ResourceCollection, current_energy: int) -> bool:
+        if self.negate:
+            return resources[self.resource] < self.amount
+        elif self.is_damage:
+            return self.damage(resources) < current_energy
+        else:
+            return resources[self.resource] >= self.amount

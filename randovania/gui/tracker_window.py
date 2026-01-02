@@ -165,6 +165,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.graph = graph
         self.logic = Logic(graph, self.preset.configuration, record_paths=True)
         self.map_canvas.select_game(graph.game_enum)
+        self.map_canvas.set_world_graph(graph)
 
         self.menu_reset_action.triggered.connect(self._confirm_reset)
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)

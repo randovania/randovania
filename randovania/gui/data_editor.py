@@ -31,6 +31,7 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games import default_data
@@ -74,7 +75,12 @@ def _ui_patch_and_simplify(requirement: Requirement, context: NodeContext) -> Re
         return type(requirement)(items, comment=requirement.comment)
 
     elif isinstance(requirement, ResourceRequirement):
-        return requirement.patch_requirements(1.0, context)
+        if context.current_resources.is_resource_set(requirement.resource):
+            if requirement.satisfied(context.current_resources, 0):
+                return Requirement.trivial()
+            elif not isinstance(requirement.resource, ItemResourceInfo) or requirement.resource.max_capacity <= 1:
+                return Requirement.impossible()
+        return requirement
 
     elif isinstance(requirement, RequirementTemplate):
         result = requirement.template_requirement(context.database)
