@@ -41,7 +41,7 @@ def _internal_fast_as(req: Requirement, database: ResourceDatabase) -> list[Requ
         raise UnableToAvoidError
 
 
-def fast_as_alternatives(req: Requirement, database: ResourceDatabase) -> typing.Iterable[RequirementList]:
+def fast_as_alternatives(req: Requirement, database: ResourceDatabase) -> tuple[RequirementList, ...]:
     """
     Equivalent to req.as_set(db).alternatives, but attempt to be faster
     """
