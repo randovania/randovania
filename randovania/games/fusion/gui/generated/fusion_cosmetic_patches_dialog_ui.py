@@ -49,7 +49,7 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, -8, 663, 586))
+        self.scroll_area_contents.setGeometry(QRect(0, 0, 663, 638))
         self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -80,6 +80,16 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.reveal_blocks_label.setObjectName(u"reveal_blocks_label")
 
         self.verticalLayout_2.addWidget(self.reveal_blocks_label)
+
+        self.alt_health_display_check = QCheckBox(self.gameplay_box)
+        self.alt_health_display_check.setObjectName(u"alt_health_display_check")
+
+        self.verticalLayout_2.addWidget(self.alt_health_display_check)
+
+        self.alt_health_display_label = QLabel(self.gameplay_box)
+        self.alt_health_display_label.setObjectName(u"alt_health_display_label")
+
+        self.verticalLayout_2.addWidget(self.alt_health_display_label)
 
 
         self.verticalLayout.addWidget(self.gameplay_box)
@@ -371,7 +381,9 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.map_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Show unexplored map from start", None))
         self.map_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"This setting reveals the entire map including item dots", None))
         self.reveal_blocks_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Reveal hidden blocks", None))
-        self.reveal_blocks_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Blocks that normally need bombs to be revealed are now always visible.", None))
+        self.reveal_blocks_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Blocks that normally need bombs to be revealed are now always visible", None))
+        self.alt_health_display_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Use Alternative HUD Health Display", None))
+        self.alt_health_display_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Changes the Health display on the HUD to \"Current Energy / Total Energy\"", None))
         self.palette_box.setTitle(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Color Rotation", None))
         self.suit_palette_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Suit Palette", None))
         self.suit_rando_shift_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Randomize Hue Shift", None))
