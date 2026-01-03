@@ -55,6 +55,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Added: Option to change Geron vulnerabilities to their primary weaknesses.
+- Added: Cosmetic option that allows using an alternative health display on the HUD.
+- Changed: The doors between Cathedral and Cathedral Save Access have been changed from a Level-0 door to an open one.
+- Changed: Maximum Energy has been limited to 9999.
+- Changed: Optimized the "Reveal hidden blocks" cosmetic option to now be nearly identical in performance compared to without it.
+- Changed: Hatches during a Navigation Room Conversation will now always show as locked.
+- Fixed: Energy values over 2099 now correctly render in-game and on the file select screen.
+- Fixed: The SA-X monster form will no longer form out of bounds and get stuck.
+
 #### Logic Database
 
 - Fixed: Typo on "Boss Ridley Defeated" event.
