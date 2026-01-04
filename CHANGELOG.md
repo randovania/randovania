@@ -126,6 +126,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed: Tower of Light: Redundant combination of Combat Dash, L-Jump and Standable Terrain to collect the Pickup.
 - Removed: Tower of Light: Redundant combination of Combat Dash, Slope Jump and Standable Terrain to collect the Pickup.
 
+##### Impact Crater
+
+- Added: All tricks now have comments.
+
 ##### Tallon Overworld
 
 - Added: Alcove: Escaping the pit with a Beginner Wallboost.
