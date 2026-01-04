@@ -15,9 +15,7 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.resource_requirement import (
-    PositiveResourceRequirement,
-)
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
@@ -119,9 +117,14 @@ def _create_dock_connection(
 
 
 def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
-    return not isinstance(requirement, PositiveResourceRequirement) or requirement.resource.resource_type not in (
-        ResourceType.EVENT,
-        ResourceType.NODE_IDENTIFIER,
+    return (
+        not isinstance(requirement, ResourceRequirement)
+        or requirement.negate
+        or requirement.resource.resource_type
+        not in (
+            ResourceType.EVENT,
+            ResourceType.NODE_IDENTIFIER,
+        )
     )
 
 
