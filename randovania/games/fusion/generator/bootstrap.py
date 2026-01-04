@@ -63,6 +63,8 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
         enabled_resources = set()
         if configuration.dock_rando.is_enabled():
             enabled_resources.add("DoorLockRando")
+        if configuration.adjusted_geron_weaknesses:
+            enabled_resources.add("NerfGerons")
         enabled_resources.add("BomblessPBs")
         enabled_resources.add("GeneratorHack")
         return enabled_resources

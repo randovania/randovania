@@ -55,6 +55,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Added: Option to change Geron vulnerabilities to their primary weaknesses.
+- Added: Cosmetic option that allows using an alternative health display on the HUD.
+- Changed: The doors between Cathedral and Cathedral Save Access have been changed from a Level-0 door to an open one.
+- Changed: Maximum Energy has been limited to 9999.
+- Changed: Optimized the "Reveal hidden blocks" cosmetic option to now be nearly identical in performance compared to without it.
+- Changed: Hatches during a Navigation Room Conversation will now always show as locked.
+- Fixed: Energy values over 2099 now correctly render in-game and on the file select screen.
+- Fixed: The SA-X monster form will no longer form out of bounds and get stuck.
+
 #### Logic Database
 
 - Fixed: Typo on "Boss Ridley Defeated" event.
@@ -84,6 +93,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Chozo Ruins
 
 - Changed: Revised the requirements for fighting Chozo Ghosts and made them consistent. Fighting multiple of them without Charge Beam is now Intermediate Combat, fighting a single one is still Beginner Combat.
+- Added: Ruined Shrine: Path from the Tower of Light Access Door to the Ruined Shrine Access Door via a Beginner Bomb Jump and Spider Ball.
+- Added: Ruined Shrine: Multiple ways to go from the Tower of Light Access Door to the top of the Half-Pipe near the pickup:
+    - Space Jump and Intermediate Standable Terrain
+    - No Space Jump, Expert Standable Terrain and an Intermediate L-Jump
+- Added: Ruined Shrine: An Intermediate dash from the top of the Half-Pipe to the Tower of Light Access Door with Space Jump.
+- Changed: Ruined Shrine: Scan Dashing from the Ruined Shrine Access Door over the fight trigger to the Pedestal now also requires Intermediate Knowledge.
+- Changed: Ruined Shrine: The NSJ escape from the pit now requires an Intermediate Dash, Intermediate L-Jump and Advanced Standable Terrain.
+- Added: Ruined Shrine: Health requirements for dealing with the Beetles
+- Changed: Ruined Shrine: Defeating the Beetles with only Bombs has been bumped to Expert Combat.
+- Changed: Ruined Shrine: Getting the Morph Pickup after triggering the beetle fight via escaping the pit and dashing over the wall to the item now requires an Intermediate L-Jump, Advanced Standable Terrain and either an Expert Combat Dash or an Advanced Scan Dash.
+- Fixed: Ruined Shrine Access: Requirements for dealing with the enemies in the room.
 - Fixed: Sunchamber Access: Requirements for dealing with the enemies in the room.
 - Fixed: Sunchamber Lobby: Requirements for dealing with the enemies in the room.
 - Changed: Sunchamber: Jumping onto the plant after defeating the Chozo Ghosts is now trivial.
@@ -99,7 +119,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Sun Tower: Being able to go down Sun Tower without having killed Flaaghra.
 - Added: Watery Hall: Going to the Missile Expansion via an Intermediate Wall Boost without Gravity Suit.
 - Changed: Watery Hall: Going to the Missile Expansion by going through Poison Water has had several changes: it is now gated behind Beginner Movement, it has slightly more accurate damage numbers now and it increases the difficulty of the tricks.
-- Changed: Watery Hall: Doing the Bomb Jump to get the Missile Expansion is now Intermediate.
 - Fixed: Watery Hall: Going to the Missile Expansion via a Bomb Jump is now possible without taking damage after Flaaghra has been defeated.
 - Fixed: Watery Hall: Requirements for dealing with the enemies in the room.
 - Fixed: Totem Access: Requirements for dealing with the enemies in the room.

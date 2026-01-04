@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_entry import PickupModel
     from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.damage_reduction import DamageReduction
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -104,9 +105,23 @@ class ResourceDatabaseView(ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_all_damage(self) -> Sequence[SimpleResourceInfo]:
+        """
+        Gets a list of all ResourceInfo of type DAMAGE
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_damage_reduction(self, resource: ResourceInfo, current_resources: ResourceCollection) -> float:
         """
         Gets the damage reduction for given resource with the given current resources.
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_all_damage_reduction(self) -> Mapping[ResourceInfo, list[DamageReduction]]:
+        """
+        Gets all damage reductions in the database.
         """
         raise NotImplementedError
 
@@ -192,8 +207,16 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
         return self._original.get_damage(short_name)
 
     @override
+    def get_all_damage(self) -> Sequence[SimpleResourceInfo]:
+        return self._original.get_all_damage()
+
+    @override
     def get_damage_reduction(self, resource: ResourceInfo, current_resources: ResourceCollection) -> float:
         return self._original.get_damage_reduction(resource, current_resources)
+
+    @override
+    def get_all_damage_reduction(self) -> Mapping[ResourceInfo, list[DamageReduction]]:
+        return self._original.get_all_damage_reduction()
 
     @override
     def get_template_requirement(self, name: str) -> NamedRequirementTemplate:

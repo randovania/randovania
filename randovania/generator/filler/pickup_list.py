@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import dataclasses
 import itertools
 from typing import TYPE_CHECKING
 
@@ -25,11 +24,6 @@ PickupCombination = tuple[PickupEntry, ...]
 PickupCombinations = tuple[PickupCombination, ...]
 
 
-def _resources_in_pickup(pickup: PickupEntry, current_resources: ResourceCollection) -> frozenset[ResourceInfo]:
-    resource_gain = pickup.resource_gain(current_resources, force_lock=True)
-    return frozenset(resource for resource, _ in resource_gain)
-
-
 def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[ResourceInfo]:
     satisfiable_requirements: frozenset[GraphRequirementList] = frozenset(
         itertools.chain.from_iterable(
@@ -37,7 +31,7 @@ def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[Resource
         )
     )
     return game_description.calculate_interesting_resources(
-        satisfiable_requirements, reach.state.node_context(), reach.state.damage_state
+        satisfiable_requirements, reach.state.resources, reach.state.resource_database, reach.state.damage_state
     )
 
 
@@ -65,13 +59,12 @@ def _unsatisfied_requirements_in_list(
     Returns an empty list if requirements are already satisfied.
     """
     items = []
-    context = state.node_context()
 
     for individual in RequirementList.from_graph_requirement_list(alternative, add_multiple_as_single=True).values():
         if individual.resource.resource_type == ResourceType.DAMAGE:
             continue
 
-        if individual.satisfied(context, state.health_for_damage_requirements):
+        if individual.satisfied(state.resources, state.health_for_damage_requirements):
             continue
 
         if individual.negate or (
@@ -134,16 +127,16 @@ def pickups_to_solve_list(
 ) -> list[PickupEntry] | None:
     pickups = []
 
-    context = dataclasses.replace(state.node_context(), current_resources=state.resources.duplicate())
+    resources = state.resources.duplicate()
     pickups_for_this = list(pickup_pool)
 
     # Check pickups that give less items in total first
     # This means we test for expansions before the standard pickups, in case both give the same resource
     # Useful to get Dark Beam Ammo Expansion instead of Dark Beam.
-    pickups_for_this.sort(key=lambda p: sum(1 for _ in p.resource_gain(context.current_resources, force_lock=True)))
+    pickups_for_this.sort(key=lambda p: sum(1 for _ in p.resource_gain(resources, force_lock=True)))
 
     for individual in sorted(requirement_list.values()):
-        if individual.satisfied(context, state.health_for_damage_requirements):
+        if individual.satisfied(resources, state.health_for_damage_requirements):
             continue
 
         # Create another copy of the list, so we can remove elements while iterating
@@ -155,18 +148,18 @@ def pickups_to_solve_list(
                 state.resource_database, state.resources.current_array_size()
             )
 
-            new_resources.add_resource_gain(pickup.resource_gain(context.current_resources, force_lock=True))
+            new_resources.add_resource_gain(pickup.resource_gain(resources, force_lock=True))
             pickup_progression.add_resource_gain(pickup.progression)
 
             if new_resources[individual.resource] + pickup_progression[individual.resource] > 0:
                 pickups.append(pickup)
                 pickups_for_this.remove(pickup)
-                context.current_resources.add_resource_gain(new_resources.as_resource_gain())
+                resources.add_resource_gain(new_resources.as_resource_gain())
 
-            if individual.satisfied(context, state.health_for_damage_requirements):
+            if individual.satisfied(resources, state.health_for_damage_requirements):
                 break
 
-        if not individual.satisfied(context, state.health_for_damage_requirements):
+        if not individual.satisfied(resources, state.health_for_damage_requirements):
             return None
 
     return pickups

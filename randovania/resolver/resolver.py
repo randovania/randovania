@@ -21,8 +21,6 @@ from randovania.resolver.resolver_reach import ResolverReach
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
 
-    from randovania.game_description.db.node import NodeContext
-    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -129,10 +127,6 @@ class ActionPriority(enum.IntEnum):
     """This node grants a dangerous resource"""
 
 
-def _is_event_node(action: ResolverAction, resource_database: ResourceDatabaseView) -> bool:
-    return action.has_event_resource
-
-
 def _is_hint_node(action: ResolverAction) -> bool:
     target_node = action.database_node
     return isinstance(target_node, HintNode)
@@ -174,12 +168,12 @@ def _progressive_chain_info_from_pickup_entry(
     return None
 
 
-def _progressive_chain_info(node: WorldGraphNode, context: NodeContext) -> None | tuple[list[int], int]:
+def _progressive_chain_info(node: WorldGraphNode, resources: ResourceCollection) -> None | tuple[list[int], int]:
     """
     When the node has a PickupEntry, returns _progressive_chain_info_from_pickup_entry for it.
     """
     if node.pickup_entry is not None:
-        return _progressive_chain_info_from_pickup_entry(node.pickup_entry, context.current_resources)
+        return _progressive_chain_info_from_pickup_entry(node.pickup_entry, resources)
     return None
 
 
@@ -218,7 +212,6 @@ async def _inner_advance_depth(
     """
 
     logic.start_new_attempt(state, max_attempts)
-    context = state.node_context()
 
     if state.hint_state is not None:
         state.hint_state.advance_hint_seen_count(state)
@@ -260,7 +253,7 @@ async def _inner_advance_depth(
                     additional = logic.get_additional_requirements(action).alternatives
 
                     resources = _resource_gain_for_state(state)
-                    progressive_chain_info = _progressive_chain_info(state.node, state.node_context())
+                    progressive_chain_info = _progressive_chain_info(state.node, state.resources)
 
                     logic.set_additional_requirements(
                         state.node,
@@ -288,9 +281,7 @@ async def _inner_advance_depth(
     has_action = False
     for _, action, damage_state in actions:
         action_additional_requirements = logic.get_additional_requirements(action)
-        if not action_additional_requirements.satisfied(
-            context.current_resources, damage_state.health_for_damage_requirements()
-        ):
+        if not action_additional_requirements.satisfied(state.resources, damage_state.health_for_damage_requirements()):
             logic.logger.log_skip(action, state, logic)
             continue
 
@@ -333,7 +324,7 @@ async def _inner_advance_depth(
         additional_requirements = additional_requirements.union(additional_alts)
 
     resources = _resource_gain_for_state(state)
-    progressive_chain_info = _progressive_chain_info(state.node, state.node_context())
+    progressive_chain_info = _progressive_chain_info(state.node, state.resources)
 
     logic.set_additional_requirements(
         state.node,

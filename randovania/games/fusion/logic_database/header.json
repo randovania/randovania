@@ -828,6 +828,10 @@
             "CanSWJ": {
                 "long_name": "Single Wall Jumping Physics",
                 "extra": {}
+            },
+            "NerfGerons": {
+                "long_name": "Primary Geron Vulnerabilities",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -1388,6 +1392,15 @@
                                                     }
                                                 ]
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "NerfGerons",
+                                                "amount": 1,
+                                                "negate": true
+                                            }
                                         }
                                     ]
                                 }
@@ -1429,7 +1442,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "Dev Note: Please sync this up with S4 Drain Pipe!",
                         "items": [
                             {
                                 "type": "and",
@@ -1570,6 +1583,15 @@
                                                     }
                                                 ]
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "NerfGerons",
+                                                "amount": 1,
+                                                "negate": true
+                                            }
                                         }
                                     ]
                                 }
@@ -1610,6 +1632,15 @@
                                                 "name": "Knowledge",
                                                 "amount": 1,
                                                 "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "NerfGerons",
+                                                "amount": 1,
+                                                "negate": true
                                             }
                                         }
                                     ]
@@ -2289,12 +2320,29 @@
                                             }
                                         },
                                         {
-                                            "type": "resource",
+                                            "type": "and",
                                             "data": {
-                                                "type": "items",
-                                                "name": "ChargeBeam",
-                                                "amount": 1,
-                                                "negate": false
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "ChargeBeam",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "misc",
+                                                            "name": "NerfGerons",
+                                                            "amount": 1,
+                                                            "negate": true
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         }
                                     ]
@@ -2333,6 +2381,15 @@
                                                         "data": "Can Use Power Bombs"
                                                     }
                                                 ]
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "NerfGerons",
+                                                "amount": 1,
+                                                "negate": true
                                             }
                                         }
                                     ]

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import pytest
 
-from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.pickup.pickup_entry import PickupEntry, ResourceLock
 from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -21,12 +20,6 @@ def test_collected_pickup_indices(state_game_data, empty_patches, blank_world_gr
     starting = empty_patches.game.region_list.node_by_identifier(empty_patches.game.starting_location)
     pickup_nodes = [node for node in empty_patches.game.region_list.all_nodes if isinstance(node, PickupNode)]
 
-    NodeContext(
-        empty_patches,
-        empty_patches.game.resource_database.create_resource_collection(),
-        empty_patches.game.resource_database,
-        empty_patches.game.region_list,
-    )
     pickup_node_resources = {
         blank_world_graph.resource_info_for_node(blank_world_graph.original_to_node[node.node_index]): 1
         for node in [pickup_nodes[0], pickup_nodes[1]]

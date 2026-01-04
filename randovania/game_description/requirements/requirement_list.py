@@ -1,17 +1,13 @@
 from __future__ import annotations
 
-import itertools
 import typing
 
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.lib.bitmask import Bitmask
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
-    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-    from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.graph.graph_requirement import GraphRequirementList
 
 _ItemKey = tuple[int, int, bool]
@@ -91,72 +87,5 @@ class RequirementList:
         else:
             return "Trivial"
 
-    def damage(self, context: NodeContext) -> int:
-        return sum(requirement.damage(context) for requirement in self._extra)
-
-    def satisfied(self, context: NodeContext, current_energy: int) -> bool:
-        """
-        A list is considered satisfied if each IndividualRequirement that belongs to it is satisfied.
-        In particular, an empty RequirementList is considered satisfied.
-        :param context:
-        :param current_energy:
-        :return:
-        """
-        if not self._bitmask.is_subset_of(context.current_resources.resource_bitmask):
-            return False
-
-        energy = current_energy
-        for requirement in self._extra:
-            if requirement.satisfied(context, energy):
-                if requirement.resource.resource_type == ResourceType.DAMAGE:
-                    energy -= requirement.damage(context)
-            else:
-                return False
-        return True
-
-    def get(self, resource: ResourceInfo) -> ResourceRequirement | None:
-        """
-        Gets an IndividualRequirement that uses the given resource
-        :param resource:
-        :return:
-        """
-        for item in self.values():
-            if item.resource == resource:
-                return item
-        return None
-
-    @property
-    def dangerous_resources(self) -> Iterator[ResourceInfo]:
-        """
-        Return an iterator of all SimpleResourceInfo in this list that have the negate flag
-        :return:
-        """
-        for individual in self._extra:
-            if individual.negate:
-                yield individual.resource
-
     def values(self) -> Iterator[ResourceRequirement]:
         yield from self._items.values()
-
-    def union(self, other: RequirementList) -> RequirementList:
-        return RequirementList(itertools.chain(self.values(), other.values()))
-
-    def is_proper_subset_of(self, other: RequirementList) -> bool:
-        """
-        Returns True when every requirement in self is also present in other, either directly or with a bigger amount.
-        However, returns False if equal.
-
-        """
-        if len(self._items) > len(other._items):
-            return False
-
-        if self._items == other._items:
-            return False
-
-        if not self._extra and not other._extra:
-            return self._bitmask.is_subset_of(other._bitmask)
-
-        return all(
-            key in other._items or any(req.is_obsoleted_by(other_req) for other_req in other._items.values())
-            for key, req in self._items.items()
-        )

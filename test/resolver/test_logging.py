@@ -6,9 +6,9 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.pickup_pool.pool_creator import calculate_pool_results
+from randovania.graph.graph_requirement import GraphRequirementSet
 from randovania.layout import filtered_database
 from randovania.resolver import debug
 from randovania.resolver.logging import ResolverLogger, TextResolverLogger
@@ -113,7 +113,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
     logger.log_complete(None)
 
     mock_logic = MagicMock()
-    mock_logic.get_additional_requirements.return_value = RequirementSet.impossible()
+    mock_logic.get_additional_requirements.return_value = GraphRequirementSet.impossible()
 
     # Skip: new additional
     logger.log_skip(

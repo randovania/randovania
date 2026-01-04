@@ -44,10 +44,11 @@ def _new_resources_including_damage(state: State) -> set[ResourceInfo]:
     if new_resources & set(
         itertools.chain(damage_state.resources_for_health(), damage_state.resources_for_general_reduction())
     ):
-        for damage_res in state.resource_database.damage:
+        for damage_res in state.resource_database.get_all_damage():
             new_resources.add(damage_res)
     else:
-        for res, reductions in state.resource_database.damage_reductions.items():
+        state.resource_database.get_all_items
+        for res, reductions in state.resource_database.get_all_damage_reduction().items():
             if any(reduction.inventory_item in new_resources for reduction in reductions):
                 new_resources.add(res)
 

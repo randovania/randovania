@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Self
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.db.node import NodeContext, NodeIndex
+    from randovania.game_description.db.node import NodeIndex
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.graph.graph_requirement import GraphRequirementSet
     from randovania.graph.state import State
@@ -50,9 +50,6 @@ class GeneratorReach:
 
     def act_on(self, node: WorldGraphNode) -> None:
         raise NotImplementedError
-
-    def node_context(self) -> NodeContext:
-        return self.state.node_context()
 
     # Node stuff
 
