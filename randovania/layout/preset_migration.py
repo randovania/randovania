@@ -1213,7 +1213,9 @@ def _migrate_v109(preset: dict, game: RandovaniaGame) -> None:
 
 def _migrate_v110(preset: dict, game: RandovaniaGame) -> None:
     if game == RandovaniaGame.FUSION:
-        preset["configuration"]["adjusted_geron_weaknesses"] = True
+        knowledge_enabled = preset["configuration"]["trick_level"]["specific_levels"].get("Knowledge")
+        val = False if knowledge_enabled else True
+        preset["configuration"]["adjusted_geron_weaknesses"] = val
 
 
 _MIGRATIONS = [
