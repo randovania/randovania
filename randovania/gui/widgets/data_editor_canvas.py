@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.region import Region
     from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraph
 
 _color_for_node: dict[type[Node], QtCore.Qt.GlobalColor] = {
     GenericNode: QtCore.Qt.GlobalColor.red,
@@ -89,6 +90,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     MoveNodeToAreaRequest = Signal(Node, Area)
     UpdateSlider = Signal(bool)
 
+    world_graph: WorldGraph | None = None
     state: State | None = None
     visible_nodes: set[Node] | None = None
 
@@ -127,6 +129,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     def select_game(self, game: RandovaniaGame) -> None:
         self.game = game
+
+    def set_world_graph(self, graph: WorldGraph) -> None:
+        self.world_graph = graph
 
     def select_region(self, region: Region) -> None:
         self.region = region
@@ -243,9 +248,12 @@ class DataEditorCanvas(QtWidgets.QWidget):
         return self.visible_nodes is None or node in self.visible_nodes
 
     def is_connection_visible(self, requirement: Requirement) -> bool:
-        return self.state is None or requirement.satisfied(
-            self.state.node_context(), self.state.health_for_damage_requirements
-        )
+        if self.state is None:
+            return True
+
+        assert self.world_graph is not None
+        req = self.world_graph.converter.convert_db(requirement)
+        return req.satisfied(self.state.resources, self.state.health_for_damage_requirements)
 
     def _update_scale_variables(self) -> None:
         self.border_x = self.rect().width() * 0.05

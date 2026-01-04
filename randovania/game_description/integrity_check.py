@@ -28,6 +28,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.requirement_list import RequirementList
     from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
@@ -184,15 +185,7 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         if isinstance(node, DockNode) or area.connections[node]:
             continue
 
-        # FIXME: cannot implement this for PickupNodes because their resource gain depends on GamePatches
-        if isinstance(node, EventNode):
-            # if this node would satisfy the victory condition, it does not need outgoing connections
-            current = game.resource_database.create_resource_collection()
-            current.set_resource(node.event, 1)
-            if game.victory_condition.satisfied(game.create_node_context(current), 0):
-                continue
-
-        if node in nodes_with_paths_in:
+        if node in nodes_with_paths_in and not node.extra.get("allow_no_outgoing_connections", False):
             yield f"{area.name} - '{node.name}': Node has paths in, but no connections out."
 
     yield from check_for_unnormalized_hint_features(area)
@@ -308,13 +301,13 @@ def find_duplicated_pickup_index(region_list: RegionList) -> Iterator[str]:
 def _needed_resources_partly_satisfied(
     req: Requirement,
     resources: tuple[str, tuple[str, ...]],
-    context: NodeContext,
+    database: ResourceDatabase,
     req_cache: dict[Requirement, tuple[RequirementList, ...]],
 ) -> bool:
     if req in req_cache:
         alternatives = req_cache[req]
     else:
-        alternatives = tuple(fast_as_set.fast_as_alternatives(req, context))
+        alternatives = fast_as_set.fast_as_alternatives(req, database)
         req_cache[req] = alternatives
 
     counter = 0
@@ -387,13 +380,13 @@ def check_for_resources_to_use_together(
     For example: { HoverWithBombsTrick: (BombItem, ExplosiveDamage)}
     :return: Error messages of requirements which don't pass the check.
     """
-    context = _create_node_context(game)
+    database = game.resource_database
     requirement_cache: dict[Requirement, tuple[RequirementList, ...]] = {}
 
     for label, requirement in get_possible_connections(game):
         for resource_key, resource_value in combined_resources.items():
             if _needed_resources_partly_satisfied(
-                requirement, (resource_key, resource_value), context, requirement_cache
+                requirement, (resource_key, resource_value), database, requirement_cache
             ):
                 yield (f'{label} contains "{resource_key}" but not "{resource_value}"')
 

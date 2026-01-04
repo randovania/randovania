@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import dataclasses
 import itertools
 from typing import TYPE_CHECKING
 
@@ -71,7 +70,7 @@ def _unsatisfied_requirements_in_list(
         if individual.resource.resource_type == ResourceType.DAMAGE:
             continue
 
-        if individual.satisfied(context, state.health_for_damage_requirements):
+        if individual.satisfied(context.current_resources, state.health_for_damage_requirements):
             continue
 
         if individual.negate or (
@@ -134,16 +133,16 @@ def pickups_to_solve_list(
 ) -> list[PickupEntry] | None:
     pickups = []
 
-    context = dataclasses.replace(state.node_context(), current_resources=state.resources.duplicate())
+    resources = state.resources.duplicate()
     pickups_for_this = list(pickup_pool)
 
     # Check pickups that give less items in total first
     # This means we test for expansions before the standard pickups, in case both give the same resource
     # Useful to get Dark Beam Ammo Expansion instead of Dark Beam.
-    pickups_for_this.sort(key=lambda p: sum(1 for _ in p.resource_gain(context.current_resources, force_lock=True)))
+    pickups_for_this.sort(key=lambda p: sum(1 for _ in p.resource_gain(resources, force_lock=True)))
 
     for individual in sorted(requirement_list.values()):
-        if individual.satisfied(context, state.health_for_damage_requirements):
+        if individual.satisfied(resources, state.health_for_damage_requirements):
             continue
 
         # Create another copy of the list, so we can remove elements while iterating
@@ -155,18 +154,18 @@ def pickups_to_solve_list(
                 state.resource_database, state.resources.current_array_size()
             )
 
-            new_resources.add_resource_gain(pickup.resource_gain(context.current_resources, force_lock=True))
+            new_resources.add_resource_gain(pickup.resource_gain(resources, force_lock=True))
             pickup_progression.add_resource_gain(pickup.progression)
 
             if new_resources[individual.resource] + pickup_progression[individual.resource] > 0:
                 pickups.append(pickup)
                 pickups_for_this.remove(pickup)
-                context.current_resources.add_resource_gain(new_resources.as_resource_gain())
+                resources.add_resource_gain(new_resources.as_resource_gain())
 
-            if individual.satisfied(context, state.health_for_damage_requirements):
+            if individual.satisfied(resources, state.health_for_damage_requirements):
                 break
 
-        if not individual.satisfied(context, state.health_for_damage_requirements):
+        if not individual.satisfied(resources, state.health_for_damage_requirements):
             return None
 
     return pickups

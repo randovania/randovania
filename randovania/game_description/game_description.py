@@ -282,26 +282,28 @@ def calculate_interesting_resources(
 
     from randovania.game_description.requirements.requirement_list import RequirementList
 
+    resources = context.current_resources
+
     def helper() -> Iterator[ResourceInfo]:
         # For each possible requirement list
         for requirement_list in satisfiable_requirements:
             # If it's not satisfied, there's at least one IndividualRequirement in it that can be collected
-            if not requirement_list.satisfied(context.current_resources, damage_state.health_for_damage_requirements()):
+            if not requirement_list.satisfied(resources, damage_state.health_for_damage_requirements()):
                 current_energy = damage_state.health_for_damage_requirements()
 
                 for individual in RequirementList.from_graph_requirement_list(requirement_list).values():
                     # Ignore those with the `negate` flag. We can't "uncollect" a resource to satisfy these.
                     # Finally, if it's not satisfied then we're interested in collecting it
-                    if not individual.negate and not individual.satisfied(context, current_energy):
+                    if not individual.negate and not individual.satisfied(resources, current_energy):
                         if individual.is_damage:
                             assert isinstance(individual.resource, SimpleResourceInfo)
                             yield from _resources_for_damage(
-                                individual.resource, context.database, context.current_resources, damage_state
+                                individual.resource, context.database, resources, damage_state
                             )
                         else:
                             yield individual.resource
-                    elif individual.is_damage and individual.satisfied(context, current_energy):
-                        current_energy -= individual.damage(context)
+                    elif individual.is_damage and individual.satisfied(resources, current_energy):
+                        current_energy -= individual.damage(resources)
 
             elif damage_resources := {
                 resource for resource in requirement_list.all_resources() if resource.resource_type.is_damage()
@@ -311,8 +313,6 @@ def calculate_interesting_resources(
                 # but when combined, the energy might not be sufficient. The satisfiable requirements are assumed to be
                 # unsatisfied.
                 for damage_resource in damage_resources:
-                    yield from _resources_for_damage(
-                        damage_resource, context.database, context.current_resources, damage_state
-                    )
+                    yield from _resources_for_damage(damage_resource, context.database, resources, damage_state)
 
     return frozenset(helper())
