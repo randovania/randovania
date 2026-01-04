@@ -7,8 +7,8 @@ from randovania.game_description.requirements.base import Requirement
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
-    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 class RequirementArrayBase(Requirement):
@@ -46,9 +46,9 @@ class RequirementArrayBase(Requirement):
     def __repr__(self) -> str:
         return repr(self.items)
 
-    def iterate_resource_requirements(self, context: NodeContext) -> Iterator[ResourceRequirement]:
+    def iterate_resource_requirements(self, database: ResourceDatabase) -> Iterator[ResourceRequirement]:
         for item in self.items:
-            yield from item.iterate_resource_requirements(context)
+            yield from item.iterate_resource_requirements(database)
 
     def __str__(self) -> str:
         if self.items:

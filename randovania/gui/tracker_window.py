@@ -437,7 +437,6 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         state = self.state_for_current_configuration()
         resources = state.resources
-        state.node_context()
         nodes_in_reach = self.current_nodes_in_reach(state)
 
         if self.map_tab_widget.currentWidget() == self.tab_graph_map:

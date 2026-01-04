@@ -5,7 +5,6 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -90,13 +89,10 @@ def test_hint_node_should_collect(hint_node, empty_patches, blank_world_graph):
     # Setup
     db = empty_patches.game.resource_database
     has_translator, translator, node = hint_node
-    node_provider = MagicMock()
+    MagicMock()
 
     def col(*args: ResourceInfo):
         return ResourceCollection.from_dict(db, dict.fromkeys(args, 1))
-
-    def ctx(*args: ResourceInfo):
-        return NodeContext(empty_patches, col(*args), db, node_provider)
 
     assert node.requirement_to_collect.satisfied(col(), 0) != has_translator
     assert node.requirement_to_collect.satisfied(col(translator), 0)

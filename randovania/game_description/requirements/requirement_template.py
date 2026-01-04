@@ -7,7 +7,6 @@ from randovania.game_description.requirements.base import Requirement
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
@@ -40,5 +39,5 @@ class RequirementTemplate(Requirement):
     def __str__(self) -> str:
         return self.template_name
 
-    def iterate_resource_requirements(self, context: NodeContext) -> Iterator[ResourceRequirement]:
-        yield from self.template_requirement(context.database).iterate_resource_requirements(context)
+    def iterate_resource_requirements(self, database: ResourceDatabase) -> Iterator[ResourceRequirement]:
+        yield from self.template_requirement(database).iterate_resource_requirements(database)

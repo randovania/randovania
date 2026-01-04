@@ -6,7 +6,6 @@ import typing
 from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.db.node_identifier import NodeIdentifier
 
 
@@ -22,19 +21,6 @@ class NodeResourceInfo:
 
     def __str__(self) -> str:
         return self.long_name
-
-    @classmethod
-    def from_node(cls, node: Node, context: NodeContext) -> NodeResourceInfo:
-        return cls(
-            context.database.first_unused_resource_index() + node.node_index,
-            node.identifier,
-            node.full_name(),
-            node.name,
-        )
-
-    @classmethod
-    def from_identifier(cls, identifier: NodeIdentifier, context: NodeContext) -> NodeResourceInfo:
-        return cls.from_node(context.node_provider.node_by_identifier(identifier), context)
 
     @property
     def extra(self) -> dict:

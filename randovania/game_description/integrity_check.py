@@ -1,15 +1,12 @@
 from __future__ import annotations
 
 import re
-import typing
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
@@ -23,26 +20,17 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.dock import DockType, DockWeakness
+    from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.requirement_list import RequirementList
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.layout.base.base_configuration import BaseConfiguration
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_suffix_re = re.compile(r" \([^()]+?\)$")
 layer_name_re = re.compile(r"[a-zA-Z0-9 _-]+")
-
-
-def _create_node_context(game: GameDescription) -> NodeContext:
-    return NodeContext(
-        patches=GamePatches.create_from_game(game, 0, typing.cast("BaseConfiguration", None)),
-        current_resources=game.resource_database.create_resource_collection(),
-        database=game.resource_database,
-        node_provider=game.region_list,
-    )
 
 
 def raw_expected_dock_names(
@@ -157,9 +145,6 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
 
 
 def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
-    fake_context = NodeContext(
-        None, game.resource_database.create_resource_collection(), game.resource_database, game.region_list
-    )
     nodes_with_paths_in: set[Node] = set()
     for node in area.nodes:
         nodes_with_paths_in.update(area.connections[node].keys())
@@ -178,7 +163,7 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
 
     for node in area.nodes:
         for t, req in area.connections[node].items():
-            for indiv in req.iterate_resource_requirements(fake_context):
+            for indiv in req.iterate_resource_requirements(game.resource_database):
                 if indiv.negate and indiv.amount > 1:
                     yield f"{node.name} -> {t.name} has a negate requirement with more than 1"
 
