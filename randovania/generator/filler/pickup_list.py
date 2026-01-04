@@ -24,11 +24,6 @@ PickupCombination = tuple[PickupEntry, ...]
 PickupCombinations = tuple[PickupCombination, ...]
 
 
-def _resources_in_pickup(pickup: PickupEntry, current_resources: ResourceCollection) -> frozenset[ResourceInfo]:
-    resource_gain = pickup.resource_gain(current_resources, force_lock=True)
-    return frozenset(resource for resource, _ in resource_gain)
-
-
 def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[ResourceInfo]:
     satisfiable_requirements: frozenset[GraphRequirementList] = frozenset(
         itertools.chain.from_iterable(

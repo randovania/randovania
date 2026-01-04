@@ -256,10 +256,10 @@ class GameDescription(GameDatabaseView):
 
 
 def _resources_for_damage(
-    resource: ResourceInfo, database: ResourceDatabase, collection: ResourceCollection, damage_state: DamageState
+    resource: ResourceInfo, database: ResourceDatabaseView, collection: ResourceCollection, damage_state: DamageState
 ) -> Iterator[ResourceInfo]:
     yield from damage_state.resources_for_health()
-    for reduction in database.damage_reductions.get(resource, []):
+    for reduction in database.get_all_damage_reduction().get(resource, []):
         if reduction.inventory_item is not None and not collection.has_resource(reduction.inventory_item):
             yield reduction.inventory_item
 
@@ -267,7 +267,7 @@ def _resources_for_damage(
 def calculate_interesting_resources(
     satisfiable_requirements: frozenset[GraphRequirementList],
     resources: ResourceCollection,
-    database: ResourceDatabase,
+    database: ResourceDatabaseView,
     damage_state: DamageState,
 ) -> frozenset[ResourceInfo]:
     """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList"""
