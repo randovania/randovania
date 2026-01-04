@@ -119,7 +119,7 @@ class ResourceDatabaseView(ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_all_damage_reduction(self) -> Mapping[ResourceInfo, list[DamageReduction]]:
+    def get_all_damage_reductions(self) -> Mapping[ResourceInfo, list[DamageReduction]]:
         """
         Gets all damage reductions in the database.
         """
@@ -215,8 +215,8 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
         return self._original.get_damage_reduction(resource, current_resources)
 
     @override
-    def get_all_damage_reduction(self) -> Mapping[ResourceInfo, list[DamageReduction]]:
-        return self._original.get_all_damage_reduction()
+    def get_all_damage_reductions(self) -> Mapping[ResourceInfo, list[DamageReduction]]:
+        return self._original.get_all_damage_reductions()
 
     @override
     def get_template_requirement(self, name: str) -> NamedRequirementTemplate:

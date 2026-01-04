@@ -169,7 +169,7 @@ class ResourceDatabase(ResourceDatabaseView):
         return damage_multiplier * base_reduction
 
     @override
-    def get_all_damage_reduction(self) -> dict[ResourceInfo, list[DamageReduction]]:
+    def get_all_damage_reductions(self) -> dict[ResourceInfo, list[DamageReduction]]:
         return self.damage_reductions
 
     def first_unused_resource_index(self) -> int:
