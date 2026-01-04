@@ -10,7 +10,7 @@ from PySide6 import QtWidgets
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import data_reader, pretty_print
 from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.node import NodeContext, NodeLocation
+from randovania.game_description.db.node import NodeLocation
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
@@ -244,9 +244,6 @@ def test_ui_patch_and_simplify_remove_present_resources(echoes_resource_database
 
 def test_ui_patch_and_simplify_template(echoes_resource_database: ResourceDatabase):
     db = echoes_resource_database
-
-    def context(collection):
-        return NodeContext(None, collection, db, None)
 
     assert _ui_patch_and_simplify(
         RequirementTemplate("Use Screw Attack (No Space Jump)"), db.create_resource_collection(), db

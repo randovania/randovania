@@ -9,7 +9,6 @@ from typing import TYPE_CHECKING, override
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
-from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
@@ -23,6 +22,7 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
+    from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
     from randovania.game_description.hint_features import HintFeature
@@ -109,14 +109,6 @@ class GameDescription(GameDatabaseView):
     def game_enum(self) -> RandovaniaGame:
         # compatibility with WorldGraph
         return self.game
-
-    def create_node_context(self, resources: ResourceCollection) -> NodeContext:
-        return NodeContext(
-            None,
-            resources,
-            self.resource_database,
-            self.region_list,
-        )
 
     def get_prefilled_docks(self) -> dict[NodeIdentifier, NodeIdentifier]:
         connections: dict[NodeIdentifier, NodeIdentifier] = {}
@@ -274,14 +266,13 @@ def _resources_for_damage(
 
 def calculate_interesting_resources(
     satisfiable_requirements: frozenset[GraphRequirementList],
-    context: NodeContext,
+    resources: ResourceCollection,
+    database: ResourceDatabase,
     damage_state: DamageState,
 ) -> frozenset[ResourceInfo]:
     """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList"""
 
     from randovania.game_description.requirements.requirement_list import RequirementList
-
-    resources = context.current_resources
 
     def helper() -> Iterator[ResourceInfo]:
         # For each possible requirement list
@@ -296,9 +287,7 @@ def calculate_interesting_resources(
                     if not individual.negate and not individual.satisfied(resources, current_energy):
                         if individual.is_damage:
                             assert isinstance(individual.resource, SimpleResourceInfo)
-                            yield from _resources_for_damage(
-                                individual.resource, context.database, resources, damage_state
-                            )
+                            yield from _resources_for_damage(individual.resource, database, resources, damage_state)
                         else:
                             yield individual.resource
                     elif individual.is_damage and individual.satisfied(resources, current_energy):
@@ -312,6 +301,6 @@ def calculate_interesting_resources(
                 # but when combined, the energy might not be sufficient. The satisfiable requirements are assumed to be
                 # unsatisfied.
                 for damage_resource in damage_resources:
-                    yield from _resources_for_damage(damage_resource, context.database, resources, damage_state)
+                    yield from _resources_for_damage(damage_resource, database, resources, damage_state)
 
     return frozenset(helper())

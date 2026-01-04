@@ -3,14 +3,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
@@ -52,9 +50,6 @@ class NodeRequirement(Requirement):
 
     def __hash__(self) -> int:
         return hash(self.node_identifier)
-
-    def as_resource_requirement(self, context: NodeContext) -> ResourceRequirement:
-        return ResourceRequirement.simple(NodeResourceInfo.from_identifier(self.node_identifier, context))
 
     def iterate_resource_requirements(self, database: ResourceDatabase) -> Iterator[ResourceRequirement]:
         yield from []

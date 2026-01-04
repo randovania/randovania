@@ -4,7 +4,6 @@ import copy
 from typing import TYPE_CHECKING, Self
 
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
@@ -14,6 +13,7 @@ from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
+    from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.node_provider import NodeProvider
     from randovania.game_description.game_patches import GamePatches
@@ -229,14 +229,6 @@ class State:
             (),
             self.damage_state.apply_new_starting_resource_difference(new_resources, self.resources),
             self.patches.assign_extra_starting_pickups([pickup]),
-        )
-
-    def node_context(self) -> NodeContext:
-        return NodeContext(
-            self.patches,
-            self.resources,
-            self.resource_database,
-            self._node_provider,
         )
 
     @property

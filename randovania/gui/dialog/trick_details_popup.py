@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 from PySide6.QtWidgets import QDialog, QWidget
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import NodeContext
 from randovania.gui.generated.trick_details_popup_ui import Ui_TrickDetailsPopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.data_editor_links import data_editor_href, on_click_data_editor_link
@@ -160,17 +159,11 @@ class ResourceDetailsPopup(BaseResourceDetailsPopup):
         def is_resource(individual: ResourceRequirement):
             return individual.resource == resource
 
-        context = NodeContext(
-            None,
-            game_description.resource_database.create_resource_collection(),
-            game_description.resource_database,
-            game_description.region_list,
-        )
         areas_to_show = [
             (region, area, usages)
             for region in game_description.region_list.regions
             for area in region.areas
-            if (usages := list(_area_uses_resource(area, is_resource, context)))
+            if (usages := list(_area_uses_resource(area, is_resource, game_description.resource_database)))
         ]
         super().__init__(parent, window_manager, game_description, areas_to_show)
 

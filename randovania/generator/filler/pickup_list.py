@@ -36,7 +36,7 @@ def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[Resource
         )
     )
     return game_description.calculate_interesting_resources(
-        satisfiable_requirements, reach.state.node_context(), reach.state.damage_state
+        satisfiable_requirements, reach.state.resources, reach.state.resource_database, reach.state.damage_state
     )
 
 
@@ -64,13 +64,12 @@ def _unsatisfied_requirements_in_list(
     Returns an empty list if requirements are already satisfied.
     """
     items = []
-    context = state.node_context()
 
     for individual in RequirementList.from_graph_requirement_list(alternative, add_multiple_as_single=True).values():
         if individual.resource.resource_type == ResourceType.DAMAGE:
             continue
 
-        if individual.satisfied(context.current_resources, state.health_for_damage_requirements):
+        if individual.satisfied(state.resources, state.health_for_damage_requirements):
             continue
 
         if individual.negate or (

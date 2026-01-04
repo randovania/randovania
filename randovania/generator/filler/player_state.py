@@ -180,9 +180,8 @@ class PlayerState:
         return result
 
     def victory_condition_satisfied(self) -> bool:
-        context = self.reach.state.node_context()
         return self.graph.victory_condition.satisfied(
-            context.current_resources, self.reach.state.health_for_damage_requirements
+            self.reach.state.resources, self.reach.state.health_for_damage_requirements
         )
 
     def assign_pickup(
