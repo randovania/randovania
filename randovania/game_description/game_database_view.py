@@ -105,7 +105,7 @@ class ResourceDatabaseView(ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_all_damage(self) -> Sequence[SimpleResourceInfo]:
+    def get_all_damage_resources(self) -> Sequence[SimpleResourceInfo]:
         """
         Gets a list of all ResourceInfo of type DAMAGE
         """
@@ -207,8 +207,8 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
         return self._original.get_damage(short_name)
 
     @override
-    def get_all_damage(self) -> Sequence[SimpleResourceInfo]:
-        return self._original.get_all_damage()
+    def get_all_damage_resources(self) -> Sequence[SimpleResourceInfo]:
+        return self._original.get_all_damage_resources()
 
     @override
     def get_damage_reduction(self, resource: ResourceInfo, current_resources: ResourceCollection) -> float:
