@@ -131,7 +131,7 @@ class ResourceDatabase(ResourceDatabaseView):
         return search.find_resource_info_with_id(self.damage, short_name, ResourceType.DAMAGE)
 
     @override
-    def get_all_damage(self) -> Sequence[SimpleResourceInfo]:
+    def get_all_damage_resources(self) -> Sequence[SimpleResourceInfo]:
         return self.damage
 
     @override
