@@ -7,7 +7,6 @@ from typing import override
 from randovania.game_description.game_database_view import ResourceDatabaseView
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources import search
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
@@ -17,6 +16,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.damage_reduction import DamageReduction
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -176,9 +176,9 @@ class ResourceDatabase(ResourceDatabaseView):
         return len(self.resource_by_index)
 
     @override
-    def create_resource_collection(self) -> ResourceCollection:
-        return ResourceCollection.with_resource_count(self, len(self.resource_by_index))
-
-    @override
     def get_resource_mapping(self) -> dict[int, ResourceInfo]:
         return self._resource_mapping
+
+    @override
+    def default_resource_collection_size(self) -> int:
+        return len(self.resource_by_index)

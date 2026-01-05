@@ -314,8 +314,10 @@ def create_patchless_graph(
 ) -> WorldGraph:
     nodes: list[WorldGraphNode] = []
 
+    old_static_resources = static_resources
     resource_database = GraphResourceDatabaseView(database_view.get_resource_database_view())
-    static_resources._resource_database = resource_database
+    static_resources = resource_database.create_resource_collection()
+    static_resources.add_resource_gain(old_static_resources.as_resource_gain())
     node_resource_index_offset = resource_database.node_resource_index_offset
 
     teleporter_networks = collections.defaultdict(list)

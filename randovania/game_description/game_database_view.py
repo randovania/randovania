@@ -147,11 +147,14 @@ class ResourceDatabaseView(ABC):
         """
         raise NotImplementedError
 
-    @abc.abstractmethod
+    @final
     def create_resource_collection(self) -> ResourceCollection:
         """
         Creates a new ResourceCollection
         """
+        from randovania.game_description.resources.resource_collection import ResourceCollection
+
+        return ResourceCollection.with_resource_count(self, self.default_resource_collection_size())
 
     @abc.abstractmethod
     def get_resource_mapping(self) -> dict[int, ResourceInfo]:
@@ -159,6 +162,14 @@ class ResourceDatabaseView(ABC):
         A dict where resources are stored by index.
         TODO: improve this
         """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def default_resource_collection_size(self) -> int:
+        """
+        Returns the default size for ResourceCollections for this database.
+        """
+        raise NotImplementedError
 
 
 class ResourceDatabaseViewProxy(ResourceDatabaseView):
@@ -231,12 +242,12 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
         return self._original.get_pickup_model(name)
 
     @override
-    def create_resource_collection(self) -> ResourceCollection:
-        return self._original.create_resource_collection()
-
-    @override
     def get_resource_mapping(self) -> dict[int, ResourceInfo]:
         return self._original.get_resource_mapping()
+
+    @override
+    def default_resource_collection_size(self) -> int:
+        return self._original.default_resource_collection_size()
 
 
 class GameDatabaseView(ABC):
