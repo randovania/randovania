@@ -131,6 +131,10 @@ class ResourceDatabase(ResourceDatabaseView):
         return search.find_resource_info_with_id(self.damage, short_name, ResourceType.DAMAGE)
 
     @override
+    def get_all_damage_resources(self) -> Sequence[SimpleResourceInfo]:
+        return self.damage
+
+    @override
     def get_all_tricks(self) -> Sequence[TrickResourceInfo]:
         return self.trick
 
@@ -153,6 +157,7 @@ class ResourceDatabase(ResourceDatabaseView):
     def energy_tank(self) -> ItemResourceInfo:
         return self.energy_tank_item
 
+    @override
     def get_damage_reduction(self, resource: ResourceInfo, current_resources: ResourceCollection) -> float:
         base_reduction = self.base_damage_reduction(self, current_resources)
 
@@ -162,6 +167,10 @@ class ResourceDatabase(ResourceDatabaseView):
                 damage_multiplier = min(damage_multiplier, reduction.damage_multiplier)
 
         return damage_multiplier * base_reduction
+
+    @override
+    def get_all_damage_reductions(self) -> dict[ResourceInfo, list[DamageReduction]]:
+        return self.damage_reductions
 
     def first_unused_resource_index(self) -> int:
         return len(self.resource_by_index)
