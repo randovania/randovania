@@ -1,6 +1,7 @@
 import pytest
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.game_database_view import ResourceDatabaseView
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -16,17 +17,16 @@ from randovania.graph.world_graph import WorldGraph
 
 
 @pytest.fixture
-def converter(blank_world_graph, blank_resource_db):
-    return GraphRequirementConverter(
-        blank_resource_db, blank_world_graph, blank_resource_db.create_resource_collection(), 1.0
-    )
+def converter(blank_world_graph: WorldGraph) -> GraphRequirementConverter:
+    resource_db = blank_world_graph.resource_database
+    return GraphRequirementConverter(resource_db, blank_world_graph, resource_db.create_resource_collection(), 1.0)
 
 
 fake_graph: WorldGraph = None  # type: ignore[assignment]
 
 
 class ResourceFactory:
-    def __init__(self, database: ResourceDatabase):
+    def __init__(self, database: ResourceDatabaseView):
         self.database = database
 
     def res(self, name: str) -> SimpleResourceInfo:
@@ -45,16 +45,16 @@ class ResourceFactory:
 
 
 @pytest.fixture
-def fac(blank_resource_db):
-    return ResourceFactory(blank_resource_db)
+def fac(converter: GraphRequirementConverter) -> ResourceFactory:
+    return ResourceFactory(converter.resource_database)
 
 
-def test_convert(converter: GraphRequirementConverter, resource_collection, fac: ResourceFactory) -> None:
+def test_convert(converter: GraphRequirementConverter, fac: ResourceFactory) -> None:
     res_a = fac.req("A")
     res_b = fac.req("B")
 
     def col(*args):
-        c = resource_collection.duplicate()
+        c = converter.resource_database.create_resource_collection()
         for n in args:
             c.set_resource(fac.res(n), 1)
         return c
@@ -293,7 +293,8 @@ def test_requirement_as_set_6(converter: GraphRequirementConverter, fac: Resourc
     assert result2 is not expected
 
 
-def test_convert_remove_static(blank_resource_db: ResourceDatabase, fac: ResourceFactory) -> None:
+def test_convert_remove_static(fac: ResourceFactory) -> None:
+    blank_resource_db = fac.database
     res_a = fac.req("A")
     res_b = fac.req("B")
     res_c = ResourceRequirement.create(blank_resource_db.get_item("Ammo"), 3, False)

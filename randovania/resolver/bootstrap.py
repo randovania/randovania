@@ -265,12 +265,12 @@ class Bootstrap[Configuration: BaseConfiguration]:
             {},
             (),
             self.create_damage_state(game, configuration).apply_collected_resource_difference(
-                resources, game.get_resource_database_view().create_resource_collection()
+                resources, graph.resource_database.create_resource_collection()
             ),
             graph.node_identifier_to_node[patches.starting_location],
             patches,
             None,
-            game.resource_database,
+            graph.resource_database,
             game.region_list,
             hint_state=None,
         )
@@ -295,20 +295,19 @@ class Bootstrap[Configuration: BaseConfiguration]:
             enabled_pickups(game, configuration), game, configuration.logical_pickup_placement
         )
 
-        static_resources = self.starting_resources_for_patches(
-            configuration, game.get_resource_database_view(), patches
-        )
         graph = world_graph_factory.create_graph(
             database_view=game,
             patches=patches,
-            static_resources=static_resources,
+            static_resources=self.starting_resources_for_patches(
+                configuration, game.get_resource_database_view(), patches
+            ),
             damage_multiplier=configuration.damage_strictness.value,
             victory_condition=game.victory_condition,
             flatten_to_set_on_patch=game.region_list.flatten_to_set_on_patch,
         )
 
         starting_state = self.calculate_starting_state(
-            static_resources,
+            graph.converter.static_resources,
             graph,
             game,
             configuration,

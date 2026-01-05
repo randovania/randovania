@@ -3,7 +3,7 @@ from __future__ import annotations
 import collections
 import copy
 import dataclasses
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock import DockLockType, DockWeakness
@@ -13,10 +13,10 @@ from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
+from randovania.game_description.game_database_view import ResourceDatabaseViewProxy
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
 from randovania.graph.requirement_converter import GraphRequirementConverter
@@ -292,6 +292,19 @@ def _should_create_front_node(database_view: GameDatabaseView, original_node: Do
     return len(connections_to) > 0
 
 
+class GraphResourceDatabaseView(ResourceDatabaseViewProxy):
+    _resource_mapping: dict[int, ResourceInfo]
+
+    def __init__(self, original: ResourceDatabaseView):
+        super().__init__(original)
+        self._resource_mapping = copy.copy(original.get_resource_mapping())
+        self.node_resource_index_offset = max(self._resource_mapping.keys(), default=0) + 1
+
+    @override
+    def get_resource_mapping(self) -> dict[int, ResourceInfo]:
+        return self._resource_mapping
+
+
 def create_patchless_graph(
     database_view: GameDatabaseView,
     static_resources: ResourceCollection,
@@ -301,9 +314,9 @@ def create_patchless_graph(
 ) -> WorldGraph:
     nodes: list[WorldGraphNode] = []
 
-    resource_database = database_view.get_resource_database_view()
-    assert isinstance(resource_database, ResourceDatabase)
-    node_resource_index_offset = resource_database.first_unused_resource_index()
+    resource_database = GraphResourceDatabaseView(database_view.get_resource_database_view())
+    static_resources._resource_database = resource_database
+    node_resource_index_offset = resource_database.node_resource_index_offset
 
     teleporter_networks = collections.defaultdict(list)
     node_replacement = calculate_node_replacement(database_view)
@@ -357,6 +370,7 @@ def create_patchless_graph(
 
     graph = WorldGraph(
         game_enum=database_view.get_game_enum(),
+        resource_database=resource_database,
         victory_condition=GraphRequirementSet.trivial(),
         nodes=nodes,
         node_resource_index_offset=node_resource_index_offset,
@@ -575,6 +589,7 @@ def duplicate_and_adjust_graph_for_patches(
 
     new_graph = WorldGraph(
         game_enum=base_graph.game_enum,
+        resource_database=base_graph.resource_database,
         victory_condition=base_graph.victory_condition,
         nodes=nodes,
         node_resource_index_offset=base_graph.node_resource_index_offset,

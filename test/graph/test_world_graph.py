@@ -84,9 +84,9 @@ def hint_node(request, blank_game_description, blank_world_graph):
     return has_translator, translator, node
 
 
-def test_hint_node_should_collect(hint_node, empty_patches, blank_world_graph):
+def test_hint_node_should_collect(hint_node, blank_world_graph):
     # Setup
-    db = empty_patches.game.resource_database
+    db = blank_world_graph.resource_database
     has_translator, translator, node = hint_node
 
     def col(*args: ResourceInfo):

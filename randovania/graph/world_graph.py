@@ -195,7 +195,6 @@ class WorldGraphNode(BaseWorldGraphNode):
 
         These resources all provide exactly 1 quantity each.
         """
-
         mapping: dict[int, ResourceInfo] = database.get_resource_mapping()
         for index in self.resource_gain_bitmask.get_set_bits():
             yield mapping[index], 1
@@ -252,6 +251,7 @@ class WorldGraph:
     """
 
     game_enum: RandovaniaGame
+    resource_database: ResourceDatabaseView
     victory_condition: GraphRequirementSet
     dangerous_resources: frozenset[ResourceInfo] = dataclasses.field(init=False)
     dangerous_resources_by_index: frozenset[int] = dataclasses.field(init=False)
