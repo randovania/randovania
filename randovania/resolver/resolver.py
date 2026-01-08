@@ -65,16 +65,20 @@ def _is_action_dangerous(action: ResolverAction) -> bool:
 
 
 def _is_dangerous_event(state: State, action: ResolverAction, dangerous_resources: frozenset[ResourceInfo]) -> bool:
-    if action.has_event_resource and not action.dangerous_resources.is_empty():
-        resource_indices = action.resource_gain_bitmask.get_set_bits()
-        if len(resource_indices) > 1:
-            mapping = state.resource_database.get_resource_mapping()
-            for resource_index in resource_indices:
-                resource = mapping[resource_index]
-                if resource.resource_type == ResourceType.EVENT and resource in dangerous_resources:
-                    return True
-        else:
+    if action.dangerous_resources.is_empty() or not action.has_event_resource:
+        return False
+
+    resource_indices = action.resource_gain_bitmask.get_set_bits()
+    if resource_indices.size() <= 1:
+        # Only one resource and one is guaranteed to be an event.
+        return True
+
+    mapping = state.resource_database.get_resource_mapping()
+    for resource_index in resource_indices:
+        resource = mapping[resource_index]
+        if resource.resource_type == ResourceType.EVENT and resource in dangerous_resources:
             return True
+
     return False
 
 
