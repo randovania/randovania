@@ -228,9 +228,9 @@ else:
         def is_subset_of(self, other: BitmaskInt) -> cython.bint:
             return self._mask & other._mask == self._mask
 
-        def get_set_bits(self) -> list[int]:
+        def get_set_bits(self) -> vector[int]:
             """Gets a list of all set bit indices."""
-            result: list[int] = []
+            result: vector[int] = []
 
             mask_str = bin(self._mask)[2:]
             idx = len(mask_str)
