@@ -1,12 +1,14 @@
 import pytest
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.game_database_view import ResourceDatabaseView
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.graph.graph_requirement import GraphRequirementSet, create_requirement_list, create_requirement_set
@@ -15,38 +17,46 @@ from randovania.graph.world_graph import WorldGraph
 
 
 @pytest.fixture
-def converter(blank_world_graph, blank_resource_db):
-    return GraphRequirementConverter(
-        blank_resource_db, blank_world_graph, blank_resource_db.create_resource_collection(), 1.0
-    )
+def converter(blank_world_graph: WorldGraph) -> GraphRequirementConverter:
+    resource_db = blank_world_graph.resource_database
+    return GraphRequirementConverter(resource_db, blank_world_graph, resource_db.create_resource_collection(), 1.0)
 
 
 fake_graph: WorldGraph = None  # type: ignore[assignment]
 
 
-def _res(name: str) -> SimpleResourceInfo:
-    assert len(name) == 1
-    return SimpleResourceInfo(
-        resource_index=ord(name[0]),
-        long_name=name,
-        short_name=name,
-        resource_type=ResourceType.EVENT,
-    )
+class ResourceFactory:
+    def __init__(self, database: ResourceDatabaseView):
+        self.database = database
+
+    def res(self, name: str) -> SimpleResourceInfo:
+        assert len(name) == 1
+        resource = SimpleResourceInfo(
+            resource_index=ord(name[0]),
+            long_name=name,
+            short_name=name,
+            resource_type=ResourceType.EVENT,
+        )
+        self.database.get_resource_mapping()[resource.resource_index] = resource
+        return resource
+
+    def req(self, name: str) -> ResourceRequirement:
+        return ResourceRequirement.simple(self.res(name))
 
 
-def _req(name: str):
-    id_req = ResourceRequirement.simple(_res(name))
-    return id_req
+@pytest.fixture
+def fac(converter: GraphRequirementConverter) -> ResourceFactory:
+    return ResourceFactory(converter.resource_database)
 
 
-def test_convert(converter, resource_collection) -> None:
-    res_a = ResourceRequirement.simple(_res("A"))
-    res_b = ResourceRequirement.simple(_res("B"))
+def test_convert(converter: GraphRequirementConverter, fac: ResourceFactory) -> None:
+    res_a = fac.req("A")
+    res_b = fac.req("B")
 
     def col(*args):
-        c = resource_collection.duplicate()
+        c = converter.resource_database.create_resource_collection()
         for n in args:
-            c.set_resource(_res(n), 1)
+            c.set_resource(fac.res(n), 1)
         return c
 
     assert converter.convert_db(Requirement.trivial()).satisfied(col(), 0)
@@ -100,12 +110,11 @@ def test_convert(converter, resource_collection) -> None:
     assert str(result_4) == "After A and After B"
 
 
-def test_convert_2(converter) -> None:
-    res_a = ResourceRequirement.simple(_res("A"))
-    res_b = ResourceRequirement.simple(_res("B"))
-    res_c = ResourceRequirement.simple(_res("C"))
-    res_d = ResourceRequirement.simple(_res("D"))
-
+def test_convert_2(converter: GraphRequirementConverter, fac: ResourceFactory) -> None:
+    res_a = fac.req("A")
+    res_b = fac.req("B")
+    res_c = fac.req("C")
+    res_d = fac.req("D")
     result = converter.convert_db(
         RequirementAnd(
             [
@@ -129,17 +138,17 @@ def test_convert_2(converter) -> None:
     assert str(result2) == "Impossible"
 
 
-def test_requirement_as_set_0(converter):
+def test_requirement_as_set_0(converter: GraphRequirementConverter, fac: ResourceFactory):
     expected = create_requirement_set(
         [
-            create_requirement_list(converter.resource_database, [_req("A"), _req("B")]),
-            create_requirement_list(converter.resource_database, [_req("A"), _req("C")]),
+            create_requirement_list(converter.resource_database, [fac.req("A"), fac.req("B")]),
+            create_requirement_list(converter.resource_database, [fac.req("A"), fac.req("C")]),
         ]
     )
     req = RequirementAnd(
         [
-            _req("A"),
-            RequirementOr([_req("B"), _req("C")]),
+            fac.req("A"),
+            RequirementOr([fac.req("B"), fac.req("C")]),
         ]
     )
 
@@ -148,20 +157,20 @@ def test_requirement_as_set_0(converter):
     assert result == expected
 
 
-def test_requirement_as_set_1(converter):
+def test_requirement_as_set_1(converter: GraphRequirementConverter, fac: ResourceFactory):
     expected = create_requirement_set(
         [
-            create_requirement_list(converter.resource_database, [_req("A"), _req("B"), _req("D")]),
-            create_requirement_list(converter.resource_database, [_req("A"), _req("B"), _req("E")]),
-            create_requirement_list(converter.resource_database, [_req("A"), _req("C"), _req("D")]),
-            create_requirement_list(converter.resource_database, [_req("A"), _req("C"), _req("E")]),
+            create_requirement_list(converter.resource_database, [fac.req("A"), fac.req("B"), fac.req("D")]),
+            create_requirement_list(converter.resource_database, [fac.req("A"), fac.req("B"), fac.req("E")]),
+            create_requirement_list(converter.resource_database, [fac.req("A"), fac.req("C"), fac.req("D")]),
+            create_requirement_list(converter.resource_database, [fac.req("A"), fac.req("C"), fac.req("E")]),
         ]
     )
     req = RequirementAnd(
         [
-            _req("A"),
-            RequirementOr([_req("B"), _req("C")]),
-            RequirementOr([_req("D"), _req("E")]),
+            fac.req("A"),
+            RequirementOr([fac.req("B"), fac.req("C")]),
+            RequirementOr([fac.req("D"), fac.req("E")]),
         ]
     )
     result = converter.convert_db(req)
@@ -169,16 +178,16 @@ def test_requirement_as_set_1(converter):
     assert result == expected
 
 
-def test_requirement_as_set_2(converter):
+def test_requirement_as_set_2(converter: GraphRequirementConverter, fac: ResourceFactory):
     expected = create_requirement_set(
         [
-            create_requirement_list(converter.resource_database, [_req("A")]),
+            create_requirement_list(converter.resource_database, [fac.req("A")]),
         ]
     )
     req = RequirementAnd(
         [
             Requirement.trivial(),
-            _req("A"),
+            fac.req("A"),
         ]
     )
     result = converter.convert_db(req)
@@ -186,16 +195,16 @@ def test_requirement_as_set_2(converter):
     assert result == expected
 
 
-def test_requirement_as_set_3(converter):
+def test_requirement_as_set_3(converter: GraphRequirementConverter, fac: ResourceFactory):
     expected = create_requirement_set(
         [
-            create_requirement_list(converter.resource_database, [_req("A")]),
+            create_requirement_list(converter.resource_database, [fac.req("A")]),
         ]
     )
     req = RequirementOr(
         [
             Requirement.impossible(),
-            _req("A"),
+            fac.req("A"),
         ]
     )
     result = converter.convert_db(req)
@@ -203,10 +212,10 @@ def test_requirement_as_set_3(converter):
     assert result == expected
 
 
-def test_requirement_as_set_4(converter):
+def test_requirement_as_set_4(converter: GraphRequirementConverter, fac: ResourceFactory):
     expected_bad = create_requirement_set(
         [
-            create_requirement_list(converter.resource_database, [_req("A")]),
+            create_requirement_list(converter.resource_database, [fac.req("A")]),
             create_requirement_list(converter.resource_database, []),
         ]
     )
@@ -218,7 +227,7 @@ def test_requirement_as_set_4(converter):
     req = RequirementOr(
         [
             Requirement.impossible(),
-            _req("A"),
+            fac.req("A"),
             Requirement.trivial(),
         ]
     )
@@ -226,22 +235,23 @@ def test_requirement_as_set_4(converter):
     assert str(result) == str(expected_bad)
     assert result == expected_bad
 
+    assert isinstance(result, GraphRequirementSet)
     result.optimize_alternatives()
     assert str(result) == str(expected_opt)
     assert result == expected_opt
 
 
-def test_requirement_as_set_5(converter):
+def test_requirement_as_set_5(converter: GraphRequirementConverter, fac: ResourceFactory):
     expected = create_requirement_set(
         [
-            create_requirement_list(converter.resource_database, [_req("A"), _req("B"), _req("C")]),
+            create_requirement_list(converter.resource_database, [fac.req("A"), fac.req("B"), fac.req("C")]),
         ]
     )
     req = RequirementAnd(
         [
-            _req("A"),
-            _req("B"),
-            _req("C"),
+            fac.req("A"),
+            fac.req("B"),
+            fac.req("C"),
         ]
     )
     result = converter.convert_db(req)
@@ -249,23 +259,25 @@ def test_requirement_as_set_5(converter):
     assert result == expected
 
 
-def test_requirement_as_set_6(converter):
+def test_requirement_as_set_6(converter: GraphRequirementConverter, fac: ResourceFactory):
     expected = create_requirement_set(
         [
-            create_requirement_list(converter.resource_database, [_req("A"), _req("B"), _req("C")]),
-            create_requirement_list(converter.resource_database, [_req("A"), _req("B"), _req("D"), _req("E")]),
+            create_requirement_list(converter.resource_database, [fac.req("A"), fac.req("B"), fac.req("C")]),
+            create_requirement_list(
+                converter.resource_database, [fac.req("A"), fac.req("B"), fac.req("D"), fac.req("E")]
+            ),
         ]
     )
     req = RequirementAnd(
         [
-            _req("A"),
+            fac.req("A"),
             RequirementAnd(
                 [
-                    _req("B"),
+                    fac.req("B"),
                     RequirementOr(
                         [
-                            _req("C"),
-                            RequirementAnd([_req("D"), _req("E")]),
+                            fac.req("C"),
+                            RequirementAnd([fac.req("D"), fac.req("E")]),
                         ],
                     ),
                 ],
@@ -281,14 +293,15 @@ def test_requirement_as_set_6(converter):
     assert result2 is not expected
 
 
-def test_convert_remove_static(blank_resource_db):
-    res_a = ResourceRequirement.simple(_res("A"))
-    res_b = ResourceRequirement.simple(_res("B"))
+def test_convert_remove_static(fac: ResourceFactory) -> None:
+    blank_resource_db = fac.database
+    res_a = fac.req("A")
+    res_b = fac.req("B")
     res_c = ResourceRequirement.create(blank_resource_db.get_item("Ammo"), 3, False)
     req = RequirementAnd([res_a, res_b, res_c])
 
     static1 = blank_resource_db.create_resource_collection()
-    static1.set_resource(_res("B"), 1)
+    static1.set_resource(fac.res("B"), 1)
     static1.set_resource(blank_resource_db.get_item("Ammo"), 2)
     converter1 = GraphRequirementConverter(blank_resource_db, fake_graph, static1, 1.0)
 
@@ -296,15 +309,15 @@ def test_convert_remove_static(blank_resource_db):
     assert str(result1) == "After A and Missile ≥ 3"
 
     static2 = blank_resource_db.create_resource_collection()
-    static2.set_resource(_res("A"), 0)
-    static2.set_resource(_res("B"), 1)
+    static2.set_resource(fac.res("A"), 0)
+    static2.set_resource(fac.res("B"), 1)
     converter2 = GraphRequirementConverter(blank_resource_db, fake_graph, static2, 1.0)
 
     result2 = converter2.convert_db(req)
     assert str(result2) == "Impossible"
 
 
-def test_convert_remove_static_with_damage(echoes_resource_database):
+def test_convert_remove_static_with_damage(echoes_resource_database: ResourceDatabase) -> None:
     db = echoes_resource_database
     requirement = RequirementOr(
         [
@@ -330,7 +343,7 @@ def test_convert_remove_static_with_damage(echoes_resource_database):
     assert str(result) == "Dark World Damage ≥ 15"
 
 
-def test_convert_node_reference(converter):
+def test_convert_node_reference(converter: GraphRequirementConverter) -> None:
     ni = NodeIdentifier.create("Intro", "Starting Area", "Spawn Point")
     req = NodeRequirement(ni)
 
@@ -338,7 +351,7 @@ def test_convert_node_reference(converter):
     assert str(result) == "Intro/Starting Area/Spawn Point"
 
 
-def test_convert_template(converter):
+def test_convert_template(converter: GraphRequirementConverter) -> None:
     req = RequirementAnd(
         [
             RequirementTemplate("Can Jump"),
@@ -350,7 +363,7 @@ def test_convert_template(converter):
     assert str(result) == "(Jump) or (Double Jump)"
 
 
-def test_isolate(prime1_resource_database):
+def test_isolate(prime1_resource_database: ResourceDatabase) -> None:
     req = RequirementAnd(
         [
             RequirementOr(

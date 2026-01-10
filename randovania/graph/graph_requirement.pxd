@@ -1,5 +1,5 @@
-from cython.cimports.libcpp.unordered_map import unordered_map
 from cython.cimports.libcpp.vector import vector
+from cython.cimports.libcpp.utility import pair
 from cython.cimports.randovania.game_description.resources.resource_collection import ResourceCollection
 from cython.cimports.randovania.lib.bitmask import Bitmask
 from cython.cimports.randovania.lib.cython_helper import PyRef
@@ -10,14 +10,14 @@ cimport cython
 cdef class GraphRequirementList:
     cdef Bitmask _set_bitmask
     cdef Bitmask _negate_bitmask
-    cdef unordered_map[size_t, int] _other_resources
-    cdef unordered_map[size_t, int] _damage_resources
+    cdef vector[pair[size_t, int]] _other_resources
+    cdef vector[pair[size_t, int]] _damage_resources
 
     cdef object _resource_db
     cdef bint _frozen
 
     @staticmethod
-    cdef GraphRequirementList from_components(object resource_db, Bitmask set_bitmask, Bitmask negate_bitmask, unordered_map[size_t, int] other_resources, unordered_map[size_t, int] damage_resources)
+    cdef GraphRequirementList from_components(object resource_db, Bitmask set_bitmask, Bitmask negate_bitmask, vector[pair[size_t, int]] other_resources, vector[pair[size_t, int]] damage_resources)
 
     @staticmethod
     cdef GraphRequirementList create_empty(object resource_db)
@@ -26,6 +26,8 @@ cdef class GraphRequirementList:
     cdef tuple _complexity_key_for_simplify(self)
     cdef void _simplify_handle_resource(self, size_t resource_index, int amount, bint negate, object progressive_item_info)
     cdef int _single_resource_optimize_logic(self, Bitmask single_req_mask)
+    cdef int _find_other_idx(self, int) noexcept
+    cdef int _find_damage_idx(self, int) noexcept
 
     cpdef bint equals_to(self, GraphRequirementList other)
     cpdef bint is_frozen(self)

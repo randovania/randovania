@@ -11,7 +11,7 @@ from randovania.game_description.resources.location_category import LocationCate
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup, create_standard_pickup
 from randovania.generator.pickup_pool.standard_pickup import find_ammo_for
-from randovania.graph import world_graph
+from randovania.graph import world_graph_factory
 from randovania.graph.state import State
 from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -32,6 +32,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceQuantity
     from randovania.generator.pickup_pool import PoolResults
+    from randovania.graph import world_graph
     from randovania.graph.world_graph import WorldGraph
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
@@ -264,12 +265,12 @@ class Bootstrap[Configuration: BaseConfiguration]:
             {},
             (),
             self.create_damage_state(game, configuration).apply_collected_resource_difference(
-                resources, game.get_resource_database_view().create_resource_collection()
+                resources, graph.resource_database.create_resource_collection()
             ),
             graph.node_identifier_to_node[patches.starting_location],
             patches,
             None,
-            game.resource_database,
+            graph.resource_database,
             game.region_list,
             hint_state=None,
         )
@@ -294,20 +295,19 @@ class Bootstrap[Configuration: BaseConfiguration]:
             enabled_pickups(game, configuration), game, configuration.logical_pickup_placement
         )
 
-        static_resources = self.starting_resources_for_patches(
-            configuration, game.get_resource_database_view(), patches
-        )
-        graph = world_graph.create_graph(
+        graph = world_graph_factory.create_graph(
             database_view=game,
             patches=patches,
-            static_resources=static_resources,
+            static_resources=self.starting_resources_for_patches(
+                configuration, game.get_resource_database_view(), patches
+            ),
             damage_multiplier=configuration.damage_strictness.value,
             victory_condition=game.victory_condition,
             flatten_to_set_on_patch=game.region_list.flatten_to_set_on_patch,
         )
 
         starting_state = self.calculate_starting_state(
-            static_resources,
+            graph.converter.static_resources,
             graph,
             game,
             configuration,

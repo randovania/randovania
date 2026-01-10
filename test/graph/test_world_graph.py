@@ -1,14 +1,13 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
-from unittest.mock import MagicMock
 
 import pytest
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.graph import world_graph
+from randovania.graph import world_graph_factory
 from randovania.graph.graph_requirement import create_requirement_list, create_requirement_set
 from randovania.graph.world_graph import WorldGraphNodeConnection
 
@@ -21,7 +20,7 @@ def test_create_graph(
     blank_game_patches,
 ) -> None:
     starting_resources = blank_game_description.resource_database.create_resource_collection()
-    graph = world_graph.create_graph(
+    graph = world_graph_factory.create_graph(
         blank_game_description,
         blank_game_patches,
         starting_resources,
@@ -85,11 +84,10 @@ def hint_node(request, blank_game_description, blank_world_graph):
     return has_translator, translator, node
 
 
-def test_hint_node_should_collect(hint_node, empty_patches, blank_world_graph):
+def test_hint_node_should_collect(hint_node, blank_world_graph):
     # Setup
-    db = empty_patches.game.resource_database
+    db = blank_world_graph.resource_database
     has_translator, translator, node = hint_node
-    MagicMock()
 
     def col(*args: ResourceInfo):
         return ResourceCollection.from_dict(db, dict.fromkeys(args, 1))
@@ -104,4 +102,4 @@ def test_hint_node_should_collect(hint_node, empty_patches, blank_world_graph):
     assert node.has_all_resources(col(resource))
     assert node.has_all_resources(col(resource, translator))
 
-    assert node.resource_gain == [(resource, 1)]
+    assert list(node.resource_gain(db)) == [(resource, 1)]
