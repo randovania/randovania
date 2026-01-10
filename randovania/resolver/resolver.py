@@ -69,7 +69,7 @@ def _is_dangerous_event(state: State, action: ResolverAction, dangerous_resource
         return False
 
     resource_indices = action.resource_gain_bitmask.get_set_bits()
-    if resource_indices.size() <= 1:
+    if len(resource_indices) <= 1:
         # Only one resource and one is guaranteed to be an event.
         return True
 

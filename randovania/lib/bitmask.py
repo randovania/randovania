@@ -143,6 +143,7 @@ if cython.compiled:
         def get_set_bits(self) -> vector[cython.size_t]:
             """Gets a list of all set bit indices."""
             result: vector[cython.size_t] = vector[cython.size_t]()
+            # For non-Cython callers, this results in a regular list
 
             idx: cython.size_t
             for idx in range(self._masks.size()):
@@ -228,9 +229,9 @@ else:
         def is_subset_of(self, other: BitmaskInt) -> cython.bint:
             return self._mask & other._mask == self._mask
 
-        def get_set_bits(self) -> vector[int]:
+        def get_set_bits(self) -> list[int]:
             """Gets a list of all set bit indices."""
-            result: vector[int] = []
+            result: list[int] = []
 
             mask_str = bin(self._mask)[2:]
             idx = len(mask_str)
