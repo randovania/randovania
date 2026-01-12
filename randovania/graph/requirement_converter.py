@@ -33,7 +33,7 @@ class GraphRequirementConverter:
         self.graph = graph
         self.static_resources = static_resources
         self.damage_multiplier = damage_multiplier
-        self._cache: dict[Requirement, GraphRequirementSet] = {}
+        self._cache: dict[Requirement | int, GraphRequirementSet] = {}
         self._template_cache: dict[str, list[GraphRequirementList] | None] = {}
 
     def resource_for_node(self, identifier: NodeIdentifier) -> ResourceInfo:
@@ -151,19 +151,27 @@ class GraphRequirementConverter:
             return result
 
     def convert_db(self, requirement: Requirement) -> GraphRequirementSet:
+        if id(requirement) in self._cache:
+            return self._cache[id(requirement)]
+
         if requirement in self._cache:
             return self._cache[requirement]
 
-        result = self._internal_convert(requirement)
-        if isinstance(result, GraphRequirementList):
-            req_set = GraphRequirementSet()
-            req_set.add_alternative(result)
-            req_set.freeze()
-            self._cache[requirement] = req_set
-            return req_set
+        inner_result = self._internal_convert(requirement)
+        if isinstance(inner_result, GraphRequirementList):
+            result = GraphRequirementSet()
+            result.add_alternative(inner_result)
+            result.freeze()
+            if result.is_trivial():
+                result = GraphRequirementSet.trivial()
         else:
+            result = inner_result
             if not result.is_frozen():
                 result.optimize_alternatives()
                 result.freeze()
-            self._cache[requirement] = result
-            return result
+
+            if result.is_trivial():
+                result = GraphRequirementSet.trivial()
+
+        self._cache[id(requirement)] = self._cache[requirement] = result
+        return result

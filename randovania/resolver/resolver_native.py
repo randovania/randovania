@@ -15,7 +15,6 @@ if typing.TYPE_CHECKING:
     import Cython as cython
 
     from randovania.graph.state import State
-    from randovania.graph.world_graph import WorldGraphNode, WorldGraphNodeConnection
     from randovania.lib.bitmask import Bitmask
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
@@ -34,6 +33,7 @@ if cython.compiled:
             ResourceCollection,  # noqa: TC002
         )
         from cython.cimports.randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
+        from cython.cimports.randovania.graph.world_graph import BaseWorldGraphNode, WorldGraphNodeConnection
 else:
     from randovania.graph.graph_requirement import (
         GraphRequirementList,
@@ -46,6 +46,7 @@ else:
 
     if typing.TYPE_CHECKING:
         from randovania.game_description.resources.resource_collection import ResourceCollection
+        from randovania.graph.world_graph import BaseWorldGraphNode, WorldGraphNodeConnection
 
 
 class ProcessNodesResponse(typing.NamedTuple):
@@ -181,7 +182,7 @@ def resolver_reach_process_nodes(
     logic: Logic,
     initial_state: State,
 ) -> ProcessNodesResponse:
-    all_nodes: Sequence[WorldGraphNode] = logic.all_nodes
+    all_nodes: Sequence[BaseWorldGraphNode] = logic.all_nodes
     resources: ResourceCollection = initial_state.resources
     initial_game_state: EnergyTankDamageState = initial_state.damage_state  # type: ignore[assignment]
     resource_bitmask: Bitmask = resources.resource_bitmask
@@ -228,7 +229,7 @@ def resolver_reach_process_nodes(
         damage_health: cython.float = damage_health_int
         state.game_states_to_check[node_index] = -1
 
-        node: WorldGraphNode = all_nodes[node_index]
+        node: BaseWorldGraphNode = all_nodes[node_index]
         node_heal: cython.bint = node.heal
         current_game_state: DamageState
 
@@ -346,6 +347,7 @@ def build_satisfiable_requirements(
     data: list[GraphRequirementList] = []
 
     additional_requirements_list: list[GraphRequirementSet] = logic.additional_requirements
+    trivial_set: GraphRequirementSet = GraphRequirementSet.trivial()
 
     for node_index, reqs in requirements_by_node.items():
         set_param: set[GraphRequirementList] = set()
@@ -355,17 +357,25 @@ def build_satisfiable_requirements(
             entry: tuple[GraphRequirementSet, GraphRequirementSet] = reqs[idx]
             req_a: GraphRequirementSet = entry[0]
             req_b: GraphRequirementSet = entry[1]
-            for a_ref in req_a._alternatives:
-                for b_ref in req_b._alternatives:
-                    new_list = a_ref.get().copy_then_and_with(b_ref.get())
-                    if new_list is not None:
-                        set_param.add(new_list)
+            # req_a is never trivial, but req_b mostly is
+            if req_b is trivial_set:
+                for a_ref in req_a._alternatives:
+                    set_param.add(a_ref.get())
+            else:
+                for a_ref in req_a._alternatives:
+                    for b_ref in req_b._alternatives:
+                        new_list = a_ref.get().copy_then_and_with(b_ref.get())
+                        if new_list is not None:
+                            set_param.add(new_list)
 
         additional: GraphRequirementSet = additional_requirements_list[node_index]
-        for a in set_param:
-            for b in additional._alternatives:
-                new_list = a.copy_then_and_with(b.get())
-                if new_list is not None:
-                    data.append(new_list)
+        if additional is trivial_set:
+            data.extend(set_param)
+        else:
+            for a in set_param:
+                for b in additional._alternatives:
+                    new_list = a.copy_then_and_with(b.get())
+                    if new_list is not None:
+                        data.append(new_list)
 
     return frozenset(data)

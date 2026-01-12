@@ -29,7 +29,7 @@ else:
 
 if cython.compiled:
     if not typing.TYPE_CHECKING:
-        from cython.cimports.libcpp.unordered_map import unordered_map
+        from cython.cimports.libcpp.utility import pair
         from cython.cimports.libcpp.vector import vector
         from cython.cimports.randovania.game_description.resources.resource_collection import (
             ResourceCollection,  # noqa: TC002
@@ -37,8 +37,8 @@ if cython.compiled:
         from cython.cimports.randovania.lib.bitmask import Bitmask
 else:
     from randovania.lib.bitmask import Bitmask
+    from randovania.lib.cython_helper import Pair as pair
     from randovania.lib.cython_helper import PyImmutableRef, PyRef
-    from randovania.lib.cython_helper import UnorderedMap as unordered_map
     from randovania.lib.cython_helper import Vector as vector
 
     if typing.TYPE_CHECKING:
@@ -85,8 +85,8 @@ class GraphRequirementList:
     def __init__(self, resource_db: ResourceDatabaseView | None) -> None:
         self._set_bitmask = Bitmask.create_native()
         self._negate_bitmask = Bitmask.create_native()
-        self._other_resources = unordered_map[cython.size_t, cython.int]()
-        self._damage_resources = unordered_map[cython.size_t, cython.int]()
+        self._other_resources = vector[pair[cython.size_t, cython.int]]()
+        self._damage_resources = vector[pair[cython.size_t, cython.int]]()
 
         self._resource_db = resource_db
         self._frozen = False
@@ -97,15 +97,19 @@ class GraphRequirementList:
         resource_db: ResourceDatabaseView | None,
         set_bitmask: Bitmask,
         negate_bitmask: Bitmask,
-        other_resources: unordered_map[cython.size_t, cython.int],
-        damage_resources: unordered_map[cython.size_t, cython.int],
+        other_resources: vector[pair[cython.size_t, cython.int]],
+        damage_resources: vector[pair[cython.size_t, cython.int]],
     ) -> GraphRequirementList:
         """Alternative constructor that accepts all components directly."""
         result: GraphRequirementList = GraphRequirementList.__new__(GraphRequirementList)
         result._set_bitmask = set_bitmask
         result._negate_bitmask = negate_bitmask
-        result._other_resources = other_resources
-        result._damage_resources = damage_resources
+        if cython.compiled:
+            result._other_resources = other_resources
+            result._damage_resources = damage_resources
+        else:
+            result._other_resources = other_resources.copy_elements()
+            result._damage_resources = damage_resources.copy_elements()
         result._resource_db = resource_db
         result._frozen = False
         return result
@@ -118,8 +122,8 @@ class GraphRequirementList:
         result._set_bitmask = Bitmask.create_native()
         result._negate_bitmask = Bitmask.create_native()
         if not cython.compiled:
-            result._other_resources = unordered_map[cython.size_t, cython.int]()
-            result._damage_resources = unordered_map[cython.size_t, cython.int]()
+            result._other_resources = vector[pair[cython.size_t, cython.int]]()
+            result._damage_resources = vector[pair[cython.size_t, cython.int]]()
         result._resource_db = resource_db
         result._frozen = False
         return result
@@ -176,15 +180,15 @@ class GraphRequirementList:
                 result ^= hash_contribution
         else:
             # Pure Python mode: use simple tuple hashing
-            result ^= hash(tuple(sorted(self._other_resources.items())))
-            result ^= hash(tuple(sorted(self._damage_resources.items()))) * 37
+            result ^= hash(tuple(sorted((entry.first, entry.second) for entry in self._other_resources)))
+            result ^= hash(tuple(sorted((entry.first, entry.second) for entry in self._damage_resources))) * 37
 
         return hash(result)
 
     def _resource_mapping(self) -> dict[int, ResourceInfo]:
         if self._resource_db is None:
             return {}
-        return getattr(self._resource_db, "_resource_mapping")
+        return self._resource_db.get_resource_mapping()
 
     @cython.ccall
     def is_frozen(self) -> cython.bint:
@@ -217,18 +221,24 @@ class GraphRequirementList:
         result = GraphRequirementList.create_empty(self._resource_db)
         result._set_bitmask = self._set_bitmask.copy()
         result._negate_bitmask = self._negate_bitmask.copy()
-        result._other_resources = copy.copy(self._other_resources)
-        result._damage_resources = copy.copy(self._damage_resources)
+        if cython.compiled:
+            result._other_resources = self._other_resources
+            result._damage_resources = self._damage_resources
+        else:
+            result._other_resources = self._other_resources.copy_elements()
+            result._damage_resources = self._damage_resources.copy_elements()
 
         return result
 
     def __str__(self) -> str:
         mapping = self._resource_mapping()
 
+        other_resources = {entry.first for entry in self._other_resources}
+
         parts = sorted(
             f"{mapping[resource_index].resource_type.non_negated_prefix}{mapping[resource_index]}"
             for resource_index in self._set_bitmask.get_set_bits()
-            if not self._other_resources.contains(resource_index)
+            if resource_index not in other_resources
         )
         parts.extend(
             sorted(
@@ -243,11 +253,37 @@ class GraphRequirementList:
         else:
             return "Trivial"
 
+    @cython.cfunc
+    @cython.exceptval(check=False)  # type: ignore[call-arg]
+    def _find_other_idx(self, resource_index: cython.int) -> cython.int:
+        """
+        Searches self._other_resources for an entry with the given resource_index.
+        Returns the index of the found entry, or -1 if not.
+        """
+        i: cython.int
+        for i in range(self._other_resources.size()):
+            if self._other_resources[i].first == resource_index:
+                return i
+        return -1
+
+    @cython.cfunc
+    @cython.exceptval(check=False)  # type: ignore[call-arg]
+    def _find_damage_idx(self, resource_index: cython.int) -> cython.int:
+        """
+        Searches self._damage_resources for an entry with the given resource_index.
+        Returns the index of the found entry, or -1 if not.
+        """
+        i: cython.int
+        for i in range(self._damage_resources.size()):
+            if self._damage_resources[i].first == resource_index:
+                return i
+        return -1
+
     @cython.ccall
     @cython.inline
     def num_requirements(self) -> cython.int:
         """Returns the total number of resource requirements in this list."""
-        return self._set_bitmask.num_set_bits() + self._negate_bitmask.num_set_bits() + len(self._damage_resources)
+        return self._set_bitmask.num_set_bits() + self._negate_bitmask.num_set_bits() + self._damage_resources.size()
 
     @cython.ccall
     @cython.inline
@@ -299,8 +335,9 @@ class GraphRequirementList:
         :return: A tuple, containing the amount and if it's a negate requirement.
         """
 
-        if self._other_resources.contains(resource_index):
-            return self._other_resources[resource_index], False
+        for entry in self._other_resources:
+            if entry.first == resource_index:
+                return entry.second, False
 
         if self._set_bitmask.is_set(resource_index):
             return 1, False
@@ -308,8 +345,10 @@ class GraphRequirementList:
         if self._negate_bitmask.is_set(resource_index):
             return 1, True
 
-        if include_damage and self._damage_resources.contains(resource_index):
-            return self._damage_resources[resource_index], False
+        if include_damage:
+            for entry in self._damage_resources:
+                if entry.first == resource_index:
+                    return entry.second, False
 
         return 0, False
 
@@ -366,17 +405,20 @@ class GraphRequirementList:
         self._set_bitmask.union(merge._set_bitmask)
         self._negate_bitmask.union(merge._negate_bitmask)
 
+        idx: cython.int
         for entry in merge._other_resources:
-            if self._other_resources.contains(entry.first):
-                self._other_resources[entry.first] = max(self._other_resources[entry.first], entry.second)
+            idx = self._find_other_idx(entry.first)
+            if idx != -1:
+                self._other_resources[idx].second = max(self._other_resources[idx].second, entry.second)
             else:
-                self._other_resources[entry.first] = entry.second
+                self._other_resources.push_back(pair[cython.size_t, cython.int](entry))
 
         for entry in merge._damage_resources:
-            if self._damage_resources.contains(entry.first):
-                self._damage_resources[entry.first] += entry.second
+            idx = self._find_damage_idx(entry.first)
+            if idx != -1:
+                self._damage_resources[idx].second += entry.second
             else:
-                self._damage_resources[entry.first] = entry.second
+                self._damage_resources.push_back(pair[cython.size_t, cython.int](entry))
 
         return True
 
@@ -390,22 +432,13 @@ class GraphRequirementList:
         if db is None:
             db = right._resource_db
 
-        if cython.compiled:
-            result = GraphRequirementList.from_components(
-                db,
-                self._set_bitmask.copy(),
-                self._negate_bitmask.copy(),
-                self._other_resources,
-                self._damage_resources,
-            )
-        else:
-            result = GraphRequirementList.from_components(
-                db,
-                self._set_bitmask.copy(),
-                self._negate_bitmask.copy(),
-                copy.copy(self._other_resources),
-                copy.copy(self._damage_resources),
-            )
+        result = GraphRequirementList.from_components(
+            db,
+            self._set_bitmask.copy(),
+            self._negate_bitmask.copy(),
+            self._other_resources,
+            self._damage_resources,
+        )
 
         # Copy and union bitmasks
         result._set_bitmask.union(right._set_bitmask)
@@ -415,17 +448,20 @@ class GraphRequirementList:
         if result._set_bitmask.share_at_least_one_bit(result._negate_bitmask):
             return None
 
+        idx: cython.int
         for entry in right._other_resources:
-            if result._other_resources.contains(entry.first):
-                result._other_resources[entry.first] = max(result._other_resources[entry.first], entry.second)
+            idx = result._find_other_idx(entry.first)
+            if idx != -1:
+                result._other_resources[idx].second = max(result._other_resources[idx].second, entry.second)
             else:
-                result._other_resources[entry.first] = entry.second
+                result._other_resources.push_back(pair[cython.size_t, cython.int](entry))
 
         for entry in right._damage_resources:
-            if result._damage_resources.contains(entry.first):
-                result._damage_resources[entry.first] += entry.second
+            idx = result._find_damage_idx(entry.first)
+            if idx != -1:
+                result._damage_resources[idx].second += entry.second
             else:
-                result._damage_resources[entry.first] = entry.second
+                result._damage_resources.push_back(pair[cython.size_t, cython.int](entry))
 
         return result
 
@@ -462,7 +498,6 @@ class GraphRequirementList:
         Adds a new resource requirement to this.
         If negate is set, amount must be 1.
         """
-        self._resource_mapping()[resource.resource_index] = resource
         if resource.resource_type.is_damage():
             self.add_damage(resource.resource_index, amount)
         else:
@@ -493,18 +528,20 @@ class GraphRequirementList:
 
         target_bitmask.set_bit(resource_index)
         if amount > 1:
-            if self._other_resources.contains(resource_index):
-                self._other_resources[resource_index] = max(self._other_resources[resource_index], amount)
+            idx: cython.int = self._find_other_idx(resource_index)
+            if idx != -1:
+                self._other_resources[idx].second = max(self._other_resources[idx].second, amount)
             else:
-                self._other_resources[resource_index] = amount
+                self._other_resources.push_back(pair[cython.size_t, cython.int](resource_index, amount))
 
     @cython.ccall
     def add_damage(self, resource_index: cython.int, amount: cython.int) -> cython.void:
         self._check_can_write()
-        if self._damage_resources.contains(resource_index):
-            self._damage_resources[resource_index] += amount
+        idx: cython.int = self._find_damage_idx(resource_index)
+        if idx != -1:
+            self._damage_resources[idx].second += amount
         else:
-            self._damage_resources[resource_index] = amount
+            self._damage_resources.push_back(pair[cython.size_t, cython.int](resource_index, amount))
 
     @cython.ccall
     def isolate_damage_requirements(self, resources: ResourceCollection) -> GraphRequirementList | None:
@@ -528,7 +565,7 @@ class GraphRequirementList:
                 return None
 
         if self._damage_resources.empty():
-            return _trivial_list
+            return TRIVIAL_LIST
 
         result = GraphRequirementList.create_empty(self._resource_db)
 
@@ -536,7 +573,7 @@ class GraphRequirementList:
             if resources.get_damage_reduction(entry.first) == 0:
                 return GraphRequirementList.create_empty(self._resource_db)
 
-            result._damage_resources[entry.first] = entry.second
+            result._damage_resources.push_back(pair[cython.size_t, cython.int](entry))
         return result
 
     @cython.ccall
@@ -553,14 +590,17 @@ class GraphRequirementList:
         if not subset_req._negate_bitmask.is_subset_of(self._negate_bitmask):
             return False
 
+        idx: cython.int
         # Check _other_resources - superset must have >= amounts for all resources in subset
-        for entry in subset_req._other_resources:
-            if not self._other_resources.contains(entry.first) or self._other_resources[entry.first] < entry.second:
+        for subset_entry in subset_req._other_resources:
+            idx = self._find_other_idx(subset_entry.first)
+            if idx == -1 or self._other_resources[idx].second < subset_entry.second:
                 return False
 
         # Check _damage_resources - superset must have >= amounts for all damage in subset
-        for entry in subset_req._damage_resources:
-            if not self._damage_resources.contains(entry.first) or self._damage_resources[entry.first] < entry.second:
+        for subset_entry in subset_req._damage_resources:
+            idx = self._find_damage_idx(subset_entry.first)
+            if idx == -1 or self._damage_resources[idx].second < subset_entry.second:
                 return False
 
         # Remove duplicates
@@ -598,7 +638,11 @@ class GraphRequirementList:
         something_set: cython.bint = False
 
         for resource_index in self._set_bitmask.get_set_bits():
-            amount = self._other_resources[resource_index] if self._other_resources.contains(resource_index) else 1
+            amount: cython.int = 1
+            for self_entry in self._other_resources:
+                if self_entry.first == resource_index:
+                    amount = self_entry.second
+                    break
             if resources.get_index(resource_index) >= amount:
                 continue
             result._simplify_handle_resource(resource_index, amount, False, progressive_item_info)
@@ -615,7 +659,7 @@ class GraphRequirementList:
         if self.damage(resources) >= health_for_damage_requirements:
             something_set = True
             for entry in self._damage_resources:
-                result._damage_resources[entry.first] = entry.second
+                result._damage_resources.push_back(pair[cython.size_t, cython.int](entry))
 
         if not something_set:
             return None
@@ -645,8 +689,8 @@ class GraphRequirementList:
             return 2
 
 
-_trivial_list: GraphRequirementList = GraphRequirementList(None)
-_trivial_list.freeze()
+TRIVIAL_LIST: GraphRequirementList = GraphRequirementList(None)
+TRIVIAL_LIST.freeze()
 
 
 @cython.final
@@ -747,6 +791,9 @@ class GraphRequirementSet:
     # @cython.exceptval(check=False)
     def satisfied(self, resources: ResourceCollection, energy: cython.float) -> cython.bint:
         """Checks if the given resources and health satisfies at least one alternative."""
+
+        if self is TRIVIAL_SET:
+            return True
 
         if cython.compiled:
             for alt in self._alternatives:
@@ -907,10 +954,7 @@ class GraphRequirementSet:
         """
         A GraphRequirementSet that is always satisfied.
         """
-        r = cls()
-        r.add_alternative(GraphRequirementList(None))
-        r.freeze()
-        return r
+        return TRIVIAL_SET
 
     @cython.ccall
     def is_trivial(self) -> cython.bint:
@@ -925,9 +969,7 @@ class GraphRequirementSet:
         A GraphRequirementSet that is never satisfied.
         """
         # No alternatives makes satisfied always return False
-        r = cls()
-        r.freeze()
-        return r
+        return IMPOSSIBLE_SET
 
     @cython.ccall
     def is_impossible(self) -> cython.bint:
@@ -959,13 +1001,44 @@ class GraphRequirementSet:
 
             if isolated is not None:
                 if isolated.is_trivial():
-                    result._alternatives.clear()
-                    result._alternatives.push_back(GraphRequirementListRef(isolated))
-                    break
+                    return TRIVIAL_SET
                 else:
                     result._alternatives.push_back(GraphRequirementListRef(isolated))
 
         return result
+
+    def get_all_used_resources(self) -> tuple[set[int], set[int]]:
+        """
+        :return: A tuple with two sets of resource indices.
+        The first is all resources used by any of the alternatives.
+        The second is all resources used in at least one negate requirement.
+        """
+        set_resources: set[int] = set()
+        resources_with_negate: set[int] = set()
+
+        for ref in self._alternatives:
+            alternative: GraphRequirementList = cython.cast(GraphRequirementList, ref.raw())
+
+            for resource_index in alternative._set_bitmask.get_set_bits():
+                set_resources.add(resource_index)
+
+            for resource_index in alternative._negate_bitmask.get_set_bits():
+                set_resources.add(resource_index)
+                resources_with_negate.add(resource_index)
+
+            for entry in alternative._damage_resources:
+                set_resources.add(entry.first)
+
+        return set_resources, resources_with_negate
+
+
+TRIVIAL_SET = GraphRequirementSet()
+TRIVIAL_SET.add_alternative(TRIVIAL_LIST)
+TRIVIAL_SET.freeze()
+
+# No alternatives makes satisfied always return False
+IMPOSSIBLE_SET = GraphRequirementSet()
+IMPOSSIBLE_SET.freeze()
 
 
 def create_requirement_list(

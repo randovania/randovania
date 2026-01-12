@@ -45,6 +45,7 @@ def test_possible_actions_with_event():
     event = MagicMock(spec=WorldGraphNode, name="event node")
     event.node_index = 0
     event.has_all_resources.return_value = False
+    event.requirement_to_collect = MagicMock()
 
     logic.all_nodes = [event]
     damage_state = MagicMock()
