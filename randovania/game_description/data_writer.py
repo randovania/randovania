@@ -327,7 +327,7 @@ def write_node(node: Node) -> dict:
         data["requirement_to_activate"] = write_requirement(node.requirement_to_activate)
 
     elif isinstance(node, RemoteCollectionNode):
-        data["node_type"] = "remote_activation"
+        data["node_type"] = "remote_collection"
         data.update(common_fields)
         data["remote_identifier"] = node.remote_node.as_json
 

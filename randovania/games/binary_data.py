@@ -223,7 +223,7 @@ ConstructNode = NodeAdapter(
             configurable_node=5,
             hint=6,
             teleporter_network=7,
-            remote_activation=8,
+            remote_collection=8,
         ),
         data=Switch(
             lambda this: this.node_type,
@@ -267,7 +267,7 @@ ConstructNode = NodeAdapter(
                     network=String,
                     requirement_to_activate=ConstructRequirement,
                 ),
-                "remote_activation": Struct(
+                "remote_collection": Struct(
                     **NodeBaseFields,
                     remote_identifier=ConstructNodeIdentifier,
                 ),

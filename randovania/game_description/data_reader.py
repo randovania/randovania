@@ -393,7 +393,7 @@ class RegionReader:
                     requirement_to_activate=read_requirement(data["requirement_to_activate"], self.resource_database),
                 )
 
-            elif node_type == "remote_activation":
+            elif node_type == "remote_collection":
                 return RemoteCollectionNode(
                     **generic_args, remote_node=NodeIdentifier.from_json(data["remote_identifier"])
                 )
