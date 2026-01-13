@@ -526,6 +526,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "PowerBombsWithoutBombs": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
             "InstantUnmorph": self.configuration.instant_morph,
+            "NerfGerons": self.configuration.adjusted_geron_weaknesses,
+            "UseAlternativeHudHealthLayout": self.cosmetic_patches.alt_health_display,
             "UnexploredMap": self.cosmetic_patches.starting_map,
             "RevealHiddenTiles": self.cosmetic_patches.reveal_blocks,
             "StereoDefault": self.cosmetic_patches.stereo_default,

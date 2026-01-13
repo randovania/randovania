@@ -4,12 +4,27 @@ import subprocess
 
 parser = argparse.ArgumentParser()
 extras_group = parser.add_mutually_exclusive_group()
-extras_group.add_argument("--thin", action="store_true")
+extras_group.add_argument("--thin", action="store_false", dest="full")
 extras_group.add_argument("--full", action="store_true")
 native_group = parser.add_mutually_exclusive_group()
-native_group.add_argument("--pure", action="store_true", help="Use the pure python mode. Default.")
-native_group.add_argument("--native", action="store_true", help="Requests that native code is compiled.")
-native_group.add_argument("--trace", action="store_true", help="Enables native mode with line tracing for coverage.")
+native_group.add_argument("--pure", action="store_const", const="pure", dest="mode", help="Use the pure python mode.")
+native_group.add_argument(
+    "--native", action="store_const", const="native", dest="mode", help="Requests that native code is compiled."
+)
+native_group.add_argument(
+    "--trace",
+    action="store_const",
+    const="trace",
+    dest="mode",
+    help="Enables native mode with line tracing for coverage.",
+)
+native_group.add_argument(
+    "--keep-previous",
+    action="store_const",
+    const=None,
+    dest="mode",
+    help="Keeps the previous native mode specified, or pure if never set. Default.",
+)
 args = parser.parse_args()
 
 if args.full:
@@ -26,15 +41,17 @@ Please follow the instructions in the README:
 """)
     raise SystemExit(1)
 
-enable_file = pathlib.Path("randovania/enable-cython")
-if args.pure:
-    enable_file.unlink(missing_ok=True)
-elif args.trace:
-    enable_file.write_bytes(b"linetrace")
-elif args.native:
-    enable_file.write_bytes(b"")
-else:
-    raise SystemExit("Either --pure, --native or --trace must be specified.")
+if args.mode is not None:
+    enable_file = pathlib.Path("randovania/enable-cython")
+    if args.mode == "pure":
+        enable_file.unlink(missing_ok=True)
+    elif args.mode == "trace":
+        enable_file.write_bytes(b"linetrace")
+    elif args.mode == "native":
+        enable_file.write_bytes(b"")
+    else:
+        print("Either --pure, --native or --trace must be specified.")
+        raise SystemExit(1)
 
 try:
     subprocess.run(

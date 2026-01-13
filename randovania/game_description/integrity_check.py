@@ -1,16 +1,13 @@
 from __future__ import annotations
 
 import re
-import typing
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.remote_activation_node import RemoteActivationNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
@@ -24,25 +21,17 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.dock import DockType, DockWeakness
+    from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.requirement_list import RequirementList
     from randovania.game_description.resources.pickup_index import PickupIndex
-    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_suffix_re = re.compile(r" \([^()]+?\)$")
 layer_name_re = re.compile(r"[a-zA-Z0-9 _-]+")
-
-
-def _create_node_context(game: GameDescription) -> NodeContext:
-    return NodeContext(
-        patches=GamePatches.create_from_game(game, 0, typing.cast("BaseConfiguration", None)),
-        current_resources=game.resource_database.create_resource_collection(),
-        database=game.resource_database,
-        node_provider=game.region_list,
-    )
 
 
 def raw_expected_dock_names(
@@ -163,9 +152,6 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
 
 
 def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
-    fake_context = NodeContext(
-        None, game.resource_database.create_resource_collection(), game.resource_database, game.region_list
-    )
     nodes_with_paths_in: set[Node] = set()
     for node in area.nodes:
         nodes_with_paths_in.update(area.connections[node].keys())
@@ -184,22 +170,14 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
 
     for node in area.nodes:
         for t, req in area.connections[node].items():
-            for indiv in req.iterate_resource_requirements(fake_context):
+            for indiv in req.iterate_resource_requirements(game.resource_database):
                 if indiv.negate and indiv.amount > 1:
                     yield f"{node.name} -> {t.name} has a negate requirement with more than 1"
 
         if isinstance(node, DockNode) or area.connections[node]:
             continue
 
-        # FIXME: cannot implement this for PickupNodes because their resource gain depends on GamePatches
-        if isinstance(node, EventNode):
-            # if this node would satisfy the victory condition, it does not need outgoing connections
-            current = game.resource_database.create_resource_collection()
-            current.set_resource(node.event, 1)
-            if game.victory_condition.satisfied(game.create_node_context(current), 0):
-                continue
-
-        if node in nodes_with_paths_in:
+        if node in nodes_with_paths_in and not node.extra.get("allow_no_outgoing_connections", False):
             yield f"{area.name} - '{node.name}': Node has paths in, but no connections out."
 
     yield from check_for_unnormalized_hint_features(area)
@@ -315,13 +293,13 @@ def find_duplicated_pickup_index(region_list: RegionList) -> Iterator[str]:
 def _needed_resources_partly_satisfied(
     req: Requirement,
     resources: tuple[str, tuple[str, ...]],
-    context: NodeContext,
+    database: ResourceDatabase,
     req_cache: dict[Requirement, tuple[RequirementList, ...]],
 ) -> bool:
     if req in req_cache:
         alternatives = req_cache[req]
     else:
-        alternatives = tuple(fast_as_set.fast_as_alternatives(req, context))
+        alternatives = fast_as_set.fast_as_alternatives(req, database)
         req_cache[req] = alternatives
 
     counter = 0
@@ -394,13 +372,13 @@ def check_for_resources_to_use_together(
     For example: { HoverWithBombsTrick: (BombItem, ExplosiveDamage)}
     :return: Error messages of requirements which don't pass the check.
     """
-    context = _create_node_context(game)
+    database = game.resource_database
     requirement_cache: dict[Requirement, tuple[RequirementList, ...]] = {}
 
     for label, requirement in get_possible_connections(game):
         for resource_key, resource_value in combined_resources.items():
             if _needed_resources_partly_satisfied(
-                requirement, (resource_key, resource_value), context, requirement_cache
+                requirement, (resource_key, resource_value), database, requirement_cache
             ):
                 yield (f'{label} contains "{resource_key}" but not "{resource_value}"')
 

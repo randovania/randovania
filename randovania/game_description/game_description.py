@@ -9,7 +9,6 @@ from typing import TYPE_CHECKING, override
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
-from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
@@ -23,6 +22,7 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
+    from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
     from randovania.game_description.hint_features import HintFeature
@@ -110,14 +110,6 @@ class GameDescription(GameDatabaseView):
         # compatibility with WorldGraph
         return self.game
 
-    def create_node_context(self, resources: ResourceCollection) -> NodeContext:
-        return NodeContext(
-            None,
-            resources,
-            self.resource_database,
-            self.region_list,
-        )
-
     def get_prefilled_docks(self) -> dict[NodeIdentifier, NodeIdentifier]:
         connections: dict[NodeIdentifier, NodeIdentifier] = {}
 
@@ -133,10 +125,9 @@ class GameDescription(GameDatabaseView):
             return self._used_trick_levels
 
         result = collections.defaultdict(set)
-        context = self.create_node_context(self.resource_database.create_resource_collection())
 
         def process(req: Requirement) -> None:
-            for resource_requirement in req.iterate_resource_requirements(context):
+            for resource_requirement in req.iterate_resource_requirements(self.resource_database):
                 resource = resource_requirement.resource
                 if resource.resource_type == ResourceType.TRICK:
                     assert isinstance(resource, TrickResourceInfo)
@@ -265,17 +256,18 @@ class GameDescription(GameDatabaseView):
 
 
 def _resources_for_damage(
-    resource: ResourceInfo, database: ResourceDatabase, collection: ResourceCollection, damage_state: DamageState
+    resource: ResourceInfo, database: ResourceDatabaseView, collection: ResourceCollection, damage_state: DamageState
 ) -> Iterator[ResourceInfo]:
     yield from damage_state.resources_for_health()
-    for reduction in database.damage_reductions.get(resource, []):
+    for reduction in database.get_all_damage_reductions().get(resource, []):
         if reduction.inventory_item is not None and not collection.has_resource(reduction.inventory_item):
             yield reduction.inventory_item
 
 
 def calculate_interesting_resources(
     satisfiable_requirements: frozenset[GraphRequirementList],
-    context: NodeContext,
+    resources: ResourceCollection,
+    database: ResourceDatabaseView,
     damage_state: DamageState,
 ) -> frozenset[ResourceInfo]:
     """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList"""
@@ -286,22 +278,20 @@ def calculate_interesting_resources(
         # For each possible requirement list
         for requirement_list in satisfiable_requirements:
             # If it's not satisfied, there's at least one IndividualRequirement in it that can be collected
-            if not requirement_list.satisfied(context.current_resources, damage_state.health_for_damage_requirements()):
+            if not requirement_list.satisfied(resources, damage_state.health_for_damage_requirements()):
                 current_energy = damage_state.health_for_damage_requirements()
 
                 for individual in RequirementList.from_graph_requirement_list(requirement_list).values():
                     # Ignore those with the `negate` flag. We can't "uncollect" a resource to satisfy these.
                     # Finally, if it's not satisfied then we're interested in collecting it
-                    if not individual.negate and not individual.satisfied(context, current_energy):
+                    if not individual.negate and not individual.satisfied(resources, current_energy):
                         if individual.is_damage:
                             assert isinstance(individual.resource, SimpleResourceInfo)
-                            yield from _resources_for_damage(
-                                individual.resource, context.database, context.current_resources, damage_state
-                            )
+                            yield from _resources_for_damage(individual.resource, database, resources, damage_state)
                         else:
                             yield individual.resource
-                    elif individual.is_damage and individual.satisfied(context, current_energy):
-                        current_energy -= individual.damage(context)
+                    elif individual.is_damage and individual.satisfied(resources, current_energy):
+                        current_energy -= individual.damage(resources)
 
             elif damage_resources := {
                 resource for resource in requirement_list.all_resources() if resource.resource_type.is_damage()
@@ -311,8 +301,6 @@ def calculate_interesting_resources(
                 # but when combined, the energy might not be sufficient. The satisfiable requirements are assumed to be
                 # unsatisfied.
                 for damage_resource in damage_resources:
-                    yield from _resources_for_damage(
-                        damage_resource, context.database, context.current_resources, damage_state
-                    )
+                    yield from _resources_for_damage(damage_resource, database, resources, damage_state)
 
     return frozenset(helper())

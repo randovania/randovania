@@ -9,13 +9,13 @@ from typing import TYPE_CHECKING, Self
 
 from frozendict import frozendict
 
+import randovania.graph.world_graph_factory
 from randovania.game_description import default_database
 from randovania.game_description.db.dock import DockLock, DockLockType, DockRandoParams, DockWeakness
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.node_search import distances_to_node
 from randovania.game_description.requirements.base import Requirement
 from randovania.generator.filler.filler_library import UnableToGenerate
-from randovania.graph import world_graph
 from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
 from randovania.layout import filtered_database
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
@@ -265,7 +265,7 @@ async def _run_dock_resolver(
 
     patches = patches.assign_dock_weakness(locks)
 
-    graph = world_graph.duplicate_and_adjust_graph_for_patches(
+    graph = randovania.graph.world_graph_factory.duplicate_and_adjust_graph_for_patches(
         base_graph,
         patches,
     )
@@ -322,7 +322,6 @@ def _determine_valid_weaknesses(
             # When using two sided door search, the state could be pointing at either dock or target.
             # Simply swap dock and target if we found the target side.
             target, dock = dock, target
-        ctx = state.node_context()
 
         exclusions: set[DockWeakness] = set()
         exclusions.update(dock.incompatible_dock_weaknesses)
@@ -349,15 +348,19 @@ def _determine_valid_weaknesses(
 
         exclusions.update(weighted_weaknesses.keys())
 
+        converter = logic.graph.converter.convert_db
+
         weighted_weaknesses.update(
             {
                 weakness: 1.0
                 for weakness in sorted(dock_type_state.can_change_to.difference(exclusions))
                 if (
-                    weakness.requirement.satisfied(ctx, state.health_for_damage_requirements)
+                    converter(weakness.requirement).satisfied(state.resources, state.health_for_damage_requirements)
                     and (
                         weakness.lock is None
-                        or weakness.lock.requirement.satisfied(ctx, state.health_for_damage_requirements)
+                        or converter(weakness.lock.requirement).satisfied(
+                            state.resources, state.health_for_damage_requirements
+                        )
                     )
                 )
             }
@@ -413,7 +416,7 @@ async def distribute_post_fill_weaknesses(
         else:
             debug.debug_print(f">> Player {player + 1} is solve-able with all doors unlocked.")
 
-        base_graphs[player] = world_graph.create_patchless_graph(
+        base_graphs[player] = randovania.graph.world_graph_factory.create_patchless_graph(
             database_view=filtered_games[player],
             static_resources=configuration.game.generator.bootstrap.starting_resources_for_patches(
                 configuration, filtered_games[player].get_resource_database_view(), patches

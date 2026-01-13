@@ -37,7 +37,7 @@ class Ui_PresetFusionPatches(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_contents = QWidget()
         self.scroll_contents.setObjectName(u"scroll_contents")
-        self.scroll_contents.setGeometry(QRect(0, 0, 709, 418))
+        self.scroll_contents.setGeometry(QRect(0, 0, 704, 562))
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -139,6 +139,17 @@ class Ui_PresetFusionPatches(object):
 
         self.instant_transitions_layout.addWidget(self.instant_morph_label)
 
+        self.adjusted_geron_weaknesses_check = QCheckBox(self.gameplay_group)
+        self.adjusted_geron_weaknesses_check.setObjectName(u"adjusted_geron_weaknesses_check")
+
+        self.instant_transitions_layout.addWidget(self.adjusted_geron_weaknesses_check)
+
+        self.adjusted_geron_weaknesses_label = QLabel(self.gameplay_group)
+        self.adjusted_geron_weaknesses_label.setObjectName(u"adjusted_geron_weaknesses_label")
+        self.adjusted_geron_weaknesses_label.setTextFormat(Qt.TextFormat.MarkdownText)
+
+        self.instant_transitions_layout.addWidget(self.adjusted_geron_weaknesses_label)
+
 
         self.scroll_layout.addWidget(self.gameplay_group)
 
@@ -170,5 +181,11 @@ class Ui_PresetFusionPatches(object):
         self.short_intro_text_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Enabling this considerably shortens Adam's intro text. This setting is only recommended to players familiar with the randomizer and its settings.", None))
         self.instant_morph_check.setText(QCoreApplication.translate("PresetFusionPatches", u"Enable Instant Morph Button", None))
         self.instant_morph_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Enabling this allows you to instantly morph and unmorph by using the SELECT button.", None))
+        self.adjusted_geron_weaknesses_check.setText(QCoreApplication.translate("PresetFusionPatches", u"Enable Balanced Geron Vulnerabilities", None))
+        self.adjusted_geron_weaknesses_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Enabling this will change Gerons to only be vulnerable to their primary weakness. This means:\n"
+"- Missile Gerons are only weak to Missiles\n"
+"- Stabilizer Gerons are only weak to Missiles\n"
+"- Super Missile Gerons are only weak to Super Missiles\n"
+"- Power Bomb Gerons are only weak to Power Bombs", None))
     # retranslateUi
 

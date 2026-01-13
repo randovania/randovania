@@ -4,7 +4,6 @@ import copy
 from typing import TYPE_CHECKING, Self
 
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
@@ -14,12 +13,13 @@ from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
+    from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.node_provider import NodeProvider
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.hint_state import ResolverHintState
@@ -40,7 +40,7 @@ class State:
     hint_state: ResolverHintState | None
 
     @property
-    def resource_database(self) -> ResourceDatabase:
+    def resource_database(self) -> ResourceDatabaseView:
         return self._resource_database
 
     def __init__(
@@ -52,7 +52,7 @@ class State:
         node: WorldGraphNode,
         patches: GamePatches,
         previous: Self | None,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
         node_provider: NodeProvider,
         hint_state: ResolverHintState | None = None,
     ):
@@ -229,14 +229,6 @@ class State:
             (),
             self.damage_state.apply_new_starting_resource_difference(new_resources, self.resources),
             self.patches.assign_extra_starting_pickups([pickup]),
-        )
-
-    def node_context(self) -> NodeContext:
-        return NodeContext(
-            self.patches,
-            self.resources,
-            self.resource_database,
-            self._node_provider,
         )
 
     @property

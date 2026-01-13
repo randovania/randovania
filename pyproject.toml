@@ -84,7 +84,7 @@ exporters = [
     "open-dread-rando==2.18.0",
 
     # Metroid Fusion
-    "mars-patcher==0.8.3",
+    "mars-patcher==0.9.0",
 
     # Metroid Planets
     "planets-yapr==1.0.1",
@@ -145,7 +145,7 @@ server = [
     "cachetools",  # for TTLCache
 
     # discord bot
-    "py-cord>=2.3.1",  # for randovania/discord_bot; 2.3.1+ is needed for Python 3.11
+    "py-cord>=2.3.1,<2.7",  # for randovania/discord_bot; 2.3.1+ is needed for Python 3.11, 2.7 breaks tests
     "audioop-lts; python_version>='3.13'",  # for py-cord
     "Pillow>=9.0.0",  # for randovania/discord_bot/database_command
     "graphviz",  # for randovania/discord_bot/database_command
@@ -177,7 +177,7 @@ installer = [
 ]
 
 typing = [
-    "mypy<1.19.1",
+    "mypy<1.19.2",
     "types-aiofiles",
     "types-peewee",
     "types-qrcode>=8.0.0.20241004",

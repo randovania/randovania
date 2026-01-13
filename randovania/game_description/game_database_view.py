@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_entry import PickupModel
     from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.damage_reduction import DamageReduction
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -104,9 +105,23 @@ class ResourceDatabaseView(ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_all_damage_resources(self) -> Sequence[SimpleResourceInfo]:
+        """
+        Gets a list of all ResourceInfo of type DAMAGE
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_damage_reduction(self, resource: ResourceInfo, current_resources: ResourceCollection) -> float:
         """
         Gets the damage reduction for given resource with the given current resources.
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_all_damage_reductions(self) -> Mapping[ResourceInfo, list[DamageReduction]]:
+        """
+        Gets all damage reductions in the database.
         """
         raise NotImplementedError
 
@@ -132,11 +147,29 @@ class ResourceDatabaseView(ABC):
         """
         raise NotImplementedError
 
-    @abc.abstractmethod
+    @final
     def create_resource_collection(self) -> ResourceCollection:
         """
         Creates a new ResourceCollection
         """
+        from randovania.game_description.resources.resource_collection import ResourceCollection
+
+        return ResourceCollection.with_resource_count(self, self.default_resource_collection_size())
+
+    @abc.abstractmethod
+    def get_resource_mapping(self) -> dict[int, ResourceInfo]:
+        """
+        A dict where resources are stored by index.
+        TODO: improve this
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def default_resource_collection_size(self) -> int:
+        """
+        Returns the default size for ResourceCollections for this database.
+        """
+        raise NotImplementedError
 
 
 class ResourceDatabaseViewProxy(ResourceDatabaseView):
@@ -185,8 +218,16 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
         return self._original.get_damage(short_name)
 
     @override
+    def get_all_damage_resources(self) -> Sequence[SimpleResourceInfo]:
+        return self._original.get_all_damage_resources()
+
+    @override
     def get_damage_reduction(self, resource: ResourceInfo, current_resources: ResourceCollection) -> float:
         return self._original.get_damage_reduction(resource, current_resources)
+
+    @override
+    def get_all_damage_reductions(self) -> Mapping[ResourceInfo, list[DamageReduction]]:
+        return self._original.get_all_damage_reductions()
 
     @override
     def get_template_requirement(self, name: str) -> NamedRequirementTemplate:
@@ -201,8 +242,12 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
         return self._original.get_pickup_model(name)
 
     @override
-    def create_resource_collection(self) -> ResourceCollection:
-        return self._original.create_resource_collection()
+    def get_resource_mapping(self) -> dict[int, ResourceInfo]:
+        return self._original.get_resource_mapping()
+
+    @override
+    def default_resource_collection_size(self) -> int:
+        return self._original.default_resource_collection_size()
 
 
 class GameDatabaseView(ABC):

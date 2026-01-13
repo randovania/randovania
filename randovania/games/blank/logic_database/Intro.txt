@@ -24,9 +24,8 @@ Hint Features - Hint Feature 1
   > Door to Ledge Room
       Trivial
   > Event - Post Weapon
-      Collected Intro/Starting Area/Pickup (Weapon)
-  > Door to Crane Room
-      Trivial
+      # This connection is for testing a NodeRequirement
+      Intro/Starting Area/Pickup (Weapon)
 
 > Pickup (Weapon); Heals? False
   * Layers: default
@@ -56,23 +55,34 @@ Hint Features - Hint Feature 1
 > Door to Back-Only Lock Room; Heals? False
   * Layers: default
   * Normal Door to Back-Only Lock Room/Door to Starting Area
+  * This dock can only be opened from this side! This is because the other side has
+a lock that has an Impossible requirement to get destroyed but is of type
+"FRONT_BLAST_BACK_FREE_UNLOCK".
   > Spawn Point
       Trivial
 
 > Door to Blue Key Room (Exit); Heals? False
   * Layers: default
   * Normal Door to Blue Key Room/Door to Starting Area (Exit)
+  * If multiple Docks connect to the same Area, they need to be differentiated by
+having an extra identifier in paratheses. In addition, this Dock can not be
+opened from this side! This is because the connecting Dock has a lock of the
+type "FRONT_BLAST_BACK_IMPOSSIBLE".
   > Spawn Point
       Trivial
 
 > Door to Blue Key Room (Entrance); Heals? False
   * Layers: default
   * Normal Door to Blue Key Room/Door to Starting Area (Entrance)
+  * If multiple Docks connect to the same Area, they need to be differentiated by
+having an extra identifier in paratheses.
   > Spawn Point
       Trivial
 
 > Second Spawn Point; Heals? False; Spawn Point
   * Layers: default
+  * If an Area has multiple Spawn Points the game needs some slightly different
+handling, so let's have one.
   > Spawn Point
       Trivial
 
@@ -91,12 +101,6 @@ Hint Features - Hint Feature 1
 > Event - Post Weapon; Heals? False
   * Layers: default
   * Event Post Weapon
-  > Spawn Point
-      Trivial
-
-> Door to Crane Room; Heals? False
-  * Layers: default
-  * Normal Door to Crane Room/Door to Starting Area
   > Spawn Point
       Trivial
 
@@ -127,6 +131,8 @@ Hint Features - Boss
 > Pickup (Free Loot); Heals? False
   * Layers: extra_pickups
   * Pickup 5; Category? Minor
+  * This pickup is on a different layer. Thus, this node and the connection to/out
+of it will only be present if this layer is active
   > Door to Starting Area
       Trivial
 
@@ -160,6 +166,9 @@ Extra - map_name: Square
 > Door to Starting Area; Heals? False
   * Layers: default
   * Back-Only Door to Starting Area/Door to Back-Only Lock Room
+  * This dock can not be opened from this side! This is because this side has a
+lock that has an Impossible requirement to get destroyed but is of type
+"FRONT_BLAST_BACK_FREE_UNLOCK".
   > Event - Key Switch 1
       Trivial
 
@@ -177,9 +186,8 @@ Extra - map_name: Square
 
 > Middle Node; Heals? False
   * Layers: default
-  * Just so the event+pickup don't become an EventPickup node
-
-
+  * The generator combines a path of Event -> Pickup into one EventPickup node.
+Thus this Middle Node is placed so that it doesn't do that.
   > Pickup (Extra Key)
       Trivial
 
@@ -189,6 +197,8 @@ Extra - map_name: Square
 > Door to Starting Area (Exit); Heals? False
   * Layers: default
   * Blue Key Door to Starting Area/Door to Blue Key Room (Exit)
+  * This Dock can only be opened from this side! This is because this Dock has a
+lock of the type "FRONT_BLAST_BACK_IMPOSSIBLE".
   > Spawn Point
       Trivial
 
@@ -233,6 +243,8 @@ Extra - map_name: Square
 > Hint with Translator; Heals? False
   * Layers: default
   * Hint
+  * This is a HintNode that requires having a resource in order to read the hint.
+The node however can still be visited and passed through.
   * Extra - translator: BlueKey
   * Extra - string_asset_id: 0
   > Door to Explosive Depot
@@ -241,6 +253,8 @@ Extra - map_name: Square
 > Hint no Translator; Heals? False
   * Layers: default
   * Hint
+  * This is a HintNode that requires no resources to read the hint, and thus can be
+read as soon as it is reached.
   * Extra - string_asset_id: 1
   > Door to Explosive Depot
       Trivial
@@ -259,6 +273,10 @@ Hint Features - Hint Feature 1, Hint Feature 2, Hint Feature 3
 > Door to Starting Area; Heals? False
   * Layers: default
   * Normal Door to Starting Area/Door to Heated Room
+  * This is a pickup that requires taking damage. The values are chosen such that
+the starting health is enough to reach the pickup, but not enough to get back
+to the door, on all damage strictness levels. A health pickup can be placed
+here to refill the player and allow them to go back.
   > Pickup (Health)
       Normal Damage ≥ 49
 
@@ -280,6 +298,9 @@ Extra - map_name: Square
 
 > Bottom; Heals? False
   * Layers: default
+  * This room is designed in a way to reproduce a situation where you get access to
+the first item in a progressive chain inside of a point of no return, where you
+also need the second item in the progressive chain to escape.
   > High Ledge
       Double Jump
   > Low Ledge
@@ -305,57 +326,6 @@ Extra - map_name: Square
   * Pickup 8; Category? Major
   * Hint Features - Ledge
   > Low Ledge
-      Trivial
-
-----------------
-Crane Room
-Extra - map_name: Square
-> Door to Starting Area; Heals? False
-  * Layers: default
-  * Normal Door to Starting Area/Door to Crane Room
-  > Near Claw Machine
-      Blue Key
-  > Behind Wall
-      Explosive or After Crane Wall Destroyed
-
-> Near Claw Machine; Heals? False
-  * Layers: default
-  > Door to Starting Area
-      Trivial
-  > Remote - Get Crane Game
-      Trivial
-  > Remote - Lower Wall
-      Trivial
-
-> Pickup (Crane Game); Heals? False
-  * Layers: default
-  * Pickup 9; Category? Minor
-  > Behind Wall
-      Trivial
-
-> Event - Lower Crane Wall; Heals? False
-  * Layers: default
-  * Event Crane Wall Destroyed
-  > Behind Wall
-      Trivial
-
-> Remote - Get Crane Game; Heals? False
-  * Layers: default
-  > Near Claw Machine
-      Trivial
-
-> Remote - Lower Wall; Heals? False
-  * Layers: default
-  > Near Claw Machine
-      Trivial
-
-> Behind Wall; Heals? False
-  * Layers: default
-  > Door to Starting Area
-      Explosive or After Crane Wall Destroyed
-  > Pickup (Crane Game)
-      Trivial
-  > Event - Lower Crane Wall
       Trivial
 
 ----------------

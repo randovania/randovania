@@ -7,7 +7,6 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -149,9 +148,6 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     collection = resource_db.create_resource_collection()
     pickups_left: list[PickupEntry] = []
     reach = MagicMock()
-    reach.state.node_context.return_value = NodeContext(
-        MagicMock(), collection, echoes_game_description.resource_database, echoes_game_description.region_list
-    )
     reach.state.resources = collection
     reach.state.health_for_damage_requirements = 100
     possible_set = MagicMock()

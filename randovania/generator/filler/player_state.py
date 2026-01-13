@@ -181,9 +181,8 @@ class PlayerState:
         return result
 
     def victory_condition_satisfied(self) -> bool:
-        context = self.reach.state.node_context()
         return self.graph.victory_condition.satisfied(
-            context.current_resources, self.reach.state.health_for_damage_requirements
+            self.reach.state.resources, self.reach.state.health_for_damage_requirements
         )
 
     def assign_pickup(
@@ -217,7 +216,7 @@ class PlayerState:
         }
 
         s = self.reach.state
-        ctx = s.node_context()
+        resources = s.resources
         nodes_by_index = {node.node_index: node for node in self.reach.iterate_nodes}
 
         paths_to_be_opened = set()
@@ -229,7 +228,7 @@ class PlayerState:
                     r.negate
                     or (
                         r.resource.resource_type != ResourceType.ITEM
-                        and not r.satisfied(ctx, s.health_for_damage_requirements)
+                        and not r.satisfied(resources, s.health_for_damage_requirements)
                     )
                     for r in req_list.values()
                 ):
@@ -242,7 +241,7 @@ class PlayerState:
                             sorted(
                                 r.pretty_text
                                 for r in req_list.values()
-                                if not r.satisfied(ctx, s.health_for_damage_requirements)
+                                if not r.satisfied(resources, s.health_for_damage_requirements)
                             )
                         ),
                     )

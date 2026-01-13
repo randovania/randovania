@@ -20,6 +20,7 @@ _FIELDS = [
     "instant_transitions",
     "short_intro_text",
     "instant_morph",
+    "adjusted_geron_weaknesses",
 ]
 
 
