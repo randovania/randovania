@@ -18,7 +18,7 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.remote_activation_node import RemoteCollectionNode
+from randovania.game_description.db.remote_collection_node import RemoteCollectionNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.base import Requirement
@@ -294,7 +294,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         refresh_if_needed(self.remote_activation_region_combo, self.on_remote_activation_region_combo)
         signal_handling.set_combo_with_value(self.remote_activation_area_combo, area)
         refresh_if_needed(self.remote_activation_area_combo, self.on_remote_activation_area_combo)
-        signal_handling.set_combo_with_value(self.remote_activation_node_combo, remote_node)
+        signal_handling.set_combo_with_value(self.remote_collection_node_combo, remote_node)
 
     # Connections Visualizer
     def _create_connections_visualizer(
@@ -393,15 +393,15 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     def on_remote_activation_area_combo(self, _: None) -> None:
         area: Area | None = self.remote_activation_area_combo.currentData()
 
-        self.remote_activation_node_combo.clear()
+        self.remote_collection_node_combo.clear()
         empty = True
         if area is not None:
             for node in area.nodes:
                 if isinstance(node, (ResourceNode, DockNode)) and not isinstance(node, RemoteCollectionNode):
-                    self.remote_activation_node_combo.addItem(node.name, userData=node)
+                    self.remote_collection_node_combo.addItem(node.name, userData=node)
                     empty = False
         if empty:
-            self.remote_activation_node_combo.addItem("Other", None)
+            self.remote_collection_node_combo.addItem("Other", None)
 
     @asyncSlot()
     async def on_hint_requirement_to_collect_button(self) -> None:
@@ -561,7 +561,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             )
 
         elif node_type == RemoteCollectionNode:
-            remote_node: Node = self.remote_activation_node_combo.currentData()
+            remote_node: Node = self.remote_collection_node_combo.currentData()
             return RemoteCollectionNode(
                 identifier,
                 node_index,

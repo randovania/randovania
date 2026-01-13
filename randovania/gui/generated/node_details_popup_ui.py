@@ -512,10 +512,10 @@ class Ui_NodeDetailsPopup(object):
 
         self.remote_activation_layout.addWidget(self.remote_activation_area_combo)
 
-        self.remote_activation_node_combo = QComboBox(self.remote_activation_group)
-        self.remote_activation_node_combo.setObjectName(u"remote_activation_node_combo")
+        self.remote_collection_node_combo = QComboBox(self.remote_activation_group)
+        self.remote_collection_node_combo.setObjectName(u"remote_collection_node_combo")
 
-        self.remote_activation_layout.addWidget(self.remote_activation_node_combo)
+        self.remote_activation_layout.addWidget(self.remote_collection_node_combo)
 
 
         self.verticalLayout.addWidget(self.remote_activation_group)

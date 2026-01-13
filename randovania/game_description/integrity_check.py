@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.remote_activation_node import RemoteCollectionNode
+from randovania.game_description.db.remote_collection_node import RemoteCollectionNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.requirements.array_base import RequirementArrayBase

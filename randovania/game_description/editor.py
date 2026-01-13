@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.remote_activation_node import RemoteCollectionNode
+from randovania.game_description.db.remote_collection_node import RemoteCollectionNode
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 

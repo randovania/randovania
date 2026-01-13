@@ -11,7 +11,7 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.remote_activation_node import RemoteCollectionNode
+from randovania.game_description.db.remote_collection_node import RemoteCollectionNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
