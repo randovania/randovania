@@ -11,6 +11,8 @@ if TYPE_CHECKING:
 
 @dataclasses.dataclass(frozen=True, slots=True)
 class RemoteCollectionNode(ResourceNode):
+    # TODO: resolver playthrough currently lists collecting this node and collecting the remote node.
+    # Should probably only do former
     remote_node: NodeIdentifier
 
     def __repr__(self) -> str:

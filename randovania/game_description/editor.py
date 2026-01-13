@@ -207,7 +207,9 @@ class Editor:
                         if new_fields:
                             new_node = dataclasses.replace(node, **new_fields)
 
-                    if isinstance(node, RemoteCollectionNode):
+                    if isinstance(
+                        node, RemoteCollectionNode
+                    ):  # TODO: doesnt quite work, renaming misses some reference somewhere.
                         new_remote = replacer(node.remote_node)
 
                         if new_remote != node.remote_node:
