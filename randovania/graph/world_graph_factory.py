@@ -12,7 +12,7 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.remote_activation_node import RemoteActivationNode
+from randovania.game_description.db.remote_activation_node import RemoteCollectionNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.game_database_view import ResourceDatabaseViewProxy
 from randovania.game_description.requirements.base import Requirement
@@ -230,7 +230,7 @@ def create_node(
         return resources, pickup_index
 
     node_to_get_resources = original_node
-    if isinstance(original_node, RemoteActivationNode):
+    if isinstance(original_node, RemoteCollectionNode):
         node_to_get_resources = game_db.node_by_identifier(original_node.remote_node)
 
     resources, pickup_index = resources_and_indices_for_node(node_to_get_resources)
@@ -400,7 +400,7 @@ def create_patchless_graph(
 
     for node in nodes:
         db_node = node.database_node
-        if isinstance(node.database_node, RemoteActivationNode):
+        if isinstance(node.database_node, RemoteCollectionNode):
             db_node = database_view.node_by_identifier(node.database_node.remote_node)
 
         if isinstance(db_node, HintNode):
@@ -527,7 +527,7 @@ def _adjust_graph_for_patches(
 
     # Add dock connections and add resources from dock locks
     for node in graph.nodes:
-        if isinstance(node.database_node, RemoteActivationNode) and isinstance(
+        if isinstance(node.database_node, RemoteCollectionNode) and isinstance(
             node.database_node.remote_node, DockNode
         ):
             db_node = node.database_node.remote_node

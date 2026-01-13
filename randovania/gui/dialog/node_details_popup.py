@@ -18,7 +18,7 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.remote_activation_node import RemoteActivationNode
+from randovania.game_description.db.remote_activation_node import RemoteCollectionNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.base import Requirement
@@ -90,7 +90,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             ConfigurableNode: self.tab_configurable,
             HintNode: self.tab_hint,
             TeleporterNetworkNode: self.tab_teleporter_network,
-            RemoteActivationNode: self.tab_remote_activation,
+            RemoteCollectionNode: self.tab_remote_activation,
         }
         tab_to_type = {tab: node_type for node_type, tab in self._type_to_tab.items()}
 
@@ -212,7 +212,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.fill_for_teleporter_network(node)
             return self.tab_teleporter_network
 
-        elif isinstance(node, RemoteActivationNode):
+        elif isinstance(node, RemoteCollectionNode):
             self.fill_for_remote_activation(node)
             return self.tab_remote_activation
 
@@ -285,7 +285,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             requirement,
         )
 
-    def fill_for_remote_activation(self, node: RemoteActivationNode) -> None:
+    def fill_for_remote_activation(self, node: RemoteCollectionNode) -> None:
         remote_node = self.game.region_list.node_by_identifier(node.remote_node)
         area = self.game.region_list.nodes_to_area(remote_node)
         region = self.game.region_list.nodes_to_region(remote_node)
@@ -397,7 +397,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         empty = True
         if area is not None:
             for node in area.nodes:
-                if isinstance(node, (ResourceNode, DockNode)) and not isinstance(node, RemoteActivationNode):
+                if isinstance(node, (ResourceNode, DockNode)) and not isinstance(node, RemoteCollectionNode):
                     self.remote_activation_node_combo.addItem(node.name, userData=node)
                     empty = False
         if empty:
@@ -560,9 +560,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 self._activated_by_requirement,
             )
 
-        elif node_type == RemoteActivationNode:
+        elif node_type == RemoteCollectionNode:
             remote_node: Node = self.remote_activation_node_combo.currentData()
-            return RemoteActivationNode(
+            return RemoteCollectionNode(
                 identifier,
                 node_index,
                 heal,

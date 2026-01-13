@@ -10,8 +10,8 @@ if TYPE_CHECKING:
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
-class RemoteActivationNode(ResourceNode):
+class RemoteCollectionNode(ResourceNode):
     remote_node: NodeIdentifier
 
     def __repr__(self) -> str:
-        return f"RemoteActivationNode({self.name!r})"
+        return f"RemoteCollectionNode({self.name!r})"
