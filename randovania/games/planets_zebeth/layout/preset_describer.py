@@ -43,7 +43,7 @@ class PlanetsZebethPresetDescriber(GamePresetDescriber):
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
                     {
-                        "Missiles need Launcher": "Missile Expansion",
+                        "Missiles need Launcher": "Missile Tank",
                     },
                     mains_are_default_required=False,
                 ),
