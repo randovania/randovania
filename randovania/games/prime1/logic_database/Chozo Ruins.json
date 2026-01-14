@@ -1633,6 +1633,27 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Deal with Scarabs",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Any Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1680,7 +1701,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Main Plaza": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -1691,6 +1712,27 @@
                                             "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Deal with Scarabs",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Any Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2618,7 +2660,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/OcHxU-t-WYk",
+                                                        "comment": "SJ, climb onto vines above Ruined Fountain Access, then jump onto spider track: https://youtu.be/OcHxU-t-WYk",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2644,7 +2686,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/SbmRjJ04Lfk",
+                                                        "comment": "NSJ, climb onto vines above Ruined Fountain Access, dash off of Plazmite/Fountain onto spider track: https://youtu.be/SbmRjJ04Lfk",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2663,6 +2705,10 @@
                                                                     "amount": 3,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Has Any Visor"
                                                             }
                                                         ]
                                                     }
@@ -5390,10 +5436,24 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to North Atrium": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Deal with Wasps",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5439,17 +5499,83 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Save Station 1": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Deal with Wasps",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    }
+                                ]
                             }
                         },
                         "Door to Eyon Tunnel": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Purposefully avoid hitting the Main Plaza Trigger",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Deal with Wasps",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Any Beam"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Activate Main Plaza Wasps": {
+                            "type": "or",
+                            "data": {
+                                "comment": "Deal with Wasps",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5497,8 +5623,94 @@
                         "Door to North Atrium": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Purposefully avoid hitting the Main Plaza Trigger",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Deal with Wasps",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Any Beam"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Climb up",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Double Bomb Jump",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "BJ",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Jump onto the branch with red leaves and from there to the platform",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Standable",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Pickup (Missile Expansion)": {
@@ -5521,26 +5733,114 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Use Bombs"
-                                                },
-                                                {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Path via Tunnels",
                                                         "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "https://youtu.be/GXPhNsNJG9E",
+                                                                    "comment": "Deal with Wasps",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "Standable",
-                                                                                "amount": 3,
+                                                                                "name": "Combat",
+                                                                                "amount": 1,
                                                                                 "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Shoot Any Beam"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Intended way by going into the upper tunnel entrance and thus hitting the Main Plaza Trigger",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "events",
+                                                                                            "name": "ActivateMainPlazaWasps",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Avoid Trigger by getting into the tunnel via destroying the lower bomb block, jumping in front of the metal block and then on top of it.",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Knowledge",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Standable",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Roll from pillar to the pickup",
+                                                        "items": [
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Climb up the pillar on the right of the pickup",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "NSJ: https://youtu.be/GXPhNsNJG9E",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Standable",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
@@ -5551,7 +5851,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": "https://youtu.be/y1qS7oPqynY",
+                                                                                            "comment": "SJ: https://youtu.be/y1qS7oPqynY",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -5583,15 +5883,23 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "https://youtu.be/y1qS7oPqynY?t=12",
+                                                                    "comment": "Get into the tunnel",
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 4,
-                                                                                "negate": false
+                                                                                "comment": "Jump, Morph and roll in: https://youtu.be/y1qS7oPqynY?t=12",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Movement",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
@@ -5602,7 +5910,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": "https://youtu.be/0GiZ4ckMg7o",
+                                                                                            "comment": "Boost into it: https://youtu.be/0GiZ4ckMg7o",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "template",
@@ -5613,7 +5921,7 @@
                                                                                                     "data": {
                                                                                                         "type": "tricks",
                                                                                                         "name": "Movement",
-                                                                                                        "amount": 2,
+                                                                                                        "amount": 3,
                                                                                                         "negate": false
                                                                                                     }
                                                                                                 }
@@ -5625,12 +5933,54 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Deal with Wasps",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Shoot Any Beam"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
                                                 }
                                             ]
                                         }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Activate Main Plaza Wasps": {
+                            "type": "or",
+                            "data": {
+                                "comment": "Deal with Wasps",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
                                     }
                                 ]
                             }
@@ -5664,6 +6014,38 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
+                        "Door to Eyon Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Activate Main Plaza Wasps": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11.582533893503168,
+                        "y": 19.662254800309007,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ActivateMainPlazaWasps",
+                    "connections": {
+                        "Door to North Atrium": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Eyon Tunnel": {
                             "type": "and",
                             "data": {
@@ -8656,17 +9038,45 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Totem Access": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Deal with Wasps",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    }
+                                ]
                             }
                         },
                         "Door to Map Station": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Deal with Wasps",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    }
+                                ]
                             }
                         },
                         "Pickup (Missile Expansion)": {
@@ -8707,7 +9117,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get into the Tunnel",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -8730,6 +9140,48 @@
                                                                     "amount": 3,
                                                                     "negate": false
                                                                 }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Deal with Wasps",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Any Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
                                                             }
                                                         ]
                                                     }
@@ -8783,10 +9235,24 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to North Atrium": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Deal with Wasps",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -8832,10 +9298,24 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to North Atrium": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Deal with Wasps",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -20242,7 +20722,7 @@
                                                                         {
                                                                             "type": "or",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/rPgTD35efHo",
+                                                                                "comment": "Get sucked by the Stone Toad to the upper level: https://youtu.be/rPgTD35efHo",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -20266,7 +20746,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Stand on Stone Toad, then either UBJ or BSJ off of it: https://www.youtube.com/watch?v=035G9C-r2S8",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -20302,7 +20782,7 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "Standable",
+                                                                                "name": "StandEnemies",
                                                                                 "amount": 3,
                                                                                 "negate": false
                                                                             }
@@ -20319,7 +20799,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://youtu.be/NRtv6aOpssk",
+                                            "comment": "Slope Jump off of the Stone Toad's crest: https://youtu.be/NRtv6aOpssk",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -20343,7 +20823,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Standable",
+                                                        "name": "StandEnemies",
                                                         "amount": 1,
                                                         "negate": false
                                                     }

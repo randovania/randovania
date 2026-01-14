@@ -93,6 +93,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Chozo Ruins
 
 - Changed: Revised the requirements for fighting Chozo Ghosts and made them consistent. Fighting multiple of them without Charge Beam is now Intermediate Combat, fighting a single one is still Beginner Combat.
+- Changed: Reflecting Pool: Jumping off of the Stone Toad has been changed from the Standable trick to the Jump Off Enemies trick.
+- Fixed: Ruined Gallery: Requirements for dealing with the enemies in the room.
+- Changed: Ruined Nursery: The boost into the tunnel from the standable pillar was changed from Intermediate Movement to Advanced Movement.
+- Fixed: Ruined Nursery: Requirements for dealing with the enemies in the room.
+- Added: Ruined Nursery: Requirements for avoiding the Trigger that activates the Main Plaza Wasps. This includes:
+  - Intermediate Knowledge and either Space Jump or Beginner Bomb Jump or Beginner Standable Terrain to get from Eyon Tunnel door to the North Atrium door.
+  - Intermediate Knowledge, Beginner Standable Terrain and Bombs to get the pickup.
+- Fixed: Ruined Fountain: The NSJ Dash over to the pickup now requires a visor.
+- Fixed: Ruined Fountain Access: Requirements for dealing with the enemies in the room.
 - Added: Ruined Shrine: Path from the Tower of Light Access Door to the Ruined Shrine Access Door via a Beginner Bomb Jump and Spider Ball.
 - Added: Ruined Shrine: Multiple ways to go from the Tower of Light Access Door to the top of the Half-Pipe near the pickup:
     - Space Jump and Intermediate Standable Terrain
