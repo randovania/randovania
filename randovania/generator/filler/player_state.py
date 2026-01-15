@@ -47,11 +47,11 @@ class GeneratorHintState(HintState):
         filler_logging.print_new_node_identifiers(self.hint_seen_count, "Hints")
 
     def valid_available_locations_for_hint(
-        self, state: PlayerState, current_uncollected: UncollectedState, all_locations: WeightedLocations
+        self, state: PlayerState, current_uncollected: set[PickupIndex], all_locations: WeightedLocations
     ) -> list[PickupIndex]:
         """
         Which PickupIndexes are valid targets for a hint
-        considering the given UncollectedState and WeightedLocations?
+        considering the given uncollected set of PickupIndices and WeightedLocations?
         """
         return [
             index
@@ -59,7 +59,7 @@ class GeneratorHintState(HintState):
             if (
                 owner == state
                 and weight >= self.configuration.minimum_location_weight_for_hint_placement
-                and index in current_uncollected.pickup_indices
+                and index in current_uncollected
             )
         ]
 
@@ -188,7 +188,7 @@ class PlayerState:
         self,
         pickup_index: PickupIndex,
         target: PickupTarget,
-        current_uncollected: UncollectedState,
+        current_uncollected: set[PickupIndex],
         all_locations: WeightedLocations,
     ) -> None:
         self.num_assigned_pickups += 1
@@ -201,7 +201,7 @@ class PlayerState:
         self.hint_state.assign_available_locations(pickup_index, available)
 
     def current_state_report(self) -> str:
-        state = UncollectedState.from_reach(self.reach)
+        uncollected_pickup_indices = UncollectedState.pickup_indices_from_reach(self.reach)
         pickups_by_name_and_quantity: dict[str, int] = collections.defaultdict(int)
 
         _KEY_MATCH = re.compile(r"Key (\d+)")
@@ -281,7 +281,7 @@ class PlayerState:
             self.reach.state.node.full_name(),
             self.num_actions,
             self.num_assigned_pickups,
-            len(state.pickup_indices),
+            len(uncollected_pickup_indices),
             sum(1 for n in self.reach.safe_nodes),
             ", ".join(
                 name if quantity == 1 else f"{name} x{quantity}"

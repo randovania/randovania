@@ -94,20 +94,24 @@ class State:
         pickups: list[PickupIndex] = []
         hints: list[NodeIdentifier] = []
         events: list[ResourceInfo] = []
+        node_resource_index_offset = graph.node_resource_index_offset
+        resource_mapping = graph.resource_database.get_resource_mapping()
 
-        for resource, count in self.resources.as_resource_gain():
-            if count < 1:
-                continue
-
-            if isinstance(resource, NodeResourceInfo):
-                graph_node = graph.get_node_by_resource_info(resource)
+        for resource_index in self.resources.resource_bitmask.get_set_bits():
+            if resource_index >= node_resource_index_offset:
+                graph_node = graph.nodes[resource_index - node_resource_index_offset]
                 if graph_node.pickup_index is not None:
                     pickups.append(graph_node.pickup_index)
+
                 if isinstance(graph_node.database_node, HintNode):
+                    resource = resource_mapping[resource_index]
+                    assert isinstance(resource, NodeResourceInfo)
                     hints.append(resource.node_identifier)
 
-            elif resource.resource_type == ResourceType.EVENT:
-                events.append(resource)
+            else:
+                resource = resource_mapping[resource_index]
+                if resource.resource_type == ResourceType.EVENT:
+                    events.append(resource)
 
         return (
             pickups,
@@ -115,12 +119,8 @@ class State:
             events,
         )
 
-    def collected_pickup_indices(self, graph: WorldGraph) -> Iterator[PickupIndex]:
-        for resource, count in self.resources.as_resource_gain():
-            if count > 0 and isinstance(resource, NodeResourceInfo):
-                graph_node = graph.get_node_by_resource_info(resource)
-                if graph_node.pickup_index is not None:
-                    yield graph_node.pickup_index
+    def collected_pickup_indices(self, graph: WorldGraph) -> set[PickupIndex]:
+        return state_native.state_collected_pickups_indices(self.resources, graph)
 
     def collected_hints(self, graph: WorldGraph) -> Iterator[NodeIdentifier]:
         for resource, count in self.resources.as_resource_gain():

@@ -39,10 +39,10 @@ def test_collected_pickup_indices(state_game_data, empty_patches, blank_world_gr
     )
 
     # Run
-    indices = list(s.collected_pickup_indices(blank_world_graph))
+    indices = s.collected_pickup_indices(blank_world_graph)
 
     # Assert
-    assert indices == [pickup_nodes[0].pickup_index, pickup_nodes[1].pickup_index]
+    assert indices == {pickup_nodes[0].pickup_index, pickup_nodes[1].pickup_index}
 
 
 def test_add_pickup_to_state(state_game_data, empty_patches, generic_pickup_category, default_generator_params):

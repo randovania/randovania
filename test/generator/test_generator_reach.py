@@ -137,7 +137,7 @@ def test_database_collectable(
     #             if isinstance(node, ResourceNode) else "",
     #             game.region_list.node_name(node, with_region=True)))
 
-    collected_indices = set(reach.state.collected_pickup_indices(reach.graph))
+    collected_indices = reach.state.collected_pickup_indices(reach.graph)
     collected_events = {
         resource
         for resource, quantity in reach.state.resources.as_resource_gain()
