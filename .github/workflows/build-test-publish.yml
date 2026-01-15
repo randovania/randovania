@@ -438,6 +438,24 @@ jobs:
         run: |
           docker run --rm --entrypoint /bin/bash randovania/server:${{ steps.prep.outputs.version }} tools/server_image_test.sh
 
+
+  sizewatcher:
+    runs-on: 'ubuntu-latest'
+    name: Release
+    needs:
+      - executable
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Download the executables
+        uses: actions/download-artifact@v7
+        with:
+          pattern: '* *'
+
+      - run: npx @adobe/sizewatcher
+
   release:
     runs-on: 'ubuntu-latest'
     name: Release
