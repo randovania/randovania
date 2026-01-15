@@ -84,6 +84,18 @@ class State:
             copy.copy(self.hint_state),
         )
 
+    def collected_pickups(self, graph: WorldGraph) -> set[PickupIndex]:
+        pickups: set[PickupIndex] = set()
+        node_resource_index_offset = graph.node_resource_index_offset
+
+        for resource_index in self.resources.resource_bitmask.get_set_bits():
+            if resource_index >= node_resource_index_offset:
+                graph_node = graph.nodes[resource_index - node_resource_index_offset]
+                if graph_node.pickup_index is not None:
+                    pickups.add(graph_node.pickup_index)
+
+        return pickups
+
     def collected_pickups_hints_and_events(
         self, graph: WorldGraph
     ) -> tuple[
@@ -94,20 +106,24 @@ class State:
         pickups: list[PickupIndex] = []
         hints: list[NodeIdentifier] = []
         events: list[ResourceInfo] = []
+        node_resource_index_offset = graph.node_resource_index_offset
+        resource_mapping = graph.resource_database.get_resource_mapping()
 
-        for resource, count in self.resources.as_resource_gain():
-            if count < 1:
-                continue
-
-            if isinstance(resource, NodeResourceInfo):
-                graph_node = graph.get_node_by_resource_info(resource)
+        for resource_index in self.resources.resource_bitmask.get_set_bits():
+            if resource_index >= node_resource_index_offset:
+                graph_node = graph.nodes[resource_index - node_resource_index_offset]
                 if graph_node.pickup_index is not None:
                     pickups.append(graph_node.pickup_index)
+
                 if isinstance(graph_node.database_node, HintNode):
+                    resource = resource_mapping[resource_index]
+                    assert isinstance(resource, NodeResourceInfo)
                     hints.append(resource.node_identifier)
 
-            elif resource.resource_type == ResourceType.EVENT:
-                events.append(resource)
+            else:
+                resource = resource_mapping[resource_index]
+                if resource.resource_type == ResourceType.EVENT:
+                    events.append(resource)
 
         return (
             pickups,

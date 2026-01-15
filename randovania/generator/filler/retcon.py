@@ -66,15 +66,15 @@ def _get_next_player(
     :param locations_weighted: Which locations are available and their weight.
     :return:
     """
-    all_uncollected: dict[PlayerState, UncollectedState] = {
-        player_state: UncollectedState.from_reach(player_state.reach) for player_state in player_states
+    all_uncollected: dict[PlayerState, set[PickupIndex]] = {
+        player_state: UncollectedState.pickup_indices_from_reach(player_state.reach) for player_state in player_states
     }
 
     max_actions = max(player_state.num_actions for player_state in player_states)
-    max_uncollected = max(len(uncollected.pickup_indices) for uncollected in all_uncollected.values())
+    max_uncollected = max(len(uncollected) for uncollected in all_uncollected.values())
 
     def _calculate_weight(player: PlayerState) -> float:
-        return 1 + (max_actions - player.num_actions) * (max_uncollected - len(all_uncollected[player].pickup_indices))
+        return 1 + (max_actions - player.num_actions) * (max_uncollected - len(all_uncollected[player]))
 
     weighted_players = {
         player_state: _calculate_weight(player_state)
@@ -408,7 +408,7 @@ def _assign_pickup_somewhere(
         index_owner_state.assign_pickup(
             pickup_index,
             PickupTarget(action, current_player.index),
-            UncollectedState.from_reach(index_owner_state.reach),
+            UncollectedState.pickup_indices_from_reach(index_owner_state.reach),
             all_locations,
         )
 
@@ -455,7 +455,7 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
         # print(f"** {player_state.name} -- {player_weight}")
 
         pickup_index_weights = _calculate_uncollected_index_weights(
-            player_state.all_indices & UncollectedState.from_reach(player_state.reach).pickup_indices,
+            player_state.all_indices & UncollectedState.pickup_indices_from_reach(player_state.reach),
             set(player_state.reach.state.patches.pickup_assignment),
             player_state.pickup_index_ages,
             player_state.indices_groups,
