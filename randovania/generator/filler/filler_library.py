@@ -54,6 +54,7 @@ class UncollectedState(NamedTuple):
     def from_reach_with_unsafe(cls, reach: GeneratorReach) -> Self:
         """Creates an UncollectedState reflecting all safe or unsafe uncollected resources in the reach."""
         db = reach.state.resource_database
+        mapping = db.get_resource_mapping()
         resources = reach.state.resources
 
         def is_collectable(node: WorldGraphNode) -> bool:
@@ -80,11 +81,14 @@ class UncollectedState(NamedTuple):
         def all_events() -> set[ResourceInfo]:
             result = set()
             for node in world_graph_nodes:
-                events = [
-                    resource for resource, _ in node.resource_gain(db) if resource.resource_type == ResourceType.EVENT
-                ]
-                if events and is_collectable(node):
-                    result |= set(events)
+                if node.has_event_resource:
+                    events = [
+                        resource
+                        for resource_index in node.resource_gain_bitmask.get_set_bits()
+                        if (resource := mapping[resource_index]).resource_type == ResourceType.EVENT
+                    ]
+                    if events and is_collectable(node):
+                        result |= set(events)
 
             return result
 

@@ -85,16 +85,7 @@ class State:
         )
 
     def collected_pickups(self, graph: WorldGraph) -> set[PickupIndex]:
-        pickups: set[PickupIndex] = set()
-        node_resource_index_offset = graph.node_resource_index_offset
-
-        for resource_index in self.resources.resource_bitmask.get_set_bits():
-            if resource_index >= node_resource_index_offset:
-                graph_node = graph.nodes[resource_index - node_resource_index_offset]
-                if graph_node.pickup_index is not None:
-                    pickups.add(graph_node.pickup_index)
-
-        return pickups
+        return state_native.state_collected_pickups(self.resources, graph)
 
     def collected_pickups_hints_and_events(
         self, graph: WorldGraph
