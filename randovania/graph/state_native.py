@@ -45,7 +45,7 @@ def state_collect_resource_node(
     return new_resources, modified_resources
 
 
-def state_collected_pickups(resources: ResourceCollection, graph: WorldGraph) -> set[PickupIndex]:
+def state_collected_pickups_indices(resources: ResourceCollection, graph: WorldGraph) -> set[PickupIndex]:
     pickups: set[PickupIndex] = set()
     node_resource_index_offset: cython.int = graph.node_resource_index_offset
 

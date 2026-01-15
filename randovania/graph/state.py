@@ -84,9 +84,6 @@ class State:
             copy.copy(self.hint_state),
         )
 
-    def collected_pickups(self, graph: WorldGraph) -> set[PickupIndex]:
-        return state_native.state_collected_pickups(self.resources, graph)
-
     def collected_pickups_hints_and_events(
         self, graph: WorldGraph
     ) -> tuple[
@@ -122,12 +119,8 @@ class State:
             events,
         )
 
-    def collected_pickup_indices(self, graph: WorldGraph) -> Iterator[PickupIndex]:
-        for resource, count in self.resources.as_resource_gain():
-            if count > 0 and isinstance(resource, NodeResourceInfo):
-                graph_node = graph.get_node_by_resource_info(resource)
-                if graph_node.pickup_index is not None:
-                    yield graph_node.pickup_index
+    def collected_pickup_indices(self, graph: WorldGraph) -> set[PickupIndex]:
+        return state_native.state_collected_pickups_indices(self.resources, graph)
 
     def collected_hints(self, graph: WorldGraph) -> Iterator[NodeIdentifier]:
         for resource, count in self.resources.as_resource_gain():

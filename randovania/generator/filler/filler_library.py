@@ -36,7 +36,9 @@ class UncollectedState(NamedTuple):
     @classmethod
     def pickup_indices_from_reach(cls, reach: GeneratorReach) -> set[PickupIndex]:
         """A more efficient way of doing UncollectedState.from_reach(reach).pickup_indices"""
-        return _filter_not_in_dict(reach.state.collected_pickups(reach.graph), reach.state.patches.pickup_assignment)
+        return _filter_not_in_dict(
+            reach.state.collected_pickup_indices(reach.graph), reach.state.patches.pickup_assignment
+        )
 
     @classmethod
     def from_reach(cls, reach: GeneratorReach) -> Self:
