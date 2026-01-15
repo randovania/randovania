@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.remote_collection_node import RemoteCollectionNode
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 
@@ -172,7 +173,7 @@ class Editor:
                     if requirement != new_requirement:
                         connections[target] = new_requirement
 
-        # Dock Nodes
+        # Dock Nodes and Remote Activation Nodes
         for region in self.game.region_list.regions:
             for area in region.areas:
                 for i in range(len(area.nodes)):
@@ -205,6 +206,14 @@ class Editor:
 
                         if new_fields:
                             new_node = dataclasses.replace(node, **new_fields)
+
+                    if isinstance(
+                        node, RemoteCollectionNode
+                    ):  # TODO: doesnt quite work, renaming misses some reference somewhere.
+                        new_remote = replacer(node.remote_node)
+
+                        if new_remote != node.remote_node:
+                            new_node = dataclasses.replace(node, remote_node=new_remote)
 
                     if new_node is not None:
                         self.replace_node(area, node, new_node)

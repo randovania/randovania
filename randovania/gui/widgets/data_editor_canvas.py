@@ -13,6 +13,7 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.remote_collection_node import RemoteCollectionNode
 from randovania.game_description.requirements.base import Requirement
 
 if TYPE_CHECKING:
@@ -26,6 +27,7 @@ _color_for_node: dict[type[Node], QtCore.Qt.GlobalColor] = {
     DockNode: QtCore.Qt.GlobalColor.green,
     PickupNode: QtCore.Qt.GlobalColor.cyan,
     EventNode: QtCore.Qt.GlobalColor.magenta,
+    RemoteCollectionNode: QtCore.Qt.GlobalColor.blue,
 }
 
 

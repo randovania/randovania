@@ -18,6 +18,8 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.remote_collection_node import RemoteCollectionNode
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.location_category import LocationCategory
@@ -88,6 +90,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             ConfigurableNode: self.tab_configurable,
             HintNode: self.tab_hint,
             TeleporterNetworkNode: self.tab_teleporter_network,
+            RemoteCollectionNode: self.tab_remote_collection,
         }
         tab_to_type = {tab: node_type for node_type, tab in self._type_to_tab.items()}
 
@@ -113,9 +116,12 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         for region in sorted(game.region_list.regions, key=lambda x: x.name):
             self.dock_connection_region_combo.addItem(region.name, userData=region)
             self.teleporter_destination_region_combo.addItem(region.name, userData=region)
+            self.remote_collection_region_combo.addItem(region.name, userData=region)
         refresh_if_needed(self.dock_connection_region_combo, self.on_dock_connection_region_combo)
         refresh_if_needed(self.dock_connection_area_combo, self.on_dock_connection_area_combo)
         refresh_if_needed(self.teleporter_destination_region_combo, self.on_teleporter_destination_region_combo)
+        refresh_if_needed(self.remote_collection_region_combo, self.on_remote_collection_region_combo)
+        refresh_if_needed(self.remote_collection_area_combo, self.on_remote_collection_area_combo)
 
         for event in sorted(game.resource_database.event, key=lambda it: it.long_name):
             self.event_resource_combo.addItem(event.long_name, event)
@@ -151,6 +157,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.hint_requirement_to_collect_button.clicked.connect(self.on_hint_requirement_to_collect_button)
         self.teleporter_network_unlocked_button.clicked.connect(self.on_teleporter_network_unlocked_button)
         self.teleporter_network_activate_button.clicked.connect(self.on_teleporter_network_activated_button)
+        self.remote_collection_region_combo.currentIndexChanged.connect(self.on_remote_collection_region_combo)
+        self.remote_collection_area_combo.currentIndexChanged.connect(self.on_remote_collection_area_combo)
 
         # Hide the tab bar
         tab_bar: QtWidgets.QTabBar = self.tab_widget.findChild(QtWidgets.QTabBar)
@@ -203,6 +211,10 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         elif isinstance(node, TeleporterNetworkNode):
             self.fill_for_teleporter_network(node)
             return self.tab_teleporter_network
+
+        elif isinstance(node, RemoteCollectionNode):
+            self.fill_for_remote_collection(node)
+            return self.tab_remote_collection
 
         else:
             raise ValueError(f"Unknown node type: {node}")
@@ -272,6 +284,17 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.teleporter_network_activate_layout,
             requirement,
         )
+
+    def fill_for_remote_collection(self, node: RemoteCollectionNode) -> None:
+        remote_node = self.game.region_list.node_by_identifier(node.remote_node)
+        area = self.game.region_list.nodes_to_area(remote_node)
+        region = self.game.region_list.nodes_to_region(remote_node)
+
+        signal_handling.set_combo_with_value(self.remote_collection_region_combo, region)
+        refresh_if_needed(self.remote_collection_region_combo, self.on_remote_collection_region_combo)
+        signal_handling.set_combo_with_value(self.remote_collection_area_combo, area)
+        refresh_if_needed(self.remote_collection_area_combo, self.on_remote_collection_area_combo)
+        signal_handling.set_combo_with_value(self.remote_collection_node_combo, remote_node)
 
     # Connections Visualizer
     def _create_connections_visualizer(
@@ -359,6 +382,26 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.teleporter_destination_area_combo.clear()
         for area in sorted(region.areas, key=lambda x: x.name):
             self.teleporter_destination_area_combo.addItem(area.name, userData=area)
+
+    def on_remote_collection_region_combo(self, _: None) -> None:
+        region: Region = self.remote_collection_region_combo.currentData()
+
+        self.remote_collection_area_combo.clear()
+        for area in sorted(region.areas, key=lambda x: x.name):
+            self.remote_collection_area_combo.addItem(area.name, userData=area)
+
+    def on_remote_collection_area_combo(self, _: None) -> None:
+        area: Area | None = self.remote_collection_area_combo.currentData()
+
+        self.remote_collection_node_combo.clear()
+        empty = True
+        if area is not None:
+            for node in area.nodes:
+                if isinstance(node, (ResourceNode, DockNode)) and not isinstance(node, RemoteCollectionNode):
+                    self.remote_collection_node_combo.addItem(node.name, userData=node)
+                    empty = False
+        if empty:
+            self.remote_collection_node_combo.addItem("Other", None)
 
     @asyncSlot()
     async def on_hint_requirement_to_collect_button(self) -> None:
@@ -515,6 +558,20 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 self._unlocked_by_requirement,
                 self.teleporter_network_edit.text(),
                 self._activated_by_requirement,
+            )
+
+        elif node_type == RemoteCollectionNode:
+            remote_node: Node = self.remote_collection_node_combo.currentData()
+            return RemoteCollectionNode(
+                identifier,
+                node_index,
+                heal,
+                location,
+                description,
+                layers,
+                extra,
+                valid_starting_location,
+                remote_node.identifier,
             )
 
         else:
