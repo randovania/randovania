@@ -31,7 +31,7 @@ class WeightedLocations:
     def __str__(self) -> str:
         return str(self._items)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"WeightedLocations({self._items!r})"
 
     def is_empty(self) -> bool:
