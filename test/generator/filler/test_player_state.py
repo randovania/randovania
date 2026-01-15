@@ -101,11 +101,16 @@ def test_filter_usable_locations(
         configuration=default_filler_config,
     )
 
-    raw = {
-        (state_for_blank, PickupIndex(0)): 1.0,
-        (state_for_blank, PickupIndex(1)): 1.0,
-        (second_state, PickupIndex(0)): 1.0,
-    }
+    raw = [
+        (
+            state_for_blank,
+            {
+                PickupIndex(0): 1.0,
+                PickupIndex(1): 1.0,
+            },
+        ),
+        (second_state, {PickupIndex(0): 1.0}),
+    ]
     locations_weighted = WeightedLocations(copy.copy(raw))
     assert blank_wl.node_from_pickup_index(PickupIndex(0)).location_category == LocationCategory.MAJOR
     assert blank_wl.node_from_pickup_index(PickupIndex(1)).location_category == LocationCategory.MINOR
