@@ -443,7 +443,7 @@ def _assign_pickup_somewhere(
 
 
 def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> WeightedLocations:
-    all_weights = {}
+    result = []
 
     total_assigned_pickups = sum(player_state.num_assigned_pickups for player_state in player_states)
 
@@ -460,15 +460,19 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
             player_state.pickup_index_ages,
             player_state.indices_groups,
         )
+
+        all_weights = {}
         for pickup_index, weight in pickup_index_weights.items():
-            all_weights[(player_state, pickup_index)] = weight * player_weight
+            all_weights[pickup_index] = weight * player_weight
+
+        result.append((player_state, all_weights))
 
     # for (player_state, pickup_index), weight in all_weights.items():
     #     wl = player_state.game.region_list
     #     print(f"> {player_state.name} - {wl.node_name(wl.node_from_pickup_index(pickup_index))}: {weight}")
     # print("============================================")
 
-    return WeightedLocations(all_weights)
+    return WeightedLocations(result)
 
 
 def _calculate_weights_for(
