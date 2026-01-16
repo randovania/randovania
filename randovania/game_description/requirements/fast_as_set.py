@@ -3,6 +3,7 @@ from __future__ import annotations
 import itertools
 import typing
 
+from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_or import RequirementOr
@@ -36,6 +37,9 @@ def _internal_fast_as(req: Requirement, database: ResourceDatabase) -> list[Requ
         for it in req.items:
             result.extend(_internal_fast_as(it, database))
         return result
+
+    elif isinstance(req, NodeRequirement):
+        return [RequirementList([])]
 
     else:
         raise UnableToAvoidError
