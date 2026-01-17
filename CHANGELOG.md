@@ -93,6 +93,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Energy Parts are now logical.
 - Added: An option to enable Lua debug logging is available in the Cosmetic Options dialog when "Show Experimental Settings" is enabled (intended for game patcher developers).
+- Added: An option is now available in the "Other" preset settings tab to skip item acquisition popups, replacing them with a short on-screen message instead (similar to receiving Multiworld items).
 
 #### Logic Database
 
