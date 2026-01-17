@@ -37,7 +37,7 @@ class Ui_PresetFusionPatches(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_contents = QWidget()
         self.scroll_contents.setObjectName(u"scroll_contents")
-        self.scroll_contents.setGeometry(QRect(0, 0, 704, 562))
+        self.scroll_contents.setGeometry(QRect(0, -119, 709, 567))
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -147,6 +147,7 @@ class Ui_PresetFusionPatches(object):
         self.adjusted_geron_weaknesses_label = QLabel(self.gameplay_group)
         self.adjusted_geron_weaknesses_label.setObjectName(u"adjusted_geron_weaknesses_label")
         self.adjusted_geron_weaknesses_label.setTextFormat(Qt.TextFormat.MarkdownText)
+        self.adjusted_geron_weaknesses_label.setWordWrap(True)
 
         self.instant_transitions_layout.addWidget(self.adjusted_geron_weaknesses_label)
 
@@ -182,10 +183,10 @@ class Ui_PresetFusionPatches(object):
         self.instant_morph_check.setText(QCoreApplication.translate("PresetFusionPatches", u"Enable Instant Morph Button", None))
         self.instant_morph_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Enabling this allows you to instantly morph and unmorph by using the SELECT button.", None))
         self.adjusted_geron_weaknesses_check.setText(QCoreApplication.translate("PresetFusionPatches", u"Enable Balanced Geron Vulnerabilities", None))
-        self.adjusted_geron_weaknesses_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Enabling this will change Gerons to only be vulnerable to their primary weakness. This means:\n"
-"- Missile Gerons are only weak to Missiles\n"
-"- Stabilizer Gerons are only weak to Missiles\n"
-"- Super Missile Gerons are only weak to Super Missiles\n"
-"- Power Bomb Gerons are only weak to Power Bombs", None))
+        self.adjusted_geron_weaknesses_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Enabling this will change Gerons to only be vulnerable to their primary weaknesses. This means:\n"
+"- Missile Gerons are only weak to Missiles and Speedboosting\n"
+"- Stabilizer Gerons are only weak to Missiles, Charge Beam and Speedboosting\n"
+"- Super Missile Gerons are only weak to Super Missiles and Speedboosting\n"
+"- Power Bomb Gerons are only weak to Power Bombs and Speedboosting", None))
     # retranslateUi
 
