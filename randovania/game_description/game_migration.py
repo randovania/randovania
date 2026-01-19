@@ -370,6 +370,10 @@ def _migrate_v30(data: dict, game: RandovaniaGame) -> None:
                         node["default_connection"]["region"] = rename
 
 
+def empty_migration(data: dict, game: RandovaniaGame) -> None:
+    return
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -401,6 +405,7 @@ _MIGRATIONS = [
     _migrate_v28,  # rename HintNodeKind
     _migrate_v29,  # add custom_index_group
     _migrate_v30,  # split Echoes light/dark
+    empty_migration,  # Added RemoteCollectionNode
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

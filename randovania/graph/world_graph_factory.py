@@ -12,6 +12,7 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.remote_collection_node import RemoteCollectionNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.game_database_view import ResourceDatabaseViewProxy
 from randovania.game_description.requirements.base import Requirement
@@ -31,6 +32,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
 
@@ -205,22 +207,33 @@ def create_node(
     area: Area,
     region: Region,
     database: ResourceDatabaseView,
+    game_db: GameDatabaseView,
 ) -> WorldGraphNode:
     """
     Creates one WorldGraphNode based on one original node.
     """
-    resources: list[ResourceInfo] = []
 
-    if isinstance(original_node, EventNode):
-        resources.append(original_node.event)
-    elif isinstance(original_node, EventPickupNode):
-        resources.append(original_node.event_node.event)
+    def resources_and_indices_for_node(node: Node) -> tuple[list[ResourceInfo], PickupIndex | None]:
+        resources: list[ResourceInfo] = []
+        pickup_index = None
 
-    pickup_index = None
-    if isinstance(original_node, PickupNode):
-        pickup_index = original_node.pickup_index
-    elif isinstance(original_node, EventPickupNode):
-        pickup_index = original_node.pickup_node.pickup_index
+        if isinstance(original_node, EventNode):
+            resources.append(original_node.event)
+        elif isinstance(original_node, EventPickupNode):
+            resources.append(original_node.event_node.event)
+
+        if isinstance(original_node, PickupNode):
+            pickup_index = original_node.pickup_index
+        elif isinstance(original_node, EventPickupNode):
+            pickup_index = original_node.pickup_node.pickup_index
+
+        return resources, pickup_index
+
+    node_to_get_resources = original_node
+    if isinstance(original_node, RemoteCollectionNode):
+        node_to_get_resources = game_db.node_by_identifier(original_node.remote_node)
+
+    resources, pickup_index = resources_and_indices_for_node(node_to_get_resources)
 
     node = WorldGraphNode(
         node_index=node_index,
@@ -343,7 +356,7 @@ def create_patchless_graph(
         if original_node is None:
             continue
 
-        nodes.append(new_node := create_node(len(nodes), original_node, area, region, resource_database))
+        nodes.append(new_node := create_node(len(nodes), original_node, area, region, resource_database, database_view))
         graph_area_connections[new_node.node_index] = copy.copy(original_area_connections[original_node.node_index])
 
         if isinstance(original_node, TeleporterNetworkNode):
@@ -386,7 +399,11 @@ def create_patchless_graph(
         resource_database.get_resource_mapping()[resource.resource_index] = resource
 
     for node in nodes:
-        if isinstance(node.database_node, HintNode):
+        db_node = node.database_node
+        if isinstance(node.database_node, RemoteCollectionNode):
+            db_node = database_view.node_by_identifier(node.database_node.remote_node)
+
+        if isinstance(db_node, HintNode):
             node.requirement_to_collect = graph.converter.convert_db(node.database_node.lock_requirement)
 
     for node in nodes:
@@ -508,8 +525,22 @@ def _adjust_graph_for_patches(
     dock_connections: set[tuple[int, int]] = set()
     redirect_to_front_of_node: list[WorldGraphNode] = []
 
-    # Add dock connections
+    # Add dock connections and add resources from dock locks
     for node in graph.nodes:
+        if isinstance(node.database_node, RemoteCollectionNode) and isinstance(
+            node.database_node.remote_node, DockNode
+        ):
+            db_node = node.database_node.remote_node
+            forward_weakness = patches.get_dock_weakness_for(db_node)
+            if forward_weakness.lock is not None:
+                front_lock_resource = graph.resource_info_for_node(node)
+                resource_database = graph.converter.resource_database
+
+                node.is_lock_action = True
+                node.add_resource(front_lock_resource, resource_database)
+                requirement_to_collect = _get_dock_lock_requirement(db_node, forward_weakness)
+                node.requirement_to_collect = graph.converter.convert_db(requirement_to_collect)
+
         if isinstance(node.database_node, DockNode):
             connection = _create_dock_connection(node, graph, patches)
             node.add_connection(graph, connection)
