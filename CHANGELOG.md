@@ -46,6 +46,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Nocturnal Shaft: When going from top left to top right, dealing with the Blue-X is now trivial.
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+##### Sanctuary Fortress
+
+- Added: Hall Of Combat Mastery: A ludicrous BSJ + Instant Morph over the spider track to access Central Area Transport East without Spider Ball or Space Jump Boots.
+
 ### Metroid: Samus Returns
 
 - Fixed: Certain output preferences from old versions of Randovania no longer causes issues on start.
