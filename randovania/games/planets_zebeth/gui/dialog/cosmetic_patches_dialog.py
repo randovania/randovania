@@ -16,12 +16,14 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
+    from randovania.interface_common.options import Options
+
 
 class PlanetsZebethCosmeticPatchesDialog(
     BaseCosmeticPatchesDialog[PlanetsZebethCosmeticPatches], Ui_PlanetsZebethCosmeticPatchesDialog
 ):
-    def __init__(self, parent: QtWidgets.QWidget | None, current: PlanetsZebethCosmeticPatches):
-        super().__init__(parent, current)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: PlanetsZebethCosmeticPatches, options: Options):
+        super().__init__(parent, current, options)
         self.setupUi(self)
 
         for room_gui_type in PlanetsZebethRoomGuiType:

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from functools import partial
-from typing import override
+from typing import TYPE_CHECKING, override
 
 from PySide6 import QtCore, QtGui, QtWidgets
 
@@ -13,6 +13,9 @@ from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatch
 from randovania.gui.lib import color_lib, slider_updater
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
+if TYPE_CHECKING:
+    from randovania.interface_common.options import Options
+
 SUIT_DEFAULT_COLORS = [
     [(255, 173, 50), (220, 25, 45), (132, 240, 60)],  # Power
     [(255, 173, 50), (220, 25, 45), (255, 125, 50), (132, 240, 60)],  # Varia
@@ -22,8 +25,8 @@ SUIT_DEFAULT_COLORS = [
 
 
 class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches], Ui_PrimeCosmeticPatchesDialog):
-    def __init__(self, parent: QtWidgets.QWidget | None, current: PrimeCosmeticPatches):
-        super().__init__(parent, current)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: PrimeCosmeticPatches, options: Options):
+        super().__init__(parent, current, options)
         self.setupUi(self)
 
         self.field_to_slider_mapping = {

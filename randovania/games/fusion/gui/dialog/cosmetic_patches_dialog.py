@@ -12,10 +12,12 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
+    from randovania.interface_common.options import Options
+
 
 class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatches], Ui_FusionCosmeticPatchesDialog):
-    def __init__(self, parent: QtWidgets.QWidget | None, current: FusionCosmeticPatches):
-        super().__init__(parent, current)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: FusionCosmeticPatches, options: Options):
+        super().__init__(parent, current, options)
         self.setupUi(self)
 
         for color_space in ColorSpace:

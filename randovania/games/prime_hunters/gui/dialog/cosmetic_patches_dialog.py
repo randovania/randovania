@@ -11,10 +11,12 @@ from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatch
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
+    from randovania.interface_common.options import Options
+
 
 class HuntersCosmeticPatchesDialog(BaseCosmeticPatchesDialog[HuntersCosmeticPatches], Ui_HuntersCosmeticPatchesDialog):
-    def __init__(self, parent: QtWidgets.QWidget | None, current: HuntersCosmeticPatches):
-        super().__init__(parent, current)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: HuntersCosmeticPatches, options: Options):
+        super().__init__(parent, current, options)
         self.setupUi(self)
 
         self.on_new_cosmetic_patches(current)
