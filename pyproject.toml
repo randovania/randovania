@@ -406,10 +406,4 @@ cache-keys = [
     { file = "README.md" },
     { file = "pyuic.json" },
     { file = "**/*.ui" },
-
-    # Listing these files forces uv to rebuild Randovania every time you run,
-    # but otherwise it's not rebuilt when these are deleted.
-    { file = "randovania/version.py" },
-    { file = "randovania/version_hash.py" },
-    { file = "randovania/data/README.md" },
 ]
