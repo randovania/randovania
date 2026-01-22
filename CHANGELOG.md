@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.4.0] - 2025-12-??
 
+- **Major** - Changed: The generator and resolver are now significantly faster.
+  - For standard settings across all games, the mean time went from 5.38 seconds to 0.86 seconds - an improvement of 524%.
+  - For Echoes door lock rando, the mean time went from 430 seconds to 15 seconds - an improvement of 2772%. Other games are similarly improved.
+  - For a 100 worlds test multiworld, the mean time went from 2000+ seconds to 269 seconds.
+
 - Added: Integration with LiveSplit One for Async Races - after some configuration, starting, pausing and finishing in LiveSplit One will update your status in the Async Race.
-- Changed: The generator and resolver now use a faster algorithm. An option was added to use the old one if needed.
 - Changed: The "Verify if game is beatable after ..." option is no longer experimental.
 - Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
 - Changed: When hiding item models or scans, the preset summary no longer references an ETM.
@@ -19,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Text such as the Seed Hash in the Async Race window is now selectable via mouse.
 - Fixed: Saving previous versions of presets when modififying no longer fails on certain cases.
 - Fixed: Certain scenarios at the start of generation with low possible actions are now less likely to fail.
-- Removed: The "Consider possible unsafe resources" experimental option has been removed and is now always enabled.
+- Removed: The "Consider possible unsafe resources" experimental option has been removed and is now always enabled. The speed up mentioned above are including the slowdown from this setting.
 - Removed: The "Revised door solver" experimental option has been removed and is now always enabled.
 - Added: Added "Create New Preset" button to preset menu to improve UX.
 - Added: Added the ability to pan maps in the data visualizer by dragging with left or center click.
