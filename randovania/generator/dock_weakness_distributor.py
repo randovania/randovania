@@ -331,7 +331,7 @@ def _determine_valid_weaknesses(
         dock_graph = dock if logic.graph is None else logic.graph.original_to_node[dock.node_index]
 
         is_locked_door_not_excluded = dock_type_params.locked in dock_type_state.can_change_to.difference(exclusions)
-        is_target_node_reachable = target_graph in reach.nodes
+        is_target_node_reachable = reach.node_in_reach(target_graph)
 
         if is_locked_door_not_excluded and is_target_node_reachable:
             # Small optimization to only calculate the reach back, if the locked door is even a viable option
@@ -341,7 +341,7 @@ def _determine_valid_weaknesses(
                 reach.health_for_damage_requirements_at_node(target_graph.node_index)
             )
             reach_from_target = ResolverReach.calculate_reach(logic, state_from_target)
-            is_source_reachable_from_target = dock_graph in reach_from_target.nodes
+            is_source_reachable_from_target = reach_from_target.node_in_reach(dock_graph)
 
             if is_source_reachable_from_target:
                 weighted_weaknesses[dock_type_params.locked] = 2.0

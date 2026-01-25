@@ -419,14 +419,14 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.update_matplot_widget(nodes_in_reach)
 
     def current_nodes_in_reach(self, state: State | None) -> list[WorldGraphNode]:
-        nodes_in_reach = []
+        nodes_in_reach: list[WorldGraphNode] = []
         if state is not None:
             reach = ResolverReach.calculate_reach(self.logic, state)
             nodes_in_reach = list(reach.nodes)
             if state.node not in nodes_in_reach:
                 nodes_in_reach.append(state.node)
 
-        return typing.cast("list[WorldGraphNode]", nodes_in_reach)
+        return nodes_in_reach
 
     def _on_tab_changed(self) -> None:
         if self.map_tab_widget.currentWidget() == self.tab_graph_map:

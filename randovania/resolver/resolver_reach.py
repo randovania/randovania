@@ -19,20 +19,14 @@ class ResolverReach:
     _node_indices: tuple[int, ...]
     _health_at_node: dict[int, int]
     _path_to_node: dict[int, list[int]]
-    _satisfiable_requirements_for_additionals: frozenset[GraphRequirementList]
+    _satisfiable_requirements_for_additionals: set[GraphRequirementList]
     _logic: Logic
-
-    @property
-    def nodes(self) -> Iterator[WorldGraphNode]:
-        all_nodes = self._logic.all_nodes
-        for index in self._node_indices:
-            yield all_nodes[index]
 
     def health_for_damage_requirements_at_node(self, index: int) -> int:
         return self._health_at_node[index]
 
     @property
-    def satisfiable_requirements_for_additionals(self) -> frozenset[GraphRequirementList]:
+    def satisfiable_requirements_for_additionals(self) -> set[GraphRequirementList]:
         return self._satisfiable_requirements_for_additionals
 
     def path_to_node(self, node: WorldGraphNode) -> tuple[WorldGraphNode, ...]:
@@ -44,39 +38,45 @@ class ResolverReach:
 
     def __init__(
         self,
-        nodes: dict[int, int],
-        path_to_node: dict[int, list[int]],
-        requirements_for_additionals: frozenset[GraphRequirementList],
         logic: Logic,
+        data: resolver_native.ProcessNodesResponse,
     ):
-        self._node_indices = tuple(nodes.keys())
-        self._health_at_node = nodes
         self._logic = logic
-        self._path_to_node = path_to_node
-        self._satisfiable_requirements_for_additionals = requirements_for_additionals
+        self._node_indices = tuple(data.reach_nodes.keys())
+        self._health_at_node = data.reach_nodes
+        self._path_to_node = data.path_to_node
+        self._satisfiable_requirements_for_additionals = data.satisfiable_requirements_for_additionals
 
     @classmethod
     def calculate_reach(cls, logic: Logic, initial_state: State) -> ResolverReach:
-        response = resolver_native.resolver_reach_process_nodes(
+        response = resolver_native.ProcessNodesResponse(
+            reach_nodes={},
+            path_to_node={},
+            satisfiable_requirements_for_additionals=set(),
+        )
+        resolver_native.resolver_reach_process_nodes(
             logic,
             initial_state,
+            response,
         )
-        reach_nodes = response.reach_nodes
-        requirements_excluding_leaving_by_node = response.requirements_excluding_leaving_by_node
+        return ResolverReach(logic, response)
 
-        # Discard satisfiable requirements of nodes reachable by other means
-        for node_index in set(reach_nodes.keys()).intersection(requirements_excluding_leaving_by_node.keys()):
-            requirements_excluding_leaving_by_node.pop(node_index)
+    @property
+    def nodes(self) -> Iterator[WorldGraphNode]:
+        all_nodes = self._logic.all_nodes
+        for index in self._node_indices:
+            yield all_nodes[index]
 
-        if requirements_excluding_leaving_by_node:
-            satisfiable_requirements_for_additionals = resolver_native.build_satisfiable_requirements(
-                logic,
-                requirements_excluding_leaving_by_node,
-            )
-        else:
-            satisfiable_requirements_for_additionals = frozenset()
+    def node_in_reach(self, node: WorldGraphNode) -> bool:
+        return node.node_index in self._health_at_node
 
-        return ResolverReach(reach_nodes, response.path_to_node, satisfiable_requirements_for_additionals, logic)
+    def collectable_resource_nodes(self, resources: ResourceCollection) -> Iterator[WorldGraphNode]:
+        for node in self.nodes:
+            if not node.has_all_resources(resources) and node.requirement_to_collect.satisfied(
+                resources,
+                self.health_for_damage_requirements_at_node(node.node_index),
+            ):
+                yield node
 
     def possible_actions(self, state: State) -> Iterator[tuple[WorldGraphNode, DamageState]]:
         for node in self.collectable_resource_nodes(state.resources):
@@ -90,11 +90,3 @@ class ResolverReach:
                     additional_requirements.alternatives
                 )
                 self._logic.logger.log_skip(node, state, self._logic)
-
-    def collectable_resource_nodes(self, resources: ResourceCollection) -> Iterator[WorldGraphNode]:
-        for node in self.nodes:
-            if not node.has_all_resources(resources) and node.requirement_to_collect.satisfied(
-                resources,
-                self.health_for_damage_requirements_at_node(node.node_index),
-            ):
-                yield node

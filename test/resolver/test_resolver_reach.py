@@ -3,13 +3,14 @@ from __future__ import annotations
 from unittest.mock import MagicMock
 
 from randovania.graph.world_graph import WorldGraphNode
+from randovania.resolver import resolver_native
 from randovania.resolver.resolver_reach import ResolverReach
 
 
 def test_possible_actions_empty():
     state = MagicMock()
 
-    reach = ResolverReach({}, {}, frozenset(), MagicMock())
+    reach = ResolverReach(MagicMock(), resolver_native.ProcessNodesResponse({}, {}, set()))
     options = list(reach.possible_actions(state))
 
     assert options == []
@@ -28,7 +29,7 @@ def test_possible_actions_no_resources():
     node_b.node_index = 1
 
     # Run
-    reach = ResolverReach({0: 1, 1: 1}, {}, frozenset(), logic)
+    reach = ResolverReach(logic, resolver_native.ProcessNodesResponse({0: 1, 1: 1}, {}, set()))
     options = [action for action, damage in reach.possible_actions(state)]
 
     # Assert
@@ -51,7 +52,7 @@ def test_possible_actions_with_event():
     damage_state = MagicMock()
 
     # Run
-    reach = ResolverReach({0: damage_state}, {}, frozenset(), logic)
+    reach = ResolverReach(logic, resolver_native.ProcessNodesResponse({0: damage_state}, {}, set()))
     options = [action for action, damage in reach.possible_actions(state)]
 
     # Assert
