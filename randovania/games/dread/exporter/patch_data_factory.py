@@ -393,6 +393,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             },
             "lua": {
                 "custom_init": {
+                    "show_dna_in_hud": c.show_dna_in_hud,
                     "enable_death_counter": c.show_death_counter,
                     "enable_room_name_display": c.show_room_names.value,
                 },
