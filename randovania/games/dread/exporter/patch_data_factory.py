@@ -536,6 +536,20 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             other_train["teleporter"]["actor"] = "wagontrain_quarantine_000"
             teleporters.append(other_train)
 
+        # Determine total/starting number of Flash Shift Upgrades and Speed Booster Upgrades
+        has_flash_upgrades: False
+        has_speed_upgrades: False
+
+        for pickup, state in self.configuration.ammo_pickup_configuration.pickups_state.items():
+            if pickup.name == "Flash Shift Upgrade":
+                has_flash_upgrades = state.pickup_count > 0
+                break
+
+        for pickup, state in self.configuration.standard_pickup_configuration.pickups_state.items():
+            if pickup.name == "Speed Booster Upgrade":
+                has_speed_upgrades = state.num_included_in_starting_pickups > 0 or state.num_shuffled_pickups > 0
+                break
+
         return {
             "configuration_identifier": self.description.shareable_hash,
             "starting_location": starting_location,
@@ -551,6 +565,8 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             "cosmetic_patches": self._cosmetic_patch_data(),
             "energy_per_tank": energy_per_tank,
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
+            "has_flash_upgrades": has_flash_upgrades,
+            "has_speed_upgrades": has_speed_upgrades,
             "enable_remote_lua": self.cosmetic_patches.enable_auto_tracker or self.players_config.is_multiworld,
             "enable_logging": self.cosmetic_patches.enable_debug_logging,
             "skip_item_popups": self.configuration.skip_item_popups,
