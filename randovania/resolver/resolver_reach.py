@@ -67,7 +67,8 @@ class ResolverReach:
         for index in self._node_indices:
             yield all_nodes[index]
 
-    def node_in_reach(self, node: WorldGraphNode) -> bool:
+    def is_node_in_reach(self, node: WorldGraphNode) -> bool:
+        """True if the given node is part of `nodes`."""
         return node.node_index in self._health_at_node
 
     def collectable_resource_nodes(self, resources: ResourceCollection) -> Iterator[WorldGraphNode]:
