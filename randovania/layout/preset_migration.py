@@ -1211,14 +1211,17 @@ def _migrate_v109(preset: dict, game: RandovaniaGame) -> None:
     preset["configuration"].pop("two_sided_door_lock_search")
 
 
-def _migrate_v110(preset: dict, game: RandovaniaGame) -> None:
+def _migrate_v110(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
     if game == RandovaniaGame.FUSION:
         knowledge_enabled = preset["configuration"]["trick_level"]["specific_levels"].get("Knowledge")
-        val = False if knowledge_enabled else True
+        if knowledge_enabled or from_layout_description:
+            val = False
+        else:
+            val = True
         preset["configuration"]["adjusted_geron_weaknesses"] = val
 
 
-_MIGRATIONS = [
+_MIGRATIONS: list[migration_lib.GameMigration | None] = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
     _migrate_v3,  # v1.2.2-563-g50f4d07a
@@ -1333,10 +1336,11 @@ _MIGRATIONS = [
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
-def convert_to_current_version(preset: dict, game: RandovaniaGame) -> dict:
+def convert_to_current_version(preset: dict, game: RandovaniaGame, from_layout_description: bool) -> dict:
     return migration_lib.apply_migrations_with_game(
         preset,
         _MIGRATIONS,
         game,
         version_name="preset version",
+        from_layout_description=from_layout_description,
     )

@@ -5,7 +5,7 @@ import typing
 from typing import TYPE_CHECKING, TypeVar
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import game_migration
+from randovania.game_description import game_description_migration
 from randovania.game_description.db import event_pickup
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.configurable_node import ConfigurableNode
@@ -509,7 +509,7 @@ def read_used_trick_levels(
 
 def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescription]:
     game = RandovaniaGame(data["game"])
-    data = game_migration.migrate_to_current(data, game)
+    data = game_description_migration.migrate_to_current(data, game)
 
     resource_database = read_resource_database(game, data["resource_database"])
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)

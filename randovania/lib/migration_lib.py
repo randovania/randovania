@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import functools
+import inspect
 import typing
 
 if typing.TYPE_CHECKING:
@@ -16,11 +17,16 @@ class Migration(typing.Protocol):
     def __call__(self, __data: dict) -> None: ...
 
 
-class GameMigration(typing.Protocol):
+class GameMigrationBasic(typing.Protocol):
     def __call__(self, __data: dict, game: RandovaniaGame) -> None: ...
 
 
+class GameMigrationExtra(typing.Protocol):
+    def __call__(self, __data: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None: ...
+
+
 Migrations = typing.Sequence[Migration | None]
+GameMigration = GameMigrationBasic | GameMigrationExtra
 GameMigrations = typing.Sequence[GameMigration | None]
 
 
@@ -63,12 +69,23 @@ def apply_migrations_with_game(
     *,
     copy_before_migrating: bool = False,
     version_name: str = "version",
+    from_layout_description: bool = False,
 ) -> dict:
-    partialed_migrations = [
-        None if migration is None else functools.partial(migration, game=game) for migration in migrations
-    ]
+    def wrap(f: GameMigration) -> Migration:
+        extra = {}
+
+        if "from_layout_description" in inspect.signature(f).parameters:
+            extra["from_layout_description"] = from_layout_description
+
+        @functools.wraps(f)
+        def wrapped(d: dict) -> None:
+            f(d, game=game, **extra)
+
+        return wrapped
+
+    wrapped_migrations = [None if migration is None else wrap(migration) for migration in migrations]
     return apply_migrations(
-        data, partialed_migrations, copy_before_migrating=copy_before_migrating, version_name=version_name
+        data, wrapped_migrations, copy_before_migrating=copy_before_migrating, version_name=version_name
     )
 
 
