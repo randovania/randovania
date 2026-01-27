@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Changed: Energy Parts are now logical.
+- Added: An option is now available in the "Other" preset settings tab to skip item acquisition popups, replacing them with a short on-screen message instead (similar to receiving Multiworld items).
 
 #### Logic Database
 

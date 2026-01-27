@@ -10,7 +10,7 @@
         "word_hash": "Armadigger Spittail Armadigger",
         "presets": [
             {
-                "schema_version": 97,
+                "schema_version": 112,
                 "base_preset_uuid": null,
                 "name": "All Settings",
                 "uuid": "38849a5f-ed44-47cc-83a7-8f084ea27612",
@@ -20,30 +20,30 @@
                     "trick_level": {
                         "minimal_logic": false,
                         "specific_levels": {
-                            "CBL": "hypermode",
-                            "Combat": "hypermode",
-                            "CrossSkip": "hypermode",
-                            "DBJ": "hypermode",
-                            "DBoost": "hypermode",
-                            "DiffusionAbuse": "hypermode",
-                            "FlashSkip": "hypermode",
-                            "FloorClip": "hypermode",
-                            "FrozenEnemy": "hypermode",
-                            "GrappleMovement": "hypermode",
-                            "IBJ": "hypermode",
-                            "Knowledge": "hypermode",
-                            "LedgeWarp": "hypermode",
-                            "Movement": "hypermode",
-                            "Pseudo": "hypermode",
-                            "RGrapple": "hypermode",
-                            "SWJ": "hypermode",
-                            "ShortBoost": "hypermode",
-                            "Slide": "hypermode",
-                            "Speedbooster": "hypermode",
-                            "TunnelSlope": "hypermode",
-                            "WBJ": "hypermode",
-                            "WSJ": "hypermode",
-                            "Walljump": "hypermode"
+                            "CBL": "ludicrous",
+                            "Combat": "ludicrous",
+                            "CrossSkip": "ludicrous",
+                            "DBJ": "ludicrous",
+                            "DBoost": "ludicrous",
+                            "DiffusionAbuse": "ludicrous",
+                            "FlashSkip": "ludicrous",
+                            "FloorClip": "ludicrous",
+                            "FrozenEnemy": "ludicrous",
+                            "GrappleMovement": "ludicrous",
+                            "IBJ": "ludicrous",
+                            "Knowledge": "ludicrous",
+                            "LedgeWarp": "ludicrous",
+                            "Movement": "ludicrous",
+                            "Pseudo": "ludicrous",
+                            "RGrapple": "ludicrous",
+                            "SWJ": "ludicrous",
+                            "ShortBoost": "ludicrous",
+                            "Slide": "ludicrous",
+                            "Speedbooster": "ludicrous",
+                            "TunnelSlope": "ludicrous",
+                            "WBJ": "ludicrous",
+                            "WSJ": "ludicrous",
+                            "Walljump": "ludicrous"
                         }
                     },
                     "starting_location": [
@@ -362,9 +362,6 @@
                     "pickup_model_data_source": "random",
                     "logical_resource_action": "randomly",
                     "first_progression_must_be_local": true,
-                    "two_sided_door_lock_search": false,
-                    "minimum_available_locations_for_hint_placement": 5,
-                    "minimum_location_weight_for_hint_placement": 0.1,
                     "dock_rando": {
                         "mode": "docks",
                         "types_state": {
@@ -418,6 +415,7 @@
                     "raven_beak_damage_table_handling": "consistent_high",
                     "allow_highly_dangerous_logic": true,
                     "nerf_power_bombs": true,
+                    "skip_item_popups": true,
                     "warp_to_start": true,
                     "april_fools_hints": false,
                     "freesink": false,
@@ -439,6 +437,14 @@
                         "ghavoran": false,
                         "hanubia": false,
                         "itorash": false
+                    },
+                    "hints": {
+                        "minimum_available_locations_for_hint_placement": 5,
+                        "minimum_location_weight_for_hint_placement": 0.1,
+                        "use_resolver_hints": false,
+                        "specific_pickup_hints": {},
+                        "enable_random_hints": true,
+                        "enable_specific_location_hints": true
                     }
                 }
             }

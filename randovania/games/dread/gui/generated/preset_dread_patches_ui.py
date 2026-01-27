@@ -134,6 +134,17 @@ class Ui_PresetDreadPatches(object):
 
         self.verticalLayout_3.addWidget(self.nerf_power_bombs_label)
 
+        self.skip_item_popups_check = QCheckBox(self.miscellaneous_group)
+        self.skip_item_popups_check.setObjectName(u"skip_item_popups_check")
+
+        self.verticalLayout_3.addWidget(self.skip_item_popups_check)
+
+        self.skip_item_popups_label = QLabel(self.miscellaneous_group)
+        self.skip_item_popups_label.setObjectName(u"skip_item_popups_label")
+        self.skip_item_popups_label.setWordWrap(True)
+
+        self.verticalLayout_3.addWidget(self.skip_item_popups_label)
+
 
         self.scroll_layout.addWidget(self.miscellaneous_group)
 
@@ -173,5 +184,9 @@ class Ui_PresetDreadPatches(object):
         self.nerf_power_bombs_check.setText(QCoreApplication.translate("PresetDreadPatches", u"Power Bomb Limitations", None))
         self.nerf_power_bombs_label.setText(QCoreApplication.translate("PresetDreadPatches", u"The Power Bomb is one of the most powerful abilities in the game, as it can defeat most enemies and some bosses in one hit, as well as open Charge Beam doors, and destroy Enkies. \n"
 "This setting removes the ability to destroy Enkies and open Charge Beam doors, making Ice Missiles and Charge Beam much more valuable. ", None))
+        self.skip_item_popups_check.setText(QCoreApplication.translate("PresetDreadPatches", u"Skip Item Acquisition Popups", None))
+        self.skip_item_popups_label.setText(QCoreApplication.translate("PresetDreadPatches", u"This setting causes the popup dialogs shown when collecting pickups to be skipped. Instead, a message is shown near the top of the screen for several seconds after collecting an \n"
+"item, similar to the messages shown when receiving items in a Multiworld game.\n"
+"              ", None))
     # retranslateUi
 
