@@ -51,8 +51,8 @@ else:
 
 class ProcessNodesResponse(typing.NamedTuple):
     reach_nodes: dict[int, int]
-    requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]]
     path_to_node: dict[int, list[int]]
+    satisfiable_requirements_for_additionals: set[GraphRequirementList]
 
 
 @cython.cfunc
@@ -178,10 +178,29 @@ if not cython.compiled:
         return True
 
 
+@cython.cfunc
+def _add_to_requirements_excluding_leaving_by_node(
+    requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]],
+    node_index: cython.int,
+    target_node_index_py: int,
+    state_ptr: cython.pointer[ProcessNodesState],
+    connection: WorldGraphNodeConnection,
+) -> cython.void:
+    if target_node_index_py not in requirements_excluding_leaving_by_node:
+        requirements_excluding_leaving_by_node[target_node_index_py] = []
+
+    new_set: GraphRequirementSet | None = state_ptr[0].satisfied_requirement_on_node[node_index].first.get()
+    assert new_set is not None
+    requirements_excluding_leaving_by_node[target_node_index_py].append(
+        (connection.requirement_without_leaving, new_set)
+    )
+
+
 def resolver_reach_process_nodes(
     logic: Logic,
     initial_state: State,
-) -> ProcessNodesResponse:
+    output: ProcessNodesResponse,
+) -> None:
     all_nodes: Sequence[BaseWorldGraphNode] = logic.all_nodes
     resources: ResourceCollection = initial_state.resources
     initial_game_state: EnergyTankDamageState = initial_state.damage_state  # type: ignore[assignment]
@@ -211,9 +230,8 @@ def resolver_reach_process_nodes(
 
     found_node_order: vector[cython.size_t] = vector[cython.size_t]()
     requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]] = {}
-    path_to_node: dict[int, list[int]] = {
-        initial_node_index: [],
-    }
+    path_to_node = output.path_to_node
+    path_to_node[initial_node_index] = []
 
     # Fast path detection for EnergyTankDamageState
     use_energy_fast_path: cython.bint = hasattr(initial_game_state, "_energy")
@@ -315,27 +333,37 @@ def resolver_reach_process_nodes(
                 if not cython.cast(GraphRequirementSet, connection.requirement_without_leaving).satisfied(
                     resources, damage_health
                 ):
-                    target_node_index_py: int = target_node_index
-                    if target_node_index_py not in requirements_excluding_leaving_by_node:
-                        requirements_excluding_leaving_by_node[target_node_index_py] = []
-
-                    new_set: GraphRequirementSet | None = state.satisfied_requirement_on_node[node_index].first.get()
-                    assert new_set is not None
-                    requirements_excluding_leaving_by_node[target_node_index_py].append(
-                        (connection.requirement_without_leaving, new_set)
+                    _add_to_requirements_excluding_leaving_by_node(
+                        requirements_excluding_leaving_by_node,
+                        node_index,
+                        target_node_index,
+                        state_ptr,
+                        connection,
                     )
 
-    reach_nodes: dict[int, int] = {
-        node_index: state.checked_nodes[node_index]
-        for node_index in found_node_order
-        if node_index != initial_node_index
-    }
+    for node_index in found_node_order:
+        if node_index != initial_node_index:
+            output.reach_nodes[node_index] = state.checked_nodes[node_index]
 
-    return ProcessNodesResponse(
-        reach_nodes=reach_nodes,
-        requirements_excluding_leaving_by_node=requirements_excluding_leaving_by_node,
-        path_to_node=path_to_node,
-    )
+    _fill_satisfiable_requirements_for_additionals(logic, requirements_excluding_leaving_by_node, output)
+
+
+def _fill_satisfiable_requirements_for_additionals(
+    logic: Logic,
+    requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]],
+    output: ProcessNodesResponse,
+) -> None:
+    # Discard satisfiable requirements of nodes reachable by other means
+    for node_index in set(output.reach_nodes.keys()).intersection(requirements_excluding_leaving_by_node.keys()):
+        requirements_excluding_leaving_by_node.pop(node_index)
+
+    if requirements_excluding_leaving_by_node:
+        output.satisfiable_requirements_for_additionals.update(
+            build_satisfiable_requirements(
+                logic,
+                requirements_excluding_leaving_by_node,
+            )
+        )
 
 
 @cython.locals(node_index=cython.int)
@@ -343,7 +371,7 @@ def resolver_reach_process_nodes(
 def build_satisfiable_requirements(
     logic: Logic,
     requirements_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]],
-) -> frozenset[GraphRequirementList]:
+) -> list[GraphRequirementList]:
     data: list[GraphRequirementList] = []
 
     additional_requirements_list: list[GraphRequirementSet] = logic.additional_requirements
@@ -378,4 +406,4 @@ def build_satisfiable_requirements(
                     if new_list is not None:
                         data.append(new_list)
 
-    return frozenset(data)
+    return data

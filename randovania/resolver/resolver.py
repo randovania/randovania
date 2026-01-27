@@ -242,7 +242,7 @@ async def _inner_advance_depth(
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
 
             # If we can go back to where we were without worsening the damage state, it's a simple safe node
-            if state.node in potential_reach.nodes and not state.damage_state.is_better_than(
+            if potential_reach.is_node_in_reach(state.node) and not state.damage_state.is_better_than(
                 potential_reach.health_for_damage_requirements_at_node(state.node.node_index)
             ):
                 new_result = await _inner_advance_depth(
@@ -304,9 +304,7 @@ async def _inner_advance_depth(
         else:
             has_action = True
 
-    additional_requirements: set[GraphRequirementList] | frozenset[GraphRequirementList] = (
-        reach.satisfiable_requirements_for_additionals
-    )
+    additional_requirements: set[GraphRequirementList] = reach.satisfiable_requirements_for_additionals
     old_additional_requirements = logic.get_additional_requirements(state.node)
 
     if (
