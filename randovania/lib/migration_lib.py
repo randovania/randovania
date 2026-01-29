@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import copy
 import functools
-import inspect
 import typing
+from collections.abc import Sequence
 
 if typing.TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
@@ -17,17 +17,12 @@ class Migration(typing.Protocol):
     def __call__(self, __data: dict) -> None: ...
 
 
-class GameMigrationBasic(typing.Protocol):
+class GameMigration(typing.Protocol):
     def __call__(self, __data: dict, game: RandovaniaGame) -> None: ...
 
 
-class GameMigrationExtra(typing.Protocol):
-    def __call__(self, __data: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None: ...
-
-
-Migrations = typing.Sequence[Migration | None]
-GameMigration = GameMigrationBasic | GameMigrationExtra
-GameMigrations = typing.Sequence[GameMigration | None]
+Migrations = Sequence[Migration | None]
+GameMigrations = Sequence[GameMigration | None]
 
 
 def apply_migrations(
@@ -69,17 +64,11 @@ def apply_migrations_with_game(
     *,
     copy_before_migrating: bool = False,
     version_name: str = "version",
-    from_layout_description: bool = False,
 ) -> dict:
     def wrap(f: GameMigration) -> Migration:
-        extra = {}
-
-        if "from_layout_description" in inspect.signature(f).parameters:
-            extra["from_layout_description"] = from_layout_description
-
         @functools.wraps(f)
         def wrapped(d: dict) -> None:
-            f(d, game=game, **extra)
+            f(d, game=game)
 
         return wrapped
 
@@ -89,5 +78,5 @@ def apply_migrations_with_game(
     )
 
 
-def get_version(migrations: Migrations | GameMigrations) -> int:
+def get_version(migrations: Sequence) -> int:
     return len(migrations) + 1
