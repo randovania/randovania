@@ -118,7 +118,7 @@ class VersionedPreset[BaseConfigurationT: BaseConfiguration]:
                     preset_migration.convert_to_current_version(
                         copy.deepcopy(self.data),
                         self.game,
-                        self._from_layout_description,
+                        from_layout_description=self._from_layout_description,
                     )
                 )
             except (ValueError, KeyError, TypeError) as e:
