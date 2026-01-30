@@ -4,7 +4,7 @@ import copy
 import re
 from typing import TYPE_CHECKING, TypeVar
 
-from randovania.game_description import game_migration
+from randovania.game_description import game_description_migration
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
@@ -427,7 +427,7 @@ def write_used_trick_levels(game: GameDescription) -> dict[str, list[int]] | Non
 
 def write_game_description(game: GameDescription) -> dict:
     return {
-        "schema_version": game_migration.CURRENT_VERSION,
+        "schema_version": game_description_migration.CURRENT_VERSION,
         "game": game.game.value,
         "resource_database": write_resource_database(game.resource_database),
         "layers": frozen_lib.unwrap(game.layers),

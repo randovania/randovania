@@ -50,9 +50,11 @@ class VersionedPreset[BaseConfigurationT: BaseConfiguration]:
     data: dict | None
     exception: InvalidPreset | None = None
     _preset: Preset[BaseConfigurationT] | None = None
+    _from_layout_description: bool
 
-    def __init__(self, data: dict | None) -> None:
+    def __init__(self, data: dict | None, from_layout_description: bool) -> None:
         self.data = data
+        self._from_layout_description = from_layout_description
 
     @classmethod
     def file_extension(cls) -> str:
@@ -113,7 +115,11 @@ class VersionedPreset[BaseConfigurationT: BaseConfiguration]:
             assert self.data is not None
             try:
                 self._preset = Preset.from_json_dict(
-                    preset_migration.convert_to_current_version(copy.deepcopy(self.data), self.game)
+                    preset_migration.convert_to_current_version(
+                        copy.deepcopy(self.data),
+                        self.game,
+                        from_layout_description=self._from_layout_description,
+                    )
                 )
             except (ValueError, KeyError, TypeError) as e:
                 self.exception = InvalidPreset(e)
@@ -129,12 +135,12 @@ class VersionedPreset[BaseConfigurationT: BaseConfiguration]:
 
     @classmethod
     def from_str(cls, contents: str) -> Self:
-        return cls(json.loads(contents))
+        return cls(json.loads(contents), from_layout_description=False)
 
     @classmethod
     def from_bytes(cls, contents: bytes) -> Self:
         decoded = BinaryVersionedPreset.parse(contents)
-        return cls(decoded["data"])
+        return cls(decoded["data"], from_layout_description=False)
 
     @classmethod
     async def from_file(cls, path: Path) -> Self:
@@ -143,11 +149,11 @@ class VersionedPreset[BaseConfigurationT: BaseConfiguration]:
 
     @classmethod
     def from_file_sync(cls, path: Path) -> Self:
-        return cls(json_lib.read_dict(path))
+        return cls(json_lib.read_dict(path), from_layout_description=False)
 
     @classmethod
     def with_preset(cls, preset: Preset[BaseConfigurationT]) -> Self:
-        result = cls(None)
+        result = cls(None, from_layout_description=False)
         result._preset = preset
         return result
 

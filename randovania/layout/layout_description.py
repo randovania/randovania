@@ -138,7 +138,7 @@ class LayoutDescription:
 
         def get_preset(i: int, p: dict) -> Preset:
             try:
-                return VersionedPreset(p).get_preset()
+                return VersionedPreset(p, from_layout_description=True).get_preset()
             except InvalidPreset as e:
                 raise InvalidLayoutDescription(f"Invalid preset for world {i + 1}: {e}") from e.original_exception
 
