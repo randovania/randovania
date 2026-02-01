@@ -60,10 +60,12 @@ def get_artifact_location_predicate(
 class PrimeBootstrap(Bootstrap):
     def create_damage_state(self, game: GameDatabaseView, configuration: BaseConfiguration) -> DamageState:
         assert isinstance(configuration, PrimeConfiguration)
+        db = game.get_resource_database_view()
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
-            game.get_resource_database_view().get_item("EnergyTank"),
+            db.get_item("EnergyTank"),
+            [db.get_item(suit) for suit in ["VariaSuit", "GravitySuit", "PhazonSuit"]],
         )
 
     def _get_enabled_misc_resources(
@@ -108,10 +110,7 @@ class PrimeBootstrap(Bootstrap):
     def prime1_progressive_damage_reduction(
         self, db: ResourceDatabaseView, current_resources: ResourceCollection
     ) -> float:
-        num_suits = sum(
-            current_resources[db.get_item_by_display_name(suit)]
-            for suit in ["Varia Suit", "Gravity Suit", "Phazon Suit"]
-        )
+        num_suits = sum(current_resources[db.get_item(suit)] for suit in ["VariaSuit", "GravitySuit", "PhazonSuit"])
         if num_suits >= 3:
             dr = 0.5
         elif num_suits == 2:
@@ -131,11 +130,11 @@ class PrimeBootstrap(Bootstrap):
         self, db: ResourceDatabaseView, current_resources: ResourceCollection
     ) -> float:
         dr = 1.0
-        if current_resources[db.get_item_by_display_name("Varia Suit")]:
+        if current_resources[db.get_item("VariaSuit")]:
             dr -= 0.1
-        if current_resources[db.get_item_by_display_name("Gravity Suit")]:
+        if current_resources[db.get_item("GravitySuit")]:
             dr -= 0.1
-        if current_resources[db.get_item_by_display_name("Phazon Suit")]:
+        if current_resources[db.get_item("PhazonSuit")]:
             dr -= 0.3
 
         hard_mode = db.get_misc("hard_mode")
@@ -147,11 +146,11 @@ class PrimeBootstrap(Bootstrap):
     def prime1_absolute_damage_reduction(
         self, db: ResourceDatabaseView, current_resources: ResourceCollection
     ) -> float:
-        if current_resources[db.get_item_by_display_name("Phazon Suit")] > 0:
+        if current_resources[db.get_item("PhazonSuit")] > 0:
             dr = 0.5
-        elif current_resources[db.get_item_by_display_name("Gravity Suit")] > 0:
+        elif current_resources[db.get_item("GravitySuit")] > 0:
             dr = 0.8
-        elif current_resources[db.get_item_by_display_name("Varia Suit")] > 0:
+        elif current_resources[db.get_item("VariaSuit")] > 0:
             dr = 0.9
         else:
             dr = 1

@@ -52,10 +52,11 @@ class ResourceDatabase(ResourceDatabaseView):
     version: list[SimpleResourceInfo]
     misc: list[SimpleResourceInfo]
     requirement_template: dict[str, NamedRequirementTemplate]
-    damage_reductions: dict[SimpleResourceInfo, list[DamageReduction]]
+    damage_reductions: dict[ResourceInfo, list[DamageReduction]]
     energy_tank_item: ItemResourceInfo
     base_damage_reduction: Callable[[ResourceDatabaseView, ResourceCollection], float] = default_base_damage_reduction
     resource_by_index: list[ResourceInfo | None] = dataclasses.field(default_factory=list)
+    _resource_mapping: dict[int, ResourceInfo] = dataclasses.field(default_factory=dict)
 
     def __post_init__(self) -> None:
         # Reserve index 0 as a placeholder for things without index
@@ -71,6 +72,7 @@ class ResourceDatabase(ResourceDatabaseView):
                 assert resource.resource_type == resource_type
                 assert self.resource_by_index[resource.resource_index] is None
                 self.resource_by_index[resource.resource_index] = resource
+                self._resource_mapping[resource.resource_index] = resource
 
     def get_by_type(
         self,
@@ -105,8 +107,16 @@ class ResourceDatabase(ResourceDatabaseView):
         return search.find_resource_info_with_long_name(self.item, name)
 
     @override
+    def get_all_items(self) -> Sequence[ItemResourceInfo]:
+        return self.item
+
+    @override
     def get_event(self, short_name: str) -> SimpleResourceInfo:
         return search.find_resource_info_with_id(self.event, short_name, ResourceType.EVENT)
+
+    @override
+    def get_all_events(self) -> Sequence[SimpleResourceInfo]:
+        return self.event
 
     @override
     def get_misc(self, short_name: str) -> SimpleResourceInfo:
@@ -119,6 +129,10 @@ class ResourceDatabase(ResourceDatabaseView):
     @override
     def get_damage(self, short_name: str) -> SimpleResourceInfo:
         return search.find_resource_info_with_id(self.damage, short_name, ResourceType.DAMAGE)
+
+    @override
+    def get_all_damage_resources(self) -> Sequence[SimpleResourceInfo]:
+        return self.damage
 
     @override
     def get_all_tricks(self) -> Sequence[TrickResourceInfo]:
@@ -143,11 +157,8 @@ class ResourceDatabase(ResourceDatabaseView):
     def energy_tank(self) -> ItemResourceInfo:
         return self.energy_tank_item
 
-    def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection) -> float:
-        cached_result = current_resources.get_damage_reduction_cache(resource)
-        if cached_result is not None:
-            return cached_result
-
+    @override
+    def get_damage_reduction(self, resource: ResourceInfo, current_resources: ResourceCollection) -> float:
         base_reduction = self.base_damage_reduction(self, current_resources)
 
         damage_multiplier = 1.0
@@ -155,10 +166,19 @@ class ResourceDatabase(ResourceDatabaseView):
             if reduction.inventory_item is None or current_resources[reduction.inventory_item] > 0:
                 damage_multiplier = min(damage_multiplier, reduction.damage_multiplier)
 
-        damage_reduction = damage_multiplier * base_reduction
-        current_resources.add_damage_reduction_cache(resource, damage_reduction)
+        return damage_multiplier * base_reduction
 
-        return damage_reduction
+    @override
+    def get_all_damage_reductions(self) -> dict[ResourceInfo, list[DamageReduction]]:
+        return self.damage_reductions
 
     def first_unused_resource_index(self) -> int:
+        return len(self.resource_by_index)
+
+    @override
+    def get_resource_mapping(self) -> dict[int, ResourceInfo]:
+        return self._resource_mapping
+
+    @override
+    def default_resource_collection_size(self) -> int:
         return len(self.resource_by_index)

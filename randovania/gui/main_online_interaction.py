@@ -23,6 +23,7 @@ if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.options import Options
     from randovania.interface_common.preset_manager import PresetManager
+    from randovania.network_common.async_race_room import AsyncRaceRoomEntry
 
 BaseSession = typing.TypeVar("BaseSession")
 
@@ -101,6 +102,12 @@ class OnlineInteractions(QtWidgets.QWidget):
 
         return None
 
+    async def _create_and_show_async_race_room(self, room: AsyncRaceRoomEntry) -> None:
+        async_room = AsyncRaceRoomWindow(room, self.network_client, self.options, self.window_manager)
+        async_room.show()
+        self.window_manager.track_window(async_room)
+        await async_room.request_room_update_events()
+
     @asyncSlot()
     @handle_network_errors
     async def _browse_async_races(self) -> None:
@@ -112,9 +119,7 @@ class OnlineInteractions(QtWidgets.QWidget):
             "Requesting the room list...",
         )
         if room is not None:
-            async_room = AsyncRaceRoomWindow(room, self.network_client, self.options, self.window_manager)
-            async_room.show()
-            self.window_manager.track_window(async_room)
+            await self._create_and_show_async_race_room(room)
 
     @asyncSlot()
     @handle_network_errors
@@ -166,9 +171,7 @@ class OnlineInteractions(QtWidgets.QWidget):
                     self._async_race_creation.layout_description,
                     self._async_race_creation.create_settings_object(),
                 )
-                async_room = AsyncRaceRoomWindow(room, self.network_client, self.options, self.window_manager)
-                async_room.show()
-                self.window_manager.track_window(async_room)
+                await self._create_and_show_async_race_room(room)
         finally:
             self._async_race_creation = None
 

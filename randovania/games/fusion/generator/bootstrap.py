@@ -51,6 +51,10 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
             game.get_resource_database_view().get_item("EnergyTank"),
+            [
+                game.get_resource_database_view().get_item("VariaSuit"),
+                game.get_resource_database_view().get_item("GravitySuit"),
+            ],
         )
 
     def _get_enabled_misc_resources(
@@ -59,15 +63,14 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
         enabled_resources = set()
         if configuration.dock_rando.is_enabled():
             enabled_resources.add("DoorLockRando")
+        if configuration.adjusted_geron_weaknesses:
+            enabled_resources.add("NerfGerons")
         enabled_resources.add("BomblessPBs")
         enabled_resources.add("GeneratorHack")
         return enabled_resources
 
     def _damage_reduction(self, db: ResourceDatabaseView, current_resources: ResourceCollection) -> float:
-        num_suits = sum(
-            (1 if current_resources[db.get_item_by_display_name(suit)] else 0)
-            for suit in ("Varia Suit", "Gravity Suit")
-        )
+        num_suits = sum((1 if current_resources[db.get_item(suit)] else 0) for suit in ("VariaSuit", "GravitySuit"))
         dr = 1.0
         if num_suits == 1:
             dr = 0.9

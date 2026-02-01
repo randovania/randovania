@@ -24,7 +24,7 @@ class Ui_PlanetsZebethCosmeticPatchesDialog(object):
     def setupUi(self, PlanetsZebethCosmeticPatchesDialog):
         if not PlanetsZebethCosmeticPatchesDialog.objectName():
             PlanetsZebethCosmeticPatchesDialog.setObjectName(u"PlanetsZebethCosmeticPatchesDialog")
-        PlanetsZebethCosmeticPatchesDialog.resize(437, 389)
+        PlanetsZebethCosmeticPatchesDialog.resize(437, 405)
         self.gridLayout = QGridLayout(PlanetsZebethCosmeticPatchesDialog)
         self.gridLayout.setSpacing(6)
         self.gridLayout.setContentsMargins(11, 11, 11, 11)
@@ -91,6 +91,29 @@ class Ui_PlanetsZebethCosmeticPatchesDialog(object):
 
         self.verticalLayout.addWidget(self.disable_low_health_beeping_label)
 
+        self.use_sm_boss_theme_check = QCheckBox(self.scroll_area_contents)
+        self.use_sm_boss_theme_check.setObjectName(u"use_sm_boss_theme_check")
+
+        self.verticalLayout.addWidget(self.use_sm_boss_theme_check)
+
+        self.use_sm_boss_theme_label = QLabel(self.scroll_area_contents)
+        self.use_sm_boss_theme_label.setObjectName(u"use_sm_boss_theme_label")
+        self.use_sm_boss_theme_label.setTextFormat(Qt.TextFormat.AutoText)
+        self.use_sm_boss_theme_label.setWordWrap(True)
+
+        self.verticalLayout.addWidget(self.use_sm_boss_theme_label)
+
+        self.use_alternative_escape_theme_check = QCheckBox(self.scroll_area_contents)
+        self.use_alternative_escape_theme_check.setObjectName(u"use_alternative_escape_theme_check")
+
+        self.verticalLayout.addWidget(self.use_alternative_escape_theme_check)
+
+        self.use_alternative_escape_theme_label = QLabel(self.scroll_area_contents)
+        self.use_alternative_escape_theme_label.setObjectName(u"use_alternative_escape_theme_label")
+        self.use_alternative_escape_theme_label.setWordWrap(True)
+
+        self.verticalLayout.addWidget(self.use_alternative_escape_theme_label)
+
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
@@ -118,5 +141,9 @@ class Ui_PlanetsZebethCosmeticPatchesDialog(object):
         self.room_name_label.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Show Room Names on HUD", None))
         self.disable_low_health_beeping_check.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Disable low health beeping", None))
         self.disable_low_health_beeping_label.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Disables the beeping sound when health is lower than 30 HP.", None))
+        self.use_sm_boss_theme_check.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Use Super Metroid boss themes", None))
+        self.use_sm_boss_theme_label.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Makes the game play SM boss themes instead of Nestroid boss themes.", None))
+        self.use_alternative_escape_theme_check.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Use alternative escape theme", None))
+        self.use_alternative_escape_theme_label.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Makes the game play SM escape theme instead of Nestroid escape theme.", None))
     # retranslateUi
 

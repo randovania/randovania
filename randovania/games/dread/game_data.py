@@ -81,6 +81,17 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
+def _test_data() -> randovania.game.game_test_data.GameTestData:
+    from randovania.layout.base.trick_level import LayoutTrickLevel
+
+    return randovania.game.game_test_data.GameTestData(
+        expected_seed_hash="JZUK3MPV",
+        # Some items require shinesparking to reach in vanilla,
+        # which due to varying difficulty has been made into a trick
+        database_collectable_include_tricks=(("Speedbooster", LayoutTrickLevel.BEGINNER),),
+    )
+
+
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Dread",
     long_name="Metroid Dread",
@@ -164,6 +175,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
+    test_data=_test_data,
     multiple_start_nodes_per_area=True,
     defaults_available_in_game_sessions=True,
 )

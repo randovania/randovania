@@ -3,7 +3,6 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.array_base import RequirementArrayBase
@@ -74,9 +73,6 @@ class Editor:
 
         self.game.region_list.invalidate_node_cache()
 
-        if isinstance(node, DockNode):
-            self.remove_node(area, node.lock_node)
-
     def replace_node(self, area: Area, old_node: Node, new_node: Node) -> None:
         def sub(n: Node) -> Node:
             return new_node if n == old_node else n
@@ -97,11 +93,6 @@ class Editor:
         if old_node.name != new_node.name and area.node_with_name(new_node.name) is not None:
             raise ValueError(f"A node named {new_node.name} already exists.")
 
-        old_lock_identifier = None
-        if isinstance(old_node, DockNode):
-            old_lock_identifier = old_node.lock_node.identifier
-            self.remove_node(area, old_node.lock_node)
-
         old_identifier = old_node.identifier
         self.replace_references_to_node_identifier(
             old_identifier,
@@ -119,17 +110,6 @@ class Editor:
         if area.default_node == old_node.name:
             object.__setattr__(area, "default_node", new_node.name)
         area.clear_dock_cache()
-
-        if isinstance(new_node, DockNode):
-            new_lock_node = DockLockNode.create_from_dock(new_node, self.new_node_index(), self.game.resource_database)
-            self.add_node(area, new_lock_node)
-
-            if isinstance(old_node, DockNode):
-                assert old_lock_identifier is not None
-                self.replace_references_to_node_identifier(
-                    old_lock_identifier,
-                    new_lock_node.identifier,
-                )
 
         self.game.region_list.invalidate_node_cache()
 

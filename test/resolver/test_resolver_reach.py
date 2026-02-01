@@ -1,15 +1,16 @@
 from __future__ import annotations
 
-from unittest.mock import MagicMock, PropertyMock
+from unittest.mock import MagicMock
 
-from randovania.game_description.db.event_node import EventNode
+from randovania.graph.world_graph import WorldGraphNode
+from randovania.resolver import resolver_native
 from randovania.resolver.resolver_reach import ResolverReach
 
 
 def test_possible_actions_empty():
     state = MagicMock()
 
-    reach = ResolverReach({}, {}, frozenset(), MagicMock())
+    reach = ResolverReach(MagicMock(), resolver_native.ProcessNodesResponse({}, {}, set()))
     options = list(reach.possible_actions(state))
 
     assert options == []
@@ -18,48 +19,44 @@ def test_possible_actions_empty():
 def test_possible_actions_no_resources():
     state = MagicMock()
     node_a = MagicMock(name="node_a")
+    node_a.has_all_resources.return_value = True
     node_b = MagicMock(name="node_b")
-    node_b.should_collect.return_value = False
+    node_b.has_all_resources.return_value = True
     logic = MagicMock()
-    logic.game.region_list.all_nodes = [node_a, node_b]
+    logic.all_nodes = [node_a, node_b]
+    logic.graph = None
     node_a.node_index = 0
     node_b.node_index = 1
 
-    type(node_a).is_resource_node = prop_a = PropertyMock(return_value=False)
-    type(node_b).is_resource_node = prop_b = PropertyMock(return_value=True)
-
     # Run
-    reach = ResolverReach({0: 1, 1: 1}, {}, frozenset(), logic)
+    reach = ResolverReach(logic, resolver_native.ProcessNodesResponse({0: 1, 1: 1}, {}, set()))
     options = [action for action, damage in reach.possible_actions(state)]
 
     # Assert
     assert options == []
-    prop_a.assert_called_once_with()
-    prop_b.assert_called_once_with()
-    node_b.should_collect.assert_called_once_with(state.node_context.return_value)
+    node_a.has_all_resources.assert_called_once_with(state.resources)
+    node_b.has_all_resources.assert_called_once_with(state.resources)
 
 
 def test_possible_actions_with_event():
     logic = MagicMock()
+    logic.graph = None
     state = MagicMock()
 
-    event = MagicMock(spec=EventNode, name="event node")
+    event = MagicMock(spec=WorldGraphNode, name="event node")
     event.node_index = 0
-    type(event).is_resource_node = prop = PropertyMock(return_value=True)
-    event.should_collect.return_value = True
+    event.has_all_resources.return_value = False
+    event.requirement_to_collect = MagicMock()
 
-    logic.game.region_list.all_nodes = [event]
+    logic.all_nodes = [event]
     damage_state = MagicMock()
 
     # Run
-    reach = ResolverReach({0: damage_state}, {}, frozenset(), logic)
+    reach = ResolverReach(logic, resolver_native.ProcessNodesResponse({0: damage_state}, {}, set()))
     options = [action for action, damage in reach.possible_actions(state)]
 
     # Assert
     assert options == [event]
-    prop.assert_called_once_with()
-    event.should_collect.assert_called_once_with(state.node_context.return_value)
+    event.has_all_resources.assert_called_once_with(state.resources)
     logic.get_additional_requirements.assert_called_once_with(event)
-    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(
-        state.node_context(), damage_state.health_for_damage_requirements.return_value
-    )
+    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(state.resources, damage_state)

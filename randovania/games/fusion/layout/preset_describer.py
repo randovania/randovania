@@ -42,6 +42,7 @@ class FusionPresetDescriber(GamePresetDescriber):
                 },
                 {"Unlocked hatches in Sector Hub": configuration.unlock_sector_hub},
                 {"Unlocked Save and Recharge Station hatches": configuration.open_save_recharge_hatches},
+                {"Vanilla Geron Vulnerabilities": not configuration.adjusted_geron_weaknesses},
             ],
             "Goal": describe_artifacts(configuration.artifacts),
         }

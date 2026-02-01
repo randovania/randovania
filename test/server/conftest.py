@@ -19,7 +19,6 @@ from randovania.server.fastapi_discord import DiscordOAuthClient
 
 if TYPE_CHECKING:
     from collections.abc import Generator
-    from pathlib import Path
 
     from pytest_mock import MockerFixture
 
@@ -27,20 +26,20 @@ if TYPE_CHECKING:
 
 
 @pytest.fixture
-def empty_database():
+def empty_database(db_path, request: pytest.FixtureRequest):
     old_db = database.db
     try:
-        test_db = SqliteDatabase(":memory:")
+        test_db = SqliteDatabase(db_path, uri=True)
         database.db = test_db
         with test_db.bind_ctx(database.all_classes):
-            test_db.connect(reuse_if_open=True)
+            assert test_db.connect(reuse_if_open=False)
             yield test_db
     finally:
         database.db = old_db
 
 
 @pytest.fixture
-def clean_database(empty_database) -> SqliteDatabase:
+def clean_database(empty_database, request: pytest.FixtureRequest) -> SqliteDatabase:
     empty_database.create_tables(database.all_classes)
     return empty_database
 
@@ -56,21 +55,26 @@ def default_game_list(is_dev_version):
 
 
 @pytest.fixture(name="db_path")
-def db_path_fixture(tmp_path: Path):
-    return tmp_path.joinpath("database.db")
+def db_path_fixture(tmp_path):
+    # Use cache=shared, so multiple threads can use the same in-memory database
+    # Use a unique per-test file name as the file name is how they're shared
+    return f"file:{tmp_path.joinpath('db')}?mode=memory&cache=shared"
 
 
 @pytest.fixture(name="server_app")
-def server_app_fixture(db_path, mocker: MockerFixture):
+def server_app_fixture(mocker: MockerFixture):
     pytest.importorskip("engineio.async_drivers.threading")
     from randovania.server.server_app import ServerApp
+
+    # Don't let test_client create the database
+    mocker.patch("randovania.server.server_app.database_lifespan")
 
     server_config = ServerConfiguration(
         secret_key="key",
         discord_client_secret="5678",
         fernet_key="s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
         client_version_checking="ignore",
-        database_path=str(db_path),
+        database_path=":INVALID:",
     )
     configuration = NetworkConfiguration(
         server_address="http://127.0.0.1:5000",
@@ -94,10 +98,16 @@ class RdvTestClient(TestClient):
         self.sa = app.sa
         super().__init__(app, *args)
 
+    def set_logged_in_user(self, user_id: int) -> None:
+        from randovania.server.user_session import _encrypt_session_for_user
+
+        self.headers["X-Randovania-Session"] = _encrypt_session_for_user(self.sa, {"user-id": user_id})
+
 
 @pytest.fixture(name="test_client")
 def test_client_fixture(server_app) -> Generator[RdvTestClient, None, None]:
-    with RdvTestClient(server_app.app) as client:
+    client = RdvTestClient(server_app.app)
+    with client:
         yield client
 
 

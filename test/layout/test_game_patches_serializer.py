@@ -103,7 +103,7 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
 
     locations = []
     for region, area, node in game.region_list.all_regions_areas_nodes:
-        if node.is_resource_node and isinstance(node, PickupNode):
+        if node.is_resource_node() and isinstance(node, PickupNode):
             locations.append(
                 {
                     "node_identifier": node.identifier.as_json,
@@ -187,7 +187,7 @@ def test_decode(patches_with_data, default_echoes_configuration):
     decoded = game_patches_serializer.decode_single(0, {0: pool}, game, encoded, default_echoes_configuration, [game])
 
     # Assert
-    assert set(decoded.all_dock_connections()) == set(expected.all_dock_connections())
+    assert set(decoded.all_dock_connections_identifiers()) == set(expected.all_dock_connections_identifiers())
     assert decoded == expected
 
 

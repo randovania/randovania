@@ -25,7 +25,7 @@ class Ui_AsyncRaceRoomWindow(object):
     def setupUi(self, AsyncRaceRoomWindow):
         if not AsyncRaceRoomWindow.objectName():
             AsyncRaceRoomWindow.setObjectName(u"AsyncRaceRoomWindow")
-        AsyncRaceRoomWindow.resize(542, 386)
+        AsyncRaceRoomWindow.resize(626, 386)
         self.centralwidget = QWidget(AsyncRaceRoomWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
@@ -37,6 +37,7 @@ class Ui_AsyncRaceRoomWindow(object):
         self.game_details_layout.setContentsMargins(4, 4, 4, 4)
         self.game_details_label = QLabel(self.game_details_group)
         self.game_details_label.setObjectName(u"game_details_label")
+        self.game_details_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
         self.game_details_layout.addWidget(self.game_details_label)
 
@@ -57,52 +58,60 @@ class Ui_AsyncRaceRoomWindow(object):
         self.participation_group.setObjectName(u"participation_group")
         self.gridLayout_2 = QGridLayout(self.participation_group)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.participation_label = QLabel(self.participation_group)
-        self.participation_label.setObjectName(u"participation_label")
-        self.participation_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.start_button = QPushButton(self.participation_group)
+        self.start_button.setObjectName(u"start_button")
 
-        self.gridLayout_2.addWidget(self.participation_label, 0, 0, 1, 6)
-
-        self.submit_proof_button = QPushButton(self.participation_group)
-        self.submit_proof_button.setObjectName(u"submit_proof_button")
-
-        self.gridLayout_2.addWidget(self.submit_proof_button, 1, 5, 1, 1)
-
-        self.join_and_export_button = QPushButton(self.participation_group)
-        self.join_and_export_button.setObjectName(u"join_and_export_button")
-
-        self.gridLayout_2.addWidget(self.join_and_export_button, 1, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.start_button, 1, 1, 1, 1)
 
         self.finish_button = QPushButton(self.participation_group)
         self.finish_button.setObjectName(u"finish_button")
 
         self.gridLayout_2.addWidget(self.finish_button, 1, 3, 1, 1)
 
-        self.start_button = QPushButton(self.participation_group)
-        self.start_button.setObjectName(u"start_button")
+        self.participation_label = QLabel(self.participation_group)
+        self.participation_label.setObjectName(u"participation_label")
+        self.participation_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.participation_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
-        self.gridLayout_2.addWidget(self.start_button, 1, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.participation_label, 0, 0, 1, 6)
 
-        self.forfeit_button = QPushButton(self.participation_group)
-        self.forfeit_button.setObjectName(u"forfeit_button")
+        self.join_and_export_button = QPushButton(self.participation_group)
+        self.join_and_export_button.setObjectName(u"join_and_export_button")
 
-        self.gridLayout_2.addWidget(self.forfeit_button, 1, 4, 1, 1)
+        self.gridLayout_2.addWidget(self.join_and_export_button, 1, 0, 1, 1)
+
+        self.submit_proof_button = QPushButton(self.participation_group)
+        self.submit_proof_button.setObjectName(u"submit_proof_button")
+
+        self.gridLayout_2.addWidget(self.submit_proof_button, 1, 5, 1, 1)
 
         self.pause_button = QPushButton(self.participation_group)
         self.pause_button.setObjectName(u"pause_button")
 
         self.gridLayout_2.addWidget(self.pause_button, 1, 2, 1, 1)
 
+        self.forfeit_button = QPushButton(self.participation_group)
+        self.forfeit_button.setObjectName(u"forfeit_button")
+
+        self.gridLayout_2.addWidget(self.forfeit_button, 1, 4, 1, 1)
+
+        self.livesplit_button = QPushButton(self.participation_group)
+        self.livesplit_button.setObjectName(u"livesplit_button")
+
+        self.gridLayout_2.addWidget(self.livesplit_button, 1, 6, 1, 1)
+
 
         self.gridLayout.addWidget(self.participation_group, 4, 0, 1, 2)
 
         self.name_label = QLabel(self.centralwidget)
         self.name_label.setObjectName(u"name_label")
+        self.name_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
         self.gridLayout.addWidget(self.name_label, 0, 0, 1, 1)
 
         self.start_end_date_label = QLabel(self.centralwidget)
         self.start_end_date_label.setObjectName(u"start_end_date_label")
+        self.start_end_date_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
         self.gridLayout.addWidget(self.start_end_date_label, 0, 1, 1, 1)
 
@@ -140,7 +149,7 @@ class Ui_AsyncRaceRoomWindow(object):
         AsyncRaceRoomWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(AsyncRaceRoomWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 542, 17))
+        self.menubar.setGeometry(QRect(0, 0, 626, 17))
         AsyncRaceRoomWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(AsyncRaceRoomWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -158,13 +167,14 @@ class Ui_AsyncRaceRoomWindow(object):
         self.view_preset_description_button.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"View preset description", None))
         self.customize_cosmetic_button.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"Customize cosmetic options", None))
         self.participation_group.setTitle(QCoreApplication.translate("AsyncRaceRoomWindow", u"Participation", None))
-        self.participation_label.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"TextLabel", None))
-        self.submit_proof_button.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"Submit Proof", None))
-        self.join_and_export_button.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"Join and export game", None))
-        self.finish_button.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"Finish", None))
         self.start_button.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"Start", None))
-        self.forfeit_button.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"Forfeit", None))
+        self.finish_button.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"Finish", None))
+        self.participation_label.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"TextLabel", None))
+        self.join_and_export_button.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"Join and export game", None))
+        self.submit_proof_button.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"Submit Proof", None))
         self.pause_button.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"Pause", None))
+        self.forfeit_button.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"Forfeit", None))
+        self.livesplit_button.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"LiveSplit One URL", None))
         self.name_label.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"RACE NAME", None))
         self.start_end_date_label.setText(QCoreApplication.translate("AsyncRaceRoomWindow", u"Race End: in <> days, at <>", None))
         self.results_group.setTitle(QCoreApplication.translate("AsyncRaceRoomWindow", u"Race Results", None))

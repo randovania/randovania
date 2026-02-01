@@ -72,27 +72,13 @@
            <string>Settings</string>
           </property>
           <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="1">
+            <widget class="QComboBox" name="mode_combo"/>
+           </item>
            <item row="6" column="0" colspan="2">
             <widget class="QLabel" name="multiworld_label">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The selected mode is &lt;span style=&quot; font-weight:700;&quot;&gt;not&lt;/span&gt; compatible with multiworld sessions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0">
-            <widget class="QCheckBox" name="two_sided_door_search_check">
-             <property name="text">
-              <string>[Experimental] Revised door solver</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QComboBox" name="mode_combo"/>
-           </item>
-           <item row="5" column="0" colspan="2">
-            <widget class="Line" name="line">
-             <property name="orientation">
-              <enum>Qt::Orientation::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -110,18 +96,8 @@
              </property>
             </widget>
            </item>
-           <item row="9" column="0" colspan="2">
-            <widget class="QLabel" name="two_sided_door_search_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When using the Individual Doors Mode, enables the use of a revised algorithm for deciding what doors can be.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0" colspan="2">
-            <widget class="Line" name="two_sided_door_search_line">
+           <item row="5" column="0" colspan="2">
+            <widget class="Line" name="line">
              <property name="orientation">
               <enum>Qt::Orientation::Horizontal</enum>
              </property>

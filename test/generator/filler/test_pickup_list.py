@@ -7,35 +7,47 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.requirement_list import RequirementList
-from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.generator import generator, reach_lib
 from randovania.generator.filler import pickup_list
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.graph.graph_requirement import create_requirement_list, create_requirement_set
+from randovania.graph.state import State
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
-from randovania.resolver.state import State
 
 if TYPE_CHECKING:
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.graph.world_graph import WorldGraphNode
 
 
 def test_requirement_lists_without_satisfied_resources(
     echoes_game_description, default_echoes_preset, echoes_game_patches
 ):
     # Setup
-    def item(name):
-        return search.find_resource_info_with_long_name(echoes_game_description.resource_database.item, name)
+    db = echoes_game_description.resource_database
 
-    state = echoes_game_description.game.generator.bootstrap.calculate_starting_state(
-        echoes_game_description, echoes_game_patches, default_echoes_preset.configuration
+    def item(name):
+        return search.find_resource_info_with_long_name(db.item, name)
+
+    state = State(
+        db.create_resource_collection(),
+        {},
+        (),
+        echoes_game_description.game.generator.bootstrap.create_damage_state(
+            echoes_game_description, default_echoes_preset.configuration
+        ),
+        None,  # type: ignore[arg-type]
+        echoes_game_patches,
+        None,
+        db,
+        echoes_game_description.region_list,
+        hint_state=None,
     )
     state.resources.add_resource_gain(
         [
@@ -45,42 +57,47 @@ def test_requirement_lists_without_satisfied_resources(
     )
     uncollected_resources: set[ResourceInfo] = set()
     possible_sets = [
-        RequirementSet(
+        create_requirement_set(
             [
-                RequirementList(
+                create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Dark Visor")),
                         ResourceRequirement.create(item("Missile"), 5, False),
                         ResourceRequirement.simple(item("Seeker Launcher")),
-                    ]
+                    ],
                 ),
-                RequirementList(
+                create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Screw Attack")),
                         ResourceRequirement.simple(item("Space Jump Boots")),
-                    ]
+                    ],
                 ),
-                RequirementList(
+                create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Power Bomb")),
                         ResourceRequirement.simple(item("Boost Ball")),
-                    ]
+                    ],
                 ),
             ]
         ),
-        RequirementSet(
+        create_requirement_set(
             [
-                RequirementList(
+                create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Power Bomb")),
                         ResourceRequirement.simple(item("Boost Ball")),
-                    ]
+                    ],
                 ),
-                RequirementList(
+                create_requirement_list(
+                    db,
                     [
                         ResourceRequirement.simple(item("Spider Ball")),
                         ResourceRequirement.simple(item("Boost Ball")),
-                    ]
+                    ],
                 ),
             ]
         ),
@@ -94,6 +111,7 @@ def test_requirement_lists_without_satisfied_resources(
         RequirementList(
             [
                 ResourceRequirement.simple(item("Dark Visor")),
+                ResourceRequirement.create(item("Missile"), 1, False),
                 ResourceRequirement.create(item("Missile"), 5, False),
             ]
         ),
@@ -118,19 +136,18 @@ def test_requirement_lists_without_satisfied_resources(
 
 
 def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
+    resource_db = echoes_game_description.get_resource_database_view()
+
     def item(name):
-        return search.find_resource_info_with_long_name(echoes_game_description.resource_database.item, name)
+        return resource_db.get_item_by_display_name(name)
 
     mock_req_lists: MagicMock = mocker.patch(
         "randovania.generator.filler.pickup_list._requirement_lists_without_satisfied_resources"
     )
 
-    collection = echoes_game_description.create_resource_collection()
+    collection = resource_db.create_resource_collection()
     pickups_left: list[PickupEntry] = []
     reach = MagicMock()
-    reach.state.node_context.return_value = NodeContext(
-        MagicMock(), collection, echoes_game_description.resource_database, echoes_game_description.region_list
-    )
     reach.state.resources = collection
     reach.state.health_for_damage_requirements = 100
     possible_set = MagicMock()
@@ -138,7 +155,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     resource = MagicMock()
     uncollected_resource_node = MagicMock()
     uncollected_resource_node.resource_gain_on_collect.return_value = [(resource, 1)]
-    uncollected_resource_nodes: list[ResourceNode] = [uncollected_resource_node]
+    uncollected_resource_nodes: list[WorldGraphNode] = [uncollected_resource_node]
 
     mock_req_lists.return_value = {
         RequirementList(
@@ -170,9 +187,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     result = pickup_list.get_pickups_that_solves_unreachable(pickups_left, reach, uncollected_resource_nodes, False)
 
     # Assert
-    mock_req_lists.assert_called_once_with(
-        reach.state, [possible_set, reach.game.victory_condition_as_set.return_value], {resource}
-    )
+    mock_req_lists.assert_called_once_with(reach.state, [possible_set, reach.graph.victory_condition], {resource})
     assert result == ()
 
 
@@ -193,17 +208,19 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
         ]
     )
 
-    resources = echoes_game_description.create_resource_collection()
+    resources = db.create_resource_collection()
     resources.set_resource(db.get_item("MissileLauncher"), 1)
     resources.set_resource(db.get_item("Missile"), 5)
 
     state = State(
         resources,
+        {},
         (),
         EnergyTankDamageState(
             99,
             100,
             db.get_item("EnergyTank"),
+            [],
         ),
         MagicMock(),
         echoes_game_patches,
@@ -253,22 +270,16 @@ async def test_get_pickups_that_solves_unreachable_quad(
         ),
     )
     pool = await generator.create_player_pool(Random(0), config, 0, 1, "World 1", MagicMock())
-    new_game, state = pool.game_generator.bootstrap.logic_bootstrap(
-        config,
-        pool.game,
-        pool.patches,
-    )
+    graph, state = pool.game_generator.bootstrap.logic_bootstrap_graph(config, pool.game, pool.patches)
     pickups_to_add = []
     if has_light_beam:
         pickups_to_add.append(next(p for p in pool.pickups if p.name == "Light Beam"))
     state = state.assign_pickups_resources(pickups_to_add)
 
-    reach = reach_lib.advance_reach_with_possible_unsafe_resources(
-        reach_lib.reach_with_all_safe_resources(new_game, state, default_filler_config)
-    )
+    reach = reach_lib.advance_after_action(reach_lib.reach_with_all_safe_resources(graph, state, default_filler_config))
 
     # Run
-    result = pickup_list.get_pickups_that_solves_unreachable(pool.pickups, reach, [], False)
+    result = pickup_list.get_pickups_that_solves_unreachable(pool.pickups, reach, [], True)
     r2 = sorted(sorted(a.name for a in it) for it in result)
     base = ["Boost Ball", "Echo Visor"]
     bomb = "Morph Ball Bomb"

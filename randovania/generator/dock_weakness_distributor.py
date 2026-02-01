@@ -9,17 +9,15 @@ from typing import TYPE_CHECKING, Self
 
 from frozendict import frozendict
 
+import randovania.graph.world_graph_factory
 from randovania.game_description import default_database
 from randovania.game_description.db.dock import DockLock, DockLockType, DockRandoParams, DockWeakness
-from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import NodeContext
 from randovania.game_description.node_search import distances_to_node
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.requirement_or import RequirementOr
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.generator.filler.filler_library import UnableToGenerate
+from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
+from randovania.layout import filtered_database
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import random_lib
 from randovania.resolver import debug, exceptions, resolver
@@ -33,8 +31,9 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.filler.filler_configuration import FillerResults
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
     from randovania.layout.base.base_configuration import BaseConfiguration
-    from randovania.resolver.state import State
 
 
 def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePatches:
@@ -153,27 +152,44 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
 
 
 class DockRandoLogic(Logic):
-    dock: DockNode
-    target: DockNode
+    dock: WorldGraphNode
+    target: WorldGraphNode
+    _victory_condition: GraphRequirementSet
 
-    def __init__(self, game: GameDescription, configuration: BaseConfiguration, dock: DockNode, target: DockNode):
-        super().__init__(game, configuration)
+    def __init__(
+        self,
+        graph: WorldGraph,
+        configuration: BaseConfiguration,
+        dock: WorldGraphNode,
+        target: WorldGraphNode,
+        victory_condition: GraphRequirementSet,
+    ):
+        super().__init__(graph, configuration)
         self.dock = dock
         self.target = target
+        self._victory_condition = victory_condition
 
     @classmethod
     def from_logic(cls, logic: Logic, dock: DockNode, target: DockNode) -> Self:
-        return cls(logic.game, logic.configuration, dock, target)
+        graph_dock = logic.graph.original_to_node[dock.node_index]
+        graph_target = logic.graph.original_to_node[target.node_index]
+        assert graph_dock.is_resource_node()
+        assert graph_target.is_resource_node()
 
-    def victory_condition(self, state: State) -> Requirement:
-        if self.configuration.two_sided_door_lock_search:
-            return RequirementOr(
-                [
-                    ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, state.node_context())),
-                    ResourceRequirement.simple(NodeResourceInfo.from_node(self.target, state.node_context())),
-                ]
-            )
-        return ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, state.node_context()))
+        source_resource = logic.graph.resource_info_for_node(graph_dock)
+        target_resource = logic.graph.resource_info_for_node(graph_target)
+
+        source_list = GraphRequirementList(logic.graph.converter.resource_database)
+        source_list.add_resource(source_resource, 1, False)
+        target_list = GraphRequirementList(logic.graph.converter.resource_database)
+        target_list.add_resource(target_resource, 1, False)
+        victory_condition = GraphRequirementSet()
+        victory_condition.add_alternative(source_list)
+        victory_condition.add_alternative(target_list)
+        return cls(logic.graph, logic.configuration, graph_dock, graph_target, victory_condition)
+
+    def victory_condition(self, state: State) -> GraphRequirementSet:
+        return self._victory_condition
 
     @staticmethod
     @lru_cache
@@ -209,9 +225,9 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
         patches = results.patches
         player_docks: list[tuple[int, DockNode]] = []
 
-        ctx = NodeContext(patches, patches.starting_resources(), game.resource_database, game.region_list)
-        for dock in patches.all_weaknesses_to_shuffle():
-            if (player, dock.get_target_node(ctx)) not in player_docks:
+        for dock in patches.all_weaknesses_to_shuffle(game):
+            target_node = game.node_by_identifier(patches.get_dock_connection_for(dock))
+            if (player, target_node) not in player_docks:
                 player_docks.append((player, dock))
 
         to_shuffle_proportion = game.dock_weakness_database.dock_rando_config.to_shuffle_proportion
@@ -228,12 +244,16 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
 
 
 async def _run_resolver(state: State, logic: Logic, max_attempts: int) -> State | None:
-    with debug.with_level(0):
+    with debug.with_level(debug.LogLevel.SILENT):
         return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=max_attempts)
 
 
 async def _run_dock_resolver(
-    dock: DockNode, target: DockNode, setup: tuple[State, Logic]
+    dock: DockNode,
+    target: DockNode,
+    base_graph: WorldGraph,
+    filtered_game: GameDescription,
+    patches: GamePatches,
 ) -> tuple[State | None, Logic]:
     """
     Run the resolver with the objective of reaching the dock, assuming the dock is locked.
@@ -243,9 +263,25 @@ async def _run_dock_resolver(
         (target, DockRandoLogic.special_locked_weakness()),  # Two Way
     ]
 
-    state = setup[0].copy()
-    state.patches = state.patches.assign_dock_weakness(locks)
-    logic = DockRandoLogic.from_logic(setup[1], dock, target)
+    patches = patches.assign_dock_weakness(locks)
+
+    graph = randovania.graph.world_graph_factory.duplicate_and_adjust_graph_for_patches(
+        base_graph,
+        patches,
+    )
+
+    bootstrap = filtered_game.get_game_enum().generator.bootstrap
+    state = bootstrap.calculate_starting_state(
+        graph.converter.static_resources,
+        graph,
+        filtered_game,
+        patches.configuration,
+        patches,
+    )
+
+    initial_logic = Logic(graph, patches.configuration)
+
+    logic = DockRandoLogic.from_logic(initial_logic, dock, target)
 
     try:
         new_state = await _run_resolver(
@@ -281,42 +317,50 @@ def _determine_valid_weaknesses(
 
     if state is not None:
         reach = ResolverReach.calculate_reach(logic, state)
-        state_dock = state.node.dock if isinstance(state.node, DockLockNode) else state.node
-        if state_dock == target:
+        state_node = state.database_node
+        if state_node == target:
             # When using two sided door search, the state could be pointing at either dock or target.
             # Simply swap dock and target if we found the target side.
             target, dock = dock, target
-        ctx = state.node_context()
 
         exclusions: set[DockWeakness] = set()
         exclusions.update(dock.incompatible_dock_weaknesses)
         exclusions.update(target.incompatible_dock_weaknesses)  # two-way
 
+        target_graph = target if logic.graph is None else logic.graph.original_to_node[target.node_index]
+        dock_graph = dock if logic.graph is None else logic.graph.original_to_node[dock.node_index]
+
         is_locked_door_not_excluded = dock_type_params.locked in dock_type_state.can_change_to.difference(exclusions)
-        is_target_node_reachable = target in reach.nodes
+        is_target_node_reachable = reach.is_node_in_reach(target_graph)
 
         if is_locked_door_not_excluded and is_target_node_reachable:
             # Small optimization to only calculate the reach back, if the locked door is even a viable option
             state_from_target = state.copy()
-            state_from_target.node = target
-            state_from_target.damage_state = reach.game_state_at_node(target.node_index)
+            state_from_target.node = target_graph
+            state_from_target.damage_state = state.damage_state.with_health(
+                reach.health_for_damage_requirements_at_node(target_graph.node_index)
+            )
             reach_from_target = ResolverReach.calculate_reach(logic, state_from_target)
-            is_source_reachable_from_target = dock in reach_from_target.nodes
+            is_source_reachable_from_target = reach_from_target.is_node_in_reach(dock_graph)
 
             if is_source_reachable_from_target:
                 weighted_weaknesses[dock_type_params.locked] = 2.0
 
         exclusions.update(weighted_weaknesses.keys())
 
+        converter = logic.graph.converter.convert_db
+
         weighted_weaknesses.update(
             {
                 weakness: 1.0
                 for weakness in sorted(dock_type_state.can_change_to.difference(exclusions))
                 if (
-                    weakness.requirement.satisfied(ctx, state.health_for_damage_requirements)
+                    converter(weakness.requirement).satisfied(state.resources, state.health_for_damage_requirements)
                     and (
                         weakness.lock is None
-                        or weakness.lock.requirement.satisfied(ctx, state.health_for_damage_requirements)
+                        or converter(weakness.lock.requirement).satisfied(
+                            state.resources, state.health_for_damage_requirements
+                        )
                     )
                 )
             }
@@ -326,9 +370,7 @@ def _determine_valid_weaknesses(
 
 
 async def distribute_post_fill_weaknesses(
-    rng: Random,
-    filler_results: FillerResults,
-    status_update: Callable[[str], None],
+    rng: Random, filler_results: FillerResults, status_update: Callable[[str], None]
 ) -> FillerResults:
     """
     Distributes dock weaknesses using a modified assume fill algorithm
@@ -342,15 +384,22 @@ async def distribute_post_fill_weaknesses(
     initial_states: dict[int, State] = {}
     docks_placed = 0
     docks_to_place = len(unassigned_docks)
+    filtered_games: dict[int, GameDescription] = {}
+    base_graphs: dict[int, WorldGraph] = {}
 
     start_time = time.perf_counter()
 
     for player, patches in new_patches.items():
-        if patches.configuration.dock_rando.mode != DockRandoMode.DOCKS:
+        configuration = patches.configuration
+        if configuration.dock_rando.mode != DockRandoMode.DOCKS:
             continue
 
         status_update(f"Preparing door lock randomizer for player {player + 1}.")
-        state, logic = resolver.setup_resolver(patches.configuration, patches)
+        filtered_games[player] = filtered_database.game_description_for_layout(configuration).get_mutable()
+
+        # setup_resolver does the inplace resource_database patching, apply_game_specific_patches
+        # and custom victory_condition
+        state, logic = resolver.setup_resolver(filtered_games[player], configuration, patches)
         initial_states[player] = state
 
         try:
@@ -367,10 +416,20 @@ async def distribute_post_fill_weaknesses(
         else:
             debug.debug_print(f">> Player {player + 1} is solve-able with all doors unlocked.")
 
+        base_graphs[player] = randovania.graph.world_graph_factory.create_patchless_graph(
+            database_view=filtered_games[player],
+            static_resources=configuration.game.generator.bootstrap.starting_resources_for_patches(
+                configuration, filtered_games[player].get_resource_database_view(), patches
+            ),
+            damage_multiplier=configuration.damage_strictness.value,
+            victory_condition=filtered_games[player].victory_condition,
+            flatten_to_set_on_patch=filtered_games[player].region_list.flatten_to_set_on_patch,
+        )
+
     path_to_area = {
         player: distances_to_node(
             filler_results.player_results[player].game,
-            state.node,
+            state.database_node,
             [],
             patches=new_patches[player],
         )
@@ -388,16 +447,7 @@ async def distribute_post_fill_weaknesses(
         game = filler_results.player_results[player].game
         patches = new_patches[player]
 
-        target = dock.get_target_node(
-            NodeContext(
-                patches,
-                patches.starting_resources(),
-                game.resource_database,
-                game.region_list,
-            )
-        )
-        assert isinstance(target, DockNode)
-
+        target = game.typed_node_by_identifier(patches.get_dock_connection_for(dock), DockNode)
         dock_type_params = game.dock_weakness_database.dock_rando_params[dock.dock_type]
         dock_type_state = patches.configuration.dock_rando.types_state[dock.dock_type]
 
@@ -422,9 +472,7 @@ async def distribute_post_fill_weaknesses(
         else:
             # Determine the reach and possible weaknesses given that reach
             new_state, logic = await _run_dock_resolver(
-                dock,
-                target,
-                resolver.setup_resolver(patches.configuration, patches),
+                dock, target, base_graphs[player], filtered_games[player], patches
             )
             weighted_weaknesses = _determine_valid_weaknesses(
                 dock, target, dock_type_params, dock_type_state, new_state, logic

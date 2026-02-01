@@ -225,6 +225,8 @@ Hint Features - Elevator
   * Extra - start_point_actor_name: ST_FromArea02A
   > Door to Transport Access (Top)
       Trivial
+  > Event - Unlock Door from Elevator
+      Trivial
 
 > Door to Transport Access (Bottom); Heals? False
   * Layers: default
@@ -247,7 +249,7 @@ Hint Features - Elevator
   * Extra - start_point_actor_name: ST_CheckPoint_002
   > Pickup (Lightning Armor)
       Morph Ball
-  > Event - Unlock Door
+  > Event - Unlock Door from Lightning Armor
       Morph Ball
   > Next to Pickup
       All of the following:
@@ -267,7 +269,7 @@ Hint Features - Elevator
   > Door to Transport Access (Bottom)
       Trivial
 
-> Event - Unlock Door; Heals? False
+> Event - Unlock Door from Lightning Armor; Heals? False
   * Layers: default
   * Event Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door
   > Right Spawnpoint
@@ -282,6 +284,12 @@ Hint Features - Elevator
       Charge Beam and Ice Beam and Morph Ball and Stand on Frozen Enemy (Advanced) and Melee Clip (Advanced) and Out of Bounds Movement (Advanced)
   > Right Spawnpoint
       Morph Ball
+
+> Event - Unlock Door from Elevator; Heals? False
+  * Layers: default
+  * Event Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door
+  > Elevator to Area 2 Dam Exterior
+      Trivial
 
 ----------------
 Transport Access

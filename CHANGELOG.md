@@ -5,13 +5,165 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.4.0] - 2025-12-??
+## [10.5.0] - 2026-03-??
 
-- Coming soon.
+- Nothing yet.
+
+## [10.4.0] - 2026-02-01
+
+- **Major** - Changed: The generator and resolver are now significantly faster.
+  - For standard settings across all games, the mean time went from 5.38 seconds to 0.86 seconds - an improvement of 524%.
+  - For Echoes door lock rando, the mean time went from 430 seconds to 15 seconds - an improvement of 2772%. Other games are similarly improved.
+  - For a 100 worlds test multiworld, the mean time went from 2000+ seconds to 269 seconds.
+
+- Added: Integration with LiveSplit One for Async Races - after some configuration, starting, pausing and finishing in LiveSplit One will update your status in the Async Race.
+- Changed: The "Verify if game is beatable after ..." option is no longer experimental.
+- Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
+- Changed: When hiding item models or scans, the preset summary no longer references an ETM.
+- Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough, especially at high verbosity.
+- Fixed: Reduced the Windows install size by about 7 MB, as a regression from last release.
+- Fixed: Logical Pickup placement "All pickups" and expansions with negative amount are now compatible.
+- Fixed: Impossible generation cases that are caused due to walking into a point of no return that's impossible to escape from.
+- Fixed: Text such as the Seed Hash in the Async Race window is now selectable via mouse.
+- Fixed: Saving previous versions of presets when modififying no longer fails on certain cases.
+- Fixed: Certain scenarios at the start of generation with low possible actions are now less likely to fail.
+- Removed: The "Consider possible unsafe resources" experimental option has been removed and is now always enabled. The speed up mentioned above are including the slowdown from this setting.
+- Removed: The "Revised door solver" experimental option has been removed and is now always enabled.
+- Added: Added "Create New Preset" button to preset menu to improve UX.
+- Added: Added the ability to pan maps in the data visualizer by dragging with left or center click.
+
+### Another Metroid 2 Remake
+
+- Changed: Prime 1's Refill Pickups will now use more appropriate models.
+
+### Factorio
+
+- Fixed: Exporting from Flatpak now works.
+
+### Metroid Dread
+
+- Changed: Energy Parts are now logical.
+
+#### Logic Database
+
+- Changed: The energy requirements for the Corpius, Kraid, Silver Chozo Robot, Gold Chozo Robot and Gold Chozo Robot have been reduced, so that when using medium damage strictness the available energy is enough to satisfy these fights.
+
+##### Artaria
+
+- Changed: Minor adjustment in Arbitrary Enky Room to increase seed variety.
+- Changed: Minor adjustment related to the EMMI Zone Spinner, to increase seed variety.
+
+##### Cataris
+
+- Changed: Minor adjustment related to Kraid to increase seed variety.
+
+##### Ferenia
+
+- Fixed: Removed Diffusion Abuse trick to push Wide Beam Block in Purple EMMI Arena. This one is impossible because when you want to aim you automatically enable the Omega Cannon.
+
+### Metroid Fusion
+
+- Added: Option to change Geron vulnerabilities to their primary weaknesses.
+- Added: Cosmetic option that allows using an alternative health display on the HUD.
+- Changed: The doors between Cathedral and Cathedral Save Access have been changed from a Level-0 door to an open one.
+- Changed: Maximum Energy has been limited to 9999.
+- Changed: Optimized the "Reveal hidden blocks" cosmetic option to now be nearly identical in performance compared to without it.
+- Changed: Hatches during a Navigation Room Conversation will now always show as locked.
+- Changed: Samus is now controllable during the animals freeing sequence, removing an RNG consistency issue.
+- Fixed: Energy values over 2099 now correctly render in-game and on the file select screen.
+- Fixed: The SA-X monster form will no longer form out of bounds and get stuck.
+
+#### Logic Database
+
+- Fixed: Typo on "Boss Ridley Defeated" event.
+- Fixed: Getting the Operations Deck Navigation Hint now requires the L1-Keycard.
+- Fixed: Getting the Restricted Sector Navigation Hint now requires the L4-Keycard.
+
+##### Main Deck
+
+- Changed: Habitation Deck: It's now possible to move from the top right door to the top left entrance after the animals have been freed.
+
+##### Sector 2 (TRO)
+
+- Fixed: Oasis is now included in the "near an extendable pillar" featural hint category.
+
+##### Sector 6
+
+- Changed: Clogged Cavern: Going down via the Speed Booster Blocks doesn't require Charge Beam or Intermediate Shinesparking anymore.
+- Changed: Nocturnal Shaft: Going from the bottom door to the topmost door is now trivial.
+- Changed: Warehouse: Going from the bottom level to the top level is now trivial.
+
+### Metroid Prime
+
+- Changed: AM2R's Drop Pickups will now use more appropriate models.
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Changed: Revised the requirements for fighting Chozo Ghosts and made them consistent. Fighting multiple of them without Charge Beam is now Intermediate Combat, fighting a single one is still Beginner Combat.
+- Changed: Reflecting Pool: Jumping off of the Stone Toad has been changed from the Standable trick to the Jump Off Enemies trick.
+- Fixed: Ruined Gallery: Requirements for dealing with the enemies in the room.
+- Changed: Ruined Nursery: The boost into the tunnel from the standable pillar was changed from Intermediate Movement to Advanced Movement.
+- Fixed: Ruined Nursery: Requirements for dealing with the enemies in the room.
+- Added: Ruined Nursery: Requirements for avoiding the Trigger that activates the Main Plaza Wasps. This includes:
+  - Intermediate Knowledge and either Space Jump or Beginner Bomb Jump or Beginner Standable Terrain to get from Eyon Tunnel door to the North Atrium door.
+  - Intermediate Knowledge, Beginner Standable Terrain and Bombs to get the pickup.
+- Fixed: Ruined Fountain: The NSJ Dash over to the pickup now requires a visor.
+- Fixed: Ruined Fountain Access: Requirements for dealing with the enemies in the room.
+- Added: Ruined Shrine: Path from the Tower of Light Access Door to the Ruined Shrine Access Door via a Beginner Bomb Jump and Spider Ball.
+- Added: Ruined Shrine: Multiple ways to go from the Tower of Light Access Door to the top of the Half-Pipe near the pickup:
+    - Space Jump and Intermediate Standable Terrain
+    - No Space Jump, Expert Standable Terrain and an Intermediate L-Jump
+- Added: Ruined Shrine: An Intermediate dash from the top of the Half-Pipe to the Tower of Light Access Door with Space Jump.
+- Changed: Ruined Shrine: Scan Dashing from the Ruined Shrine Access Door over the fight trigger to the Pedestal now also requires Intermediate Knowledge.
+- Changed: Ruined Shrine: The NSJ escape from the pit now requires an Intermediate Dash, Intermediate L-Jump and Advanced Standable Terrain.
+- Added: Ruined Shrine: Health requirements for dealing with the Beetles
+- Changed: Ruined Shrine: Defeating the Beetles with only Bombs has been bumped to Expert Combat.
+- Changed: Ruined Shrine: Getting the Morph Pickup after triggering the beetle fight via escaping the pit and dashing over the wall to the item now requires an Intermediate L-Jump, Advanced Standable Terrain and either an Expert Combat Dash or an Advanced Scan Dash.
+- Fixed: Ruined Shrine Access: Requirements for dealing with the enemies in the room.
+- Fixed: Sunchamber Access: Requirements for dealing with the enemies in the room.
+- Fixed: Sunchamber Lobby: Requirements for dealing with the enemies in the room.
+- Changed: Sunchamber: Jumping onto the plant after defeating the Chozo Ghosts is now trivial.
+- Changed: Sunchamber: Reworked the Flaaghra fight. Key points are:
+    - Killing Flaaghra with only Missiles is now Combat Beginner
+    - There is now a way to kill Flaaghra with only 4 Missiles, gated behind Combat Advanced
+    - Adjusted health requirements
+    - Destroying the Bomb slots from outside is now Knowledge Intermediate
+    - Destroying the Bomb Slots with Power Bombs is now Knowledge Beginner
+    - Added a way to kill Flaaghra with Wavebuster, 20 Missiles and Ludicrous Combat
+    - When fighting Flaaghra from the back, there is now an Intermediate Knowledge trick for using only 2 Power Bombs
+    - When fighting Flaaghra from the back, you can now get to the platform via either an Intermediate Scan Dash, or a Beginner Scan Dash with Space Jump
+- Fixed: Sun Tower: Being able to go down Sun Tower without having killed Flaaghra.
+- Added: Watery Hall: Going to the Missile Expansion via an Intermediate Wall Boost without Gravity Suit.
+- Changed: Watery Hall: Going to the Missile Expansion by going through Poison Water has had several changes: it is now gated behind Beginner Movement, it has slightly more accurate damage numbers now and it increases the difficulty of the tricks.
+- Fixed: Watery Hall: Going to the Missile Expansion via a Bomb Jump is now possible without taking damage after Flaaghra has been defeated.
+- Fixed: Watery Hall: Requirements for dealing with the enemies in the room.
+- Fixed: Totem Access: Requirements for dealing with the enemies in the room.
+- Fixed: Tower of Light: Climbing up the tower via an Oculus dash now requires you to have a visor.
+- Removed: Tower of Light: Redundant combination of Combat Dash, L-Jump and Standable Terrain to collect the Pickup.
+- Removed: Tower of Light: Redundant combination of Combat Dash, Slope Jump and Standable Terrain to collect the Pickup.
+
+##### Tallon Overworld
+
+- Added: Alcove: Escaping the pit with a Beginner Wallboost.
+
+##### Phazon Mines
+
+- Fixed: Killing Elite Pirates on Hard Mode now requires Missiles instead of Power Beams.
+- Changed: Killing Elite Pirates with Beginner Combat but now requires Charge Beam or Plasma Beam, but less health.
+
+### Metroid: Samus Returns
+
+#### Logic Database
+
+##### Area 2 Dam Entryway
+
+- Fixed: Lightning Armor & Transport to Dam Exterior East: You can now logically unlock the door from the Elevator space.
 
 ## [10.3.2] - 2025-11-05
 
-- Changed: The Multiworld Session is more responsive in worlds with many worlds.
+- Changed: The Multiworld Session is more responsive in sessions with many worlds.
 - Changed: In a Multiworld Session with many worlds, the server now responds faster when exporting a world.
 
 ### Metroid Prime
@@ -426,6 +578,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The generator will now check for the count of major pickups when major/minor split is enabled.
 
 ### Metroid Dread
+
 - Fixed: A crash when attempting to fire Proto EMMI's Omega Blaster while having 0 maximum missiles.
 
 ### Metroid: Samus Returns

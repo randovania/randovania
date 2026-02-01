@@ -35,7 +35,7 @@ class FusionHintDistributor(HintDistributor):
                 return False
         if target.player == player_id and ("Keycard" in target.pickup.name):
             # don't place a keycard hint on a navigation pad locked by itself
-            return target.pickup.name not in str(hint_node.requirement_to_collect())
+            return target.pickup.name not in str(hint_node.lock_requirement)
         return super().is_pickup_interesting(target, player_id, hint_node)
 
     # Set default precision for hints

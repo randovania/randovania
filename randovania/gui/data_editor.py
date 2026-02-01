@@ -21,10 +21,9 @@ from randovania.game_description import (
     integrity_check,
     pretty_print,
 )
-from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.node import GenericNode, Node, NodeContext, NodeLocation
+from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.editor import Editor
 from randovania.game_description.requirements.array_base import RequirementArrayBase
@@ -32,6 +31,7 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games import default_data
@@ -53,12 +53,15 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 SHOW_REGION_MIN_MAX_SPINNER = False
 
 
-def _ui_patch_and_simplify(requirement: Requirement, context: NodeContext) -> Requirement:
+def _ui_patch_and_simplify(
+    requirement: Requirement, static_resources: ResourceCollection, database: ResourceDatabase
+) -> Requirement:
     if isinstance(requirement, RequirementArrayBase):
         items = list(requirement.items)
         if isinstance(requirement, RequirementOr):
@@ -68,18 +71,23 @@ def _ui_patch_and_simplify(requirement: Requirement, context: NodeContext) -> Re
             remove = Requirement.trivial()
             solve = Requirement.impossible()
 
-        items = [_ui_patch_and_simplify(it, context) for it in items]
+        items = [_ui_patch_and_simplify(it, static_resources, database) for it in items]
         if solve in items:
             return solve
         items = [it for it in items if it != remove]
         return type(requirement)(items, comment=requirement.comment)
 
     elif isinstance(requirement, ResourceRequirement):
-        return requirement.patch_requirements(1.0, context)
+        if static_resources.is_resource_set(requirement.resource):
+            if requirement.satisfied(static_resources, 0):
+                return Requirement.trivial()
+            elif not isinstance(requirement.resource, ItemResourceInfo) or requirement.resource.max_capacity <= 1:
+                return Requirement.impossible()
+        return requirement
 
     elif isinstance(requirement, RequirementTemplate):
-        result = requirement.template_requirement(context.database)
-        patched = _ui_patch_and_simplify(result, context)
+        result = requirement.template_requirement(database)
+        patched = _ui_patch_and_simplify(result, static_resources, database)
         if result != patched:
             return patched
         else:
@@ -464,12 +472,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 return
             self.replace_node_with(area, node_edit_popup.node, new_node)
 
-            if isinstance(new_node, DockNode) and not hasattr(new_node, "lock_node"):
-                lock_node = DockLockNode.create_from_dock(
-                    new_node, self.editor.new_node_index(), self.resource_database
-                )
-                self.editor.add_node(area, lock_node)
-
     def update_selected_node(self) -> None:
         node = self.current_node
         self.node_info_group.setEnabled(node is not None)
@@ -571,10 +573,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         requirement = self.current_area.connections[current_node].get(current_connection_node, Requirement.impossible())
         if self._collection_for_filtering is not None:
             db = self.game_description.resource_database
-            context = NodeContext(None, self._collection_for_filtering, db, self.game_description.region_list)
-            before_count = sum(1 for _ in requirement.iterate_resource_requirements(context))
-            requirement = _ui_patch_and_simplify(requirement, context)
-            after_count = sum(1 for _ in requirement.iterate_resource_requirements(context))
+            before_count = sum(1 for _ in requirement.iterate_resource_requirements(db))
+            requirement = _ui_patch_and_simplify(requirement, self._collection_for_filtering, db)
+            after_count = sum(1 for _ in requirement.iterate_resource_requirements(db))
 
             filtered_count_item = QtWidgets.QTreeWidgetItem(self.other_node_alternatives_contents)
             filtered_count_item.setText(
@@ -815,19 +816,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.editor.add_node(current_area, new_node_this_area)
         self.editor.add_node(target_area, new_node_other_area)
 
-        new_node_this_lock = DockLockNode.create_from_dock(
-            new_node_this_area,
-            self.editor.new_node_index(),
-            self.resource_database,
-        )
-        new_node_other_lock = DockLockNode.create_from_dock(
-            new_node_other_area,
-            self.editor.new_node_index(),
-            self.resource_database,
-        )
-        self.editor.add_node(current_area, new_node_this_lock)
-        self.editor.add_node(target_area, new_node_other_lock)
-
         if source_count == 1:
             source_node = current_area.node_with_name(source_name_base)
             target_node = target_area.node_with_name(target_name_base)
@@ -896,7 +884,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
             resources = self.connection_filters.selected_tricks()
             if resources and self.use_trick_filters_check.isChecked():
-                self._collection_for_filtering = ResourceCollection.from_resource_gain(game, resources.items())
+                self._collection_for_filtering = ResourceCollection.from_resource_gain(
+                    game.resource_database, resources.items()
+                )
             else:
                 self._collection_for_filtering = None
 

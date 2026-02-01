@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     import uuid
 
     from randovania.game.game_enum import RandovaniaGame
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.network_common.remote_pickup import RemotePickup
 
@@ -30,7 +31,7 @@ class DebugRemoteConnector(RemoteConnector):
         self._last_inventory_event = Inventory({})
 
         self.messages = []
-        self.item_collection = game.game_description.create_resource_collection()
+        self.item_collection = game.game_description.resource_database.create_resource_collection()
         self._last_remote_pickup = 0
 
     @property
@@ -48,8 +49,9 @@ class DebugRemoteConnector(RemoteConnector):
         self.remote_pickups = remote_pickups
 
         for remote_pickup in remote_pickups[self._last_remote_pickup :]:
-            self.messages.append(f"Received {remote_pickup[1].name} from {remote_pickup[0]}")
-            self.item_collection.add_resource_gain(remote_pickup[1].resource_gain(self.item_collection))
+            entry: PickupEntry = remote_pickup[1]
+            self.messages.append(f"Received {entry.name} from {remote_pickup[0]}")
+            self.item_collection.add_resource_gain(entry.resource_gain(self.item_collection))
             self._last_remote_pickup += 1
 
         self.RemotePickupsUpdated.emit()

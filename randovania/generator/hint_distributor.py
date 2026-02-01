@@ -133,7 +133,7 @@ class FeatureChooser[PrecisionT: Enum]:
 
     def debug_precisions(self, header: str) -> None:
         """Debug print `feature_precisions()`"""
-        if debug.debug_level() <= 0:
+        if debug.debug_level() <= debug.LogLevel.SILENT:
             return
 
         print(f"> {header}:")
@@ -168,7 +168,7 @@ class FeatureChooser[PrecisionT: Enum]:
         possible_features: list[HintFeature | PrecisionT] = []
         possible_features.extend(sorted(feature for feature in element_features if feature in feature_precisions))
         possible_features.extend(additional_precision_features)
-        if debug.debug_level() > 0:
+        if debug.debug_level() > debug.LogLevel.SILENT:
             possible_precisions = "\n".join(
                 f"     {self._debug_precision_text(feature, feature_precisions[feature])}"
                 for feature in sorted(possible_features, key=lambda f: feature_precisions[f])
@@ -769,7 +769,7 @@ def _should_use_resolver_hints(config: BaseConfiguration) -> bool:
 
 
 async def get_resolver_hint_state(player: int, patches: GamePatches) -> ResolverHintState | None:
-    with debug.with_level(0):
+    with debug.with_level(debug.LogLevel.SILENT):
         new_state = await resolver.resolve(patches.configuration, patches, collect_hint_data=True)
 
     if new_state is None:
@@ -832,11 +832,11 @@ async def distribute_specific_location_hints(
     player_pools = filler_results.player_pools
 
     for player_index, patches in old_patches.items():
-        player_pool = player_pools[player_index]
+        player_pool = filler_results.player_results[player_index]
 
-        hint_distributor = player_pool.game.game.hints.hint_distributor
+        hint_distributor = player_pool.game.game_enum.hints.hint_distributor
         new_patches[player_index] = await hint_distributor.assign_precision_to_hints(
-            patches, rng, player_pool, player_pools, HintNodeKind.SPECIFIC_LOCATION
+            patches, rng, player_pool.pool, player_pools, HintNodeKind.SPECIFIC_LOCATION
         )
 
     return dataclasses.replace(

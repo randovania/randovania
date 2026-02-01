@@ -7,3 +7,5 @@ WORLD_PICKUPS_UPDATE = "world_pickups_update"
 
 WORLD_JSON_INVENTORY = "multiplayer_json_inventory"
 WORLD_BINARY_INVENTORY = "multiplayer_binary_inventory"
+
+ASYNC_RACE_ROOM_UPDATE = "async_race_room_update"

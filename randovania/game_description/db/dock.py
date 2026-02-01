@@ -138,6 +138,13 @@ class DockWeaknessDatabase:
         for weakness_dict in self.weaknesses.values():
             yield from weakness_dict.values()
 
+    def find_type_for_weakness(self, weakness: DockWeakness) -> DockType:
+        """Find the DockType that has the given DockWeakness"""
+        for dock_type, weaknesses in self.weaknesses.items():
+            if weakness in weaknesses.values():
+                return dock_type
+        raise KeyError(f"Unknown DockWeakness: {weakness}")
+
     # FIXME: Make is_teleporter and ignore_for_hints proper DockType fields
     @property
     def all_teleporter_dock_types(self) -> list[DockType]:
@@ -146,3 +153,12 @@ class DockWeaknessDatabase:
     @property
     def all_ignore_hints_dock_types(self) -> list[DockType]:
         return [dock_type for dock_type in self.dock_types if dock_type.extra.get("ignore_for_hints", False)]
+
+    def can_weakness_be_shuffled(self, weakness: DockWeakness) -> bool:
+        """
+        Checks if the given DockWeakness is allowed to ever be shuffled into something else.
+        """
+        dock_type = self.find_type_for_weakness(weakness)
+        if dock_type not in self.dock_rando_params:
+            return False
+        return weakness in self.dock_rando_params[dock_type].change_from

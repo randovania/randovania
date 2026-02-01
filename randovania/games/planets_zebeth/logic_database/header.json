@@ -192,6 +192,10 @@
             "DoorLockRando": {
                 "long_name": "Door Lock Rando",
                 "extra": {}
+            },
+            "OpenMissileDoorWithOneMissile": {
+                "long_name": "Open Missile Door With One Missile",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -395,10 +399,36 @@
                         "lock": {
                             "lock_type": "front-blast-back-free-unlock",
                             "requirement": {
-                                "type": "and",
+                                "type": "or",
                                 "data": {
                                     "comment": null,
                                     "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "misc",
+                                                            "name": "OpenMissileDoorWithOneMissile",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Missiles",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
                                         {
                                             "type": "resource",
                                             "data": {

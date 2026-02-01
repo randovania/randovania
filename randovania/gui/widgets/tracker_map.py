@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import collections
 import logging
 from typing import TYPE_CHECKING
 
@@ -15,16 +16,17 @@ from randovania.game_description.db.dock_node import DockNode
 if TYPE_CHECKING:
     from matplotlib.axes import Axes
 
-    from randovania.game_description.db.node import Node
+    from randovania.game_description.db.area import Area
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 
 class MatplotlibWidget(QtWidgets.QWidget):
     ax: Axes
 
-    def __init__(self, parent, region_list: RegionList):
+    def __init__(self, parent: QtWidgets.QWidget, region_list: RegionList):
         super().__init__(parent)
 
         self.region_list = region_list
@@ -39,9 +41,9 @@ class MatplotlibWidget(QtWidgets.QWidget):
         self.ax = fig.add_subplot(111)
         self.line, *_ = self.ax.plot([])
 
-        self._region_to_node_positions = {}
+        self._region_to_node_positions: dict[str, dict] = {}
 
-    def _positions_for_region(self, region: Region, state: State):
+    def _positions_for_region(self, region: Region, state: State) -> dict:
         g = networkx.DiGraph()
 
         for area in region.areas:
@@ -62,31 +64,34 @@ class MatplotlibWidget(QtWidgets.QWidget):
 
         return networkx.drawing.spring_layout(g)
 
-    def update_for(self, region: Region, state: State, nodes_in_reach: set[Node]):
+    def update_for(self, region: Region, state: State, nodes_in_reach: list[WorldGraphNode], graph: WorldGraph) -> None:
         g = networkx.DiGraph()
 
         for area in region.areas:
             g.add_node(area)
 
-        context = state.node_context()
-        for area in region.areas:
-            nearby_areas = set()
-            for node in area.nodes:
-                if node not in nodes_in_reach:
+        nearby_areas_by_area: dict[Area, set[Area]] = collections.defaultdict(set)
+
+        for node in nodes_in_reach:
+            if node.area not in region.areas:
+                continue
+
+            for connection in node.connections:
+                target = graph.nodes[connection.target]
+                if target.area is node.area or target.area not in region.areas:
                     continue
 
-                for other_node, requirement in node.connections_from(context):
-                    if requirement.satisfied(context, state.health_for_damage_requirements):
-                        other_area = self.region_list.nodes_to_area(other_node)
-                        if other_area in region.areas:
-                            nearby_areas.add(other_area)
+                if connection.requirement.satisfied(state.resources, state.health_for_damage_requirements):
+                    nearby_areas_by_area[node.area].add(target.area)
 
-            for other_area in nearby_areas:
-                g.add_edge(area, other_area)
+        for source_area, area_list in nearby_areas_by_area.items():
+            for target_area in area_list:
+                g.add_edge(source_area, target_area)
 
         self.ax.clear()
 
         cf = self.ax.get_figure()
+        assert cf is not None
         cf.set_facecolor("w")
 
         if region.name not in self._region_to_node_positions:

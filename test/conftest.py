@@ -36,6 +36,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.graph.world_graph import WorldGraph
 
 
 class TestFilesDir:
@@ -506,6 +507,20 @@ def empty_patches(default_blank_configuration, blank_game_description) -> GamePa
 
 
 @pytest.fixture
+def blank_world_graph(blank_game_description, empty_patches) -> WorldGraph:
+    from randovania.graph.world_graph_factory import create_graph
+
+    return create_graph(
+        database_view=blank_game_description,
+        patches=empty_patches,
+        static_resources=blank_game_description.resource_database.create_resource_collection(),
+        damage_multiplier=1.0,
+        victory_condition=blank_game_description.victory_condition,
+        flatten_to_set_on_patch=False,
+    )
+
+
+@pytest.fixture
 def _mock_seed_hash(mocker: pytest_mock.MockerFixture) -> None:
     mocker.patch(
         "randovania.layout.layout_description.LayoutDescription.shareable_hash_bytes",
@@ -554,6 +569,11 @@ def world_database(tmp_path: Path):
     from randovania.interface_common.world_database import WorldDatabase
 
     return WorldDatabase(tmp_path.joinpath("world_database"))
+
+
+@pytest.fixture
+def resource_collection(blank_resource_db):
+    return blank_resource_db.create_resource_collection()
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:

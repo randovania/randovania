@@ -597,7 +597,7 @@
                 "extra": {}
             },
             "Ridley": {
-                "long_name": "Boss Ridley Deafeated",
+                "long_name": "Boss Ridley Defeated",
                 "extra": {}
             },
             "OmegaMetroid": {
@@ -686,6 +686,10 @@
             },
             "RightSiloCheckpointShutter": {
                 "long_name": "Access Right of Silo Checkpoint Shutter",
+                "extra": {}
+            },
+            "Animals": {
+                "long_name": "Main Deck Animal Controls",
                 "extra": {}
             }
         },
@@ -823,6 +827,10 @@
             },
             "CanSWJ": {
                 "long_name": "Single Wall Jumping Physics",
+                "extra": {}
+            },
+            "NerfGerons": {
+                "long_name": "Primary Geron Vulnerabilities",
                 "extra": {}
             }
         },
@@ -1268,7 +1276,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "Dev Note: MD Operations Ventilation and S1 Yameba Corridor contain extra rules",
                         "items": [
                             {
                                 "type": "or",
@@ -1384,6 +1392,15 @@
                                                     }
                                                 ]
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "NerfGerons",
+                                                "amount": 1,
+                                                "negate": true
+                                            }
                                         }
                                     ]
                                 }
@@ -1425,7 +1442,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "Dev Note: Please sync this up with S4 Drain Pipe! And S3 Bob's Abode + S6 Geron's Crossing contain shinesparks",
                         "items": [
                             {
                                 "type": "and",
@@ -1566,6 +1583,15 @@
                                                     }
                                                 ]
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "NerfGerons",
+                                                "amount": 1,
+                                                "negate": true
+                                            }
                                         }
                                     ]
                                 }
@@ -1579,7 +1605,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "Dev Note: MD Central Nexus can be destroyed by shinesparking",
                         "items": [
                             {
                                 "type": "template",
@@ -1606,6 +1632,15 @@
                                                 "name": "Knowledge",
                                                 "amount": 1,
                                                 "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "NerfGerons",
+                                                "amount": 1,
+                                                "negate": true
                                             }
                                         }
                                     ]
@@ -2268,7 +2303,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "Dev Note: Most instances can also be shinesparked. Also, Central Stabilizer contains extra rules.",
                         "items": [
                             {
                                 "type": "or",
@@ -2329,6 +2364,15 @@
                                                         "data": "Can Use Power Bombs"
                                                     }
                                                 ]
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "NerfGerons",
+                                                "amount": 1,
+                                                "negate": true
                                             }
                                         }
                                     ]
@@ -2655,6 +2699,19 @@
                 "extra": {},
                 "items": {
                     "Open Hatch": {
+                        "extra": {
+                            "type": "Open"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Open Hatch (Forced)": {
                         "extra": {
                             "type": "Open"
                         },

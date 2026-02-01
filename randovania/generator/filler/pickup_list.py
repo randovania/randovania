@@ -1,59 +1,70 @@
 from __future__ import annotations
 
-import dataclasses
 import itertools
 from typing import TYPE_CHECKING
 
 from randovania.game_description import game_description
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.requirements.requirement_list import RequirementList
-from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator, Sequence
+    from collections.abc import Sequence
 
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.generator_reach import GeneratorReach
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraphNode
 
 PickupCombination = tuple[PickupEntry, ...]
 PickupCombinations = tuple[PickupCombination, ...]
 
 
-def _resources_in_pickup(pickup: PickupEntry, current_resources: ResourceCollection) -> frozenset[ResourceInfo]:
-    resource_gain = pickup.resource_gain(current_resources, force_lock=True)
-    return frozenset(resource for resource, _ in resource_gain)
-
-
 def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[ResourceInfo]:
-    satisfiable_requirements: frozenset[RequirementList] = frozenset(
+    satisfiable_requirements: frozenset[GraphRequirementList] = frozenset(
         itertools.chain.from_iterable(
             requirements.alternatives for requirements in reach.unreachable_nodes_with_requirements().values()
         )
     )
     return game_description.calculate_interesting_resources(
-        satisfiable_requirements, reach.state.node_context(), reach.state.health_for_damage_requirements
+        satisfiable_requirements, reach.state.resources, reach.state.resource_database, reach.state.damage_state
     )
 
 
-def _unsatisfied_item_requirements_in_list(
-    alternative: RequirementList, state: State, uncollected_resources: set[ResourceInfo]
-) -> Iterator[list[ResourceRequirement]]:
-    items = []
-    damage = []
-    context = state.node_context()
+def _unsatisfied_item_requirements_for_damage(
+    alternative: GraphRequirementList, state: State
+) -> list[list[ResourceRequirement]] | None:
+    """Returns a list of item requirements to satisfy a RequirementList containing damage requirements.
+    Requirements are allowed to contain multiple individual items, hence list of lists.
+    Returns None if the requirements are already satisfied.
+    """
+    sum_damage = alternative.damage(state.resources)
 
-    for individual in alternative.values():
+    if state.health_for_damage_requirements <= sum_damage:
+        # Delegates to the game for how to handle the damage requirement
+        return state.damage_state.resource_requirements_for_satisfying_damage(sum_damage, state.resources)
+    return None
+
+
+def _unsatisfied_requirements_in_list(
+    alternative: GraphRequirementList, state: State, uncollected_resources: set[ResourceInfo]
+) -> list[ResourceRequirement] | None:
+    """Returns a list of unmet requirements to satisfy a requirement list.
+    Damage requirements are handled separately.
+    Returns None if requirements cannot be satisfied by collecting uncollected resources.
+    Returns an empty list if requirements are already satisfied.
+    """
+    items = []
+
+    for individual in RequirementList.from_graph_requirement_list(alternative, add_multiple_as_single=True).values():
         if individual.resource.resource_type == ResourceType.DAMAGE:
-            damage.append(individual)
             continue
 
-        if individual.satisfied(context, state.health_for_damage_requirements):
+        if individual.satisfied(state.resources, state.health_for_damage_requirements):
             continue
 
         if individual.negate or (
@@ -63,21 +74,16 @@ def _unsatisfied_item_requirements_in_list(
             # - There is a negative requirement which is unsatisfied, as that means we have lost the chance to
             #   ever satisfy it
             # - There is a non-item requirement for something that is not reachable
-            return
+            return None
 
         items.append(individual)
 
-    sum_damage = sum(req.damage(context) for req in damage)
-    if state.health_for_damage_requirements <= sum_damage:
-        # Delegates to the game for how to handle the damage requirement
-        yield items + state.damage_state.resource_requirements_for_satisfying_damage(sum_damage)
-    else:
-        yield items
+    return items
 
 
 def _requirement_lists_without_satisfied_resources(
     state: State,
-    possible_sets: list[RequirementSet],
+    possible_sets: list[GraphRequirementSet],
     uncollected_resources: set[ResourceInfo],
 ) -> set[RequirementList]:
     seen_lists = set()
@@ -91,14 +97,22 @@ def _requirement_lists_without_satisfied_resources(
     for requirements in possible_sets:
         # Maybe should first recreate `requirements` by removing the satisfied items or the ones that can't be
         for alternative in requirements.alternatives:
+            alternative.freeze()
             if alternative in seen_lists:
                 continue
             seen_lists.add(alternative)
 
-            for items in _unsatisfied_item_requirements_in_list(alternative, state, uncollected_resources):
-                _add_items(items)
+            item_lists_for_damage = _unsatisfied_item_requirements_for_damage(alternative, state)
+            other_items = _unsatisfied_requirements_in_list(alternative, state, uncollected_resources)
 
-    if debug.debug_level() > 2:
+            if other_items is not None:
+                if item_lists_for_damage is None:
+                    _add_items(other_items)
+                else:
+                    for list_for_damage in item_lists_for_damage:
+                        _add_items(list_for_damage + other_items)
+
+    if debug.debug_level() > debug.LogLevel.HIGH:
         print(">> All requirement lists:")
         for result_it in sorted(result, key=lambda it: it.as_stable_sort_tuple):
             print(f"* {result_it}")
@@ -113,34 +127,39 @@ def pickups_to_solve_list(
 ) -> list[PickupEntry] | None:
     pickups = []
 
-    game = state.patches.game
-    context = dataclasses.replace(state.node_context(), current_resources=state.resources.duplicate())
+    resources = state.resources.duplicate()
     pickups_for_this = list(pickup_pool)
 
     # Check pickups that give less items in total first
     # This means we test for expansions before the standard pickups, in case both give the same resource
     # Useful to get Dark Beam Ammo Expansion instead of Dark Beam.
-    pickups_for_this.sort(key=lambda p: sum(1 for _ in p.resource_gain(context.current_resources, force_lock=True)))
+    pickups_for_this.sort(key=lambda p: sum(1 for _ in p.resource_gain(resources, force_lock=True)))
 
     for individual in sorted(requirement_list.values()):
-        if individual.satisfied(context, state.health_for_damage_requirements):
+        if individual.satisfied(resources, state.health_for_damage_requirements):
             continue
 
         # Create another copy of the list, so we can remove elements while iterating
         for pickup in list(pickups_for_this):
-            new_resources = ResourceCollection.from_resource_gain(
-                game, pickup.resource_gain(context.current_resources, force_lock=True)
+            new_resources = ResourceCollection.with_resource_count(
+                state.resource_database, state.resources.current_array_size()
             )
-            pickup_progression = ResourceCollection.from_resource_gain(game, pickup.progression)
+            pickup_progression = ResourceCollection.with_resource_count(
+                state.resource_database, state.resources.current_array_size()
+            )
+
+            new_resources.add_resource_gain(pickup.resource_gain(resources, force_lock=True))
+            pickup_progression.add_resource_gain(pickup.progression)
+
             if new_resources[individual.resource] + pickup_progression[individual.resource] > 0:
                 pickups.append(pickup)
                 pickups_for_this.remove(pickup)
-                context.current_resources.add_resource_gain(new_resources.as_resource_gain())
+                resources.add_resource_gain(new_resources.as_resource_gain())
 
-            if individual.satisfied(context, state.health_for_damage_requirements):
+            if individual.satisfied(resources, state.health_for_damage_requirements):
                 break
 
-        if not individual.satisfied(context, state.health_for_damage_requirements):
+        if not individual.satisfied(resources, state.health_for_damage_requirements):
             return None
 
     return pickups
@@ -149,7 +168,7 @@ def pickups_to_solve_list(
 def get_pickups_that_solves_unreachable(
     pickups_left: Sequence[PickupEntry],
     reach: GeneratorReach,
-    uncollected_resource_nodes: Sequence[ResourceNode],
+    uncollected_resource_nodes: Sequence[WorldGraphNode],
     single_set: bool,
 ) -> PickupCombinations:
     """New logic. Given pickup list and a reach, checks the combination of pickups
@@ -158,19 +177,20 @@ def get_pickups_that_solves_unreachable(
     """
     state = reach.state
     possible_sets = [v for v in reach.unreachable_nodes_with_requirements().values() if v.alternatives]
-    context = reach.node_context()
-    possible_sets.append(reach.game.victory_condition_as_set(context))
+    possible_sets.append(reach.graph.victory_condition)
 
     uncollected_resources = set()
     for node in uncollected_resource_nodes:
-        for resource, _ in node.resource_gain_on_collect(context):
+        for resource, _ in node.resource_gain_on_collect(state.resources):
             uncollected_resources.add(resource)
 
     if single_set:
-        desired_lists: list[RequirementList] = []
+        # TODO: remove the argument
+        singleton = GraphRequirementSet()
         for req_set in possible_sets:
-            desired_lists.extend(req_set.alternatives)
-        possible_sets = [RequirementSet(desired_lists)]
+            singleton.extend_alternatives(req_set.alternatives)
+        singleton.optimize_alternatives()
+        possible_sets = [singleton]
 
     all_lists = _requirement_lists_without_satisfied_resources(state, possible_sets, uncollected_resources)
 
@@ -181,7 +201,7 @@ def get_pickups_that_solves_unreachable(
         if pickups is not None and pickups:
             result[tuple(pickups)] = ""
 
-    if debug.debug_level() > 2:
+    if debug.debug_level() > debug.LogLevel.HIGH:
         print(">> All pickup combinations alternatives:")
         for items in sorted(result.keys()):
             print("* {}".format(", ".join(p.name for p in items)))

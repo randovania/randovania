@@ -44,15 +44,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - name: Workaround for worktree config
-        run: git config --unset-all extensions.worktreeConfig || true
+      - name: Enable Cython
+        run: touch randovania/enable-cython
 
       - name: Install Python packages
-        run: uv sync --extra server
+        run: uv sync --extra server --reinstall-package randovania
 
       - name: Bulk Generate (AM2R)
         run: uv run tools/bulk_generate_for_discord.py --game am2r

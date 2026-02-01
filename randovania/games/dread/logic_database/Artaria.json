@@ -9350,6 +9350,23 @@
                                 ]
                             }
                         },
+                        "Event - EMMI Spinner Rotated": {
+                            "type": "and",
+                            "data": {
+                                "comment": "This connection is here to help the generator see that flipping the spinner is safe by opening the one way door.",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ArtariaEmmiSpinnerRotated",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Event - EMMI Spinner Pulled": {
                             "type": "and",
                             "data": {
@@ -11901,7 +11918,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "Damage",
-                                                        "amount": 198,
+                                                        "amount": 130,
                                                         "negate": false
                                                     }
                                                 },
@@ -23241,43 +23258,9 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Navigation Station North (Upper)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Slide"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s010_cave:default:breakablecave017",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
+                        "Start Point": {
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 },

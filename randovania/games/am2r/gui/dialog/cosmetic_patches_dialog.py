@@ -13,14 +13,16 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
+    from randovania.interface_common.options import Options
+
 DEFAULT_HEALTH_COLOR = (255, 225, 0)
 DEFAULT_ETANK_COLOR = (112, 222, 250)
 DEFAULT_DNA_COLOR = (46, 208, 5)
 
 
 class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog[AM2RCosmeticPatches], Ui_AM2RCosmeticPatchesDialog):
-    def __init__(self, parent: QtWidgets.QWidget | None, current: AM2RCosmeticPatches):
-        super().__init__(parent, current)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: AM2RCosmeticPatches, options: Options):
+        super().__init__(parent, current, options)
         self.setupUi(self)
 
         for room_gui_type in AM2RRoomGuiType:

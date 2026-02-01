@@ -119,7 +119,11 @@ async def test_browser_discord_login_callback_success(mock_sa, mock_request, exi
     if has_sid:
         mock_sa.sio.emit.assert_awaited_once_with(
             "user_session_update",
-            {"encoded_session_b85": b"Wo~0~d2n=PWB", "user": {"discord_id": 1234, "id": 1, "name": expected_name}},
+            {
+                "encoded_session_b85": "Wo~0~d2n=PWB",
+                "user": {"discord_id": 1234, "id": 1, "name": expected_name},
+                "sid": "TheSid",
+            },
             to="TheSid",
             namespace="/",
         )
@@ -342,3 +346,73 @@ async def test_restore_user_session_invalid_key(mock_sa, fernet):
 
     with pytest.raises(InvalidSessionError):
         await user_session.restore_user_session(mock_sa, "TheSid", b"")
+
+
+async def test_me_json(test_client, clean_database):
+    # Setup
+    user = User.create(id=1234, name="The Name")
+    test_client.set_logged_in_user(user.id)
+
+    # Run
+    response = test_client.get("/me", headers={"Accept": "application/json"})
+
+    # Assert
+    response.raise_for_status()
+    assert response.json() == user.as_json
+
+
+async def test_get_discord_user(test_client, clean_database):
+    discord_user = MagicMock()
+    discord_user.id = "123412341234"
+
+    user = User.create(id=1234, name="The Name", discord_id=int(discord_user.id))
+    test_client.sa.discord.user = AsyncMock(return_value=discord_user)
+
+    from randovania.server.user_session import _encrypt_session_for_user
+
+    test_client.headers["X-Randovania-Session"] = _encrypt_session_for_user(
+        test_client.sa, {"discord-access-token": "<TOKEN>"}
+    )
+
+    # Run
+    response = test_client.get("/me", headers={"Accept": "application/json"})
+
+    # Assert
+    response.raise_for_status()
+    assert response.json() == user.as_json
+
+
+async def test_guest_login_form(test_client):
+    response = test_client.get("/guest_login")
+
+    # Assert
+    response.raise_for_status()
+    assert '<form class="form-inline" method="POST" action="http://testserver/guest_login">' in response.text
+    assert '<input id="name" placeholder="User name to login as" name="name">' in response.text
+
+
+async def test_guest_login_post_valid_json(test_client, clean_database):
+    response = test_client.post("/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo"})
+    response.raise_for_status()
+    assert response.json() == {
+        "encoded_session_b85": ANY,
+        "sid": None,
+        "user": {"discord_id": None, "id": 1, "name": "Guest: Foo"},
+    }
+    assert User.get_by_id(1).name == "Guest: Foo"
+
+
+async def test_guest_login_post_valid_web(test_client, clean_database):
+    response = test_client.post("/guest_login", data={"name": "Foo"}, follow_redirects=False)
+    assert response.status_code == 303
+    assert response.headers["Location"] == "http://testserver/me"
+    assert response.text == ""
+    assert User.get_by_id(1).name == "Guest: Foo"
+
+
+async def test_guest_login_post_not_debug(test_client):
+    test_client.sa.app.debug = False
+
+    response = test_client.post("/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo"})
+    assert response.status_code == 400
+    assert response.json() == {"error_message": "Unable to perform login"}

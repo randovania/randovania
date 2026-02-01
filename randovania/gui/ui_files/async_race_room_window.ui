@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>542</width>
+    <width>626</width>
     <height>386</height>
    </rect>
   </property>
@@ -38,6 +38,9 @@
          <property name="text">
           <string>GAME NAME, SEED HASH</string>
          </property>
+         <property name="textInteractionFlags">
+          <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
+         </property>
         </widget>
        </item>
        <item>
@@ -63,27 +66,10 @@
        <string>Participation</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0" colspan="6">
-        <widget class="QLabel" name="participation_label">
+       <item row="1" column="1">
+        <widget class="QPushButton" name="start_button">
          <property name="text">
-          <string>TextLabel</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5">
-        <widget class="QPushButton" name="submit_proof_button">
-         <property name="text">
-          <string>Submit Proof</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="join_and_export_button">
-         <property name="text">
-          <string>Join and export game</string>
+          <string>Start</string>
          </property>
         </widget>
        </item>
@@ -94,10 +80,37 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="start_button">
+       <item row="0" column="0" colspan="6">
+        <widget class="QLabel" name="participation_label">
          <property name="text">
-          <string>Start</string>
+          <string>TextLabel</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="join_and_export_button">
+         <property name="text">
+          <string>Join and export game</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <widget class="QPushButton" name="submit_proof_button">
+         <property name="text">
+          <string>Submit Proof</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="pause_button">
+         <property name="text">
+          <string>Pause</string>
          </property>
         </widget>
        </item>
@@ -108,10 +121,10 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QPushButton" name="pause_button">
+       <item row="1" column="6">
+        <widget class="QPushButton" name="livesplit_button">
          <property name="text">
-          <string>Pause</string>
+          <string>LiveSplit One URL</string>
          </property>
         </widget>
        </item>
@@ -123,12 +136,18 @@
       <property name="text">
        <string>RACE NAME</string>
       </property>
+      <property name="textInteractionFlags">
+       <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
+      </property>
      </widget>
     </item>
     <item row="0" column="1">
      <widget class="QLabel" name="start_end_date_label">
       <property name="text">
        <string>Race End: in &lt;&gt; days, at &lt;&gt;</string>
+      </property>
+      <property name="textInteractionFlags">
+       <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
       </property>
      </widget>
     </item>
@@ -193,7 +212,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>542</width>
+     <width>626</width>
      <height>17</height>
     </rect>
    </property>

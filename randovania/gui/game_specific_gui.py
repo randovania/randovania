@@ -35,7 +35,7 @@ async def customize_cosmetic_patcher_button(
     per_game_options: PerGameOptions = options.generic_per_game_options(game)
 
     assert game.gui.cosmetic_dialog is not None
-    dialog = game.gui.cosmetic_dialog(parent, per_game_options.cosmetic_patches)
+    dialog = game.gui.cosmetic_dialog(parent, per_game_options.cosmetic_patches, options)
     result = await async_dialog.execute_dialog(dialog)
 
     if result == QtWidgets.QDialog.DialogCode.Accepted:

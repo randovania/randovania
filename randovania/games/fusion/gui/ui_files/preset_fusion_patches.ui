@@ -42,9 +42,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-119</y>
          <width>709</width>
-         <height>418</height>
+         <height>567</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -204,6 +204,30 @@ While logic will respect this value, only the original value (100) has been test
             <widget class="QLabel" name="instant_morph_label">
              <property name="text">
               <string>Enabling this allows you to instantly morph and unmorph by using the SELECT button.</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="adjusted_geron_weaknesses_check">
+             <property name="text">
+              <string>Enable Balanced Geron Vulnerabilities</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="adjusted_geron_weaknesses_label">
+             <property name="text">
+              <string>Enabling this will change Gerons to only be vulnerable to their primary weaknesses. This means:
+- Missile Gerons are only weak to Missiles and Speedboosting
+- Stabilizer Gerons are only weak to Missiles, Charge Beam and Speedboosting
+- Super Missile Gerons are only weak to Super Missiles and Speedboosting
+- Power Bomb Gerons are only weak to Power Bombs and Speedboosting</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::TextFormat::MarkdownText</enum>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>

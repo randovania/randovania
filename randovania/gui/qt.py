@@ -173,7 +173,7 @@ async def display_window_for(app: QtWidgets.QApplication, options: Options, comm
     elif command == "main":
         await show_main_window(app, options, args.preview, args.instantly_quit)
     elif command == "data_editor":
-        show_data_editor(app, options, RandovaniaGame(args.game))
+        show_data_editor(app, options, RandovaniaGame(args.graph))
     elif command == "game":
         await show_game_details(app, options, args.rdvgame)
     else:
@@ -304,7 +304,7 @@ async def qt_main(app: QtWidgets.QApplication, args: argparse.Namespace) -> None
     @qasync.asyncClose
     async def _on_last_window_closed():
         if app.quitOnLastWindowClosed():
-            await app.network_client.disconnect_from_server()
+            await app.network_client.shutdown()
             await app.game_connection.stop()
             logger.info("Last QT window closed")
         else:

@@ -17,9 +17,9 @@ if TYPE_CHECKING:
 
 
 class WeightedLocations:
-    _items: dict[tuple[PlayerState, PickupIndex], float]
+    _items: list[tuple[PlayerState, dict[PickupIndex, float]]]
 
-    def __init__(self, items: dict[tuple[PlayerState, PickupIndex], float]):
+    def __init__(self, items: list[tuple[PlayerState, dict[PickupIndex, float]]]):
         self._items = items
 
     def __hash__(self) -> int:
@@ -31,55 +31,71 @@ class WeightedLocations:
     def __str__(self) -> str:
         return str(self._items)
 
+    def __repr__(self) -> str:
+        return f"WeightedLocations({self._items!r})"
+
     def is_empty(self) -> bool:
         """True if there are no locations."""
-        return not self._items
+        return all(not locations for _, locations in self._items)
 
     def total_count(self) -> int:
         """How many locations are available, across all worlds."""
-        return len(self._items)
+        return sum(len(locations) for _, locations in self._items)
+
+    def _locations_for_player(self, player: PlayerState) -> dict[PickupIndex, float]:
+        for p, locations in self._items:
+            if p == player:
+                return locations
+        raise KeyError(f"Unknown player: {player}")
 
     def count_for_player(self, player: PlayerState) -> int:
         """How many locations are available, for one player in particular."""
-        return sum(1 for p, _ in self._items.keys() if p == player)
+        return len(self._locations_for_player(player))
 
     def filter_for_player(self, player: PlayerState) -> WeightedLocations:
         """Returns only the locations of one player in particular."""
-        return WeightedLocations({loc: weight for loc, weight in self._items.items() if loc[0] is player})
+        return WeightedLocations([entry if entry[0] == player else (entry[0], {}) for entry in self._items])
 
     def filter_major_minor_for_pickup(self, pickup: PickupEntry) -> WeightedLocations:
         """Returns only the locations whose player's major/minor configuration allow this pickup."""
         return WeightedLocations(
-            {
-                (player, index): weight
-                for (player, index), weight in self._items.items()
-                if player.can_place_pickup_at(pickup, index)
-            }
+            [
+                (
+                    player,
+                    {index: weight for index, weight in locations.items() if player.can_place_pickup_at(pickup, index)},
+                )
+                for player, locations in self._items
+            ]
         )
 
     def all_items(self) -> Iterator[tuple[PlayerState, PickupIndex, float]]:
-        for (player, index), weight in self._items.items():
-            yield player, index, weight
+        for player, locations in self._items:
+            for index, weight in locations.items():
+                yield player, index, weight
 
     def select_location(self, rng: Random) -> tuple[PlayerState, PickupIndex]:
-        return random_lib.select_element_with_weight(rng, self._items)
+        return random_lib.select_element_with_weight(
+            rng, {(player, index): weight for player, locations in self._items for index, weight in locations.items()}
+        )
 
     def remove(self, player: PlayerState, index: PickupIndex) -> None:
-        self._items.pop((player, index))
+        self._locations_for_player(player).pop(index)
 
     def can_fit(self, action: Action, *, extra_indices: int = 0) -> bool:
         # Find how many locations are major, minor or both
         num_major_locs = 0
         num_minor_locs = 0
         num_free_locs = extra_indices
-        for player, index in self._items.keys():
+
+        for player, locations in self._items:
             if player.configuration.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-                if player.get_location_category(index) == LocationCategory.MAJOR:
-                    num_major_locs += 1
-                else:
-                    num_minor_locs += 1
+                for index in locations.keys():
+                    if player.get_location_category(index) == LocationCategory.MAJOR:
+                        num_major_locs += 1
+                    else:
+                        num_minor_locs += 1
             else:
-                num_free_locs += 1
+                num_free_locs += len(locations)
 
         # Count how many pickups are major and minor in the action
         num_major_picks = 0

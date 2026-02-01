@@ -8,19 +8,22 @@ from PySide6 import QtWidgets
 from randovania.gui.lib import signal_handling
 
 if TYPE_CHECKING:
+    from randovania.interface_common.options import Options
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 
 class BaseCosmeticPatchesDialog[CosmeticPatches: BaseCosmeticPatches](QtWidgets.QDialog):
     _cosmetic_patches: CosmeticPatches
+    _options: Options
     accept_button: QtWidgets.QPushButton
     cancel_button: QtWidgets.QPushButton
     reset_button: QtWidgets.QPushButton
 
-    def __init__(self, parent: QtWidgets.QWidget | None, current: CosmeticPatches):
+    def __init__(self, parent: QtWidgets.QWidget | None, current: CosmeticPatches, options: Options):
         super().__init__(parent)
         assert isinstance(current, self.cosmetic_patches_type())
         self._cosmetic_patches = current
+        self._options = options
 
     @classmethod
     def cosmetic_patches_type(cls) -> type[CosmeticPatches]:

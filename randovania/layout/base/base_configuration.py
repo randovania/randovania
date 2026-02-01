@@ -56,13 +56,11 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     pickup_model_data_source: PickupModelDataSource
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool
-    two_sided_door_lock_search: bool
     dock_rando: DockRandoConfiguration
     single_set_for_pickups_that_solve: bool
     staggered_multi_pickup_placement: bool
     check_if_beatable_after_base_patches: bool
     logical_pickup_placement: LogicalPickupPlacementConfiguration
-    consider_possible_unsafe_resources: bool
     hints: HintConfiguration
 
     @classmethod
@@ -87,9 +85,6 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
 
         if self.first_progression_must_be_local:
             result.append("Requiring first progression to be local causes increased generation failure.")
-
-        if self.consider_possible_unsafe_resources:
-            result.append("Considering possible unsafe resources will increase generation time.")
 
         if self.logical_pickup_placement == LogicalPickupPlacementConfiguration.ALL:
             result.append(

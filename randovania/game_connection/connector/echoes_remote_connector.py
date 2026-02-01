@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import struct
+import typing
 from typing import TYPE_CHECKING, TypeGuard, override
 
 from open_prime_rando.dol_patching import all_prime_dol_patches
@@ -18,6 +19,7 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
+    from randovania.game_description.resources.resource_info import ResourceGain
 
 
 def format_received_item(item_name: str, player_name: str) -> str:
@@ -106,7 +108,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
                 item.extra["item_id"],
                 delta,
             )
-            for item, delta in resources_to_give.as_resource_gain()
+            for item, delta in typing.cast("ResourceGain[ItemResourceInfo]", resources_to_give.as_resource_gain())
         ]
         return patches, format_received_item(item_name, provider_name)
 

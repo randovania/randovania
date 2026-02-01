@@ -17,6 +17,7 @@ from randovania.network_common.session_visibility import MultiplayerSessionVisib
 
 @pytest.fixture(name="client")
 def network_client_fixture(skip_qtbot, mocker, tmpdir):
+    mocker.patch("randovania.lib.http_lib.http_session")
     mocker.patch(
         "randovania.get_configuration",
         return_value={

@@ -23,6 +23,7 @@ class FusionConfiguration(BaseConfiguration):
     unlock_sector_hub: bool
     short_intro_text: bool
     instant_morph: bool
+    adjusted_geron_weaknesses: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
