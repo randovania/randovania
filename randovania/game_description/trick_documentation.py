@@ -35,7 +35,7 @@ def _find_tricks_usage_documentation(requirement: Requirement) -> Iterator[tuple
 
     documentation_state = TrickUsageState.SKIPPED
 
-    trick_resources = []
+    trick_resources: list[ResourceRequirement] = []
     for it in requirement.items:
         if isinstance(it, RequirementArrayBase):
             yield from _find_tricks_usage_documentation(it)

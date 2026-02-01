@@ -11,11 +11,13 @@ from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPre
 if TYPE_CHECKING:
     import pytestqt.qtbot
 
+    from randovania.interface_common.options import Options
 
-def test_suit_cosmetics(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+
+def test_suit_cosmetics(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = EchoesCosmeticPatches()
 
-    dialog = EchoesCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = EchoesCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     def click(target):
@@ -40,10 +42,10 @@ def test_suit_cosmetics(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     assert dialog.cosmetic_patches == EchoesCosmeticPatches()
 
 
-def test_change_sound_mode(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+def test_change_sound_mode(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     preferences = EchoesCosmeticPatches(user_preferences=EchoesUserPreferences(sound_mode=SoundMode.MONO))
 
-    dialog = EchoesCosmeticPatchesDialog(None, preferences)
+    dialog = EchoesCosmeticPatchesDialog(None, preferences, options)
     skip_qtbot.addWidget(dialog)
 
     dialog.sound_mode_combo.setCurrentIndex(2)
@@ -51,10 +53,10 @@ def test_change_sound_mode(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     assert dialog.preferences == EchoesUserPreferences(sound_mode=SoundMode.SURROUND)
 
 
-def test_change_sfx_volume(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+def test_change_sfx_volume(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     preferences = EchoesCosmeticPatches(user_preferences=EchoesUserPreferences(sfx_volume=15))
 
-    dialog = EchoesCosmeticPatchesDialog(None, preferences)
+    dialog = EchoesCosmeticPatchesDialog(None, preferences, options)
     skip_qtbot.addWidget(dialog)
 
     dialog.sfx_volume_slider.setValue(50)
@@ -62,10 +64,10 @@ def test_change_sfx_volume(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     assert dialog.preferences == EchoesUserPreferences(sfx_volume=50)
 
 
-def test_change_hud_lag(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+def test_change_hud_lag(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     preferences = EchoesCosmeticPatches(user_preferences=EchoesUserPreferences(hud_lag=False))
 
-    dialog = EchoesCosmeticPatchesDialog(None, preferences)
+    dialog = EchoesCosmeticPatchesDialog(None, preferences, options)
     skip_qtbot.addWidget(dialog)
 
     dialog.hud_lag_check.setChecked(True)

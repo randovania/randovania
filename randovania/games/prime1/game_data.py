@@ -105,6 +105,13 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
+def _test_data() -> randovania.game.game_test_data.GameTestData:
+    return randovania.game.game_test_data.GameTestData(
+        expected_seed_hash="2ROHQBP6",
+        database_collectable_ignore_events=("Event33",),
+    )
+
+
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Prime",
     long_name="Metroid Prime",
@@ -172,6 +179,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
+    test_data=_test_data,
     defaults_available_in_game_sessions=True,
     logic_db_integrity=find_prime_db_errors,
 )

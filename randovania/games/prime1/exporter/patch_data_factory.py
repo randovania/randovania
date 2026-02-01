@@ -726,7 +726,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
                     identifier = node.identifier.area_identifier
                     target = _name_for_location(
-                        db.region_list, self.patches.get_dock_connection_for(node).identifier.area_identifier
+                        db.region_list, self.patches.get_dock_connection_for(node).area_identifier
                     )
 
                     source_name = prime1_elevators.RANDOMPRIME_CUSTOM_NAMES[

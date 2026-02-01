@@ -62,10 +62,6 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
             self.check_if_beatable_after_base_patches_check,
             self._persist_bool_layout_field("check_if_beatable_after_base_patches"),
         )
-        signal_handling.on_checked(
-            self.consider_unsafe_check,
-            self._persist_bool_layout_field("consider_possible_unsafe_resources"),
-        )
 
         # Damage strictness
         self.damage_strictness_combo.setItemData(0, LayoutDamageStrictness.STRICT)
@@ -89,7 +85,6 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         signal_handling.set_combo_with_value(self.logical_pickup_placement_combo, layout.logical_pickup_placement)
 
         self.check_if_beatable_after_base_patches_check.setChecked(layout.check_if_beatable_after_base_patches)
-        self.consider_unsafe_check.setChecked(layout.consider_possible_unsafe_resources)
 
         self.trick_level_minimal_logic_check.setChecked(layout.trick_level.minimal_logic)
         signal_handling.set_combo_with_value(self.dangerous_combo, layout.logical_resource_action)
@@ -115,20 +110,14 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     @property
     def experimental_settings(self) -> Iterable[QtWidgets.QWidget]:
         # Always hidden right now
-        yield self.check_if_beatable_after_base_patches_check
         yield self.local_first_progression_check
         yield self.local_first_progression_label
         yield self.line_2
 
-        yield self.experimental_generator_line
-        yield self.consider_unsafe_line
-        yield self.minimal_logic_line
         yield self.logical_pickup_placement_line
         yield self.logical_pickup_placement_combo
         yield self.logical_pickup_placement_label
         yield self.logical_pickup_placement_description
-        yield self.consider_unsafe_check
-        yield self.consider_unsafe_description
 
     def _persist_major_minor(self, value: bool):
         mode = RandomizationMode.MAJOR_MINOR_SPLIT if value else RandomizationMode.FULL

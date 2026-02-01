@@ -8,10 +8,13 @@ import pytest
 from randovania.generator import generator
 from randovania.generator.filler.filler_configuration import FillerPlayerResult, FillerResults
 from randovania.layout.exceptions import InvalidConfiguration
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 
 if TYPE_CHECKING:
     from collections.abc import Callable
+
+    import pytest_mock
 
 
 @patch("randovania.generator.generator._validate_pickup_pool_size", autospec=True)
@@ -21,7 +24,7 @@ async def test_create_patches(
     mock_distribute_remaining_items: MagicMock,
     mock_create_player_pool: MagicMock,
     mock_validate_item_pool_size: MagicMock,
-    mocker,
+    mocker: pytest_mock.MockerFixture,
 ):
     # Setup
     filler_result = MagicMock()
@@ -102,3 +105,33 @@ def test_distribute_remaining_items_no_locations_left(
         InvalidConfiguration, match=r"Received 881 remaining pickups, but there's only \d+ unassigned locations."
     ):
         generator._distribute_remaining_items(rng, filler_results, [default_echoes_preset])
+
+
+@pytest.mark.benchmark
+@pytest.mark.skip_resolver_tests
+async def test_create_description(preset_manager, game_enum) -> None:
+    # Setup
+    game_test_data = game_enum.data.test_data()
+
+    preset = preset_manager.default_preset_for_game(game_enum).get_preset()
+    generator_parameters = GeneratorParameters(
+        seed_number=game_test_data.generator_test_seed_number,
+        spoiler=True,
+        development=True,
+        presets=[preset],
+    )
+
+    # Run
+    result = await generator.generate_and_validate_description(
+        generator_params=generator_parameters,
+        status_update=None,
+        resolve_after_generation=False,
+        resolver_timeout=None,
+        attempts=0,
+    )
+
+    # Assert
+    assert result.shareable_hash == game_test_data.expected_seed_hash, (
+        "Hash of the generated game does not match the expected value. "
+        "For updating this value easily, check the CLI command `randovania development update-expected-seed-hash`"
+    )

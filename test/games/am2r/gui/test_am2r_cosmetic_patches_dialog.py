@@ -13,6 +13,8 @@ from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatch
 if TYPE_CHECKING:
     from pytestqt.qtbot import QtBot
 
+    from randovania.interface_common.options import Options
+
 
 @pytest.mark.parametrize(
     ("music_start_value", "option_to_click", "music_end_value"),
@@ -29,11 +31,11 @@ if TYPE_CHECKING:
     ],
 )
 def test_change_music_option(
-    skip_qtbot: QtBot, music_start_value: MusicMode, option_to_click: str, music_end_value: MusicMode
+    skip_qtbot: QtBot, music_start_value: MusicMode, option_to_click: str, music_end_value: MusicMode, options: Options
 ) -> None:
     cosmetic_patches = AM2RCosmeticPatches(music=music_start_value)
 
-    dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
     str_to_option_map = {
         "vanilla_music_option": dialog.vanilla_music_option,
@@ -49,10 +51,10 @@ def test_change_music_option(
     assert dialog.cosmetic_patches == AM2RCosmeticPatches(music=music_end_value)
 
 
-def test_show_unexplored_map(skip_qtbot: QtBot) -> None:
+def test_show_unexplored_map(skip_qtbot: QtBot, options: Options) -> None:
     cosmetic_patches = AM2RCosmeticPatches(show_unexplored_map=True)
 
-    dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.show_unexplored_map_check, QtCore.Qt.MouseButton.LeftButton)
@@ -60,10 +62,10 @@ def test_show_unexplored_map(skip_qtbot: QtBot) -> None:
     assert dialog.cosmetic_patches == AM2RCosmeticPatches(show_unexplored_map=False)
 
 
-def test_unveiled_blocks(skip_qtbot: QtBot) -> None:
+def test_unveiled_blocks(skip_qtbot: QtBot, options: Options) -> None:
     cosmetic_patches = AM2RCosmeticPatches(unveiled_blocks=True)
 
-    dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.unveiled_blocks_check, QtCore.Qt.MouseButton.LeftButton)
@@ -71,11 +73,11 @@ def test_unveiled_blocks(skip_qtbot: QtBot) -> None:
     assert dialog.cosmetic_patches == AM2RCosmeticPatches(unveiled_blocks=False)
 
 
-def test_custom_hud_colors(skip_qtbot: QtBot) -> None:
+def test_custom_hud_colors(skip_qtbot: QtBot, options: Options) -> None:
     # Setup
     cosmetic_patches = AM2RCosmeticPatches(health_hud_rotation=0, etank_hud_rotation=0, dna_hud_rotation=0)
 
-    dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     assert dialog.custom_health_rotation_square.styleSheet() == "background-color: rgb(255,221,0)"
@@ -99,10 +101,10 @@ def test_custom_hud_colors(skip_qtbot: QtBot) -> None:
     assert dialog.custom_dna_rotation_square.styleSheet() == "background-color: rgb(5,208,130)"
 
 
-def test_rotate_tilesets_and_backgrounds(skip_qtbot: QtBot) -> None:
+def test_rotate_tilesets_and_backgrounds(skip_qtbot: QtBot, options: Options) -> None:
     cosmetic_patches = AM2RCosmeticPatches()
 
-    dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     assert (

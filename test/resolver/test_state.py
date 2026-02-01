@@ -2,11 +2,10 @@ from __future__ import annotations
 
 import pytest
 
-from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.pickup.pickup_entry import PickupEntry, ResourceLock
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.resolver import state
+from randovania.graph import state
 from randovania.resolver.no_op_damage_state import NoOpDamageState
 
 
@@ -15,23 +14,21 @@ def state_game_data(empty_patches) -> NoOpDamageState:
     return NoOpDamageState()
 
 
-def test_collected_pickup_indices(state_game_data, empty_patches):
+def test_collected_pickup_indices(state_game_data, empty_patches, blank_world_graph):
     # Setup
     db = empty_patches.game.resource_database
     starting = empty_patches.game.region_list.node_by_identifier(empty_patches.game.starting_location)
     pickup_nodes = [node for node in empty_patches.game.region_list.all_nodes if isinstance(node, PickupNode)]
 
-    context = NodeContext(
-        empty_patches,
-        ResourceCollection(),
-        empty_patches.game.resource_database,
-        empty_patches.game.region_list,
-    )
-    resources = ResourceCollection.from_dict(
-        empty_patches.game, {db.item[0]: 5, pickup_nodes[0].resource(context): 1, pickup_nodes[1].resource(context): 1}
-    )
+    pickup_node_resources = {
+        blank_world_graph.resource_info_for_node(blank_world_graph.original_to_node[node.node_index]): 1
+        for node in [pickup_nodes[0], pickup_nodes[1]]
+    }
+
+    resources = ResourceCollection.from_dict(db, {db.item[0]: 5, **pickup_node_resources})
     s = state.State(
         resources,
+        {},
         (),
         state_game_data,
         starting,
@@ -42,10 +39,10 @@ def test_collected_pickup_indices(state_game_data, empty_patches):
     )
 
     # Run
-    indices = list(s.collected_pickup_indices)
+    indices = s.collected_pickup_indices(blank_world_graph)
 
     # Assert
-    assert indices == [pickup_nodes[0].pickup_index, pickup_nodes[1].pickup_index]
+    assert indices == {pickup_nodes[0].pickup_index, pickup_nodes[1].pickup_index}
 
 
 def test_add_pickup_to_state(state_game_data, empty_patches, generic_pickup_category, default_generator_params):
@@ -53,7 +50,8 @@ def test_add_pickup_to_state(state_game_data, empty_patches, generic_pickup_cate
     db = empty_patches.game.resource_database
     starting_node = empty_patches.game.region_list.node_by_identifier(empty_patches.game.starting_location)
     s = state.State(
-        ResourceCollection(),
+        db.create_resource_collection(),
+        {},
         (),
         state_game_data,
         starting_node,
@@ -83,7 +81,7 @@ def test_add_pickup_to_state(state_game_data, empty_patches, generic_pickup_cate
 
     # Assert
     assert s.resources == ResourceCollection.from_dict(
-        empty_patches.game,
+        db,
         {
             resource_a: 1,
             resource_b: 1,
@@ -98,7 +96,8 @@ def test_assign_pickup_to_starting_items(
     db = empty_patches.game.resource_database
     starting_node = empty_patches.game.region_list.node_by_identifier(empty_patches.game.starting_location)
     starting = state.State(
-        ResourceCollection(),
+        db.create_resource_collection(),
+        {},
         (),
         state_game_data,
         starting_node,
@@ -127,7 +126,5 @@ def test_assign_pickup_to_starting_items(
 
     # Assert
     assert final.patches.starting_equipment == [p]
-    assert final.patches.starting_resources() == ResourceCollection.from_dict(
-        empty_patches.game, {resource_a: 5, resource_b: 0}
-    )
-    assert final.resources == ResourceCollection.from_dict(empty_patches.game, {resource_a: 5, resource_b: 0})
+    assert final.patches.starting_resources() == ResourceCollection.from_dict(db, {resource_a: 5, resource_b: 0})
+    assert final.resources == ResourceCollection.from_dict(db, {resource_a: 5, resource_b: 0})

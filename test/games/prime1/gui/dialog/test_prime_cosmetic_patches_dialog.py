@@ -12,11 +12,13 @@ from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticP
 if TYPE_CHECKING:
     import pytestqt.qtbot
 
+    from randovania.interface_common.options import Options
 
-def test_open_map(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+
+def test_open_map(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = PrimeCosmeticPatches(open_map=True)
 
-    dialog = PrimeCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = PrimeCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.open_map_check, QtCore.Qt.MouseButton.LeftButton)
@@ -24,10 +26,10 @@ def test_open_map(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     assert dialog.cosmetic_patches == PrimeCosmeticPatches(open_map=False)
 
 
-def test_force_fusion(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+def test_force_fusion(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = PrimeCosmeticPatches(force_fusion=True)
 
-    dialog = PrimeCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = PrimeCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.force_fusion_check, QtCore.Qt.MouseButton.LeftButton)
@@ -35,10 +37,10 @@ def test_force_fusion(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     assert dialog.cosmetic_patches == PrimeCosmeticPatches(force_fusion=False)
 
 
-def test_custom_hud_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+def test_custom_hud_color(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = PrimeCosmeticPatches(use_hud_color=False)
 
-    dialog = PrimeCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = PrimeCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.custom_hud_color, QtCore.Qt.MouseButton.LeftButton)

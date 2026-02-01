@@ -2,6 +2,7 @@ name: Benchmark
 
 on:
   pull_request:
+  merge_group:
   push:
     branches:
       - main
@@ -12,18 +13,18 @@ jobs:
     runs-on: 'ubuntu-latest'
     strategy:
       matrix:
-        shard: [1, 2, 3]
+        shard: [1, 2, 3, 4]
 
     timeout-minutes: 30
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.5"
+          version: "0.9.27"
           enable-cache: true
 
       - name: Set up Python
@@ -32,12 +33,35 @@ jobs:
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install $(cat .github/linux_apt_dependencies.txt)
 
+      - name: Enable Cython
+        run: touch randovania/enable-cython
+
       - name: Install Python packages
         run: uv sync --locked --extra exporters --extra gui --extra server --extra test
 
       - name: run pytest (benchmark)
         uses: CodSpeedHQ/action@v4
+        if: ${{ github.event_name != 'merge_group' }}
         with:
-          run: uv run pytest --codspeed --codspeed-max-rounds=2 --skip-gui-tests --test-group=${{ matrix.shard }} --test-group-count=3
+          run: uv run pytest --codspeed --codspeed-max-rounds=2 --skip-gui-tests --test-group=${{ matrix.shard }} --test-group-count=4
           mode: walltime
           token: ${{ secrets.CODSPEED_TOKEN }}
+
+      - name: run pytest (for merge group)
+        if: ${{ github.event_name == 'merge_group' }}
+        run: uv run pytest --codspeed --codspeed-max-rounds=1 --skip-gui-tests --test-group=${{ matrix.shard }} --test-group-count=4
+
+  confirm:
+    name: Benchmark Confirm
+    runs-on: 'ubuntu-latest'
+    needs: walltime
+    if: always()
+    steps:
+      - name: Check walltime results
+        run: |
+          if [[ "${{ needs.walltime.result }}" != "success" ]]; then
+            echo "Walltime benchmark failed or was cancelled"
+            exit 1
+          else
+            echo "Walltime benchmark succeeded"
+          fi

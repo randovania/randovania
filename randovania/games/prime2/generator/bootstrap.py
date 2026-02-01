@@ -43,6 +43,7 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
             game.get_resource_database_view().get_item("EnergyTank"),
+            [],
         )
 
     def event_resources_for_configuration(

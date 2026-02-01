@@ -2033,8 +2033,7 @@
                     "extra": {
                         "door_idx": [
                             141,
-                            174,
-                            204
+                            174
                         ]
                     },
                     "valid_starting_location": false,
@@ -2235,8 +2234,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            193,
-                            146
+                            193
                         ]
                     },
                     "valid_starting_location": false,
@@ -6491,7 +6489,7 @@
                                     "type": "resource",
                                     "data": {
                                         "type": "items",
-                                        "name": "L0Locks",
+                                        "name": "L1Locks",
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -7055,7 +7053,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            81
+                            81,
+                            146
                         ]
                     },
                     "valid_starting_location": false,
@@ -7188,7 +7187,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            82
+                            82,
+                            204
                         ]
                     },
                     "valid_starting_location": false,
@@ -12149,10 +12149,12 @@
                     "valid_starting_location": false,
                     "kind": "generic",
                     "requirement_to_collect": {
-                        "type": "and",
+                        "type": "resource",
                         "data": {
-                            "comment": null,
-                            "items": []
+                            "type": "items",
+                            "name": "L4Locks",
+                            "amount": 1,
+                            "negate": false
                         }
                     },
                     "connections": {
@@ -12501,15 +12503,15 @@
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "or",
                             "data": {
-                                "comment": "Animals causes issues in generation with DLR, removed as an event for now",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "misc",
-                                            "name": "GeneratorHack",
+                                            "type": "events",
+                                            "name": "Animals",
                                             "amount": 1,
-                                            "negate": true
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -12598,13 +12600,13 @@
                         "Door to Habitation Deck Entrance (Upper)": {
                             "type": "or",
                             "data": {
-                                "comment": "Animals causes issues in generation with DLR, removed as an event for now",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "misc",
-                                            "name": "GeneratorHack",
+                                            "type": "events",
+                                            "name": "Animals",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -12612,7 +12614,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Save the Animals)": {
+                        "Event - Activate Animal Controls": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12748,6 +12750,31 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Activate Animal Controls": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 200.68454661558107,
+                        "y": 376.59770114942535,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Animals",
+                    "connections": {
+                        "Pickup (Save the Animals)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }

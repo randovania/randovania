@@ -134,7 +134,7 @@ class LayoutDescription:
             raise InvalidLayoutDescription("Unable to read details of a race game file")
 
         original_dict = copy.deepcopy(json_dict)
-        json_dict = description_migration.convert_to_current_version(json_dict)
+        json_dict = description_migration.convert_to_current_version(copy.deepcopy(json_dict))
 
         def get_preset(i: int, p: dict) -> Preset:
             try:
@@ -166,7 +166,7 @@ class LayoutDescription:
                     f"Unable to parse game modifications and the rdvgame has been modified.\n\nOriginal error: {e}"
                 ) from e
 
-        return cls(
+        result = cls(
             randovania_version_text=json_dict["info"]["randovania_version"],
             randovania_version_git=bytes.fromhex(json_dict["info"]["randovania_version_git"]),
             generator_parameters=generator_parameters,
@@ -175,6 +175,10 @@ class LayoutDescription:
             user_modified=expected_checksum != actual_checksum,
             original_dict=original_dict,
         )
+
+        # Fill the cache so calling shareable_word_hash is not slow by needing to re-serialize
+        object.__setattr__(result, "__cached_serialized_patches", json_dict["game_modifications"])
+        return result
 
     @classmethod
     def from_file(cls, path: Path) -> typing.Self:

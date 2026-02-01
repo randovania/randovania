@@ -342,8 +342,8 @@ class PermalinkLookupCog(RandovaniaCog):
                         presets=presets,
                     ),
                     status_update=None,
-                    validate_after_generation=False,
-                    timeout=60,
+                    resolve_after_generation=False,
+                    resolver_timeout=60,
                 ),
                 timeout=60,
             )

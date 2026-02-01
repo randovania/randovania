@@ -31,14 +31,14 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.5"
+          version: "0.9.27"
           enable-cache: true
 
       - name: Set up Python
@@ -48,7 +48,7 @@ jobs:
         run: uv build
 
       - name: Upload wheel
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v6.0.0
         with:
           name: Python Package
           if-no-files-found: error
@@ -56,81 +56,40 @@ jobs:
             dist/randovania-*.tar.gz
             dist/randovania-*.whl
 
-
-  resolver:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    name: Resolver
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7
-        with:
-          version: "0.9.5"
-          enable-cache: true
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-
-      - name: Apt
-        run: sudo apt-get -q update && sudo apt-get -y install $(cat .github/linux_apt_dependencies.txt)
-
-      - name: Install Python packages
-        run: uv sync --locked --extra gui --extra exporters --extra test
-
-      - name: run pytest
-        run: uv run pytest --cov randovania --cov-append --cov-report=xml --durations=100 -n auto --skip-gui-tests test/resolver/test_resolver.py test/generator/test_generator_reach.py
-
-      - name: codecov
-        uses: Wandalen/wretry.action@master
-        with:
-          action: codecov/codecov-action@v4
-          with: |
-            fail_ci_if_error: false
-            files: ./coverage.xml
-            token: ${{ secrets.CODECOV_TOKEN }}
-          attempt_limit: 5
-          attempt_delay: 10000
-
   pytest:
     strategy:
       fail-fast: false
       matrix:
+        compiled:
+          - { env_var: "1", suffix: "", event_name: "${{ github.event_name }}" }
+          - { env_var: "0", suffix: " (Pure)", event_name: "${{ github.event_name }}" }
         os:
-          - { name: "Linux", image: ubuntu-latest }
-          - { name: "macOS", image: macos-latest }
-          - { name: "Windows", image: windows-latest }
-        is_merge_queue:
-          - ${{ github.event_name == 'merge_queue' }}
+          - { name: "Linux", image: ubuntu-latest, event_name: "${{ github.event_name }}" }
+          - { name: "macOS", image: macos-latest, event_name: "${{ github.event_name }}" }
+          - { name: "Windows", image: windows-latest, event_name: "${{ github.event_name }}" }
         is_stable:
           - ${{ startsWith(github.ref, 'refs/heads/stable') || startsWith(github.ref, 'refs/tags/v') }}
 
         exclude:
-          - is_merge_queue: true
-            os: { name: "Linux", image: ubuntu-latest }
-          - is_merge_queue: true
-            os: { name: "macOS", image: macos-latest }
+          - os: { name: "Linux", image: ubuntu-latest, event_name: merge_group }
+          - os: { name: "macOS", image: macos-latest, event_name: merge_group }
+          - compiled: { env_var: "0", suffix: " (Pure)", event_name: merge_group }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
 
-    name: ${{ matrix.os.name }}
+    name: ${{ matrix.os.name }}${{ matrix.compiled.suffix }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.5"
+          version: "0.9.27"
           enable-cache: true
 
       - name: Set up Python
@@ -140,6 +99,15 @@ jobs:
         run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server $(cat .github/linux_apt_dependencies.txt)
         if: matrix.os.image == 'ubuntu-latest'
 
+      - name: Enable Cython
+        if: matrix.compiled.env_var == '1'
+        run: echo "linetrace" > randovania/enable-cython
+
+      - name: Disable Cython
+        if: matrix.compiled.env_var == '0'
+        run: rm -f randovania/enable-cython
+        shell: bash
+
       - name: Install Python packages
         run: uv sync --locked --all-extras
 
@@ -147,8 +115,9 @@ jobs:
         run: uv run coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
         if: ${{ !matrix.is_stable }}
 
+      # Don't use `-n auto` as it causes issues with Cython coverage
       - name: run pytest
-        run: $PREFIX uv run pytest --cov randovania --cov-append --cov-report=xml --skip-resolver-tests -n auto --durations=100
+        run: $PREFIX uv run pytest --cov randovania --cov-append --cov-report=xml --skip-resolver-tests --durations=100
         shell: bash
         env:
           QT_QPA_PLATFORM: "${{ matrix.os.image == 'ubuntu-latest' && 'xcb' || '' }}"
@@ -170,20 +139,15 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - { name: "Linux", image: ubuntu-latest }
-          - { name: "macOS", image: macos-latest }
-          - { name: "Windows", image: windows-latest }
-
-        is_merge_queue:
-          - ${{ github.event_name == 'merge_queue' }}
+          - { name: "Linux", image: ubuntu-latest, event_name: "${{ github.event_name }}" }
+          - { name: "macOS", image: macos-latest, event_name: "${{ github.event_name }}" }
+          - { name: "Windows", image: windows-latest, event_name: "${{ github.event_name }}" }
         is_stable:
           - ${{ startsWith(github.ref, 'refs/heads/stable') || startsWith(github.ref, 'refs/tags/v') }}
 
         exclude:
-          - is_merge_queue: true
-            os: { name: "Linux", image: ubuntu-latest }
-          - is_merge_queue: true
-            os: { name: "macOS", image: macos-latest }
+          - os: { name: "Linux", image: ubuntu-latest, event_name: merge_group }
+          - os: { name: "macOS", image: macos-latest, event_name: merge_group }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
@@ -192,14 +156,14 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.5"
+          version: "0.9.27"
           enable-cache: true
 
       - name: Set up Python
@@ -208,6 +172,9 @@ jobs:
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server x11-utils gnumeric libxcb-cursor0 libxkbcommon-x11-0
         if: matrix.os.image == 'ubuntu-latest'
+
+      - name: Enable Cython
+        run: touch randovania/enable-cython
 
       - name: Install Python packages
         run: uv sync --locked --extra gui --extra exporters --extra test --group installer
@@ -240,7 +207,7 @@ jobs:
 
       - name: Upload artifacts
         if: ${{ (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v6.0.0
         with:
           name: Randovania ${{ matrix.os.name }} Executable
           if-no-files-found: error
@@ -256,10 +223,10 @@ jobs:
     if: ${{ (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Download the executable
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: Randovania Windows Executable
           path: packages/
@@ -339,7 +306,7 @@ jobs:
           $project.Build();
 
       - name: Upload installer
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v6.0.0
         with:
           name: Randovania Windows Installer
           if-no-files-found: error
@@ -354,19 +321,19 @@ jobs:
 
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.5"
+          version: "0.9.27"
           enable-cache: true
 
       - name: Set up Python
         uses: actions/setup-python@v6
 
       - name: Download the executable
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: Randovania Linux Executable
           path: packages/
@@ -389,7 +356,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -427,7 +394,7 @@ jobs:
 
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.11.1
+        uses: docker/setup-buildx-action@v3.12.0
 
       - name: Should Push
         id: decide_push
@@ -484,21 +451,21 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.5"
+          version: "0.9.27"
           enable-cache: true
 
       - name: Set up Python
         uses: actions/setup-python@v6
 
       - name: Download the executables
-        uses: actions/download-artifact@v6.0.0
+        uses: actions/download-artifact@v7.0.0
         with:
           pattern: '* *'
           path: packages/
@@ -536,7 +503,7 @@ jobs:
           version: "v${{ steps.randovania_version.outputs.version }}"
 
       - name: Upload binaries to GitHub Release
-        uses: svenstaro/upload-release-action@2.11.2
+        uses: svenstaro/upload-release-action@2.11.3
         if: ${{ startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/stable') }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -611,7 +578,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.WEBSITE_VERSION_UPDATER_PAT }}
           repository: randovania/randovania.github.io

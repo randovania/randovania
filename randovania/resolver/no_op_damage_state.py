@@ -5,9 +5,12 @@ from typing import TYPE_CHECKING, Self, override
 from randovania.resolver.damage_state import DamageState
 
 if TYPE_CHECKING:
-    from randovania.game_description.db.node import Node
+    from collections.abc import Generator
+
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
+    from randovania.graph.world_graph import BaseWorldGraphNode
 
 
 class NoOpDamageState(DamageState):
@@ -18,15 +21,27 @@ class NoOpDamageState(DamageState):
         return 0
 
     @override
-    def is_better_than(self, other: DamageState | None) -> bool:
-        return other is None
+    def resources_for_health(self) -> Generator[ItemResourceInfo]:
+        yield from []
 
     @override
-    def apply_damage(self, damage: int) -> Self:
+    def resources_for_general_reduction(self) -> Generator[ItemResourceInfo]:
+        yield from []
+
+    @override
+    def is_better_than(self, other: int) -> bool:
+        return other < 0
+
+    @override
+    def with_health(self, health: int) -> Self:
         return self
 
     @override
-    def apply_node_heal(self, node: Node, resources: ResourceCollection) -> Self:
+    def apply_damage(self, damage: float) -> Self:
+        return self
+
+    @override
+    def apply_node_heal(self, node: BaseWorldGraphNode, resources: ResourceCollection) -> Self:
         return self
 
     @override
@@ -50,5 +65,7 @@ class NoOpDamageState(DamageState):
         return self
 
     @override
-    def resource_requirements_for_satisfying_damage(self, damage: int) -> list[ResourceRequirement]:
-        return []
+    def resource_requirements_for_satisfying_damage(
+        self, damage: int, resources: ResourceCollection
+    ) -> list[list[ResourceRequirement]] | None:
+        return None

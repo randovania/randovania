@@ -16,7 +16,7 @@ if typing.TYPE_CHECKING:
 @pytest.mark.skip_resolver_tests
 async def test_resolver_with_log_file(test_files_dir, layout_name, is_valid):
     # Setup
-    debug.set_level(2)
+    debug.set_level(debug.LogLevel.HIGH)
 
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", layout_name))
     configuration = description.get_preset(0).configuration

@@ -576,6 +576,10 @@
             "Event57": {
                 "long_name": "Control Tower Fight",
                 "extra": {}
+            },
+            "ActivateMainPlazaWasps": {
+                "long_name": "Activate Main Plaza Wasps",
+                "extra": {}
             }
         },
         "tricks": {
@@ -1423,7 +1427,7 @@
                 "requirement": {
                     "type": "and",
                     "data": {
-                        "comment": null,
+                        "comment": "Used for killing Elite Pirates. Note that the Phazon Elite in Elite Research does not use this template.",
                         "items": [
                             {
                                 "type": "template",
@@ -1510,7 +1514,7 @@
                                                                                             "type": "resource",
                                                                                             "data": {
                                                                                                 "type": "items",
-                                                                                                "name": "Power",
+                                                                                                "name": "Missile",
                                                                                                 "amount": 20,
                                                                                                 "negate": false
                                                                                             }
@@ -1542,12 +1546,46 @@
                                                 "comment": "Normal Fight",
                                                 "items": [
                                                     {
-                                                        "type": "resource",
+                                                        "type": "or",
                                                         "data": {
-                                                            "type": "damage",
-                                                            "name": "Damage",
-                                                            "amount": 200,
-                                                            "negate": false
+                                                            "comment": "Damage requirements",
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "damage",
+                                                                        "name": "Damage",
+                                                                        "amount": 200,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Combat",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "damage",
+                                                                                    "name": "Damage",
+                                                                                    "amount": 40,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     },
                                                     {
@@ -1567,15 +1605,6 @@
                                                                 {
                                                                     "type": "template",
                                                                     "data": "Shoot Plasma Beam"
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "Combat",
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
                                                                 }
                                                             ]
                                                         }
@@ -1604,6 +1633,203 @@
                                                                     }
                                                                 }
                                                             ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Has Any Visor": {
+                "display_name": "Has Any Visor",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Combat",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Scan",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Thermal",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "X-Ray",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Kill Chozo Ghosts": {
+                "display_name": "Kill Multiple Chozo Ghosts",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Shoot Power Beam"
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": "Charge Beam makes the fight easier and faster",
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Charge",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "damage",
+                                                                        "name": "Damage",
+                                                                        "amount": 90,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "X-Ray",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "damage",
+                                                                                    "name": "Damage",
+                                                                                    "amount": 15,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Kill Single Chozo Ghost": {
+                "display_name": "Kill Single Chozo Ghost",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Shoot Power Beam"
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Charge",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "damage",
+                                                            "name": "Damage",
+                                                            "amount": 15,
+                                                            "negate": false
                                                         }
                                                     }
                                                 ]

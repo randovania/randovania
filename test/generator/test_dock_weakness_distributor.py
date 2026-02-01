@@ -28,7 +28,7 @@ def _force_blank_two_way(blank_game_description):
     )
 
 
-def test_distribute_pre_fill_weaknesses_swap(empty_patches):
+def test_distribute_pre_fill_weaknesses_swap(blank_game_description, empty_patches):
     rng = Random(5000)
     patches = dataclasses.replace(
         empty_patches,
@@ -45,7 +45,7 @@ def test_distribute_pre_fill_weaknesses_swap(empty_patches):
         patches,
         rng,
     )
-    docks = {(n.identifier.area, n.name): w.name for n, w in result.all_dock_weaknesses()}
+    docks = {(n.identifier.area, n.name): w.name for n, w in result.all_dock_weaknesses(blank_game_description)}
 
     assert docks == {
         ("Back-Only Lock Room", "Door to Starting Area"): "Explosive Door",
@@ -65,11 +65,11 @@ def test_distribute_pre_fill_weaknesses_swap(empty_patches):
         ("Starting Area", "Door to Heated Room"): "Normal Door",
         ("Starting Area", "Door to Ledge Room"): "Normal Door",
     }
-    assert list(result.all_weaknesses_to_shuffle()) == []
+    assert list(result.all_weaknesses_to_shuffle(blank_game_description)) == []
 
 
 @pytest.mark.usefixtures("_force_blank_two_way")
-def test_distribute_pre_fill_weaknesses_swap_force_two_way(empty_patches):
+def test_distribute_pre_fill_weaknesses_swap_force_two_way(blank_game_description, empty_patches):
     rng = Random(10000)
     patches = dataclasses.replace(
         empty_patches,
@@ -86,7 +86,7 @@ def test_distribute_pre_fill_weaknesses_swap_force_two_way(empty_patches):
         patches,
         rng,
     )
-    docks = {(n.identifier.area, n.name): w.name for n, w in result.all_dock_weaknesses()}
+    docks = {(n.identifier.area, n.name): w.name for n, w in result.all_dock_weaknesses(blank_game_description)}
 
     assert docks == {
         ("Back-Only Lock Room", "Door to Starting Area"): "Back-Only Door",
@@ -106,10 +106,10 @@ def test_distribute_pre_fill_weaknesses_swap_force_two_way(empty_patches):
         ("Starting Area", "Door to Heated Room"): "Back-Only Door",
         ("Starting Area", "Door to Ledge Room"): "Back-Only Door",
     }
-    assert list(result.all_weaknesses_to_shuffle()) == []
+    assert list(result.all_weaknesses_to_shuffle(blank_game_description)) == []
 
 
-def test_distribute_pre_fill_docks(empty_patches, monkeypatch):
+def test_distribute_pre_fill_docks(blank_game_description, empty_patches, monkeypatch):
     rng = Random(5000)
     patches = dataclasses.replace(
         empty_patches,
@@ -126,8 +126,8 @@ def test_distribute_pre_fill_docks(empty_patches, monkeypatch):
         patches,
         rng,
     )
-    docks = {(n.identifier.area, n.name): w.name for n, w in result.all_dock_weaknesses()}
-    to_shuffle = [(n.identifier.area, n.name) for n in result.all_weaknesses_to_shuffle()]
+    docks = {(n.identifier.area, n.name): w.name for n, w in result.all_dock_weaknesses(blank_game_description)}
+    to_shuffle = [(n.identifier.area, n.name) for n in result.all_weaknesses_to_shuffle(blank_game_description)]
 
     assert docks == {
         ("Back-Only Lock Room", "Door to Starting Area"): "Normal Door",
@@ -167,7 +167,7 @@ def test_distribute_pre_fill_docks(empty_patches, monkeypatch):
     ]
 
 
-async def test_dock_weakness_distribute(default_blank_preset):
+async def test_dock_weakness_distribute(default_blank_preset, blank_game_description):
     options = MagicMock()
     _editor = PresetEditor(default_blank_preset.fork(), options)
     with _editor as editor:
@@ -177,4 +177,4 @@ async def test_dock_weakness_distribute(default_blank_preset):
     gen_params = GeneratorParameters(6000, False, [preset])
     description = await generate_and_validate_description(gen_params, None, False)
 
-    assert list(description.all_patches[0].all_dock_weaknesses())
+    assert list(description.all_patches[0].all_dock_weaknesses(blank_game_description))

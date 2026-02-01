@@ -12,6 +12,8 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
 if TYPE_CHECKING:
     import pytestqt.qtbot
 
+    from randovania.interface_common.options import Options
+
 
 @pytest.mark.parametrize(
     ("music_start_value", "option_to_click", "music_end_value"),
@@ -28,11 +30,15 @@ if TYPE_CHECKING:
     ],
 )
 def test_change_music_option(
-    skip_qtbot: pytestqt.qtbot.QtBot, music_start_value: MusicMode, option_to_click: str, music_end_value: MusicMode
+    skip_qtbot: pytestqt.qtbot.QtBot,
+    music_start_value: MusicMode,
+    option_to_click: str,
+    music_end_value: MusicMode,
+    options: Options,
 ) -> None:
     cosmetic_patches = MSRCosmeticPatches(music=music_start_value)
 
-    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
     str_to_option_map = {
         "vanilla_music_option": dialog.vanilla_music_option,
@@ -53,10 +59,12 @@ def test_change_music_option(
         ("ambience_slider", "ambience_label", "ambience_volume"),
     ],
 )
-def test_certain_slider(skip_qtbot: pytestqt.qtbot.QtBot, slider_name: str, label_name: str, field_name: str) -> None:
+def test_certain_slider(
+    skip_qtbot: pytestqt.qtbot.QtBot, slider_name: str, label_name: str, field_name: str, options: Options
+) -> None:
     cosmetic_patches = MSRCosmeticPatches(**{field_name: 0})  # type: ignore[arg-type]
 
-    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches, options)
     label = getattr(dialog, label_name)
     skip_qtbot.addWidget(dialog)
     assert label.text() == "  0%"
@@ -69,10 +77,10 @@ def test_certain_slider(skip_qtbot: pytestqt.qtbot.QtBot, slider_name: str, labe
     assert slider.value() == 80
 
 
-def test_custom_laser_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+def test_custom_laser_color(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = MSRCosmeticPatches(use_laser_color=False)
 
-    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.custom_laser_color_check, QtCore.Qt.MouseButton.LeftButton)
@@ -80,10 +88,10 @@ def test_custom_laser_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     assert dialog.cosmetic_patches == MSRCosmeticPatches(use_laser_color=True)
 
 
-def test_custom_energy_tank_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+def test_custom_energy_tank_color(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = MSRCosmeticPatches(use_energy_tank_color=False)
 
-    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.custom_energy_tank_color_check, QtCore.Qt.MouseButton.LeftButton)
@@ -91,10 +99,10 @@ def test_custom_energy_tank_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     assert dialog.cosmetic_patches == MSRCosmeticPatches(use_energy_tank_color=True)
 
 
-def test_custom_aeion_bar_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+def test_custom_aeion_bar_color(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = MSRCosmeticPatches(use_aeion_bar_color=False)
 
-    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.custom_aeion_bar_color_check, QtCore.Qt.MouseButton.LeftButton)
@@ -102,10 +110,10 @@ def test_custom_aeion_bar_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     assert dialog.cosmetic_patches == MSRCosmeticPatches(use_aeion_bar_color=True)
 
 
-def test_custom_ammo_hud_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+def test_custom_ammo_hud_color(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = MSRCosmeticPatches(use_ammo_hud_color=False)
 
-    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.custom_ammo_hud_color_check, QtCore.Qt.MouseButton.LeftButton)
@@ -113,10 +121,10 @@ def test_custom_ammo_hud_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     assert dialog.cosmetic_patches == MSRCosmeticPatches(use_ammo_hud_color=True)
 
 
-def test_room_names_dropdown(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+def test_room_names_dropdown(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = MSRCosmeticPatches(show_room_names=MSRRoomGuiType.NONE)
 
-    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     set_combo_with_value(dialog.room_names_dropdown, MSRRoomGuiType.ALWAYS)

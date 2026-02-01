@@ -20,6 +20,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -29,17 +30,14 @@ _NOTHING_PICKUP_NAME = "Nothing"
 
 
 def _pickup_assignment_to_pickup_locations(
-    region_list: RegionList,
+    game: GameDatabaseView,
     pickup_assignment: PickupAssignment,
     current_world: int,
     num_worlds: int,
 ) -> list[dict]:
     pickup_locations = []
 
-    for region, area, node in region_list.all_regions_areas_nodes:
-        if not node.is_resource_node or not isinstance(node, PickupNode):
-            continue
-
+    for _, _, node in game.iterate_nodes_of_type(PickupNode):
         if node.pickup_index in pickup_assignment:
             target = pickup_assignment[node.pickup_index]
             item_name = target.pickup.name
@@ -82,7 +80,6 @@ def serialize_single(world_index: int, num_worlds: int, patches: GamePatches) ->
     :return:
     """
     game = filtered_database.game_description_for_layout(patches.configuration)
-    region_list = game.region_list
 
     dock_weakness_to_type = {}
     for dock_type, weaknesses in game.dock_weakness_database.weaknesses.items():
@@ -108,18 +105,16 @@ def serialize_single(world_index: int, num_worlds: int, patches: GamePatches) ->
         },
         "starting_location": patches.starting_location.as_string,
         "dock_connections": {
-            dock.identifier.as_string: target.identifier.as_string for dock, target in patches.all_dock_connections()
+            dock.as_string: target.as_string for dock, target in patches.all_dock_connections_identifiers()
         },
         "dock_weakness": {
             dock.identifier.as_string: {
                 "type": dock_weakness_to_type[weakness].short_name,
                 "name": weakness.name,
             }
-            for dock, weakness in patches.all_dock_weaknesses()
+            for dock, weakness in patches.all_dock_weaknesses(game)
         },
-        "locations": _pickup_assignment_to_pickup_locations(
-            region_list, patches.pickup_assignment, world_index, num_worlds
-        ),
+        "locations": _pickup_assignment_to_pickup_locations(game, patches.pickup_assignment, world_index, num_worlds),
         "hints": {identifier.as_string: hint.as_json for identifier, hint in patches.hints.items()},
         "game_specific": patches.game_specific,
     }
@@ -229,7 +224,7 @@ def decode_single(
     starting_equipment: StartingEquipment
     if "items" in game_modifications["starting_equipment"]:
         starting_equipment = ResourceCollection.from_dict(
-            game,
+            game.resource_database,
             {
                 find_resource_info_with_long_name(game.resource_database.item, resource_name): quantity
                 for resource_name, quantity in game_modifications["starting_equipment"]["items"].items()

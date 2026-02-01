@@ -328,11 +328,15 @@ class SelectAreaItem(discord.ui.Select):
     async def callback(self, interaction: discord.Interaction):
         r = interaction.response
         assert isinstance(r, discord.InteractionResponse)
+        logging.info(f"Entered SelectAreaItem callback for {self.game} with split region {self.split_region}.")
         option_selected = self.values[0]
 
         valid_items = [area for area in self.split_region.areas if area.command_id == option_selected]
         if not valid_items:
             await r.defer()
+            logging.info(
+                f"Responding with invalid selected option '{option_selected}' for {self.game}'s SelectAreaItem."
+            )
             return await interaction.edit_original_response(
                 view=None,
                 embeds=[],
@@ -380,11 +384,15 @@ class SelectSplitRegionItem(discord.ui.Select):
     async def callback(self, interaction: discord.Interaction):
         r = interaction.response
         assert isinstance(r, discord.InteractionResponse)
+        logging.info(f"Entered SelectSplitRegionItem callback for {self.game}.")
 
         option_selected = self.values[0]
 
         valid_items = [it for it in self.split_regions if it.command_id == option_selected]
         if not valid_items:
+            logging.info(
+                f"Responding with invalid selected option '{option_selected}' for {self.game}'s SelectSplitRegionItem."
+            )
             return await r.send_message(
                 view=None,
                 embeds=[],

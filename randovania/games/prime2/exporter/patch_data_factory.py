@@ -153,7 +153,7 @@ def _pretty_name_for_elevator(
         if original_teleporter_node.default_connection.area_identifier == connection.area_identifier:
             return region_list.nodes_to_area(original_teleporter_node).name
 
-    return f"Transport to {elevators.get_elevator_or_area_name(game, region_list, connection, False)}"
+    return f"Transport to {elevators.get_elevator_or_area_name(game.node_by_identifier(connection), False)}"
 
 
 def _create_elevators_field(patches: GamePatches, game: GameDescription, elevator_type: DockType) -> list:
@@ -167,7 +167,7 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
 
     elevator_fields = []
 
-    for node, connection in patches.all_dock_connections():
+    for node, connection in patches.all_dock_connections(game):
         if isinstance(node, DockNode) and node.dock_type == elevator_type:
             target_area_location = connection.identifier.area_identifier
             elevator_fields.append(
@@ -229,7 +229,7 @@ def _apply_translator_gate_patches(specific_patches: dict, elevator_shuffle_mode
 def _create_elevator_scan_port_patches(
     game: GameDescription,
     region_list: RegionList,
-    get_elevator_connection_for: Callable[[DockNode], Node],
+    get_elevator_connection_for: Callable[[DockNode], NodeIdentifier],
     elevator_dock_type: DockType,
 ) -> Iterator[dict]:
     for node in _get_nodes_by_teleporter_id(region_list, elevator_dock_type):
@@ -237,7 +237,7 @@ def _create_elevator_scan_port_patches(
             continue
 
         target_area_name = elevators.get_elevator_or_area_name(
-            game, region_list, get_elevator_connection_for(node).identifier, True
+            game.node_by_identifier(get_elevator_connection_for(node)), True
         )
         yield {
             "asset_id": node.extra["scan_asset_id"],
@@ -777,7 +777,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
     def add_dock_connection_changes(self, regions_patch_data: dict) -> None:
         portal_changes: dict[DockNode, Node] = {
             source: target
-            for source, target in self.patches.all_dock_connections()
+            for source, target in self.patches.all_dock_connections(self.game)
             if source.dock_type.short_name == "portal" and source.default_connection != target.identifier
         }
 
@@ -805,7 +805,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
                 "old_door_type": dock.default_dock_weakness.extra["door_type"],
                 "new_door_type": weakness.extra["door_type"],
             }
-            for dock, weakness in self.patches.all_dock_weaknesses()
+            for dock, weakness in self.patches.all_dock_weaknesses(self.game)
             if dock.default_dock_weakness != weakness
         }
 
@@ -815,7 +815,9 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
     def add_new_patcher_elevators(self, regions_patch_data: dict) -> None:
         elevator_type = self.elevator_dock_type()
-        all_teleporters = [pair for pair in self.patches.all_dock_connections() if pair[0].dock_type == elevator_type]
+        all_teleporters = [
+            pair for pair in self.patches.all_dock_connections(self.game) if pair[0].dock_type == elevator_type
+        ]
         for node, connection in all_teleporters:
             node_identifier = connection.identifier
             area_patches, area = self._add_area_to_regions_patch(regions_patch_data, node)
@@ -825,7 +827,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
                     "target_assets": _area_identifier_to_json(self.game.region_list, node_identifier.area_identifier),
                     "target_strg": node.extra["scan_asset_id"],
                     "target_name": elevators.get_elevator_or_area_name(
-                        self.game, self.game.region_list, node_identifier, include_world_name=True
+                        self.game.node_by_identifier(node_identifier), include_region_name=True
                     ),
                 }
             )
@@ -973,7 +975,7 @@ class EchoesModelNameMapping:
     jingle_index: dict[str, int]  # 2 for keys, 1 for major items, 0 otherwise
 
 
-def _create_pickup_resources_for(resources: ResourceGain) -> list[dict[str, int]]:
+def _create_pickup_resources_for(resources: ResourceGain[ItemResourceInfo]) -> list[dict[str, int]]:
     return [
         {"index": resource.extra["item_id"], "amount": quantity}
         for resource, quantity in resources

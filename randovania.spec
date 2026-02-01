@@ -45,6 +45,7 @@ a = Analysis(
     datas=datas,
     hiddenimports=[
         "unittest.mock",
+        "randovania.lib.bitmask",
     ],
     hookspath=[
         # https://github.com/pyinstaller/pyinstaller/issues/4040

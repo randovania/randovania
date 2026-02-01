@@ -106,14 +106,20 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
             "seed_identifier": self._create_hash_dict(),
             "starting_items": self._create_starting_items_dict(),
             "starting_memo": self._create_starting_memo(),
+            "warp_to_start": self.configuration.warp_to_start,
+            "open_missile_doors_with_one_missile": self.configuration.open_missile_doors_with_one_missile,
+            "allow_downward_shots": self.configuration.allow_downward_shots,
             "credits_string": self._credits_spoiler(),
         }
 
     def _create_cosmetics(self) -> dict:
         c = self.cosmetic_patches
         return {
-            "show_unexplored_map": c.show_unexplored_map,
+            "disable_low_health_beeping": c.disable_low_health_beeping,
             "room_names_on_hud": c.show_room_names.value,
+            "show_unexplored_map": c.show_unexplored_map,
+            "use_alternative_escape_theme": c.use_alternative_escape_theme,
+            "use_sm_boss_theme": c.use_sm_boss_theme,
         }
 
     def _get_item_data(self) -> dict:

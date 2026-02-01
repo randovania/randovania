@@ -12,6 +12,7 @@ from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer
 from randovania.games.fusion.exporter.joke_hints import FUSION_JOKE_HINTS
 from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
@@ -140,6 +141,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         }
 
         for item, quantity in self.patches.starting_resources().as_resource_gain():
+            assert isinstance(item, ItemResourceInfo)
+
             match item.extra["StartingItemCategory"]:
                 case "Metroids":
                     continue
@@ -172,7 +175,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
     def _create_door_locks(self) -> list[dict]:
         result = []
-        for node, weakness in self.patches.all_dock_weaknesses():
+        for node, weakness in self.patches.all_dock_weaknesses(self.game):
             for id in node.extra["door_idx"]:
                 result.append(
                     {
@@ -520,9 +523,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "DisableDemos": True,
             "RoomNames": self._create_room_names(),
             "AccessibilityPatches": True,
-            "PowerBombsWithoutBombs": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
             "InstantUnmorph": self.configuration.instant_morph,
+            "NerfGerons": self.configuration.adjusted_geron_weaknesses,
+            "UseAlternativeHudHealthLayout": self.cosmetic_patches.alt_health_display,
             "UnexploredMap": self.cosmetic_patches.starting_map,
             "RevealHiddenTiles": self.cosmetic_patches.reveal_blocks,
             "StereoDefault": self.cosmetic_patches.stereo_default,

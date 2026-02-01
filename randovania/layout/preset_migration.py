@@ -1206,6 +1206,18 @@ def _migrate_v108(preset: dict, game: RandovaniaGame) -> None:
         preset["configuration"]["instant_morph"] = True
 
 
+def _migrate_v109(preset: dict, game: RandovaniaGame) -> None:
+    preset["configuration"].pop("consider_possible_unsafe_resources")
+    preset["configuration"].pop("two_sided_door_lock_search")
+
+
+def _migrate_v110(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.FUSION:
+        knowledge_enabled = preset["configuration"]["trick_level"]["specific_levels"].get("Knowledge")
+        val = False if knowledge_enabled else True
+        preset["configuration"]["adjusted_geron_weaknesses"] = val
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1315,6 +1327,8 @@ _MIGRATIONS = [
     _migrate_v106,  # add pre-placement to prime
     _migrate_v107,  # fusion remove anti-softlock
     _migrate_v108,  # fusion instant morph
+    _migrate_v109,  # remove consider_possible_unsafe_resources and two_sided_door_lock_search
+    _migrate_v110,  # fusion: add adjusted geron weaknesses
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

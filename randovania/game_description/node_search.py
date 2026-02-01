@@ -46,7 +46,7 @@ def distances_to_node(
     else:
 
         def get_dock_connection_for(n: DockNode) -> NodeIdentifier:
-            return patches.get_dock_connection_for(n).identifier
+            return patches.get_dock_connection_for(n)
 
     node_to_area = {}
 

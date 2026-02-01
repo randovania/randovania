@@ -3,21 +3,20 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, NamedTuple
 
 from randovania.game_description import default_database
-from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup, create_standard_pickup
 from randovania.generator.pickup_pool.standard_pickup import find_ammo_for
+from randovania.graph import world_graph_factory
+from randovania.graph.state import State
 from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.lib import random_lib
-from randovania.resolver.state import State
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Generator, Iterable
@@ -25,13 +24,16 @@ if TYPE_CHECKING:
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_description import GameDescription, MinimalLogicData
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.game_description.resources.resource_info import ResourceGain, ResourceQuantity
     from randovania.generator.pickup_pool import PoolResults
+    from randovania.graph import world_graph
+    from randovania.graph.world_graph import WorldGraph
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
@@ -89,7 +91,7 @@ def victory_condition_for_pickup_placement(
         return game.victory_condition
 
     add_all_pickups = placement_config is LogicalPickupPlacementConfiguration.ALL
-    resources = game.create_resource_collection()
+    resources = game.resource_database.create_resource_collection()
 
     for pickup in pickups:
         if pickup.generator_params.preferred_location_category is LocationCategory.MAJOR or add_all_pickups:
@@ -99,7 +101,13 @@ def victory_condition_for_pickup_placement(
     return RequirementAnd(
         [
             game.victory_condition,
-            *(ResourceRequirement.create(resource[0], resource[1], False) for resource in resources.as_resource_gain()),
+            *(
+                ResourceRequirement.create(resource, quantity, False)
+                for resource, quantity in resources.as_resource_gain()
+                if quantity > 0
+                and isinstance(resource, ItemResourceInfo)
+                and not resource.extra.get("exclude_from_logical_pickup_placement", False)
+            ),
         ]
     ).simplify()
 
@@ -120,9 +128,6 @@ class Bootstrap[Configuration: BaseConfiguration]:
         :param resource_database:
         :return:
         """
-
-        static_resources = {}
-
         for trick in resource_database.get_all_tricks():
             if configuration.minimal_logic:
                 level = LayoutTrickLevel.maximum()
@@ -131,8 +136,6 @@ class Bootstrap[Configuration: BaseConfiguration]:
 
             yield trick, level.as_number
 
-        return static_resources
-
     def event_resources_for_configuration(
         self,
         configuration: Configuration,
@@ -140,39 +143,36 @@ class Bootstrap[Configuration: BaseConfiguration]:
     ) -> ResourceGain:
         yield from []
 
-    def _add_minimal_logic_initial_resources(
+    def minimal_logic_initial_resources(
         self,
-        resources: ResourceCollection,
-        game: GameDatabaseView,
+        minimal_logic: MinimalLogicData,
+        resource_database: ResourceDatabaseView,
         standard_pickups: StandardPickupConfiguration,
-    ) -> None:
-        resource_database = game.resource_database
-
-        if game.minimal_logic is None:
-            raise ValueError(f"Minimal logic enabled, but {game.game} doesn't have support for it.")
-
-        item_db = default_database.pickup_database_for_game(game.game)
-        pickups_state = standard_pickups.pickups_state
+    ) -> ResourceGain:
+        resource_gain: list[ResourceQuantity] = []
 
         items_to_skip = set()
-        for it in game.minimal_logic.items_to_exclude:
+
+        item_db = default_database.pickup_database_for_game(standard_pickups.game)
+        pickups_state = standard_pickups.pickups_state
+        custom_item_count = minimal_logic.custom_item_amount
+
+        for it in minimal_logic.items_to_exclude:
             if it.reason is None or pickups_state[item_db.standard_pickups[it.reason]].num_shuffled_pickups != 0:
                 items_to_skip.add(it.name)
 
-        custom_item_count = game.minimal_logic.custom_item_amount
-        events_to_skip = {it.name for it in game.minimal_logic.events_to_exclude}
-
-        resources.add_resource_gain(
-            [(event, 1) for event in resource_database.event if event.short_name not in events_to_skip]
+        resource_gain.extend(
+            (item, custom_item_count.get(item.short_name, 1))
+            for item in resource_database.get_all_items()
+            if item.short_name not in items_to_skip
         )
 
-        resources.add_resource_gain(
-            [
-                (item, custom_item_count.get(item.short_name, 1))
-                for item in resource_database.item
-                if item.short_name not in items_to_skip
-            ]
+        events_to_skip = {it.name for it in minimal_logic.events_to_exclude}
+        resource_gain.extend(
+            (event, 1) for event in resource_database.get_all_events() if event.short_name not in events_to_skip
         )
+
+        return resource_gain
 
     def create_damage_state(self, game: GameDatabaseView, configuration: Configuration) -> DamageState:
         """
@@ -182,46 +182,6 @@ class Bootstrap[Configuration: BaseConfiguration]:
         :return:
         """
         raise NotImplementedError
-
-    def calculate_starting_state(
-        self, game: GameDescription, patches: GamePatches, configuration: Configuration
-    ) -> State:
-        starting_node = game.region_list.node_by_identifier(patches.starting_location)
-
-        initial_resources = patches.starting_resources()
-
-        if starting_node.is_resource_node:
-            assert isinstance(starting_node, ResourceNode)
-            initial_resources.add_resource_gain(
-                starting_node.resource_gain_on_collect(
-                    NodeContext(
-                        patches,
-                        initial_resources,
-                        game.resource_database,
-                        game.region_list,
-                    )
-                ),
-            )
-
-        starting_state = State(
-            initial_resources,
-            (),
-            self.create_damage_state(game, configuration).apply_collected_resource_difference(
-                initial_resources, ResourceCollection()
-            ),
-            starting_node,
-            patches,
-            None,
-            game.resource_database,
-            game.region_list,
-        )
-
-        # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on
-        keys_to_remove = [resource for resource, quantity in initial_resources.as_resource_gain() if quantity == 0]
-        for resource in keys_to_remove:
-            initial_resources.remove_resource(resource)
-
-        return starting_state
 
     def version_resources_for_game(
         self, configuration: Configuration, resource_database: ResourceDatabaseView
@@ -253,6 +213,37 @@ class Bootstrap[Configuration: BaseConfiguration]:
         for resource in resource_database.get_all_resources_of_type(ResourceType.MISC):
             yield resource, 1 if resource.short_name in enabled_resources else 0
 
+    def starting_resources_for_patches(
+        self,
+        configuration: Configuration,
+        resource_view: ResourceDatabaseView,
+        patches: GamePatches,
+    ) -> ResourceCollection:
+        collection = patches.starting_resources()
+
+        # When calling `patch_requirement`, not-set is different to `set to 0`.
+        keys_to_remove = [resource for resource, quantity in collection.as_resource_gain() if quantity == 0]
+        for resource in keys_to_remove:
+            collection.remove_resource(resource)
+
+        if configuration.trick_level.minimal_logic:
+            minimal_logic = configuration.game.game_description.minimal_logic
+            if minimal_logic is None:
+                raise ValueError(f"Minimal logic enabled, but {configuration.game} doesn't have support for it.")
+
+            collection.add_resource_gain(
+                self.minimal_logic_initial_resources(
+                    minimal_logic, resource_view, configuration.standard_pickup_configuration
+                )
+            )
+
+        collection.add_resource_gain(self.trick_resources_for_configuration(configuration.trick_level, resource_view))
+        collection.add_resource_gain(self.event_resources_for_configuration(configuration, resource_view))
+        collection.add_resource_gain(self.version_resources_for_game(configuration, resource_view))
+        collection.add_resource_gain(self.misc_resources_for_configuration(configuration, resource_view))
+
+        return collection
+
     def patch_resource_database(self, db: ResourceDatabase, configuration: Configuration) -> ResourceDatabase:
         """
         Makes modifications to the resource database according to the configuration.
@@ -261,12 +252,32 @@ class Bootstrap[Configuration: BaseConfiguration]:
         """
         return db
 
-    def logic_bootstrap(
+    def calculate_starting_state(
         self,
-        configuration: Configuration,
+        resources: ResourceCollection,
+        graph: WorldGraph,
         game: GameDescription,
+        configuration: Configuration,
         patches: GamePatches,
-    ) -> tuple[GameDescription, State]:
+    ) -> State:
+        return State(
+            resources.duplicate(),
+            {},
+            (),
+            self.create_damage_state(game, configuration).apply_collected_resource_difference(
+                resources, graph.resource_database.create_resource_collection()
+            ),
+            graph.node_identifier_to_node[patches.starting_location],
+            patches,
+            None,
+            graph.resource_database,
+            game.region_list,
+            hint_state=None,
+        )
+
+    def logic_bootstrap_graph(
+        self, configuration: Configuration, game: GameDescription, patches: GamePatches
+    ) -> tuple[world_graph.WorldGraph, State]:
         """
         Core code for starting a new Logic/State.
         :param configuration:
@@ -277,36 +288,37 @@ class Bootstrap[Configuration: BaseConfiguration]:
         if not game.mutable:
             raise ValueError("Running logic_bootstrap with non-mutable game")
 
-        game.region_list.ensure_has_node_cache()
-        starting_state = self.calculate_starting_state(game, patches, configuration)
-
-        if configuration.trick_level.minimal_logic:
-            self._add_minimal_logic_initial_resources(
-                starting_state.resources, game, configuration.standard_pickup_configuration
-            )
-
-        static_resources = game.create_resource_collection()
-        static_resources.add_resource_gain(
-            self.trick_resources_for_configuration(configuration.trick_level, game.resource_database)
-        )
-        static_resources.add_resource_gain(
-            self.event_resources_for_configuration(configuration, game.resource_database)
-        )
-        static_resources.add_resource_gain(self.version_resources_for_game(configuration, game.resource_database))
-        static_resources.add_resource_gain(self.misc_resources_for_configuration(configuration, game.resource_database))
-
-        for resource, quantity in static_resources.as_resource_gain():
-            starting_state.resources.set_resource(resource, quantity)
-
         self.apply_game_specific_patches(configuration, game, patches)
-        game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
 
         # All majors/pickups required
         game.victory_condition = victory_condition_for_pickup_placement(
             enabled_pickups(game, configuration), game, configuration.logical_pickup_placement
         )
 
-        return game, starting_state
+        graph = world_graph_factory.create_graph(
+            database_view=game,
+            patches=patches,
+            static_resources=self.starting_resources_for_patches(
+                configuration, game.get_resource_database_view(), patches
+            ),
+            damage_multiplier=configuration.damage_strictness.value,
+            victory_condition=game.victory_condition,
+            flatten_to_set_on_patch=game.region_list.flatten_to_set_on_patch,
+        )
+
+        starting_state = self.calculate_starting_state(
+            graph.converter.static_resources,
+            graph,
+            game,
+            configuration,
+            patches,
+        )
+        # This existed to collect the starting ship for Corruption, but it might cause issues with starting on docks
+        # starting_state.resources.add_resource_gain(
+        #     starting_state.node.resource_gain_on_collect(starting_state.node_context())
+        # )
+
+        return graph, starting_state
 
     def apply_game_specific_patches(
         self, configuration: Configuration, game: GameDescription, patches: GamePatches

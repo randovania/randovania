@@ -1,7 +1,11 @@
+from __future__ import annotations
+
 import datetime
+import logging
+from typing import TYPE_CHECKING, override
 
 import humanize
-from PySide6 import QtCore, QtWidgets
+from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui import game_specific_gui
@@ -9,19 +13,22 @@ from randovania.gui.dialog.async_race_admin_dialog import AsyncRaceAdminDialog
 from randovania.gui.dialog.async_race_leaderboard_dialog import AsyncRaceLeaderboardDialog
 from randovania.gui.dialog.async_race_proof_popup import AsyncRaceProofPopup
 from randovania.gui.dialog.async_race_settings_dialog import AsyncRaceSettingsDialog
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.async_race_room_window_ui import Ui_AsyncRaceRoomWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
-from randovania.gui.lib.qt_network_client import QtNetworkClient
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.audit_log_model import AuditEntryListDatabaseModel
-from randovania.interface_common.options import Options
 from randovania.layout import preset_describer
-from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.async_race_room import (
     AsyncRaceRoomEntry,
     AsyncRaceRoomRaceStatus,
     AsyncRaceRoomUserStatus,
 )
+
+if TYPE_CHECKING:
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.options import Options
+    from randovania.layout.versioned_preset import VersionedPreset
 
 
 class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
@@ -49,6 +56,8 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         self.ui = Ui_AsyncRaceRoomWindow()
         self.ui.setupUi(self)
 
+        network_client.AsyncRaceRoomUpdated.connect(self.on_data_from_server)
+
         self._refresh_timer = QtCore.QTimer(self)
         self._refresh_timer.setSingleShot(True)
         self._refresh_timer.timeout.connect(self.refresh_data)
@@ -67,6 +76,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         self.ui.view_preset_description_button.clicked.connect(self._preset_view_summary)
         self.ui.view_spoiler_button.clicked.connect(self._view_spoiler)
         self.ui.view_leaderboard_button.clicked.connect(self._view_leaderboard)
+        self.ui.livesplit_button.clicked.connect(self._get_livesplit_url)
         self._view_audit_log_action.triggered.connect(self._on_view_audit_log)
         self._change_options_action.triggered.connect(self._on_change_options)
         self._view_user_entries_action.triggered.connect(self._on_view_user_entries)
@@ -79,6 +89,16 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         self.ui.forfeit_button.clicked.connect(self._on_forfeit)
         self.ui.submit_proof_button.clicked.connect(self._on_submit_proof)
         self.on_room_details(room)
+
+    @override
+    def closeEvent(self, event: QtGui.QCloseEvent) -> None:
+        try:
+            self._network_client.AsyncRaceRoomUpdated.disconnect(self.on_data_from_server)
+        except Exception as e:
+            logging.exception(f"Unable to disconnect: {e}")
+
+        self.CloseEvent.emit()
+        super().closeEvent(event)
 
     def on_room_details(self, room: AsyncRaceRoomEntry) -> None:
         self.room = room
@@ -126,6 +146,16 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
             "Forfeit" if room.self_status != AsyncRaceRoomUserStatus.FORFEITED else "Undo Forfeit"
         )
         self.ui.submit_proof_button.setEnabled(room.self_status == AsyncRaceRoomUserStatus.FINISHED)
+        self.ui.livesplit_button.setEnabled(
+            can_participate
+            and room.self_status
+            in {
+                AsyncRaceRoomUserStatus.JOINED,
+                AsyncRaceRoomUserStatus.STARTED,
+                AsyncRaceRoomUserStatus.PAUSED,
+                AsyncRaceRoomUserStatus.FINISHED,
+            }
+        )
         self._change_options_action.setEnabled(room.is_admin)
         self._view_user_entries_action.setEnabled(room.is_admin)
 
@@ -349,6 +379,24 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
             self._leaderboard_dialog = None
 
     @asyncSlot()
+    async def _get_livesplit_url(self) -> None:
+        try:
+            self.setEnabled(False)
+            url = await self._network_client.async_race_get_livesplit_url(self.room)
+            common_qt_lib.set_clipboard(url)
+
+            await TextPromptDialog.prompt(
+                parent=self,
+                title="LiveSplit One URL",
+                description="URL to add in 'Server Connection' in the Settings page of LiveSplit One.",
+                initial_value=url,
+                is_modal=True,
+                read_only=True,
+            )
+        finally:
+            self.setEnabled(True)
+
+    @asyncSlot()
     async def _on_view_audit_log(self) -> None:
         """Opens a widget with the audit log."""
         if self._audit_log_dialog is not None:
@@ -416,3 +464,16 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         Requests new room data from the server, then updates the UI.
         """
         self.on_room_details(await self._network_client.async_race_refresh_room(self.room))
+
+    def on_data_from_server(self, room: AsyncRaceRoomEntry) -> None:
+        if room.id == self.room.id:
+            self.on_room_details(room)
+
+    @asyncSlot()
+    async def _stop_listening_room_update_events(self) -> None:
+        await self._network_client.server_call("async_race_listen_to_room", (self.room.id, False))
+
+    async def request_room_update_events(self) -> None:
+        # TODO: this does not restart the listener if we disconnect from the server
+        await self._network_client.server_call("async_race_listen_to_room", (self.room.id, True))
+        self.CloseEvent.connect(self._stop_listening_room_update_events)

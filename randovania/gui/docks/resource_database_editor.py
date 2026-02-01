@@ -12,7 +12,6 @@ from PySide6 import QtCore, QtWidgets
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import NamedRequirementTemplate
-from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -23,8 +22,13 @@ from randovania.gui.lib.editable_table_model import AppendableEditableTableModel
 from randovania.lib import frozen_lib
 
 if typing.TYPE_CHECKING:
+    from _typeshed import DataclassInstance
+
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceInfo
+
+    class DataclassResourceInfo(ResourceInfo, DataclassInstance, typing.Protocol): ...
 
 
 def encode_extra(qt_value: str) -> tuple[bool, typing.Any]:
@@ -46,7 +50,7 @@ GENERIC_FIELDS: list[FieldDefinition] = [
 ]
 
 
-class ResourceDatabaseGenericModel(AppendableEditableTableModel[ResourceInfo]):
+class ResourceDatabaseGenericModel[T: DataclassResourceInfo](AppendableEditableTableModel[T]):
     """Model for editing a database of ResourceInfo using a QTableView"""
 
     def __init__(self, db: ResourceDatabase, resource_type: ResourceType):
@@ -59,28 +63,30 @@ class ResourceDatabaseGenericModel(AppendableEditableTableModel[ResourceInfo]):
         return GENERIC_FIELDS
 
     @typing.override
-    def _get_items(self) -> list[ResourceInfo]:
-        return typing.cast("list[ResourceInfo]", self.db.get_by_type(self.resource_type))
+    def _get_items(self) -> list[T]:
+        return typing.cast("list[T]", self.db.get_by_type(self.resource_type))
 
     @typing.override
-    def _create_item(self, short_name: str) -> ResourceInfo:
-        return SimpleResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, self.resource_type)
-
-    @typing.override
-    def _get_item_identifier(self, item: ResourceInfo) -> str:
+    def _get_item_identifier(self, item: T) -> str:
         return item.short_name
 
     @typing.override
-    def append_item(self, resource: ResourceInfo) -> bool:
+    def append_item(self, resource: T) -> bool:
         assert resource.resource_index == self.db.first_unused_resource_index()
         return super().append_item(resource)
+
+
+class ResourceDatabaseSimpleModel(ResourceDatabaseGenericModel[SimpleResourceInfo]):
+    @typing.override
+    def _create_item(self, short_name: str) -> SimpleResourceInfo:
+        return SimpleResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, self.resource_type)
 
 
 ITEM_FIELDS = copy.copy(GENERIC_FIELDS)
 ITEM_FIELDS.insert(2, FieldDefinition("Max Capacity", "max_capacity", from_qt=lambda v: (v > 0, v)))
 
 
-class ResourceDatabaseItemModel(ResourceDatabaseGenericModel):
+class ResourceDatabaseItemModel(ResourceDatabaseGenericModel[ItemResourceInfo]):
     """Model for editing a database of ItemResourceInfo using a QTableView"""
 
     def __init__(self, db: ResourceDatabase):
@@ -99,7 +105,7 @@ TRICK_FIELDS = copy.copy(GENERIC_FIELDS)
 TRICK_FIELDS.insert(2, FieldDefinition("Description", "description"))
 
 
-class ResourceDatabaseTrickModel(ResourceDatabaseGenericModel):
+class ResourceDatabaseTrickModel(ResourceDatabaseGenericModel[TrickResourceInfo]):
     """Model for editing a database of TrickResourceInfo using a QTableView"""
 
     def __init__(self, db: ResourceDatabase):
@@ -146,11 +152,11 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         self.db = db
         self.region_list = region_list
         self.tab_item.setModel(ResourceDatabaseItemModel(db))
-        self.tab_event.setModel(ResourceDatabaseGenericModel(db, ResourceType.EVENT))
+        self.tab_event.setModel(ResourceDatabaseSimpleModel(db, ResourceType.EVENT))
         self.tab_trick.setModel(ResourceDatabaseTrickModel(db))
-        self.tab_damage.setModel(ResourceDatabaseGenericModel(db, ResourceType.DAMAGE))
-        self.tab_version.setModel(ResourceDatabaseGenericModel(db, ResourceType.VERSION))
-        self.tab_misc.setModel(ResourceDatabaseGenericModel(db, ResourceType.MISC))
+        self.tab_damage.setModel(ResourceDatabaseSimpleModel(db, ResourceType.DAMAGE))
+        self.tab_version.setModel(ResourceDatabaseSimpleModel(db, ResourceType.VERSION))
+        self.tab_misc.setModel(ResourceDatabaseSimpleModel(db, ResourceType.MISC))
 
         for tab in self._all_tabs:
             tab_model = tab.model()

@@ -4,7 +4,7 @@ import asyncio
 import multiprocessing
 import operator
 from concurrent.futures import ProcessPoolExecutor
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from randovania import monitoring
 from randovania.generator import generator
@@ -49,6 +49,7 @@ def generate_layout(
         span.set_tag("unique_games", str(sorted(set(games))))
         span.set_tag("attempts", retries if retries is not None else generator.DEFAULT_ATTEMPTS)
         span.set_tag("validate_after", options.advanced_validate_seed_after)
+        span.set_tag("use_world_graph", True)
         span.set_tag(
             "dock_rando",
             any(preset.configuration.dock_rando.mode == DockRandoMode.DOCKS for preset in parameters.presets),
@@ -78,19 +79,19 @@ def generate_layout(
                     tags={"game": preset.game.short_name},
                 )
 
-        extra_args = {
+        extra_args: dict[str, Any] = {
             "generator_params": parameters,
-            "validate_after_generation": options.advanced_validate_seed_after,
+            "resolve_after_generation": options.advanced_validate_seed_after,
             "world_names": world_names,
         }
         if not options.advanced_timeout_during_generation:
-            extra_args["timeout"] = None
+            extra_args["resolver_timeout"] = None
         if retries is not None:
             extra_args["attempts"] = retries
 
         debug_level = debug.debug_level()
         if not parameters.spoiler:
-            debug_level = 0
+            debug_level = debug.LogLevel.SILENT
 
         if options.advanced_generate_in_another_process:
             generator_function = generate_in_another_process
@@ -118,7 +119,7 @@ def generate_layout(
             raise
 
 
-def _generate_layout_worker(output_pipe: Connection, debug_level: int, extra_args: dict):
+def _generate_layout_worker(output_pipe: Connection, debug_level: debug.LogLevel, extra_args: dict):
     def status_update(message: str):
         output_pipe.send(message)
         if output_pipe.poll():
@@ -130,7 +131,7 @@ def _generate_layout_worker(output_pipe: Connection, debug_level: int, extra_arg
 
 def generate_in_another_process(
     status_update: Callable[[str], None],
-    debug_level: int,
+    debug_level: debug.LogLevel,
     extra_args: dict,
 ) -> LayoutDescription:
     receiving_pipe, output_pipe = multiprocessing.Pipe(True)
@@ -156,13 +157,8 @@ def generate_in_another_process(
 
 def generate_in_host_process(
     status_update: Callable[[str], None],
-    debug_level: int,
+    debug_level: debug.LogLevel,
     extra_args: dict,
 ) -> LayoutDescription:
     with debug.with_level(debug_level):
-        return asyncio.run(
-            generator.generate_and_validate_description(
-                **extra_args,
-                status_update=status_update,
-            )
-        )
+        return asyncio.run(generator.generate_and_validate_description(status_update=status_update, **extra_args))

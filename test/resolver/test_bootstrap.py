@@ -18,11 +18,7 @@ def test_logic_bootstrap(preset_manager, game_enum):
 
     patches = game_enum.generator.base_patches_factory.create_base_patches(configuration, Random(1000), game, False, 0)
 
-    new_game, state = game_enum.generator.bootstrap.logic_bootstrap(
-        configuration,
-        game.get_mutable(),
-        patches,
-    )
+    _, state = game_enum.generator.bootstrap.logic_bootstrap_graph(configuration, game.get_mutable(), patches)
 
     for misc_resource in game.resource_database.misc:
         assert state.resources.is_resource_set(misc_resource)

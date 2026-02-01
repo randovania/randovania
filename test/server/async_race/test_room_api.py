@@ -1,9 +1,12 @@
+import base64
 import contextlib
 import datetime
+import logging
 from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
 import pytest_mock
+from starlette.websockets import WebSocketDisconnect
 
 from randovania.layout.layout_description import LayoutDescription
 from randovania.network_common import error
@@ -32,14 +35,14 @@ async def test_verify_authorization_no_password(simple_room):
     await room_api._verify_authorization(sa, "", simple_room, "AuthToken")
 
     # Assert
-    sa.decrypt_dict.assert_not_called()
+    sa.decrypt_and_b85_dict.assert_not_called()
 
 
 async def test_verify_authorization_password_valid(simple_room):
     # Setup
     sa = MagicMock()
     sa.get_current_user = AsyncMock()
-    sa.decrypt_dict.return_value = {
+    sa.decrypt_and_b85_dict.return_value = {
         "room_id": simple_room.id,
         "time": datetime.datetime.now().timestamp(),
     }
@@ -49,14 +52,14 @@ async def test_verify_authorization_password_valid(simple_room):
     await room_api._verify_authorization(sa, "", simple_room, "AuthToken")
 
     # Assert
-    sa.decrypt_dict.assert_called_once_with("AuthToken")
+    sa.decrypt_and_b85_dict.assert_called_once_with("AuthToken")
 
 
 async def test_verify_authorization_password_wrong_room(simple_room):
     # Setup
     sa = MagicMock()
     sa.get_current_user = AsyncMock()
-    sa.decrypt_dict.return_value = {
+    sa.decrypt_and_b85_dict.return_value = {
         "room_id": 1234,
         "time": datetime.datetime.now().timestamp(),
     }
@@ -67,14 +70,14 @@ async def test_verify_authorization_password_wrong_room(simple_room):
         await room_api._verify_authorization(sa, "", simple_room, "AuthToken")
 
     # Assert
-    sa.decrypt_dict.assert_called_once_with("AuthToken")
+    sa.decrypt_and_b85_dict.assert_called_once_with("AuthToken")
 
 
 async def test_verify_authorization_token_too_old(simple_room):
     # Setup
     sa = MagicMock()
     sa.get_current_user = AsyncMock()
-    sa.decrypt_dict.return_value = {
+    sa.decrypt_and_b85_dict.return_value = {
         "room_id": simple_room.id,
         "time": 0,
     }
@@ -85,14 +88,14 @@ async def test_verify_authorization_token_too_old(simple_room):
         await room_api._verify_authorization(sa, "", simple_room, "AuthToken")
 
     # Assert
-    sa.decrypt_dict.assert_called_once_with("AuthToken")
+    sa.decrypt_and_b85_dict.assert_called_once_with("AuthToken")
 
 
 async def test_verify_authorization_unexpected_error(simple_room):
     # Setup
     sa = MagicMock()
     sa.get_current_user = AsyncMock()
-    sa.decrypt_dict.return_value = {}
+    sa.decrypt_and_b85_dict.return_value = {}
     simple_room.password = "SomePassword"
 
     # Run
@@ -100,7 +103,7 @@ async def test_verify_authorization_unexpected_error(simple_room):
         await room_api._verify_authorization(sa, "", simple_room, "AuthToken")
 
     # Assert
-    sa.decrypt_dict.assert_called_once_with("AuthToken")
+    sa.decrypt_and_b85_dict.assert_called_once_with("AuthToken")
 
 
 async def test_list_rooms(simple_room, mocker: pytest_mock.MockFixture):
@@ -270,6 +273,27 @@ async def test_change_room_settings_valid(simple_room, mocker: pytest_mock.MockF
     }
 
 
+@pytest.mark.parametrize("listen", [False, True])
+async def test_listen_to_room(simple_room, mock_sa, listen):
+    user = User.get_by_id(1234)
+    mock_sa.get_current_user.return_value = user
+    room_name = f"async-race-{simple_room.id}-{user.id}"
+
+    # Run
+    await room_api.listen_to_room(mock_sa, "TheSid", 1, listen)
+
+    # Assert
+    if listen:
+        mock_sa.sio.enter_room.assert_awaited_once_with("TheSid", room_name)
+    else:
+        mock_sa.sio.enter_room.assert_not_called()
+
+    if not listen:
+        mock_sa.sio.leave_room.assert_awaited_once_with("TheSid", room_name)
+    else:
+        mock_sa.sio.leave_room.assert_not_called()
+
+
 @pytest.mark.parametrize("password", [None, "Something"])
 async def test_get_room_valid_password(simple_room, mocker: pytest_mock.MockFixture, password: str | None):
     # Setup
@@ -418,7 +442,7 @@ async def test_change_state(
         assert AsyncRaceEntry.entry_for(room, user).user_status() == before_state
 
     valid_transition = (before_state, after_state) in VALID_TRANSITIONS
-    if valid_transition:
+    if valid_transition or (before_state == after_state and before_state != AsyncRaceRoomUserStatus.NOT_MEMBER):
         expectation = contextlib.nullcontext()
         expected_after = after_state
     else:
@@ -761,3 +785,120 @@ async def test_get_audit_log(simple_room, mocker: pytest_mock.MockFixture):
     assert result == [
         {"user": "The Player", "message": "Someone did a thing", "time": "2020-05-12T00:00:00+00:00"},
     ]
+
+
+async def test_get_livesplit_url(test_client, simple_room):
+    sid = "TheSid"
+    user = User.get_by_id(1235)
+
+    test_client.sa.get_current_user = AsyncMock(return_value=user)
+
+    url = await room_api.get_livesplit_url(
+        test_client.sa,
+        sid,
+        simple_room.id,
+    )
+    assert url.startswith("ws://127.0.0.1:5000/async-race-room/1/livesplit/")
+    token = url.split("/")[-1]
+    decoded = test_client.sa.decrypt_str(base64.urlsafe_b64decode(token))
+    assert decoded == "1235/1"
+
+
+async def test_get_livesplit_url_not_member(test_client, simple_room):
+    sid = "TheSid"
+    user = User.get_by_id(1234)
+
+    test_client.sa.get_current_user = AsyncMock(return_value=user)
+    test_client.sa.sio.enter_room = AsyncMock()
+
+    with pytest.raises(error.NotAuthorizedForActionError):
+        await room_api.get_livesplit_url(
+            test_client.sa,
+            sid,
+            simple_room.id,
+        )
+    test_client.sa.sio.enter_room.assert_not_called()
+
+
+async def test_emit_async_room_update(simple_room):
+    # Setup
+    sa = MagicMock()
+    sa.sio.emit = AsyncMock()
+    sa.get_current_user = AsyncMock()
+    sa.get_current_user.return_value = User.get_by_id(1235)
+
+    # Run
+    await room_api.emit_async_room_update(sa, AsyncRaceRoom.get_by_id(1), "TheSid")
+
+    # Assert
+    sa.sio.emit.assert_awaited_once_with(
+        "async_race_room_update",
+        ANY,
+        namespace="/",
+        to="async-race-1-1235",
+    )
+
+
+@pytest.mark.parametrize("can_pause", [False, True])
+async def test_livesplit_socket(test_client, simple_room, can_pause: bool, caplog):
+    simple_room.allow_pause = can_pause
+    simple_room.save()
+
+    entry = AsyncRaceEntry.entry_for(simple_room, User.get_by_id(1235))
+    entry.start_datetime = None
+    entry.save()
+
+    test_client.sa.logger.setLevel(logging.INFO)
+    token = base64.urlsafe_b64encode(test_client.sa.encrypt_str("1235/1")).decode("ascii")
+
+    with test_client.websocket_connect(f"/async-race-room/1/livesplit/{token}") as websocket:
+        websocket.send_json({"event": "Finished"})
+        websocket.send_json({"event": "Started"})
+        websocket.send_text("bad data")
+        websocket.send_json({"event": "Paused"})
+        if can_pause:
+            websocket.send_json({"event": "Resumed"})
+        else:
+            assert websocket.receive_json() == {"command": "undoAllPauses"}
+
+        websocket.send_json({"event": "Finished"})
+        websocket.send_json({"event": "Splitted"})
+        websocket.close()
+
+        entry = AsyncRaceEntry.entry_for(simple_room, User.get_by_id(1235))
+        assert entry.user_status() == AsyncRaceRoomUserStatus.FINISHED
+
+    assert caplog.messages == [
+        "Invalid transition to AsyncRaceRoomUserStatus.FINISHED received from livesplit:"
+        " Invalid Action: Unsupported state transition",
+        "Received invalid json from livesplit: Expecting value: line 1 column 1 (char 0) bad data",
+    ]
+
+
+async def test_livesplit_socket_no_room(test_client, clean_database):
+    token = base64.urlsafe_b64encode(test_client.sa.encrypt_str("1235/1")).decode("ascii")
+
+    with pytest.raises(WebSocketDisconnect) as exc:
+        with test_client.websocket_connect(f"/async-race-room/1/livesplit/{token}") as websocket:
+            websocket.close()
+    assert exc.value.reason == "Invalid url"
+
+
+async def test_livesplit_socket_different_room_id(test_client, simple_room):
+    token = base64.urlsafe_b64encode(test_client.sa.encrypt_str("1234/2")).decode("ascii")
+
+    with pytest.raises(WebSocketDisconnect) as exc:
+        with test_client.websocket_connect(f"/async-race-room/1/livesplit/{token}") as websocket:
+            websocket.close()
+
+    assert exc.value.reason == "Invalid url"
+
+
+async def test_livesplit_socket_not_a_member(test_client, simple_room):
+    token = base64.urlsafe_b64encode(test_client.sa.encrypt_str("1234/1")).decode("ascii")
+
+    with pytest.raises(WebSocketDisconnect) as exc:
+        with test_client.websocket_connect(f"/async-race-room/1/livesplit/{token}") as websocket:
+            websocket.close()
+
+    assert exc.value.reason == "Not a member"
