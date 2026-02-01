@@ -63,6 +63,8 @@ async def emit_session_meta_update(sa: ServerApp, session: MultiplayerSession) -
 async def emit_session_actions_update(sa: ServerApp, session: MultiplayerSession) -> None:
     with sentry_sdk.start_span(op="emit", description="session_actions_update") as span:
         sa.logger.debug("multiplayer_session_actions_update for session %d (%s)", session.id, session.name)
+        # FIXME: some sort of pagination for the clients.
+        # Ideally the client stores locally all the actions it has received, so it only needs to request the difference
         actions = session.describe_actions()
 
         span.set_data("session.id", session.id)
