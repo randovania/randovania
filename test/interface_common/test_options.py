@@ -57,6 +57,68 @@ def test_migrate_from_v11(option):
     assert new_data == expected_data
 
 
+def test_migrate_from_v40(option):
+    old_data = {
+        "version": 40,
+        "options": {
+            "game_samus_returns": {
+                "cosmetic_patches": {
+                    "use_laser_color": True,
+                    "use_energy_tank_color": True,
+                    "use_aeion_bar_color": True,
+                    "use_ammo_hud_color": True,
+                    "laser_locked_color": [255, 0, 0],
+                    "laser_unlocked_color": [255, 255, 0],
+                    "grapple_laser_locked_color": [0, 0, 255],
+                    "grapple_laser_unlocked_color": [0, 85, 0],
+                    "energy_tank_color": [255, 0, 0],
+                    "aeion_bar_color": [85, 255, 0],
+                    "ammo_hud_color": [0, 0, 255],
+                    "show_room_names": "ALWAYS",
+                    "music": "vanilla_music",
+                    "music_volume": 100,
+                    "ambience_volume": 100,
+                },
+                "input_file": None,
+                "target_platform": "citra",
+                "output_preference": None,
+            }
+        },
+    }
+
+    # Run
+    new_data = persisted_options.get_persisted_options_from_data(old_data)
+    option.load_from_persisted(new_data, False)
+
+    # Assert
+    expected_data = {
+        "game_samus_returns": {
+            "cosmetic_patches": {
+                "use_laser_color": True,
+                "use_energy_tank_color": True,
+                "use_aeion_bar_color": True,
+                "use_ammo_hud_color": True,
+                "laser_locked_color": [255, 0, 0],
+                "laser_unlocked_color": [255, 255, 0],
+                "grapple_laser_locked_color": [0, 0, 255],
+                "grapple_laser_unlocked_color": [0, 85, 0],
+                "energy_tank_color": [255, 0, 0],
+                "aeion_bar_color": [85, 255, 0],
+                "ammo_hud_color": [0, 0, 255],
+                "show_room_names": "ALWAYS",
+                "music": "vanilla_music",
+                "music_volume": 100,
+                "ambience_volume": 100,
+            },
+            "input_file": None,
+            "target_platform": "azahar",
+            "output_preference": None,
+        },
+        "schema_version": persisted_options._CURRENT_OPTIONS_FILE_VERSION,
+    }
+    assert new_data == expected_data
+
+
 @patch("randovania.interface_common.options.Options._save_to_disk", autospec=True)
 def test_context_manager_with_no_changes_doesnt_save(mock_save_to_disk: MagicMock, option: Options):
     # Setup
