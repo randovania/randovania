@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.4.0] - 2025-12-??
+## [10.5.0] - 2026-03-??
+
+- Nothing yet.
+
+## [10.4.0] - 2026-02-01
 
 - **Major** - Changed: The generator and resolver are now significantly faster.
   - For standard settings across all games, the mean time went from 5.38 seconds to 0.86 seconds - an improvement of 524%.
