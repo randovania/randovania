@@ -81,6 +81,12 @@ class Ui_DreadCosmeticPatchesDialog(object):
 
         self.game_changes_layout.addWidget(self.enable_auto_tracker)
 
+        self.enable_debug_logging = QCheckBox(self.game_changes_box)
+        self.enable_debug_logging.setObjectName(u"enable_debug_logging")
+        self.enable_debug_logging.setVisible(False)
+
+        self.game_changes_layout.addWidget(self.enable_debug_logging)
+
         self.show_room_names = QHBoxLayout()
         self.show_room_names.setSpacing(6)
         self.show_room_names.setObjectName(u"show_room_names")
@@ -275,6 +281,7 @@ class Ui_DreadCosmeticPatchesDialog(object):
         self.show_player_damage.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show player damage", None))
         self.show_death_counter.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show player death count in HUD", None))
         self.enable_auto_tracker.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Enable automatic item tracker", None))
+        self.enable_debug_logging.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Enable Lua debug logs (in supported emulators)", None))
         self.room_names_label.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show Room Names On HUD", None))
         self.room_names_dropdown.setCurrentText("")
         self.room_names_dropdown.setPlaceholderText("")
