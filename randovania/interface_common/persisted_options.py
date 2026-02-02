@@ -156,12 +156,14 @@ def _msr_enable_remote_lua(options: dict) -> None:
 
 
 def _msr_citra_to_azahar(options: dict) -> None:
-    if "target_platform" in options.get("game_samus_returns", {}):
-        if options["game_samus_returns"]["target_platform"] == "citra":
-            options["game_samus_returns"]["target_platform"] = "azahar"
+    game_samus_returns = options.get("game_samus_returns", {})
 
-    if "output_preference" in options.get("game_samus_returns", {}):
-        as_dict: dict = json.loads(options["game_samus_returns"]["output_preference"])
+    if "target_platform" in game_samus_returns:
+        if game_samus_returns["target_platform"] == "citra":
+            game_samus_returns["target_platform"] = "azahar"
+
+    if game_samus_returns.get("output_preference") is not None:
+        as_dict: dict = json.loads(game_samus_returns["output_preference"])
         if as_dict.get("selected_tab", "") == "citra":
             as_dict["selected_tab"] = "azahar"
         # dirty replacement: replaces the platform and the field name for the always empty dict tab options
@@ -169,7 +171,7 @@ def _msr_citra_to_azahar(options: dict) -> None:
         if tab_options:
             tab_options["azahar"] = {}
             tab_options.pop("citra", None)
-        options["game_samus_returns"]["output_preference"] = json.dumps(as_dict, separators=(",", ":"))
+        game_samus_returns["output_preference"] = json.dumps(as_dict, separators=(",", ":"))
 
 
 _CONVERTER_FOR_VERSION = [
