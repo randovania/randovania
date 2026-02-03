@@ -537,8 +537,8 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             teleporters.append(other_train)
 
         # Determine total/starting number of Flash Shift Upgrades and Speed Booster Upgrades
-        has_flash_upgrades: False
-        has_speed_upgrades: False
+        has_flash_upgrades = False
+        has_speed_upgrades = False
 
         for pickup, state in self.configuration.ammo_pickup_configuration.pickups_state.items():
             if pickup.name == "Flash Shift Upgrade":
