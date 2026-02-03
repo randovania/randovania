@@ -536,19 +536,18 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             other_train["teleporter"]["actor"] = "wagontrain_quarantine_000"
             teleporters.append(other_train)
 
-        # Determine total/starting number of Flash Shift Upgrades and Speed Booster Upgrades
-        has_flash_upgrades = False
-        has_speed_upgrades = False
-
-        for pickup, state in self.configuration.ammo_pickup_configuration.pickups_state.items():
-            if pickup.name == "Flash Shift Upgrade":
-                has_flash_upgrades = state.pickup_count > 0
-                break
-
-        for pickup, state in self.configuration.standard_pickup_configuration.pickups_state.items():
-            if pickup.name == "Speed Booster Upgrade":
-                has_speed_upgrades = state.num_included_in_starting_pickups > 0 or state.num_shuffled_pickups > 0
-                break
+        # Determine if the preset contains any Flash Shift Upgrade or Speed Booster Upgrade items (this will decide
+        # whether or not to show them in the Samus menu)
+        has_flash_upgrades = any(
+            state.pickup_count > 0
+            for pickup, state in self.configuration.ammo_pickup_configuration.pickups_state.items()
+            if pickup.name == "Flash Shift Upgrade"
+        )
+        has_speed_upgrades = any(
+            state.num_included_in_starting_pickups > 0 or state.num_shuffled_pickups > 0
+            for pickup, state in self.configuration.standard_pickup_configuration.pickups_state.items()
+            if pickup.name == "Speed Booster Upgrade"
+        )
 
         return {
             "configuration_identifier": self.description.shareable_hash,
