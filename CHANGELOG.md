@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing yet.
 
+### Metroid: Samus Returns
+
+- Fixed: Certain output preferences from old versions of Randovania no longer causes issues on start.
+
 ## [10.4.0] - 2026-02-01
 
 - **Major** - Changed: The generator and resolver are now significantly faster.
