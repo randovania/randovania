@@ -185,7 +185,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker, dread_configuration,
 @pytest.mark.parametrize("mod_manager", [False, True])
 def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manager, dread_configuration, options):
     # Setup
-    mocker.patch("randovania.games.dread.gui.dialog.game_export_dialog.DreadGameExportDialog.get_path_to_ryujinx")
+    mocker.patch("randovania.games.dread.gui.dialog.game_export_dialog._get_path_to_ryujinx")
     mocker.patch("platform.system", return_value="Windows")
 
     mocker.patch(

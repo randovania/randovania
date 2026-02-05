@@ -87,39 +87,45 @@ def romfs_validation(line: QtWidgets.QLineEdit) -> bool:
     )
 
 
+def _get_path_to_ryujinx(linux_ryujinx_path: LinuxRyujinxPath) -> Path:
+    ryujinx_path_tuple = ("Ryujinx", "mods", "contents", "010093801237c000")
+    match (platform.system(), linux_ryujinx_path):
+        case "Windows", _:
+            # TODO: double check what ryujinx actually uses for windows. I don't think it reads the Appdata env var
+            # but instead probably the value from QStandardPaths.
+            return windows_lib.get_appdata().joinpath(*ryujinx_path_tuple)
+
+        case "Linux", LinuxRyujinxPath.NATIVE:
+            base_config_path = QtCore.QStandardPaths.writableLocation(
+                QtCore.QStandardPaths.StandardLocation.GenericConfigLocation
+            )
+            return Path(base_config_path, *ryujinx_path_tuple)
+        case "Linux", LinuxRyujinxPath.FLATPAK:
+            base_config_path = str(
+                Path(
+                    QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.HomeLocation),
+                    ".var",
+                    "app",
+                    "org.ryujinx.Ryujinx",
+                    "config",
+                )
+            )
+            return Path(base_config_path, *ryujinx_path_tuple)
+
+        case "Darwin", _:
+            return Path(
+                QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.GenericDataLocation),
+                *ryujinx_path_tuple,
+            )
+
+    raise ValueError("Unsupported platform")
+
+
 class DreadGameExportDialog(GameExportDialog[DreadConfiguration], Ui_DreadGameExportDialog):
     def get_path_to_ryujinx(self) -> Path:
-        ryujinx_path_tuple = ("Ryujinx", "mods", "contents", "010093801237c000")
-        match (platform.system(), self.linux_ryujinx_path):
-            case "Windows", _:
-                # TODO: double check what ryujinx actually uses for windows. I don't think it reads the Appdata env var
-                # but instead probably the value from QStandardPaths.
-                return windows_lib.get_appdata().joinpath(*ryujinx_path_tuple)
-
-            case "Linux", LinuxRyujinxPath.NATIVE:
-                base_config_path = QtCore.QStandardPaths.writableLocation(
-                    QtCore.QStandardPaths.StandardLocation.GenericConfigLocation
-                )
-                return Path(base_config_path, *ryujinx_path_tuple)
-            case "Linux", LinuxRyujinxPath.FLATPAK:
-                base_config_path = str(
-                    Path(
-                        QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.HomeLocation),
-                        ".var",
-                        "app",
-                        "org.ryujinx.Ryujinx",
-                        "config",
-                    )
-                )
-                return Path(base_config_path, *ryujinx_path_tuple)
-
-            case "Darwin", _:
-                return Path(
-                    QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.GenericDataLocation),
-                    *ryujinx_path_tuple,
-                )
-
-        raise ValueError("Unsupported platform")
+        # Move the logic to a non-class method, so it can be mocked without causing PySide to crash
+        # Why it crashes? Dunno, but it started with 6.10.1
+        return _get_path_to_ryujinx(self.linux_ryujinx_path)
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
