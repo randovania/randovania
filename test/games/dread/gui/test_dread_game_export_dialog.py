@@ -241,7 +241,7 @@ def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker, dread_conf
     # Setup
     ryujinx_path = tmp_path.joinpath("ryujinx_mod")
     mocker.patch(
-        "randovania.games.dread.gui.dialog.game_export_dialog.DreadGameExportDialog.get_path_to_ryujinx",
+        "randovania.games.dread.gui.dialog.game_export_dialog._get_path_to_ryujinx",
         return_value=ryujinx_path,
     )
 
