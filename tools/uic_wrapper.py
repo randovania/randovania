@@ -15,6 +15,8 @@ def main() -> None:
     paths: list[Path] = args.paths
     new_paths: list[str] = []
 
+    import PySide6
+
     if args.all_ui_files:
         paths_to_glob = []
         for path in list(paths):
@@ -28,17 +30,21 @@ def main() -> None:
     try:
 
         def process_file(path: Path) -> None:
-            new_file = os.fspath(path.parents[1].joinpath("generated").joinpath(path.stem + "_ui.py"))
-            new_paths.append(new_file)
-            subprocess.check_call(
+            new_file = path.parents[1].joinpath("generated").joinpath(path.stem + "_ui.py")
+            new_paths.append(os.fspath(new_file))
+            result = subprocess.run(
                 [
                     "pyside6-uic",
                     "--absolute-imports",
-                    "-o",
-                    new_file,
                     os.fspath(path),
-                ]
+                ],
+                stdout=subprocess.PIPE,
+                check=True,
             )
+            new_content = result.stdout.replace(
+                b"Qt User Interface Compiler version " + PySide6.__version__.encode(), b"tools/uic_wrapper.py"
+            )
+            new_file.write_bytes(new_content)
 
         with ThreadPoolExecutor() as executor:
             for path_to_process in paths:
