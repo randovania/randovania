@@ -71,6 +71,11 @@ class Ui_DreadCosmeticPatchesDialog(object):
 
         self.game_changes_layout.addWidget(self.show_player_damage)
 
+        self.show_dna_in_hud = QCheckBox(self.game_changes_box)
+        self.show_dna_in_hud.setObjectName(u"show_dna_in_hud")
+
+        self.game_changes_layout.addWidget(self.show_dna_in_hud)
+
         self.show_death_counter = QCheckBox(self.game_changes_box)
         self.show_death_counter.setObjectName(u"show_death_counter")
 
@@ -273,6 +278,7 @@ class Ui_DreadCosmeticPatchesDialog(object):
         self.show_enemy_life.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show enemy life bars", None))
         self.show_enemy_damage.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show enemy damage", None))
         self.show_player_damage.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show player damage", None))
+        self.show_dna_in_hud.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show current and total DNA count in HUD", None))
         self.show_death_counter.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show player death count in HUD", None))
         self.enable_auto_tracker.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Enable automatic item tracker", None))
         self.room_names_label.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show Room Names On HUD", None))

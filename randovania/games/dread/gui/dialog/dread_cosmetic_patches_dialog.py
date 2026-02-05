@@ -59,6 +59,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog[DreadCosmeticPatches]
         self._persist_check_field(self.show_enemy_life, "show_enemy_life")
         self._persist_check_field(self.show_enemy_damage, "show_enemy_damage")
         self._persist_check_field(self.show_player_damage, "show_player_damage")
+        self._persist_check_field(self.show_dna_in_hud, "show_dna_in_hud")
         self._persist_check_field(self.show_death_counter, "show_death_counter")
         self._persist_check_field(self.enable_auto_tracker, "enable_auto_tracker")
         for field_name, slider in self.field_name_to_slider_mapping.items():
@@ -78,6 +79,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog[DreadCosmeticPatches]
         self.show_enemy_life.setChecked(patches.show_enemy_life)
         self.show_enemy_damage.setChecked(patches.show_enemy_damage)
         self.show_player_damage.setChecked(patches.show_player_damage)
+        self.show_dna_in_hud.setChecked(patches.show_dna_in_hud)
         self.show_death_counter.setChecked(patches.show_death_counter)
         self.enable_auto_tracker.setChecked(patches.enable_auto_tracker)
         for field_name, slider in self.field_name_to_slider_mapping.items():
