@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'game_details_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.0
+## Created by: tools/uic_wrapper.py
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -119,7 +119,7 @@ class Ui_GameDetailsWindow(object):
         sizePolicy2.setHeightForWidth(self.stop_background_process_button.sizePolicy().hasHeightForWidth())
         self.stop_background_process_button.setSizePolicy(sizePolicy2)
         self.stop_background_process_button.setMaximumSize(QSize(75, 16777215))
-        self.stop_background_process_button.setText(u"\ud83d\udec7 Stop")
+        self.stop_background_process_button.setText(u"\U0001f6c7 Stop")
         self.stop_background_process_button.setCheckable(False)
         self.stop_background_process_button.setFlat(False)
 
