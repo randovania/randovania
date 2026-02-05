@@ -1061,7 +1061,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     def enable_buttons_with_background_tasks(self, value: bool):
         self.update_background_process_button()
 
-    def update_progress(self, message: str, percentage: int):
+    def update_progress(self, message: str, percentage: int) -> None:
         self.progress_label.setText(message)
         if "Aborted" in message:
             percentage = 0
