@@ -6,10 +6,9 @@ import concurrent.futures
 import threading
 import typing
 
-from PySide6.QtCore import Signal
-
 import randovania.games.prime2.patcher.csharp_subprocess
 from randovania.lib.background_task import AbortBackgroundTask
+from randovania.lib.signal import RdvSignal
 
 
 class BackgroundTaskInProgressError(Exception):
@@ -17,8 +16,8 @@ class BackgroundTaskInProgressError(Exception):
 
 
 class BackgroundTaskMixin:
-    progress_update_signal = Signal(str, int)
-    background_tasks_button_lock_signal = Signal(bool)
+    progress_update_signal = RdvSignal[[str, int]]()
+    background_tasks_button_lock_signal = RdvSignal[[bool]]()
     abort_background_task_requested: bool = False
     _background_thread: threading.Thread | None = None
 
