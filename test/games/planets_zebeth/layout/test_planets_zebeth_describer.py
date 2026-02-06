@@ -33,7 +33,7 @@ def test_planets_zebeth_format_params(preset_name):
 
     # Assert
     assert dict(result) == {
-        "Game Changes": [],
+        "Game Changes": ["Missiles need Launcher"],
         "Gameplay": ["Starts at Brinstar - Maru Mari Hall"],
         "Goal": [dna_where],
         "Pickup Pool": ["Size: 42 of 42", "Unmodified starting pickup"],
