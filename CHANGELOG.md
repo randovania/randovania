@@ -7,7 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.5.0] - 2026-03-??
 
-- Nothing yet.
+### Metroid Dread
+
+#### Logic Database
+
+##### Burenia
+
+- Added: Door Lock Overrides:
+    - The Shutter Gate in Main Hub Tower Top leading to Flash Shift Room is now additionally logical with Speed Booster.
+    - The Shutter Gate in Flash Shift Room is now additionally logical with Flash Shift Skip (Beginner) and
+      either Wall Jump (Beginner) or using Spin Boost.
+    - The Shutter Gate in Main Hub Tower Top leading to Underwater Horseshoe is now additionally logical with Speed
+      Booster and either Speed Booster Conservation (Intermediate) or Speed Booster Conservation (Beginner) and Gravity
+      Suit.
+
+##### Cataris
+
+- Added: Door Lock Overrides:
+    - The Shutter Gate in EMMI Zone Exits West is now additionally logical with with many more options.
+    - The Shutter Gate in Green EMMI Introduction is now additionally logical with with many more options.
+
+##### Ferenia
+
+- Added: Door Lock Override:
+    - The Shutter Gate in Total Recharge Station is now additionally logical with Flash Shift Skip (Beginner) and either
+      Movement (Beginner) or using Spin Boost.
 
 ### Metroid: Samus Returns
 
