@@ -157,6 +157,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Killing Elite Pirates on Hard Mode now requires Missiles instead of Power Beams.
 - Changed: Killing Elite Pirates with Beginner Combat but now requires Charge Beam or Plasma Beam, but less health.
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+##### Sanctuary Fortress
+
+- Added: Hall Of Combat Mastery: A ludicrous BSJ over the spider track to access Central Area Transport East without Spider Ball or Space Jump Boots.
+
 ### Metroid: Samus Returns
 
 #### Logic Database
