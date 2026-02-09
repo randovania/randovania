@@ -62,11 +62,11 @@ class PlanetsZebethGameExportDialog(GameExportDialog[PlanetsZebethConfiguration]
         add_field_validation(
             accept_button=self.accept_button,
             fields={
-                self.input_folder_edit: lambda: not (
-                    self.input_folder.is_dir() and _is_valid_input_dir(self.input_folder)
+                self.input_folder_edit: lambda: (
+                    not (self.input_folder.is_dir() and _is_valid_input_dir(self.input_folder))
                 ),
-                self.output_folder_edit: lambda: not (
-                    self.output_folder.is_dir() and self.output_folder != self.input_folder
+                self.output_folder_edit: lambda: (
+                    not (self.output_folder.is_dir() and self.output_folder != self.input_folder)
                 ),
             },
         )
