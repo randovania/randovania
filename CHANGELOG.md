@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Removed game-specific text from the preset editor's header to make information more clear for all games in RDV.
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+##### Agon Wastes
+
+- Fixed: Fighting Bomb Guardian with only Charged Dark shots now requires the correct 30 dark ammo.
+
 ### Metroid: Samus Returns
 
 - Fixed: Certain output preferences from old versions of Randovania no longer causes issues on start.
