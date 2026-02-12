@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.5.0] - 2026-03-??
 
-- Nothing yet
+- Nothing yet.
 
 ### Metroid: Samus Returns
 
