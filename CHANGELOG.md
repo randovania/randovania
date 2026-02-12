@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Removed game-specific text from the preset editor's header to make information more clear for all games in RDV.
 
+### Metroid Fusion
+
+- Changed: Renamed elevator rooms to be more aligned with where they are in the B.S.L rather than "to" a desitination. Example, "Elevator to Central Nexus" was renamed to "Habitation Deck Elevator". Change should bring more clarity and also help prepare for a future setting.
+
 ### Metroid: Samus Returns
 
 - Fixed: Certain output preferences from old versions of Randovania no longer causes issues on start.
