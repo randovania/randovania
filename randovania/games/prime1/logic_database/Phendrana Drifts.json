@@ -11646,55 +11646,12 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "Cross the tunnel",
+                                                        "comment": "Go through or bypass the tunnel",
                                                         "items": [
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Stand on holes in tunnel",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Standable",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "Dash off the floating platform above: https://youtu.be/S4831hWNEfY",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Scan",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Dash",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Go through the tunnel",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -11752,6 +11709,49 @@
                                                                                 "type": "tricks",
                                                                                 "name": "RJump",
                                                                                 "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Stand on holes holes in tunnel",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Standable",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Dash off the floating platform above: https://youtu.be/S4831hWNEfY",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Dash",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Scan",
+                                                                                "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -13284,7 +13284,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Avoid the fight trigger. Barely move into the room then jump up backwards above the door: https://youtu.be/femXvPUNezk?si=7zD5oIcCAADK0Juh&t=24",
+                                            "comment": "Avoid the fight trigger. Barely move into the room then jump up backwards above the door: https://youtu.be/femXvPUNezk&t=24",
                                             "items": [
                                                 {
                                                     "type": "or",
@@ -13722,7 +13722,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Avoid the fight trigger. Move around the side behind it then drop down: https://www.youtube.com/watch?v=femXvPUNezk",
+                                            "comment": "Avoid the fight trigger. Move around the side behind it then drop down: https://youtu.be/femXvPUNezk",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -15632,7 +15632,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Dash: https://youtu.be/wmwIhBC7OSQ",
+                                                        "comment": "Dash off stalactite: https://youtu.be/wmwIhBC7OSQ",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -15667,7 +15667,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Reach the first platform out of the water",
+                                                                    "comment": "Get out of the water",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -15705,12 +15705,20 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "LJump",
-                                                                                "amount": 2,
-                                                                                "negate": false
+                                                                                "comment": "Reach the first platform with a jump",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "LJump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -15881,7 +15889,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Dash: https://youtu.be/iYX3Bt8Vnnw?t=12",
+                                                                    "comment": "Dash off of stalactite: https://youtu.be/iYX3Bt8Vnnw?t=12",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -16041,7 +16049,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": "Slope Jump: https://youtu.be/Rw8w0ZSjeOc?si=kgUn8av0FB2QbChi&t=21",
+                                                                                            "comment": "Slope Jump into the wall below the door: https://youtu.be/Rw8w0ZSjeOc?t=21",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -16211,7 +16219,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "Escape the water to first platform",
+                                                        "comment": "Escape the water to the first platform",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -19081,7 +19089,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Stand on the icicle near the door and dash",
+                                                                    "comment": "Stand near the stalagmite by the door and dash off the ice: https://youtu.be/rcdFTntLnqk",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -19172,7 +19180,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": null,
+                                                                                                        "comment": "With Space Jump",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "resource",
@@ -19198,7 +19206,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": "https://youtu.be/V_CBSW0l8Hs",
+                                                                                                        "comment": "Without Space Jump: https://youtu.be/V_CBSW0l8Hs",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "resource",
@@ -19272,7 +19280,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/E65HYxLnOZQ?t=59",
+                                                                                "comment": "Climb onto the stalagmite near the door and dash off the ice",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -19471,7 +19479,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Dash off the vine, Wall Boost, dash off the vine again ttps://www.youtube.com/watch?v=k7ylvABQ_Oo",
+                                                                                "comment": "Dash off the vine, Wall Boost, dash off the vine again: https://youtu.be/k7ylvABQ_Oo",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
