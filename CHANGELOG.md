@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Agon Wastes
 
-- Fixed: Fighting Bomb Guardian with only Charged Dark shots now requires the correct 30 dark ammo.
+- Fixed: Fighting Bomb Guardian with only Charged Dark shots now requires the correct 31 dark ammo.
 
 ### Metroid: Samus Returns
 
