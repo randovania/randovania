@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Removed game-specific text from the preset editor's header to make information more clear for all games in RDV.
 
 ### Metroid Prime 2: Echoes
-- Added: Added a notice to the door lock rando tab that new patcher is both required and will be enabled alongside any randomization settings
+- Added: Added a notice to the door lock rando tab that new patcher is both required and will be enabled alongside any randomization settings.
 
 ### Metroid: Samus Returns
 
