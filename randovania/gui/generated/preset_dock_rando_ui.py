@@ -15,10 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
-    QGroupBox, QHBoxLayout, QLabel, QMainWindow,
-    QScrollArea, QSizePolicy, QSpacerItem, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGroupBox,
+    QHBoxLayout, QLabel, QMainWindow, QScrollArea,
+    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
 class Ui_PresetDockRando(object):
     def setupUi(self, PresetDockRando):
@@ -51,36 +50,43 @@ class Ui_PresetDockRando(object):
         self.scroll_area_layout.setContentsMargins(1, 1, 1, 0)
         self.settings_group = QGroupBox(self.scroll_area_contents)
         self.settings_group.setObjectName(u"settings_group")
-        self.gridLayout = QGridLayout(self.settings_group)
-        self.gridLayout.setSpacing(6)
-        self.gridLayout.setContentsMargins(11, 11, 11, 11)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.mode_combo = QComboBox(self.settings_group)
-        self.mode_combo.setObjectName(u"mode_combo")
-
-        self.gridLayout.addWidget(self.mode_combo, 0, 1, 1, 1)
-
-        self.multiworld_label = QLabel(self.settings_group)
-        self.multiworld_label.setObjectName(u"multiworld_label")
-
-        self.gridLayout.addWidget(self.multiworld_label, 6, 0, 1, 2)
-
+        self.settings_layout = QVBoxLayout(self.settings_group)
+        self.settings_layout.setSpacing(6)
+        self.settings_layout.setContentsMargins(11, 11, 11, 11)
+        self.settings_layout.setObjectName(u"settings_layout")
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setSpacing(6)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.mode_label = QLabel(self.settings_group)
         self.mode_label.setObjectName(u"mode_label")
 
-        self.gridLayout.addWidget(self.mode_label, 0, 0, 1, 1)
+        self.horizontalLayout.addWidget(self.mode_label)
+
+        self.mode_combo = QComboBox(self.settings_group)
+        self.mode_combo.setObjectName(u"mode_combo")
+        self.mode_combo.setInsertPolicy(QComboBox.InsertPolicy.InsertAtCurrent)
+
+        self.horizontalLayout.addWidget(self.mode_combo)
+
+
+        self.settings_layout.addLayout(self.horizontalLayout)
 
         self.mode_description = QLabel(self.settings_group)
         self.mode_description.setObjectName(u"mode_description")
 
-        self.gridLayout.addWidget(self.mode_description, 2, 0, 1, 2)
+        self.settings_layout.addWidget(self.mode_description)
 
         self.line = QFrame(self.settings_group)
         self.line.setObjectName(u"line")
         self.line.setFrameShape(QFrame.Shape.HLine)
         self.line.setFrameShadow(QFrame.Shadow.Sunken)
 
-        self.gridLayout.addWidget(self.line, 5, 0, 1, 2)
+        self.settings_layout.addWidget(self.line)
+
+        self.multiworld_label = QLabel(self.settings_group)
+        self.multiworld_label.setObjectName(u"multiworld_label")
+
+        self.settings_layout.addWidget(self.multiworld_label)
 
 
         self.scroll_area_layout.addWidget(self.settings_group)
@@ -132,9 +138,9 @@ class Ui_PresetDockRando(object):
     def retranslateUi(self, PresetDockRando):
         PresetDockRando.setWindowTitle(QCoreApplication.translate("PresetDockRando", u"Door Locks", None))
         self.settings_group.setTitle(QCoreApplication.translate("PresetDockRando", u"Settings", None))
-        self.multiworld_label.setText(QCoreApplication.translate("PresetDockRando", u"<html><head/><body><p>The selected mode is <span style=\" font-weight:700;\">not</span> compatible with multiworld sessions.</p></body></html>", None))
         self.mode_label.setText(QCoreApplication.translate("PresetDockRando", u"Randomization Mode", None))
         self.mode_description.setText(QCoreApplication.translate("PresetDockRando", u"Original door locks.", None))
+        self.multiworld_label.setText(QCoreApplication.translate("PresetDockRando", u"<html><head/><body><p>The selected mode is <span style=\" font-weight:700;\">not</span> compatible with multiworld sessions.</p></body></html>", None))
         self.dock_types_group.setTitle(QCoreApplication.translate("PresetDockRando", u"Door Types", None))
         self.change_from_desc.setText(QCoreApplication.translate("PresetDockRando", u"**Doors to Change**\n"
 "\n"
