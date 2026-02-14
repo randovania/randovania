@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Sector 6 (NOC)
 
-- Changed: Nocturnal Shaft: Dealing with the Blue-X is now Trivial.
+- Changed: Nocturnal Shaft: When going from top left to top right, dealing with the Blue-X is now trivial.
 
 ### Metroid: Samus Returns
 
