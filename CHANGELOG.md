@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Sector 6 (NOC)
 
-- Changed: Nocturnal Shaft: Going from top left door to top right door no longer requires varia suit, intermediate combat, or beginner damage boost and 70+ health
+- Changed: Nocturnal Shaft: Dealing with the Blue-X is now Trivial.
 
 ### Metroid: Samus Returns
 
