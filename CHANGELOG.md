@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Renamed elevator rooms to be more aligned with where they are in the B.S.L rather than their destination in order to bring more clarity. For example, "Elevator to Central Nexus" was renamed to "Habitation Deck Elevator".
 
+#### Logic Database
+
+##### Sector 6 (NOC)
+
+- Changed: Nocturnal Shaft: Going from top left door to top right door no longer requires varia suit, intermediate combat, or beginner damage boost and 70+ health
+
 ### Metroid: Samus Returns
 
 - Fixed: Certain output preferences from old versions of Randovania no longer causes issues on start.
