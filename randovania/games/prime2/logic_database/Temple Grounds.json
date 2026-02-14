@@ -11431,12 +11431,50 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to GFMC Compound": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "events",
-                                "name": "Event109",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event109",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "SA bonk inside the tunnel: https://youtu.be/1SGf1gyufXE",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BSJ",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Event - Gate Unlocked": {
