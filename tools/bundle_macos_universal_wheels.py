@@ -32,7 +32,7 @@ from randovania.lib import http_lib
 
 def parse_wheel_filename(url: str) -> dict[str, str]:
     """Parse wheel filename from URL to extract components."""
-    filename = url.split("/")[-1]
+    filename = url.rsplit("/", maxsplit=1)[-1]
     if not filename.endswith(".whl"):
         raise ValueError(f"Invalid wheel filename: {filename}")
 
@@ -147,7 +147,7 @@ def get_installed_packages() -> set[str]:
 
 async def download_wheel(session: aiohttp.ClientSession, url: str, dest_dir: Path) -> Path:
     """Download a wheel file to the specified directory using aiohttp."""
-    filename = url.split("/")[-1]
+    filename = url.rsplit("/", maxsplit=1)[-1]
     dest_path = dest_dir / filename
 
     async with session.get(url) as response:
