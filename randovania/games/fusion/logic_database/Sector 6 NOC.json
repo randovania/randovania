@@ -755,7 +755,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Sector 6 (NOC) Entrance Elevator": {
+                        "Door to Elevator to Main Deck": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -764,7 +764,7 @@
                         }
                     }
                 },
-                "Door to Sector 6 (NOC) Entrance Elevator": {
+                "Door to Elevator to Main Deck": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -785,7 +785,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Sector 6 (NOC) Entrance Elevator",
+                        "area": "Elevator to Main Deck",
                         "node": "Door to Entrance Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -848,7 +848,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Sector 6 (NOC) Entrance Elevator": {
+                        "Door to Elevator to Main Deck": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1664,6 +1664,58 @@
                                             "name": "ScrewAttack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoosts",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 70,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6328,7 +6380,7 @@
                 }
             }
         },
-        "Sector 6 (NOC) Entrance Elevator": {
+        "Elevator to Main Deck": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -6369,7 +6421,7 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Sector Hub Lift 6",
+                        "area": "Elevator to Sector 6 (NOC)",
                         "node": "Elevator to Sector 6 (NOC)"
                     },
                     "default_dock_weakness": "Elevator",
@@ -6410,7 +6462,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Entrance Navigation Room",
-                        "node": "Door to Sector 6 (NOC) Entrance Elevator"
+                        "node": "Door to Elevator to Main Deck"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
