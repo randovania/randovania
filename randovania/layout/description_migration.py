@@ -856,6 +856,18 @@ def _migrate_v40(data: dict) -> None:
                 game["dock_weakness"][doors_to_migrate[target_door[0]]] = game["dock_weakness"].pop(target_door[0])
 
 
+def _migrate_v41(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        for hint in game["hints"].values():
+            if "precision" in hint:
+                precision = hint["precision"]
+                if "item" in precision:
+                    if precision["item"] == "nothing":
+                        precision["item"] = "detailed"
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -897,6 +909,7 @@ _MIGRATIONS = [
     _migrate_v38,  # Redo am2r pickup features
     _migrate_v39,  # Redo msr pickup features
     _migrate_v40,  # Renamed Fusion elevators, migrated connecting doors
+    _migrate_v41,  # Fix old hint migrations where it hinted a nothing pickup
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
