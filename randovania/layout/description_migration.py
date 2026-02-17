@@ -858,7 +858,7 @@ def _migrate_v40(data: dict) -> None:
         item_locations = {
             "Glass Tube to Sector 5 (ARC)": "Sector 3 (PYR) Westbound Glass Tube",
             "Cargo Hold to Sector 5 (ARC)": "Cargo Hold",
-            "Flooded Access to Sector 4 (AQA)": "Flooded Access",
+            "Flooded Airlock to Sector 4 (AQA)": "Flooded Airlock",
         }
         for location in game["locations"]:
             node = location["node_identifier"]
