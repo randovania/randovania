@@ -81,7 +81,7 @@ def test_layout_patch_data_export(
     data = factory.create_data()
     mock_attach.assert_called_once_with()
 
-    _update_committed(data_path, cosmetic_path, data, cosmetic_patches)
+    # _update_committed(data_path, cosmetic_path, data, cosmetic_patches)
 
     assert data == json_lib.read_path(data_path)
 
