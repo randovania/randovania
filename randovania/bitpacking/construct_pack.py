@@ -246,7 +246,7 @@ def compiled_construct_for_type(type_: type) -> construct.Construct:
     )
 
 
-def encode(obj: T, type_: type[T] | None = None) -> bytes:
+def encode[T](obj: T, type_: type[T] | None = None) -> bytes:
     if type_ is None:
         type_ = type(obj)
     t: type = type_  # workaround for mypy considering type[T] not hashable
