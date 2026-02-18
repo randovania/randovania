@@ -163,7 +163,7 @@ _PER_GAME_SERIALIZERS = {
 
 def add_per_game_serializer():
     def make_decoder(g: RandovaniaGame):
-        return g.options.from_json
+        return lambda it: g.options.from_json(it)  # noqa: PLW0108
 
     for game in RandovaniaGame.all_games():
         _SERIALIZER_FOR_FIELD[f"game_{game.value}"] = Serializer(
