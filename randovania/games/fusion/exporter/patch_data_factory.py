@@ -417,9 +417,15 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
             credits_array.append({"LineType": "Red", "Text": pickup, "BlankLines": 1})
             for location in spoiler_dict[pickup]:
-                region_lines = self._wrap_text_for_credits(location["Region"])
-                area_lines = self._wrap_text_for_credits(location["Area"])
+                region_name = location["Region"]
+                area_name = location["Area"]
+                # We want to avoid displaying something like "s3 - s3 blabla", so remove possible redundancies like that
+                if area_name.startswith(region_name):
+                    area_name = area_name[len(region_name) + 1 :]
                 world_name = location["World"] if location["World"] else ""
+
+                region_lines = self._wrap_text_for_credits(region_name)
+                area_lines = self._wrap_text_for_credits(area_name)
                 world_lines = self._wrap_text_for_credits(world_name)
                 for line in world_lines:
                     credits_array.append({"LineType": "Blue", "Text": line, "BlankLines": 0})

@@ -35,6 +35,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - The Shutter Gate in Total Recharge Station is now additionally logical with Flash Shift Skip (Beginner) and either
       Movement (Beginner) or using Spin Boost.
 
+### Metroid Fusion
+
+- Changed: Renamed Elevator rooms, Glass Tubes and other rooms that cross different Sectors to be more aligned with where they are in the B.S.L rather than their destination. This is done in order to bring more clarity to them. For example, "Elevator to Central Nexus" was renamed to "Habitation Deck Elevator", Sector 3's "Glass Tube to to Sector 5 (ARC)" was renamed to "Sector 3 (PYR) Westbound Glass Tube" and "Cargo Hold to Sector 5 (ARC)" was renamed to "Cargo Hold".
+- Changed: Fixed a typo in the Open Sector Hub preset.
+
+#### Logic Database
+
+##### Sector 6 (NOC)
+
+- Changed: Nocturnal Shaft: When going from top left to top right, dealing with the Blue-X is now trivial.
+
 ### Metroid: Samus Returns
 
 - Fixed: Certain output preferences from old versions of Randovania no longer causes issues on start.
@@ -182,6 +193,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Killing Elite Pirates on Hard Mode now requires Missiles instead of Power Beams.
 - Changed: Killing Elite Pirates with Beginner Combat but now requires Charge Beam or Plasma Beam, but less health.
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+##### Temple Grounds
+
+- Added: Sacred Bridge: Crossing the room in reverse without opening the gate with a ludicrous IUJ and advanced movement.
 
 ### Metroid: Samus Returns
 
