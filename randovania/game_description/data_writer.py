@@ -138,7 +138,9 @@ def write_trick_resource(resource: TrickResourceInfo) -> dict:
     }
 
 
-def write_array(array: list[_Resource], writer: Callable[[_Resource], dict]) -> dict:
+def write_array[Resource: (SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo)](
+    array: list[_Resource], writer: Callable[[_Resource], dict]
+) -> dict:
     return {item.short_name: writer(item) for item in array}
 
 

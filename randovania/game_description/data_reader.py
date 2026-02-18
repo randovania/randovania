@@ -58,11 +58,11 @@ X = TypeVar("X")
 Y = TypeVar("Y")
 
 
-def read_dict(data: dict[str, Y], item_reader: Callable[[str, Y], X]) -> list[X]:
+def read_dict[Y, X](data: dict[str, Y], item_reader: Callable[[str, Y], X]) -> list[X]:
     return [item_reader(name, item) for name, item in data.items()]
 
 
-def read_array(data: list[Y], item_reader: Callable[[Y], X]) -> list[X]:
+def read_array[Y, X](data: list[Y], item_reader: Callable[[Y], X]) -> list[X]:
     return [item_reader(item) for item in data]
 
 

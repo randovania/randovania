@@ -240,11 +240,11 @@ def test_update_builder_ui(skip_qtbot, mocker: MockerFixture):
         }[uid]
     )
     window_manager.multiworld_client.get_world_sync_error = MagicMock(
-        side_effect=lambda uid: (
+        side_effect=(
             {
                 connector_c.layout_uuid: error.ServerError(),
             }
-        ).get(uid)
+        ).get
     )
 
     window.update_builder_ui()

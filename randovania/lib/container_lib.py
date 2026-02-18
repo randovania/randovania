@@ -16,7 +16,7 @@ def iterate_key_sorted[SupportsRichComparisonT: SupportsRichComparison, Y](
     return sorted(obj.items(), key=operator.itemgetter(0))
 
 
-def ensure_in_set(element: X, the_set: set[X], present: bool) -> None:
+def ensure_in_set[X](element: X, the_set: set[X], present: bool) -> None:
     if present:
         the_set.add(element)
     elif element in the_set:

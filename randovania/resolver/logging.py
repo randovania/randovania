@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import abc
 import typing
-from enum import Enum
+from enum import StrEnum
 from functools import cached_property
 from typing import TYPE_CHECKING, Literal, NamedTuple, Protocol, final
 
@@ -28,7 +28,7 @@ if TYPE_CHECKING:
     from randovania.resolver.resolver import ActionPriority
 
 
-class ActionType(str, Enum):
+class ActionType(StrEnum):
     MAJOR_PICKUP = "Major"
     MINOR_PICKUP = "Minor"
     EVENT = "Event"
