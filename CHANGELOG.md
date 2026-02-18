@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
-- Changed: Renamed Elevator rooms, Glass Tubes and other rooms that cross different Sectors to be more aligned with where they are in the B.S.L rather than their destination, in order to bring more clarity. For example, "Elevator to Central Nexus" was renamed to "Habitation Deck Elevator", Sector 3's "Glass Tube to to Sector 5 (ARC)" was renamed to "Sector 3 (PYR) Westbound Glass Tube" and "Cargo Hold to Sector 5 (ARC)" was renamed to "Cargo Hold".
+- Changed: Renamed Elevator rooms, Glass Tubes and other rooms that cross different Sectors to be more aligned with where they are in the B.S.L rather than their destination. This is done in order to bring more clarity to them. For example, "Elevator to Central Nexus" was renamed to "Habitation Deck Elevator", Sector 3's "Glass Tube to to Sector 5 (ARC)" was renamed to "Sector 3 (PYR) Westbound Glass Tube" and "Cargo Hold to Sector 5 (ARC)" was renamed to "Cargo Hold".
 - Changed: Fixed a typo in the Open Sector Hub preset.
 
 #### Logic Database
