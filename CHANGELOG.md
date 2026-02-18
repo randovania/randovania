@@ -168,6 +168,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Killing Elite Pirates on Hard Mode now requires Missiles instead of Power Beams.
 - Changed: Killing Elite Pirates with Beginner Combat but now requires Charge Beam or Plasma Beam, but less health.
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+##### Temple Grounds
+
+- Added: Sacred Bridge: Crossing the room in reverse without opening the gate with a ludicrous IUJ and advanced movement.
+
 ### Metroid: Samus Returns
 
 #### Logic Database
