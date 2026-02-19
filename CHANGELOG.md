@@ -84,6 +84,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Changed: Energy Parts are now logical.
+- Added: An option to enable Lua debug logging is available in the Cosmetic Options dialog when "Show Experimental Settings" is enabled (intended for game patcher developers).
 
 #### Logic Database
 
