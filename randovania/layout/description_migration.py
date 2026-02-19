@@ -855,6 +855,16 @@ def _migrate_v40(data: dict) -> None:
             if target_door[0] in doors_to_migrate:
                 game["dock_weakness"][doors_to_migrate[target_door[0]]] = game["dock_weakness"].pop(target_door[0])
 
+        item_locations = {
+            "Glass Tube to Sector 5 (ARC)": "Sector 3 (PYR) Westbound Glass Tube",
+            "Cargo Hold to Sector 5 (ARC)": "Cargo Hold",
+            "Flooded Airlock to Sector 4 (AQA)": "Flooded Airlock",
+        }
+        for location in game["locations"]:
+            node = location["node_identifier"]
+            area = node["area"]
+            node["area"] = item_locations.get(area, area)
+
 
 def _migrate_v41(data: dict) -> None:
     game_modifications = data["game_modifications"]
@@ -908,7 +918,7 @@ _MIGRATIONS = [
     _migrate_v37,  # Refactor how the "locations" field is saved.
     _migrate_v38,  # Redo am2r pickup features
     _migrate_v39,  # Redo msr pickup features
-    _migrate_v40,  # Renamed Fusion elevators, migrated connecting doors
+    _migrate_v40,  # Renamed Fusion rooms that reference other sector
     _migrate_v41,  # Fix old hint migrations where it "nothing" was still a valid precision
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)

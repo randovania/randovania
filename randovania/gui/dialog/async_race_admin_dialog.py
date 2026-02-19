@@ -30,7 +30,7 @@ class AsyncRaceEntryDataDatabaseModel(EditableTableModel[AsyncRaceEntryData]):
             DateFieldDefinition("Start Date", "start_date", optional=True),
             DateFieldDefinition("Finish Date", "finish_date", optional=True),
             BoolFieldDefinition("Forfeited?", "forfeit"),
-            FieldDefinition("Pauses?", "pauses", to_qt=lambda v: len(v), from_qt=None),
+            FieldDefinition("Pauses?", "pauses", to_qt=len, from_qt=None),
             FieldDefinition("Submission Notes", "submission_notes"),
             FieldDefinition("Proof URL", "proof_url"),
         ]
