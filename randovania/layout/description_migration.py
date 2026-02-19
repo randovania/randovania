@@ -909,7 +909,7 @@ _MIGRATIONS = [
     _migrate_v38,  # Redo am2r pickup features
     _migrate_v39,  # Redo msr pickup features
     _migrate_v40,  # Renamed Fusion elevators, migrated connecting doors
-    _migrate_v41,  # Fix old hint migrations where it hinted a nothing pickup
+    _migrate_v41,  # Fix old hint migrations where it "nothing" was still a valid precision
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
