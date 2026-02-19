@@ -688,6 +688,7 @@ SOLO_RDVGAMES = [
     ("prime1_and_2_multi.rdvgame", None),
     ("cs_echoes_multi_1.rdvgame", None),
     ("dread_prime1_multiworld.rdvgame", None),  # dread-prime1 multi
+    ("multi-old-echoes-with-owner-precision.rdvgame", None),  # echoes+echoes multi from v2.2.0
     # AM2R
     ("am2r/starter_preset.rdvgame", False),  # starter preset
     ("am2r/door_lock.rdvgame", False),  # starter preset+door lock rando

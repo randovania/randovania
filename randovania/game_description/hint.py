@@ -34,6 +34,9 @@ class HintItemPrecision(Enum):
     # The exact item
     DETAILED = "detailed"
 
+    # DEPRECATED: vague/useless hint
+    NOTHING = "nothing"
+
 
 class HintLocationPrecision(Enum):
     # Precision hasn't been assigned yet
