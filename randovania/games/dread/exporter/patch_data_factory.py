@@ -393,6 +393,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             },
             "lua": {
                 "custom_init": {
+                    "show_dna_in_hud": c.show_dna_in_hud,
                     "enable_death_counter": c.show_death_counter,
                     "enable_room_name_display": c.show_room_names.value,
                 },
@@ -535,6 +536,19 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             other_train["teleporter"]["actor"] = "wagontrain_quarantine_000"
             teleporters.append(other_train)
 
+        # Determine if the preset contains any Flash Shift Upgrade or Speed Booster Upgrade items (this will decide
+        # whether or not to show them in the Samus menu)
+        has_flash_upgrades = any(
+            state.pickup_count > 0
+            for pickup, state in self.configuration.ammo_pickup_configuration.pickups_state.items()
+            if pickup.name == "Flash Shift Upgrade"
+        )
+        has_speed_upgrades = any(
+            state.num_included_in_starting_pickups > 0 or state.num_shuffled_pickups > 0
+            for pickup, state in self.configuration.standard_pickup_configuration.pickups_state.items()
+            if pickup.name == "Speed Booster Upgrade"
+        )
+
         return {
             "configuration_identifier": self.description.shareable_hash,
             "starting_location": starting_location,
@@ -550,6 +564,8 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             "cosmetic_patches": self._cosmetic_patch_data(),
             "energy_per_tank": energy_per_tank,
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
+            "has_flash_upgrades": has_flash_upgrades,
+            "has_speed_upgrades": has_speed_upgrades,
             "enable_remote_lua": self.cosmetic_patches.enable_auto_tracker or self.players_config.is_multiworld,
             "enable_logging": self.cosmetic_patches.enable_debug_logging,
             "skip_item_popups": self.configuration.skip_item_popups,
