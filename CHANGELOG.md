@@ -35,6 +35,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - The Shutter Gate in Total Recharge Station is now additionally logical with Flash Shift Skip (Beginner) and either
       Movement (Beginner) or using Spin Boost.
 
+##### Haubia
+
+- Fixed: Requirements for Power Bomb ammo in Ferenia Shortcut have been strengthened, so 2 ammo is required to reach the Pickup, 3 ammo is required to leave from the pickup, in either direction.
+- Fixed: Requirements for Power Bomb ammo in Sppedboost Puzzle Room have been strengthened, so 4 ammo is required to get from Ferenia Shortcut to the Navigation Station.
+
 ### Metroid Fusion
 
 - Changed: Renamed Elevator rooms, Glass Tubes and other rooms that cross different Sectors to be more aligned with where they are in the B.S.L rather than their destination. This is done in order to bring more clarity to them. For example, "Elevator to Central Nexus" was renamed to "Habitation Deck Elevator", Sector 3's "Glass Tube to to Sector 5 (ARC)" was renamed to "Sector 3 (PYR) Westbound Glass Tube" and "Cargo Hold to Sector 5 (ARC)" was renamed to "Cargo Hold".
