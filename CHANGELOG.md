@@ -11,6 +11,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Added: Current and total DNA count is now displayed in the "Samus" menu on the pause screen. A cosmetic option is also available to display it in the HUD, next to the death counter (if enabled).
+- Changed: The appearance of the Death Counter was improved to use an icon instead of the "Deaths:" text.
+- Added: The current improvements gained to Speed Booster and Flash Shift from the "Upgrade" items (if present) will be displayed in the "Samus" menu.
+  - The current "number of chained Flash Shifts" is displayed when Flash Shift Upgrades are present in the item pool.
+  - The current "time-to-charge Speed Booster" is displayed when Speed Booster Upgrades are present in the item pool.
+- Added: Icons for individual Beam and Missile upgrades are displayed in the header of the each respective category in the "Samus" menu, clearly indicating whether or not "earlier" items have been obtained even if a "later" item is shown as the "current item".
+  - For example, if the player has obtained Plasma Beam, an icon will be displayed on the Beams category for Wide Beam. The icon will be "dimmed" if the player has not yet obtained Wide Beam, and it will light up once Wide Beam is acquired.
+  - Likewise, if the player has obtained Wave Beam, a similar icon is displayed for Plasma Beam.
+  - Likewise, if the player has obtained Ice Missiles, a similar icon is displayed for Super Missiles.
+- Added: An option is now available in the "Other" preset settings tab to skip item acquisition popups, replacing them with a short on-screen message instead (similar to receiving Multiworld items).
+- Added: An option to enable Lua debug logging is available in the Cosmetic Options dialog when "Show Experimental Settings" is enabled (intended for game patcher developers).
+
 #### Logic Database
 
 ##### Burenia
@@ -92,8 +104,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Changed: Energy Parts are now logical.
-- Added: An option to enable Lua debug logging is available in the Cosmetic Options dialog when "Show Experimental Settings" is enabled (intended for game patcher developers).
-- Added: An option is now available in the "Other" preset settings tab to skip item acquisition popups, replacing them with a short on-screen message instead (similar to receiving Multiworld items).
 
 #### Logic Database
 
