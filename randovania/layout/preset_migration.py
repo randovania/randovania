@@ -1225,6 +1225,11 @@ def _migrate_v110(preset: dict, game: RandovaniaGame, *, from_layout_description
         preset["configuration"]["adjusted_geron_weaknesses"] = not from_layout_description
 
 
+def _migrate_v111(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    if game == RandovaniaGame.METROID_DREAD:
+        preset["configuration"]["skip_item_popups"] = False
+
+
 _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1336,6 +1341,7 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v108,  # fusion instant morph
     _migrate_v109,  # remove consider_possible_unsafe_resources and two_sided_door_lock_search
     _migrate_v110,  # fusion: add adjusted geron weaknesses
+    _migrate_v111,  # dread: add skip_item_popups setting
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
