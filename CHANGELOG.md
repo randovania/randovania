@@ -49,8 +49,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Changed: The hatch graphics have been changed in order to be more accessible to color blind people.
+- Fixed: The HUD no longer occasionally disappears after rescuing the animals.
+- Fixed: Discrepancies on the map and minimap regarding boss icons.
+- Changed: The Missile Geron in Sector 1 (SRX) - Yameba Corridor has been moved a few tiles to the left.
 - Changed: Renamed Elevator rooms, Glass Tubes and other rooms that cross different Sectors to be more aligned with where they are in the B.S.L rather than their destination. This is done in order to bring more clarity to them. For example, "Elevator to Central Nexus" was renamed to "Habitation Deck Elevator", Sector 3's "Glass Tube to to Sector 5 (ARC)" was renamed to "Sector 3 (PYR) Westbound Glass Tube" and "Cargo Hold to Sector 5 (ARC)" was renamed to "Cargo Hold".
-- Changed: Fixed a typo in the Open Sector Hub preset.
+- Fixed: Fixed a typo in the Open Sector Hub preset.
 
 #### Logic Database
 
