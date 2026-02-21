@@ -47,6 +47,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - The Shutter Gate in Total Recharge Station is now additionally logical with Flash Shift Skip (Beginner) and either
       Movement (Beginner) or using Spin Boost.
 
+##### Haubia
+
+- Fixed: Requirements for Power Bomb ammo in Ferenia Shortcut have been strengthened, so 2 ammo is required to reach the Pickup, 3 ammo is required to leave from the pickup, in either direction.
+- Fixed: Requirements for Power Bomb ammo in Sppedboost Puzzle Room have been strengthened, so 4 ammo is required to get from Ferenia Shortcut to the Navigation Station.
+
 ### Metroid Fusion
 
 - Changed: The hatch graphics have been changed in order to be more accessible to color blind people.
