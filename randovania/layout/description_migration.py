@@ -859,6 +859,8 @@ def _migrate_v40(data: dict) -> None:
             "Glass Tube to Sector 5 (ARC)": "Sector 3 (PYR) Westbound Glass Tube",
             "Cargo Hold to Sector 5 (ARC)": "Cargo Hold",
             "Flooded Airlock to Sector 4 (AQA)": "Flooded Airlock",
+            "Ridley Arena": "Neo-Ridley Arena",
+            "Zoro Zig-Zag": "Zig-Zag-Zone",
         }
         for location in game["locations"]:
             node = location["node_identifier"]
@@ -906,7 +908,7 @@ _MIGRATIONS = [
     _migrate_v37,  # Refactor how the "locations" field is saved.
     _migrate_v38,  # Redo am2r pickup features
     _migrate_v39,  # Redo msr pickup features
-    _migrate_v40,  # Renamed Fusion rooms that reference other sector
+    _migrate_v40,  # Renamed Fusion rooms that reference other sectors or unofficial enemy names
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

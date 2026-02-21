@@ -394,7 +394,7 @@ class Ui_FusionGameTabWidget(object):
 "\n"
 "- Main Deck - Operations Ventilation - repaired the connection between Crew Quarters East and West.\n"
 "\n"
-"- Main Deck - Silo Entry - the Zoro cocoon is moved to allow traversal.\n"
+"- Main Deck - Silo Entry - the Zero cocoon is moved to allow traversal.\n"
 "\n"
 "- Main Deck - Central Reactor C"
                         "ore - now has a platform near the top to make traversal still possible after the vines have been removed.\n"
