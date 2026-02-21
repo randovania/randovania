@@ -26,6 +26,8 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog[DreadCosmeticPatches]
         super().__init__(parent, current, options)
         self.setupUi(self)
 
+        self.enable_debug_logging.setVisible(options.experimental_settings)
+
         for room_gui_type in DreadRoomGuiType:
             self.room_names_dropdown.addItem(room_gui_type.long_name, room_gui_type)
 
@@ -59,8 +61,10 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog[DreadCosmeticPatches]
         self._persist_check_field(self.show_enemy_life, "show_enemy_life")
         self._persist_check_field(self.show_enemy_damage, "show_enemy_damage")
         self._persist_check_field(self.show_player_damage, "show_player_damage")
+        self._persist_check_field(self.show_dna_in_hud, "show_dna_in_hud")
         self._persist_check_field(self.show_death_counter, "show_death_counter")
         self._persist_check_field(self.enable_auto_tracker, "enable_auto_tracker")
+        self._persist_check_field(self.enable_debug_logging, "enable_debug_logging")
         for field_name, slider in self.field_name_to_slider_mapping.items():
             slider.valueChanged.connect(partial(self._on_slider_update, slider, field_name))
         signal_handling.on_combo(self.room_names_dropdown, self._on_room_name_mode_update)
@@ -78,8 +82,10 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog[DreadCosmeticPatches]
         self.show_enemy_life.setChecked(patches.show_enemy_life)
         self.show_enemy_damage.setChecked(patches.show_enemy_damage)
         self.show_player_damage.setChecked(patches.show_player_damage)
+        self.show_dna_in_hud.setChecked(patches.show_dna_in_hud)
         self.show_death_counter.setChecked(patches.show_death_counter)
         self.enable_auto_tracker.setChecked(patches.enable_auto_tracker)
+        self.enable_debug_logging.setChecked(patches.enable_debug_logging)
         for field_name, slider in self.field_name_to_slider_mapping.items():
             slider = self.field_name_to_slider_mapping[field_name]
             slider.setValue(getattr(patches, f"{field_name}_volume"))

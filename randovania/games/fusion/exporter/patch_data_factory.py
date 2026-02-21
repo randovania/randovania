@@ -528,7 +528,6 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "CreditsText": self._create_credits_text(),
             "DisableDemos": True,
             "RoomNames": self._create_room_names(),
-            "AccessibilityPatches": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
             "InstantUnmorph": self.configuration.instant_morph,
             "NerfGerons": self.configuration.adjusted_geron_weaknesses,

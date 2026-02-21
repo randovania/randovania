@@ -29,6 +29,7 @@ if TYPE_CHECKING:
         ("show_player_damage", "show_player_damage"),
         ("show_death_counter", "show_death_counter"),
         ("enable_auto_tracker", "enable_auto_tracker"),
+        ("enable_debug_logging", "enable_debug_logging"),
     ],
 )
 def test_certain_field(skip_qtbot: pytestqt.qtbot.QtBot, widget_field: str, field_name: str, options: Options) -> None:

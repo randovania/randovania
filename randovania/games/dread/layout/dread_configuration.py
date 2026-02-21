@@ -72,6 +72,7 @@ class DreadConfiguration(BaseConfiguration):
     raven_beak_damage_table_handling: DreadRavenBeakDamageMode
     allow_highly_dangerous_logic: bool
     nerf_power_bombs: bool
+    skip_item_popups: bool
     warp_to_start: bool
     april_fools_hints: bool
     freesink: bool
