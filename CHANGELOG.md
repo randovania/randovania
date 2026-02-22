@@ -54,9 +54,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Changed: Blue-X Damage has been separated from Cold Damage. Damage boosts involving Blue-X parasites in Sector 6 (NOC) now use Blue-X Damage, rather than Cold Damage.
+
 ##### Sector 6 (NOC)
 
 - Changed: Nocturnal Shaft: When going from top left to top right, dealing with the Blue-X is now trivial.
+- Changed: Nocturnal Shaft: When going from top right to top left, damage boosting the Blue-X now correctly expects 70 minimum health, rather than 71.
 
 ### Metroid Prime 2: Echoes
 
