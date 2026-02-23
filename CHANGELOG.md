@@ -91,7 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         - Elevator to Main Deck => Sector 4 (AQA) Entrance Elevator
         - Cargo Hold to Sector 5 (ARC) => Cargo Hold
         - Glass Tube to Sector 6 (NOC) => Sector 4 (AQA) Eastbound Glass Tube
-        - Glass Tube to Sector 6 (NOC) => Sector 4 (AQA) Westbound Glass Tube
+        - Glass Tube to Sector 2 (TRO) => Sector 4 (AQA) Westbound Glass Tube
     - Sector 5 (ARC):
         - Elevator to Main Deck => Sector 5 (ARC) Entrance Elevator
         - Flooded Airlock to Sector 4 (AQA) => Flooded Airlock
