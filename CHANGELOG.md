@@ -118,6 +118,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Changed: Fighting Bomb Guardian with only Charged Dark shots now requires 31 Dark Ammo and Combat Intermediate.
+
 ##### Sanctuary Fortress
 
 - Added: Hall Of Combat Mastery: A ludicrous BSJ + Instant Morph over the spider track to access Central Area Transport East without Spider Ball or Space Jump Boots.
