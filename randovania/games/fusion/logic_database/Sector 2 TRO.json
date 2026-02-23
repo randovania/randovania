@@ -586,7 +586,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Main Deck": {
+                        "Door to Sector 2 (TRO) Entrance Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -595,7 +595,7 @@
                         }
                     }
                 },
-                "Door to Elevator to Main Deck": {
+                "Door to Sector 2 (TRO) Entrance Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -616,7 +616,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 2 (TRO)",
-                        "area": "Elevator to Main Deck",
+                        "area": "Sector 2 (TRO) Entrance Elevator",
                         "node": "Door to Entrance Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -679,7 +679,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Elevator to Main Deck": {
+                        "Door to Sector 2 (TRO) Entrance Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -964,7 +964,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Glass Tube to Sector 4 (AQA)": {
+                        "Door to Sector 2 (TRO) Eastbound Glass Tube": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1063,7 +1063,7 @@
                         }
                     }
                 },
-                "Door to Glass Tube to Sector 4 (AQA)": {
+                "Door to Sector 2 (TRO) Eastbound Glass Tube": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1084,7 +1084,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 2 (TRO)",
-                        "area": "Glass Tube to Sector 4 (AQA)",
+                        "area": "Sector 2 (TRO) Eastbound Glass Tube",
                         "node": "Door to Security Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1394,7 +1394,7 @@
                 }
             }
         },
-        "Zoro Zig-Zag": {
+        "Zig-Zag-Zone": {
             "default_node": null,
             "hint_features": [
                 "pillar"
@@ -1506,7 +1506,7 @@
                     "default_connection": {
                         "region": "Sector 2 (TRO)",
                         "area": "Data Courtyard",
-                        "node": "Door to Zoro Zig-Zag"
+                        "node": "Door to Zig-Zag-Zone"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1697,7 +1697,7 @@
                     "default_connection": {
                         "region": "Sector 2 (TRO)",
                         "area": "Maintenance Wing",
-                        "node": "Door to Zoro Zig-Zag"
+                        "node": "Door to Zig-Zag-Zone"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2692,7 +2692,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Walljump or stand on frozen Zoros",
+                                            "comment": "Walljump or stand on frozen Zeros",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2720,7 +2720,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Freeze Zoros: https://youtu.be/PO6s9wkzqmM",
+                                                                    "comment": "Freeze Zeros: https://youtu.be/PO6s9wkzqmM",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -2747,7 +2747,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Stand on Zoro Cocoons",
+                                            "comment": "Stand on Zero Cocoons",
                                             "items": [
                                                 {
                                                     "type": "or",
@@ -2999,7 +2999,7 @@
                         "y": 112.0,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "excluded from DLR due to hatch limitations",
                     "layers": [
                         "default"
                     ],
@@ -3017,7 +3017,7 @@
                         "node": "Door to Cathedral"
                     },
                     "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -3596,7 +3596,7 @@
                         "y": 112.0,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "excluded from DLR due to hatch limitations",
                     "layers": [
                         "default"
                     ],
@@ -3613,7 +3613,7 @@
                         "node": "Door to Cathedral Save Access"
                     },
                     "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -7491,7 +7491,7 @@
                 }
             }
         },
-        "Elevator to Main Deck": {
+        "Sector 2 (TRO) Entrance Elevator": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -7532,7 +7532,7 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 2 (TRO)",
+                        "area": "Sector Hub Lift 2",
                         "node": "Elevator to Sector 2 (TRO)"
                     },
                     "default_dock_weakness": "Elevator",
@@ -7573,7 +7573,7 @@
                     "default_connection": {
                         "region": "Sector 2 (TRO)",
                         "area": "Entrance Navigation Room",
-                        "node": "Door to Elevator to Main Deck"
+                        "node": "Door to Sector 2 (TRO) Entrance Elevator"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7669,7 +7669,7 @@
                         }
                     }
                 },
-                "Door to Zoro Zig-Zag": {
+                "Door to Zig-Zag-Zone": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7690,7 +7690,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 2 (TRO)",
-                        "area": "Zoro Zig-Zag",
+                        "area": "Zig-Zag-Zone",
                         "node": "Door to Data Courtyard"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -7780,7 +7780,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Zoro Zig-Zag": {
+                        "Door to Zig-Zag-Zone": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9226,7 +9226,7 @@
                         }
                     }
                 },
-                "Door to Glass Tube to Sector 1 (SRX)": {
+                "Door to Sector 2 (TRO) Westbound Glass Tube": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9247,7 +9247,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 2 (TRO)",
-                        "area": "Glass Tube to Sector 1 (SRX)",
+                        "area": "Sector 2 (TRO) Westbound Glass Tube",
                         "node": "Door to Kago Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -9458,7 +9458,7 @@
                                 ]
                             }
                         },
-                        "Door to Glass Tube to Sector 1 (SRX)": {
+                        "Door to Sector 2 (TRO) Westbound Glass Tube": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10509,7 +10509,7 @@
                 ]
             },
             "nodes": {
-                "Door to Zoro Zig-Zag": {
+                "Door to Zig-Zag-Zone": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10530,7 +10530,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 2 (TRO)",
-                        "area": "Zoro Zig-Zag",
+                        "area": "Zig-Zag-Zone",
                         "node": "Door to Maintenance Wing"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -10580,7 +10580,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Zoro Zig-Zag": {
+                        "Door to Zig-Zag-Zone": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11609,7 +11609,7 @@
                 }
             }
         },
-        "Glass Tube to Sector 1 (SRX)": {
+        "Sector 2 (TRO) Westbound Glass Tube": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -11647,7 +11647,7 @@
                     "default_connection": {
                         "region": "Sector 2 (TRO)",
                         "area": "Kago Room",
-                        "node": "Door to Glass Tube to Sector 1 (SRX)"
+                        "node": "Door to Sector 2 (TRO) Westbound Glass Tube"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -11686,7 +11686,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Glass Tube to Sector 2 (TRO)",
+                        "area": "Sector 1 (SRX) Eastbound Glass Tube",
                         "node": "Area Transition to Sector 2 (TRO)"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -11707,7 +11707,7 @@
                 }
             }
         },
-        "Glass Tube to Sector 4 (AQA)": {
+        "Sector 2 (TRO) Eastbound Glass Tube": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -11745,7 +11745,7 @@
                     "default_connection": {
                         "region": "Sector 2 (TRO)",
                         "area": "Security Access",
-                        "node": "Door to Glass Tube to Sector 4 (AQA)"
+                        "node": "Door to Sector 2 (TRO) Eastbound Glass Tube"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -11784,7 +11784,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Glass Tube to Sector 2 (TRO)",
+                        "area": "Sector 4 (AQA) Westbound Glass Tube",
                         "node": "Area Transition to Sector 2 (TRO)"
                     },
                     "default_dock_weakness": "Open Passage",

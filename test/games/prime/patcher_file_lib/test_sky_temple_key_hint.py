@@ -19,7 +19,7 @@ def _create_hint_text(
     key_location: str,
 ) -> list[str]:
     if hide_area:
-        key_location = key_location.split(" - ")[0]
+        key_location = key_location.split(" - ", maxsplit=1)[0]
 
     determiner = ""
     if multiworld:

@@ -21,7 +21,7 @@ def shuffle[T](rng: Random, x: Iterator[T]) -> list[T]:
     return result
 
 
-def iterate_with_weights(rng: Random, items: Iterable[T], item_weights: Mapping[T, float]) -> Iterator[T]:
+def iterate_with_weights[T](rng: Random, items: Iterable[T], item_weights: Mapping[T, float]) -> Iterator[T]:
     """
     Iterates over the given list randomly, with each item having the probability listed in item_weigths
     :param items:
@@ -64,7 +64,7 @@ def select_element_with_weight_and_uniform_fallback[T](rng: Random, weighted_ite
         return rng.choice(list(weighted_items.keys()))
 
 
-def create_weighted_list(
+def create_weighted_list[T](
     rng: Random,
     current: list[T],
     factory: Callable[[], list[T]],

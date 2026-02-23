@@ -102,12 +102,12 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 2}]
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
   * Extra - door_idx: (8,)
-  > Door to Elevator to Main Deck
+  > Door to Sector 2 (TRO) Entrance Elevator
       Trivial
 
-> Door to Elevator to Main Deck; Heals? False
+> Door to Sector 2 (TRO) Entrance Elevator; Heals? False
   * Layers: default
-  * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
+  * Open Hatch to Sector 2 (TRO) Entrance Elevator/Door to Entrance Navigation Room
   * Extra - door_idx: (67,)
   > Door to Entrance Save Room
       Trivial
@@ -120,7 +120,7 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 2}]
   * Extra - hint_name: Sector2Entrance
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: PRECISE_CATEGORY
-  > Door to Elevator to Main Deck
+  > Door to Sector 2 (TRO) Entrance Elevator
       Trivial
 
 ----------------
@@ -174,7 +174,7 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 0}, {'x': 10, 'y': 1}, {'x': 10, 'y
       Trivial
   > Door to Level 1 Security Room (Upper)
       Trivial
-  > Door to Glass Tube to Sector 4 (AQA)
+  > Door to Sector 2 (TRO) Eastbound Glass Tube
       Screw Attack
 
 > Door to Level 1 Security Room (Lower); Heals? False
@@ -191,9 +191,9 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 0}, {'x': 10, 'y': 1}, {'x': 10, 'y
   > Door to Security Corridor
       Trivial
 
-> Door to Glass Tube to Sector 4 (AQA); Heals? False
+> Door to Sector 2 (TRO) Eastbound Glass Tube; Heals? False
   * Layers: default
-  * L0 Hatch to Glass Tube to Sector 4 (AQA)/Door to Security Access
+  * L0 Hatch to Sector 2 (TRO) Eastbound Glass Tube/Door to Security Access
   * Extra - door_idx: (128,)
   > Door to Security Corridor
       Screw Attack
@@ -255,7 +255,7 @@ Hint Features - Data Room
       Trivial
 
 ----------------
-Zoro Zig-Zag
+Zig-Zag-Zone
 Extra - map_name: Sector 29
 Extra - room_id: [9]
 Extra - minimap_coordinates: [{'x': 0, 'y': 5}, {'x': 0, 'y': 6}, {'x': 1, 'y': 5}, {'x': 1, 'y': 6}, {'x': 1, 'y': 7}, {'x': 1, 'y': 8}, {'x': 1, 'y': 9}, {'x': 1, 'y': 10}]
@@ -273,7 +273,7 @@ Hint Features - Pillar
 
 > Door to Data Courtyard; Heals? False
   * Layers: default
-  * L0 Hatch to Data Courtyard/Door to Zoro Zig-Zag
+  * L0 Hatch to Data Courtyard/Door to Zig-Zag-Zone
   * Extra - door_idx: (20,)
   > Pickup (Missile Tank)
       All of the following:
@@ -292,17 +292,17 @@ Hint Features - Pillar
               # Simply climb up to item
               Have Any Jump Upgrade
   > Door to Maintenance Wing
-      After Sector 2 Zoro Zig-Zag Bomb Blocks Broken and Can Bounce in Ball
+      After Sector 2 Zig-Zag-Zone Bomb Blocks Broken and Can Bounce in Ball
   > Event - Break Bomb Blocks
       Can Bounce in Ball and Can Use Any Bombs
 
 > Door to Maintenance Wing; Heals? False
   * Layers: default
-  * L0 Hatch to Maintenance Wing/Door to Zoro Zig-Zag
+  * L0 Hatch to Maintenance Wing/Door to Zig-Zag-Zone
   * Extra - door_idx: (21,)
   > Door to Data Courtyard
       All of the following:
-          Morph Ball and After Sector 2 Zoro Zig-Zag Bomb Blocks Broken
+          Morph Ball and After Sector 2 Zig-Zag-Zone Bomb Blocks Broken
           Any of the following:
               Space Jump
               Hi-Jump and Wall Jump (Intermediate)
@@ -322,7 +322,7 @@ Hint Features - Pillar
 
 > Event - Break Bomb Blocks; Heals? False
   * Layers: default
-  * Event Sector 2 Zoro Zig-Zag Bomb Blocks Broken
+  * Event Sector 2 Zig-Zag-Zone Bomb Blocks Broken
   > Door to Data Courtyard
       Trivial
   > Door to Maintenance Wing
@@ -446,14 +446,14 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 6}, {'x': 6, 'y': 7}, {'x': 6, 'y': 
       Any of the following:
           Space Jump
           All of the following:
-              # Walljump or stand on frozen Zoros
+              # Walljump or stand on frozen Zeros
               Hi-Jump
               Any of the following:
                   Wall Jump (Beginner)
-                  # Freeze Zoros: https://youtu.be/PO6s9wkzqmM
+                  # Freeze Zeros: https://youtu.be/PO6s9wkzqmM
                   Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
           All of the following:
-              # Stand on Zoro Cocoons
+              # Stand on Zero Cocoons
               After Boss Nettori Defeated or After Boss Zazabi Defeated
               Any of the following:
                   Hi-Jump
@@ -481,7 +481,8 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 6}, {'x': 6, 'y': 7}, {'x': 6, 'y': 
 
 > Door to Cathedral Save Access; Heals? False
   * Layers: default
-  * Open Hatch to Cathedral Save Access/Door to Cathedral
+  * Open Hatch to Cathedral Save Access/Door to Cathedral; Excluded from Dock Lock Rando
+  * excluded from DLR due to hatch limitations
   * Extra - door_idx: (29, 105)
   > Door to Puyo Corridor
       Trivial
@@ -582,7 +583,8 @@ Extra - room_id: [15]
 Extra - minimap_coordinates: [{'x': 7, 'y': 13}, {'x': 8, 'y': 13}]
 > Door to Cathedral; Heals? False
   * Layers: default
-  * Open Hatch to Cathedral/Door to Cathedral Save Access
+  * Open Hatch to Cathedral/Door to Cathedral Save Access; Excluded from Dock Lock Rando
+  * excluded from DLR due to hatch limitations
   * Extra - door_idx: (35,)
   > Door to Cathedral Save Room
       Trivial
@@ -1143,20 +1145,20 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 6}]
       Trivial
 
 ----------------
-Elevator to Main Deck
+Sector 2 (TRO) Entrance Elevator
 Extra - map_name: Sector 229
 Extra - room_id: [29]
 Extra - minimap_coordinates: [{'x': 2, 'y': 1}, {'x': 2, 'y': 2}]
 > Elevator to Main Deck; Heals? False
   * Layers: default
-  * Elevator to Elevator to Sector 2 (TRO)/Elevator to Sector 2 (TRO)
+  * Elevator to Sector Hub Lift 2/Elevator to Sector 2 (TRO)
   * Extra - door_idx: (0,)
   > Door to Entrance Navigation Room
       Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Navigation Room/Door to Elevator to Main Deck
+  * L0 Hatch to Entrance Navigation Room/Door to Sector 2 (TRO) Entrance Elevator
   * Extra - door_idx: (66,)
   > Elevator to Main Deck
       Trivial
@@ -1177,9 +1179,9 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 4}, {'x': 2, 'y': 5}, {'x': 2, 'y': 
   > Door to Courtyard Access
       Can Use Any Bombs
 
-> Door to Zoro Zig-Zag; Heals? False
+> Door to Zig-Zag-Zone; Heals? False
   * Layers: default
-  * L0 Hatch to Zoro Zig-Zag/Door to Data Courtyard
+  * L0 Hatch to Zig-Zag-Zone/Door to Data Courtyard
   * Extra - door_idx: (18,)
   > Door to Courtyard Save Room
       Trivial
@@ -1195,7 +1197,7 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 4}, {'x': 2, 'y': 5}, {'x': 2, 'y': 
   * Layers: default
   * L0 Hatch to Courtyard Save Room/Door to Data Courtyard
   * Extra - door_idx: (84,)
-  > Door to Zoro Zig-Zag
+  > Door to Zig-Zag-Zone
       Trivial
   > Door to Courtyard Access
       After Sector 2 Data Hub Bomb Block Destroyed and Can Bounce in Ball
@@ -1376,9 +1378,9 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 3}, {'x': 4, 'y': 3}, {'x': 5, 'y': 
           # Shinespark from entrance rooms: https://youtu.be/Vj4czMXvx4M
           Level 0 Keycard and Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
 
-> Door to Glass Tube to Sector 1 (SRX); Heals? False
+> Door to Sector 2 (TRO) Westbound Glass Tube; Heals? False
   * Layers: default
-  * L0 Hatch to Glass Tube to Sector 1 (SRX)/Door to Kago Room
+  * L0 Hatch to Sector 2 (TRO) Westbound Glass Tube/Door to Kago Room
   * Extra - door_idx: (125,)
   > Beside Pickup
       Screw Attack
@@ -1400,7 +1402,7 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 3}, {'x': 4, 'y': 3}, {'x': 5, 'y': 
               Movement (Advanced)
               # NHJ damage boost: https://youtu.be/2_3yWlyZrYQ
               Damage Boosts (Beginner) and Normal Damage ≥ 34
-  > Door to Glass Tube to Sector 1 (SRX)
+  > Door to Sector 2 (TRO) Westbound Glass Tube
       Screw Attack
 
 ----------------
@@ -1583,9 +1585,9 @@ Maintenance Wing
 Extra - map_name: Sector 243
 Extra - room_id: [43]
 Extra - minimap_coordinates: [{'x': 0, 'y': 10}, {'x': 0, 'y': 11}]
-> Door to Zoro Zig-Zag; Heals? False
+> Door to Zig-Zag-Zone; Heals? False
   * Layers: default
-  * L0 Hatch to Zoro Zig-Zag/Door to Maintenance Wing
+  * L0 Hatch to Zig-Zag-Zone/Door to Maintenance Wing
   * Extra - door_idx: (98,)
   > Door to Cultivation Station
       Trivial
@@ -1594,7 +1596,7 @@ Extra - minimap_coordinates: [{'x': 0, 'y': 10}, {'x': 0, 'y': 11}]
   * Layers: default
   * L0 Hatch to Cultivation Station/Door to Maintenance Wing
   * Extra - door_idx: (99,)
-  > Door to Zoro Zig-Zag
+  > Door to Zig-Zag-Zone
       Any of the following:
           Space Jump
           # WJ up: https://youtu.be/8gjeZTK98_8
@@ -1766,39 +1768,39 @@ Hint Features - Climbable Surface, Multiple Pickups
           Space Jump and Movement (Advanced)
 
 ----------------
-Glass Tube to Sector 1 (SRX)
+Sector 2 (TRO) Westbound Glass Tube
 Extra - map_name: Sector 252
 Extra - room_id: [52]
 Extra - minimap_coordinates: [{'x': 2, 'y': 3}]
 > Door to Kago Room; Heals? False
   * Layers: default
-  * L0 Hatch to Kago Room/Door to Glass Tube to Sector 1 (SRX)
+  * L0 Hatch to Kago Room/Door to Sector 2 (TRO) Westbound Glass Tube
   * Extra - door_idx: (126,)
   > Area Transition to Sector 1 (SRX)
       Trivial
 
 > Area Transition to Sector 1 (SRX); Heals? False
   * Layers: default
-  * Open Passage to Glass Tube to Sector 2 (TRO)/Area Transition to Sector 2 (TRO)
+  * Open Passage to Sector 1 (SRX) Eastbound Glass Tube/Area Transition to Sector 2 (TRO)
   * Extra - door_idx: (127,)
   > Door to Kago Room
       Trivial
 
 ----------------
-Glass Tube to Sector 4 (AQA)
+Sector 2 (TRO) Eastbound Glass Tube
 Extra - map_name: Sector 253
 Extra - room_id: [53]
 Extra - minimap_coordinates: [{'x': 12, 'y': 2}]
 > Door to Security Access; Heals? False
   * Layers: default
-  * L0 Hatch to Security Access/Door to Glass Tube to Sector 4 (AQA)
+  * L0 Hatch to Security Access/Door to Sector 2 (TRO) Eastbound Glass Tube
   * Extra - door_idx: (129,)
   > Area Transition to Sector 4 (AQA)
       Trivial
 
 > Area Transition to Sector 4 (AQA); Heals? False
   * Layers: default
-  * Open Passage to Glass Tube to Sector 2 (TRO)/Area Transition to Sector 2 (TRO)
+  * Open Passage to Sector 4 (AQA) Westbound Glass Tube/Area Transition to Sector 2 (TRO)
   * Extra - door_idx: (130,)
   > Door to Security Access
       Trivial
