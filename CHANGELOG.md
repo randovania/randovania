@@ -55,10 +55,55 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Fusion
 
 - Changed: The hatch graphics have been changed in order to be more accessible to color blind people.
+- Changed: The Missile Geron in Sector 1 (SRX) - Yameba Corridor has been moved a few tiles to the left.
+- Changed: Renamed a lot of rooms that either reference other Sectors or unofficial enemy names to be more aligned with where they are in the B.S.L rather than their destination. This is done in order to bring more clarity to them. The full list is as follows:
+    - Main Deck:
+        - Elevator to Sector 1 (SRX) => Sector Hub Lift 1
+        - Elevator to Sector 2 (TRO) => Sector Hub Lift 2
+        - Elevator to Sector 3 (PYR) => Sector Hub Lift 3
+        - Elevator to Sector 4 (AQA) => Sector Hub Lift 4
+        - Elevator to Sector 5 (ARC) => Sector Hub Lift 5
+        - Elevator to Sector 6 (NOC) => Sector Hub Lift 6
+        - Elevator to Sector Hub => Main Elevator
+        - Elevator to Crew Quarters => Operations Deck Elevator
+        - Elevator to Operations Deck => Crew Quarters Elevator
+        - Elevator to Tourian (SRX) => Restricted Zone Elevator
+        - Elevator to Habitation Deck => Nexus Elevator
+        - Elevator to Central Nexus => Habitation Deck Elevator
+        - Back Door to Sector 6 (NOC) => Restricted Back Door
+    - Sector 1 (SRX):
+        - Elevator to Main Deck => Sector 1 (SRX) Entrance Elevator
+        - Elevator to Restricted Zone => Tourian Elevator
+        - Glass Tube to Sector 2 (TRO) => Sector 1 (SRX) Eastbound Glass Tube
+        - Glass Tube to Sector 3 (PYR) => Sector 1 (SRX) Westbound Glass Tube
+        - Ridley Arena => Neo-Ridley Arena
+        - Ridley Arena Access => Neo-Ridley Arena Access
+    - Sector 2 (TRO):
+        - Elevator to Main Deck => Sector 2 (TRO) Entrance Elevator
+        - Glass Tube to Sector 1 (SRX) => Sector 2 (TRO) Westbound Glass Tube
+        - Glass Tube to Sector 4 (AQA) => Sector 2 (TRO) Eastbound Glass Tube
+        - Zoro Zig-Zag => Zig-Zag-Zone
+    - Sector 3 (PYR):
+        - Elevator to Main Deck => Sector 3 (PYR) Entrance Elevator
+        - Glass Tube to Sector 5 (ARC) => Sector 3 (PYR) Westbound Glass Tube
+        - Glass Tube to Sector 1 (SRX) => Sector 3 (PYR) Eastbound Glass Tube
+    - Sector 4 (AQA:
+        - Elevator to Main Deck => Sector 4 (AQA) Entrance Elevator
+        - Cargo Hold to Sector 5 (ARC) => Cargo Hold
+        - Glass Tube to Sector 6 (NOC) => Sector 4 (AQA) Eastbound Glass Tube
+        - Glass Tube to Sector 6 (NOC) => Sector 4 (AQA) Westbound Glass Tube
+    - Sector 5 (ARC):
+        - Elevator to Main Deck => Sector 5 (ARC) Entrance Elevator
+        - Flooded Airlock to Sector 4 (AQA) => Flooded Airlock
+        - Glass Tube to Sector 6 (NOC) => Sector 5 (ARC) Westbound Glass Tube
+        - Glass Tube to Sector 3 (PYR) => Sector 5 (ARC) Eastbound Glass Tube
+    - Sector 6 (NOC):
+        - Elevator to Main Deck => Sector 6 (NOC) Entrance Elevator
+        - Glass Tube to Sector 4 (AQA) => Sector 6 (NOC) Westbound Glass Tube
+        - Glass Tube to Sector 5 (ARC) => Sector 6 (NOC) Eastbound Glass Tube
+        - Checkpoint to Restricted Zone => Authorization Checkpoint
 - Fixed: The HUD no longer occasionally disappears after rescuing the animals.
 - Fixed: Discrepancies on the map and minimap regarding boss icons.
-- Changed: The Missile Geron in Sector 1 (SRX) - Yameba Corridor has been moved a few tiles to the left.
-- Changed: Renamed Elevator rooms, Glass Tubes and other rooms that cross different Sectors to be more aligned with where they are in the B.S.L rather than their destination. This is done in order to bring more clarity to them. For example, "Elevator to Central Nexus" was renamed to "Habitation Deck Elevator", Sector 3's "Glass Tube to to Sector 5 (ARC)" was renamed to "Sector 3 (PYR) Westbound Glass Tube" and "Cargo Hold to Sector 5 (ARC)" was renamed to "Cargo Hold".
 - Fixed: Fixed a typo in the Open Sector Hub preset.
 
 #### Logic Database
