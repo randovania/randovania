@@ -118,8 +118,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Changed: Fighting Bomb Guardian with only Charged Dark shots now requires Combat (intermediate).
-- Fixed: Fighting Bomb Guardian with only Charged Dark shots now requires the correct 31 dark ammo.
+- Changed: Fighting Bomb Guardian with only Charged Dark shots now requires 31 Dark Ammo and Combat Intermediate.
 
 ##### Sanctuary Fortress
 
