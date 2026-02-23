@@ -114,6 +114,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
+- Added: Added a notice to the door lock rando tab that new patcher is both required and will be enabled alongside any randomization settings.
+
 #### Logic Database
 
 ##### Sanctuary Fortress
