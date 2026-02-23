@@ -394,7 +394,7 @@ class BitPackJson(BitPackValue):
                 return BitPackJson.bit_pack_unpack(decoder, {})
 
 
-def pack_array_element(element: T, array: list[T]) -> Iterator[tuple[int, int]]:
+def pack_array_element[T](element: T, array: list[T]) -> Iterator[tuple[int, int]]:
     if len(array) > 1:
         yield array.index(element), len(array)
     else:
@@ -415,7 +415,7 @@ def _limits_for_size(remaining_size: int) -> tuple[int, ...]:
         return ()
 
 
-def _aux_pack_sorted_array_elements(elements: list[T], array: list[T]) -> Iterator[tuple[int, int]]:
+def _aux_pack_sorted_array_elements[T](elements: list[T], array: list[T]) -> Iterator[tuple[int, int]]:
     yield len(elements), len(array) + 1
 
     previous_index = 0
@@ -555,7 +555,7 @@ def decode_bool(decoder: BitPackDecoder) -> bool:
     return bool(decoder.decode_single(2))
 
 
-def encode_tuple(value: Sequence[T], encoder: Callable[[T], Iterator[tuple[int, int]]]) -> Iterator[tuple[int, int]]:
+def encode_tuple[T](value: Sequence[T], encoder: Callable[[T], Iterator[tuple[int, int]]]) -> Iterator[tuple[int, int]]:
     yield from encode_big_int(len(value))
     for it in value:
         yield from encoder(it)

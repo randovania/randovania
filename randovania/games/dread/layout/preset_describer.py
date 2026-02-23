@@ -105,6 +105,7 @@ class DreadPresetDescriber(GamePresetDescriber):
                 },
                 {
                     "Disabled Power Bomb Limitations": not configuration.nerf_power_bombs,
+                    "Skip Item Acquisition Popups": configuration.skip_item_popups,
                 },
             ],
             "Environmental Damage": _format_environmental_damage(configuration),

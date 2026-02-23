@@ -133,8 +133,9 @@ class EchoesGameExportDialog(GameExportDialog[EchoesConfiguration], Ui_EchoesGam
                     self.input_file, self._prompt_input_file, self.input_file_edit
                 ),
                 self.output_file_edit: lambda: output_file_validator(self.output_file),
-                self.prime_file_edit: lambda: self._use_prime_models
-                and is_prime1_iso_validator(self.prime_file, iso_required=True),
+                self.prime_file_edit: lambda: (
+                    self._use_prime_models and is_prime1_iso_validator(self.prime_file, iso_required=True)
+                ),
             },
         )
 

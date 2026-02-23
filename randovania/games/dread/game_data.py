@@ -85,7 +85,7 @@ def _test_data() -> randovania.game.game_test_data.GameTestData:
     from randovania.layout.base.trick_level import LayoutTrickLevel
 
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="JZUK3MPV",
+        expected_seed_hash="IKZ75CTI",
         # Some items require shinesparking to reach in vanilla,
         # which due to varying difficulty has been made into a trick
         database_collectable_include_tricks=(("Speedbooster", LayoutTrickLevel.BEGINNER),),

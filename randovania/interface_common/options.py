@@ -163,7 +163,7 @@ _PER_GAME_SERIALIZERS = {
 
 def add_per_game_serializer():
     def make_decoder(g: RandovaniaGame):
-        return lambda it: g.options.from_json(it)
+        return lambda it: g.options.from_json(it)  # noqa: PLW0108
 
     for game in RandovaniaGame.all_games():
         _SERIALIZER_FOR_FIELD[f"game_{game.value}"] = Serializer(
@@ -177,7 +177,7 @@ def add_per_game_serializer():
 add_per_game_serializer()
 
 
-def _return_with_default(value: T | None, default_factory: Callable[[], T]) -> T:
+def _return_with_default[T](value: T | None, default_factory: Callable[[], T]) -> T:
     """
     Returns the given value is if it's not None, otherwise call default_factory
     :param value:
