@@ -224,24 +224,34 @@ extend-exclude = [
 ]
 
 [tool.ruff.lint]
-select = [
-    "E", "F", "W", "C90", "I", "UP", "C4",
-    "RSE",
-    "TCH",
-    "PTH",
-    "COM818", "COM819",
-    "ISC",
-    "PIE",
-    "PT",
+extend-select = [
+    "E", # PyCodeStyle Errors
+    "F", # Pyflakes (Errors/Warnings)
+    "W", # PyCodeStyle Warnings
+    "I", # Import Sorting (isort)
+    "UP", # Python Upgrades (pyupgrade)
+    "C4", # Comprehensions (flake8-comprehensions)
+    "C90", # complexity (mccabe)
+    "RSE", # flake8-raise (RSE)
+    "PTH", # use pathlib
+    "COM818", "COM819", # trailing comma
+    "ISC", # flake8-implicit-str-concat
+    "PIE", # flake8-pie (misc checks)
+    "PT", # common style issues or inconsistencies with pytest-based tests (flake8-pytest-style)
+    "SIM101", # Multiple isinstance calls for {name}, merge into a single call
 
-    "PLC",
+    "PLC",  # pylint convention
     "PLC0208",  # iterating over set is also not deterministic, so we shouldn't do that!
+    "PLE",  # pylint error
+    "PLW",  # pylint warning
 
-    "PLE",
-    "PLR0402", "PLR1711", "PLR1722", "PLR0206",
-    "PLR0133", "PLR0124",
-    "PLW",
-    "SIM101",
+    # pylint refactor
+    "PLR0402", # Use from {module} import {name} in lieu of alias
+    "PLR1711", # Useless return statement at end of function
+    "PLR1722", # Use sys.exit() instead of {name}
+    "PLR0206", # Cannot have defined parameters for properties
+    "PLR0133", # Two constants compared in a comparison, consider replacing {left_constant} {op} {right_constant}
+    "PLR0124", # Name compared with itself, consider replacing {actual}
 ]
 ignore = [
     "ISC001",  # may cause conflicts with formatter
