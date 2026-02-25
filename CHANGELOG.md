@@ -34,6 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - The Shutter Gate in Main Hub Tower Top leading to Underwater Horseshoe is now additionally logical with Speed
       Booster and either Speed Booster Conservation (Intermediate) or Speed Booster Conservation (Beginner) and Gravity
       Suit.
+- Added: Underneath Drogyga: Cross the grapple blocks with a horizontal bomb jump (Expert Diagonal Bomb Jump)
+- Added: Underneath Drogyga: Climb out of the water after drogyga using single-wall wall jump with a water bomb jump
 
 ##### Cataris
 
