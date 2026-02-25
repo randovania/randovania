@@ -78,13 +78,6 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
                 },
             }
 
-            if pickup.name == "Missile Launcher":
-                pickup_map_dict[object_id].update(
-                    {
-                        "is_launcher": True,
-                    }
-                )
-
             # aka Big Missile Tank and Missile Tank
             if pickup.name.endswith("Missile Tank"):
                 pickup_map_dict[object_id].update(
