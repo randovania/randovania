@@ -116,6 +116,10 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
                 ),
             }
 
+        required_amount_of_keys = 2
+        if not self.configuration.artifacts.vanilla_tourian_keys:
+            required_amount_of_keys = self.configuration.artifacts.required_artifacts
+
         return {
             "starting_room": self._create_starting_location(),
             "seed_identifier": self._create_hash_dict(),
@@ -129,6 +133,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
             "open_missile_doors_with_one_missile": self.configuration.open_missile_doors_with_one_missile,
             "allow_downward_shots": self.configuration.allow_downward_shots,
             "credits_string": self._credits_spoiler(),
+            "required_amount_of_keys": required_amount_of_keys,
         }
 
     def _create_cosmetics(self) -> dict:
