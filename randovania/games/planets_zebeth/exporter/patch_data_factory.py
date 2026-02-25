@@ -100,8 +100,8 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
             "session_uuid": str(self.players_config.get_own_uuid()),
         }
 
-    def _create_game_config_dict(self, pickup_list: list[ExportedPickupDetails]):
-        def get_locked_ammo_text(ammo_item: str) -> dict[str, str]:
+    def _create_game_config_dict(self, pickup_list: list[ExportedPickupDetails]) -> dict:
+        def get_locked_ammo_text(ammo_item: str) -> dict[str, str | list[str]]:
             text = "MISSING TEXT, PLEASE REPORT THIS!"
             for pickup in pickup_list:
                 if pickup.original_pickup.name != ammo_item:
