@@ -109,7 +109,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
                 text = pickup.collection_text[0]
                 break
             return {
-                "header": f"Locked {ammo_item}",
+                "header": f"Locked {ammo_item} acquired",
                 "description": textwrap.wrap(
                     text,
                     width=MAX_CHARS_LIMIT_FOR_INGAME_MESSAGE_BOX,
@@ -120,12 +120,15 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         if not self.configuration.artifacts.vanilla_tourian_keys:
             required_amount_of_keys = self.configuration.artifacts.required_artifacts
 
+        missile_tank_locked_text = get_locked_ammo_text("Missile Tank")
+        big_missile_tank_locked_text = get_locked_ammo_text("Big Missile Tank")
+
         return {
             "starting_room": self._create_starting_location(),
             "seed_identifier": self._create_hash_dict(),
             "required_messages": {
-                get_locked_ammo_text("Missile Tank"),
-                get_locked_ammo_text("Big Missile Tank"),
+                "Missile Tank": missile_tank_locked_text,
+                "Big Missile Tank": big_missile_tank_locked_text,
             },
             "starting_items": self._create_starting_items_dict(),
             "starting_memo": self._create_starting_memo(),
