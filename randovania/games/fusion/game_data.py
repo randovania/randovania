@@ -176,5 +176,6 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     exporter=_exporter,
     test_data=_test_data,
     multiple_start_nodes_per_area=True,
+    racetime_url="https://racetime.gg/mfr-rdv/data",
     logic_db_integrity=find_fusion_db_errors,
 )

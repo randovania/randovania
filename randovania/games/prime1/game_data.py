@@ -181,5 +181,6 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     exporter=_exporter,
     test_data=_test_data,
     defaults_available_in_game_sessions=True,
+    racetime_url="https://racetime.gg/mpr/data",
     logic_db_integrity=find_prime_db_errors,
 )
