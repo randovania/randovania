@@ -103,7 +103,11 @@ def _remove_empty(d: Any) -> Any:
 
 
 def prime1_pickup_details_to_patcher(
-    detail: pickup_exporter.ExportedPickupDetails, modal_hud_override: bool, pickup_markers: bool, rng: Random
+    detail: pickup_exporter.ExportedPickupDetails,
+    modal_hud_override: bool,
+    pickup_markers: bool,
+    rng: Random,
+    spring_ball_enabled: bool = False,
 ) -> dict:
     model = detail.model.as_json
     original_model = detail.original_model.as_json
@@ -143,6 +147,10 @@ def prime1_pickup_details_to_patcher(
         collection_text = collection_text.replace("Missile Expansion", "Shiny Missile Expansion")
         name = name.replace("Missile Expansion", "Shiny Missile Expansion")
         original_model = model
+
+    # Add Spring Ball message when collecting Morph Ball Bomb if spring ball is enabled
+    if spring_ball_enabled and model["name"] == "Morph Ball Bomb" and not detail.is_for_remote_player:
+        collection_text += " and Spring Ball"
 
     result = {
         "type": pickup_type,
@@ -749,6 +757,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                         pickup_index in modal_hud_override,
                         self.cosmetic_patches.pickup_markers,
                         self.rng,
+                        self.configuration.spring_ball,
                     )
 
                     if self.configuration.shuffle_item_pos or node.extra.get("position_required"):

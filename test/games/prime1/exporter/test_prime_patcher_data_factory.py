@@ -55,7 +55,7 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
         }
 
     # Run
-    result = prime1_pickup_details_to_patcher(detail, False, True, rng)
+    result = prime1_pickup_details_to_patcher(detail, False, True, rng, False)
 
     # Assert
     assert result == {
@@ -65,6 +65,50 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
         "respawn": False,
         "showIcon": True,
         **shiny_stuff,
+    }
+
+
+@pytest.mark.parametrize("spring_ball_enabled", [False, True])
+def test_prime1_pickup_details_to_patcher_spring_ball(prime1_resource_database, spring_ball_enabled: bool):
+    # Setup
+    rng = MagicMock()
+    detail = pickup_exporter.ExportedPickupDetails(
+        index=PickupIndex(28),
+        name="Morph Ball Bomb",
+        description="Allows you to place bombs while in Morph Ball mode.",
+        collection_text=["Morph Ball Bomb acquired!"],
+        conditional_resources=[
+            ConditionalResources(
+                None,
+                None,
+                ((prime1_resource_database.get_item_by_display_name("Morph Ball Bomb"), 1),),
+            )
+        ],
+        conversion=[],
+        model=PickupModel(RandovaniaGame.METROID_PRIME, "Morph Ball Bomb"),
+        original_model=PickupModel(RandovaniaGame.METROID_PRIME, "Morph Ball Bomb"),
+        is_for_remote_player=False,
+        original_pickup=None,
+    )
+
+    expected_hudmemo = "Morph Ball Bomb acquired!"
+    if spring_ball_enabled:
+        expected_hudmemo += " and Spring Ball"
+
+    # Run
+    result = prime1_pickup_details_to_patcher(detail, False, True, rng, spring_ball_enabled)
+
+    # Assert
+    assert result == {
+        "type": "Morph Ball Bomb",
+        "currIncrease": 1,
+        "maxIncrease": 1,
+        "respawn": False,
+        "showIcon": True,
+        "model": {"game": "prime1", "name": "Morph Ball Bomb"},
+        "original_model": {"game": "prime1", "name": "Morph Ball Bomb"},
+        "scanText": "Morph Ball Bomb. Allows you to place bombs while in Morph Ball mode.",
+        "hudmemoText": expected_hudmemo,
     }
 
 
