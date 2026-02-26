@@ -41,14 +41,6 @@ class RaceEntry:
         )
 
 
-_SUPPORTED_GAME_URLS = {
-    RandovaniaGame.METROID_PRIME: "https://racetime.gg/mpr/data",
-    RandovaniaGame.METROID_PRIME_ECHOES: "https://racetime.gg/mp2r/data",
-    RandovaniaGame.METROID_DREAD: "https://racetime.gg/dread-rando/data",
-    RandovaniaGame.AM2R: "https://racetime.gg/am2r-rdv/data",
-    RandovaniaGame.METROID_SAMUS_RETURNS: "https://racetime.gg/msrr/data",
-    RandovaniaGame.FUSION: "https://racetime.gg/mfr-rdv/data",
-}
 _TEST_RESPONSE = {
     "name": "Metroid Prime 2: Echoes Randomizer",
     "short_name": "MP2R",
@@ -146,7 +138,9 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
         self.filter_name_edit.textEdited.connect(self.update_list)
 
         self._game_checks = set()
-        for game in _SUPPORTED_GAME_URLS:
+        for game in RandovaniaGame.all_games():
+            if game.data.racetime_url is None:
+                continue
             game_checkbox = QCheckBox(game.long_name)
             game_checkbox.setChecked(True)
             self.game_check_layout.addWidget(game_checkbox)
@@ -162,7 +156,10 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
         self.refresh_button.setEnabled(False)
         self.races = []
         try:
-            for game, race_url in _SUPPORTED_GAME_URLS.items():
+            for game in RandovaniaGame.all_games():
+                race_url = game.data.racetime_url
+                if race_url is None:
+                    continue
                 try:
                     raw_races = await _query_server(race_url)
                 except aiohttp.ClientError as e:

@@ -199,5 +199,6 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     test_data=_test_data,
     multiple_start_nodes_per_area=False,
     defaults_available_in_game_sessions=True,
+    racetime_url="https://racetime.gg/am2r-rdv/data",
     logic_db_integrity=find_am2r_db_errors,
 )

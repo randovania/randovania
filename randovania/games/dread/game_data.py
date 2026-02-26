@@ -178,4 +178,5 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     test_data=_test_data,
     multiple_start_nodes_per_area=True,
     defaults_available_in_game_sessions=True,
+    racetime_url="https://racetime.gg/dread-rando/data",
 )

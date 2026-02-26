@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [10.5.0] - 2026-03-??
 
 - Changed: Removed game-specific text from the preset editor's header to make information more clear for all games in RDV.
+- Changed: Racetime.gg integration URLs are now stored in each game's data configuration instead of a separate dictionary.
 
 ### Metroid Dread
 
