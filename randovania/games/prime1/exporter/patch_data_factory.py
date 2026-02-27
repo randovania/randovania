@@ -107,7 +107,7 @@ def prime1_pickup_details_to_patcher(
     modal_hud_override: bool,
     pickup_markers: bool,
     rng: Random,
-    spring_ball_enabled: bool = False,
+    spring_ball_item: str | None = None,
 ) -> dict:
     model = detail.model.as_json
     original_model = detail.original_model.as_json
@@ -148,8 +148,8 @@ def prime1_pickup_details_to_patcher(
         name = name.replace("Missile Expansion", "Shiny Missile Expansion")
         original_model = model
 
-    # Add Spring Ball message when collecting Morph Ball Bomb if spring ball is enabled
-    if spring_ball_enabled and model["name"] == "Morph Ball Bomb" and not detail.is_for_remote_player:
+    # Add Spring Ball message when collecting the item that grants Spring Ball
+    if spring_ball_item is not None and model["name"] == spring_ball_item and not detail.is_for_remote_player:
         collection_text += " and Spring Ball"
 
     result = {
@@ -691,6 +691,12 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
         elevator_dock_types = self.game.dock_weakness_database.all_teleporter_dock_types
 
+        # Determine which item grants Spring Ball
+        if self.configuration.spring_ball:
+            spring_ball_item = "Morph Ball Bomb"
+        else:
+            spring_ball_item = None
+
         # Initialize serialized db data
         level_data: dict = {}
 
@@ -757,7 +763,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                         pickup_index in modal_hud_override,
                         self.cosmetic_patches.pickup_markers,
                         self.rng,
-                        self.configuration.spring_ball,
+                        spring_ball_item,
                     )
 
                     if self.configuration.shuffle_item_pos or node.extra.get("position_required"):
@@ -1028,9 +1034,9 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             boss_sizes = {}
 
         if self.configuration.spring_ball:
-            spring_ball_item = "Morph Ball Bomb"
+            spring_ball_item_config = "Morph Ball Bomb"
         else:
-            spring_ball_item = "Spring Ball"
+            spring_ball_item_config = "Spring Ball"
 
         data: dict = {
             "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
@@ -1057,7 +1063,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 "noDoors": self.configuration.no_doors,
                 "startingRoom": starting_room,
                 "warpToStart": self.configuration.warp_to_start,
-                "springBallItem": spring_ball_item,
+                "springBallItem": spring_ball_item_config,
                 "incineratorDroneConfig": idrone_config,
                 "mazeSeeds": maze_seeds,
                 "nonvariaHeatDamage": not self.configuration.legacy_mode,

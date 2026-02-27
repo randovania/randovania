@@ -55,7 +55,7 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
         }
 
     # Run
-    result = prime1_pickup_details_to_patcher(detail, False, True, rng, False)
+    result = prime1_pickup_details_to_patcher(detail, False, True, rng, None)
 
     # Assert
     assert result == {
@@ -68,8 +68,8 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
     }
 
 
-@pytest.mark.parametrize("spring_ball_enabled", [False, True])
-def test_prime1_pickup_details_to_patcher_spring_ball(prime1_resource_database, spring_ball_enabled: bool):
+@pytest.mark.parametrize("spring_ball_item", [None, "Morph Ball Bomb"])
+def test_prime1_pickup_details_to_patcher_spring_ball(prime1_resource_database, spring_ball_item: str | None):
     # Setup
     rng = MagicMock()
     detail = pickup_exporter.ExportedPickupDetails(
@@ -92,11 +92,11 @@ def test_prime1_pickup_details_to_patcher_spring_ball(prime1_resource_database, 
     )
 
     expected_hudmemo = "Morph Ball Bomb acquired!"
-    if spring_ball_enabled:
+    if spring_ball_item is not None:
         expected_hudmemo += " and Spring Ball"
 
     # Run
-    result = prime1_pickup_details_to_patcher(detail, False, True, rng, spring_ball_enabled)
+    result = prime1_pickup_details_to_patcher(detail, False, True, rng, spring_ball_item)
 
     # Assert
     assert result == {
