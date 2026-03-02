@@ -34,9 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Door Lock Overrides:
     - The Shutter Gate in Main Hub Tower Top leading to Flash Shift Room is now additionally logical with Speed Booster.
     - The Shutter Gate in Flash Shift Room is now additionally logical with Flash Shift Skip (Beginner) and either Wall Jump (Beginner) or using Spin Boost.
-    - The Shutter Gate in Main Hub Tower Top leading to Underwater Horseshoe is now additionally logical with Speed
-      Booster and either Speed Booster Conservation (Intermediate) or Speed Booster Conservation (Beginner) and Gravity
-      Suit.
+    - The Shutter Gate in Main Hub Tower Top leading to Underwater Horseshoe is now additionally logical with Speed Booster and either Speed Booster Conservation (Intermediate) or Speed Booster Conservation (Beginner) and Gravity Suit.
 
 ##### Cataris
 
