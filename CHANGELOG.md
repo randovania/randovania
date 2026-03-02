@@ -33,8 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Door Lock Overrides:
     - The Shutter Gate in Main Hub Tower Top leading to Flash Shift Room is now additionally logical with Speed Booster.
-    - The Shutter Gate in Flash Shift Room is now additionally logical with Flash Shift Skip (Beginner) and
-      either Wall Jump (Beginner) or using Spin Boost.
+    - The Shutter Gate in Flash Shift Room is now additionally logical with Flash Shift Skip (Beginner) and either Wall Jump (Beginner) or using Spin Boost.
     - The Shutter Gate in Main Hub Tower Top leading to Underwater Horseshoe is now additionally logical with Speed
       Booster and either Speed Booster Conservation (Intermediate) or Speed Booster Conservation (Beginner) and Gravity
       Suit.
@@ -48,10 +47,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ferenia
 
 - Added: Door Lock Override:
-    - The Shutter Gate in Total Recharge Station is now additionally logical with Flash Shift Skip (Beginner) and either
-      Movement (Beginner) or using Spin Boost.
+    - The Shutter Gate in Total Recharge Station is now additionally logical with Flash Shift Skip (Beginner) and either Movement (Beginner) or using Spin Boost.
 
-##### Haubia
+##### Hanubia
 
 - Fixed: Requirements for Power Bomb ammo in Ferenia Shortcut have been strengthened, so 2 ammo is required to reach the Pickup, 3 ammo is required to leave from the pickup, in either direction.
 - Fixed: Requirements for Power Bomb ammo in Sppedboost Puzzle Room have been strengthened, so 4 ammo is required to get from Ferenia Shortcut to the Navigation Station.
@@ -91,7 +89,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         - Elevator to Main Deck => Sector 3 (PYR) Entrance Elevator
         - Glass Tube to Sector 5 (ARC) => Sector 3 (PYR) Westbound Glass Tube
         - Glass Tube to Sector 1 (SRX) => Sector 3 (PYR) Eastbound Glass Tube
-    - Sector 4 (AQA:
+    - Sector 4 (AQA):
         - Elevator to Main Deck => Sector 4 (AQA) Entrance Elevator
         - Cargo Hold to Sector 5 (ARC) => Cargo Hold
         - Glass Tube to Sector 6 (NOC) => Sector 4 (AQA) Eastbound Glass Tube
