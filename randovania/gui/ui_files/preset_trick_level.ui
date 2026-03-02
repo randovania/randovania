@@ -36,10 +36,10 @@
     <item>
      <widget class="QScrollArea" name="trick_level_scroll">
       <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
+       <enum>QFrame::Shape::NoFrame</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
+       <enum>QFrame::Shadow::Plain</enum>
       </property>
       <property name="widgetResizable">
        <bool>true</bool>
@@ -69,10 +69,10 @@
         <item>
          <widget class="QLabel" name="logic_description_label">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Randovania has rules in place which guarantees that the game is completable regardless of the modifications made to the game. Here you can also configure which kind of game knowledge or skill it expects you to have, allowing for even more varied games.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;No matter the level, it is always possible to softlock when you enter a room or area that you're unable to leave. For example, vanilla beam rooms without the necessary beam to escape, Dark World without Light Beam/Anihhilator Beam, Torvus Bog without Super Missile.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;However, it may be &lt;span style=&quot; font-style:italic;&quot;&gt;necessary&lt;/span&gt; to enter Dark World without a way to escape if that item is located in the Dark World.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania has rules in place which guarantee that your game is completable regardless of the modifications made to it. Here you can also configure what level of skill it expects you to have, allowing for even more varied games.&lt;/p&gt;&lt;p&gt;No matter your settings, it is always possible to softlock when you enter a room or area that you're unable to leave. For example: passing through a door with a different lock on the other side, or jumping down from a ledge that's too tall to jump back up again. These are commonly known as &amp;quot;point of no returns,&amp;quot; or PoNRs for short.&lt;/p&gt;&lt;p&gt;However, it may be necessary to pass through a point of no return if a required pickup is placed behind it. For this reason, it is recommended to save often, especially before passing through a door or obstacle you may not be able to come back through.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -82,7 +82,7 @@
         <item>
          <widget class="Line" name="trick_level_line_1">
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
          </widget>
         </item>
@@ -99,7 +99,7 @@
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Allows the generator to require tricks which are only possible prior to Gravity Suit being obtained. &lt;a href=&quot;resource-details://misc/gravity&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Click here&lt;/span&gt;&lt;/a&gt; to see which rooms are affected.&lt;/p&gt;&lt;p&gt;Enabling this option adds these alternatives to logic. To prevent the creation of an uncompletable save file, it is advised that you not pick up Gravity Suit until these rooms are cleared. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -109,7 +109,7 @@
         <item>
          <widget class="Line" name="trick_level_line_2">
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
          </widget>
         </item>

@@ -189,7 +189,7 @@ def test_menu_set_preset_broken(widget: SelectPresetWidget):
     broken_data = copy.deepcopy(widget._window_manager.preset_manager.default_preset_for_game(widget._game).as_json)
     broken_data["schema_version"] = 6
 
-    broken_preset = VersionedPreset(broken_data)
+    broken_preset = VersionedPreset(broken_data, False)
     widget._preset_menu.set_preset(broken_preset)
 
     menu = widget._preset_menu

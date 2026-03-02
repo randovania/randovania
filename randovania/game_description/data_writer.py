@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import copy
 import re
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 
-from randovania.game_description import game_migration
+from randovania.game_description import game_description_migration
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
@@ -37,8 +37,6 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_type import ResourceType
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-
-    _Resource = TypeVar("_Resource", SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo)
 
 REGION_NAME_TO_FILE_NAME_RE = re.compile(r"[^a-zA-Z0-9\- ]")
 
@@ -138,7 +136,9 @@ def write_trick_resource(resource: TrickResourceInfo) -> dict:
     }
 
 
-def write_array(array: list[_Resource], writer: Callable[[_Resource], dict]) -> dict:
+def write_array[Resource: (SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo)](
+    array: list[Resource], writer: Callable[[Resource], dict]
+) -> dict:
     return {item.short_name: writer(item) for item in array}
 
 
@@ -427,7 +427,7 @@ def write_used_trick_levels(game: GameDescription) -> dict[str, list[int]] | Non
 
 def write_game_description(game: GameDescription) -> dict:
     return {
-        "schema_version": game_migration.CURRENT_VERSION,
+        "schema_version": game_description_migration.CURRENT_VERSION,
         "game": game.game.value,
         "resource_database": write_resource_database(game.resource_database),
         "layers": frozen_lib.unwrap(game.layers),

@@ -245,7 +245,7 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
         for ammo_pickup in pickup_database.ammo_pickups.values():
             categories.add(ammo_pickup.gui_category)
 
-        for standard_pickup_category in sorted(categories, key=lambda it: all_categories.index(it)):
+        for standard_pickup_category in sorted(categories, key=all_categories.index):
             category_box = Foldable(None, standard_pickup_category.long_name)
             category_box.setObjectName(f"category_box {standard_pickup_category}")
             category_layout = QtWidgets.QGridLayout()

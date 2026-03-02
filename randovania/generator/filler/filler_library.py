@@ -21,7 +21,7 @@ class UnableToGenerate(Exception):
 X = TypeVar("X")
 
 
-def _filter_not_in_dict(
+def _filter_not_in_dict[X](
     elements: set[X],
     dictionary: dict[X, Any],
 ) -> set[X]:

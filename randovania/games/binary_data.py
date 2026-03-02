@@ -21,7 +21,7 @@ from construct import (
 )
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import game_migration
+from randovania.game_description import game_description_migration
 from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.lib.construct_lib import (
     ConstructDict,
@@ -350,7 +350,7 @@ ConstructGame = Struct(
     format_version=Const(current_format_version, Int32ub),
     db=Compressed(
         Struct(
-            schema_version=Const(game_migration.CURRENT_VERSION, VarInt),
+            schema_version=Const(game_description_migration.CURRENT_VERSION, VarInt),
             game=ConstructGameEnum,
             resource_database=ConstructResourceDatabase,
             layers=PrefixedArray(VarInt, String),

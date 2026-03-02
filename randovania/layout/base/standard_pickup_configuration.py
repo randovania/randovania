@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 T = TypeVar("T")
 
 
-def _check_matching_pickups(actual: Iterable[T], reference: Iterable[T]) -> None:
+def _check_matching_pickups[T](actual: Iterable[T], reference: Iterable[T]) -> None:
     actual_pickups = set(actual)
     reference_pickups = set(reference)
     if actual_pickups != reference_pickups:

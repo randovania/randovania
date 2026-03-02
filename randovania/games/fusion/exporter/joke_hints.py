@@ -41,7 +41,7 @@ FUSION_JOKE_HINTS = GENERIC_JOKE_HINTS + [
     "When seeing spiders, my first Reaction is to jump.",
     "This Terminal cannot Navigate.",
     "Nettori's strength comes from its feet being planted into the ground.",
-    "Zoros crawl around a corner and start flying.",
+    "Zeros crawl around a corner and start flying.",
     "Samus can position herself with Zozoros to form a sandwich.",
     "You wouldn't steal an animal. You wouldn't steal a Core-X. You wouldn't download an Infant Metroid.",
     "Your next item is... hey, this hint is just an X in disguise!",

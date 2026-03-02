@@ -131,7 +131,7 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
             lambda: self.ftp_anonymous_check.isChecked() or self.ftp_password_edit.text(),
             self.update_accept_validation,
         )
-        add_validation(self.ftp_ip_edit, lambda: self.ftp_ip_edit.text(), self.update_accept_validation)
+        add_validation(self.ftp_ip_edit, self.ftp_ip_edit.text, self.update_accept_validation)
         self.ftp_port_edit.setValidator(QtGui.QIntValidator(1, 65535, self))
 
         self.tab_ftp.serialize_options = lambda: {

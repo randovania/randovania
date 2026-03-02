@@ -444,8 +444,37 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Missile Tank Alcove": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Shortcut Room": {
                             "type": "resource",
@@ -538,7 +567,7 @@
                                                                 "data": {
                                                                     "type": "items",
                                                                     "name": "PBAmmo",
-                                                                    "amount": 2,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -581,7 +610,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "PBAmmo",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -2478,8 +2507,37 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Navigation Station (Bottom)": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Require enough ammo to cover the trip to and from the pickup in Ferenia Shortcut.",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Door to Tank Room": {
                             "type": "and",

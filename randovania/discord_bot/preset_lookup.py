@@ -276,7 +276,7 @@ async def _try_get[T](
 
 async def _get_presets_from_message(message: discord.Message) -> AsyncGenerator[Preset[BaseConfiguration]]:
     def _get_preset(d: dict) -> Preset[BaseConfiguration]:
-        return VersionedPreset(d).get_preset()
+        return VersionedPreset(d, from_layout_description=False).get_preset()
 
     for attachment in message.attachments:
         filename: str = attachment.filename

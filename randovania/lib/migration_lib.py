@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import functools
 import typing
+from collections.abc import Sequence
 
 if typing.TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
@@ -20,8 +21,8 @@ class GameMigration(typing.Protocol):
     def __call__(self, __data: dict, game: RandovaniaGame) -> None: ...
 
 
-Migrations = typing.Sequence[Migration | None]
-GameMigrations = typing.Sequence[GameMigration | None]
+Migrations = Sequence[Migration | None]
+GameMigrations = Sequence[GameMigration | None]
 
 
 def apply_migrations(
@@ -64,13 +65,18 @@ def apply_migrations_with_game(
     copy_before_migrating: bool = False,
     version_name: str = "version",
 ) -> dict:
-    partialed_migrations = [
-        None if migration is None else functools.partial(migration, game=game) for migration in migrations
-    ]
+    def wrap(f: GameMigration) -> Migration:
+        @functools.wraps(f)
+        def wrapped(d: dict) -> None:
+            f(d, game=game)
+
+        return wrapped
+
+    wrapped_migrations = [None if migration is None else wrap(migration) for migration in migrations]
     return apply_migrations(
-        data, partialed_migrations, copy_before_migrating=copy_before_migrating, version_name=version_name
+        data, wrapped_migrations, copy_before_migrating=copy_before_migrating, version_name=version_name
     )
 
 
-def get_version(migrations: Migrations | GameMigrations) -> int:
+def get_version(migrations: Sequence) -> int:
     return len(migrations) + 1
