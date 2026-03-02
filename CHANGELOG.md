@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The current improvements gained to Speed Booster and Flash Shift from the "Upgrade" items (if present) will be displayed in the "Samus" menu.
   - The current "number of chained Flash Shifts" is displayed when Flash Shift Upgrades are present in the item pool, and either Flash Shift or at least one Flash Shift Upgrade has been obtained.
   - The current "time-to-charge Speed Booster" is displayed when Speed Booster Upgrades are present in the item pool, and either Speed Booster or at least one Speed Booster Upgrade has been obtained.
-- Added: Icons for individual Beam and Missile upgrades are displayed in the header of the each respective category in the "Samus" menu, clearly indicating whether or not "earlier" items have been obtained even if a "later" item was obatined first.
+- Added: Icons for individual Beam and Missile upgrades are displayed in the header of the each respective category in the "Samus" menu, clearly indicating whether or not "earlier" items have been obtained even if a "later" item was obtained first.
   - For example, if the player has obtained Plasma Beam, an icon will be displayed on the Beams category for Wide Beam. The icon will be "dimmed" if the player has not yet obtained Wide Beam, and it will light up once Wide Beam is acquired.
   - Likewise, if the player has obtained Wave Beam, an icon with similar behavior is displayed for Plasma Beam.
   - Likewise, if the player has obtained Ice Missiles, an icon with similar behavior is displayed for Super Missiles.
