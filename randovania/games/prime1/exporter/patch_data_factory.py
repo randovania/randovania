@@ -150,7 +150,8 @@ def prime1_pickup_details_to_patcher(
 
     # Add Spring Ball message when collecting the item that grants Spring Ball
     if spring_ball_item is not None and model["name"] == spring_ball_item and not detail.is_for_remote_player:
-        collection_text += " and Spring Ball"
+        # Replace "acquired!" with "and Spring Ball acquired!" to improve message formatting
+        collection_text = collection_text.replace(" acquired!", " and Spring Ball acquired!")
 
     result = {
         "type": pickup_type,

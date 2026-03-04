@@ -93,7 +93,7 @@ def test_prime1_pickup_details_to_patcher_spring_ball(prime1_resource_database, 
 
     expected_hudmemo = "Morph Ball Bomb acquired!"
     if spring_ball_item is not None:
-        expected_hudmemo += " and Spring Ball"
+        expected_hudmemo = "Morph Ball Bomb and Spring Ball acquired!"
 
     # Run
     result = prime1_pickup_details_to_patcher(detail, False, True, rng, spring_ball_item)
