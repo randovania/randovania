@@ -52,7 +52,7 @@ async def test_browser_login_with_discord(has_sio, mock_sa, mock_request, mocker
     mock_render = mocker.patch("randovania.server.user_session.unable_to_login")
 
     mock_sa.discord.get_oauth_login_url.return_value = "http://fakeurl.gg"
-    mock_sa.configuration = {"server_config": {"secret_key": "secret"}}
+    mock_sa.configuration = {"server_config": {"secret_key": "secret-key-long-enough-for-hs256"}}
 
     server = mock_sa.sio
     server.rooms.return_value = ["THE_SID"] if has_sio is True else []
