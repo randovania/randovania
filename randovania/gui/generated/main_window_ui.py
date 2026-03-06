@@ -302,7 +302,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.stop_background_process_button.sizePolicy().hasHeightForWidth())
         self.stop_background_process_button.setSizePolicy(sizePolicy1)
         self.stop_background_process_button.setMaximumSize(QSize(75, 16777215))
-        self.stop_background_process_button.setText(u"\ud83d\udec7 Stop")
+        self.stop_background_process_button.setText(u"\U0001f6c7 Stop")
         self.stop_background_process_button.setCheckable(False)
         self.stop_background_process_button.setFlat(False)
 
