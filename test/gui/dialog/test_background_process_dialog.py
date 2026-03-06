@@ -5,10 +5,6 @@ from unittest.mock import AsyncMock
 from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
 
 
-def invoke_callable(target):
-    target()
-
-
 async def test_open_for_background_task(skip_qtbot, mocker):
     def on_execute_dialog(dialog):
         skip_qtbot.addWidget(dialog)
@@ -17,10 +13,16 @@ async def test_open_for_background_task(skip_qtbot, mocker):
         "randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock, side_effect=on_execute_dialog
     )
 
-    mocker.patch(
-        "randovania.gui.dialog.background_process_dialog.BackgroundProcessDialog._start_thread_for",
-        side_effect=invoke_callable,
-    )
+    # Patch threading.Thread (outside any Qt class MRO) to run the target synchronously
+    # instead of spawning a real thread, avoiding class-level patching on Qt classes.
+    class _SyncThread:
+        def __init__(self, target, **kwargs):
+            self._target = target
+
+        def start(self):
+            self._target()
+
+    mocker.patch("threading.Thread", _SyncThread)
 
     def work(progress_update):
         progress_update("Hello", 1)
