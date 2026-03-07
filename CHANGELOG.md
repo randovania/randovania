@@ -215,6 +215,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Changed: AM2R's Drop Pickups will now use more appropriate models.
+- Added: When Spring Ball is enabled, a message is now displayed when collecting the item that grants Spring Ball.
 
 #### Logic Database
 
