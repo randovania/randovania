@@ -22,7 +22,7 @@ from randovania.games.common import elevators
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.exporter.joke_hints import ECHOES_JOKE_HINTS
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, EchoesNewPatcher
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.games.prime2.patcher import echoes_items
@@ -490,7 +490,7 @@ def _akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]
 
 def _create_string_patches(
     hint_config: HintConfiguration,
-    use_new_patcher: bool,
+    new_patcher: EchoesNewPatcher,
     game: GameDescription,
     all_patches: dict[int, GamePatches],
     players_config: PlayersConfiguration,
@@ -529,7 +529,7 @@ def _create_string_patches(
         )
 
     # Elevator Scans
-    if not use_new_patcher:
+    if not new_patcher.is_enabled():
         string_patches.extend(
             _create_elevator_scan_port_patches(
                 game, game.region_list, patches.get_dock_connection_for, elevator_dock_type
@@ -694,7 +694,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         )
 
         # Add the elevators
-        if not self.configuration.use_new_patcher:
+        if not self.configuration.use_new_patcher.is_enabled():
             result["elevators"] = _create_elevators_field(self.patches, self.game, self.elevator_dock_type())
         else:
             result["elevators"] = []
@@ -733,8 +733,10 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
         _apply_translator_gate_patches(result["specific_patches"], self.configuration.teleporters.mode)
 
-        if self.configuration.use_new_patcher:
+        if self.configuration.use_new_patcher.is_enabled():
             result["new_patcher"] = self.new_patcher_configuration()
+
+        result["new_patcher_only"] = self.configuration.use_new_patcher == EchoesNewPatcher.ONLY
 
         return result
 
