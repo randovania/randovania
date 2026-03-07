@@ -80,5 +80,8 @@ class GameData:
     web_info: GameWebInfo = GameWebInfo()
     """Contains a handful of fields displayed primarily on the website."""
 
+    racetime_url: str | None = None
+    """The URL to the racetime.gg data endpoint for this game, if available."""
+
     logic_db_integrity: Callable[[GameDescription], Iterator[str]] = lambda game: iter(())
     """A function checking for game specific database integrity errors."""
