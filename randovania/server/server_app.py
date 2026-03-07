@@ -77,6 +77,10 @@ class ServerLoggingFormatter(ColourizedFormatter):
         return super().formatMessage(record)
 
 
+async def get_sid(sa: ServerApp, sid: str) -> str:
+    return sid
+
+
 class ServerApp:
     """The main class handling server functionality."""
 
@@ -181,9 +185,7 @@ class ServerApp:
             )
             return randovania.VERSION
 
-        @self.sio.on("/get_sid")
-        async def get_sid(sid: str) -> str:
-            return sid
+        self.on("get_sid", get_sid)
 
     def _setup_exception_handlers(self) -> None:
         def status_message(status_code: int) -> str:
