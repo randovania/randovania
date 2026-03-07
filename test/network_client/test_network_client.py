@@ -171,6 +171,7 @@ async def test_connect_to_server(tmp_path):
     client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     async def connect(*args, **kwargs):
+        assert client._waiting_for_on_connect is not None
         client._waiting_for_on_connect.set_result(True)
 
     client.sio.connect = AsyncMock(side_effect=connect)
@@ -423,7 +424,7 @@ async def test_create_new_session(client: NetworkClient, mocker: pytest_mock.Moc
     client.server_post = MagicMock(return_value=AsyncMock())
     response = client.server_post.return_value.__aenter__.return_value
     response.raise_for_status = MagicMock()
-    client.http.headers["X-Randovania-Sid"] = 1234
+    client.http.headers["X-Randovania-Sid"] = "1234"
 
     # Run
     result = await client.create_new_session("The Session")
@@ -454,7 +455,7 @@ async def test_create_new_session_bad(client: NetworkClient, mocker: pytest_mock
         "status_message": "422 Unprocessable Entity",
     }
     response.raise_for_status = MagicMock()
-    client.http.headers["X-Randovania-Sid"] = 1234
+    client.http.headers["X-Randovania-Sid"] = "1234"
 
     # Run
     with pytest.raises(
