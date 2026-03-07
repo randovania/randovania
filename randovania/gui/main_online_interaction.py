@@ -141,7 +141,9 @@ class OnlineInteractions(QtWidgets.QWidget):
             self._login_window.show()
             return
 
-        self._login_window = LoginPromptDialog(self.network_client)
+        self._login_window = LoginPromptDialog(
+            self.network_client, await self.network_client.query_authentication_methods()
+        )
         try:
             await async_dialog.execute_dialog(self._login_window)
         finally:

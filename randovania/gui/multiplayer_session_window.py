@@ -1187,7 +1187,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @handle_network_errors
     async def _connect_to_server(self):
         if self.network_client.connection_state == ConnectionState.ConnectedNotLogged:
-            await async_dialog.execute_dialog(LoginPromptDialog(self.network_client))
+            await async_dialog.execute_dialog(
+                LoginPromptDialog(
+                    self.network_client,
+                    await self.network_client.query_authentication_methods(),
+                )
+            )
         else:
             await self.network_client.connect_to_server()
 
