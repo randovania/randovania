@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import datetime
 import json
+import re
 import uuid
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -26,7 +27,7 @@ from randovania.network_common.async_race_room import (
     AsyncRaceRoomUserStatus,
 )
 from randovania.network_common.authentication import AuthenticationMethod
-from randovania.network_common.error import InvalidSessionError, RequestTimeoutError, ServerError
+from randovania.network_common.error import InvalidActionError, InvalidSessionError, RequestTimeoutError, ServerError
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, WorldUserInventory
 from randovania.network_common.remote_pickup import RemotePickup
@@ -170,6 +171,7 @@ async def test_connect_to_server(tmp_path):
     client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     async def connect(*args, **kwargs):
+        assert client._waiting_for_on_connect is not None
         client._waiting_for_on_connect.set_result(True)
 
     client.sio.connect = AsyncMock(side_effect=connect)
@@ -419,16 +421,53 @@ async def test_on_disconnect(client: NetworkClient):
 
 async def test_create_new_session(client: NetworkClient, mocker: pytest_mock.MockerFixture):
     mock_session_from = mocker.patch("randovania.network_common.multiplayer_session.MultiplayerSessionEntry.from_json")
-    client.server_call = AsyncMock()
+    client.server_post = MagicMock(return_value=AsyncMock())
+    response = client.server_post.return_value.__aenter__.return_value
+    response.raise_for_status = MagicMock()
+    client.http.headers["X-Randovania-Sid"] = "1234"
 
     # Run
     result = await client.create_new_session("The Session")
 
     # Assert
     assert result is mock_session_from.return_value
-    client.server_call.assert_awaited_once_with("multiplayer_create_session", "The Session")
-    mock_session_from.assert_called_once_with(client.server_call.return_value)
+    client.server_post.assert_called_once_with("session", json={"name": "The Session"})
+    mock_session_from.assert_called_once_with(response.json.return_value)
+    response.raise_for_status.assert_called_once_with()
     assert client._sessions_interested_in == {mock_session_from.return_value.id}
+
+
+async def test_create_new_session_bad(client: NetworkClient, mocker: pytest_mock.MockerFixture):
+    mock_session_from = mocker.patch("randovania.network_common.multiplayer_session.MultiplayerSessionEntry.from_json")
+    client.server_post = MagicMock(return_value=AsyncMock())
+    response = client.server_post.return_value.__aenter__.return_value
+    response.status = 422
+    response.json.return_value = {
+        "errors": [
+            {
+                "ctx": {"max_length": 50},
+                "input": "My Room With A Name that is really really really long",
+                "loc": ["body", "name"],
+                "msg": "String should have at most 50 characters",
+                "type": "string_too_long",
+            }
+        ],
+        "status_message": "422 Unprocessable Entity",
+    }
+    response.raise_for_status = MagicMock()
+    client.http.headers["X-Randovania-Sid"] = "1234"
+
+    # Run
+    with pytest.raises(
+        InvalidActionError, match=re.escape(r"Invalid Action: String should have at most 50 characters")
+    ):
+        await client.create_new_session("The Session")
+
+    # Assert
+    client.server_post.assert_called_once_with("session", json={"name": "The Session"})
+    mock_session_from.assert_not_called()
+    response.raise_for_status.assert_not_called()
+    assert client._sessions_interested_in == set()
 
 
 async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mock.MockerFixture):
