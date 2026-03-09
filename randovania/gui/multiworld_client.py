@@ -271,7 +271,8 @@ class MultiworldClient(QtCore.QObject):
         async with self._pickups_lock:
             self._remote_games[pickups.world_id] = pickups
 
-        for connector in self.game_connection.connected_states.keys():
+        # Iterate over a snapshot: connectors may connect/disconnect while this async slot runs.
+        for connector in list(self.game_connection.connected_states):
             if connector.layout_uuid == pickups.world_id:
                 await connector.set_remote_pickups(pickups.pickups)
 
