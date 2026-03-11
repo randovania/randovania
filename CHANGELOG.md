@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [10.5.0] - 2026-03-02
 
 - Changed: Removed game-specific text from the preset editor's header to make information more clear for all games in RDV.
+- Fixed: Some very old RDVGames not importing properly.
 
 ### Metroid Dread
 

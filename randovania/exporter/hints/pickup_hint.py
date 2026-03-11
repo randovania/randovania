@@ -96,6 +96,9 @@ def create_pickup_hint(
     elif precision is HintItemPrecision.DETAILED:
         details = HintDetails(_calculate_determiner(pickup_assignment, target.pickup, game_view), target.pickup.name)
 
+    elif precision is HintItemPrecision.NOTHING:
+        details = HintDetails("a, ", "pickup")
+
     else:
         raise ValueError(f"Unknown precision: {precision}")
 
