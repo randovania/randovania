@@ -155,15 +155,7 @@ def test_distribute_pre_fill_docks(blank_game_description, empty_patches, monkey
         ("Starting Area", "Door to Blue Key Room (Entrance)"),
         ("Starting Area", "Door to Heated Room"),
         ("Starting Area", "Door to Ledge Room"),
-        ("Boss Arena", "Door to Starting Area"),
-        ("Explosive Depot", "Door to Starting Area"),
         ("Explosive Depot", "Door to Hint Room"),
-        ("Back-Only Lock Room", "Door to Starting Area"),
-        ("Blue Key Room", "Door to Starting Area (Exit)"),
-        ("Blue Key Room", "Door to Starting Area (Entrance)"),
-        ("Hint Room", "Door to Explosive Depot"),
-        ("Heated Room", "Door to Starting Area"),
-        ("Ledge Room", "Door to Starting Area"),
     ]
 
 

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.6.0] - 2026-04-??
 
+### Door Lock Rando
+
+- Fixed: Resolved an unintended behavior affecting individual door lock rando where games where only a prpoortion of doors locks get randomized. Docks not chosen for randomization will now be left with the original dock locks instead of being unlocked. This currently only affects Metroid Dread.
+
 ### Metroid Dread
 
 #### Logic Database
