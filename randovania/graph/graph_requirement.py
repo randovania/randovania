@@ -375,6 +375,27 @@ class GraphRequirementList:
 
     @cython.ccall
     # @cython.exceptval(check=False)
+    def satisfied_damage(self, resources: ResourceCollection) -> cython.float:
+        """Checks if the given resources and health satisfies this requirement."""
+        if not self._set_bitmask.is_subset_of(resources.resource_bitmask):
+            return INF
+
+        if not self._negate_bitmask.is_empty():
+            if self._negate_bitmask.is_subset_of(resources.resource_bitmask):
+                return INF
+
+        for entry in self._other_resources:
+            if resources.get_index(entry.first) < entry.second:
+                return INF
+
+        damage: cython.float = 0
+        for entry in self._damage_resources:
+            damage += entry.second * resources.get_damage_reduction(entry.first)
+
+        return damage
+
+    @cython.ccall
+    # @cython.exceptval(check=False)
     def damage(self, resources: ResourceCollection) -> cython.float:
         """
         How much damage this requirement causes with the reductions of the given resources.
@@ -690,6 +711,7 @@ class GraphRequirementList:
 
 TRIVIAL_LIST: GraphRequirementList = GraphRequirementList(None)
 TRIVIAL_LIST.freeze()
+INF: cython.float = float("inf")
 
 
 @cython.final
@@ -807,14 +829,14 @@ class GraphRequirementSet:
 
     @cython.ccall
     # @cython.exceptval(check=False)
-    def damage(self, resources: ResourceCollection) -> cython.float:
+    def satisfied_damage(self, resources: ResourceCollection) -> cython.float:
         """
-        The least amount of damage from any alternative.
+        The least amount of damage from any satisfied alternative.
         """
-        damage: cython.float = float("inf")
+        damage: cython.float = INF
 
         for alt in self._alternatives:
-            new_dmg: cython.float = cython.cast(GraphRequirementList, alt.raw()).damage(resources)
+            new_dmg: cython.float = cython.cast(GraphRequirementList, alt.raw()).satisfied_damage(resources)
             if new_dmg <= 0.0:
                 return new_dmg
             if new_dmg < damage:

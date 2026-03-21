@@ -748,6 +748,7 @@ SOLO_RDVGAMES = [
     ("prime1_crazy_seed.rdvgame", False),  # chaos features
     ("prime1_crazy_seed_one_way_door.rdvgame", True),  # same as above but 1-way doors
     ("prime1_refills.rdvgame", True),  # Refill items + custom artifact count
+    ("prime1/damage-check.rdvgame", False),
     # Prime 2
     ("seed_a.rdvgame", True),  # extremely old rdvgame
     ("prime2_seed_b.rdvgame", True),
