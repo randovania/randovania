@@ -159,6 +159,35 @@ def test_distribute_pre_fill_docks(blank_game_description, empty_patches, monkey
     ]
 
 
+def test_distribute_pre_fill_docks_swap_proportion_of_docks_dread(dread_game_description, dread_game_patches):
+    rng = Random(10000)
+
+    patches = dataclasses.replace(
+        dread_game_patches,
+        configuration=dataclasses.replace(
+            dread_game_patches.configuration,
+            dock_rando=dataclasses.replace(
+                dread_game_patches.configuration.dock_rando,
+                mode=DockRandoMode.DOCKS,
+            ),
+        ),
+    )
+
+    result = dock_weakness_distributor.distribute_pre_fill_weaknesses(
+        patches,
+        rng,
+    )
+    docks = list(result.all_dock_weaknesses(dread_game_description))
+
+    to_shuffle = list(result.all_weaknesses_to_shuffle(dread_game_description))
+
+    assert len(to_shuffle) == 152
+    assert len(docks) == 298
+    # After accounting for excluded docks and the 60% proportion; 152 docks get shuffled.
+    # One would expect both sides of those to be marked for getting opened.
+    # However, the Open Passage on the other side of Sensor Locks don't count as Doors, so those aren't present here.
+
+
 async def test_dock_weakness_distribute(default_blank_preset, blank_game_description):
     options = MagicMock()
     _editor = PresetEditor(default_blank_preset.fork(), options)
