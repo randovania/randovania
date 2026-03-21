@@ -156,7 +156,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
                 ),
             )
             for node in nodes_to_shuffle
-            if (weakness := all_mapping.get(node.default_dock_weakness)) is not None
+            if (weakness := all_mapping.get(node.default_dock_weakness)) is not None  # type: ignore[assignment]
         )
 
         if weakness_database.dock_rando_config.force_change_two_way:
