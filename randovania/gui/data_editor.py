@@ -244,7 +244,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_view_canvas.select_game(self.game_description.game)
 
         self.region_selector_box.clear()
-        for region in sorted(self.region_list.regions, key=lambda x: x.name):
+        for region in self.region_list.regions:
             self.region_selector_box.addItem(region.name, userData=region)
 
         if current_region:

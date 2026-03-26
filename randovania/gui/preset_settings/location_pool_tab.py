@@ -60,7 +60,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
                             node_name = node.name
                         node_names[node] = f"{region_list.nodes_to_area(node).name} ({node_name})"
 
-        for region_name in sorted(nodes_by_region.keys()):
+        for region_name, _ in nodes_by_region.items():
             spoiler = Foldable(None, region_name, initially_folded=len(nodes_by_region) > 1)
             vbox_layout = QtWidgets.QVBoxLayout()
 
@@ -101,7 +101,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
     def game_enum(self) -> RandovaniaGame:
         return self.game_description.game
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         available_locations = preset.configuration.available_locations
 
         self._during_batch_update = True
@@ -115,7 +115,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
 
         self._during_batch_update = False
 
-    def _on_update_randomization_mode(self):
+    def _on_update_randomization_mode(self) -> None:
         with self._editor as editor:
             mode = RandomizationMode.MAJOR_MINOR_SPLIT if self._major_minor else RandomizationMode.FULL
             editor.available_locations = dataclasses.replace(editor.available_locations, randomization_mode=mode)
@@ -127,7 +127,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
                     row_widget.setEnabled(True)
                     row_widget.set_can_have_progression(True)
 
-    def _on_location_changed(self, node: PickupNode):
+    def _on_location_changed(self, node: PickupNode) -> None:
         if self._during_batch_update:
             return
         with self._editor as editor:
