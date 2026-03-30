@@ -86,10 +86,11 @@ def _test_data() -> randovania.game.game_test_data.GameTestData:
     )
 
 
+# TODO
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="MZM",
     long_name="Metroid: Zero Mission",
-    development_state=randovania.game.development_state.DevelopmentState.STAGING,
+    development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
     presets=["starter_preset.rdvpreset"],
     faq=[],
     web_info=randovania.game.web_info.GameWebInfo(
