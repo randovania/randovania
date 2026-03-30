@@ -1,0 +1,1127 @@
+----------------
+Starting Room
+Extra - map_name: Brinstar0
+Extra - room_id: 0
+> Dock to Broken Elevator to Brinstar; Heals? False
+  * Layers: default
+  * Access Open to Broken Elevator to Brinstar/Dock to Starting Room
+  * Extra - door_idx: 0
+  > Spawn Point
+      Trivial
+
+> Door to Fake Block Fork; Heals? False
+  * Layers: default
+  * Power Beam Door to Fake Block Fork/Door to Starting Room
+  * Extra - door_idx: 1
+  > Spawn Point
+      Trivial
+
+> Pickup (Morph Ball); Heals? False
+  * Layers: default
+  * Pickup 28; Category? Major
+  > Spawn Point
+      Morph Ball or Have Increased Height
+
+> Spawn Point; Heals? False
+  * Layers: default
+  > Dock to Broken Elevator to Brinstar
+      Lay Bomb and Lay Power Bomb
+  > Door to Fake Block Fork
+      Trivial
+  > Pickup (Morph Ball)
+      Trivial
+
+----------------
+Fake Block Fork
+Extra - map_name: Brinstar1
+Extra - room_id: 1
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 0; Category? Minor
+  > Door to Guide Statue (Long Beam)
+      Morph Ball
+
+> Door to Starting Room; Heals? False
+  * Layers: default
+  * Power Beam Door to Starting Room/Door to Fake Block Fork
+  * Extra - door_idx: 2
+  > Door to Guide Statue (Long Beam)
+      Trivial
+
+> Door to Guide Statue (Long Beam); Heals? False
+  * Layers: default
+  * Power Beam Door to Guide Statue (Long Beam)/Door to Fake Block Fork
+  * Extra - door_idx: 3
+  > Pickup (Missile Tank)
+      Destroy Bomb Blocks
+  > Door to Starting Room
+      Trivial
+  > Door to Elevator to Kraid
+      Destroy Bomb Blocks
+
+> Door to Elevator to Kraid; Heals? False
+  * Layers: default
+  * Power Beam Door to Elevator to Kraid/Door to Fake Block Fork
+  * Extra - door_idx: 4
+  > Door to Guide Statue (Long Beam)
+      Destroy Bomb Blocks
+
+----------------
+Guide Statue (Long Beam)
+Extra - map_name: Brinstar2
+Extra - room_id: 2
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 1; Category? Minor
+  > Door to Fake Block Fork
+      Trivial
+
+> Door to Fake Block Fork; Heals? False
+  * Layers: default
+  * Power Beam Door to Fake Block Fork/Door to Guide Statue (Long Beam)
+  * Extra - door_idx: 5
+  > Pickup (Energy Tank)
+      Have Increased Height
+  > Door to Blue-Tinted Hub
+      Morph Ball and After Brinstar Corridor 2 Chozo Statue
+  > Event - Chozo Statue
+      Morph Ball
+
+> Door to Blue-Tinted Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Blue-Tinted Hub/Door to Guide Statue (Long Beam)
+  * Extra - door_idx: 6
+  > Door to Fake Block Fork
+      After Brinstar Corridor 2 Chozo Statue
+
+> Event - Chozo Statue; Heals? False
+  * Layers: default
+  * Event Brinstar Corridor 2 Chozo Statue
+  > Door to Fake Block Fork
+      Morph Ball
+
+----------------
+Blue-Tinted Hub
+Extra - map_name: Brinstar3
+Extra - room_id: 3
+> Door to Guide Statue (Long Beam); Heals? False
+  * Layers: default
+  * Power Beam Door to Guide Statue (Long Beam)/Door to Blue-Tinted Hub
+  * Extra - door_idx: 7
+  > Door to Save Station (South)
+      Trivial
+  > Lower Half
+      Trivial
+
+> Door to Guide Statue (Bombs); Heals? False
+  * Layers: default
+  * Power Beam Door to Guide Statue (Bombs)/Door to Blue-Tinted Hub
+  * Extra - door_idx: 10
+  > Upper Half
+      Trivial
+
+> Door to Long Beam Chamber Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Long Beam Chamber Access/Door to Blue-Tinted Hub
+  * Extra - door_idx: 11
+  > Upper Half
+      Trivial
+
+> Door to Vestibule; Heals? False
+  * Layers: default
+  * Power Beam Door to Vestibule/Door to Blue-Tinted Hub
+  * Extra - door_idx: 12
+
+> Door to Save Station (South); Heals? False
+  * Layers: default
+  * Power Beam Door to Save Station (South)/Door to Blue-Tinted Hub
+  * Extra - door_idx: 76
+  > Door to Guide Statue (Long Beam)
+      Trivial
+
+> Tunnel to Sloped Alcove; Heals? False
+  * Layers: default
+  * Tunnel to Sloped Alcove/Tunnel to Blue-Tinted Hub
+  * Extra - door_idx: 83
+  > Upper Half
+      Trivial
+
+> Tunnel to Speedbooster Passage; Heals? False
+  * Layers: default
+  * Tunnel to Speedbooster Passage/Tunnel to Blue-Tinted Hub
+  * Extra - door_idx: 91
+  > Lower Half
+      Trivial
+
+> Tunnel to Hidden Tank Shaft; Heals? False
+  * Layers: default
+  * Tunnel to Hidden Tank Shaft/Tunnel to Blue-Tinted Hub
+  * Extra - door_idx: 92
+  > Lower Half
+      Trivial
+
+> Tunnel to Hidden Tank Shaft (95); Heals? False
+  * Layers: default
+  * Tunnel to Hidden Tank Shaft/Tunnel to Blue-Tinted Hub
+  * Extra - door_idx: 95
+  > Lower Half
+      Destroy Bomb Blocks
+
+> Lower Half; Heals? False
+  * Layers: default
+  > Door to Guide Statue (Long Beam)
+      Trivial
+  > Door to Vestibule
+      Any of the following:
+          Knowledge (Beginner)
+          Long Beam and Morph Ball
+  > Tunnel to Speedbooster Passage
+      All of the following:
+          Knowledge (Beginner)
+          Power Grip or Mid-Air Morphs (Beginner)
+  > Tunnel to Hidden Tank Shaft
+      All of the following:
+          Knowledge (Beginner)
+          Any of the following:
+              Power Grip
+              All of the following:
+                  Mid-Air Morphs (Beginner)
+                  Wall Jumps (Intermediate) or Have Increased Height
+  > Tunnel to Hidden Tank Shaft (95)
+      All of the following:
+          Destroy Bomb Blocks
+          Ice Beam or Wall Jumps (Beginner) or Have Increased Height
+  > Upper Half
+      Trivial
+
+> Upper Half; Heals? False
+  * Layers: default
+  > Door to Guide Statue (Bombs)
+      Trivial
+  > Door to Long Beam Chamber Access
+      Trivial
+  > Tunnel to Sloped Alcove
+      Power Grip and Knowledge (Beginner)
+  > Lower Half
+      Trivial
+
+----------------
+Long Beam Chamber Access
+Extra - map_name: Brinstar4
+Extra - room_id: 4
+> Door to Blue-Tinted Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Blue-Tinted Hub/Door to Long Beam Chamber Access
+  * Extra - door_idx: 13
+  > Door to Long Beam Chamber
+      Morph Ball
+
+> Door to Long Beam Chamber; Heals? False
+  * Layers: default
+  * Power Beam Door to Long Beam Chamber/Door to Long Beam Chamber Access
+  * Extra - door_idx: 14
+  > Door to Blue-Tinted Hub
+      All of the following:
+          Morph Ball
+          Long Beam or Lay Any Bomb
+  > Tunnel to Small Cave
+      All of the following:
+          Morph Ball
+          Long Beam or Lay Any Bomb
+
+> Tunnel to Small Cave; Heals? False
+  * Layers: default
+  * Tunnel to Small Cave/Tunnel to Long Beam Chamber Access
+  * Extra - door_idx: 63
+  > Door to Long Beam Chamber
+      All of the following:
+          Morph Ball
+          Long Beam or Lay Any Bomb
+
+----------------
+Long Beam Chamber
+Extra - map_name: Brinstar5
+Extra - room_id: 5
+> Door to Long Beam Chamber Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Long Beam Chamber Access/Door to Long Beam Chamber
+  * Extra - door_idx: 15
+  > Pickup (Long Beam)
+      Trivial
+
+> Pickup (Long Beam); Heals? False
+  * Layers: default
+  * Pickup 32; Category? Major
+  > Door to Long Beam Chamber Access
+      Trivial
+
+----------------
+Vestibule
+Extra - map_name: Brinstar6
+Extra - room_id: 6
+> Door to Blue-Tinted Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Blue-Tinted Hub/Door to Vestibule
+  * Extra - door_idx: 16
+  > Door to Gold-Tinted Hub
+      Trivial
+
+> Door to Gold-Tinted Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Gold-Tinted Hub/Door to Vestibule
+  * Extra - door_idx: 17
+  > Door to Blue-Tinted Hub
+      Trivial
+
+----------------
+Gold-Tinted Hub
+Extra - map_name: Brinstar7
+Extra - room_id: 7
+> Door to Four Pipes Corridor; Heals? False
+  * Layers: default
+  * Power Beam Door to Four Pipes Corridor/Door to Gold-Tinted Hub
+  * Extra - door_idx: 18
+  > Door to Vestibule
+      Trivial
+  > Tunnel to Sloped Alcove
+      Ice Beam and Power Grip
+
+> Door to Vestibule; Heals? False
+  * Layers: default
+  * Power Beam Door to Vestibule/Door to Gold-Tinted Hub
+  * Extra - door_idx: 19
+  > Door to Four Pipes Corridor
+      Trivial
+  > Door to Mero Corridor
+      Trivial
+  > Door to Save Station (Central)
+      Morph Ball
+
+> Door to Mero Corridor; Heals? False
+  * Layers: default
+  * Missile Door to Mero Corridor/Door to Gold-Tinted Hub
+  * Extra - door_idx: 20
+  > Door to Vestibule
+      Trivial
+
+> Door to Norfair Access Corridor; Heals? False
+  * Layers: default
+  * Power Beam Door to Norfair Access Corridor/Door to Gold-Tinted Hub
+  * Extra - door_idx: 21
+  > Door to Vestibule
+      Speed Booster and Knowledge (Beginner)
+  > Door to Save Station (Central)
+      Trivial
+  > Tunnel to Speedbooster Passage
+      Morph Ball and Speed Booster
+
+> Door to Save Station (Central); Heals? False
+  * Layers: default
+  * Power Beam Door to Save Station (Central)/Door to Gold-Tinted Hub
+  * Extra - door_idx: 72
+  > Door to Vestibule
+      Morph Ball
+  > Door to Norfair Access Corridor
+      Trivial
+
+> Tunnel to Sloped Alcove; Heals? False
+  * Layers: default
+  * Tunnel to Sloped Alcove/Tunnel to Gold-Tinted Hub
+  * Extra - door_idx: 80
+  > Door to Four Pipes Corridor
+      Trivial
+
+> Tunnel to Speedbooster Passage; Heals? False
+  * Layers: default
+  * Tunnel to Speedbooster Passage/Tunnel to Gold-Tinted Hub
+  * Extra - door_idx: 88
+  > Door to Norfair Access Corridor
+      All of the following:
+          Morph Ball
+          Speed Booster or Lay Any Bomb
+
+----------------
+Elevator to Kraid
+Extra - map_name: Brinstar8
+Extra - room_id: 8
+> Door to Fake Block Fork; Heals? False
+  * Layers: default
+  * Power Beam Door to Fake Block Fork/Door to Elevator to Kraid
+  * Extra - door_idx: 8
+
+> Dock to Elevator to Brinstar; Heals? False
+  * Layers: default
+  * Access Open to Elevator to Brinstar/Dock to Elevator to Kraid
+  * Extra - door_idx: 9
+
+> Door to Guide Statue (Hi-Jump); Heals? False
+  * Layers: default
+  * Missile Door to Guide Statue (Hi-Jump)/Door to Elevator to Kraid
+  * Extra - door_idx: 79
+
+----------------
+Tourian Gate Access
+Extra - map_name: Brinstar9
+Extra - room_id: 9
+> Door to Tourian Gate; Heals? False
+  * Layers: default
+  * Power Beam Door to Tourian Gate/Door to Tourian Gate Access
+  * Extra - door_idx: 22
+  > Door to Guide Statue (Bombs)
+      Morph Ball
+  > Dock to Small Cave
+      Trivial
+
+> Door to Guide Statue (Bombs); Heals? False
+  * Layers: default
+  * Power Beam Door to Guide Statue (Bombs)/Door to Tourian Gate Access
+  * Extra - door_idx: 23
+  > Door to Tourian Gate
+      Morph Ball
+
+> Dock to Small Cave; Heals? False
+  * Layers: default
+  * Access Open to Small Cave/Dock to Tourian Gate Access
+  * Extra - door_idx: 62
+  > Door to Tourian Gate
+      Trivial
+
+----------------
+Tourian Gate
+Extra - map_name: Brinstar10
+Extra - room_id: 10
+> Door to Elevator to Tourian; Heals? False
+  * Layers: default
+  * Power Beam Door to Elevator to Tourian/Door to Tourian Gate
+  * Extra - door_idx: 24
+  > Door to Tourian Gate Access
+      After Kraid Defeated and After Ridley Defeated
+
+> Door to Tourian Gate Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Tourian Gate Access/Door to Tourian Gate
+  * Extra - door_idx: 25
+  > Door to Elevator to Tourian
+      After Kraid Defeated and After Ridley Defeated
+
+----------------
+Elevator to Tourian
+Extra - map_name: Brinstar11
+Extra - room_id: 11
+> Door to Tourian Gate; Heals? False
+  * Layers: default
+  * Power Beam Door to Tourian Gate/Door to Elevator to Tourian
+  * Extra - door_idx: 26
+  > Dock to Elevator to Brinstar (Upper)
+      Trivial
+
+> Dock to Elevator to Brinstar (Upper); Heals? False
+  * Layers: default
+  * Access Open to Elevator to Brinstar (Upper)/Dock to Elevator to Tourian
+  * Extra - door_idx: 61
+  > Door to Tourian Gate
+      Trivial
+
+----------------
+Norfair Access Corridor
+Extra - map_name: Brinstar12
+Extra - room_id: 12
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 2; Category? Minor
+  > Door to Gold-Tinted Hub
+      Trivial
+  > Door to Elevator to Norfair
+      Destroy Bomb Blocks
+
+> Door to Gold-Tinted Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Gold-Tinted Hub/Door to Norfair Access Corridor
+  * Extra - door_idx: 27
+  > Pickup (Missile Tank)
+      Trivial
+  > Pickup (Charge Beam)
+      Defeat Charge Beam Beast
+
+> Door to Elevator to Norfair; Heals? False
+  * Layers: default
+  * Power Beam Door to Elevator to Norfair/Door to Norfair Access Corridor
+  * Extra - door_idx: 28
+  > Pickup (Missile Tank)
+      Destroy Bomb Blocks
+
+> Pickup (Charge Beam); Heals? False
+  * Layers: default
+  * Pickup 58; Category? Major
+  > Door to Gold-Tinted Hub
+      Trivial
+
+----------------
+Mero Corridor
+Extra - map_name: Brinstar13
+Extra - room_id: 13
+> Door to Gold-Tinted Hub; Heals? False
+  * Layers: default
+  * Missile Door to Gold-Tinted Hub/Door to Mero Corridor
+  * Extra - door_idx: 29
+  > Door to Mero Abyss
+      Trivial
+
+> Door to Mero Abyss; Heals? False
+  * Layers: default
+  * Power Beam Door to Mero Abyss/Door to Mero Corridor
+  * Extra - door_idx: 30
+  > Door to Gold-Tinted Hub
+      Trivial
+
+----------------
+Mero Abyss
+Extra - map_name: Brinstar14
+Extra - room_id: 14
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 3; Category? Minor
+  > Door to Mero Hive Chamber
+      Movement (Beginner) or Destroy Bomb Blocks
+
+> Door to Mero Corridor; Heals? False
+  * Layers: default
+  * Power Beam Door to Mero Corridor/Door to Mero Abyss
+  * Extra - door_idx: 31
+  > Door to Mero Hive Chamber
+      Trivial
+
+> Door to Mero Hive Chamber; Heals? False
+  * Layers: default
+  * Power Beam Door to Mero Hive Chamber/Door to Mero Abyss
+  * Extra - door_idx: 32
+  > Pickup (Missile Tank)
+      All of the following:
+          Destroy Bomb Blocks
+          Power Grip or Mid-Air Morphs (Intermediate)
+  > Door to Mero Corridor
+      Trivial
+
+----------------
+Mero Hive Chamber
+Extra - map_name: Brinstar15
+Extra - room_id: 15
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 4; Category? Minor
+  > Door to Mero Abyss
+      Trivial
+
+> Door to Mero Abyss; Heals? False
+  * Layers: default
+  * Power Beam Door to Mero Abyss/Door to Mero Hive Chamber
+  * Extra - door_idx: 33
+  > Pickup (Missile Tank)
+      Trivial
+  > Door to Central Fork
+      Trivial
+
+> Door to Central Fork; Heals? False
+  * Layers: default
+  * Power Beam Door to Central Fork/Door to Mero Hive Chamber
+  * Extra - door_idx: 34
+  > Door to Mero Abyss
+      Trivial
+
+----------------
+Central Fork
+Extra - map_name: Brinstar16
+Extra - room_id: 16
+> Door to Mero Hive Chamber; Heals? False
+  * Layers: default
+  * Power Beam Door to Mero Hive Chamber/Door to Central Fork
+  * Extra - door_idx: 35
+  > Door to Alternate Charge Beast Arena
+      Trivial
+  > Door to Waver Cavern
+      Destroy Bomb Blocks
+
+> Door to Alternate Charge Beast Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Alternate Charge Beast Arena/Door to Central Fork
+  * Extra - door_idx: 36
+  > Door to Mero Hive Chamber
+      Trivial
+
+> Door to Waver Cavern; Heals? False
+  * Layers: default
+  * Power Beam Door to Waver Cavern/Door to Central Fork
+  * Extra - door_idx: 37
+  > Door to Mero Hive Chamber
+      Destroy Bomb Blocks
+
+----------------
+Waver Cavern
+Extra - map_name: Brinstar17
+Extra - room_id: 17
+> Door to Guide Statue (Ice Beam); Heals? False
+  * Layers: default
+  * Missile Door to Guide Statue (Ice Beam)/Door to Waver Cavern
+  * Extra - door_idx: 38
+  > Door to Central Fork
+      Trivial
+
+> Door to Central Fork; Heals? False
+  * Layers: default
+  * Power Beam Door to Central Fork/Door to Waver Cavern
+  * Extra - door_idx: 39
+  > Door to Guide Statue (Ice Beam)
+      Trivial
+
+----------------
+Guide Statue (Ice Beam)
+Extra - map_name: Brinstar18
+Extra - room_id: 18
+> Door to Waver Cavern; Heals? False
+  * Layers: default
+  * Missile Door to Waver Cavern/Door to Guide Statue (Ice Beam)
+  * Extra - door_idx: 40
+
+----------------
+Alternate Charge Beast Arena
+Extra - map_name: Brinstar19
+Extra - room_id: 19
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 5; Category? Minor
+  > Door to Central Fork
+      Trivial
+  > Door to Eastern Hub
+      Trivial
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 6; Category? Minor
+  > Door to Central Fork
+      Trivial
+
+> Door to Central Fork; Heals? False
+  * Layers: default
+  * Power Beam Door to Central Fork/Door to Alternate Charge Beast Arena
+  * Extra - door_idx: 41
+  > Pickup (Energy Tank)
+      Trivial
+  > Pickup (Missile Tank)
+      Trivial
+
+> Door to Eastern Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Eastern Hub/Door to Alternate Charge Beast Arena
+  * Extra - door_idx: 42
+  > Pickup (Energy Tank)
+      Trivial
+
+----------------
+Eastern Hub
+Extra - map_name: Brinstar20
+Extra - room_id: 20
+> Door to Guide Statue (Wave Beam); Heals? False
+  * Layers: default
+  * Power Beam Door to Guide Statue (Wave Beam)/Door to Eastern Hub
+  * Extra - door_idx: 43
+  > Door to Short Shaft
+      Trivial
+
+> Door to Short Shaft; Heals? False
+  * Layers: default
+  * Power Beam Door to Short Shaft/Door to Eastern Hub
+  * Extra - door_idx: 44
+  > Door to Guide Statue (Wave Beam)
+      Any of the following:
+          Use Space Jump
+          Hi-Jump Boots and Ice Beam
+  > Door to Alternate Charge Beast Arena
+      Trivial
+
+> Door to Alternate Charge Beast Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Alternate Charge Beast Arena/Door to Eastern Hub
+  * Extra - door_idx: 45
+  > Door to Short Shaft
+      Trivial
+  > Door to Map Station
+      Trivial
+
+> Door to Map Station; Heals? False
+  * Layers: default
+  * Missile Door to Map Station/Door to Eastern Hub
+  * Extra - door_idx: 66
+  > Door to Alternate Charge Beast Arena
+      Trivial
+
+----------------
+Acid Vine Puzzle
+Extra - map_name: Brinstar21
+Extra - room_id: 21
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 7; Category? Minor
+  > Door to Save Station (North)
+      Trivial
+
+> Door to Save Station (North); Heals? False
+  * Layers: default
+  * Power Beam Door to Save Station (North)/Door to Acid Vine Puzzle
+  * Extra - door_idx: 46
+  > Pickup (Missile Tank)
+      Trivial
+  > Tunnel to Guide Statue (Wave Beam)
+      Morph Ball and Varia Suit
+  > Tunnel to Guide Statue (Wave Beam) (86)
+      Morph Ball and Power Grip
+
+> Tunnel to Guide Statue (Wave Beam); Heals? False
+  * Layers: default
+  * Tunnel to Guide Statue (Wave Beam)/Tunnel to Acid Vine Puzzle
+  * Extra - door_idx: 64
+
+> Tunnel to Guide Statue (Wave Beam) (86); Heals? False
+  * Layers: default
+  * Tunnel to Guide Statue (Wave Beam)/Tunnel to Acid Vine Puzzle
+  * Extra - door_idx: 86
+  > Door to Save Station (North)
+      Morph Ball and Short Beam
+
+----------------
+Varia Chamber Ascent
+Extra - map_name: Brinstar22
+Extra - room_id: 22
+> Door to Varia Chamber Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Varia Chamber Access/Door to Varia Chamber Ascent
+  * Extra - door_idx: 48
+  > Door to Four Pipes Corridor
+      Trivial
+
+> Door to Four Pipes Corridor; Heals? False
+  * Layers: default
+  * Power Beam Door to Four Pipes Corridor/Door to Varia Chamber Ascent
+  * Extra - door_idx: 49
+  > Door to Varia Chamber Access
+      Ice Beam Abuse (Intermediate) or Have Increased Height
+  > Door to Save Station (North)
+      Trivial
+
+> Door to Save Station (North); Heals? False
+  * Layers: default
+  * Power Beam Door to Save Station (North)/Door to Varia Chamber Ascent
+  * Extra - door_idx: 50
+  > Door to Four Pipes Corridor
+      Trivial
+
+----------------
+Varia Chamber Access
+Extra - map_name: Brinstar23
+Extra - room_id: 23
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 8; Category? Minor
+  > Door to Varia Chamber Ascent
+      Can Bounce in Ball
+
+> Door to Varia Chamber; Heals? False
+  * Layers: default
+  * Missile Door to Varia Chamber/Door to Varia Chamber Access
+  * Extra - door_idx: 51
+  > Door to Varia Chamber Ascent
+      Can Bounce in Ball
+
+> Door to Varia Chamber Ascent; Heals? False
+  * Layers: default
+  * Power Beam Door to Varia Chamber Ascent/Door to Varia Chamber Access
+  * Extra - door_idx: 52
+  > Pickup (Energy Tank)
+      Can Bounce in Ball
+  > Door to Varia Chamber
+      Can Bounce in Ball and Destroy Bomb Blocks
+
+----------------
+Bomb Chamber Access
+Extra - map_name: Brinstar24
+Extra - room_id: 24
+> Door to Bomb Chamber; Heals? False
+  * Layers: default
+  * Missile Door to Bomb Chamber/Door to Bomb Chamber Access
+  * Extra - door_idx: 53
+  > Door to Short Shaft
+      Destroy Bomb Blocks
+
+> Door to Short Shaft; Heals? False
+  * Layers: default
+  * Power Beam Door to Short Shaft/Door to Bomb Chamber Access
+  * Extra - door_idx: 54
+  > Door to Bomb Chamber
+      Morph Ball
+
+----------------
+Bomb Chamber
+Extra - map_name: Brinstar25
+Extra - room_id: 25
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 9; Category? Minor
+  > Door to Bomb Chamber Access
+      Trivial
+
+> Door to Bomb Chamber Access; Heals? False
+  * Layers: default
+  * Missile Door to Bomb Chamber Access/Door to Bomb Chamber
+  * Extra - door_idx: 55
+  > Pickup (Missile Tank)
+      Can Bounce in Ball or Destroy Bomb Blocks
+  > Pickup (Bombs)
+      Trivial
+
+> Pickup (Bombs); Heals? False
+  * Layers: default
+  * Pickup 87; Category? Major
+  > Door to Bomb Chamber Access
+      Trivial
+
+----------------
+Elevator to Norfair
+Extra - map_name: Brinstar26
+Extra - room_id: 26
+> Door to Norfair Access Corridor; Heals? False
+  * Layers: default
+  * Power Beam Door to Norfair Access Corridor/Door to Elevator to Norfair
+  * Extra - door_idx: 56
+  > Dock to Elevator to Brinstar
+      Trivial
+
+> Dock to Elevator to Brinstar; Heals? False
+  * Layers: default
+  * Access Open to Elevator to Brinstar/Dock to Elevator to Norfair
+  * Extra - door_idx: 57
+  > Door to Norfair Access Corridor
+      Trivial
+
+----------------
+Varia Chamber
+Extra - map_name: Brinstar27
+Extra - room_id: 27
+> Door to Varia Chamber Access; Heals? False
+  * Layers: default
+  * Missile Door to Varia Chamber Access/Door to Varia Chamber
+  * Extra - door_idx: 59
+  > Pickup (Varia Suit)
+      Trivial
+
+> Pickup (Varia Suit); Heals? False
+  * Layers: default
+  * Pickup 56; Category? Major
+  > Door to Varia Chamber Access
+      Trivial
+
+----------------
+Four Pipes Corridor
+Extra - map_name: Brinstar28
+Extra - room_id: 28
+> Door to Varia Chamber Ascent; Heals? False
+  * Layers: default
+  * Power Beam Door to Varia Chamber Ascent/Door to Four Pipes Corridor
+  * Extra - door_idx: 58
+  > Door to Gold-Tinted Hub
+      Any of the following:
+          After Brinstar Acid Tanglefruit Destroyed
+          Power Grip and Super Missiles
+
+> Door to Gold-Tinted Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Gold-Tinted Hub/Door to Four Pipes Corridor
+  * Extra - door_idx: 60
+  > Door to Varia Chamber Ascent
+      Can Bounce in Ball and Destroy Bomb Blocks
+
+> Event - Tangle Fruit; Heals? False
+  * Layers: default
+  * Event Brinstar Acid Tanglefruit Destroyed
+
+----------------
+Sloped Alcove
+Extra - map_name: Brinstar29
+Extra - room_id: 29
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 10; Category? Minor
+  > Tunnel to Gold-Tinted Hub
+      Can Bounce in Ball
+  > Tunnel to Blue-Tinted Hub
+      Destroy Bomb Blocks
+
+> Tunnel to Gold-Tinted Hub; Heals? False
+  * Layers: default
+  * Tunnel to Gold-Tinted Hub/Tunnel to Sloped Alcove
+  * Extra - door_idx: 81
+  > Pickup (Missile Tank)
+      Trivial
+
+> Tunnel to Blue-Tinted Hub; Heals? False
+  * Layers: default
+  * Tunnel to Blue-Tinted Hub/Tunnel to Sloped Alcove
+  * Extra - door_idx: 82
+
+----------------
+Guide Statue (Bombs)
+Extra - map_name: Brinstar30
+Extra - room_id: 30
+> Door to Tourian Gate Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Tourian Gate Access/Door to Guide Statue (Bombs)
+  * Extra - door_idx: 96
+  > Door to Blue-Tinted Hub
+      After Brinstar Corridor 5 Chozo Statue
+  > Event - Chozo Statue
+      Morph Ball
+
+> Door to Blue-Tinted Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Blue-Tinted Hub/Door to Guide Statue (Bombs)
+  * Extra - door_idx: 97
+  > Door to Tourian Gate Access
+      After Brinstar Corridor 5 Chozo Statue
+
+> Event - Chozo Statue; Heals? False
+  * Layers: default
+  * Event Brinstar Corridor 5 Chozo Statue
+  > Door to Tourian Gate Access
+      Trivial
+
+----------------
+Short Shaft
+Extra - map_name: Brinstar31
+Extra - room_id: 31
+> Door to Bomb Chamber Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Bomb Chamber Access/Door to Short Shaft
+  * Extra - door_idx: 67
+  > Door to Save Station (East)
+      Trivial
+
+> Door to Save Station (East); Heals? False
+  * Layers: default
+  * Power Beam Door to Save Station (East)/Door to Short Shaft
+  * Extra - door_idx: 68
+  > Door to Bomb Chamber Access
+      Trivial
+  > Door to Eastern Hub
+      Trivial
+
+> Door to Eastern Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Eastern Hub/Door to Short Shaft
+  * Extra - door_idx: 69
+  > Door to Save Station (East)
+      Trivial
+
+----------------
+Map Station
+Extra - map_name: Brinstar32
+Extra - room_id: 32
+> Door to Eastern Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Eastern Hub/Door to Map Station
+  * Extra - door_idx: 70
+
+----------------
+Save Station (East)
+Extra - map_name: Brinstar33
+Extra - room_id: 33
+> Door to Short Shaft; Heals? False
+  * Layers: default
+  * Power Beam Door to Short Shaft/Door to Save Station (East)
+  * Extra - door_idx: 71
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Short Shaft
+      Trivial
+
+----------------
+Save Station (Central)
+Extra - map_name: Brinstar34
+Extra - room_id: 34
+> Door to Gold-Tinted Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Gold-Tinted Hub/Door to Save Station (Central)
+  * Extra - door_idx: 73
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Gold-Tinted Hub
+      Trivial
+
+----------------
+Small Cave
+Extra - map_name: Brinstar35
+Extra - room_id: 35
+> Tunnel to Long Beam Chamber Access; Heals? False
+  * Layers: default
+  * Tunnel to Long Beam Chamber Access/Tunnel to Small Cave
+  * Extra - door_idx: 74
+  > Dock to Tourian Gate Access
+      Morph Ball
+
+> Dock to Tourian Gate Access; Heals? False
+  * Layers: default
+  * Access Open to Tourian Gate Access/Dock to Small Cave
+  * Extra - door_idx: 75
+  > Tunnel to Long Beam Chamber Access
+      Morph Ball
+
+----------------
+Save Station (South)
+Extra - map_name: Brinstar36
+Extra - room_id: 36
+> Door to Blue-Tinted Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Blue-Tinted Hub/Door to Save Station (South)
+  * Extra - door_idx: 77
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Blue-Tinted Hub
+      Trivial
+
+----------------
+Guide Statue (Hi-Jump)
+Extra - map_name: Brinstar37
+Extra - room_id: 37
+> Door to Elevator to Kraid; Heals? False
+  * Layers: default
+  * Missile Door to Elevator to Kraid/Door to Guide Statue (Hi-Jump)
+  * Extra - door_idx: 78
+
+----------------
+Guide Statue (Wave Beam)
+Extra - map_name: Brinstar38
+Extra - room_id: 38
+> Door to Eastern Hub; Heals? False
+  * Layers: default
+  * Power Beam Door to Eastern Hub/Door to Guide Statue (Wave Beam)
+  * Extra - door_idx: 47
+  > Tunnel to Acid Vine Puzzle
+      Morph Ball and Varia Suit
+  > Tunnel to Acid Vine Puzzle (87)
+      After Brinstar Underhang Corridor Chozo Statue and Can Bounce in Ball
+  > Event - Chozo Statue
+      Morph Ball
+
+> Tunnel to Acid Vine Puzzle; Heals? False
+  * Layers: default
+  * Tunnel to Acid Vine Puzzle/Tunnel to Guide Statue (Wave Beam)
+  * Extra - door_idx: 65
+  > Door to Eastern Hub
+      Morph Ball or Varia Suit
+
+> Tunnel to Acid Vine Puzzle (87); Heals? False
+  * Layers: default
+  * Tunnel to Acid Vine Puzzle/Tunnel to Guide Statue (Wave Beam)
+  * Extra - door_idx: 87
+  > Door to Eastern Hub
+      After Brinstar Underhang Corridor Chozo Statue
+
+> Event - Chozo Statue; Heals? False
+  * Layers: default
+  * Event Brinstar Underhang Corridor Chozo Statue
+  > Door to Eastern Hub
+      Trivial
+
+----------------
+Save Station (North)
+Extra - map_name: Brinstar39
+Extra - room_id: 39
+> Door to Acid Vine Puzzle; Heals? False
+  * Layers: default
+  * Power Beam Door to Acid Vine Puzzle/Door to Save Station (North)
+  * Extra - door_idx: 84
+  > Save Station
+      Trivial
+
+> Door to Varia Chamber Ascent; Heals? False
+  * Layers: default
+  * Power Beam Door to Varia Chamber Ascent/Door to Save Station (North)
+  * Extra - door_idx: 85
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Acid Vine Puzzle
+      Trivial
+  > Door to Varia Chamber Ascent
+      Trivial
+
+----------------
+Speedbooster Passage
+Extra - map_name: Brinstar40
+Extra - room_id: 40
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 11; Category? Minor
+  > Tunnel to Gold-Tinted Hub
+      Trivial
+
+> Tunnel to Gold-Tinted Hub; Heals? False
+  * Layers: default
+  * Tunnel to Gold-Tinted Hub/Tunnel to Speedbooster Passage
+  * Extra - door_idx: 89
+  > Pickup (Missile Tank)
+      Trivial
+  > Tunnel to Blue-Tinted Hub
+      All of the following:
+          Morph Ball
+          Speed Booster or Destroy Bomb Blocks
+
+> Tunnel to Blue-Tinted Hub; Heals? False
+  * Layers: default
+  * Tunnel to Blue-Tinted Hub/Tunnel to Speedbooster Passage
+  * Extra - door_idx: 90
+  > Pickup (Missile Tank)
+      Speed Booster or Shinespark (Beginner)
+  > Tunnel to Gold-Tinted Hub
+      All of the following:
+          Morph Ball
+          Speed Booster or Destroy Bomb Blocks
+
+----------------
+Hidden Tank Shaft
+Extra - map_name: Brinstar41
+Extra - room_id: 41
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 12; Category? Minor
+
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 13; Category? Minor
+  > Tunnel to Blue-Tinted Hub
+      Morph Ball
+
+> Tunnel to Blue-Tinted Hub; Heals? False
+  * Layers: default
+  * Tunnel to Blue-Tinted Hub/Tunnel to Hidden Tank Shaft
+  * Extra - door_idx: 93
+  > Pickup (Super Missile Tank)
+      Morph Ball and Speed Booster
+
+> Tunnel to Blue-Tinted Hub (94); Heals? False
+  * Layers: default
+  * Tunnel to Blue-Tinted Hub/Tunnel to Hidden Tank Shaft
+  * Extra - door_idx: 94
+  > Pickup (Missile Tank)
+      Morph Ball
+  > Tunnel to Blue-Tinted Hub
+      Morph Ball
+

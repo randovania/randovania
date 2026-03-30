@@ -3,56 +3,923 @@
     "game": "zero_mission",
     "resource_database": {
         "items": {
-            "Weapon": {
-                "long_name": "Powerful Weapon",
+            "Short Beam": {
+                "long_name": "Short Beam",
                 "max_capacity": 1,
                 "extra": {}
             },
-            "VictoryKey": {
-                "long_name": "Victory Key",
+            "Morph Ball": {
+                "long_name": "Morph Ball",
                 "max_capacity": 1,
                 "extra": {}
             },
-            "Health": {
-                "long_name": "Health",
-                "max_capacity": 500,
+            "Long Beam": {
+                "long_name": "Long Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Charge Beam": {
+                "long_name": "Charge Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Ice Beam": {
+                "long_name": "Ice Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Wave Beam": {
+                "long_name": "Wave Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Plasma Beam": {
+                "long_name": "Plasma Beam (Unknown Item 1)",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Bombs": {
+                "long_name": "Bombs",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Power Bombs": {
+                "long_name": "Power Bombs",
+                "max_capacity": 99,
+                "extra": {}
+            },
+            "Power Grip": {
+                "long_name": "Power Grip",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Speed Booster": {
+                "long_name": "Speed Booster",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Hi-Jump": {
+                "long_name": "Hi-Jump Boots",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Space Jump": {
+                "long_name": "Space Jump (Unknown Item 2)",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Screw Attack": {
+                "long_name": "Screw Attack",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Varia Suit": {
+                "long_name": "Varia Suit",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Gravity Suit": {
+                "long_name": "Gravity Suit",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Missiles": {
+                "long_name": "Missiles",
+                "max_capacity": 999,
+                "extra": {}
+            },
+            "Super Missiles": {
+                "long_name": "Super Missiles",
+                "max_capacity": 999,
+                "extra": {}
+            },
+            "Energy Tank": {
+                "long_name": "Energy Tank",
+                "max_capacity": 12,
                 "extra": {}
             }
         },
-        "events": {},
-        "tricks": {},
-        "damage": {},
-        "versions": {},
+        "events": {
+            "VictoryEvent": {
+                "long_name": "Victory Event",
+                "extra": ""
+            },
+            "KraidDefeated": {
+                "long_name": "Kraid Defeated",
+                "extra": {}
+            },
+            "RidleyDefeated": {
+                "long_name": "Ridley Defeated",
+                "extra": {}
+            },
+            "MotherBrainDefeated": {
+                "long_name": "Mother Brain Defeated",
+                "extra": {}
+            },
+            "RuinsTestCompleted": {
+                "long_name": "Ruins Test Completed",
+                "extra": {}
+            },
+            "BrinstarC5Chozo": {
+                "long_name": "Brinstar Corridor 5 Chozo Statue",
+                "extra": {}
+            },
+            "BrinstarAcidFruit": {
+                "long_name": "Brinstar Acid Tanglefruit Destroyed",
+                "extra": {}
+            },
+            "BrinstarC2Chozo": {
+                "long_name": "Brinstar Corridor 2 Chozo Statue",
+                "extra": {}
+            },
+            "BrinstarUnderhangChozo": {
+                "long_name": "Brinstar Underhang Corridor Chozo Statue",
+                "extra": {}
+            },
+            "KillAcidWorm": {
+                "long_name": "Acid Worm Defeated",
+                "extra": {}
+            },
+            "Ziplines": {
+                "long_name": "Ziplines Activated",
+                "extra": {}
+            },
+            "RuinsChozoStatue": {
+                "long_name": "Ruins Chozo Statue Item Aquired",
+                "extra": {}
+            },
+            "KraidChozoStatue": {
+                "long_name": "Kraid Chozo Statue Item Aquired",
+                "extra": {}
+            },
+            "RidleyChozoStatue": {
+                "long_name": "Ridley Chozo Statue Item Aquired",
+                "extra": {}
+            },
+            "NorfairPillbug": {
+                "long_name": "Kiru-Giru Blockade Defeated",
+                "extra": {}
+            },
+            "Pipe": {
+                "long_name": "Chozodia Pipe Broken",
+                "extra": {}
+            },
+            "MechaDefeated": {
+                "long_name": "Mecha Ridley Defeated",
+                "extra": {}
+            }
+        },
+        "tricks": {
+            "WallJump": {
+                "long_name": "Wall Jumps",
+                "description": "By spin jumping against a wall, reversing the direction of the D-Pad, and pressing jump again, the player can perform a wall jump. Although an intentional mechanic, this technique is treated as a trick to make the randomizer more accessible.",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "Shinespark": {
+                "long_name": "Shinespark",
+                "description": "By building a speed boost and crouching, Samus can store the Speed Booster's immense energy, and pressing the jump button allows her to release it all at once, flying through the air. Although an intentional mechanic, this technique is treated as a trick to make the randomizer more accessible.",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "HeatRuns": {
+                "long_name": "Heat Runs",
+                "description": "Although the volcanic Norfair is perilous, it is still entirely possible to brave its heat without the Varia suit. Heat Running is the act of traversing heated rooms without protection.",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "IBA": {
+                "long_name": "Ice Beam Abuse",
+                "description": "Using the Ice Beam to freeze enemies opens many possibilities for traversal, some unintentional. Well-placed frozen enemies can be used to reach high places or clip through thin ceilings.",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "IBJ": {
+                "long_name": "Infinite Bomb Jump",
+                "description": "By timing bombs precisely, the player can ride their blasts to gain an infinite amount of height.",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "DBoost": {
+                "long_name": "Damage Boosting",
+                "description": "When Samus takes damage from physical sources, like spikes and enemies, she receives a small knockback away from the enemy. However, by carefully manipulating inputs, a player can use this boost to send Samus flying across rooms.",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "Movement": {
+                "long_name": "Movement",
+                "description": "Covers general movement skills the player can use to optimize their movement.",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "Knowledge": {
+                "long_name": "Knowledge",
+                "description": "Covers a number of tricks which require little to no skill from the player except to know that they exist. ",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "Combat": {
+                "long_name": "Combat",
+                "description": "Encapsulates a number of more specific tricks related to combat, as well as the player's general skill in dealing damage without taking it. Dictates how many resources the player is expected to have for fights, and whether certain techniques are considered to be in logic.",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "MidairMorph": {
+                "long_name": "Mid-Air Morphs",
+                "description": "Entering Morph Ball mode while in mid air to enter 1 tile high gaps without power grip or bombs",
+                "require_documentation_above": 0,
+                "extra": {}
+            }
+        },
+        "damage": {
+            "Damage": {
+                "long_name": "Normal Damage",
+                "extra": {}
+            },
+            "Weak Lava": {
+                "long_name": "Weak Lava",
+                "extra": {}
+            },
+            "Strong Lava": {
+                "long_name": "Strong Lava",
+                "extra": {}
+            },
+            "Acid": {
+                "long_name": "Acid",
+                "extra": {}
+            }
+        },
+        "versions": {
+            "NTSC-U": {
+                "long_name": "North American (U) Release",
+                "extra": {}
+            }
+        },
         "misc": {},
-        "requirement_template": {},
+        "requirement_template": {
+            "Lay Any Bomb": {
+                "display_name": "Lay Any Bomb",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Lay Bomb"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Lay Power Bomb"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Defeat Charge Beam Beast": {
+                "display_name": "Defeat Charge Beam Beast",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missiles",
+                                                "amount": 6,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Morph Ball",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missiles",
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Lay Bomb": {
+                "display_name": "Lay Bomb",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph Ball",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Bombs",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Lay Power Bomb": {
+                "display_name": "Lay Power Bomb",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph Ball",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power Bombs",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Fire Plasma Beam": {
+                "display_name": "Fire Plasma Beam",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "RuinsTestCompleted",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Plasma Beam",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Use Space Jump": {
+                "display_name": "Use Space Jump",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "RuinsTestCompleted",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Space Jump",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Gravity Suit Equipped": {
+                "display_name": "Gravity Suit Equipped",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "RuinsTestCompleted",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Gravity Suit",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Defeat Metroid": {
+                "display_name": "Defeat Metroid",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Ice Beam",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missiles",
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Super Missiles",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Lay Bomb"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Have Increased Height": {
+                "display_name": "Have Increased Height",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Use Space Jump"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Hi-Jump",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Bounce in Ball": {
+                "display_name": "Can Bounce in Ball",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Lay Bomb"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Use Spring Ball"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Use Spring Ball": {
+                "display_name": "Use Spring Ball",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph Ball",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Hi-Jump",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Climb Into 1x1": {
+                "display_name": "Climb Into 1x1",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power Grip",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph Ball",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "BallSpark": {
+                "display_name": "BallSpark",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Use Spring Ball"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Speed Booster",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Climb Ledges": {
+                "display_name": "Climb Ledges",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Have Increased Height"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power Grip",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Climb High Ledges": {
+                "display_name": "Climb High Ledges",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Use Space Jump"
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Hi-Jump",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Power Grip",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Destroy Bomb Blocks": {
+                "display_name": "Destroy Bomb Blocks",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph Ball",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Bombs",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
         "damage_reductions": [],
-        "energy_tank_item_index": "Health"
+        "energy_tank_item_index": "Energy Tank"
     },
     "layers": [
         "default"
     ],
     "starting_location": {
-        "region": "Main",
-        "area": "First Area",
-        "node": "Spawn Point"
+        "region": "Brinstar",
+        "area": "Starting Room",
+        "node": "Door to Fake Block Fork"
     },
-    "minimal_logic": null,
+    "minimal_logic": {
+        "items_to_exclude": [],
+        "custom_item_amount": [],
+        "events_to_exclude": [],
+        "description": "Nothing is checked."
+    },
     "victory_condition": {
-        "type": "resource",
+        "type": "and",
         "data": {
-            "type": "items",
-            "name": "VictoryKey",
-            "amount": 1,
-            "negate": false
+            "comment": null,
+            "items": [
+                {
+                    "type": "resource",
+                    "data": {
+                        "type": "events",
+                        "name": "VictoryEvent",
+                        "amount": 1,
+                        "negate": false
+                    }
+                }
+            ]
         }
     },
     "dock_weakness_database": {
         "types": {
-            "Door": {
+            "door": {
                 "name": "Door",
                 "extra": {},
                 "items": {
-                    "Normal": {
+                    "Power Beam Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Missile Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missiles",
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Super Missiles",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "Super Missile Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Super Missiles",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "Power Bomb Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Power Bombs",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "dock_rando": null
+            },
+            "dock": {
+                "name": "Dock",
+                "extra": {},
+                "items": {
+                    "Access Open": {
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -66,14 +933,35 @@
                 },
                 "dock_rando": null
             },
-            "Other": {
-                "name": "Other",
+            "tunnel": {
+                "name": "Tunnel",
                 "extra": {},
                 "items": {
-                    "Not Determined": {
+                    "Tunnel": {
                         "extra": {},
                         "requirement": {
-                            "type": "or",
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            },
+            "teleporter": {
+                "name": "Teleporter",
+                "extra": {
+                    "is_teleporter": true,
+                    "ignore_for_hints": true
+                },
+                "items": {
+                    "Teleporter": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
@@ -86,19 +974,56 @@
             }
         },
         "default_weakness": {
-            "type": "Other",
-            "name": "Not Determined"
+            "type": "door",
+            "name": "Power Beam Door"
         },
         "dock_rando": {
             "force_change_two_way": false,
-            "resolver_attempts": 100,
+            "resolver_attempts": 125,
             "to_shuffle_proportion": 1.0
         }
     },
     "hint_feature_database": {},
-    "used_trick_levels": {},
+    "used_trick_levels": {
+        "Knowledge": [
+            1
+        ],
+        "MidairMorph": [
+            1,
+            2,
+            3
+        ],
+        "WallJump": [
+            1,
+            2,
+            3
+        ],
+        "Combat": [
+            1,
+            2
+        ],
+        "Movement": [
+            1
+        ],
+        "IBA": [
+            1,
+            2
+        ],
+        "Shinespark": [
+            1
+        ],
+        "IBJ": [
+            3
+        ]
+    },
     "flatten_to_set_on_patch": false,
     "regions": [
-        "Main.json"
+        "Brinstar.json",
+        "Chozodia.json",
+        "Crateria.json",
+        "Kraid.json",
+        "Norfair.json",
+        "Ridley.json",
+        "Tourian.json"
     ]
 }
