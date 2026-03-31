@@ -257,10 +257,13 @@
             "hint_features": [],
             "extra": {
                 "map_name": "Ridley2",
-                "room_id": 2
+                "room_id": [
+                    2,
+                    28
+                ]
             },
             "nodes": {
-                "Door to Imago Arena": {
+                "Door to Imago Arena (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -273,14 +276,17 @@
                         "default"
                     ],
                     "extra": {
-                        "door_idx": 43
+                        "door_idx": [
+                            43,
+                            75
+                        ]
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
                         "area": "Imago Arena",
-                        "node": "Door to Cocoon Cave (Upper)"
+                        "node": "Door to Cocoon Cave (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -337,7 +343,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Dock to Imago Arena": {
+                        "Dock to Imago Arena (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -346,7 +352,7 @@
                         }
                     }
                 },
-                "Dock to Imago Arena": {
+                "Dock to Imago Arena (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -404,7 +410,7 @@
                     "default_connection": {
                         "region": "Ridley",
                         "area": "Cocoon Cavern (Lower)",
-                        "node": "Tunnel to Cocoon Cavern (Upper, INITIAL)"
+                        "node": "Tunnel to Cocoon Cave (Upper)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -822,13 +828,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Map Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -965,18 +964,23 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Missile Tank)": {
+                        "Door to Path over Lava": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Climb Into 1x1"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Use Space Jump"
+                                        "data": "Climb Into 1x1"
                                     }
                                 ]
                             }
@@ -1287,21 +1291,11 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Desgeega Hall": {
-                            "type": "or",
+                        "Door to Multiviola Cache": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "IceBeam",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -1334,7 +1328,34 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Multiviola Cache": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "IceBeam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Multiviola Cache": {
                     "node_type": "dock",
@@ -1375,6 +1396,32 @@
                                         "data": {
                                             "type": "items",
                                             "name": "IceBeam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Desgeega Hall": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "IceBeam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1861,7 +1908,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Ridley's Reliquary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Ridley's Reliquary": {
                     "node_type": "dock",
@@ -1891,7 +1946,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Ridley Arena Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2918,13 +2981,6 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Save Station (East)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Map Station": {
                             "type": "and",
                             "data": {
@@ -2963,7 +3019,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Missile Tank)": {
+                        "Door to Map Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3007,6 +3063,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Save Station (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -3017,7 +3080,10 @@
             "hint_features": [],
             "extra": {
                 "map_name": "Ridley19",
-                "room_id": 19
+                "room_id": [
+                    19,
+                    27
+                ]
             },
             "nodes": {
                 "Pickup (Super Missile Tank)": {
@@ -3039,7 +3105,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Cocoon Cave (Upper)": {
+                        "Door to Cocoon Cave (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3048,7 +3114,7 @@
                         }
                     }
                 },
-                "Door to Cocoon Cave (Upper)": {
+                "Door to Cocoon Cave (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3061,14 +3127,17 @@
                         "default"
                     ],
                     "extra": {
-                        "door_idx": 44
+                        "door_idx": [
+                            44,
+                            59
+                        ]
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
                         "area": "Cocoon Cave (Upper)",
-                        "node": "Door to Imago Arena"
+                        "node": "Door to Imago Arena (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3109,14 +3178,17 @@
                         "default"
                     ],
                     "extra": {
-                        "door_idx": 64
+                        "door_idx": [
+                            64,
+                            65
+                        ]
                     },
                     "valid_starting_location": false,
                     "dock_type": "dock",
                     "default_connection": {
                         "region": "Ridley",
                         "area": "Cocoon Cave (Upper)",
-                        "node": "Dock to Imago Arena"
+                        "node": "Dock to Imago Arena (Upper)"
                     },
                     "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
@@ -3125,7 +3197,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Cocoon Cave (Upper)": {
+                        "Door to Cocoon Cave (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3985,38 +4057,8 @@
                 "room_id": 27
             },
             "nodes": {
-                "Door to Cocoon Cave (Upper)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 984.0,
-                        "y": 144.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": 59
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Ridley",
-                        "area": "Cocoon Cave (Upper)",
-                        "node": "Door to Imago Arena"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
-                },
                 "Dock to Cocoon Cave (Upper)": {
-                    "node_type": "dock",
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 984.0,
@@ -4031,27 +4073,7 @@
                         "door_idx": 65
                     },
                     "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Ridley",
-                        "area": "Cocoon Cave (Upper)",
-                        "node": "Dock to Imago Arena"
-                    },
-                    "default_dock_weakness": "Access Open",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Door to Cocoon Cave (Upper)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
+                    "connections": {}
                 }
             }
         },
@@ -4063,38 +4085,8 @@
                 "room_id": 28
             },
             "nodes": {
-                "Tunnel to Cocoon Cavern (Lower)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 200.0,
-                        "y": 24.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": 67
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "region": "Ridley",
-                        "area": "Cocoon Cavern (Lower)",
-                        "node": "Tunnel to Cocoon Cavern (Upper, INITIAL)"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
-                },
                 "Door to Cocoon Cavern (Upper, INITIAL)": {
-                    "node_type": "dock",
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -4109,18 +4101,6 @@
                         "door_idx": 75
                     },
                     "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Ridley",
-                        "area": "Cocoon Cavern (Upper, INITIAL)",
-                        "node": "Door to Cocoon Cavern (Upper, INITIAL)"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
                     "connections": {}
                 }
             }
@@ -4157,44 +4137,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Pickup (2nd Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerGrip",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Have Increased Height"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
                             }
                         }
                     }
@@ -4255,6 +4197,41 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Missiles",
+                                            "amount": 5,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (2nd Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 5,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4283,21 +4260,11 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "or",
+                        "Door to Western Hub": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -4570,7 +4537,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Cocoon Cavern (Upper, INITIAL)": {
+                        "Tunnel to Cocoon Cave (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4579,7 +4546,7 @@
                         }
                     }
                 },
-                "Tunnel to Cocoon Cavern (Upper, INITIAL)": {
+                "Tunnel to Cocoon Cave (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4598,7 +4565,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Cocoon Cavern (Upper, INITIAL)",
+                        "area": "Cocoon Cave (Upper)",
                         "node": "Tunnel to Cocoon Cavern (Lower)"
                     },
                     "default_dock_weakness": "Tunnel",

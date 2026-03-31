@@ -791,13 +791,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Dock to Transport to Crateria": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Flooded Tunnel": {
                             "type": "and",
                             "data": {
@@ -836,7 +829,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Flooded Cavern": {
+                        "Door to Flooded Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -875,6 +868,13 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Flooded Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Transport to Crateria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1041,7 +1041,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Elevator to Norfair": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Wrecked Ship Entrance": {
                     "node_type": "dock",
@@ -1077,6 +1085,23 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Dock to Chozo Ruins Valley": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }

@@ -227,13 +227,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Corrosive Pool": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -267,6 +260,13 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Acidic Concourse": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Corrosive Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -311,21 +311,13 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Runway": {
-                            "type": "or",
+                        "Door to Gauntlet": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "WallJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Hi-Jump",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Sidehopper Hall": {
@@ -367,23 +359,6 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Gauntlet": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "IceBeam",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Door to Corrosive Pool": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -501,13 +476,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
                                     }
                                 ]
                             }
@@ -544,13 +514,6 @@
                     "hint_features": [],
                     "connections": {
                         "Door to Elevator to Brinstar": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Apex Launcher Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -594,6 +557,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Apex Launcher Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -626,7 +596,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Missile Tank)": {
+                        "Door to Elevator to Brinstar": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -820,14 +790,14 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "or",
+                        "Room Center": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Bomb"
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -879,8 +849,26 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Caged Sidehopper Hall": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1020,25 +1008,11 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Save Station (Northeast)": {
-                            "type": "or",
+                        "Door to Zeela-Infested Room": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Ziplines",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -1087,8 +1061,39 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Save Station (Northeast)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Ziplines",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -1141,20 +1146,25 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Energy Tank)": {
+                        "Door to Zeela-Infested Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
                                             "name": "Ziplines",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1605,6 +1615,15 @@
                                     {
                                         "type": "template",
                                         "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -1708,7 +1727,7 @@
                         }
                     }
                 },
-                "Door to Illusionary Acid Pool": {
+                "Door to Illusionary Acid Pool (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1728,7 +1747,7 @@
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Illusionary Acid Pool",
-                        "node": "Door to Barisute Pit"
+                        "node": "Door to Barisute Pit (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1737,7 +1756,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Illusionary Acid Pool (104)": {
+                        "Door to Illusionary Acid Pool (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1808,7 +1827,7 @@
                         }
                     }
                 },
-                "Door to Illusionary Acid Pool (104)": {
+                "Door to Illusionary Acid Pool (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1828,7 +1847,7 @@
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Illusionary Acid Pool",
-                        "node": "Door to Barisute Pit"
+                        "node": "Door to Barisute Pit (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1837,7 +1856,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Illusionary Acid Pool": {
+                        "Door to Illusionary Acid Pool (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1895,38 +1914,10 @@
                     "hint_features": [],
                     "connections": {
                         "Underneath Zipline": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "GravitySuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -2197,7 +2188,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Energy Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -2248,7 +2239,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Pipe Shaft": {
+                        "Door to Elevator to Brinstar": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2286,27 +2277,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Ziplines",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spring Ball"
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Elevator to Brinstar": {
                             "type": "or",
                             "data": {
@@ -2364,6 +2334,27 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Ziplines",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spring Ball"
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Pipe Shaft": {
                             "type": "or",
                             "data": {
@@ -3054,7 +3045,29 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Divided Alcove": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Ramp": {
                     "node_type": "dock",
@@ -3084,7 +3097,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Ball Launcher Speedway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3240,10 +3266,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -3267,8 +3295,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Acid Fall",
-                        "node": "Tunnel to Acid Fall"
+                        "area": "Corrosive Pool",
+                        "node": "Dock to Acid Fall"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -3277,13 +3305,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Block Column Hub": {
                             "type": "and",
                             "data": {
@@ -3336,7 +3357,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4214,6 +4245,27 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Bounce in Ball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4279,6 +4331,27 @@
                                             "name": "PowerGrip",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Bounce in Ball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4429,7 +4502,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Barisute Pit": {
+                        "Door to Barisute Pit (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4438,7 +4511,7 @@
                         }
                     }
                 },
-                "Door to Barisute Pit": {
+                "Door to Barisute Pit (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4458,7 +4531,7 @@
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Barisute Pit",
-                        "node": "Door to Illusionary Acid Pool"
+                        "node": "Door to Illusionary Acid Pool (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4505,7 +4578,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Barisute Pit": {
+                        "Door to Barisute Pit (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4602,7 +4675,7 @@
                         }
                     }
                 },
-                "Door to Barisute Pit (105)": {
+                "Door to Barisute Pit (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4622,7 +4695,7 @@
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Barisute Pit",
-                        "node": "Door to Illusionary Acid Pool"
+                        "node": "Door to Illusionary Acid Pool (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4684,6 +4757,13 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Door to Acid Fall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Save Station (East)": {
                             "type": "and",
                             "data": {
@@ -4722,7 +4802,14 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Save Station (East)": {
+                        "Door to Corrosive Pool": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Speed Booster Tutorial Slope": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4809,13 +4896,6 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Corrosive Pool": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Acid Fall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4924,18 +5004,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tunnel to Hidden Drop": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
                                     }
                                 ]
                             }
@@ -5179,7 +5247,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to Kraid's Reliquary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Dock to Kraid's Reliquary": {
                     "node_type": "dock",
@@ -5209,7 +5285,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to Kraid Arena Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -5923,7 +6007,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to Kraid's Reliquary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Dock to Kraid's Reliquary": {
                     "node_type": "dock",
@@ -5953,7 +6045,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Kraid Arena Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Speed Booster Tutorial Slope": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Dock to Speed Booster Tutorial Slope": {
                     "node_type": "dock",
@@ -5983,7 +6090,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to Kraid's Reliquary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -6122,7 +6237,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Zipline Activation Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Zipline Activation Chamber": {
                     "node_type": "dock",
@@ -6152,7 +6275,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Apex Launcher Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },

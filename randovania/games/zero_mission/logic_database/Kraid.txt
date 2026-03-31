@@ -44,14 +44,14 @@ Extra - room_id: 0
   * Extra - door_idx: 4
   > Door to Acidic Concourse
       Trivial
-  > Door to Corrosive Pool
-      Trivial
 
 > Door to Gauntlet; Heals? False
   * Layers: default
   * Power Beam Door to Gauntlet/Door to Elevator to Brinstar
   * Extra - door_idx: 5
   > Door to Acidic Concourse
+      Trivial
+  > Door to Corrosive Pool
       Trivial
   > Door to Sidehopper Hall
       Trivial
@@ -60,8 +60,8 @@ Extra - room_id: 0
   * Layers: default
   * Power Beam Door to Corrosive Pool/Door to Elevator to Brinstar
   * Extra - door_idx: 6
-  > Door to Runway
-      Wall Jumps (Beginner)
+  > Door to Gauntlet
+      Hi-Jump Boots
   > Door to Sidehopper Hall
       Trivial
 
@@ -70,8 +70,6 @@ Extra - room_id: 0
   * Power Beam Door to Sidehopper Hall/Door to Elevator to Brinstar
   * Extra - door_idx: 7
   > Door to Gauntlet
-      Ice Beam
-  > Door to Corrosive Pool
       Ice Beam
   > Door to Divided Alcove
       Any of the following:
@@ -83,7 +81,7 @@ Extra - room_id: 0
   * Power Beam Door to Divided Alcove/Door to Elevator to Brinstar
   * Extra - door_idx: 8
   > Door to Sidehopper Hall
-      Morph Ball
+      Can Bounce in Ball
 
 ----------------
 Caged Sidehopper Hall
@@ -94,8 +92,6 @@ Extra - room_id: 1
   * Pickup 14; Category? Minor
   > Door to Elevator to Brinstar
       Trivial
-  > Door to Apex Launcher Hub
-      Trivial
 
 > Door to Elevator to Brinstar; Heals? False
   * Layers: default
@@ -103,12 +99,14 @@ Extra - room_id: 1
   * Extra - door_idx: 9
   > Pickup (Missile Tank)
       Trivial
+  > Door to Apex Launcher Hub
+      Trivial
 
 > Door to Apex Launcher Hub; Heals? False
   * Layers: default
   * Power Beam Door to Apex Launcher Hub/Door to Caged Sidehopper Hall
   * Extra - door_idx: 10
-  > Pickup (Missile Tank)
+  > Door to Elevator to Brinstar
       Trivial
 
 ----------------
@@ -146,15 +144,17 @@ Extra - room_id: 2
   * Layers: default
   * Power Beam Door to Caged Sidehopper Hall/Door to Apex Launcher Hub
   * Extra - door_idx: 14
-  > Pickup (Missile Tank)
-      Lay Bomb
+  > Room Center
+      Lay Any Bomb
 
 > Room Center; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
       Morph Ball
   > Door to Upper Corridor
-      Power Grip
+      Power Grip or Space Jump (Unknown Item 2)
+  > Door to Caged Sidehopper Hall
+      Morph Ball
 
 ----------------
 Upper Corridor
@@ -181,15 +181,17 @@ Extra - room_id: 4
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 16; Category? Minor
-  > Door to Save Station (Northeast)
-      After Ziplines Activated or Use Space Jump
+  > Door to Zeela-Infested Room
+      Trivial
 
 > Door to Zeela-Infested Room; Heals? False
   * Layers: default
   * Power Beam Door to Zeela-Infested Room/Door to Zipline Activation Chamber
   * Extra - door_idx: 17
   > Pickup (Energy Tank)
-      After Ziplines Activated or Use Space Jump
+      Space Jump (Unknown Item 2) or After Ziplines Activated
+  > Door to Save Station (Northeast)
+      Space Jump (Unknown Item 2) or After Ziplines Activated
   > Event - Ziplines Activated
       Morph Ball
 
@@ -197,8 +199,8 @@ Extra - room_id: 4
   * Layers: default
   * Power Beam Door to Save Station (Northeast)/Door to Zipline Activation Chamber
   * Extra - door_idx: 18
-  > Pickup (Energy Tank)
-      After Ziplines Activated or Use Space Jump
+  > Door to Zeela-Infested Room
+      Space Jump (Unknown Item 2) or After Ziplines Activated
 
 > Event - Ziplines Activated; Heals? False
   * Layers: default
@@ -273,7 +275,7 @@ Extra - room_id: 6
 > Ball Launcher; Heals? False
   * Layers: default
   > Door to Upper Corridor
-      Lay Bomb
+      Space Jump (Unknown Item 2) or Lay Bomb
   > Door to Zipline Activation Chamber
       Any of the following:
           Lay Bomb
@@ -291,11 +293,11 @@ Extra - room_id: 7
   > Tunnel to Save Station (North)
       Morph Ball
 
-> Door to Illusionary Acid Pool; Heals? False
+> Door to Illusionary Acid Pool (Lower); Heals? False
   * Layers: default
-  * Power Beam Door to Illusionary Acid Pool/Door to Barisute Pit
+  * Power Beam Door to Illusionary Acid Pool/Door to Barisute Pit (Lower)
   * Extra - door_idx: 24
-  > Door to Illusionary Acid Pool (104)
+  > Door to Illusionary Acid Pool (Upper)
       Morph Ball and Power Grip
 
 > Tunnel to Save Station (North); Heals? False
@@ -305,11 +307,11 @@ Extra - room_id: 7
   > Pickup (Missile Tank)
       Lay Any Bomb
 
-> Door to Illusionary Acid Pool (104); Heals? False
+> Door to Illusionary Acid Pool (Upper); Heals? False
   * Layers: default
-  * Power Beam Door to Illusionary Acid Pool/Door to Barisute Pit
+  * Power Beam Door to Illusionary Acid Pool/Door to Barisute Pit (Upper)
   * Extra - door_idx: 104
-  > Door to Illusionary Acid Pool
+  > Door to Illusionary Acid Pool (Lower)
       Morph Ball and Power Grip
 
 ----------------
@@ -320,7 +322,7 @@ Extra - room_id: 8
   * Layers: default
   * Pickup 18; Category? Minor
   > Underneath Zipline
-      Gravity Suit or Morph Ball or Speed Booster
+      Trivial
 
 > Door to Illusionary Acid Pool; Heals? False
   * Layers: default
@@ -360,7 +362,7 @@ Extra - room_id: 9
   * Missile Door to Elevator to Brinstar/Door to Runway
   * Extra - door_idx: 28
   > Pickup (Energy Tank)
-      Speed Booster or Have Increased Height
+      Speed Booster and Have Increased Height
 
 ----------------
 Gauntlet
@@ -369,15 +371,13 @@ Extra - room_id: 10
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 20; Category? Minor
-  > Door to Pipe Shaft
+  > Door to Elevator to Brinstar
       Trivial
 
 > Door to Pipe Shaft; Heals? False
   * Layers: default
   * Power Beam Door to Pipe Shaft/Door to Gauntlet
   * Extra - door_idx: 29
-  > Pickup (Missile Tank)
-      After Ziplines Activated and Use Spring Ball
   > Door to Elevator to Brinstar
       Missiles or Combat (Beginner)
 
@@ -385,6 +385,8 @@ Extra - room_id: 10
   * Layers: default
   * Power Beam Door to Elevator to Brinstar/Door to Gauntlet
   * Extra - door_idx: 30
+  > Pickup (Missile Tank)
+      After Ziplines Activated and Use Spring Ball
   > Door to Pipe Shaft
       Missiles or Combat (Beginner)
 
@@ -493,11 +495,15 @@ Extra - room_id: 15
   * Layers: default
   * Power Beam Door to Ball Launcher Speedway/Door to Pit Block Chamber
   * Extra - door_idx: 40
+  > Door to Divided Alcove
+      Missiles and Can Bounce in Ball
 
 > Door to Ramp; Heals? False
   * Layers: default
   * Power Beam Door to Ramp/Door to Pit Block Chamber
   * Extra - door_idx: 41
+  > Door to Ball Launcher Speedway
+      Lay Any Bomb
 
 ----------------
 Ramp
@@ -532,14 +538,12 @@ Extra - room_id: 17
   * Power Beam Door to Block Column Hub/Door to Acid Fall
   * Extra - door_idx: 44
   > Pickup (Missile Tank)
-      Trivial
+      Morph Ball
 
 > Tunnel to Acid Fall; Heals? False
   * Layers: default
-  * Tunnel to Acid Fall/Tunnel to Acid Fall
+  * Tunnel to Corrosive Pool/Dock to Acid Fall
   * Extra - door_idx: 86
-  > Pickup (Missile Tank)
-      Trivial
   > Door to Block Column Hub
       Trivial
 
@@ -552,7 +556,7 @@ Extra - room_id: 18
   * Power Beam Door to Ramp/Door to Replenishment Station
   * Extra - door_idx: 45
   > Door to Hidden Drop
-      Trivial
+      Morph Ball
 
 > Door to Hidden Drop; Heals? False
   * Layers: default
@@ -716,14 +720,18 @@ Extra - room_id: 25
   * Power Beam Door to Sidehopper Path/Door to Space Jump Access
   * Extra - door_idx: 61
   > Door to Save Station (Southwest)
-      Morph Ball and After Kraid Chozo Statue Item Aquired
+      All of the following:
+          Morph Ball and After Kraid Chozo Statue Item Aquired
+          Missiles or Can Bounce in Ball
 
 > Door to Save Station (Southwest); Heals? False
   * Layers: default
   * Power Beam Door to Save Station (Southwest)/Door to Space Jump Access
   * Extra - door_idx: 77
   > Door to Sidehopper Path
-      Morph Ball and Power Grip and After Kraid Chozo Statue Item Aquired
+      All of the following:
+          Morph Ball and Power Grip and After Kraid Chozo Statue Item Aquired
+          Missiles or Can Bounce in Ball
   > Door to Space Jump Chamber
       Trivial
 
@@ -750,12 +758,12 @@ Extra - room_id: 26
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 23; Category? Minor
-  > Door to Barisute Pit
+  > Door to Barisute Pit (Lower)
       Trivial
 
-> Door to Barisute Pit; Heals? False
+> Door to Barisute Pit (Lower); Heals? False
   * Layers: default
-  * Power Beam Door to Barisute Pit/Door to Illusionary Acid Pool
+  * Power Beam Door to Barisute Pit/Door to Illusionary Acid Pool (Lower)
   * Extra - door_idx: 62
   > Door to Acidic Concourse
       Trivial
@@ -764,7 +772,7 @@ Extra - room_id: 26
   * Layers: default
   * Power Beam Door to Acidic Concourse/Door to Illusionary Acid Pool
   * Extra - door_idx: 63
-  > Door to Barisute Pit
+  > Door to Barisute Pit (Lower)
       Trivial
   > Door to Antechamber
       Lay Any Bomb
@@ -780,9 +788,9 @@ Extra - room_id: 26
               Lay Power Bomb
               Mid-Air Morphs (Advanced) and Lay Bomb
 
-> Door to Barisute Pit (105); Heals? False
+> Door to Barisute Pit (Upper); Heals? False
   * Layers: default
-  * Power Beam Door to Barisute Pit/Door to Illusionary Acid Pool
+  * Power Beam Door to Barisute Pit/Door to Illusionary Acid Pool (Upper)
   * Extra - door_idx: 105
   > Pickup (Missile Tank)
       Can Bounce in Ball
@@ -795,6 +803,8 @@ Extra - room_id: 27
   * Layers: default
   * Power Beam Door to Corrosive Pool/Door to Block Column Hub
   * Extra - door_idx: 65
+  > Door to Acid Fall
+      Trivial
   > Door to Save Station (East)
       Trivial
 
@@ -802,7 +812,9 @@ Extra - room_id: 27
   * Layers: default
   * Power Beam Door to Acid Fall/Door to Block Column Hub
   * Extra - door_idx: 66
-  > Door to Save Station (East)
+  > Door to Corrosive Pool
+      Trivial
+  > Door to Speed Booster Tutorial Slope
       Trivial
 
 > Door to Speed Booster Tutorial Slope; Heals? False
@@ -817,8 +829,6 @@ Extra - room_id: 27
   * Power Beam Door to Save Station (East)/Door to Block Column Hub
   * Extra - door_idx: 87
   > Door to Corrosive Pool
-      Trivial
-  > Door to Acid Fall
       Trivial
 
 ----------------
@@ -838,8 +848,6 @@ Extra - room_id: 28
   * Extra - door_idx: 69
   > Door to Kraid Arena Access
       After Kraid Chozo Statue Item Aquired
-  > Tunnel to Hidden Drop
-      Use Space Jump
   > Dock to Kraid Arena (FINAL)
       Speed Booster
 
@@ -883,11 +891,15 @@ Extra - room_id: 30
   * Layers: default
   * Access Open to Kraid Arena Access/Door to Kraid Arena
   * Extra - door_idx: 72
+  > Dock to Kraid's Reliquary
+      Trivial
 
 > Dock to Kraid's Reliquary; Heals? False
   * Layers: default
   * Access Open to Kraid's Reliquary/Dock to Kraid Arena (FINAL)
   * Extra - door_idx: 81
+  > Dock to Kraid Arena Access
+      Trivial
 
 ----------------
 Save Station (North)
@@ -1033,16 +1045,24 @@ Extra - room_id: 37
   * Layers: default
   * Power Beam Door to Kraid Arena Access/Door to Kraid Arena
   * Extra - door_idx: 89
+  > Dock to Kraid's Reliquary
+      Trivial
 
 > Dock to Kraid's Reliquary; Heals? False
   * Layers: default
   * Access Open to Kraid's Reliquary/Dock to Kraid Arena (FINAL)
   * Extra - door_idx: 90
+  > Door to Kraid Arena Access
+      Trivial
+  > Dock to Speed Booster Tutorial Slope
+      Trivial
 
 > Dock to Speed Booster Tutorial Slope; Heals? False
   * Layers: default
   * Access Open to Speed Booster Tutorial Slope/Dock to Kraid Arena (FINAL)
   * Extra - door_idx: 95
+  > Dock to Kraid's Reliquary
+      Trivial
 
 ----------------
 Cache
@@ -1069,11 +1089,15 @@ Extra - room_id: 39
   * Layers: default
   * Power Beam Door to Apex Launcher Hub/Door to Save Station (Northeast)
   * Extra - door_idx: 93
+  > Door to Zipline Activation Chamber
+      Trivial
 
 > Door to Zipline Activation Chamber; Heals? False
   * Layers: default
   * Power Beam Door to Zipline Activation Chamber/Door to Save Station (Northeast)
   * Extra - door_idx: 94
+  > Door to Apex Launcher Hub
+      Trivial
 
 ----------------
 Acid Worm Arena Access

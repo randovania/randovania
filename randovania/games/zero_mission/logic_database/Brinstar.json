@@ -534,6 +534,15 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -804,10 +813,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Upper Half": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -850,7 +861,7 @@
                         }
                     }
                 },
-                "Tunnel to Hidden Tank Shaft": {
+                "Tunnel to Hidden Tank Shaft (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -870,7 +881,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Hidden Tank Shaft",
-                        "node": "Tunnel to Blue-Tinted Hub"
+                        "node": "Tunnel to Blue-Tinted Hub (Lower)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -888,7 +899,7 @@
                         }
                     }
                 },
-                "Tunnel to Hidden Tank Shaft (95)": {
+                "Tunnel to Hidden Tank Shaft (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -908,7 +919,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Hidden Tank Shaft",
-                        "node": "Tunnel to Blue-Tinted Hub"
+                        "node": "Tunnel to Blue-Tinted Hub (Upper)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1039,7 +1050,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Hidden Tank Shaft": {
+                        "Tunnel to Hidden Tank Shaft (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1111,7 +1122,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Hidden Tank Shaft (95)": {
+                        "Tunnel to Hidden Tank Shaft (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2086,7 +2097,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to Elevator to Brinstar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Guide Statue (Hi-Jump)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Dock to Elevator to Brinstar": {
                     "node_type": "dock",
@@ -2116,7 +2142,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Fake Block Fork": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Guide Statue (Hi-Jump)": {
                     "node_type": "dock",
@@ -2146,7 +2180,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Fake Block Fork": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2544,18 +2586,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Elevator to Norfair": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Destroy Bomb Blocks"
-                                    }
-                                ]
-                            }
                         }
                     }
                 },
@@ -2593,6 +2623,18 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Door to Elevator to Norfair": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Blocks"
+                                    }
+                                ]
                             }
                         },
                         "Pickup (Charge Beam)": {
@@ -2638,8 +2680,8 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "or",
+                        "Door to Gold-Tinted Hub": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -3355,13 +3397,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Eastern Hub": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -3435,6 +3470,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Eastern Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3467,7 +3509,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Energy Tank)": {
+                        "Door to Central Fork": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3757,7 +3799,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Guide Statue (Wave Beam)": {
+                        "Tunnel to Guide Statue (Wave Beam) (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3783,7 +3825,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Guide Statue (Wave Beam) (86)": {
+                        "Tunnel to Guide Statue (Wave Beam) (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3811,7 +3853,7 @@
                         }
                     }
                 },
-                "Tunnel to Guide Statue (Wave Beam)": {
+                "Tunnel to Guide Statue (Wave Beam) (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3831,7 +3873,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Guide Statue (Wave Beam)",
-                        "node": "Tunnel to Acid Vine Puzzle"
+                        "node": "Tunnel to Acid Vine Puzzle (Lower)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -3839,9 +3881,36 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Save Station (North)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Tunnel to Guide Statue (Wave Beam) (86)": {
+                "Tunnel to Guide Statue (Wave Beam) (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3861,7 +3930,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Guide Statue (Wave Beam)",
-                        "node": "Tunnel to Acid Vine Puzzle"
+                        "node": "Tunnel to Acid Vine Puzzle (Upper)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4348,7 +4417,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -4602,46 +4671,67 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Gold-Tinted Hub": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "BrinstarAcidFruit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Destroy Bomb Blocks"
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "PowerGrip",
+                                                        "type": "events",
+                                                        "name": "BrinstarAcidFruit",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "SuperMissiles",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SuperMissiles",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PowerGrip",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Event - Tangle Fruit": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "VariaSuit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -4708,7 +4798,15 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "BrinstarAcidFruit",
-                    "connections": {}
+                    "connections": {
+                        "Door to Varia Chamber Ascent": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -5553,7 +5651,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel to Acid Vine Puzzle": {
+                        "Tunnel to Acid Vine Puzzle (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5579,7 +5677,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Acid Vine Puzzle (87)": {
+                        "Tunnel to Acid Vine Puzzle (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5619,7 +5717,7 @@
                         }
                     }
                 },
-                "Tunnel to Acid Vine Puzzle": {
+                "Tunnel to Acid Vine Puzzle (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5639,7 +5737,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Acid Vine Puzzle",
-                        "node": "Tunnel to Guide Statue (Wave Beam)"
+                        "node": "Tunnel to Guide Statue (Wave Beam) (Lower)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -5676,7 +5774,7 @@
                         }
                     }
                 },
-                "Tunnel to Acid Vine Puzzle (87)": {
+                "Tunnel to Acid Vine Puzzle (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5696,7 +5794,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Acid Vine Puzzle",
-                        "node": "Tunnel to Guide Statue (Wave Beam)"
+                        "node": "Tunnel to Guide Statue (Wave Beam) (Upper)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -6010,7 +6108,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -6103,7 +6201,15 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to Blue-Tinted Hub (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (Super Missile Tank)": {
                     "node_type": "pickup",
@@ -6124,7 +6230,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Tunnel to Blue-Tinted Hub": {
+                        "Tunnel to Blue-Tinted Hub (Lower)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6143,7 +6249,7 @@
                         }
                     }
                 },
-                "Tunnel to Blue-Tinted Hub": {
+                "Tunnel to Blue-Tinted Hub (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6163,7 +6269,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Blue-Tinted Hub",
-                        "node": "Tunnel to Hidden Tank Shaft"
+                        "node": "Tunnel to Hidden Tank Shaft (Lower)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -6200,7 +6306,7 @@
                         }
                     }
                 },
-                "Tunnel to Blue-Tinted Hub (94)": {
+                "Tunnel to Blue-Tinted Hub (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6220,7 +6326,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Blue-Tinted Hub",
-                        "node": "Tunnel to Hidden Tank Shaft"
+                        "node": "Tunnel to Hidden Tank Shaft (Upper)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -6246,7 +6352,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Blue-Tinted Hub": {
+                        "Tunnel to Blue-Tinted Hub (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
