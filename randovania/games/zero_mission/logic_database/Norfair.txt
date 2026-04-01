@@ -282,6 +282,15 @@ Extra - room_id: 8
       All of the following:
           Morph Ball
           Ice Beam or Have Increased Height
+  > Pickup (Ice Beam)
+      Trivial
+
+> Pickup (Ice Beam); Heals? False
+  * Layers: default
+  * Pickup 100; Category? Major
+  * Extra - source: ICE_BEAM
+  > Door to Ice Beam Chamber Access
+      Trivial
 
 ----------------
 Ice Beam Chamber Access
@@ -364,6 +373,8 @@ Extra - room_id: 13
   * Extra - door_idx: 29
   > Tunnel to Superheated Runway Access
       Morph Ball
+  > Pickup (Hi-Jump)
+      Trivial
 
 > Tunnel to Superheated Runway Access; Heals? False
   * Layers: default
@@ -371,6 +382,13 @@ Extra - room_id: 13
   * Extra - door_idx: 104
   > Door to Hi-Jump Chamber Access
       Morph Ball
+
+> Pickup (Hi-Jump); Heals? False
+  * Layers: default
+  * Pickup 99; Category? Major
+  * Extra - source: HI_JUMP
+  > Door to Hi-Jump Chamber Access
+      Trivial
 
 ----------------
 Superheated Runway
@@ -506,6 +524,7 @@ Extra - room_id: 18
 > Pickup (Screw Attack); Heals? False
   * Layers: default
   * Pickup 91; Category? Major
+  * Extra - source: SCREW_ATTACK
   > Door to Screw Attack Chamber Access
       Trivial
 
@@ -744,6 +763,7 @@ Extra - room_id: 27
 > Pickup (Wave Beam); Heals? False
   * Layers: default
   * Pickup 92; Category? Major
+  * Extra - source: WAVE_BEAM
   > Door to Wave Beam Chamber Access
       Trivial
 
