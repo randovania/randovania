@@ -14,8 +14,8 @@ if TYPE_CHECKING:
 class MZMBootstrap(Bootstrap[MZMConfiguration]):
     def create_damage_state(self, game: GameDatabaseView, configuration: MZMConfiguration) -> DamageState:
         return EnergyTankDamageState(
-            99,
-            100,
+            configuration.energy_per_tank - 1,
+            configuration.energy_per_tank,
             game.get_resource_database_view().get_item("EnergyTank"),
             [
                 game.get_resource_database_view().get_item("VariaSuit"),

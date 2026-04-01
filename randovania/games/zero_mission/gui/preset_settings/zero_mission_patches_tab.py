@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from PySide6 import QtWidgets
-
+from randovania.games.zero_mission.gui.generated.preset_zero_mission_patches_ui import Ui_PresetMZMPatches
 from randovania.games.zero_mission.layout import MZMConfiguration
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -14,36 +13,29 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class PresetMZMPatches(PresetTab[MZMConfiguration]):
+class PresetMZMPatches(PresetTab, Ui_PresetMZMPatches):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
-
-        self.root_widget = QtWidgets.QWidget(self)
-        self.root_layout = QtWidgets.QVBoxLayout(self.root_widget)
-
-        self.include_extra_pickups_check = QtWidgets.QCheckBox(self.root_widget)
-        self.include_extra_pickups_check.setEnabled(True)
-        self.include_extra_pickups_check.setText("Include Extra Pickups")
-        self.root_layout.addWidget(self.include_extra_pickups_check)
-
-        self.include_extra_pickups_label = QtWidgets.QLabel(self.root_widget)
-        self.include_extra_pickups_label.setWordWrap(True)
-        self.include_extra_pickups_label.setText("Include some optional pickups.")
-        self.root_layout.addWidget(self.include_extra_pickups_label)
+        self.setupUi(self)
 
         self.setCentralWidget(self.root_widget)
 
         # Signals
-        self.include_extra_pickups_check.stateChanged.connect(self._persist_option_then_notify("include_extra_pickups"))
+        self.etank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
 
     @classmethod
     def tab_title(cls) -> str:
-        return "Other"
+        return "Gameplay"
 
     @classmethod
     def header_name(cls) -> str | None:
         return cls.GAME_MODIFICATIONS_HEADER
 
+    def _persist_tank_capacity(self) -> None:
+        with self._editor as editor:
+            editor.set_configuration_field("energy_per_tank", int(self.etank_capacity_spin_box.value()))
+
     def on_preset_changed(self, preset: Preset[MZMConfiguration]) -> None:
         config = preset.configuration
-        self.include_extra_pickups_check.setChecked(config.include_extra_pickups)
+        assert isinstance(config, MZMConfiguration)
+        self.etank_capacity_spin_box.setValue(config.energy_per_tank)

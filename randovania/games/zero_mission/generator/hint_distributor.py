@@ -6,6 +6,7 @@ from randovania.game_description.hint import PrecisionPair
 from randovania.generator.hint_distributor import HintDistributor
 
 
+# TODO needs design discussion re: hints
 class MZMHintDistributor(HintDistributor):
     @override
     @property
