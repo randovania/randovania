@@ -1,7 +1,7 @@
 ----------------
 Starting Room
 Extra - map_name: Brinstar0
-Extra - room_id: 0
+Extra - room_id: [0]
 > Dock to Broken Elevator to Brinstar; Heals? False
   * Layers: default
   * Access Open to Broken Elevator to Brinstar/Dock to Starting Room
@@ -25,6 +25,8 @@ Extra - room_id: 0
 
 > Spawn Point; Heals? False; Spawn Point
   * Layers: default
+  * Extra - X: 39
+  * Extra - Y: 29
   > Dock to Broken Elevator to Brinstar
       Lay Bomb and Lay Power Bomb
   > Door to Fake Block Fork
@@ -35,10 +37,12 @@ Extra - room_id: 0
 ----------------
 Fake Block Fork
 Extra - map_name: Brinstar1
-Extra - room_id: 1
+Extra - room_id: [1]
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 0; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Door to Guide Statue (Long Beam)
       Morph Ball
 
@@ -70,10 +74,12 @@ Extra - room_id: 1
 ----------------
 Guide Statue (Long Beam)
 Extra - map_name: Brinstar2
-Extra - room_id: 2
+Extra - room_id: [2]
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 1; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Door to Fake Block Fork
       Trivial
 
@@ -104,7 +110,7 @@ Extra - room_id: 2
 ----------------
 Blue-Tinted Hub
 Extra - map_name: Brinstar3
-Extra - room_id: 3
+Extra - room_id: [3]
 > Door to Guide Statue (Long Beam); Heals? False
   * Layers: default
   * Power Beam Door to Guide Statue (Long Beam)/Door to Blue-Tinted Hub
@@ -209,7 +215,7 @@ Extra - room_id: 3
 ----------------
 Long Beam Chamber Access
 Extra - map_name: Brinstar4
-Extra - room_id: 4
+Extra - room_id: [4]
 > Door to Blue-Tinted Hub; Heals? False
   * Layers: default
   * Power Beam Door to Blue-Tinted Hub/Door to Long Beam Chamber Access
@@ -242,7 +248,7 @@ Extra - room_id: 4
 ----------------
 Long Beam Chamber
 Extra - map_name: Brinstar5
-Extra - room_id: 5
+Extra - room_id: [5]
 > Door to Long Beam Chamber Access; Heals? False
   * Layers: default
   * Power Beam Door to Long Beam Chamber Access/Door to Long Beam Chamber
@@ -260,7 +266,7 @@ Extra - room_id: 5
 ----------------
 Vestibule
 Extra - map_name: Brinstar6
-Extra - room_id: 6
+Extra - room_id: [6]
 > Door to Blue-Tinted Hub; Heals? False
   * Layers: default
   * Power Beam Door to Blue-Tinted Hub/Door to Vestibule
@@ -278,7 +284,7 @@ Extra - room_id: 6
 ----------------
 Gold-Tinted Hub
 Extra - map_name: Brinstar7
-Extra - room_id: 7
+Extra - room_id: [7]
 > Door to Four Pipes Corridor; Heals? False
   * Layers: default
   * Power Beam Door to Four Pipes Corridor/Door to Gold-Tinted Hub
@@ -345,7 +351,7 @@ Extra - room_id: 7
 ----------------
 Elevator to Kraid
 Extra - map_name: Brinstar8
-Extra - room_id: 8
+Extra - room_id: [8]
 > Door to Fake Block Fork; Heals? False
   * Layers: default
   * Power Beam Door to Fake Block Fork/Door to Elevator to Kraid
@@ -372,7 +378,7 @@ Extra - room_id: 8
 ----------------
 Tourian Gate Access
 Extra - map_name: Brinstar9
-Extra - room_id: 9
+Extra - room_id: [9]
 > Door to Tourian Gate; Heals? False
   * Layers: default
   * Power Beam Door to Tourian Gate/Door to Tourian Gate Access
@@ -399,7 +405,7 @@ Extra - room_id: 9
 ----------------
 Tourian Gate
 Extra - map_name: Brinstar10
-Extra - room_id: 10
+Extra - room_id: [10]
 > Door to Elevator to Tourian; Heals? False
   * Layers: default
   * Power Beam Door to Elevator to Tourian/Door to Tourian Gate
@@ -417,7 +423,7 @@ Extra - room_id: 10
 ----------------
 Elevator to Tourian
 Extra - map_name: Brinstar11
-Extra - room_id: 11
+Extra - room_id: [11]
 > Door to Tourian Gate; Heals? False
   * Layers: default
   * Power Beam Door to Tourian Gate/Door to Elevator to Tourian
@@ -435,10 +441,12 @@ Extra - room_id: 11
 ----------------
 Norfair Access Corridor
 Extra - map_name: Brinstar12
-Extra - room_id: 12
+Extra - room_id: [12]
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 2; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Door to Gold-Tinted Hub
       Trivial
 
@@ -463,13 +471,14 @@ Extra - room_id: 12
 > Pickup (Charge Beam); Heals? False
   * Layers: default
   * Pickup 58; Category? Major
+  * Extra - source: CHARGE_BEAM
   > Door to Gold-Tinted Hub
       Trivial
 
 ----------------
 Mero Corridor
 Extra - map_name: Brinstar13
-Extra - room_id: 13
+Extra - room_id: [13]
 > Door to Gold-Tinted Hub; Heals? False
   * Layers: default
   * Missile Door to Gold-Tinted Hub/Door to Mero Corridor
@@ -487,10 +496,12 @@ Extra - room_id: 13
 ----------------
 Mero Abyss
 Extra - map_name: Brinstar14
-Extra - room_id: 14
+Extra - room_id: [14]
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 3; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Door to Mero Hive Chamber
       Movement (Beginner) or Destroy Bomb Blocks
 
@@ -515,10 +526,12 @@ Extra - room_id: 14
 ----------------
 Mero Hive Chamber
 Extra - map_name: Brinstar15
-Extra - room_id: 15
+Extra - room_id: [15]
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 4; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Door to Mero Abyss
       Trivial
 
@@ -541,7 +554,7 @@ Extra - room_id: 15
 ----------------
 Central Fork
 Extra - map_name: Brinstar16
-Extra - room_id: 16
+Extra - room_id: [16]
 > Door to Mero Hive Chamber; Heals? False
   * Layers: default
   * Power Beam Door to Mero Hive Chamber/Door to Central Fork
@@ -568,7 +581,7 @@ Extra - room_id: 16
 ----------------
 Waver Cavern
 Extra - map_name: Brinstar17
-Extra - room_id: 17
+Extra - room_id: [17]
 > Door to Guide Statue (Ice Beam); Heals? False
   * Layers: default
   * Missile Door to Guide Statue (Ice Beam)/Door to Waver Cavern
@@ -586,7 +599,7 @@ Extra - room_id: 17
 ----------------
 Guide Statue (Ice Beam)
 Extra - map_name: Brinstar18
-Extra - room_id: 18
+Extra - room_id: [18]
 > Door to Waver Cavern; Heals? False
   * Layers: default
   * Missile Door to Waver Cavern/Door to Guide Statue (Ice Beam)
@@ -595,16 +608,20 @@ Extra - room_id: 18
 ----------------
 Alternate Charge Beast Arena
 Extra - map_name: Brinstar19
-Extra - room_id: 19
+Extra - room_id: [19]
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 5; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Door to Central Fork
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 6; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Door to Central Fork
       Trivial
 
@@ -629,7 +646,7 @@ Extra - room_id: 19
 ----------------
 Eastern Hub
 Extra - map_name: Brinstar20
-Extra - room_id: 20
+Extra - room_id: [20]
 > Door to Guide Statue (Wave Beam); Heals? False
   * Layers: default
   * Power Beam Door to Guide Statue (Wave Beam)/Door to Eastern Hub
@@ -667,10 +684,12 @@ Extra - room_id: 20
 ----------------
 Acid Vine Puzzle
 Extra - map_name: Brinstar21
-Extra - room_id: 21
+Extra - room_id: [21]
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 7; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Door to Save Station (North)
       Trivial
 
@@ -702,7 +721,7 @@ Extra - room_id: 21
 ----------------
 Varia Chamber Ascent
 Extra - map_name: Brinstar22
-Extra - room_id: 22
+Extra - room_id: [22]
 > Door to Varia Chamber Access; Heals? False
   * Layers: default
   * Power Beam Door to Varia Chamber Access/Door to Varia Chamber Ascent
@@ -729,10 +748,12 @@ Extra - room_id: 22
 ----------------
 Varia Chamber Access
 Extra - map_name: Brinstar23
-Extra - room_id: 23
+Extra - room_id: [23]
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 8; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Door to Varia Chamber Ascent
       Can Bounce in Ball
 
@@ -755,7 +776,7 @@ Extra - room_id: 23
 ----------------
 Bomb Chamber Access
 Extra - map_name: Brinstar24
-Extra - room_id: 24
+Extra - room_id: [24]
 > Door to Bomb Chamber; Heals? False
   * Layers: default
   * Missile Door to Bomb Chamber/Door to Bomb Chamber Access
@@ -773,10 +794,12 @@ Extra - room_id: 24
 ----------------
 Bomb Chamber
 Extra - map_name: Brinstar25
-Extra - room_id: 25
+Extra - room_id: [25]
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 9; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Door to Bomb Chamber Access
       Trivial
 
@@ -799,7 +822,7 @@ Extra - room_id: 25
 ----------------
 Elevator to Norfair
 Extra - map_name: Brinstar26
-Extra - room_id: 26
+Extra - room_id: [26]
 > Door to Norfair Access Corridor; Heals? False
   * Layers: default
   * Power Beam Door to Norfair Access Corridor/Door to Elevator to Norfair
@@ -817,7 +840,7 @@ Extra - room_id: 26
 ----------------
 Varia Chamber
 Extra - map_name: Brinstar27
-Extra - room_id: 27
+Extra - room_id: [27]
 > Door to Varia Chamber Access; Heals? False
   * Layers: default
   * Missile Door to Varia Chamber Access/Door to Varia Chamber
@@ -835,7 +858,7 @@ Extra - room_id: 27
 ----------------
 Four Pipes Corridor
 Extra - map_name: Brinstar28
-Extra - room_id: 28
+Extra - room_id: [28]
 > Door to Varia Chamber Ascent; Heals? False
   * Layers: default
   * Power Beam Door to Varia Chamber Ascent/Door to Four Pipes Corridor
@@ -865,10 +888,12 @@ Extra - room_id: 28
 ----------------
 Sloped Alcove
 Extra - map_name: Brinstar29
-Extra - room_id: 29
+Extra - room_id: [29]
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 10; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Tunnel to Gold-Tinted Hub
       Can Bounce in Ball
   > Tunnel to Blue-Tinted Hub
@@ -889,7 +914,7 @@ Extra - room_id: 29
 ----------------
 Guide Statue (Bombs)
 Extra - map_name: Brinstar30
-Extra - room_id: 30
+Extra - room_id: [30]
 > Door to Tourian Gate Access; Heals? False
   * Layers: default
   * Power Beam Door to Tourian Gate Access/Door to Guide Statue (Bombs)
@@ -915,7 +940,7 @@ Extra - room_id: 30
 ----------------
 Short Shaft
 Extra - map_name: Brinstar31
-Extra - room_id: 31
+Extra - room_id: [31]
 > Door to Bomb Chamber Access; Heals? False
   * Layers: default
   * Power Beam Door to Bomb Chamber Access/Door to Short Shaft
@@ -942,7 +967,7 @@ Extra - room_id: 31
 ----------------
 Map Station
 Extra - map_name: Brinstar32
-Extra - room_id: 32
+Extra - room_id: [32]
 > Door to Eastern Hub; Heals? False
   * Layers: default
   * Power Beam Door to Eastern Hub/Door to Map Station
@@ -951,7 +976,7 @@ Extra - room_id: 32
 ----------------
 Save Station (East)
 Extra - map_name: Brinstar33
-Extra - room_id: 33
+Extra - room_id: [33]
 > Door to Short Shaft; Heals? False
   * Layers: default
   * Power Beam Door to Short Shaft/Door to Save Station (East)
@@ -967,7 +992,7 @@ Extra - room_id: 33
 ----------------
 Save Station (Central)
 Extra - map_name: Brinstar34
-Extra - room_id: 34
+Extra - room_id: [34]
 > Door to Gold-Tinted Hub; Heals? False
   * Layers: default
   * Power Beam Door to Gold-Tinted Hub/Door to Save Station (Central)
@@ -983,7 +1008,7 @@ Extra - room_id: 34
 ----------------
 Small Cave
 Extra - map_name: Brinstar35
-Extra - room_id: 35
+Extra - room_id: [35]
 > Tunnel to Long Beam Chamber Access; Heals? False
   * Layers: default
   * Tunnel to Long Beam Chamber Access/Tunnel to Small Cave
@@ -1001,7 +1026,7 @@ Extra - room_id: 35
 ----------------
 Save Station (South)
 Extra - map_name: Brinstar36
-Extra - room_id: 36
+Extra - room_id: [36]
 > Door to Blue-Tinted Hub; Heals? False
   * Layers: default
   * Power Beam Door to Blue-Tinted Hub/Door to Save Station (South)
@@ -1017,7 +1042,7 @@ Extra - room_id: 36
 ----------------
 Guide Statue (Hi-Jump)
 Extra - map_name: Brinstar37
-Extra - room_id: 37
+Extra - room_id: [37]
 > Door to Elevator to Kraid; Heals? False
   * Layers: default
   * Missile Door to Elevator to Kraid/Door to Guide Statue (Hi-Jump)
@@ -1026,7 +1051,7 @@ Extra - room_id: 37
 ----------------
 Guide Statue (Wave Beam)
 Extra - map_name: Brinstar38
-Extra - room_id: 38
+Extra - room_id: [38]
 > Door to Eastern Hub; Heals? False
   * Layers: default
   * Power Beam Door to Eastern Hub/Door to Guide Statue (Wave Beam)
@@ -1061,7 +1086,7 @@ Extra - room_id: 38
 ----------------
 Save Station (North)
 Extra - map_name: Brinstar39
-Extra - room_id: 39
+Extra - room_id: [39]
 > Door to Acid Vine Puzzle; Heals? False
   * Layers: default
   * Power Beam Door to Acid Vine Puzzle/Door to Save Station (North)
@@ -1086,10 +1111,12 @@ Extra - room_id: 39
 ----------------
 Speedbooster Passage
 Extra - map_name: Brinstar40
-Extra - room_id: 40
+Extra - room_id: [40]
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 11; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Tunnel to Gold-Tinted Hub
       Trivial
 
@@ -1118,16 +1145,20 @@ Extra - room_id: 40
 ----------------
 Hidden Tank Shaft
 Extra - map_name: Brinstar41
-Extra - room_id: 41
+Extra - room_id: [41]
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 12; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Tunnel to Blue-Tinted Hub (Lower)
       Trivial
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 13; Category? Minor
+  * Extra - blockx: 0
+  * Extra - blocky: 0
   > Tunnel to Blue-Tinted Hub (Lower)
       Morph Ball
 
