@@ -48,7 +48,7 @@ def is_mzm_validator(path: Path | None) -> bool:
     if md5_expected == md5_returned:
         return False
     else:
-        return True
+        return False  # Change to True when base rom patches are implemented, for now requires building decomp
 
 
 class MZMGameExportDialog(GameExportDialog[MZMConfiguration], Ui_MZMGameExportDialog):
