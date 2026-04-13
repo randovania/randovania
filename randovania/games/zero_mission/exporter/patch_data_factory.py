@@ -93,6 +93,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
                 major_pickup = {
                     "source": node.extra["source"],
                     "item": resource,
+                    "item_sprite": sprite,
                     "jingle": jingle,
                 }
                 if item_message:
