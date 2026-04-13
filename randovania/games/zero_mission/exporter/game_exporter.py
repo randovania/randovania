@@ -62,8 +62,8 @@ class MZMGameExporter(GameExporter[MZMGameExportParams]):
             if len(line) > 30:
                 text[index] = f"{line[0:27]}..."
 
-        patch_data["TitleText"] = [{"LineNum": index, "Text": line} for index, line in enumerate(text)] + patch_data[
-            "TitleText"
+        patch_data["title_text"] = [{"LineNum": index, "Text": line} for index, line in enumerate(text)] + patch_data[
+            "title_text"
         ]
         patcher.validate_patch_data_zm(patch_data)
         try:

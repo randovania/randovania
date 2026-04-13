@@ -5,9 +5,11 @@ from typing import TYPE_CHECKING, override
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.zero_mission.exporter.hint_namer import MZMHintNamer
 from randovania.games.zero_mission.layout import MZMConfiguration, MZMCosmeticPatches
+from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
     from mars_patcher.zm.auto_generated_types import MarsschemazmStartingItems
@@ -28,10 +30,10 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
     def _create_starting_location(self) -> dict:
         starting_location_node = self.game.region_list.node_by_identifier(self.patches.starting_location)
         starting_location_dict = {
-            "Area": self.game.region_list.nodes_to_region(starting_location_node).extra["area_id"],
-            "Room": self.game.region_list.nodes_to_area(starting_location_node).extra["room_id"][0],
-            "BlockX": starting_location_node.extra["X"],
-            "BlockY": starting_location_node.extra["Y"],
+            "area": self.game.region_list.nodes_to_region(starting_location_node).extra["area_id"],
+            "room": self.game.region_list.nodes_to_area(starting_location_node).extra["room_id"][0],
+            "block_x": starting_location_node.extra["X"],
+            "block_y": starting_location_node.extra["Y"],
         }
         return starting_location_dict
 
@@ -73,13 +75,13 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
         for pickup in pickup_list:
             node = self.game.region_list.node_from_pickup_index(pickup.index)
             is_major = False
-            jingle = "Minor"
+            jingle = "MINOR"
             if "source" in node.extra:
                 is_major = True
             if not pickup.is_for_remote_player and pickup.conditional_resources[0].resources:
                 conditional_extras = pickup.conditional_resources[0].resources[-1][0].extra
                 resource = conditional_extras["item"]
-                jingle = conditional_extras.get("Jingle", "Minor")
+                jingle = conditional_extras.get("Jingle", "MINOR")
             else:
                 resource = "None"
 
@@ -89,27 +91,27 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
 
             if is_major:
                 major_pickup = {
-                    "Source": node.extra["source"],
-                    "Item": resource,
-                    "Jingle": jingle,
+                    "source": node.extra["source"],
+                    "item": resource,
+                    "jingle": jingle,
                 }
                 if item_message:
                     major_pickup["ItemMessages"] = item_message
                 major_pickup_list.append(major_pickup)
             else:
                 minor_pickup = {
-                    "Area": self.game.region_list.nodes_to_region(node).extra["area_id"],
-                    "Room": self.game.region_list.nodes_to_area(node).extra["room_id"][0],
-                    "BlockX": node.extra["blockx"],
-                    "BlockY": node.extra["blocky"],
-                    "Item": resource,
-                    "ItemSprite": sprite,
-                    "Jingle": jingle,
+                    "area": self.game.region_list.nodes_to_region(node).extra["area_id"],
+                    "room": self.game.region_list.nodes_to_area(node).extra["room_id"][0],
+                    "block_x": node.extra["blockx"],
+                    "block_y": node.extra["blocky"],
+                    "item": resource,
+                    "item_sprite": sprite,
+                    "jingle": jingle,
                 }
                 if item_message:
                     minor_pickup["ItemMessages"] = item_message
                 minor_pickup_list.append(minor_pickup)
-        pickup_map_dict = {"MajorLocations": major_pickup_list, "MinorLocations": minor_pickup_list}
+        pickup_map_dict = {"major_locations": major_pickup_list, "minor_locations": minor_pickup_list}
 
         return pickup_map_dict
 
@@ -124,36 +126,39 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
                 tank_dict[stand_definition.extra["LauncherIncrementName"]] = stand_state.included_ammo[0]
         return tank_dict
 
-    def _create_title_text(self) -> list:
-        elements = []
-        for line, word in enumerate(self.description.shareable_word_hash.split(), 12):
-            final_word = word if len(word) <= 30 else f"{word[0:27]}..."
-            elements.append({"LineNum": line, "Text": final_word.center(30)})
-        return elements
+    # def _create_title_text(self) -> list:
+    #     elements = []
+    #     for line, word in enumerate(self.description.shareable_word_hash.split(), 12):
+    #         final_word = word if len(word) <= 30 else f"{word[0:27]}..."
+    #         elements.append({"LineNum": line, "Text": final_word.center(30)})
+    #     return elements
 
-    def _create_intro_text(self) -> list:
-        elements = []
+    # def _create_intro_text(self) -> list:
+    #     elements = []
+    #
+    #     return elements
 
-        return elements
+    # def _create_credits_text(self) -> list:
+    #     elements = []
+    #
+    #     return elements
 
-    def _create_credits_text(self) -> list:
-        elements = []
+    # def _create_room_names(self) -> list[dict]:
+    #     names = []
+    #     for region in self.game.region_list.regions:
+    #         for area in region.areas:
+    #             for number in area.extra["room_id"]:
+    #                 names.append(
+    #                     {
+    #                         "Area": region.extra["area_id"],
+    #                         "Room": number,
+    #                         "Name": area.name,
+    #                     }
+    #                 )
+    #     return names
 
-        return elements
-
-    def _create_room_names(self) -> list[dict]:
-        names = []
-        for region in self.game.region_list.regions:
-            for area in region.areas:
-                for number in area.extra["room_id"]:
-                    names.append(
-                        {
-                            "Area": region.extra["area_id"],
-                            "Room": number,
-                            "Name": area.name,
-                        }
-                    )
-        return names
+    def create_visual_nothing(self) -> PickupEntry:
+        return pickup_creator.create_visual_nothing(self.game_enum(), "ANONYMOUS")
 
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         pickup_list = self.export_pickup_list()
@@ -163,17 +168,21 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
             "starting_items": self._create_starting_items(),
             "locations": self._create_pickup_dict(pickup_list),
             "tank_increments": self._create_tank_increments(),
-            "intro_text": self._create_intro_text(),
-            "title_text": self._create_title_text(),
-            "credits_text": self._create_credits_text(),
+            # "intro_text": self._create_intro_text(),
+            "title_text": [],  # self._create_title_text(),
+            # "credits_text": self._create_credits_text(),
             "disable_demos": False,
             "skip_door_transitions": False,
             "unexplored_map": False,
-            "room_names": self._create_room_names(),
+            # "room_names": self._create_room_names(),
             "accessibility_patches": True,
             "stereo_default": True,
             "disable_music": False,
             "disable_sound_effects": False,
         }
+        # Uncomment to spew the patch data into the terminal
+        import json
+
+        print(json.dumps(mars_data))
 
         return mars_data
