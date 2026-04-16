@@ -16,6 +16,6 @@ def test_zero_mission_format_params():
     # Assert
     assert dict(result) == {
         "Gameplay": ["Starts at Brinstar - Starting Room"],
-        "Pickup Pool": ["Size: 79 of 102", "Unmodified starting pickup"],
+        "Pickup Pool": ["Size: 101 of 102", "Unmodified starting pickup"],
         "Logic Settings": ["All tricks disabled"],
     }
