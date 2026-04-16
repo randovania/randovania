@@ -83,7 +83,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
                 resource = conditional_extras["item"]
                 jingle = conditional_extras.get("Jingle", "MINOR")
             else:
-                resource = "None"
+                resource = "NONE"
 
             sprite = pickup.model.name
 
@@ -157,6 +157,13 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
     #                     }
     #                 )
     #     return names
+
+    def create_useless_pickup(self) -> PickupEntry:
+        """Used for any location with no PickupEntry assigned to it."""
+        return pickup_creator.create_nothing_pickup(
+            self.game.get_resource_database_view(),
+            model_name="EMPTY",
+        )
 
     def create_visual_nothing(self) -> PickupEntry:
         return pickup_creator.create_visual_nothing(self.game_enum(), "ANONYMOUS")
