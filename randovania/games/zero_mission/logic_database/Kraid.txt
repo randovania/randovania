@@ -459,7 +459,7 @@ Extra - room_id: [12]
 
 > Open Passage to Acid Fall; Heals? False
   * Layers: default
-  * Horizontal Passage to Acid Fall/Tunnel to Acid Fall
+  * Vertical Passage to Acid Fall/Open Passage to Corrosive Pool
   * Extra - door_idx: (85,)
 
 ----------------
@@ -565,9 +565,9 @@ Extra - room_id: [17]
   > Pickup (Missile Tank)
       Morph Ball
 
-> Tunnel to Acid Fall; Heals? False
+> Open Passage to Corrosive Pool; Heals? False
   * Layers: default
-  * Tunnel to Corrosive Pool/Open Passage to Acid Fall
+  * Vertical Passage to Corrosive Pool/Open Passage to Acid Fall
   * Extra - door_idx: (86,)
   > Door to Block Column Hub
       Trivial
@@ -696,7 +696,7 @@ Extra - room_id: [23]
   * Extra - door_idx: (55,)
   > Door to Ball Launcher Speedway
       Trivial
-  > Tunnel to Space Jump Access
+  > Open Passage to Space Jump Access
       Lay Any Bomb
 
 > Door to Ball Launcher Speedway; Heals? False
@@ -706,9 +706,9 @@ Extra - room_id: [23]
   > Door to Antechamber
       Trivial
 
-> Tunnel to Space Jump Access; Heals? False
+> Open Passage to Space Jump Access; Heals? False
   * Layers: default
-  * Tunnel to Space Jump Access/Tunnel to Drain
+  * Vertical Passage to Space Jump Access/Open Passage to Drain
   * Extra - door_idx: (57,)
 
 ----------------
@@ -733,9 +733,9 @@ Extra - room_id: [24]
 Space Jump Access
 Extra - map_name: Kraid25
 Extra - room_id: [25]
-> Tunnel to Drain; Heals? False
+> Open Passage to Drain; Heals? False
   * Layers: default
-  * Tunnel to Drain/Tunnel to Space Jump Access
+  * Vertical Passage to Drain/Open Passage to Space Jump Access
   * Extra - door_idx: (60,)
   > Door to Sidehopper Path
       After Kraid Chozo Statue Item Aquired
@@ -877,7 +877,7 @@ Extra - room_id: [28]
   * Extra - door_idx: (69,)
   > Door to Kraid Arena Access
       After Kraid Chozo Statue Item Aquired
-  > Open Passage to Kraid Arena (FINAL)
+  > Open Passage to Kraid Arena
       Speed Booster
 
 > Tunnel to Hidden Drop; Heals? False
@@ -887,9 +887,9 @@ Extra - room_id: [28]
   > Door to Block Column Hub
       Trivial
 
-> Open Passage to Kraid Arena (FINAL); Heals? False
+> Open Passage to Kraid Arena; Heals? False
   * Layers: default
-  * Horizontal Passage to Kraid Arena (FINAL)/Open Passage to Speed Booster Tutorial Slope
+  * Horizontal Passage to Kraid Arena/Open Passage to Speed Booster Tutorial Slope
   * Extra - door_idx: (96,)
   > Door to Block Column Hub
       Speed Booster
@@ -900,7 +900,7 @@ Extra - map_name: Kraid29
 Extra - room_id: [29]
 > Door to Kraid Arena; Heals? False
   * Layers: default
-  * Missile Door to Kraid Arena/Open Passage to Kraid Arena Access
+  * Missile Door to Kraid Arena/Door to Kraid Arena Access
   * Extra - door_idx: (70,)
   > Door to Speed Booster Tutorial Slope
       Trivial
@@ -915,19 +915,27 @@ Extra - room_id: [29]
 ----------------
 Kraid Arena
 Extra - map_name: Kraid30
-Extra - room_id: [30]
-> Open Passage to Kraid Arena Access; Heals? False
+Extra - room_id: [30, 37]
+> Door to Kraid Arena Access; Heals? False
   * Layers: default
-  * Horizontal Passage to Kraid Arena Access/Door to Kraid Arena
-  * Extra - door_idx: (72,)
+  * Blue Door to Kraid Arena Access/Door to Kraid Arena
+  * Extra - door_idx: (72, 89)
   > Open Passage to Kraid's Reliquary
       Trivial
 
 > Open Passage to Kraid's Reliquary; Heals? False
   * Layers: default
-  * Horizontal Passage to Kraid's Reliquary/Open Passage to Kraid Arena (FINAL)
-  * Extra - door_idx: (81,)
-  > Open Passage to Kraid Arena Access
+  * Horizontal Passage to Kraid's Reliquary/Open Passage to Kraid Arena
+  * Extra - door_idx: (81, 90)
+  > Door to Kraid Arena Access
+      Trivial
+  > Open Passage to Speed Booster Tutorial Slope
+      Trivial
+
+> Open Passage to Speed Booster Tutorial Slope; Heals? False
+  * Layers: default
+  * Horizontal Passage to Speed Booster Tutorial Slope/Open Passage to Kraid Arena
+  > Open Passage to Kraid's Reliquary
       Trivial
 
 ----------------
@@ -1013,9 +1021,9 @@ Extra - room_id: [33]
 Kraid's Reliquary
 Extra - map_name: Kraid34
 Extra - room_id: [34]
-> Open Passage to Kraid Arena (FINAL); Heals? False
+> Open Passage to Kraid Arena; Heals? False
   * Layers: default
-  * Horizontal Passage to Kraid Arena (FINAL)/Open Passage to Kraid's Reliquary
+  * Horizontal Passage to Kraid Arena/Open Passage to Kraid's Reliquary
   * Extra - door_idx: (82,)
   > Pickup (Speed Booster)
       Trivial
@@ -1024,7 +1032,7 @@ Extra - room_id: [34]
   * Layers: default
   * Pickup 89; Category? Major
   * Extra - source: SPEED_BOOSTER
-  > Open Passage to Kraid Arena (FINAL)
+  > Open Passage to Kraid Arena
       Trivial
 
 ----------------
@@ -1067,33 +1075,6 @@ Extra - room_id: [36]
       Trivial
   > Open Passage to Norfair Tunnel
       Screw Attack
-
-----------------
-Kraid Arena (FINAL)
-Extra - map_name: Kraid37
-Extra - room_id: [37]
-> Door to Kraid Arena Access; Heals? False
-  * Layers: default
-  * Blue Door to Kraid Arena Access/Door to Kraid Arena
-  * Extra - door_idx: (89,)
-  > Open Passage to Kraid's Reliquary
-      Trivial
-
-> Open Passage to Kraid's Reliquary; Heals? False
-  * Layers: default
-  * Horizontal Passage to Kraid's Reliquary/Open Passage to Kraid Arena (FINAL)
-  * Extra - door_idx: (90,)
-  > Door to Kraid Arena Access
-      Trivial
-  > Open Passage to Speed Booster Tutorial Slope
-      Trivial
-
-> Open Passage to Speed Booster Tutorial Slope; Heals? False
-  * Layers: default
-  * Horizontal Passage to Speed Booster Tutorial Slope/Open Passage to Kraid Arena (FINAL)
-  * Extra - door_idx: (95,)
-  > Open Passage to Kraid's Reliquary
-      Trivial
 
 ----------------
 Cache

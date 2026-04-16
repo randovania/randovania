@@ -115,11 +115,15 @@ Extra - room_id: [4]
   * Layers: default
   * Blue Door to Save Station (North)/Door to Main Corridor
   * Extra - door_idx: (8,)
+  > Door to Blue-Bubble Hub
+      Trivial
 
 > Door to Blue-Bubble Hub; Heals? False
   * Layers: default
   * Blue Door to Blue-Bubble Hub/Door to Main Corridor
   * Extra - door_idx: (9,)
+  > Door to Save Station (North)
+      Trivial
 
 ----------------
 Blue-Bubble Hub
@@ -130,6 +134,8 @@ Extra - room_id: [5]
   * Pickup 29; Category? Minor
   * Extra - blockx: 8
   * Extra - blocky: 111
+  > Door to Save Station (Southeast)
+      Trivial
 
 > Door to Ice Beam Tutorial C; Heals? False
   * Layers: default
@@ -185,11 +191,17 @@ Extra - room_id: [5]
   * Layers: default
   * Blue Door to Save Station (Southeast)/Door to Blue-Bubble Hub
   * Extra - door_idx: (16,)
+  > Pickup (2nd Missile Tank)
+      Trivial
+  > Door to Kiru-Giru Larval Hall
+      Trivial
 
-> Door to Kiru-Giru Larval Hall (IGNORE); Heals? False
+> Door to Kiru-Giru Larval Hall; Heals? False
   * Layers: default
-  * Blue Door to Kiru-Giru Larval Hall (IGNORE)/Door to Blue-Bubble Hub
+  * Blue Door to Kiru-Giru Larval Hall/Door to Blue-Bubble Hub
   * Extra - door_idx: (94,)
+  > Door to Save Station (Southeast)
+      Trivial
   > Door to Guide Statue (Varia) (Lower)
       Trivial
   > Pickup (Missile Tank)
@@ -199,7 +211,7 @@ Extra - room_id: [5]
   * Layers: default
   * Blue Door to Guide Statue (Varia)/Door to Blue-Bubble Hub (Lower)
   * Extra - door_idx: (119,)
-  > Door to Kiru-Giru Larval Hall (IGNORE)
+  > Door to Kiru-Giru Larval Hall
       Trivial
 
 > Door to Guide Statue (Varia) (Upper); Heals? False
@@ -216,7 +228,7 @@ Extra - room_id: [5]
   * Extra - blocky: 79
   > Door to Hi-Jump Chamber Access
       Climb Into 1x1 or Have Increased Height
-  > Door to Kiru-Giru Larval Hall (IGNORE)
+  > Door to Kiru-Giru Larval Hall
       Trivial
   > Ball Launcher
       Missiles and Knowledge (Beginner)
@@ -485,9 +497,9 @@ Extra - room_id: [16]
   > Door to Twin Hill Room
       Trivial
 
-> Tunnel to East Green Bubble Hub (Lower); Heals? False
+> Open Passage to East Green Bubble Hub (Lower); Heals? False
   * Layers: default
-  * Tunnel to East Green Bubble Hub (Lower)/Tunnel to East Green Bubble Hub (Upper)
+  * Vertical Passage to East Green Bubble Hub (Lower)/Open Passage to East Green Bubble Hub (Upper)
   * Extra - door_idx: (118,)
   > Door to Screw Attack Chamber Access
       Trivial
@@ -688,16 +700,16 @@ Extra - room_id: [23]
   > Door to Vine-Infested Passage
       Power Grip
 
-> Tunnel to Speed Transporter C; Heals? False
+> Open Passage to Speed Transporter C; Heals? False
   * Layers: default
-  * Tunnel to Speed Transporter C/Tunnel to East Green Bubble Hub (Lower)
+  * Vertical Passage to Speed Transporter C/Open Passage to East Green Bubble Hub (Lower)
   * Extra - door_idx: (116,)
-  > Tunnel to East Green Bubble Hub (Upper)
+  > Open Passage to East Green Bubble Hub (Upper)
       Trivial
 
-> Tunnel to East Green Bubble Hub (Upper); Heals? False
+> Open Passage to East Green Bubble Hub (Upper); Heals? False
   * Layers: default
-  * Tunnel to East Green Bubble Hub (Upper)/Tunnel to East Green Bubble Hub (Lower)
+  * Vertical Passage to East Green Bubble Hub (Upper)/Open Passage to East Green Bubble Hub (Lower)
   * Extra - door_idx: (117,)
 
 ----------------
@@ -901,44 +913,30 @@ Extra - room_id: [33]
   * Layers: default
   * Blue Door to Save Station (Southeast)/Door to Path of Vines
   * Extra - door_idx: (65,)
-  > Door to Kiru-Giru Arena (INITIAL WITH PIPE)
+  > Door to Kiru-Giru Arena (FINAL)
       Missiles
 
-> Door to Kiru-Giru Arena (INITIAL WITH PIPE); Heals? False
+> Door to Kiru-Giru Arena (FINAL); Heals? False
   * Layers: default
-  * Blue Door to Kiru-Giru Arena (INITIAL WITH PIPE)/Door to Path of Vines
+  * Blue Door to Kiru-Giru Arena (FINAL)/Door to Path of Vines
   * Extra - door_idx: (66,)
   > Door to Save Station (Southeast)
       Missiles
 
-> Tunnel to Broken Statue Room; Heals? False
+> Open Passage to Broken Statue Room; Heals? False
   * Layers: default
-  * Tunnel to Broken Statue Room/Tunnel to Path of Vines
+  * Vertical Passage to Broken Statue Room/Open Passage to Path of Vines
   * Extra - door_idx: (106,)
   > Door to Save Station (Southeast)
       Trivial
 
 ----------------
-Kiru-Giru Arena (INITIAL WITH PIPE)
-Extra - map_name: Norfair34
-Extra - room_id: [34]
-> Door to Path of Vines; Heals? False
-  * Layers: default
-  * Blue Door to Path of Vines/Door to Kiru-Giru Arena (INITIAL WITH PIPE)
-  * Extra - door_idx: (67,)
-
-> Door to Elevator to Ridley; Heals? False
-  * Layers: default
-  * Blue Door to Elevator to Ridley/Door to Kiru-Giru Arena (INITIAL)
-  * Extra - door_idx: (68,)
-
-----------------
 Elevator to Ridley
 Extra - map_name: Norfair35
 Extra - room_id: [35]
-> Door to Kiru-Giru Arena (INITIAL); Heals? False
+> Door to Kiru-Giru Arena (FINAL); Heals? False
   * Layers: default
-  * Blue Door to Kiru-Giru Arena (INITIAL)/Door to Elevator to Ridley
+  * Blue Door to Kiru-Giru Arena (FINAL)/Door to Elevator to Ridley
   * Extra - door_idx: (69,)
   > Open Passage to Elevator to Norfair
       Trivial
@@ -949,14 +947,14 @@ Extra - room_id: [35]
   * Layers: default
   * Horizontal Passage to Elevator to Norfair/Open Passage to Elevator to Ridley
   * Extra - door_idx: (70,)
-  > Door to Kiru-Giru Arena (INITIAL)
+  > Door to Kiru-Giru Arena (FINAL)
       Trivial
 
 > Door to Broken Statue Room; Heals? False
   * Layers: default
   * Missile Door to Broken Statue Room/Door to Elevator to Ridley
   * Extra - door_idx: (102,)
-  > Door to Kiru-Giru Arena (INITIAL)
+  > Door to Kiru-Giru Arena (FINAL)
       After Ridley Defeated
 
 ----------------
@@ -1035,20 +1033,20 @@ Extra - room_id: [39]
   * Layers: default
   * Blue Door to Elevator to Brinstar/Door to Save Station (North)
   * Extra - door_idx: (85,)
-  > Door to Main Corridor
+  > Save Station
       Trivial
 
 > Door to Main Corridor; Heals? False
   * Layers: default
   * Blue Door to Main Corridor/Door to Save Station (North)
   * Extra - door_idx: (86,)
-  > Door to Elevator to Brinstar
-      Trivial
   > Save Station
       Trivial
 
 > Save Station; Heals? False
   * Layers: default
+  > Door to Elevator to Brinstar
+      Trivial
   > Door to Main Corridor
       Trivial
 
@@ -1096,7 +1094,7 @@ Extra - room_id: [41]
 ----------------
 Kiru-Giru Larval Hall
 Extra - map_name: Norfair42
-Extra - room_id: [42]
+Extra - room_id: [42, 46]
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 38; Category? Minor
@@ -1116,8 +1114,8 @@ Extra - room_id: [42]
 
 > Door to Blue-Bubble Hub; Heals? False
   * Layers: default
-  * Blue Door to Blue-Bubble Hub/Door to Kiru-Giru Larval Hall (IGNORE)
-  * Extra - door_idx: (93,)
+  * Blue Door to Blue-Bubble Hub/Door to Kiru-Giru Larval Hall
+  * Extra - door_idx: (93, 99)
   > Pickup (Energy Tank)
       Missiles and After Kiru-Giru Blockade Defeated
   > Door to Path of Destruction
@@ -1132,21 +1130,36 @@ Extra - room_id: [42]
 ----------------
 Kiru-Giru Arena (FINAL)
 Extra - map_name: Norfair43
-Extra - room_id: [43]
+Extra - room_id: [43, 34, 54]
 > Door to Path of Vines; Heals? False
   * Layers: default
-  * Blue Door to Path of Vines/Door to Kiru-Giru Arena (INITIAL WITH PIPE)
-  * Extra - door_idx: (95,)
+  * Blue Door to Path of Vines/Door to Kiru-Giru Arena (FINAL)
+  * Extra - door_idx: (95, 67, 123)
+  > Arena
+      Trivial
 
 > Door to Elevator to Ridley; Heals? False
   * Layers: default
-  * Blue Door to Elevator to Ridley/Door to Kiru-Giru Arena (INITIAL)
-  * Extra - door_idx: (96,)
+  * Blue Door to Elevator to Ridley/Door to Kiru-Giru Arena (FINAL)
+  * Extra - door_idx: (96, 68, 124)
+  > Arena
+      Trivial
 
-> Open Passage to Cocoon Cave (Upper); Heals? False
+> Open Passage to Ridley; Heals? False
   * Layers: default
-  * Horizontal Passage to Cocoon Cave (Upper)/Open Passage to Kiru-Giru Arena (FINAL)
+  * Vertical Passage to Cocoon Cave (Upper)/Open Passage to Norfair
   * Extra - door_idx: (108,)
+  > Arena
+      Trivial
+
+> Arena; Heals? False
+  * Layers: default
+  > Door to Path of Vines
+      Trivial
+  > Door to Elevator to Ridley
+      Trivial
+  > Open Passage to Ridley
+      Trivial
 
 ----------------
 Save Station (Far North)
@@ -1190,15 +1203,6 @@ Extra - room_id: [45]
       Trivial
 
 ----------------
-Kiru-Giru Larval Hall (IGNORE)
-Extra - map_name: Norfair46
-Extra - room_id: [46]
-> Door to Blue-Bubble Hub; Heals? False
-  * Layers: default
-  * Blue Door to Blue-Bubble Hub/Door to Kiru-Giru Larval Hall (IGNORE)
-  * Extra - door_idx: (99,)
-
-----------------
 Ice Beam Tutorial C
 Extra - map_name: Norfair47
 Extra - room_id: [47]
@@ -1207,7 +1211,7 @@ Extra - room_id: [47]
   * Pickup 40; Category? Minor
   * Extra - blockx: 24
   * Extra - blocky: 3
-  > Door to Guide Statue (Speed Booster)
+  > Door to Blue-Bubble Hub
       Trivial
 
 > Door to Guide Statue (Speed Booster); Heals? False
@@ -1223,6 +1227,8 @@ Extra - room_id: [47]
   * Layers: default
   * Blue Door to Blue-Bubble Hub/Door to Ice Beam Tutorial C
   * Extra - door_idx: (101,)
+  > Pickup (Missile Tank)
+      Morph Ball
   > Door to Guide Statue (Speed Booster)
       Morph Ball or Power Grip
 
@@ -1234,7 +1240,7 @@ Extra - room_id: [48]
   * Layers: default
   * Missile Door to Elevator to Ridley/Door to Broken Statue Room
   * Extra - door_idx: (103,)
-  > Tunnel to Path of Vines
+  > Open Passage to Path of Vines
       All of the following:
           Lay Bomb
           Any of the following:
@@ -1245,9 +1251,9 @@ Extra - room_id: [48]
   > Open Passage to Speed Transporter A
       Trivial
 
-> Tunnel to Path of Vines; Heals? False
+> Open Passage to Path of Vines; Heals? False
   * Layers: default
-  * Tunnel to Path of Vines/Tunnel to Broken Statue Room
+  * Vertical Passage to Path of Vines/Open Passage to Broken Statue Room
   * Extra - door_idx: (107,)
 
 > Open Passage to Speed Transporter A; Heals? False
@@ -1321,12 +1327,12 @@ Extra - room_id: [52]
   * Layers: default
   * Horizontal Passage to Speed Transporter B/Open Passage to Speed Transporter C
   * Extra - door_idx: (114,)
-  > Tunnel to East Green Bubble Hub (Lower)
+  > Open Passage to East Green Bubble Hub (Lower)
       Speed Booster and Lay Bomb
 
-> Tunnel to East Green Bubble Hub (Lower); Heals? False
+> Open Passage to East Green Bubble Hub (Lower); Heals? False
   * Layers: default
-  * Tunnel to East Green Bubble Hub (Lower)/Tunnel to Speed Transporter C
+  * Vertical Passage to East Green Bubble Hub (Lower)/Open Passage to Speed Transporter C
   * Extra - door_idx: (115,)
 
 ----------------
@@ -1346,20 +1352,6 @@ Extra - room_id: [53]
   * Extra - door_idx: (121,)
   > Door to Blue-Bubble Hub (Lower)
       Trivial
-
-----------------
-Kiru-Giru Arena (INITIAL)
-Extra - map_name: Norfair54
-Extra - room_id: [54]
-> Door to Path of Vines; Heals? False
-  * Layers: default
-  * Blue Door to Path of Vines/Door to Kiru-Giru Arena (INITIAL WITH PIPE)
-  * Extra - door_idx: (123,)
-
-> Door to Elevator to Ridley; Heals? False
-  * Layers: default
-  * Blue Door to Elevator to Ridley/Door to Kiru-Giru Arena (INITIAL)
-  * Extra - door_idx: (124,)
 
 ----------------
 Lava-Filled Passage

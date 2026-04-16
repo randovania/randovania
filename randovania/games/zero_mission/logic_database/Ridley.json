@@ -277,7 +277,7 @@
                 ]
             },
             "nodes": {
-                "Door to Imago Arena (Lower)": {
+                "Door to Imago Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -300,7 +300,7 @@
                     "default_connection": {
                         "region": "Ridley",
                         "area": "Imago Arena",
-                        "node": "Door to Cocoon Cave (Lower)"
+                        "node": "Door to Cocoon Cave (Upper)"
                     },
                     "default_dock_weakness": "Blue Door",
                     "exclude_from_dock_rando": false,
@@ -328,7 +328,7 @@
                         }
                     }
                 },
-                "Open Passage to Kiru-Giru Arena (FINAL)": {
+                "Open Passage to Norfair": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -350,16 +350,16 @@
                     "default_connection": {
                         "region": "Norfair",
                         "area": "Kiru-Giru Arena (FINAL)",
-                        "node": "Open Passage to Cocoon Cave (Upper)"
+                        "node": "Open Passage to Ridley"
                     },
-                    "default_dock_weakness": "Horizontal Passage",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Open Passage to Imago Arena (Upper)": {
+                        "Open Passage to Imago Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -368,7 +368,7 @@
                         }
                     }
                 },
-                "Open Passage to Imago Arena (Upper)": {
+                "Open Passage to Imago Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -399,7 +399,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Open Passage to Kiru-Giru Arena (FINAL)": {
+                        "Open Passage to Norfair": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3278,7 +3278,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Cocoon Cave (Lower)": {
+                        "Door to Cocoon Cave (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3287,7 +3287,7 @@
                         }
                     }
                 },
-                "Door to Cocoon Cave (Lower)": {
+                "Door to Cocoon Cave (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3310,7 +3310,7 @@
                     "default_connection": {
                         "region": "Ridley",
                         "area": "Cocoon Cave (Upper)",
-                        "node": "Door to Imago Arena (Lower)"
+                        "node": "Door to Imago Arena"
                     },
                     "default_dock_weakness": "Blue Door",
                     "exclude_from_dock_rando": false,
@@ -3361,7 +3361,7 @@
                     "default_connection": {
                         "region": "Ridley",
                         "area": "Cocoon Cave (Upper)",
-                        "node": "Open Passage to Imago Arena (Upper)"
+                        "node": "Open Passage to Imago Arena"
                     },
                     "default_dock_weakness": "Horizontal Passage",
                     "exclude_from_dock_rando": false,
@@ -3370,7 +3370,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Cocoon Cave (Lower)": {
+                        "Door to Cocoon Cave (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4269,70 +4269,6 @@
                             }
                         }
                     }
-                }
-            }
-        },
-        "Imago's Hideout (AFTER)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Ridley27",
-                "room_id": [
-                    27
-                ]
-            },
-            "nodes": {
-                "Open Passage to Cocoon Cave (Upper)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 984.0,
-                        "y": 392.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            65
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {}
-                }
-            }
-        },
-        "Cocoon Cavern (Upper, INITIAL)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Ridley28",
-                "room_id": [
-                    28
-                ]
-            },
-            "nodes": {
-                "Door to Cocoon Cavern (Upper, INITIAL)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 144.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            75
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {}
                 }
             }
         },

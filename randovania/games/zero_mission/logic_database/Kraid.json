@@ -2885,9 +2885,9 @@
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Acid Fall",
-                        "node": "Tunnel to Acid Fall"
+                        "node": "Open Passage to Corrosive Pool"
                     },
-                    "default_dock_weakness": "Horizontal Passage",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3471,7 +3471,7 @@
                         }
                     }
                 },
-                "Tunnel to Acid Fall": {
+                "Open Passage to Corrosive Pool": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3489,13 +3489,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "tunnel",
+                    "dock_type": "dock",
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Corrosive Pool",
                         "node": "Open Passage to Acid Fall"
                     },
-                    "default_dock_weakness": "Tunnel",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4192,7 +4192,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Space Jump Access": {
+                        "Open Passage to Space Jump Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4246,7 +4246,7 @@
                         }
                     }
                 },
-                "Tunnel to Space Jump Access": {
+                "Open Passage to Space Jump Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4264,13 +4264,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "tunnel",
+                    "dock_type": "dock",
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Space Jump Access",
-                        "node": "Tunnel to Drain"
+                        "node": "Open Passage to Drain"
                     },
-                    "default_dock_weakness": "Tunnel",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4382,7 +4382,7 @@
                 ]
             },
             "nodes": {
-                "Tunnel to Drain": {
+                "Open Passage to Drain": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4400,13 +4400,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "tunnel",
+                    "dock_type": "dock",
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Drain",
-                        "node": "Tunnel to Space Jump Access"
+                        "node": "Open Passage to Space Jump Access"
                     },
-                    "default_dock_weakness": "Tunnel",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5295,7 +5295,7 @@
                                 ]
                             }
                         },
-                        "Open Passage to Kraid Arena (FINAL)": {
+                        "Open Passage to Kraid Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5354,7 +5354,7 @@
                         }
                     }
                 },
-                "Open Passage to Kraid Arena (FINAL)": {
+                "Open Passage to Kraid Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5375,7 +5375,7 @@
                     "dock_type": "dock",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Kraid Arena (FINAL)",
+                        "area": "Kraid Arena",
                         "node": "Open Passage to Speed Booster Tutorial Slope"
                     },
                     "default_dock_weakness": "Horizontal Passage",
@@ -5438,7 +5438,7 @@
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Kraid Arena",
-                        "node": "Open Passage to Kraid Arena Access"
+                        "node": "Door to Kraid Arena Access"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -5514,11 +5514,12 @@
             "extra": {
                 "map_name": "Kraid30",
                 "room_id": [
-                    30
+                    30,
+                    37
                 ]
             },
             "nodes": {
-                "Open Passage to Kraid Arena Access": {
+                "Door to Kraid Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5532,17 +5533,18 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            72
+                            72,
+                            89
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Kraid Arena Access",
                         "node": "Door to Kraid Arena"
                     },
-                    "default_dock_weakness": "Horizontal Passage",
+                    "default_dock_weakness": "Blue Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5572,7 +5574,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            81
+                            81,
+                            90
                         ]
                     },
                     "valid_starting_location": false,
@@ -5580,7 +5583,7 @@
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Kraid's Reliquary",
-                        "node": "Open Passage to Kraid Arena (FINAL)"
+                        "node": "Open Passage to Kraid Arena"
                     },
                     "default_dock_weakness": "Horizontal Passage",
                     "exclude_from_dock_rando": false,
@@ -5589,7 +5592,50 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Open Passage to Kraid Arena Access": {
+                        "Door to Kraid Arena Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Open Passage to Speed Booster Tutorial Slope": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Speed Booster Tutorial Slope": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 726.9,
+                        "y": 79.66,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Kraid",
+                        "area": "Speed Booster Tutorial Slope",
+                        "node": "Open Passage to Kraid Arena"
+                    },
+                    "default_dock_weakness": "Horizontal Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Open Passage to Kraid's Reliquary": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6017,7 +6063,7 @@
                 ]
             },
             "nodes": {
-                "Open Passage to Kraid Arena (FINAL)": {
+                "Open Passage to Kraid Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6038,7 +6084,7 @@
                     "dock_type": "dock",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Kraid Arena (FINAL)",
+                        "area": "Kraid Arena",
                         "node": "Open Passage to Kraid's Reliquary"
                     },
                     "default_dock_weakness": "Horizontal Passage",
@@ -6078,7 +6124,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Open Passage to Kraid Arena (FINAL)": {
+                        "Open Passage to Kraid Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6302,145 +6348,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Kraid Arena (FINAL)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Kraid37",
-                "room_id": [
-                    37
-                ]
-            },
-            "nodes": {
-                "Door to Kraid Arena Access": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 504.0,
-                        "y": 240.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            89
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Kraid",
-                        "area": "Kraid Arena Access",
-                        "node": "Door to Kraid Arena"
-                    },
-                    "default_dock_weakness": "Blue Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Kraid's Reliquary": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Open Passage to Kraid's Reliquary": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 80.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            90
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Kraid",
-                        "area": "Kraid's Reliquary",
-                        "node": "Open Passage to Kraid Arena (FINAL)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Door to Kraid Arena Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Open Passage to Speed Booster Tutorial Slope": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Open Passage to Speed Booster Tutorial Slope": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 744.0,
-                        "y": 80.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            95
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Kraid",
-                        "area": "Speed Booster Tutorial Slope",
-                        "node": "Open Passage to Kraid Arena (FINAL)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Kraid's Reliquary": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }

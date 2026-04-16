@@ -693,7 +693,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Blue-Bubble Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Blue-Bubble Hub": {
                     "node_type": "dock",
@@ -725,7 +733,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Save Station (North)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -760,7 +776,15 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Door to Save Station (Southeast)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Ice Beam Tutorial C": {
                     "node_type": "dock",
@@ -1127,9 +1151,24 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Pickup (2nd Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Kiru-Giru Larval Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to Kiru-Giru Larval Hall (IGNORE)": {
+                "Door to Kiru-Giru Larval Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1150,7 +1189,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Kiru-Giru Larval Hall (IGNORE)",
+                        "area": "Kiru-Giru Larval Hall",
                         "node": "Door to Blue-Bubble Hub"
                     },
                     "default_dock_weakness": "Blue Door",
@@ -1160,6 +1199,13 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Door to Save Station (Southeast)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Guide Statue (Varia) (Lower)": {
                             "type": "and",
                             "data": {
@@ -1221,7 +1267,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Kiru-Giru Larval Hall (IGNORE)": {
+                        "Door to Kiru-Giru Larval Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1308,7 +1354,7 @@
                                 ]
                             }
                         },
-                        "Door to Kiru-Giru Larval Hall (IGNORE)": {
+                        "Door to Kiru-Giru Larval Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2922,7 +2968,7 @@
                         }
                     }
                 },
-                "Tunnel to East Green Bubble Hub (Lower)": {
+                "Open Passage to East Green Bubble Hub (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2940,13 +2986,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "tunnel",
+                    "dock_type": "dock",
                     "default_connection": {
                         "region": "Norfair",
                         "area": "East Green Bubble Hub (Lower)",
-                        "node": "Tunnel to East Green Bubble Hub (Upper)"
+                        "node": "Open Passage to East Green Bubble Hub (Upper)"
                     },
-                    "default_dock_weakness": "Tunnel",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4176,7 +4222,7 @@
                         }
                     }
                 },
-                "Tunnel to Speed Transporter C": {
+                "Open Passage to Speed Transporter C": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4194,20 +4240,20 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "tunnel",
+                    "dock_type": "dock",
                     "default_connection": {
                         "region": "Norfair",
                         "area": "Speed Transporter C",
-                        "node": "Tunnel to East Green Bubble Hub (Lower)"
+                        "node": "Open Passage to East Green Bubble Hub (Lower)"
                     },
-                    "default_dock_weakness": "Tunnel",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel to East Green Bubble Hub (Upper)": {
+                        "Open Passage to East Green Bubble Hub (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4216,7 +4262,7 @@
                         }
                     }
                 },
-                "Tunnel to East Green Bubble Hub (Upper)": {
+                "Open Passage to East Green Bubble Hub (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4234,13 +4280,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "tunnel",
+                    "dock_type": "dock",
                     "default_connection": {
                         "region": "Norfair",
                         "area": "East Green Bubble Hub (Upper)",
-                        "node": "Tunnel to East Green Bubble Hub (Lower)"
+                        "node": "Open Passage to East Green Bubble Hub (Lower)"
                     },
-                    "default_dock_weakness": "Tunnel",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5385,7 +5431,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Kiru-Giru Arena (INITIAL WITH PIPE)": {
+                        "Door to Kiru-Giru Arena (FINAL)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5404,7 +5450,7 @@
                         }
                     }
                 },
-                "Door to Kiru-Giru Arena (INITIAL WITH PIPE)": {
+                "Door to Kiru-Giru Arena (FINAL)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5425,7 +5471,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Kiru-Giru Arena (INITIAL WITH PIPE)",
+                        "area": "Kiru-Giru Arena (FINAL)",
                         "node": "Door to Path of Vines"
                     },
                     "default_dock_weakness": "Blue Door",
@@ -5454,7 +5500,7 @@
                         }
                     }
                 },
-                "Tunnel to Broken Statue Room": {
+                "Open Passage to Broken Statue Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5472,13 +5518,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "tunnel",
+                    "dock_type": "dock",
                     "default_connection": {
                         "region": "Norfair",
                         "area": "Broken Statue Room",
-                        "node": "Tunnel to Path of Vines"
+                        "node": "Open Passage to Path of Vines"
                     },
-                    "default_dock_weakness": "Tunnel",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5496,82 +5542,6 @@
                 }
             }
         },
-        "Kiru-Giru Arena (INITIAL WITH PIPE)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Norfair34",
-                "room_id": [
-                    34
-                ]
-            },
-            "nodes": {
-                "Door to Path of Vines": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 744.0,
-                        "y": 288.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            67
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Norfair",
-                        "area": "Path of Vines",
-                        "node": "Door to Kiru-Giru Arena (INITIAL WITH PIPE)"
-                    },
-                    "default_dock_weakness": "Blue Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
-                },
-                "Door to Elevator to Ridley": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 744.0,
-                        "y": 96.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            68
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Norfair",
-                        "area": "Elevator to Ridley",
-                        "node": "Door to Kiru-Giru Arena (INITIAL)"
-                    },
-                    "default_dock_weakness": "Blue Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
-                }
-            }
-        },
         "Elevator to Ridley": {
             "default_node": null,
             "hint_features": [],
@@ -5582,7 +5552,7 @@
                 ]
             },
             "nodes": {
-                "Door to Kiru-Giru Arena (INITIAL)": {
+                "Door to Kiru-Giru Arena (FINAL)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5603,7 +5573,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Kiru-Giru Arena (INITIAL)",
+                        "area": "Kiru-Giru Arena (FINAL)",
                         "node": "Door to Elevator to Ridley"
                     },
                     "default_dock_weakness": "Blue Door",
@@ -5670,7 +5640,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Kiru-Giru Arena (INITIAL)": {
+                        "Door to Kiru-Giru Arena (FINAL)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5710,7 +5680,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Kiru-Giru Arena (INITIAL)": {
+                        "Door to Kiru-Giru Arena (FINAL)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6118,7 +6088,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Main Corridor": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6158,13 +6128,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Brinstar": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Save Station": {
                             "type": "and",
                             "data": {
@@ -6189,6 +6152,13 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Door to Elevator to Brinstar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Main Corridor": {
                             "type": "and",
                             "data": {
@@ -6405,7 +6375,8 @@
             "extra": {
                 "map_name": "Norfair42",
                 "room_id": [
-                    42
+                    42,
+                    46
                 ]
             },
             "nodes": {
@@ -6543,7 +6514,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            93
+                            93,
+                            99
                         ]
                     },
                     "valid_starting_location": false,
@@ -6551,7 +6523,7 @@
                     "default_connection": {
                         "region": "Norfair",
                         "area": "Blue-Bubble Hub",
-                        "node": "Door to Kiru-Giru Larval Hall (IGNORE)"
+                        "node": "Door to Kiru-Giru Larval Hall"
                     },
                     "default_dock_weakness": "Blue Door",
                     "exclude_from_dock_rando": false,
@@ -6656,7 +6628,9 @@
             "extra": {
                 "map_name": "Norfair43",
                 "room_id": [
-                    43
+                    43,
+                    34,
+                    54
                 ]
             },
             "nodes": {
@@ -6674,7 +6648,9 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            95
+                            95,
+                            67,
+                            123
                         ]
                     },
                     "valid_starting_location": false,
@@ -6682,7 +6658,7 @@
                     "default_connection": {
                         "region": "Norfair",
                         "area": "Path of Vines",
-                        "node": "Door to Kiru-Giru Arena (INITIAL WITH PIPE)"
+                        "node": "Door to Kiru-Giru Arena (FINAL)"
                     },
                     "default_dock_weakness": "Blue Door",
                     "exclude_from_dock_rando": false,
@@ -6690,7 +6666,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Elevator to Ridley": {
                     "node_type": "dock",
@@ -6706,7 +6690,9 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            96
+                            96,
+                            68,
+                            124
                         ]
                     },
                     "valid_starting_location": false,
@@ -6714,7 +6700,7 @@
                     "default_connection": {
                         "region": "Norfair",
                         "area": "Elevator to Ridley",
-                        "node": "Door to Kiru-Giru Arena (INITIAL)"
+                        "node": "Door to Kiru-Giru Arena (FINAL)"
                     },
                     "default_dock_weakness": "Blue Door",
                     "exclude_from_dock_rando": false,
@@ -6722,9 +6708,17 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Open Passage to Cocoon Cave (Upper)": {
+                "Open Passage to Ridley": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6746,15 +6740,61 @@
                     "default_connection": {
                         "region": "Ridley",
                         "area": "Cocoon Cave (Upper)",
-                        "node": "Open Passage to Kiru-Giru Arena (FINAL)"
+                        "node": "Open Passage to Norfair"
                     },
-                    "default_dock_weakness": "Horizontal Passage",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 376.00767938564917,
+                        "y": 505.80849532037433,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Path of Vines": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Elevator to Ridley": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Open Passage to Ridley": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -6957,50 +6997,6 @@
                 }
             }
         },
-        "Kiru-Giru Larval Hall (IGNORE)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Norfair46",
-                "room_id": [
-                    46
-                ]
-            },
-            "nodes": {
-                "Door to Blue-Bubble Hub": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 744.0,
-                        "y": 112.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            99
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Norfair",
-                        "area": "Blue-Bubble Hub",
-                        "node": "Door to Kiru-Giru Larval Hall (IGNORE)"
-                    },
-                    "default_dock_weakness": "Blue Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
-                }
-            }
-        },
         "Ice Beam Tutorial C": {
             "default_node": null,
             "hint_features": [],
@@ -7033,7 +7029,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Guide Statue (Speed Booster)": {
+                        "Door to Blue-Bubble Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7176,6 +7172,23 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Guide Statue (Speed Booster)": {
                             "type": "or",
                             "data": {
@@ -7247,7 +7260,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel to Path of Vines": {
+                        "Open Passage to Path of Vines": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7323,7 +7336,7 @@
                         }
                     }
                 },
-                "Tunnel to Path of Vines": {
+                "Open Passage to Path of Vines": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7341,13 +7354,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "tunnel",
+                    "dock_type": "dock",
                     "default_connection": {
                         "region": "Norfair",
                         "area": "Path of Vines",
-                        "node": "Tunnel to Broken Statue Room"
+                        "node": "Open Passage to Broken Statue Room"
                     },
-                    "default_dock_weakness": "Tunnel",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -7768,7 +7781,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel to East Green Bubble Hub (Lower)": {
+                        "Open Passage to East Green Bubble Hub (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7791,7 +7804,7 @@
                         }
                     }
                 },
-                "Tunnel to East Green Bubble Hub (Lower)": {
+                "Open Passage to East Green Bubble Hub (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7809,13 +7822,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "tunnel",
+                    "dock_type": "dock",
                     "default_connection": {
                         "region": "Norfair",
                         "area": "East Green Bubble Hub (Lower)",
-                        "node": "Tunnel to Speed Transporter C"
+                        "node": "Open Passage to Speed Transporter C"
                     },
-                    "default_dock_weakness": "Tunnel",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -7914,82 +7927,6 @@
                             }
                         }
                     }
-                }
-            }
-        },
-        "Kiru-Giru Arena (INITIAL)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Norfair54",
-                "room_id": [
-                    54
-                ]
-            },
-            "nodes": {
-                "Door to Path of Vines": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 744.0,
-                        "y": 448.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            123
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Norfair",
-                        "area": "Path of Vines",
-                        "node": "Door to Kiru-Giru Arena (INITIAL WITH PIPE)"
-                    },
-                    "default_dock_weakness": "Blue Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
-                },
-                "Door to Elevator to Ridley": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 744.0,
-                        "y": 256.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            124
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Norfair",
-                        "area": "Elevator to Ridley",
-                        "node": "Door to Kiru-Giru Arena (INITIAL)"
-                    },
-                    "default_dock_weakness": "Blue Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
                 }
             }
         },
