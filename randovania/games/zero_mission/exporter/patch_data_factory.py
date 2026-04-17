@@ -45,7 +45,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
             "missiles": 0,
             "super_missiles": 0,
             "power_bombs": 0,
-            "suit_type": "NORMAL",
+            "suit_type": "FULLY_POWERED",
             "ziplines_activated": self.configuration.starting_ziplines,
         }
 

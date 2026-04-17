@@ -1,28 +1,4 @@
 ----------------
-Elevator to Brinstar (Upper)
-Extra - map_name: Tourian0
-Extra - room_id: [0]
-> Open Passage to Elevator to Tourian; Heals? False
-  * Layers: default
-  * Horizontal Passage to Elevator to Tourian/Open Passage to Elevator to Brinstar (Upper)
-  * Extra - door_idx: (0,)
-
-> Door to Save Station (North); Heals? False
-  * Layers: default
-  * Blue Door to Save Station (North)/Door to Elevator to Brinstar (Upper)
-  * Extra - door_idx: (1,)
-
-> Tunnel to Elevator to Brinstar (Upper); Heals? False
-  * Layers: default
-  * Tunnel to Elevator to Brinstar (Upper)/Tunnel to Elevator to Brinstar (Upper)
-  * Extra - door_idx: (14,)
-
-> Door to Elevator to Brinstar (Upper); Heals? False
-  * Layers: default
-  * Blue Door to Elevator to Brinstar (Upper)/Door to Elevator to Brinstar (Upper)
-  * Extra - door_idx: (35,)
-
-----------------
 Lava Passage
 Extra - map_name: Tourian1
 Extra - room_id: [1]
@@ -61,52 +37,47 @@ Extra - room_id: [2]
 ----------------
 Rinka Hall (INITIAL)
 Extra - map_name: Tourian3
-Extra - room_id: [3]
+Extra - room_id: [3, 10]
 > Door to Save Station (South); Heals? False
   * Layers: default
   * Blue Door to Save Station (South)/Door to Rinka Hall (INITIAL)
-  * Extra - door_idx: (6,)
+  * Extra - door_idx: (6, 20)
   > Door to Command Center (INITIAL)
       Trivial
 
 > Door to Command Center (INITIAL); Heals? False
   * Layers: default
   * Missile Door to Command Center (INITIAL)/Door to Rinka Hall (INITIAL)
-  * Extra - door_idx: (7,)
+  * Extra - door_idx: (7, 19)
   > Door to Save Station (South)
       Trivial
 
 ----------------
 Command Center (INITIAL)
 Extra - map_name: Tourian4
-Extra - room_id: [4]
+Extra - room_id: [4, 9]
 > Door to Rinka Hall (INITIAL); Heals? False
   * Layers: default
   * Missile Door to Rinka Hall (INITIAL)/Door to Command Center (INITIAL)
-  * Extra - door_idx: (8,)
-  > Door to Escape Shaft (INITIAL)
+  * Extra - door_idx: (18,)
+  > Door to Escape Shaft
       Missiles
 
-> Door to Escape Shaft (INITIAL); Heals? False
+> Door to Escape Shaft; Heals? False
   * Layers: default
-  * Blue Door to Escape Shaft (INITIAL)/Open Passage to Command Center (INITIAL)
-  * Extra - door_idx: (9,)
+  * Blue Door to Escape Shaft/Open Passage to Command Center (INITIAL)
+  * Extra - door_idx: (9, 17)
+  > Door to Rinka Hall (INITIAL)
+      Trivial
+  > Open Passage to Reliquary
+      Trivial
 
-----------------
-Escape Shaft (INITIAL)
-Extra - map_name: Tourian5
-Extra - room_id: [5]
-> Open Passage to Command Center (INITIAL); Heals? False
+> Open Passage to Reliquary; Heals? False
   * Layers: default
-  * Horizontal Passage to Command Center (INITIAL)/Door to Escape Shaft (INITIAL)
-  * Extra - door_idx: (10,)
-  > Tunnel to Elevator to Tourian (ESCAPE)
-      Power Grip
-
-> Tunnel to Elevator to Tourian (ESCAPE); Heals? False
-  * Layers: default
-  * Tunnel to Elevator to Tourian (ESCAPE)/Open Passage to Escape Shaft (INITIAL)
-  * Extra - door_idx: (11,)
+  * Vertical Passage to Reliquary/Open Passage to Command Center (INITIAL)
+  * Extra - door_idx: (16,)
+  > Door to Escape Shaft
+      Trivial
 
 ----------------
 Save Station (South)
@@ -142,12 +113,12 @@ Extra - room_id: [7]
   * Pickup 62; Category? Minor
   * Extra - blockx: 14
   * Extra - blocky: 8
-  > Tunnel to Command Center
+  > Open Passage to Command Center (INITIAL)
       Climb Into 1x1
 
-> Tunnel to Command Center; Heals? False
+> Open Passage to Command Center (INITIAL); Heals? False
   * Layers: default
-  * Tunnel to Command Center/Tunnel to Reliquary
+  * Vertical Passage to Command Center (INITIAL)/Open Passage to Reliquary
   * Extra - door_idx: (15,)
   > Pickup (Power Bomb Tank)
       Morph Ball
@@ -155,83 +126,38 @@ Extra - room_id: [7]
 ----------------
 Escape Shaft
 Extra - map_name: Tourian8
-Extra - room_id: [8]
+Extra - room_id: [8, 5]
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 63; Category? Minor
   * Extra - blockx: 11
   * Extra - blocky: 109
-  > Open Passage to Command Center
+  > Open Passage to Command Center (INITIAL)
       Trivial
 
 > Tunnel to Elevator to Tourian; Heals? False
   * Layers: default
   * Tunnel to Elevator to Tourian/Open Passage to Escape Shaft
-  * Extra - door_idx: (21,)
-  > Open Passage to Command Center
+  * Extra - door_idx: (21, 11)
+  > Open Passage to Command Center (INITIAL)
       Trivial
 
-> Open Passage to Command Center; Heals? False
+> Open Passage to Command Center (INITIAL); Heals? False
   * Layers: default
-  * Horizontal Passage to Command Center/Open Passage to Escape Shaft
-  * Extra - door_idx: (22,)
+  * Horizontal Passage to Command Center (INITIAL)/Door to Escape Shaft
+  * Extra - door_idx: (22, 10)
   > Pickup (Missile Tank)
       Speed Booster or Use Space Jump
   > Tunnel to Elevator to Tourian
       Power Grip or Have Increased Height
 
 ----------------
-Command Center
-Extra - map_name: Tourian9
-Extra - room_id: [9]
-> Tunnel to Reliquary; Heals? False
-  * Layers: default
-  * Tunnel to Reliquary/Tunnel to Command Center
-  * Extra - door_idx: (16,)
-  > Open Passage to Escape Shaft
-      Super Missiles
-
-> Open Passage to Escape Shaft; Heals? False
-  * Layers: default
-  * Horizontal Passage to Escape Shaft/Open Passage to Command Center
-  * Extra - door_idx: (17,)
-  > Tunnel to Reliquary
-      Super Missiles
-  > Open Passage to Rinka Hall
-      Use Space Jump
-
-> Open Passage to Rinka Hall; Heals? False
-  * Layers: default
-  * Horizontal Passage to Rinka Hall/Open Passage to Command Center
-  * Extra - door_idx: (18,)
-  > Open Passage to Escape Shaft
-      Use Space Jump
-
-----------------
-Rinka Hall
-Extra - map_name: Tourian10
-Extra - room_id: [10]
-> Open Passage to Command Center; Heals? False
-  * Layers: default
-  * Horizontal Passage to Command Center/Open Passage to Rinka Hall
-  * Extra - door_idx: (19,)
-  > Door to Save Station (South)
-      Trivial
-
-> Door to Save Station (South); Heals? False
-  * Layers: default
-  * Blue Door to Save Station (South)/Door to Rinka Hall (INITIAL)
-  * Extra - door_idx: (20,)
-  > Open Passage to Command Center
-      Trivial
-
-----------------
 Save Station (North)
 Extra - map_name: Tourian11
 Extra - room_id: [11]
-> Door to Elevator to Brinstar (Upper); Heals? False
+> Door to Elevator to Brinstar; Heals? False
   * Layers: default
-  * Blue Door to Elevator to Brinstar (Upper)/Door to Save Station (North)
+  * Blue Door to Elevator to Brinstar/Door to Save Station (North)
   * Extra - door_idx: (24,)
   > Save Station
       Trivial
@@ -245,7 +171,7 @@ Extra - room_id: [11]
 
 > Save Station; Heals? False
   * Layers: default
-  > Door to Elevator to Brinstar (Upper)
+  > Door to Elevator to Brinstar
       Trivial
   > Door to Antechamber
       Trivial
@@ -307,7 +233,7 @@ Extra - room_id: [14]
 ----------------
 Elevator to Brinstar
 Extra - map_name: Tourian15
-Extra - room_id: [15]
+Extra - room_id: [15, 0]
 > Door to Lava Passage; Heals? False
   * Layers: default
   * Blue Door to Lava Passage/Door to Elevator to Brinstar
@@ -318,14 +244,23 @@ Extra - room_id: [15]
 > Door to Entrance; Heals? False
   * Layers: default
   * Blue Door to Entrance/Door to Elevator to Brinstar
-  * Extra - door_idx: (32,)
+  * Extra - door_idx: (32, 35)
   > Door to Lava Passage
       Trivial
 
-> Door to Elevator to Brinstar; Heals? False
+> Door to Save Station (North); Heals? False
   * Layers: default
-  * Blue Door to Elevator to Brinstar/Door to Elevator to Brinstar
-  * Extra - door_idx: (36,)
+  * Blue Door to Save Station (North)/Door to Elevator to Brinstar
+  * Extra - door_idx: (36, 1)
+  > Open Passage to Brinstar
+      Trivial
+
+> Open Passage to Brinstar; Heals? False
+  * Layers: default
+  * Vertical Passage to Elevator to Tourian/Open Passage to Tourian
+  * Extra - door_idx: (0,)
+  > Door to Save Station (North)
+      Trivial
 
 ----------------
 Triple-Tiered Room
