@@ -1,67 +1,4 @@
 ----------------
-Crash Landing Site (initial)
-Extra - map_name: Chozodia0
-Extra - room_id: [0]
-> Tunnel to Crash Landing Site (initial); Heals? False
-  * Layers: default
-  * Tunnel to Crash Landing Site (initial)/Tunnel to Crash Landing Site (initial)
-  * Extra - door_idx: (0,)
-  > Tunnel to Crash Landing Site (initial) (1)
-      Trivial
-  > Open Passage to Mother Ship Approach (initial)
-      Trivial
-
-> Tunnel to Crash Landing Site (initial) (1); Heals? False
-  * Layers: default
-  * Tunnel to Crash Landing Site (initial)/Tunnel to Crash Landing Site (initial)
-  * Extra - door_idx: (1,)
-  > Tunnel to Crash Landing Site (initial)
-      Trivial
-
-> Open Passage to Mother Ship Approach (initial); Heals? False
-  * Layers: default
-  * Horizontal Passage to Mother Ship Approach (initial)/Open Passage to Crash Landing Site (initial)
-  * Extra - door_idx: (2,)
-  > Tunnel to Crash Landing Site (initial)
-      Use Space Jump
-
-----------------
-Mother Ship Approach (initial)
-Extra - map_name: Chozodia1
-Extra - room_id: [1]
-> Open Passage to Crash Landing Site (initial); Heals? False
-  * Layers: default
-  * Horizontal Passage to Crash Landing Site (initial)/Open Passage to Mother Ship Approach (initial)
-  * Extra - door_idx: (3,)
-  > Open Passage to Mother Ship Entrance East
-      Morph Ball and Climb Ledges
-
-> Open Passage to Mother Ship Entrance East; Heals? False
-  * Layers: default
-  * Horizontal Passage to Mother Ship Entrance East/Open Passage to Mother Ship Approach (initial)
-  * Extra - door_idx: (4,)
-  > Open Passage to Crash Landing Site (initial)
-      Morph Ball and Climb Ledges
-
-----------------
-Mother Ship Entrance East
-Extra - map_name: Chozodia2
-Extra - room_id: [2]
-> Open Passage to Mother Ship Approach (initial); Heals? False
-  * Layers: default
-  * Horizontal Passage to Mother Ship Approach (initial)/Open Passage to Mother Ship Entrance East
-  * Extra - door_idx: (5,)
-  > Tunnel to Mother Ship Exit East
-      Morph Ball
-
-> Tunnel to Mother Ship Exit East; Heals? False
-  * Layers: default
-  * Tunnel to Mother Ship Exit East/Tunnel to Mother Ship Entrance East
-  * Extra - door_idx: (175,)
-  > Open Passage to Mother Ship Approach (initial)
-      Morph Ball and Climb Ledges
-
-----------------
 Tripwire Corridor
 Extra - map_name: Chozodia3
 Extra - room_id: [3]
@@ -217,18 +154,18 @@ Extra - room_id: [8]
 ----------------
 Outer Drop (REMOVE_FROM_LOGIC)
 Extra - map_name: Chozodia9
-Extra - room_id: [9]
+Extra - room_id: [9, 98]
 > Open Passage to Hidden Zebesian; Heals? False
   * Layers: default
-  * Horizontal Passage to Hidden Zebesian/Open Passage to Outer Drop
-  * Extra - door_idx: (242,)
+  * Horizontal Passage to Hidden Zebesian/Open Passage to Outer Drop (REMOVE_FROM_LOGIC)
+  * Extra - door_idx: (242, 239)
   > Open Passage to Large Glass Tube
       Trivial
 
 > Open Passage to Large Glass Tube; Heals? False
   * Layers: default
   * Horizontal Passage to Large Glass Tube/Tunnel to Outer Drop (REMOVE_FROM_LOGIC)
-  * Extra - door_idx: (243,)
+  * Extra - door_idx: (243, 240)
 
 ----------------
 Mother Ship Exit East
@@ -258,9 +195,9 @@ Extra - room_id: [10]
   > Door to Mother Ship Entrance East (final)
       Trivial
 
-> Tunnel to Mother Ship Entrance East; Heals? False
+> Tunnel to Mother Ship Entrance East (final); Heals? False
   * Layers: default
-  * Tunnel to Mother Ship Entrance East/Tunnel to Mother Ship Exit East
+  * Tunnel to Mother Ship Entrance East (final)/Tunnel to Mother Ship Exit East
   * Extra - door_idx: (176,)
   > Tunnel to Map Station
       Morph Ball and Climb Ledges
@@ -269,7 +206,7 @@ Extra - room_id: [10]
   * Layers: default
   * Tunnel to Map Station/Tunnel to Mother Ship Exit East
   * Extra - door_idx: (177,)
-  > Tunnel to Mother Ship Entrance East
+  > Tunnel to Mother Ship Entrance East (final)
       Morph Ball
 
 ----------------
@@ -377,7 +314,7 @@ Extra - room_id: [13]
 
 > Tunnel to Escape-Ship Bay (Upper); Heals? False
   * Layers: default
-  * Tunnel to Escape-Ship Bay/Tunnel to Mother Ship Hangar (Lower)
+  * Tunnel to Escape-Ship Bay/Tunnel to Mother Ship Hangar (Upper)
   * Extra - door_idx: (104,)
   > Door to Mother Ship Concourse
       Trivial
@@ -549,42 +486,24 @@ Extra - room_id: [19]
   * Layers: default
   * Blue Door to Hiding Place B/Door to Hidden Zebesian
   * Extra - door_idx: (43,)
-  > Tunnel to Inner Drop (INITIAL)
+  > Tunnel to Inner Drop
       Morph Ball
-  > Open Passage to Outer Drop
+  > Open Passage to Outer Drop (REMOVE_FROM_LOGIC)
       Climb Into 1x1 and Lay Any Bomb and Use Space Jump
 
-> Tunnel to Inner Drop (INITIAL); Heals? False
+> Tunnel to Inner Drop; Heals? False
   * Layers: default
-  * Tunnel to Inner Drop (INITIAL)/Tunnel to Hidden Zebesian
+  * Tunnel to Inner Drop/Tunnel to Hidden Zebesian
   * Extra - door_idx: (46,)
   > Door to Hiding Place B
       Morph Ball and Use Space Jump
 
-> Open Passage to Outer Drop; Heals? False
+> Open Passage to Outer Drop (REMOVE_FROM_LOGIC); Heals? False
   * Layers: default
-  * Horizontal Passage to Outer Drop/Open Passage to Hidden Zebesian
+  * Vertical Passage to Outer Drop (REMOVE_FROM_LOGIC)/Open Passage to Hidden Zebesian
   * Extra - door_idx: (238,)
   > Door to Hiding Place B
       Climb Into 1x1 and Lay Any Bomb and Use Space Jump
-
-----------------
-Inner Drop (INITIAL)
-Extra - map_name: Chozodia20
-Extra - room_id: [20]
-> Tunnel to Hidden Zebesian; Heals? False
-  * Layers: default
-  * Tunnel to Hidden Zebesian/Tunnel to Inner Drop (INITIAL)
-  * Extra - door_idx: (45,)
-  > Door to Large Glass Tube (INITIAL)
-      Lay Any Bomb
-
-> Door to Large Glass Tube (INITIAL); Heals? False
-  * Layers: default
-  * Blue Door to Large Glass Tube (INITIAL)/Door to Inner Drop (INITIAL)
-  * Extra - door_idx: (48,)
-  > Tunnel to Hidden Zebesian
-      Lay Any Bomb and Use Space Jump
 
 ----------------
 Save Station (Ship Central)
@@ -630,31 +549,6 @@ Extra - room_id: [22]
       Trivial
 
 ----------------
-Large Glass Tube (INITIAL)
-Extra - map_name: Chozodia23
-Extra - room_id: [23]
-> Door to Inner Drop (INITIAL); Heals? False
-  * Layers: default
-  * Blue Door to Inner Drop (INITIAL)/Door to Large Glass Tube (INITIAL)
-  * Extra - door_idx: (51,)
-  > Open Passage to Wrecked Antechamber
-      Trivial
-
-> Open Passage to Wrecked Antechamber; Heals? False
-  * Layers: default
-  * Horizontal Passage to Wrecked Antechamber/Open Passage to Large Glass Tube (INITIAL)
-  * Extra - door_idx: (52,)
-  > Door to Inner Drop (INITIAL)
-      Trivial
-
-> Tunnel to Outer Drop; Heals? False
-  * Layers: default
-  * Tunnel to Outer Drop/Open Passage to Large Glass Tube (INITIAL)
-  * Extra - door_idx: (241,)
-  > Door to Inner Drop (INITIAL)
-      Trivial
-
-----------------
 Wrecked Antechamber
 Extra - map_name: Chozodia24
 Extra - room_id: [24]
@@ -663,47 +557,31 @@ Extra - room_id: [24]
   * Pickup 71; Category? Minor
   * Extra - blockx: 10
   * Extra - blocky: 13
-  > Open Passage to Large Glass Tube (INITIAL)
+  > Open Passage to Large Glass Tube (Tube)
       Speed Booster
 
-> Open Passage to Large Glass Tube (INITIAL); Heals? False
+> Open Passage to Large Glass Tube (Tube); Heals? False
   * Layers: default
-  * Horizontal Passage to Large Glass Tube (INITIAL)/Open Passage to Wrecked Antechamber
+  * Horizontal Passage to Large Glass Tube/Open Passage to Wrecked Antechamber (Tube)
   * Extra - door_idx: (53,)
-  > Door to Ruins Foyer (INITIAL)
+  > Door to Ruins Foyer
       Trivial
 
-> Door to Ruins Foyer (INITIAL); Heals? False
+> Door to Ruins Foyer; Heals? False
   * Layers: default
-  * Blue Door to Ruins Foyer (INITIAL)/Door to Wrecked Antechamber
+  * Blue Door to Ruins Foyer/Door to Wrecked Antechamber
   * Extra - door_idx: (54,)
-  > Open Passage to Large Glass Tube (INITIAL)
+  > Open Passage to Large Glass Tube (Tube)
       Trivial
 
-> Open Passage to Large Glass Tube; Heals? False
+> Open Passage to Large Glass Tube (Shinespark); Heals? False
   * Layers: default
-  * Horizontal Passage to Large Glass Tube/Open Passage to Wrecked Antechamber
+  * Vertical Passage to Large Glass Tube/Open Passage to Wrecked Antechamber (Shinepsark)
   * Extra - door_idx: (139,)
   > Pickup (Energy Tank)
       Speed Booster
-
-----------------
-Ruins Foyer (INITIAL)
-Extra - map_name: Chozodia25
-Extra - room_id: [25]
-> Door to Wrecked Antechamber; Heals? False
-  * Layers: default
-  * Blue Door to Wrecked Antechamber/Door to Ruins Foyer (INITIAL)
-  * Extra - door_idx: (55,)
-  > Tunnel to Obstructed Hall
+  > Open Passage to Large Glass Tube (Tube)
       Trivial
-
-> Tunnel to Obstructed Hall; Heals? False
-  * Layers: default
-  * Tunnel to Obstructed Hall/Tunnel to Ruins Foyer (INITIAL)
-  * Extra - door_idx: (56,)
-  > Door to Wrecked Antechamber
-      Use Space Jump
 
 ----------------
 Crawlspace
@@ -717,9 +595,9 @@ Extra - room_id: [26]
   > Open Passage to Tri-Pillar Shaft
       Morph Ball
 
-> Tunnel to Western Ruins Hub (INITIAL); Heals? False
+> Tunnel to Western Ruins Hub; Heals? False
   * Layers: default
-  * Tunnel to Western Ruins Hub (INITIAL)/Tunnel to Crawlspace
+  * Tunnel to Western Ruins Hub/Tunnel to Crawlspace
   * Extra - door_idx: (57,)
   > Open Passage to Tri-Pillar Shaft
       Morph Ball
@@ -730,7 +608,7 @@ Extra - room_id: [26]
   * Extra - door_idx: (58,)
   > Pickup (Power Bomb Tank)
       Missiles and Morph Ball and Fire Plasma Beam and Have Increased Height
-  > Tunnel to Western Ruins Hub (INITIAL)
+  > Tunnel to Western Ruins Hub
       Morph Ball
 
 ----------------
@@ -791,9 +669,9 @@ Extra - room_id: [29]
   > Tunnel to Pitfall
       Morph Ball
 
-> Open Passage to Eye Ascension (INITIAL); Heals? False
+> Open Passage to Eye Ascension; Heals? False
   * Layers: default
-  * Horizontal Passage to Eye Ascension (INITIAL)/Open Passage to Hanging Barrier Hall
+  * Horizontal Passage to Eye Ascension/Open Passage to Hanging Barrier Hall
   * Extra - door_idx: (64,)
   > Open Passage to Pitfall (Upper)
       Trivial
@@ -818,34 +696,16 @@ Extra - room_id: [29]
   * Extra - door_idx: (221,)
   > Open Passage to Chozodia's Fork
       Trivial
-  > Open Passage to Eye Ascension (INITIAL)
+  > Open Passage to Eye Ascension
       Climb Ledges
-
-----------------
-Eye Ascension (INITIAL)
-Extra - map_name: Chozodia30
-Extra - room_id: [30]
-> Open Passage to Hanging Barrier Hall; Heals? False
-  * Layers: default
-  * Horizontal Passage to Hanging Barrier Hall/Open Passage to Eye Ascension (INITIAL)
-  * Extra - door_idx: (65,)
-  > Open Passage to Zebesian Pit
-      Climb High Ledges
-
-> Open Passage to Zebesian Pit; Heals? False
-  * Layers: default
-  * Horizontal Passage to Zebesian Pit/Open Passage to Eye Ascension (INITIAL)
-  * Extra - door_idx: (66,)
-  > Open Passage to Hanging Barrier Hall
-      Trivial
 
 ----------------
 Zebesian Pit
 Extra - map_name: Chozodia31
 Extra - room_id: [31]
-> Open Passage to Eye Ascension (INITIAL); Heals? False
+> Open Passage to Eye Ascension; Heals? False
   * Layers: default
-  * Horizontal Passage to Eye Ascension (INITIAL)/Open Passage to Zebesian Pit
+  * Horizontal Passage to Eye Ascension/Open Passage to Zebesian Pit
   * Extra - door_idx: (67,)
   > Open Passage to Hiding Place C
       Screw Attack
@@ -854,7 +714,7 @@ Extra - room_id: [31]
   * Layers: default
   * Horizontal Passage to Hiding Place C/Open Passage to Zebesian Pit
   * Extra - door_idx: (68,)
-  > Open Passage to Eye Ascension (INITIAL)
+  > Open Passage to Eye Ascension
       Screw Attack and Use Space Jump
 
 ----------------
@@ -865,21 +725,31 @@ Extra - room_id: [32]
   * Layers: default
   * Tunnel to Hiding Place D/Tunnel to Chacmool Room
   * Extra - door_idx: (69,)
+  > Open Passage to Chacmool Access (Lower)
+      Trivial
 
 > Open Passage to Chacmool Access (Lower); Heals? False
   * Layers: default
   * Horizontal Passage to Chacmool Access/Open Passage to Chacmool Room (Lower)
   * Extra - door_idx: (195,)
+  > Tunnel to Hiding Place D
+      Trivial
 
 > Open Passage to Chacmool Access (Upper); Heals? False
   * Layers: default
   * Horizontal Passage to Chacmool Access/Open Passage to Chacmool Room (Upper)
   * Extra - door_idx: (198,)
+  > Open Passage to Chacmool Access (Lower)
+      Trivial
+  > Open Passage to Eye Pit
+      Trivial
 
 > Open Passage to Eye Pit; Heals? False
   * Layers: default
   * Horizontal Passage to Eye Pit/Open Passage to Chacmool Room
   * Extra - door_idx: (199,)
+  > Open Passage to Chacmool Access (Upper)
+      Trivial
 
 ----------------
 Hiding Place D
@@ -908,8 +778,6 @@ Extra - room_id: [34]
   * Pickup 73; Category? Minor
   * Extra - blockx: 34
   * Extra - blocky: 14
-  > Open Passage to Hall of Lights
-      Missiles or Lay Power Bomb
   > Open Passage to Crateria
       Climb Ledges
 
@@ -932,7 +800,9 @@ Extra - room_id: [34]
   * Horizontal Passage to Chozodia Access Hall (eastbound)/Open Passage to Chozodia
   * Extra - door_idx: (220,)
   > Pickup (Power Bomb Tank)
-      Missiles or Climb Into 1x1
+      Missiles and Climb Into 1x1
+  > Open Passage to Hall of Lights
+      Missiles and Lay Power Bomb
 
 ----------------
 Patrolled Path
@@ -942,41 +812,23 @@ Extra - room_id: [35]
   * Layers: default
   * Horizontal Passage to Eye Pit/Open Passage to Patrolled Path
   * Extra - door_idx: (75,)
-  > Open Passage to Western Ruins Hub (INITIAL)
+  > Open Passage to Western Ruins Hub
       Morph Ball or Climb Ledges
 
-> Open Passage to Western Ruins Hub (INITIAL); Heals? False
+> Open Passage to Western Ruins Hub; Heals? False
   * Layers: default
-  * Horizontal Passage to Western Ruins Hub (INITIAL)/Open Passage to Patrolled Path
+  * Horizontal Passage to Western Ruins Hub/Open Passage to Patrolled Path
   * Extra - door_idx: (76,)
   > Open Passage to Eye Pit
       Climb Ledges
 
 ----------------
-Western Ruins Hub (INITIAL)
-Extra - map_name: Chozodia36
-Extra - room_id: [36]
-> Open Passage to Patrolled Path; Heals? False
-  * Layers: default
-  * Horizontal Passage to Patrolled Path/Open Passage to Western Ruins Hub (INITIAL)
-  * Extra - door_idx: (77,)
-  > Tunnel to Crawlspace
-      Morph Ball and Climb Ledges
-
-> Tunnel to Crawlspace; Heals? False
-  * Layers: default
-  * Tunnel to Crawlspace/Tunnel to Western Ruins Hub (INITIAL)
-  * Extra - door_idx: (78,)
-  > Open Passage to Patrolled Path
-      Morph Ball and Power Grip
-
-----------------
 Obstructed Hall
 Extra - map_name: Chozodia37
 Extra - room_id: [37]
-> Tunnel to Ruins Foyer (INITIAL); Heals? False
+> Tunnel to Ruins Foyer; Heals? False
   * Layers: default
-  * Tunnel to Ruins Foyer (INITIAL)/Tunnel to Obstructed Hall
+  * Tunnel to Ruins Foyer/Tunnel to Obstructed Hall
   * Extra - door_idx: (79,)
   > Open Passage to Dark-Blue Alcove
       Climb High Ledges and Lay Any Bomb
@@ -985,7 +837,7 @@ Extra - room_id: [37]
   * Layers: default
   * Horizontal Passage to Dark-Blue Alcove/Open Passage to Obstructed Hall
   * Extra - door_idx: (80,)
-  > Tunnel to Ruins Foyer (INITIAL)
+  > Tunnel to Ruins Foyer
       Lay Any Bomb
 
 ----------------
@@ -996,84 +848,48 @@ Extra - room_id: [38]
   * Layers: default
   * Horizontal Passage to Crawlspace/Open Passage to Tri-Pillar Shaft
   * Extra - door_idx: (81,)
-  > Open Passage to Chozo Inner Temple (INITIAL)
+  > Open Passage to Chozo Inner Temple
       Climb High Ledges
 
-> Open Passage to Chozo Inner Temple (INITIAL); Heals? False
+> Open Passage to Chozo Inner Temple; Heals? False
   * Layers: default
-  * Horizontal Passage to Chozo Inner Temple (INITIAL)/Open Passage to Tri-Pillar Shaft
+  * Horizontal Passage to Chozo Inner Temple/Open Passage to Tri-Pillar Shaft
   * Extra - door_idx: (82,)
   > Open Passage to Crawlspace
-      Trivial
-
-----------------
-Chozo Inner Temple (INITIAL)
-Extra - map_name: Chozodia39
-Extra - room_id: [39]
-> Open Passage to Tri-Pillar Shaft; Heals? False
-  * Layers: default
-  * Horizontal Passage to Tri-Pillar Shaft/Open Passage to Chozo Inner Temple (INITIAL)
-  * Extra - door_idx: (83,)
-  > Open Passage to Save Station (Ruins North)
-      Climb Ledges
-
-> Open Passage to Save Station (Ruins North); Heals? False
-  * Layers: default
-  * Horizontal Passage to Save Station (Ruins North)/Open Passage to Chozo Inner Temple (INITIAL)
-  * Extra - door_idx: (84,)
-  > Open Passage to Tri-Pillar Shaft
       Trivial
 
 ----------------
 Save Station (Ruins North)
 Extra - map_name: Chozodia40
 Extra - room_id: [40]
-> Open Passage to Chozo Inner Temple (INITIAL); Heals? False
+> Open Passage to Chozo Inner Temple; Heals? False
   * Layers: default
-  * Horizontal Passage to Chozo Inner Temple (INITIAL)/Open Passage to Save Station (Ruins North)
+  * Horizontal Passage to Chozo Inner Temple/Open Passage to Save Station (Ruins North)
   * Extra - door_idx: (85,)
   > Save Station
       Trivial
 
-> Open Passage to Flooded Chamber (INITIAL); Heals? False
+> Open Passage to Flooded Chamber; Heals? False
   * Layers: default
-  * Horizontal Passage to Flooded Chamber (INITIAL)/Open Passage to Save Station (Ruins North)
+  * Horizontal Passage to Flooded Chamber/Open Passage to Save Station (Ruins North)
   * Extra - door_idx: (86,)
   > Save Station
       Trivial
 
 > Save Station; Heals? True; Spawn Point
   * Layers: default
-  > Open Passage to Chozo Inner Temple (INITIAL)
+  > Open Passage to Chozo Inner Temple
       Lay Power Bomb
-  > Open Passage to Flooded Chamber (INITIAL)
-      Trivial
-
-----------------
-Flooded Chamber (INITIAL)
-Extra - map_name: Chozodia41
-Extra - room_id: [41]
-> Open Passage to Save Station (Ruins North); Heals? False
-  * Layers: default
-  * Horizontal Passage to Save Station (Ruins North)/Open Passage to Flooded Chamber (INITIAL)
-  * Extra - door_idx: (87,)
-  > Open Passage to Top of the Ruins
-      Climb Ledges
-
-> Open Passage to Top of the Ruins; Heals? False
-  * Layers: default
-  * Horizontal Passage to Top of the Ruins/Open Passage to Flooded Chamber (INITIAL)
-  * Extra - door_idx: (88,)
-  > Open Passage to Save Station (Ruins North)
+  > Open Passage to Flooded Chamber
       Trivial
 
 ----------------
 Top of the Ruins
 Extra - map_name: Chozodia42
 Extra - room_id: [42]
-> Open Passage to Flooded Chamber (INITIAL); Heals? False
+> Open Passage to Flooded Chamber; Heals? False
   * Layers: default
-  * Horizontal Passage to Flooded Chamber (INITIAL)/Open Passage to Top of the Ruins
+  * Horizontal Passage to Flooded Chamber/Open Passage to Top of the Ruins
   * Extra - door_idx: (89,)
   > Etching of Samus
       Trivial
@@ -1186,8 +1002,6 @@ Extra - room_id: [47]
   * Extra - blocky: 17
   > Door to Armory Access
       Trivial
-  > Door to Armory Reliquary
-      Trivial
 
 > Door to Armory Access; Heals? False
   * Layers: default
@@ -1195,50 +1009,64 @@ Extra - room_id: [47]
   * Extra - door_idx: (102,)
   > Pickup (Power Bomb Tank)
       Trivial
+  > Door to Armory Reliquary
+      Trivial
 
 > Door to Armory Reliquary; Heals? False
   * Layers: default
   * Power Bomb Door to Armory Reliquary/Door to Armory Chamber
   * Extra - door_idx: (163,)
-  > Pickup (Power Bomb Tank)
+  > Door to Armory Access
+      Trivial
+  > Open Passage to Armory Reliquary
       Trivial
 
 > Open Passage to Armory Reliquary; Heals? False
   * Layers: default
   * Horizontal Passage to Armory Reliquary/Open Passage to Armory Chamber
   * Extra - door_idx: (213,)
+  > Door to Armory Reliquary
+      Trivial
 
 ----------------
 Escape-Ship Bay
 Extra - map_name: Chozodia48
-Extra - room_id: [48]
+Extra - room_id: [48, 92]
 > Tunnel to Mother Ship Hangar (Lower); Heals? False
   * Layers: default
   * Tunnel to Mother Ship Hangar/Tunnel to Escape-Ship Bay (Lower)
-  * Extra - door_idx: (97,)
+  * Extra - door_idx: (97, 216)
   > Tunnel to Escape-Ship Bay Access
       Morph Ball
 
 > Door to Mother Ship Hangar; Heals? False
   * Layers: default
   * Missile Door to Mother Ship Hangar/Door to Escape-Ship Bay
-  * Extra - door_idx: (101,)
+  * Extra - door_idx: (101, 217)
   > Tunnel to Mother Ship Hangar (Upper)
       Climb Into 1x1 and Climb Ledges
+  > Event - Victory
+      Trivial
 
 > Tunnel to Mother Ship Hangar (Upper); Heals? False
   * Layers: default
   * Tunnel to Mother Ship Hangar/Tunnel to Escape-Ship Bay (Upper)
-  * Extra - door_idx: (105,)
+  * Extra - door_idx: (105, 218)
   > Door to Mother Ship Hangar
       Trivial
 
 > Tunnel to Escape-Ship Bay Access; Heals? False
   * Layers: default
   * Tunnel to Escape-Ship Bay Access/Tunnel to Escape-Ship Bay
-  * Extra - door_idx: (171,)
+  * Extra - door_idx: (171, 215)
   > Tunnel to Mother Ship Hangar (Lower)
       Morph Ball and Use Space Jump
+
+> Event - Victory; Heals? False
+  * Layers: default
+  * Event Victory Event
+  > Door to Mother Ship Hangar
+      Trivial
 
 ----------------
 Armory Reliquary
@@ -1354,30 +1182,31 @@ Extra - room_id: [54]
   * Pickup 76; Category? Minor
   * Extra - blockx: 59
   * Extra - blocky: 20
-  > Open Passage to Western Ruins Hub
-      Morph Ball and Gravity Suit Equipped and Use Space Jump
+  > Room Center
+      Trivial
 
 > Open Passage to Western Ruins Hub; Heals? False
   * Layers: default
   * Horizontal Passage to Western Ruins Hub/Open Passage to Chozodian Lava Pool
   * Extra - door_idx: (113,)
-  > Pickup (Super Missile Tank)
-      All of the following:
-          Can Bounce in Ball and Climb Into 1x1 and Gravity Suit Equipped
-          Screw Attack or Lay Any Bomb
-  > Tunnel to Eye Ascension
-      All of the following:
-          Gravity Suit Equipped and Use Space Jump
-          Screw Attack or Lay Any Bomb
+  > Room Center
+      Trivial
 
 > Tunnel to Eye Ascension; Heals? False
   * Layers: default
   * Tunnel to Eye Ascension/Tunnel to Chozodian Lava Pool
   * Extra - door_idx: (115,)
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Pickup (Super Missile Tank)
+      Trivial
   > Open Passage to Western Ruins Hub
-      All of the following:
-          Gravity Suit Equipped and Use Space Jump
-          Screw Attack or Lay Power Bomb
+      Trivial
+  > Tunnel to Eye Ascension
+      Trivial
 
 ----------------
 Escape-Ship Bay Access
@@ -1402,7 +1231,7 @@ Extra - room_id: [55]
 ----------------
 Eye Ascension
 Extra - map_name: Chozodia56
-Extra - room_id: [56]
+Extra - room_id: [56, 30]
 > Tunnel to Chozodian Lava Pool; Heals? False
   * Layers: default
   * Tunnel to Chozodian Lava Pool/Tunnel to Eye Ascension
@@ -1412,22 +1241,22 @@ Extra - room_id: [56]
 
 > Open Passage to Zebesian Pit; Heals? False
   * Layers: default
-  * Horizontal Passage to Zebesian Pit/Open Passage to Eye Ascension (INITIAL)
-  * Extra - door_idx: (119,)
+  * Horizontal Passage to Zebesian Pit/Open Passage to Eye Ascension
+  * Extra - door_idx: (119, 66)
   > Open Passage to Hanging Barrier Hall
       Trivial
 
 > Open Passage to Hanging Barrier Hall; Heals? False
   * Layers: default
-  * Horizontal Passage to Hanging Barrier Hall/Open Passage to Eye Ascension (INITIAL)
-  * Extra - door_idx: (120,)
+  * Horizontal Passage to Hanging Barrier Hall/Open Passage to Eye Ascension
+  * Extra - door_idx: (120, 65)
   > Open Passage to Zebesian Pit
       Climb High Ledges
 
 ----------------
 Western Ruins Hub
 Extra - map_name: Chozodia57
-Extra - room_id: [57]
+Extra - room_id: [57, 36]
 > Open Passage to Chozodian Lava Pool; Heals? False
   * Layers: default
   * Horizontal Passage to Chozodian Lava Pool/Open Passage to Western Ruins Hub
@@ -1439,15 +1268,15 @@ Extra - room_id: [57]
 
 > Tunnel to Crawlspace; Heals? False
   * Layers: default
-  * Tunnel to Crawlspace/Tunnel to Western Ruins Hub (INITIAL)
-  * Extra - door_idx: (118,)
+  * Tunnel to Crawlspace/Tunnel to Western Ruins Hub
+  * Extra - door_idx: (118, 78)
   > Bottom of Room
       Lay Power Bomb
 
 > Open Passage to Patrolled Path; Heals? False
   * Layers: default
-  * Horizontal Passage to Patrolled Path/Open Passage to Western Ruins Hub (INITIAL)
-  * Extra - door_idx: (121,)
+  * Horizontal Passage to Patrolled Path/Open Passage to Western Ruins Hub
+  * Extra - door_idx: (121, 77)
   > Bottom of Room
       Lay Power Bomb
 
@@ -1545,7 +1374,7 @@ Extra - room_id: [59]
 ----------------
 Mother Ship Bridge
 Extra - map_name: Chozodia60
-Extra - room_id: [60]
+Extra - room_id: [60, 96]
 > Tunnel to Ventilation Tunnel; Heals? False
   * Layers: default
   * Tunnel to Ventilation Tunnel/Tunnel to Mother Ship Bridge
@@ -1556,7 +1385,7 @@ Extra - room_id: [60]
 > Door to Bridge Access; Heals? False
   * Layers: default
   * Blue Door to Bridge Access/Door to Mother Ship Bridge
-  * Extra - door_idx: (129,)
+  * Extra - door_idx: (129, 233)
   > Bridge Floor
       Morph Ball
 
@@ -1572,7 +1401,7 @@ Extra - room_id: [60]
 > Door to Wall Tunnel; Heals? False
   * Layers: default
   * Blue Door to Wall Tunnel/Door to Mother Ship Bridge
-  * Extra - door_idx: (151,)
+  * Extra - door_idx: (151, 234)
   > Door to Upper Antechamber
       Lay Any Bomb
 
@@ -1729,18 +1558,18 @@ Extra - room_id: [66]
 ----------------
 Ruins Foyer
 Extra - map_name: Chozodia67
-Extra - room_id: [67]
+Extra - room_id: [67, 25]
 > Tunnel to Obstructed Hall; Heals? False
   * Layers: default
-  * Tunnel to Obstructed Hall/Tunnel to Ruins Foyer (INITIAL)
-  * Extra - door_idx: (147,)
+  * Tunnel to Obstructed Hall/Tunnel to Ruins Foyer
+  * Extra - door_idx: (147, 56)
   > Door to Wrecked Antechamber
       Use Space Jump
 
 > Door to Wrecked Antechamber; Heals? False
   * Layers: default
-  * Blue Door to Wrecked Antechamber/Door to Ruins Foyer (INITIAL)
-  * Extra - door_idx: (148,)
+  * Blue Door to Wrecked Antechamber/Door to Ruins Foyer
+  * Extra - door_idx: (148, 55)
   > Tunnel to Obstructed Hall
       Trivial
 
@@ -2081,36 +1910,36 @@ Extra - room_id: [82]
 ----------------
 Chozo Inner Temple
 Extra - map_name: Chozodia83
-Extra - room_id: [83]
+Extra - room_id: [83, 39]
 > Open Passage to Save Station (Ruins North); Heals? False
   * Layers: default
-  * Horizontal Passage to Save Station (Ruins North)/Open Passage to Chozo Inner Temple (INITIAL)
-  * Extra - door_idx: (191,)
+  * Horizontal Passage to Save Station (Ruins North)/Open Passage to Chozo Inner Temple
+  * Extra - door_idx: (191, 83)
   > Open Passage to Tri-Pillar Shaft
       Trivial
 
 > Open Passage to Tri-Pillar Shaft; Heals? False
   * Layers: default
-  * Horizontal Passage to Tri-Pillar Shaft/Open Passage to Chozo Inner Temple (INITIAL)
-  * Extra - door_idx: (192,)
+  * Horizontal Passage to Tri-Pillar Shaft/Open Passage to Chozo Inner Temple
+  * Extra - door_idx: (192, 84)
   > Open Passage to Save Station (Ruins North)
       Climb Ledges
 
 ----------------
 Chacmool Access
 Extra - map_name: Chozodia84
-Extra - room_id: [84]
+Extra - room_id: [84, 91]
 > Open Passage to Chacmool Room (Lower); Heals? False
   * Layers: default
   * Horizontal Passage to Chacmool Room/Open Passage to Chacmool Access (Lower)
-  * Extra - door_idx: (196,)
+  * Extra - door_idx: (196, 235)
   > Open Passage to Save Station (Ruins West)
       Morph Ball
 
 > Open Passage to Chacmool Room (Upper); Heals? False
   * Layers: default
   * Horizontal Passage to Chacmool Room/Open Passage to Chacmool Access (Upper)
-  * Extra - door_idx: (197,)
+  * Extra - door_idx: (197, 212)
   > Open Passage to Save Station (Ruins West)
       Trivial
 
@@ -2124,34 +1953,38 @@ Extra - room_id: [84]
 ----------------
 Large Glass Tube
 Extra - map_name: Chozodia85
-Extra - room_id: [85]
+Extra - room_id: [85, 23]
 > Open Passage to Atomic Shaft; Heals? False
   * Layers: default
   * Horizontal Passage to Atomic Shaft/Open Passage to Large Glass Tube
   * Extra - door_idx: (134,)
-  > Open Passage to Wrecked Antechamber
+  > Open Passage to Wrecked Antechamber (Shinepsark)
       Speed Booster
   > Outside Tube
       Use Space Jump
 
-> Open Passage to Wrecked Antechamber; Heals? False
+> Open Passage to Wrecked Antechamber (Shinepsark); Heals? False
   * Layers: default
-  * Horizontal Passage to Wrecked Antechamber/Open Passage to Large Glass Tube
+  * Vertical Passage to Wrecked Antechamber/Open Passage to Large Glass Tube (Shinespark)
   * Extra - door_idx: (138,)
 
 > Door to Inner Drop; Heals? False
   * Layers: default
   * Blue Door to Inner Drop/Door to Large Glass Tube
-  * Extra - door_idx: (165,)
+  * Extra - door_idx: (165, 51)
+  > Open Passage to Wrecked Antechamber (Tube)
+      Trivial
   > Outside Tube
       After Chozodia Pipe Broken
   > Event - Break Tube
       Lay Power Bomb
 
-> Open Passage to Wrecked Antechamber (169); Heals? False
+> Open Passage to Wrecked Antechamber (Tube); Heals? False
   * Layers: default
-  * Horizontal Passage to Wrecked Antechamber/Open Passage to Large Glass Tube (INITIAL)
-  * Extra - door_idx: (169,)
+  * Horizontal Passage to Wrecked Antechamber/Open Passage to Large Glass Tube (Tube)
+  * Extra - door_idx: (169, 52)
+  > Door to Inner Drop
+      Trivial
 
 > Open Passage to Launchpad; Heals? False
   * Layers: default
@@ -2163,7 +1996,7 @@ Extra - room_id: [85]
 > Tunnel to Outer Drop (REMOVE_FROM_LOGIC); Heals? False
   * Layers: default
   * Tunnel to Outer Drop (REMOVE_FROM_LOGIC)/Open Passage to Large Glass Tube
-  * Extra - door_idx: (244,)
+  * Extra - door_idx: (244, 241)
   > Door to Inner Drop
       Trivial
 
@@ -2174,6 +2007,8 @@ Extra - room_id: [85]
   > Door to Inner Drop
       After Chozodia Pipe Broken
   > Open Passage to Launchpad
+      Lay Power Bomb
+  > Event - Break Tube
       Lay Power Bomb
 
 > Event - Break Tube; Heals? False
@@ -2202,7 +2037,7 @@ Extra - room_id: [86]
 
 > Tunnel to Mother Ship Exit East; Heals? False
   * Layers: default
-  * Tunnel to Mother Ship Exit East/Tunnel to Mother Ship Entrance East
+  * Tunnel to Mother Ship Exit East/Tunnel to Mother Ship Entrance East (final)
   * Extra - door_idx: (201,)
   > Door to Mother Ship Exit East
       Climb Ledges
@@ -2304,7 +2139,7 @@ Extra - room_id: [89]
 ----------------
 Flooded Chamber
 Extra - map_name: Chozodia90
-Extra - room_id: [90]
+Extra - room_id: [90, 41]
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 84; Category? Minor
@@ -2318,17 +2153,15 @@ Extra - room_id: [90]
   * Pickup 85; Category? Minor
   * Extra - blockx: 56
   * Extra - blocky: 40
-  > Open Passage to Western Ruins Hub
-      Gravity Suit Equipped and Use Space Jump
+  > Beside Pickup
+      Trivial
 
 > Open Passage to Western Ruins Hub; Heals? False
   * Layers: default
   * Horizontal Passage to Western Ruins Hub/Open Passage to Flooded Chamber
   * Extra - door_idx: (193,)
-  > Pickup (Super Missile Tank)
+  > Beside Pickup
       Trivial
-  > Open Passage to Save Station (Ruins North)
-      Climb Into 1x1 and Have Increased Height
 
 > Tunnel to Top of the Ruins; Heals? False
   * Layers: default
@@ -2339,10 +2172,12 @@ Extra - room_id: [90]
 
 > Open Passage to Save Station (Ruins North); Heals? False
   * Layers: default
-  * Horizontal Passage to Save Station (Ruins North)/Open Passage to Flooded Chamber (INITIAL)
+  * Horizontal Passage to Save Station (Ruins North)/Open Passage to Flooded Chamber
   * Extra - door_idx: (209,)
-  > Pickup (Super Missile Tank)
-      Missiles and Speed Booster and Gravity Suit Equipped
+  > Open Passage to Top of the Ruins
+      Trivial
+  > Beside Pickup
+      Trivial
 
 > Tunnel to Western Ruins Hub; Heals? False
   * Layers: default
@@ -2351,77 +2186,37 @@ Extra - room_id: [90]
   > Pickup (Missile Tank)
       Trivial
 
-----------------
-Chacmool Access (HARD MODE)
-Extra - map_name: Chozodia91
-Extra - room_id: [91]
-> Open Passage to Chacmool Room; Heals? False
+> Open Passage to Top of the Ruins; Heals? False
   * Layers: default
-  * Horizontal Passage to Chacmool Room/Open Passage to Chacmool Access (Lower)
-  * Extra - door_idx: (212,)
-
-> Open Passage to Chacmool Room (235); Heals? False
-  * Layers: default
-  * Horizontal Passage to Chacmool Room/Open Passage to Chacmool Access (Lower)
-  * Extra - door_idx: (235,)
-  > Open Passage to Chacmool Room
-      Morph Ball
-
-----------------
-Escape-Ship Bay (FINAL)
-Extra - map_name: Chozodia92
-Extra - room_id: [92]
-> Tunnel to Escape-Ship Bay Access; Heals? False
-  * Layers: default
-  * Tunnel to Escape-Ship Bay Access/Tunnel to Escape-Ship Bay
-  * Extra - door_idx: (215,)
-  > Tunnel to Mother Ship Hangar
-      Morph Ball and Use Space Jump
-
-> Tunnel to Mother Ship Hangar; Heals? False
-  * Layers: default
-  * Tunnel to Mother Ship Hangar/Tunnel to Escape-Ship Bay (Lower)
-  * Extra - door_idx: (216,)
-  > Tunnel to Escape-Ship Bay Access
-      Morph Ball
-
-> Door to Mother Ship Hangar; Heals? False
-  * Layers: default
-  * Missile Door to Mother Ship Hangar/Door to Escape-Ship Bay
-  * Extra - door_idx: (217,)
-  > Tunnel to Mother Ship Hangar (218)
-      Climb Into 1x1 and Climb Ledges
-  > Victory
+  * Horizontal Passage to Top of the Ruins/Open Passage to Flooded Chamber
+  * Extra - door_idx: (88,)
+  > Open Passage to Save Station (Ruins North)
       Trivial
 
-> Tunnel to Mother Ship Hangar (218); Heals? False
+> Beside Pickup; Heals? False
   * Layers: default
-  * Tunnel to Mother Ship Hangar/Tunnel to Escape-Ship Bay (Lower)
-  * Extra - door_idx: (218,)
-  > Door to Mother Ship Hangar
+  > Pickup (Super Missile Tank)
+      Speed Booster
+  > Open Passage to Western Ruins Hub
       Trivial
-
-> Victory; Heals? False
-  * Layers: default
-  * Event Victory Event
-  > Door to Mother Ship Hangar
-      Trivial
+  > Open Passage to Save Station (Ruins North)
+      Missiles
 
 ----------------
 Inner Drop
 Extra - map_name: Chozodia93
-Extra - room_id: [93]
+Extra - room_id: [93, 20]
 > Door to Large Glass Tube; Heals? False
   * Layers: default
   * Blue Door to Large Glass Tube/Door to Inner Drop
-  * Extra - door_idx: (223,)
+  * Extra - door_idx: (223, 48)
   > Tunnel to Hidden Zebesian
       Lay Any Bomb and Use Space Jump
 
 > Tunnel to Hidden Zebesian; Heals? False
   * Layers: default
-  * Tunnel to Hidden Zebesian/Tunnel to Inner Drop (INITIAL)
-  * Extra - door_idx: (224,)
+  * Tunnel to Hidden Zebesian/Tunnel to Inner Drop
+  * Extra - door_idx: (224, 45)
   > Door to Large Glass Tube
       Lay Any Bomb
 
@@ -2463,20 +2258,6 @@ Extra - room_id: [95]
       Speed Booster or Use Space Jump
 
 ----------------
-Bridge?
-Extra - map_name: Chozodia96
-Extra - room_id: [96]
-> Door to Bridge Access; Heals? False
-  * Layers: default
-  * Blue Door to Bridge Access/Door to Mother Ship Bridge
-  * Extra - door_idx: (233,)
-
-> Door to Wall Tunnel; Heals? False
-  * Layers: default
-  * Blue Door to Wall Tunnel/Door to Mother Ship Bridge
-  * Extra - door_idx: (234,)
-
-----------------
 Upper Antechamber
 Extra - map_name: Chozodia97
 Extra - room_id: [97]
@@ -2493,20 +2274,4 @@ Extra - room_id: [97]
   * Extra - door_idx: (237,)
   > Door to Mother Ship Bridge
       Trivial
-
-----------------
-Outer Drop
-Extra - map_name: Chozodia98
-Extra - room_id: [98]
-> Open Passage to Hidden Zebesian; Heals? False
-  * Layers: default
-  * Horizontal Passage to Hidden Zebesian/Open Passage to Outer Drop
-  * Extra - door_idx: (239,)
-  > Open Passage to Large Glass Tube (INITIAL)
-      Trivial
-
-> Open Passage to Large Glass Tube (INITIAL); Heals? False
-  * Layers: default
-  * Horizontal Passage to Large Glass Tube (INITIAL)/Tunnel to Outer Drop
-  * Extra - door_idx: (240,)
 

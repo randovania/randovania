@@ -4,386 +4,6 @@
         "area_id": 6
     },
     "areas": {
-        "Crash Landing Site (initial)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia0",
-                "room_id": [
-                    0
-                ]
-            },
-            "nodes": {
-                "Tunnel to Crash Landing Site (initial)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 424.0,
-                        "y": 248.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            0
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Crash Landing Site (initial)",
-                        "node": "Tunnel to Crash Landing Site (initial)"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Tunnel to Crash Landing Site (initial) (1)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Open Passage to Mother Ship Approach (initial)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel to Crash Landing Site (initial) (1)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 291.74401288442016,
-                        "y": 261.2024929538327,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            1
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Crash Landing Site (initial)",
-                        "node": "Tunnel to Crash Landing Site (initial)"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Tunnel to Crash Landing Site (initial)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Open Passage to Mother Ship Approach (initial)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 96.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            2
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Mother Ship Approach (initial)",
-                        "node": "Open Passage to Crash Landing Site (initial)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Tunnel to Crash Landing Site (initial)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Mother Ship Approach (initial)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia1",
-                "room_id": [
-                    1
-                ]
-            },
-            "nodes": {
-                "Open Passage to Crash Landing Site (initial)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 744.0,
-                        "y": 96.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            3
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Crash Landing Site (initial)",
-                        "node": "Open Passage to Mother Ship Approach (initial)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Mother Ship Entrance East": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Ledges"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Open Passage to Mother Ship Entrance East": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 80.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            4
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Mother Ship Entrance East",
-                        "node": "Open Passage to Mother Ship Approach (initial)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Crash Landing Site (initial)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Ledges"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Mother Ship Entrance East": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia2",
-                "room_id": [
-                    2
-                ]
-            },
-            "nodes": {
-                "Open Passage to Mother Ship Approach (initial)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 744.0,
-                        "y": 240.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            5
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Mother Ship Approach (initial)",
-                        "node": "Open Passage to Mother Ship Entrance East"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Tunnel to Mother Ship Exit East": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tunnel to Mother Ship Exit East": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 72.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            175
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Mother Ship Exit East",
-                        "node": "Tunnel to Mother Ship Entrance East"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Mother Ship Approach (initial)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Ledges"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "Tripwire Corridor": {
             "default_node": null,
             "hint_features": [],
@@ -1265,7 +885,8 @@
             "extra": {
                 "map_name": "Chozodia9",
                 "room_id": [
-                    9
+                    9,
+                    98
                 ]
             },
             "nodes": {
@@ -1283,7 +904,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            242
+                            242,
+                            239
                         ]
                     },
                     "valid_starting_location": false,
@@ -1291,7 +913,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Hidden Zebesian",
-                        "node": "Open Passage to Outer Drop"
+                        "node": "Open Passage to Outer Drop (REMOVE_FROM_LOGIC)"
                     },
                     "default_dock_weakness": "Horizontal Passage",
                     "exclude_from_dock_rando": false,
@@ -1323,7 +945,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            243
+                            243,
+                            240
                         ]
                     },
                     "valid_starting_location": false,
@@ -1485,7 +1108,7 @@
                         }
                     }
                 },
-                "Tunnel to Mother Ship Entrance East": {
+                "Tunnel to Mother Ship Entrance East (final)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1506,7 +1129,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Mother Ship Entrance East",
+                        "area": "Mother Ship Entrance East (final)",
                         "node": "Tunnel to Mother Ship Exit East"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -1570,7 +1193,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel to Mother Ship Entrance East": {
+                        "Tunnel to Mother Ship Entrance East (final)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2224,7 +1847,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Escape-Ship Bay",
-                        "node": "Tunnel to Mother Ship Hangar (Lower)"
+                        "node": "Tunnel to Mother Ship Hangar (Upper)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -3266,7 +2889,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel to Inner Drop (INITIAL)": {
+                        "Tunnel to Inner Drop": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3283,7 +2906,7 @@
                                 ]
                             }
                         },
-                        "Open Passage to Outer Drop": {
+                        "Open Passage to Outer Drop (REMOVE_FROM_LOGIC)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3305,7 +2928,7 @@
                         }
                     }
                 },
-                "Tunnel to Inner Drop (INITIAL)": {
+                "Tunnel to Inner Drop": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3326,7 +2949,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Inner Drop (INITIAL)",
+                        "area": "Inner Drop",
                         "node": "Tunnel to Hidden Zebesian"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -3359,7 +2982,7 @@
                         }
                     }
                 },
-                "Open Passage to Outer Drop": {
+                "Open Passage to Outer Drop (REMOVE_FROM_LOGIC)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3380,10 +3003,10 @@
                     "dock_type": "dock",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Outer Drop",
+                        "area": "Outer Drop (REMOVE_FROM_LOGIC)",
                         "node": "Open Passage to Hidden Zebesian"
                     },
-                    "default_dock_weakness": "Horizontal Passage",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3402,112 +3025,6 @@
                                     {
                                         "type": "template",
                                         "data": "Climb Into 1x1"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Inner Drop (INITIAL)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia20",
-                "room_id": [
-                    20
-                ]
-            },
-            "nodes": {
-                "Tunnel to Hidden Zebesian": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 1240.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            45
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Hidden Zebesian",
-                        "node": "Tunnel to Inner Drop (INITIAL)"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Door to Large Glass Tube (INITIAL)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Any Bomb"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Door to Large Glass Tube (INITIAL)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 112.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            48
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Large Glass Tube (INITIAL)",
-                        "node": "Door to Inner Drop (INITIAL)"
-                    },
-                    "default_dock_weakness": "Blue Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Tunnel to Hidden Zebesian": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "template",
@@ -3740,138 +3257,6 @@
                 }
             }
         },
-        "Large Glass Tube (INITIAL)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia23",
-                "room_id": [
-                    23
-                ]
-            },
-            "nodes": {
-                "Door to Inner Drop (INITIAL)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 984.0,
-                        "y": 432.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            51
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Inner Drop (INITIAL)",
-                        "node": "Door to Large Glass Tube (INITIAL)"
-                    },
-                    "default_dock_weakness": "Blue Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Wrecked Antechamber": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Open Passage to Wrecked Antechamber": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 280.0,
-                        "y": 432.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            52
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Wrecked Antechamber",
-                        "node": "Open Passage to Large Glass Tube (INITIAL)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Door to Inner Drop (INITIAL)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel to Outer Drop": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 952.0,
-                        "y": 664.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            241
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Outer Drop",
-                        "node": "Open Passage to Large Glass Tube (INITIAL)"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Door to Inner Drop (INITIAL)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "Wrecked Antechamber": {
             "default_node": null,
             "hint_features": [],
@@ -3904,7 +3289,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Open Passage to Large Glass Tube (INITIAL)": {
+                        "Open Passage to Large Glass Tube (Tube)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3923,7 +3308,7 @@
                         }
                     }
                 },
-                "Open Passage to Large Glass Tube (INITIAL)": {
+                "Open Passage to Large Glass Tube (Tube)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3944,8 +3329,8 @@
                     "dock_type": "dock",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Large Glass Tube (INITIAL)",
-                        "node": "Open Passage to Wrecked Antechamber"
+                        "area": "Large Glass Tube",
+                        "node": "Open Passage to Wrecked Antechamber (Tube)"
                     },
                     "default_dock_weakness": "Horizontal Passage",
                     "exclude_from_dock_rando": false,
@@ -3954,7 +3339,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Ruins Foyer (INITIAL)": {
+                        "Door to Ruins Foyer": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3963,7 +3348,7 @@
                         }
                     }
                 },
-                "Door to Ruins Foyer (INITIAL)": {
+                "Door to Ruins Foyer": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3984,7 +3369,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Ruins Foyer (INITIAL)",
+                        "area": "Ruins Foyer",
                         "node": "Door to Wrecked Antechamber"
                     },
                     "default_dock_weakness": "Blue Door",
@@ -3994,7 +3379,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Open Passage to Large Glass Tube (INITIAL)": {
+                        "Open Passage to Large Glass Tube (Tube)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4003,7 +3388,7 @@
                         }
                     }
                 },
-                "Open Passage to Large Glass Tube": {
+                "Open Passage to Large Glass Tube (Shinespark)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4025,9 +3410,9 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Large Glass Tube",
-                        "node": "Open Passage to Wrecked Antechamber"
+                        "node": "Open Passage to Wrecked Antechamber (Shinepsark)"
                     },
-                    "default_dock_weakness": "Horizontal Passage",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4050,102 +3435,12 @@
                                     }
                                 ]
                             }
-                        }
-                    }
-                }
-            }
-        },
-        "Ruins Foyer (INITIAL)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia25",
-                "room_id": [
-                    25
-                ]
-            },
-            "nodes": {
-                "Door to Wrecked Antechamber": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 504.0,
-                        "y": 592.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            55
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Wrecked Antechamber",
-                        "node": "Door to Ruins Foyer (INITIAL)"
-                    },
-                    "default_dock_weakness": "Blue Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Tunnel to Obstructed Hall": {
+                        },
+                        "Open Passage to Large Glass Tube (Tube)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel to Obstructed Hall": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 56.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            56
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Obstructed Hall",
-                        "node": "Tunnel to Ruins Foyer (INITIAL)"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Door to Wrecked Antechamber": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
-                                    }
-                                ]
                             }
                         }
                     }
@@ -4203,7 +3498,7 @@
                         }
                     }
                 },
-                "Tunnel to Western Ruins Hub (INITIAL)": {
+                "Tunnel to Western Ruins Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4224,7 +3519,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Western Ruins Hub (INITIAL)",
+                        "area": "Western Ruins Hub",
                         "node": "Tunnel to Crawlspace"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -4318,7 +3613,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Western Ruins Hub (INITIAL)": {
+                        "Tunnel to Western Ruins Hub": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4652,7 +3947,7 @@
                         }
                     }
                 },
-                "Open Passage to Eye Ascension (INITIAL)": {
+                "Open Passage to Eye Ascension": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4673,7 +3968,7 @@
                     "dock_type": "dock",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Eye Ascension (INITIAL)",
+                        "area": "Eye Ascension",
                         "node": "Open Passage to Hanging Barrier Hall"
                     },
                     "default_dock_weakness": "Horizontal Passage",
@@ -4820,7 +4115,7 @@
                                 "items": []
                             }
                         },
-                        "Open Passage to Eye Ascension (INITIAL)": {
+                        "Open Passage to Eye Ascension": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4830,103 +4125,6 @@
                                         "data": "Climb Ledges"
                                     }
                                 ]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Eye Ascension (INITIAL)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia30",
-                "room_id": [
-                    30
-                ]
-            },
-            "nodes": {
-                "Open Passage to Hanging Barrier Hall": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 112.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            65
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Hanging Barrier Hall",
-                        "node": "Open Passage to Eye Ascension (INITIAL)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Zebesian Pit": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Climb High Ledges"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Open Passage to Zebesian Pit": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 624.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            66
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Zebesian Pit",
-                        "node": "Open Passage to Eye Ascension (INITIAL)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Hanging Barrier Hall": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -4943,7 +4141,7 @@
                 ]
             },
             "nodes": {
-                "Open Passage to Eye Ascension (INITIAL)": {
+                "Open Passage to Eye Ascension": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4964,7 +4162,7 @@
                     "dock_type": "dock",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Eye Ascension (INITIAL)",
+                        "area": "Eye Ascension",
                         "node": "Open Passage to Zebesian Pit"
                     },
                     "default_dock_weakness": "Horizontal Passage",
@@ -5024,7 +4222,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Open Passage to Eye Ascension (INITIAL)": {
+                        "Open Passage to Eye Ascension": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5089,7 +4287,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Open Passage to Chacmool Access (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Open Passage to Chacmool Access (Lower)": {
                     "node_type": "dock",
@@ -5121,7 +4327,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to Hiding Place D": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Open Passage to Chacmool Access (Upper)": {
                     "node_type": "dock",
@@ -5153,7 +4367,22 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Open Passage to Chacmool Access (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Open Passage to Eye Pit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Open Passage to Eye Pit": {
                     "node_type": "dock",
@@ -5185,7 +4414,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Open Passage to Chacmool Access (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -5323,27 +4560,6 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Open Passage to Hall of Lights": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    }
-                                ]
-                            }
-                        },
                         "Open Passage to Crateria": {
                             "type": "and",
                             "data": {
@@ -5475,13 +4691,34 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Climb Into 1x1"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Open Passage to Hall of Lights": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
                                     },
                                     {
                                         "type": "resource",
@@ -5540,7 +4777,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Open Passage to Western Ruins Hub (INITIAL)": {
+                        "Open Passage to Western Ruins Hub": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5563,7 +4800,7 @@
                         }
                     }
                 },
-                "Open Passage to Western Ruins Hub (INITIAL)": {
+                "Open Passage to Western Ruins Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5584,7 +4821,7 @@
                     "dock_type": "dock",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Western Ruins Hub (INITIAL)",
+                        "area": "Western Ruins Hub",
                         "node": "Open Passage to Patrolled Path"
                     },
                     "default_dock_weakness": "Horizontal Passage",
@@ -5610,131 +4847,6 @@
                 }
             }
         },
-        "Western Ruins Hub (INITIAL)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia36",
-                "room_id": [
-                    36
-                ]
-            },
-            "nodes": {
-                "Open Passage to Patrolled Path": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 240.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            77
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Patrolled Path",
-                        "node": "Open Passage to Western Ruins Hub (INITIAL)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Tunnel to Crawlspace": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Ledges"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tunnel to Crawlspace": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 376.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            78
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Crawlspace",
-                        "node": "Tunnel to Western Ruins Hub (INITIAL)"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Patrolled Path": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PowerGrip",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "Obstructed Hall": {
             "default_node": null,
             "hint_features": [],
@@ -5745,7 +4857,7 @@
                 ]
             },
             "nodes": {
-                "Tunnel to Ruins Foyer (INITIAL)": {
+                "Tunnel to Ruins Foyer": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5766,7 +4878,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Ruins Foyer (INITIAL)",
+                        "area": "Ruins Foyer",
                         "node": "Tunnel to Obstructed Hall"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -5825,7 +4937,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel to Ruins Foyer (INITIAL)": {
+                        "Tunnel to Ruins Foyer": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5882,7 +4994,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Open Passage to Chozo Inner Temple (INITIAL)": {
+                        "Open Passage to Chozo Inner Temple": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5896,7 +5008,7 @@
                         }
                     }
                 },
-                "Open Passage to Chozo Inner Temple (INITIAL)": {
+                "Open Passage to Chozo Inner Temple": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5917,7 +5029,7 @@
                     "dock_type": "dock",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Chozo Inner Temple (INITIAL)",
+                        "area": "Chozo Inner Temple",
                         "node": "Open Passage to Tri-Pillar Shaft"
                     },
                     "default_dock_weakness": "Horizontal Passage",
@@ -5938,103 +5050,6 @@
                 }
             }
         },
-        "Chozo Inner Temple (INITIAL)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia39",
-                "room_id": [
-                    39
-                ]
-            },
-            "nodes": {
-                "Open Passage to Tri-Pillar Shaft": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1224.0,
-                        "y": 144.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            83
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Tri-Pillar Shaft",
-                        "node": "Open Passage to Chozo Inner Temple (INITIAL)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Save Station (Ruins North)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Ledges"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Open Passage to Save Station (Ruins North)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1224.0,
-                        "y": 472.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            84
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Save Station (Ruins North)",
-                        "node": "Open Passage to Chozo Inner Temple (INITIAL)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Tri-Pillar Shaft": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "Save Station (Ruins North)": {
             "default_node": null,
             "hint_features": [],
@@ -6045,7 +5060,7 @@
                 ]
             },
             "nodes": {
-                "Open Passage to Chozo Inner Temple (INITIAL)": {
+                "Open Passage to Chozo Inner Temple": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6066,7 +5081,7 @@
                     "dock_type": "dock",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Chozo Inner Temple (INITIAL)",
+                        "area": "Chozo Inner Temple",
                         "node": "Open Passage to Save Station (Ruins North)"
                     },
                     "default_dock_weakness": "Horizontal Passage",
@@ -6085,7 +5100,7 @@
                         }
                     }
                 },
-                "Open Passage to Flooded Chamber (INITIAL)": {
+                "Open Passage to Flooded Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6106,7 +5121,7 @@
                     "dock_type": "dock",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Flooded Chamber (INITIAL)",
+                        "area": "Flooded Chamber",
                         "node": "Open Passage to Save Station (Ruins North)"
                     },
                     "default_dock_weakness": "Horizontal Passage",
@@ -6140,7 +5155,7 @@
                     "extra": {},
                     "valid_starting_location": true,
                     "connections": {
-                        "Open Passage to Chozo Inner Temple (INITIAL)": {
+                        "Open Passage to Chozo Inner Temple": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6152,104 +5167,7 @@
                                 ]
                             }
                         },
-                        "Open Passage to Flooded Chamber (INITIAL)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Flooded Chamber (INITIAL)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia41",
-                "room_id": [
-                    41
-                ]
-            },
-            "nodes": {
-                "Open Passage to Save Station (Ruins North)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 280.0,
-                        "y": 272.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            87
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Save Station (Ruins North)",
-                        "node": "Open Passage to Flooded Chamber (INITIAL)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Top of the Ruins": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Ledges"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Open Passage to Top of the Ruins": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 560.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            88
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Top of the Ruins",
-                        "node": "Open Passage to Flooded Chamber (INITIAL)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Save Station (Ruins North)": {
+                        "Open Passage to Flooded Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6270,7 +5188,7 @@
                 ]
             },
             "nodes": {
-                "Open Passage to Flooded Chamber (INITIAL)": {
+                "Open Passage to Flooded Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6291,7 +5209,7 @@
                     "dock_type": "dock",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Flooded Chamber (INITIAL)",
+                        "area": "Flooded Chamber",
                         "node": "Open Passage to Top of the Ruins"
                     },
                     "default_dock_weakness": "Horizontal Passage",
@@ -6901,13 +5819,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Armory Reliquary": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -6948,6 +5859,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Armory Reliquary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -6982,7 +5900,14 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Power Bomb Tank)": {
+                        "Door to Armory Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Open Passage to Armory Reliquary": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7021,7 +5946,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Armory Reliquary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7031,7 +5964,8 @@
             "extra": {
                 "map_name": "Chozodia48",
                 "room_id": [
-                    48
+                    48,
+                    92
                 ]
             },
             "nodes": {
@@ -7049,7 +5983,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            97
+                            97,
+                            216
                         ]
                     },
                     "valid_starting_location": false,
@@ -7099,7 +6034,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            101
+                            101,
+                            217
                         ]
                     },
                     "valid_starting_location": false,
@@ -7131,6 +6067,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Victory": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -7148,7 +6091,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            105
+                            105,
+                            218
                         ]
                     },
                     "valid_starting_location": false,
@@ -7188,7 +6132,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            171
+                            171,
+                            215
                         ]
                     },
                     "valid_starting_location": false,
@@ -7224,6 +6169,31 @@
                                         "data": "Use Space Jump"
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Victory": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 422.08,
+                        "y": 323.75,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "VictoryEvent",
+                    "connections": {
+                        "Door to Mother Ship Hangar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -7849,29 +6819,11 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Open Passage to Western Ruins Hub": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Gravity Suit Equipped"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -7907,82 +6859,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Super Missile Tank)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Any Bomb"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Gravity Suit Equipped"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Into 1x1"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Bounce in Ball"
-                                    }
-                                ]
-                            }
-                        },
-                        "Tunnel to Eye Ascension": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Any Bomb"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Gravity Suit Equipped"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -8018,41 +6899,49 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 589.4082073434125,
+                        "y": 95.68130549556037,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Super Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Open Passage to Western Ruins Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Gravity Suit Equipped"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Power Bomb"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Eye Ascension": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -8197,7 +7086,8 @@
             "extra": {
                 "map_name": "Chozodia56",
                 "room_id": [
-                    56
+                    56,
+                    30
                 ]
             },
             "nodes": {
@@ -8255,7 +7145,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            119
+                            119,
+                            66
                         ]
                     },
                     "valid_starting_location": false,
@@ -8263,7 +7154,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Zebesian Pit",
-                        "node": "Open Passage to Eye Ascension (INITIAL)"
+                        "node": "Open Passage to Eye Ascension"
                     },
                     "default_dock_weakness": "Horizontal Passage",
                     "exclude_from_dock_rando": false,
@@ -8295,7 +7186,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            120
+                            120,
+                            65
                         ]
                     },
                     "valid_starting_location": false,
@@ -8303,7 +7195,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Hanging Barrier Hall",
-                        "node": "Open Passage to Eye Ascension (INITIAL)"
+                        "node": "Open Passage to Eye Ascension"
                     },
                     "default_dock_weakness": "Horizontal Passage",
                     "exclude_from_dock_rando": false,
@@ -8334,7 +7226,8 @@
             "extra": {
                 "map_name": "Chozodia57",
                 "room_id": [
-                    57
+                    57,
+                    36
                 ]
             },
             "nodes": {
@@ -8423,7 +7316,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            118
+                            118,
+                            78
                         ]
                     },
                     "valid_starting_location": false,
@@ -8431,7 +7325,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Crawlspace",
-                        "node": "Tunnel to Western Ruins Hub (INITIAL)"
+                        "node": "Tunnel to Western Ruins Hub"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -8468,7 +7362,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            121
+                            121,
+                            77
                         ]
                     },
                     "valid_starting_location": false,
@@ -8476,7 +7371,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Patrolled Path",
-                        "node": "Open Passage to Western Ruins Hub (INITIAL)"
+                        "node": "Open Passage to Western Ruins Hub"
                     },
                     "default_dock_weakness": "Horizontal Passage",
                     "exclude_from_dock_rando": false,
@@ -9097,7 +7992,8 @@
             "extra": {
                 "map_name": "Chozodia60",
                 "room_id": [
-                    60
+                    60,
+                    96
                 ]
             },
             "nodes": {
@@ -9160,7 +8056,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            129
+                            129,
+                            233
                         ]
                     },
                     "valid_starting_location": false,
@@ -9266,7 +8163,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            151
+                            151,
+                            234
                         ]
                     },
                     "valid_starting_location": false,
@@ -10136,7 +9034,8 @@
             "extra": {
                 "map_name": "Chozodia67",
                 "room_id": [
-                    67
+                    67,
+                    25
                 ]
             },
             "nodes": {
@@ -10154,7 +9053,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            147
+                            147,
+                            56
                         ]
                     },
                     "valid_starting_location": false,
@@ -10162,7 +9062,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Obstructed Hall",
-                        "node": "Tunnel to Ruins Foyer (INITIAL)"
+                        "node": "Tunnel to Ruins Foyer"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -10199,7 +9099,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            148
+                            148,
+                            55
                         ]
                     },
                     "valid_starting_location": false,
@@ -10207,7 +9108,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Wrecked Antechamber",
-                        "node": "Door to Ruins Foyer (INITIAL)"
+                        "node": "Door to Ruins Foyer"
                     },
                     "default_dock_weakness": "Blue Door",
                     "exclude_from_dock_rando": false,
@@ -12203,7 +11104,8 @@
             "extra": {
                 "map_name": "Chozodia83",
                 "room_id": [
-                    83
+                    83,
+                    39
                 ]
             },
             "nodes": {
@@ -12221,7 +11123,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            191
+                            191,
+                            83
                         ]
                     },
                     "valid_starting_location": false,
@@ -12229,7 +11132,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Save Station (Ruins North)",
-                        "node": "Open Passage to Chozo Inner Temple (INITIAL)"
+                        "node": "Open Passage to Chozo Inner Temple"
                     },
                     "default_dock_weakness": "Horizontal Passage",
                     "exclude_from_dock_rando": false,
@@ -12261,7 +11164,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            192
+                            192,
+                            84
                         ]
                     },
                     "valid_starting_location": false,
@@ -12269,7 +11173,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Tri-Pillar Shaft",
-                        "node": "Open Passage to Chozo Inner Temple (INITIAL)"
+                        "node": "Open Passage to Chozo Inner Temple"
                     },
                     "default_dock_weakness": "Horizontal Passage",
                     "exclude_from_dock_rando": false,
@@ -12300,7 +11204,8 @@
             "extra": {
                 "map_name": "Chozodia84",
                 "room_id": [
-                    84
+                    84,
+                    91
                 ]
             },
             "nodes": {
@@ -12318,7 +11223,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            196
+                            196,
+                            235
                         ]
                     },
                     "valid_starting_location": false,
@@ -12368,7 +11274,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            197
+                            197,
+                            212
                         ]
                     },
                     "valid_starting_location": false,
@@ -12442,7 +11349,8 @@
             "extra": {
                 "map_name": "Chozodia85",
                 "room_id": [
-                    85
+                    85,
+                    23
                 ]
             },
             "nodes": {
@@ -12477,7 +11385,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Open Passage to Wrecked Antechamber": {
+                        "Open Passage to Wrecked Antechamber (Shinepsark)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -12508,7 +11416,7 @@
                         }
                     }
                 },
-                "Open Passage to Wrecked Antechamber": {
+                "Open Passage to Wrecked Antechamber (Shinepsark)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12530,9 +11438,9 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Wrecked Antechamber",
-                        "node": "Open Passage to Large Glass Tube"
+                        "node": "Open Passage to Large Glass Tube (Shinespark)"
                     },
-                    "default_dock_weakness": "Horizontal Passage",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -12554,7 +11462,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            165
+                            165,
+                            51
                         ]
                     },
                     "valid_starting_location": false,
@@ -12571,6 +11480,13 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Open Passage to Wrecked Antechamber (Tube)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Outside Tube": {
                             "type": "or",
                             "data": {
@@ -12602,7 +11518,7 @@
                         }
                     }
                 },
-                "Open Passage to Wrecked Antechamber (169)": {
+                "Open Passage to Wrecked Antechamber (Tube)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12616,7 +11532,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            169
+                            169,
+                            52
                         ]
                     },
                     "valid_starting_location": false,
@@ -12624,7 +11541,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Wrecked Antechamber",
-                        "node": "Open Passage to Large Glass Tube (INITIAL)"
+                        "node": "Open Passage to Large Glass Tube (Tube)"
                     },
                     "default_dock_weakness": "Horizontal Passage",
                     "exclude_from_dock_rando": false,
@@ -12632,7 +11549,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Inner Drop": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Open Passage to Launchpad": {
                     "node_type": "dock",
@@ -12693,7 +11618,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            244
+                            244,
+                            241
                         ]
                     },
                     "valid_starting_location": false,
@@ -12774,6 +11700,10 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Break Tube": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
                         }
                     }
                 },
@@ -12926,7 +11856,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Mother Ship Exit East",
-                        "node": "Tunnel to Mother Ship Entrance East"
+                        "node": "Tunnel to Mother Ship Entrance East (final)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -13520,7 +12450,8 @@
             "extra": {
                 "map_name": "Chozodia90",
                 "room_id": [
-                    90
+                    90,
+                    41
                 ]
             },
             "nodes": {
@@ -13577,20 +12508,11 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Open Passage to Western Ruins Hub": {
+                        "Beside Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Gravity Suit Equipped"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -13626,27 +12548,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Super Missile Tank)": {
+                        "Beside Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Open Passage to Save Station (Ruins North)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Into 1x1"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Have Increased Height"
-                                    }
-                                ]
                             }
                         }
                     }
@@ -13713,7 +12619,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Save Station (Ruins North)",
-                        "node": "Open Passage to Flooded Chamber (INITIAL)"
+                        "node": "Open Passage to Flooded Chamber"
                     },
                     "default_dock_weakness": "Horizontal Passage",
                     "exclude_from_dock_rando": false,
@@ -13722,34 +12628,18 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Super Missile Tank)": {
+                        "Open Passage to Top of the Ruins": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Gravity Suit Equipped"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
+                            }
+                        },
+                        "Beside Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -13793,57 +12683,13 @@
                             }
                         }
                     }
-                }
-            }
-        },
-        "Chacmool Access (HARD MODE)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia91",
-                "room_id": [
-                    91
-                ]
-            },
-            "nodes": {
-                "Open Passage to Chacmool Room": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 264.0,
-                        "y": 416.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            212
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Chacmool Room",
-                        "node": "Open Passage to Chacmool Access (Lower)"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
                 },
-                "Open Passage to Chacmool Room (235)": {
+                "Open Passage to Top of the Ruins": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 264.0,
-                        "y": 328.0,
+                        "x": 32.81,
+                        "y": 561.49,
                         "z": 0.0
                     },
                     "description": "",
@@ -13852,15 +12698,15 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            235
+                            88
                         ]
                     },
                     "valid_starting_location": false,
                     "dock_type": "dock",
                     "default_connection": {
                         "region": "Chozodia",
-                        "area": "Chacmool Room",
-                        "node": "Open Passage to Chacmool Access (Lower)"
+                        "area": "Top of the Ruins",
+                        "node": "Open Passage to Flooded Chamber"
                     },
                     "default_dock_weakness": "Horizontal Passage",
                     "exclude_from_dock_rando": false,
@@ -13869,189 +12715,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Open Passage to Chacmool Room": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Escape-Ship Bay (FINAL)": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia92",
-                "room_id": [
-                    92
-                ]
-            },
-            "nodes": {
-                "Tunnel to Escape-Ship Bay Access": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 456.0,
-                        "y": 168.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            215
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Escape-Ship Bay Access",
-                        "node": "Tunnel to Escape-Ship Bay"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Tunnel to Mother Ship Hangar": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tunnel to Mother Ship Hangar": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 216.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            216
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Mother Ship Hangar",
-                        "node": "Tunnel to Escape-Ship Bay (Lower)"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Tunnel to Escape-Ship Bay Access": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Door to Mother Ship Hangar": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 304.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            217
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Mother Ship Hangar",
-                        "node": "Door to Escape-Ship Bay"
-                    },
-                    "default_dock_weakness": "Missile Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Tunnel to Mother Ship Hangar (218)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Ledges"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Into 1x1"
-                                    }
-                                ]
-                            }
-                        },
-                        "Victory": {
+                        "Open Passage to Save Station (Ruins North)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14060,52 +12724,12 @@
                         }
                     }
                 },
-                "Tunnel to Mother Ship Hangar (218)": {
-                    "node_type": "dock",
+                "Beside Pickup": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 40.0,
-                        "y": 584.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            218
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Mother Ship Hangar",
-                        "node": "Tunnel to Escape-Ship Bay (Lower)"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Door to Mother Ship Hangar": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Victory": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 403.25,
-                        "y": 315.38,
+                        "x": 735.6237101031918,
+                        "y": 74.9277657787377,
                         "z": 0.0
                     },
                     "description": "",
@@ -14114,13 +12738,46 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "VictoryEvent",
                     "connections": {
-                        "Door to Mother Ship Hangar": {
+                        "Pickup (Super Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Open Passage to Western Ruins Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Open Passage to Save Station (Ruins North)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -14133,7 +12790,8 @@
             "extra": {
                 "map_name": "Chozodia93",
                 "room_id": [
-                    93
+                    93,
+                    20
                 ]
             },
             "nodes": {
@@ -14151,7 +12809,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            223
+                            223,
+                            48
                         ]
                     },
                     "valid_starting_location": false,
@@ -14200,7 +12859,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            224
+                            224,
+                            45
                         ]
                     },
                     "valid_starting_location": false,
@@ -14208,7 +12868,7 @@
                     "default_connection": {
                         "region": "Chozodia",
                         "area": "Hidden Zebesian",
-                        "node": "Tunnel to Inner Drop (INITIAL)"
+                        "node": "Tunnel to Inner Drop"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -14442,82 +13102,6 @@
                 }
             }
         },
-        "Bridge?": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia96",
-                "room_id": [
-                    96
-                ]
-            },
-            "nodes": {
-                "Door to Bridge Access": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 744.0,
-                        "y": 80.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            233
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Bridge Access",
-                        "node": "Door to Mother Ship Bridge"
-                    },
-                    "default_dock_weakness": "Blue Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
-                },
-                "Door to Wall Tunnel": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 744.0,
-                        "y": 448.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            234
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Wall Tunnel",
-                        "node": "Door to Mother Ship Bridge"
-                    },
-                    "default_dock_weakness": "Blue Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
-                }
-            }
-        },
         "Upper Antechamber": {
             "default_node": null,
             "hint_features": [],
@@ -14607,90 +13191,6 @@
                             }
                         }
                     }
-                }
-            }
-        },
-        "Outer Drop": {
-            "default_node": null,
-            "hint_features": [],
-            "extra": {
-                "map_name": "Chozodia98",
-                "room_id": [
-                    98
-                ]
-            },
-            "nodes": {
-                "Open Passage to Hidden Zebesian": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 240.0,
-                        "y": 1304.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            239
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Hidden Zebesian",
-                        "node": "Open Passage to Outer Drop"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Open Passage to Large Glass Tube (INITIAL)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Open Passage to Large Glass Tube (INITIAL)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 240.0,
-                        "y": 520.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            240
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "dock",
-                    "default_connection": {
-                        "region": "Chozodia",
-                        "area": "Large Glass Tube (INITIAL)",
-                        "node": "Tunnel to Outer Drop"
-                    },
-                    "default_dock_weakness": "Horizontal Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {}
                 }
             }
         }
