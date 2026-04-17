@@ -1,28 +1,4 @@
 ----------------
-Landing Site (ESCAPE)
-Extra - map_name: Crateria0
-Extra - room_id: [0]
-> Tunnel to Landing Site (ESCAPE); Heals? False
-  * Layers: default
-  * Tunnel to Landing Site (ESCAPE)/Tunnel to Landing Site (ESCAPE)
-  * Extra - door_idx: (0,)
-
-> Door to Crateria Chozo Ruins Entrance; Heals? False
-  * Layers: default
-  * Blue Door to Crateria Chozo Ruins Entrance/Door to Landing Site (ESCAPE)
-  * Extra - door_idx: (1,)
-
-> Door to Parlor and Alcatraz; Heals? False
-  * Layers: default
-  * Blue Door to Parlor and Alcatraz/Door to Landing Site
-  * Extra - door_idx: (3,)
-
-> Door to Flooded Tunnel; Heals? False
-  * Layers: default
-  * Blue Door to Flooded Tunnel/Door to Landing Site (ESCAPE)
-  * Extra - door_idx: (26,)
-
-----------------
 Weedway
 Extra - map_name: Crateria2
 Extra - room_id: [2]
@@ -59,26 +35,9 @@ Extra - room_id: [3]
       Use Space Jump
 
 ----------------
-Elevator to Tourian (ESCAPE)
-Extra - map_name: Crateria4
-Extra - room_id: [4]
-> Door to Parlor and Alcatraz; Heals? False
-  * Layers: default
-  * Blue Door to Parlor and Alcatraz/Door to Elevator to Tourian
-  * Extra - door_idx: (12,)
-  > Open Passage to Escape Shaft (INITIAL)
-      Trivial
-
-> Open Passage to Escape Shaft (INITIAL); Heals? False
-  * Layers: default
-  * Extra - door_idx: (13,)
-  > Door to Parlor and Alcatraz
-      Trivial
-
-----------------
 Landing Site
 Extra - map_name: Crateria5
-Extra - room_id: [0]
+Extra - room_id: [0, 5]
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 64; Category? Minor
@@ -89,19 +48,21 @@ Extra - room_id: [0]
 
 > Door to Flooded Tunnel; Heals? False
   * Layers: default
-  * Blue Door to Flooded Tunnel/Door to Landing Site (ESCAPE)
-  * Extra - door_idx: (14,)
+  * Blue Door to Flooded Tunnel/Door to Landing Site
+  * Extra - door_idx: (14, 26)
   > Pickup (Power Bomb Tank)
       BallSpark and Lay Power Bomb
   > Door to Parlor and Alcatraz
       Speed Booster
   > Door to Crateria Chozo Ruins Entrance
       Use Space Jump
+  > Ship
+      Trivial
 
 > Door to Parlor and Alcatraz; Heals? False
   * Layers: default
   * Blue Door to Parlor and Alcatraz/Door to Landing Site
-  * Extra - door_idx: (42,)
+  * Extra - door_idx: (42, 3)
   > Door to Flooded Tunnel
       Any of the following:
           Speed Booster
@@ -111,8 +72,14 @@ Extra - room_id: [0]
 
 > Door to Crateria Chozo Ruins Entrance; Heals? False
   * Layers: default
-  * Blue Door to Crateria Chozo Ruins Entrance/Door to Landing Site (ESCAPE)
-  * Extra - door_idx: (46,)
+  * Blue Door to Crateria Chozo Ruins Entrance/Door to Landing Site
+  * Extra - door_idx: (46, 1)
+  > Door to Flooded Tunnel
+      Trivial
+
+> Ship; Heals? False
+  * Layers: default
+  * Extra - door_idx: (0,)
   > Door to Flooded Tunnel
       Trivial
 
@@ -269,30 +236,12 @@ Extra - room_id: [9]
       Screw Attack
 
 ----------------
-Chozodia Access Hall (westbound)
-Extra - map_name: Crateria10
-Extra - room_id: [10]
-> Door to Chozo Ruins Valley; Heals? False
-  * Layers: default
-  * Blue Door to Chozo Ruins Valley/Door to Chozodia Access Hall (eastbound)
-  * Extra - door_idx: (23,)
-  > Open Passage to Chozodia's Fork
-      Trivial
-
-> Open Passage to Chozodia's Fork; Heals? False
-  * Layers: default
-  * Horizontal Passage to Chozodia's Fork/Open Passage to Chozodia Access Hall (westbound)
-  * Extra - door_idx: (24,)
-  > Door to Chozo Ruins Valley
-      Trivial
-
-----------------
 Flooded Tunnel
 Extra - map_name: Crateria11
 Extra - room_id: [11]
-> Door to Landing Site (ESCAPE); Heals? False
+> Door to Landing Site; Heals? False
   * Layers: default
-  * Blue Door to Landing Site (ESCAPE)/Door to Flooded Tunnel
+  * Blue Door to Landing Site/Door to Flooded Tunnel
   * Extra - door_idx: (27,)
   > Door to Elevator to Norfair
       Any of the following:
@@ -303,7 +252,7 @@ Extra - room_id: [11]
   * Layers: default
   * Blue Door to Elevator to Norfair/Door to Flooded Tunnel
   * Extra - door_idx: (28,)
-  > Door to Landing Site (ESCAPE)
+  > Door to Landing Site
       Speed Booster and Gravity Suit Equipped and Lay Power Bomb
 
 ----------------
@@ -387,9 +336,9 @@ Extra - room_id: [14]
 Crateria Chozo Ruins Entrance
 Extra - map_name: Crateria15
 Extra - room_id: [15]
-> Door to Landing Site (ESCAPE); Heals? False
+> Door to Landing Site; Heals? False
   * Layers: default
-  * Blue Door to Landing Site (ESCAPE)/Door to Crateria Chozo Ruins Entrance
+  * Blue Door to Landing Site/Door to Crateria Chozo Ruins Entrance
   * Extra - door_idx: (4,)
   > Door to Statuary Shaft
       All of the following:
@@ -400,7 +349,7 @@ Extra - room_id: [15]
   * Layers: default
   * Blue Door to Statuary Shaft/Door to Crateria Chozo Ruins Entrance
   * Extra - door_idx: (38,)
-  > Door to Landing Site (ESCAPE)
+  > Door to Landing Site
       Climb Into 1x1
 
 ----------------
@@ -451,18 +400,18 @@ Extra - room_id: [18, 4]
 ----------------
 Chozodia Access Hall (eastbound)
 Extra - map_name: Crateria20
-Extra - room_id: [20]
+Extra - room_id: [20, 10]
 > Door to Chozo Ruins Valley; Heals? False
   * Layers: default
   * Blue Door to Chozo Ruins Valley/Door to Chozodia Access Hall (eastbound)
-  * Extra - door_idx: (48,)
-  > Open Passage to Chozodia's Fork
+  * Extra - door_idx: (48, 23)
+  > Open Passage to Chozodia
       Trivial
 
-> Open Passage to Chozodia's Fork; Heals? False
+> Open Passage to Chozodia; Heals? False
   * Layers: default
-  * Horizontal Passage to Chozodia's Fork/Open Passage to Chozodia Access Hall (westbound)
-  * Extra - door_idx: (49,)
+  * Horizontal Passage to Chozodia's Fork/Open Passage to Crateria
+  * Extra - door_idx: (49, 24)
   > Door to Chozo Ruins Valley
       Trivial
 
