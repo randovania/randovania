@@ -13,7 +13,7 @@ class MZMConfiguration(BaseConfiguration):
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
-        return RandovaniaGame.METROID_ZM
+        return RandovaniaGame.METROID_ZERO_MISSION
 
     def active_layers(self) -> set[str]:
         result = super().active_layers()

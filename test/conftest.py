@@ -250,12 +250,12 @@ def fusion_game_patches(
 
 @pytest.fixture(scope="session")
 def zero_mission_game_description() -> GameDescription:
-    return default_database.game_description_for(RandovaniaGame.METROID_ZM)
+    return default_database.game_description_for(RandovaniaGame.METROID_ZERO_MISSION)
 
 
 @pytest.fixture(scope="session")
 def default_zero_mission_preset() -> Preset:
-    return PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_ZM).get_preset()
+    return PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_ZERO_MISSION).get_preset()
 
 
 @pytest.fixture(scope="session")

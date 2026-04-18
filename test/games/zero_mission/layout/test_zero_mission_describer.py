@@ -7,11 +7,11 @@ from randovania.interface_common.preset_manager import PresetManager
 
 def test_zero_mission_format_params():
     # Setup
-    preset = PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_ZM).get_preset()
+    preset = PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_ZERO_MISSION).get_preset()
     assert isinstance(preset.configuration, MZMConfiguration)
 
     # Run
-    result = RandovaniaGame.METROID_ZM.data.layout.preset_describer.format_params(preset.configuration)
+    result = RandovaniaGame.METROID_ZERO_MISSION.data.layout.preset_describer.format_params(preset.configuration)
 
     # Assert
     assert dict(result) == {

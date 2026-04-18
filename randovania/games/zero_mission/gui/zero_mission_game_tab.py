@@ -11,4 +11,4 @@ class MZMGameTabWidget(BaseGameTabWidget, Ui_MZMGameTabWidget):
 
     @classmethod
     def game(cls) -> RandovaniaGame:
-        return RandovaniaGame.METROID_ZM
+        return RandovaniaGame.METROID_ZERO_MISSION

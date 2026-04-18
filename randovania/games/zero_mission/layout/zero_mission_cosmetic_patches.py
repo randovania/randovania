@@ -10,4 +10,4 @@ from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 class MZMCosmeticPatches(BaseCosmeticPatches):
     @classmethod
     def game(cls) -> RandovaniaGame:
-        return RandovaniaGame.METROID_ZM
+        return RandovaniaGame.METROID_ZERO_MISSION

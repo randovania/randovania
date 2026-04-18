@@ -58,7 +58,7 @@ class MZMGameExportDialog(GameExportDialog[MZMConfiguration], Ui_MZMGameExportDi
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
-        return RandovaniaGame.METROID_ZM
+        return RandovaniaGame.METROID_ZERO_MISSION
 
     def __init__(
         self,

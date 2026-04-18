@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
 class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]):
     def game_enum(self) -> RandovaniaGame:
-        return RandovaniaGame.METROID_ZM
+        return RandovaniaGame.METROID_ZERO_MISSION
 
     @override
     @classmethod

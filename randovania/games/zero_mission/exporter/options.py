@@ -25,7 +25,7 @@ class MZMPerGameOptions(PerGameOptions):
 
     @classmethod
     def from_json(cls, value: dict) -> Self:
-        game = RandovaniaGame.METROID_ZM
+        game = RandovaniaGame.METROID_ZERO_MISSION
         cosmetic_patches = game.data.layout.cosmetic_patches.from_json(value["cosmetic_patches"])
         return cls(
             cosmetic_patches=cosmetic_patches,
@@ -36,4 +36,4 @@ class MZMPerGameOptions(PerGameOptions):
     @classmethod
     @override
     def game_enum(cls) -> RandovaniaGame:
-        return RandovaniaGame.METROID_ZM
+        return RandovaniaGame.METROID_ZERO_MISSION

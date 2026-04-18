@@ -36,7 +36,7 @@ class RandovaniaGame(BitPackEnum, Enum):
     FACTORIO = "factorio"
     METROID_PLANETS_ZEBETH = "planets_zebeth"
     METROID_PRIME_HUNTERS = "prime_hunters"
-    METROID_ZM = "zero_mission"
+    METROID_ZERO_MISSION = "zero_mission"
 
     @property
     def data(self) -> GameData:
@@ -62,7 +62,7 @@ class RandovaniaGame(BitPackEnum, Enum):
             import randovania.games.planets_zebeth.game_data as game_module
         elif self == RandovaniaGame.METROID_PRIME_HUNTERS:
             import randovania.games.prime_hunters.game_data as game_module
-        elif self == RandovaniaGame.METROID_ZM:
+        elif self == RandovaniaGame.METROID_ZERO_MISSION:
             import randovania.games.zero_mission.game_data as game_module
         else:
             raise ValueError(f"Missing import for game: {self.value}")
