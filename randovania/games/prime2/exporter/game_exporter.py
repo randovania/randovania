@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import copy
 import shutil
-import tempfile
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -159,30 +158,15 @@ def modern_export(
     progress_update: status_update_lib.ProgressUpdateCallable,
 ) -> None:
     assert export_params.input_path is not None
-    with monitoring.trace_block("open_prime_rando.echoes.patcher.patch_iso"), tempfile.TemporaryDirectory() as temp_dir:
+    with monitoring.trace_block("open_prime_rando.echoes.patcher.patch_iso"):
         import open_prime_rando.echoes.patcher
         import open_prime_rando.echoes.rando_configuration
 
-        temp_path = Path(temp_dir)
-        updaters = status_update_lib.split_progress_update(progress_update, 3)
-
-        iso_packager.unpack_iso(
-            iso=export_params.input_path,
-            game_files_path=temp_path,
-            progress_update=updaters[0],
-        )
-
         open_prime_rando.echoes.patcher.patch_iso(
             export_params.input_path,
-            temp_path,  # OPR's output path is currently a dir, not an ISO
+            export_params.output_path,
             open_prime_rando.echoes.rando_configuration.RandoConfiguration.model_validate(patch_data),
-            updaters[1],
-        )
-
-        iso_packager.pack_iso(
-            iso=export_params.output_path,
-            game_files_path=temp_path,
-            progress_update=updaters[2],
+            progress_update,
         )
 
 
