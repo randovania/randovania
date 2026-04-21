@@ -437,8 +437,8 @@
         },
         "misc": {},
         "requirement_template": {
-            "Lay Any Bomb": {
-                "display_name": "Lay Any Bomb",
+            "Can Use Any Bombs": {
+                "display_name": "Can Use Any Bombs",
                 "requirement": {
                     "type": "or",
                     "data": {
@@ -446,11 +446,11 @@
                         "items": [
                             {
                                 "type": "template",
-                                "data": "Lay Bomb"
+                                "data": "Can Use Bombs"
                             },
                             {
                                 "type": "template",
-                                "data": "Lay Power Bomb"
+                                "data": "Can Use Power Bombs"
                             }
                         ]
                     }
@@ -519,8 +519,8 @@
                     }
                 }
             },
-            "Lay Bomb": {
-                "display_name": "Lay Bomb",
+            "Can Use Bombs": {
+                "display_name": "Can Use Bombs",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -548,8 +548,8 @@
                     }
                 }
             },
-            "Lay Power Bomb": {
-                "display_name": "Lay Power Bomb",
+            "Can Use Power Bombs": {
+                "display_name": "Can Use Power Bombs",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -708,14 +708,14 @@
                             },
                             {
                                 "type": "template",
-                                "data": "Lay Bomb"
+                                "data": "Can Use Bombs"
                             }
                         ]
                     }
                 }
             },
-            "Have Increased Height": {
-                "display_name": "Have Increased Height",
+            "Have Any Jump Upgrade": {
+                "display_name": "Have Any Jump Upgrade",
                 "requirement": {
                     "type": "or",
                     "data": {
@@ -747,18 +747,18 @@
                         "items": [
                             {
                                 "type": "template",
-                                "data": "Lay Bomb"
+                                "data": "Can Use Bombs"
                             },
                             {
                                 "type": "template",
-                                "data": "Use Spring Ball"
+                                "data": "Can Use Springball"
                             }
                         ]
                     }
                 }
             },
-            "Use Spring Ball": {
-                "display_name": "Use Spring Ball",
+            "Can Use Springball": {
+                "display_name": "Can Use Springball",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -786,8 +786,8 @@
                     }
                 }
             },
-            "Climb Into 1x1": {
-                "display_name": "Climb Into 1x1",
+            "Tunnel Climb": {
+                "display_name": "Tunnel Climb",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -815,8 +815,8 @@
                     }
                 }
             },
-            "BallSpark": {
-                "display_name": "BallSpark",
+            "Can Ballspark": {
+                "display_name": "Can Ballspark",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -824,7 +824,7 @@
                         "items": [
                             {
                                 "type": "template",
-                                "data": "Use Spring Ball"
+                                "data": "Can Use Springball"
                             },
                             {
                                 "type": "resource",
@@ -848,7 +848,7 @@
                         "items": [
                             {
                                 "type": "template",
-                                "data": "Have Increased Height"
+                                "data": "Have Any Jump Upgrade"
                             },
                             {
                                 "type": "resource",
@@ -893,43 +893,6 @@
                                             "data": {
                                                 "type": "items",
                                                 "name": "PowerGrip",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "Destroy Bomb Blocks": {
-                "display_name": "Destroy Bomb Blocks",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "MorphBall",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "or",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Bombs",
                                                 "amount": 1,
                                                 "negate": false
                                             }
