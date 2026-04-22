@@ -38,9 +38,8 @@ def is_mzm_validator(path: Path | None) -> bool:
         return True
     assert path is not None
     try:
-        with path.open("rb") as file:
-            data = file.read()
-            md5_returned = hashlib.md5(data).hexdigest()
+        data = path.read_bytes()
+        md5_returned = hashlib.md5(data).hexdigest()
     except Exception:
         # If any error during opening happens, suppress that and pretend its invalid,
         # as otherwise it would cause the dialog to be inaccessible.
