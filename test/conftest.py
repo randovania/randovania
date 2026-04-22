@@ -25,7 +25,6 @@ from randovania.games.fusion.layout.fusion_configuration import FusionConfigurat
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.games.zero_mission.layout.zero_mission_configuration import MZMConfiguration
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.preset import Preset
 from randovania.lib import json_lib
@@ -246,29 +245,6 @@ def fusion_game_patches(
     default_fusion_configuration: FusionConfiguration, fusion_game_description: GameDescription
 ) -> GamePatches:
     return GamePatches.create_from_game(fusion_game_description, 0, default_fusion_configuration)
-
-
-@pytest.fixture(scope="session")
-def zero_mission_game_description() -> GameDescription:
-    return default_database.game_description_for(RandovaniaGame.METROID_ZERO_MISSION)
-
-
-@pytest.fixture(scope="session")
-def default_zero_mission_preset() -> Preset:
-    return PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_ZERO_MISSION).get_preset()
-
-
-@pytest.fixture(scope="session")
-def default_zero_mission_configuration(default_zero_mission_preset: Preset) -> MZMConfiguration:
-    assert isinstance(default_zero_mission_preset.configuration, MZMConfiguration)
-    return default_zero_mission_preset.configuration
-
-
-@pytest.fixture
-def zero_mission_game_patches(
-    default_zero_mission_configuration: MZMConfiguration, zero_mission_game_description: GameDescription
-) -> GamePatches:
-    return GamePatches.create_from_game(zero_mission_game_description, 0, default_zero_mission_configuration)
 
 
 @pytest.fixture(scope="session")
