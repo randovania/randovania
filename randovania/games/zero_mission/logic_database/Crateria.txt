@@ -66,7 +66,7 @@ Extra - room_id: [0, 5]
   > Door to Flooded Tunnel
       Any of the following:
           Speed Booster
-          Morph Ball and Have Any Jump Upgrade
+          Morph Ball and Use Space Jump
   > Door to Crateria Chozo Ruins Entrance
       Speed Booster and Shinespark (Beginner)
 
@@ -128,19 +128,19 @@ Extra - room_id: [7]
   * Extra - door_idx: (18,)
   > Pickup (Missile Tank)
       Trivial
-  > Tunnel to Chozo Ruins Valley
+  > Open Passage to Chozo Ruins Valley (West)
       All of the following:
           Morph Ball
-          Can Use Any Bombs or Have Any Jump Upgrade
+          Can Use Any Bombs or Climb Ledges
   > Door to Wrecked Ship Entrance
-      Power Grip or Have Any Jump Upgrade
+      Climb Ledges
 
-> Tunnel to Chozo Ruins Valley; Heals? False
+> Open Passage to Chozo Ruins Valley (West); Heals? False
   * Layers: default
-  * Tunnel to Chozo Ruins Valley/Tunnel to Flooded Cavern
+  * Vertical Passage to Chozo Ruins Valley/Open Passage to Flooded Cavern (West)
   * Extra - door_idx: (20,)
   > Door to Elevator to Norfair
-      Trivial
+      Morph Ball
 
 > Door to Wrecked Ship Entrance; Heals? False
   * Layers: default
@@ -148,12 +148,12 @@ Extra - room_id: [7]
   * Extra - door_idx: (21,)
   > Door to Elevator to Norfair
       Trivial
-  > Open Passage to Chozo Ruins Valley
+  > Open Passage to Chozo Ruins Valley (East)
       Space Jump (Unknown Item 2)
 
-> Open Passage to Chozo Ruins Valley; Heals? False
+> Open Passage to Chozo Ruins Valley (East); Heals? False
   * Layers: default
-  * Horizontal Passage to Chozo Ruins Valley/Open Passage to Flooded Cavern
+  * Vertical Passage to Chozo Ruins Valley/Open Passage to Flooded Cavern (East)
   * Extra - door_idx: (41,)
   > Door to Wrecked Ship Entrance
       Trivial
@@ -175,7 +175,7 @@ Extra - room_id: [9]
   * Pickup 67; Category? Minor
   * Extra - blockx: 64
   * Extra - blocky: 34
-  > Open Passage to Flooded Cavern
+  > Open Passage to Flooded Cavern (East)
       Trivial
 
 > Door to Statuary Shaft; Heals? False
@@ -190,9 +190,9 @@ Extra - room_id: [9]
           Speed Booster and Shinespark (Beginner)
           Infinite Bomb Jump (Advanced) and Can Use Bombs
 
-> Tunnel to Flooded Cavern; Heals? False
+> Open Passage to Flooded Cavern (West); Heals? False
   * Layers: default
-  * Tunnel to Flooded Cavern/Tunnel to Chozo Ruins Valley
+  * Vertical Passage to Flooded Cavern/Open Passage to Chozo Ruins Valley (West)
   * Extra - door_idx: (22,)
   > Door to Plasma Beam Chamber
       Can Bounce in Ball
@@ -212,12 +212,12 @@ Extra - room_id: [9]
       All of the following:
           Morph Ball and After Ruins Chozo Statue Item Aquired
           Power Grip or Can Bounce in Ball
-  > Tunnel to Flooded Cavern
+  > Open Passage to Flooded Cavern (West)
       Can Bounce in Ball
 
-> Open Passage to Flooded Cavern; Heals? False
+> Open Passage to Flooded Cavern (East); Heals? False
   * Layers: default
-  * Horizontal Passage to Flooded Cavern/Open Passage to Chozo Ruins Valley
+  * Vertical Passage to Flooded Cavern/Open Passage to Chozo Ruins Valley (East)
   * Extra - door_idx: (40,)
   > Past Pillars
       Screw Attack
@@ -228,11 +228,13 @@ Extra - room_id: [9]
       Speed Booster and Use Space Jump
   > Pickup (Missile Tank)
       Speed Booster and Can Use Springball
+  > Door to Statuary Shaft
+      Space Jump (Unknown Item 2)
   > Door to Chozodia Access Hall (eastbound)
       Any of the following:
           Use Space Jump
           Hi-Jump Boots and Power Grip
-  > Open Passage to Flooded Cavern
+  > Open Passage to Flooded Cavern (East)
       Screw Attack
 
 ----------------
@@ -245,7 +247,7 @@ Extra - room_id: [11]
   * Extra - door_idx: (27,)
   > Door to Elevator to Norfair
       Any of the following:
-          Speed Booster and Gravity Suit Equipped
+          Gravity Suit and Speed Booster
           After Ruins Chozo Statue Item Aquired and Tunnel Climb
 
 > Door to Elevator to Norfair; Heals? False
@@ -253,7 +255,7 @@ Extra - room_id: [11]
   * Blue Door to Elevator to Norfair/Door to Flooded Tunnel
   * Extra - door_idx: (28,)
   > Door to Landing Site
-      Speed Booster and Can Use Power Bombs and Gravity Suit Equipped
+      Gravity Suit and Speed Booster and Can Use Power Bombs
 
 ----------------
 Chozo Reliquary
@@ -271,7 +273,7 @@ Extra - room_id: [12]
   * Pickup 94; Category? Major
   * Extra - source: POWER_GRIP
   > Tunnel to Statuary Shaft
-      Power Grip or Have Any Jump Upgrade
+      Climb Ledges
 
 ----------------
 Wrecked Ship Entrance
@@ -309,7 +311,7 @@ Extra - room_id: [14]
   * Extra - door_idx: (35,)
   > Pickup (Missile Tank)
       After Ruins Chozo Statue Item Aquired
-  > In Front of Statue
+  > Pickup (Unknown Item 1)
       Trivial
 
 > Pickup (Unknown Item 1); Heals? False
@@ -322,14 +324,7 @@ Extra - room_id: [14]
 > Event - Statue Item Acquired; Heals? False
   * Layers: default
   * Event Ruins Chozo Statue Item Aquired
-  > In Front of Statue
-      Trivial
-
-> In Front of Statue; Heals? False
-  * Layers: default
   > Door to Chozo Ruins Valley
-      After Ruins Chozo Statue Item Aquired or Gravity Suit Equipped or Use Space Jump
-  > Pickup (Unknown Item 1)
       Trivial
 
 ----------------
@@ -343,7 +338,7 @@ Extra - room_id: [15]
   > Door to Statuary Shaft
       All of the following:
           Tunnel Climb
-          Wall Jumps (Beginner) or Have Any Jump Upgrade
+          Wall Jumps (Beginner) or Climb High Ledges
 
 > Door to Statuary Shaft; Heals? False
   * Layers: default
@@ -361,23 +356,30 @@ Extra - room_id: [17, 8, 16]
   * Blue Door to Crateria Chozo Ruins Entrance/Door to Statuary Shaft
   * Extra - door_idx: (45, 34)
   > Door to Chozo Ruins Valley
-      Use Space Jump
+      Climb High Ledges
+  > Tunnel to Chozo Reliquary
+      Can Bounce in Ball
 
 > Door to Chozo Ruins Valley; Heals? False
   * Layers: default
   * Blue Door to Chozo Ruins Valley/Door to Statuary Shaft
   * Extra - door_idx: (47, 15, 36)
   > Door to Crateria Chozo Ruins Entrance
-      Use Space Jump
+      Climb Ledges
   > Tunnel to Chozo Reliquary
-      Trivial
+      Can Bounce in Ball
 
 > Tunnel to Chozo Reliquary; Heals? False
   * Layers: default
   * Tunnel to Chozo Reliquary/Tunnel to Statuary Shaft
   * Extra - door_idx: (39, 29)
-  > Door to Chozo Ruins Valley
-      Power Grip
+  > Door to Crateria Chozo Ruins Entrance
+      All of the following:
+          Climb Ledges
+          Any of the following:
+              Can Use Any Bombs
+              # Must shoot the shot block before morphing to avoid softlock
+              Movement (Beginner)
 
 ----------------
 Elevator to Tourian

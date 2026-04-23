@@ -285,15 +285,15 @@
                 "extra": ""
             },
             "KraidDefeated": {
-                "long_name": "Kraid Defeated",
+                "long_name": "Boss Kraid Defeated",
                 "extra": {}
             },
             "RidleyDefeated": {
-                "long_name": "Ridley Defeated",
+                "long_name": "Boss Ridley Defeated",
                 "extra": {}
             },
             "MotherBrainDefeated": {
-                "long_name": "Mother Brain Defeated",
+                "long_name": "Boss Mother Brain Defeated",
                 "extra": {}
             },
             "RuinsTestCompleted": {
@@ -317,7 +317,7 @@
                 "extra": {}
             },
             "KillAcidWorm": {
-                "long_name": "Acid Worm Defeated",
+                "long_name": "Boss Acid Worm Defeated",
                 "extra": {}
             },
             "Ziplines": {
@@ -337,7 +337,7 @@
                 "extra": {}
             },
             "NorfairPillbug": {
-                "long_name": "Kiru-Giru Blockade Defeated",
+                "long_name": "Boss Kiru-Giru Blockade Defeated",
                 "extra": {}
             },
             "Pipe": {
@@ -345,7 +345,11 @@
                 "extra": {}
             },
             "MechaDefeated": {
-                "long_name": "Mecha Ridley Defeated",
+                "long_name": "Boss Mecha Ridley Defeated",
+                "extra": {}
+            },
+            "ChargeBeast": {
+                "long_name": "Boss Charge Beast",
                 "extra": {}
             }
         },
@@ -442,7 +446,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "This template is used when any requirement requires either Bombs or Power Bombs",
                         "items": [
                             {
                                 "type": "template",
@@ -456,75 +460,12 @@
                     }
                 }
             },
-            "Defeat Charge Beam Beast": {
-                "display_name": "Defeat Charge Beam Beast",
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missiles",
-                                                "amount": 6,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "MorphBall",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missiles",
-                                                "amount": 3,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "Combat",
-                                                "amount": 2,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
             "Can Use Bombs": {
                 "display_name": "Can Use Bombs",
                 "requirement": {
                     "type": "and",
                     "data": {
-                        "comment": null,
+                        "comment": "This template is used when any requirement requires using Bombs",
                         "items": [
                             {
                                 "type": "resource",
@@ -553,7 +494,7 @@
                 "requirement": {
                     "type": "and",
                     "data": {
-                        "comment": null,
+                        "comment": "This template is used when any requirement requires using Power Bombs",
                         "items": [
                             {
                                 "type": "resource",
@@ -569,35 +510,6 @@
                                 "data": {
                                     "type": "items",
                                     "name": "PowerBombs",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "Fire Plasma Beam": {
-                "display_name": "Fire Plasma Beam",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "events",
-                                    "name": "RuinsTestCompleted",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "PlasmaBeam",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -635,41 +547,12 @@
                     }
                 }
             },
-            "Gravity Suit Equipped": {
-                "display_name": "Gravity Suit Equipped",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "events",
-                                    "name": "RuinsTestCompleted",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "GravitySuit",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
             "Defeat Metroid": {
                 "display_name": "Defeat Metroid",
                 "requirement": {
                     "type": "and",
                     "data": {
-                        "comment": null,
+                        "comment": "This template is used when any requirement requires defeating a Metroid",
                         "items": [
                             {
                                 "type": "resource",
@@ -719,7 +602,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "This template is used when any requirement requires increased jump height",
                         "items": [
                             {
                                 "type": "template",
@@ -743,7 +626,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "This template is used when any requirement requires being able to gain height in Morph Ball",
                         "items": [
                             {
                                 "type": "template",
@@ -762,7 +645,7 @@
                 "requirement": {
                     "type": "and",
                     "data": {
-                        "comment": null,
+                        "comment": "This template is used when any requirement requires Springball",
                         "items": [
                             {
                                 "type": "resource",
@@ -791,7 +674,7 @@
                 "requirement": {
                     "type": "and",
                     "data": {
-                        "comment": null,
+                        "comment": "This template is used when any requirement requires climbing into a tunnel",
                         "items": [
                             {
                                 "type": "resource",
@@ -820,7 +703,7 @@
                 "requirement": {
                     "type": "and",
                     "data": {
-                        "comment": null,
+                        "comment": "This template is used when any requirement requires Ballsparking",
                         "items": [
                             {
                                 "type": "template",
@@ -844,7 +727,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "This template is used when any requirement requires climbing ledges needing at least Power Grip",
                         "items": [
                             {
                                 "type": "template",
@@ -868,7 +751,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "This template is used when any requirement requires climbing ledges needing at least Hi-Jump and Power Grip",
                         "items": [
                             {
                                 "type": "template",
@@ -898,6 +781,64 @@
                                             }
                                         }
                                     ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Use Missiles": {
+                "display_name": "Can Use Missiles",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "This template is used when any requirement requires at least 1 Missile",
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MissileLauncher",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Use Super Missiles": {
+                "display_name": "Can Use Super Missiles",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "This template is used when any requirement requires at least 1 Super Missile",
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SuperMissileLauncher",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SuperMissiles",
+                                    "amount": 1,
+                                    "negate": false
                                 }
                             }
                         ]
@@ -1152,10 +1093,6 @@
             2,
             3
         ],
-        "Combat": [
-            1,
-            2
-        ],
         "Movement": [
             1
         ],
@@ -1168,6 +1105,10 @@
         ],
         "IBJ": [
             3
+        ],
+        "Combat": [
+            1,
+            2
         ]
     },
     "flatten_to_set_on_patch": false,

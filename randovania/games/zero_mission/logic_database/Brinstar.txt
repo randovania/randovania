@@ -21,7 +21,7 @@ Extra - room_id: [0]
   * Pickup 28; Category? Major
   * Extra - source: MORPH_BALL
   > Spawn Point
-      Morph Ball or Have Any Jump Upgrade
+      Morph Ball or Space Jump (Unknown Item 2) or Climb High Ledges
 
 > Spawn Point; Heals? False; Spawn Point
   * Layers: default
@@ -88,9 +88,11 @@ Extra - room_id: [2]
   * Blue Door to Fake Block Fork/Door to Guide Statue (Long Beam)
   * Extra - door_idx: (5,)
   > Pickup (Energy Tank)
-      Have Any Jump Upgrade
+      Any of the following:
+          Space Jump (Unknown Item 2)
+          Hi-Jump Boots and Ice Beam
   > Door to Blue-Tinted Hub
-      Morph Ball and After Brinstar Corridor 2 Chozo Statue
+      After Brinstar Corridor 2 Chozo Statue
   > Event - Chozo Statue
       Morph Ball
 
@@ -99,7 +101,7 @@ Extra - room_id: [2]
   * Blue Door to Blue-Tinted Hub/Door to Guide Statue (Long Beam)
   * Extra - door_idx: (6,)
   > Door to Fake Block Fork
-      Morph Ball and After Brinstar Corridor 2 Chozo Statue
+      After Brinstar Corridor 2 Chozo Statue
 
 > Event - Chozo Statue; Heals? False
   * Layers: default
@@ -138,6 +140,8 @@ Extra - room_id: [3]
   * Layers: default
   * Blue Door to Vestibule/Door to Blue-Tinted Hub
   * Extra - door_idx: (12,)
+  > Lower Half
+      Trivial
 
 > Door to Save Station (South); Heals? False
   * Layers: default
@@ -228,9 +232,7 @@ Extra - room_id: [4]
   * Blue Door to Long Beam Chamber/Door to Long Beam Chamber Access
   * Extra - door_idx: (14,)
   > Door to Blue-Tinted Hub
-      All of the following:
-          Morph Ball
-          Long Beam or Can Use Any Bombs
+      Morph Ball and Can Use Any Bombs
   > Tunnel to Small Cave
       All of the following:
           Morph Ball
@@ -292,7 +294,9 @@ Extra - room_id: [7]
   > Door to Vestibule
       Trivial
   > Tunnel to Sloped Alcove
-      Ice Beam and Power Grip
+      All of the following:
+          Climb Ledges
+          Ice Beam or Space Jump (Unknown Item 2)
 
 > Door to Vestibule; Heals? False
   * Layers: default
@@ -411,14 +415,14 @@ Extra - room_id: [10]
   * Blue Door to Elevator to Tourian/Door to Tourian Gate
   * Extra - door_idx: (24,)
   > Door to Tourian Gate Access
-      After Kraid Defeated and After Ridley Defeated
+      After Boss Kraid Defeated and After Boss Ridley Defeated
 
 > Door to Tourian Gate Access; Heals? False
   * Layers: default
   * Blue Door to Tourian Gate Access/Door to Tourian Gate
   * Extra - door_idx: (25,)
   > Door to Elevator to Tourian
-      After Kraid Defeated and After Ridley Defeated
+      After Boss Kraid Defeated and After Boss Ridley Defeated
 
 ----------------
 Elevator to Tourian
@@ -458,8 +462,10 @@ Extra - room_id: [12]
       Trivial
   > Door to Elevator to Norfair
       Can Use Any Bombs
-  > Pickup (Charge Beam)
-      Defeat Charge Beam Beast
+  > Event - Charge Beast
+      Any of the following:
+          Missiles ≥ 10 and Can Use Missiles
+          Super Missiles ≥ 5 and Can Use Super Missiles
 
 > Door to Elevator to Norfair; Heals? False
   * Layers: default
@@ -473,6 +479,12 @@ Extra - room_id: [12]
   * Pickup 58; Category? Major
   * Extra - source: CHARGE_BEAM
   > Door to Gold-Tinted Hub
+      Trivial
+
+> Event - Charge Beast; Heals? False
+  * Layers: default
+  * Event Boss Charge Beast
+  > Pickup (Charge Beam)
       Trivial
 
 ----------------
@@ -1014,14 +1026,14 @@ Extra - room_id: [35]
   * Tunnel to Long Beam Chamber Access/Tunnel to Small Cave
   * Extra - door_idx: (74,)
   > Open Passage to Tourian Gate Access
-      Morph Ball
+      Trivial
 
 > Open Passage to Tourian Gate Access; Heals? False
   * Layers: default
   * Horizontal Passage to Tourian Gate Access/Open Passage to Small Cave
   * Extra - door_idx: (75,)
   > Tunnel to Long Beam Chamber Access
-      Morph Ball
+      Trivial
 
 ----------------
 Save Station (South)

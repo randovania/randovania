@@ -384,7 +384,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Have Any Jump Upgrade"
+                                                    "data": "Use Space Jump"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -474,8 +474,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 691.15,
-                        "y": 155.95,
+                        "x": 633.5965038586387,
+                        "y": 158.5492023795989,
                         "z": 0.0
                     },
                     "description": "",
@@ -718,7 +718,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Chozo Ruins Valley": {
+                        "Open Passage to Chozo Ruins Valley (West)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -739,7 +739,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Have Any Jump Upgrade"
+                                                    "data": "Climb Ledges"
                                                 },
                                                 {
                                                     "type": "template",
@@ -758,23 +758,14 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Have Any Jump Upgrade"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PowerGrip",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "data": "Climb Ledges"
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Tunnel to Chozo Ruins Valley": {
+                "Open Passage to Chozo Ruins Valley (West)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -792,13 +783,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "tunnel",
+                    "dock_type": "dock",
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Chozo Ruins Valley",
-                        "node": "Tunnel to Flooded Cavern"
+                        "node": "Open Passage to Flooded Cavern (West)"
                     },
-                    "default_dock_weakness": "Tunnel",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -809,7 +800,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -852,7 +853,7 @@
                                 "items": []
                             }
                         },
-                        "Open Passage to Chozo Ruins Valley": {
+                        "Open Passage to Chozo Ruins Valley (East)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -871,7 +872,7 @@
                         }
                     }
                 },
-                "Open Passage to Chozo Ruins Valley": {
+                "Open Passage to Chozo Ruins Valley (East)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -893,9 +894,9 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Chozo Ruins Valley",
-                        "node": "Open Passage to Flooded Cavern"
+                        "node": "Open Passage to Flooded Cavern (East)"
                     },
-                    "default_dock_weakness": "Horizontal Passage",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -976,7 +977,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Open Passage to Flooded Cavern": {
+                        "Open Passage to Flooded Cavern (East)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1120,7 +1121,7 @@
                         }
                     }
                 },
-                "Tunnel to Flooded Cavern": {
+                "Open Passage to Flooded Cavern (West)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1138,13 +1139,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "tunnel",
+                    "dock_type": "dock",
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Flooded Cavern",
-                        "node": "Tunnel to Chozo Ruins Valley"
+                        "node": "Open Passage to Chozo Ruins Valley (West)"
                     },
-                    "default_dock_weakness": "Tunnel",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1283,7 +1284,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Flooded Cavern": {
+                        "Open Passage to Flooded Cavern (West)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1297,7 +1298,7 @@
                         }
                     }
                 },
-                "Open Passage to Flooded Cavern": {
+                "Open Passage to Flooded Cavern (East)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1319,9 +1320,9 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Flooded Cavern",
-                        "node": "Open Passage to Chozo Ruins Valley"
+                        "node": "Open Passage to Chozo Ruins Valley (East)"
                     },
-                    "default_dock_weakness": "Horizontal Passage",
+                    "default_dock_weakness": "Vertical Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1351,8 +1352,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 1268.5892016720745,
-                        "y": 270.6646788856734,
+                        "x": 1283.898500751519,
+                        "y": 187.68135601783433,
                         "z": 0.0
                     },
                     "description": "",
@@ -1404,6 +1405,23 @@
                                 ]
                             }
                         },
+                        "Door to Statuary Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Chozodia Access Hall (eastbound)": {
                             "type": "or",
                             "data": {
@@ -1442,7 +1460,7 @@
                                 ]
                             }
                         },
-                        "Open Passage to Flooded Cavern": {
+                        "Open Passage to Flooded Cavern (East)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1515,8 +1533,13 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Gravity Suit Equipped"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "GravitySuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -1597,8 +1620,13 @@
                                         "data": "Can Use Power Bombs"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Gravity Suit Equipped"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "GravitySuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -1670,8 +1698,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 119.61,
-                        "y": 90.27,
+                        "x": 120.51451883849292,
+                        "y": 88.3858891288697,
                         "z": 0.0
                     },
                     "description": "",
@@ -1693,17 +1721,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PowerGrip",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "template",
-                                        "data": "Have Any Jump Upgrade"
+                                        "data": "Climb Ledges"
                                     }
                                 ]
                             }
@@ -1893,7 +1912,7 @@
                                 ]
                             }
                         },
-                        "In Front of Statue": {
+                        "Pickup (Unknown Item 1)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1948,56 +1967,7 @@
                     "valid_starting_location": false,
                     "event_name": "RuinsChozoStatue",
                     "connections": {
-                        "In Front of Statue": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "In Front of Statue": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 369.35,
-                        "y": 83.83,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
                         "Door to Chozo Ruins Valley": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "RuinsChozoStatue",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Gravity Suit Equipped"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
-                                    }
-                                ]
-                            }
-                        },
-                        "Pickup (Unknown Item 1)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2065,7 +2035,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Have Any Jump Upgrade"
+                                                    "data": "Climb High Ledges"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -2182,7 +2152,19 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Use Space Jump"
+                                        "data": "Climb High Ledges"
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Chozo Reliquary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
                                     }
                                 ]
                             }
@@ -2229,7 +2211,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Use Space Jump"
+                                        "data": "Climb Ledges"
                                     }
                                 ]
                             }
@@ -2238,7 +2220,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2275,18 +2262,42 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Chozo Ruins Valley": {
+                        "Door to Crateria Chozo Ruins Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "template",
+                                        "data": "Climb Ledges"
+                                    },
+                                    {
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "PowerGrip",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Any Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Must shoot the shot block before morphing to avoid softlock",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
