@@ -19,17 +19,18 @@ from randovania.gui.dialog.game_export_dialog import (
     prompt_for_output_file,
     spoiler_path_for,
 )
-from randovania.interface_common.options import Options
 
 if TYPE_CHECKING:
-    from randovania.interface_common.options import PerGameOptions
+    from randovania.interface_common.options import Options, PerGameOptions
 
 # Expected MD5 hashes for vanilla "Metroid Prime Hunters.NDS" based on region
 EXPECTED_MD5_HASHES: list[str] = [
-    "b4c8a9398866b49c7be17d75736a223b",  # USA
-    "d6ac284bc69a8a2119fd9057743b6d89",  # Europe
-    # "42850a19d7be2ee5e067df6984aa900e",  # Japan
-    # "4f04529f79564020a56e187b8f9865c3",  # Korea
+    "b4c8a9398866b49c7be17d75736a223b",  # USA Rev0
+    "be93b7aaaba93bafa37324fd7156c817",  # USA Rev1
+    "c71a2d5fd41727c31f1619fb3085d4df",  # Europe Rev0
+    "378297159f176802e27384e18e33a1c4",  # Europe Rev1
+    # "42850a19d7be2ee5e067df6984aa900e",  # Japan Rev0
+    # "4f04529f79564020a56e187b8f9865c3",  # Korea Rev0
 ]
 
 
@@ -134,7 +135,7 @@ class HuntersGameExportDialog(GameExportDialog[HuntersConfiguration], Ui_Hunters
         return dataclasses.replace(
             hunters_options,
             input_path=self.input_file,
-            output_path=self.output_file.parent,
+            output_path=Path(self.output_file).parent,
         )
 
     def get_game_export_params(self) -> HuntersGameExportParams:
@@ -145,6 +146,6 @@ class HuntersGameExportDialog(GameExportDialog[HuntersConfiguration], Ui_Hunters
 
         return HuntersGameExportParams(
             spoiler_output=spoiler_output,
-            input_file=self.input_file,
+            input_path=self.input_file,
             output_path=self.output_file,
         )

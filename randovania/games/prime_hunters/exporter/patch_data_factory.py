@@ -251,6 +251,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
+        full_hash = f"{self.description.shareable_word_hash} ({self.description.shareable_hash})"
         return {
             "configuration_id": self.description.get_seed_for_world(self.players_config.player_index),
             "starting_items": starting_items,
@@ -265,7 +266,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             },
             "string_tables": self._update_string_tables(),
             "text_patches": {
-                "patcher_version": "<version>",
+                "patcher_version": full_hash,
             },
         }
 

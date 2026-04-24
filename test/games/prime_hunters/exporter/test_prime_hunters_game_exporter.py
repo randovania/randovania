@@ -35,7 +35,7 @@ def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     exporter = HuntersGameExporter()
     export_params = HuntersGameExportParams(
         spoiler_output=None,
-        input_file=tmp_path.joinpath("input_file.nds"),
+        input_path=tmp_path.joinpath("input_file.nds"),
         output_path=tmp_path.joinpath("output", "path"),
     )
     progress_update = MagicMock()
