@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Generator
 
 - Changed: Adjusted the check for which resources are unlocked safely after an action, so it both doesn't collect some dangerous actions too early, but also calculates deeper what is is safe.
+- Fixed: When using logical pickup placement set to Major pickups or All pickups, generated pickups would not be considered required. For example, Red Keys in Metroid Prime 2: Echoes.
 
 ### Metroid Dread
 
