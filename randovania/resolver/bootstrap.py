@@ -44,8 +44,7 @@ def enabled_pickups(game: GameDescription, configuration: BaseConfiguration) -> 
 
     yield from pool_results.to_place
     yield from pool_results.starting
-    for _, pickup in pool_results.assignment:
-        yield pickup
+    yield from pool_results.assignment.values()
 
 
 def victory_condition_for_pickup_placement(
