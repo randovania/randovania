@@ -222,7 +222,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             string_id = node.extra["entity_type_data"]["string_id"]
 
             scan_title = f"{_STRING_ID_TO_SCAN_TITLE[string_id]}\\"
-            scan_text = " ".join(
+            scan_text = "\n \n".join(
                 [
                     text
                     for text in octolith_hint_mapping.values()
@@ -237,6 +237,8 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 if scan_text == "":
                     string_tables["scan_log"][string_id] = scan_title + self.rng.choice(useless_hints)
                 else:
+                    if " - " in scan_text:
+                        scan_text = scan_text.replace("- ", "-\n").replace("\n \n", "\n")
                     string_tables["scan_log"][string_id] = scan_title + scan_text
             else:
                 string_tables["scan_log"][string_id] = scan_title + self.rng.choice(useless_hints)
@@ -251,6 +253,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
+        full_hash = f"{self.description.shareable_word_hash} ({self.description.shareable_hash})"
         return {
             "configuration_id": self.description.get_seed_for_world(self.players_config.player_index),
             "starting_items": starting_items,
@@ -265,7 +268,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             },
             "string_tables": self._update_string_tables(),
             "text_patches": {
-                "patcher_version": "<version>",
+                "patcher_version": full_hash,
             },
         }
 
