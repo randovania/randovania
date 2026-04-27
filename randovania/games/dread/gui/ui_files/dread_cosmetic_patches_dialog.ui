@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>421</width>
-    <height>368</height>
+    <width>624</width>
+    <height>797</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,9 +23,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>390</width>
-        <height>716</height>
+        <y>-242</y>
+        <width>583</width>
+        <height>1057</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -48,6 +48,16 @@
           <string>Config Options</string>
          </property>
          <layout class="QVBoxLayout" name="game_changes_layout">
+          <item>
+           <widget class="QCheckBox" name="enable_debug_logging">
+            <property name="visible">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Enable Lua debug logs (in supported emulators)</string>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QCheckBox" name="show_boss_life">
             <property name="text">
@@ -94,16 +104,6 @@
            <widget class="QCheckBox" name="enable_auto_tracker">
             <property name="text">
              <string>Enable automatic item tracker</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="enable_debug_logging">
-            <property name="text">
-             <string>Enable Lua debug logs (in supported emulators)</string>
-            </property>
-            <property name="visible">
-             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -243,6 +243,29 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="separate_save_slots">
+            <property name="text">
+             <string>Use separate save data for this game</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="save_slots_description">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting changes the internal name of Dread's save files to be specific to the randomizer you are playing. This setting simplifies the process of playing multiple randomizers (such as playing a solo randomizer during an asynchronous multiworld). &lt;/p&gt;&lt;p&gt;This will increase the space used by save data (by approximately 250 KB per save slot).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <property name="indent">
+             <number>24</number>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
