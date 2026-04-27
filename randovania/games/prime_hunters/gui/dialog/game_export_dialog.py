@@ -135,7 +135,7 @@ class HuntersGameExportDialog(GameExportDialog[HuntersConfiguration], Ui_Hunters
         return dataclasses.replace(
             hunters_options,
             input_path=self.input_file,
-            output_path=Path(self.output_file).parent,
+            output_path=self.output_file.parent,
         )
 
     def get_game_export_params(self) -> HuntersGameExportParams:
