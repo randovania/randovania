@@ -222,7 +222,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             string_id = node.extra["entity_type_data"]["string_id"]
 
             scan_title = f"{_STRING_ID_TO_SCAN_TITLE[string_id]}\\"
-            scan_text = " ".join(
+            scan_text = "\n \n".join(
                 [
                     text
                     for text in octolith_hint_mapping.values()
@@ -237,6 +237,8 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 if scan_text == "":
                     string_tables["scan_log"][string_id] = scan_title + self.rng.choice(useless_hints)
                 else:
+                    if " - " in scan_text:
+                        scan_text = scan_text.replace("- ", "-\n").replace("\n \n", "\n")
                     string_tables["scan_log"][string_id] = scan_title + scan_text
             else:
                 string_tables["scan_log"][string_id] = scan_title + self.rng.choice(useless_hints)
