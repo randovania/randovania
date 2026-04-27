@@ -25,6 +25,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Main Deck
+
+- Changed: Habitation Deck Entrance: Changed the NHJ WJ Freeze trick from Movement (Advanced) to Stand on Frozen Enemies (Expert). Also added in Stand On Frozen Enemies (Beginner) to the other WJ trick to account for diffusion timing.
+
 ##### Sector 6 (NOC)
 
 - Added: X-B.O.X. Garage: Knowledge (Advanced) + Movement (Beginner) method to grab the upper item using power bombs without killing the Owtch.
