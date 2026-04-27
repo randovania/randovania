@@ -127,12 +127,12 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
                 tank_dict[stand_definition.extra["LauncherIncrementName"]] = stand_state.included_ammo[0]
         return tank_dict
 
-    # def _create_title_text(self) -> list:
-    #     elements = []
-    #     for line, word in enumerate(self.description.shareable_word_hash.split(), 12):
-    #         final_word = word if len(word) <= 30 else f"{word[0:27]}..."
-    #         elements.append({"LineNum": line, "Text": final_word.center(30)})
-    #     return elements
+    def _create_title_text(self) -> list:
+        elements = []
+        for line, word in enumerate(self.description.shareable_word_hash.split(), 12):
+            final_word = word if len(word) <= 30 else f"{word[0:27]}..."
+            elements.append({"LineNum": line, "Text": final_word.center(30)})
+        return elements
 
     # def _create_intro_text(self) -> list:
     #     elements = []
@@ -177,7 +177,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
             "locations": self._create_pickup_dict(pickup_list),
             "tank_increments": self._create_tank_increments(),
             # "intro_text": self._create_intro_text(),
-            "title_text": [],  # self._create_title_text(),
+            "title_text": self._create_title_text(),
             # "credits_text": self._create_credits_text(),
             "disable_demos": False,
             "skip_door_transitions": False,
