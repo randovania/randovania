@@ -144,19 +144,19 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
     #
     #     return elements
 
-    # def _create_room_names(self) -> list[dict]:
-    #     names = []
-    #     for region in self.game.region_list.regions:
-    #         for area in region.areas:
-    #             for number in area.extra["room_id"]:
-    #                 names.append(
-    #                     {
-    #                         "Area": region.extra["area_id"],
-    #                         "Room": number,
-    #                         "Name": area.name,
-    #                     }
-    #                 )
-    #     return names
+    def _create_room_names(self) -> list[dict]:
+        names = []
+        for region in self.game.region_list.regions:
+            for area in region.areas:
+                for number in area.extra["room_id"]:
+                    names.append(
+                        {
+                            "Area": region.extra["area_id"],
+                            "Room": number,
+                            "Name": area.name,
+                        }
+                    )
+        return names
 
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
@@ -182,7 +182,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
             "disable_demos": False,
             "skip_door_transitions": False,
             "unexplored_map": False,
-            # "room_names": self._create_room_names(),
+            "RoomNames": self._create_room_names(),
             "accessibility_patches": True,
             "stereo_default": True,
             "disable_music": False,
