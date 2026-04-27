@@ -1,10 +1,15 @@
 from __future__ import annotations
 
+import math
+import textwrap
+from collections import defaultdict
 from typing import TYPE_CHECKING, override
 
+from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description import default_database
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.zero_mission.exporter.hint_namer import MZMHintNamer
@@ -139,10 +144,78 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
     #
     #     return elements
 
-    # def _create_credits_text(self) -> list:
-    #     elements = []
-    #
-    #     return elements
+    def _credits_elements(self) -> defaultdict[str, list[dict]]:
+        elements = defaultdict(list)
+        majors = credits_spoiler.generic_credits(
+            self.configuration.standard_pickup_configuration, self.description.all_patches, self.players_config
+        )
+
+        for pickup, locations in majors:
+            for location in locations:
+                # Special case for special messages
+                if isinstance(location, str):
+                    elements[pickup.name].append({"World": None, "Region": "", "Area": location})
+                    continue
+
+                region_list = default_database.game_description_for(location.location.game).region_list
+                pickup_node = region_list.node_from_pickup_index(location.location.location)
+                elements[pickup.name].append(
+                    {
+                        "World": location.world_name,
+                        "Region": pickup_node.identifier.region,
+                        "Area": pickup_node.identifier.area,
+                    }
+                )
+        return elements
+
+    @staticmethod
+    def _wrap_text_for_credits(text: str) -> list[str]:
+        return textwrap.wrap(text, width=30)
+
+    def _create_credits_text(self) -> list:
+        credits_array = []
+        spoiler_dict = self._credits_elements()
+
+        major_pickup_name_order = {
+            pickup.name: index
+            for index, pickup in enumerate(self.configuration.standard_pickup_configuration.pickups_state.keys())
+        }
+
+        def sort_pickup(p: str) -> tuple[int | float, str]:
+            return major_pickup_name_order.get(p, math.inf), p
+
+        credits_array.append({"LineType": "White2", "Text": "Item Locations", "BlankLines": 2})
+
+        for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
+            credits_array.append({"LineType": "Red", "Text": pickup, "BlankLines": 1})
+            for location in spoiler_dict[pickup]:
+                region_name = location["Region"]
+                area_name = location["Area"]
+                # We want to avoid displaying something like "s3 - s3 blabla", so remove possible redundancies like that
+                # Also need to ignore the case of random starting items where region name is blank
+                if area_name.startswith(region_name) and region_name != "":
+                    area_name = area_name[len(region_name) + 1 :]
+                world_name = location["World"] if location["World"] else ""
+
+                region_lines = self._wrap_text_for_credits(region_name)
+                area_lines = self._wrap_text_for_credits(area_name)
+                world_lines = self._wrap_text_for_credits(world_name)
+                for line in world_lines:
+                    credits_array.append({"LineType": "Blue", "Text": line, "BlankLines": 0})
+                for line in region_lines:
+                    credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
+                for line in area_lines:
+                    credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
+                credits_array[-1]["BlankLines"] = 1
+
+        # Have last item give more space
+        credits_array[-1]["BlankLines"] = 3
+
+        # Self plug, for streaming/showcasing.
+        credits_array.append({"LineType": "Blue", "Text": "Play this Randomizer at", "BlankLines": 0})
+        credits_array.append({"LineType": "White1", "Text": "randovania.org", "BlankLines": 3})
+
+        return credits_array
 
     def _create_room_names(self) -> list[dict]:
         names = []
@@ -178,7 +251,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
             "tank_increments": self._create_tank_increments(),
             # "intro_text": self._create_intro_text(),
             "title_text": self._create_title_text(),
-            # "credits_text": self._create_credits_text(),
+            "credits_text": self._create_credits_text(),
             "disable_demos": False,
             "skip_door_transitions": False,
             "unexplored_map": False,
