@@ -26,9 +26,11 @@ if TYPE_CHECKING:
 # Expected MD5 hashes for vanilla "Metroid Prime Hunters.NDS" based on region
 EXPECTED_MD5_HASHES: list[str] = [
     "b4c8a9398866b49c7be17d75736a223b",  # USA Rev0
-    "be93b7aaaba93bafa37324fd7156c817",  # USA Rev1
+    "9fe5f1eb1eb9dc5d90130408f813b39e",  # USA Rev1
+    "be93b7aaaba93bafa37324fd7156c817",  # USA Rev1 (Wii U VC)
     "c71a2d5fd41727c31f1619fb3085d4df",  # Europe Rev0
     "378297159f176802e27384e18e33a1c4",  # Europe Rev1
+    "94b27d06db53519b2def908bdf80e201",  # Europe Rev 1 (Wii U VC)
     # "42850a19d7be2ee5e067df6984aa900e",  # Japan Rev0
     # "4f04529f79564020a56e187b8f9865c3",  # Korea Rev0
 ]
