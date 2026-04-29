@@ -4,6 +4,7 @@ import copy
 from typing import TYPE_CHECKING, BinaryIO
 
 import construct.core
+from construct import Construct
 from construct.core import (
     Compressed,
     Const,
@@ -72,7 +73,7 @@ def encode(original_data: dict, x: BinaryIO) -> None:
     ConstructGame.build_stream({"db": data}, x)
 
 
-def _build_resource_info(**kwargs):
+def _build_resource_info(**kwargs: Construct) -> Struct:
     return Struct(
         long_name=String,
         **kwargs,
@@ -200,13 +201,13 @@ NodeBaseFields = {
 
 
 class NodeAdapter(construct.Adapter):
-    def _decode(self, obj: construct.Container, context, path):
+    def _decode(self, obj: construct.Container, context: construct.Container, path: str) -> construct.Container:
         result = construct.Container(node_type=obj["node_type"])
         result.update(obj["data"])
         result["connections"] = result.pop("connections")
         return result
 
-    def _encode(self, obj: construct.Container, context, path):
+    def _encode(self, obj: construct.Container, context: construct.Container, path: str) -> construct.Container:
         data = copy.copy(obj)
         return construct.Container(
             node_type=data.pop("node_type"),
