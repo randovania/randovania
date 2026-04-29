@@ -3,18 +3,14 @@ from __future__ import annotations
 import copy
 from typing import TYPE_CHECKING, BinaryIO
 
-import construct
-from construct import (
-    Byte,
+import construct.core
+from construct.core import (
     Compressed,
     Const,
     Default,
     Flag,
-    Float32b,
     Float64b,
-    Int32ub,
     PrefixedArray,
-    Short,
     Struct,
     Switch,
     VarInt,
@@ -35,7 +31,7 @@ from randovania.lib.construct_lib import (
 if TYPE_CHECKING:
     from pathlib import Path
 
-current_format_version = 11
+current_format_version = 12
 
 _EXPECTED_FIELDS = [
     "schema_version",
@@ -84,6 +80,11 @@ def _build_resource_info(**kwargs):
     )
 
 
+def _build_enum(**mapping: int) -> construct.core.Enum:
+    """Create a construct enum from the mapping, using VarInt."""
+    return construct.core.Enum(VarInt, **mapping)
+
+
 ConstructAreaIdentifier = construct.Struct(
     region=String,
     area=String,
@@ -98,12 +99,12 @@ ConstructNodeIdentifier = construct.Struct(
 ConstructResourceInfo = _build_resource_info()
 
 ConstructItemResourceInfo = _build_resource_info(
-    max_capacity=Int32ub,
+    max_capacity=VarInt,
 )
 
 ConstructTrickResourceInfo = _build_resource_info(
     description=String,
-    require_documentation_above=Byte,
+    require_documentation_above=VarInt,
 )
 
 ConstructDamageReductions = Struct(
@@ -112,18 +113,18 @@ ConstructDamageReductions = Struct(
         VarInt,
         Struct(
             name=String,
-            quantity=Int32ub,
-            multiplier=Float32b,
+            quantity=VarInt,
+            multiplier=Float64b,
         ),
     ),
 )
 
-ConstructResourceType = construct.Enum(Byte, items=0, events=1, tricks=2, damage=3, versions=4, misc=5)
+ConstructResourceType = _build_enum(items=0, events=1, tricks=2, damage=3, versions=4, misc=5)
 
 ConstructResourceRequirement = Struct(
     type=ConstructResourceType,
     name=String,
-    amount=Short,
+    amount=VarInt,
     negate=Flag,
 )
 
@@ -134,7 +135,7 @@ requirement_type_map = {
 }
 
 ConstructRequirement = Struct(
-    type=construct.Enum(Byte, resource=0, **{"and": 1, "or": 2}, template=3, node=4),
+    type=_build_enum(resource=0, **{"and": 1, "or": 2}, template=3, node=4),
     data=Switch(lambda this: this.type, requirement_type_map),
 )
 ConstructRequirementArray = Struct(
@@ -179,7 +180,7 @@ ConstructResourceGain = Struct(
     amount=VarInt,
 )
 
-ConstructHintNodeKind = construct.Enum(Byte, **{enum_value.value: i for i, enum_value in enumerate(HintNodeKind)})
+ConstructHintNodeKind = _build_enum(**{enum_value.value: i for i, enum_value in enumerate(HintNodeKind)})
 
 ConstructNodeCoordinates = Struct(
     x=Float64b,
@@ -215,9 +216,7 @@ class NodeAdapter(construct.Adapter):
 
 ConstructNode = NodeAdapter(
     Struct(
-        node_type=construct.Enum(
-            Byte, generic=0, dock=1, pickup=2, event=4, configurable_node=5, hint=6, teleporter_network=7
-        ),
+        node_type=_build_enum(generic=0, dock=1, pickup=2, event=4, configurable_node=5, hint=6, teleporter_network=7),
         data=Switch(
             lambda this: this.node_type,
             {
@@ -238,7 +237,7 @@ ConstructNode = NodeAdapter(
                 "pickup": Struct(
                     **NodeBaseFields,
                     pickup_index=VarInt,
-                    location_category=construct.Enum(Byte, major=0, minor=1),
+                    location_category=_build_enum(major=0, minor=1),
                     custom_index_group=OptionalValue(String),
                     hint_features=PrefixedArray(VarInt, String),
                 ),
@@ -278,7 +277,7 @@ ConstructRegion = Struct(
     areas=ConstructDict(ConstructArea),
 )
 
-ConstructGameEnum = construct.Enum(Byte, **{enum_item.value: i for i, enum_item in enumerate(RandovaniaGame)})
+ConstructGameEnum = _build_enum(**{enum_item.value: i for i, enum_item in enumerate(RandovaniaGame)})
 
 ConstructMinimalLogicDatabase = Struct(
     items_to_exclude=PrefixedArray(
@@ -332,7 +331,7 @@ ConstructDockWeaknessDatabase = Struct(
     ),
 )
 
-ConstructUsedTrickLevels = OptionalValue(ConstructDict(PrefixedArray(VarInt, construct.Byte)))
+ConstructUsedTrickLevels = OptionalValue(ConstructDict(PrefixedArray(VarInt, VarInt)))
 
 ConstructHintFeatureDatabase = ConstructDict(
     DefaultsAdapter(
@@ -348,7 +347,7 @@ ConstructHintFeatureDatabase = ConstructDict(
 
 ConstructGame = Struct(
     magic_number=Const(b"Req."),
-    format_version=Const(current_format_version, Int32ub),
+    format_version=Const(current_format_version, VarInt),
     db=Compressed(
         Struct(
             schema_version=Const(game_description_migration.CURRENT_VERSION, VarInt),
