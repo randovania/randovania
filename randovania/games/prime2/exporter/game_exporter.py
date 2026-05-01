@@ -161,6 +161,9 @@ def modern_export(
     with monitoring.trace_block("open_prime_rando.echoes.patcher.patch_iso"):
         import open_prime_rando.echoes.patcher
         import open_prime_rando.echoes.rando_configuration
+        import open_prime_rando.version
+
+        patch_data["title_screen_text"] = f"{patch_data['title_screen_text']}\nOPR v{open_prime_rando.version.version}"
 
         open_prime_rando.echoes.patcher.patch_iso(
             export_params.input_path,

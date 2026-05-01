@@ -749,13 +749,13 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
     def _modern_patcher(self, randovania_meta: PatcherDataMeta) -> dict[str, typing.Any]:
         result: dict[str, typing.Any] = {
             "new_patcher_only": True,
-            # "world_changes": [],
+            "game_title": f"Prime 2 Randomizer - {self.description.shareable_word_hash}",
+            "title_screen_text": f"Randovania v{randovania.VERSION}",
+            "world_changes": [],
         }
 
-        if True:
-            result["game_title"] = f"Prime 2 Randomizer - {self.description.shareable_word_hash}"
-            if len(result["game_title"]) > 64:
-                result["game_title"] = result["game_title"][:64]
+        if len(result["game_title"]) > 64:
+            result["game_title"] = result["game_title"][:64]
 
         starting_area = _area_identifier_to_json(self.game.region_list, self.patches.starting_location.area_identifier)
         result["starting_area"] = {
