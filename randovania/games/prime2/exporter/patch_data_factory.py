@@ -11,15 +11,18 @@ import randovania.games.prime2.exporter.hints
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
 from randovania.games.prime2.exporter import hints
+from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.exporter.joke_hints import ECHOES_JOKE_HINTS
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, EchoesNewPatcher
@@ -30,7 +33,7 @@ from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.hint_configuration import HintConfiguration, SpecificPickupHintMode
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
-from randovania.lib import json_lib, string_lib
+from randovania.lib import frozen_lib, json_lib, string_lib
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
@@ -45,7 +48,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -746,13 +749,60 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
         return result
 
+    def _location_data_for(self, pickup_node: PickupNode) -> dict:
+        result = {}
+        result.update(frozen_lib.unwrap(pickup_node.extra["location_data"]))
+        if "instances" in result:
+            result.update(result.pop("instances"))
+
+        if "connections" in result:
+            for con in result["connections"]:
+                con["state"] = "ZERO"
+
+        if result["type"] == "custom":
+            assert pickup_node.location is not None
+            result["position"] = {
+                "x": pickup_node.location.x,
+                "y": pickup_node.location.y,
+                "z": pickup_node.location.z,
+            }
+
+        return result
+
+    def _pickup_appearance_for(self, model: PickupModel, mapping: EchoesModelNameMapping) -> dict:
+        model_name = f"{model.game.value}_{model.name}"
+
+        if model_name not in mapping.index:
+            model_name = model.name
+
+        # FIXME
+        if model_name == "VariaSuit INCOMPLETE":
+            model_name = "VariaSuit"
+
+        # pickup["sound_index"] = mapping.sound_index.get(model_name, 0)
+        # pickup["jingle_index"] = mapping.jingle_index.get(model_name, 0)
+
+        return {
+            "model_data": model_name,
+            "sound": 0,  # FIXME
+            "jingle": {
+                "file_name": "/audio/itm_x_short_00.dsp",  # FIXME
+                "volume": 55,
+            },
+        }
+
     def _modern_patcher(self, randovania_meta: PatcherDataMeta) -> dict[str, typing.Any]:
+        mapping = _get_model_mapping(decode_randomizer_data())
+
         result: dict[str, typing.Any] = {
             "new_patcher_only": True,
             "game_title": f"Prime 2 Randomizer - {self.description.shareable_word_hash}",
             "title_screen_text": f"Randovania v{randovania.VERSION}",
             "world_changes": [],
         }
+
+        _world_changes: dict[int, dict] = {}
+        _area_changes: dict[tuple[int, int], dict] = {}
 
         if len(result["game_title"]) > 64:
             result["game_title"] = result["game_title"][:64]
@@ -762,6 +812,59 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
             "mlvl_id": starting_area["world_asset_id"],
             "mrea_id": starting_area["area_asset_id"],
         }
+
+        pickup_list = _create_raw_pickup_list(
+            self.cosmetic_patches, self.configuration, self.game, self.patches, self.players_config, self.rng
+        )
+
+        def _get_area_change(node: Node) -> dict:
+            id_ref = _area_identifier_to_json(self.game.region_list, node.identifier.area_identifier)
+            mlvl_id = id_ref["world_asset_id"]
+            mrea_id = id_ref["area_asset_id"]
+
+            if (mlvl_id, mrea_id) not in _area_changes:
+                if mlvl_id not in _world_changes:
+                    _world_changes[mlvl_id] = {
+                        "mlvl_id": mlvl_id,
+                        "area_changes": [],
+                    }
+                    result["world_changes"].append(_world_changes[mlvl_id])
+
+                _area_changes[(mlvl_id, mrea_id)] = {
+                    "mrea_id": mrea_id,
+                    "pickups": [],
+                }
+                _world_changes[mlvl_id]["area_changes"].append(_area_changes[(mlvl_id, mrea_id)])
+
+            return _area_changes[(mlvl_id, mrea_id)]
+
+        for exported_pickup in pickup_list:
+            pickup_node = self.game.region_list.node_from_pickup_index(exported_pickup.index)
+            change = _get_area_change(pickup_node)
+
+            base_appearance = self._pickup_appearance_for(exported_pickup.model, mapping)
+            base_appearance["hud_text"] = exported_pickup.collection_text[0]
+            base_appearance["scan"] = f"{exported_pickup.name}. {exported_pickup.description}".strip()
+
+            new_pickup = {
+                "location": self._location_data_for(pickup_node),
+                "stages": [
+                    {
+                        "required_item": None,  # FIXME
+                        "resources": _create_pickup_resources_for(
+                            exported_pickup.conditional_resources[0].resources,
+                            key_name="item",
+                            # FIXME: multiworld
+                        ),
+                        "appearance": base_appearance,
+                        "conversion": [],  # FIXME
+                    }
+                ],
+            }
+
+            # from open_prime_rando.echoes.pickups.schema import PickupModification
+            # PickupModification.model_validate(new_pickup)
+            change["pickups"].append(new_pickup)
 
         if self.configuration.menu_mod:
             result["practice_mod"] = "full"
@@ -954,14 +1057,15 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         ]
 
 
-def _create_pickup_list(
+def _create_raw_pickup_list(
     cosmetic_patches: EchoesCosmeticPatches,
     configuration: BaseConfiguration,
     game: GameDescription,
     patches: GamePatches,
     players_config: PlayersConfiguration,
     rng: Random,
-) -> list[dict]:
+) -> list[ExportedPickupDetails]:
+
     useless_target = PickupTarget(
         create_echoes_useless_pickup(game.get_resource_database_view()), players_config.player_index
     )
@@ -972,7 +1076,7 @@ def _create_pickup_list(
         memo_data = default_prime2_memo_data()
 
     echoes_game = RandovaniaGame.METROID_PRIME_ECHOES
-    pickup_list = pickup_exporter.export_all_indices(
+    return pickup_exporter.export_all_indices(
         patches,
         useless_target,
         game.region_list,
@@ -981,6 +1085,24 @@ def _create_pickup_list(
         configuration.pickup_model_data_source,
         exporter=pickup_exporter.create_pickup_exporter(memo_data, players_config, echoes_game),
         visual_nothing=pickup_creator.create_visual_nothing(echoes_game, "EnergyTransferModule"),
+    )
+
+
+def _create_pickup_list(
+    cosmetic_patches: EchoesCosmeticPatches,
+    configuration: BaseConfiguration,
+    game: GameDescription,
+    patches: GamePatches,
+    players_config: PlayersConfiguration,
+    rng: Random,
+) -> list[dict]:
+    pickup_list = _create_raw_pickup_list(
+        cosmetic_patches,
+        configuration,
+        game,
+        patches,
+        players_config,
+        rng,
     )
     multiworld_item = game.resource_database.get_item(echoes_items.MULTIWORLD_ITEM)
 
@@ -1002,9 +1124,11 @@ class EchoesModelNameMapping:
     jingle_index: dict[str, int]  # 2 for keys, 1 for major items, 0 otherwise
 
 
-def _create_pickup_resources_for(resources: ResourceGain[ItemResourceInfo]) -> list[dict[str, int]]:
+def _create_pickup_resources_for(
+    resources: ResourceGain[ItemResourceInfo], key_name: str = "index"
+) -> list[dict[str, int]]:
     return [
-        {"index": resource.extra["item_id"], "amount": quantity}
+        {key_name: resource.extra["item_id"], "amount": quantity}
         for resource, quantity in resources
         if quantity != 0 and resource.resource_type == ResourceType.ITEM
     ]
