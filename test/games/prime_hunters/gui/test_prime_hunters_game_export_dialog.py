@@ -95,6 +95,6 @@ def test_get_game_export_params(skip_qtbot, tmp_path, save_spoiler: bool):
     # Assert
     assert result == HuntersGameExportParams(
         spoiler_output=tmp_path.joinpath("output", "Prime Hunters - MyHash.rdvgame"),
-        input_file=tmp_path.joinpath("input/game.nds"),
+        input_path=tmp_path.joinpath("input/game.nds"),
         output_path=tmp_path.joinpath("output", "Prime Hunters - MyHash.nds"),
     )

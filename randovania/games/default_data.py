@@ -4,8 +4,7 @@ import functools
 from typing import TYPE_CHECKING
 
 from randovania import get_data_path
-from randovania.game_description import data_reader
-from randovania.games import binary_data
+from randovania.game_description import binary_data, data_reader
 
 if TYPE_CHECKING:
     from pathlib import Path
