@@ -630,13 +630,16 @@ if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
         return qtbot
 
     @pytest.fixture
-    def event_loop(request: pytest.FixtureRequest) -> asyncio.EventLoop:
+    def event_loop_policy(request: pytest.FixtureRequest) -> asyncio.AbstractEventLoopPolicy:
         if "skip_qtbot" in request.fixturenames:
-            loop = get_event_loop_class()(request.getfixturevalue("qapp"), set_running_loop=False)
-        else:
-            loop = asyncio.get_event_loop_policy().new_event_loop()
-        yield loop
-        loop.close()
+            qapp = request.getfixturevalue("qapp")
+
+            class _QEventLoopPolicy(asyncio.DefaultEventLoopPolicy):
+                def new_event_loop(self) -> asyncio.AbstractEventLoop:
+                    return get_event_loop_class()(qapp, set_running_loop=False)
+
+            return _QEventLoopPolicy()
+        return asyncio.DefaultEventLoopPolicy()
 
     @pytest.fixture(scope="session")
     def qapp_cls(request: pytest.FixtureRequest):

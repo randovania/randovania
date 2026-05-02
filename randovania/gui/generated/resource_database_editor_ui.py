@@ -46,7 +46,7 @@ class Ui_ResourceDatabaseEditor(object):
         self.tab_widget.addTab(self.tab_misc, "")
         self.tab_template = QTreeWidget()
         __qtreewidgetitem = QTreeWidgetItem()
-        __qtreewidgetitem.setText(0, u"1");
+        __qtreewidgetitem.setText(0, u"1")
         self.tab_template.setHeaderItem(__qtreewidgetitem)
         self.tab_template.setObjectName(u"tab_template")
         self.tab_widget.addTab(self.tab_template, "")

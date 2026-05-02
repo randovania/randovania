@@ -341,7 +341,7 @@ class Ui_EchoesGameTabWidget(object):
 "                                                them:</p></body></html>\n"
 "                                            ", None))
         ___qtreewidgetitem = self.hint_locations_tree_widget.headerItem()
-        ___qtreewidgetitem.setText(0, QCoreApplication.translate("EchoesGameTabWidget", u"Location", None));
+        ___qtreewidgetitem.setText(0, QCoreApplication.translate("EchoesGameTabWidget", u"Location", None))
         EchoesGameTabWidget.setTabText(EchoesGameTabWidget.indexOf(self.hint_locations_tab), QCoreApplication.translate("EchoesGameTabWidget", u"Hint Locations", None))
         pass
     # retranslateUi

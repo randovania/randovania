@@ -165,15 +165,15 @@ class Ui_FusionGameTabWidget(object):
         font = QFont()
         font.setBold(True)
         __qtablewidgetitem = QTableWidgetItem()
-        __qtablewidgetitem.setFont(font);
+        __qtablewidgetitem.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
-        __qtablewidgetitem1.setFont(font);
+        __qtablewidgetitem1.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
         __qtablewidgetitem2 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         __qtablewidgetitem3 = QTableWidgetItem()
-        __qtablewidgetitem3.setFont(font);
+        __qtablewidgetitem3.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
         if (self.tableWidget.rowCount() < 11):
             self.tableWidget.setRowCount(11)
@@ -431,126 +431,126 @@ class Ui_FusionGameTabWidget(object):
         self.hints_label.setText(QCoreApplication.translate("FusionGameTabWidget", u"<html><head/><body><p>In Metroid Fusion, players can find hints at the various Navigation Terminals spread throught the B.S.L. The Navigation Terminals are unlocked by the various Keycard pickups, and the graphics on the terminal can be used to identify which is needed in-game. There are three main types of hints: </p><p>1) <span style=\" font-weight:700;\">Infant Metroids</span>: The Restricted Labs and Operations Deck Navigation Rooms give a hint where the Infant Metroids can be found. Metroids on Bosses will be hinted on Operations Deck, and any remaining Metroids around the station will be hinted on Restricted Labs.</p><p>2) <span style=\" font-weight:700;\">Charge Beam</span>: The Auxiliary Navigation Terminal always gives a hint where the Charge Beam can be found. </p><p>3) <span style=\" font-weight:700;\">Regular: </span>The remaining Navigation Terminals give hints to random pickups with varying precision. One of these hints will randomly be replaced by a joke hint, which will have green text and a fu"
                         "nny message to the player.</p><p>The table below summarizes the above:</p></body></html>", None))
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("FusionGameTabWidget", u"Region", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("FusionGameTabWidget", u"Region", None))
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("FusionGameTabWidget", u"Area", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("FusionGameTabWidget", u"Area", None))
         ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("FusionGameTabWidget", u"Lock", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("FusionGameTabWidget", u"Lock", None))
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("FusionGameTabWidget", u"Hint Type", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("FusionGameTabWidget", u"Hint Type", None))
         ___qtablewidgetitem4 = self.tableWidget.verticalHeaderItem(0)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None))
         ___qtablewidgetitem5 = self.tableWidget.verticalHeaderItem(1)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None))
         ___qtablewidgetitem6 = self.tableWidget.verticalHeaderItem(2)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None))
         ___qtablewidgetitem7 = self.tableWidget.verticalHeaderItem(3)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None))
         ___qtablewidgetitem8 = self.tableWidget.verticalHeaderItem(4)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem8.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None))
         ___qtablewidgetitem9 = self.tableWidget.verticalHeaderItem(5)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem9.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None))
         ___qtablewidgetitem10 = self.tableWidget.verticalHeaderItem(6)
-        ___qtablewidgetitem10.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem10.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None))
         ___qtablewidgetitem11 = self.tableWidget.verticalHeaderItem(7)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem11.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None))
         ___qtablewidgetitem12 = self.tableWidget.verticalHeaderItem(8)
-        ___qtablewidgetitem12.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem12.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None))
         ___qtablewidgetitem13 = self.tableWidget.verticalHeaderItem(9)
-        ___qtablewidgetitem13.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem13.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None))
         ___qtablewidgetitem14 = self.tableWidget.verticalHeaderItem(10)
-        ___qtablewidgetitem14.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem14.setText(QCoreApplication.translate("FusionGameTabWidget", u"New Row", None))
 
         __sortingEnabled = self.tableWidget.isSortingEnabled()
         self.tableWidget.setSortingEnabled(False)
         ___qtablewidgetitem15 = self.tableWidget.item(0, 0)
-        ___qtablewidgetitem15.setText(QCoreApplication.translate("FusionGameTabWidget", u"Main Deck", None));
+        ___qtablewidgetitem15.setText(QCoreApplication.translate("FusionGameTabWidget", u"Main Deck", None))
         ___qtablewidgetitem16 = self.tableWidget.item(0, 1)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("FusionGameTabWidget", u"Auxiliary Navigation Room", None));
+        ___qtablewidgetitem16.setText(QCoreApplication.translate("FusionGameTabWidget", u"Auxiliary Navigation Room", None))
         ___qtablewidgetitem17 = self.tableWidget.item(0, 2)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("FusionGameTabWidget", u"Unlocked", None));
+        ___qtablewidgetitem17.setText(QCoreApplication.translate("FusionGameTabWidget", u"Unlocked", None))
         ___qtablewidgetitem18 = self.tableWidget.item(0, 3)
-        ___qtablewidgetitem18.setText(QCoreApplication.translate("FusionGameTabWidget", u"Specific Charge Beam, Configurable Precision", None));
+        ___qtablewidgetitem18.setText(QCoreApplication.translate("FusionGameTabWidget", u"Specific Charge Beam, Configurable Precision", None))
         ___qtablewidgetitem19 = self.tableWidget.item(1, 0)
-        ___qtablewidgetitem19.setText(QCoreApplication.translate("FusionGameTabWidget", u"Main Deck", None));
+        ___qtablewidgetitem19.setText(QCoreApplication.translate("FusionGameTabWidget", u"Main Deck", None))
         ___qtablewidgetitem20 = self.tableWidget.item(1, 1)
-        ___qtablewidgetitem20.setText(QCoreApplication.translate("FusionGameTabWidget", u"Crew Quarters Navigation Room", None));
+        ___qtablewidgetitem20.setText(QCoreApplication.translate("FusionGameTabWidget", u"Crew Quarters Navigation Room", None))
         ___qtablewidgetitem21 = self.tableWidget.item(1, 2)
-        ___qtablewidgetitem21.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 1 Keycard (BLUE)", None));
+        ___qtablewidgetitem21.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 1 Keycard (BLUE)", None))
         ___qtablewidgetitem22 = self.tableWidget.item(1, 3)
-        ___qtablewidgetitem22.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None));
+        ___qtablewidgetitem22.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None))
         ___qtablewidgetitem23 = self.tableWidget.item(2, 0)
-        ___qtablewidgetitem23.setText(QCoreApplication.translate("FusionGameTabWidget", u"Main Deck", None));
+        ___qtablewidgetitem23.setText(QCoreApplication.translate("FusionGameTabWidget", u"Main Deck", None))
         ___qtablewidgetitem24 = self.tableWidget.item(2, 1)
-        ___qtablewidgetitem24.setText(QCoreApplication.translate("FusionGameTabWidget", u"Nexus Navigation Room", None));
+        ___qtablewidgetitem24.setText(QCoreApplication.translate("FusionGameTabWidget", u"Nexus Navigation Room", None))
         ___qtablewidgetitem25 = self.tableWidget.item(2, 2)
-        ___qtablewidgetitem25.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 4 Keycard (RED)", None));
+        ___qtablewidgetitem25.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 4 Keycard (RED)", None))
         ___qtablewidgetitem26 = self.tableWidget.item(2, 3)
-        ___qtablewidgetitem26.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None));
+        ___qtablewidgetitem26.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None))
         ___qtablewidgetitem27 = self.tableWidget.item(3, 0)
-        ___qtablewidgetitem27.setText(QCoreApplication.translate("FusionGameTabWidget", u"Main Deck", None));
+        ___qtablewidgetitem27.setText(QCoreApplication.translate("FusionGameTabWidget", u"Main Deck", None))
         ___qtablewidgetitem28 = self.tableWidget.item(3, 1)
-        ___qtablewidgetitem28.setText(QCoreApplication.translate("FusionGameTabWidget", u"Operations Deck Navigation Room", None));
+        ___qtablewidgetitem28.setText(QCoreApplication.translate("FusionGameTabWidget", u"Operations Deck Navigation Room", None))
         ___qtablewidgetitem29 = self.tableWidget.item(3, 2)
-        ___qtablewidgetitem29.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 1 Keycard (BLUE)", None));
+        ___qtablewidgetitem29.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 1 Keycard (BLUE)", None))
         ___qtablewidgetitem30 = self.tableWidget.item(3, 3)
-        ___qtablewidgetitem30.setText(QCoreApplication.translate("FusionGameTabWidget", u"Specific Infant Metroids, Configurable Precision", None));
+        ___qtablewidgetitem30.setText(QCoreApplication.translate("FusionGameTabWidget", u"Specific Infant Metroids, Configurable Precision", None))
         ___qtablewidgetitem31 = self.tableWidget.item(4, 0)
-        ___qtablewidgetitem31.setText(QCoreApplication.translate("FusionGameTabWidget", u"Main Deck", None));
+        ___qtablewidgetitem31.setText(QCoreApplication.translate("FusionGameTabWidget", u"Main Deck", None))
         ___qtablewidgetitem32 = self.tableWidget.item(4, 1)
-        ___qtablewidgetitem32.setText(QCoreApplication.translate("FusionGameTabWidget", u"Restricted Navigation Room", None));
+        ___qtablewidgetitem32.setText(QCoreApplication.translate("FusionGameTabWidget", u"Restricted Navigation Room", None))
         ___qtablewidgetitem33 = self.tableWidget.item(4, 2)
-        ___qtablewidgetitem33.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 4 Keycard (RED)", None));
+        ___qtablewidgetitem33.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 4 Keycard (RED)", None))
         ___qtablewidgetitem34 = self.tableWidget.item(4, 3)
-        ___qtablewidgetitem34.setText(QCoreApplication.translate("FusionGameTabWidget", u"Specific Infant Metroids, Configurable Precision", None));
+        ___qtablewidgetitem34.setText(QCoreApplication.translate("FusionGameTabWidget", u"Specific Infant Metroids, Configurable Precision", None))
         ___qtablewidgetitem35 = self.tableWidget.item(5, 0)
-        ___qtablewidgetitem35.setText(QCoreApplication.translate("FusionGameTabWidget", u"Sector 1 (SRX)", None));
+        ___qtablewidgetitem35.setText(QCoreApplication.translate("FusionGameTabWidget", u"Sector 1 (SRX)", None))
         ___qtablewidgetitem36 = self.tableWidget.item(5, 1)
-        ___qtablewidgetitem36.setText(QCoreApplication.translate("FusionGameTabWidget", u"Entrance Navigation Room", None));
+        ___qtablewidgetitem36.setText(QCoreApplication.translate("FusionGameTabWidget", u"Entrance Navigation Room", None))
         ___qtablewidgetitem37 = self.tableWidget.item(5, 2)
-        ___qtablewidgetitem37.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 2 Keycard (GREEN)", None));
+        ___qtablewidgetitem37.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 2 Keycard (GREEN)", None))
         ___qtablewidgetitem38 = self.tableWidget.item(5, 3)
-        ___qtablewidgetitem38.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None));
+        ___qtablewidgetitem38.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None))
         ___qtablewidgetitem39 = self.tableWidget.item(6, 0)
-        ___qtablewidgetitem39.setText(QCoreApplication.translate("FusionGameTabWidget", u"Sector 2 (TRO)", None));
+        ___qtablewidgetitem39.setText(QCoreApplication.translate("FusionGameTabWidget", u"Sector 2 (TRO)", None))
         ___qtablewidgetitem40 = self.tableWidget.item(6, 1)
-        ___qtablewidgetitem40.setText(QCoreApplication.translate("FusionGameTabWidget", u"Entrance Navigation Room", None));
+        ___qtablewidgetitem40.setText(QCoreApplication.translate("FusionGameTabWidget", u"Entrance Navigation Room", None))
         ___qtablewidgetitem41 = self.tableWidget.item(6, 2)
-        ___qtablewidgetitem41.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 2 Keycard (GREEN)", None));
+        ___qtablewidgetitem41.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 2 Keycard (GREEN)", None))
         ___qtablewidgetitem42 = self.tableWidget.item(6, 3)
-        ___qtablewidgetitem42.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None));
+        ___qtablewidgetitem42.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None))
         ___qtablewidgetitem43 = self.tableWidget.item(7, 0)
-        ___qtablewidgetitem43.setText(QCoreApplication.translate("FusionGameTabWidget", u"Sector 3 (PYR)", None));
+        ___qtablewidgetitem43.setText(QCoreApplication.translate("FusionGameTabWidget", u"Sector 3 (PYR)", None))
         ___qtablewidgetitem44 = self.tableWidget.item(7, 1)
-        ___qtablewidgetitem44.setText(QCoreApplication.translate("FusionGameTabWidget", u"Entrance Navigation Room", None));
+        ___qtablewidgetitem44.setText(QCoreApplication.translate("FusionGameTabWidget", u"Entrance Navigation Room", None))
         ___qtablewidgetitem45 = self.tableWidget.item(7, 2)
-        ___qtablewidgetitem45.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 3 Keycard (YELLOW)", None));
+        ___qtablewidgetitem45.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 3 Keycard (YELLOW)", None))
         ___qtablewidgetitem46 = self.tableWidget.item(7, 3)
-        ___qtablewidgetitem46.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None));
+        ___qtablewidgetitem46.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None))
         ___qtablewidgetitem47 = self.tableWidget.item(8, 0)
-        ___qtablewidgetitem47.setText(QCoreApplication.translate("FusionGameTabWidget", u"Sector 4 (AQA)", None));
+        ___qtablewidgetitem47.setText(QCoreApplication.translate("FusionGameTabWidget", u"Sector 4 (AQA)", None))
         ___qtablewidgetitem48 = self.tableWidget.item(8, 1)
-        ___qtablewidgetitem48.setText(QCoreApplication.translate("FusionGameTabWidget", u"Entrance Navigation Room", None));
+        ___qtablewidgetitem48.setText(QCoreApplication.translate("FusionGameTabWidget", u"Entrance Navigation Room", None))
         ___qtablewidgetitem49 = self.tableWidget.item(8, 2)
-        ___qtablewidgetitem49.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 3 Keycard (YELLOW)", None));
+        ___qtablewidgetitem49.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 3 Keycard (YELLOW)", None))
         ___qtablewidgetitem50 = self.tableWidget.item(8, 3)
-        ___qtablewidgetitem50.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None));
+        ___qtablewidgetitem50.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None))
         ___qtablewidgetitem51 = self.tableWidget.item(9, 0)
-        ___qtablewidgetitem51.setText(QCoreApplication.translate("FusionGameTabWidget", u"Sector 5 (ARC)", None));
+        ___qtablewidgetitem51.setText(QCoreApplication.translate("FusionGameTabWidget", u"Sector 5 (ARC)", None))
         ___qtablewidgetitem52 = self.tableWidget.item(9, 1)
-        ___qtablewidgetitem52.setText(QCoreApplication.translate("FusionGameTabWidget", u"Entrance Navigation Room", None));
+        ___qtablewidgetitem52.setText(QCoreApplication.translate("FusionGameTabWidget", u"Entrance Navigation Room", None))
         ___qtablewidgetitem53 = self.tableWidget.item(9, 2)
-        ___qtablewidgetitem53.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 4 Keycard (RED)", None));
+        ___qtablewidgetitem53.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 4 Keycard (RED)", None))
         ___qtablewidgetitem54 = self.tableWidget.item(9, 3)
-        ___qtablewidgetitem54.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None));
+        ___qtablewidgetitem54.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None))
         ___qtablewidgetitem55 = self.tableWidget.item(10, 0)
-        ___qtablewidgetitem55.setText(QCoreApplication.translate("FusionGameTabWidget", u"Sector 6 (NOC)", None));
+        ___qtablewidgetitem55.setText(QCoreApplication.translate("FusionGameTabWidget", u"Sector 6 (NOC)", None))
         ___qtablewidgetitem56 = self.tableWidget.item(10, 1)
-        ___qtablewidgetitem56.setText(QCoreApplication.translate("FusionGameTabWidget", u"Entrance Navigation Room", None));
+        ___qtablewidgetitem56.setText(QCoreApplication.translate("FusionGameTabWidget", u"Entrance Navigation Room", None))
         ___qtablewidgetitem57 = self.tableWidget.item(10, 2)
-        ___qtablewidgetitem57.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 4 Keycard (RED)", None));
+        ___qtablewidgetitem57.setText(QCoreApplication.translate("FusionGameTabWidget", u"Level 4 Keycard (RED)", None))
         ___qtablewidgetitem58 = self.tableWidget.item(10, 3)
-        ___qtablewidgetitem58.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None));
+        ___qtablewidgetitem58.setText(QCoreApplication.translate("FusionGameTabWidget", u"Regular Hint, Featural", None))
         self.tableWidget.setSortingEnabled(__sortingEnabled)
 
         self.label.setText(QCoreApplication.translate("FusionGameTabWidget", u"<html><head/><body><p><br/></p></body></html>", None))

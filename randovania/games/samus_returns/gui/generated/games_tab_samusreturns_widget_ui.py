@@ -194,64 +194,64 @@ class Ui_SamusReturnsGameTabWidget(object):
         __qtablewidgetitem11 = QTableWidgetItem()
         self.hints_dna_locations_widget.setVerticalHeaderItem(9, __qtablewidgetitem11)
         __qtablewidgetitem12 = QTableWidgetItem()
-        __qtablewidgetitem12.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem12.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(0, 0, __qtablewidgetitem12)
         __qtablewidgetitem13 = QTableWidgetItem()
-        __qtablewidgetitem13.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem13.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(0, 1, __qtablewidgetitem13)
         __qtablewidgetitem14 = QTableWidgetItem()
-        __qtablewidgetitem14.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem14.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(1, 0, __qtablewidgetitem14)
         __qtablewidgetitem15 = QTableWidgetItem()
-        __qtablewidgetitem15.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem15.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(1, 1, __qtablewidgetitem15)
         __qtablewidgetitem16 = QTableWidgetItem()
-        __qtablewidgetitem16.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem16.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(2, 0, __qtablewidgetitem16)
         __qtablewidgetitem17 = QTableWidgetItem()
-        __qtablewidgetitem17.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem17.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(2, 1, __qtablewidgetitem17)
         __qtablewidgetitem18 = QTableWidgetItem()
-        __qtablewidgetitem18.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem18.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(3, 0, __qtablewidgetitem18)
         __qtablewidgetitem19 = QTableWidgetItem()
-        __qtablewidgetitem19.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem19.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(3, 1, __qtablewidgetitem19)
         __qtablewidgetitem20 = QTableWidgetItem()
-        __qtablewidgetitem20.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem20.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(4, 0, __qtablewidgetitem20)
         __qtablewidgetitem21 = QTableWidgetItem()
-        __qtablewidgetitem21.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem21.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(4, 1, __qtablewidgetitem21)
         __qtablewidgetitem22 = QTableWidgetItem()
-        __qtablewidgetitem22.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem22.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(5, 0, __qtablewidgetitem22)
         __qtablewidgetitem23 = QTableWidgetItem()
-        __qtablewidgetitem23.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem23.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(5, 1, __qtablewidgetitem23)
         __qtablewidgetitem24 = QTableWidgetItem()
-        __qtablewidgetitem24.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem24.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(6, 0, __qtablewidgetitem24)
         __qtablewidgetitem25 = QTableWidgetItem()
-        __qtablewidgetitem25.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem25.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(6, 1, __qtablewidgetitem25)
         __qtablewidgetitem26 = QTableWidgetItem()
-        __qtablewidgetitem26.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem26.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(7, 0, __qtablewidgetitem26)
         __qtablewidgetitem27 = QTableWidgetItem()
-        __qtablewidgetitem27.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem27.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(7, 1, __qtablewidgetitem27)
         __qtablewidgetitem28 = QTableWidgetItem()
-        __qtablewidgetitem28.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem28.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(8, 0, __qtablewidgetitem28)
         __qtablewidgetitem29 = QTableWidgetItem()
-        __qtablewidgetitem29.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem29.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(8, 1, __qtablewidgetitem29)
         __qtablewidgetitem30 = QTableWidgetItem()
-        __qtablewidgetitem30.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem30.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(9, 0, __qtablewidgetitem30)
         __qtablewidgetitem31 = QTableWidgetItem()
-        __qtablewidgetitem31.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem31.setTextAlignment(Qt.AlignCenter)
         self.hints_dna_locations_widget.setItem(9, 1, __qtablewidgetitem31)
         self.hints_dna_locations_widget.setObjectName(u"hints_dna_locations_widget")
         sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
@@ -340,75 +340,75 @@ class Ui_SamusReturnsGameTabWidget(object):
         SamusReturnsGameTabWidget.setTabText(SamusReturnsGameTabWidget.indexOf(self.differences_tab), QCoreApplication.translate("SamusReturnsGameTabWidget", u"Differences", None))
         self.hints_label.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"<html><head/><body><p>In Metroid: Samus Returns, you can find hints from the following sources:</p><p><span style=\" font-weight:600;\">After collecting all Metroid DNA</span>: The textbox that is shown after collecting all Metroid DNA also hints to where the Baby Metroid is located, if it has not already been collected.</p><p><span style=\" font-weight:600;\">Chozo Seals: </span>Seals found at the start of each area provide one hint to where an <span style=\" font-weight:600;\">item</span> is located.</p></body></html>", None))
         ___qtreewidgetitem = self.hint_locations_tree_widget.headerItem()
-        ___qtreewidgetitem.setText(0, QCoreApplication.translate("SamusReturnsGameTabWidget", u"Location", None));
+        ___qtreewidgetitem.setText(0, QCoreApplication.translate("SamusReturnsGameTabWidget", u"Location", None))
         self.hints_label_2.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"<hr><html><head/><body><p>Custom Chozo Seals have also been added to all areas, which provide hints to where<span style=\" font-weight:600;\"> Metroid DNA</span> is located. Each seal provides hints randomly between zero and a set maximum. If no hints are provided, a joke hint is provided instead. These custom seals and their maximum amount of hints are as follows:</p></body></html>", None))
         ___qtablewidgetitem = self.hints_dna_locations_widget.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Location", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Location", None))
         ___qtablewidgetitem1 = self.hints_dna_locations_widget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Maximum amount of DNA hints", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Maximum amount of DNA hints", None))
         ___qtablewidgetitem2 = self.hints_dna_locations_widget.verticalHeaderItem(0)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None))
         ___qtablewidgetitem3 = self.hints_dna_locations_widget.verticalHeaderItem(1)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None))
         ___qtablewidgetitem4 = self.hints_dna_locations_widget.verticalHeaderItem(2)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None))
         ___qtablewidgetitem5 = self.hints_dna_locations_widget.verticalHeaderItem(3)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None))
         ___qtablewidgetitem6 = self.hints_dna_locations_widget.verticalHeaderItem(4)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None))
         ___qtablewidgetitem7 = self.hints_dna_locations_widget.verticalHeaderItem(5)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None))
         ___qtablewidgetitem8 = self.hints_dna_locations_widget.verticalHeaderItem(6)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem8.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None))
         ___qtablewidgetitem9 = self.hints_dna_locations_widget.verticalHeaderItem(7)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem9.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None))
         ___qtablewidgetitem10 = self.hints_dna_locations_widget.verticalHeaderItem(8)
-        ___qtablewidgetitem10.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem10.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None))
         ___qtablewidgetitem11 = self.hints_dna_locations_widget.verticalHeaderItem(9)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None));
+        ___qtablewidgetitem11.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"New Row", None))
 
         __sortingEnabled = self.hints_dna_locations_widget.isSortingEnabled()
         self.hints_dna_locations_widget.setSortingEnabled(False)
         ___qtablewidgetitem12 = self.hints_dna_locations_widget.item(0, 0)
-        ___qtablewidgetitem12.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Surface West - Transport to Area 8", None));
+        ___qtablewidgetitem12.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Surface West - Transport to Area 8", None))
         ___qtablewidgetitem13 = self.hints_dna_locations_widget.item(0, 1)
-        ___qtablewidgetitem13.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"1", None));
+        ___qtablewidgetitem13.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"1", None))
         ___qtablewidgetitem14 = self.hints_dna_locations_widget.item(1, 0)
-        ___qtablewidgetitem14.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 1 - Metroid Caverns Lobby", None));
+        ___qtablewidgetitem14.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 1 - Metroid Caverns Lobby", None))
         ___qtablewidgetitem15 = self.hints_dna_locations_widget.item(1, 1)
-        ___qtablewidgetitem15.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"4", None));
+        ___qtablewidgetitem15.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"4", None))
         ___qtablewidgetitem16 = self.hints_dna_locations_widget.item(2, 0)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 2 Dam Exterior - Metroid Caverns Teleporter", None));
+        ___qtablewidgetitem16.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 2 Dam Exterior - Metroid Caverns Teleporter", None))
         ___qtablewidgetitem17 = self.hints_dna_locations_widget.item(2, 1)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"5", None));
+        ___qtablewidgetitem17.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"5", None))
         ___qtablewidgetitem18 = self.hints_dna_locations_widget.item(3, 0)
-        ___qtablewidgetitem18.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 3 Metroid Caverns - Gamma+ Arena South", None));
+        ___qtablewidgetitem18.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 3 Metroid Caverns - Gamma+ Arena South", None))
         ___qtablewidgetitem19 = self.hints_dna_locations_widget.item(3, 1)
-        ___qtablewidgetitem19.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"6", None));
+        ___qtablewidgetitem19.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"6", None))
         ___qtablewidgetitem20 = self.hints_dna_locations_widget.item(4, 0)
-        ___qtablewidgetitem20.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 4 Crystal Mines - Basalt Basin", None));
+        ___qtablewidgetitem20.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 4 Crystal Mines - Basalt Basin", None))
         ___qtablewidgetitem21 = self.hints_dna_locations_widget.item(4, 1)
-        ___qtablewidgetitem21.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"4", None));
+        ___qtablewidgetitem21.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"4", None))
         ___qtablewidgetitem22 = self.hints_dna_locations_widget.item(5, 0)
-        ___qtablewidgetitem22.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 5 Tower Exterior - Tower Exterior", None));
+        ___qtablewidgetitem22.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 5 Tower Exterior - Tower Exterior", None))
         ___qtablewidgetitem23 = self.hints_dna_locations_widget.item(5, 1)
-        ___qtablewidgetitem23.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"5", None));
+        ___qtablewidgetitem23.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"5", None))
         ___qtablewidgetitem24 = self.hints_dna_locations_widget.item(6, 0)
-        ___qtablewidgetitem24.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 6 - Hideout Sprawl", None));
+        ___qtablewidgetitem24.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 6 - Hideout Sprawl", None))
         ___qtablewidgetitem25 = self.hints_dna_locations_widget.item(6, 1)
-        ___qtablewidgetitem25.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"3", None));
+        ___qtablewidgetitem25.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"3", None))
         ___qtablewidgetitem26 = self.hints_dna_locations_widget.item(7, 0)
-        ___qtablewidgetitem26.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 6 - Crumbling Stairwell", None));
+        ___qtablewidgetitem26.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 6 - Crumbling Stairwell", None))
         ___qtablewidgetitem27 = self.hints_dna_locations_widget.item(7, 1)
-        ___qtablewidgetitem27.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"3", None));
+        ___qtablewidgetitem27.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"3", None))
         ___qtablewidgetitem28 = self.hints_dna_locations_widget.item(8, 0)
-        ___qtablewidgetitem28.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 7 - Wallfire Workstation", None));
+        ___qtablewidgetitem28.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 7 - Wallfire Workstation", None))
         ___qtablewidgetitem29 = self.hints_dna_locations_widget.item(8, 1)
-        ___qtablewidgetitem29.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"3", None));
+        ___qtablewidgetitem29.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"3", None))
         ___qtablewidgetitem30 = self.hints_dna_locations_widget.item(9, 0)
-        ___qtablewidgetitem30.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 8 - Hatchling Room*", None));
+        ___qtablewidgetitem30.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"Area 8 - Hatchling Room*", None))
         ___qtablewidgetitem31 = self.hints_dna_locations_widget.item(9, 1)
-        ___qtablewidgetitem31.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"5", None));
+        ___qtablewidgetitem31.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"5", None))
         self.hints_dna_locations_widget.setSortingEnabled(__sortingEnabled)
 
         self.hints_label_3.setText(QCoreApplication.translate("SamusReturnsGameTabWidget", u"<html><head/><body><p>*The DNA Seal in Area 8 - Hatchling Room is inactive until <span style=\" font-style:italic;\">after</span> the Metroid Queen has been defeated.</p></body></html>\n"

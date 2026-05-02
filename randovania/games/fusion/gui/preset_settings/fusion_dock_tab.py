@@ -10,8 +10,6 @@ from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
-
     from randovania.game_description.game_description import GameDescription
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
@@ -64,11 +62,6 @@ class PresetFusionDocks(PresetDockRando):
         # Checkbox Signals
         for f in _CHECKBOX_FIELDS:
             self._add_checkbox_persist_option(getattr(self, f"{f}_check"), f)
-
-    @property
-    def development_settings(self) -> Iterator[QtWidgets.QWidget]:
-        # Hide the randomization settings unless running in preview mode
-        yield self.settings_group
 
     def _add_checkbox_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
         def persist(value: bool) -> None:

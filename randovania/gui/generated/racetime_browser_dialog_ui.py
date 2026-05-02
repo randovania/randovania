@@ -160,17 +160,17 @@ class Ui_RacetimeBrowserDialog(object):
     def retranslateUi(self, RacetimeBrowserDialog):
         RacetimeBrowserDialog.setWindowTitle(QCoreApplication.translate("RacetimeBrowserDialog", u"Racetime.gg Browser", None))
         ___qtablewidgetitem = self.table_widget.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Name", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Name", None))
         ___qtablewidgetitem1 = self.table_widget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Status", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Status", None))
         ___qtablewidgetitem2 = self.table_widget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Entrants", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Entrants", None))
         ___qtablewidgetitem3 = self.table_widget.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Goal", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Goal", None))
         ___qtablewidgetitem4 = self.table_widget.horizontalHeaderItem(4)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Opened At", None));
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Opened At", None))
         ___qtablewidgetitem5 = self.table_widget.horizontalHeaderItem(5)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Info", None));
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Info", None))
         self.filter_group.setTitle(QCoreApplication.translate("RacetimeBrowserDialog", u"Filters", None))
         self.status_pending_check.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Pending", None))
         self.filter_name_label.setText(QCoreApplication.translate("RacetimeBrowserDialog", u"Name", None))

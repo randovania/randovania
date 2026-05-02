@@ -171,8 +171,8 @@ class PrimeBootstrap(Bootstrap):
         if configuration.legacy_mode:
             suits.extend([db.get_item_by_display_name("Gravity Suit"), db.get_item_by_display_name("Phazon Suit")])
 
-        reductions = [DamageReduction(None, configuration.heat_damage / 10.0)]
-        reductions.extend([DamageReduction(suit, 0) for suit in suits])
+        reductions = [DamageReduction(None, 0, configuration.heat_damage / 10.0)]
+        reductions.extend([DamageReduction(suit, 1, 0) for suit in suits])
         damage_reductions[db.get_damage("HeatDamage1")] = reductions
 
         if configuration.damage_reduction == DamageReductionConfig.PROGRESSIVE:

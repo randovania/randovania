@@ -291,7 +291,7 @@ class Ui_CaveStoryGameTabWidget(object):
 "                                                to them:</p></body></html>\n"
 "                                            ", None))
         ___qtreewidgetitem = self.hint_locations_tree_widget.headerItem()
-        ___qtreewidgetitem.setText(0, QCoreApplication.translate("CaveStoryGameTabWidget", u"Location", None));
+        ___qtreewidgetitem.setText(0, QCoreApplication.translate("CaveStoryGameTabWidget", u"Location", None))
         CaveStoryGameTabWidget.setTabText(CaveStoryGameTabWidget.indexOf(self.hint_locations_tab), QCoreApplication.translate("CaveStoryGameTabWidget", u"Hint Locations", None))
         pass
     # retranslateUi

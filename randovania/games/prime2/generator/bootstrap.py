@@ -9,7 +9,10 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_reduction import DamageReduction
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
+from randovania.games.prime2.layout.echoes_configuration import (
+    EchoesConfiguration,
+    LayoutSkyTempleKeyMode,
+)
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
@@ -56,7 +59,7 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
         yield resource_database.get_event("Event71"), 1  # Landing Site Webs
         yield resource_database.get_event("Event78"), 1  # Hive Chamber A Gates
 
-        if configuration.use_new_patcher:
+        if configuration.use_new_patcher.is_enabled():
             yield resource_database.get_event("Event73"), 1  # Dynamo Chamber Gates
             yield resource_database.get_event("Event75"), 1  # Trooper Security Station Gate
 
@@ -93,9 +96,9 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
     def patch_resource_database(self, db: ResourceDatabase, configuration: EchoesConfiguration) -> ResourceDatabase:
         damage_reductions = copy.copy(db.damage_reductions)
         damage_reductions[db.get_damage("DarkWorld1")] = [
-            DamageReduction(None, configuration.varia_suit_damage / 6.0),
-            DamageReduction(db.get_item_by_display_name("Dark Suit"), configuration.dark_suit_damage / 6.0),
-            DamageReduction(db.get_item_by_display_name("Light Suit"), 0.0),
+            DamageReduction(None, 0, configuration.varia_suit_damage / 6.0),
+            DamageReduction(db.get_item_by_display_name("Dark Suit"), 1, configuration.dark_suit_damage / 6.0),
+            DamageReduction(db.get_item_by_display_name("Light Suit"), 1, 0.0),
         ]
         return dataclasses.replace(db, damage_reductions=damage_reductions)
 

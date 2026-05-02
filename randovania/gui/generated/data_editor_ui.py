@@ -180,7 +180,7 @@ class Ui_DataEditorWindow(object):
 
         self.other_node_alternatives_contents = QTreeWidget(self.connections_group)
         __qtreewidgetitem = QTreeWidgetItem()
-        __qtreewidgetitem.setText(0, u"1");
+        __qtreewidgetitem.setText(0, u"1")
         self.other_node_alternatives_contents.setHeaderItem(__qtreewidgetitem)
         self.other_node_alternatives_contents.setObjectName(u"other_node_alternatives_contents")
         self.other_node_alternatives_contents.header().setVisible(False)

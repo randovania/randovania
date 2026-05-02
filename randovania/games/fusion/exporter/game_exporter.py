@@ -53,11 +53,17 @@ class FusionGameExporter(GameExporter[FusionGameExportParams]):
         from mars_patcher import patcher
         from mars_patcher.version import version as mars_patcher_version
 
-        # Add rdv and patcher version to patch data
-        text = [
-            f"Randovania  : {randovania.VERSION}",
-            f"MARS Patcher: {mars_patcher_version}",
-        ]
+        # Always add RDV version, add patcher version only if dev/source
+        if randovania.is_dev_version():
+            text = [
+                f"Randovania  : {randovania.VERSION}",
+                f"MARS Patcher: {mars_patcher_version}",
+            ]
+        else:
+            text = [
+                f"Randovania {randovania.VERSION}",
+            ]
+
         for index, line in enumerate(text):
             if len(line) > 30:
                 text[index] = f"{line[0:27]}..."

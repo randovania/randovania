@@ -33,6 +33,10 @@ datas = [
     ("README.md", "data/"),
 ]
 datas += copy_metadata("randovania", recursive=True)
+datas += copy_metadata("pytest_asyncio")
+datas += copy_metadata("pytest-mock")
+datas += copy_metadata("pytest-localftpserver")
+datas += copy_metadata("pytest-codspeed")
 if platform.system() == "Linux":
     linux_datas = [("randovania/data/xdg_assets", "xdg_assets")]
     datas += linux_datas
@@ -46,6 +50,10 @@ a = Analysis(
     hiddenimports=[
         "unittest.mock",
         "randovania.lib.bitmask",
+        "pytest_asyncio.plugin",
+        "pytest_mock.plugin",
+        "pytest_localftpserver.plugin",
+        "pytest_codspeed.plugin",
     ],
     hookspath=[
         # https://github.com/pyinstaller/pyinstaller/issues/4040

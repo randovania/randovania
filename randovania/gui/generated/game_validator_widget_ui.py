@@ -130,14 +130,14 @@ class Ui_GameValidatorWidget(object):
         self.start_button.setText(QCoreApplication.translate("GameValidatorWidget", u"Start", None))
         self.status_label.setText(QCoreApplication.translate("GameValidatorWidget", u"Not started", None))
         ___qtreewidgetitem = self.log_widget.headerItem()
-        ___qtreewidgetitem.setText(0, QCoreApplication.translate("GameValidatorWidget", u"Playthrough", None));
+        ___qtreewidgetitem.setText(0, QCoreApplication.translate("GameValidatorWidget", u"Playthrough", None))
 
         __sortingEnabled = self.log_widget.isSortingEnabled()
         self.log_widget.setSortingEnabled(False)
         ___qtreewidgetitem1 = self.log_widget.topLevelItem(0)
-        ___qtreewidgetitem1.setText(0, QCoreApplication.translate("GameValidatorWidget", u"To view the playthrough, it's necessary to run the solver.", None));
+        ___qtreewidgetitem1.setText(0, QCoreApplication.translate("GameValidatorWidget", u"To view the playthrough, it's necessary to run the solver.", None))
         ___qtreewidgetitem2 = self.log_widget.topLevelItem(1)
-        ___qtreewidgetitem2.setText(0, QCoreApplication.translate("GameValidatorWidget", u"Press the Start button at the bottom-right and wait for it to finish.", None));
+        ___qtreewidgetitem2.setText(0, QCoreApplication.translate("GameValidatorWidget", u"Press the Start button at the bottom-right and wait for it to finish.", None))
         self.log_widget.setSortingEnabled(__sortingEnabled)
 
         self.verbosity_label.setText(QCoreApplication.translate("GameValidatorWidget", u"<html><head/><body><p>Verbosity</p></body></html>", None))

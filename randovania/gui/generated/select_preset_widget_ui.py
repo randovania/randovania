@@ -89,18 +89,18 @@ class Ui_SelectPresetWidget(object):
         self.create_new_preset_button.setText(QCoreApplication.translate("SelectPresetWidget", u"\uff0b Create New Preset", None))
         self.create_preset_description.setText(QCoreApplication.translate("SelectPresetWidget", u"<html><head/><body><p>This content should have been replaced by code.</p></body></html>", None))
         ___qtreewidgetitem = self.create_preset_tree.headerItem()
-        ___qtreewidgetitem.setText(0, QCoreApplication.translate("SelectPresetWidget", u"Presets (Right click for actions)", None));
+        ___qtreewidgetitem.setText(0, QCoreApplication.translate("SelectPresetWidget", u"Presets (Right click for actions)", None))
 
         __sortingEnabled = self.create_preset_tree.isSortingEnabled()
         self.create_preset_tree.setSortingEnabled(False)
         ___qtreewidgetitem1 = self.create_preset_tree.topLevelItem(0)
-        ___qtreewidgetitem1.setText(0, QCoreApplication.translate("SelectPresetWidget", u"Metroid Prime", None));
+        ___qtreewidgetitem1.setText(0, QCoreApplication.translate("SelectPresetWidget", u"Metroid Prime", None))
         ___qtreewidgetitem2 = ___qtreewidgetitem1.child(0)
-        ___qtreewidgetitem2.setText(0, QCoreApplication.translate("SelectPresetWidget", u"Default Preset", None));
+        ___qtreewidgetitem2.setText(0, QCoreApplication.translate("SelectPresetWidget", u"Default Preset", None))
         ___qtreewidgetitem3 = ___qtreewidgetitem2.child(0)
-        ___qtreewidgetitem3.setText(0, QCoreApplication.translate("SelectPresetWidget", u"Your Custom Preset", None));
+        ___qtreewidgetitem3.setText(0, QCoreApplication.translate("SelectPresetWidget", u"Your Custom Preset", None))
         ___qtreewidgetitem4 = self.create_preset_tree.topLevelItem(1)
-        ___qtreewidgetitem4.setText(0, QCoreApplication.translate("SelectPresetWidget", u"Metroid Prime 2", None));
+        ___qtreewidgetitem4.setText(0, QCoreApplication.translate("SelectPresetWidget", u"Metroid Prime 2", None))
         self.create_preset_tree.setSortingEnabled(__sortingEnabled)
 
         pass

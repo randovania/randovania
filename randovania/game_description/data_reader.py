@@ -108,6 +108,7 @@ class ResourceReader:
 def read_damage_reduction(data: dict, items: list[ItemResourceInfo]) -> DamageReduction:
     return DamageReduction(
         find_resource_info_with_id(items, data["name"], ResourceType.ITEM) if data["name"] is not None else None,
+        data["quantity"],
         data["multiplier"],
     )
 

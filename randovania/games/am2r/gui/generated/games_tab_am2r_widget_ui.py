@@ -181,46 +181,46 @@ class Ui_AM2RGameTabWidget(object):
         __qtablewidgetitem8 = QTableWidgetItem()
         self.tableWidget.setVerticalHeaderItem(6, __qtablewidgetitem8)
         __qtablewidgetitem9 = QTableWidgetItem()
-        __qtablewidgetitem9.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem9.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(0, 0, __qtablewidgetitem9)
         __qtablewidgetitem10 = QTableWidgetItem()
-        __qtablewidgetitem10.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem10.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(0, 1, __qtablewidgetitem10)
         __qtablewidgetitem11 = QTableWidgetItem()
-        __qtablewidgetitem11.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem11.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(1, 0, __qtablewidgetitem11)
         __qtablewidgetitem12 = QTableWidgetItem()
-        __qtablewidgetitem12.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem12.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(1, 1, __qtablewidgetitem12)
         __qtablewidgetitem13 = QTableWidgetItem()
-        __qtablewidgetitem13.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem13.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(2, 0, __qtablewidgetitem13)
         __qtablewidgetitem14 = QTableWidgetItem()
-        __qtablewidgetitem14.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem14.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(2, 1, __qtablewidgetitem14)
         __qtablewidgetitem15 = QTableWidgetItem()
-        __qtablewidgetitem15.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem15.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(3, 0, __qtablewidgetitem15)
         __qtablewidgetitem16 = QTableWidgetItem()
-        __qtablewidgetitem16.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem16.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(3, 1, __qtablewidgetitem16)
         __qtablewidgetitem17 = QTableWidgetItem()
-        __qtablewidgetitem17.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem17.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(4, 0, __qtablewidgetitem17)
         __qtablewidgetitem18 = QTableWidgetItem()
-        __qtablewidgetitem18.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem18.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(4, 1, __qtablewidgetitem18)
         __qtablewidgetitem19 = QTableWidgetItem()
-        __qtablewidgetitem19.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem19.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(5, 0, __qtablewidgetitem19)
         __qtablewidgetitem20 = QTableWidgetItem()
-        __qtablewidgetitem20.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem20.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(5, 1, __qtablewidgetitem20)
         __qtablewidgetitem21 = QTableWidgetItem()
-        __qtablewidgetitem21.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem21.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(6, 0, __qtablewidgetitem21)
         __qtablewidgetitem22 = QTableWidgetItem()
-        __qtablewidgetitem22.setTextAlignment(Qt.AlignCenter);
+        __qtablewidgetitem22.setTextAlignment(Qt.AlignCenter)
         self.tableWidget.setItem(6, 1, __qtablewidgetitem22)
         self.tableWidget.setObjectName(u"tableWidget")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
@@ -301,54 +301,54 @@ class Ui_AM2RGameTabWidget(object):
         AM2RGameTabWidget.setTabText(AM2RGameTabWidget.indexOf(self.differences_tab), QCoreApplication.translate("AM2RGameTabWidget", u"Differences", None))
         self.hints_label.setText(QCoreApplication.translate("AM2RGameTabWidget", u"<html><head/><body><p>In AM2R, you can find hints from the following sources: </p><p><span style=\" font-weight:600;\">Broken Chozo Statue</span>: Hints for where your Ice Beam is located. It can be found in Genetics Laboratory - Destroyed Chozo Memorial. </p><p><span style=\" font-weight:600;\">Wisdom Septoggs</span>: Wisdom Septoggs have been placed throughout the planet, one in each Area. They hint to where your Metroid DNA is located. Each Wisdom Septogg can hint between zero DNA and a set maximum. If no hints are provided, a joke hint is displayed instead. The locations and maximum amount of hinted DNA is as follows:</p></body></html>", None))
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Location", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Location", None))
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Maximum amount of DNA hints", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Maximum amount of DNA hints", None))
         ___qtablewidgetitem2 = self.tableWidget.verticalHeaderItem(0)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None))
         ___qtablewidgetitem3 = self.tableWidget.verticalHeaderItem(1)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None))
         ___qtablewidgetitem4 = self.tableWidget.verticalHeaderItem(2)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None));
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None))
         ___qtablewidgetitem5 = self.tableWidget.verticalHeaderItem(3)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None));
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None))
         ___qtablewidgetitem6 = self.tableWidget.verticalHeaderItem(4)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None));
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None))
         ___qtablewidgetitem7 = self.tableWidget.verticalHeaderItem(5)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None));
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None))
         ___qtablewidgetitem8 = self.tableWidget.verticalHeaderItem(6)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None));
+        ___qtablewidgetitem8.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Neue Zeile", None))
 
         __sortingEnabled = self.tableWidget.isSortingEnabled()
         self.tableWidget.setSortingEnabled(False)
         ___qtablewidgetitem9 = self.tableWidget.item(0, 0)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Main Caves - Research Site Elevator", None));
+        ___qtablewidgetitem9.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Main Caves - Research Site Elevator", None))
         ___qtablewidgetitem10 = self.tableWidget.item(0, 1)
-        ___qtablewidgetitem10.setText(QCoreApplication.translate("AM2RGameTabWidget", u"5", None));
+        ___qtablewidgetitem10.setText(QCoreApplication.translate("AM2RGameTabWidget", u"5", None))
         ___qtablewidgetitem11 = self.tableWidget.item(1, 0)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Golden Temple - Breeding Grounds Hub", None));
+        ___qtablewidgetitem11.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Golden Temple - Breeding Grounds Hub", None))
         ___qtablewidgetitem12 = self.tableWidget.item(1, 1)
-        ___qtablewidgetitem12.setText(QCoreApplication.translate("AM2RGameTabWidget", u"4", None));
+        ___qtablewidgetitem12.setText(QCoreApplication.translate("AM2RGameTabWidget", u"4", None))
         ___qtablewidgetitem13 = self.tableWidget.item(2, 0)
-        ___qtablewidgetitem13.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Hydro Station - Breeding Grounds Lobby", None));
+        ___qtablewidgetitem13.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Hydro Station - Breeding Grounds Lobby", None))
         ___qtablewidgetitem14 = self.tableWidget.item(2, 1)
-        ___qtablewidgetitem14.setText(QCoreApplication.translate("AM2RGameTabWidget", u"8", None));
+        ___qtablewidgetitem14.setText(QCoreApplication.translate("AM2RGameTabWidget", u"8", None))
         ___qtablewidgetitem15 = self.tableWidget.item(3, 0)
-        ___qtablewidgetitem15.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Industrial Complex - Breeding Grounds Fly Stadium", None));
+        ___qtablewidgetitem15.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Industrial Complex - Breeding Grounds Fly Stadium", None))
         ___qtablewidgetitem16 = self.tableWidget.item(3, 1)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("AM2RGameTabWidget", u"10", None));
+        ___qtablewidgetitem16.setText(QCoreApplication.translate("AM2RGameTabWidget", u"10", None))
         ___qtablewidgetitem17 = self.tableWidget.item(4, 0)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("AM2RGameTabWidget", u"The Tower - Tower Exterior North", None));
+        ___qtablewidgetitem17.setText(QCoreApplication.translate("AM2RGameTabWidget", u"The Tower - Tower Exterior North", None))
         ___qtablewidgetitem18 = self.tableWidget.item(4, 1)
-        ___qtablewidgetitem18.setText(QCoreApplication.translate("AM2RGameTabWidget", u"6", None));
+        ___qtablewidgetitem18.setText(QCoreApplication.translate("AM2RGameTabWidget", u"6", None))
         ___qtablewidgetitem19 = self.tableWidget.item(5, 0)
-        ___qtablewidgetitem19.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Distribution Center - Distribution Facility Tower East", None));
+        ___qtablewidgetitem19.setText(QCoreApplication.translate("AM2RGameTabWidget", u"Distribution Center - Distribution Facility Tower East", None))
         ___qtablewidgetitem20 = self.tableWidget.item(5, 1)
-        ___qtablewidgetitem20.setText(QCoreApplication.translate("AM2RGameTabWidget", u"8", None));
+        ___qtablewidgetitem20.setText(QCoreApplication.translate("AM2RGameTabWidget", u"8", None))
         ___qtablewidgetitem21 = self.tableWidget.item(6, 0)
-        ___qtablewidgetitem21.setText(QCoreApplication.translate("AM2RGameTabWidget", u"The Depths - Bubble Lair Shinespark Cave", None));
+        ___qtablewidgetitem21.setText(QCoreApplication.translate("AM2RGameTabWidget", u"The Depths - Bubble Lair Shinespark Cave", None))
         ___qtablewidgetitem22 = self.tableWidget.item(6, 1)
-        ___qtablewidgetitem22.setText(QCoreApplication.translate("AM2RGameTabWidget", u"5", None));
+        ___qtablewidgetitem22.setText(QCoreApplication.translate("AM2RGameTabWidget", u"5", None))
         self.tableWidget.setSortingEnabled(__sortingEnabled)
 
         self.label.setText(QCoreApplication.translate("AM2RGameTabWidget", u"<html><p></p><p>All Hints are marked with an \"H\" on the map. In a Multiworld session, all hints will also describe the player which has the item.</p></html>", None))
