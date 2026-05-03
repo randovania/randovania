@@ -67,7 +67,7 @@ class Ui_HuntersCosmeticPatchesDialog(object):
 
         self.gridLayout_2.addWidget(self.cosmetic_patches_box, 0, 0, 1, 1)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.gridLayout_2.addItem(self.verticalSpacer, 1, 0, 1, 1)
 
@@ -103,7 +103,7 @@ class Ui_HuntersCosmeticPatchesDialog(object):
         HuntersCosmeticPatchesDialog.setWindowTitle(QCoreApplication.translate("HuntersCosmeticPatchesDialog", u"Hunters Game - Cosmetic Options", None))
         self.cosmetic_patches_box.setTitle(QCoreApplication.translate("HuntersCosmeticPatchesDialog", u"Cosmetic Patches", None))
         self.shuffle_hunter_colors_check.setText(QCoreApplication.translate("HuntersCosmeticPatchesDialog", u"Shuffle Hunter Colors", None))
-        self.shuffle_hunter_colors_label.setText(QCoreApplication.translate("HuntersCosmeticPatchesDialog", u"This changes how the Hunters and Guardians appear in game by using alternate textures from multiplayer.", None))
+        self.shuffle_hunter_colors_label.setText(QCoreApplication.translate("HuntersCosmeticPatchesDialog", u"This changes how the Hunters appear in game by using alternate textures from multiplayer.", None))
         self.reset_button.setText(QCoreApplication.translate("HuntersCosmeticPatchesDialog", u"Reset to Defaults", None))
         self.cancel_button.setText(QCoreApplication.translate("HuntersCosmeticPatchesDialog", u"Cancel", None))
         self.accept_button.setText(QCoreApplication.translate("HuntersCosmeticPatchesDialog", u"Accept", None))
