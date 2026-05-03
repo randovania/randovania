@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Added: Unique Save Slots cosmetic option. Stores this randomizer's saves in a unique location based on the seed hash.
+
 #### Logic Database
 
 - Fixed: Door override requirements for Shutter Gates (Flash Shift Doors) mentioned in version 10.5.0 didn't work and had no effect.
