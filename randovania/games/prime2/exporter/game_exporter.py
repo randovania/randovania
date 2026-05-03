@@ -164,6 +164,7 @@ def modern_export(
         import open_prime_rando.version
 
         patch_data["title_screen_text"] = f"{patch_data['title_screen_text']}\nOPR v{open_prime_rando.version.version}"
+        json_lib.write_path(export_params.output_path.with_suffix(".json"), patch_data)
 
         open_prime_rando.echoes.patcher.patch_iso(
             export_params.input_path,

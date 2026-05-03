@@ -812,6 +812,10 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
             "mlvl_id": starting_area["world_asset_id"],
             "mrea_id": starting_area["area_asset_id"],
         }
+        result["starting_items"] = [
+            {"item": item_id_for_item_resource(resource), "capacity": quantity}
+            for resource, quantity in self.patches.starting_resources().as_resource_gain()
+        ]
 
         pickup_list = _create_raw_pickup_list(
             self.cosmetic_patches, self.configuration, self.game, self.patches, self.players_config, self.rng
@@ -832,7 +836,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
                 _area_changes[(mlvl_id, mrea_id)] = {
                     "mrea_id": mrea_id,
-                    "pickups": [],
+                    # "pickups": [],
                 }
                 _world_changes[mlvl_id]["area_changes"].append(_area_changes[(mlvl_id, mrea_id)])
 
@@ -864,7 +868,8 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
             # from open_prime_rando.echoes.pickups.schema import PickupModification
             # PickupModification.model_validate(new_pickup)
-            change["pickups"].append(new_pickup)
+            if "pickups" in change:
+                change["pickups"].append(new_pickup)
 
         if self.configuration.menu_mod:
             result["practice_mod"] = "full"
