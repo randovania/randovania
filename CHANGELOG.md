@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Artaria
 
-- Changed: Implementation detatil that should make the generator understand when the Varia Suit Climb is logically safe.
+- Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
 
 ### Metroid Prime 2: Echoes
 
