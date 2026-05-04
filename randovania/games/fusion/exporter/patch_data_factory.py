@@ -509,6 +509,16 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
         return pickup_creator.create_visual_nothing(self.game_enum(), "Anonymous")
 
+    def create_environmental_damage(self) -> dict:
+        environmental_damage = {
+            "Lava": self.configuration.lava_damage,
+            "Acid": self.configuration.acid_damage,
+            "Heat": self.configuration.heat_damage,
+            "Cold": self.configuration.cold_damage,
+            "Subzero": self.configuration.subzero_damage,
+        }
+        return environmental_damage
+
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         pickup_list = self.export_pickup_list()
 
@@ -538,6 +548,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "StereoDefault": self.cosmetic_patches.stereo_default,
             "DisableMusic": self.cosmetic_patches.disable_music,
             "DisableSoundEffects": self.cosmetic_patches.disable_sfx,
+            "EnvironmentalDamage": self.create_environmental_damage(),
         }
         ## Uncomment to spew the patch data into the terminal
         # import json

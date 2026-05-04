@@ -223,6 +223,11 @@
                     "MessageID": 17
                 }
             },
+            "BothSuits": {
+                "long_name": "Both Suits",
+                "max_capacity": 2,
+                "extra": {}
+            },
             "EnergyTank": {
                 "long_name": "Energy Tank",
                 "max_capacity": 20,
@@ -2530,11 +2535,16 @@
                 ]
             },
             {
-                "name": "BlueXDamage",
+                "name": "LavaDamage",
                 "reductions": [
                     {
                         "name": "VariaSuit",
                         "quantity": 1,
+                        "multiplier": 0.4
+                    },
+                    {
+                        "name": "BothSuits",
+                        "quantity": 2,
                         "multiplier": 0.0
                     }
                 ]

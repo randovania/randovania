@@ -35,6 +35,10 @@ class PresetFusionPatches(PresetTab, Ui_PresetFusionPatches):
         for f in _FIELDS:
             self._add_persist_option(getattr(self, f"{f}_check"), f)
         self.etank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
+        self.heat_damage_spin_box.valueChanged.connect(self._persist_heat_damage)
+        self.lava_damage_spin_box.valueChanged.connect(self._persist_lava_damage)
+        self.cold_damage_spin_box.valueChanged.connect(self._persist_cold_damage)
+        self.acid_damage_spin_box.valueChanged.connect(self._persist_acid_damage)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -55,9 +59,29 @@ class PresetFusionPatches(PresetTab, Ui_PresetFusionPatches):
         with self._editor as editor:
             editor.set_configuration_field("energy_per_tank", int(self.etank_capacity_spin_box.value()))
 
+    def _persist_lava_damage(self) -> None:
+        with self._editor as editor:
+            editor.set_configuration_field("heat_damage", int(self.heat_damage_spin_box.value()))
+
+    def _persist_acid_damage(self) -> None:
+        with self._editor as editor:
+            editor.set_configuration_field("lava_damage", int(self.lava_damage_spin_box.value()))
+
+    def _persist_heat_damage(self) -> None:
+        with self._editor as editor:
+            editor.set_configuration_field("cold_damage", int(self.cold_damage_spin_box.value()))
+
+    def _persist_cold_damage(self) -> None:
+        with self._editor as editor:
+            editor.set_configuration_field("acid_damage", int(self.acid_damage_spin_box.value()))
+
     def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(config, FusionConfiguration)
         for f in _FIELDS:
             typing.cast("QtWidgets.QCheckBox", getattr(self, f"{f}_check")).setChecked(getattr(config, f))
         self.etank_capacity_spin_box.setValue(config.energy_per_tank)
+        self.heat_damage_spin_box.setValue(config.heat_damage)
+        self.lava_damage_spin_box.setValue(config.lava_damage)
+        self.cold_damage_spin_box.setValue(config.cold_damage)
+        self.acid_damage_spin_box.setValue(config.acid_damage)

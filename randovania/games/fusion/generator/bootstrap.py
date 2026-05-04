@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import copy
 import dataclasses
 from typing import TYPE_CHECKING
 
+from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.games.fusion.layout import FusionConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
@@ -80,6 +82,29 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
         return dr
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: FusionConfiguration) -> ResourceDatabase:
+        damage_reductions = copy.copy(db.damage_reductions)
+        default_lava_dmg = 20
+        default_acid_dmg = 60
+        default_heat_dmg = 6
+        default_cold_dmg = 15
+        damage_reductions[db.get_damage("LavaDamage")] = [
+            DamageReduction(None, 0, configuration.lava_damage / default_lava_dmg),
+            DamageReduction(
+                db.get_item_by_display_name("Varia Suit"), 1, 0.4 * (configuration.lava_damage / default_lava_dmg)
+            ),
+            DamageReduction(db.get_item_by_display_name("Both Suits"), 2, 0.0),
+        ]
+        damage_reductions[db.get_damage("AcidDamage")] = [
+            DamageReduction(None, 0, configuration.acid_damage / default_acid_dmg),
+        ]
+        damage_reductions[db.get_damage("HeatDamage")] = [
+            DamageReduction(None, 0, configuration.heat_damage / default_heat_dmg),
+            DamageReduction(db.get_item_by_display_name("Varia Suit"), 1, 0.0),
+        ]
+        damage_reductions[db.get_damage("ColdDamage")] = [
+            DamageReduction(None, 0, configuration.cold_damage / default_cold_dmg),
+            DamageReduction(db.get_item_by_display_name("Varia Suit"), 1, 0.0),
+        ]
         return dataclasses.replace(db, base_damage_reduction=self._damage_reduction)
 
     def assign_pool_results(
