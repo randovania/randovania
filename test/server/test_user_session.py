@@ -366,19 +366,23 @@ async def test_guest_login_form(test_client):
     assert '<input id="name" placeholder="User name to login as" name="name">' in response.text
 
 
-async def test_guest_login_post_valid_json(test_client, clean_database):
-    response = test_client.post("/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo"})
+async def test_guest_login_post_valid_json(test_client, clean_database, mocker: pytest_mock.MockerFixture):
+    mocker.patch("randovania.server.user_session._log_session_info")
+
+    response = test_client.post(
+        "/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo", "sid": "1234"}
+    )
     response.raise_for_status()
     assert response.json() == {
         "encoded_session_b85": ANY,
-        "sid": None,
+        "sid": "1234",
         "user": {"discord_id": None, "id": 1, "name": "Guest: Foo"},
     }
     assert User.get_by_id(1).name == "Guest: Foo"
 
 
 async def test_guest_login_post_valid_web(test_client, clean_database):
-    response = test_client.post("/guest_login", data={"name": "Foo"}, follow_redirects=False)
+    response = test_client.post("/guest_login", data={"name": "Foo", "sid": "1234"}, follow_redirects=False)
     assert response.status_code == 303
     assert response.headers["Location"] == "http://testserver/me"
     assert response.text == ""
@@ -388,7 +392,9 @@ async def test_guest_login_post_valid_web(test_client, clean_database):
 async def test_guest_login_post_not_debug(test_client):
     test_client.sa.app.debug = False
 
-    response = test_client.post("/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo"})
+    response = test_client.post(
+        "/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo", "sid": "1234"}
+    )
     assert response.status_code == 400
     assert response.json() == {"error_message": "Unable to perform login"}
 

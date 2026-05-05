@@ -38,12 +38,16 @@ def _encrypt_session_for_user(sa: ServerApp, session: dict) -> str:
 
 def _create_client_side_session_raw(sa: ServerApp, sid: str | None, user: User) -> dict:
     if sid is not None:
-        sa.logger.info(f"Client at {sa.current_client_ip(sid)} is user {user.name} ({user.id}).")
+        _log_session_info(sa, sid, user)
 
     return {
         "sid": sid,
         "user": user.as_json,
     }
+
+
+def _log_session_info(sa: ServerApp, sid: str | None, user: User):
+    sa.logger.info(f"Client at {sa.current_client_ip(sid)} is user {user.name} ({user.id}).")
 
 
 async def _create_client_side_session(
@@ -330,7 +334,9 @@ async def guest_login(sa: ServerAppDep, request: Request) -> Response:
 
 
 @router.post("/guest_login")
-async def guest_login_post(sa: ServerAppDep, request: Request, name: typing.Annotated[str, Form()]) -> Response:
+async def guest_login_post(
+    sa: ServerAppDep, request: Request, name: typing.Annotated[str, Form()], sid: typing.Annotated[str, Form()]
+) -> Response:
     if not sa.app.debug:
         return unable_to_login(sa, request, "Unable to perform login", 400)
 
@@ -342,8 +348,7 @@ async def guest_login_post(sa: ServerAppDep, request: Request, name: typing.Anno
     request.session["user_id"] = user.id
 
     if sa.is_api_request(request):
-        # TODO: get the `sid` from the header? Though all it'll do is send that back to the client
-        return JSONResponse(await _create_client_side_session(sa, None, user, {"user-id": user.id}))
+        return JSONResponse(await _create_client_side_session(sa, sid, user, {"user-id": user.id}))
     else:
         return RedirectResponse(
             request.url_for("browser_me"),
