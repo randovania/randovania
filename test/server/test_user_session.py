@@ -299,7 +299,7 @@ async def test_restore_user_session_with_discord(mock_sa, fernet, mocker: pytest
     assert result is discord_result
 
 
-async def test_restore_plain_user_session(mock_sa, fernet, mocker: pytest_mock.MockerFixture):
+async def test_restore_plain_user_session(mock_sa, fernet, mocker: pytest_mock.MockerFixture, clean_database):
     session_result = MagicMock()
 
     mock_create_client_side = mocker.patch(
@@ -314,12 +314,7 @@ async def test_restore_plain_user_session(mock_sa, fernet, mocker: pytest_mock.M
         "user-id": 1234,
     }
 
-    plain_user = {
-        "id": 1234,
-        "name": "Foo",
-    }
-
-    User.get_by_id = MagicMock(return_value=plain_user)
+    plain_user = User.create(id=1234, name="Foo")
 
     enc_session = fernet.encrypt(json.dumps(session).encode("utf-8"))
 
