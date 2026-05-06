@@ -299,6 +299,40 @@ async def test_restore_user_session_with_discord(mock_sa, fernet, mocker: pytest
     assert result is discord_result
 
 
+async def test_restore_plain_user_session(mock_sa, fernet, mocker: pytest_mock.MockerFixture):
+    session_result = MagicMock()
+
+    mock_create_client_side = mocker.patch(
+        "randovania.server.user_session._create_client_side_session", autospec=True, return_value=session_result
+    )
+
+    mock_sa.sio.save_session = AsyncMock()
+
+    mock_sa.fernet_encrypt = fernet
+
+    session = {
+        "user-id": 1234,
+    }
+
+    plain_user = {
+        "id": 1234,
+        "name": "Foo",
+    }
+
+    User.get_by_id = MagicMock(return_value=plain_user)
+
+    enc_session = fernet.encrypt(json.dumps(session).encode("utf-8"))
+
+    # Run
+    result = await user_session.restore_user_session(mock_sa, "TheSid", enc_session)
+
+    # Assert
+    mock_sa.sio.save_session.assert_called_once_with("TheSid", session)
+    mock_create_client_side.assert_called_once_with(mock_sa, "TheSid", plain_user)
+
+    assert result is session_result
+
+
 async def test_logout(mock_sa, mocker: MockerFixture):
     mock_leave_all_rooms = mocker.patch("randovania.server.multiplayer.session_common.leave_all_rooms", autospec=True)
 
@@ -369,6 +403,8 @@ async def test_guest_login_form(test_client):
 async def test_guest_login_post_valid_json(test_client, clean_database, mocker: pytest_mock.MockerFixture):
     mocker.patch("randovania.server.user_session._log_session_info")
 
+    test_client.sa.sio.save_session = AsyncMock()
+
     response = test_client.post(
         "/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo", "sid": "1234"}
     )
@@ -382,6 +418,8 @@ async def test_guest_login_post_valid_json(test_client, clean_database, mocker: 
 
 
 async def test_guest_login_post_valid_web(test_client, clean_database):
+    test_client.sa.sio.save_session = AsyncMock()
+
     response = test_client.post("/guest_login", data={"name": "Foo", "sid": "1234"}, follow_redirects=False)
     assert response.status_code == 303
     assert response.headers["Location"] == "http://testserver/me"

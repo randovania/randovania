@@ -346,10 +346,13 @@ async def guest_login_post(
         discord_id=None,
     )
 
-    request.session["user_id"] = user.id
+    session = {}
+
+    session["user-id"] = user.id
+    await sa.sio.save_session(sid, session)
 
     if sa.is_api_request(request):
-        return JSONResponse(await _create_client_side_session(sa, sid, user, {"user-id": user.id}))
+        return JSONResponse(await _create_client_side_session(sa, sid, user, session))
     else:
         return RedirectResponse(
             request.url_for("browser_me"),
