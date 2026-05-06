@@ -36,9 +36,8 @@ def _encrypt_session_for_user(sa: ServerApp, session: dict) -> str:
     return base64.b85encode(encrypted_session).decode("ascii")
 
 
-def _create_client_side_session_raw(sa: ServerApp, sid: str | None, user: User) -> dict:
-    if sid is not None:
-        _log_session_info(sa, sid, user)
+def _create_client_side_session_raw(sa: ServerApp, sid: str, user: User) -> dict:
+    _log_session_info(sa, sid, user)
 
     return {
         "sid": sid,
@@ -53,13 +52,15 @@ def _log_session_info(sa: ServerApp, sid: str, user: User) -> None:
 async def _create_client_side_session(
     sa: ServerApp, sid: str | None, user: User | None, session: dict | None = None
 ) -> dict:
+
+    # The sid should never be None here
+    assert sid is not None
     """
 
     :param user: If the session's user was already retrieved, pass it along to avoid an extra query.
     :return:
     """
     if session is None:
-        assert sid is not None
         session = await sa.sio.get_session(sid)
 
     if user is None:
