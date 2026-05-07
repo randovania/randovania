@@ -836,7 +836,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
                 _area_changes[(mlvl_id, mrea_id)] = {
                     "mrea_id": mrea_id,
-                    # "pickups": [],
+                    "pickups": [],
                 }
                 _world_changes[mlvl_id]["area_changes"].append(_area_changes[(mlvl_id, mrea_id)])
 
@@ -852,24 +852,33 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
             new_pickup = {
                 "location": self._location_data_for(pickup_node),
-                "stages": [
+                "primary_stage": {
+                    "resources": _create_pickup_resources_for(
+                        exported_pickup.conditional_resources[0].resources,
+                        key_name="item",
+                        # FIXME: multiworld
+                    ),
+                    "appearance": base_appearance,
+                    "conversion": [],  # FIXME
+                },
+                "progressive_stages": [
                     {
-                        "required_item": None,  # FIXME
+                        "required_item": conditional.item.extra["item_id"],
                         "resources": _create_pickup_resources_for(
-                            exported_pickup.conditional_resources[0].resources,
+                            conditional.resources,
                             key_name="item",
                             # FIXME: multiworld
                         ),
-                        "appearance": base_appearance,
+                        "appearance": base_appearance,  # FIXME
                         "conversion": [],  # FIXME
                     }
+                    for conditional in exported_pickup.conditional_resources[1:]
                 ],
             }
 
             # from open_prime_rando.echoes.pickups.schema import PickupModification
             # PickupModification.model_validate(new_pickup)
-            if "pickups" in change:
-                change["pickups"].append(new_pickup)
+            change["pickups"].append(new_pickup)
 
         if self.configuration.menu_mod:
             result["practice_mod"] = "full"
