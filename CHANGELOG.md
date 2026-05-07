@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Dark, Light, and Beam Ammo Expansions are now considered dark-aligned, light-aligned and both, respectively.
 
+#### Logic Database
+
+##### Sanctuary Fortress
+
+- Changed: Minor adjustment aimed at making Aerie safer for the generator, no changes to requirements in practice.
+
 ## [10.7.0] - 2026-05-02
 
 ### Generator
