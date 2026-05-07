@@ -49,12 +49,7 @@ def _log_session_info(sa: ServerApp, sid: str, user: User) -> None:
     sa.logger.info(f"Client at {sa.current_client_ip(sid)} is user {user.name} ({user.id}).")
 
 
-async def _create_client_side_session(
-    sa: ServerApp, sid: str | None, user: User | None, session: dict | None = None
-) -> dict:
-
-    # The sid should never be None here
-    assert sid is not None
+async def _create_client_side_session(sa: ServerApp, sid: str, user: User | None, session: dict | None = None) -> dict:
     """
 
     :param user: If the session's user was already retrieved, pass it along to avoid an extra query.
@@ -346,10 +341,8 @@ async def guest_login_post(
         discord_id=None,
     )
 
-    session = {}
-
-    session["user-id"] = user.id
-    await sa.sio.save_session(sid, session)
+    async with sa.sio.session(sid) as session:
+        session["user-id"] = user.id
 
     if sa.is_api_request(request):
         return JSONResponse(await _create_client_side_session(sa, sid, user, session))

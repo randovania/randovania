@@ -398,7 +398,8 @@ async def test_guest_login_form(test_client):
 async def test_guest_login_post_valid_json(test_client, clean_database, mocker: pytest_mock.MockerFixture):
     mocker.patch("randovania.server.user_session._log_session_info")
 
-    test_client.sa.sio.save_session = AsyncMock()
+    test_client.sa.sio.session = MagicMock()
+    test_client.sa.sio.session.return_value.__aenter__.return_value = {}
 
     response = test_client.post(
         "/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo", "sid": "1234"}
@@ -413,7 +414,8 @@ async def test_guest_login_post_valid_json(test_client, clean_database, mocker: 
 
 
 async def test_guest_login_post_valid_web(test_client, clean_database):
-    test_client.sa.sio.save_session = AsyncMock()
+    test_client.sa.sio.session = MagicMock()
+    test_client.sa.sio.session.return_value.__aenter__.return_value = {}
 
     response = test_client.post("/guest_login", data={"name": "Foo", "sid": "1234"}, follow_redirects=False)
     assert response.status_code == 303
