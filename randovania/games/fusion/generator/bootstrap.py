@@ -105,7 +105,9 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
             DamageReduction(None, 0, configuration.cold_damage / default_cold_dmg),
             DamageReduction(db.get_item_by_display_name("Varia Suit"), 1, 0.0),
         ]
-        return dataclasses.replace(db, base_damage_reduction=self._damage_reduction)
+        return dataclasses.replace(
+            db, base_damage_reduction=self._damage_reduction, damage_reductions=damage_reductions
+        )
 
     def assign_pool_results(
         self, rng: Random, configuration: FusionConfiguration, patches: GamePatches, pool_results: PoolResults
