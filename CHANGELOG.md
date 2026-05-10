@@ -16,6 +16,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
+- Added: Dock between White EMMI Introduction and White EMMI Arena.
+- Added: Dock between EMMI Zone Entrance Hallway and Central Unit Access.
+- Added: Dock between Central Unit Access and Navigation Station South.
+- Added: White EMMI Introduction: New connection between Door to EMMI Zone Ballspark Hallway and Dock to White EMMI Arena which uses a Floor Clip.
+- Added: White EMMI Arena: New connection between Dock from White EMMI Introduction to Door to EMMI Zone Spinner (Top) (trivial).
+- Added: EMMI Zone Entrance Hallway: New connection between Door to EMMI Zone First Entrance and Dock to Central Unit Access which uses a Floor Clip.
+- Added: Central Unit Access: New connection between Dock from EMMI Zone Introduction to Door to White EMMI Arena (Top) (trivial).
+- Added: Central Unit Access: New connection between Door to White EMMI Arena (Bottom) and Dock to Navigation Station South which uses a Floor Clip.
+- Added: Navigation Station South: New connection bewteen Dock from Central Unit Access to Door to First Tutorial (trivial).
+- Changed: Screw Attack Room: Connection between Next to Upper Tank and Start Point Screw attack now has Floor Clip logic.
+- Changed: Thermal Door Tutorial: Connection between Door to Dabid Jaffe Room and Tunnel to David Jaffe Room now has Short Boost and Speed Booster Upgrade logic.
+
+##### Cataris
+
+- Changed: Dairon Transport Access: Connection between Door to Thermal Device Room North and Dock to EMMI Zone Tower West now has Floor Clip logic to avoid the Wide Block.
+- Changed: Thermal Device Room North: Connection between Tunnel to Lava Button West and Dock to Lava Button West (Mid) now has Floor Clip logic.
+- Changed: Thermal Device Room North: Connection between Dock to Lava Button West (Mid) and Dock to Lava Button West (Bottom) now has Floor Clip logic.
+- Changed: Teleport to Artaria (Blue): Connection between Center Room and Right Room now has Floor Clip logic with varying levels of trick and item requirements to get the speed booster store for the clip.
+- Changed: Underlava Puzzle Room 2: Connection between Below Lava and Event - Speed Blocks Destroyed now has Short Boost logic.
+
+##### Ghavoran
+
+- Added: Dock between Spin Boost Tower and Elun Transport Access.
+- Added: Spin Boost Tower: New connection between Dock to Flipper Room and Dock to Elun Transport Access which uses a Floor Clip.
+- Added: Elun Transport Access: New connection between Dock from Spin Boost Tower to Center Platform (trivial).
+
+##### Hanubia
+
+- Changed: Speedboost Puzzle Room:  Connection between Door to Navigation Station (Bottom) and Start Point 1 has Floor Clip logic.
 
 ### Metroid Prime 2: Echoes
 
