@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Navigation Station South: New connection bewteen Dock from Central Unit Access to Door to First Tutorial (trivial).
 - Changed: Screw Attack Room: Connection between Next to Upper Tank and Start Point Screw attack now has Floor Clip logic.
 - Changed: Thermal Door Tutorial: Connection between Door to Dabid Jaffe Room and Tunnel to David Jaffe Room now has Short Boost and Speed Booster Upgrade logic.
+- Changed: Teleport to Dairon: Connection between Door to White EMMI Introduction (Thermal) and Door to White EMMI Introduction (Lower) now have Floor Clip logic.
 
 ##### Cataris
 
