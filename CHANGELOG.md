@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
 
+### Metroid Fusion
+
+- Added: Environmental Damage (Heat, Lava, Cold, Acid) rates can now be configured.
+
 ### Metroid Prime 2: Echoes
 
 - Changed: Dark, Light, and Beam Ammo Expansions are now considered dark-aligned, light-aligned and both, respectively.
