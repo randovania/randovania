@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.8.0] - 2026-06-0?
 
+### Generator
+
+- Fixed: When using logical pickup placement set to Major pickups or All pickups, generated pickups would not be considered required. For example, Red Keys in Metroid Prime 2: Echoes.
+
 ### Metroid Dread
 
 - Added: Unique Save Slots cosmetic option. Stores this randomizer's saves in a unique location based on the seed hash.
