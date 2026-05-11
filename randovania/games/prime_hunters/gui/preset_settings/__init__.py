@@ -13,11 +13,9 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetHuntersForceFields,
     )
     from randovania.games.prime_hunters.gui.preset_settings.prime_hunters_goal_tab import PresetHuntersGoal
-    from randovania.games.prime_hunters.gui.preset_settings.prime_hunters_patches_tab import PresetHuntersPatches
     from randovania.games.prime_hunters.gui.preset_settings.prime_hunters_teleporters_tab import (
         PresetTeleportersHunters,
     )
-    from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.hints_tab import PresetHints
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
@@ -31,8 +29,6 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetLocationPool,
         MetroidPresetPickupPool,
         PresetHuntersGoal,
-        PresetHuntersPatches,
         PresetTeleportersHunters,
         PresetHuntersForceFields,
-        PresetDockRando,
     ]

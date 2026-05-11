@@ -5,17 +5,53 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.7.0] - 2026-05-??
+## [10.8.0] - 2026-06-0?
+
+### Generator
+
+- Fixed: When using logical pickup placement set to Major pickups or All pickups, generated pickups would not be considered required. For example, Red Keys in Metroid Prime 2: Echoes.
+
+### Metroid Dread
+
+- Added: Unique Save Slots cosmetic option. Stores this randomizer's saves in a unique location based on the seed hash.
+
+#### Logic Database
+
+- Fixed: Door override requirements for Shutter Gates (Flash Shift Doors) mentioned in version 10.5.0 didn't work and had no effect.
+
+##### Artaria
+
+- Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
+
+### Metroid Fusion
+
+- Added: Environmental Damage (Heat, Lava, Cold, Acid) rates can now be configured.
+
+### Metroid Prime 2: Echoes
+
+- Changed: Dark, Light, and Beam Ammo Expansions are now considered dark-aligned, light-aligned and both, respectively.
+
+### Metroid: Samus Returns
+
+- Fixed: When you changed the final boss setting to not being Ridley and the pickup Ridley drops after defeat was an item which was exclusively on Metroids, it would not have spawned.
+
+## [10.7.0] - 2026-05-02
+
+### Generator
+
+- Changed: Adjusted the check for which resources are unlocked safely after an action, so it both doesn't collect some dangerous actions too early, but also calculates deeper what is is safe.
 
 ### Metroid Dread
 
 - Changed: Increased likelihood that doors that are logically challenging to reach get locks when using Individual Doors mode to randomize Door Locks.
+- Changed: Increased likelihood of the generator placing Energy Tanks or Energy Parts sooner.
 
 ### Metroid Fusion
 
 - Added: Door Lock Randomizer is now available.
 - Fixed: Low-Health alarm now plays correctly when using the alternative Health Display.
 - Fixed: HUD no longer disappears after saving the animals (again).
+- Removed: MARS patcher version no longer appears on title screen.
 
 #### Logic Database
 

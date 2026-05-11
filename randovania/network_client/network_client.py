@@ -783,13 +783,14 @@ class NetworkClient:
         return {AuthenticationMethod(r) for r in result}
 
     async def login_as_guest(self, name: str) -> None:
-        async with self.server_post("guest_login", data={"name": name}) as response:
+        if self.connection_state != ConnectionState.Connected:
+            await self.connect_to_server()
+
+        async with self.server_post("guest_login", data={"name": name, "sid": self.sio.get_sid()}) as response:
             response.raise_for_status()
             new_session = await response.json()
 
         await self.on_user_session_updated(new_session)
-        if self.connection_state != ConnectionState.Connected:
-            await self.connect_to_server()
 
     def server_get(
         self,
