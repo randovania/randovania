@@ -66,7 +66,7 @@ class FusionHintNamer(HintNamer[FusionColor]):
         fmt = "{} is located in {}{}."
         location_name = self.format_location(location, with_region=True, with_area=not hide_area, with_color=with_color)
 
-        if resource.extra.get("item") == "InfantMetroid":
+        if resource.extra.get("item") == "INFANT_METROID":
             region_list = default_database.game_description_for(location.game).region_list
             node = region_list.node_from_pickup_index(location.location)
             if boss_name := node.extra.get("boss_hint_name"):
