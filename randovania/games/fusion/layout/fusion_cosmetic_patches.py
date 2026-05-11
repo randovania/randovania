@@ -20,7 +20,7 @@ class ColorSpace(Enum):
 enum_lib.add_long_name(
     ColorSpace,
     {
-        ColorSpace.Oklab: "Oklab",
+        ColorSpace.Oklab: "OKLAB",
         ColorSpace.HSV: "HSV",
     },
 )
