@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Dark, Light, and Beam Ammo Expansions are now considered dark-aligned, light-aligned and both, respectively.
 
+### Metroid: Samus Returns
+
+- Fixed: When you changed the final boss setting to not being Ridley and the pickup Ridley drops after defeat was an item which was exclusively on Metroids, it would not have spawned.
+
 ## [10.7.0] - 2026-05-02
 
 ### Generator
