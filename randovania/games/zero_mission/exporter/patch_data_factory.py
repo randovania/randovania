@@ -102,7 +102,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
                     "jingle": jingle,
                 }
                 if item_message:
-                    major_pickup["ItemMessages"] = item_message
+                    major_pickup["item_messages"] = item_message
                 major_pickup_list.append(major_pickup)
             else:
                 minor_pickup = {
@@ -115,7 +115,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
                     "jingle": jingle,
                 }
                 if item_message:
-                    minor_pickup["ItemMessages"] = item_message
+                    minor_pickup["item_messages"] = item_message
                 minor_pickup_list.append(minor_pickup)
         pickup_map_dict = {"major_locations": major_pickup_list, "minor_locations": minor_pickup_list}
 
@@ -136,7 +136,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
         elements = []
         for line, word in enumerate(self.description.shareable_word_hash.split(), 12):
             final_word = word if len(word) <= 30 else f"{word[0:27]}..."
-            elements.append({"LineNum": line, "Text": final_word.center(30)})
+            elements.append({"line_num": line, "text": final_word.center(30)})
         return elements
 
     # def _create_intro_text(self) -> list:
@@ -184,10 +184,10 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
         def sort_pickup(p: str) -> tuple[int | float, str]:
             return major_pickup_name_order.get(p, math.inf), p
 
-        credits_array.append({"LineType": "White2", "Text": "Item Locations", "BlankLines": 2})
+        credits_array.append({"line_type": "WHITE_BIG", "text": "Item Locations", "blank_lines": 2})
 
         for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
-            credits_array.append({"LineType": "Red", "Text": pickup, "BlankLines": 1})
+            credits_array.append({"line_type": "RED", "text": pickup, "blank_lines": 1})
             for location in spoiler_dict[pickup]:
                 region_name = location["Region"]
                 area_name = location["Area"]
@@ -201,19 +201,19 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
                 area_lines = self._wrap_text_for_credits(area_name)
                 world_lines = self._wrap_text_for_credits(world_name)
                 for line in world_lines:
-                    credits_array.append({"LineType": "Blue", "Text": line, "BlankLines": 0})
+                    credits_array.append({"line_type": "BLUE", "text": line, "blank_lines": 0})
                 for line in region_lines:
-                    credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
+                    credits_array.append({"line_type": "WHITE", "text": line, "blank_lines": 0})
                 for line in area_lines:
-                    credits_array.append({"LineType": "White1", "Text": line, "BlankLines": 0})
-                credits_array[-1]["BlankLines"] = 1
+                    credits_array.append({"line_type": "WHITE", "text": line, "blank_lines": 0})
+                credits_array[-1]["blank_lines"] = 1
 
         # Have last item give more space
-        credits_array[-1]["BlankLines"] = 3
+        credits_array[-1]["blank_lines"] = 3
 
         # Self plug, for streaming/showcasing.
-        credits_array.append({"LineType": "Blue", "Text": "Play this Randomizer at", "BlankLines": 0})
-        credits_array.append({"LineType": "White1", "Text": "randovania.org", "BlankLines": 3})
+        credits_array.append({"line_type": "BLUE", "text": "Play this Randomizer at", "blank_lines": 0})
+        credits_array.append({"line_type": "WHITE", "text": "randovania.org", "blank_lines": 3})
 
         return credits_array
 
@@ -224,9 +224,9 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
                 for number in area.extra["room_id"]:
                     names.append(
                         {
-                            "Area": region.extra["area_id"],
-                            "Room": number,
-                            "Name": area.name,
+                            "area": region.extra["area_id"],
+                            "room": number,
+                            "name": area.name,
                         }
                     )
         return names
@@ -255,7 +255,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
             "disable_demos": False,
             "skip_door_transitions": False,
             "unexplored_map": False,
-            "RoomNames": self._create_room_names(),
+            "room_names": self._create_room_names(),
             "accessibility_patches": True,
             "stereo_default": True,
             "disable_music": False,
