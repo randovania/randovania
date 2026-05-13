@@ -407,6 +407,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
                 "power_bomb": c.alt_power_bomb.value,
                 "closed": c.alt_closed.value,
             },
+            "split_saves": c.separate_save_slots,
         }
 
         if c.show_room_names.value != "NEVER":

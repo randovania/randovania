@@ -7024,8 +7024,7 @@
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": {
+                    "override_default_open_requirement": {
                         "type": "and",
                         "data": {
                             "comment": null,
@@ -7041,6 +7040,7 @@
                             ]
                         }
                     },
+                    "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank, Supers-locked)": {
@@ -15312,6 +15312,23 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Chain Reaction End": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Having this connection back to the event node helps the generator see when the rest of this area is safe to do",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ChainReactionEnd",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -18762,8 +18779,7 @@
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": {
+                    "override_default_open_requirement": {
                         "type": "and",
                         "data": {
                             "comment": null,
@@ -18779,6 +18795,7 @@
                             ]
                         }
                     },
+                    "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
                         "Room Middle": {

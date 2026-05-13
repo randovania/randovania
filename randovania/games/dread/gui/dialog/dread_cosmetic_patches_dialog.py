@@ -65,6 +65,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog[DreadCosmeticPatches]
         self._persist_check_field(self.show_death_counter, "show_death_counter")
         self._persist_check_field(self.enable_auto_tracker, "enable_auto_tracker")
         self._persist_check_field(self.enable_debug_logging, "enable_debug_logging")
+        self._persist_check_field(self.separate_save_slots, "separate_save_slots")
         for field_name, slider in self.field_name_to_slider_mapping.items():
             slider.valueChanged.connect(partial(self._on_slider_update, slider, field_name))
         signal_handling.on_combo(self.room_names_dropdown, self._on_room_name_mode_update)
@@ -86,6 +87,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog[DreadCosmeticPatches]
         self.show_death_counter.setChecked(patches.show_death_counter)
         self.enable_auto_tracker.setChecked(patches.enable_auto_tracker)
         self.enable_debug_logging.setChecked(patches.enable_debug_logging)
+        self.separate_save_slots.setChecked(patches.separate_save_slots)
         for field_name, slider in self.field_name_to_slider_mapping.items():
             slider = self.field_name_to_slider_mapping[field_name]
             slider.setValue(getattr(patches, f"{field_name}_volume"))

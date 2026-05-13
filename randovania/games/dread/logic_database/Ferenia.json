@@ -485,8 +485,7 @@
                     "default_dock_weakness": "Phase Shift Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": {
+                    "override_default_open_requirement": {
                         "type": "or",
                         "data": {
                             "comment": null,
@@ -536,6 +535,7 @@
                             ]
                         }
                     },
+                    "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
                         "Right Alcove": {
@@ -3831,12 +3831,29 @@
                                                         "comment": "With Normal Bombs, the means to break the blocks blend together with reaching the item",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Space",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
