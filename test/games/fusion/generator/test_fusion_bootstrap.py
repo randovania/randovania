@@ -46,8 +46,8 @@ def test_assign_pool_results_predetermined(fusion_game_description, fusion_confi
 @pytest.mark.parametrize(
     ("dmg_type", "dmg_configured", "dmg_multiplier", "config_value"),
     [
-        ("LavaDamage", 40, [2.0, 2.2, 0.0], "lava_damage"),
-        ("LavaDamage", 10, [0.5, 0.55, 0.0], "lava_damage"),
+        ("LavaDamage", 40, [2.0, 2.0 / 0.9, 0.0], "lava_damage"),
+        ("LavaDamage", 10, [0.5, 0.5 / 0.9, 0.0], "lava_damage"),
         ("HeatDamage", 60, [10.0, 0.0], "heat_damage"),
         ("AcidDamage", 6, [0.1], "acid_damage"),
         ("ColdDamage", 45, [3.0, 0.0], "cold_damage"),
