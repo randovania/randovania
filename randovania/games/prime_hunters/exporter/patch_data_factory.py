@@ -101,7 +101,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         result["weapons"] = fmt.format(*weapons)
         result["missiles"] = starting_items["Missiles"]
         result["ammo"] = 40
-        result["energy_tanks"] = starting_items["Energy Tank"]
+        result["energy"] = self.configuration.starting_energy
         result["octoliths"] = fmt.format(*octoliths)
 
         return result
