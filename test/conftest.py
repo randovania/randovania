@@ -711,6 +711,7 @@ SOLO_RDVGAMES = [
     ("fusion/all_hidden_with_random.rdvgame", True),
     ("fusion/starting_items.rdvgame", True),
     ("fusion/lots_of_random_starting_items.rdvgame", True),
+    ("fusion/high_lava_dmg.rdvgame", False),  # expected configured lava dmg too high for solver
     # Dread
     ("dread/vanilla.rdvgame", True),  # vanilla
     ("dread/starter_preset.rdvgame", False),  # starter preset

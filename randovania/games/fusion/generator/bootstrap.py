@@ -89,8 +89,9 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
         default_cold_dmg = 15
         damage_reductions[db.get_damage("LavaDamage")] = [
             DamageReduction(None, 0, configuration.lava_damage / default_lava_dmg),
+            # FIXME the "/ 0.9" is required to offset the base_reduction until it can be ignored
             DamageReduction(
-                db.get_item_by_display_name("Varia Suit"), 1, 0.4 * (configuration.lava_damage / default_lava_dmg)
+                db.get_item_by_display_name("Varia Suit"), 1, (configuration.lava_damage / default_lava_dmg) / 0.9
             ),
             DamageReduction(db.get_item_by_display_name("Both Suits"), 2, 0.0),
         ]
