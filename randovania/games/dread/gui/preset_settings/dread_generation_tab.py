@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.gui.dialog.trick_details_popup import ResourceDetailsPopup
 from randovania.gui.lib import signal_handling
@@ -60,12 +59,13 @@ class PresetDreadGeneration(PresetGeneration):
             )
 
     def _on_click_link_highdanger_logic_details(self, link: str) -> None:
+        ()
         self._exec_trick_details(
             ResourceDetailsPopup(
                 self,
                 self._window_manager,
                 self.game_description,
-                self.game_description.resource_database.get_by_type_and_index(ResourceType.MISC, "HighDanger"),
+                self.game_description.get_resource_database_view().get_misc("HighDanger"),
             )
         )
 

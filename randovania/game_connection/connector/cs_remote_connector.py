@@ -130,11 +130,11 @@ class CSRemoteConnector(RemoteConnector):
     async def get_inventory(self) -> Inventory:
         inventory = {}
 
-        item_db = self.game.resource_database.item
-        get_item = self.game.resource_database.get_item
+        resource_db = self.game.get_resource_database_view()
+        get_item = resource_db.get_item
 
         # Normal items
-        normal_items = [item for item in item_db if "flag" in item.extra]
+        normal_items = [item for item in resource_db.get_all_items() if "flag" in item.extra]
         flag_nums = [item.extra["flag"] for item in normal_items]
         flags = await self.executor.get_flags(flag_nums)
 

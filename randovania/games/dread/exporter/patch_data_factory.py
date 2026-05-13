@@ -452,7 +452,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         if self.configuration.artifacts.required_artifacts == 0:
             return {"required_artifacts": 0, "hints": []}
 
-        artifacts = [self.game.resource_database.get_item(f"Artifact{i + 1}") for i in range(12)]
+        artifacts = [self.resource_db.get_item(f"Artifact{i + 1}") for i in range(12)]
         artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
             self.description.all_patches,
             self.players_config,

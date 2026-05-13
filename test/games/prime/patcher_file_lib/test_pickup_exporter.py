@@ -219,19 +219,23 @@ def test_create_pickup_list(
         pickup_exporter.GenericAcquiredMemo(), RandovaniaGame.METROID_PRIME_ECHOES
     )
 
-    region_list = MagicMock()
-    region_list.iterate_nodes_of_type.return_value = [
-        PickupNode(
-            NodeIdentifier.create("World", "Area", f"Name {i}"),
-            i,
-            False,
-            None,
-            "",
-            ("default",),
-            {},
-            False,
-            PickupIndex(i),
-            False,
+    game_view = MagicMock()
+    game_view.iterate_nodes_of_type.return_value = [
+        (
+            MagicMock(),
+            MagicMock(),
+            PickupNode(
+                NodeIdentifier.create("World", "Area", f"Name {i}"),
+                i,
+                False,
+                None,
+                "",
+                ("default",),
+                {},
+                False,
+                PickupIndex(i),
+                False,
+            ),
         )
         for i in range(7)
     ]
@@ -240,7 +244,7 @@ def test_create_pickup_list(
     result = pickup_exporter.export_all_indices(
         patches,
         PickupTarget(useless_pickup, 0),
-        region_list,
+        game_view,
         rng,
         model_style,
         PickupModelDataSource.ETM,
@@ -438,19 +442,23 @@ def test_create_pickup_list_random_data_source(
 
     creator = pickup_exporter.PickupExporterSolo(memo_data, RandovaniaGame.METROID_PRIME_ECHOES)
 
-    region_list = MagicMock()
-    region_list.iterate_nodes_of_type.return_value = [
-        PickupNode(
-            NodeIdentifier.create("W", "A", f"Name {i}"),
-            i,
-            False,
-            None,
-            "",
-            ("default",),
-            {},
-            False,
-            PickupIndex(i),
-            False,
+    game_view = MagicMock()
+    game_view.iterate_nodes_of_type.return_value = [
+        (
+            MagicMock(),
+            MagicMock(),
+            PickupNode(
+                NodeIdentifier.create("W", "A", f"Name {i}"),
+                i,
+                False,
+                None,
+                "",
+                ("default",),
+                {},
+                False,
+                PickupIndex(i),
+                False,
+            ),
         )
         for i in range(5)
     ]
@@ -459,7 +467,7 @@ def test_create_pickup_list_random_data_source(
     result = pickup_exporter.export_all_indices(
         patches,
         PickupTarget(useless_pickup, 0),
-        region_list,
+        game_view,
         rng,
         PickupModelStyle.HIDE_ALL,
         PickupModelDataSource.RANDOM,
