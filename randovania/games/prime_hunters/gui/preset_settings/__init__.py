@@ -9,6 +9,7 @@ if TYPE_CHECKING:
 
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
+    from randovania.games.prime_hunters.gui.preset_settings.prime_hunters_energy_tab import PresetHuntersEnergy
     from randovania.games.prime_hunters.gui.preset_settings.prime_hunters_force_fields_tab import (
         PresetHuntersForceFields,
     )
@@ -25,10 +26,11 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
     return [
         PresetTrickLevel,
         PresetGeneration,
+        PresetHuntersGoal,
         PresetHints,
         PresetLocationPool,
         MetroidPresetPickupPool,
-        PresetHuntersGoal,
         PresetTeleportersHunters,
         PresetHuntersForceFields,
+        PresetHuntersEnergy,
     ]
