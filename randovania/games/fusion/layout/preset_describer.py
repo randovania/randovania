@@ -36,6 +36,11 @@ class FusionPresetDescriber(GamePresetDescriber):
         extra_message_tree = {
             "Game Changes": [
                 {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},
+                {f"Heat Damage: {configuration.heat_damage}/s": configuration.heat_damage != 6},
+                {f"Lava Damage: {configuration.lava_damage}/s": configuration.lava_damage != 20},
+                {f"Cold Damage: {configuration.cold_damage}/s": configuration.cold_damage != 15},
+                {f"Acid Damage: {configuration.acid_damage}/s": configuration.acid_damage != 60},
+                {f"Subzero Damage: {configuration.subzero_damage}/s": configuration.subzero_damage != 6},
                 {
                     "Instant Hatch Transitions": configuration.instant_transitions,
                     "Instant Morph Button (SELECT)": configuration.instant_morph,
