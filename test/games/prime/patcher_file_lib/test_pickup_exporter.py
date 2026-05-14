@@ -19,6 +19,7 @@ from randovania.game_description.pickup.pickup_entry import (
     ResourceLock,
 )
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -234,7 +235,7 @@ def test_create_pickup_list(
                 {},
                 False,
                 PickupIndex(i),
-                False,
+                LocationCategory.MINOR,
             ),
         )
         for i in range(7)
@@ -457,7 +458,7 @@ def test_create_pickup_list_random_data_source(
                 {},
                 False,
                 PickupIndex(i),
-                False,
+                LocationCategory.MINOR,
             ),
         )
         for i in range(5)

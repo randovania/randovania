@@ -226,7 +226,7 @@ class SelectNodesItem(discord.ui.Select):
             if self.area.area.default_node == node.name:
                 name += "; Default Node"
 
-            body = pretty_print.pretty_print_node_type(node, db.region_list, db.get_resource_database_view()) + "\n"
+            body = pretty_print.pretty_print_node_type(node, db, db.get_resource_database_view()) + "\n"
 
             node_bodies = []
 

@@ -59,7 +59,6 @@ class PresetDreadGeneration(PresetGeneration):
             )
 
     def _on_click_link_highdanger_logic_details(self, link: str) -> None:
-        ()
         self._exec_trick_details(
             ResourceDetailsPopup(
                 self,
