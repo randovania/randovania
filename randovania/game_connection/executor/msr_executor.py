@@ -74,7 +74,11 @@ def get_bootstrapper_for(game: GameDescription) -> list[str]:
     replacements = {
         "num_pickup_nodes": game.region_list.num_pickup_nodes,
         "inventory": "{{{}}}".format(
-            ",".join(repr(r.extra["item_id"]) for r in game.resource_database.item if "item_id" in r.extra)
+            ",".join(
+                repr(r.extra["item_id"])
+                for r in game.get_resource_database_view().get_all_items()
+                if "item_id" in r.extra
+            )
         ),
     }
 
