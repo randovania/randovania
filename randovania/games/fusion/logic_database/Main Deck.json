@@ -1258,7 +1258,7 @@
                         "default"
                     ],
                     "extra": {
-                        "hint_name": "MainDeckEast",
+                        "hint_name": "MAIN_DECK_EAST",
                         "location_precision": "REGION_ONLY",
                         "item_precision": "PRECISE_CATEGORY"
                     },
@@ -3041,8 +3041,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 2,
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
@@ -3056,41 +3056,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Freeze Enemies With Ice Missiles"
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Freeze Enemies With Ice Beam"
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "With Diffusion it's stricter: https://www.youtube.com/watch?v=H5AlKJwEuTU",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Freeze Enemies With Diffusion"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies With Any Weapon"
                                                 }
                                             ]
                                         }
@@ -3121,6 +3088,15 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Freeze Enemies With Any Weapon"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -3464,7 +3440,7 @@
                         "default"
                     ],
                     "extra": {
-                        "hint_name": "MainDeckWest",
+                        "hint_name": "MAIN_DECK_WEST",
                         "location_precision": "REGION_ONLY",
                         "item_precision": "PRECISE_CATEGORY"
                     },
@@ -6474,7 +6450,7 @@
                         "default"
                     ],
                     "extra": {
-                        "hint_name": "OperationsDeck",
+                        "hint_name": "OPERATIONS_DECK",
                         "location_precision": "REGION_ONLY",
                         "item_precision": "PRECISE_CATEGORY"
                     },
@@ -7698,7 +7674,7 @@
                     "extra": {
                         "area": 0,
                         "room": 38,
-                        "source": "Arachnus",
+                        "source": "ARACHNUS",
                         "boss_hint_name": "Arachnus",
                         "infant_weight": 3.5
                     },
@@ -8019,7 +7995,7 @@
                     "extra": {
                         "area": 0,
                         "room": 39,
-                        "source": "MainDeckData",
+                        "source": "MAIN_DECK_DATA",
                         "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
@@ -10861,7 +10837,7 @@
                     "extra": {
                         "area": 0,
                         "room": 54,
-                        "source": "AuxiliaryPower",
+                        "source": "AUXILIARY_POWER",
                         "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
@@ -11160,7 +11136,7 @@
                         "default"
                     ],
                     "extra": {
-                        "hint_name": "AuxiliaryPower",
+                        "hint_name": "AUXILIARY_POWER",
                         "location_precision": "REGION_ONLY",
                         "item_precision": "DETAILED"
                     },
@@ -12142,7 +12118,7 @@
                         "default"
                     ],
                     "extra": {
-                        "hint_name": "RestrictedLabs",
+                        "hint_name": "RESTRICTED_LABS",
                         "location_precision": "DETAILED",
                         "item_precision": "DETAILED"
                     },
@@ -12638,7 +12614,7 @@
                     "extra": {
                         "area": 0,
                         "room": 69,
-                        "source": "Animals",
+                        "source": "ANIMALS",
                         "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
@@ -13904,7 +13880,7 @@
                     "extra": {
                         "area": 0,
                         "room": 86,
-                        "source": "Yakuza",
+                        "source": "YAKUZA",
                         "boss_hint_name": "Yakuza",
                         "infant_weight": 3.5
                     },
