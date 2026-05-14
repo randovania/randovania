@@ -94,6 +94,23 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             True,  # Power Beam
         ]
 
+        all_artifacts = {
+            "Celestial Archives": [],
+            "Alinos": [],
+            "Arcterra": [],
+            "Vesper Defense Outpost": [],
+        }
+        for region, artifact_list in all_artifacts.items():
+            artifacts = 0
+            for i in range(1, 3):
+                if starts_with_item(f"{region}CArtifact{i}"):
+                    artifacts += 1
+                if starts_with_item(f"{region}AArtifact{i}"):
+                    artifacts += 1
+                if starts_with_item(f"{region}BSArtifact{i}"):
+                    artifacts += 1
+                artifact_list.append(artifacts)
+
         octoliths = []
         for i in reversed(range(1, 9)):
             octoliths.append(starts_with_item(f"Octolith {i}"))
@@ -102,6 +119,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         result["missiles"] = starting_items["Missiles"]
         result["ammo"] = 40
         result["energy"] = self.configuration.starting_energy + (100 * starting_items["Energy Tank"])
+        result["artifacts"] = all_artifacts
         result["octoliths"] = fmt.format(*octoliths)
 
         return result
