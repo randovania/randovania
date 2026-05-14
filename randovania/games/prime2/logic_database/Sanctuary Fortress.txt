@@ -2120,6 +2120,8 @@ Hint Features - Abyss, Boss, Echo Visor Lock, Elevator, Portal
   * Layers: default
   * No Return Portal to Hive Summit/Portal to Aerie
   * Extra - dock_name: VirtualArenaDock
+  > Dock to Aerie Access
+      Trivial
   > Event - Aerie Pickup
       All of the following:
           After Dark Samus 2
@@ -2130,19 +2132,21 @@ Hint Features - Abyss, Boss, Echo Visor Lock, Elevator, Portal
               # https://www.youtube.com/watch?v=gt_lKlVVr28
               Movement (Beginner) and Use Screw Attack (No Space Jump)
           Echo Visor or Enabled Allow Vanilla Echo Visor
-  > Bottom Floor
-      After Dark Samus 2
-  > Before Dark Samus
-      Before Dark Samus 2
 
 > Dock to Aerie Access; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Open Passage to Aerie Access/Dock to Aerie
   * Extra - dock_name: Docks_Floor
+  > Event - Dark Samus 2
+      Any of the following:
+          All of the following:
+              Normal Damage ≥ 50
+              Any of the following:
+                  Dark Visor
+                  Echo Visor and Combat (Beginner)
+          Invisible Objects (Advanced) and Normal Damage ≥ 100
   > Bottom Floor
       After Dark Samus 2
-  > Before Dark Samus
-      Trivial
 
 > Pickup (Echo Visor); Heals? False
   * Layers: default
@@ -2157,8 +2161,8 @@ Hint Features - Abyss, Boss, Echo Visor Lock, Elevator, Portal
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 4260106
   * Extra - keep_name_when_vanilla: True
-  > Bottom Floor
-      After Dark Samus 2
+  > Dock to Aerie Access
+      Trivial
 
 > Event - Dark Samus 2; Heals? False
   * Layers: default
@@ -2177,26 +2181,12 @@ Hint Features - Abyss, Boss, Echo Visor Lock, Elevator, Portal
   > Portal to Hive Summit
       Trivial
   > Dock to Aerie Access
-      After Dark Samus 2
+      Trivial
   > Pickup (Echo Visor)
       # https://www.youtube.com/watch?v=29qB37vxSgY
       Morph Ball Bomb and Bomb Space Jump (Expert) and Movement (Expert) and Use Screw Attack (Space Jump)
   > Elevator to Aerie Transport Station
       Echo Visor and After Aerie Pickup
   > Event - Dark Samus 2
-      # Having a connection back the event node lets the genrator know when this sequence is safe.
-      After Dark Samus 2
-
-> Before Dark Samus; Heals? False
-  * Layers: default
-  > Event - Dark Samus 2
-      Any of the following:
-          All of the following:
-              Normal Damage ≥ 50
-              Any of the following:
-                  Dark Visor
-                  Echo Visor and Combat (Beginner)
-          Invisible Objects (Advanced) and Normal Damage ≥ 100
-  > Bottom Floor
-      After Dark Samus 2
+      Trivial
 

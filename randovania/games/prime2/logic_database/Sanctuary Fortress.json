@@ -16204,6 +16204,13 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Dock to Aerie Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Aerie Pickup": {
                             "type": "and",
                             "data": {
@@ -16310,24 +16317,6 @@
                                     }
                                 ]
                             }
-                        },
-                        "Bottom Floor": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event69",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Before Dark Samus": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event69",
-                                "amount": 1,
-                                "negate": true
-                            }
                         }
                     }
                 },
@@ -16355,305 +16344,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {
-                        "Bottom Floor": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event69",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Before Dark Samus": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Echo Visor)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 104.66,
-                        "y": 431.3,
-                        "z": 182.33
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "location_data": {
-                            "type": "standard",
-                            "exclude_memo_from_removal": false,
-                            "original_model": "EchoVisor",
-                            "connections": [
-                                {
-                                    "target": 272695764,
-                                    "message": "ACTV"
-                                },
-                                {
-                                    "target": 272695764,
-                                    "message": "ZERO"
-                                }
-                            ],
-                            "removals": [
-                                4260015,
-                                272695742
-                            ],
-                            "collision_offset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 1.0
-                            },
-                            "instances": {
-                                "pickup": 4260007,
-                                "hud_memo": 4260014,
-                                "streamed_audio": 4260013,
-                                "sound": 4260009,
-                                "audio_fade": 4260016
-                            }
-                        }
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 118,
-                    "location_category": "major",
-                    "custom_index_group": null,
-                    "hint_features": [],
-                    "connections": {
-                        "Bottom Floor": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Elevator to Aerie Transport Station": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "scan_asset_id": null,
-                        "teleporter_instance_id": 4260106,
-                        "keep_name_when_vanilla": true
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "elevator",
-                    "default_connection": {
-                        "region": "Sanctuary Fortress",
-                        "area": "Aerie Transport Station",
-                        "node": "Elevator to Aerie"
-                    },
-                    "default_dock_weakness": "Elevator",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Bottom Floor": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event69",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Event - Dark Samus 2": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Event69",
-                    "connections": {
-                        "Bottom Floor": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Aerie Pickup": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Event70",
-                    "connections": {
-                        "Pickup (Echo Visor)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Echo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "VanillaEcho",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Bottom Floor": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Portal to Hive Summit": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Dock to Aerie Access": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event69",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Pickup (Echo Visor)": {
-                            "type": "and",
-                            "data": {
-                                "comment": "https://www.youtube.com/watch?v=29qB37vxSgY",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bombs",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "BSJ",
-                                            "amount": 4,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 4,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Screw Attack (Space Jump)"
-                                    }
-                                ]
-                            }
-                        },
-                        "Elevator to Aerie Transport Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Echo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event70",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Dark Samus 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": "Having a connection back the event node lets the genrator know when this sequence is safe.",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event69",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Before Dark Samus": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
                     "connections": {
                         "Event - Dark Samus 2": {
                             "type": "or",
@@ -16756,6 +16446,270 @@
                                 "name": "Event69",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Pickup (Echo Visor)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 104.66,
+                        "y": 431.3,
+                        "z": 182.33
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "location_data": {
+                            "type": "standard",
+                            "exclude_memo_from_removal": false,
+                            "original_model": "EchoVisor",
+                            "connections": [
+                                {
+                                    "target": 272695764,
+                                    "message": "ACTV"
+                                },
+                                {
+                                    "target": 272695764,
+                                    "message": "ZERO"
+                                }
+                            ],
+                            "removals": [
+                                4260015,
+                                272695742
+                            ],
+                            "collision_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 1.0
+                            },
+                            "instances": {
+                                "pickup": 4260007,
+                                "hud_memo": 4260014,
+                                "streamed_audio": 4260013,
+                                "sound": 4260009,
+                                "audio_fade": 4260016
+                            }
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 118,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Bottom Floor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Elevator to Aerie Transport Station": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": 4260106,
+                        "keep_name_when_vanilla": true
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "elevator",
+                    "default_connection": {
+                        "region": "Sanctuary Fortress",
+                        "area": "Aerie Transport Station",
+                        "node": "Elevator to Aerie"
+                    },
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Dock to Aerie Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Dark Samus 2": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Event69",
+                    "connections": {
+                        "Bottom Floor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Aerie Pickup": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Event70",
+                    "connections": {
+                        "Pickup (Echo Visor)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Echo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "VanillaEcho",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Bottom Floor": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Portal to Hive Summit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Aerie Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Echo Visor)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "https://www.youtube.com/watch?v=29qB37vxSgY",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Bombs",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "BSJ",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Screw Attack (Space Jump)"
+                                    }
+                                ]
+                            }
+                        },
+                        "Elevator to Aerie Transport Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Echo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event70",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Dark Samus 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Having a connection back the event node lets the genrator know when this sequence is safe.",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
