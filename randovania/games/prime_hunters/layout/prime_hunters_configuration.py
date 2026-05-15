@@ -17,21 +17,8 @@ class HuntersOctolithConfig(BitPackDataclass, JsonDataclass):
 
 
 @dataclasses.dataclass(frozen=True)
-class HuntersArtifactConfig(BitPackDataclass, JsonDataclass):
-    celestial_archives_1: int = dataclasses.field(metadata={"min": 0, "max": 3, "precision": 1})
-    celestial_archives_2: int = dataclasses.field(metadata={"min": 0, "max": 3, "precision": 1})
-    alinos_1: int = dataclasses.field(metadata={"min": 0, "max": 3, "precision": 1})
-    alinos_2: int = dataclasses.field(metadata={"min": 0, "max": 3, "precision": 1})
-    arcterra_1: int = dataclasses.field(metadata={"min": 0, "max": 3, "precision": 1})
-    arcterra_2: int = dataclasses.field(metadata={"min": 0, "max": 3, "precision": 1})
-    vesper_defense_outpost_1: int = dataclasses.field(metadata={"min": 0, "max": 3, "precision": 1})
-    vesper_defense_outpost_2: int = dataclasses.field(metadata={"min": 0, "max": 3, "precision": 1})
-
-
-@dataclasses.dataclass(frozen=True)
 class HuntersConfiguration(BaseConfiguration):
     octoliths: HuntersOctolithConfig
-    artifacts: HuntersArtifactConfig
     force_field_configuration: ForceFieldConfiguration
     teleporters: TeleporterConfiguration
     starting_energy: int = dataclasses.field(metadata={"min": 1, "max": 1099, "precision": 1})
