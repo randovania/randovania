@@ -31,6 +31,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Added Movement (Beginner) requirement to reach Missile Tank Pickup in Space Jump Room using Space Jump and Normal Bomb.
 
+##### Ghavoran
+
+- Fixed: Logic bug that failed to account for how, after fighting the Central Unit,  one needs to finish the Ice EMMI fight before leaving the EMMI Zone.
+
 ### Metroid Fusion
 
 - Added: Environmental Damage (Heat, Lava, Cold, Acid) rates can now be configured.
