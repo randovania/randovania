@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.8.0] - 2026-06-0?
 
+- Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
+
 ### Generator
 
 - Fixed: When using logical pickup placement set to Major pickups or All pickups, generated pickups would not be considered required. For example, Red Keys in Metroid Prime 2: Echoes.
