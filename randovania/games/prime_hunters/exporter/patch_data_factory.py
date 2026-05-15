@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from typing import TYPE_CHECKING, Final, override
+from typing import TYPE_CHECKING, Final, LiteralString, override
 
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
@@ -81,8 +81,10 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         def starts_with_item(weapon_name: str) -> bool:
             return starting_items[weapon_name] > 0
 
-        fmt = "{:d}" * 8  # 8-bit bitfield
+        def fmt(field: list[bool], length: int) -> LiteralString:
+            return ("{:d}" * length).format(*field)
 
+        # Weapons
         weapons = [
             starts_with_item("Shock Coil"),
             starts_with_item("Magmaul"),
@@ -94,33 +96,40 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             True,  # Power Beam
         ]
 
-        all_artifacts = {
-            "Celestial Archives": [],
-            "Alinos": [],
-            "Arcterra": [],
-            "Vesper Defense Outpost": [],
-        }
-        for region, artifact_list in all_artifacts.items():
-            artifacts = 0
-            for i in range(1, 3):
-                if starts_with_item(f"{region}CArtifact{i}"):
-                    artifacts += 1
-                if starts_with_item(f"{region}AArtifact{i}"):
-                    artifacts += 1
-                if starts_with_item(f"{region}BSArtifact{i}"):
-                    artifacts += 1
-                artifact_list.append(artifacts)
+        # Artifacts
+        boss_portals = [
+            "alinos_1",
+            "alinos_2",
+            "celestial_archives_1",
+            "celestial_archives_2",
+            "vesper_defense_outpost_1",
+            "vesper_defense_outpost_2",
+            "arcterra_1",
+            "arcterra_2",
+        ]
 
+        regions = ["Alinos", "Celestial", "VDO", "Arcterra"]
+        artifact_types = ["Cartograph", "Attameter", "Binary Subscripture"]
+
+        formatted_artifacts = []
+        for region in regions:
+            for i in range(1, 3):
+                portal_artifacts = [
+                    starts_with_item(f"{region} {artifact_type} Artifact {i}") for artifact_type in artifact_types
+                ]
+                formatted_artifacts.append(fmt(portal_artifacts, 3))
+
+        # Octoliths
         octoliths = []
         for i in reversed(range(1, 9)):
             octoliths.append(starts_with_item(f"Octolith {i}"))
 
-        result["weapons"] = fmt.format(*weapons)
+        result["weapons"] = fmt(weapons, 8)
         result["missiles"] = starting_items["Missiles"]
         result["ammo"] = 40
         result["energy"] = self.configuration.starting_energy + (100 * starting_items["Energy Tank"])
-        result["artifacts"] = all_artifacts
-        result["octoliths"] = fmt.format(*octoliths)
+        result["artifacts"] = dict(zip(boss_portals, formatted_artifacts))
+        result["octoliths"] = fmt(octoliths, 8)
 
         return result
 
