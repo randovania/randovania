@@ -67,13 +67,15 @@ _STRING_ID_TO_SCAN_TITLE = {
     "214L": "OCTOLITH HINTS 04",
 }
 
+type StartingInventory = dict[str, str | int | dict[str, str]]
+
 
 class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosmeticPatches]):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_HUNTERS
 
-    def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, str | int]:
-        result: dict[str, str | int] = {}
+    def _calculate_starting_inventory(self, resources: ResourceCollection) -> StartingInventory:
+        result: StartingInventory = {}
 
         starting_items: defaultdict = defaultdict(int)
         starting_items.update({resource.long_name: quantity for resource, quantity in resources.as_resource_gain()})
