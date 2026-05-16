@@ -29,6 +29,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
 
+##### Dairon
+
+- Changed: When comming in to Teleport to Artaria from Transport to Cataris, climbing up to above the Wide Block has these changes:
+  - Using Grapple Beam now requires Grapple Movement (Beginner)
+  - Using Simple IBJ now requires Diagonal Bomb Jump (Beginner)
+  - Added option to use just Speed Booster with Speed Booster Conservation (Intermediate)
+
 ##### Ferenia
 
 - Changed: Added Movement (Beginner) requirement to reach Missile Tank Pickup in Space Jump Room using Space Jump and Normal Bomb.
