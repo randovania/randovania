@@ -68,8 +68,8 @@ class FusionGameExporter(GameExporter[FusionGameExportParams]):
             if len(line) > 30:
                 text[index] = f"{line[0:27]}..."
 
-        patch_data["TitleText"] = [{"LineNum": index, "Text": line} for index, line in enumerate(text)] + patch_data[
-            "TitleText"
+        patch_data["title_text"] = [{"line_num": index, "text": line} for index, line in enumerate(text)] + patch_data[
+            "title_text"
         ]
 
         patcher.validate_patch_data_mf(patch_data)

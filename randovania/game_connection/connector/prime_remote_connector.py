@@ -179,13 +179,13 @@ class PrimeRemoteConnector(RemoteConnector):
     async def get_inventory(self) -> Inventory:
         """Fetches the inventory represented by the given game memory."""
 
-        memory_ops = await self._memory_op_for_items(
-            [item for item in self.game.resource_database.item if item.extra["item_id"] < 1000]
-        )
+        resource_db = self.game.get_resource_database_view()
+        all_items = [item for item in resource_db.get_all_items() if item.extra["item_id"] < 1000]
+        memory_ops = await self._memory_op_for_items(all_items)
         ops_result = await self.executor.perform_memory_operations(memory_ops)
 
         inventory = {}
-        for item, memory_op in zip(self.game.resource_database.item, memory_ops):
+        for item, memory_op in zip(all_items, memory_ops, strict=True):
             inv = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
             if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (item != self.multiworld_magic_item):
                 raise MemoryOperationException(f"Received {inv} for {item.long_name}, which is an invalid state.")
@@ -305,7 +305,8 @@ class PrimeRemoteConnector(RemoteConnector):
         Returns a displayable item name and its resources for a PickupEntry based on the inventory.
         """
 
-        inventory_resources = self.game.resource_database.create_resource_collection()
+        resource_db = self.game.get_resource_database_view()
+        inventory_resources = resource_db.create_resource_collection()
         inventory_resources.add_resource_gain(inventory.as_resource_gain())
         conditional = pickup.conditional_for_resources(inventory_resources)
         if conditional.name is not None:
@@ -313,7 +314,7 @@ class PrimeRemoteConnector(RemoteConnector):
         else:
             item_name = pickup.name
 
-        resources_to_give = self.game.resource_database.create_resource_collection()
+        resources_to_give = resource_db.create_resource_collection()
 
         if (
             pickup.respects_lock

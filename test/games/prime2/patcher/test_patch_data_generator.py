@@ -154,10 +154,10 @@ def test_add_header_data_to_result():
 
 def test_create_spawn_point_field(echoes_game_description, echoes_pickup_database, empty_patches):
     # Setup
-    resource_db = echoes_game_description.resource_database
+    resource_db = echoes_game_description.get_resource_database_view()
 
     morph = pickup_creator.create_standard_pickup(
-        echoes_pickup_database.get_pickup_with_name("Morph Ball"), StandardPickupState(), resource_db, None, False
+        echoes_pickup_database.standard_pickups["Morph Ball"], StandardPickupState(), resource_db, None, False
     )
 
     loc = NodeIdentifier.create("Temple Grounds", "Hive Chamber B", "Door to Hive Storage")
@@ -165,12 +165,12 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
 
     capacities = [
         {"amount": 1 if item.short_name == "MorphBall" else 0, "index": item.extra["item_id"]}
-        for item in resource_db.item
+        for item in resource_db.get_all_items()
         if item.extra["item_id"] < 1000
     ]
 
     # Run
-    result = patch_data_factory._create_spawn_point_field(patches, echoes_game_description)
+    result = patch_data_factory._create_spawn_point_field(patches, echoes_game_description, resource_db)
 
     # Assert
     assert result == {
@@ -672,7 +672,11 @@ def test_create_string_patches(
 
     else:
         mock_stk_create_hints.assert_called_once_with(
-            all_patches, player_config, game.resource_database, namer, stk_mode == SpecificPickupHintMode.HIDE_AREA
+            all_patches,
+            player_config,
+            game.get_resource_database_view(),
+            namer,
+            stk_mode == SpecificPickupHintMode.HIDE_AREA,
         )
         mock_stk_hide_hints.assert_not_called()
         expected_result.extend(["show", "hints"])

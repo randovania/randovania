@@ -407,6 +407,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
                 "power_bomb": c.alt_power_bomb.value,
                 "closed": c.alt_closed.value,
             },
+            "split_saves": c.separate_save_slots,
         }
 
         if c.show_room_names.value != "NEVER":
@@ -451,7 +452,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         if self.configuration.artifacts.required_artifacts == 0:
             return {"required_artifacts": 0, "hints": []}
 
-        artifacts = [self.game.resource_database.get_item(f"Artifact{i + 1}") for i in range(12)]
+        artifacts = [self.resource_db.get_item(f"Artifact{i + 1}") for i in range(12)]
         artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
             self.description.all_patches,
             self.players_config,
