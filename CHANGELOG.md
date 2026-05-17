@@ -40,6 +40,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Added Movement (Beginner) requirement to reach Missile Tank Pickup in Space Jump Room using Space Jump and Normal Bomb.
 
+##### Ghavoran
+
+- Changed: Some implementation details surrounding the Chozo-X to help the Resolver in some cases.
+
 ### Metroid Fusion
 
 - Added: Environmental Damage (Heat, Lava, Cold, Acid) rates can now be configured.

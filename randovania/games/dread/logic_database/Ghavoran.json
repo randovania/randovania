@@ -9312,6 +9312,15 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "HighDanger",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
                                     }
                                 ]
                             }
@@ -9331,8 +9340,25 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Fight Chozo-X"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "HighDanger",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Fight Chozo-X"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -9397,6 +9423,15 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "HighDanger",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
                                     }
                                 ]
                             }
@@ -9416,8 +9451,34 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Fight Chozo-X"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "HighDanger",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Fight Chozo-X"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranChozoX",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -9500,6 +9561,15 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "HighDanger",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
                                     }
                                 ]
                             }
@@ -9519,8 +9589,25 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Fight Chozo-X"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "HighDanger",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Fight Chozo-X"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -13883,6 +13970,15 @@
                                                     "data": {
                                                         "type": "misc",
                                                         "name": "HighDanger",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranChozoXTrigger",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
