@@ -50,7 +50,7 @@ class HuntersHintNamer(HintNamer[None]):
         if world_name is not None:
             determiner = self.format_world(world_name, with_color=with_color) + "'s "
 
-        fmt = "{} is located in\n{}{}."
+        fmt = "{} is located in {}{}."
         location_name = self.format_location(location, with_region=True, with_area=not hide_area, with_color=with_color)
         if " (" in location_name:
             location_name, _ = location_name.split(" (")
