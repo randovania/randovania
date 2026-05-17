@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.8.0] - 2026-06-0?
 
+- Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
+
 ### Generator
 
 - Fixed: When using logical pickup placement set to Major pickups or All pickups, generated pickups would not be considered required. For example, Red Keys in Metroid Prime 2: Echoes.
+
+### Resolver
+
+- Fixed: An issue where damage reduction multipliers above 1.0 were being ignored.
 
 ### Metroid Dread
 
@@ -22,6 +28,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
+
+##### Dairon
+
+- Changed: When comming in to Teleport to Artaria from Transport to Cataris, climbing up to above the Wide Block has these changes:
+  - Using Grapple Beam now requires Grapple Movement (Beginner)
+  - Using Simple IBJ now requires Diagonal Bomb Jump (Beginner)
+  - Added option to use just Speed Booster with Speed Booster Conservation (Intermediate)
 
 ##### Ferenia
 
@@ -44,6 +57,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Fixed: When you changed the final boss setting to not being Ridley and the pickup Ridley drops after defeat was an item which was exclusively on Metroids, it would not have spawned.
+
+#### Logic Database
+
+##### Area 6 Poisonous Tunnel
+
+- Fixed: Going back from the Pickup to the upper section now has the correct requirements.
 
 ## [10.7.0] - 2026-05-02
 

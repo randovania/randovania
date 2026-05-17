@@ -355,9 +355,9 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
         }
 
     def _create_hints(self, rng: Random) -> dict:
-        artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(46)]
-        ice = [(self.game.resource_database.get_item("Ice Beam"))]
-        dna_hint_mapping = {}
+        artifacts = [self.resource_db.get_item(f"Metroid DNA {i + 1}") for i in range(46)]
+        ice = [(self.resource_db.get_item("Ice Beam"))]
+
         hint_config = self.configuration.hints
         hint_namer = AM2RHintNamer(self.description.all_patches, self.players_config)
         if hint_config.specific_pickup_hints["artifacts"] != SpecificPickupHintMode.DISABLED:

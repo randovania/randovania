@@ -225,7 +225,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         exporter = self.create_hint_exporter(FUSION_JOKE_HINTS)
 
         nav_text_json = {}
-        artifacts = [self.game.resource_database.get_item(f"Infant Metroid {i + 1}") for i in range(20)]
+        artifacts = [self.resource_db.get_item(f"Infant Metroid {i + 1}") for i in range(20)]
 
         metroid_precision = self.configuration.hints.specific_pickup_hints["artifacts"]
         charge_precision = self.configuration.hints.specific_pickup_hints["charge_beam"]
@@ -245,7 +245,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 self.players_config,
                 exporter.namer,
                 True if charge_precision == SpecificPickupHintMode.HIDE_AREA else False,
-                [self.game.resource_database.get_item("ChargeBeam")],
+                [self.resource_db.get_item("ChargeBeam")],
                 True,
             )
 

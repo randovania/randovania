@@ -22,9 +22,6 @@ class HuntersConfiguration(BaseConfiguration):
     force_field_configuration: ForceFieldConfiguration
     teleporters: TeleporterConfiguration
     starting_energy: int = dataclasses.field(metadata={"min": 1, "max": 1099, "precision": 1})
-    missile_launcher_ammo: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
-    missile_expansion_ammo: int = dataclasses.field(metadata={"min": 2, "max": 1000, "precision": 2})
-    ua_expansion_ammo: int = dataclasses.field(metadata={"min": 2, "max": 1000, "precision": 2})
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

@@ -90,7 +90,7 @@ class DreadConfiguration(BaseConfiguration):
         result = super().unsupported_features()
 
         gd = default_database.game_description_for(self.game)
-        for trick in gd.resource_database.trick:
+        for trick in gd.get_resource_database_view().get_all_tricks():
             if trick.hide_from_ui and self.trick_level.level_for_trick(trick) != LayoutTrickLevel.DISABLED:
                 result.append(f"Enabled {trick.long_name}")
 
