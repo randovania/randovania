@@ -194,6 +194,18 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
         return level_data
 
+    def _update_ammo_sizes(self) -> dict:
+        spc = self.configuration.standard_pickup_configuration.as_json["pickups_state"]
+        apc = self.configuration.ammo_pickup_configuration.as_json["pickups_state"]
+
+        ammo_sizes = {
+            "missile_launcher": spc["Missile Launcher"]["included_ammo"][0],
+            "missile_expansion": apc["Missile Expansion"]["ammo_count"][0],
+            "ua_expansion": apc["UA Expansion"]["ammo_count"][0],
+        }
+
+        return ammo_sizes
+
     def _update_string_tables(self) -> dict:
         string_tables: dict = {
             "scan_log": {},
@@ -258,11 +270,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             "configuration_id": self.description.get_seed_for_world(self.players_config.player_index),
             "starting_items": starting_items,
             "areas": self._entity_patching_per_area(),
-            "ammo_sizes": {
-                "missile_launcher": self.configuration.missile_launcher_ammo,
-                "missile_expansion": self.configuration.missile_expansion_ammo,
-                "ua_expansion": self.configuration.ua_expansion_ammo,
-            },
+            "ammo_sizes": self._update_ammo_sizes(),
             "game_patches": {
                 "shuffle_hunter_colors": self.cosmetic_patches.shuffle_hunter_colors,
             },
