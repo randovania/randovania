@@ -33,6 +33,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
         return MZMHintNamer
 
     def _create_starting_location(self) -> dict:
+        # creates the data for the games starting location
         starting_location_node = self.game.region_list.node_by_identifier(self.patches.starting_location)
         starting_location_dict = {
             "area": self.game.region_list.nodes_to_region(starting_location_node).extra["area_id"],
@@ -43,6 +44,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
         return starting_location_dict
 
     def _create_starting_items(self) -> MarsschemazmStartingItems:
+        # creates the data for the games starting items
         starting_dict: MarsschemazmStartingItems = {
             "energy": self.configuration.energy_per_tank - 1,
             "abilities": [],
@@ -54,7 +56,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
             "ziplines_activated": self.configuration.starting_ziplines,
         }
 
-        for item, quantity in self.patches.starting_resources().as_resource_gain():
+        for item, quantity in self.patches.starting_resources().as_resource_gain():  # TODO update post #9153
             assert isinstance(item, ItemResourceInfo)
 
             match item.extra["StartingItemCategory"]:
@@ -74,9 +76,11 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
         return starting_dict
 
     def _create_pickup_dict(self, pickup_list: list[ExportedPickupDetails]) -> dict:
+        # creates the data for major and minor locations
         pickup_map_dict = {}
         minor_pickup_list = []
         major_pickup_list = []
+
         for pickup in pickup_list:
             node = self.game.region_list.node_from_pickup_index(pickup.index)
             is_major = False
@@ -92,8 +96,6 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
 
             sprite = pickup.model.name
 
-            item_message = {}
-
             if is_major:
                 major_pickup = {
                     "source": node.extra["source"],
@@ -101,8 +103,6 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
                     "item_sprite": sprite,
                     "jingle": jingle,
                 }
-                if item_message:
-                    major_pickup["item_messages"] = item_message
                 major_pickup_list.append(major_pickup)
             else:
                 minor_pickup = {
@@ -114,14 +114,13 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
                     "item_sprite": sprite,
                     "jingle": jingle,
                 }
-                if item_message:
-                    minor_pickup["item_messages"] = item_message
                 minor_pickup_list.append(minor_pickup)
         pickup_map_dict = {"major_locations": major_pickup_list, "minor_locations": minor_pickup_list}
 
         return pickup_map_dict
 
     def _create_tank_increments(self) -> dict:
+        # creates the data for the amount of ammo each relevant resource type provides
         tank_dict = {}
         for ammo_definition, ammo_state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
             tank_dict[ammo_definition.extra["TankIncrementName"]] = ammo_state.ammo_count[0]
@@ -133,6 +132,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
         return tank_dict
 
     def _create_title_text(self) -> list:
+        # creates the data for the title text, this is further modified in the game_exporter
         elements = []
         for line, word in enumerate(self.description.shareable_word_hash.split(), 12):
             final_word = word if len(word) <= 30 else f"{word[0:27]}..."
@@ -140,11 +140,13 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
         return elements
 
     # def _create_intro_text(self) -> list:
+    # TODO
     #     elements = []
     #
     #     return elements
 
     def _credits_elements(self) -> defaultdict[str, list[dict]]:
+        # creates the credits elements for each pickup
         elements = defaultdict(list)
         majors = credits_spoiler.generic_credits(
             self.configuration.standard_pickup_configuration, self.description.all_patches, self.players_config
@@ -173,6 +175,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
         return textwrap.wrap(text, width=30)
 
     def _create_credits_text(self) -> list:
+        # creates the data for the credits lines
         credits_array = []
         spoiler_dict = self._credits_elements()
 
@@ -218,6 +221,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
         return credits_array
 
     def _create_room_names(self) -> list[dict]:
+        # creates the data for the room names
         names = []
         for region in self.game.region_list.regions:
             for area in region.areas:
