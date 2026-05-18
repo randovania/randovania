@@ -113,10 +113,12 @@ def get_results(recipe: dict) -> dict[str, int]:
 def load_recipes_raw() -> dict[str, dict[str, typing.Any]]:
     assets_folder = RandovaniaGame.FACTORIO.data_path.joinpath("assets")
 
-    return json_lib.read_path(assets_folder.joinpath("recipes-raw.json"))
+    return typing.cast(
+        "dict[str, dict[str, typing.Any]]", json_lib.read_path(assets_folder.joinpath("recipes-raw.json"))
+    )
 
 
 def load_techs_raw() -> dict[str, dict[str, typing.Any]]:
     assets_folder = RandovaniaGame.FACTORIO.data_path.joinpath("assets")
 
-    return json_lib.read_path(assets_folder.joinpath("techs-raw.json"))
+    return typing.cast("dict[str, dict[str, typing.Any]]", json_lib.read_path(assets_folder.joinpath("techs-raw.json")))
