@@ -73,10 +73,8 @@ def victory_condition_for_pickup_placement(
             game.victory_condition,
             *(
                 ResourceRequirement.create(resource, quantity, False)
-                for resource, quantity in resources.as_resource_gain()
-                if quantity > 0
-                and isinstance(resource, ItemResourceInfo)
-                and not resource.extra.get("exclude_from_logical_pickup_placement", False)
+                for resource, quantity in resources.as_resource_gain_of_type(ItemResourceInfo)
+                if quantity > 0 and not resource.extra.get("exclude_from_logical_pickup_placement", False)
             ),
         ]
     ).simplify()

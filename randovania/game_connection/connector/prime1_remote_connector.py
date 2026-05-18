@@ -109,11 +109,9 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
 
         patches: list[PatchInstructions] = []
 
-        for item, delta in resources_to_give.as_resource_gain():
+        for item, delta in resources_to_give.as_resource_gain_of_type(ItemResourceInfo):
             if delta == 0:
                 continue
-
-            assert isinstance(item, ItemResourceInfo)
 
             if item.short_name not in prime_items.ARTIFACT_ITEMS:
                 if item.extra.get("max_increase", None) == 0:

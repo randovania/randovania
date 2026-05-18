@@ -30,3 +30,4 @@ if typing.TYPE_CHECKING:
     ResourceQuantity: typing.TypeAlias = tuple[ResourceInfoT, int]
     ResourceGainTuple: typing.TypeAlias = tuple[ResourceQuantity[ResourceInfoT], ...]
     ResourceGain: typing.TypeAlias = Iterable[ResourceQuantity[ResourceInfoT]]
+    type ResourceGainT[T: ResourceInfo] = Iterable[ResourceQuantity[T]]

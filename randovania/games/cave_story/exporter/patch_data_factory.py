@@ -16,7 +16,6 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.exporter.hint_exporter import CSHintExporter
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
@@ -294,11 +293,9 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
             (res for res, _ in self._starting_items.as_resource_gain() if res.short_name in {"missile", "tempMissile"}),
             None,
         )
-        for item, _ in self._starting_items.as_resource_gain():
-            if item.resource_type != ResourceType.ITEM or item == self._missile:
+        for item, _ in self._starting_items.as_resource_gain_of_type(ItemResourceInfo):
+            if item == self._missile:
                 continue
-
-            assert isinstance(item, ItemResourceInfo)
 
             if item.short_name == "lifeCapsule":
                 self._life = self._starting_items[item]

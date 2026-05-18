@@ -140,8 +140,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "power_bombs": 0,
         }
 
-        for item, quantity in self.patches.starting_resources().as_resource_gain():
-            assert isinstance(item, ItemResourceInfo)
+        for item, quantity in self.patches.starting_resources().as_resource_gain_of_type(ItemResourceInfo):
             # skip resources only relating to RDV internals
             _rdv_resources = ["Both Suits"]
             if item.long_name in _rdv_resources:
