@@ -19,7 +19,7 @@ class DreadArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_major_bosses: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 12, "precision": 1})
 
-    def unsupported_features(self):
+    def unsupported_features(self) -> list[str]:
         max_artifacts = 6 * (self.prefer_emmi + self.prefer_major_bosses)
         if self.required_artifacts > max_artifacts:
             return ["Metroid DNA on non-boss/EMMI"]

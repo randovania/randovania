@@ -102,7 +102,7 @@ exporters = [
     "mp2hudcolor==1.0.14",
 
     # Metroid Prime Hunters
-    "open-prime-hunters-rando==0.8.0",
+    "open-prime-hunters-rando==0.9.1",
 
     # Metroid: Samus Returns
     "open-samus-returns-rando==3.4.2",
@@ -148,7 +148,7 @@ server = [
     "cachetools",  # for TTLCache
 
     # discord bot
-    "py-cord>=2.7.1,<2.8",  # for randovania/discord_bot; 2.3.1+ is needed for Python 3.11, 2.7 breaks tests
+    "py-cord>=2.8,<2.9",  # for randovania/discord_bot; 2.3.1+ is needed for Python 3.11, 2.7 breaks tests
     "audioop-lts; python_version>='3.13'",  # for py-cord
     "Pillow>=9.0.0",  # for randovania/discord_bot/database_command
     "graphviz",  # for randovania/discord_bot/database_command
@@ -305,18 +305,7 @@ files = [
     "randovania/game_connection/",
     "randovania/game_description/",
     "randovania/game/",
-    "randovania/games/am2r/generator/",
-    "randovania/games/am2r/gui/",
-    "randovania/games/am2r/layout/",
-    "randovania/games/blank/",
-    "randovania/games/cave_story/",
-    "randovania/games/dread/exporter/hint_namer.py",
-    "randovania/games/dread/gui/",
-    "randovania/games/fusion/",
-    "randovania/games/prime_hunters/",
-    "randovania/games/prime1/",
-    "randovania/games/prime2/",
-    "randovania/games/samus_returns/",
+    "randovania/games/",
     "randovania/generator/",
     "randovania/graph/",
     "randovania/gui/async_race_room_window.py",
@@ -408,6 +397,7 @@ module = [
     "ruamel.*",
     "aiocache.*",
     "socketio_handler.*",
+    "nod.*",
 ]
 ignore_missing_imports = true
 
