@@ -1,0 +1,129 @@
+====================
+Templates
+
+* Can Use Any Bombs:
+      # This template is used when any requirement requires either Bombs or Power Bombs
+      Can Use Bombs or Can Use Power Bombs
+
+* Can Use Bombs:
+      # This template is used when any requirement requires using Bombs
+      Bombs and Morph Ball
+
+* Can Use Power Bombs:
+      # This template is used when any requirement requires using Power Bombs
+      Morph Ball and Power Bombs
+
+* Use Space Jump:
+      Space Jump (Unknown Item 2) and After Ruins Test Completed
+
+* Defeat Metroid:
+      All of the following:
+          # This template is used when any requirement requires defeating a Metroid
+          Ice Beam and Can Use Bombs
+          Missiles ≥ 5 or Super Missiles
+
+* Have Any Jump Upgrade:
+      # This template is used when any requirement requires increased jump height
+      Hi-Jump Boots or Use Space Jump
+
+* Can Bounce in Ball:
+      # This template is used when any requirement requires being able to gain height in Morph Ball
+      Can Use Bombs or Can Use Springball
+
+* Can Use Springball:
+      # This template is used when any requirement requires Springball
+      Hi-Jump Boots and Morph Ball
+
+* Tunnel Climb:
+      # This template is used when any requirement requires climbing into a tunnel
+      Morph Ball and Power Grip
+
+* Can Ballspark:
+      # This template is used when any requirement requires Ballsparking
+      Speed Booster and Can Use Springball
+
+* Climb Ledges:
+      # This template is used when any requirement requires climbing ledges needing at least Power Grip
+      Power Grip or Have Any Jump Upgrade
+
+* Climb High Ledges:
+      Any of the following:
+          # This template is used when any requirement requires climbing ledges needing at least Hi-Jump and Power Grip
+          Use Space Jump
+          Hi-Jump Boots and Power Grip
+
+* Can Use Missiles:
+      # This template is used when any requirement requires at least 1 Missile
+      Missile Launcher and Missiles
+
+* Can Use Super Missiles:
+      # This template is used when any requirement requires at least 1 Super Missile
+      Super Missile Launcher and Super Missiles
+
+====================
+Dock Weaknesses
+
+> Door
+  * Blue Door
+      Open:
+          Trivial
+      No lock
+
+
+  * Missile Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Missiles ≥ 5 or Super Missiles
+
+
+  * Super Missile Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Super Missiles
+
+
+  * Power Bomb Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Power Bombs
+
+  > Dock Rando: Disabled
+
+
+> Open Passage
+  * Horizontal Passage
+      Open:
+          Trivial
+      No lock
+
+
+  * Vertical Passage
+      Open:
+          Trivial
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Tunnel
+  * Tunnel
+      Open:
+          Trivial
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Teleporter
+* Extra - is_teleporter: True
+* Extra - ignore_for_hints: True
+  * Teleporter
+      Open:
+          Trivial
+      No lock
+
+  > Dock Rando: Disabled
+

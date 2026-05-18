@@ -758,6 +758,8 @@ SOLO_RDVGAMES = [
     ("samus_returns/starter_preset.rdvgame", True),  # starter preset
     ("samus_returns/progressive_beams_and_suits.rdvgame", False),  # starter preset + progressive beam and suit
     ("samus_returns/non_required_mains.rdvgame", True),  # non-required main for power bombs + hide model
+    # Zero Mission
+    ("zero_mission/starter_preset.rdvgame", True),  # starter preset
 ]
 
 COOP_RDVGAMES = [
