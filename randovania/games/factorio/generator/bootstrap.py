@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import collections
-from typing import TYPE_CHECKING
+from collections.abc import Sequence
+from typing import TYPE_CHECKING, cast
 
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
@@ -26,11 +27,11 @@ if TYPE_CHECKING:
     from randovania.resolver.damage_state import DamageState
 
 
-def _recipe_unlocked_requirements(items: list[ItemResourceInfo]) -> list[Requirement]:
-    items = [ResourceRequirement.simple(it) for it in items]
-    if len(items) > 1:
-        return [RequirementAnd(items)]
-    return items
+def _recipe_unlocked_requirements(items: Sequence[ItemResourceInfo]) -> Sequence[Requirement]:
+    result = [ResourceRequirement.simple(it) for it in items]
+    if len(result) > 1:
+        return [RequirementAnd(result)]
+    return result
 
 
 class FactorioBootstrap(Bootstrap):
@@ -50,7 +51,7 @@ class FactorioBootstrap(Bootstrap):
             for recipe in tech.extra["recipes_unlocked"]:
                 tech_for_recipe[recipe].append(tech)
 
-        game_specific: FactorioGameSpecific = patches.game_specific
+        game_specific = cast("FactorioGameSpecific", patches.game_specific)
 
         for recipe_name, recipe_data in game_specific["recipes"].items():
             # Assume all the custom recipes craft only one item, and it's the same name as the recipe
@@ -62,7 +63,7 @@ class FactorioBootstrap(Bootstrap):
             )
 
             template = resource_db.requirement_template[f"craft-{result_item}"]
-            new_items = _recipe_unlocked_requirements(tech_for_recipe[result_item])
+            new_items = list(_recipe_unlocked_requirements(tech_for_recipe[result_item]))
             new_items.append(RequirementTemplate(f"perform-{category}"))
             new_items.extend([RequirementTemplate(f"craft-{it}") for it in recipe_data["ingredients"]])
 

@@ -40,6 +40,8 @@ def is_prime1_iso_validator(file: Path | None, *, iso_required: bool = False) ->
     if is_file_validator(file):
         return True
 
+    assert file is not None  # comes from is_file_validator
+
     # Check if correct game, but only for ISO files (as we can't for them).
     if file.suffix.lower() == ".iso" or iso_required:
         iso_details = discover_game(file)
@@ -54,6 +56,8 @@ def is_prime2_iso_validator(file: Path | None) -> bool:
     """Returns False when the given path exists and is a Prime 2 ISO, True otherwise"""
     if is_file_validator(file):
         return True
+
+    assert file is not None  # comes from is_file_validator
 
     # Echoes only support ISO, so we can always identify the game
     iso_details = discover_game(file)

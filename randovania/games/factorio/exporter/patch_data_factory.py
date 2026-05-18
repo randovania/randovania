@@ -46,7 +46,9 @@ class FactorioPatchDataFactory(PatchDataFactory[FactorioConfiguration, FactorioC
 
             prerequisites = []
 
-            con_req = area.connections[area.node_with_name("Connection to Tech Tree")][node]
+            connection_node = area.node_with_name("Connection to Tech Tree")
+            assert connection_node is not None
+            con_req = area.connections[connection_node][node]
             assert isinstance(con_req, RequirementAnd)
 
             for req in con_req.items:
@@ -54,7 +56,7 @@ class FactorioPatchDataFactory(PatchDataFactory[FactorioConfiguration, FactorioC
                     other_node = rl.node_by_identifier(req.node_identifier)
                     prerequisites.append(other_node.extra["tech_name"])
 
-            new_tech = {
+            new_tech: cfg.ConfigurationTechnologiesItem = {
                 "tech_name": node.extra["tech_name"],
                 "locale_name": exported.name,
                 "description": exported.description,
@@ -91,12 +93,12 @@ class FactorioPatchDataFactory(PatchDataFactory[FactorioConfiguration, FactorioC
             ],
         }
 
-        return result
+        return typing.cast("dict", result)
 
     def _create_recipe_patches(self) -> list[cfg.ConfigurationRecipesItem]:
-        result = []
+        result: list[cfg.ConfigurationRecipesItem] = []
 
-        game_specific: FactorioGameSpecific = self.patches.game_specific
+        game_specific: FactorioGameSpecific = typing.cast("FactorioGameSpecific", self.patches.game_specific)
         recipes_raw = data_parser.load_recipes_raw()
 
         for recipe_name, modification in game_specific["recipes"].items():
