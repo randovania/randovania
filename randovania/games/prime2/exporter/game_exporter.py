@@ -7,9 +7,9 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 import mp2hudcolor  # type: ignore[import-not-found]
-from open_prime_rando.dol_patching.echoes import dol_patcher
 from ppc_asm import dol_file
-from retro_data_structures.asset_manager import AssetManager, PathFileProvider, PathFileWriter
+from retro_data_structures.asset_manager import AssetManager, PathFileWriter
+from retro_data_structures.file_provider import PathFileProvider
 from retro_data_structures.game_check import Game as RDSGame
 
 from randovania import monitoring
@@ -109,12 +109,14 @@ def classic_export(
 
     claris_randomizer.apply_patcher_file(contents_files_path, patch_data, randomizer_data, claris_update)
 
+    from open_prime_rando.echoes import legacy_patcher
+
     dol = dol_file.DolFile(contents_files_path.joinpath("sys/main.dol"))
     dol.set_editable(True)
     with dol:
-        dol_patcher.apply_patches(
+        legacy_patcher.patch_dol(
             dol,
-            dol_patcher.EchoesDolPatchesData.from_json(patch_data["dol_patches"]),
+            legacy_patcher.DolPatchesData.model_validate(patch_data["dol_patches"]),
         )
 
     # New Patcher
@@ -122,9 +124,7 @@ def classic_export(
         opr_update = updaters.pop(0)
 
         with monitoring.trace_block("open_prime_rando.echoes.legacy_patcher.patch_paks"):
-            import open_prime_rando.echoes.legacy_patcher
-
-            open_prime_rando.echoes.legacy_patcher.patch_paks(
+            legacy_patcher.patch_paks(
                 PathFileProvider(contents_files_path), contents_files_path, new_patcher, opr_update
             )
 
