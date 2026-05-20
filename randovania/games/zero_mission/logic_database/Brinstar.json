@@ -172,11 +172,11 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Bombs"
+                                        "data": "Can Use Power Bombs"
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Can Use Power Bombs"
+                                        "data": "Can Use Ball Launcher"
                                     }
                                 ]
                             }
@@ -231,21 +231,11 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Guide Statue (Long Beam)": {
+                        "Door to Elevator to Kraid": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -321,18 +311,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Starting Room": {
                             "type": "and",
                             "data": {
@@ -385,6 +363,22 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Ball Launcher"
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Guide Statue (Long Beam)": {
                             "type": "and",
                             "data": {
@@ -524,38 +518,13 @@
                                 ]
                             }
                         },
-                        "Door to Blue-Tinted Hub": {
-                            "type": "and",
+                        "Hint - Long Beam Statue": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "BrinstarC2Chozo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Chozo Statue": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -591,56 +560,56 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Fake Block Fork": {
+                        "Hint - Long Beam Statue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "BrinstarC2Chozo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
                 },
-                "Event - Chozo Statue": {
-                    "node_type": "event",
-                    "heal": false,
+                "Hint - Long Beam Statue": {
+                    "node_type": "hint",
+                    "heal": true,
                     "coordinates": {
-                        "x": 798.72,
-                        "y": 101.93,
+                        "x": 814.4670951943679,
+                        "y": 89.6675849403122,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "hint_statue": "LONG_BEAM"
+                    },
                     "valid_starting_location": false,
-                    "event_name": "BrinstarC2Chozo",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "resource",
+                        "data": {
+                            "type": "items",
+                            "name": "MorphBall",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
                     "connections": {
                         "Door to Fake Block Fork": {
-                            "type": "or",
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Blue-Tinted Hub": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -688,6 +657,13 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Door to Vestibule": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Save Station (South)": {
                             "type": "and",
                             "data": {
@@ -695,12 +671,13 @@
                                 "items": []
                             }
                         },
-                        "Lower Half": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                        "Tunnel to Speedbooster Passage": {
+                            "type": "template",
+                            "data": "Tunnel Climb"
+                        },
+                        "Tunnel to Hidden Tank Shaft (Lower)": {
+                            "type": "template",
+                            "data": "Tunnel Climb"
                         }
                     }
                 },
@@ -735,7 +712,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Upper Half": {
+                        "Door to Long Beam Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -775,11 +752,30 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Upper Half": {
+                        "Door to Guide Statue (Bombs)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Door to Vestibule": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Sloped Alcove": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Tunnel Climb"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -815,11 +811,51 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Lower Half": {
+                        "Door to Guide Statue (Long Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Door to Long Beam Chamber Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Hidden Tank Shaft (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "IceBeam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Ledges"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -895,13 +931,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Upper Half": {
-                            "type": "resource",
+                        "Door to Long Beam Chamber Access": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "MorphBall",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -937,7 +971,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Lower Half": {
+                        "Door to Guide Statue (Long Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -977,7 +1011,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Lower Half": {
+                        "Door to Guide Statue (Long Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1017,312 +1051,9 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Lower Half": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Lower Half": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 140.99310528936735,
-                        "y": 712.0745429623125,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Guide Statue (Long Beam)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Vestibule": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "MorphBall",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "LongBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tunnel to Speedbooster Passage": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerGrip",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "MidairMorph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tunnel to Hidden Tank Shaft (Lower)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerGrip",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "MidairMorph",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "WallJump",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Have Any Jump Upgrade"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tunnel to Hidden Tank Shaft (Upper)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "IceBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Have Any Jump Upgrade"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Upper Half": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Upper Half": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 167.4096525948857,
-                        "y": 1460.5433832853323,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Guide Statue (Bombs)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Long Beam Chamber Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel to Sloped Alcove": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PowerGrip",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Lower Half": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Can Use Any Bombs"
                         }
                     }
                 }
@@ -1778,11 +1509,11 @@
                         "Tunnel to Sloped Alcove": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: account for hard mode missing upper ripper?",
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Climb Ledges"
+                                        "data": "Tunnel Climb"
                                     },
                                     {
                                         "type": "or",
@@ -1955,15 +1686,6 @@
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -2230,10 +1952,12 @@
                             }
                         },
                         "Door to Guide Statue (Hi-Jump)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "KraidDefeated",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2310,10 +2034,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Fake Block Fork": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "KraidDefeated",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2923,8 +2649,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 223.08,
-                        "y": 112.0,
+                        "x": 222.39999999999998,
+                        "y": 138.9575757575758,
                         "z": 0.0
                     },
                     "description": "",
@@ -3073,19 +2799,31 @@
                         "Door to Mero Hive Chamber": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Softlock without bombs",
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "data": "Can Use Bombs"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Power Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBombs",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3178,15 +2916,6 @@
                                         "data": {
                                             "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "MidairMorph",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -3624,7 +3353,51 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Hint - Ice Beam Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint - Ice Beam Statue": {
+                    "node_type": "hint",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 115.21,
+                        "y": 91.22,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "hint_statue": "ICE_BEAM"
+                    },
+                    "valid_starting_location": false,
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "resource",
+                        "data": {
+                            "type": "items",
+                            "name": "MorphBall",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "connections": {
+                        "Door to Waver Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4119,27 +3892,17 @@
                             }
                         },
                         "Tunnel to Guide Statue (Wave Beam) (Upper)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PowerGrip",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Tunnel Climb"
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Use Springball"
                                     }
                                 ]
                             }
@@ -4345,16 +4108,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Have Any Jump Upgrade"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "IBA",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
+                                        "data": "Climb High Ledges"
                                     }
                                 ]
                             }
@@ -4442,14 +4196,19 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Varia Chamber Ascent": {
-                            "type": "or",
+                        "Room Center": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Bounce in Ball"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -4487,16 +4246,13 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Varia Chamber Ascent": {
-                            "type": "or",
+                        "Event - Varia Access Left Tangle Fruit": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Bounce in Ball"
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "BrinstarAcidFruit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -4532,19 +4288,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Energy Tank)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Bounce in Ball"
-                                    }
-                                ]
-                            }
-                        },
-                        "Door to Varia Chamber": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4554,10 +4298,177 @@
                                         "data": "Can Bounce in Ball"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Tunnel Climb"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Springball"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 555.0976430976431,
+                        "y": 248.45791245791247,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Any Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "WaveBeam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Varia Chamber Ascent": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Varia Access Left Tangle Fruit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb High Ledges"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Tunnel Climb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Varia Access Left Tangle Fruit": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 215.49,
+                        "y": 228.63,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "BrinstarAcidFruit",
+                    "connections": {
+                        "Door to Varia Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Room Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "VariaSuit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -4606,13 +4517,18 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Short Shaft": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -4770,7 +4686,7 @@
                 },
                 "Pickup (Bombs)": {
                     "node_type": "pickup",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
                         "x": 387.64,
                         "y": 120.92,
@@ -4944,7 +4860,7 @@
                 },
                 "Pickup (Varia Suit)": {
                     "node_type": "pickup",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
                         "x": 141.86,
                         "y": 123.57,
@@ -5023,60 +4939,8 @@
                                     {
                                         "type": "template",
                                         "data": "Can Use Any Bombs"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "BrinstarAcidFruit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "SuperMissiles",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PowerGrip",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
-                            }
-                        },
-                        "Event - Tangle Fruit": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "VariaSuit",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -5126,31 +4990,6 @@
                                         "data": "Can Bounce in Ball"
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Event - Tangle Fruit": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1299.88,
-                        "y": 77.49,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "BrinstarAcidFruit",
-                    "connections": {
-                        "Door to Varia Chamber Ascent": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -5330,38 +5169,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Blue-Tinted Hub": {
+                        "Hint - Bomb Statue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "BrinstarC5Chozo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Chozo Statue": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -5397,42 +5209,50 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Tourian Gate Access": {
+                        "Hint - Bomb Statue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "BrinstarC5Chozo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
                 },
-                "Event - Chozo Statue": {
-                    "node_type": "event",
-                    "heal": false,
+                "Hint - Bomb Statue": {
+                    "node_type": "hint",
+                    "heal": true,
                     "coordinates": {
-                        "x": 132.07,
-                        "y": 122.96,
+                        "x": 153.06,
+                        "y": 97.55,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "hint_name": "BOMBS"
+                    },
                     "valid_starting_location": false,
-                    "event_name": "BrinstarC5Chozo",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "resource",
+                        "data": {
+                            "type": "items",
+                            "name": "MorphBall",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
                     "connections": {
                         "Door to Tourian Gate Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Blue-Tinted Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5680,16 +5500,19 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 134.58475482023,
-                        "y": 84.57748706767558,
+                        "x": 134.58,
+                        "y": 84.58,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
+                    "extra": {
+                        "X": 8,
+                        "Y": 9
+                    },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Short Shaft": {
                             "type": "and",
@@ -5756,16 +5579,19 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 166.29609678936342,
-                        "y": 84.05762900260783,
+                        "x": 166.3,
+                        "y": 84.06,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
+                    "extra": {
+                        "X": 10,
+                        "Y": 9
+                    },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Gold-Tinted Hub": {
                             "type": "and",
@@ -5924,16 +5750,19 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 168.37552904963448,
-                        "y": 76.77961609165916,
+                        "x": 168.38,
+                        "y": 76.78,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
+                    "extra": {
+                        "X": 10,
+                        "Y": 9
+                    },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Blue-Tinted Hub": {
                             "type": "and",
@@ -5986,7 +5815,51 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Hint - Hi-Jump Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint - Hi-Jump Statue": {
+                    "node_type": "hint",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 177.3,
+                        "y": 89.23,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "hint_name": "HI_JUMP"
+                    },
+                    "valid_starting_location": false,
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "resource",
+                        "data": {
+                            "type": "items",
+                            "name": "MorphBall",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "connections": {
+                        "Door to Elevator to Kraid": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -6031,68 +5904,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel to Acid Vine Puzzle (Lower)": {
+                        "Hint - Wave Beam Statue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "VariaSuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tunnel to Acid Vine Puzzle (Upper)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Bounce in Ball"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "BrinstarUnderhangChozo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Chozo Statue": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -6128,20 +5944,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Eastern Hub": {
-                            "type": "or",
+                        "Hint - Wave Beam Statue": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -6187,46 +5994,76 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Eastern Hub": {
-                            "type": "or",
+                        "Hint - Wave Beam Statue": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "BrinstarUnderhangChozo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
                 },
-                "Event - Chozo Statue": {
-                    "node_type": "event",
-                    "heal": false,
+                "Hint - Wave Beam Statue": {
+                    "node_type": "hint",
+                    "heal": true,
                     "coordinates": {
-                        "x": 117.41,
-                        "y": 264.32,
+                        "x": 114.69,
+                        "y": 246.4,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "hint_name": "WAVE_BEAM"
+                    },
                     "valid_starting_location": false,
-                    "event_name": "BrinstarUnderhangChozo",
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "resource",
+                        "data": {
+                            "type": "items",
+                            "name": "MorphBall",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
                     "connections": {
                         "Door to Eastern Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Tunnel to Acid Vine Puzzle (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Acid Vine Puzzle (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -6327,16 +6164,19 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 151.22021290239834,
-                        "y": 75.47997092898976,
+                        "x": 152.0,
+                        "y": 75.68,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
+                    "extra": {
+                        "X": 9,
+                        "Y": 9
+                    },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Acid Vine Puzzle": {
                             "type": "and",
@@ -6429,10 +6269,32 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Ledges"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "IceBeam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Tunnel to Blue-Tinted Hub": {
@@ -6506,32 +6368,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Shinespark",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Tunnel to Gold-Tinted Hub": {
                             "type": "and",
                             "data": {
@@ -6561,8 +6397,20 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Use Any Bombs"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Any Bombs"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Bounce in Ball"
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -6638,20 +6486,10 @@
                     "hint_features": [],
                     "connections": {
                         "Tunnel to Blue-Tinted Hub (Lower)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -6690,7 +6528,7 @@
                         "Pickup (Super Missile Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: Add video, likely needs cross room shinespark requirements",
                                 "items": [
                                     {
                                         "type": "resource",
