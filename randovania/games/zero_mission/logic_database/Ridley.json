@@ -322,15 +322,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
                             }
@@ -613,21 +604,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Hall of Pillars": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Pronged Hall": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Path over Lava": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -667,7 +644,28 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Energy Tank)": {
+                        "Door to Pronged Hall": {
+                            "type": "or",
+                            "data": {
+                                "comment": "There are other ways to get past this gap using various levels of skill/knowledge but keeping it simple for now",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PowerGrip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Space Jump"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Path over Lava": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -713,6 +711,34 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Hall of Pillars": {
+                            "type": "or",
+                            "data": {
+                                "comment": "There are other ways to get past this gap using various levels of skill/knowledge but keeping it simple for now",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PowerGrip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Space Jump"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Path over Lava": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -747,7 +773,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Energy Tank)": {
+                        "Door to Pronged Hall": {
                             "type": "template",
                             "data": "Use Space Jump"
                         }
@@ -2882,20 +2908,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Holtz Hall": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "SpeedBooster",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Runway": {
@@ -3874,7 +3892,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Map Station": {
+                        "Door to Zebbo Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3914,6 +3932,13 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Door to Western Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Map Station": {
                             "type": "and",
                             "data": {
@@ -3938,13 +3963,6 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Western Hub": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Zebbo Nest": {
                             "type": "and",
                             "data": {
@@ -4721,12 +4739,29 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "PowerGrip",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PowerGrip",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -5123,12 +5158,16 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel to Cocoon Cave (Upper)": {
+                        "Door to Hall of Pillars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Tunnel to Cocoon Cave (Upper)": {
+                            "type": "template",
+                            "data": "Climb Ledges"
                         }
                     }
                 },
@@ -5163,7 +5202,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel to Cocoon Cave (Upper)": {
+                        "Door to Save Station (North)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5204,13 +5243,6 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Save Station (North)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Hall of Pillars": {
                             "type": "and",
                             "data": {
                                 "comment": null,

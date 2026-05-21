@@ -59,7 +59,7 @@ Extra - room_id: [2, 28]
   * Blue Door to Imago Arena/Door to Cocoon Cave (Upper)
   * Extra - door_idx: (43, 75)
   > Tunnel to Cocoon Cavern (Lower)
-      Missiles and Morph Ball
+      Missiles
 
 > Open Passage to Norfair; Heals? False
   * Layers: default
@@ -107,18 +107,17 @@ Extra - room_id: [4]
   * Pickup 43; Category? Minor
   * Extra - blockx: 6
   * Extra - blocky: 8
-  > Door to Hall of Pillars
-      Trivial
   > Door to Pronged Hall
-      Trivial
-  > Door to Path over Lava
       Trivial
 
 > Door to Hall of Pillars; Heals? False
   * Layers: default
   * Missile Door to Hall of Pillars/Door to Artificial Passage
   * Extra - door_idx: (9,)
-  > Pickup (Energy Tank)
+  > Door to Pronged Hall
+      # There are other ways to get past this gap using various levels of skill/knowledge but keeping it simple for now
+      Power Grip or Use Space Jump
+  > Door to Path over Lava
       Trivial
 
 > Door to Pronged Hall; Heals? False
@@ -127,12 +126,17 @@ Extra - room_id: [4]
   * Extra - door_idx: (10,)
   > Pickup (Energy Tank)
       Trivial
+  > Door to Hall of Pillars
+      # There are other ways to get past this gap using various levels of skill/knowledge but keeping it simple for now
+      Power Grip or Use Space Jump
+  > Door to Path over Lava
+      Trivial
 
 > Door to Path over Lava; Heals? False
   * Layers: default
   * Blue Door to Path over Lava/Door to Artificial Passage
   * Extra - door_idx: (11,)
-  > Pickup (Energy Tank)
+  > Door to Pronged Hall
       Use Space Jump
 
 ----------------
@@ -674,20 +678,20 @@ Extra - room_id: [21]
   * Layers: default
   * Missile Door to Western Hub/Door to Map Station
   * Extra - door_idx: (47,)
-  > Map Station
+  > Door to Zebbo Nest
       Trivial
 
 > Door to Zebbo Nest; Heals? False
   * Layers: default
   * Blue Door to Zebbo Nest/Door to Map Station
   * Extra - door_idx: (48,)
+  > Door to Western Hub
+      Trivial
   > Map Station
       Trivial
 
 > Map Station; Heals? False
   * Layers: default
-  > Door to Western Hub
-      Trivial
   > Door to Zebbo Nest
       Trivial
 
@@ -837,7 +841,9 @@ Extra - room_id: [29]
   > Pickup (2nd Missile Tank)
       All of the following:
           Missiles ≥ 5 or Super Missiles ≥ 5
-          Power Grip or Use Space Jump
+          Any of the following:
+              Use Space Jump
+              Hi-Jump Boots and Power Grip
 
 > Door to Western Hub; Heals? False
   * Layers: default
@@ -904,14 +910,16 @@ Extra - room_id: [32]
   * Layers: default
   * Blue Door to Save Station (North)/Door to Cocoon Cavern (Lower)
   * Extra - door_idx: (5,)
-  > Tunnel to Cocoon Cave (Upper)
+  > Door to Hall of Pillars
       Trivial
+  > Tunnel to Cocoon Cave (Upper)
+      Climb Ledges
 
 > Door to Hall of Pillars; Heals? False
   * Layers: default
   * Super Missile Door to Hall of Pillars/Door to Cocoon Cavern (Lower)
   * Extra - door_idx: (6,)
-  > Tunnel to Cocoon Cave (Upper)
+  > Door to Save Station (North)
       Trivial
 
 > Tunnel to Cocoon Cave (Upper); Heals? False
@@ -919,7 +927,5 @@ Extra - room_id: [32]
   * Tunnel to Cocoon Cave (Upper)/Tunnel to Cocoon Cavern (Lower)
   * Extra - door_idx: (74,)
   > Door to Save Station (North)
-      Trivial
-  > Door to Hall of Pillars
       Trivial
 
