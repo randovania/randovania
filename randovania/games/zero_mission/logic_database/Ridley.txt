@@ -186,8 +186,7 @@ Extra - room_id: [6]
       Morph Ball and Climb Ledges
   > Door to Pronged Hall
       Any of the following:
-          Use Space Jump
-          Hi-Jump Boots and Power Grip
+          Climb High Ledges
           All of the following:
               Morph Ball
               Hi-Jump Boots or Power Grip
@@ -198,7 +197,7 @@ Extra - room_id: [6]
   * Layers: default
   * Missile Door to Map Station/Door to Western Hub
   * Extra - door_idx: (17,)
-  > Door to Path over Lava
+  > Pickup (Missile Tank)
       Tunnel Climb and Use Space Jump
   > Door to Maze
       Speed Booster
@@ -326,9 +325,7 @@ Extra - room_id: [10]
   * Blue Door to Desgeega Corridor/Door to Multiviola Cache
   * Extra - door_idx: (12,)
   > Door to Gambit
-      All of the following:
-          Morph Ball
-          Hi-Jump Boots or Power Grip
+      Can Use Springball or Tunnel Climb
 
 > Door to Gambit; Heals? False
   * Layers: default
@@ -456,7 +453,7 @@ Extra - room_id: [14]
   > Pickup (Energy Tank)
       Trivial
   > Door to Eastern Hub
-      Morph Ball
+      Can Bounce in Ball or Tunnel Climb
 
 > Open Passage to Desgeega Corridor; Heals? False
   * Layers: default
@@ -836,22 +833,16 @@ Extra - room_id: [29]
   * Pickup 59; Category? Minor
   * Extra - blockx: 20
   * Extra - blocky: 15
-  > Door to Western Hub
+  > Maze center
       Trivial
-  > Pickup (2nd Missile Tank)
-      All of the following:
-          Missiles ≥ 5 or Super Missiles ≥ 5
-          Any of the following:
-              Use Space Jump
-              Hi-Jump Boots and Power Grip
 
 > Door to Western Hub; Heals? False
   * Layers: default
   * Blue Door to Western Hub/Door to Maze
   * Extra - door_idx: (69,)
-  > Pickup (Missile Tank)
+  > Maze center
       All of the following:
-          Have Any Jump Upgrade and Tunnel Climb
+          Speed Booster and Have Any Jump Upgrade and Tunnel Climb
           Missiles or Super Missiles
 
 > Pickup (2nd Missile Tank); Heals? False
@@ -859,8 +850,19 @@ Extra - room_id: [29]
   * Pickup 96; Category? Minor
   * Extra - blockx: 24
   * Extra - blocky: 3
+  > Maze center
+      Trivial
+
+> Maze center; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Trivial
   > Door to Western Hub
       Trivial
+  > Pickup (2nd Missile Tank)
+      All of the following:
+          Climb High Ledges
+          Missiles ≥ 5 or Super Missiles ≥ 5
 
 ----------------
 Chain Reaction Chamber

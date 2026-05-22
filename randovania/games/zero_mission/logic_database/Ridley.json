@@ -1039,39 +1039,13 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Use Space Jump"
+                                        "data": "Climb High Ledges"
                                     },
                                     {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Hi-Jump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PowerGrip",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
                                                 {
                                                     "type": "and",
                                                     "data": {
@@ -1175,18 +1149,18 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Path over Lava": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Use Space Jump"
+                                        "data": "Tunnel Climb"
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Tunnel Climb"
+                                        "data": "Use Space Jump"
                                     }
                                 ]
                             }
@@ -1883,44 +1857,17 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Gambit": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Use Springball"
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Hi-Jump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerGrip",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Tunnel Climb"
                                     }
                                 ]
                             }
@@ -2598,13 +2545,12 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Tunnel Climb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
                                     }
                                 ]
                             }
@@ -4695,6 +4641,152 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
+                        "Maze center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Western Hub": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 504.0,
+                        "y": 80.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            69
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Ridley",
+                        "area": "Western Hub",
+                        "node": "Door to Maze"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Maze center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SuperMissiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Have Any Jump Upgrade"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Tunnel Climb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (2nd Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 391.53,
+                        "y": 327.7,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "blockx": 24,
+                        "blocky": 3
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 96,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Maze center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Maze center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 392.12,
+                        "y": 138.25,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Western Hub": {
                             "type": "and",
                             "data": {
@@ -4734,150 +4826,10 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PowerGrip",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Hi-Jump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Space Jump"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Climb High Ledges"
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Door to Western Hub": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 504.0,
-                        "y": 80.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            69
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Ridley",
-                        "area": "Western Hub",
-                        "node": "Door to Maze"
-                    },
-                    "default_dock_weakness": "Blue Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Missiles",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SuperMissiles",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Tunnel Climb"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Have Any Jump Upgrade"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Pickup (2nd Missile Tank)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 391.53,
-                        "y": 327.7,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "blockx": 24,
-                        "blocky": 3
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 96,
-                    "location_category": "minor",
-                    "custom_index_group": null,
-                    "hint_features": [],
-                    "connections": {
-                        "Door to Western Hub": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
