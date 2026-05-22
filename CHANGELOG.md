@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ferenia
 
 - Changed: Added Movement (Beginner) requirement to reach Missile Tank Pickup in Space Jump Room using Space Jump and Normal Bomb.
+- Changed: Added Speed Booster Conservation trick to reach Missile Tank Pickup in Space Jump Room using Speed Booster. Beginner with Power Bombs and Intermediate with Cross Bombs.
 
 ##### Ghavoran
 
