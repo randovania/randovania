@@ -2004,8 +2004,41 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Ridley Arena": {
-                            "type": "template",
-                            "data": "Climb Ledges"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Ledges"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Super Missiles"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Missiles"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ChargeBeam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
