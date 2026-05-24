@@ -21,7 +21,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v8.1.0
         with:
-          version: "0.11.15"
+          version: "0.11.16"
           enable-cache: true
 
       - name: Set up Python
@@ -31,7 +31,7 @@ jobs:
         run: uv sync --locked --all-extras --group typing
 
       - name: mypy
-        uses: liskin/gh-problem-matcher-wrap@v3
+        uses: liskin/gh-problem-matcher-wrap@v4
         with:
           linters: mypy
           run: uv run mypy
@@ -49,7 +49,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v8.1.0
         with:
-          version: "0.11.15"
+          version: "0.11.16"
           enable-cache: true
 
       - name: Set up Python
