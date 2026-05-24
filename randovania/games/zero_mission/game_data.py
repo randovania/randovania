@@ -82,7 +82,7 @@ def _hash_words() -> list[str]:
 
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="ULHG44OA",
+        expected_seed_hash="I44G3TPZ",
     )
 
 
