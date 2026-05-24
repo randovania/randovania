@@ -123,7 +123,7 @@ Extra - room_id: [3]
   > Door to Save Station (South)
       Trivial
   > Tunnel to Speedbooster Passage
-      Tunnel Climb
+      Can Use Springball or Tunnel Climb
   > Tunnel to Hidden Tank Shaft (Lower)
       Tunnel Climb
 
@@ -156,7 +156,7 @@ Extra - room_id: [3]
   > Tunnel to Hidden Tank Shaft (Upper)
       All of the following:
           Can Use Any Bombs
-          Ice Beam or Climb Ledges
+          Ice Beam or Climb High Ledges
 
 > Door to Save Station (South); Heals? False
   * Layers: default
@@ -303,7 +303,7 @@ Extra - room_id: [7]
   > Door to Save Station (Central)
       Trivial
   > Tunnel to Speedbooster Passage
-      Morph Ball and Speed Booster
+      Morph Ball and Can Ballspark
 
 > Door to Save Station (Central); Heals? False
   * Layers: default
@@ -326,9 +326,7 @@ Extra - room_id: [7]
   * Tunnel to Speedbooster Passage/Tunnel to Gold-Tinted Hub
   * Extra - door_idx: (88,)
   > Door to Norfair Access Corridor
-      All of the following:
-          Morph Ball
-          Speed Booster or Can Use Any Bombs
+      Morph Ball and Can Use Any Bombs
 
 ----------------
 Elevator to Kraid
@@ -770,8 +768,14 @@ Extra - room_id: [23]
       All of the following:
           Can Bounce in Ball
           Any of the following:
-              Varia Suit
+              # Go through the tunnel and past the crumble blocks
               Can Use Springball and Tunnel Climb
+              All of the following:
+                  # Go through the acid
+                  Varia Suit
+                  Any of the following:
+                      Power Grip or Can Use Springball
+                      Gravity Suit and Climb Ledges
 
 > Room Center; Heals? False
   * Layers: default
@@ -1155,18 +1159,14 @@ Extra - room_id: [40]
   > Tunnel to Blue-Tinted Hub
       All of the following:
           Morph Ball
-          Speed Booster or Can Use Any Bombs
+          Can Ballspark or Can Use Any Bombs
 
 > Tunnel to Blue-Tinted Hub; Heals? False
   * Layers: default
   * Tunnel to Blue-Tinted Hub/Tunnel to Speedbooster Passage
   * Extra - door_idx: (90,)
   > Tunnel to Gold-Tinted Hub
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Speed Booster
-              Can Bounce in Ball and Can Use Any Bombs
+      Morph Ball and Can Bounce in Ball and Can Use Any Bombs
 
 ----------------
 Hidden Tank Shaft
@@ -1194,7 +1194,7 @@ Extra - room_id: [41]
   * Extra - door_idx: (93,)
   > Pickup (Super Missile Tank)
       # TODO: Add video, likely needs cross room shinespark requirements
-      Morph Ball and Speed Booster
+      Can Ballspark
 
 > Tunnel to Blue-Tinted Hub (Upper); Heals? False
   * Layers: default
