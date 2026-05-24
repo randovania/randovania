@@ -1104,4 +1104,9 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         if starting_memo:
             data["gameConfig"]["startingMemo"] = starting_memo
 
+        if not self.configuration.legacy_mode:
+            data["gameConfig"]["missileCosts"] = {
+                "Wavebuster": 8,
+            }
+
         return data
