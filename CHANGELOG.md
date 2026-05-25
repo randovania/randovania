@@ -55,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Main Deck
 
 - Changed: Habitation Deck Entrance: Changed the NHJ WJ Freeze trick from Movement (Advanced) to Stand on Frozen Enemies (Expert). Also added in Stand On Frozen Enemies (Beginner) to the other WJ trick to account for diffusion timing.
+- Changed: Dark Stairwell: Using the hidden connection to/from Central Nexus can now expect Mid-Air Morphs instead of Bombs/Hi-Jump.
 
 ### Metroid Prime
 
