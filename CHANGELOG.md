@@ -58,7 +58,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Observatory: Softlock if upper 1st-pass pirates killed before entering the room
+- Fixed: Training Chamber: Softlock if room unloaded after triggering fight but before killing both ghosts (e.g. wallcrawl)
+- Fixed: GM8E30 (Korean) support
+- Changed: Wavebuster no longer consumes ammo if cancelled due to "point blank range" rule
+- Changed: Updated tournament scan to include 2025 winners
+
 #### Logic Database
+
+- Changed: Reduced logical cost to open Wavebuster door locks: 11->10
 
 ##### Phendrana Drifts
 
