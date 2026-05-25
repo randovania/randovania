@@ -4490,8 +4490,25 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Have Any Jump Upgrade"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Kickclimb off the platform",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Have Any Jump Upgrade"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "or",
