@@ -328,25 +328,8 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Gauntlet": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Hi-Jump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Space Jump"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Have Any Jump Upgrade"
                         },
                         "Door to Sidehopper Hall": {
                             "type": "and",
@@ -830,6 +813,10 @@
                                 "items": [
                                     {
                                         "type": "template",
+                                        "data": "Can Break Single Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "template",
                                         "data": "Can Use Ball Launcher"
                                     }
                                 ]
@@ -870,8 +857,25 @@
                             }
                         },
                         "Door to Upper Corridor": {
-                            "type": "template",
-                            "data": "Climb Ledges"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PowerGrip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Space Jump"
+                                    }
+                                ]
+                            }
                         },
                         "Door to Caged Sidehopper Hall": {
                             "type": "resource",
