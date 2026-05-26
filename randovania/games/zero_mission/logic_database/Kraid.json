@@ -932,7 +932,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Apex Launcher Hub": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -943,6 +943,27 @@
                                             "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ziplines",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb High Ledges"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -982,7 +1003,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Zeela-Infested Room": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -991,6 +1012,15 @@
                                         "data": {
                                             "type": "items",
                                             "name": "PowerGrip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1040,6 +1070,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Save Station (Northeast)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1082,72 +1119,47 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Climb Ledges"
                                     }
                                 ]
                             }
                         },
                         "Door to Save Station (Northeast)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Ride the zipline in Morph Ball to avoid the item",
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Ziplines Activated": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Use Springball"
                                     }
                                 ]
                             }
                         },
                         "Pickup (Zipline Activation)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1183,16 +1195,20 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Zeela-Infested Room": {
+                        "Pickup (Energy Tank)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
+                                        "type": "template",
+                                        "data": "Climb Ledges"
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Ziplines",
+                                            "type": "tricks",
+                                            "name": "Movement",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1201,37 +1217,33 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SpaceJump",
+                                            "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     }
                                 ]
                             }
-                        }
-                    }
-                },
-                "Event - Ziplines Activated": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 180.89,
-                        "y": 106.47,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Ziplines",
-                    "connections": {
+                        },
                         "Door to Zeela-Infested Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Ride the zipline in Morph Ball to avoid the item",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Ziplines",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Springball"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1310,10 +1322,29 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Acid Worm Arena Access": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Ziplines",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "KillAcidWorm",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Tunnel to Cache": {
@@ -1374,6 +1405,10 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Acid Worm Defeated": {
+                            "type": "template",
+                            "data": "Defeat Acid Worm"
                         }
                     }
                 },
@@ -1421,26 +1456,22 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Ziplines",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
                                     }
                                 ]
                             }
                         },
                         "Event - Acid Worm Defeated": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Defeat Acid Worm"
                         }
                     }
                 },
@@ -1502,8 +1533,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 269.3667141045376,
-                        "y": 245.45570367788716,
+                        "x": 269.3175542406311,
+                        "y": 203.17685733070348,
                         "z": 0.0
                     },
                     "description": "",
@@ -1697,7 +1728,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Bombs"
+                                        "data": "Can Use Ball Launcher"
                                     },
                                     {
                                         "type": "resource",
@@ -1718,7 +1749,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Bombs"
+                                        "data": "Can Use Ball Launcher"
                                     },
                                     {
                                         "type": "and",
@@ -2064,7 +2095,7 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
@@ -2187,7 +2218,7 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
@@ -2461,7 +2492,7 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
@@ -2782,7 +2813,7 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "events",
+                                                                    "type": "items",
                                                                     "name": "Ziplines",
                                                                     "amount": 1,
                                                                     "negate": false
@@ -3055,7 +3086,7 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
@@ -3109,7 +3140,7 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false

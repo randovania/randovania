@@ -331,10 +331,6 @@
                 "long_name": "Boss Acid Worm Defeated",
                 "extra": {}
             },
-            "Ziplines": {
-                "long_name": "Ziplines Activated",
-                "extra": {}
-            },
             "RuinsChozoStatue": {
                 "long_name": "Ruins Chozo Statue Item Aquired",
                 "extra": {}
@@ -902,6 +898,78 @@
                                                 "type": "tricks",
                                                 "name": "Knowledge",
                                                 "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Defeat Acid Worm": {
+                "display_name": "Defeat Acid Worm",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Ziplines",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": "Health Requirements",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "VariaSuit",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "EnergyTank",
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": "Damage Requirements",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missiles",
+                                                "amount": 45,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "SuperMissiles",
+                                                "amount": 9,
                                                 "negate": false
                                             }
                                         }
