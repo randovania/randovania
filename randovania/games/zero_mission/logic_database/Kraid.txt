@@ -178,7 +178,7 @@ Extra - room_id: [3]
   * Blue Door to Apex Launcher Hub/Door to Upper Corridor
   * Extra - door_idx: (16,)
   > Door to Zeela-Infested Room
-      Morph Ball and Power Grip
+      Tunnel Climb
 
 ----------------
 Zipline Activation Chamber
@@ -231,38 +231,48 @@ Extra - room_id: [5]
   * Layers: default
   * Blue Door to Zeela-Infested Room/Door to Acid Worm Arena
   * Extra - door_idx: (19,)
-  > Door to Acid Worm Arena Access
-      No Zipline Activation or After Boss Acid Worm Defeated
-  > Tunnel to Cache
-      All of the following:
-          After Boss Acid Worm Defeated and Can Use Any Bombs
-          Any of the following:
-              Power Grip
-              Movement (Beginner) and Can Bounce in Ball
-  > Event - Acid Worm Defeated
-      Defeat Acid Worm
+  > Acid Worm Arena
+      Trivial
 
 > Door to Acid Worm Arena Access; Heals? False
   * Layers: default
   * Blue Door to Acid Worm Arena Access/Door to Acid Worm Arena
   * Extra - door_idx: (20,)
-  > Door to Zeela-Infested Room
-      No Zipline Activation or After Boss Acid Worm Defeated
-  > Event - Acid Worm Defeated
-      Defeat Acid Worm
+  > Acid Worm Arena
+      Trivial
 
 > Tunnel to Cache; Heals? False
   * Layers: default
   * Tunnel to Cache/Tunnel to Acid Worm Arena
   * Extra - door_idx: (91,)
-  > Door to Zeela-Infested Room
+  > Acid Worm Arena
       After Boss Acid Worm Defeated and Can Use Any Bombs
 
 > Event - Acid Worm Defeated; Heals? False
   * Layers: default
   * Event Boss Acid Worm Defeated
+  > Acid Worm Arena
+      After Boss Acid Worm Defeated
+
+> Acid Worm Arena; Heals? False
+  * Layers: default
+  > Door to Zeela-Infested Room
+      After Boss Acid Worm Defeated
   > Door to Acid Worm Arena Access
       After Boss Acid Worm Defeated
+  > Tunnel to Cache
+      All of the following:
+          After Boss Acid Worm Defeated and Can Use Any Bombs
+          Any of the following:
+              Tunnel Climb
+              Movement (Beginner) and Can Bounce in Ball
+  > Event - Acid Worm Defeated
+      All of the following:
+          Zipline Activation
+          # Health requirements
+          Energy Tank ≥ 2 or Varia Suit
+          # Damage Requirements
+          Missiles ≥ 45 or Super Missiles ≥ 9
 
 ----------------
 Zeela-Infested Room
