@@ -11,8 +11,10 @@ import randovania.game.gui
 import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
+from randovania.games.common.prime_family.gui.prime_trilogy_teleporter_details_tab import (
+    PrimeTrilogyTeleporterDetailsTab,
+)
 from randovania.games.prime2_dev import layout
-from randovania.layout.preset_describer import GamePresetDescriber
 
 if typing.TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter
@@ -37,7 +39,11 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.EchoesCosmeticPatchesDialog,
         export_dialog=gui.EchoesGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(HintDetailsTab,),
+        spoiler_visualizer=(
+            PrimeTrilogyTeleporterDetailsTab,
+            gui.TranslatorGateDetailsTab,
+            HintDetailsTab,
+        ),
     )
 
 
@@ -58,7 +64,18 @@ def _hints() -> randovania.game.hints.GameHints:
 
     return randovania.game.hints.GameHints(
         hint_distributor=generator.EchoesHintDistributor(),
-        specific_pickup_hints={},
+        specific_pickup_hints={
+            "sky_temple_keys": randovania.game.hints.SpecificHintDetails(
+                long_name="Sky Temple Key Hints",
+                description="This controls how precise the hints for Sky Temple Keys in Sky Temple Gateway are.",
+            ),
+            "dark_temple_keys": randovania.game.hints.SpecificHintDetails(
+                long_name="Dark Temple Key Hints",
+                description=(
+                    "This controls how precise the hints for Dark Temple Keys at their respective gateways are."
+                ),
+            ),
+        },
     )
 
 
@@ -83,13 +100,14 @@ def _hash_words() -> list[str]:
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
         expected_seed_hash="O4DMH5PE",
+        database_collectable_ignore_events=("Event91", "Event92", "Event97"),
     )
 
 
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Echoes",
     long_name="Metroid Prime 2: Echoes (Development)",
-    development_state=randovania.game.development_state.DevelopmentState.STAGING,
+    development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
     presets=["starter_preset.rdvpreset"],
     faq=[],
     web_info=randovania.game.web_info.GameWebInfo(
@@ -106,7 +124,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     layout=randovania.game.layout.GameLayout(
         configuration=layout.EchoesConfiguration,
         cosmetic_patches=layout.EchoesCosmeticPatches,
-        preset_describer=GamePresetDescriber(),
+        preset_describer=layout.EchoesPresetDescriber(),
     ),
     options=_options,
     gui=_gui,
@@ -115,5 +133,5 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     test_data=_test_data,
-    multiple_start_nodes_per_area=True,
+    multiple_start_nodes_per_area=False,
 )

@@ -57,7 +57,7 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 448, 2361))
+        self.scroll_area_contents.setGeometry(QRect(0, 0, 448, 2716))
         self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -95,8 +95,7 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.custom_hud_color_square.setSizePolicy(sizePolicy2)
         self.custom_hud_color_square.setMinimumSize(QSize(22, 22))
         self.custom_hud_color_square.setAutoFillBackground(False)
-        self.custom_hud_color_square.setFrameShape(QFrame.Shape.StyledPanel)
-        self.custom_hud_color_square.setFrameShadow(QFrame.Shadow.Raised)
+        self.custom_hud_color_square.setFrameShape(QFrame.NoFrame)
         self.custom_hud_color_square.setLineWidth(1)
 
         self.hud_color_layout.addWidget(self.custom_hud_color_square)
@@ -114,21 +113,6 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.game_changes_layout.addWidget(self.remove_hud_popup_check)
 
-        self.pickup_markers_check = QCheckBox(self.game_changes_box)
-        self.pickup_markers_check.setObjectName(u"pickup_markers_check")
-
-        self.game_changes_layout.addWidget(self.pickup_markers_check)
-
-        self.open_map_check = QCheckBox(self.game_changes_box)
-        self.open_map_check.setObjectName(u"open_map_check")
-
-        self.game_changes_layout.addWidget(self.open_map_check)
-
-        self.unvisited_room_names_check = QCheckBox(self.game_changes_box)
-        self.unvisited_room_names_check.setObjectName(u"unvisited_room_names_check")
-
-        self.game_changes_layout.addWidget(self.unvisited_room_names_check)
-
 
         self.verticalLayout.addWidget(self.game_changes_box)
 
@@ -139,11 +123,6 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.suits_foldable_layout.setSpacing(6)
         self.suits_foldable_layout.setContentsMargins(11, 11, 11, 11)
         self.suits_foldable_layout.setObjectName(u"suits_foldable_layout")
-        self.experimental_label = QLabel(self.suits_foldable)
-        self.experimental_label.setObjectName(u"experimental_label")
-
-        self.suits_foldable_layout.addWidget(self.experimental_label)
-
         self.simple_suit_box = QWidget(self.suits_foldable)
         self.simple_suit_box.setObjectName(u"simple_suit_box")
         self.horizontalLayout_2 = QHBoxLayout(self.simple_suit_box)
@@ -184,7 +163,6 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         font.setPointSize(9)
         font.setBold(True)
         self.simple_name_label.setFont(font)
-        self.simple_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_2.addWidget(self.simple_name_label)
 
@@ -197,7 +175,6 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         font1 = QFont()
         font1.setBold(False)
         self.simple_img_label.setFont(font1)
-        self.simple_img_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_2.addWidget(self.simple_img_label)
 
@@ -245,7 +222,6 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         sizePolicy5.setHeightForWidth(self.varia_name_label.sizePolicy().hasHeightForWidth())
         self.varia_name_label.setSizePolicy(sizePolicy5)
         self.varia_name_label.setFont(font)
-        self.varia_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_3.addWidget(self.varia_name_label)
 
@@ -255,7 +231,6 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.varia_img_label.setSizePolicy(sizePolicy5)
         self.varia_img_label.setMinimumSize(QSize(256, 256))
         self.varia_img_label.setMaximumSize(QSize(16777215, 16777215))
-        self.varia_img_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_3.addWidget(self.varia_img_label)
 
@@ -305,7 +280,6 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         font2 = QFont()
         font2.setBold(True)
         self.dark_name_label.setFont(font2)
-        self.dark_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_4.addWidget(self.dark_name_label)
 
@@ -315,7 +289,6 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.dark_img_label.setSizePolicy(sizePolicy5)
         self.dark_img_label.setMinimumSize(QSize(256, 256))
         self.dark_img_label.setMaximumSize(QSize(16777215, 16777215))
-        self.dark_img_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_4.addWidget(self.dark_img_label)
 
@@ -363,7 +336,6 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         sizePolicy5.setHeightForWidth(self.light_name_label.sizePolicy().hasHeightForWidth())
         self.light_name_label.setSizePolicy(sizePolicy5)
         self.light_name_label.setFont(font)
-        self.light_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_5.addWidget(self.light_name_label)
 
@@ -373,7 +345,6 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.light_img_label.setSizePolicy(sizePolicy5)
         self.light_img_label.setMinimumSize(QSize(256, 256))
         self.light_img_label.setMaximumSize(QSize(16777215, 16777215))
-        self.light_img_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_5.addWidget(self.light_img_label)
 
@@ -432,8 +403,7 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.helmet_alpha_slider = ScrollProtectedSlider(self.visor_box)
         self.helmet_alpha_slider.setObjectName(u"helmet_alpha_slider")
-        self.helmet_alpha_slider.setOrientation(Qt.Orientation.Horizontal)
-        self.helmet_alpha_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.helmet_alpha_slider.setTickPosition(QSlider.NoTicks)
 
         self.visor_layout.addWidget(self.helmet_alpha_slider, 1, 1, 1, 1)
 
@@ -454,8 +424,7 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.hud_alpha_slider = ScrollProtectedSlider(self.visor_box)
         self.hud_alpha_slider.setObjectName(u"hud_alpha_slider")
-        self.hud_alpha_slider.setOrientation(Qt.Orientation.Horizontal)
-        self.hud_alpha_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.hud_alpha_slider.setTickPosition(QSlider.NoTicks)
 
         self.visor_layout.addWidget(self.hud_alpha_slider, 0, 1, 1, 1)
 
@@ -516,15 +485,13 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.sfx_volume_slider = ScrollProtectedSlider(self.audio_box)
         self.sfx_volume_slider.setObjectName(u"sfx_volume_slider")
-        self.sfx_volume_slider.setOrientation(Qt.Orientation.Horizontal)
-        self.sfx_volume_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.sfx_volume_slider.setTickPosition(QSlider.NoTicks)
 
         self.audio_layout.addWidget(self.sfx_volume_slider, 1, 1, 1, 1)
 
         self.music_volume_slider = ScrollProtectedSlider(self.audio_box)
         self.music_volume_slider.setObjectName(u"music_volume_slider")
-        self.music_volume_slider.setOrientation(Qt.Orientation.Horizontal)
-        self.music_volume_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.music_volume_slider.setTickPosition(QSlider.NoTicks)
 
         self.audio_layout.addWidget(self.music_volume_slider, 2, 1, 1, 1)
 
@@ -559,15 +526,13 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.screen_brightness_slider = ScrollProtectedSlider(self.screen_box)
         self.screen_brightness_slider.setObjectName(u"screen_brightness_slider")
-        self.screen_brightness_slider.setOrientation(Qt.Orientation.Horizontal)
-        self.screen_brightness_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.screen_brightness_slider.setTickPosition(QSlider.NoTicks)
 
         self.screen_layout.addWidget(self.screen_brightness_slider, 0, 1, 1, 1)
 
         self.screen_y_offset_slider = ScrollProtectedSlider(self.screen_box)
         self.screen_y_offset_slider.setObjectName(u"screen_y_offset_slider")
-        self.screen_y_offset_slider.setOrientation(Qt.Orientation.Horizontal)
-        self.screen_y_offset_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.screen_y_offset_slider.setTickPosition(QSlider.NoTicks)
 
         self.screen_layout.addWidget(self.screen_y_offset_slider, 2, 1, 1, 1)
 
@@ -578,15 +543,13 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.screen_x_offset_slider = ScrollProtectedSlider(self.screen_box)
         self.screen_x_offset_slider.setObjectName(u"screen_x_offset_slider")
-        self.screen_x_offset_slider.setOrientation(Qt.Orientation.Horizontal)
-        self.screen_x_offset_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.screen_x_offset_slider.setTickPosition(QSlider.NoTicks)
 
         self.screen_layout.addWidget(self.screen_x_offset_slider, 1, 1, 1, 1)
 
         self.screen_stretch_slider = ScrollProtectedSlider(self.screen_box)
         self.screen_stretch_slider.setObjectName(u"screen_stretch_slider")
-        self.screen_stretch_slider.setOrientation(Qt.Orientation.Horizontal)
-        self.screen_stretch_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.screen_stretch_slider.setTickPosition(QSlider.NoTicks)
 
         self.screen_layout.addWidget(self.screen_stretch_slider, 3, 1, 1, 1)
 
@@ -621,7 +584,7 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.verticalLayout.addWidget(self.options_foldable)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.verticalLayout.addItem(self.verticalSpacer)
 
@@ -648,11 +611,7 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.custom_hud_color_button.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Set Color...", None))
         self.faster_credits_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Faster Credits", None))
         self.remove_hud_popup_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Skip Item Acquisition Popups", None))
-        self.pickup_markers_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Replace Translator icons on map with item icons", None))
-        self.open_map_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Open map from start", None))
-        self.unvisited_room_names_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Always display room names on map", None))
         self.suits_foldable.setProperty(u"title", QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Suit Colors", None))
-        self.experimental_label.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Note: requires the experimental patcher to be enabled.", None))
         self.simple_left_button.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"<", None))
         self.simple_name_label.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Player 1", None))
         self.simple_img_label.setText("")

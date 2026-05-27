@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.games.prime2.gui.preset_settings.echoes_translators_tab import gate_data
-from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.games.prime2_dev.gui.preset_settings.echoes_translators_tab import gate_data
+from randovania.games.prime2_dev.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.layout import filtered_database
 from randovania.lib.container_lib import iterate_key_sorted

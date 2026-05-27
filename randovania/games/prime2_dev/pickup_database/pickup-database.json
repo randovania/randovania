@@ -291,7 +291,7 @@
                 "targeting",
                 "visor"
             ],
-            "model_name": "ScanVisor INCOMPLETE",
+            "model_name": "CombatVisor",
             "offworld_models": {
                 "am2r": "sItemCombatVisorPrime",
                 "prime1": "Combat Visor"
@@ -314,7 +314,7 @@
                 "targeting",
                 "visor"
             ],
-            "model_name": "ScanVisor INCOMPLETE",
+            "model_name": "ScanVisor",
             "offworld_models": {
                 "am2r": "sItemScanVisorPrime",
                 "prime1": "Scan Visor"
@@ -388,7 +388,7 @@
                 "major",
                 "suit"
             ],
-            "model_name": "VariaSuit INCOMPLETE",
+            "model_name": "VariaSuit",
             "offworld_models": {
                 "am2r": "sItemVariaSuitPrime",
                 "prime1": "Varia Suit",
@@ -474,7 +474,7 @@
                 "major",
                 "suit"
             ],
-            "model_name": "VariaSuit INCOMPLETE",
+            "model_name": "VariaSuit",
             "offworld_models": {
                 "am2r": "sItemProgressiveSuitEchoes",
                 "prime1": "Varia Suit",
@@ -504,7 +504,7 @@
                 "major",
                 "ordnance"
             ],
-            "model_name": "CoinChest",
+            "model_name": "PowerBeam",
             "offworld_models": {
                 "am2r": "sItemPowerBeamPrime",
                 "prime1": "Power Beam",
@@ -514,7 +514,7 @@
             "additional_resources": {
                 "Percent": 1
             },
-            "description": "This uses the Coin Chest model in-game.",
+            "description": "This uses a yellow-tinted Annihilator Beam model in-game.",
             "progression": [
                 "Power"
             ],
@@ -529,7 +529,7 @@
                 "major",
                 "ordnance"
             ],
-            "model_name": "ChargeBeam INCOMPLETE",
+            "model_name": "ChargeBeam",
             "offworld_models": {
                 "am2r": "sItemChargeBeam",
                 "dread": "powerup_chargebeam",
@@ -637,7 +637,7 @@
                 115
             ]
         },
-        "Double Damage": {
+        "Massive Damage": {
             "gui_category": "beam",
             "hint_features": [
                 "cheat"
@@ -648,7 +648,6 @@
             "additional_resources": {
                 "Percent": 1
             },
-            "description": "Doubles all damage dealt by Samus.\nThis uses a big un-split Beam Ammo Expansion model in-game.",
             "progression": [
                 "DoubleDamage"
             ],
@@ -682,7 +681,7 @@
                 "morph_ball",
                 "morph_ball_related"
             ],
-            "model_name": "CoinChest",
+            "model_name": "MorphBall",
             "offworld_models": {
                 "am2r": "sItemMorphBallPrime",
                 "prime1": "Morph Ball",
@@ -693,7 +692,7 @@
             "additional_resources": {
                 "Percent": 1
             },
-            "description": "This uses the Coin Chest model in-game.",
+            "description": "This uses a small Boost Ball model in-game.",
             "progression": [
                 "MorphBall"
             ],
@@ -814,29 +813,6 @@
             "original_locations": [
                 88
             ]
-        },
-        "Cannon Ball": {
-            "gui_category": "morph_ball",
-            "hint_features": [
-                "cheat"
-            ],
-            "model_name": "BoostBall",
-            "offworld_models": {
-                "am2r": "sItemCannonBallEchoes",
-                "prime1": "Boost Ball",
-                "dread": "powerup_speedbooster",
-                "samus_returns": "offworld_speedbooster"
-            },
-            "preferred_location_category": "major",
-            "additional_resources": {
-                "Percent": 1
-            },
-            "description": "Collecting this pickup will provide you with the Cannon Ball state until you die, quit the game or use a Kinetic Orb Cannon. It's possible to softlock while doing certain Morph Ball puzzles with Cannon Ball enabled. \nThis uses Boost Ball model in-game.",
-            "progression": [
-                "CannonBall"
-            ],
-            "expected_case_for_describer": "missing",
-            "starting_condition": "never_start"
         },
         "Space Jump Boots": {
             "gui_category": "movement",
@@ -1325,7 +1301,8 @@
             ],
             "unlocked_by": "MissileLauncher",
             "temporary": "Temporary1",
-            "allows_negative": true
+            "allows_negative": true,
+            "hide_requires_main": true
         },
         "Power Bomb Expansion": {
             "gui_category": "morph_ball",
@@ -1351,7 +1328,8 @@
             ],
             "unlocked_by": "PowerBomb",
             "temporary": "Temporary2",
-            "allows_negative": true
+            "allows_negative": true,
+            "hide_requires_main": true
         },
         "Dark Ammo Expansion": {
             "gui_category": "beam",

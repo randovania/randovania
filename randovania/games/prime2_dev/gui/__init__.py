@@ -1,17 +1,15 @@
 from __future__ import annotations
 
-from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
-from randovania.games.prime2.gui.dialog.game_export_dialog import EchoesGameExportDialog
-from randovania.games.prime2.gui.echoes_game_tab import EchoesGameTabWidget
-from randovania.games.prime2.gui.portal_details_tab import PortalDetailsTab
-from randovania.games.prime2.gui.preset_settings import prime2_preset_tabs
-from randovania.games.prime2.gui.translator_gate_details_tab import TranslatorGateDetailsTab
+from randovania.games.prime2_dev.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
+from randovania.games.prime2_dev.gui.dialog.game_export_dialog import EchoesGameExportDialog
+from randovania.games.prime2_dev.gui.echoes_game_tab import EchoesGameTabWidget
+from randovania.games.prime2_dev.gui.preset_settings import preset_tabs
+from randovania.games.prime2_dev.gui.translator_gate_details_tab import TranslatorGateDetailsTab
 
 __all__ = [
     "EchoesCosmeticPatchesDialog",
     "EchoesGameExportDialog",
     "EchoesGameTabWidget",
-    "PortalDetailsTab",
     "TranslatorGateDetailsTab",
-    "prime2_preset_tabs",
+    "preset_tabs",
 ]

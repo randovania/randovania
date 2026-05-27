@@ -111,7 +111,7 @@ class Ui_EchoesGameExportDialog(object):
 
     def retranslateUi(self, EchoesGameExportDialog):
         EchoesGameExportDialog.setWindowTitle(QCoreApplication.translate("EchoesGameExportDialog", u"Game Patching", None))
-        self.description_label.setText(QCoreApplication.translate("EchoesGameExportDialog", u"<html><head/><body><p>In order to create the randomized game, a ISO file of Metroid Prime 2: Echoes for the Nintendo Gamecube is necessary.</p><p>After using it once, a copy is kept by Randovania for later use.</p></body></html>", None))
+        self.description_label.setText(QCoreApplication.translate("EchoesGameExportDialog", u"<html><head/><body><p>In order to create the randomized game, an ISO file of Metroid Prime 2: Echoes for the Nintendo Gamecube is necessary.</p></body></html>", None))
         self.accept_button.setText(QCoreApplication.translate("EchoesGameExportDialog", u"Accept", None))
         self.input_file_edit.setPlaceholderText(QCoreApplication.translate("EchoesGameExportDialog", u"Path to vanilla Gamecube ISO", None))
         self.output_file_button.setText(QCoreApplication.translate("EchoesGameExportDialog", u"Select File", None))

@@ -3,10 +3,11 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.game_description import default_database
-from randovania.games.prime2.layout.beam_configuration import BeamAmmoConfiguration, BeamConfiguration
-from randovania.games.prime2.layout.echoes_configuration import (
+from randovania.games.prime2_dev.layout.beam_configuration import BeamAmmoConfiguration, BeamConfiguration
+from randovania.games.prime2_dev.layout.echoes_configuration import (
     EchoesConfiguration,
     LayoutSkyTempleKeyMode,
+    PracticeModMode,
 )
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
@@ -137,25 +138,23 @@ class EchoesPresetDescriber(GamePresetDescriber):
                         not configuration.teleporters.is_vanilla
                     )
                 },
-                {"Portals: Randomized": configuration.portal_rando},
             ],
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
                     {
-                        "Missiles needs Launcher": "Missile Expansion",
-                        "Power Bomb needs Main": "Power Bomb Expansion",
+                        "Missiles don't need Launcher": "Missile Expansion",
+                        "Power Bombs don't need Main": "Power Bomb Expansion",
                     },
-                    mains_are_default_required=False,
+                    mains_are_default_required=True,
                 ),
                 {
-                    "Warp to start": configuration.warp_to_start,
-                    "Menu Mod": configuration.menu_mod,
+                    f"Practice Mod: {configuration.practice_mod.long_name}": configuration.practice_mod
+                    is not PracticeModMode.DISABLED,
                     "Final bosses removed": configuration.teleporters.skip_final_bosses,
                     "Unlocked Save Station doors": configuration.blue_save_doors,
                     "Inverted Aether": configuration.inverted_mode,
                 },
-                {"New Patcher": configuration.use_new_patcher.is_enabled()},
                 *create_beam_configuration_description(configuration.beam_configuration),
             ],
         }

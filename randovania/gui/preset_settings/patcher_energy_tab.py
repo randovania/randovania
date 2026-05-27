@@ -9,6 +9,7 @@ from randovania.games.fusion.layout.fusion_configuration import FusionConfigurat
 from randovania.games.planets_zebeth.layout.planets_zebeth_configuration import PlanetsZebethConfiguration
 from randovania.games.prime1.layout.prime_configuration import DamageReduction, IngameDifficulty, PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2_dev.layout.echoes_configuration import EchoesConfiguration as EchoesDevConfiguration
 from randovania.gui.generated.preset_patcher_energy_ui import Ui_PresetPatcherEnergy
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -87,6 +88,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             config,
             PrimeConfiguration
             | EchoesConfiguration
+            | EchoesDevConfiguration
             | AM2RConfiguration
             | FusionConfiguration
             | PlanetsZebethConfiguration,
@@ -94,7 +96,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
 
         if self.game_enum in {RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_ECHOES_DEV}:
-            assert isinstance(config, EchoesConfiguration)
+            assert isinstance(config, EchoesConfiguration | EchoesDevConfiguration)
             self.dangerous_tank_check.setChecked(config.dangerous_energy_tank)
             self.safe_zone_logic_heal_check.setChecked(config.safe_zone.fully_heal)
             self.safe_zone_regen_spin.setValue(config.safe_zone.heal_per_second)
@@ -114,14 +116,14 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
     def _persist_safe_zone_regen(self) -> None:
         with self._editor as editor:
             configuration = editor.configuration
-            assert isinstance(configuration, EchoesConfiguration)
+            assert isinstance(configuration, EchoesConfiguration | EchoesDevConfiguration)
             safe_zone = dataclasses.replace(configuration.safe_zone, heal_per_second=self.safe_zone_regen_spin.value())
             editor.set_configuration_field("safe_zone", safe_zone)
 
     def _persist_safe_zone_logic_heal(self, checked: bool) -> None:
         with self._editor as editor:
             configuration = editor.configuration
-            assert isinstance(configuration, EchoesConfiguration)
+            assert isinstance(configuration, EchoesConfiguration | EchoesDevConfiguration)
             safe_zone = dataclasses.replace(configuration.safe_zone, fully_heal=checked)
             editor.set_configuration_field("safe_zone", safe_zone)
 

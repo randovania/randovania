@@ -39,7 +39,7 @@ class Ui_PresetTeleportersPrime2(object):
         self.teleporter_scroll_area.setWidgetResizable(True)
         self.teleporter_scroll_area_contents = QWidget()
         self.teleporter_scroll_area_contents.setObjectName(u"teleporter_scroll_area_contents")
-        self.teleporter_scroll_area_contents.setGeometry(QRect(0, 0, 524, 471))
+        self.teleporter_scroll_area_contents.setGeometry(QRect(0, 0, 503, 461))
         self.teleporters_layout = QVBoxLayout(self.teleporter_scroll_area_contents)
         self.teleporters_layout.setSpacing(6)
         self.teleporters_layout.setContentsMargins(11, 11, 11, 11)
@@ -56,11 +56,6 @@ class Ui_PresetTeleportersPrime2(object):
         self.teleporters_description_label.setWordWrap(True)
 
         self.teleporters_layout.addWidget(self.teleporters_description_label)
-
-        self.teleporters_help_sound_bug_label = QLabel(self.teleporter_scroll_area_contents)
-        self.teleporters_help_sound_bug_label.setObjectName(u"teleporters_help_sound_bug_label")
-
-        self.teleporters_layout.addWidget(self.teleporters_help_sound_bug_label)
 
         self.teleporters_line_2 = QFrame(self.teleporter_scroll_area_contents)
         self.teleporters_line_2.setObjectName(u"teleporters_line_2")
@@ -87,18 +82,6 @@ class Ui_PresetTeleportersPrime2(object):
         self.teleporters_line_4.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.teleporters_layout.addWidget(self.teleporters_line_4)
-
-        self.teleporters_allow_unvisited_names_check = QCheckBox(self.teleporter_scroll_area_contents)
-        self.teleporters_allow_unvisited_names_check.setObjectName(u"teleporters_allow_unvisited_names_check")
-
-        self.teleporters_layout.addWidget(self.teleporters_allow_unvisited_names_check)
-
-        self.teleporters_line_3 = QFrame(self.teleporter_scroll_area_contents)
-        self.teleporters_line_3.setObjectName(u"teleporters_line_3")
-        self.teleporters_line_3.setFrameShape(QFrame.Shape.HLine)
-        self.teleporters_line_3.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.teleporters_layout.addWidget(self.teleporters_line_3)
 
         self.teleporters_help_list_label = QLabel(self.teleporter_scroll_area_contents)
         self.teleporters_help_list_label.setObjectName(u"teleporters_help_list_label")
@@ -140,10 +123,8 @@ class Ui_PresetTeleportersPrime2(object):
     def retranslateUi(self, PresetTeleportersPrime2):
         PresetTeleportersPrime2.setWindowTitle(QCoreApplication.translate("PresetTeleportersPrime2", u"Elevators", None))
         self.teleporters_description_label.setText(QCoreApplication.translate("PresetTeleportersPrime2", u"<html><head/><body><p>&lt;description generated dynamically&gt;</p></body></html>", None))
-        self.teleporters_help_sound_bug_label.setText(QCoreApplication.translate("PresetTeleportersPrime2", u"These settings will cause the teleporter cutscenes to be silent in order to avoid a different game bug.", None))
         self.skip_final_bosses_check.setText(QCoreApplication.translate("PresetTeleportersPrime2", u"Go directly to credits from Sky Temple Gateway", None))
         self.skip_final_bosses_label.setText(QCoreApplication.translate("PresetTeleportersPrime2", u"<html><head/><body><p>Change the light beam in Sky Temple Gateway to go directly to the credits, skipping the final bosses.</p><p>This changes the requirements to <span style=\" font-weight:600;\">not need the final bosses</span>, turning certain items optional such as Screw Attack and Spider Ball.</p></body></html>", None))
-        self.teleporters_allow_unvisited_names_check.setText(QCoreApplication.translate("PresetTeleportersPrime2", u"Allow \"Always display room names on map\" when teleporters are shuffled", None))
         self.teleporters_help_list_label.setText(QCoreApplication.translate("PresetTeleportersPrime2", u"<html><head/><body><p>Shuffling Sky Temple Gateway, Sky Temple Energy Controller, Aerie and Aerie Transport Station is possible, but they're not included by default as they behave somewhat differently to other teleporters.</p><p>The teleporter in Aerie Transport Station is only available after you defeat Dark Samus 2.</p><p>When shuffling Sky Temple Energy Controller, you <span style=\" font-weight:600;\">must</span> enter Sky Temple Gateway via an teleporter otherwise the game will crash.</p><p><span style=\" font-style:italic;\">Warning</span>: Entering Sky Temple Energy Controller from elsewhere causes the game to be stuck in a black screen in unknown conditions. The game is still running, so you can blindly use the menu mod to work around this issue.</p></body></html>", None))
         self.teleporters_source_group.setTitle(QCoreApplication.translate("PresetTeleportersPrime2", u"Elevators to randomize", None))
         self.teleporters_target_group.setTitle(QCoreApplication.translate("PresetTeleportersPrime2", u"Valid teleporter targets", None))

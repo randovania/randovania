@@ -9,9 +9,10 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
     PrimeTrilogyTeleporterConfiguration,
 )
-from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
-from randovania.games.prime2.layout.translator_configuration import TranslatorConfiguration
+from randovania.games.prime2_dev.layout.beam_configuration import BeamConfiguration
+from randovania.games.prime2_dev.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.lib import enum_lib
 
 
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
@@ -47,13 +48,20 @@ class LayoutSafeZone(BitPackDataclass, JsonDataclass):
     )
 
 
-class EchoesNewPatcher(BitPackEnum, Enum):
+class PracticeModMode(BitPackEnum, Enum):
     DISABLED = "disabled"
-    BOTH = "both"
-    ONLY = "only"
+    FULL = "full"
 
-    def is_enabled(self) -> bool:
-        return self != EchoesNewPatcher.DISABLED
+    long_name: str
+
+
+enum_lib.add_long_name(
+    PracticeModMode,
+    {
+        PracticeModMode.DISABLED: "Disabled",
+        PracticeModMode.FULL: "Full",
+    },
+)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -62,33 +70,22 @@ class EchoesConfiguration(BaseConfiguration):
     sky_temple_keys: LayoutSkyTempleKeyMode
     translator_configuration: TranslatorConfiguration
     beam_configuration: BeamConfiguration
+
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     safe_zone: LayoutSafeZone
-    menu_mod: bool
-    warp_to_start: bool
     varia_suit_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 60.0, "precision": 3.0})
     dark_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 3.0})
     dangerous_energy_tank: bool
-    use_new_patcher: EchoesNewPatcher
-    inverted_mode: bool
-    portal_rando: bool
+
+    practice_mod: PracticeModMode
 
     blue_save_doors: bool
 
-    allow_jumping_on_dark_water: bool
-    allow_vanilla_dark_beam: bool
-    allow_vanilla_light_beam: bool
-    allow_vanilla_seeker_launcher: bool
-    allow_vanilla_echo_visor: bool
-    allow_vanilla_dark_visor: bool
-    allow_vanilla_screw_attack: bool
-    allow_vanilla_gravity_boost: bool
-    allow_vanilla_boost_ball: bool
-    allow_vanilla_spider_ball: bool
+    inverted_mode: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
-        return RandovaniaGame.METROID_PRIME_ECHOES
+        return RandovaniaGame.METROID_PRIME_ECHOES_DEV
 
     def dangerous_settings(self) -> list[str]:
         result = super().dangerous_settings()
@@ -103,11 +100,5 @@ class EchoesConfiguration(BaseConfiguration):
 
         if self.inverted_mode:
             result.append("Inverted Aether")
-
-        if self.portal_rando:
-            result.append("Portal Rando")
-
-        if self.use_new_patcher == EchoesNewPatcher.ONLY:
-            result.append("Using the new patcher exclusively")
 
         return result

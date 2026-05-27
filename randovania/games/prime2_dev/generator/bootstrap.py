@@ -8,11 +8,11 @@ from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.damage_reduction import DamageReduction
-from randovania.games.prime2.layout.echoes_configuration import (
+from randovania.games.prime2_dev.layout.echoes_configuration import (
     EchoesConfiguration,
     LayoutSkyTempleKeyMode,
 )
-from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.games.prime2_dev.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
@@ -24,7 +24,6 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.resolver.damage_state import DamageState
 
@@ -48,43 +47,25 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
             [],
         )
 
-    def event_resources_for_configuration(
-        self,
-        configuration: EchoesConfiguration,
-        resource_database: ResourceDatabaseView,
-    ) -> ResourceGain:
-        yield resource_database.get_event("Event2"), 1  # Hive Tunnel Web
-        yield resource_database.get_event("Event4"), 1  # Command Chamber Gate
-        yield resource_database.get_event("Event71"), 1  # Landing Site Webs
-        yield resource_database.get_event("Event78"), 1  # Hive Chamber A Gates
-
-        if configuration.use_new_patcher.is_enabled():
-            yield resource_database.get_event("Event73"), 1  # Dynamo Chamber Gates
-            yield resource_database.get_event("Event75"), 1  # Trooper Security Station Gate
-
     def _get_enabled_misc_resources(
         self, configuration: EchoesConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = set()
-        allow_vanilla = {
-            "allow_jumping_on_dark_water": "DarkWaterJump",
-            "allow_vanilla_dark_beam": "VanillaDarkBeam",
-            "allow_vanilla_light_beam": "VanillaLightBeam",
-            "allow_vanilla_seeker_launcher": "VanillaSeekers",
-            "allow_vanilla_echo_visor": "VanillaEcho",
-            "allow_vanilla_dark_visor": "VanillaDarkVisor",
-            "allow_vanilla_screw_attack": "VanillaSA",
-            "allow_vanilla_gravity_boost": "VanillaGravity",
-            "allow_vanilla_boost_ball": "VanillaBoost",
-            "allow_vanilla_spider_ball": "VanillaSpider",
-        }
-        for name, index in allow_vanilla.items():
-            if getattr(configuration, name):
-                enabled_resources.add(index)
 
-        if configuration.teleporters.is_vanilla:
-            # Vanilla Great Temple Emerald Translator Gate
-            enabled_resources.add("VanillaGreatTempleEmeraldGate")
+        # FIXME: remove these misc resources altogether
+        enabled_resources.update(
+            {
+                "VanillaDarkBeam",
+                "VanillaLightBeam",
+                "VanillaSeekers",
+                "VanillaEcho",
+                "VanillaDarkVisor",
+                "VanillaSA",
+                "VanillaGravity",
+                "VanillaBoost",
+                "VanillaSpider",
+            }
+        )
 
         if configuration.safe_zone.prevents_dark_aether:
             # Safe Zone

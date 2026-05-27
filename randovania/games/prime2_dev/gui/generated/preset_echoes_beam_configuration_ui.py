@@ -69,7 +69,7 @@ class Ui_PresetEchoesBeamConfiguration(object):
 
     def retranslateUi(self, PresetEchoesBeamConfiguration):
         PresetEchoesBeamConfiguration.setWindowTitle(QCoreApplication.translate("PresetEchoesBeamConfiguration", u"Beam Configuration", None))
-        self.beam_configuration_label.setText(QCoreApplication.translate("PresetEchoesBeamConfiguration", u"<html><head/><body><p>Configure what each beam uses as ammo and how much ammo is consumed when shooting it uncharged, charged or with a charge combo.</p><p>Logic always uses the default values.</p><p><span style=\" font-weight:600;\">Known Issue: </span>If you're out of the ammo a beam normally uses, you'll be unable to shoot that beam regardless of what it actually uses to shoot.</p></body></html>", None))
+        self.beam_configuration_label.setText(QCoreApplication.translate("PresetEchoesBeamConfiguration", u"<html><head/><body><p>Configure what each beam uses as ammo and how much ammo is consumed when shooting it uncharged, charged or with a charge combo.</p><p>Logic always uses the default values.</p></body></html>", None))
         self.beam_configuration_group.setTitle("")
     # retranslateUi
 

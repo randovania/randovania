@@ -6,15 +6,15 @@ from typing import TYPE_CHECKING, override
 
 from PySide6 import QtCore, QtGui, QtWidgets
 
-from randovania.games.prime2.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog
-from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences, SoundMode
+from randovania.games.prime2_dev.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog
+from randovania.games.prime2_dev.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime2_dev.layout.echoes_user_preferences import EchoesUserPreferences, SoundMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.lib import slider_updater
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
-    from randovania.games.prime2.layout.echoes_cosmetic_suits import EchoesSuitPreferences, SuitColor
+    from randovania.games.prime2_dev.layout.echoes_cosmetic_suits import EchoesSuitPreferences, SuitColor
     from randovania.interface_common.options import Options
 
 
@@ -70,9 +70,6 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog[EchoesCosmeticPatche
 
         self._persist_check_field(self.remove_hud_popup_check, "disable_hud_popup")
         self._persist_check_field(self.faster_credits_check, "speed_up_credits")
-        self._persist_check_field(self.open_map_check, "open_map")
-        self._persist_check_field(self.unvisited_room_names_check, "unvisited_room_names")
-        self._persist_check_field(self.pickup_markers_check, "pickup_markers")
         self._persist_check_field(self.custom_hud_color, "use_hud_color")
         self.sound_mode_combo.currentIndexChanged.connect(self._on_sound_mode_update)
         self.custom_hud_color_button.clicked.connect(self._open_color_picker)
@@ -95,9 +92,6 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog[EchoesCosmeticPatche
     def on_new_cosmetic_patches(self, patches: EchoesCosmeticPatches) -> None:
         self.remove_hud_popup_check.setChecked(patches.disable_hud_popup)
         self.faster_credits_check.setChecked(patches.speed_up_credits)
-        self.open_map_check.setChecked(patches.open_map)
-        self.unvisited_room_names_check.setChecked(patches.unvisited_room_names)
-        self.pickup_markers_check.setChecked(patches.pickup_markers)
         self.on_new_user_preferences(patches.user_preferences)
         self.custom_hud_color.setChecked(patches.use_hud_color)
         self._set_suit_colors(patches.suit_colors)

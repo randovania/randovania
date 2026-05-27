@@ -9,10 +9,12 @@ from PySide6.QtWidgets import QComboBox
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
-from randovania.games.prime2.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement, TranslatorConfiguration
+from randovania.games.prime2_dev.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
+from randovania.games.prime2_dev.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2_dev.layout.translator_configuration import (
+    LayoutTranslatorRequirement,
+    TranslatorConfiguration,
+)
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.lib.enum_lib import iterate_enum
@@ -32,13 +34,17 @@ def _translator_config(editor: PresetEditor) -> TranslatorConfiguration:
 
 
 def gate_data() -> tuple[dict[int, str], dict[NodeIdentifier, int]]:
-    db = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
-    randomizer_data = decode_randomizer_data()
+    db = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES_DEV)
 
-    gate_index_to_name = {gate["Index"]: gate["Name"] for gate in randomizer_data["TranslatorLocationData"]}
+    # FIXME: this sucks lmao. also need to add the gate names to the db for temple sanctuary
+    gate_index_to_name = {
+        node.extra["gate_index"]: node.extra.get("gate_name", node.identifier.area)
+        for node in db.region_list.iterate_nodes_of_type(ConfigurableNode)
+    }
     identifier_to_gate = {
         node.identifier: node.extra["gate_index"] for node in db.region_list.iterate_nodes_of_type(ConfigurableNode)
     }
+
     return gate_index_to_name, identifier_to_gate
 
 

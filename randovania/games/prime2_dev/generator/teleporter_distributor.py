@@ -30,7 +30,7 @@ def get_teleporter_connections_echoes(
 
 
 def elevator_echoes_shuffled(game: GameDatabaseView, rng: Random) -> TeleporterConnection:
-    from randovania.games.prime2.generator.base_patches_factory import WORLDS
+    from randovania.games.prime2_dev.generator.base_patches_factory import WORLDS
 
     worlds = list(WORLDS)
     rng.shuffle(worlds)

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, override
 
-from randovania.games.prime2 import dark_aether_helper
+from randovania.games.prime2_dev import dark_aether_helper
 from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
 
 if TYPE_CHECKING:

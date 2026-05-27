@@ -1,16 +1,14 @@
 from __future__ import annotations
 
-import collections
 import copy
 import dataclasses
 from typing import TYPE_CHECKING, Self
 
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
-from randovania.games.prime2 import dark_aether_helper
-from randovania.games.prime2.generator.teleporter_distributor import get_teleporter_connections_echoes
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.games.prime2_dev.generator.teleporter_distributor import get_teleporter_connections_echoes
+from randovania.games.prime2_dev.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2_dev.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator.base_patches_factory import BasePatchesFactory, MissingRng, weaknesses_for_unlocked_saves
 from randovania.generator.teleporter_distributor import get_dock_connections_assignment_for_teleporter
 
@@ -97,27 +95,6 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
         dock_assignment = get_dock_connections_assignment_for_teleporter(
             configuration.teleporters, game, teleporter_connection
         )
-
-        if configuration.portal_rando:
-            light_portals_by_region: dict[str, list[DockNode]] = collections.defaultdict(list)
-            dark_portals_by_region: dict[str, list[DockNode]] = collections.defaultdict(list)
-            portal_type = game.find_dock_type_by_short_name("portal")
-
-            for region, area, node in game.iterate_nodes_of_type(DockNode):
-                if node.dock_type == portal_type:
-                    if dark_aether_helper.is_region_light(region):
-                        portal_list = light_portals_by_region[region.name]
-                    else:
-                        portal_list = dark_portals_by_region[dark_aether_helper.get_counterpart_name(region)]
-                    portal_list.append(node)
-
-            for region_name, light_portals in light_portals_by_region.items():
-                dark_portals = dark_portals_by_region[region_name]
-                assert len(light_portals) == len(dark_portals)
-                rng.shuffle(light_portals)
-                rng.shuffle(dark_portals)
-                dock_assignment.extend(zip(light_portals, dark_portals))
-                dock_assignment.extend(zip(dark_portals, light_portals))
 
         yield from dock_assignment
 

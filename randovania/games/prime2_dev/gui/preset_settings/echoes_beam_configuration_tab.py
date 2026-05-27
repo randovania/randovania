@@ -7,14 +7,16 @@ from typing import TYPE_CHECKING, Any
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QComboBox
 
-from randovania.games.prime2.gui.generated.preset_echoes_beam_configuration_ui import Ui_PresetEchoesBeamConfiguration
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2_dev.gui.generated.preset_echoes_beam_configuration_ui import (
+    Ui_PresetEchoesBeamConfiguration,
+)
+from randovania.games.prime2_dev.layout.echoes_configuration import EchoesConfiguration
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
-    from randovania.games.prime2.layout.beam_configuration import BeamAmmoConfiguration
+    from randovania.games.prime2_dev.layout.beam_configuration import BeamAmmoConfiguration
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset

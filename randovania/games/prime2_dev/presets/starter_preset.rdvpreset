@@ -2,9 +2,9 @@
     "schema_version": 93,
     "base_preset_uuid": null,
     "name": "Starter Preset",
-    "uuid": "fcbe4e3f-b1fa-41cc-83cb-c86d84c10f0f",
-    "description": "This preset balances the item pool with additional beam ammo expansions and progressive suits, while minimizing softlocks as much as possible.<br />Crashes are fixed and unexpected behaviours of the game are changed to what would be expected from a casual view.",
-    "game": "prime2",
+    "uuid": "7f262f6b-88e8-4d7f-89e0-d0ee3f552030",
+    "description": "Basic preset.",
+    "game": "prime2_dev",
     "configuration": {
         "trick_level": {
             "minimal_logic": false,
@@ -43,7 +43,7 @@
                 "Progressive Suit": {
                     "num_shuffled_pickups": 2
                 },
-                "Double Damage": {},
+                "Massive Damage": {},
                 "Power Beam": {
                     "num_included_in_starting_pickups": 1
                 },
@@ -88,7 +88,6 @@
                         2
                     ]
                 },
-                "Cannon Ball": {},
                 "Space Jump Boots": {
                     "num_shuffled_pickups": 1
                 },
@@ -233,6 +232,17 @@
         "single_set_for_pickups_that_solve": true,
         "staggered_multi_pickup_placement": true,
         "check_if_beatable_after_base_patches": false,
+        "hints": {
+            "enable_random_hints": true,
+            "enable_specific_location_hints": true,
+            "specific_pickup_hints": {
+                "sky_temple_keys": "precise",
+                "dark_temple_keys": "hide-area"
+            },
+            "minimum_available_locations_for_hint_placement": 0,
+            "minimum_location_weight_for_hint_placement": 0.0,
+            "use_resolver_hints": false
+        },
         "teleporters": {
             "mode": "vanilla",
             "excluded_teleporters": [
@@ -283,10 +293,6 @@
                 "Sanctuary Fortress/Sanctuary Temple/Translator Gate": "cobalt"
             }
         },
-        "hints": {
-            "item_hints": true,
-            "sky_temple_keys": "precise"
-        },
         "beam_configuration": {
             "power": {
                 "item_index": 0,
@@ -331,24 +337,11 @@
             "prevents_dark_aether": true,
             "heal_per_second": 1.0
         },
-        "menu_mod": true,
-        "warp_to_start": true,
+        "practice_mod": "full",
         "varia_suit_damage": 6.0,
         "dark_suit_damage": 1.2,
         "dangerous_energy_tank": false,
-        "use_new_patcher": false,
         "inverted_mode": false,
-        "portal_rando": false,
-        "blue_save_doors": false,
-        "allow_jumping_on_dark_water": false,
-        "allow_vanilla_dark_beam": true,
-        "allow_vanilla_light_beam": true,
-        "allow_vanilla_seeker_launcher": true,
-        "allow_vanilla_echo_visor": true,
-        "allow_vanilla_dark_visor": true,
-        "allow_vanilla_screw_attack": true,
-        "allow_vanilla_gravity_boost": true,
-        "allow_vanilla_boost_ball": true,
-        "allow_vanilla_spider_ball": true
+        "blue_save_doors": false
     }
 }

@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2_dev.layout.echoes_configuration import EchoesConfiguration as EchoesDevConfiguration
 from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
 
 if TYPE_CHECKING:
@@ -17,7 +18,7 @@ class PrimeTrilogyTeleporterDetailsTab(TeleporterDetailsTab):
     def should_appear_for(
         cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
     ) -> bool:
-        assert isinstance(configuration, PrimeConfiguration | EchoesConfiguration)
+        assert isinstance(configuration, PrimeConfiguration | EchoesConfiguration | EchoesDevConfiguration)
         return not configuration.teleporters.is_vanilla
 
     def tab_title(self) -> str:
