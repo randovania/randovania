@@ -13,7 +13,7 @@ class EchoesConfiguration(BaseConfiguration):
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
-        return RandovaniaGame.METROID_PRIME_2_ECHOES
+        return RandovaniaGame.METROID_PRIME_ECHOES_DEV
 
     def active_layers(self) -> set[str]:
         result = super().active_layers()

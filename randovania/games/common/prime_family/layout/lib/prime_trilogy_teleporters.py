@@ -17,7 +17,7 @@ class PrimeTrilogyTeleporterConfiguration(TeleporterConfiguration):
         match self.game:
             case RandovaniaGame.METROID_PRIME:
                 return NodeIdentifier.create("End of Game", "Credits", "Event - Credits")
-            case RandovaniaGame.METROID_PRIME_ECHOES:
+            case RandovaniaGame.METROID_PRIME_ECHOES | RandovaniaGame.METROID_PRIME_ECHOES_DEV:
                 return NodeIdentifier.create("Temple Grounds", "Credits", "Event - Dark Samus 3 and 4")
             case _:
                 raise ValueError(f"Unsupported game {self.game}")
@@ -45,7 +45,7 @@ class PrimeTrilogyTeleporterConfiguration(TeleporterConfiguration):
                 # one elevator always leads to credits.
                 essence = NodeIdentifier.create("Impact Crater", "Metroid Prime Lair", "Teleporter to Credits")
                 static[essence] = credits_node
-        elif self.game == RandovaniaGame.METROID_PRIME_ECHOES:
+        elif self.game in {RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_ECHOES_DEV}:
             if self.skip_final_bosses:
                 gateway = NodeIdentifier.create("Sky Temple Grounds", "Sky Temple Gateway", "Elevator to Sky Temple")
                 static[gateway] = self.get_credits_node()

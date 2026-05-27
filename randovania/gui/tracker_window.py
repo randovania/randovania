@@ -253,7 +253,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     # check if destination exists
                     self.game_description.region_list.node_by_identifier(node_location)
 
-            if self.game_configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
+            if self.game_configuration.game in {
+                RandovaniaGame.METROID_PRIME_ECHOES,
+                RandovaniaGame.METROID_PRIME_ECHOES_DEV,
+            }:
                 configurable_nodes = {
                     NodeIdentifier.from_string(identifier): (
                         LayoutTranslatorRequirement(item) if item is not None else None
@@ -606,7 +609,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         # But we need to support a magical "Impossible" kind of gate, in case there's no selection
 
         game = self.game_description
-        if game.game != RandovaniaGame.METROID_PRIME_ECHOES:
+        if game.game not in {RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_ECHOES_DEV}:
             return
 
         scan_visor = game.resource_database.get_item("Scan")
@@ -647,7 +650,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         region_list = self.game_description.region_list
         self._translator_gate_to_combo = {}
 
-        if self.game_configuration.game != RandovaniaGame.METROID_PRIME_ECHOES:
+        if self.game_configuration.game not in {
+            RandovaniaGame.METROID_PRIME_ECHOES,
+            RandovaniaGame.METROID_PRIME_ECHOES_DEV,
+        }:
             return
 
         configuration = self.game_configuration
@@ -887,7 +893,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         except MissingRng:
             pass
 
-        if game.game != RandovaniaGame.METROID_PRIME_ECHOES:
+        if game.game not in {RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_ECHOES_DEV}:
             raise NotImplementedError
 
         return patches.assign_game_specific(

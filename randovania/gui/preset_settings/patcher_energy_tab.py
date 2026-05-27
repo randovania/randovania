@@ -31,7 +31,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
 
         # Aether Damage
 
-        if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
+        if self.game_enum in {RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_ECHOES_DEV}:
             config_fields = {field.name: field for field in dataclasses.fields(EchoesConfiguration)}
             self.varia_suit_spin_box.setMinimum(config_fields["varia_suit_damage"].metadata["min"])
             self.varia_suit_spin_box.setMaximum(config_fields["varia_suit_damage"].metadata["max"])
@@ -93,7 +93,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         )
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
 
-        if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
+        if self.game_enum in {RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_ECHOES_DEV}:
             assert isinstance(config, EchoesConfiguration)
             self.dangerous_tank_check.setChecked(config.dangerous_energy_tank)
             self.safe_zone_logic_heal_check.setChecked(config.safe_zone.fully_heal)

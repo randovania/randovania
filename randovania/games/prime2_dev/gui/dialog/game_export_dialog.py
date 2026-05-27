@@ -4,9 +4,9 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.games.prime_2_echoes.exporter.game_exporter import EchoesGameExportParams
-from randovania.games.prime_2_echoes.exporter.options import EchoesPerGameOptions
-from randovania.games.prime_2_echoes.layout import EchoesConfiguration
+from randovania.games.prime2_dev.exporter.game_exporter import EchoesGameExportParams
+from randovania.games.prime2_dev.exporter.options import EchoesPerGameOptions
+from randovania.games.prime2_dev.layout import EchoesConfiguration
 from randovania.gui.dialog.game_export_dialog import GameExportDialog, spoiler_path_for
 
 if TYPE_CHECKING:
@@ -22,7 +22,7 @@ class EchoesGameExportDialog(GameExportDialog[EchoesConfiguration]):
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
-        return RandovaniaGame.METROID_PRIME_2_ECHOES
+        return RandovaniaGame.METROID_PRIME_ECHOES_DEV
 
     @property
     def input_file(self) -> Path:

@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
-    from randovania.games.prime_2_echoes.gui.preset_settings.prime_2_echoes_patches_tab import PresetEchoesPatches
+    from randovania.games.prime2_dev.gui.preset_settings.prime_2_echoes_patches_tab import PresetEchoesPatches
     from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.hints_tab import PresetHints

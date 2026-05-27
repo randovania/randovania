@@ -70,7 +70,8 @@ class TeleporterList(location_list.LocationList):
 
 def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame) -> bool:
     if (
-        game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES)
+        game
+        in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_ECHOES_DEV)
         and area.name == "Credits"
         and node.name in ("Event - Credits", "Event - Dark Samus 3 and 4")
     ):

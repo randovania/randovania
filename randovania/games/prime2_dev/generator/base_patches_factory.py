@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from randovania.games.prime_2_echoes.layout import EchoesConfiguration
+from randovania.games.prime2_dev.layout import EchoesConfiguration
 from randovania.generator.base_patches_factory import BasePatchesFactory
 
 

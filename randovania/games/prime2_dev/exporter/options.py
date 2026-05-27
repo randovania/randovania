@@ -25,7 +25,7 @@ class EchoesPerGameOptions(PerGameOptions):
 
     @classmethod
     def from_json(cls, value: dict) -> Self:
-        game = RandovaniaGame.METROID_PRIME_2_ECHOES
+        game = RandovaniaGame.METROID_PRIME_ECHOES_DEV
         cosmetic_patches = game.data.layout.cosmetic_patches.from_json(value["cosmetic_patches"])
         return cls(
             cosmetic_patches=cosmetic_patches,
@@ -36,4 +36,4 @@ class EchoesPerGameOptions(PerGameOptions):
     @classmethod
     @override
     def game_enum(cls) -> RandovaniaGame:
-        return RandovaniaGame.METROID_PRIME_2_ECHOES
+        return RandovaniaGame.METROID_PRIME_ECHOES_DEV

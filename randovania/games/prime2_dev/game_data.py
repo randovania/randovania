@@ -11,7 +11,7 @@ import randovania.game.gui
 import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
-from randovania.games.prime_2_echoes import layout
+from randovania.games.prime2_dev import layout
 from randovania.layout.preset_describer import GamePresetDescriber
 
 if typing.TYPE_CHECKING:
@@ -21,14 +21,14 @@ if typing.TYPE_CHECKING:
 
 
 def _options() -> type[PerGameOptions]:
-    from randovania.games.prime_2_echoes.exporter.options import EchoesPerGameOptions
+    from randovania.games.prime2_dev.exporter.options import EchoesPerGameOptions
 
     return EchoesPerGameOptions
 
 
 def _gui() -> randovania.game.gui.GameGui:
-    from randovania.games.prime_2_echoes import gui
-    from randovania.games.prime_2_echoes.layout import progressive_items
+    from randovania.games.prime2_dev import gui
+    from randovania.games.prime2_dev.layout import progressive_items
     from randovania.gui.game_details.hint_details_tab import HintDetailsTab
 
     return randovania.game.gui.GameGui(
@@ -42,7 +42,7 @@ def _gui() -> randovania.game.gui.GameGui:
 
 
 def _generator() -> randovania.game.generator.GameGenerator:
-    from randovania.games.prime_2_echoes import generator
+    from randovania.games.prime2_dev import generator
     from randovania.generator.filler.weights import ActionWeights
 
     return randovania.game.generator.GameGenerator(
@@ -54,7 +54,7 @@ def _generator() -> randovania.game.generator.GameGenerator:
 
 
 def _hints() -> randovania.game.hints.GameHints:
-    from randovania.games.prime_2_echoes import generator
+    from randovania.games.prime2_dev import generator
 
     return randovania.game.hints.GameHints(
         hint_distributor=generator.EchoesHintDistributor(),
@@ -63,19 +63,19 @@ def _hints() -> randovania.game.hints.GameHints:
 
 
 def _patch_data_factory() -> type[PatchDataFactory]:
-    from randovania.games.prime_2_echoes.exporter.patch_data_factory import EchoesPatchDataFactory
+    from randovania.games.prime2_dev.exporter.patch_data_factory import EchoesPatchDataFactory
 
     return EchoesPatchDataFactory
 
 
 def _exporter() -> GameExporter:
-    from randovania.games.prime_2_echoes.exporter.game_exporter import EchoesGameExporter
+    from randovania.games.prime2_dev.exporter.game_exporter import EchoesGameExporter
 
     return EchoesGameExporter()
 
 
 def _hash_words() -> list[str]:
-    from randovania.games.prime_2_echoes.hash_words import HASH_WORDS
+    from randovania.games.prime2_dev.hash_words import HASH_WORDS
 
     return HASH_WORDS
 

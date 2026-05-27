@@ -10,4 +10,4 @@ from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 class EchoesCosmeticPatches(BaseCosmeticPatches):
     @classmethod
     def game(cls) -> RandovaniaGame:
-        return RandovaniaGame.METROID_PRIME_2_ECHOES
+        return RandovaniaGame.METROID_PRIME_ECHOES_DEV

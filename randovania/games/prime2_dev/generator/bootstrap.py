@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.games.prime_2_echoes.layout import EchoesConfiguration
+from randovania.games.prime2_dev.layout import EchoesConfiguration
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.games.prime_2_echoes.layout.prime_2_echoes_configuration import EchoesConfiguration
+from randovania.games.prime2_dev.layout.prime_2_echoes_configuration import EchoesConfiguration
 from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
 
 if TYPE_CHECKING:

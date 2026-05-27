@@ -110,6 +110,7 @@ def render_region_graph_logic(args: Namespace) -> None:
             "Great Temple": "#c917ff",
         },
     }
+    per_game_colors[RandovaniaGame.METROID_PRIME_ECHOES_DEV] = per_game_colors[RandovaniaGame.METROID_PRIME_ECHOES]
     colors = per_game_colors.get(gd.game)
     if colors is None:
         colors = {region.name: _hash_to_color(region.name) for region in gd.region_list.regions}

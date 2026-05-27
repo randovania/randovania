@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.games.prime_2_echoes.layout import EchoesConfiguration
+from randovania.games.prime2_dev.layout import EchoesConfiguration
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:

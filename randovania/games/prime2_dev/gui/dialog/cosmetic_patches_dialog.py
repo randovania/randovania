@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, override
 
-from randovania.games.prime_2_echoes.gui.generated.prime_2_echoes_cosmetic_patches_dialog_ui import (
+from randovania.games.prime2_dev.gui.generated.prime_2_echoes_cosmetic_patches_dialog_ui import (
     Ui_EchoesCosmeticPatchesDialog,
 )
-from randovania.games.prime_2_echoes.layout.prime_2_echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime2_dev.layout.prime_2_echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 
 if TYPE_CHECKING:
