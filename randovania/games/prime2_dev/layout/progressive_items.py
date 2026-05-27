@@ -7,4 +7,7 @@ if TYPE_CHECKING:
 
 
 def tuples() -> ProgressiveItemTuples:
-    return []
+    return [
+        ("Progressive Suit", ("Dark Suit", "Light Suit")),
+        ("Progressive Grapple", ("Grapple Beam", "Screw Attack")),
+    ]

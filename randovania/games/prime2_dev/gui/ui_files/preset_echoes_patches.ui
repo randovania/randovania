@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PresetEchoesPatches</class>
+ <widget class="QMainWindow" name="PresetEchoesPatches">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>466</width>
+    <height>552</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Other</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>4</number>
+    </property>
+    <property name="topMargin">
+     <number>4</number>
+    </property>
+    <property name="rightMargin">
+     <number>4</number>
+    </property>
+    <property name="bottomMargin">
+     <number>4</number>
+    </property>
+    <item>
+     <widget class="QCheckBox" name="include_menu_mod_check">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Include Menu Mod</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="include_menu_mod_label">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Menu Mod is a practice tool for Echoes, allowing in-game changes to which items you have and warping to all rooms.&lt;/p&gt;&lt;p&gt;See the &lt;a href=&quot;https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z?file_subpath=%2FEchoes+Menu%2Freadme.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Menu Mod README&lt;/span&gt;&lt;/a&gt; for more details.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <property name="openExternalLinks">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="Line" name="warp_to_start_line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="warp_to_start_check">
+      <property name="text">
+       <string>Add warping to starting location from save stations</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="warp_to_start_label">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>70</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Refusing to save at any Save Station will prompt if you want to warp to the starting location (by default, Samus' ship in Landing Site).&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#005500;&quot;&gt;Usage of the this option is encouraged for all, as it prevents many softlocks that occurs normally in Echoes.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="Line" name="save_doors_line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="save_doors_check">
+      <property name="text">
+       <string>Force all Save Station doors to be unlocked</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="save_doors_label">
+      <property name="text">
+       <string>This ensures you can easily access Save Stations, regardless of your inventory or of door lock randomization.</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="Line" name="new_patcher_line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="new_patcher_check">
+      <property name="text">
+       <string>[Experimental] Use new patcher</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="new_patcher_label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates the use of the new patcher in addition to the existing one.&lt;/p&gt;&lt;p&gt;With this enabled:&lt;br/&gt;- Certain in-game puzzles will have their solution randomized, but are also modified to have better accessibility.&lt;br/&gt;- Dynamo Chamber and Trooper Security Station now start in post-layer change state&lt;/p&gt;&lt;p&gt;It's also required for certain new features, such as Inverted Aether.&lt;/p&gt;&lt;p&gt;This setting causes additional stuttering during gameplay, especially on Dolphin. It's recommended to unlock disc read speeds.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignJustify|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="Line" name="portal_rando_line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="portal_rando_check">
+      <property name="text">
+       <string>[Experimental] Portal Randomizer</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="portal_rando_label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randomizes portals inside each region. Requires the new patcher to be enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="Line" name="inverted_line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="inverted_check">
+      <property name="text">
+       <string>[Unsupported] Inverted Aether</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="inverted_label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this mode, it's the Light Aether atmosphere that is dangerous!&lt;br/&gt;All safe zones are moved to Light Aether, but that's not enough so it's still extremely dangerous.&lt;/p&gt;&lt;p&gt;Logic always acts as if this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
