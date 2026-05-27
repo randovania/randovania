@@ -671,6 +671,8 @@ Extra - asset_id: collision_camera_006
       Trivial
   > Door to EMMI Zone First Entrance
       Speed Booster
+  > Dock to White EMMI Arena
+      Morph Ball and After Artaria - Thermal Device and After Artaria - First Chase Blob and Floor Clip (Expert) and Speed Booster Conservation (Advanced) and Can SSC
 
 > Door to EMMI Zone First Entrance; Heals? False
   * Layers: default
@@ -719,6 +721,10 @@ Extra - asset_id: collision_camera_006
   > Event - First Chase Blob
       Trivial
 
+> Dock to White EMMI Arena; Heals? False
+  * Layers: default
+  * Open Passage to White EMMI Arena/Dock from White EMMI Introduction
+
 ----------------
 Teleport to Dairon
 Extra - total_boundings: {'x1': 5800.0, 'x2': 8900.0, 'y1': 300.0, 'y2': 4400.0}
@@ -765,6 +771,8 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_def: None
   > Door to EMMI Zone Exit North (Bottom)
       Trivial
+  > Door to White EMMI Introduction (Lower)
+      Floor Clip (Expert) and Can SSC
   > Door to EMMI First Chase End (Top)
       Trivial
 
@@ -1969,6 +1977,12 @@ Extra - asset_id: collision_camera_017
   > Start Point
       Trivial
 
+> Dock from White EMMI Introduction; Heals? False
+  * Layers: default
+  * Blocked Passage to White EMMI Introduction/Dock to White EMMI Arena
+  > Door to EMMI Zone Spinner (Top)
+      Trivial
+
 ----------------
 EMMI Zone Entrance Hallway
 Extra - total_boundings: {'x1': 7800.0, 'x2': 10900.0, 'y1': -3650.0, 'y2': -2850.0}
@@ -1985,6 +1999,14 @@ Extra - asset_id: collision_camera_018
   * Extra - right_shield_def: None
   > Dock to Melee Tutorial Room
       Trivial
+  > Dock to Central Unit Access
+      Any of the following:
+          # https://youtu.be/QrsTVRbFCMk
+          All of the following:
+              Can SSC
+              Any of the following:
+                  Floor Clip (Advanced) and Disabled Door Lock Randomizer
+                  Floor Clip (Expert) and Enabled Door Lock Randomizer
 
 > Dock to Melee Tutorial Room; Heals? False
   * Layers: default
@@ -1998,6 +2020,10 @@ Extra - asset_id: collision_camera_018
   * Layers: default
   > Dock to Melee Tutorial Room
       Trivial
+
+> Dock to Central Unit Access; Heals? False
+  * Layers: default
+  * Open Passage to Central Unit Access/Dock from EMMI Zone Entrance Hallway
 
 ----------------
 Corpius Arena
@@ -2159,7 +2185,12 @@ Extra - asset_id: collision_camera_022
           Morph Ball
           Any of the following:
               Simple IBJ
-              Speed Booster and Disabled Door Lock Randomizer and Open Charge Door
+              All of the following:
+                  Speed Booster
+                  Any of the following:
+                      Speed Booster Upgrade ≥ 2
+                      Disabled Door Lock Randomizer and Open Charge Door
+                      Speed Booster Upgrade and Short Boost (Intermediate) and Can Short Boost
               Climb Sloped Tunnels (Intermediate) and Use Spin Boost
 
 > Door to Thermal Device; Heals? False
@@ -3045,6 +3076,9 @@ Extra - asset_id: collision_camera_049
       Trivial
   > Dock to Central Unit
       After Artaria - Central Unit
+  > Dock to Navigation Station South
+      # https://youtu.be/O7E_QjSWbrQ
+      Floor Clip (Intermediate) and Can SSC
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -3074,6 +3108,16 @@ Extra - asset_id: collision_camera_049
   * Extra - callback_function: OnEmmyCaveDead
   * Extra - boss_hint_name: E.M.M.I.-02SM
   > Door to White EMMI Arena (Bottom)
+      Trivial
+
+> Dock to Navigation Station South; Heals? False
+  * Layers: default
+  * Open Passage to Navigation Station South/Dock from Central Unit Access
+
+> Dock from EMMI Zone Entrance Hallway; Heals? False
+  * Layers: default
+  * Blocked Passage to EMMI Zone Entrance Hallway/Dock to Central Unit Access
+  > Door to White EMMI Arena (Top)
       Trivial
 
 ----------------
@@ -4154,6 +4198,12 @@ Extra - asset_id: collision_camera_068
   > Door to First Tutorial
       Trivial
 
+> Dock from Central Unit Access; Heals? False
+  * Layers: default
+  * Blocked Passage to Central Unit Access/Dock to Navigation Station South
+  > Door to First Tutorial
+      Trivial
+
 ----------------
 Wide Beam Block Room
 Extra - total_boundings: {'x1': -1300.0, 'x2': 800.0, 'y1': -3300.0, 'y2': -1100.0}
@@ -5069,7 +5119,9 @@ Extra - asset_id: collision_camera_081
   > Total Recharge
       After Artaria - Screw Attack Rotatable
   > Start Point - Screw Attack
-      Screw Attack
+      Any of the following:
+          Screw Attack
+          Before Artaria - Screw Attack Rotatable and Floor Clip (Advanced) and Enabled Highly Dangerous Logic and Artaria/Screw Attack Room/Pickup (Missile Tank, Top) and Can SSC
   > Event - Screw Attack Rotatable
       Trivial
 
@@ -5186,6 +5238,8 @@ Extra - asset_id: collision_camera_082
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Corridor
       Trivial
+  > Cold Room
+      Gravity Suit and Floor Clip (Expert) and Can SSC
 
 > Corridor; Heals? False
   * Layers: default

@@ -28,6 +28,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
+- Added: New docks and connections to handle new floor clip logic in several rooms.
+
+##### Cataris
+
+- Changed: Dairon Transport Access: Connection between Door to Thermal Device Room North and Dock to EMMI Zone Tower West now has Floor Clip logic to avoid the Wide Block.
+- Added: New docks and connections to handle new floor clip logic in several rooms.
+
+##### Ghavoran
+
+- Added: Dock between Spin Boost Tower and Elun Transport Access.
+- Added: New dock and connections to handle new floor clip logic in Spin Boost Tower.
+
+##### Hanubia
+
+- Changed: Speedboost Puzzle Room:  Connection between Door to Navigation Station (Bottom) and Start Point 1 has Floor Clip logic.
 
 ##### Dairon
 
