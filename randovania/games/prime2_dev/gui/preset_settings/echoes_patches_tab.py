@@ -20,7 +20,9 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.practice_mod_description_label.setText(self.include_menu_mod_label.text().replace("color:#0000ff;", ""))
+        self.practice_mod_description_label.setText(
+            self.practice_mod_description_label.text().replace("color:#0000ff;", "")
+        )
         for mode in PracticeModMode:
             self.practice_mod_mode_combo.addItem(mode.long_name, mode)
 
