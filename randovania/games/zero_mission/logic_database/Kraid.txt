@@ -169,14 +169,16 @@ Extra - room_id: [3]
   * Blue Door to Zeela-Infested Room/Door to Upper Corridor
   * Extra - door_idx: (15,)
   > Door to Apex Launcher Hub
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Zipline Activation or Climb High Ledges
 
 > Door to Apex Launcher Hub; Heals? False
   * Layers: default
   * Blue Door to Apex Launcher Hub/Door to Upper Corridor
   * Extra - door_idx: (16,)
   > Door to Zeela-Infested Room
-      Power Grip
+      Tunnel Climb
 
 ----------------
 Zipline Activation Chamber
@@ -189,32 +191,30 @@ Extra - room_id: [4]
   * Extra - blocky: 6
   > Door to Zeela-Infested Room
       Trivial
+  > Door to Save Station (Northeast)
+      Trivial
 
 > Door to Zeela-Infested Room; Heals? False
   * Layers: default
   * Blue Door to Zeela-Infested Room/Door to Zipline Activation Chamber
   * Extra - door_idx: (17,)
   > Pickup (Energy Tank)
-      Space Jump (Unknown Item 2) or After Ziplines Activated
+      Zipline Activation or Climb Ledges
   > Door to Save Station (Northeast)
-      Space Jump (Unknown Item 2) or After Ziplines Activated
-  > Event - Ziplines Activated
-      Morph Ball
+      # Ride the zipline in Morph Ball to avoid the item
+      Zipline Activation and Can Use Springball
   > Pickup (Zipline Activation)
-      Trivial
+      Morph Ball
 
 > Door to Save Station (Northeast); Heals? False
   * Layers: default
   * Blue Door to Save Station (Northeast)/Door to Zipline Activation Chamber
   * Extra - door_idx: (18,)
+  > Pickup (Energy Tank)
+      Zipline Activation or Movement (Beginner) or Climb Ledges
   > Door to Zeela-Infested Room
-      Space Jump (Unknown Item 2) or After Ziplines Activated
-
-> Event - Ziplines Activated; Heals? False
-  * Layers: default
-  * Event Ziplines Activated
-  > Door to Zeela-Infested Room
-      Trivial
+      # Ride the zipline in Morph Ball to avoid the item
+      Zipline Activation and Can Use Springball
 
 > Pickup (Zipline Activation); Heals? False
   * Layers: default
@@ -231,36 +231,50 @@ Extra - room_id: [5]
   * Layers: default
   * Blue Door to Zeela-Infested Room/Door to Acid Worm Arena
   * Extra - door_idx: (19,)
-  > Door to Acid Worm Arena Access
+  > Acid Worm Arena
       Trivial
-  > Tunnel to Cache
-      All of the following:
-          After Boss Acid Worm Defeated and Can Use Any Bombs
-          Any of the following:
-              Power Grip
-              Movement (Beginner) and Can Bounce in Ball
 
 > Door to Acid Worm Arena Access; Heals? False
   * Layers: default
   * Blue Door to Acid Worm Arena Access/Door to Acid Worm Arena
   * Extra - door_idx: (20,)
-  > Door to Zeela-Infested Room
-      After Boss Acid Worm Defeated
-  > Event - Acid Worm Defeated
-      Missiles
+  > Acid Worm Arena
+      Trivial
 
 > Tunnel to Cache; Heals? False
   * Layers: default
   * Tunnel to Cache/Tunnel to Acid Worm Arena
   * Extra - door_idx: (91,)
-  > Door to Zeela-Infested Room
+  > Acid Worm Arena
       After Boss Acid Worm Defeated and Can Use Any Bombs
 
 > Event - Acid Worm Defeated; Heals? False
   * Layers: default
   * Event Boss Acid Worm Defeated
+  > Acid Worm Arena
+      Trivial
+
+> Acid Worm Arena; Heals? False
+  * Layers: default
+  > Door to Zeela-Infested Room
+      After Boss Acid Worm Defeated
   > Door to Acid Worm Arena Access
       After Boss Acid Worm Defeated
+  > Tunnel to Cache
+      All of the following:
+          After Boss Acid Worm Defeated and Can Use Any Bombs
+          Any of the following:
+              Tunnel Climb
+              Movement (Beginner) and Can Bounce in Ball
+  > Event - Acid Worm Defeated
+      All of the following:
+          Bombs
+          Any of the following:
+              # Health requirements
+              Normal Damage ≥ 199
+              Varia Suit and Normal Damage ≥ 99
+          # Damage Requirements
+          Missiles ≥ 45 or Super Missiles ≥ 9
 
 ----------------
 Zeela-Infested Room
@@ -290,11 +304,15 @@ Extra - room_id: [6]
 > Ball Launcher; Heals? False
   * Layers: default
   > Door to Upper Corridor
-      Space Jump (Unknown Item 2) or Can Use Bombs
+      Space Jump (Unknown Item 2) or Can Use Ball Launcher
   > Door to Zipline Activation Chamber
       Any of the following:
-          Can Use Bombs
-          Morph Ball and Mid-Air Morphs (Beginner) and Use Space Jump
+          Can Use Ball Launcher
+          All of the following:
+              Use Space Jump
+              Any of the following:
+                  Tunnel Climb
+                  Morph Ball and Mid-Air Morphs (Beginner)
   > Door to Acid Worm Arena
       Trivial
 
@@ -348,7 +366,7 @@ Extra - room_id: [8]
   * Blue Door to Illusionary Acid Pool/Door to Acidic Concourse
   * Extra - door_idx: (26,)
   > Underneath Zipline
-      After Ziplines Activated or Use Space Jump
+      Zipline Activation or Use Space Jump
 
 > Door to Elevator to Brinstar; Heals? False
   * Layers: default
@@ -362,7 +380,7 @@ Extra - room_id: [8]
   > Pickup (Missile Tank)
       Gravity Suit and Morph Ball and Speed Booster
   > Door to Illusionary Acid Pool
-      After Ziplines Activated or Use Space Jump
+      Zipline Activation or Use Space Jump
   > Door to Elevator to Brinstar
       Power Grip and Can Use Any Bombs
 
@@ -409,7 +427,7 @@ Extra - room_id: [10]
   * Blue Door to Elevator to Brinstar/Door to Gauntlet
   * Extra - door_idx: (30,)
   > Pickup (Missile Tank)
-      After Ziplines Activated and Can Use Springball
+      Zipline Activation and Can Use Springball
   > Door to Pipe Shaft
       Missiles or Combat (Beginner)
 
@@ -452,7 +470,7 @@ Extra - room_id: [12]
       All of the following:
           After Kraid Chozo Statue Item Aquired
           Any of the following:
-              Missiles and After Ziplines Activated
+              Missiles and Zipline Activation
               Screw Attack and Use Space Jump
   > Open Passage to Acid Fall
       Trivial
@@ -496,14 +514,14 @@ Extra - room_id: [14]
   * Blue Door to Elevator to Brinstar/Door to Divided Alcove
   * Extra - door_idx: (37,)
   > Door to Pit Block Chamber
-      After Ziplines Activated and Can Bounce in Ball
+      Zipline Activation and Can Bounce in Ball
 
 > Door to Pit Block Chamber; Heals? False
   * Layers: default
   * Blue Door to Pit Block Chamber/Door to Divided Alcove
   * Extra - door_idx: (38,)
   > Door to Elevator to Brinstar
-      After Ziplines Activated and Can Bounce in Ball
+      Zipline Activation and Can Bounce in Ball
 
 ----------------
 Pit Block Chamber

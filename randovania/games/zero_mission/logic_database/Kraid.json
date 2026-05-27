@@ -932,7 +932,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Apex Launcher Hub": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -943,6 +943,27 @@
                                             "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ziplines",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb High Ledges"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -982,21 +1003,8 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Zeela-Infested Room": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PowerGrip",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Tunnel Climb"
                         }
                     }
                 }
@@ -1035,6 +1043,13 @@
                     "hint_features": [],
                     "connections": {
                         "Door to Zeela-Infested Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Save Station (Northeast)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1082,72 +1097,47 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Climb Ledges"
                                     }
                                 ]
                             }
                         },
                         "Door to Save Station (Northeast)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Ride the zipline in Morph Ball to avoid the item",
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Ziplines Activated": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Use Springball"
                                     }
                                 ]
                             }
                         },
                         "Pickup (Zipline Activation)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1183,16 +1173,20 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Zeela-Infested Room": {
+                        "Pickup (Energy Tank)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
+                                        "type": "template",
+                                        "data": "Climb Ledges"
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Ziplines",
+                                            "type": "tricks",
+                                            "name": "Movement",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1201,37 +1195,33 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SpaceJump",
+                                            "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     }
                                 ]
                             }
-                        }
-                    }
-                },
-                "Event - Ziplines Activated": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 180.89,
-                        "y": 106.47,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Ziplines",
-                    "connections": {
+                        },
                         "Door to Zeela-Infested Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Ride the zipline in Morph Ball to avoid the item",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Ziplines",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Springball"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1309,70 +1299,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Acid Worm Arena Access": {
+                        "Acid Worm Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Tunnel to Cache": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "KillAcidWorm",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerGrip",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Bounce in Ball"
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
                             }
                         }
                     }
@@ -1408,38 +1339,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Zeela-Infested Room": {
-                            "type": "or",
+                        "Acid Worm Arena": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "KillAcidWorm",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Acid Worm Defeated": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -1475,7 +1379,88 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Acid Worm Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "KillAcidWorm",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Acid Worm Defeated": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 270.0,
+                        "y": 300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "KillAcidWorm",
+                    "connections": {
+                        "Acid Worm Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Acid Worm Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 270.0,
+                        "y": 220.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Door to Zeela-Infested Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "KillAcidWorm",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Acid Worm Arena Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "KillAcidWorm",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tunnel to Cache": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1490,31 +1475,46 @@
                                         }
                                     },
                                     {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Tunnel Climb"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Bounce in Ball"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
                                         "type": "template",
                                         "data": "Can Use Any Bombs"
                                     }
                                 ]
                             }
-                        }
-                    }
-                },
-                "Event - Acid Worm Defeated": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 269.3667141045376,
-                        "y": 245.45570367788716,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "KillAcidWorm",
-                    "connections": {
-                        "Door to Acid Worm Arena Access": {
+                        },
+                        "Event - Acid Worm Defeated": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1522,10 +1522,79 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "KillAcidWorm",
+                                            "type": "items",
+                                            "name": "Bombs",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Health requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 199,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "VariaSuit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 99,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Damage Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missiles",
+                                                        "amount": 45,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SuperMissiles",
+                                                        "amount": 9,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1697,7 +1766,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Bombs"
+                                        "data": "Can Use Ball Launcher"
                                     },
                                     {
                                         "type": "resource",
@@ -1718,7 +1787,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Bombs"
+                                        "data": "Can Use Ball Launcher"
                                     },
                                     {
                                         "type": "and",
@@ -1730,21 +1799,41 @@
                                                     "data": "Use Space Jump"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "MorphBall",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "MidairMorph",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Tunnel Climb"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "MorphBall",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MidairMorph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2064,7 +2153,7 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
@@ -2187,7 +2276,7 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
@@ -2461,7 +2550,7 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
@@ -2782,7 +2871,7 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "events",
+                                                                    "type": "items",
                                                                     "name": "Ziplines",
                                                                     "amount": 1,
                                                                     "negate": false
@@ -3055,7 +3144,7 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
@@ -3109,7 +3198,7 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
+                                            "type": "items",
                                             "name": "Ziplines",
                                             "amount": 1,
                                             "negate": false
