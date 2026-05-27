@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from typing import TYPE_CHECKING, Any, override
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
@@ -10,7 +10,6 @@ from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
@@ -25,6 +24,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
     from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
 
 _ALTERNATIVE_MODELS = {
@@ -90,14 +90,14 @@ def get_resources_for_details(
     return resources
 
 
-def _get_destination_room_for_teleportal(connection: Node) -> str:
+def _get_destination_room_for_teleportal(connection: Node):
     return connection.extra.get("transporter_name", f"{connection.identifier.region} - {connection.identifier.area}")
 
 
 class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPatches]):
     spawnpoint_name_prefix = "SP_RDV_"
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.new_spawn_points: dict[Node, dict] = {}
 
@@ -109,10 +109,9 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
     def hint_namer_type(cls) -> type[DreadHintNamer]:
         return DreadHintNamer
 
-    def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, int]:
+    def _calculate_starting_inventory(self, resources: ResourceCollection):
         result = {}
         for resource, quantity in resources.as_resource_gain():
-            assert isinstance(resource, ItemResourceInfo)
             try:
                 result[get_item_id_for_item(resource)] = quantity
             except KeyError:
@@ -120,7 +119,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
                 continue
         return result
 
-    def _starting_inventory_text(self) -> list[str]:
+    def _starting_inventory_text(self):
         result = [r"{c1}Random starting items:{c0}"]
         items = item_names.additional_starting_equipment(self.configuration, self.game, self.patches)
         if not items:
@@ -131,7 +130,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
     def _key_error_for_node(self, node: Node, err: KeyError) -> KeyError:
         return KeyError(f"{node.full_name()} has no extra {err}")
 
-    def _get_or_create_spawn_point(self, node: Node, level_name: str) -> str:
+    def _get_or_create_spawn_point(self, node: Node, level_name: str):
         if node in self.new_spawn_points:
             return self.new_spawn_points[node]["new_actor"]["actor"]
         else:
@@ -192,8 +191,6 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
     def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> dict | None:
         alt_model = _ALTERNATIVE_MODELS.get(detail.model, [detail.model.name])
         model_names = alt_model
-
-        map_icon: dict
 
         if detail.is_for_remote_player:
             if model_names == ["offworld"]:
@@ -316,7 +313,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             DreadHintNamer(self.description.all_patches, self.players_config),
         )
 
-    def _static_room_name_fixes(self, scenario_name: str, area: Area) -> tuple[str, str]:
+    def _static_room_name_fixes(self, scenario_name: str, area: Area):
         # static fixes for some rooms
         cc_name = area.extra["asset_id"]
         area_name = area.name
@@ -410,7 +407,6 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
                 "power_bomb": c.alt_power_bomb.value,
                 "closed": c.alt_closed.value,
             },
-            "split_saves": c.separate_save_slots,
         }
 
         if c.show_room_names.value != "NEVER":
@@ -423,7 +419,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
 
     def _door_patches(self) -> list[dict[str, dict]]:
         result = []
-        used_actors: dict[str, str] = {}
+        used_actors = {}
 
         for node, weakness in self.patches.all_dock_weaknesses(self.game):
             if "type" not in weakness.extra:
@@ -455,7 +451,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         if self.configuration.artifacts.required_artifacts == 0:
             return {"required_artifacts": 0, "hints": []}
 
-        artifacts = [self.resource_db.get_item(f"Artifact{i + 1}") for i in range(12)]
+        artifacts = [self.game.resource_database.get_item(f"Artifact{i + 1}") for i in range(12)]
         artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
             self.description.all_patches,
             self.players_config,
@@ -476,7 +472,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             "hints": hint_text,
         }
 
-    def _tilegroup_patches(self) -> list[dict]:
+    def _tilegroup_patches(self):
         return [
             # beam blocks -> speedboost blocks in Artaria EMMI zone Speed Booster puzzle to prevent softlock
             {
@@ -485,7 +481,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             }
         ]
 
-    def _light_patches(self) -> list[dict]:
+    def _light_patches(self):
         config = self.configuration.disabled_lights.as_json
         patches = []
 
@@ -520,7 +516,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
 
         energy_per_tank = self.configuration.energy_per_tank if self.configuration.immediate_energy_parts else 100.0
 
-        teleporters: list[dict] = [
+        teleporters = [
             {
                 "teleporter": self._teleporter_ref_for(node),
                 "destination": self._start_point_ref_for(connection),
@@ -534,9 +530,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         ]
 
         # special-case the Ghavoran Flipper train to update the map correctly
-        flipper_list: list[dict] = [
-            t for t in teleporters if t["teleporter"]["actor"] == "wagontrain_quarantine_with_cutscene_000"
-        ]
+        flipper_list = [t for t in teleporters if t["teleporter"]["actor"] == "wagontrain_quarantine_with_cutscene_000"]
         if flipper_list:
             other_train = deepcopy(flipper_list[0])
             other_train["teleporter"]["actor"] = "wagontrain_quarantine_000"
@@ -601,11 +595,11 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
 
 
 class DreadAcquiredMemo(dict):
-    def __missing__(self, key: str) -> str:
+    def __missing__(self, key):
         return f"{key} acquired."
 
     @classmethod
-    def with_expansion_text(cls) -> dict[str, str]:
+    def with_expansion_text(cls):
         result = cls()
         result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity {MissilesChanged} by {Missiles}."
         result["Missile+ Tank"] = "Missile+ Tank acquired.\nMissile capacity {MissilesChanged} by {Missiles}."

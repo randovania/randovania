@@ -85,14 +85,14 @@ def _hash_words() -> list[str]:
 
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="45I4ODCF",
+        expected_seed_hash="6WQ5CHSQ",
     )
 
 
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Hunters",
     long_name="Metroid Prime Hunters",
-    development_state=randovania.game.development_state.DevelopmentState.STAGING,
+    development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
     presets=[
         "starter_preset.rdvpreset",
     ],

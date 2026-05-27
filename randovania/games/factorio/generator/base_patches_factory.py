@@ -3,7 +3,6 @@ from __future__ import annotations
 import typing
 from typing import TYPE_CHECKING
 
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.factorio.data_importer import data_parser
 from randovania.games.factorio.generator import recipes
 from randovania.games.factorio.generator.item_cost import BASIC_RESOURCES, cost_calculator
@@ -31,7 +30,9 @@ class FactorioGameSpecific(typing.TypedDict):
 
 
 class FactorioBasePatchesFactory(BasePatchesFactory[FactorioConfiguration]):
-    def create_game_specific(self, configuration: FactorioConfiguration, game: GameDescription, rng: Random) -> dict:
+    def create_game_specific(
+        self, configuration: FactorioConfiguration, game: GameDescription, rng: Random
+    ) -> FactorioGameSpecific:
         recipes_raw = data_parser.load_recipes_raw()
         techs_raw = data_parser.load_techs_raw()
         item_cost = cost_calculator(recipes_raw, techs_raw)
@@ -49,7 +50,6 @@ class FactorioBasePatchesFactory(BasePatchesFactory[FactorioConfiguration]):
         # Get all recipes available
         available_recipes = {recipe for recipe, data in recipes_raw.items() if data.get("enabled", True)}
         for tech, _ in collection.as_resource_gain():
-            assert isinstance(tech, ItemResourceInfo)
             available_recipes.update(tech.extra["recipes_unlocked"])
 
         # Get all recipe results

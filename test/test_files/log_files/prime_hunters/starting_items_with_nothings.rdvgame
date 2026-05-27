@@ -1,19 +1,19 @@
 {
-    "schema_version": 41,
+    "schema_version": 39,
     "info": {
-        "randovania_version": "10.6.0.dev134-dirty",
-        "randovania_version_git": "315ae7fa",
-        "permalink": "DfCyCuXbazFa5_oMpZZToKqwSOAhQOtAAH5g",
+        "randovania_version": "10.3.0.dev283-dirty",
+        "randovania_version_git": "631911a7",
+        "permalink": "DaIZleLo_mMZEacMVg7fTKjcFhBKyHiYAK7C",
         "has_spoiler": true,
-        "seed": 1837168670,
-        "hash": "WIFOLW3L",
-        "word_hash": "Bounty Tetra Neural",
+        "seed": 849244479,
+        "hash": "DGK6F2H6",
+        "word_hash": "Head Empaths Vast",
         "presets": [
             {
-                "schema_version": 112,
+                "schema_version": 109,
                 "base_preset_uuid": null,
                 "name": "Starter Preset Copy",
-                "uuid": "2039f936-b24e-4d9f-819a-7e0f37fd4818",
+                "uuid": "41f4c3ba-e928-4bcc-81c8-a9f6a739cc86",
                 "description": "A copy version of Starter Preset.",
                 "game": "prime_hunters",
                 "configuration": {
@@ -38,7 +38,7 @@
                             "Missile Launcher": {
                                 "num_shuffled_pickups": 1,
                                 "included_ammo": [
-                                    5
+                                    10
                                 ]
                             },
                             "Volt Driver": {
@@ -64,8 +64,8 @@
                             }
                         },
                         "default_pickups": {},
-                        "minimum_random_starting_pickups": 3,
-                        "maximum_random_starting_pickups": 7
+                        "minimum_random_starting_pickups": 2,
+                        "maximum_random_starting_pickups": 4
                     },
                     "ammo_pickup_configuration": {
                         "pickups_state": {
@@ -90,6 +90,7 @@
                     "pickup_model_data_source": "etm",
                     "logical_resource_action": "randomly",
                     "first_progression_must_be_local": false,
+                    "two_sided_door_lock_search": false,
                     "dock_rando": {
                         "mode": "vanilla",
                         "types_state": {
@@ -107,6 +108,7 @@
                     "staggered_multi_pickup_placement": true,
                     "check_if_beatable_after_base_patches": false,
                     "logical_pickup_placement": "minimal",
+                    "consider_possible_unsafe_resources": false,
                     "hints": {
                         "enable_random_hints": true,
                         "enable_specific_location_hints": true,
@@ -119,7 +121,7 @@
                     },
                     "octoliths": {
                         "prefer_bosses": true,
-                        "placed_octoliths": 8
+                        "placed_octoliths": 4
                     },
                     "force_field_configuration": {
                         "force_field_requirement": {
@@ -154,8 +156,7 @@
                         "mode": "vanilla",
                         "excluded_teleporters": [],
                         "excluded_targets": []
-                    },
-                    "starting_energy": 99
+                    }
                 }
             }
         ]
@@ -165,9 +166,12 @@
             "game": "prime_hunters",
             "starting_equipment": {
                 "pickups": [
-                    "Missile Launcher",
-                    "Battlehammer",
-                    "Imperialist"
+                    "Octolith 5",
+                    "Octolith 6",
+                    "Octolith 7",
+                    "Octolith 8",
+                    "Magmaul",
+                    "Judicator"
                 ]
             },
             "starting_location": "Celestial Archives/Celestial Gateway/Ship",
@@ -246,7 +250,7 @@
                         "node": "Pickup (Missile Expansion)"
                     },
                     "index": 7,
-                    "pickup": "Alinos Binary Subscripture Artifact 1",
+                    "pickup": "VDO Cartograph Artifact 1",
                     "owner": 0
                 },
                 {
@@ -256,26 +260,26 @@
                         "node": "Pickup (Missile Expansion)"
                     },
                     "index": 10,
-                    "pickup": "UA Expansion",
+                    "pickup": "Nothing",
                     "owner": 0
                 },
                 {
                     "node_identifier": {
                         "region": "Alinos",
-                        "area": "Biodefense Chamber A (Alinos)",
-                        "node": "Pickup (Octolith)"
-                    },
-                    "index": 1,
-                    "pickup": "Octolith 6",
-                    "owner": 0
-                },
-                {
-                    "node_identifier": {
-                        "region": "Alinos",
-                        "area": "Biodefense Chamber B (Alinos)",
+                        "area": "Biodefense Chamber 02",
                         "node": "Pickup (Octolith)"
                     },
                     "index": 0,
+                    "pickup": "Octolith 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Alinos",
+                        "area": "Biodefense Chamber 06",
+                        "node": "Pickup (Octolith)"
+                    },
+                    "index": 1,
                     "pickup": "Octolith 3",
                     "owner": 0
                 },
@@ -286,7 +290,7 @@
                         "node": "Pickup (Attameter Artifact)"
                     },
                     "index": 12,
-                    "pickup": "VDO Cartograph Artifact 1",
+                    "pickup": "UA Expansion",
                     "owner": 0
                 },
                 {
@@ -296,7 +300,7 @@
                         "node": "Pickup (Energy Tank)"
                     },
                     "index": 11,
-                    "pickup": "Celestial Binary Subscripture Artifact 2",
+                    "pickup": "UA Expansion",
                     "owner": 0
                 },
                 {
@@ -316,7 +320,7 @@
                         "node": "Pickup (Cartograph Artifact)"
                     },
                     "index": 4,
-                    "pickup": "UA Expansion",
+                    "pickup": "Imperialist",
                     "owner": 0
                 },
                 {
@@ -326,7 +330,7 @@
                         "node": "Pickup (Cartograph Artifact)"
                     },
                     "index": 2,
-                    "pickup": "UA Expansion",
+                    "pickup": "Missile Expansion",
                     "owner": 0
                 },
                 {
@@ -336,7 +340,7 @@
                         "node": "Pickup (Energy Tank)"
                     },
                     "index": 3,
-                    "pickup": "VDO Attameter Artifact 1",
+                    "pickup": "UA Expansion",
                     "owner": 0
                 },
                 {
@@ -346,7 +350,7 @@
                         "node": "Pickup (Attameter Artifact)"
                     },
                     "index": 15,
-                    "pickup": "Volt Driver",
+                    "pickup": "Arcterra Cartograph Artifact 1",
                     "owner": 0
                 },
                 {
@@ -356,7 +360,7 @@
                         "node": "Pickup (Binary Subscripture Artifact)"
                     },
                     "index": 8,
-                    "pickup": "Arcterra Attameter Artifact 2",
+                    "pickup": "Alinos Attameter Artifact 1",
                     "owner": 0
                 },
                 {
@@ -376,7 +380,7 @@
                         "node": "Pickup (UA Expansion)"
                     },
                     "index": 5,
-                    "pickup": "Magmaul",
+                    "pickup": "Nothing",
                     "owner": 0
                 },
                 {
@@ -386,7 +390,7 @@
                         "node": "Pickup (Binary Subcripture Artifact)"
                     },
                     "index": 6,
-                    "pickup": "Energy Tank",
+                    "pickup": "Celestial Cartograph Artifact 2",
                     "owner": 0
                 },
                 {
@@ -396,23 +400,23 @@
                         "node": "Pickup (UA Expansion)"
                     },
                     "index": 14,
-                    "pickup": "Arcterra Cartograph Artifact 1",
+                    "pickup": "Alinos Cartograph Artifact 2",
                     "owner": 0
                 },
                 {
                     "node_identifier": {
                         "region": "Arcterra",
-                        "area": "Biodefense Chamber A (Arcterra)",
+                        "area": "Biodefense Chamber 04",
                         "node": "Pickup (Octolith)"
                     },
                     "index": 45,
-                    "pickup": "Octolith 4",
+                    "pickup": "Energy Tank",
                     "owner": 0
                 },
                 {
                     "node_identifier": {
                         "region": "Arcterra",
-                        "area": "Biodefense Chamber B (Arcterra)",
+                        "area": "Biodefense Chamber 07",
                         "node": "Pickup (Octolith)"
                     },
                     "index": 46,
@@ -426,7 +430,7 @@
                         "node": "Pickup (UA Expansion)"
                     },
                     "index": 49,
-                    "pickup": "VDO Binary Subscripture Artifact 1",
+                    "pickup": "Missile Launcher",
                     "owner": 0
                 },
                 {
@@ -446,7 +450,7 @@
                         "node": "Pickup (Imperialist)"
                     },
                     "index": 61,
-                    "pickup": "Celestial Attameter Artifact 1",
+                    "pickup": "Celestial Attameter Artifact 2",
                     "owner": 0
                 },
                 {
@@ -456,7 +460,7 @@
                         "node": "Pickup (Binary Subscripture Artifact)"
                     },
                     "index": 47,
-                    "pickup": "Nothing",
+                    "pickup": "UA Expansion",
                     "owner": 0
                 },
                 {
@@ -466,7 +470,7 @@
                         "node": "Pickup (Energy Tank)"
                     },
                     "index": 48,
-                    "pickup": "Missile Expansion",
+                    "pickup": "Alinos Cartograph Artifact 1",
                     "owner": 0
                 },
                 {
@@ -476,7 +480,7 @@
                         "node": "Pickup (Cartograph Artifact)"
                     },
                     "index": 50,
-                    "pickup": "Alinos Attameter Artifact 2",
+                    "pickup": "Arcterra Attameter Artifact 1",
                     "owner": 0
                 },
                 {
@@ -486,7 +490,7 @@
                         "node": "Pickup (Judicator)"
                     },
                     "index": 53,
-                    "pickup": "Missile Expansion",
+                    "pickup": "Energy Tank",
                     "owner": 0
                 },
                 {
@@ -496,7 +500,7 @@
                         "node": "Pickup (Missile Expansion)"
                     },
                     "index": 51,
-                    "pickup": "Arcterra Binary Subscripture Artifact 2",
+                    "pickup": "Celestial Attameter Artifact 1",
                     "owner": 0
                 },
                 {
@@ -506,7 +510,7 @@
                         "node": "Pickup (UA Expansion - Alcove)"
                     },
                     "index": 54,
-                    "pickup": "Energy Tank",
+                    "pickup": "Alinos Attameter Artifact 2",
                     "owner": 0
                 },
                 {
@@ -516,7 +520,7 @@
                         "node": "Pickup (UA Expansion - War Wasps)"
                     },
                     "index": 52,
-                    "pickup": "Shock Coil",
+                    "pickup": "Missile Expansion",
                     "owner": 0
                 },
                 {
@@ -526,7 +530,7 @@
                         "node": "Pickup (Binary Subscripture Artifact)"
                     },
                     "index": 59,
-                    "pickup": "Arcterra Binary Subscripture Artifact 1",
+                    "pickup": "Missile Expansion",
                     "owner": 0
                 },
                 {
@@ -536,7 +540,7 @@
                         "node": "Pickup (UA Expansion)"
                     },
                     "index": 60,
-                    "pickup": "Alinos Cartograph Artifact 2",
+                    "pickup": "Energy Tank",
                     "owner": 0
                 },
                 {
@@ -546,7 +550,7 @@
                         "node": "Pickup (Attameter Artifact)"
                     },
                     "index": 58,
-                    "pickup": "Energy Tank",
+                    "pickup": "UA Expansion",
                     "owner": 0
                 },
                 {
@@ -566,7 +570,7 @@
                         "node": "Pickup (Cartograph Artifact)"
                     },
                     "index": 55,
-                    "pickup": "Nothing",
+                    "pickup": "Arcterra Binary Subscripture Artifact 2",
                     "owner": 0
                 },
                 {
@@ -576,27 +580,27 @@
                         "node": "Pickup (Missile Expansion)"
                     },
                     "index": 56,
-                    "pickup": "Alinos Cartograph Artifact 1",
+                    "pickup": "VDO Attameter Artifact 1",
                     "owner": 0
                 },
                 {
                     "node_identifier": {
                         "region": "Celestial Archives",
-                        "area": "Biodefense Chamber A (Celestial Archives)",
+                        "area": "Biodefense Chamber 01",
                         "node": "Pickup (Octolith)"
                     },
                     "index": 16,
-                    "pickup": "Octolith 8",
+                    "pickup": "Octolith 4",
                     "owner": 0
                 },
                 {
                     "node_identifier": {
                         "region": "Celestial Archives",
-                        "area": "Biodefense Chamber B (Celestial Archives)",
+                        "area": "Biodefense Chamber 05",
                         "node": "Pickup (Octolith)"
                     },
                     "index": 17,
-                    "pickup": "Octolith 7",
+                    "pickup": "VDO Attameter Artifact 2",
                     "owner": 0
                 },
                 {
@@ -606,7 +610,7 @@
                         "node": "Pickup (UA Expansion)"
                     },
                     "index": 21,
-                    "pickup": "Energy Tank",
+                    "pickup": "Missile Expansion",
                     "owner": 0
                 },
                 {
@@ -616,7 +620,7 @@
                         "node": "Pickup (Cartograph Artifact)"
                     },
                     "index": 22,
-                    "pickup": "Missile Expansion",
+                    "pickup": "Energy Tank",
                     "owner": 0
                 },
                 {
@@ -626,7 +630,7 @@
                         "node": "Pickup (Energy Tank)"
                     },
                     "index": 23,
-                    "pickup": "Celestial Binary Subscripture Artifact 1",
+                    "pickup": "Nothing",
                     "owner": 0
                 },
                 {
@@ -636,7 +640,7 @@
                         "node": "Pickup (Missile Expansion)"
                     },
                     "index": 25,
-                    "pickup": "Missile Expansion",
+                    "pickup": "Arcterra Binary Subscripture Artifact 1",
                     "owner": 0
                 },
                 {
@@ -646,7 +650,7 @@
                         "node": "Pickup (UA Expansion)"
                     },
                     "index": 26,
-                    "pickup": "VDO Cartograph Artifact 2",
+                    "pickup": "VDO Binary Subscripture Artifact 1",
                     "owner": 0
                 },
                 {
@@ -656,7 +660,7 @@
                         "node": "Pickup (Volt Driver)"
                     },
                     "index": 24,
-                    "pickup": "UA Expansion",
+                    "pickup": "Nothing",
                     "owner": 0
                 },
                 {
@@ -666,7 +670,7 @@
                         "node": "Pickup (Attameter Artifact)"
                     },
                     "index": 27,
-                    "pickup": "Arcterra Cartograph Artifact 2",
+                    "pickup": "Volt Driver",
                     "owner": 0
                 },
                 {
@@ -676,7 +680,7 @@
                         "node": "Pickup (Cartograph Artifact)"
                     },
                     "index": 31,
-                    "pickup": "Missile Expansion",
+                    "pickup": "Battlehammer",
                     "owner": 0
                 },
                 {
@@ -686,7 +690,7 @@
                         "node": "Pickup (UA Expansion)"
                     },
                     "index": 32,
-                    "pickup": "VDO Binary Subscripture Artifact 2",
+                    "pickup": "Energy Tank",
                     "owner": 0
                 },
                 {
@@ -696,7 +700,7 @@
                         "node": "Pickup (Attameter Artifact)"
                     },
                     "index": 28,
-                    "pickup": "UA Expansion",
+                    "pickup": "Celestial Cartograph Artifact 1",
                     "owner": 0
                 },
                 {
@@ -706,7 +710,7 @@
                         "node": "Pickup (Shock Coil)"
                     },
                     "index": 29,
-                    "pickup": "Judicator",
+                    "pickup": "Arcterra Cartograph Artifact 2",
                     "owner": 0
                 },
                 {
@@ -716,7 +720,7 @@
                         "node": "Pickup (Missile Expansion)"
                     },
                     "index": 30,
-                    "pickup": "Missile Expansion",
+                    "pickup": "Celestial Binary Subscripture Artifact 2",
                     "owner": 0
                 },
                 {
@@ -726,7 +730,7 @@
                         "node": "Pickup (Binary Subscripture Artifact)"
                     },
                     "index": 19,
-                    "pickup": "Missile Expansion",
+                    "pickup": "Alinos Binary Subscripture Artifact 1",
                     "owner": 0
                 },
                 {
@@ -736,7 +740,7 @@
                         "node": "Pickup (Energy Tank)"
                     },
                     "index": 20,
-                    "pickup": "VDO Attameter Artifact 2",
+                    "pickup": "UA Expansion",
                     "owner": 0
                 },
                 {
@@ -746,7 +750,7 @@
                         "node": "Pickup (Binary Subscripture Artifact)"
                     },
                     "index": 18,
-                    "pickup": "Energy Tank",
+                    "pickup": "Nothing",
                     "owner": 0
                 },
                 {
@@ -756,7 +760,7 @@
                         "node": "Pickup (UA Expansion)"
                     },
                     "index": 63,
-                    "pickup": "UA Expansion",
+                    "pickup": "Celestial Binary Subscripture Artifact 1",
                     "owner": 0
                 },
                 {
@@ -766,27 +770,27 @@
                         "node": "Pickup (Energy Tank)"
                     },
                     "index": 64,
-                    "pickup": "Energy Tank",
+                    "pickup": "Missile Expansion",
                     "owner": 0
                 },
                 {
                     "node_identifier": {
                         "region": "Vesper Defense Outpost",
-                        "area": "Biodefense Chamber A (VDO)",
+                        "area": "Biodefense Chamber 03",
                         "node": "Pickup (Octolith)"
                     },
                     "index": 33,
-                    "pickup": "Octolith 5",
+                    "pickup": "Arcterra Attameter Artifact 2",
                     "owner": 0
                 },
                 {
                     "node_identifier": {
                         "region": "Vesper Defense Outpost",
-                        "area": "Biodefense Chamber B (VDO)",
+                        "area": "Biodefense Chamber 08",
                         "node": "Pickup (Octolith)"
                     },
                     "index": 34,
-                    "pickup": "Octolith 2",
+                    "pickup": "Alinos Binary Subscripture Artifact 2",
                     "owner": 0
                 },
                 {
@@ -796,7 +800,7 @@
                         "node": "Pickup (Binary Subscripture Artifact)"
                     },
                     "index": 43,
-                    "pickup": "Celestial Cartograph Artifact 2",
+                    "pickup": "Missile Expansion",
                     "owner": 0
                 },
                 {
@@ -806,7 +810,7 @@
                         "node": "Pickup (UA Expansion)"
                     },
                     "index": 44,
-                    "pickup": "Alinos Attameter Artifact 1",
+                    "pickup": "Nothing",
                     "owner": 0
                 },
                 {
@@ -816,7 +820,7 @@
                         "node": "Pickup (Battlehammer)"
                     },
                     "index": 35,
-                    "pickup": "Energy Tank",
+                    "pickup": "UA Expansion",
                     "owner": 0
                 },
                 {
@@ -826,7 +830,7 @@
                         "node": "Pickup (Missile Expansion)"
                     },
                     "index": 36,
-                    "pickup": "Celestial Attameter Artifact 2",
+                    "pickup": "Energy Tank",
                     "owner": 0
                 },
                 {
@@ -836,7 +840,7 @@
                         "node": "Pickup (Binary Subscripture Artifact)"
                     },
                     "index": 39,
-                    "pickup": "Celestial Cartograph Artifact 1",
+                    "pickup": "UA Expansion",
                     "owner": 0
                 },
                 {
@@ -846,7 +850,7 @@
                         "node": "Pickup (Missile Expansion)"
                     },
                     "index": 40,
-                    "pickup": "Nothing",
+                    "pickup": "VDO Binary Subscripture Artifact 2",
                     "owner": 0
                 },
                 {
@@ -856,7 +860,7 @@
                         "node": "Pickup (Attameter Artifact)"
                     },
                     "index": 42,
-                    "pickup": "Alinos Binary Subscripture Artifact 2",
+                    "pickup": "VDO Cartograph Artifact 2",
                     "owner": 0
                 },
                 {
@@ -866,7 +870,7 @@
                         "node": "Pickup (Cartograph Artifact)"
                     },
                     "index": 41,
-                    "pickup": "UA Expansion",
+                    "pickup": "Shock Coil",
                     "owner": 0
                 },
                 {
@@ -876,7 +880,7 @@
                         "node": "Pickup (UA Expansion)"
                     },
                     "index": 65,
-                    "pickup": "UA Expansion",
+                    "pickup": "Missile Expansion",
                     "owner": 0
                 },
                 {
@@ -886,7 +890,7 @@
                         "node": "Pickup (Attameter Artifact)"
                     },
                     "index": 38,
-                    "pickup": "Arcterra Attameter Artifact 1",
+                    "pickup": "UA Expansion",
                     "owner": 0
                 },
                 {
@@ -896,7 +900,7 @@
                         "node": "Pickup (Cartograph Artifact)"
                     },
                     "index": 37,
-                    "pickup": "UA Expansion",
+                    "pickup": "Energy Tank",
                     "owner": 0
                 }
             ],
@@ -946,37 +950,36 @@
         }
     ],
     "item_order": [
-        "Missile Launcher as starting item",
-        "Battlehammer as starting item",
-        "Imperialist as starting item",
-        "Volt Driver at Alinos/Elder Passage/Pickup (Attameter Artifact)",
-        "Judicator at Celestial Archives/Incubation Vault 02/Pickup (Shock Coil)",
-        "Magmaul at Alinos/Magma Drop/Pickup (UA Expansion)",
-        "Arcterra Binary Subscripture Artifact 2 at Arcterra/Ice Hive/Pickup (Missile Expansion)",
-        "Shock Coil at Arcterra/Ice Hive/Pickup (UA Expansion - War Wasps)",
-        "VDO Attameter Artifact 2 at Celestial Archives/New Arrival Registration/Pickup (Energy Tank)",
-        "VDO Cartograph Artifact 2 at Celestial Archives/Data Shrine 02/Pickup (UA Expansion)",
-        "Arcterra Binary Subscripture Artifact 1 at Arcterra/Sanctorus/Pickup (Binary Subscripture Artifact)",
-        "Celestial Attameter Artifact 1 at Arcterra/Fault Line/Pickup (Imperialist)",
-        "Arcterra Attameter Artifact 2 at Alinos/High Ground/Pickup (Binary Subscripture Artifact)",
-        "Arcterra Cartograph Artifact 1 at Alinos/Processor Core/Pickup (UA Expansion)",
-        "Arcterra Attameter Artifact 1 at Vesper Defense Outpost/Weapons Complex/Pickup (Attameter Artifact)",
-        "Celestial Cartograph Artifact 2 at Vesper Defense Outpost/Compression Chamber/Pickup (Binary Subscripture Artifact)",
-        "Alinos Cartograph Artifact 1 at Arcterra/Subterranean/Pickup (Missile Expansion)",
-        "Alinos Attameter Artifact 2 at Arcterra/Ice Hive/Pickup (Cartograph Artifact)",
-        "Celestial Attameter Artifact 2 at Vesper Defense Outpost/Cortex CPU/Pickup (Missile Expansion)",
-        "Celestial Binary Subscripture Artifact 2 at Alinos/Council Chamber/Pickup (Energy Tank)",
-        "Alinos Binary Subscripture Artifact 2 at Vesper Defense Outpost/Stasis Bunker/Pickup (Attameter Artifact)",
-        "VDO Binary Subscripture Artifact 1 at Arcterra/Drip Moat/Pickup (UA Expansion)",
-        "Celestial Binary Subscripture Artifact 1 at Celestial Archives/Data Shrine 01/Pickup (Energy Tank)",
-        "VDO Binary Subscripture Artifact 2 at Celestial Archives/Docking Bay/Pickup (UA Expansion)",
-        "VDO Attameter Artifact 1 at Alinos/Echo Hall/Pickup (Energy Tank)",
-        "Alinos Attameter Artifact 1 at Vesper Defense Outpost/Compression Chamber/Pickup (UA Expansion)",
-        "Arcterra Cartograph Artifact 2 at Celestial Archives/Data Shrine 03/Pickup (Attameter Artifact)",
-        "Alinos Binary Subscripture Artifact 1 at Alinos/Alinos Gateway/Pickup (Missile Expansion)",
-        "Celestial Cartograph Artifact 1 at Vesper Defense Outpost/Fuel Stack/Pickup (Binary Subscripture Artifact)",
-        "VDO Cartograph Artifact 1 at Alinos/Council Chamber/Pickup (Attameter Artifact)",
-        "Alinos Cartograph Artifact 2 at Arcterra/Sanctorus/Pickup (UA Expansion)"
+        "Magmaul as starting item",
+        "Judicator as starting item",
+        "VDO Cartograph Artifact 1 at Alinos/Alinos Gateway/Pickup (Missile Expansion)",
+        "Arcterra Attameter Artifact 1 at Arcterra/Ice Hive/Pickup (Cartograph Artifact)",
+        "Arcterra Cartograph Artifact 1 at Alinos/Elder Passage/Pickup (Attameter Artifact)",
+        "Imperialist at Alinos/Crash Site/Pickup (Cartograph Artifact)",
+        "Missile Launcher at Arcterra/Drip Moat/Pickup (UA Expansion)",
+        "Volt Driver at Celestial Archives/Data Shrine 03/Pickup (Attameter Artifact)",
+        "Battlehammer at Celestial Archives/Docking Bay/Pickup (Cartograph Artifact)",
+        "VDO Cartograph Artifact 2 at Vesper Defense Outpost/Stasis Bunker/Pickup (Attameter Artifact)",
+        "Shock Coil at Vesper Defense Outpost/Stasis Bunker/Pickup (Cartograph Artifact)",
+        "Celestial Binary Subscripture Artifact 2 at Celestial Archives/Incubation Vault 03/Pickup (Missile Expansion)",
+        "VDO Binary Subscripture Artifact 1 at Celestial Archives/Data Shrine 02/Pickup (UA Expansion)",
+        "Arcterra Cartograph Artifact 2 at Celestial Archives/Incubation Vault 02/Pickup (Shock Coil)",
+        "Celestial Cartograph Artifact 1 at Celestial Archives/Incubation Vault 01/Pickup (Attameter Artifact)",
+        "Celestial Attameter Artifact 1 at Arcterra/Ice Hive/Pickup (Missile Expansion)",
+        "VDO Attameter Artifact 1 at Arcterra/Subterranean/Pickup (Missile Expansion)",
+        "Arcterra Attameter Artifact 2 at Vesper Defense Outpost/Biodefense Chamber 03/Pickup (Octolith)",
+        "Arcterra Binary Subscripture Artifact 2 at Arcterra/Subterranean/Pickup (Cartograph Artifact)",
+        "Celestial Cartograph Artifact 2 at Alinos/Piston Cave/Pickup (Binary Subcripture Artifact)",
+        "Alinos Cartograph Artifact 2 at Alinos/Processor Core/Pickup (UA Expansion)",
+        "Celestial Attameter Artifact 2 at Arcterra/Fault Line/Pickup (Imperialist)",
+        "VDO Attameter Artifact 2 at Celestial Archives/Biodefense Chamber 05/Pickup (Octolith)",
+        "Alinos Attameter Artifact 2 at Arcterra/Ice Hive/Pickup (UA Expansion - Alcove)",
+        "VDO Binary Subscripture Artifact 2 at Vesper Defense Outpost/Fuel Stack/Pickup (Missile Expansion)",
+        "Alinos Binary Subscripture Artifact 2 at Vesper Defense Outpost/Biodefense Chamber 08/Pickup (Octolith)",
+        "Alinos Binary Subscripture Artifact 1 at Celestial Archives/New Arrival Registration/Pickup (Binary Subscripture Artifact)",
+        "Celestial Binary Subscripture Artifact 1 at Celestial Archives/Transfer Lock/Pickup (UA Expansion)",
+        "Alinos Attameter Artifact 1 at Alinos/High Ground/Pickup (Binary Subscripture Artifact)",
+        "Alinos Cartograph Artifact 1 at Arcterra/Frost Labyrinth/Pickup (Energy Tank)"
     ],
-    "checksum": "b2076a38424ffcb01680ec799abc778c479e575ef74c1f7a4f94ed49b15db9c46610b8b63911efa9742ca25d34a65e56d15485ab16e837534024b0f9ae622555"
+    "checksum": "046e55f3678654ea9aed891041b333be59ce313c96868cce6bec724eb9e7d1d90ee24f4c40c02320029075aa9785ddc45a2e6efaeb472b0bea2db17988f43f87"
 }

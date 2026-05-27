@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'resource_database_editor.ui'
 ##
-## Created by: tools/uic_wrapper.py
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -46,7 +46,7 @@ class Ui_ResourceDatabaseEditor(object):
         self.tab_widget.addTab(self.tab_misc, "")
         self.tab_template = QTreeWidget()
         __qtreewidgetitem = QTreeWidgetItem()
-        __qtreewidgetitem.setText(0, u"1")
+        __qtreewidgetitem.setText(0, u"1");
         self.tab_template.setHeaderItem(__qtreewidgetitem)
         self.tab_template.setObjectName(u"tab_template")
         self.tab_widget.addTab(self.tab_template, "")

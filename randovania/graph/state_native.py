@@ -16,13 +16,13 @@ if typing.TYPE_CHECKING:
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 else:
     # However cython's compiler seems to expect the import to be this way, otherwise `cython.compiled` breaks
-    import cython
+    import cython  # noqa: TC002
 
 
 if cython.compiled:
     if not typing.TYPE_CHECKING:
         from cython.cimports.randovania.game_description.resources.resource_collection import (
-            ResourceCollection,
+            ResourceCollection,  # noqa: TC002
         )
 
 

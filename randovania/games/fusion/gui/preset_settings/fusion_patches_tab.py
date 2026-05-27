@@ -22,12 +22,6 @@ _FIELDS = [
     "instant_morph",
     "adjusted_geron_weaknesses",
 ]
-_SPIN_BOXES = [
-    "heat_damage",
-    "lava_damage",
-    "cold_damage",
-    "acid_damage",
-]
 
 
 class PresetFusionPatches(PresetTab, Ui_PresetFusionPatches):
@@ -41,8 +35,6 @@ class PresetFusionPatches(PresetTab, Ui_PresetFusionPatches):
         for f in _FIELDS:
             self._add_persist_option(getattr(self, f"{f}_check"), f)
         self.etank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
-        for s in _SPIN_BOXES:
-            self._add_persist_spin(getattr(self, f"{s}_spin_box"), s)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -63,18 +55,9 @@ class PresetFusionPatches(PresetTab, Ui_PresetFusionPatches):
         with self._editor as editor:
             editor.set_configuration_field("energy_per_tank", int(self.etank_capacity_spin_box.value()))
 
-    def _add_persist_spin(self, spin: QtWidgets.QSpinBox, attribute_name: str) -> None:
-        def persist(value: int) -> None:
-            with self._editor as editor:
-                editor.set_configuration_field(attribute_name, value)
-
-        spin.valueChanged.connect(persist)
-
     def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(config, FusionConfiguration)
         for f in _FIELDS:
             typing.cast("QtWidgets.QCheckBox", getattr(self, f"{f}_check")).setChecked(getattr(config, f))
         self.etank_capacity_spin_box.setValue(config.energy_per_tank)
-        for s in _SPIN_BOXES:
-            typing.cast("QtWidgets.QSpinBox", getattr(self, f"{s}_spin_box")).setValue(getattr(config, s))

@@ -5,7 +5,7 @@ from randovania.games.factorio.gui.factorio_game_tab import FactorioGameTabWidge
 from randovania.games.factorio.gui.preset_settings import preset_tabs
 
 __all__ = [
-    "FactorioGameExportDialog",
     "FactorioGameTabWidget",
+    "FactorioGameExportDialog",
     "preset_tabs",
 ]

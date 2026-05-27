@@ -28,7 +28,7 @@ class PrimeFamilyHintNamer(HintNamer[str]):
 
     @override
     @classmethod
-    def colorize_text(cls, color: str, text: str, with_color: bool) -> str:
+    def colorize_text(cls, color: str, text: str, with_color: bool):
         if with_color:
             return f"&push;&main-color={color};{text}&pop;"
         else:

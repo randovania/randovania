@@ -495,7 +495,7 @@ def _serialize_dock_modifications(
                 assert len(candidates) % 2 == 0
 
                 if max_index < -0.00001:
-                    raise Exception(f"Failed to find pairings for {candidates!s}")
+                    raise Exception(f"Failed to find pairings for {str(candidates)}")
 
                 new_result = next_candidate(max_index)
                 if new_result[0] is None:
@@ -677,7 +677,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 )
             )
 
-        scan_visor = self.resource_db.get_item_by_display_name("Scan Visor")
+        scan_visor = self.game.resource_database.get_item_by_display_name("Scan Visor")
         pickup_list = self.export_pickup_list()
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
@@ -845,7 +845,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         # serialize text modifications
         if self.configuration.hints.specific_pickup_hints["phazon_suit"] != SpecificPickupHintMode.DISABLED:
             try:
-                phazon_suit_resource_info = self.resource_db.get_item_by_display_name("Phazon Suit")
+                phazon_suit_resource_info = self.game.resource_database.get_item_by_display_name("Phazon Suit")
 
                 hint_texts: dict[ItemResourceInfo, str] = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                     self.description.all_patches,
@@ -907,7 +907,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             "&push;&font=C29C51F1;&main-color=#33ffd6;{}&pop;",
         )
 
-        artifacts = [self.resource_db.get_item(index) for index in prime_items.ARTIFACT_ITEMS]
+        artifacts = [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS]
         hint_config = self.configuration.hints
         if hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.DISABLED:
             resulting_hints = {art: f"{art.long_name} is lost somewhere on Tallon IV." for art in artifacts}
@@ -917,7 +917,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 self.players_config,
                 namer,
                 hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.HIDE_AREA,
-                [self.resource_db.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
+                [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
                 True,
             )
 
@@ -948,7 +948,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
         starting_resources = self.patches.starting_resources()
         starting_items = {
-            name: _starting_items_value_for(self.resource_db, starting_resources, index)
+            name: _starting_items_value_for(db.resource_database, starting_resources, index)
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
 
@@ -1064,10 +1064,10 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 "startingItems": starting_items,
                 "etankCapacity": self.configuration.energy_per_tank,
                 "itemMaxCapacity": {
-                    "Energy Tank": self.resource_db.get_item("EnergyTank").max_capacity,
-                    "Power Bomb": self.resource_db.get_item("PowerBomb").max_capacity,
-                    "Missile": self.resource_db.get_item("Missile").max_capacity,
-                    "Unknown Item 1": self.resource_db.get_item(prime_items.MULTIWORLD_ITEM).max_capacity,
+                    "Energy Tank": db.resource_database.get_item("EnergyTank").max_capacity,
+                    "Power Bomb": db.resource_database.get_item("PowerBomb").max_capacity,
+                    "Missile": db.resource_database.get_item("Missile").max_capacity,
+                    "Unknown Item 1": db.resource_database.get_item(prime_items.MULTIWORLD_ITEM).max_capacity,
                 },
                 "mainPlazaDoor": self.configuration.main_plaza_door,
                 "backwardsFrigate": self.configuration.backwards_frigate,
@@ -1103,10 +1103,5 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
         if starting_memo:
             data["gameConfig"]["startingMemo"] = starting_memo
-
-        if not self.configuration.legacy_mode:
-            data["gameConfig"]["missileCosts"] = {
-                "Wavebuster": 8,
-            }
 
         return data

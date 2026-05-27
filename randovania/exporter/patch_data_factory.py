@@ -18,7 +18,7 @@ from randovania.layout import filtered_database
 if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_database import PickupDatabase
@@ -45,7 +45,6 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
     description: LayoutDescription
     players_config: PlayersConfiguration
     game: GameDescription
-    resource_db: ResourceDatabaseView
     pickup_db: PickupDatabase
     patches: GamePatches
     rng: Random
@@ -71,7 +70,6 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         )
         self.rng = Random(description.get_seed_for_world(players_config.player_index))
         self.game = filtered_database.game_description_for_layout(self.configuration)
-        self.resource_db = self.game.get_resource_database_view()
         self.memo_data = self.create_memo_data()
 
     def game_enum(self) -> RandovaniaGame:
@@ -135,7 +133,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         return pickup_exporter.export_all_indices(
             self.patches,
             PickupTarget(self.create_useless_pickup(), self.players_config.player_index),
-            self.game,
+            self.game.region_list,
             self.rng,
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,

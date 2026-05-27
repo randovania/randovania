@@ -92,7 +92,7 @@ class AM2RExecutor:
             self._socket.api_version = int(api_version)
 
             loop = asyncio.get_event_loop()
-            self._read_loop_task = loop.create_task(self.read_loop())
+            loop.create_task(self.read_loop())
             self.logger.info("Connected")
 
             return None
@@ -128,7 +128,7 @@ class AM2RExecutor:
         ret_bytes: bytearray = bytearray(type.to_bytes())
         if msg is not None:
             ret_bytes.extend(msg)
-        return bytes(ret_bytes)
+        return ret_bytes
 
     async def _read_response(self) -> bytes | None:
         if self._socket is None:

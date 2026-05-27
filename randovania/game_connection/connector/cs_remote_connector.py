@@ -130,11 +130,11 @@ class CSRemoteConnector(RemoteConnector):
     async def get_inventory(self) -> Inventory:
         inventory = {}
 
-        resource_db = self.game.get_resource_database_view()
-        get_item = resource_db.get_item
+        item_db = self.game.resource_database.item
+        get_item = self.game.resource_database.get_item
 
         # Normal items
-        normal_items = [item for item in resource_db.get_all_items() if "flag" in item.extra]
+        normal_items = [item for item in item_db if "flag" in item.extra]
         flag_nums = [item.extra["flag"] for item in normal_items]
         flags = await self.executor.get_flags(flag_nums)
 
@@ -194,7 +194,7 @@ class CSRemoteConnector(RemoteConnector):
         # no pending pickups, and pickups to send:
         # send the next pickup!
         await self.executor.set_flag(ITEM_SENT_FLAG, True)
-        provider_name, pickup, _coop_location = self.remote_pickups[num_pickups]
+        provider_name, pickup, coop_location = self.remote_pickups[num_pickups]
 
         message = f"Received item from ={provider_name}=!"
         message = wrap_msg_text(message, False)

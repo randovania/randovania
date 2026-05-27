@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import typing
 from random import Random
-from typing import TYPE_CHECKING, ClassVar, override
+from typing import TYPE_CHECKING, override
 
 from randovania import monitoring
 from randovania.exporter import item_names
@@ -111,7 +111,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
     _EASTER_EGG_SHINY = 1024
 
     # Effect, sprite, header => new_sprite, new_header
-    SHINIES: ClassVar[dict[tuple[str, str, str], tuple[str, str]]] = {
+    SHINIES = {
         ("Missile Tank", "sItemMissile", "Got Missile Tank"): ("sItemShinyMissile", "Got Shiny Missile Tank"),
         ("Hi-Jump Boots", "sItemHijump", "Hi-Jump Boots acquired"): (
             "sItemShinyHijump",
@@ -161,7 +161,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
                 },
             }
 
-            pickup_obj: dict = pickup_map_dict[object_name]
+            pickup_obj = pickup_map_dict[object_name]
             shiny_id = (pickup_obj["item_effect"], pickup_obj["sprite_details"]["name"], pickup_obj["text"]["header"])
 
             if (
@@ -355,9 +355,9 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
         }
 
     def _create_hints(self, rng: Random) -> dict:
-        artifacts = [self.resource_db.get_item(f"Metroid DNA {i + 1}") for i in range(46)]
-        ice = [(self.resource_db.get_item("Ice Beam"))]
-
+        artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(46)]
+        ice = [(self.game.resource_database.get_item("Ice Beam"))]
+        dna_hint_mapping = {}
         hint_config = self.configuration.hints
         hint_namer = AM2RHintNamer(self.description.all_patches, self.players_config)
         if hint_config.specific_pickup_hints["artifacts"] != SpecificPickupHintMode.DISABLED:

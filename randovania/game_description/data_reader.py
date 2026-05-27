@@ -108,7 +108,6 @@ class ResourceReader:
 def read_damage_reduction(data: dict, items: list[ItemResourceInfo]) -> DamageReduction:
     return DamageReduction(
         find_resource_info_with_id(items, data["name"], ResourceType.ITEM) if data["name"] is not None else None,
-        data["quantity"],
         data["multiplier"],
     )
 
@@ -259,9 +258,9 @@ def read_dock_weakness_database(
                 change_to={weaknesses[dock_type][weak] for weak in dr["change_to"]},
             )
 
-    default_dock_type = next(
+    default_dock_type = [
         dock_type for dock_type in dock_types if dock_type.short_name == data["default_weakness"]["type"]
-    )
+    ][0]
     default_dock_weakness = weaknesses[default_dock_type][data["default_weakness"]["name"]]
 
     dock_rando_config = DockRandoConfig(

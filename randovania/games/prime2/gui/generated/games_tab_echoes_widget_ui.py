@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'games_tab_echoes_widget.ui'
 ##
-## Created by: tools/uic_wrapper.py
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -341,7 +341,7 @@ class Ui_EchoesGameTabWidget(object):
 "                                                them:</p></body></html>\n"
 "                                            ", None))
         ___qtreewidgetitem = self.hint_locations_tree_widget.headerItem()
-        ___qtreewidgetitem.setText(0, QCoreApplication.translate("EchoesGameTabWidget", u"Location", None))
+        ___qtreewidgetitem.setText(0, QCoreApplication.translate("EchoesGameTabWidget", u"Location", None));
         EchoesGameTabWidget.setTabText(EchoesGameTabWidget.indexOf(self.hint_locations_tab), QCoreApplication.translate("EchoesGameTabWidget", u"Hint Locations", None))
         pass
     # retranslateUi

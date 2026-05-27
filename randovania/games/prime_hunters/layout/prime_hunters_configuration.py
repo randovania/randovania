@@ -21,7 +21,6 @@ class HuntersConfiguration(BaseConfiguration):
     octoliths: HuntersOctolithConfig
     force_field_configuration: ForceFieldConfiguration
     teleporters: TeleporterConfiguration
-    starting_energy: int = dataclasses.field(metadata={"min": 1, "max": 1099, "precision": 1})
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

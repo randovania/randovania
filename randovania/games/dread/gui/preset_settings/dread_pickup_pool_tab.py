@@ -53,11 +53,11 @@ class DreadPresetPickupPool(PresetPickupPool):
 
     def _create_energy_box(self) -> None:
         category_box, category_layout, _ = self._boxes_for_category["energy_tank"]
-        resource_db = default_database.game_description_for(self.game).get_resource_database_view()
+        game_description = default_database.game_description_for(self.game)
 
         row = 0
         for item in [self._energy_tank_item, self._energy_part_item]:
-            resource = resource_db.get_item(item.progression[0])
+            resource = game_description.resource_database.get_item(item.progression[0])
 
             starting_label = QtWidgets.QLabel(category_box)
             starting_label.setText(f"Starting {item.name}")

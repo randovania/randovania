@@ -8,7 +8,8 @@ import pytest
 import randovania.lib.construct_lib
 from randovania import get_data_path
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import binary_data, data_reader, game_description_migration
+from randovania.game_description import data_reader, game_description_migration
+from randovania.games import binary_data
 from randovania.layout.generator_parameters import raw_database_hash
 
 sample_data = {

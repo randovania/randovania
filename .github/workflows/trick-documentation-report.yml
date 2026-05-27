@@ -29,9 +29,9 @@ jobs:
         run: git config --unset-all extensions.worktreeConfig || true
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.1.0
+        uses: astral-sh/setup-uv@v7
         with:
-          version: "0.11.16"
+          version: "0.10.2"
           enable-cache: true
 
       - name: Set up Python
@@ -46,7 +46,7 @@ jobs:
           WEBHOOK_URL: ${{ secrets.GENERAL_TALK_WEBHOOK }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v6
         with:
           name: Reports
           if-no-files-found: error

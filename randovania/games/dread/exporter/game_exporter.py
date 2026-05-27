@@ -64,11 +64,11 @@ class DreadGameExporter(GameExporter[DreadGameExportParams]):
         """
         return DreadGameExportParams
 
-    def _before_export(self) -> None:
+    def _before_export(self):
         assert not self._busy
         self._busy = True
 
-    def _after_export(self) -> None:
+    def _after_export(self):
         self._busy = False
 
     def _do_export_game(
@@ -77,7 +77,7 @@ class DreadGameExporter(GameExporter[DreadGameExportParams]):
         export_params: DreadGameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
         randovania_meta: PatcherDataMeta,
-    ) -> None:
+    ):
         export_params.output_path.mkdir(parents=True, exist_ok=True)
 
         patch_data["mod_compatibility"] = export_params.target_platform.value
@@ -85,7 +85,7 @@ class DreadGameExporter(GameExporter[DreadGameExportParams]):
         monitoring.set_tag("dread_mod_category", patch_data["mod_category"])
         monitoring.set_tag("dread_target_platform", patch_data["mod_compatibility"])
 
-        from open_dread_rando.version import version as open_dread_rando_version  # type: ignore[import-untyped]
+        from open_dread_rando.version import version as open_dread_rando_version
 
         text_patches = patch_data["text_patches"]
         text_patches["GUI_COMPANY_TITLE_SCREEN"] = text_patches["GUI_COMPANY_TITLE_SCREEN"].replace(
@@ -108,7 +108,7 @@ class DreadGameExporter(GameExporter[DreadGameExportParams]):
             progress_update(f"Finished deleting {export_params.output_path}", -1)
 
         with monitoring.trace_block("open_dread_rando.patch_with_status_update"):
-            import open_dread_rando  # type: ignore[import-untyped]
+            import open_dread_rando
 
             open_dread_rando.patch_with_status_update(
                 export_params.input_path,

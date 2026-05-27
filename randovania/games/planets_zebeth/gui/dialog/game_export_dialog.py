@@ -20,7 +20,7 @@ from randovania.gui.dialog.game_export_dialog import (
 )
 
 if TYPE_CHECKING:
-    from randovania.interface_common.options import Options, PerGameOptions
+    from randovania.interface_common.options import Options
 
 
 def _is_valid_input_dir(path: Path) -> bool:
@@ -84,19 +84,18 @@ class PlanetsZebethGameExportDialog(GameExportDialog[PlanetsZebethConfiguration]
         return self.auto_save_spoiler_check.isChecked()
 
     # Input file
-    def _on_input_folder_button(self) -> None:
+    def _on_input_folder_button(self):
         input_dir = prompt_for_input_directory(self, self.input_folder_edit)
         if input_dir is not None:
             self.input_folder_edit.setText(str(input_dir.absolute()))
 
     # Output File
-    def _on_output_folder_button(self) -> None:
+    def _on_output_folder_button(self):
         output_dir = prompt_for_output_directory(self, "Planets Zebeth Randomizer", self.output_folder_edit)
         if output_dir is not None:
             self.output_folder_edit.setText(str(output_dir))
 
-    def update_per_game_options(self, per_game: PerGameOptions) -> PerGameOptions:
-        assert isinstance(per_game, PlanetsZebethPerGameOptions)
+    def update_per_game_options(self, per_game: PlanetsZebethPerGameOptions) -> PlanetsZebethPerGameOptions:
         return dataclasses.replace(
             per_game,
             input_path=self.input_folder,

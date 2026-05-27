@@ -19,7 +19,7 @@ def main():
     if len(versions) != 1:
         raise ValueError(f"Found versions {sorted(versions)} in {artifact_dir}, expected just one")
 
-    print(next(iter(versions)))
+    print(list(versions)[0])
 
 
 if __name__ == "__main__":

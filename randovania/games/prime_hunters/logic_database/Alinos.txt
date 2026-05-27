@@ -84,7 +84,7 @@ Extra - entity_file: crystalroom_Ent.bin
       Trivial
 
 ----------------
-Biodefense Chamber B (Alinos)
+Biodefense Chamber 02
 Extra - room_id: 35
 Extra - entity_file: Unit1_b1_Ent.bin
 > Room Center; Heals? False; Default Node
@@ -97,11 +97,11 @@ Extra - entity_file: Unit1_b1_Ent.bin
   > Door to Stronghold Void B (Alinos)
       After Alinos - Defeat Slench 1
   > Event - Slench 1
-      Combat (Beginner) or Damage ≥ 99
+      Trivial
 
 > Door to Stronghold Void B (Alinos); Heals? False
   * Layers: default
-  * Normal Door to Stronghold Void B (Alinos)/Door to Biodefense Chamber B (Alinos)
+  * Normal Door to Stronghold Void B (Alinos)/Door to Biodefense Chamber 02
   * Extra - entity_id: 4
   * Extra - position: frozendict.frozendict({'x': 0.0, 'y': 2.479248046875, 'z': 17.3896484375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -128,7 +128,7 @@ Extra - entity_file: Unit1_b1_Ent.bin
       Trivial
 
 ----------------
-Biodefense Chamber A (Alinos)
+Biodefense Chamber 06
 Extra - room_id: 44
 Extra - entity_file: Unit1_b2_Ent.bin
 > Room Center; Heals? False; Default Node
@@ -141,13 +141,11 @@ Extra - entity_file: Unit1_b2_Ent.bin
   > Door to Stronghold Void A (Alinos)
       After Alinos - Defeat Cretaphid v3
   > Event - Cretaphid v3
-      Any of the following:
-          Combat (Advanced) or Damage ≥ 199
-          Combat (Intermediate) and Damage ≥ 99
+      Trivial
 
 > Door to Stronghold Void A (Alinos); Heals? False
   * Layers: default
-  * Normal Door to Stronghold Void A (Alinos)/Door to Biodefense Chamber A (Alinos)
+  * Normal Door to Stronghold Void A (Alinos)/Door to Biodefense Chamber 06
   * Extra - entity_id: 1
   * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -0.89990234375, 'z': 10.0})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -405,20 +403,20 @@ Extra - portal_filename: unit1_C4_Ent
 > Portal to High Ground; Heals? False
   * Layers: default
   * Portal to High Ground/Portal from Magma Drop; Custom name: Alinos - Magma Drop (High Ground Exit Portal)
-  * Extra - entity_id: 29
-  * Extra - position: frozendict.frozendict({'x': 0.99169921875, 'y': 114.47216796875, 'z': -15.309814453125})
-  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': -0.999755859375, 'z': 0.0})
-  * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.004150390625})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 11, 'target_index': 11, 'artifact_id': 11, 'active': True, 'invisible': True, 'entity_filename': 'unit1_RM1_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
-
-> Portal from High Ground; Heals? False
-  * Layers: default
-  * No Return Portal to High Ground/Portal to Magma Drop; Custom name: Alinos - Magma Drop (High Ground Entrance Portal)
   * Extra - entity_id: 28
   * Extra - position: frozendict.frozendict({'x': 0.900146484375, 'y': 116.433349609375, 'z': 5.60546875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.004150390625})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 10, 'target_index': 10, 'artifact_id': 10, 'active': False, 'invisible': True, 'entity_filename': 'unit1_RM1_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 10, 'target_index': 10, 'artifact_id': 10, 'active': False, 'invisible': True, 'entity_filename': ' unit1_RM1_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+
+> Portal from High Ground; Heals? False
+  * Layers: default
+  * No Return Portal to High Ground/Portal to Magma Drop; Custom name: Alinos - Magma Drop (High Ground Entrance Portal)
+  * Extra - entity_id: 29
+  * Extra - position: frozendict.frozendict({'x': 0.99169921875, 'y': 114.47216796875, 'z': -15.309814453125})
+  * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': -0.999755859375, 'z': 0.0})
+  * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.004150390625})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 11, 'target_index': 11, 'artifact_id': 11, 'active': True, 'invisible': True, 'entity_filename': ' unit1_RM1_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
 
@@ -500,7 +498,7 @@ Extra - portal_filename: unit1_Land_Ent
   > Ship
       Trivial
 
-> Ship; Heals? True; Default Node
+> Ship; Heals? False; Default Node
   * Layers: default
   * Teleporter Network (Unlocked by Trivial)
   * Extra - entity_id: 0
@@ -535,7 +533,7 @@ Extra - portal_filename: unit1_Land_Ent
   * Extra - position: frozendict.frozendict({'x': 14.37890625, 'y': 14.46875, 'z': -11.133544921875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 21, 'target_index': 21, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit1_RM3_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 21, 'target_index': 21, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit1_RM3_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Ship
       Trivial
 
@@ -546,7 +544,7 @@ Extra - portal_filename: unit1_Land_Ent
   * Extra - position: frozendict.frozendict({'x': 14.37890625, 'y': 14.46875, 'z': 11.133544921875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 20, 'target_index': 20, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit1_RM6_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 20, 'target_index': 20, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit1_RM6_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Ship
       Trivial
 
@@ -707,7 +705,7 @@ Extra - portal_filename: unit1_RM1_Ent
   * Extra - position: frozendict.frozendict({'x': -13.34130859375, 'y': -2.190673828125, 'z': 11.0625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.005859375, 'y': 0.999755859375, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': 1.0})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 11, 'target_index': 11, 'artifact_id': 11, 'active': True, 'invisible': True, 'entity_filename': 'unit1_C4_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 10, 'target_index': 10, 'artifact_id': 10, 'active': True, 'invisible': True, 'entity_filename': ' unit1_C4_Ent.b', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Judicator Force Field (Lower)
       Trivial
 
@@ -718,7 +716,7 @@ Extra - portal_filename: unit1_RM1_Ent
   * Extra - position: frozendict.frozendict({'x': -9.540283203125, 'y': 0.78955078125, 'z': 4.26025390625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 11, 'target_index': 11, 'artifact_id': 11, 'active': False, 'invisible': True, 'entity_filename': 'unit1_C4_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 11, 'target_index': 11, 'artifact_id': 11, 'active': False, 'invisible': True, 'entity_filename': ' unit1_C4_Ent.b', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Lower Level
       Trivial
 
@@ -1261,7 +1259,7 @@ Extra - portal_filename: unit1_RM5_Ent
   * Extra - position: frozendict.frozendict({'x': 4.05908203125, 'y': 4.415771484375, 'z': 1.34130859375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 1, 'target_index': 1, 'artifact_id': 1, 'active': False, 'invisible': False, 'entity_filename': 'Unit1_TP2_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 1, 'target_index': 1, 'artifact_id': 1, 'active': False, 'invisible': False, 'entity_filename': 'Unit1_TP2_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
 
@@ -1332,7 +1330,7 @@ Extra - portal_filename: unit1_RM6_Ent
   * Extra - position: frozendict.frozendict({'x': 22.7255859375, 'y': 17.335693359375, 'z': 0.04833984375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.999755859375, 'y': 0.0, 'z': 0.0})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 0, 'target_index': 0, 'artifact_id': 0, 'active': False, 'invisible': False, 'entity_filename': 'Unit1_TP1_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 0, 'target_index': 0, 'artifact_id': 0, 'active': False, 'invisible': False, 'entity_filename': 'Unit1_TP1_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
 
@@ -1411,7 +1409,7 @@ Extra - portal_filename: Unit1_TP1_Ent
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Portal to Elder Passage
       Trivial
-  > Door to Biodefense Chamber B (Alinos)
+  > Door to Biodefense Chamber 02
       Trivial
 
 > Portal to Elder Passage; Heals? False
@@ -1421,13 +1419,13 @@ Extra - portal_filename: Unit1_TP1_Ent
   * Extra - position: frozendict.frozendict({'x': 0.37109375, 'y': 0.222412109375, 'z': 65.701904296875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.015625, 'y': 0.0, 'z': -0.999755859375})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 0, 'target_index': 0, 'artifact_id': 255, 'active': True, 'invisible': False, 'entity_filename': 'unit1_RM6_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 0, 'target_index': 0, 'artifact_id': 255, 'active': True, 'invisible': False, 'entity_filename': 'unit1_RM6_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
 
-> Door to Biodefense Chamber B (Alinos); Heals? False
+> Door to Biodefense Chamber 02; Heals? False
   * Layers: default
-  * Normal Door to Biodefense Chamber B (Alinos)/Door to Stronghold Void B (Alinos)
+  * Normal Door to Biodefense Chamber 02/Door to Stronghold Void B (Alinos)
   * Extra - entity_id: 2
   * Extra - position: frozendict.frozendict({'x': 0.12158203125, 'y': 1.657470703125, 'z': 6.73046875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -1450,7 +1448,7 @@ Extra - portal_filename: Unit1_TP2_Ent
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Portal to Processor Core
       Trivial
-  > Door to Biodefense Chamber A (Alinos)
+  > Door to Biodefense Chamber 06
       Trivial
 
 > Portal to Processor Core; Heals? False
@@ -1460,13 +1458,13 @@ Extra - portal_filename: Unit1_TP2_Ent
   * Extra - position: frozendict.frozendict({'x': 0.37109375, 'y': 0.222412109375, 'z': 65.701904296875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.015625, 'y': 0.0, 'z': -0.999755859375})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 1, 'target_index': 1, 'artifact_id': 255, 'active': True, 'invisible': False, 'entity_filename': 'unit1_RM5_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 1, 'target_index': 1, 'artifact_id': 255, 'active': True, 'invisible': False, 'entity_filename': 'unit1_RM5_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
 
-> Door to Biodefense Chamber A (Alinos); Heals? False
+> Door to Biodefense Chamber 06; Heals? False
   * Layers: default
-  * Normal Door to Biodefense Chamber A (Alinos)/Door to Stronghold Void A (Alinos)
+  * Normal Door to Biodefense Chamber 06/Door to Stronghold Void A (Alinos)
   * Extra - entity_id: 2
   * Extra - position: frozendict.frozendict({'x': 0.12158203125, 'y': 1.657470703125, 'z': 6.73046875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})

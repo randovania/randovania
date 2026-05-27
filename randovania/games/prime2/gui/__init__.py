@@ -11,7 +11,7 @@ __all__ = [
     "EchoesCosmeticPatchesDialog",
     "EchoesGameExportDialog",
     "EchoesGameTabWidget",
-    "PortalDetailsTab",
-    "TranslatorGateDetailsTab",
     "prime2_preset_tabs",
+    "TranslatorGateDetailsTab",
+    "PortalDetailsTab",
 ]

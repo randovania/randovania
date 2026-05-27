@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'preset_fusion_patches.ui'
 ##
-## Created by: tools/uic_wrapper.py
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -23,7 +23,7 @@ class Ui_PresetFusionPatches(object):
     def setupUi(self, PresetFusionPatches):
         if not PresetFusionPatches.objectName():
             PresetFusionPatches.setObjectName(u"PresetFusionPatches")
-        PresetFusionPatches.resize(725, 619)
+        PresetFusionPatches.resize(725, 408)
         self.root_widget = QWidget(PresetFusionPatches)
         self.root_widget.setObjectName(u"root_widget")
         self.root_widget.setMaximumSize(QSize(16777215, 16777215))
@@ -37,7 +37,7 @@ class Ui_PresetFusionPatches(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_contents = QWidget()
         self.scroll_contents.setObjectName(u"scroll_contents")
-        self.scroll_contents.setGeometry(QRect(0, 0, 706, 670))
+        self.scroll_contents.setGeometry(QRect(0, -119, 709, 567))
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -96,93 +96,6 @@ class Ui_PresetFusionPatches(object):
 
 
         self.scroll_layout.addWidget(self.energy_group)
-
-        self.environmental_damage_group = QGroupBox(self.scroll_contents)
-        self.environmental_damage_group.setObjectName(u"environmental_damage_group")
-        self.verticalLayout_3 = QVBoxLayout(self.environmental_damage_group)
-        self.verticalLayout_3.setSpacing(6)
-        self.verticalLayout_3.setContentsMargins(11, 11, 11, 11)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(9, 9, 9, 9)
-        self.environmental_damage_label = QLabel(self.environmental_damage_group)
-        self.environmental_damage_label.setObjectName(u"environmental_damage_label")
-
-        self.verticalLayout_3.addWidget(self.environmental_damage_label)
-
-        self.heat_damage = QHBoxLayout()
-        self.heat_damage.setSpacing(6)
-        self.heat_damage.setObjectName(u"heat_damage")
-        self.heat_damage_label = QLabel(self.environmental_damage_group)
-        self.heat_damage_label.setObjectName(u"heat_damage_label")
-
-        self.heat_damage.addWidget(self.heat_damage_label)
-
-        self.heat_damage_spin_box = QSpinBox(self.environmental_damage_group)
-        self.heat_damage_spin_box.setObjectName(u"heat_damage_spin_box")
-        self.heat_damage_spin_box.setMaximum(255)
-        self.heat_damage_spin_box.setValue(6)
-
-        self.heat_damage.addWidget(self.heat_damage_spin_box)
-
-
-        self.verticalLayout_3.addLayout(self.heat_damage)
-
-        self.lava_damage = QHBoxLayout()
-        self.lava_damage.setSpacing(6)
-        self.lava_damage.setObjectName(u"lava_damage")
-        self.lava_damage_label = QLabel(self.environmental_damage_group)
-        self.lava_damage_label.setObjectName(u"lava_damage_label")
-
-        self.lava_damage.addWidget(self.lava_damage_label)
-
-        self.lava_damage_spin_box = QSpinBox(self.environmental_damage_group)
-        self.lava_damage_spin_box.setObjectName(u"lava_damage_spin_box")
-        self.lava_damage_spin_box.setMaximum(255)
-        self.lava_damage_spin_box.setValue(20)
-
-        self.lava_damage.addWidget(self.lava_damage_spin_box)
-
-
-        self.verticalLayout_3.addLayout(self.lava_damage)
-
-        self.cold_damage = QHBoxLayout()
-        self.cold_damage.setSpacing(6)
-        self.cold_damage.setObjectName(u"cold_damage")
-        self.cold_damage_label = QLabel(self.environmental_damage_group)
-        self.cold_damage_label.setObjectName(u"cold_damage_label")
-
-        self.cold_damage.addWidget(self.cold_damage_label)
-
-        self.cold_damage_spin_box = QSpinBox(self.environmental_damage_group)
-        self.cold_damage_spin_box.setObjectName(u"cold_damage_spin_box")
-        self.cold_damage_spin_box.setMaximum(255)
-        self.cold_damage_spin_box.setValue(15)
-
-        self.cold_damage.addWidget(self.cold_damage_spin_box)
-
-
-        self.verticalLayout_3.addLayout(self.cold_damage)
-
-        self.acid_damage = QHBoxLayout()
-        self.acid_damage.setSpacing(6)
-        self.acid_damage.setObjectName(u"acid_damage")
-        self.acid_damage_label = QLabel(self.environmental_damage_group)
-        self.acid_damage_label.setObjectName(u"acid_damage_label")
-
-        self.acid_damage.addWidget(self.acid_damage_label)
-
-        self.acid_damage_spin_box = QSpinBox(self.environmental_damage_group)
-        self.acid_damage_spin_box.setObjectName(u"acid_damage_spin_box")
-        self.acid_damage_spin_box.setMaximum(255)
-        self.acid_damage_spin_box.setValue(60)
-
-        self.acid_damage.addWidget(self.acid_damage_spin_box)
-
-
-        self.verticalLayout_3.addLayout(self.acid_damage)
-
-
-        self.scroll_layout.addWidget(self.environmental_damage_group)
 
         self.gameplay_group = QGroupBox(self.scroll_contents)
         self.gameplay_group.setObjectName(u"gameplay_group")
@@ -262,12 +175,6 @@ class Ui_PresetFusionPatches(object):
         self.etank_description_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Configure how much energy each Energy Tank you collect will provide. Your base energy is always this quantity, minus 1.\n"
 "While logic will respect this value, only the original value (100) has been tested.", None))
         self.etank_capacity_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Energy per tank:", None))
-        self.environmental_damage_group.setTitle(QCoreApplication.translate("PresetFusionPatches", u"Environmental Damage", None))
-        self.environmental_damage_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Configure how much damage you will take each second you spend inside these environments.", None))
-        self.heat_damage_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Heat Damage:", None))
-        self.lava_damage_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Lava Damage:", None))
-        self.cold_damage_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Cold Damage:", None))
-        self.acid_damage_label.setText(QCoreApplication.translate("PresetFusionPatches", u"Acid Damage:", None))
         self.gameplay_group.setTitle(QCoreApplication.translate("PresetFusionPatches", u"Other", None))
         self.instant_transitions_check.setText(QCoreApplication.translate("PresetFusionPatches", u"Enable Instant Hatch Transitions", None))
         self.instant_transitions_label.setText(QCoreApplication.translate("PresetFusionPatches", u"<html><head/><body><p>Enabling this will skip the transition animation for hatches.</p></body></html>", None))

@@ -2,7 +2,7 @@
     "name": "Arcterra",
     "extra": {},
     "areas": {
-        "Biodefense Chamber A (Arcterra)": {
+        "Biodefense Chamber 04": {
             "default_node": "Player Spawn",
             "hint_features": [],
             "extra": {
@@ -57,7 +57,7 @@
                     "default_connection": {
                         "region": "Arcterra",
                         "area": "Stronghold Void A (Arcterra)",
-                        "node": "Door to Biodefense Chamber A (Arcterra)"
+                        "node": "Door to Biodefense Chamber 04"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -203,79 +203,19 @@
                             }
                         },
                         "Event - Slench 2": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Judicator",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 199,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Damage",
-                                                                    "amount": 99,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Judicator",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
                 }
             }
         },
-        "Biodefense Chamber B (Arcterra)": {
+        "Biodefense Chamber 07": {
             "default_node": "Player Spawn",
             "hint_features": [],
             "extra": {
@@ -330,7 +270,7 @@
                     "default_connection": {
                         "region": "Arcterra",
                         "area": "Stronghold Void B (Arcterra)",
-                        "node": "Door to Biodefense Chamber B (Arcterra)"
+                        "node": "Door to Biodefense Chamber 07"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -476,55 +416,10 @@
                             }
                         },
                         "Event - Cretaphid v4": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Damage",
-                                            "amount": 299,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 199,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 4,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -1223,7 +1118,7 @@
             "nodes": {
                 "Ship": {
                     "node_type": "teleporter_network",
-                    "heal": true,
+                    "heal": false,
                     "coordinates": {
                         "x": 503.9365872405841,
                         "y": 166.45669997437864,
@@ -1399,7 +1294,7 @@
                             "artifact_id": 8,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit4_RM1_Ent",
+                            "entity_filename": "unit4_RM1_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -1466,7 +1361,7 @@
                             "artifact_id": 8,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit4_RM5_Ent",
+                            "entity_filename": "unit4_RM5_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -4467,7 +4362,7 @@
                             "artifact_id": 7,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "Unit4_TP2_Ent",
+                            "entity_filename": "Unit4_TP2_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -5209,7 +5104,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Biodefense Chamber A (Arcterra)": {
+                        "Door to Biodefense Chamber 04": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5225,7 +5120,7 @@
                         }
                     }
                 },
-                "Door to Biodefense Chamber A (Arcterra)": {
+                "Door to Biodefense Chamber 04": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5271,7 +5166,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Arcterra",
-                        "area": "Biodefense Chamber A (Arcterra)",
+                        "area": "Biodefense Chamber 04",
                         "node": "Door to Stronghold Void A (Arcterra)"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -5325,7 +5220,7 @@
                             "artifact_id": 255,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit4_RM1_Ent",
+                            "entity_filename": "unit4_RM1_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -5411,7 +5306,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Biodefense Chamber B (Arcterra)": {
+                        "Door to Biodefense Chamber 07": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5455,7 +5350,7 @@
                             "artifact_id": 10,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit4_RM5_Ent",
+                            "entity_filename": "unit4_RM5_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -5487,7 +5382,7 @@
                         }
                     }
                 },
-                "Door to Biodefense Chamber B (Arcterra)": {
+                "Door to Biodefense Chamber 07": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5533,7 +5428,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Arcterra",
-                        "area": "Biodefense Chamber B (Arcterra)",
+                        "area": "Biodefense Chamber 07",
                         "node": "Door to Stronghold Void B (Arcterra)"
                     },
                     "default_dock_weakness": "Normal Door",

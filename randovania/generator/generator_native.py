@@ -20,6 +20,7 @@ else:
     # However cython's compiler seems to expect the import to be this way, otherwise `cython.compiled` breaks
     import cython
 
+# ruff: noqa: UP046
 
 if cython.compiled:
     if not typing.TYPE_CHECKING:
@@ -30,7 +31,7 @@ if cython.compiled:
         from cython.cimports.libcpp.utility import pair
         from cython.cimports.libcpp.vector import vector
         from cython.cimports.randovania.game_description.resources.resource_collection import (
-            ResourceCollection,
+            ResourceCollection,  # noqa: TC002
         )
         from cython.cimports.randovania.graph.graph_requirement import GraphRequirementSet, GraphRequirementSetRef
         from cython.cimports.randovania.graph.world_graph import BaseWorldGraphNode

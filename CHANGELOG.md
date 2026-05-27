@@ -5,162 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.8.0] - 2026-06-0?
-
-- Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
-
-### Generator
-
-- Fixed: When using logical pickup placement set to Major pickups or All pickups, generated pickups would not be considered required. For example, Red Keys in Metroid Prime 2: Echoes.
-
-### Resolver
-
-- Fixed: An issue where damage reduction multipliers above 1.0 were being ignored.
-
-### Metroid Dread
-
-- Added: Unique Save Slots cosmetic option. Stores this randomizer's saves in a unique location based on the seed hash.
-
-#### Logic Database
-
-- Fixed: Door override requirements for Shutter Gates (Flash Shift Doors) mentioned in version 10.5.0 didn't work and had no effect.
-
-##### Artaria
-
-- Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
-
-##### Dairon
-
-- Changed: When comming in to Teleport to Artaria from Transport to Cataris, climbing up to above the Wide Block has these changes:
-  - Using Grapple Beam now requires Grapple Movement (Beginner)
-  - Using Simple IBJ now requires Diagonal Bomb Jump (Beginner)
-  - Added option to use just Speed Booster with Speed Booster Conservation (Intermediate)
-
-##### Ferenia
-
-- Changed: Added Movement (Beginner) requirement to reach Missile Tank Pickup in Space Jump Room using Space Jump and Normal Bomb.
-- Changed: Added Speed Booster Conservation trick to reach Missile Tank Pickup in Space Jump Room using Speed Booster. Beginner with Power Bombs and Intermediate with Cross Bombs.
-
-##### Ghavoran
-
-- Changed: Some implementation details surrounding the Chozo-X to help the Resolver in some cases.
-- Fixed: Logic bug that failed to account for how, after fighting the Central Unit,  one needs to finish the Ice EMMI fight before leaving the EMMI Zone.
-
-### Metroid Fusion
-
-- Added: Environmental Damage (Heat, Lava, Cold, Acid) rates can now be configured.
-
-#### Logic Database
-
-##### Main Deck
-
-- Changed: Habitation Deck Entrance: Changed the NHJ WJ Freeze trick from Movement (Advanced) to Stand on Frozen Enemies (Expert). Also added in Stand On Frozen Enemies (Beginner) to the other WJ trick to account for diffusion timing.
-
-### Metroid Prime
-
-- Fixed: Observatory: Softlock if upper 1st-pass pirates killed before entering the room
-- Fixed: Training Chamber: Softlock if room unloaded after triggering fight but before killing both ghosts (e.g. wallcrawl)
-- Fixed: GM8E30 (Korean) support
-- Changed: Wavebuster no longer consumes ammo if cancelled due to "point blank range" rule
-- Changed: Updated tournament scan to include 2025 winners
-
-#### Logic Database
-
-- Changed: Reduced logical cost to open Wavebuster door locks: 11->10
-
-##### Phendrana Drifts
-
-- Changed: Transport to Magmoor Caverns South: Reorganized the climb from the elevator up to Transport Access for readability and consistency.
-    - Changed: The L-Jump portion of the NSJ climb was increased from Beginner to Advanced.
-    - Added: A way to climb without Space Jump or Bombs using a Ledge Clip Jump (Movement Expert) and then a Slope + L-Jump (both Advanced).
-
-### Metroid Prime 2: Echoes
-
-- Changed: Dark, Light, and Beam Ammo Expansions are now considered dark-aligned, light-aligned and both, respectively.
-
-#### Logic Database
-
-##### Sanctuary Fortress
-
-- Changed: Minor adjustment aimed at making Aerie safer for the generator, no changes to requirements in practice.
-- Fixed: It was not logical to fight Dark Samus 2 when comming in to Aerie with a randomized elevator.
-
-### Metroid: Samus Returns
-
-- Fixed: When you changed the final boss setting to not being Ridley and the pickup Ridley drops after defeat was an item which was exclusively on Metroids, it would not have spawned.
-
-#### Logic Database
-
-##### Area 6 Poisonous Tunnel
-
-- Fixed: Going back from the Pickup to the upper section now has the correct requirements.
-
-## [10.7.0] - 2026-05-02
-
-### Generator
-
-- Changed: Adjusted the check for which resources are unlocked safely after an action, so it both doesn't collect some dangerous actions too early, but also calculates deeper what is is safe.
-
-### Metroid Dread
-
-- Changed: Increased likelihood that doors that are logically challenging to reach get locks when using Individual Doors mode to randomize Door Locks.
-- Changed: Increased likelihood of the generator placing Energy Tanks or Energy Parts sooner.
-
-### Metroid Fusion
-
-- Added: Door Lock Randomizer is now available.
-- Fixed: Low-Health alarm now plays correctly when using the alternative Health Display.
-- Fixed: HUD no longer disappears after saving the animals (again).
-- Removed: MARS patcher version no longer appears on title screen.
-
-#### Logic Database
-
-##### Sector 6 (NOC)
-
-- Added: X-B.O.X. Garage: Knowledge (Advanced) + Movement (Beginner) method to grab the upper item using power bombs without killing the Owtch.
-
-## [10.6.0] - 2026-04-01
-
-- Fixed: The resolver now correctly handles damage requirements with item alternatives.
-
-### Metroid Dread
-
-#### Logic Database
-
-##### Burenia
-
-- Added: Underneath Drogyga: Cross the grapple blocks with a horizontal bomb jump (Expert Diagonal Bomb Jump)
-- Added: Underneath Drogyga: Climb out of the water after drogyga using single-wall wall jump with a water bomb jump
-
-### Metroid Fusion
-
-- Fixed: The credits text for random starting items now appears correctly.
-
-#### Logic Database
-
-- Changed: Blue-X Damage has been separated from Cold Damage.
-- Changed: Acid Damage has been separated from Normal Damage.
-
-##### Sector 1 (SRX)
-
-- Update Ripper Sauna to use Acid Damage.
-
-##### Sector 6 (NOC)
-
-- Fixed: Nocturnal Shaft: When going from top right to top left, damage boosting through the Blue-X now correctly expects at least 70 health.
-
-### Metroid Prime
-
-- Fixed: Metroid Prime Lair: Black screen softlock if Subchamber Five cutscene is skipped late
-- Fixed: Burn Dome: Wasps remain active if Incinerator Drone death cutscene is skipped on first frame
-- Fixed: [PAL] Frost Cave: Game stutter when loading Hunter Metroid layer
-
-### Metroid Prime 2: Echoes
-
-- Fixed: All custom randomizer text now properly appears in all languages, though always in English.
-
-
-## [10.5.0] - 2026-03-02
+## [10.5.0] - 2026-03-??
 
 - Changed: Removed game-specific text from the preset editor's header to make information more clear for all games in RDV.
 
@@ -171,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The current improvements gained to Speed Booster and Flash Shift from the "Upgrade" items (if present) will be displayed in the "Samus" menu.
   - The current "number of chained Flash Shifts" is displayed when Flash Shift Upgrades are present in the item pool, and either Flash Shift or at least one Flash Shift Upgrade has been obtained.
   - The current "time-to-charge Speed Booster" is displayed when Speed Booster Upgrades are present in the item pool, and either Speed Booster or at least one Speed Booster Upgrade has been obtained.
-- Added: Icons for individual Beam and Missile upgrades are displayed in the header of each respective category in the "Samus" menu, clearly indicating whether or not "earlier" items have been obtained even if a "later" item was obtained first.
+- Added: Icons for individual Beam and Missile upgrades are displayed in the header of the each respective category in the "Samus" menu, clearly indicating whether or not "earlier" items have been obtained even if a "later" item was obatined first.
   - For example, if the player has obtained Plasma Beam, an icon will be displayed on the Beams category for Wide Beam. The icon will be "dimmed" if the player has not yet obtained Wide Beam, and it will light up once Wide Beam is acquired.
   - Likewise, if the player has obtained Wave Beam, an icon with similar behavior is displayed for Plasma Beam.
   - Likewise, if the player has obtained Ice Missiles, an icon with similar behavior is displayed for Super Missiles.
@@ -184,8 +29,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Door Lock Overrides:
     - The Shutter Gate in Main Hub Tower Top leading to Flash Shift Room is now additionally logical with Speed Booster.
-    - The Shutter Gate in Flash Shift Room is now additionally logical with Flash Shift Skip (Beginner) and either Wall Jump (Beginner) or using Spin Boost.
-    - The Shutter Gate in Main Hub Tower Top leading to Underwater Horseshoe is now additionally logical with Speed Booster and either Speed Booster Conservation (Intermediate) or Speed Booster Conservation (Beginner) and Gravity Suit.
+    - The Shutter Gate in Flash Shift Room is now additionally logical with Flash Shift Skip (Beginner) and
+      either Wall Jump (Beginner) or using Spin Boost.
+    - The Shutter Gate in Main Hub Tower Top leading to Underwater Horseshoe is now additionally logical with Speed
+      Booster and either Speed Booster Conservation (Intermediate) or Speed Booster Conservation (Beginner) and Gravity
+      Suit.
 
 ##### Cataris
 
@@ -196,65 +44,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ferenia
 
 - Added: Door Lock Override:
-    - The Shutter Gate in Total Recharge Station is now additionally logical with Flash Shift Skip (Beginner) and either Movement (Beginner) or using Spin Boost.
+    - The Shutter Gate in Total Recharge Station is now additionally logical with Flash Shift Skip (Beginner) and either
+      Movement (Beginner) or using Spin Boost.
 
-##### Hanubia
+##### Haubia
 
 - Fixed: Requirements for Power Bomb ammo in Ferenia Shortcut have been strengthened, so 2 ammo is required to reach the Pickup, 3 ammo is required to leave from the pickup, in either direction.
-- Fixed: Requirements for Power Bomb ammo in Speedboost Puzzle Room have been strengthened, so 4 ammo is required to get from Ferenia Shortcut to the Navigation Station.
+- Fixed: Requirements for Power Bomb ammo in Sppedboost Puzzle Room have been strengthened, so 4 ammo is required to get from Ferenia Shortcut to the Navigation Station.
 
 ### Metroid Fusion
 
 - Changed: The hatch graphics have been changed in order to be more accessible to color blind people.
-- Changed: The Missile Geron in Sector 1 (SRX) - Yameba Corridor has been moved a few tiles to the left.
-- Changed: Renamed a lot of rooms that either reference other Sectors or unofficial enemy names to be more aligned with where they are in the B.S.L rather than their destination. This is done in order to bring more clarity to them. The full list is as follows:
-    - Main Deck:
-        - Elevator to Sector 1 (SRX) => Sector Hub Lift 1
-        - Elevator to Sector 2 (TRO) => Sector Hub Lift 2
-        - Elevator to Sector 3 (PYR) => Sector Hub Lift 3
-        - Elevator to Sector 4 (AQA) => Sector Hub Lift 4
-        - Elevator to Sector 5 (ARC) => Sector Hub Lift 5
-        - Elevator to Sector 6 (NOC) => Sector Hub Lift 6
-        - Elevator to Sector Hub => Main Elevator
-        - Elevator to Crew Quarters => Operations Deck Elevator
-        - Elevator to Operations Deck => Crew Quarters Elevator
-        - Elevator to Tourian (SRX) => Restricted Zone Elevator
-        - Elevator to Habitation Deck => Nexus Elevator
-        - Elevator to Central Nexus => Habitation Deck Elevator
-        - Back Door to Sector 6 (NOC) => Restricted Back Door
-    - Sector 1 (SRX):
-        - Elevator to Main Deck => Sector 1 (SRX) Entrance Elevator
-        - Elevator to Restricted Zone => Tourian Elevator
-        - Glass Tube to Sector 2 (TRO) => Sector 1 (SRX) Eastbound Glass Tube
-        - Glass Tube to Sector 3 (PYR) => Sector 1 (SRX) Westbound Glass Tube
-        - Ridley Arena => Neo-Ridley Arena
-        - Ridley Arena Access => Neo-Ridley Arena Access
-    - Sector 2 (TRO):
-        - Elevator to Main Deck => Sector 2 (TRO) Entrance Elevator
-        - Glass Tube to Sector 1 (SRX) => Sector 2 (TRO) Westbound Glass Tube
-        - Glass Tube to Sector 4 (AQA) => Sector 2 (TRO) Eastbound Glass Tube
-        - Zoro Zig-Zag => Zig-Zag-Zone
-    - Sector 3 (PYR):
-        - Elevator to Main Deck => Sector 3 (PYR) Entrance Elevator
-        - Glass Tube to Sector 5 (ARC) => Sector 3 (PYR) Westbound Glass Tube
-        - Glass Tube to Sector 1 (SRX) => Sector 3 (PYR) Eastbound Glass Tube
-    - Sector 4 (AQA):
-        - Elevator to Main Deck => Sector 4 (AQA) Entrance Elevator
-        - Cargo Hold to Sector 5 (ARC) => Cargo Hold
-        - Glass Tube to Sector 6 (NOC) => Sector 4 (AQA) Eastbound Glass Tube
-        - Glass Tube to Sector 2 (TRO) => Sector 4 (AQA) Westbound Glass Tube
-    - Sector 5 (ARC):
-        - Elevator to Main Deck => Sector 5 (ARC) Entrance Elevator
-        - Flooded Airlock to Sector 4 (AQA) => Flooded Airlock
-        - Glass Tube to Sector 6 (NOC) => Sector 5 (ARC) Westbound Glass Tube
-        - Glass Tube to Sector 3 (PYR) => Sector 5 (ARC) Eastbound Glass Tube
-    - Sector 6 (NOC):
-        - Elevator to Main Deck => Sector 6 (NOC) Entrance Elevator
-        - Glass Tube to Sector 4 (AQA) => Sector 6 (NOC) Westbound Glass Tube
-        - Glass Tube to Sector 5 (ARC) => Sector 6 (NOC) Eastbound Glass Tube
-        - Checkpoint to Restricted Zone => Authorization Checkpoint
 - Fixed: The HUD no longer occasionally disappears after rescuing the animals.
 - Fixed: Discrepancies on the map and minimap regarding boss icons.
+- Changed: The Missile Geron in Sector 1 (SRX) - Yameba Corridor has been moved a few tiles to the left.
+- Changed: Renamed Elevator rooms, Glass Tubes and other rooms that cross different Sectors to be more aligned with where they are in the B.S.L rather than their destination. This is done in order to bring more clarity to them. For example, "Elevator to Central Nexus" was renamed to "Habitation Deck Elevator", Sector 3's "Glass Tube to to Sector 5 (ARC)" was renamed to "Sector 3 (PYR) Westbound Glass Tube" and "Cargo Hold to Sector 5 (ARC)" was renamed to "Cargo Hold".
 - Fixed: Fixed a typo in the Open Sector Hub preset.
 
 #### Logic Database
@@ -265,11 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Added: Added a notice to the door lock rando tab that new patcher is both required and will be enabled alongside any randomization settings.
-
 #### Logic Database
-
-- Changed: Fighting Bomb Guardian with only Charged Dark shots now requires 31 Dark Ammo and Combat Intermediate.
 
 ##### Sanctuary Fortress
 

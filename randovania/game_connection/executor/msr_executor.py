@@ -74,11 +74,7 @@ def get_bootstrapper_for(game: GameDescription) -> list[str]:
     replacements = {
         "num_pickup_nodes": game.region_list.num_pickup_nodes,
         "inventory": "{{{}}}".format(
-            ",".join(
-                repr(r.extra["item_id"])
-                for r in game.get_resource_database_view().get_all_items()
-                if "item_id" in r.extra
-            )
+            ",".join(repr(r.extra["item_id"]) for r in game.resource_database.item if "item_id" in r.extra)
         ),
     }
 
@@ -172,7 +168,7 @@ class MSRExecutor:
             await self._read_response()
 
             loop = asyncio.get_event_loop()
-            self._read_loop_task = loop.create_task(self.read_loop())
+            loop.create_task(self.read_loop())
             self.logger.info("Connected")
 
             return None
@@ -204,13 +200,13 @@ class MSRExecutor:
         return self._socket is not None
 
     def _build_packet(self, type: PacketType, msg: bytes | None) -> bytes:
-        ret_bytes: bytearray = bytearray(type.to_bytes())
+        retBytes: bytearray = bytearray(type.to_bytes())
         if msg is not None:
             if type == PacketType.PACKET_REMOTE_LUA_EXEC:
-                ret_bytes.extend(len(msg).to_bytes(length=4, byteorder="little"))
+                retBytes.extend(len(msg).to_bytes(length=4, byteorder="little"))
             if type in [PacketType.PACKET_REMOTE_LUA_EXEC, PacketType.PACKET_HANDSHAKE]:
-                ret_bytes.extend(msg)
-        return bytes(ret_bytes)
+                retBytes.extend(msg)
+        return retBytes
 
     async def _read_response(self) -> bytes | None:
         if self._socket is None:

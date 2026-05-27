@@ -156,12 +156,9 @@ class DefaultsAdapter(construct.Adapter):
 class CompressedZSTD(construct.Tunnel):
     def __init__(self, subcon: construct.Construct, level: int = 3):
         super().__init__(subcon)
-        try:
-            import compression.zstd as zstd_lib  # type: ignore[import-not-found]
-        except ImportError:
-            import zstandard as zstd_lib
+        import zstandard
 
-        self.lib = zstd_lib
+        self.lib = zstandard
         self.level = level
 
     def _decode(self, data: bytes, context: construct.Container, path: str) -> bytes:

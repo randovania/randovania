@@ -630,16 +630,13 @@ if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
         return qtbot
 
     @pytest.fixture
-    def event_loop_policy(request: pytest.FixtureRequest) -> asyncio.AbstractEventLoopPolicy:
+    def event_loop(request: pytest.FixtureRequest) -> asyncio.EventLoop:
         if "skip_qtbot" in request.fixturenames:
-            qapp = request.getfixturevalue("qapp")
-
-            class _QEventLoopPolicy(asyncio.DefaultEventLoopPolicy):
-                def new_event_loop(self) -> asyncio.AbstractEventLoop:
-                    return get_event_loop_class()(qapp, set_running_loop=False)
-
-            return _QEventLoopPolicy()
-        return asyncio.DefaultEventLoopPolicy()
+            loop = get_event_loop_class()(request.getfixturevalue("qapp"), set_running_loop=False)
+        else:
+            loop = asyncio.get_event_loop_policy().new_event_loop()
+        yield loop
+        loop.close()
 
     @pytest.fixture(scope="session")
     def qapp_cls(request: pytest.FixtureRequest):
@@ -657,7 +654,7 @@ else:
     @pytest.fixture
     def skip_qtbot(request: pytest.FixtureRequest) -> QtBot:
         pytest.skip()
-        return "no qtbot"
+        return "no qtbot"  # noqa
 
     @pytest.fixture(scope="session")
     def qapp_cls(request: pytest.FixtureRequest) -> None:
@@ -710,8 +707,6 @@ SOLO_RDVGAMES = [
     ("fusion/all_hidden_with_nothing.rdvgame", True),
     ("fusion/all_hidden_with_random.rdvgame", True),
     ("fusion/starting_items.rdvgame", True),
-    ("fusion/lots_of_random_starting_items.rdvgame", True),
-    ("fusion/high_lava_dmg.rdvgame", False),  # expected configured lava dmg too high for solver
     # Dread
     ("dread/vanilla.rdvgame", True),  # vanilla
     ("dread/starter_preset.rdvgame", False),  # starter preset
@@ -733,13 +728,11 @@ SOLO_RDVGAMES = [
         True,
     ),  # starter preset + random starting item + nothing items
     ("prime_hunters/two_way_unchecked_portal_shuffle.rdvgame", True),  # starter preset + two-way portal shuffle
-    ("prime_hunters/starting_energy_and_artifacts.rdvgame", True),  # starter preset + random starting items + artifacts
     # Prime 1
     ("prime1-vanilla.rdvgame", True),  # vanilla
     ("prime1_crazy_seed.rdvgame", False),  # chaos features
     ("prime1_crazy_seed_one_way_door.rdvgame", True),  # same as above but 1-way doors
     ("prime1_refills.rdvgame", True),  # Refill items + custom artifact count
-    ("prime1/damage-check.rdvgame", False),
     # Prime 2
     ("seed_a.rdvgame", True),  # extremely old rdvgame
     ("prime2_seed_b.rdvgame", True),
@@ -758,8 +751,6 @@ SOLO_RDVGAMES = [
     ("samus_returns/starter_preset.rdvgame", True),  # starter preset
     ("samus_returns/progressive_beams_and_suits.rdvgame", False),  # starter preset + progressive beam and suit
     ("samus_returns/non_required_mains.rdvgame", True),  # non-required main for power bombs + hide model
-    # Zero Mission
-    ("zero_mission/starter_preset.rdvgame", True),  # starter preset
 ]
 
 COOP_RDVGAMES = [

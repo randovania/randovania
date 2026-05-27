@@ -13,11 +13,9 @@ from pathlib import Path
 _FOLDER = Path(__file__).parent
 
 
-async def deploy(
-    remote_host: str, host2: str, remote_user: str, server_environment: str, version: str, context: str | None
-) -> None:
+async def deploy(remote_host: str, host2: str, remote_user: str, server_environment: str, version: str):
     new_env = os.environ.copy()
-
+    new_env["DOCKER_HOST"] = f"ssh://{remote_user}@{remote_host}"
     new_env["DOMAIN"] = remote_host
     new_env["VERSION"] = version
     new_env["SERVER_ENVIRONMENT"] = server_environment
@@ -33,17 +31,10 @@ async def deploy(
     else:
         raise ValueError(f"Unknown server_environment: {server_environment}")
 
-    context_args = []
-    if context is not None:
-        context_args = ["--context", context]
-    else:
-        new_env["DOCKER_HOST"] = f"ssh://{remote_user}@{remote_host}"
-
     stack_file = _FOLDER.joinpath("server-docker", "docker-compose.yml")
     subprocess.run(
         [
             "docker",
-            *context_args,
             "stack",
             "deploy",
             "--detach=true",
@@ -58,14 +49,11 @@ async def deploy(
 
 async def main():
     parser = argparse.ArgumentParser()
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument("--user", default="root")
-    group.add_argument("--context")
+    parser.add_argument("--user", default="root")
     parser.add_argument("--host", default="randovania.metroidprime.run")
     parser.add_argument("--host2", default="randovania.org")
-    version = parser.add_mutually_exclusive_group()
-    version.add_argument("--ref")
-    version.add_argument("--sha")
+    parser.add_argument("--ref")
+    parser.add_argument("--sha")
     args = parser.parse_args()
 
     ref = args.ref
@@ -89,7 +77,6 @@ async def main():
         remote_user=args.user,
         server_environment=server_environment,
         version=version,
-        context=args.context,
     )
 
 

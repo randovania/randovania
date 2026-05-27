@@ -157,27 +157,16 @@ class ResourceDatabase(ResourceDatabaseView):
     def energy_tank(self) -> ItemResourceInfo:
         return self.energy_tank_item
 
-    # FIXME implement a way to have certain individual reductions not apply the base_damage_reduction
     @override
     def get_damage_reduction(self, resource: ResourceInfo, current_resources: ResourceCollection) -> float:
         base_reduction = self.base_damage_reduction(self, current_resources)
-        reductions = self.damage_reductions.get(resource, [])
 
-        # loop through all valid reductions with current inventory and collect the multipliers
-        multipliers = []
-        for reduction in reductions:
-            if (
-                reduction.inventory_item is None
-                or current_resources[reduction.inventory_item] >= reduction.item_quantity
-            ):
-                multipliers.append(reduction.damage_multiplier)
+        damage_multiplier = 1.0
+        for reduction in self.damage_reductions.get(resource, []):
+            if reduction.inventory_item is None or current_resources[reduction.inventory_item] > 0:
+                damage_multiplier = min(damage_multiplier, reduction.damage_multiplier)
 
-        # if there are no valid multipliers return base_reduction
-        if not multipliers:
-            return base_reduction
-
-        # return the lowest valid multiplier * base_reduction
-        return min(multipliers) * base_reduction
+        return damage_multiplier * base_reduction
 
     @override
     def get_all_damage_reductions(self) -> dict[ResourceInfo, list[DamageReduction]]:

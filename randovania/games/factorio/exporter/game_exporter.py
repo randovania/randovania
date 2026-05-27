@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import dataclasses
-import typing
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -62,10 +61,8 @@ class FactorioGameExporter(GameExporter[FactorioGameExportParams]):
 
         export_params.output_path.mkdir(parents=True, exist_ok=True)
 
-        configuration = typing.cast("factorio_randovania_mod.Configuration", patch_data)
-
         assets_mod = factorio_randovania_mod.export_mod(
-            configuration,
+            patch_data,
             export_params.output_path,
         )
         if assets_mod is not None:

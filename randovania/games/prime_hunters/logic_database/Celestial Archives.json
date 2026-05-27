@@ -2,7 +2,7 @@
     "name": "Celestial Archives",
     "extra": {},
     "areas": {
-        "Biodefense Chamber A (Celestial Archives)": {
+        "Biodefense Chamber 01": {
             "default_node": "Player Spawn",
             "hint_features": [],
             "extra": {
@@ -57,7 +57,7 @@
                     "default_connection": {
                         "region": "Celestial Archives",
                         "area": "Stronghold Void A (Celestial Archives)",
-                        "node": "Door to Biodefense Chamber A (Celestial Archives)"
+                        "node": "Door to Biodefense Chamber 01"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -213,7 +213,7 @@
                 }
             }
         },
-        "Biodefense Chamber B (Celestial Archives)": {
+        "Biodefense Chamber 05": {
             "default_node": "Player Spawn",
             "hint_features": [],
             "extra": {
@@ -268,7 +268,7 @@
                     "default_connection": {
                         "region": "Celestial Archives",
                         "area": "Stronghold Void B (Celestial Archives)",
-                        "node": "Door to Biodefense Chamber B (Celestial Archives)"
+                        "node": "Door to Biodefense Chamber 05"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -414,72 +414,12 @@
                             }
                         },
                         "Event - Slench 3": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Battlehammer",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 399,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Damage",
-                                                                    "amount": 299,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Battlehammer",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1783,8 +1723,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 160.73,
-                        "y": 77.01,
+                        "x": 160.7327249022164,
+                        "y": 77.01238591916558,
                         "z": 0.0
                     },
                     "description": "",
@@ -1814,7 +1754,7 @@
                             "artifact_id": 2,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "Unit2_TP1_Ent",
+                            "entity_filename": "Unit2_TP1_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -2003,7 +1943,7 @@
                             "artifact_id": 10,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_RM4_Ent",
+                            "entity_filename": "unit2_RM4_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -2700,7 +2640,7 @@
                             "artifact_id": 10,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_RM7_Ent",
+                            "entity_filename": "unit2_RM7_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -3472,7 +3412,7 @@
                             "artifact_id": 3,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "Unit2_TP2_Ent",
+                            "entity_filename": "Unit2_TP2_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -4114,7 +4054,7 @@
                             "artifact_id": 8,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit2_C4_Ent",
+                            "entity_filename": "unit2_C4_Ent.b",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -4181,7 +4121,7 @@
                             "artifact_id": 8,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit2_C7_Ent",
+                            "entity_filename": "unit2_C7_Ent.b",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -4215,7 +4155,7 @@
                 },
                 "Ship": {
                     "node_type": "teleporter_network",
-                    "heal": true,
+                    "heal": false,
                     "coordinates": {
                         "x": 803.8899301727306,
                         "y": 392.10712973171627,
@@ -6685,7 +6625,7 @@
                             "artifact_id": 10,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_C4_Ent",
+                            "entity_filename": "unit2_C4_Ent.b",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -6820,7 +6760,7 @@
                             "artifact_id": 10,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit2_RM8_Ent",
+                            "entity_filename": "unit2_RM8_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -7049,7 +6989,7 @@
                             "artifact_id": 10,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit2_RM8_Ent",
+                            "entity_filename": "unit2_RM8_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -7116,7 +7056,7 @@
                             "artifact_id": 10,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit2_RM6_Ent",
+                            "entity_filename": "unit2_RM6_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -7183,7 +7123,7 @@
                             "artifact_id": 10,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_RM5_Ent",
+                            "entity_filename": "unit2_RM5_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -7250,7 +7190,7 @@
                             "artifact_id": 10,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit2_RM5_Ent",
+                            "entity_filename": "unit2_RM5_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -7374,7 +7314,7 @@
                             "artifact_id": 10,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit2_RM6_Ent",
+                            "entity_filename": "unit2_RM6_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -7448,7 +7388,7 @@
                             "artifact_id": 10,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_RM8_Ent",
+                            "entity_filename": "unit2_RM8_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -7902,7 +7842,7 @@
                             "artifact_id": 10,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit2_RM8_Ent",
+                            "entity_filename": "unit2_RM8_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -7969,7 +7909,7 @@
                             "artifact_id": 10,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_RM5_Ent",
+                            "entity_filename": "unit2_RM5_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -8036,7 +7976,7 @@
                             "artifact_id": 10,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit2_RM7_Ent",
+                            "entity_filename": "unit2_RM7_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -8161,7 +8101,7 @@
                             "artifact_id": 10,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit2_RM5_Ent",
+                            "entity_filename": "unit2_RM5_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -8404,7 +8344,7 @@
                             "artifact_id": 10,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_C6_Ent",
+                            "entity_filename": "unit2_C6_Ent.b",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -8529,7 +8469,7 @@
                             "artifact_id": 10,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_RM6_Ent",
+                            "entity_filename": "unit2_RM6_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -8717,7 +8657,7 @@
                             "artifact_id": 10,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit2_RM8_Ent",
+                            "entity_filename": "unit2_RM8_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -8784,7 +8724,7 @@
                             "artifact_id": 10,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit2_RM8_Ent",
+                            "entity_filename": "unit2_RM8_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -9067,7 +9007,7 @@
                             "artifact_id": 10,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_RM5_Ent",
+                            "entity_filename": "unit2_RM5_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -9134,7 +9074,7 @@
                             "artifact_id": 10,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_RM7_Ent",
+                            "entity_filename": "unit2_RM7_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -9201,7 +9141,7 @@
                             "artifact_id": 10,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_RM6_Ent",
+                            "entity_filename": "unit2_RM6_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -9325,7 +9265,7 @@
                             "artifact_id": 10,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_RM4_Ent",
+                            "entity_filename": "unit2_RM4_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -9697,7 +9637,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Biodefense Chamber A (Celestial Archives)": {
+                        "Door to Biodefense Chamber 01": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9741,7 +9681,7 @@
                             "artifact_id": 255,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_C4_Ent",
+                            "entity_filename": "unit2_C4_Ent.b",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -9773,7 +9713,7 @@
                         }
                     }
                 },
-                "Door to Biodefense Chamber A (Celestial Archives)": {
+                "Door to Biodefense Chamber 01": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9819,7 +9759,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Celestial Archives",
-                        "area": "Biodefense Chamber A (Celestial Archives)",
+                        "area": "Biodefense Chamber 01",
                         "node": "Door to Stronghold Void A (Celestial Archives)"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -9892,7 +9832,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Biodefense Chamber B (Celestial Archives)": {
+                        "Door to Biodefense Chamber 05": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9936,7 +9876,7 @@
                             "artifact_id": 255,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit2_C7_Ent",
+                            "entity_filename": "unit2_C7_Ent.b",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -9968,7 +9908,7 @@
                         }
                     }
                 },
-                "Door to Biodefense Chamber B (Celestial Archives)": {
+                "Door to Biodefense Chamber 05": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10014,7 +9954,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Celestial Archives",
-                        "area": "Biodefense Chamber B (Celestial Archives)",
+                        "area": "Biodefense Chamber 05",
                         "node": "Door to Stronghold Void B (Celestial Archives)"
                     },
                     "default_dock_weakness": "Normal Door",

@@ -2,7 +2,6 @@ import collections
 import itertools
 import math
 import random
-from collections.abc import Sequence
 
 from randovania.games.factorio.generator.item_cost import ItemCost, cost_for_ingredient_list, item_is_fluid
 from randovania.lib import pyeasyga
@@ -10,7 +9,7 @@ from randovania.lib import pyeasyga
 _TARGET_FITNESS = 0.25
 
 
-class RecipeAlgorithm(pyeasyga.GeneticAlgorithm[ItemCost]):
+class RecipeAlgorithm(pyeasyga.GeneticAlgorithm):
     all_good_solutions: set[tuple[int, ...]]
 
     def __init__(
@@ -66,7 +65,7 @@ class RecipeAlgorithm(pyeasyga.GeneticAlgorithm[ItemCost]):
         mutate_index = self.random.randrange(len(individual))
         individual[mutate_index] = (0, 1)[individual[mutate_index] == 0]
 
-    def fitness_function(self, individual: Sequence[int], data: Sequence[ItemCost]) -> float:
+    def fitness_function(self, individual: list[int], data: list[ItemCost]) -> float:
         item_count = 0
         fluid_count = 0
 
@@ -74,6 +73,7 @@ class RecipeAlgorithm(pyeasyga.GeneticAlgorithm[ItemCost]):
 
         for selected, item in zip(individual, data):
             if selected:
+                item: ItemCost
                 item_count += 1
 
                 if item.is_fluid:
@@ -98,7 +98,7 @@ class RecipeAlgorithm(pyeasyga.GeneticAlgorithm[ItemCost]):
 
     def create_initial_population(self) -> None:
         """Create a population with all combinations of items, of increasing size."""
-        initial_population: list[pyeasyga.Chromosome] = []
+        initial_population = []
         for k in itertools.count(1):
             new_genes = [
                 self.create_individual_from_indices(comb)
@@ -150,11 +150,11 @@ def make_random_recipe(
         max_items=max_items,
     )
 
-    def ingredient_from_genes(genes: Sequence[int]) -> tuple[tuple[str, int], ...]:
+    def ingredient_from_genes(genes: list[int]) -> tuple[tuple[str, int], ...]:
         return tuple((possible_items[i], selected) for i, selected in enumerate(genes) if selected)
 
-    def group_by_items(all_genes: list[tuple[int, ...]]) -> dict[tuple[int, ...], list[Sequence[int]]]:
-        groups: dict[tuple[int, ...], list[Sequence[int]]] = collections.defaultdict(list)
+    def group_by_items(all_genes: list[tuple[int, ...]]) -> dict[tuple[int, ...], list[list[int]]]:
+        groups = collections.defaultdict(list)
         for gene in all_genes:
             indices = tuple(idx for idx, selected in enumerate(gene) if selected)
             groups[indices].append(gene)

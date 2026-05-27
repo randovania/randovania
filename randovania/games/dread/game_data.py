@@ -85,7 +85,7 @@ def _test_data() -> randovania.game.game_test_data.GameTestData:
     from randovania.layout.base.trick_level import LayoutTrickLevel
 
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="FPXCNGGT",
+        expected_seed_hash="IKZ75CTI",
         # Some items require shinesparking to reach in vanilla,
         # which due to varying difficulty has been made into a trick
         database_collectable_include_tricks=(("Speedbooster", LayoutTrickLevel.BEGINNER),),
@@ -178,5 +178,4 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     test_data=_test_data,
     multiple_start_nodes_per_area=True,
     defaults_available_in_game_sessions=True,
-    racetime_url="https://racetime.gg/dread-rando/data",
 )

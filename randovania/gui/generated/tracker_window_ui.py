@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'tracker_window.ui'
 ##
-## Created by: tools/uic_wrapper.py
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -331,7 +331,7 @@ class Ui_TrackerWindow(object):
         self.hide_collected_resources_check.setText(QCoreApplication.translate("TrackerWindow", u"Hide collected resources", None))
         self.current_location_label.setText(QCoreApplication.translate("TrackerWindow", u"Current location:", None))
         ___qtreewidgetitem = self.possible_locations_tree.headerItem()
-        ___qtreewidgetitem.setText(0, QCoreApplication.translate("TrackerWindow", u"Accessible Locations", None))
+        ___qtreewidgetitem.setText(0, QCoreApplication.translate("TrackerWindow", u"Accessible Locations", None));
         self.map_tab_widget.setTabText(self.map_tab_widget.indexOf(self.tab_text_map), QCoreApplication.translate("TrackerWindow", u"Text Map", None))
         self.map_tab_widget.setTabText(self.map_tab_widget.indexOf(self.tab_map), QCoreApplication.translate("TrackerWindow", u"Map", None))
         self.map_tab_widget.setTabText(self.map_tab_widget.indexOf(self.tab_graph_map), QCoreApplication.translate("TrackerWindow", u"Graph Map", None))

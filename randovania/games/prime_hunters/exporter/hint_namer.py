@@ -52,8 +52,6 @@ class HuntersHintNamer(HintNamer[None]):
 
         fmt = "{} is located in {}{}."
         location_name = self.format_location(location, with_region=True, with_area=not hide_area, with_color=with_color)
-        if " (" in location_name:
-            location_name, _ = location_name.split(" (")
 
         return fmt.format(
             self.colorize_text(self.color_item, resource.long_name, with_color).upper(),

@@ -30,8 +30,8 @@ if TYPE_CHECKING:
 
     from randovania.lib.status_update_lib import ProgressUpdateCallable
 
-PRIME_MODELS_VERSION = 2
-ECHOES_MODELS_VERSION = 4
+PRIME_MODELS_VERSION = 1
+ECHOES_MODELS_VERSION = 3
 
 
 def delete_converted_assets(assets_dir: Path):
@@ -357,14 +357,6 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
     asset_manager = echoes_asset_manager(input_path)
     open_prime_rando.echoes.custom_assets.create_custom_assets(asset_manager)
 
-    # Fix the Varia Suit's character in the suits ANCS referencing a missing skin.
-    # 0x3A5E2FE1 is Light Suit's skin
-    # this is fixed by Claris' patcher when exporting for Echoes
-    asset_manager.get_file(0xA3E787B7).raw.character_set.characters[0].skin_id = 0x3A5E2FE1
-
-    # Commit the Suit and custom Visors
-    asset_manager.build_modified_files()
-
     logging.info("Loading PAKs")
     status_update("Loading assets from Prime 2 to convert", 0.0)
     converter = AssetConverter(
@@ -374,6 +366,13 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
         converters=conversions.converter_for,
     )
     logging.info(f"Finished loading PAKs: {time.time() - start}")
+
+    # Fix the Varia Suit's character in the suits ANCS referencing a missing skin.
+    # 0x3A5E2FE1 is Light Suit's skin
+    # this is fixed by Claris' patcher when exporting for Echoes
+    suits_ancs = asset_manager.get_parsed_asset(0xA3E787B7)
+    suits_ancs.raw.character_set.characters[0].skin_id = 0x3A5E2FE1
+    asset_manager.replace_asset(0xA3E787B7, suits_ancs)
 
     # Use echoes missile expansion for unlimited missiles instead of missile launcher
     unlimited_missile_data = next(i for i in randomizer_data["ModelData"] if i["Index"] == 42)

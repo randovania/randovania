@@ -204,7 +204,7 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 6}]
 > Navigation Terminal; Heals? False
   * Layers: default
   * Hint
-  * Extra - hint_name: MAIN_DECK_EAST
+  * Extra - hint_name: MainDeckEast
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: PRECISE_CATEGORY
   > Door to Concourse
@@ -458,10 +458,15 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 2}, {'x': 11, 'y': 3}, {'x': 11, 'y
                   Can Freeze Enemies With Any Weapon
                   # Kill Fune, then WJ and Jump extend over: https://youtu.be/C56BsRG_eKY
                   Jump Extends (Advanced) and Wall Jump (Advanced) and Can Kill Tough Beam-Resistant Enemy
-          # NHJ WJ before it spawns, then freeze in mid-air: https://youtu.be/AUkhZE_5CbE
-          Stand On Frozen Enemies (Expert) and Wall Jump (Advanced) and Can Freeze Enemies With Any Weapon
+          All of the following:
+              # NHJ WJ before it spawns, then freeze in mid-air: https://youtu.be/AUkhZE_5CbE
+              Movement (Intermediate) and Wall Jump (Advanced)
+              Any of the following:
+                  Can Freeze Enemies With Ice Beam or Can Freeze Enemies With Ice Missiles
+                  # With Diffusion it's stricter: https://www.youtube.com/watch?v=H5AlKJwEuTU
+                  Movement (Advanced) and Can Freeze Enemies With Diffusion
           # NHJ Jump, freeze it while stretched, then WJ of the left door to get on top: https://youtu.be/o-DdSO4E3-M
-          Stand On Frozen Enemies (Beginner) and Wall Jump (Intermediate) and Disabled Door Lock Rando and Can Freeze Enemies With Any Weapon
+          Wall Jump (Intermediate) and Disabled Door Lock Rando and Can Freeze Enemies With Any Weapon
           # Kill Funes and then SWJ up
           Wall Jump (Beginner) and Can Kill Tough Beam-Resistant Enemy and Can Single Walljump
   > Door to Habitation Deck (Upper)
@@ -518,7 +523,7 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 10}]
 > Navigation Terminal; Heals? False
   * Layers: default
   * Hint
-  * Extra - hint_name: MAIN_DECK_WEST
+  * Extra - hint_name: MainDeckWest
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: PRECISE_CATEGORY
   > Door to Dark Stairwell
@@ -1013,7 +1018,7 @@ Extra - minimap_coordinates: [{'x': 16, 'y': 1}]
 > Navigation Terminal; Heals? False
   * Layers: default
   * Hint
-  * Extra - hint_name: OPERATIONS_DECK
+  * Extra - hint_name: OperationsDeck
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: PRECISE_CATEGORY
   > Door to Operations Deck Data Room
@@ -1223,7 +1228,7 @@ Hint Features - Multiple Pickups
   * Hint Features - Core-X
   * Extra - area: 0
   * Extra - room: 38
-  * Extra - source: ARACHNUS
+  * Extra - source: Arachnus
   * Extra - boss_hint_name: Arachnus
   * Extra - infant_weight: 3.5
   > Arena
@@ -1281,7 +1286,7 @@ Hint Features - Data Room
   * Pickup 15; Category? Major
   * Extra - area: 0
   * Extra - room: 39
-  * Extra - source: MAIN_DECK_DATA
+  * Extra - source: MainDeckData
   * Extra - infant_weight: 0.4
   > Door to Operations Deck Navigation Room
       Trivial
@@ -1735,7 +1740,7 @@ Hint Features - B.S.L. Systems Console
   * Pickup 122; Category? Minor
   * Extra - area: 0
   * Extra - room: 54
-  * Extra - source: AUXILIARY_POWER
+  * Extra - source: AuxiliaryPower
   * Extra - infant_weight: 0.4
   > Door to Auxiliary Navigation Room
       Trivial
@@ -1787,7 +1792,7 @@ Extra - minimap_coordinates: [{'x': 19, 'y': 19}]
 > Navigation Terminal; Heals? False
   * Layers: default
   * Hint
-  * Extra - hint_name: AUXILIARY_POWER
+  * Extra - hint_name: AuxiliaryPower
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: DETAILED
   > Door to Silo Checkpoint
@@ -1884,9 +1889,9 @@ Restricted Back Door
 Extra - map_name: Main Deck62
 Extra - room_id: [62]
 Extra - minimap_coordinates: [{'x': 9, 'y': 23}, {'x': 9, 'y': 24}]
-> Other to Authorization Checkpoint; Heals? False
+> Other to Checkpoint to Restricted Zone; Heals? False
   * Layers: default
-  * Tunnel to Authorization Checkpoint/Other to Restricted Back Door
+  * Tunnel to Checkpoint to Restricted Zone/Other to Restricted Back Door
   * Extra - door_idx: (143,)
   > Door to Restricted Save Room
       Trivial
@@ -1895,7 +1900,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 23}, {'x': 9, 'y': 24}]
   * Layers: default
   * L4 Hatch to Restricted Save Room/Door to Restricted Back Door
   * Extra - door_idx: (144,)
-  > Other to Authorization Checkpoint
+  > Other to Checkpoint to Restricted Zone
       All of the following:
           Screw Attack
           Any of the following:
@@ -1977,7 +1982,7 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 21}]
 > Navigation Terminal; Heals? False
   * Layers: default
   * Hint
-  * Extra - hint_name: RESTRICTED_LABS
+  * Extra - hint_name: RestrictedLabs
   * Extra - location_precision: DETAILED
   * Extra - item_precision: DETAILED
   > Door to Restricted Airlock
@@ -2068,7 +2073,7 @@ Hint Features - 1-way Shutter
   * Hint Features - B.S.L. Systems Console
   * Extra - area: 0
   * Extra - room: 69
-  * Extra - source: ANIMALS
+  * Extra - source: Animals
   * Extra - infant_weight: 0.4
   > Other to Habitation Ventilation (Upper)
       Trivial
@@ -2332,7 +2337,7 @@ Hint Features - Core-X
   * Pickup 106; Category? Major
   * Extra - area: 0
   * Extra - room: 86
-  * Extra - source: YAKUZA
+  * Extra - source: Yakuza
   * Extra - boss_hint_name: Yakuza
   * Extra - infant_weight: 3.5
   > Arena

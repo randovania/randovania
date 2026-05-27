@@ -53,7 +53,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
 
     @property
     def multiworld_magic_item(self) -> ItemResourceInfo:
-        return self.game.get_resource_database_view().get_item(prime_items.MULTIWORLD_ITEM)
+        return self.game.resource_database.get_item(prime_items.MULTIWORLD_ITEM)
 
     async def current_game_status(self) -> tuple[bool, Region | None]:
         """

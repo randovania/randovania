@@ -46,6 +46,7 @@ import random
 import typing
 from operator import attrgetter
 
+SeedData = typing.TypeVar("SeedData")
 type Fitness = float
 type Genes = list[int]
 
@@ -65,7 +66,7 @@ class Chromosome:
         return repr((self.fitness, self.genes))
 
 
-class GeneticAlgorithm[SeedData]:
+class GeneticAlgorithm:
     tournament_size: int
 
     """Genetic Algorithm class.

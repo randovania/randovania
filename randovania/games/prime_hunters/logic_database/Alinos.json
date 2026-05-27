@@ -567,7 +567,7 @@
                 }
             }
         },
-        "Biodefense Chamber B (Alinos)": {
+        "Biodefense Chamber 02": {
             "default_node": "Room Center",
             "hint_features": [],
             "extra": {
@@ -621,29 +621,10 @@
                             }
                         },
                         "Event - Slench 1": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Damage",
-                                            "amount": 99,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -695,7 +676,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Stronghold Void B (Alinos)",
-                        "node": "Door to Biodefense Chamber B (Alinos)"
+                        "node": "Door to Biodefense Chamber 02"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -797,7 +778,7 @@
                 }
             }
         },
-        "Biodefense Chamber A (Alinos)": {
+        "Biodefense Chamber 06": {
             "default_node": "Room Center",
             "hint_features": [],
             "extra": {
@@ -851,55 +832,10 @@
                             }
                         },
                         "Event - Cretaphid v3": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Damage",
-                                            "amount": 199,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 99,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -951,7 +887,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Stronghold Void A (Alinos)",
-                        "node": "Door to Biodefense Chamber A (Alinos)"
+                        "node": "Door to Biodefense Chamber 06"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2175,67 +2111,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 203.66,
-                        "y": 849.29,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "entity_id": 29,
-                        "position": {
-                            "x": 0.99169921875,
-                            "y": 114.47216796875,
-                            "z": -15.309814453125
-                        },
-                        "up_vector": {
-                            "x": 0.0,
-                            "y": -0.999755859375,
-                            "z": 0.0
-                        },
-                        "facing_vector": {
-                            "x": 0.999755859375,
-                            "y": 0.0,
-                            "z": 0.004150390625
-                        },
-                        "entity_type_data": {
-                            "load_index": 11,
-                            "target_index": 11,
-                            "artifact_id": 11,
-                            "active": true,
-                            "invisible": true,
-                            "entity_filename": "unit1_RM1_Ent",
-                            "target_position": {
-                                "x": 0.062255859375,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "node_name": ""
-                        }
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Portal",
-                    "default_connection": {
-                        "region": "Alinos",
-                        "area": "High Ground",
-                        "node": "Portal from Magma Drop"
-                    },
-                    "default_dock_weakness": "Portal",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": "Alinos - Magma Drop (High Ground Exit Portal)",
-                    "connections": {}
-                },
-                "Portal from High Ground": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 84.09,
-                        "y": 901.71,
+                        "x": 203.664958578871,
+                        "y": 849.2911862669741,
                         "z": 0.0
                     },
                     "description": "",
@@ -2265,7 +2142,66 @@
                             "artifact_id": 10,
                             "active": false,
                             "invisible": true,
-                            "entity_filename": "unit1_RM1_Ent",
+                            "entity_filename": " unit1_RM1_Ent.",
+                            "target_position": {
+                                "x": 0.062255859375,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "node_name": ""
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Portal",
+                    "default_connection": {
+                        "region": "Alinos",
+                        "area": "High Ground",
+                        "node": "Portal from Magma Drop"
+                    },
+                    "default_dock_weakness": "Portal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": "Alinos - Magma Drop (High Ground Exit Portal)",
+                    "connections": {}
+                },
+                "Portal from High Ground": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 84.08685626441205,
+                        "y": 901.7089845418054,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "entity_id": 29,
+                        "position": {
+                            "x": 0.99169921875,
+                            "y": 114.47216796875,
+                            "z": -15.309814453125
+                        },
+                        "up_vector": {
+                            "x": 0.0,
+                            "y": -0.999755859375,
+                            "z": 0.0
+                        },
+                        "facing_vector": {
+                            "x": 0.999755859375,
+                            "y": 0.0,
+                            "z": 0.004150390625
+                        },
+                        "entity_type_data": {
+                            "load_index": 11,
+                            "target_index": 11,
+                            "artifact_id": 11,
+                            "active": true,
+                            "invisible": true,
+                            "entity_filename": " unit1_RM1_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -2689,7 +2625,7 @@
                 },
                 "Ship": {
                     "node_type": "teleporter_network",
-                    "heal": true,
+                    "heal": false,
                     "coordinates": {
                         "x": 249.40004799616028,
                         "y": 223.3021358291337,
@@ -2834,8 +2770,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 453.98,
-                        "y": 193.9,
+                        "x": 453.98368130549557,
+                        "y": 193.90448764098875,
                         "z": 0.0
                     },
                     "description": "",
@@ -2865,7 +2801,7 @@
                             "artifact_id": 8,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit1_RM3_Ent",
+                            "entity_filename": "unit1_RM3_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -2901,8 +2837,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 43.62,
-                        "y": 192.1,
+                        "x": 43.61651067914566,
+                        "y": 192.10463162946962,
                         "z": 0.0
                     },
                     "description": "",
@@ -2932,7 +2868,7 @@
                             "artifact_id": 8,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit1_RM6_Ent",
+                            "entity_filename": "unit1_RM6_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -3718,8 +3654,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 176.68,
-                        "y": 98.42,
+                        "x": 176.68146376041105,
+                        "y": 98.423024615803,
                         "z": 0.0
                     },
                     "description": "",
@@ -3744,12 +3680,12 @@
                             "z": 1.0
                         },
                         "entity_type_data": {
-                            "load_index": 11,
-                            "target_index": 11,
-                            "artifact_id": 11,
+                            "load_index": 10,
+                            "target_index": 10,
+                            "artifact_id": 10,
                             "active": true,
                             "invisible": true,
-                            "entity_filename": "unit1_C4_Ent",
+                            "entity_filename": " unit1_C4_Ent.b",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -3785,8 +3721,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 326.16,
-                        "y": 146.78,
+                        "x": 326.16157701041413,
+                        "y": 146.78423772609813,
                         "z": 0.0
                     },
                     "description": "",
@@ -3816,7 +3752,7 @@
                             "artifact_id": 11,
                             "active": false,
                             "invisible": true,
-                            "entity_filename": "unit1_C4_Ent",
+                            "entity_filename": " unit1_C4_Ent.b",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -6536,8 +6472,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 525.96,
-                        "y": 295.75,
+                        "x": 525.9634286562072,
+                        "y": 295.7450885847459,
                         "z": 0.0
                     },
                     "description": "",
@@ -6567,7 +6503,7 @@
                             "artifact_id": 1,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "Unit1_TP2_Ent",
+                            "entity_filename": "Unit1_TP2_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -6932,8 +6868,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 507.22,
-                        "y": 342.56,
+                        "x": 507.2159765752177,
+                        "y": 342.557292632568,
                         "z": 0.0
                     },
                     "description": "",
@@ -6963,7 +6899,7 @@
                             "artifact_id": 0,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "Unit1_TP1_Ent",
+                            "entity_filename": "Unit1_TP1_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -7370,7 +7306,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Biodefense Chamber B (Alinos)": {
+                        "Door to Biodefense Chamber 02": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7414,7 +7350,7 @@
                             "artifact_id": 255,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit1_RM6_Ent",
+                            "entity_filename": "unit1_RM6_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -7446,7 +7382,7 @@
                         }
                     }
                 },
-                "Door to Biodefense Chamber B (Alinos)": {
+                "Door to Biodefense Chamber 02": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7492,7 +7428,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Alinos",
-                        "area": "Biodefense Chamber B (Alinos)",
+                        "area": "Biodefense Chamber 02",
                         "node": "Door to Stronghold Void B (Alinos)"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -7565,7 +7501,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Biodefense Chamber A (Alinos)": {
+                        "Door to Biodefense Chamber 06": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7578,8 +7514,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 116.96,
-                        "y": 220.15,
+                        "x": 116.96342086767618,
+                        "y": 220.14746661555176,
                         "z": 0.0
                     },
                     "description": "",
@@ -7609,7 +7545,7 @@
                             "artifact_id": 255,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit1_RM5_Ent",
+                            "entity_filename": "unit1_RM5_Ent.",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -7641,7 +7577,7 @@
                         }
                     }
                 },
-                "Door to Biodefense Chamber A (Alinos)": {
+                "Door to Biodefense Chamber 06": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7687,7 +7623,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Alinos",
-                        "area": "Biodefense Chamber A (Alinos)",
+                        "area": "Biodefense Chamber 06",
                         "node": "Door to Stronghold Void A (Alinos)"
                     },
                     "default_dock_weakness": "Normal Door",

@@ -25,9 +25,10 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
-    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
+    from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.hint_features import HintFeature
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
@@ -37,15 +38,15 @@ def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
         return requirement.pretty_text
 
 
-def get_template_name(db: ResourceDatabaseView, requirement: RequirementTemplate) -> str:
+def get_template_name(db: ResourceDatabase, requirement: RequirementTemplate) -> str:
     try:
-        return db.get_template_requirement(requirement.template_name).display_name
+        return db.requirement_template[requirement.template_name].display_name
     except KeyError:
         return f"Unknown Template ({requirement.template_name})"
 
 
 def pretty_print_requirement_array(
-    requirement: RequirementArrayBase, db: ResourceDatabaseView, level: int
+    requirement: RequirementArrayBase, db: ResourceDatabase, level: int
 ) -> Iterator[tuple[int, str]]:
     if len(requirement.items) == 1 and requirement.comment is None:
         yield from pretty_format_requirement(requirement.items[0], db, level)
@@ -83,7 +84,7 @@ def pretty_print_requirement_array(
 
 
 def pretty_format_requirement(
-    requirement: Requirement, db: ResourceDatabaseView, level: int = 0
+    requirement: Requirement, db: ResourceDatabase, level: int = 0
 ) -> Iterator[tuple[int, str]]:
     if requirement == Requirement.impossible():
         yield level, "Impossible"
@@ -108,7 +109,7 @@ def pretty_format_requirement(
 
 def pretty_print_requirement(
     requirement: Requirement,
-    db: ResourceDatabaseView,
+    db: ResourceDatabase,
     prefix: str = "",
     print_function: typing.Callable[[str], None] = print,
 ) -> None:
@@ -116,10 +117,10 @@ def pretty_print_requirement(
         print_function("{}{}{}".format(prefix, "    " * nested_level, text))
 
 
-def pretty_print_node_type(node: Node, game_view: GameDatabaseView, db: ResourceDatabaseView) -> str:
+def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceDatabase) -> str:
     if isinstance(node, DockNode):
         try:
-            other = game_view.node_by_identifier(node.default_connection)
+            other = region_list.node_by_identifier(node.default_connection)
             other_name = other.full_name(with_region=False)
         except IndexError as e:
             other_name = f"(Area {node.default_connection.area}, index {node.default_connection.node}) [{e}]"
@@ -167,7 +168,7 @@ def pretty_print_hint_features(features: Iterable[HintFeature]) -> str:
     return f"Hint Features - {', '.join([feature.long_name for feature in sorted(features)])}"
 
 
-def pretty_print_area(game: GameDatabaseView, area: Area, print_function: typing.Callable[[str], None] = print) -> None:
+def pretty_print_area(game: GameDescription, area: Area, print_function: typing.Callable[[str], None] = print) -> None:
     print_function(area.name)
     for extra_name, extra_field in area.extra.items():
         print_function(f"Extra - {extra_name}: {extra_field}")
@@ -187,7 +188,7 @@ def pretty_print_area(game: GameDatabaseView, area: Area, print_function: typing
         print_function(message)
         print_function(f"  * Layers: {', '.join(node.layers)}")
 
-        description_line = pretty_print_node_type(node, game, game.get_resource_database_view())
+        description_line = pretty_print_node_type(node, game.region_list, game.resource_database)
         if description_line:
             print_function(f"  * {description_line}")
         if isinstance(node, PickupNode) and node.hint_features:
@@ -206,7 +207,7 @@ def pretty_print_area(game: GameDatabaseView, area: Area, print_function: typing
                     print_function(f"  * Override default {label} requirement:")
                     pretty_print_requirement(
                         req.simplify(keep_comments=True),
-                        game.get_resource_database_view(),
+                        game.resource_database,
                         prefix="    ",
                         print_function=print_function,
                     )
@@ -219,7 +220,7 @@ def pretty_print_area(game: GameDatabaseView, area: Area, print_function: typing
             print_function(f"  > {target_node.name}")
             pretty_print_requirement(
                 requirement.simplify(keep_comments=True),
-                game.get_resource_database_view(),
+                game.resource_database,
                 prefix="      ",
                 print_function=print_function,
             )

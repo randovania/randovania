@@ -18,11 +18,6 @@ class FusionArtifactConfig(BitPackDataclass, JsonDataclass):
 class FusionConfiguration(BaseConfiguration):
     instant_transitions: bool
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
-    acid_damage: int = dataclasses.field(metadata={"min": 0, "max": 255, "precision": 1})
-    lava_damage: int = dataclasses.field(metadata={"min": 0, "max": 255, "precision": 1})
-    heat_damage: int = dataclasses.field(metadata={"min": 0, "max": 255, "precision": 1})
-    cold_damage: int = dataclasses.field(metadata={"min": 0, "max": 255, "precision": 1})
-    subzero_damage: int = dataclasses.field(metadata={"min": 0, "max": 255, "precision": 1})
     artifacts: FusionArtifactConfig
     open_save_recharge_hatches: bool
     unlock_sector_hub: bool

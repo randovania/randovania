@@ -116,7 +116,7 @@ class MercuryConnector(RemoteConnector):
             self.logger.error("Unknown response: %s (got %s)", json_string, e)
             return
 
-        items = [r for r in self.game.get_resource_database_view().get_all_items() if "item_id" in r.extra]
+        items = [r for r in self.game.resource_database.item if "item_id" in r.extra]
 
         inventory = Inventory(
             {item: InventoryItem(quantity, quantity) for item, quantity in zip(items, inventory_ints)}

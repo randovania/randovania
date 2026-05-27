@@ -58,7 +58,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
 
     @property
     def multiworld_magic_item(self) -> ItemResourceInfo:
-        return self.game.get_resource_database_view().get_item(echoes_items.MULTIWORLD_ITEM)
+        return self.game.resource_database.get_item(echoes_items.MULTIWORLD_ITEM)
 
     async def current_game_status(self) -> tuple[bool, Region | None]:
         """
@@ -120,7 +120,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         item_name, resources_to_give = super()._resources_to_give_for_pickup(pickup, inventory)
 
         # Ignore item% for received items
-        resources_to_give.remove_resource(self.game.get_resource_database_view().get_item("Percent"))
+        resources_to_give.remove_resource(self.game.resource_database.get_item("Percent"))
 
         return item_name, resources_to_give
 
@@ -161,7 +161,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         inventory = await super().get_inventory()
 
         if self._should_read_object_count:
-            inventory[self.game.get_resource_database_view().get_item("ObjectCount")] = InventoryItem(
+            inventory[self.game.resource_database.get_item("ObjectCount")] = InventoryItem(
                 await self._read_object_count(), 1024
             )
 

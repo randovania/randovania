@@ -31,7 +31,7 @@ def is_boss_location(node: PickupNode, config: HuntersConfiguration) -> bool:
 class HuntersBootstrap(Bootstrap[HuntersConfiguration]):
     def create_damage_state(self, game: GameDatabaseView, configuration: HuntersConfiguration) -> DamageState:
         return EnergyTankDamageState(
-            configuration.starting_energy,
+            99,
             100,
             game.get_resource_database_view().get_item("EnergyTank"),
             [],

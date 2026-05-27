@@ -186,7 +186,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         while self._current_tree[-1].indent >= widget.indent:
             self._current_tree.pop().item.setExpanded(False)
 
-        if (self.should_item_be_visible(widget) or len(self._current_tree) == 1) and identifier is not None:
+        if self.should_item_be_visible(widget) and identifier is not None:
             if len(self._current_tree) == 2:
                 region_item = self._current_tree[-1].item
 

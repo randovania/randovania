@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'data_editor.ui'
 ##
-## Created by: tools/uic_wrapper.py
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -180,7 +180,7 @@ class Ui_DataEditorWindow(object):
 
         self.other_node_alternatives_contents = QTreeWidget(self.connections_group)
         __qtreewidgetitem = QTreeWidgetItem()
-        __qtreewidgetitem.setText(0, u"1")
+        __qtreewidgetitem.setText(0, u"1");
         self.other_node_alternatives_contents.setHeaderItem(__qtreewidgetitem)
         self.other_node_alternatives_contents.setObjectName(u"other_node_alternatives_contents")
         self.other_node_alternatives_contents.header().setVisible(False)

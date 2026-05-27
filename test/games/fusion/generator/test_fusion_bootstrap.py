@@ -41,24 +41,3 @@ def test_assign_pool_results_predetermined(fusion_game_description, fusion_confi
         PickupIndex(i) for i in expected
     }
     assert shuffled_metroids == []
-
-
-@pytest.mark.parametrize(
-    ("dmg_type", "dmg_configured", "dmg_multiplier", "config_value"),
-    [
-        ("LavaDamage", 40, [2.0, 2.0 / 0.9, 0.0], "lava_damage"),
-        ("LavaDamage", 10, [0.5, 0.5 / 0.9, 0.0], "lava_damage"),
-        ("HeatDamage", 60, [10.0, 0.0], "heat_damage"),
-        ("AcidDamage", 6, [0.1], "acid_damage"),
-        ("ColdDamage", 45, [3.0, 0.0], "cold_damage"),
-    ],
-)
-def test_patch_resource_database(
-    fusion_game_description, fusion_configuration, dmg_type, dmg_configured, dmg_multiplier, config_value
-):
-    # replace the environmental damage with the dmg value for the test and run bootstrap
-    fusion_configuration = dataclasses.replace(fusion_configuration, **{config_value: dmg_configured})
-    result = FusionBootstrap().patch_resource_database(fusion_game_description.resource_database, fusion_configuration)
-    # loop through all reductions and assert that the new multiplier is what we expect
-    for i, reduction in enumerate(result.damage_reductions[result.get_damage(dmg_type)]):
-        assert reduction.damage_multiplier == dmg_multiplier[i]

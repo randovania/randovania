@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>624</width>
-    <height>797</height>
+    <width>421</width>
+    <height>368</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,9 +23,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-242</y>
-        <width>583</width>
-        <height>1057</height>
+        <y>0</y>
+        <width>390</width>
+        <height>716</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -48,16 +48,6 @@
           <string>Config Options</string>
          </property>
          <layout class="QVBoxLayout" name="game_changes_layout">
-          <item>
-           <widget class="QCheckBox" name="enable_debug_logging">
-            <property name="visible">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Enable Lua debug logs (in supported emulators)</string>
-            </property>
-           </widget>
-          </item>
           <item>
            <widget class="QCheckBox" name="show_boss_life">
             <property name="text">
@@ -104,6 +94,16 @@
            <widget class="QCheckBox" name="enable_auto_tracker">
             <property name="text">
              <string>Enable automatic item tracker</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="enable_debug_logging">
+            <property name="text">
+             <string>Enable Lua debug logs (in supported emulators)</string>
+            </property>
+            <property name="visible">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -243,29 +243,6 @@
              </widget>
             </item>
            </layout>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="separate_save_slots">
-            <property name="text">
-             <string>Unique Save Slots</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="save_slots_description">
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting changes where the game save slots are stored to a folder unique to this randomized game. This makes it easier to maintain concurrent randomizer sessions (such as multiple worlds in a multiworld).&lt;/p&gt;&lt;p&gt;Each save slot generated with this setting will take up approximately 300kb of space. To free this space, delete your save data through System Settings on console, or open the game save data in Ryujinx and delete any folders starting with "RDV".&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-            <property name="margin">
-             <number>0</number>
-            </property>
-            <property name="indent">
-             <number>24</number>
-            </property>
-           </widget>
           </item>
          </layout>
         </widget>
