@@ -136,7 +136,7 @@ class PickupEntry:
             yield ConditionalResources(
                 name=progression[0].long_name,
                 item=previous,
-                resources=(progression,) + self.extra_resources,
+                resources=(progression, *self.extra_resources),
             )
             previous = progression[0]
 

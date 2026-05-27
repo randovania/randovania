@@ -1061,7 +1061,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     def enable_buttons_with_background_tasks(self, value: bool):
         self.update_background_process_button()
 
-    def update_progress(self, message: str, percentage: int):
+    def update_progress(self, message: str, percentage: int) -> None:
         self.progress_label.setText(message)
         if "Aborted" in message:
             percentage = 0
@@ -1187,7 +1187,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @handle_network_errors
     async def _connect_to_server(self):
         if self.network_client.connection_state == ConnectionState.ConnectedNotLogged:
-            await async_dialog.execute_dialog(LoginPromptDialog(self.network_client))
+            await async_dialog.execute_dialog(
+                LoginPromptDialog(
+                    self.network_client,
+                    await self.network_client.query_authentication_methods(),
+                )
+            )
         else:
             await self.network_client.connect_to_server()
 

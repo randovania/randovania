@@ -72,11 +72,11 @@ class DeleteUnknownNativeCommand(Command):
 
 
 class CustomBuild(build):
-    sub_commands = [
+    sub_commands = (
         ("copy_readme", None),
         ("delete_unknown_native", None),
         *build.sub_commands,
-    ]
+    )
 
 
 cythonize_files = [

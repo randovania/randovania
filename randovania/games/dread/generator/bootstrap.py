@@ -24,12 +24,10 @@ def is_dna_node(node: PickupNode, config: DreadConfiguration) -> bool:
         "boss_hint_name" in node.extra
         and (
             # must be an emmi with emmi option
-            node.extra["pickup_type"] == "emmi"
-            and artifact_config.prefer_emmi
+            (node.extra["pickup_type"] == "emmi" and artifact_config.prefer_emmi)
             or
             # or not an emmi but with major boss option
-            not node.extra["pickup_type"] == "emmi"
-            and artifact_config.prefer_major_bosses
+            (not node.extra["pickup_type"] == "emmi" and artifact_config.prefer_major_bosses)
         )
     )
 

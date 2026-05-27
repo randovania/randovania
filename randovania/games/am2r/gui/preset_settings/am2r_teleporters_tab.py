@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import typing
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 from randovania.games.am2r.gui.generated.preset_teleporters_am2r_ui import Ui_PresetTeleportersAM2R
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
@@ -27,7 +27,7 @@ if TYPE_CHECKING:
 
 
 class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeListHelper):
-    teleporter_mode_to_description = {
+    teleporter_mode_to_description: ClassVar[dict[TeleporterShuffleMode, str]] = {
         TeleporterShuffleMode.VANILLA: "All transport pipes are connected to where they do in the original game.",
         TeleporterShuffleMode.TWO_WAY_UNCHECKED: (
             "After taking a transport pipe, the transport pipe in the room you are in"

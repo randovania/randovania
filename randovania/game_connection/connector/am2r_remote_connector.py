@@ -208,9 +208,10 @@ class AM2RRemoteConnector(RemoteConnector):
                     break
                 inventory_dict[actual_items[index]] += 1
 
+        resource_db = self.game.get_resource_database_view()
         inventory = Inventory(
             {
-                self.game.resource_database.get_item_by_display_name(name): InventoryItem(quantity, quantity)
+                resource_db.get_item_by_display_name(name): InventoryItem(quantity, quantity)
                 for name, quantity in inventory_dict.items()
             }
         )
@@ -257,7 +258,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
         # Mark as cooldown, and send provider, item name, model name and quantity to game
         self.in_cooldown = True
-        provider_name, pickup, coop_location = remote_pickups[num_pickups]
+        provider_name, pickup, _coop_location = remote_pickups[num_pickups]
         name, model = pickup.name, pickup.model.name
         # For some reason, the resources here are sorted differently to the patch data factory.
         # There we want the first entry, here we want the last.

@@ -19,6 +19,7 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.exporter import patch_data_factory
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, EchoesNewPatcher
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
@@ -153,10 +154,10 @@ def test_add_header_data_to_result():
 
 def test_create_spawn_point_field(echoes_game_description, echoes_pickup_database, empty_patches):
     # Setup
-    resource_db = echoes_game_description.resource_database
+    resource_db = echoes_game_description.get_resource_database_view()
 
     morph = pickup_creator.create_standard_pickup(
-        echoes_pickup_database.get_pickup_with_name("Morph Ball"), StandardPickupState(), resource_db, None, False
+        echoes_pickup_database.standard_pickups["Morph Ball"], StandardPickupState(), resource_db, None, False
     )
 
     loc = NodeIdentifier.create("Temple Grounds", "Hive Chamber B", "Door to Hive Storage")
@@ -164,12 +165,12 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
 
     capacities = [
         {"amount": 1 if item.short_name == "MorphBall" else 0, "index": item.extra["item_id"]}
-        for item in resource_db.item
+        for item in resource_db.get_all_items()
         if item.extra["item_id"] < 1000
     ]
 
     # Run
-    result = patch_data_factory._create_spawn_point_field(patches, echoes_game_description)
+    result = patch_data_factory._create_spawn_point_field(patches, echoes_game_description, resource_db)
 
     # Assert
     assert result == {
@@ -183,7 +184,7 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
 
 
 def test_create_elevators_field_no_elevator(empty_patches, echoes_game_description):
-    with pytest.raises(InvalidConfiguration, match="Invalid elevator count. Expected 22, got 0."):
+    with pytest.raises(InvalidConfiguration, match=r"Invalid elevator count. Expected 22, got 0."):
         patch_data_factory._create_elevators_field(
             empty_patches, echoes_game_description, echoes_game_description.dock_weakness_database.find_type("elevator")
         )
@@ -650,7 +651,7 @@ def test_create_string_patches(
     # Run
     result = patch_data_factory._create_string_patches(
         hint_config,
-        False,
+        EchoesNewPatcher.DISABLED,
         game,
         all_patches,
         player_config,
@@ -671,7 +672,11 @@ def test_create_string_patches(
 
     else:
         mock_stk_create_hints.assert_called_once_with(
-            all_patches, player_config, game.resource_database, namer, stk_mode == SpecificPickupHintMode.HIDE_AREA
+            all_patches,
+            player_config,
+            game.get_resource_database_view(),
+            namer,
+            stk_mode == SpecificPickupHintMode.HIDE_AREA,
         )
         mock_stk_hide_hints.assert_not_called()
         expected_result.extend(["show", "hints"])
@@ -683,15 +688,20 @@ def test_create_string_patches(
 @pytest.mark.parametrize(
     ("rdvgame_filename", "expected_results_filename", "use_new_patcher"),
     [
-        ("seed_a.rdvgame", "seed_a_old_patcher.json", False),
-        ("seed_a.rdvgame", "seed_a_new_patcher.json", True),
-        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_old_patcher.json", False),
-        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_new_patcher.json", True),
+        ("seed_a.rdvgame", "seed_a_old_patcher.json", EchoesNewPatcher.DISABLED),
+        ("seed_a.rdvgame", "seed_a_new_patcher.json", EchoesNewPatcher.BOTH),
+        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_old_patcher.json", EchoesNewPatcher.DISABLED),
+        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_new_patcher.json", EchoesNewPatcher.BOTH),
+        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_only_new_patcher.json", EchoesNewPatcher.ONLY),
     ],
 )
 def test_generate_patcher_data(
-    test_files_dir, rdvgame_filename, expected_results_filename, use_new_patcher, monkeypatch, mocker
-):
+    test_files_dir,
+    rdvgame_filename: str,
+    expected_results_filename: str,
+    use_new_patcher: EchoesNewPatcher,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", rdvgame_filename))
     player_index = 0

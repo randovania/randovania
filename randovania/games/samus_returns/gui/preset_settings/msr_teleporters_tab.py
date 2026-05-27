@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 
 
 class PresetTeleportersMSR(PresetTeleporterTab, Ui_PresetTeleportersMSR, NodeListHelper):
-    teleporter_mode_to_description = {
+    teleporter_mode_to_description: typing.ClassVar[dict[TeleporterShuffleMode, str]] = {
         TeleporterShuffleMode.VANILLA: "All elevators are connected to where they do in the original game.",
         TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
             "After taking a elevator, the elevator in the room you are in will bring you back to where you were. "

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import argparse
-from unittest.mock import ANY, MagicMock, patch
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -49,7 +49,7 @@ def test_parse_args_invalid(args):
     # Run
     parser = cli.create_parser()
 
-    with pytest.raises(SystemExit, match="^0$"):
+    with pytest.raises(SystemExit, match=r"^0$"):
         parser.parse_args(args)
 
 
@@ -74,7 +74,7 @@ def test_run_args_without_func():
     args.func = None
 
     # Run
-    with pytest.raises(SystemExit, match="^1$"):
+    with pytest.raises(SystemExit, match=r"^1$"):
         cli._run_args(parser, args)
 
     # Assert
@@ -111,5 +111,5 @@ def test_run_pytest(mocker):
     cli.run_pytest(["a", "b", "c", "d"])
 
     # Assert
-    mock_main.assert_called_once_with(["c", "d"], plugins=ANY)
+    mock_main.assert_called_once_with(["c", "d"])
     mock_exit.assert_called_once_with(mock_main.return_value)

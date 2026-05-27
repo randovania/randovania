@@ -8,11 +8,11 @@ from pathlib import Path
 from typing import Any
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import default_database, trick_documentation
+from randovania.game_description import binary_data, default_database, trick_documentation
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.game_description.trick_documentation import TrickUsageState
-from randovania.games import binary_data, default_data
+from randovania.games import default_data
 from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 

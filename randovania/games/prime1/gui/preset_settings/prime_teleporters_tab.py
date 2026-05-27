@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.games.prime1.gui.generated.preset_teleporters_prime1_ui import (
@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 
 
 class PresetTeleportersPrime1(PresetTeleporterTab[PrimeConfiguration], Ui_PresetTeleportersPrime1, NodeListHelper):
-    teleporter_mode_to_description = {
+    teleporter_mode_to_description: ClassVar[dict[TeleporterShuffleMode, str]] = {
         TeleporterShuffleMode.VANILLA: "All elevators are connected to where they do in the original game.",
         TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
             "After taking an elevator, the elevator in the room you are in will bring you back to where you were. "

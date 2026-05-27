@@ -7,9 +7,9 @@ from randovania.games.prime_hunters.gui.prime_hunters_game_tab import HuntersGam
 from randovania.games.prime_hunters.gui.prime_hunters_teleporter_details_tab import HuntersTeleporterDetailsTab
 
 __all__ = [
-    "HuntersGameTabWidget",
     "HuntersCosmeticPatchesDialog",
     "HuntersGameExportDialog",
-    "preset_tabs",
+    "HuntersGameTabWidget",
     "HuntersTeleporterDetailsTab",
+    "preset_tabs",
 ]

@@ -304,7 +304,7 @@ async def _create_description(
         status_update,
         world_names,
     )
-    player_pools, filler_results = pools_results
+    _player_pools, filler_results = pools_results
 
     filler_results = _distribute_remaining_items(rng, filler_results, presets)
     filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, filler_results, status_update)

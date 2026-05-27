@@ -209,7 +209,7 @@ def test_encode(data):
     value = data.expected
 
     # Run
-    result, echoes_bit_count = bitpacking.pack_results_and_bit_count(
+    result, _echoes_bit_count = bitpacking.pack_results_and_bit_count(
         value.bit_pack_encode({"reference": data.reference})
     )
 

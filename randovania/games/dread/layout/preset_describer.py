@@ -37,8 +37,8 @@ def describe_artifacts(artifacts: DreadArtifactConfig) -> list[dict[str, bool]]:
         ]
 
 
-def _format_environmental_damage(configuration: DreadConfiguration):
-    def format_dmg(value: int | None):
+def _format_environmental_damage(configuration: DreadConfiguration) -> list[dict[str, bool]]:
+    def format_dmg(value: int | None) -> str:
         if value is None:
             return "Unmodified"
         elif value == 0:

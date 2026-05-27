@@ -117,7 +117,7 @@ def test_replace_node_unknown_node(game_editor):
     dock = region_list.area_by_area_location(loc2).node_with_name("Door to Landing Site")
 
     # Run
-    with pytest.raises(ValueError, match="Given Door to Landing Site does does not belong to Landing Site."):
+    with pytest.raises(ValueError, match=r"Given Door to Landing Site does does not belong to Landing Site."):
         game_editor.replace_node(landing_site, dock, dock)
 
 

@@ -143,7 +143,7 @@ class GameConnection:
 
     def _on_player_location_changed(self, connector: RemoteConnector, location: PlayerLocationEvent) -> None:
         connected_state = self._ensure_connected_state_exists(connector)
-        region, area = location
+        region, _area = location
         if region is None:
             connected_state.status = GameConnectionStatus.TitleScreen
         else:

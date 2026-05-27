@@ -34,6 +34,7 @@ from uvicorn.logging import ColourizedFormatter
 import randovania
 from randovania.bitpacking import construct_pack
 from randovania.network_common import connection_headers, error
+from randovania.network_common.authentication import AuthenticationMethod
 from randovania.server import client_check, fastapi_discord
 from randovania.server.database import User, World, database_lifespan
 from randovania.server.discord_auth import EnforceDiscordRole, discord_oauth_lifespan
@@ -76,6 +77,10 @@ class ServerLoggingFormatter(ColourizedFormatter):
         return super().formatMessage(record)
 
 
+async def get_sid(sa: ServerApp, sid: str) -> str:
+    return sid
+
+
 class ServerApp:
     """The main class handling server functionality."""
 
@@ -84,7 +89,6 @@ class ServerApp:
     db: peewee.SqliteDatabase
     metrics: Instrumentator
     fernet_encrypt: Fernet
-    guest_encrypt: Fernet | None = None
     enforce_role: EnforceDiscordRole | None = None
     expected_headers: dict[str, str]
 
@@ -93,8 +97,6 @@ class ServerApp:
 
         self.logger = logging.getLogger("uvicorn.asgi")
         self.fernet_encrypt = Fernet(configuration["server_config"]["fernet_key"].encode("ascii"))
-        if configuration.get("guest_secret") is not None:
-            self.guest_encrypt = Fernet(configuration["guest_secret"].encode("ascii"))
 
         self.expected_headers = connection_headers()
         self.expected_headers.pop("X-Randovania-Version")
@@ -182,6 +184,8 @@ class ServerApp:
                 request.headers.get("X-Forwarded-For"),
             )
             return randovania.VERSION
+
+        self.on("get_sid", get_sid)
 
     def _setup_exception_handlers(self) -> None:
         def status_message(status_code: int) -> str:
@@ -436,6 +440,17 @@ class ServerApp:
     def is_api_request(self, request: fastapi.Request) -> bool:
         return "application/json" in request.headers.get("accept", "")
 
+    def is_authentication_method_supported(self, method: AuthenticationMethod) -> bool:
+        match method:
+            case AuthenticationMethod.GUEST:
+                return self.app.debug
+
+            case AuthenticationMethod.DISCORD:
+                return self.configuration["server_config"]["discord_client_secret"] != ""
+
+            case _:  # pragma: no cover
+                raise ValueError("Unknown method")
+
 
 async def server_app(request: fastapi.Request) -> ServerApp:
     """Returns the request's ServerApp. Used for dependency injection ."""
@@ -515,3 +530,5 @@ UserDep = Annotated[User, RequireUser]
 """The User associated with the request."""
 AdminDep = Annotated[User, RequireAdminUser]
 """The admin User associated with the request."""
+SidDep = Annotated[str | None, fastapi.Header(alias="X-Randovania-Sid")]
+"""The client's socketio sid as well."""

@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'dread_cosmetic_patches_dialog.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.0
+## Created by: tools/uic_wrapper.py
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -26,7 +26,7 @@ class Ui_DreadCosmeticPatchesDialog(object):
     def setupUi(self, DreadCosmeticPatchesDialog):
         if not DreadCosmeticPatchesDialog.objectName():
             DreadCosmeticPatchesDialog.setObjectName(u"DreadCosmeticPatchesDialog")
-        DreadCosmeticPatchesDialog.resize(421, 368)
+        DreadCosmeticPatchesDialog.resize(624, 797)
         self.gridLayout = QGridLayout(DreadCosmeticPatchesDialog)
         self.gridLayout.setSpacing(6)
         self.gridLayout.setContentsMargins(11, 11, 11, 11)
@@ -36,7 +36,7 @@ class Ui_DreadCosmeticPatchesDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 390, 716))
+        self.scroll_area_contents.setGeometry(QRect(0, -242, 583, 1057))
         self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -51,6 +51,12 @@ class Ui_DreadCosmeticPatchesDialog(object):
         self.game_changes_layout.setSpacing(6)
         self.game_changes_layout.setContentsMargins(11, 11, 11, 11)
         self.game_changes_layout.setObjectName(u"game_changes_layout")
+        self.enable_debug_logging = QCheckBox(self.game_changes_box)
+        self.enable_debug_logging.setObjectName(u"enable_debug_logging")
+        self.enable_debug_logging.setVisible(True)
+
+        self.game_changes_layout.addWidget(self.enable_debug_logging)
+
         self.show_boss_life = QCheckBox(self.game_changes_box)
         self.show_boss_life.setObjectName(u"show_boss_life")
 
@@ -85,12 +91,6 @@ class Ui_DreadCosmeticPatchesDialog(object):
         self.enable_auto_tracker.setObjectName(u"enable_auto_tracker")
 
         self.game_changes_layout.addWidget(self.enable_auto_tracker)
-
-        self.enable_debug_logging = QCheckBox(self.game_changes_box)
-        self.enable_debug_logging.setObjectName(u"enable_debug_logging")
-        self.enable_debug_logging.setVisible(False)
-
-        self.game_changes_layout.addWidget(self.enable_debug_logging)
 
         self.show_room_names = QHBoxLayout()
         self.show_room_names.setSpacing(6)
@@ -202,6 +202,19 @@ class Ui_DreadCosmeticPatchesDialog(object):
 
         self.game_changes_layout.addLayout(self.ambience_group)
 
+        self.separate_save_slots = QCheckBox(self.game_changes_box)
+        self.separate_save_slots.setObjectName(u"separate_save_slots")
+
+        self.game_changes_layout.addWidget(self.separate_save_slots)
+
+        self.save_slots_description = QLabel(self.game_changes_box)
+        self.save_slots_description.setObjectName(u"save_slots_description")
+        self.save_slots_description.setWordWrap(True)
+        self.save_slots_description.setMargin(0)
+        self.save_slots_description.setIndent(24)
+
+        self.game_changes_layout.addWidget(self.save_slots_description)
+
 
         self.verticalLayout.addWidget(self.game_changes_box)
 
@@ -280,6 +293,7 @@ class Ui_DreadCosmeticPatchesDialog(object):
     def retranslateUi(self, DreadCosmeticPatchesDialog):
         DreadCosmeticPatchesDialog.setWindowTitle(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Metroid Dread - Cosmetic Options", None))
         self.game_changes_box.setTitle(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Config Options", None))
+        self.enable_debug_logging.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Enable Lua debug logs (in supported emulators)", None))
         self.show_boss_life.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show boss life bars", None))
         self.show_enemy_life.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show enemy life bars", None))
         self.show_enemy_damage.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show enemy damage", None))
@@ -287,7 +301,6 @@ class Ui_DreadCosmeticPatchesDialog(object):
         self.show_dna_in_hud.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show current and total DNA count in HUD", None))
         self.show_death_counter.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show player death count in HUD", None))
         self.enable_auto_tracker.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Enable automatic item tracker", None))
-        self.enable_debug_logging.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Enable Lua debug logs (in supported emulators)", None))
         self.room_names_label.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Show Room Names On HUD", None))
         self.room_names_dropdown.setCurrentText("")
         self.room_names_dropdown.setPlaceholderText("")
@@ -298,6 +311,8 @@ class Ui_DreadCosmeticPatchesDialog(object):
         self.sfx_label.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"100%", None))
         self.ambience_title_label.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Background Ambience Volume:", None))
         self.ambience_label.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"100%", None))
+        self.separate_save_slots.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Unique Save Slots", None))
+        self.save_slots_description.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"<html><head/><body><p>This setting changes where the game save slots are stored to a folder unique to this randomized game. This makes it easier to maintain concurrent randomizer sessions (such as multiple worlds in a multiworld).</p><p>Each save slot generated with this setting will take up approximately 300kb of space. To free this space, delete your save data through System Settings on console, or open the game save data in Ryujinx and delete any folders starting with \"RDV\".</p></body></html>", None))
         self.accessibility_options_box.setTitle(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Accessibility Options", None))
         self.alt_ice_missile.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Alternate Ice Missile shield texture", None))
         self.alt_storm_missile.setText(QCoreApplication.translate("DreadCosmeticPatchesDialog", u"Alternate Storm Missile shield texture", None))

@@ -6,8 +6,8 @@ from randovania.games.fusion.gui.fusion_game_tab import FusionGameTabWidget
 from randovania.games.fusion.gui.preset_settings import preset_tabs
 
 __all__ = [
-    "FusionGameTabWidget",
     "FusionCosmeticPatchesDialog",
     "FusionGameExportDialog",
+    "FusionGameTabWidget",
     "preset_tabs",
 ]

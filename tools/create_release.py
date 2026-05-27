@@ -210,13 +210,10 @@ async def main():
 
     if is_production():
         server_suffix = "randovania"
-        client_id = 618134325921316864
     else:
         server_suffix = "randovania-staging"
-        client_id = 887825192208969828
 
     configuration = {
-        "discord_client_id": client_id,
         "server_address": f"https://randovania.metroidprime.run/{server_suffix}",
         "socketio_path": f"/{server_suffix}/socket.io",
         "sentry_urls": {"client": os.environ.get("SENTRY_CLIENT_URL")},

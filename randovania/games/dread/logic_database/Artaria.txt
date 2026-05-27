@@ -1241,7 +1241,7 @@ Extra - asset_id: collision_camera_011
   * Extra - left_shield_def: actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Override default lock requirement:
+  * Override default open requirement:
     Open Charge Door and Shoot Super Missile
 
   > Pickup (Missile Tank, Supers-locked)
@@ -2679,6 +2679,9 @@ Extra - asset_id: collision_camera_030
       Trivial
   > Tunnel to Chain Reaction Room
       Bomb and Morph Ball and Climb Sloped Tunnels (Advanced)
+  > Event - Chain Reaction End
+      # Having this connection back to the event node helps the generator see when the rest of this area is safe to do
+      After Artaria - Chain Reaction End
 
 > Tunnel to Chain Reaction Room; Heals? False
   * Layers: default
@@ -3348,7 +3351,7 @@ Extra - asset_id: collision_camera_055
   * Extra - left_shield_def: actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  * Override default lock requirement:
+  * Override default open requirement:
     Open Charge Door and Shoot Super Missile
 
   > Room Middle

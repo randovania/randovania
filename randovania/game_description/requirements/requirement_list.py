@@ -14,7 +14,7 @@ _ItemKey = tuple[int, int, bool]
 
 
 class RequirementList:
-    __slots__ = ("_bitmask", "_items", "_extra", "_cached_hash")
+    __slots__ = ("_bitmask", "_cached_hash", "_extra", "_items")
     _bitmask: Bitmask
     _items: dict[_ItemKey, ResourceRequirement]
     _extra: list[ResourceRequirement]

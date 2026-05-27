@@ -114,7 +114,7 @@ def test_decode(default_blank_preset, mocker, development, extra_data):
 
     # Run
     if extra_data:
-        expectation = pytest.raises(ValueError, match="At least one entire byte of data is still unread.")
+        expectation = pytest.raises(ValueError, match=r"At least one entire byte of data is still unread.")
     else:
         expectation = contextlib.nullcontext()
 

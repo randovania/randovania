@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import datetime
 import json
 import urllib.parse
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
-from fastapi import Request  # noqa: TC002
+from fastapi import Request
 from fastapi.responses import RedirectResponse
 
 from randovania.network_common import error
@@ -15,7 +14,7 @@ from randovania.network_common.error import InvalidSessionError
 from randovania.server import user_session
 from randovania.server.database import User
 from randovania.server.fastapi_discord import exceptions as fd_exceptions
-from randovania.server.server_app import ServerAppDep  # noqa: TC001
+from randovania.server.server_app import ServerAppDep
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -52,7 +51,7 @@ async def test_browser_login_with_discord(has_sio, mock_sa, mock_request, mocker
     mock_render = mocker.patch("randovania.server.user_session.unable_to_login")
 
     mock_sa.discord.get_oauth_login_url.return_value = "http://fakeurl.gg"
-    mock_sa.configuration = {"server_config": {"secret_key": "secret"}}
+    mock_sa.configuration = {"server_config": {"secret_key": "secret-key-long-enough-for-hs256"}}
 
     server = mock_sa.sio
     server.rooms.return_value = ["THE_SID"] if has_sio is True else []
@@ -300,28 +299,33 @@ async def test_restore_user_session_with_discord(mock_sa, fernet, mocker: pytest
     assert result is discord_result
 
 
-async def test_login_with_guest(mock_sa, mocker):
-    # Setup
-    mocker.patch("randovania.server.user_session._get_now", return_value=datetime.datetime(year=2020, month=9, day=4))
-    mock_create_session = mocker.patch("randovania.server.user_session._create_client_side_session", autospec=True)
-    enc_request = b"encrypted stuff"
+async def test_restore_plain_user_session(mock_sa, fernet, mocker: pytest_mock.MockerFixture, clean_database):
+    session_result = MagicMock()
 
-    mock_sa.guest_encrypt.decrypt.return_value = json.dumps(
-        {
-            "name": "Someone",
-            "date": "2020-09-05T17:12:09.941661",
-        }
-    ).encode("utf-8")
+    mock_create_client_side = mocker.patch(
+        "randovania.server.user_session._create_client_side_session", autospec=True, return_value=session_result
+    )
 
-    result = await user_session.login_with_guest(mock_sa, "TheSid", enc_request)
+    mock_sa.sio.save_session = AsyncMock()
+
+    mock_sa.fernet_encrypt = fernet
+
+    session = {
+        "user-id": 1234,
+    }
+
+    plain_user = User.create(id=1234, name="Foo")
+
+    enc_session = fernet.encrypt(json.dumps(session).encode("utf-8"))
+
+    # Run
+    result = await user_session.restore_user_session(mock_sa, "TheSid", enc_session)
 
     # Assert
-    mock_sa.guest_encrypt.decrypt.assert_called_once_with(enc_request)
-    user: User = User.get_by_id(1)
-    assert user.name == "Guest: Someone"
+    mock_sa.sio.save_session.assert_called_once_with("TheSid", session)
+    mock_create_client_side.assert_called_once_with(mock_sa, "TheSid", plain_user)
 
-    mock_create_session.assert_called_once_with(mock_sa, "TheSid", user)
-    assert result is mock_create_session.return_value
+    assert result is session_result
 
 
 async def test_logout(mock_sa, mocker: MockerFixture):
@@ -391,19 +395,29 @@ async def test_guest_login_form(test_client):
     assert '<input id="name" placeholder="User name to login as" name="name">' in response.text
 
 
-async def test_guest_login_post_valid_json(test_client, clean_database):
-    response = test_client.post("/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo"})
+async def test_guest_login_post_valid_json(test_client, clean_database, mocker: pytest_mock.MockerFixture):
+    mocker.patch("randovania.server.user_session._log_session_info")
+
+    test_client.sa.sio.session = MagicMock()
+    test_client.sa.sio.session.return_value.__aenter__.return_value = {}
+
+    response = test_client.post(
+        "/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo", "sid": "1234"}
+    )
     response.raise_for_status()
     assert response.json() == {
         "encoded_session_b85": ANY,
-        "sid": None,
+        "sid": "1234",
         "user": {"discord_id": None, "id": 1, "name": "Guest: Foo"},
     }
     assert User.get_by_id(1).name == "Guest: Foo"
 
 
 async def test_guest_login_post_valid_web(test_client, clean_database):
-    response = test_client.post("/guest_login", data={"name": "Foo"}, follow_redirects=False)
+    test_client.sa.sio.session = MagicMock()
+    test_client.sa.sio.session.return_value.__aenter__.return_value = {}
+
+    response = test_client.post("/guest_login", data={"name": "Foo", "sid": "1234"}, follow_redirects=False)
     assert response.status_code == 303
     assert response.headers["Location"] == "http://testserver/me"
     assert response.text == ""
@@ -413,6 +427,14 @@ async def test_guest_login_post_valid_web(test_client, clean_database):
 async def test_guest_login_post_not_debug(test_client):
     test_client.sa.app.debug = False
 
-    response = test_client.post("/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo"})
+    response = test_client.post(
+        "/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo", "sid": "1234"}
+    )
     assert response.status_code == 400
     assert response.json() == {"error_message": "Unable to perform login"}
+
+
+async def test_authentication_methods(test_client, is_dev_version):
+    response = test_client.get("/authentication_methods")
+
+    assert response.json() == ["guest", "discord"]

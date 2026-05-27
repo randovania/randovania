@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
 
 
 class RequirementArrayBase(Requirement):
-    __slots__ = ("items", "comment", "_cached_hash")
+    __slots__ = ("_cached_hash", "comment", "items")
     items: tuple[Requirement, ...]
     comment: str | None
     _cached_hash: int | None

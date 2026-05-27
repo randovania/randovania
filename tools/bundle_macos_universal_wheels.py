@@ -197,7 +197,7 @@ def calculate_merged_wheel_name(matching_wheels: list[dict[str, Any]]) -> str:
     min_version = None
     for wheel_data in matching_wheels:
         wheel_info = wheel_data["wheel_info"]
-        arch, version = parse_macos_platform(wheel_info["platform_tag"])
+        _arch, version = parse_macos_platform(wheel_info["platform_tag"])
         if min_version is None or version < min_version:
             min_version = version
 

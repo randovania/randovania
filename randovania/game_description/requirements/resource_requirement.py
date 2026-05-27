@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
 
 class ResourceRequirement(Requirement):
-    __slots__ = ("resource", "amount", "negate")
+    __slots__ = ("amount", "negate", "resource")
     resource: ResourceInfo
     amount: int
     negate: bool

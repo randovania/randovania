@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'preset_dread_patches.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.0
+## Created by: tools/uic_wrapper.py
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -37,7 +37,7 @@ class Ui_PresetDreadPatches(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_contents = QWidget()
         self.scroll_contents.setObjectName(u"scroll_contents")
-        self.scroll_contents.setGeometry(QRect(0, 0, 498, 754))
+        self.scroll_contents.setGeometry(QRect(0, 0, 506, 878))
         self.scroll_layout = QVBoxLayout(self.scroll_contents)
         self.scroll_layout.setSpacing(6)
         self.scroll_layout.setContentsMargins(11, 11, 11, 11)
@@ -185,8 +185,6 @@ class Ui_PresetDreadPatches(object):
         self.nerf_power_bombs_label.setText(QCoreApplication.translate("PresetDreadPatches", u"The Power Bomb is one of the most powerful abilities in the game, as it can defeat most enemies and some bosses in one hit, as well as open Charge Beam doors, and destroy Enkies. \n"
 "This setting removes the ability to destroy Enkies and open Charge Beam doors, making Ice Missiles and Charge Beam much more valuable. ", None))
         self.skip_item_popups_check.setText(QCoreApplication.translate("PresetDreadPatches", u"Skip Item Acquisition Popups", None))
-        self.skip_item_popups_label.setText(QCoreApplication.translate("PresetDreadPatches", u"This setting causes the popup dialogs shown when collecting pickups to be skipped. Instead, a message is shown near the top of the screen for several seconds after collecting an \n"
-"item, similar to the messages shown when receiving items in a Multiworld game.\n"
-"              ", None))
+        self.skip_item_popups_label.setText(QCoreApplication.translate("PresetDreadPatches", u"This setting causes the popup dialogs shown when collecting pickups to be skipped. Instead, a message is shown near the top of the screen for several seconds after collecting an item, similar to the messages shown when receiving items in a Multiworld game.", None))
     # retranslateUi
 

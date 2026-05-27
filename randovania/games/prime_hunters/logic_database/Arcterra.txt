@@ -1,10 +1,10 @@
 ----------------
-Biodefense Chamber 04
+Biodefense Chamber A (Arcterra)
 Extra - room_id: 82
 Extra - entity_file: unit4_b1_Ent.bin
 > Door to Stronghold Void A (Arcterra); Heals? False
   * Layers: default
-  * Normal Door to Stronghold Void A (Arcterra)/Door to Biodefense Chamber 04
+  * Normal Door to Stronghold Void A (Arcterra)/Door to Biodefense Chamber A (Arcterra)
   * Extra - entity_id: 4
   * Extra - position: frozendict.frozendict({'x': 0.0, 'y': 2.479248046875, 'z': 17.3896484375})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -40,15 +40,19 @@ Extra - entity_file: unit4_b1_Ent.bin
   > Door to Stronghold Void A (Arcterra)
       After Arcterra - Defeat Slench 2
   > Event - Slench 2
-      Judicator
+      All of the following:
+          Judicator
+          Any of the following:
+              Combat (Intermediate) or Damage ≥ 199
+              Combat (Beginner) and Damage ≥ 99
 
 ----------------
-Biodefense Chamber 07
+Biodefense Chamber B (Arcterra)
 Extra - room_id: 88
 Extra - entity_file: unit4_b2_Ent.bin
 > Door to Stronghold Void B (Arcterra); Heals? False
   * Layers: default
-  * Normal Door to Stronghold Void B (Arcterra)/Door to Biodefense Chamber 07
+  * Normal Door to Stronghold Void B (Arcterra)/Door to Biodefense Chamber B (Arcterra)
   * Extra - entity_id: 1
   * Extra - position: frozendict.frozendict({'x': 0.0, 'y': -0.89990234375, 'z': 10.0})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -84,7 +88,9 @@ Extra - entity_file: unit4_b2_Ent.bin
   > Door to Stronghold Void B (Arcterra)
       After Arcterra - Defeat Cretaphid v4
   > Event - Cretaphid v4
-      Trivial
+      Any of the following:
+          Combat (Expert) or Damage ≥ 299
+          Combat (Advanced) and Damage ≥ 199
 
 ----------------
 Frost Labyrinth
@@ -226,7 +232,7 @@ Arcterra Gateway
 Extra - room_id: 77
 Extra - entity_file: unit4_Land_Ent.bin
 Extra - portal_filename: unit4_Land_Ent
-> Ship; Heals? False; Default Node
+> Ship; Heals? True; Default Node
   * Layers: default
   * Teleporter Network (Unlocked by Trivial)
   * Extra - entity_id: 0
@@ -259,7 +265,7 @@ Extra - portal_filename: unit4_Land_Ent
   * Extra - position: frozendict.frozendict({'x': -4.44189453125, 'y': 31.87109375, 'z': -5.018798828125})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.289306640625, 'y': 0.0, 'z': 0.95703125})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 60, 'target_index': 60, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit4_RM1_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 60, 'target_index': 60, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit4_RM1_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Ship
       Trivial
 
@@ -270,7 +276,7 @@ Extra - portal_filename: unit4_Land_Ent
   * Extra - position: frozendict.frozendict({'x': 5.830322265625, 'y': 31.87109375, 'z': 5.312744140625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': -0.983642578125, 'y': 0.0, 'z': -0.178955078125})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 70, 'target_index': 70, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit4_RM5_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 70, 'target_index': 70, 'artifact_id': 8, 'active': False, 'invisible': False, 'entity_filename': 'unit4_RM5_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Ship
       Trivial
 
@@ -864,7 +870,7 @@ Extra - portal_filename: unit4_RM5_Ent
   * Extra - position: frozendict.frozendict({'x': -58.685791015625, 'y': 14.5, 'z': -11.09228515625})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.8525390625, 'y': 0.0, 'z': 0.5224609375})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 2, 'target_index': 3, 'artifact_id': 7, 'active': False, 'invisible': False, 'entity_filename': 'Unit4_TP2_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 2, 'target_index': 3, 'artifact_id': 7, 'active': False, 'invisible': False, 'entity_filename': 'Unit4_TP2_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > South Side
       Trivial
 
@@ -1005,14 +1011,14 @@ Extra - portal_filename: Unit4_TP1_Ent
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
-  > Door to Biodefense Chamber 04
+  > Door to Biodefense Chamber A (Arcterra)
       Trivial
   > Portal to Ice Hive
       Trivial
 
-> Door to Biodefense Chamber 04; Heals? False
+> Door to Biodefense Chamber A (Arcterra); Heals? False
   * Layers: default
-  * Normal Door to Biodefense Chamber 04/Door to Stronghold Void A (Arcterra)
+  * Normal Door to Biodefense Chamber A (Arcterra)/Door to Stronghold Void A (Arcterra)
   * Extra - entity_id: 2
   * Extra - position: frozendict.frozendict({'x': 0.12158203125, 'y': 1.657470703125, 'z': 6.73046875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
@@ -1028,7 +1034,7 @@ Extra - portal_filename: Unit4_TP1_Ent
   * Extra - position: frozendict.frozendict({'x': 0.37109375, 'y': 0.222412109375, 'z': 65.701904296875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.0, 'y': 0.0, 'z': -0.999755859375})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 6, 'target_index': 6, 'artifact_id': 255, 'active': True, 'invisible': False, 'entity_filename': 'unit4_RM1_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 6, 'target_index': 6, 'artifact_id': 255, 'active': True, 'invisible': False, 'entity_filename': 'unit4_RM1_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
 
@@ -1046,7 +1052,7 @@ Extra - portal_filename: Unit4_TP2_Ent
   * Extra - entity_type_data: frozendict.frozendict({'availabilty': 0, 'active': True})
   > Portal to Fault Line
       Trivial
-  > Door to Biodefense Chamber 07
+  > Door to Biodefense Chamber B (Arcterra)
       Trivial
 
 > Portal to Fault Line; Heals? False
@@ -1056,13 +1062,13 @@ Extra - portal_filename: Unit4_TP2_Ent
   * Extra - position: frozendict.frozendict({'x': 0.37109375, 'y': 0.222412109375, 'z': 65.701904296875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})
   * Extra - facing_vector: frozendict.frozendict({'x': 0.015625, 'y': 0.0, 'z': -0.999755859375})
-  * Extra - entity_type_data: frozendict.frozendict({'load_index': 3, 'target_index': 2, 'artifact_id': 10, 'active': True, 'invisible': False, 'entity_filename': 'unit4_RM5_Ent.', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
+  * Extra - entity_type_data: frozendict.frozendict({'load_index': 3, 'target_index': 2, 'artifact_id': 10, 'active': True, 'invisible': False, 'entity_filename': 'unit4_RM5_Ent', 'target_position': frozendict.frozendict({'x': 0.062255859375, 'y': 0.0, 'z': 0.0}), 'node_name': ''})
   > Player Spawn
       Trivial
 
-> Door to Biodefense Chamber 07; Heals? False
+> Door to Biodefense Chamber B (Arcterra); Heals? False
   * Layers: default
-  * Normal Door to Biodefense Chamber 07/Door to Stronghold Void B (Arcterra)
+  * Normal Door to Biodefense Chamber B (Arcterra)/Door to Stronghold Void B (Arcterra)
   * Extra - entity_id: 2
   * Extra - position: frozendict.frozendict({'x': 0.12158203125, 'y': 1.657470703125, 'z': 6.73046875})
   * Extra - up_vector: frozendict.frozendict({'x': 0.0, 'y': 1.0, 'z': 0.0})

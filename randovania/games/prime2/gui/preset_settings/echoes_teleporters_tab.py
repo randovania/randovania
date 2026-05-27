@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from typing import TYPE_CHECKING, override
+from typing import TYPE_CHECKING, ClassVar, override
 
 import randovania
 from randovania.game_description.db.dock_node import DockNode
@@ -35,14 +35,14 @@ if TYPE_CHECKING:
 
 
 class PresetTeleportersPrime2(PresetTeleporterTab[EchoesConfiguration], Ui_PresetTeleportersPrime2, NodeListHelper):
-    custom_weights = {
+    custom_weights: ClassVar[dict[str, int]] = {
         "Great Temple": 0,
         "Agon Wastes": 1,
         "Torvus Bog": 2,
         "Sanctuary Fortress": 3,
         "Temple Grounds": 5,
     }
-    teleporter_mode_to_description = {
+    teleporter_mode_to_description: ClassVar[dict[TeleporterShuffleMode, str]] = {
         TeleporterShuffleMode.VANILLA: "All elevators are connected to where they do in the original game.",
         TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
             "After taking an elevator, the elevator in the room you are in will bring you back to where you were. "

@@ -188,6 +188,7 @@ def write_resource_database(resource_database: ResourceDatabase) -> dict:
                 "reductions": [
                     {
                         "name": reduction.inventory_item.short_name if reduction.inventory_item is not None else None,
+                        "quantity": reduction.item_quantity,
                         "multiplier": reduction.damage_multiplier,
                     }
                     for reduction in reductions

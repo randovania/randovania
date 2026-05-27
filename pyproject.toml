@@ -61,7 +61,7 @@ dependencies = [
     # For TypeVar default
     "typing-extensions>=4.4.0",
     # For compressing preset/rdvgames
-    "zstandard",
+    "zstandard; python_version<'3.14'",
     # For consistent HTTPS certificate availability across platforms
     "certifi",
     # speedup GraphRequirement
@@ -81,32 +81,35 @@ exporters = [
     "factorio-randovania-mod==0.8.1",
 
     # Metroid Dread
-    "open-dread-rando==2.19.0",
+    "open-dread-rando==2.20.1",
 
     # Metroid Fusion
-    "mars-patcher==0.11.0",
+    "mars-patcher==0.14.2",
 
     # Metroid Planets
-    "planets-yapr==1.0.1",
+    "planets-yapr==1.0.3",
 
     # Metroid Prime 1
-    "py_randomprime==1.30.3",
-    "random-enemy-attributes==1.0.4.3",
+    "py_randomprime==1.31.1",
+    "random-enemy-attributes==1.0.9",
 
     # Metroid Prime 1/2
     "ppc-asm>=1.2.1",  # for multiworld
-    "open-prime-rando==0.15.1",  # but also for echoes exporting
-    "retro-data-structures>=0.24.0,<0.29",  # Newer versions break asset conversion and needs adjusting
+    "open-prime-rando==0.16.0",  # but also for echoes exporting
+    "retro-data-structures==0.34.0",
 
     # Metroid Prime 2
-    "mp2hudcolor==1.0.13",
+    "mp2hudcolor==1.0.14",
+
+    # Metroid Prime Hunters
+    "open-prime-hunters-rando==0.9.1",
 
     # Metroid: Samus Returns
-    "open-samus-returns-rando==3.4.0",
+    "open-samus-returns-rando==3.4.2",
 ]
 
 gui = [
-    "PySide6-Essentials==6.10.0",
+    "PySide6-Essentials==6.11.1",
     "pyqtdarktheme-fork>=2.3.0",
     "markdown",
     "qasync",
@@ -138,14 +141,14 @@ server = [
     # discord auth
     "aiocache",  # for fastapi_discord copy
     "oauthlib",
-    "pyjwt<2.11.0",
+    "pyjwt",
 
     # database
-    "peewee",
+    "peewee<4",
     "cachetools",  # for TTLCache
 
     # discord bot
-    "py-cord>=2.3.1,<2.7",  # for randovania/discord_bot; 2.3.1+ is needed for Python 3.11, 2.7 breaks tests
+    "py-cord>=2.8,<2.9",  # for randovania/discord_bot; 2.3.1+ is needed for Python 3.11, 2.7 breaks tests
     "audioop-lts; python_version>='3.13'",  # for py-cord
     "Pillow>=9.0.0",  # for randovania/discord_bot/database_command
     "graphviz",  # for randovania/discord_bot/database_command
@@ -155,7 +158,7 @@ test = [
     "pytest",
     "pytest-cov",
     "pytest-qt",
-    "pytest-asyncio<1.0.0",  # Breaks our tests somehow
+    "pytest-asyncio",
     "pytest-mock",
     "pytest-localftpserver",
     "pytest-xdist[psutil]",
@@ -177,9 +180,9 @@ installer = [
 ]
 
 typing = [
-    "mypy<1.19.2",
+    "mypy<2.1.1",
     "types-aiofiles",
-    "types-peewee",
+    "types-peewee<4",
     "types-qrcode>=8.0.0.20241004",
     "python-socketio-stubs",
     "types-oauthlib",
@@ -224,24 +227,35 @@ extend-exclude = [
 ]
 
 [tool.ruff.lint]
-select = [
-    "E", "F", "W", "C90", "I", "UP", "C4",
-    "RSE",
-    "TCH",
-    "PTH",
-    "COM818", "COM819",
-    "ISC",
-    "PIE",
-    "PT",
+extend-select = [
+    "E", # PyCodeStyle Errors
+    "F", # Pyflakes (Errors/Warnings)
+    "W", # PyCodeStyle Warnings
+    "I", # Import Sorting (isort)
+    "UP", # Python Upgrades (pyupgrade)
+    "C4", # Comprehensions (flake8-comprehensions)
+    "C90", # complexity (mccabe)
+    "RSE", # flake8-raise (RSE)
+    "PTH", # use pathlib
+    "COM818", "COM819", # trailing comma
+    "ISC", # flake8-implicit-str-concat
+    "PIE", # flake8-pie (misc checks)
+    "PT", # common style issues or inconsistencies with pytest-based tests (flake8-pytest-style)
+    "SIM101", # Multiple isinstance calls for {name}, merge into a single call
+    "RUF",  # Ruff-specific rules
 
-    "PLC",
+    "PLC",  # pylint convention
     "PLC0208",  # iterating over set is also not deterministic, so we shouldn't do that!
+    "PLE",  # pylint error
+    "PLW",  # pylint warning
 
-    "PLE",
-    "PLR0402", "PLR1711", "PLR1722", "PLR0206",
-    "PLR0133", "PLR0124",
-    "PLW",
-    "SIM101",
+    # pylint refactor
+    "PLR0402", # Use from {module} import {name} in lieu of alias
+    "PLR1711", # Useless return statement at end of function
+    "PLR1722", # Use sys.exit() instead of {name}
+    "PLR0206", # Cannot have defined parameters for properties
+    "PLR0133", # Two constants compared in a comparison, consider replacing {left_constant} {op} {right_constant}
+    "PLR0124", # Name compared with itself, consider replacing {actual}
 ]
 ignore = [
     "ISC001",  # may cause conflicts with formatter
@@ -291,18 +305,7 @@ files = [
     "randovania/game_connection/",
     "randovania/game_description/",
     "randovania/game/",
-    "randovania/games/am2r/generator/",
-    "randovania/games/am2r/gui/",
-    "randovania/games/am2r/layout/",
-    "randovania/games/blank/",
-    "randovania/games/cave_story/",
-    "randovania/games/dread/exporter/hint_namer.py",
-    "randovania/games/dread/gui/",
-    "randovania/games/fusion/",
-    "randovania/games/prime_hunters/",
-    "randovania/games/prime1/",
-    "randovania/games/prime2/",
-    "randovania/games/samus_returns/",
+    "randovania/games/",
     "randovania/generator/",
     "randovania/graph/",
     "randovania/gui/async_race_room_window.py",
@@ -348,12 +351,12 @@ files = [
     "test/games/samus_returns/",
     "test/games/test_game.py",
     "test/games/test_hashes.py",
-    "test/games/test_prime_binary_decoder.py",
     "test/generator/",
     "test/graph/",
     "test/gui/dialog/test_connections_editor.py",
     "test/gui/widgets/test_node_selector_widget.py",
     "test/lib/",
+    "test/network_client/test_network_client.py",
     "test/resolver/test_logging.py",
 ]
 follow_imports = "silent"
@@ -394,6 +397,7 @@ module = [
     "ruamel.*",
     "aiocache.*",
     "socketio_handler.*",
+    "nod.*",
 ]
 ignore_missing_imports = true
 

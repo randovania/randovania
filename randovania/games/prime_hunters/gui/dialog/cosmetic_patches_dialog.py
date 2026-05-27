@@ -29,11 +29,11 @@ class HuntersCosmeticPatchesDialog(BaseCosmeticPatchesDialog[HuntersCosmeticPatc
 
     def connect_signals(self) -> None:
         super().connect_signals()
-        # More signals here!
+
+        self._persist_check_field(self.shuffle_hunter_colors_check, "shuffle_hunter_colors")
 
     def on_new_cosmetic_patches(self, patches: HuntersCosmeticPatches) -> None:
-        # Update fields with the new values
-        pass
+        self.shuffle_hunter_colors_check.setChecked(patches.shuffle_hunter_colors)
 
     @property
     def cosmetic_patches(self) -> HuntersCosmeticPatches:

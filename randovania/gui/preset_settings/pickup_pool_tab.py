@@ -295,7 +295,7 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
             if standard_pickup.hide_from_gui or standard_pickup.gui_category.name == "energy_tank":
                 continue
 
-            category_box, category_layout, elements = self._boxes_for_category[standard_pickup.gui_category.name]
+            _category_box, category_layout, elements = self._boxes_for_category[standard_pickup.gui_category.name]
             widget = StandardPickupWidget(None, standard_pickup, StandardPickupState(), resource_database)
             widget.Changed.connect(partial(self._on_standard_pickup_updated, widget))
 

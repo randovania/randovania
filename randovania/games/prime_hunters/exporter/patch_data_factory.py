@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from typing import TYPE_CHECKING, Final, override
+from typing import TYPE_CHECKING, Final, LiteralString, override
 
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
@@ -36,7 +36,7 @@ def force_field_index_for_requirement(game: GameDescription, requirement: Layout
 ITEM_SPAWN_ENTITY_TYPE: Final = 4
 ARTIFACT_ENTITY_TYPE: Final = 17
 OCTOLITH_MODEL_ID: Final = 8
-NOTHING_ITEM_TYPE: Final = 21
+NOTHING_ITEM_TYPE: Final = 17
 
 _ARTIFACT_TO_MODEL_ID = {
     "AlinosArtifact1": 0,
@@ -67,13 +67,15 @@ _STRING_ID_TO_SCAN_TITLE = {
     "214L": "OCTOLITH HINTS 04",
 }
 
+type StartingInventory = dict[str, str | int | dict[str, str]]
+
 
 class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosmeticPatches]):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_HUNTERS
 
-    def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, str | int]:
-        result: dict[str, str | int] = {}
+    def _calculate_starting_inventory(self, resources: ResourceCollection) -> StartingInventory:
+        result: StartingInventory = {}
 
         starting_items: defaultdict = defaultdict(int)
         starting_items.update({resource.long_name: quantity for resource, quantity in resources.as_resource_gain()})
@@ -81,8 +83,10 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         def starts_with_item(weapon_name: str) -> bool:
             return starting_items[weapon_name] > 0
 
-        fmt = "{:d}" * 8  # 8-bit bitfield
+        def fmt(field: list[bool], length: int) -> LiteralString:
+            return ("{:d}" * length).format(*field)
 
+        # Weapons
         weapons = [
             starts_with_item("Shock Coil"),
             starts_with_item("Magmaul"),
@@ -94,15 +98,40 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             True,  # Power Beam
         ]
 
+        # Artifacts
+        boss_portals = [
+            "alinos_1",
+            "alinos_2",
+            "celestial_archives_1",
+            "celestial_archives_2",
+            "vesper_defense_outpost_1",
+            "vesper_defense_outpost_2",
+            "arcterra_1",
+            "arcterra_2",
+        ]
+
+        regions = ["Alinos", "Celestial", "VDO", "Arcterra"]
+        artifact_types = ["Cartograph", "Attameter", "Binary Subscripture"]
+
+        formatted_artifacts = []
+        for region in regions:
+            for i in range(1, 3):
+                portal_artifacts = [
+                    starts_with_item(f"{region} {artifact_type} Artifact {i}") for artifact_type in artifact_types
+                ]
+                formatted_artifacts.append(fmt(portal_artifacts, 3))
+
+        # Octoliths
         octoliths = []
         for i in reversed(range(1, 9)):
             octoliths.append(starts_with_item(f"Octolith {i}"))
 
-        result["weapons"] = fmt.format(*weapons)
+        result["weapons"] = fmt(weapons, 8)
         result["missiles"] = starting_items["Missiles"]
         result["ammo"] = 40
-        result["energy_tanks"] = starting_items["Energy Tank"]
-        result["octoliths"] = fmt.format(*octoliths)
+        result["energy"] = self.configuration.starting_energy + (100 * starting_items["Energy Tank"])
+        result["artifacts"] = dict(zip(boss_portals, formatted_artifacts))
+        result["octoliths"] = fmt(octoliths, 8)
 
         return result
 
@@ -182,13 +211,29 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             }
 
             for area in region.areas:
-                level_data[region.name]["levels"][area.name] = {
+                area_name = area.name
+                # Remove region name from room name
+                if area_name.startswith(("Biodefense Chamber", "Stronghold Void")):
+                    area_name, _ = area_name.split(" (")
+                level_data[region.name]["levels"][area_name] = {
                     "pickups": self._get_pickups_for_area(area),
                     "force_fields": self._get_force_fields_for_area(area, self.patches.game_specific["force_fields"]),
                     "portals": self._get_portals_for_area(area),
                 }
 
         return level_data
+
+    def _update_ammo_sizes(self) -> dict:
+        spc = self.configuration.standard_pickup_configuration.as_json["pickups_state"]
+        apc = self.configuration.ammo_pickup_configuration.as_json["pickups_state"]
+
+        ammo_sizes = {
+            "missile_launcher": spc["Missile Launcher"]["included_ammo"][0],
+            "missile_expansion": apc["Missile Expansion"]["ammo_count"][0],
+            "ua_expansion": apc["UA Expansion"]["ammo_count"][0],
+        }
+
+        return ammo_sizes
 
     def _update_string_tables(self) -> dict:
         string_tables: dict = {
@@ -227,7 +272,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             )
 
             dud_hint = "this lore scan did not provide any useful OCTOLITH hints."
-            useless_hints = [self.rng.choice(GENERIC_JOKE_HINTS + [dud_hint])]
+            useless_hints = [self.rng.choice([*GENERIC_JOKE_HINTS, dud_hint])]
 
             if octoliths_precision != SpecificPickupHintMode.DISABLED:
                 if scan_text == "":
@@ -247,11 +292,19 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
+        full_hash = f"{self.description.shareable_word_hash} ({self.description.shareable_hash})"
         return {
             "configuration_id": self.description.get_seed_for_world(self.players_config.player_index),
             "starting_items": starting_items,
             "areas": self._entity_patching_per_area(),
+            "ammo_sizes": self._update_ammo_sizes(),
+            "game_patches": {
+                "shuffle_hunter_colors": self.cosmetic_patches.shuffle_hunter_colors,
+            },
             "string_tables": self._update_string_tables(),
+            "text_patches": {
+                "patcher_version": full_hash,
+            },
         }
 
     @override

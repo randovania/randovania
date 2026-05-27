@@ -119,7 +119,7 @@ def cmd_collect(args):
 
     # Start the Python process
     process = subprocess.Popen(
-        [sys.executable] + args.python_command,
+        [sys.executable, *args.python_command],
         env=env,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
@@ -553,7 +553,7 @@ def extract_function_name(frame: str) -> str:
     Format: {name} ({file}:{line})
     Function name is: {file}:{name}
     """
-    func, file, line = format_frame(frame)
+    func, file, _ = format_frame(frame)
     if file:
         return f"{file}:{func}"
     return func

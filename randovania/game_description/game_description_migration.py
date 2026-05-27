@@ -370,6 +370,12 @@ def _migrate_v30(data: dict, game: RandovaniaGame) -> None:
                         node["default_connection"]["region"] = rename
 
 
+def _migrate_v31(data: dict, game: RandovaniaGame) -> None:
+    for damage_reduction in data["resource_database"]["damage_reductions"]:
+        for reductions in damage_reduction["reductions"]:
+            reductions["quantity"] = 1
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -401,6 +407,7 @@ _MIGRATIONS = [
     _migrate_v28,  # rename HintNodeKind
     _migrate_v29,  # add custom_index_group
     _migrate_v30,  # split Echoes light/dark
+    _migrate_v31,  # add quantity to damage reduction
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

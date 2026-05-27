@@ -71,7 +71,7 @@ def test_create_tracker_valid(skip_qtbot, game, tracker_name):
     assert window._current_tracker_game == game
 
     # Select new theme
-    action = [action for action in window._tracker_actions[game] if action.text() == tracker_name][0]
+    action = next(action for action in window._tracker_actions[game] if action.text() == tracker_name)
     action.setChecked(True)
 
     window.create_tracker()
@@ -115,15 +115,20 @@ def test_update_sources_combo(skip_qtbot):
 
 
 @pytest.mark.parametrize("correct_source", [False, True])
-def test_on_game_state_updated(skip_qtbot, mocker, correct_source):
+def test_on_game_state_updated(skip_qtbot, correct_source):
     # Setup
     inventory = MagicMock()
     connection = MagicMock()
-    connector = connection.get_connector_for_builder.return_value
-    mocker.patch("randovania.gui.auto_tracker_window.AutoTrackerWindow.create_tracker")
+    connector = MagicMock()
+    # Return None during __init__ so create_tracker() exits early without crashing
+    connection.get_connector_for_builder.return_value = None
 
     # Run
     window = AutoTrackerWindow(connection, None, MagicMock())
+    # Now set up the real connector and reset call history from init
+    connection.get_connector_for_builder.return_value = connector
+    connection.get_connector_for_builder.reset_mock()
+    window.create_tracker = MagicMock()
     window.selected_builder = MagicMock()
     window.item_tracker = MagicMock()
     skip_qtbot.addWidget(window)

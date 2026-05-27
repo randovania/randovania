@@ -374,7 +374,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
             shuffled_hints = list(dna_hint_mapping.values())[start:end]
             shuffled_hints = [hint for hint in shuffled_hints if "Hunter already started with" not in hint]
             if not shuffled_hints:
-                shuffled_hints = [rng.choice(MSR_JOKE_HINTS + [dud_hint])]
+                shuffled_hints = [rng.choice([*MSR_JOKE_HINTS, dud_hint])]
             hints.append(
                 {"accesspoint_actor": {"scenario": scenario, "actor": actor}, "text": "\n".join(shuffled_hints) + "\n"}
             )

@@ -75,7 +75,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         starting_resources = self.patches.starting_resources()
         return {resource.long_name: quantity for resource, quantity in starting_resources.as_resource_gain()}
 
-    def _create_starting_memo(self) -> dict:
+    def _create_starting_memo(self) -> dict | None:
         starting_memo = None
         extra_starting = item_names.additional_starting_equipment(self.configuration, self.game, self.patches)
         if extra_starting:
@@ -86,6 +86,8 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
                 "header": "Extra Starting Items",
                 "description": textwrap.wrap(starting_memo, width=MAX_CHARS_LIMIT_FOR_INGAME_MESSAGE_BOX),
             }
+
+        return None
 
     def _create_starting_location(self) -> dict:
         return {
@@ -100,16 +102,43 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
             "session_uuid": str(self.players_config.get_own_uuid()),
         }
 
-    def _create_game_config_dict(self):
+    def _create_game_config_dict(self, pickup_list: list[ExportedPickupDetails]) -> dict:
+        def get_locked_ammo_text(ammo_item: str) -> dict[str, str | list[str]]:
+            text = "MISSING TEXT, PLEASE REPORT THIS!"
+            for pickup in pickup_list:
+                if pickup.original_pickup.name != ammo_item:
+                    continue
+                text = pickup.collection_text[0]
+                break
+            return {
+                "header": f"Locked {ammo_item} acquired",
+                "description": textwrap.wrap(
+                    text,
+                    width=MAX_CHARS_LIMIT_FOR_INGAME_MESSAGE_BOX,
+                ),
+            }
+
+        required_amount_of_keys = 2
+        if not self.configuration.artifacts.vanilla_tourian_keys:
+            required_amount_of_keys = self.configuration.artifacts.required_artifacts
+
+        missile_tank_locked_text = get_locked_ammo_text("Missile Tank")
+        big_missile_tank_locked_text = get_locked_ammo_text("Big Missile Tank")
+
         return {
             "starting_room": self._create_starting_location(),
             "seed_identifier": self._create_hash_dict(),
+            "required_messages": {
+                "Missile Tank": missile_tank_locked_text,
+                "Big Missile Tank": big_missile_tank_locked_text,
+            },
             "starting_items": self._create_starting_items_dict(),
             "starting_memo": self._create_starting_memo(),
             "warp_to_start": self.configuration.warp_to_start,
             "open_missile_doors_with_one_missile": self.configuration.open_missile_doors_with_one_missile,
             "allow_downward_shots": self.configuration.allow_downward_shots,
             "credits_string": self._credits_spoiler(),
+            "required_amount_of_keys": required_amount_of_keys,
         }
 
     def _create_cosmetics(self) -> dict:
@@ -123,7 +152,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         }
 
     def _get_item_data(self) -> dict:
-        item_data: dict = json_lib.read_path(
+        item_data: dict = json_lib.read_dict(
             RandovaniaGame.METROID_PLANETS_ZEBETH.data_path.joinpath("pickup_database", "item_data.json")
         )
 
@@ -178,7 +207,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
 
         return {
             "seed": self.description.get_seed_for_world(self.players_config.player_index),
-            "game_config": self._create_game_config_dict(),
+            "game_config": self._create_game_config_dict(pickup_list),
             "preferences": self._create_cosmetics(),
             "level_data": {"room": "rm_Zebeth", "pickups": self._create_pickups_dict(pickup_list, self.rng)},
         }

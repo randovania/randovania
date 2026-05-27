@@ -725,7 +725,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.stop_background_process_button.setVisible(True)
         self.stop_background_process_button.setEnabled(not value)
 
-    def update_progress(self, message: str, percentage: int):
+    def update_progress(self, message: str, percentage: int) -> None:
         self.progress_bar.setVisible(True)
 
         self.progress_label.setText(message)

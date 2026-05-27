@@ -20,11 +20,11 @@ if TYPE_CHECKING:
 
 
 class PresetPlanetsZebethPatches(PresetTab, Ui_PresetPlanetsZebethPatches):
-    _CHECKBOX_FIELDS = [
+    _CHECKBOX_FIELDS = (
         "allow_downward_shots",
         "open_missile_doors_with_one_missile",
         "warp_to_start",
-    ]
+    )
 
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)

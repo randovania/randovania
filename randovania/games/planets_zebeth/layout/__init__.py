@@ -6,6 +6,6 @@ from randovania.games.planets_zebeth.layout.preset_describer import PlanetsZebet
 
 __all__ = [
     "PlanetsZebethConfiguration",
-    "PlanetsZebethPresetDescriber",
     "PlanetsZebethCosmeticPatches",
+    "PlanetsZebethPresetDescriber",
 ]

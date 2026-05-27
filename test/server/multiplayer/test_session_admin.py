@@ -548,7 +548,7 @@ async def test_admin_session_update_layout_generation(
     expected_order = {w.name: None for w in [w1, w2, w3]}
 
     if case == "to_true_busy":
-        expectation = pytest.raises(error.InvalidActionError, match="Generation already in progress by Other.")
+        expectation = pytest.raises(error.InvalidActionError, match=r"Generation already in progress by Other.")
         expected_user = user2
     else:
         expectation = contextlib.nullcontext()

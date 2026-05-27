@@ -46,7 +46,7 @@ def test_click_on_link(skip_qtbot, trick_levels):
     [
         (RandovaniaGame.METROID_PRIME_ECHOES, AreaIdentifier("Agon Wastes", "Agon Temple")),
         (RandovaniaGame.METROID_PRIME_ECHOES, AreaIdentifier("Dark Agon Wastes", "Dark Agon Temple")),
-        (RandovaniaGame.FUSION, AreaIdentifier("Sector 1 (SRX)", "Ridley Arena")),
+        (RandovaniaGame.FUSION, AreaIdentifier("Sector 1 (SRX)", "Neo-Ridley Arena")),
     ],
 )
 def test_data_editor_href(text: str | None, game: RandovaniaGame, area_id: AreaIdentifier):

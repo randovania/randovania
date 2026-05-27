@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import typing
 from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
@@ -31,7 +32,7 @@ class PresetTeleporterTab(PresetTab[ConfigurationT_co], NodeListHelper):
     _teleporters_target_for_region: dict[str, QtWidgets.QCheckBox]
     _teleporters_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
     _teleporters_target_for_node: dict[NodeIdentifier, QtWidgets.QCheckBox]
-    teleporter_mode_to_description: dict[TeleporterShuffleMode, str] = {}
+    teleporter_mode_to_description: typing.ClassVar[dict[TeleporterShuffleMode, str]] = {}
     teleporters_layout: QtWidgets.QVBoxLayout
     teleporters_combo: ScrollProtectedComboBox
     teleporters_description_label: QtWidgets.QLabel

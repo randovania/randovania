@@ -15,7 +15,6 @@ from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.main_window import MainWindow
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.gui.widgets.about_widget import AboutWidget
-from randovania.gui.widgets.changelog_widget import ChangeLogWidget
 from randovania.gui.widgets.dependencies_widget import DependenciesWidget
 from randovania.gui.widgets.randovania_help_widget import RandovaniaHelpWidget
 from randovania.gui.widgets.reporting_optout_widget import ReportingOptOutWidget
@@ -200,10 +199,9 @@ def test_on_menu_action_help(default_main_window, monkeypatch):
 
 
 @pytest.mark.parametrize("has_changelog", [False, True])
-def test_on_menu_action_changelog(default_main_window, monkeypatch, has_changelog):
+async def test_on_menu_action_changelog(default_main_window, monkeypatch, has_changelog):
     mock_show = MagicMock()
     monkeypatch.setattr(QtWidgets.QWidget, "show", mock_show)
-    monkeypatch.setattr(ChangeLogWidget, "setup_labels", MagicMock())
     if has_changelog:
         default_main_window.all_change_logs = {}
 

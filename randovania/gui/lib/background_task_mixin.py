@@ -6,10 +6,9 @@ import concurrent.futures
 import threading
 import typing
 
-from PySide6.QtCore import Signal
-
 import randovania.games.prime2.patcher.csharp_subprocess
 from randovania.lib.background_task import AbortBackgroundTask
+from randovania.lib.signal import RdvSignal
 
 
 class BackgroundTaskInProgressError(Exception):
@@ -17,8 +16,8 @@ class BackgroundTaskInProgressError(Exception):
 
 
 class BackgroundTaskMixin:
-    progress_update_signal = Signal(str, int)
-    background_tasks_button_lock_signal = Signal(bool)
+    progress_update_signal = RdvSignal[[str, int]]()
+    background_tasks_button_lock_signal = RdvSignal[[bool]]()
     abort_background_task_requested: bool = False
     _background_thread: threading.Thread | None = None
 
@@ -28,6 +27,7 @@ class BackgroundTaskMixin:
         self._background_thread.start()
 
     def run_in_background_thread(self, target, starting_message: str) -> None:
+        loop = asyncio.get_event_loop()
         last_progress = 0.0
 
         def progress_update(message: str, progress: float | None):
@@ -38,10 +38,10 @@ class BackgroundTaskMixin:
                 last_progress = progress
 
             if self.abort_background_task_requested:
-                self.progress_update_signal.emit(f"{message} - Aborted", int(progress * 100))
+                loop.call_soon_threadsafe(self.progress_update_signal.emit, f"{message} - Aborted", int(progress * 100))
                 raise AbortBackgroundTask
             else:
-                self.progress_update_signal.emit(message, int(progress * 100))
+                loop.call_soon_threadsafe(self.progress_update_signal.emit, message, int(progress * 100))
 
         def thread() -> None:
             try:
@@ -50,13 +50,13 @@ class BackgroundTaskMixin:
                 pass
             finally:
                 self._background_thread = None
-                self.background_tasks_button_lock_signal.emit(True)
+                loop.call_soon_threadsafe(self.background_tasks_button_lock_signal.emit, True)
 
         if self._background_thread:
             raise BackgroundTaskInProgressError("Trying to start a new background thread while one exists already.")
 
         self.abort_background_task_requested = False
-        progress_update(starting_message, 0)
+        self.progress_update_signal.emit(starting_message, 0)
 
         self._start_thread_for(thread)
         self.background_tasks_button_lock_signal.emit(False)

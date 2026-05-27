@@ -81,7 +81,7 @@ class TrickLevelConfiguration(BitPackValue):
         count_at_difficulties = collections.defaultdict(list)
         for trick in _all_tricks(database.resource_database):
             level = self.level_for_trick(trick)
-            if trick in tricks_in_use and not trick.hide_from_ui or level != LayoutTrickLevel.DISABLED:
+            if (trick in tricks_in_use and not trick.hide_from_ui) or level != LayoutTrickLevel.DISABLED:
                 count_at_difficulties[level].append(trick.long_name)
 
         if len(count_at_difficulties) == 1:

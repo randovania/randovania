@@ -17,7 +17,7 @@ if typing.TYPE_CHECKING:
 
 
 class PresetAM2RRoomDesign(PresetTab, Ui_PresetAM2RRoomDesign):
-    _CHECKBOX_FIELDS = [
+    _CHECKBOX_FIELDS = (
         "septogg_helpers",
         "respawn_bomb_blocks",
         "grave_grotto_blocks",
@@ -25,7 +25,7 @@ class PresetAM2RRoomDesign(PresetTab, Ui_PresetAM2RRoomDesign):
         "softlock_prevention_blocks",
         "a3_entrance_blocks",
         "screw_blocks",
-    ]
+    )
 
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)

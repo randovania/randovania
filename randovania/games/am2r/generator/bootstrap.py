@@ -24,11 +24,8 @@ def is_dna_node(node: PickupNode, config: AM2RConfiguration) -> bool:
     artifact_config = config.artifacts
     name = node.extra["object_name"]
     _boss_items = ["oItemM_111", "oItemJumpBall", "oItemSpaceJump", "oItemPBeam", "oItemIBeam", "oItemETank_50"]
-    return (
-        artifact_config.prefer_metroids
-        and name.startswith("oItemDNA_")
-        or artifact_config.prefer_bosses
-        and name in _boss_items
+    return (artifact_config.prefer_metroids and name.startswith("oItemDNA_")) or (
+        artifact_config.prefer_bosses and name in _boss_items
     )
 
 

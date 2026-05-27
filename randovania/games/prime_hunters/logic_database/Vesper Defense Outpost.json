@@ -2,7 +2,7 @@
     "name": "Vesper Defense Outpost",
     "extra": {},
     "areas": {
-        "Biodefense Chamber 03": {
+        "Biodefense Chamber A (VDO)": {
             "default_node": "Player Spawn",
             "hint_features": [],
             "extra": {
@@ -57,7 +57,7 @@
                     "default_connection": {
                         "region": "Vesper Defense Outpost",
                         "area": "Stronghold Void A (VDO)",
-                        "node": "Door to Biodefense Chamber 03"
+                        "node": "Door to Biodefense Chamber A (VDO)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -211,17 +211,62 @@
                             }
                         },
                         "Event - Cretaphid v2": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 199,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 99,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
                 }
             }
         },
-        "Biodefense Chamber 08": {
+        "Biodefense Chamber B (VDO)": {
             "default_node": "Player Spawn",
             "hint_features": [],
             "extra": {
@@ -276,7 +321,7 @@
                     "default_connection": {
                         "region": "Vesper Defense Outpost",
                         "area": "Stronghold Void B (VDO)",
-                        "node": "Door to Biodefense Chamber 08"
+                        "node": "Door to Biodefense Chamber B (VDO)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -409,7 +454,7 @@
                             }
                         },
                         "Event - Slench 4": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -420,6 +465,58 @@
                                             "name": "Magmaul",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 299,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 399,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1431,7 +1528,7 @@
             "nodes": {
                 "Ship": {
                     "node_type": "teleporter_network",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
                         "x": 188.14985163204747,
                         "y": 335.85426969996706,
@@ -1623,7 +1720,7 @@
                             "artifact_id": 8,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit3_C1_Ent.b",
+                            "entity_filename": "unit3_C1_Ent",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -1700,7 +1797,7 @@
                             "artifact_id": 8,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "unit3_RM1_Ent.",
+                            "entity_filename": "unit3_RM1_Ent",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -2823,7 +2920,7 @@
                             "artifact_id": 5,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "Unit3_TP2_Ent.",
+                            "entity_filename": "Unit3_TP2_Ent",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -3401,7 +3498,7 @@
                             "artifact_id": 4,
                             "active": false,
                             "invisible": false,
-                            "entity_filename": "Unit3_TP1_Ent.",
+                            "entity_filename": "Unit3_TP1_Ent",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -4043,7 +4140,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Biodefense Chamber 03": {
+                        "Door to Biodefense Chamber A (VDO)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4087,7 +4184,7 @@
                             "artifact_id": 255,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit3_RM4_Ent.",
+                            "entity_filename": "unit3_RM4_Ent",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -4119,7 +4216,7 @@
                         }
                     }
                 },
-                "Door to Biodefense Chamber 03": {
+                "Door to Biodefense Chamber A (VDO)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4165,7 +4262,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Vesper Defense Outpost",
-                        "area": "Biodefense Chamber 03",
+                        "area": "Biodefense Chamber A (VDO)",
                         "node": "Door to Stronghold Void A (VDO)"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -4238,7 +4335,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Biodefense Chamber 08": {
+                        "Door to Biodefense Chamber B (VDO)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4282,7 +4379,7 @@
                             "artifact_id": 255,
                             "active": true,
                             "invisible": false,
-                            "entity_filename": "unit3_RM3_Ent.",
+                            "entity_filename": "unit3_RM3_Ent",
                             "target_position": {
                                 "x": 0.062255859375,
                                 "y": 0.0,
@@ -4314,7 +4411,7 @@
                         }
                     }
                 },
-                "Door to Biodefense Chamber 08": {
+                "Door to Biodefense Chamber B (VDO)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4360,7 +4457,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Vesper Defense Outpost",
-                        "area": "Biodefense Chamber 08",
+                        "area": "Biodefense Chamber B (VDO)",
                         "node": "Door to Stronghold Void B (VDO)"
                     },
                     "default_dock_weakness": "Normal Door",

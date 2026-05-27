@@ -32,8 +32,7 @@ def _is_valid_input_dir(path: Path) -> bool:
         return (
             path.joinpath("AM2R.AppImage").exists()
             # Flatpak/non-packed
-            or path.joinpath("assets", "game.unx").exists()
-            and path.joinpath("runner").exists()
+            or (path.joinpath("assets", "game.unx").exists() and path.joinpath("runner").exists())
         )
     if current_platform == "Darwin":
         return (

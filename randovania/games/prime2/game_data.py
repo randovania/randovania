@@ -96,7 +96,7 @@ def _hash_words() -> list[str]:
 
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="OUWWPF34",
+        expected_seed_hash="3LNNNRTE",
         database_collectable_ignore_events=("Event91", "Event92", "Event97"),
     )
 
@@ -196,4 +196,5 @@ Taking the transport hologram at the center of this room.""",
     exporter=_exporter,
     test_data=_test_data,
     defaults_available_in_game_sessions=True,
+    racetime_url="https://racetime.gg/mp2r/data",
 )

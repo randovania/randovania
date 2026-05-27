@@ -63,7 +63,7 @@ def get_version(original_permalink: str, randovania_version: bytes) -> str | Non
                 logging.info("Skipping permalink %s from dev version %s", original_permalink, version_raw)
                 return None
 
-            major, minor, revision = version_split[0][1:].split(".")
+            major, minor, _revision = version_split[0][1:].split(".")
             version = f"{major}.{int(minor) + 1}.0.dev{version_split[1]}"
         else:
             if is_dev_version:

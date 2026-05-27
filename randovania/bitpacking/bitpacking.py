@@ -26,7 +26,7 @@ ARBITRARY_INT_SIZE_LIMITS = (4, 16, 128, 1024)
 
 
 def _bits_for_number(value: int) -> int:
-    return int(math.ceil(math.log2(value)))
+    return math.ceil(math.log2(value))
 
 
 def single_byte_hash(data: bytes) -> int:

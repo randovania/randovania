@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import copy
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.games.dread.gui.generated.preset_teleporters_dread_ui import (
@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 
 
 class PresetTeleportersDread(PresetTeleporterTab, Ui_PresetTeleportersDread, NodeListHelper):
-    teleporter_mode_to_description = {
+    teleporter_mode_to_description: ClassVar[dict[TeleporterShuffleMode, str]] = {
         TeleporterShuffleMode.VANILLA: "All transporters are connected to where they do in the original game.",
         TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
             "After taking a transporter, the transporter in the room you are in will bring you back to where you were. "

@@ -18,7 +18,6 @@ else:
     # However cython's compiler seems to expect the import to be this way, otherwise `cython.compiled` breaks
     import cython
 
-# ruff: noqa: UP046
 
 if cython.compiled:
     if not typing.TYPE_CHECKING:

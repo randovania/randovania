@@ -20,9 +20,9 @@ class SocketIOTestClient:
     :param auth: Optional authentication data, given as a dictionary.
     """
 
-    clients = {}
-
     def __init__(self, socketio: AsyncServer, namespace=None, query_string=None, headers=None, auth=None):
+        self.clients = {}
+
         async def _mock_send_packet(eio_sid, pkt):
             # make sure the packet can be encoded and decoded
             epkt = pkt.encode()
@@ -159,7 +159,7 @@ class SocketIOTestClient:
         if callback:
             self.callback_counter += 1
             id = self.callback_counter
-        pkt = packet.Packet(packet.EVENT, data=[event] + list(args), namespace=namespace, id=id)
+        pkt = packet.Packet(packet.EVENT, data=[event, *list(args)], namespace=namespace, id=id)
         encoded_pkt = pkt.encode()
         if isinstance(encoded_pkt, list):
             for epkt in encoded_pkt:

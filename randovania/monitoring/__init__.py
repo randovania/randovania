@@ -77,7 +77,7 @@ def before_breadcrumb(crumb: dict[str, typing.Any], hint: sentry_sdk.types.Hint)
 
 def before_send(event: sentry_sdk.types.Event, hint: sentry_sdk.types.Hint) -> sentry_sdk.types.Event | None:
     if "exc_info" in hint:
-        exc_type, exc_value, tb = hint["exc_info"]
+        _exc_type, exc_value, _tb = hint["exc_info"]
         if isinstance(exc_value, ConnectionError):
             return None
 

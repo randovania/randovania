@@ -1230,6 +1230,22 @@ def _migrate_v111(preset: dict, game: RandovaniaGame, *, from_layout_description
         preset["configuration"]["skip_item_popups"] = False
 
 
+def _migrate_v112(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
+        preset["configuration"]["use_new_patcher"] = (
+            "both" if preset["configuration"]["use_new_patcher"] else "disabled"
+        )
+
+
+def _migrate_v113(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    if game == RandovaniaGame.FUSION:
+        preset["configuration"]["lava_damage"] = 20
+        preset["configuration"]["acid_damage"] = 60
+        preset["configuration"]["heat_damage"] = 6
+        preset["configuration"]["cold_damage"] = 15
+        preset["configuration"]["subzero_damage"] = 6
+
+
 _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1342,6 +1358,8 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v109,  # remove consider_possible_unsafe_resources and two_sided_door_lock_search
     _migrate_v110,  # fusion: add adjusted geron weaknesses
     _migrate_v111,  # dread: add skip_item_popups setting
+    _migrate_v112,  # echoes new patcher only
+    _migrate_v113,  # fusion: add environmental damage
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

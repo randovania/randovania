@@ -2,7 +2,10 @@ from __future__ import annotations
 
 from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 
-AM2R_JOKE_HINTS = GENERIC_JOKE_HINTS + [
+# ruff: noqa: RUF001
+
+AM2R_JOKE_HINTS = [
+    *GENERIC_JOKE_HINTS,
     "This Wisdom Septogg does not seem very wise.",
     "How many Ridley's have you found so far in this game?",
     "Movement in Morph Ball is faster than unmorphed, except for Speedboosting.",

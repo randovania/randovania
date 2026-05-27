@@ -117,7 +117,7 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 2}]
 > Navigation Terminal; Heals? False
   * Layers: default
   * Hint
-  * Extra - hint_name: Sector2Entrance
+  * Extra - hint_name: SECTOR_2_ENTRANCE
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: PRECISE_CATEGORY
   > Door to Sector 2 (TRO) Entrance Elevator
@@ -249,13 +249,13 @@ Hint Features - Data Room
   * Pickup 105; Category? Major
   * Extra - area: 2
   * Extra - room: 8
-  * Extra - source: TroData
+  * Extra - source: TRO_DATA
   * Extra - infant_weight: 0.28
   > Door to Data Courtyard
       Trivial
 
 ----------------
-Zoro Zig-Zag
+Zig-Zag-Zone
 Extra - map_name: Sector 29
 Extra - room_id: [9]
 Extra - minimap_coordinates: [{'x': 0, 'y': 5}, {'x': 0, 'y': 6}, {'x': 1, 'y': 5}, {'x': 1, 'y': 6}, {'x': 1, 'y': 7}, {'x': 1, 'y': 8}, {'x': 1, 'y': 9}, {'x': 1, 'y': 10}]
@@ -273,7 +273,7 @@ Hint Features - Pillar
 
 > Door to Data Courtyard; Heals? False
   * Layers: default
-  * L0 Hatch to Data Courtyard/Door to Zoro Zig-Zag
+  * L0 Hatch to Data Courtyard/Door to Zig-Zag-Zone
   * Extra - door_idx: (20,)
   > Pickup (Missile Tank)
       All of the following:
@@ -292,17 +292,17 @@ Hint Features - Pillar
               # Simply climb up to item
               Have Any Jump Upgrade
   > Door to Maintenance Wing
-      After Sector 2 Zoro Zig-Zag Bomb Blocks Broken and Can Bounce in Ball
+      After Sector 2 Zig-Zag-Zone Bomb Blocks Broken and Can Bounce in Ball
   > Event - Break Bomb Blocks
       Can Bounce in Ball and Can Use Any Bombs
 
 > Door to Maintenance Wing; Heals? False
   * Layers: default
-  * L0 Hatch to Maintenance Wing/Door to Zoro Zig-Zag
+  * L0 Hatch to Maintenance Wing/Door to Zig-Zag-Zone
   * Extra - door_idx: (21,)
   > Door to Data Courtyard
       All of the following:
-          Morph Ball and After Sector 2 Zoro Zig-Zag Bomb Blocks Broken
+          Morph Ball and After Sector 2 Zig-Zag-Zone Bomb Blocks Broken
           Any of the following:
               Space Jump
               Hi-Jump and Wall Jump (Intermediate)
@@ -322,7 +322,7 @@ Hint Features - Pillar
 
 > Event - Break Bomb Blocks; Heals? False
   * Layers: default
-  * Event Sector 2 Zoro Zig-Zag Bomb Blocks Broken
+  * Event Sector 2 Zig-Zag-Zone Bomb Blocks Broken
   > Door to Data Courtyard
       Trivial
   > Door to Maintenance Wing
@@ -411,7 +411,7 @@ Extra - room_id: [12]
 Extra - minimap_coordinates: [{'x': 15, 'y': 6}, {'x': 15, 'y': 7}]
 > Door to Nettori Arena Access; Heals? False
   * Layers: default
-  * L0 Hatch to Nettori Arena Access/Door to Shooting Gallery; Excluded from Dock Lock Rando
+  * L0 Hatch to Nettori Arena Access/Door to Shooting Gallery
   * Extra - door_idx: (25,)
   > Door to Nettori Arena
       Trivial
@@ -446,14 +446,14 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 6}, {'x': 6, 'y': 7}, {'x': 6, 'y': 
       Any of the following:
           Space Jump
           All of the following:
-              # Walljump or stand on frozen Zoros
+              # Walljump or stand on frozen Zeros
               Hi-Jump
               Any of the following:
                   Wall Jump (Beginner)
-                  # Freeze Zoros: https://youtu.be/PO6s9wkzqmM
+                  # Freeze Zeros: https://youtu.be/PO6s9wkzqmM
                   Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
           All of the following:
-              # Stand on Zoro Cocoons
+              # Stand on Zero Cocoons
               After Boss Nettori Defeated or After Boss Zazabi Defeated
               Any of the following:
                   Hi-Jump
@@ -684,7 +684,7 @@ Hint Features - Core-X
   * Pickup 107; Category? Major
   * Extra - area: 2
   * Extra - room: 18
-  * Extra - source: Zazabi
+  * Extra - source: ZAZABI
   * Extra - boss_hint_name: Zazabi
   * Extra - infant_weight: 3.5
   > Arena Floor
@@ -798,7 +798,7 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 6}, {'x': 12, 'y': 5}, {'x': 12, 'y
 
 > Door to Shooting Gallery; Heals? False
   * Layers: default
-  * L0 Hatch to Shooting Gallery/Door to Nettori Arena Access; Excluded from Dock Lock Rando
+  * L0 Hatch to Shooting Gallery/Door to Nettori Arena Access
   * Extra - door_idx: (47, 75)
   > Door to Overgrown Spire
       Any of the following:
@@ -911,7 +911,7 @@ Hint Features - Core-X
   * Pickup 115; Category? Major
   * Extra - area: 2
   * Extra - room: 22
-  * Extra - source: Nettori
+  * Extra - source: NETTORI
   * Extra - boss_hint_name: Nettori
   * Extra - infant_weight: 3.5
   > Arena
@@ -1074,7 +1074,7 @@ Hint Features - Security Room
   * Pickup 116; Category? Major
   * Extra - area: 2
   * Extra - room: 26
-  * Extra - source: Level1
+  * Extra - source: LEVEL_1
   * Extra - infant_weight: 0.28
   > Door to Security Access (Lower)
       Trivial
@@ -1179,9 +1179,9 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 4}, {'x': 2, 'y': 5}, {'x': 2, 'y': 
   > Door to Courtyard Access
       Can Use Any Bombs
 
-> Door to Zoro Zig-Zag; Heals? False
+> Door to Zig-Zag-Zone; Heals? False
   * Layers: default
-  * L0 Hatch to Zoro Zig-Zag/Door to Data Courtyard
+  * L0 Hatch to Zig-Zag-Zone/Door to Data Courtyard
   * Extra - door_idx: (18,)
   > Door to Courtyard Save Room
       Trivial
@@ -1197,7 +1197,7 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 4}, {'x': 2, 'y': 5}, {'x': 2, 'y': 
   * Layers: default
   * L0 Hatch to Courtyard Save Room/Door to Data Courtyard
   * Extra - door_idx: (84,)
-  > Door to Zoro Zig-Zag
+  > Door to Zig-Zag-Zone
       Trivial
   > Door to Courtyard Access
       After Sector 2 Data Hub Bomb Block Destroyed and Can Bounce in Ball
@@ -1585,9 +1585,9 @@ Maintenance Wing
 Extra - map_name: Sector 243
 Extra - room_id: [43]
 Extra - minimap_coordinates: [{'x': 0, 'y': 10}, {'x': 0, 'y': 11}]
-> Door to Zoro Zig-Zag; Heals? False
+> Door to Zig-Zag-Zone; Heals? False
   * Layers: default
-  * L0 Hatch to Zoro Zig-Zag/Door to Maintenance Wing
+  * L0 Hatch to Zig-Zag-Zone/Door to Maintenance Wing
   * Extra - door_idx: (98,)
   > Door to Cultivation Station
       Trivial
@@ -1596,7 +1596,7 @@ Extra - minimap_coordinates: [{'x': 0, 'y': 10}, {'x': 0, 'y': 11}]
   * Layers: default
   * L0 Hatch to Cultivation Station/Door to Maintenance Wing
   * Extra - door_idx: (99,)
-  > Door to Zoro Zig-Zag
+  > Door to Zig-Zag-Zone
       Any of the following:
           Space Jump
           # WJ up: https://youtu.be/8gjeZTK98_8

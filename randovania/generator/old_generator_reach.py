@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 
 
 class GraphPath:
-    __slots__ = ("previous_node", "node", "requirement")
+    __slots__ = ("node", "previous_node", "requirement")
     previous_node: NodeIndex | None
     node: NodeIndex
     requirement: GraphRequirementSet

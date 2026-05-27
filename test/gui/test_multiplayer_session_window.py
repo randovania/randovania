@@ -1126,7 +1126,7 @@ async def test_track_world_listener_create(
     window.network_client.world_track_inventory.assert_awaited_once_with(world_uid, user_id, True)
 
 
-@pytest.mark.parametrize("visibility", list(MultiplayerSessionVisibility) + [None])
+@pytest.mark.parametrize("visibility", [*list(MultiplayerSessionVisibility), None])
 async def test_session_visibility_button_clicked(window: MultiplayerSessionWindow, visibility):
     window._session = MagicMock()
     window._session.visibility = visibility

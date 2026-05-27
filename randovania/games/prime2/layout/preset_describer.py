@@ -155,7 +155,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
                     "Unlocked Save Station doors": configuration.blue_save_doors,
                     "Inverted Aether": configuration.inverted_mode,
                 },
-                {"New Patcher": configuration.use_new_patcher},
+                {"New Patcher": configuration.use_new_patcher.is_enabled()},
                 *create_beam_configuration_description(configuration.beam_configuration),
             ],
         }

@@ -30,7 +30,7 @@ import inspect
 import weakref
 from collections.abc import Callable
 from functools import partial
-from typing import Any, Generic, Never, Self, overload
+from typing import Any, ClassVar, Generic, Never, Self, overload
 
 from typing_extensions import ParamSpec, TypeIs, TypeVar
 
@@ -122,7 +122,7 @@ class RdvSignal(Generic[P, T]):
     This emulates the behavior of a PyQt signal
     """
 
-    _map: dict[Self, weakref.WeakKeyDictionary[Any, RdvSignalInstance]] = {}
+    _map: ClassVar[dict[object, weakref.WeakKeyDictionary[Any, RdvSignalInstance]]] = {}
 
     @overload
     def __get__(self, instance: None, owner: Any) -> Self: ...

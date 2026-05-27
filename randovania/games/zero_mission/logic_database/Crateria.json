@@ -1,0 +1,2668 @@
+{
+    "name": "Crateria",
+    "extra": {
+        "area_id": 5
+    },
+    "areas": {
+        "Weedway": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria2",
+                "room_id": [
+                    2
+                ]
+            },
+            "nodes": {
+                "Door to Parlor and Alcatraz": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 96.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            8
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Parlor and Alcatraz",
+                        "node": "Door to Weedway"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Broken Elevator to Brinstar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Broken Elevator to Brinstar": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 504.0,
+                        "y": 96.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            9
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Broken Elevator to Brinstar",
+                        "node": "Door to Weedway"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Parlor and Alcatraz": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Broken Elevator to Brinstar": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria3",
+                "room_id": [
+                    3
+                ]
+            },
+            "nodes": {
+                "Door to Weedway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 256.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            10
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Weedway",
+                        "node": "Door to Broken Elevator to Brinstar"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Open Passage to Starting Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Starting Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 152.0,
+                        "y": 40.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            11
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Starting Room",
+                        "node": "Open Passage to Broken Elevator to Brinstar"
+                    },
+                    "default_dock_weakness": "Vertical Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Weedway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Space Jump"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Landing Site": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria0",
+                "room_id": [
+                    0,
+                    5
+                ]
+            },
+            "nodes": {
+                "Pickup (Power Bomb Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 328.0,
+                        "y": 584.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "blockx": 20,
+                        "blocky": 37
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 64,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Flooded Tunnel": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Flooded Tunnel": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1224.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            14,
+                            26
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Flooded Tunnel",
+                        "node": "Door to Landing Site"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Power Bombs"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Ballspark"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Parlor and Alcatraz": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Crateria Chozo Ruins Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Space Jump"
+                                    }
+                                ]
+                            }
+                        },
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Parlor and Alcatraz": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 80.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            42,
+                            3
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Parlor and Alcatraz",
+                        "node": "Door to Landing Site"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Flooded Tunnel": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Space Jump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Crateria Chozo Ruins Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Shinespark",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Crateria Chozo Ruins Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1224.0,
+                        "y": 592.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            46,
+                            1
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Crateria Chozo Ruins Entrance",
+                        "node": "Door to Landing Site"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Flooded Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Ship": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 633.5965038586387,
+                        "y": 158.5492023795989,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            0
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Flooded Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Elevator to Norfair": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria6",
+                "room_id": [
+                    6
+                ]
+            },
+            "nodes": {
+                "Door to Flooded Cavern": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 504.0,
+                        "y": 256.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            16
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Flooded Cavern",
+                        "node": "Door to Elevator to Norfair"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Flooded Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Transport to Crateria": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 152.0,
+                        "y": 40.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            17
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Norfair",
+                        "area": "Transport to Crateria",
+                        "node": "Open Passage to Elevator to Norfair"
+                    },
+                    "default_dock_weakness": "Horizontal Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Flooded Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Flooded Tunnel": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 256.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            31
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Flooded Tunnel",
+                        "node": "Door to Elevator to Norfair"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Flooded Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Open Passage to Transport to Crateria": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Flooded Cavern": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria7",
+                "room_id": [
+                    7
+                ]
+            },
+            "nodes": {
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 56.0,
+                        "y": 104.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "blockx": 3,
+                        "blocky": 27
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 65,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Elevator to Norfair": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Elevator to Norfair": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 256.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            18
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Elevator to Norfair",
+                        "node": "Door to Flooded Cavern"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Open Passage to Chozo Ruins Valley (West)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Ledges"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Any Bombs"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Wrecked Ship Entrance": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Ledges"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Chozo Ruins Valley (West)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 104.0,
+                        "y": 504.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            20
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Chozo Ruins Valley",
+                        "node": "Open Passage to Flooded Cavern (West)"
+                    },
+                    "default_dock_weakness": "Vertical Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Elevator to Norfair": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Wrecked Ship Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1464.0,
+                        "y": 272.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            21
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Wrecked Ship Entrance",
+                        "node": "Door to Flooded Cavern"
+                    },
+                    "default_dock_weakness": "Power Bomb Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Elevator to Norfair": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Open Passage to Chozo Ruins Valley (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Chozo Ruins Valley (East)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1088.0,
+                        "y": 504.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            41
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Chozo Ruins Valley",
+                        "node": "Open Passage to Flooded Cavern (East)"
+                    },
+                    "default_dock_weakness": "Vertical Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Wrecked Ship Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Chozo Ruins Valley": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria9",
+                "room_id": [
+                    9
+                ]
+            },
+            "nodes": {
+                "Pickup (Super Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1448.0,
+                        "y": 552.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "blockx": 90,
+                        "blocky": 9
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 66,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Past Pillars": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1032.0,
+                        "y": 152.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "blockx": 64,
+                        "blocky": 34
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 67,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Open Passage to Flooded Cavern (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Statuary Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            19
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Statuary Shaft",
+                        "node": "Door to Chozo Ruins Valley"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Plasma Beam Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "RuinsChozoStatue",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Past Pillars": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinespark",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Space Jump"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Flooded Cavern (West)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 104.0,
+                        "y": 40.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            22
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Flooded Cavern",
+                        "node": "Open Passage to Chozo Ruins Valley (West)"
+                    },
+                    "default_dock_weakness": "Vertical Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Plasma Beam Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Chozodia Access Hall (eastbound)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1464.0,
+                        "y": 400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            25
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Chozodia Access Hall (eastbound)",
+                        "node": "Door to Chozo Ruins Valley"
+                    },
+                    "default_dock_weakness": "Power Bomb Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Past Pillars": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Plasma Beam Chamber": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 504.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            37
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Plasma Beam Chamber",
+                        "node": "Door to Chozo Ruins Valley"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Statuary Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Bounce in Ball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerGrip",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "RuinsChozoStatue",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Open Passage to Flooded Cavern (West)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Flooded Cavern (East)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1088.0,
+                        "y": 40.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            40
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Flooded Cavern",
+                        "node": "Open Passage to Chozo Ruins Valley (East)"
+                    },
+                    "default_dock_weakness": "Vertical Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Past Pillars": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Past Pillars": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1283.898500751519,
+                        "y": 187.68135601783433,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Super Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Space Jump"
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Springball"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Statuary Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Chozodia Access Hall (eastbound)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Space Jump"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerGrip",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Open Passage to Flooded Cavern (East)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Flooded Tunnel": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria11",
+                "room_id": [
+                    11
+                ]
+            },
+            "nodes": {
+                "Door to Landing Site": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            27
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Landing Site",
+                        "node": "Door to Flooded Tunnel"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Elevator to Norfair": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "GravitySuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Tunnel Climb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "RuinsChozoStatue",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Elevator to Norfair": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 504.0,
+                        "y": 96.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            28
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Elevator to Norfair",
+                        "node": "Door to Flooded Tunnel"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Landing Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Power Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "GravitySuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Chozo Reliquary": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria12",
+                "room_id": [
+                    12
+                ]
+            },
+            "nodes": {
+                "Tunnel to Statuary Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 264.0,
+                        "y": 120.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            30
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Statuary Shaft",
+                        "node": "Tunnel to Chozo Reliquary"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Power Grip)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Power Grip)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 120.51451883849292,
+                        "y": 88.3858891288697,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "source": "POWER_GRIP"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 94,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Tunnel to Statuary Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Ledges"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Wrecked Ship Entrance": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria13",
+                "room_id": [
+                    13
+                ]
+            },
+            "nodes": {
+                "Door to Flooded Cavern": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            32
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Flooded Cavern",
+                        "node": "Door to Wrecked Ship Entrance"
+                    },
+                    "default_dock_weakness": "Power Bomb Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Open Passage to Wrecked Ship Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Wrecked Ship Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 504.0,
+                        "y": 104.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            33
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Chozodia",
+                        "area": "Wrecked Ship Entrance",
+                        "node": "Open Passage to Wrecked Ship Entrance"
+                    },
+                    "default_dock_weakness": "Horizontal Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Flooded Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Plasma Beam Chamber": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria14",
+                "room_id": [
+                    14
+                ]
+            },
+            "nodes": {
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 136.0,
+                        "y": 56.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "blockx": 8,
+                        "blocky": 10
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 68,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Chozo Ruins Valley": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Chozo Ruins Valley": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            35
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Chozo Ruins Valley",
+                        "node": "Door to Plasma Beam Chamber"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "RuinsChozoStatue",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Unknown Item 1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Unknown Item 1)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 419.67,
+                        "y": 92.58,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "source": "PLASMA_BEAM"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 95,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Event - Statue Item Acquired": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Statue Item Acquired": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 412.01,
+                        "y": 124.31,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "RuinsChozoStatue",
+                    "connections": {
+                        "Door to Chozo Ruins Valley": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Crateria Chozo Ruins Entrance": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria15",
+                "room_id": [
+                    15
+                ]
+            },
+            "nodes": {
+                "Door to Landing Site": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            4
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Landing Site",
+                        "node": "Door to Crateria Chozo Ruins Entrance"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Statuary Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Tunnel Climb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb High Ledges"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Statuary Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 504.0,
+                        "y": 240.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            38
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Statuary Shaft",
+                        "node": "Door to Crateria Chozo Ruins Entrance"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Landing Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Tunnel Climb"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Statuary Shaft": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria17",
+                "room_id": [
+                    17,
+                    8,
+                    16
+                ]
+            },
+            "nodes": {
+                "Door to Crateria Chozo Ruins Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 560.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            45,
+                            34
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Crateria Chozo Ruins Entrance",
+                        "node": "Door to Statuary Shaft"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Chozo Ruins Valley": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb High Ledges"
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Chozo Reliquary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Chozo Ruins Valley": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 504.0,
+                        "y": 560.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            47,
+                            15,
+                            36
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Chozo Ruins Valley",
+                        "node": "Door to Statuary Shaft"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Crateria Chozo Ruins Entrance": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Ledges"
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Chozo Reliquary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Chozo Reliquary": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 36.25,
+                        "y": 121.67,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            39,
+                            29
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Chozo Reliquary",
+                        "node": "Tunnel to Statuary Shaft"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Crateria Chozo Ruins Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Ledges"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Any Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Must shoot the shot block before morphing to avoid softlock",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Elevator to Tourian": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria18",
+                "room_id": [
+                    18,
+                    4
+                ]
+            },
+            "nodes": {
+                "Door to Parlor and Alcatraz": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 264.0,
+                        "y": 256.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            50,
+                            12
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Parlor and Alcatraz",
+                        "node": "Door to Elevator to Tourian"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Open Passage to Escape Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Escape Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 152.0,
+                        "y": 40.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            51,
+                            13
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Escape Shaft",
+                        "node": "Tunnel to Elevator to Tourian"
+                    },
+                    "default_dock_weakness": "Horizontal Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Parlor and Alcatraz": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Chozodia Access Hall (eastbound)": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria20",
+                "room_id": [
+                    20,
+                    10
+                ]
+            },
+            "nodes": {
+                "Door to Chozo Ruins Valley": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 80.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            48,
+                            23
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Chozo Ruins Valley",
+                        "node": "Door to Chozodia Access Hall (eastbound)"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Open Passage to Chozodia": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Chozodia": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 504.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            49,
+                            24
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Chozodia",
+                        "area": "Chozodia's Fork",
+                        "node": "Open Passage to Crateria"
+                    },
+                    "default_dock_weakness": "Horizontal Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Chozo Ruins Valley": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Parlor and Alcatraz": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Crateria21",
+                "room_id": [
+                    21,
+                    1
+                ]
+            },
+            "nodes": {
+                "Door to Landing Site": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 984.0,
+                        "y": 880.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            2,
+                            5
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Landing Site",
+                        "node": "Door to Parlor and Alcatraz"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Weedway": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Power Bombs"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Elevator to Tourian": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Weedway": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 744.0,
+                        "y": 416.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            43,
+                            6
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Weedway",
+                        "node": "Door to Parlor and Alcatraz"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Landing Site": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Power Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Elevator to Tourian": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 96.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            44,
+                            7
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Elevator to Tourian",
+                        "node": "Door to Parlor and Alcatraz"
+                    },
+                    "default_dock_weakness": "Super Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Landing Site": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PowerGrip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Have Any Jump Upgrade"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
