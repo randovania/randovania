@@ -23,6 +23,7 @@ class PlanetsZebethConfiguration(BaseConfiguration):
     warp_to_start: bool
     open_missile_doors_with_one_missile: bool
     allow_downward_shots: bool
+    allow_screw_attack_to_break_blocks: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

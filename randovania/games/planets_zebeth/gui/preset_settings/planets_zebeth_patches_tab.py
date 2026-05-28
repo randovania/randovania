@@ -22,6 +22,7 @@ if TYPE_CHECKING:
 class PresetPlanetsZebethPatches(PresetTab, Ui_PresetPlanetsZebethPatches):
     _CHECKBOX_FIELDS = (
         "allow_downward_shots",
+        "allow_screw_attack_to_break_blocks",
         "open_missile_doors_with_one_missile",
         "warp_to_start",
     )
