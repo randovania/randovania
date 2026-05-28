@@ -103,7 +103,7 @@ class EchoesGameExportDialog(GameExportDialog[EchoesConfiguration], Ui_EchoesGam
         return dataclasses.replace(
             per_game,
             input_path=self.input_file,
-            output_path=self.output_file,
+            output_directory=self.output_file.parent,
             use_external_models=use_external_models,
         )
 

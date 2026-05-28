@@ -11,9 +11,6 @@ import randovania.game.gui
 import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
-from randovania.games.common.prime_family.gui.prime_trilogy_teleporter_details_tab import (
-    PrimeTrilogyTeleporterDetailsTab,
-)
 from randovania.games.prime2_dev import layout
 
 if typing.TYPE_CHECKING:
@@ -29,6 +26,9 @@ def _options() -> type[PerGameOptions]:
 
 
 def _gui() -> randovania.game.gui.GameGui:
+    from randovania.games.common.prime_family.gui.prime_trilogy_teleporter_details_tab import (
+        PrimeTrilogyTeleporterDetailsTab,
+    )
     from randovania.games.prime2_dev import gui
     from randovania.games.prime2_dev.layout import progressive_items
     from randovania.gui.game_details.hint_details_tab import HintDetailsTab
