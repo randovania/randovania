@@ -506,7 +506,7 @@ Extra - room_id: [14]
   * Blue Door to Mero Hive Chamber/Door to Mero Abyss
   * Extra - door_idx: (32,)
   > Pickup (Missile Tank)
-      Power Grip and Can Use Any Bombs
+      Can Break Single Bomb Blocks and Tunnel Climb
   > Door to Mero Corridor
       Trivial
 
@@ -751,7 +751,7 @@ Extra - room_id: [23]
   * Extra - blockx: 18
   * Extra - blocky: 16
   > Room Center
-      Varia Suit
+      Morph Ball and Varia Suit
 
 > Door to Varia Chamber; Heals? False
   * Layers: default
@@ -781,12 +781,18 @@ Extra - room_id: [23]
   * Layers: default
   > Pickup (Energy Tank)
       All of the following:
-          Varia Suit
+          Morph Ball and Varia Suit
           Wave Beam or Can Use Any Bombs
   > Door to Varia Chamber Ascent
       Varia Suit and Can Bounce in Ball
   > Event - Varia Access Left Tangle Fruit
-      Can Use Bombs and Climb High Ledges and Tunnel Climb
+      All of the following:
+          Can Use Bombs and Tunnel Climb
+          Any of the following:
+              # Climb into tunnel above acid
+              Climb High Ledges
+              # Go through acid
+              Varia Suit and Climb Ledges
 
 > Event - Varia Access Left Tangle Fruit; Heals? False
   * Layers: default
@@ -1107,7 +1113,7 @@ Extra - room_id: [38]
   > Door to Eastern Hub
       Trivial
   > Tunnel to Acid Vine Puzzle (Lower)
-      Varia Suit
+      Morph Ball and Varia Suit
   > Tunnel to Acid Vine Puzzle (Upper)
       Can Bounce in Ball
 
@@ -1157,16 +1163,14 @@ Extra - room_id: [40]
   > Pickup (Missile Tank)
       Ice Beam or Climb Ledges
   > Tunnel to Blue-Tinted Hub
-      All of the following:
-          Morph Ball
-          Can Ballspark or Can Use Any Bombs
+      Can Ballspark or Can Use Any Bombs
 
 > Tunnel to Blue-Tinted Hub; Heals? False
   * Layers: default
   * Tunnel to Blue-Tinted Hub/Tunnel to Speedbooster Passage
   * Extra - door_idx: (90,)
   > Tunnel to Gold-Tinted Hub
-      Morph Ball and Can Bounce in Ball and Can Use Any Bombs
+      Can Bounce in Ball and Can Use Any Bombs
 
 ----------------
 Hidden Tank Shaft
