@@ -76,10 +76,6 @@ class PresetTeleportersPrime2(PresetTeleporterTab[EchoesConfiguration], Ui_Prese
     ):
         super().__init__(editor, game_description, window_manager)
         signal_handling.on_checked(self.skip_final_bosses_check, self._update_require_final_bosses)
-        signal_handling.on_checked(
-            self.teleporters_allow_unvisited_names_check,
-            self._update_allow_unvisited_names,
-        )
 
     def setup_ui(self) -> None:
         self.setupUi(self)
@@ -214,7 +210,6 @@ class PresetTeleportersPrime2(PresetTeleporterTab[EchoesConfiguration], Ui_Prese
                 dest_check.setChecked(origin_check.isChecked())
 
         sound_bug_warning = not should_keep_elevator_sounds(config)
-        self.teleporters_allow_unvisited_names_check.setChecked(config_teleporters.allow_unvisited_room_names)
         self.teleporters_help_sound_bug_label.setVisible(sound_bug_warning)
         self.skip_final_bosses_check.setChecked(config_teleporters.skip_final_bosses)
 

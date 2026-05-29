@@ -10,11 +10,9 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.game.game_enum import RandovaniaGame
-from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
-    PrimeTrilogyTeleporterConfiguration,
-)
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
+from randovania.games.prime2.layout.echoes_teleporters import EchoesTeleporterConfiguration
 from randovania.games.prime2.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
@@ -95,7 +93,7 @@ def layout_config_with_data(request, default_echoes_configuration):
         "available_locations": AvailableLocationsConfiguration,
         "standard_pickup_configuration": StandardPickupConfiguration,
         "ammo_pickup_configuration": AmmoPickupConfiguration,
-        "teleporters": PrimeTrilogyTeleporterConfiguration,
+        "teleporters": EchoesTeleporterConfiguration,
         "translator_configuration": TranslatorConfiguration,
         "hints": HintConfiguration,
         "beam_configuration": BeamConfiguration,
