@@ -1246,6 +1246,22 @@ def _migrate_v113(preset: dict, game: RandovaniaGame, *, from_layout_description
         preset["configuration"]["subzero_damage"] = 6
 
 
+def _migrate_v114(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    if game == RandovaniaGame.FUSION:
+        rename = {"Sector 6 (NOC)/Twin Caverns East/Door to Twin Cavern Save Room": "Sector 6 (NOC)/Twin Caverns East/Door to Twin Caverns Save Room"}
+
+    def fix(identifier: dict) -> None:
+        region_rename = rename.get(f"{identifier['region']}/{identifier['area']}")
+        if region_rename:
+            identifier["region"] = region_rename
+            if region_rename in {"Sector 6 (NOC)", "Twin Caverns East"}:
+                if identifier["node"] == "Door to Twin Cavern Save Room":
+                    identifier["node"] = "Door to Twin Caverns Save Room"
+
+    for starting_location in preset["configuration"]["starting_location"]:
+        fix(starting_location)
+
+
 _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1360,6 +1376,7 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v111,  # dread: add skip_item_popups setting
     _migrate_v112,  # echoes new patcher only
     _migrate_v113,  # fusion: add environmental damage
+    _migrate_v114,  # fusion: rename twin cavern save room to twin caverns save room
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

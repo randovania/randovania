@@ -868,6 +868,28 @@ def _migrate_v40(data: dict) -> None:
             node["area"] = item_locations.get(area, area)
 
 
+def _migrate_v41(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_name = game["game"]
+        if game_name != "fusion":
+            continue
+
+        doors_to_migrate = {"Sector 6 (NOC)/Twin Caverns East/Door to Twin Cavern Save Room": "Sector 6 (NOC)/Twin Caverns East/Door to Twin Caverns Save Room"}
+        for target_door in list(game["dock_weakness"].items()):
+            if target_door[0] in doors_to_migrate:
+                game["dock_weakness"][doors_to_migrate[target_door[0]]] = game["dock_weakness"].pop(target_door[0])
+
+        room_locations = {
+            "Twin Cavern Save Room": "Twin Caverns Save Room",
+        }
+        for location in game["locations"]:
+            node = location["node_identifier"]
+            area = node["area"]
+            node["area"] = room_locations.get(area, area)
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -909,6 +931,7 @@ _MIGRATIONS = [
     _migrate_v38,  # Redo am2r pickup features
     _migrate_v39,  # Redo msr pickup features
     _migrate_v40,  # Renamed Fusion rooms that reference other sectors or unofficial enemy names
+    _migrate_v41,  # fusion: rename twin cavern save room to twin caverns save room
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
