@@ -2,18 +2,22 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.damage_reduction import DamageReduction
+from randovania.games.prime2.layout import translator_configuration
 from randovania.games.prime2.layout.echoes_configuration import (
     EchoesConfiguration,
     LayoutSkyTempleKeyMode,
 )
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.resolver.bootstrap import Bootstrap
+from randovania.resolver.bootstrap import Bootstrap, ConfigurableNodeBootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
@@ -115,21 +119,64 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
 
         return super().assign_pool_results(rng, configuration, patches, pool_results)
 
-    def apply_game_specific_patches(
-        self, configuration: EchoesConfiguration, game: GameDescription, patches: GamePatches
-    ) -> None:
+    @override
+    @classmethod
+    def _configurable_node_class(cls) -> type[ConfigurableNodeBootstrap]:
+        return TranslatorGateBootstrap
+
+
+class TranslatorGateBootstrap(ConfigurableNodeBootstrap[EchoesConfiguration, LayoutTranslatorRequirement]):
+    @override
+    @property
+    def category_name(self) -> str:
+        return "Translator Gates"
+
+    @override
+    def get_options(
+        self, configuration: EchoesConfiguration, game: GameDescription, node: ConfigurableNode
+    ) -> dict[str, LayoutTranslatorRequirement | None]:
+        translator_requirement = configuration.translator_configuration.translator_requirement
+        gate_requirement = translator_requirement[node.identifier]
+
+        return self._get_standard_options(
+            gate_requirement,
+            gate_requirement.long_name,
+            {
+                LayoutTranslatorRequirement.RANDOM,
+                LayoutTranslatorRequirement.RANDOM_WITH_REMOVED,
+            },
+            {translator.long_name: translator for translator in translator_configuration.ITEM_NAMES.keys()},
+        )
+
+    @override
+    def get_requirement(
+        self, configuration: EchoesConfiguration, game: GameDescription, node_config: LayoutTranslatorRequirement
+    ) -> Requirement:
         resource_db = game.get_resource_database_view()
         scan_visor = resource_db.get_item_by_display_name("Scan Visor")
         scan_visor_req = ResourceRequirement.simple(scan_visor)
 
-        translator_gates = patches.game_specific["translator_gates"]
+        translator = resource_db.get_item(node_config.item_name)
+        translator_req = ResourceRequirement.simple(translator)
 
-        for _, _, node in game.iterate_nodes_of_type(ConfigurableNode):
-            requirement = LayoutTranslatorRequirement(translator_gates[node.identifier.as_string])
-            translator = resource_db.get_item(requirement.item_name)
-            game.region_list.configurable_nodes[node.identifier] = RequirementAnd(
-                [
-                    scan_visor_req,
-                    ResourceRequirement.simple(translator),
-                ]
-            )
+        return RequirementAnd([scan_visor_req, translator_req])
+
+    @override
+    def get_node_config(
+        self, configuration: EchoesConfiguration, game: GameDescription, patches: GamePatches, node: ConfigurableNode
+    ) -> LayoutTranslatorRequirement:
+        translator_gates = patches.game_specific["translator_gates"]
+        return LayoutTranslatorRequirement(translator_gates[node.identifier.as_string])
+
+    @override
+    def get_default_patches(
+        self, configuration: EchoesConfiguration, game: GameDescription, patches: GamePatches
+    ) -> GamePatches:
+        return patches.assign_game_specific(
+            {
+                "translator_gates": {
+                    node.identifier.as_string: LayoutTranslatorRequirement.REMOVED
+                    for node in game.region_list.iterate_nodes_of_type(ConfigurableNode)
+                }
+            }
+        )
