@@ -1560,7 +1560,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Speed Booster Conservation (Intermediate) https://youtu.be/Gwrbu5Usm2c",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1614,7 +1614,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://youtu.be/m4FANVI7eOU",
+                                                                    "comment": "Stand on Frozen Enemy (Beginner) https://youtu.be/m4FANVI7eOU",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -1681,7 +1681,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "https://youtu.be/R9VK5rfKMmg",
+                                                                    "comment": "Damage Boost (Intermediate) https://youtu.be/R9VK5rfKMmg",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -4278,7 +4278,7 @@
                         "Dock to Arbitrary Enky Room (Upper)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Climb Sloped Tunnels (Beginner) https://youtu.be/ho7Zzb20Nns",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4309,8 +4309,16 @@
                             }
                         },
                         "Tunnel to EMMI Zone Exit North": {
-                            "type": "template",
-                            "data": "Ballspark"
+                            "type": "and",
+                            "data": {
+                                "comment": "Ballspark https://youtu.be/CYEk65eZKJs",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Ballspark"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -5449,21 +5457,50 @@
                             }
                         },
                         "Pickup (Power Bomb Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Ballspark"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "From an open door in the EMMI Zone",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Ballspark"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "misc",
-                                            "name": "DoorLocks",
-                                            "amount": 1,
-                                            "negate": true
+                                            "comment": "Seed Boster Conservation (Intermediate) https://youtu.be/fTvewcFs7a0",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Ballspark"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -7496,12 +7533,20 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Pseudo",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": "Pseudo-Wave Beam (Intermediate) https://youtu.be/hBPwFgzHPyo",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -8833,7 +8878,7 @@
                         "Tunnel to Charge Beam Access": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Climb Sloped Tunnels (Beginner) https://youtu.be/gW6Q8JEF5cI",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -10425,7 +10470,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Diagonal Bomb Jump (Beginner) https://youtu.be/Bz7lv6To7zI",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -10446,7 +10491,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Infinite Bomb Jump (Expert) https://youtu.be/Q8X1MC-bIeI",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -10605,8 +10650,16 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Simple IBJ https://youtu.be/XpKJV5wCOCk",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "and",
@@ -10647,12 +10700,20 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Speed Booster https://youtu.be/qgh7ei-vYGQ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -10714,7 +10775,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Single-wall Wall Jump (Advanced) https://youtu.be/PZXnNkGoTFU",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -16584,8 +16645,16 @@
                                         "data": "Use Spin Boost"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "IBJ https://youtu.be/zLpd2INNBt0",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "and",
@@ -16616,7 +16685,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Speed Booster https://youtu.be/OGcfk4kApbI",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -16813,7 +16882,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Single-wall Wall Jump (Intermediate) https://youtu.be/aNJ30_1OEGk",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -17968,6 +18037,32 @@
                                                         "name": "DoorLocks",
                                                         "amount": 1,
                                                         "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Single-wall Wall Jump (Intermediate) https://youtu.be/sFMKqRatCn8",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -23691,8 +23786,16 @@
                                         "data": "Use Spin Boost"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "IBJ https://youtu.be/Nj1UVWP0xzA",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -23715,7 +23818,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Single-wall Wall Jump (Advanced) https://youtu.be/CbtL-2GGiuk",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -23819,7 +23922,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Single-wall Wall Jump (Advanced) https://youtu.be/CbtL-2GGiuk",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -25263,7 +25366,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Single-wall Wall Jump (Intermediate) https://youtu.be/3ykOYO65oKc",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
