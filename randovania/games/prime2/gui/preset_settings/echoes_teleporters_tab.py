@@ -148,13 +148,6 @@ class PresetTeleportersPrime2(PresetTeleporterTab[EchoesConfiguration], Ui_Prese
                 skip_final_bosses=checked,
             )
 
-    def _update_allow_unvisited_names(self, checked: bool) -> None:
-        with self._editor as editor:
-            editor.layout_configuration_teleporters = dataclasses.replace(
-                editor.configuration.teleporters,
-                allow_unvisited_room_names=checked,
-            )
-
     def on_preset_changed(self, preset: Preset[EchoesConfiguration]) -> None:
         config = preset.configuration
         config_teleporters = config.teleporters
