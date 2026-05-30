@@ -583,242 +583,6 @@
             "default_node": "Room Center",
             "hint_features": [],
             "extra": {
-                "room_id": 35,
-                "entity_file": "Unit1_b1_Ent.bin"
-            },
-            "nodes": {
-                "Room Center": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 550.3959683225341,
-                        "y": 224.20206383489318,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "header": {
-                            "entity_id": 0,
-                            "position": {
-                                "x": 0.06494140625,
-                                "y": 1.61669921875,
-                                "z": 14.279296875
-                            },
-                            "up_vector": {
-                                "x": 0.0,
-                                "y": 1.0,
-                                "z": 0.0
-                            },
-                            "facing_vector": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": -0.999755859375
-                            }
-                        },
-                        "fields": {
-                            "availabilty": 0,
-                            "active": true
-                        }
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Stronghold Void B (Alinos)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Slench1",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Slench 1": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Damage",
-                                            "amount": 99,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Door to Stronghold Void B (Alinos)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 834.7732181425487,
-                        "y": 217.00263978881685,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "header": {
-                            "entity_id": 4,
-                            "position": {
-                                "x": 0.0,
-                                "y": 2.479248046875,
-                                "z": 17.3896484375
-                            },
-                            "up_vector": {
-                                "x": 0.0,
-                                "y": 1.0,
-                                "z": 0.0
-                            },
-                            "facing_vector": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": -0.999755859375
-                            }
-                        },
-                        "fields": {
-                            "node_name": "",
-                            "weapon_type": 9,
-                            "door_type": 2,
-                            "connector_id": 21,
-                            "target_layer_id": 0,
-                            "locked": false,
-                            "out_connector_id": 0,
-                            "out_loader_id": 85,
-                            "entity_file_name": "Unit1_TP1_Ent.b",
-                            "room_name": "Unit1_TP1_Ent.b"
-                        }
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Alinos",
-                        "area": "Stronghold Void B (Alinos)",
-                        "node": "Door to Biodefense Chamber B (Alinos)"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Room Center": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Octolith)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 448.40412766978636,
-                        "y": 148.6081113510919,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "header": {
-                            "entity_id": 2,
-                            "position": {
-                                "x": 0.0,
-                                "y": -0.2119140625,
-                                "z": -6.82373046875
-                            },
-                            "up_vector": {
-                                "x": 0.0,
-                                "y": 1.0,
-                                "z": 0.0
-                            },
-                            "facing_vector": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 1.0
-                            }
-                        },
-                        "fields": {
-                            "model_id": 8,
-                            "artifact_id": 0,
-                            "active": false,
-                            "has_base": false,
-                            "message1_target": 4,
-                            "message1": 16,
-                            "message2_target": -1,
-                            "message2": 0,
-                            "message3_target": -1,
-                            "message3": 0
-                        }
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 0,
-                    "location_category": "major",
-                    "custom_index_group": null,
-                    "hint_features": [],
-                    "connections": {
-                        "Room Center": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Slench 1": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 252.81977441804653,
-                        "y": 286.59707223422123,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Slench1",
-                    "connections": {
-                        "Pickup (Octolith)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Biodefense Chamber A (Alinos)": {
-            "default_node": "Room Center",
-            "hint_features": [],
-            "extra": {
                 "room_id": 44,
                 "entity_file": "Unit1_b2_Ent.bin"
             },
@@ -861,7 +625,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Stronghold Void A (Alinos)": {
+                        "Door to Stronghold Void B (Alinos)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -924,7 +688,7 @@
                         }
                     }
                 },
-                "Door to Stronghold Void A (Alinos)": {
+                "Door to Stronghold Void B (Alinos)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -972,8 +736,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Alinos",
-                        "area": "Stronghold Void A (Alinos)",
-                        "node": "Door to Biodefense Chamber A (Alinos)"
+                        "area": "Stronghold Void B (Alinos)",
+                        "node": "Door to Biodefense Chamber B (Alinos)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1065,6 +829,242 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Cretaphid3",
+                    "connections": {
+                        "Pickup (Octolith)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Biodefense Chamber A (Alinos)": {
+            "default_node": "Room Center",
+            "hint_features": [],
+            "extra": {
+                "room_id": 35,
+                "entity_file": "Unit1_b1_Ent.bin"
+            },
+            "nodes": {
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 550.3959683225341,
+                        "y": 224.20206383489318,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "header": {
+                            "entity_id": 0,
+                            "position": {
+                                "x": 0.06494140625,
+                                "y": 1.61669921875,
+                                "z": 14.279296875
+                            },
+                            "up_vector": {
+                                "x": 0.0,
+                                "y": 1.0,
+                                "z": 0.0
+                            },
+                            "facing_vector": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": -0.999755859375
+                            }
+                        },
+                        "fields": {
+                            "availabilty": 0,
+                            "active": true
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Stronghold Void A (Alinos)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Slench1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Slench 1": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 99,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Stronghold Void A (Alinos)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 834.7732181425487,
+                        "y": 217.00263978881685,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "header": {
+                            "entity_id": 4,
+                            "position": {
+                                "x": 0.0,
+                                "y": 2.479248046875,
+                                "z": 17.3896484375
+                            },
+                            "up_vector": {
+                                "x": 0.0,
+                                "y": 1.0,
+                                "z": 0.0
+                            },
+                            "facing_vector": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": -0.999755859375
+                            }
+                        },
+                        "fields": {
+                            "node_name": "",
+                            "palette_id": 9,
+                            "door_type": 2,
+                            "connector_id": 21,
+                            "target_layer_id": 0,
+                            "locked": false,
+                            "out_connector_id": 0,
+                            "out_loader_id": 85,
+                            "entity_filename": "Unit1_TP1_Ent.b",
+                            "room_name": "Unit1_TP1_Ent.b"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Alinos",
+                        "area": "Stronghold Void A (Alinos)",
+                        "node": "Door to Biodefense Chamber A (Alinos)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Octolith)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 448.40412766978636,
+                        "y": 148.6081113510919,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "header": {
+                            "entity_id": 2,
+                            "position": {
+                                "x": 0.0,
+                                "y": -0.2119140625,
+                                "z": -6.82373046875
+                            },
+                            "up_vector": {
+                                "x": 0.0,
+                                "y": 1.0,
+                                "z": 0.0
+                            },
+                            "facing_vector": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 1.0
+                            }
+                        },
+                        "fields": {
+                            "model_id": 8,
+                            "artifact_id": 0,
+                            "active": false,
+                            "has_base": false,
+                            "message1_target": 4,
+                            "message1": 16,
+                            "message2_target": -1,
+                            "message2": 0,
+                            "message3_target": -1,
+                            "message3": 0
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 0,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Slench 1": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 252.81977441804653,
+                        "y": 286.59707223422123,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Slench1",
                     "connections": {
                         "Pickup (Octolith)": {
                             "type": "and",
@@ -6578,7 +6578,7 @@
                                 "items": []
                             }
                         },
-                        "Portal to Stronghold Void A (Alinos)": {
+                        "Portal to Stronghold Void B (Alinos)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6696,7 +6696,7 @@
                         }
                     }
                 },
-                "Portal to Stronghold Void A (Alinos)": {
+                "Portal to Stronghold Void B (Alinos)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6746,7 +6746,7 @@
                     "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
-                        "area": "Stronghold Void A (Alinos)",
+                        "area": "Stronghold Void B (Alinos)",
                         "node": "Portal to Processor Core"
                     },
                     "default_dock_weakness": "Portal",
@@ -7104,7 +7104,7 @@
                         }
                     }
                 },
-                "Portal to Stronghold Void B (Alinos)": {
+                "Portal to Stronghold Void A (Alinos)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7154,7 +7154,7 @@
                     "dock_type": "Portal",
                     "default_connection": {
                         "region": "Alinos",
-                        "area": "Stronghold Void B (Alinos)",
+                        "area": "Stronghold Void A (Alinos)",
                         "node": "Portal to Elder Passage"
                     },
                     "default_dock_weakness": "Portal",
@@ -7162,7 +7162,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "ui_custom_name": "Alinos - Elder Passage (Stronghold Void B Portal)",
+                    "ui_custom_name": "Alinos - Elder Passage (Stronghold Void A Portal)",
                     "connections": {
                         "Player Spawn": {
                             "type": "and",
@@ -7440,7 +7440,7 @@
                                 "negate": false
                             }
                         },
-                        "Portal to Stronghold Void B (Alinos)": {
+                        "Portal to Stronghold Void A (Alinos)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7502,7 +7502,7 @@
                 }
             }
         },
-        "Stronghold Void B (Alinos)": {
+        "Stronghold Void A (Alinos)": {
             "default_node": "Player Spawn",
             "hint_features": [],
             "extra": {
@@ -7556,7 +7556,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Biodefense Chamber B (Alinos)": {
+                        "Door to Biodefense Chamber A (Alinos)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7616,7 +7616,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Elder Passage",
-                        "node": "Portal to Stronghold Void B (Alinos)"
+                        "node": "Portal to Stronghold Void A (Alinos)"
                     },
                     "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
@@ -7634,7 +7634,7 @@
                         }
                     }
                 },
-                "Door to Biodefense Chamber B (Alinos)": {
+                "Door to Biodefense Chamber A (Alinos)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7682,8 +7682,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Alinos",
-                        "area": "Biodefense Chamber B (Alinos)",
-                        "node": "Door to Stronghold Void B (Alinos)"
+                        "area": "Biodefense Chamber A (Alinos)",
+                        "node": "Door to Stronghold Void A (Alinos)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -7703,7 +7703,7 @@
                 }
             }
         },
-        "Stronghold Void A (Alinos)": {
+        "Stronghold Void B (Alinos)": {
             "default_node": "Player Spawn",
             "hint_features": [],
             "extra": {
@@ -7757,7 +7757,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Biodefense Chamber A (Alinos)": {
+                        "Door to Biodefense Chamber B (Alinos)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7817,7 +7817,7 @@
                     "default_connection": {
                         "region": "Alinos",
                         "area": "Processor Core",
-                        "node": "Portal to Stronghold Void A (Alinos)"
+                        "node": "Portal to Stronghold Void B (Alinos)"
                     },
                     "default_dock_weakness": "Portal",
                     "exclude_from_dock_rando": false,
@@ -7835,7 +7835,7 @@
                         }
                     }
                 },
-                "Door to Biodefense Chamber A (Alinos)": {
+                "Door to Biodefense Chamber B (Alinos)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7883,8 +7883,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Alinos",
-                        "area": "Biodefense Chamber A (Alinos)",
-                        "node": "Door to Stronghold Void A (Alinos)"
+                        "area": "Biodefense Chamber B (Alinos)",
+                        "node": "Door to Stronghold Void B (Alinos)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
