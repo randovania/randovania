@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, NamedTuple
 
-from retro_data_structures.json_util import JsonValue
-
 from randovania.game_description import default_database
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.pickup_node import PickupNode
@@ -19,6 +17,7 @@ from randovania.layout.base.logical_pickup_placement_configuration import Logica
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.lib import random_lib
+from randovania.lib.json_lib import JsonType
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Generator, Iterable
@@ -456,14 +455,14 @@ class ConfigurableNodeBootstrap[Configuration: BaseConfiguration, ConfigNodeData
         """
         return patches
 
-    def config_data_to_json(self, value: ConfigNodeData) -> JsonValue:
+    def config_data_to_json(self, value: ConfigNodeData) -> JsonType:
         """
         Serializes the data for a config node to JSON.
         Used by the map tracker to maintain state.
         """
         raise NotImplementedError
 
-    def json_to_config_data(self, value: JsonValue) -> ConfigNodeData:
+    def json_to_config_data(self, value: JsonType) -> ConfigNodeData:
         """
         Deerializes the data for a config node from JSON.
         Used by the map tracker to maintain state.
