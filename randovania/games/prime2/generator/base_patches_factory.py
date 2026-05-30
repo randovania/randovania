@@ -8,9 +8,10 @@ from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.games.prime2.generator.teleporter_distributor import get_teleporter_connections_echoes
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement, TranslatorConfiguration
 from randovania.generator.base_patches_factory import BasePatchesFactory, MissingRng, weaknesses_for_unlocked_saves
 from randovania.generator.teleporter_distributor import get_dock_connections_assignment_for_teleporter
+from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -66,15 +67,16 @@ WORLDS = [
 ]
 
 
-class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
-    def assign_static_dock_weakness(
-        self, configuration: EchoesConfiguration, game: GameDatabaseView, initial_patches: GamePatches
-    ) -> GamePatches:
-        parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
+class SharedEchoesBasePatches:
+    """Shared logic between Echoes and EchoesOPR"""
+
+    @staticmethod
+    def unlock_save_doors(blue_save_doors: bool, game: GameDatabaseView, initial_patches: GamePatches) -> GamePatches:
+        """Apply patches to unlock save doors, if the option is set."""
 
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
 
-        if configuration.blue_save_doors:
+        if blue_save_doors:
             dock_weakness.extend(
                 weaknesses_for_unlocked_saves(
                     game,
@@ -84,21 +86,23 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
                 )
             )
 
-        return parent.assign_dock_weakness(dock_weakness)
+        return initial_patches.assign_dock_weakness(dock_weakness)
 
-    def dock_connections_assignment(
-        self, configuration: EchoesConfiguration, game: GameDatabaseView, rng: Random
+    @staticmethod
+    def teleporter_assignment(
+        teleporter_config: TeleporterConfiguration, game: GameDatabaseView, rng: Random
     ) -> Iterable[tuple[DockNode, Node]]:
-        yield from super().dock_connections_assignment(configuration, game, rng)
+        """Assign teleporter targets."""
 
-        teleporter_connection = get_teleporter_connections_echoes(configuration.teleporters, game, rng)
-        dock_assignment = get_dock_connections_assignment_for_teleporter(
-            configuration.teleporters, game, teleporter_connection
-        )
+        teleporter_connection = get_teleporter_connections_echoes(teleporter_config, game, rng)
+        dock_assignment = get_dock_connections_assignment_for_teleporter(teleporter_config, game, teleporter_connection)
 
         yield from dock_assignment
 
-    def create_game_specific(self, configuration: EchoesConfiguration, game: GameDescription, rng: Random) -> dict:
+    @staticmethod
+    def translator_gates(translator_config: TranslatorConfiguration, rng: Random) -> dict[str, str]:
+        """Create specific patches for translator gates."""
+
         all_choices = list(LayoutTranslatorRequirement)
         all_choices.remove(LayoutTranslatorRequirement.RANDOM)
         all_choices.remove(LayoutTranslatorRequirement.RANDOM_WITH_REMOVED)
@@ -108,7 +112,7 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
 
         translator_gates = {}
 
-        for identifier, requirement in configuration.translator_configuration.translator_requirement.items():
+        for identifier, requirement in translator_config.translator_requirement.items():
             if requirement in random_requirements:
                 if rng is None:
                     raise MissingRng("Translator")
@@ -119,6 +123,23 @@ class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
 
             translator_gates[identifier.as_string] = requirement.value
 
+        return translator_gates
+
+
+class EchoesBasePatchesFactory(BasePatchesFactory[EchoesConfiguration]):
+    def assign_static_dock_weakness(
+        self, configuration: EchoesConfiguration, game: GameDatabaseView, initial_patches: GamePatches
+    ) -> GamePatches:
+        parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
+        return SharedEchoesBasePatches.unlock_save_doors(configuration.blue_save_doors, game, parent)
+
+    def dock_connections_assignment(
+        self, configuration: EchoesConfiguration, game: GameDatabaseView, rng: Random
+    ) -> Iterable[tuple[DockNode, Node]]:
+        yield from super().dock_connections_assignment(configuration, game, rng)
+        yield from SharedEchoesBasePatches.teleporter_assignment(configuration.teleporters, game, rng)
+
+    def create_game_specific(self, configuration: EchoesConfiguration, game: GameDescription, rng: Random) -> dict:
         return {
-            "translator_gates": translator_gates,
+            "translator_gates": SharedEchoesBasePatches.translator_gates(configuration.translator_configuration, rng),
         }

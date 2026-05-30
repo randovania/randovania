@@ -42,11 +42,12 @@ def _gui() -> randovania.game.gui.GameGui:
 
 
 def _generator() -> randovania.game.generator.GameGenerator:
+    from randovania.games.prime2.generator.pickup_pool.pool_creator import echoes_specific_pool
     from randovania.games.prime2_opr import generator
     from randovania.generator.filler.weights import ActionWeights
 
     return randovania.game.generator.GameGenerator(
-        pickup_pool_creator=generator.pool_creator,
+        pickup_pool_creator=echoes_specific_pool,
         bootstrap=generator.EchoesOPRBootstrap(),
         base_patches_factory=generator.EchoesOPRBasePatchesFactory(),
         action_weights=ActionWeights(),
