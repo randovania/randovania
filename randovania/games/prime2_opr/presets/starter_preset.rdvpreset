@@ -12,9 +12,9 @@
         },
         "starting_location": [
             {
-                "region": "Main",
-                "area": "First Area",
-                "node": "Spawn Point"
+                "region": "Temple Grounds",
+                "area": "Landing Site",
+                "node": "Save Station"
             }
         ],
         "available_locations": {
@@ -23,16 +23,171 @@
         },
         "standard_pickup_configuration": {
             "pickups_state": {
-                "Powerful Weapon": {
+                "Combat Visor": {
+                    "num_included_in_starting_pickups": 1
+                },
+                "Scan Visor": {
+                    "num_included_in_starting_pickups": 1
+                },
+                "Dark Visor": {
                     "num_shuffled_pickups": 1
+                },
+                "Echo Visor": {
+                    "num_shuffled_pickups": 1
+                },
+                "Varia Suit": {
+                    "num_included_in_starting_pickups": 1
+                },
+                "Dark Suit": {},
+                "Light Suit": {},
+                "Progressive Suit": {
+                    "num_shuffled_pickups": 2
+                },
+                "Power Beam": {
+                    "num_included_in_starting_pickups": 1
+                },
+                "Charge Beam": {
+                    "num_included_in_starting_pickups": 1
+                },
+                "Dark Beam": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        50
+                    ]
+                },
+                "Light Beam": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        50
+                    ]
+                },
+                "Annihilator Beam": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        0,
+                        0
+                    ]
+                },
+                "Massive Damage": {},
+                "Unlimited Beam Ammo": {},
+                "Morph Ball": {
+                    "num_included_in_starting_pickups": 1
+                },
+                "Morph Ball Bomb": {
+                    "num_shuffled_pickups": 1
+                },
+                "Boost Ball": {
+                    "num_shuffled_pickups": 1
+                },
+                "Spider Ball": {
+                    "num_shuffled_pickups": 1
+                },
+                "Power Bomb": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        2
+                    ]
+                },
+                "Space Jump Boots": {
+                    "num_shuffled_pickups": 1
+                },
+                "Gravity Boost": {
+                    "num_shuffled_pickups": 1
+                },
+                "Grapple Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Screw Attack": {
+                    "num_shuffled_pickups": 1
+                },
+                "Progressive Grapple": {},
+                "Missile Launcher": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        5
+                    ]
+                },
+                "Seeker Launcher": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        5
+                    ]
+                },
+                "Unlimited Missiles": {},
+                "Super Missile": {
+                    "num_shuffled_pickups": 1
+                },
+                "Sunburst": {
+                    "num_shuffled_pickups": 1
+                },
+                "Darkburst": {
+                    "num_shuffled_pickups": 1
+                },
+                "Sonic Boom": {
+                    "num_shuffled_pickups": 1
+                },
+                "Violet Translator": {
+                    "num_shuffled_pickups": 1
+                },
+                "Amber Translator": {
+                    "num_shuffled_pickups": 1
+                },
+                "Emerald Translator": {
+                    "num_shuffled_pickups": 1
+                },
+                "Cobalt Translator": {
+                    "num_shuffled_pickups": 1
+                },
+                "Energy Tank": {
+                    "num_shuffled_pickups": 14
                 }
             },
-            "default_pickups": {},
+            "default_pickups": {
+                "visor": "Combat Visor",
+                "beam": "Power Beam"
+            },
             "minimum_random_starting_pickups": 0,
             "maximum_random_starting_pickups": 0
         },
         "ammo_pickup_configuration": {
-            "pickups_state": {}
+            "pickups_state": {
+                "Missile Expansion": {
+                    "ammo_count": [
+                        5
+                    ],
+                    "pickup_count": 33,
+                    "requires_main_item": true
+                },
+                "Power Bomb Expansion": {
+                    "ammo_count": [
+                        1
+                    ],
+                    "pickup_count": 8,
+                    "requires_main_item": true
+                },
+                "Dark Ammo Expansion": {
+                    "ammo_count": [
+                        20
+                    ],
+                    "pickup_count": 10,
+                    "requires_main_item": true
+                },
+                "Light Ammo Expansion": {
+                    "ammo_count": [
+                        20
+                    ],
+                    "pickup_count": 10,
+                    "requires_main_item": true
+                },
+                "Beam Ammo Expansion": {
+                    "ammo_count": [
+                        200,
+                        200
+                    ],
+                    "pickup_count": 0,
+                    "requires_main_item": true
+                }
+            }
         },
         "damage_strictness": 1.5,
         "pickup_model_style": "all-visible",
@@ -42,11 +197,30 @@
         "dock_rando": {
             "mode": "vanilla",
             "types_state": {
-                "Door": {
-                    "can_change_from": [],
-                    "can_change_to": []
+                "door": {
+                    "can_change_from": [
+                        "Annihilator Door",
+                        "Dark Door",
+                        "Light Door",
+                        "Missile Blast Shield",
+                        "Normal Door",
+                        "Power Bomb Blast Shield",
+                        "Seeker Launcher Blast Shield",
+                        "Super Missile Blast Shield"
+                    ],
+                    "can_change_to": [
+                        "Annihilator Door",
+                        "Dark Door",
+                        "Light Door",
+                        "Missile Blast Shield",
+                        "Normal Door",
+                        "Permanently Locked",
+                        "Power Bomb Blast Shield",
+                        "Seeker Launcher Blast Shield (patched)",
+                        "Super Missile Blast Shield"
+                    ]
                 },
-                "Other": {
+                "portal": {
                     "can_change_from": [],
                     "can_change_to": []
                 }
@@ -59,11 +233,110 @@
         "hints": {
             "enable_random_hints": true,
             "enable_specific_location_hints": true,
-            "specific_pickup_hints": {},
+            "specific_pickup_hints": {
+                "sky_temple_keys": "precise"
+            },
             "minimum_available_locations_for_hint_placement": 0,
             "minimum_location_weight_for_hint_placement": 0.0,
             "use_resolver_hints": false
         },
-        "include_extra_pickups": false
+        "teleporters": {
+            "mode": "vanilla",
+            "excluded_teleporters": [
+                {
+                    "region": "Sanctuary Fortress",
+                    "area": "Aerie",
+                    "node": "Elevator to Aerie Transport Station"
+                },
+                {
+                    "region": "Sanctuary Fortress",
+                    "area": "Aerie Transport Station",
+                    "node": "Elevator to Aerie"
+                },
+                {
+                    "region": "Sky Temple",
+                    "area": "Sky Temple Energy Controller",
+                    "node": "Elevator to Sky Temple Grounds"
+                },
+                {
+                    "region": "Sky Temple Grounds",
+                    "area": "Sky Temple Gateway",
+                    "node": "Elevator to Sky Temple"
+                }
+            ],
+            "excluded_targets": [],
+            "skip_final_bosses": false
+        },
+        "sky_temple_keys": 9,
+        "translator_configuration": {
+            "translator_requirement": {
+                "Temple Grounds/Hive Access Tunnel/Translator Gate": "removed",
+                "Temple Grounds/Meeting Grounds/Translator Gate": "amber",
+                "Temple Grounds/Hive Transport Area/Translator Gate": "removed",
+                "Temple Grounds/Industrial Site/Translator Gate": "removed",
+                "Temple Grounds/Path of Eyes/Translator Gate": "amber",
+                "Temple Grounds/Temple Assembly Site/Translator Gate": "violet",
+                "Temple Grounds/GFMC Compound/Translator Gate": "emerald",
+                "Great Temple/Temple Sanctuary/Transport A Translator Gate": "emerald",
+                "Great Temple/Temple Sanctuary/Transport B Translator Gate": "violet",
+                "Great Temple/Temple Sanctuary/Transport C Translator Gate": "amber",
+                "Agon Wastes/Mining Plaza/Translator Gate": "amber",
+                "Agon Wastes/Mining Station A/Translator Gate": "amber",
+                "Torvus Bog/Great Bridge/Translator Gate": "emerald",
+                "Torvus Bog/Torvus Temple/Translator Gate": "emerald",
+                "Torvus Bog/Torvus Temple/Elevator Translator Scan": "emerald",
+                "Sanctuary Fortress/Reactor Core/Translator Gate": "cobalt",
+                "Sanctuary Fortress/Sanctuary Temple/Translator Gate": "cobalt"
+            }
+        },
+        "beam_configuration": {
+            "power": {
+                "item_index": 0,
+                "ammo_a": -1,
+                "ammo_b": -1,
+                "uncharged_cost": 0,
+                "charged_cost": 0,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 0
+            },
+            "dark": {
+                "item_index": 1,
+                "ammo_a": 45,
+                "ammo_b": -1,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 30
+            },
+            "light": {
+                "item_index": 2,
+                "ammo_a": 46,
+                "ammo_b": -1,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 30
+            },
+            "annihilator": {
+                "item_index": 3,
+                "ammo_a": 46,
+                "ammo_b": 45,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 30
+            }
+        },
+        "energy_per_tank": 100,
+        "safe_zone": {
+            "fully_heal": true,
+            "prevents_dark_aether": true,
+            "heal_per_second": 1.0
+        },
+        "varia_suit_damage": 6.0,
+        "dark_suit_damage": 1.2,
+        "dangerous_energy_tank": false,
+        "inverted_mode": false,
+        "blue_save_doors": false
     }
 }
