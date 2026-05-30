@@ -2,23 +2,29 @@ from __future__ import annotations
 
 import copy
 import dataclasses
+from random import Random
 from typing import TYPE_CHECKING, override
 
 from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.damage_reduction import DamageReduction
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime2.layout import translator_configuration
 from randovania.games.prime2.layout.echoes_configuration import (
     EchoesConfiguration,
     LayoutSkyTempleKeyMode,
 )
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
+from randovania.generator.pickup_pool import PoolResults
 from randovania.lib.json_lib import JsonType
 from randovania.resolver.bootstrap import Bootstrap, ConfigurableNodeBootstrap
+from randovania.resolver.damage_state import DamageState
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
@@ -44,8 +50,8 @@ def is_boss_location(node: PickupNode, config: EchoesConfiguration) -> bool:
     return False
 
 
-class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
-    def create_damage_state(self, game: GameDatabaseView, configuration: EchoesConfiguration) -> DamageState:
+class BaseEchoesBootstrap[Configuration: (EchoesConfiguration, EchoesOPRConfiguration)](Bootstrap[Configuration]):
+    def create_damage_state(self, game: GameDatabaseView, configuration: Configuration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
@@ -53,6 +59,47 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
             [],
         )
 
+    def _get_enabled_misc_resources(
+        self, configuration: Configuration, resource_database: ResourceDatabaseView
+    ) -> set[str]:
+        enabled_resources = set()
+
+        if configuration.safe_zone.prevents_dark_aether:
+            # Safe Zone
+            enabled_resources.add("SafeZone")
+
+        return enabled_resources
+
+    def patch_resource_database(self, db: ResourceDatabase, configuration: Configuration) -> ResourceDatabase:
+        damage_reductions = copy.copy(db.damage_reductions)
+        damage_reductions[db.get_damage("DarkWorld1")] = [
+            DamageReduction(None, 0, configuration.varia_suit_damage / 6.0),
+            DamageReduction(db.get_item_by_display_name("Dark Suit"), 1, configuration.dark_suit_damage / 6.0),
+            DamageReduction(db.get_item_by_display_name("Light Suit"), 1, 0.0),
+        ]
+        return dataclasses.replace(db, damage_reductions=damage_reductions)
+
+    def assign_pool_results(
+        self, rng: Random, configuration: Configuration, patches: GamePatches, pool_results: PoolResults
+    ) -> GamePatches:
+        mode = configuration.sky_temple_keys
+
+        if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
+            pickups_to_preplace = [
+                pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "sky_temple_key"
+            ]
+            locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_boss_location)
+            self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
+
+        return super().assign_pool_results(rng, configuration, patches, pool_results)
+
+    @override
+    @classmethod
+    def _configurable_node_class(cls) -> type[ConfigurableNodeBootstrap]:
+        return TranslatorGateBootstrap
+
+
+class EchoesBootstrap(BaseEchoesBootstrap[EchoesConfiguration]):
     def event_resources_for_configuration(
         self,
         configuration: EchoesConfiguration,
@@ -70,7 +117,7 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
     def _get_enabled_misc_resources(
         self, configuration: EchoesConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
-        enabled_resources = set()
+        enabled_resources = super()._get_enabled_misc_resources(configuration, resource_database)
         allow_vanilla = {
             "allow_jumping_on_dark_water": "DarkWaterJump",
             "allow_vanilla_dark_beam": "VanillaDarkBeam",
@@ -91,39 +138,7 @@ class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
             # Vanilla Great Temple Emerald Translator Gate
             enabled_resources.add("VanillaGreatTempleEmeraldGate")
 
-        if configuration.safe_zone.prevents_dark_aether:
-            # Safe Zone
-            enabled_resources.add("SafeZone")
-
         return enabled_resources
-
-    def patch_resource_database(self, db: ResourceDatabase, configuration: EchoesConfiguration) -> ResourceDatabase:
-        damage_reductions = copy.copy(db.damage_reductions)
-        damage_reductions[db.get_damage("DarkWorld1")] = [
-            DamageReduction(None, 0, configuration.varia_suit_damage / 6.0),
-            DamageReduction(db.get_item_by_display_name("Dark Suit"), 1, configuration.dark_suit_damage / 6.0),
-            DamageReduction(db.get_item_by_display_name("Light Suit"), 1, 0.0),
-        ]
-        return dataclasses.replace(db, damage_reductions=damage_reductions)
-
-    def assign_pool_results(
-        self, rng: Random, configuration: EchoesConfiguration, patches: GamePatches, pool_results: PoolResults
-    ) -> GamePatches:
-        mode = configuration.sky_temple_keys
-
-        if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
-            pickups_to_preplace = [
-                pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "sky_temple_key"
-            ]
-            locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_boss_location)
-            self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
-
-        return super().assign_pool_results(rng, configuration, patches, pool_results)
-
-    @override
-    @classmethod
-    def _configurable_node_class(cls) -> type[ConfigurableNodeBootstrap]:
-        return TranslatorGateBootstrap
 
 
 class TranslatorGateBootstrap(ConfigurableNodeBootstrap[EchoesConfiguration, LayoutTranslatorRequirement]):
