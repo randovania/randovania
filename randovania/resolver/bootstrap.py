@@ -398,7 +398,7 @@ class ConfigurableNodeBootstrap[Configuration: BaseConfiguration, ConfigNodeData
         """
         The name used to refer to this game's configurable nodes.
         """
-        return "Configurable Nodes"
+        raise NotImplementedError
 
     def get_requirement(
         self, configuration: Configuration, game: GameDescription, node_config: ConfigNodeData
