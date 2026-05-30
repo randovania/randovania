@@ -9,7 +9,7 @@ from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.games.prime2.layout.echoes_teleporters import EchoesTeleporterConfiguration
+from randovania.games.prime2.layout.echoes_teleporters import EchoesTeleporterConfiguration, EchoesTeleporterTargetList
 from randovania.layout.lib.teleporters import (
     TeleporterConfiguration,
     TeleporterList,
@@ -151,7 +151,7 @@ def test_echoes_data(request):
         mode=TeleporterShuffleMode.VANILLA,
         skip_final_bosses=False,
         excluded_teleporters=TeleporterList((), game),
-        excluded_targets=TeleporterTargetList((), game),
+        excluded_targets=EchoesTeleporterTargetList((), game),
     )
     return Data(
         reference=reference,
