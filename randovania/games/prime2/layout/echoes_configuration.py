@@ -69,7 +69,6 @@ class EchoesConfiguration(BaseConfiguration):
     dangerous_energy_tank: bool
     use_new_patcher: EchoesNewPatcher
     inverted_mode: bool
-    portal_rando: bool
 
     blue_save_doors: bool
 
