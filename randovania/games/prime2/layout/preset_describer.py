@@ -137,7 +137,6 @@ class EchoesPresetDescriber(GamePresetDescriber):
                         not configuration.teleporters.is_vanilla
                     )
                 },
-                {"Portals: Randomized": configuration.portal_rando},
             ],
             "Game Changes": [
                 message_for_required_mains(
