@@ -686,10 +686,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
                 "visor": default_pickups[pickup_category_visors].name,
                 "beam": default_pickups[pickup_category_beams].name,
             },
-            "unvisited_room_names": (
-                self.configuration.teleporters.can_use_unvisited_room_names
-                and self.cosmetic_patches.unvisited_room_names
-            ),
+            "unvisited_room_names": self.cosmetic_patches.unvisited_room_names,
             "teleporter_sounds": should_keep_elevator_sounds(self.configuration),
             "dangerous_energy_tank": self.configuration.dangerous_energy_tank,
         }
@@ -733,9 +730,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
         result["logbook_patches"] = self.create_logbook_patches()
 
-        if not self.configuration.teleporters.is_vanilla and (
-            self.cosmetic_patches.unvisited_room_names and self.configuration.teleporters.can_use_unvisited_room_names
-        ):
+        if not self.configuration.teleporters.is_vanilla and self.cosmetic_patches.unvisited_room_names:
             exclude_map_ids = _ELEVATOR_ROOMS_MAP_ASSET_IDS
         else:
             exclude_map_ids = []

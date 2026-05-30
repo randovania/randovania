@@ -6,10 +6,8 @@ from enum import Enum
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
-from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
-    PrimeTrilogyTeleporterConfiguration,
-)
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
+from randovania.games.prime2.layout.echoes_teleporters import EchoesTeleporterConfiguration
 from randovania.games.prime2.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -58,7 +56,7 @@ class EchoesNewPatcher(BitPackEnum, Enum):
 
 @dataclasses.dataclass(frozen=True)
 class EchoesConfiguration(BaseConfiguration):
-    teleporters: PrimeTrilogyTeleporterConfiguration
+    teleporters: EchoesTeleporterConfiguration
     sky_temple_keys: LayoutSkyTempleKeyMode
     translator_configuration: TranslatorConfiguration
     beam_configuration: BeamConfiguration
