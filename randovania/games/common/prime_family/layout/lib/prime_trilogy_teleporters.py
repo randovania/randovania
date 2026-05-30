@@ -4,13 +4,28 @@ import dataclasses
 from typing import override
 
 from randovania.game_description import default_database
+from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode
+from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode, TeleporterTargetList
+
+
+class PrimeTrilogyTeleporterTargetList(TeleporterTargetList):
+    @override
+    @classmethod
+    def valid_teleporter_target(cls, area: Area, node: Node) -> bool:
+        if any(node.name == "Save Station" for node in area.nodes):
+            return False
+
+        return super().valid_teleporter_target(area, node)
 
 
 @dataclasses.dataclass(frozen=True)
 class PrimeTrilogyTeleporterConfiguration(TeleporterConfiguration):
+    # override parent field type
+    excluded_targets: PrimeTrilogyTeleporterTargetList
+
     skip_final_bosses: bool
 
     @property
