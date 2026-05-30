@@ -12,7 +12,6 @@ import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.prime2_opr import layout
-from randovania.layout.preset_describer import GamePresetDescriber
 
 if typing.TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter
@@ -118,7 +117,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     layout=randovania.game.layout.GameLayout(
         configuration=layout.EchoesOPRConfiguration,
         cosmetic_patches=layout.EchoesOPRCosmeticPatches,
-        preset_describer=GamePresetDescriber(),
+        preset_describer=layout.EchoesOPRPresetDescriber(),
     ),
     options=_options,
     gui=_gui,

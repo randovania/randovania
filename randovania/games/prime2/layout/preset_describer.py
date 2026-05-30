@@ -8,6 +8,7 @@ from randovania.games.prime2.layout.echoes_configuration import (
     EchoesConfiguration,
     LayoutSkyTempleKeyMode,
 )
+from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
@@ -93,51 +94,82 @@ def create_beam_configuration_description(
     return result
 
 
+def shared_preset_description(
+    template_strings: dict[str, list[str]], configuration: EchoesConfiguration | EchoesOPRConfiguration
+) -> dict[str, list[str]]:
+    """Shared logic between Echoes and EchoesOPR"""
+    pickup_database = default_database.pickup_database_for_game(configuration.game)
+
+    template_strings = super().format_params(configuration)
+    unified_ammo = configuration.ammo_pickup_configuration.pickups_state[
+        pickup_database.ammo_pickups["Beam Ammo Expansion"]
+    ]
+
+    # Difficulty
+    if (configuration.varia_suit_damage, configuration.dark_suit_damage) != (
+        6,
+        1.2,
+    ):
+        template_strings["Difficulty"].append(
+            f"Dark Aether deals {configuration.varia_suit_damage:.2f} dmg/s to Varia, "
+            f"{configuration.dark_suit_damage:.2f} dmg/s to Dark Suit"
+        )
+
+    if configuration.energy_per_tank != 100:
+        template_strings["Difficulty"].append(f"{configuration.energy_per_tank} energy per Energy Tank")
+
+    if configuration.safe_zone.heal_per_second != 1:
+        template_strings["Difficulty"].append(
+            f"Safe Zones restore {configuration.safe_zone.heal_per_second:.2f} energy/s"
+        )
+
+    extra_message_tree = {
+        "Pickup Pool": [
+            {
+                "Split beam ammo": unified_ammo.pickup_count == 0,
+            }
+        ],
+        "Difficulty": [
+            {"1-HP Mode": configuration.dangerous_energy_tank},
+        ],
+        "Gameplay": [
+            {f"Translator Gates: {configuration.translator_configuration.description()}": True},
+            {
+                f"Elevators: {configuration.teleporters.description('elevators')}": (
+                    not configuration.teleporters.is_vanilla
+                )
+            },
+        ],
+        "Game Changes": [
+            {
+                "Final bosses removed": configuration.teleporters.skip_final_bosses,
+                "Unlocked Save Station doors": configuration.blue_save_doors,
+                "Inverted Aether": configuration.inverted_mode,
+            },
+            *create_beam_configuration_description(configuration.beam_configuration),
+        ],
+    }
+    fill_template_strings_from_tree(template_strings, extra_message_tree)
+
+    # Sky Temple Keys
+    if configuration.sky_temple_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:
+        template_strings["Pickup Pool"].append("Sky Temple Keys at all bosses")
+    elif configuration.sky_temple_keys == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
+        template_strings["Pickup Pool"].append("Sky Temple Keys at all guardians")
+    else:
+        template_strings["Pickup Pool"].append(f"{configuration.sky_temple_keys.num_keys} Sky Temple Keys")
+
+    return template_strings
+
+
 class EchoesPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, EchoesConfiguration)
-        pickup_database = default_database.pickup_database_for_game(configuration.game)
 
         template_strings = super().format_params(configuration)
-        unified_ammo = configuration.ammo_pickup_configuration.pickups_state[
-            pickup_database.ammo_pickups["Beam Ammo Expansion"]
-        ]
-
-        # Difficulty
-        if (configuration.varia_suit_damage, configuration.dark_suit_damage) != (
-            6,
-            1.2,
-        ):
-            template_strings["Difficulty"].append(
-                f"Dark Aether deals {configuration.varia_suit_damage:.2f} dmg/s to Varia, "
-                f"{configuration.dark_suit_damage:.2f} dmg/s to Dark Suit"
-            )
-
-        if configuration.energy_per_tank != 100:
-            template_strings["Difficulty"].append(f"{configuration.energy_per_tank} energy per Energy Tank")
-
-        if configuration.safe_zone.heal_per_second != 1:
-            template_strings["Difficulty"].append(
-                f"Safe Zones restore {configuration.safe_zone.heal_per_second:.2f} energy/s"
-            )
+        template_strings = shared_preset_description(template_strings, configuration)
 
         extra_message_tree = {
-            "Pickup Pool": [
-                {
-                    "Split beam ammo": unified_ammo.pickup_count == 0,
-                }
-            ],
-            "Difficulty": [
-                {"1-HP Mode": configuration.dangerous_energy_tank},
-            ],
-            "Gameplay": [
-                {f"Translator Gates: {configuration.translator_configuration.description()}": True},
-                {
-                    f"Elevators: {configuration.teleporters.description('elevators')}": (
-                        not configuration.teleporters.is_vanilla
-                    )
-                },
-            ],
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
@@ -150,23 +182,11 @@ class EchoesPresetDescriber(GamePresetDescriber):
                 {
                     "Warp to start": configuration.warp_to_start,
                     "Menu Mod": configuration.menu_mod,
-                    "Final bosses removed": configuration.teleporters.skip_final_bosses,
-                    "Unlocked Save Station doors": configuration.blue_save_doors,
-                    "Inverted Aether": configuration.inverted_mode,
                 },
                 {"New Patcher": configuration.use_new_patcher.is_enabled()},
-                *create_beam_configuration_description(configuration.beam_configuration),
             ],
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)
-
-        # Sky Temple Keys
-        if configuration.sky_temple_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:
-            template_strings["Pickup Pool"].append("Sky Temple Keys at all bosses")
-        elif configuration.sky_temple_keys == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
-            template_strings["Pickup Pool"].append("Sky Temple Keys at all guardians")
-        else:
-            template_strings["Pickup Pool"].append(f"{configuration.sky_temple_keys.num_keys} Sky Temple Keys")
 
         return template_strings
 
