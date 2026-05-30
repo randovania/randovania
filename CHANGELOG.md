@@ -65,6 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: GM8E30 (Korean) support
 - Changed: Wavebuster no longer consumes ammo if cancelled due to "point blank range" rule
 - Changed: Updated tournament scan to include 2025 winners
+- Changed: The Dangerous Gravity Suit Logic setting has been moved from the Trick Level tab to the Generation tab.
 
 #### Logic Database
 
