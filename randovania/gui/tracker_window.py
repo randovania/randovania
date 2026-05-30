@@ -9,13 +9,11 @@ import typing
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.common import elevators
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.pickup_pool import pool_creator
 from randovania.graph.graph_requirement import GraphRequirementSet
@@ -111,15 +109,11 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     async def create_new(cls, persistence_path: Path, preset: Preset) -> TrackerWindow:
         result = cls(persistence_path, preset)
 
-        if preset.configuration.dock_rando.is_enabled():
-            raise InvalidLayoutForTracker("Tracker does not support Door Lock rando")
-
-        if isinstance(preset.configuration, EchoesConfiguration):
-            if preset.configuration.portal_rando:
-                raise InvalidLayoutForTracker("Tracker does not support Portal rando")
-
-        if preset.game == RandovaniaGame.FACTORIO:
-            raise InvalidLayoutForTracker("Tracker does not support Factorio")
+        incompatible = preset.settings_incompatible_with_map_tracker()
+        if incompatible:
+            description = "Tracker does not support the following features:\n"
+            description += "\n".join(incompatible)
+            raise InvalidLayoutForTracker(description)
 
         await result.configure()
         return result
@@ -163,6 +157,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.logic = Logic(graph, self.preset.configuration, record_paths=True)
         self.map_canvas.select_game(graph.game_enum)
         self.map_canvas.set_world_graph(graph)
+
+        # hide map tab if game doesn't use it
+        self.map_tab_widget.setTabVisible(1, not game.game.gui.hide_database_map_view)
 
         self.menu_reset_action.triggered.connect(self._confirm_reset)
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)

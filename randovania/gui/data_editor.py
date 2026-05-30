@@ -218,10 +218,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.resource_editor.ResourceChanged.connect(self._on_resource_changed)
         self.connection_filters.FiltersUpdated.connect(self._on_filters_changed)
 
-        if self.game_description.game in {
-            RandovaniaGame.METROID_PRIME_ECHOES,
-            RandovaniaGame.FACTORIO,
-        }:
+        if self.game_description.game.gui.hide_database_map_view:
             self.area_view_dock.hide()
 
         self.zoom_slider.setTickInterval(1)

@@ -111,3 +111,11 @@ class EchoesConfiguration(BaseConfiguration):
             result.append("Using the new patcher exclusively")
 
         return result
+
+    def settings_incompatible_with_map_tracker(self) -> list[str]:
+        result = super().settings_incompatible_with_map_tracker()
+
+        if self.portal_rando:
+            result.append("Portal Rando")
+
+        return result
