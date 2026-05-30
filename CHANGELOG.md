@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [10.8.0] - 2026-06-0?
 
 - Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
+- Changed: When using the Nintendont game connection, it will now give better feedback when you're in the Homebrew Channel and haven't launched Nintendont yet.
 
 ### Generator
 
