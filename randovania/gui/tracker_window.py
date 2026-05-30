@@ -16,7 +16,6 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.common import elevators
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.pickup_pool import pool_creator
 from randovania.graph.graph_requirement import GraphRequirementSet
@@ -251,13 +250,13 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     # check if destination exists
                     self.game_description.region_list.node_by_identifier(node_location)
 
-            if self.game_configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
-                configurable_nodes = {
-                    NodeIdentifier.from_string(identifier): (
-                        LayoutTranslatorRequirement(item) if item is not None else None
-                    )
-                    for identifier, item in previous_state["configurable_nodes"].items()
-                }
+            config_bootstrap = self.game_description.game.generator.bootstrap.configurable_nodes
+            configurable_nodes = {
+                NodeIdentifier.from_string(identifier): (
+                    config_bootstrap.json_to_config_data(value) if value is not None else None
+                )
+                for identifier, value in previous_state["configurable_nodes"].items()
+            }
         except (KeyError, AttributeError):
             return False
 
@@ -480,6 +479,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.persist_current_state()
 
     def persist_current_state(self) -> None:
+        config_bootstrap = self.game_description.game.generator.bootstrap.configurable_nodes
         json_lib.write_path(
             self.persistence_path.joinpath("state.json"),
             {
@@ -493,8 +493,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     for teleporter, combo in self._teleporter_id_to_combo.items()
                 ],
                 "configurable_nodes": {
-                    gate.as_string: combo.currentData().value if combo.currentIndex() > 0 else None
-                    for gate, combo in self._config_node_to_combo.items()
+                    node_id.as_string: config_bootstrap.config_data_to_json(combo.currentData())
+                    if combo.currentIndex() > 0
+                    else None
+                    for node_id, combo in self._config_node_to_combo.items()
                 },
                 "starting_location": self._initial_state.node.identifier.as_json,
             },

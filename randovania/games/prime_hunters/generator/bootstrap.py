@@ -9,6 +9,7 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.games.prime_hunters.layout import HuntersConfiguration, force_field_configuration
 from randovania.games.prime_hunters.layout.force_field_configuration import LayoutForceFieldRequirement
+from randovania.lib.json_lib import JsonType
 from randovania.resolver.bootstrap import Bootstrap, ConfigurableNodeBootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
@@ -104,3 +105,11 @@ class ForceFieldBootstrap(ConfigurableNodeBootstrap[HuntersConfiguration, Layout
                 }
             }
         )
+
+    @override
+    def config_data_to_json(self, value: LayoutForceFieldRequirement) -> JsonType:
+        return value.value
+
+    @override
+    def json_to_config_data(self, value: JsonType) -> LayoutForceFieldRequirement:
+        return LayoutForceFieldRequirement(value)

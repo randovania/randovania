@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, NamedTuple
 
+from retro_data_structures.json_util import JsonValue
+
 from randovania.game_description import default_database
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.pickup_node import PickupNode
@@ -453,3 +455,17 @@ class ConfigurableNodeBootstrap[Configuration: BaseConfiguration, ConfigNodeData
         Returns a GamePatches with the configurable nodes all assigned to an arbitrary default.
         """
         return patches
+
+    def config_data_to_json(self, value: ConfigNodeData) -> JsonValue:
+        """
+        Serializes the data for a config node to JSON.
+        Used by the map tracker to maintain state.
+        """
+        raise NotImplementedError
+
+    def json_to_config_data(self, value: JsonValue) -> ConfigNodeData:
+        """
+        Deerializes the data for a config node from JSON.
+        Used by the map tracker to maintain state.
+        """
+        raise NotImplementedError

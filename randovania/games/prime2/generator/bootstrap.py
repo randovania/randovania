@@ -17,6 +17,7 @@ from randovania.games.prime2.layout.echoes_configuration import (
     LayoutSkyTempleKeyMode,
 )
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.lib.json_lib import JsonType
 from randovania.resolver.bootstrap import Bootstrap, ConfigurableNodeBootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
@@ -180,3 +181,11 @@ class TranslatorGateBootstrap(ConfigurableNodeBootstrap[EchoesConfiguration, Lay
                 }
             }
         )
+
+    @override
+    def config_data_to_json(self, value: LayoutTranslatorRequirement) -> JsonType:
+        return value.value
+
+    @override
+    def json_to_config_data(self, value: JsonType) -> LayoutTranslatorRequirement:
+        return LayoutTranslatorRequirement(value)
