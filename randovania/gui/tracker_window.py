@@ -164,6 +164,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.map_canvas.select_game(graph.game_enum)
         self.map_canvas.set_world_graph(graph)
 
+        # hide map tab if game doesn't use it
+        self.map_tab_widget.setTabVisible(1, not game.game.gui.hide_database_map_view)
+
         self.menu_reset_action.triggered.connect(self._confirm_reset)
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)

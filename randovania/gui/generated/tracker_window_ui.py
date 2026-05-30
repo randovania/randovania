@@ -308,7 +308,7 @@ class Ui_TrackerWindow(object):
         self.retranslateUi(TrackerWindow)
 
         self.tab_widget.setCurrentIndex(0)
-        self.map_tab_widget.setCurrentIndex(3)
+        self.map_tab_widget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(TrackerWindow)
