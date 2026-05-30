@@ -14,14 +14,11 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.games.common import elevators
-from randovania.games.prime2.layout import translator_configuration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.pickup_pool import pool_creator
-from randovania.graph.graph_requirement import GraphRequirementSet, create_requirement_list, create_requirement_set
+from randovania.graph.graph_requirement import GraphRequirementSet
 from randovania.graph.state import State, add_pickup_to_state
 from randovania.graph.world_graph import WorldGraph, WorldGraphNode, WorldGraphNodeConnection
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
@@ -94,7 +91,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     persistence_path: Path
     _initial_state: State
     _teleporter_id_to_combo: dict[NodeIdentifier, QtWidgets.QComboBox]
-    _translator_gate_to_combo: dict[NodeIdentifier, QtWidgets.QComboBox]
+    _config_node_to_combo: dict[NodeIdentifier, QtWidgets.QComboBox]
     _starting_nodes_indices: set[NodeIndex]
 
     # UI tools
@@ -182,7 +179,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.setup_pickups_box(pool_results.to_place)
         self.setup_possible_locations_tree()
         self.setup_teleporters()
-        self.setup_translator_gates()
+        self.setup_configurable_nodes()
 
         # Map
         for region in sorted(self.game_description.region_list.regions, key=lambda x: x.name):
@@ -253,13 +250,13 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     # check if destination exists
                     self.game_description.region_list.node_by_identifier(node_location)
 
-            if self.game_configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
-                configurable_nodes = {
-                    NodeIdentifier.from_string(identifier): (
-                        LayoutTranslatorRequirement(item) if item is not None else None
-                    )
-                    for identifier, item in previous_state["configurable_nodes"].items()
-                }
+            config_bootstrap = self.game_description.game.generator.bootstrap.configurable_nodes
+            configurable_nodes = {
+                NodeIdentifier.from_string(identifier): (
+                    config_bootstrap.json_to_config_data(value) if value is not None else None
+                )
+                for identifier, value in previous_state["configurable_nodes"].items()
+            }
         except (KeyError, AttributeError):
             return False
 
@@ -276,7 +273,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     break
 
         for identifier, requirement in configurable_nodes.items():
-            combo = self._translator_gate_to_combo[identifier]
+            combo = self._config_node_to_combo[identifier]
             for i in range(combo.count()):
                 if requirement == combo.itemData(i):
                     combo.setCurrentIndex(i)
@@ -300,7 +297,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         for teleporter in self._teleporter_id_to_combo.values():
             teleporter.setCurrentIndex(0)
-        for teleporter in self._translator_gate_to_combo.values():
+        for teleporter in self._config_node_to_combo.values():
             teleporter.setCurrentIndex(0)
 
         self._refresh_for_new_action()
@@ -433,7 +430,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             self.on_graph_map_region_combo()
 
     def update_locations_tree_for_reachable_nodes(self) -> None:
-        self.update_translator_gates()
+        self.update_configurable_nodes()
 
         state = self.state_for_current_configuration()
         resources = state.resources
@@ -482,6 +479,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.persist_current_state()
 
     def persist_current_state(self) -> None:
+        config_bootstrap = self.game_description.game.generator.bootstrap.configurable_nodes
         json_lib.write_path(
             self.persistence_path.joinpath("state.json"),
             {
@@ -495,8 +493,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     for teleporter, combo in self._teleporter_id_to_combo.items()
                 ],
                 "configurable_nodes": {
-                    gate.as_string: combo.currentData().value if combo.currentIndex() > 0 else None
-                    for gate, combo in self._translator_gate_to_combo.items()
+                    node_id.as_string: config_bootstrap.config_data_to_json(combo.currentData())
+                    if combo.currentIndex() > 0
+                    else None
+                    for node_id, combo in self._config_node_to_combo.items()
                 },
                 "starting_location": self._initial_state.node.identifier.as_json,
             },
@@ -601,87 +601,75 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 self._teleporter_id_to_combo[node.identifier] = combo
                 layout.addWidget(combo, i, 1)
 
-    def update_translator_gates(self) -> None:
-        # It'd be nice to use EchoesBoostrap.apply_game_specific_patches
-        # But we need to support a magical "Impossible" kind of gate, in case there's no selection
-
+    def update_configurable_nodes(self) -> None:
         game = self.game_description
-        if game.game != RandovaniaGame.METROID_PRIME_ECHOES:
-            return
-
-        scan_visor = game.resource_database.get_item("Scan")
-        scan_visor_req = ResourceRequirement.simple(scan_visor)
 
         for configurable_node in game.region_list.iterate_nodes_of_type(ConfigurableNode):
-            combo = self._translator_gate_to_combo[configurable_node.identifier]
-            requirement: LayoutTranslatorRequirement | None = combo.currentData()
-            translator_req: ResourceRequirement | None = None
+            combo = self._config_node_to_combo[configurable_node.identifier]
+            node_config: typing.Any | None = combo.currentData()
 
-            if requirement is not None:
-                translator = game.resource_database.get_item(requirement.item_name)
-                translator_req = ResourceRequirement.simple(translator)
+            if node_config is None:
+                requirement = None
+            else:
+                db_requirement = game.game.generator.bootstrap.configurable_nodes.get_requirement(
+                    self.game_configuration,
+                    game,
+                    node_config,
+                )
+                requirement = self.graph.converter.convert_db(db_requirement)
+
+            def _get_requirement(conn: WorldGraphNodeConnection) -> GraphRequirementSet:
+                if requirement is None:
+                    return GraphRequirementSet.impossible()
+                return conn.requirement_without_leaving.copy_then_and_with_set(requirement)
 
             graph_node = self.graph.original_to_node[configurable_node.node_index]
             graph_node.connections = [
                 WorldGraphNodeConnection(
                     conn.target,
-                    conn.requirement_without_leaving.copy_then_and_with_set(
-                        create_requirement_set(
-                            [
-                                create_requirement_list(
-                                    self.graph.converter.resource_database,
-                                    [scan_visor_req, translator_req],
-                                )
-                            ]
-                        )
-                    )
-                    if translator_req is not None
-                    else GraphRequirementSet.impossible(),
+                    _get_requirement(conn),
                     conn.requirement_without_leaving,
                     conn.requirement_without_leaving,
                 )
                 for conn in graph_node.connections
             ]
 
-    def setup_translator_gates(self) -> None:
+    def setup_configurable_nodes(self) -> None:
         region_list = self.game_description.region_list
-        self._translator_gate_to_combo = {}
-
-        if self.game_configuration.game != RandovaniaGame.METROID_PRIME_ECHOES:
-            return
+        self._config_node_to_combo = {}
 
         configuration = self.game_configuration
-        assert isinstance(configuration, EchoesConfiguration)
 
-        gates = {
-            f"{area.name} ({node.name})": node.identifier
+        config_nodes = {
+            f"{area.name} ({node.name})": node
             for region, area, node in region_list.all_regions_areas_nodes
             if isinstance(node, ConfigurableNode)
         }
-        translator_requirement = configuration.translator_configuration.translator_requirement
 
-        for i, (gate_name, gate) in enumerate(sorted(gates.items(), key=lambda it: it[0])):
-            node_name = QtWidgets.QLabel(self.translator_gate_scroll_contents)
+        if not config_nodes:
+            self.tab_widget.setTabEnabled(2, False)
+            return
+
+        config_node_bootstrap = self.game_description.game.generator.bootstrap.configurable_nodes
+
+        self.tab_widget.setTabText(2, config_node_bootstrap.category_name)
+
+        for i, (gate_name, gate) in enumerate(sorted(config_nodes.items(), key=lambda it: it[0])):
+            node_name = QtWidgets.QLabel(self.configurable_node_scroll_contents)
             node_name.setText(gate_name)
-            self.translator_gate_scroll_layout.addWidget(node_name, i, 0)
+            self.configurable_node_scroll_layout.addWidget(node_name, i, 0)
 
-            combo = QtWidgets.QComboBox(self.translator_gate_scroll_contents)
-            gate_requirement = translator_requirement[gate]
+            combo = QtWidgets.QComboBox(self.configurable_node_scroll_contents)
 
-            if gate_requirement in (
-                LayoutTranslatorRequirement.RANDOM,
-                LayoutTranslatorRequirement.RANDOM_WITH_REMOVED,
-            ):
-                combo.addItem("Undefined", None)
-                for translator in translator_configuration.ITEM_NAMES.keys():
-                    combo.addItem(translator.long_name, translator)
-            else:
-                combo.addItem(gate_requirement.long_name, gate_requirement)
-                combo.setEnabled(False)
+            options = config_node_bootstrap.get_options(configuration, self.game_description, gate)
+
+            for name, value in options.items():
+                combo.addItem(name, value)
+            combo.setEnabled(len(options) > 1)
 
             combo.currentIndexChanged.connect(self.update_locations_tree_for_reachable_nodes)
-            self._translator_gate_to_combo[gate] = combo
-            self.translator_gate_scroll_layout.addWidget(combo, i, 1)
+            self._config_node_to_combo[gate.identifier] = combo
+            self.configurable_node_scroll_layout.addWidget(combo, i, 1)
 
     def setup_starting_location(self, node_location: NodeIdentifier | None) -> None:
         if node_location is None:
@@ -887,14 +875,8 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         except MissingRng:
             pass
 
-        if game.game != RandovaniaGame.METROID_PRIME_ECHOES:
-            raise NotImplementedError
-
-        return patches.assign_game_specific(
-            {
-                "translator_gates": {
-                    node.identifier.as_string: LayoutTranslatorRequirement.VIOLET
-                    for node in game.region_list.iterate_nodes_of_type(ConfigurableNode)
-                }
-            }
+        return game.game.generator.bootstrap.configurable_nodes.get_default_patches(
+            self.game_configuration,
+            game,
+            patches,
         )

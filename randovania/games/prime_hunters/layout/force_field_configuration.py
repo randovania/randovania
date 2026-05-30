@@ -17,6 +17,8 @@ if TYPE_CHECKING:
 
 
 class LayoutForceFieldRequirement(BitPackEnum, Enum):
+    long_name: str
+
     POWER_BEAM = "power-beam"
     VOLT_DRIVER = "volt-driver"
     MISSILE = "missile"
