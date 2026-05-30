@@ -86,7 +86,7 @@ def _exporter() -> GameExporter:
 
 
 def _hash_words() -> list[str]:
-    from randovania.games.prime2_opr.hash_words import HASH_WORDS
+    from randovania.games.prime2.hash_words import HASH_WORDS
 
     return HASH_WORDS
 
@@ -100,17 +100,45 @@ def _test_data() -> randovania.game.game_test_data.GameTestData:
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="EchoesOPR",
     long_name="Metroid Prime 2: Echoes (Open Prime Rando)",
-    development_state=randovania.game.development_state.DevelopmentState.STAGING,
+    development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
     presets=["starter_preset.rdvpreset"],
-    faq=[],
+    faq=[
+        (
+            "Why can't I see the echo locks in Mining Plaza even when using the Echo Visor?",
+            "You need to beat Amorbis and then return the Agon Energy in order for these echo locks to appear.",
+        ),
+        (
+            "How do I use the light energy transports?",
+            """
+To use a light energy transport, simply enter the light energy/holograms with Light Suit.
+The following rooms behave differently and do not require Light Suit,
+and may have additional requirements in order to use the transports:
+
+#### Energy Controllers
+The light energy transports that are unlocked upon returning
+the Sanctuary Energy and going back to Main Energy Controller.
+
+#### Sky Temple Gateway (Sky Temple Grounds)
+
+The light energy transport unlocked when returning all the Sky Temple Keys.
+
+#### Sky Temple Energy Controller (Sky Temple)
+
+Taking the transport hologram at the center of this room.
+            """,
+        ),
+    ],
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=(
-            "Everything",
-            "Nothing",
+            "All items including Temple Keys",
+            "Elevator destinations",
+            "Starting locations",
+            "Door locks",
+            "Translator gate requirements",
         ),
         need_to_play=(
-            "A Nintendo Virtual Boy",
-            "Your original Virtual Boy Game Cartridge",
+            "An ISO of any NTSC-U or PAL GameCube release of the game",
+            "A modded Wii, or Dolphin Emulator",
         ),
     ),
     hash_words=_hash_words(),
@@ -126,5 +154,4 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     test_data=_test_data,
-    multiple_start_nodes_per_area=True,
 )
