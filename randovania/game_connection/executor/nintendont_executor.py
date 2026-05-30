@@ -134,6 +134,15 @@ class NintendontExecutor(MemoryOperationExecutor):
             self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
             return None
 
+        except ConnectionRefusedError as e:
+            # Ip exists, maybe it's listening to the HBC port instead?
+            try:
+                reader, writer = await asyncio.open_connection(self._ip, 4299)
+                writer.close()
+            except Exception:
+                raise e
+
+            return "Currently in the Homebrew Channel. Upload Nintendont or launch it manually."
         except (TimeoutError, OSError, struct.error, UnicodeError) as e:
             # UnicodeError is for some invalid ip addresses
             self._socket = None
