@@ -19,7 +19,7 @@ class DreadArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_major_bosses: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 12, "precision": 1})
 
-    def unsupported_features(self):
+    def unsupported_features(self) -> list[str]:
         max_artifacts = 6 * (self.prefer_emmi + self.prefer_major_bosses)
         if self.required_artifacts > max_artifacts:
             return ["Metroid DNA on non-boss/EMMI"]
@@ -90,7 +90,7 @@ class DreadConfiguration(BaseConfiguration):
         result = super().unsupported_features()
 
         gd = default_database.game_description_for(self.game)
-        for trick in gd.resource_database.trick:
+        for trick in gd.get_resource_database_view().get_all_tricks():
             if trick.hide_from_ui and self.trick_level.level_for_trick(trick) != LayoutTrickLevel.DISABLED:
                 result.append(f"Enabled {trick.long_name}")
 

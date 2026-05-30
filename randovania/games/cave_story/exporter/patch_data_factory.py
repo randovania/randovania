@@ -182,10 +182,7 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
         if self.configuration.no_blocks:
             starting_script += "<FL+1351"
         # rocket skip enabled
-        if (
-            self.configuration.trick_level.level_for_trick(self.game.resource_database.get_trick("Dboost")).as_number
-            >= 4
-        ):
+        if self.configuration.trick_level.level_for_trick(self.resource_db.get_trick("Dboost")).as_number >= 4:
             starting_script += "<FL+6400"
         # initialize HP counter
         starting_script += set_flag(4011, self.configuration.starting_hp, bits=6)

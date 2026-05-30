@@ -523,10 +523,11 @@ async def test_login_as_guest(client: NetworkClient):
     client.on_user_session_updated = AsyncMock()
     client.connect_to_server = AsyncMock()
     client.server_post = MagicMock(return_value=MockResponse({"data": 5}, 200))
+    client.sio.get_sid = MagicMock(return_value="1234")
 
     await client.login_as_guest("Foo")
 
-    client.server_post.assert_called_once_with("guest_login", data={"name": "Foo"})
+    client.server_post.assert_called_once_with("guest_login", data={"name": "Foo", "sid": "1234"})
     client.on_user_session_updated.assert_awaited_once_with({"data": 5})
     client.connect_to_server.assert_awaited_once_with()
 

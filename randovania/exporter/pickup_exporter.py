@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 from randovania.exporter import item_names
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.game_database_view import GameDatabaseView
 from randovania.game_description.pickup.pickup_entry import (
     ConditionalResources,
     PickupEntry,
@@ -20,7 +21,6 @@ if TYPE_CHECKING:
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.assignment import PickupTarget
-    from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceGainTuple
@@ -372,7 +372,7 @@ def _get_visual_model(
 def export_all_indices(
     patches: GamePatches,
     useless_target: PickupTarget,
-    region_list: RegionList,
+    game_view: GameDatabaseView,
     rng: Random,
     model_style: PickupModelStyle,
     data_source: PickupModelDataSource,
@@ -383,7 +383,7 @@ def export_all_indices(
     Creates the patcher data for all pickups in the game
     :param patches:
     :param useless_target:
-    :param region_list:
+    :param game_view:
     :param rng:
     :param model_style:
     :param data_source:
@@ -396,7 +396,7 @@ def export_all_indices(
     pickup_list = list(pickup_assignment.values())
     rng.shuffle(pickup_list)
 
-    indices = sorted(node.pickup_index for node in region_list.iterate_nodes_of_type(PickupNode))
+    indices = sorted(node.pickup_index for _, _, node in game_view.iterate_nodes_of_type(PickupNode))
 
     pickups = [
         exporter.export(

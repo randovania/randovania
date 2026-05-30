@@ -226,7 +226,7 @@ class SelectNodesItem(discord.ui.Select):
             if self.area.area.default_node == node.name:
                 name += "; Default Node"
 
-            body = pretty_print.pretty_print_node_type(node, db.region_list, db.resource_database) + "\n"
+            body = pretty_print.pretty_print_node_type(node, db, db.get_resource_database_view()) + "\n"
 
             node_bodies = []
 
@@ -235,7 +235,9 @@ class SelectNodesItem(discord.ui.Select):
                     continue
 
                 extra_lines = []
-                for level, text in pretty_print.pretty_format_requirement(requirement.simplify(), db.resource_database):
+                for level, text in pretty_print.pretty_format_requirement(
+                    requirement.simplify(), db.get_resource_database_view()
+                ):
                     extra_lines.append("{}{}".format("  " * level, text))
 
                 inner = "\n".join(extra_lines)

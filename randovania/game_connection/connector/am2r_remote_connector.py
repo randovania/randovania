@@ -208,9 +208,10 @@ class AM2RRemoteConnector(RemoteConnector):
                     break
                 inventory_dict[actual_items[index]] += 1
 
+        resource_db = self.game.get_resource_database_view()
         inventory = Inventory(
             {
-                self.game.resource_database.get_item_by_display_name(name): InventoryItem(quantity, quantity)
+                resource_db.get_item_by_display_name(name): InventoryItem(quantity, quantity)
                 for name, quantity in inventory_dict.items()
             }
         )

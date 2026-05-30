@@ -711,6 +711,7 @@ SOLO_RDVGAMES = [
     ("fusion/all_hidden_with_random.rdvgame", True),
     ("fusion/starting_items.rdvgame", True),
     ("fusion/lots_of_random_starting_items.rdvgame", True),
+    ("fusion/high_lava_dmg.rdvgame", False),  # expected configured lava dmg too high for solver
     # Dread
     ("dread/vanilla.rdvgame", True),  # vanilla
     ("dread/starter_preset.rdvgame", False),  # starter preset
@@ -732,6 +733,7 @@ SOLO_RDVGAMES = [
         True,
     ),  # starter preset + random starting item + nothing items
     ("prime_hunters/two_way_unchecked_portal_shuffle.rdvgame", True),  # starter preset + two-way portal shuffle
+    ("prime_hunters/starting_energy_and_artifacts.rdvgame", True),  # starter preset + random starting items + artifacts
     # Prime 1
     ("prime1-vanilla.rdvgame", True),  # vanilla
     ("prime1_crazy_seed.rdvgame", False),  # chaos features
@@ -756,6 +758,8 @@ SOLO_RDVGAMES = [
     ("samus_returns/starter_preset.rdvgame", True),  # starter preset
     ("samus_returns/progressive_beams_and_suits.rdvgame", False),  # starter preset + progressive beam and suit
     ("samus_returns/non_required_mains.rdvgame", True),  # non-required main for power bombs + hide model
+    # Zero Mission
+    ("zero_mission/starter_preset.rdvgame", True),  # starter preset
 ]
 
 COOP_RDVGAMES = [

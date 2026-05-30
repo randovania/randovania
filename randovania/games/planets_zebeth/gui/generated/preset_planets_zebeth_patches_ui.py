@@ -85,6 +85,24 @@ class Ui_PresetPlanetsZebethPatches(object):
 
         self.verticalLayout.addWidget(self.allow_downward_shots_label)
 
+        self.allow_screw_attack_to_break_blocks_line = QFrame(self.centralWidget)
+        self.allow_screw_attack_to_break_blocks_line.setObjectName(u"allow_screw_attack_to_break_blocks_line")
+        self.allow_screw_attack_to_break_blocks_line.setFrameShape(QFrame.Shape.HLine)
+        self.allow_screw_attack_to_break_blocks_line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout.addWidget(self.allow_screw_attack_to_break_blocks_line)
+
+        self.allow_screw_attack_to_break_blocks_check = QCheckBox(self.centralWidget)
+        self.allow_screw_attack_to_break_blocks_check.setObjectName(u"allow_screw_attack_to_break_blocks_check")
+
+        self.verticalLayout.addWidget(self.allow_screw_attack_to_break_blocks_check)
+
+        self.allow_screw_attack_to_break_blocks_label = QLabel(self.centralWidget)
+        self.allow_screw_attack_to_break_blocks_label.setObjectName(u"allow_screw_attack_to_break_blocks_label")
+        self.allow_screw_attack_to_break_blocks_label.setWordWrap(True)
+
+        self.verticalLayout.addWidget(self.allow_screw_attack_to_break_blocks_label)
+
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
@@ -104,5 +122,7 @@ class Ui_PresetPlanetsZebethPatches(object):
         self.open_missile_doors_with_one_missile_label.setText(QCoreApplication.translate("PresetPlanetsZebethPatches", u"With this option enabled, only one missile is required to open red doors instead of 5.", None))
         self.allow_downward_shots_check.setText(QCoreApplication.translate("PresetPlanetsZebethPatches", u"Allow downward shots", None))
         self.allow_downward_shots_label.setText(QCoreApplication.translate("PresetPlanetsZebethPatches", u"Allows the player to shoot below.", None))
+        self.allow_screw_attack_to_break_blocks_check.setText(QCoreApplication.translate("PresetPlanetsZebethPatches", u"Allow Screw Attack to break blocks", None))
+        self.allow_screw_attack_to_break_blocks_label.setText(QCoreApplication.translate("PresetPlanetsZebethPatches", u"With this option enabled, the Screw Attack will now break blocks when the player spins near blocks.", None))
     # retranslateUi
 

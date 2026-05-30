@@ -16127,7 +16127,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to Aerie Transport Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -16196,6 +16204,13 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Dock to Aerie Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Aerie Pickup": {
                             "type": "and",
                             "data": {
@@ -16302,24 +16317,6 @@
                                     }
                                 ]
                             }
-                        },
-                        "Bottom Floor": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event69",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Before Dark Samus": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event69",
-                                "amount": 1,
-                                "negate": true
-                            }
                         }
                     }
                 },
@@ -16348,13 +16345,107 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Before Dark Samus": {
+                        "Event - Dark Samus 2": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 50,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "DarkVisor",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Echo",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "InvisibleObjects",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 100,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Bottom Floor": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
                                 "name": "Event69",
                                 "amount": 1,
-                                "negate": true
+                                "negate": false
                             }
                         }
                     }
@@ -16446,13 +16537,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Bottom Floor": {
-                            "type": "resource",
+                        "Dock to Aerie Access": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Event69",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -16536,6 +16625,13 @@
                                 "items": []
                             }
                         },
+                        "Dock to Aerie Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Echo Visor)": {
                             "type": "and",
                             "data": {
@@ -16607,119 +16703,10 @@
                                 "comment": "Having a connection back the event node lets the genrator know when this sequence is safe.",
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event69",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Before Dark Samus": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Event - Dark Samus 2": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 50,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "DarkVisor",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Echo",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "InvisibleObjects",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 100,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "items": []
                                         }
                                     }
                                 ]

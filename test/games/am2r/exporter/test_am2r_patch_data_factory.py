@@ -74,7 +74,7 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
     pickup_list = pickup_exporter.export_all_indices(
         data.patches,
         useless_target,
-        data.game.region_list,
+        data.game,
         data.rng,
         data.configuration.pickup_model_style,
         data.configuration.pickup_model_data_source,

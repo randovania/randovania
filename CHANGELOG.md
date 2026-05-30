@@ -5,6 +5,98 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.8.0] - 2026-06-0?
+
+- Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
+
+### Generator
+
+- Fixed: When using logical pickup placement set to Major pickups or All pickups, generated pickups would not be considered required. For example, Red Keys in Metroid Prime 2: Echoes.
+
+### Resolver
+
+- Fixed: An issue where damage reduction multipliers above 1.0 were being ignored.
+
+### Metroid Dread
+
+- Added: Unique Save Slots cosmetic option. Stores this randomizer's saves in a unique location based on the seed hash.
+
+#### Logic Database
+
+- Fixed: Door override requirements for Shutter Gates (Flash Shift Doors) mentioned in version 10.5.0 didn't work and had no effect.
+
+##### Artaria
+
+- Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
+- Added: Added videos for reaching Door to EMMI Zone First Entrance from above before destroying the blob.
+
+##### Dairon
+
+- Changed: When comming in to Teleport to Artaria from Transport to Cataris, climbing up to above the Wide Block has these changes:
+  - Using Grapple Beam now requires Grapple Movement (Beginner)
+  - Using Simple IBJ now requires Diagonal Bomb Jump (Beginner)
+  - Added option to use just Speed Booster with Speed Booster Conservation (Intermediate)
+
+##### Ferenia
+
+- Changed: Added Movement (Beginner) requirement to reach Missile Tank Pickup in Space Jump Room using Space Jump and Normal Bomb.
+- Changed: Added Speed Booster Conservation trick to reach Missile Tank Pickup in Space Jump Room using Speed Booster. Beginner with Power Bombs and Intermediate with Cross Bombs.
+
+##### Ghavoran
+
+- Changed: Some implementation details surrounding the Chozo-X to help the Resolver in some cases.
+- Fixed: Logic bug that failed to account for how, after fighting the Central Unit,  one needs to finish the Ice EMMI fight before leaving the EMMI Zone.
+
+### Metroid Fusion
+
+- Added: Environmental Damage (Heat, Lava, Cold, Acid) rates can now be configured.
+
+#### Logic Database
+
+##### Main Deck
+
+- Changed: Habitation Deck Entrance: Changed the NHJ WJ Freeze trick from Movement (Advanced) to Stand on Frozen Enemies (Expert). Also added in Stand On Frozen Enemies (Beginner) to the other WJ trick to account for diffusion timing.
+
+### Metroid Prime
+
+- Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
+- Fixed: Observatory: Softlock if the upper 1st-pass pirates are killed before entering the room
+- Fixed: Training Chamber: Softlock if the room unloaded after triggering fight but before killing both ghosts (e.g. wallcrawl)
+- Fixed: GM8E30 (Korean) support
+- Changed: Wavebuster no longer consumes ammo if cancelled due to "point blank range" rule
+- Changed: Updated tournament scan to include 2025 winners
+
+#### Logic Database
+
+- Changed: Reduced logical cost to open Wavebuster door locks: 11->10
+
+##### Phendrana Drifts
+
+- Changed: Transport to Magmoor Caverns South: Reorganized the climb from the elevator up to Transport Access for readability and consistency.
+    - Changed: The L-Jump portion of the NSJ climb was increased from Beginner to Advanced.
+    - Added: A way to climb without Space Jump or Bombs using a Ledge Clip Jump (Movement Expert) and then a Slope + L-Jump (both Advanced).
+
+### Metroid Prime 2: Echoes
+
+- Changed: Dark, Light, and Beam Ammo Expansions are now considered dark-aligned, light-aligned and both, respectively.
+
+#### Logic Database
+
+##### Sanctuary Fortress
+
+- Changed: Minor adjustment aimed at making Aerie safer for the generator, no changes to requirements in practice.
+- Fixed: It was not logical to fight Dark Samus 2 when comming in to Aerie with a randomized elevator.
+
+### Metroid: Samus Returns
+
+- Fixed: When you changed the final boss setting to not being Ridley and the pickup Ridley drops after defeat was an item which was exclusively on Metroids, it would not have spawned.
+
+#### Logic Database
+
+##### Area 6 Poisonous Tunnel
+
+- Fixed: Going back from the Pickup to the upper section now has the correct requirements.
+
 ## [10.7.0] - 2026-05-02
 
 ### Generator

@@ -75,7 +75,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         starting_resources = self.patches.starting_resources()
         return {resource.long_name: quantity for resource, quantity in starting_resources.as_resource_gain()}
 
-    def _create_starting_memo(self) -> dict:
+    def _create_starting_memo(self) -> dict | None:
         starting_memo = None
         extra_starting = item_names.additional_starting_equipment(self.configuration, self.game, self.patches)
         if extra_starting:
@@ -86,6 +86,8 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
                 "header": "Extra Starting Items",
                 "description": textwrap.wrap(starting_memo, width=MAX_CHARS_LIMIT_FOR_INGAME_MESSAGE_BOX),
             }
+
+        return None
 
     def _create_starting_location(self) -> dict:
         return {
@@ -135,6 +137,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
             "warp_to_start": self.configuration.warp_to_start,
             "open_missile_doors_with_one_missile": self.configuration.open_missile_doors_with_one_missile,
             "allow_downward_shots": self.configuration.allow_downward_shots,
+            "allow_screw_attack_to_break_blocks": self.configuration.allow_screw_attack_to_break_blocks,
             "credits_string": self._credits_spoiler(),
             "required_amount_of_keys": required_amount_of_keys,
         }
@@ -150,7 +153,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         }
 
     def _get_item_data(self) -> dict:
-        item_data: dict = json_lib.read_path(
+        item_data: dict = json_lib.read_dict(
             RandovaniaGame.METROID_PLANETS_ZEBETH.data_path.joinpath("pickup_database", "item_data.json")
         )
 
