@@ -144,7 +144,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             target = self.patches.pickup_assignment.get(node.pickup_index, None)
             pickup: dict = {}
 
-            pickup["entity_id"] = node.extra["entity_id"]
+            pickup["entity_id"] = node.extra["header"]["entity_id"]
 
             if target is None:
                 pickup["entity_type"] = ITEM_SPAWN_ENTITY_TYPE
@@ -176,7 +176,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 continue
 
             field = {
-                "entity_id": self.game.region_list.node_by_identifier(node_identifier).extra["entity_id"],
+                "entity_id": self.game.region_list.node_by_identifier(node_identifier).extra["header"]["entity_id"],
                 "type": force_field_index_for_requirement(self.game, LayoutForceFieldRequirement(requirement)),
             }
             force_fields.append(field)
@@ -190,11 +190,11 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             if node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types and node in area.nodes:
                 portal: dict = {}
 
-                portal["entity_id"] = node.extra["entity_id"]
-                portal["target_index"] = connection.extra["entity_type_data"]["load_index"]
+                portal["entity_id"] = node.extra["header"]["entity_id"]
+                portal["target_index"] = connection.extra["fields"]["load_index"]
                 portal["entity_filename"] = self.game.region_list.area_by_area_location(
                     connection.identifier.area_identifier
-                ).extra["portal_filename"]
+                ).extra["portal_file_name"]
 
                 portals.append(portal)
 
@@ -260,7 +260,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         # Hints are assigned to four lore scans in pairs: (1,2), (3,4), (5,6), (7,8)
         i = 1
         for node in hint_nodes:
-            string_id = node.extra["entity_type_data"]["string_id"]
+            string_id = node.extra["fields"]["string_id"]
 
             scan_title = f"{_STRING_ID_TO_SCAN_TITLE[string_id]}\\"
             scan_text = " ".join(
