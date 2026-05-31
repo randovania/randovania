@@ -10,7 +10,6 @@ if TYPE_CHECKING:
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
     from randovania.games.prime2.gui.preset_settings.echoes_beam_configuration_tab import PresetEchoesBeamConfiguration
-    from randovania.games.prime2.gui.preset_settings.echoes_dock_rando_tab import PresetEchoesDockRando
     from randovania.games.prime2.gui.preset_settings.echoes_energy_tab import PresetEchoesEnergy
     from randovania.games.prime2.gui.preset_settings.echoes_goal_tab import PresetEchoesGoal
     from randovania.games.prime2.gui.preset_settings.echoes_item_pool_tab import EchoesPresetItemPool
@@ -18,6 +17,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
     from randovania.games.prime2.gui.preset_settings.echoes_teleporters_tab import PresetTeleportersPrime2
     from randovania.games.prime2.gui.preset_settings.echoes_translators_tab import PresetEchoesTranslators
     from randovania.games.prime2_opr.gui.preset_settings.prime2_opr_patches_tab import PresetEchoesOPRPatches
+    from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.hints_tab import PresetHints
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
@@ -33,7 +33,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetEchoesEnergy,
         PresetTeleportersPrime2,
         PresetEchoesStartingArea,
-        PresetEchoesDockRando,
+        PresetDockRando,
         PresetEchoesTranslators,
         PresetEchoesBeamConfiguration,
         PresetEchoesOPRPatches,
