@@ -1,0 +1,352 @@
+====================
+Templates
+
+* Use Screw Attack (Space Jump):
+      Morph Ball and Screw Attack and Space Jump Boots
+
+* Use Screw Attack (No Space Jump):
+      Morph Ball and Screw Attack
+
+* Shoot Dark Beam:
+      All of the following:
+          Dark Beam
+          Charge Beam or Dark Ammo
+
+* Shoot Light Beam:
+      All of the following:
+          Light Beam
+          Charge Beam or Light Ammo
+
+* Shoot Annihilator Beam:
+      All of the following:
+          Annihilator Beam
+          Any of the following:
+              Charge Beam
+              Dark Ammo and Light Ammo
+
+* Shoot Darkburst:
+      Charge Beam and Dark Beam and Dark Ammo ≥ 30 and Darkburst and Missile ≥ 5
+
+* Shoot Sunburst:
+      Charge Beam and Light Beam and Light Ammo ≥ 30 and Missile ≥ 5 and Sunburst
+
+* Shoot Sonic Boom:
+      Annihilator Beam and Charge Beam and Dark Ammo ≥ 30 and Light Ammo ≥ 30 and Missile ≥ 5 and Sonic Boom
+
+* Activate Bomb Slot without Bombs (Space Jump):
+      All of the following:
+          Morph Ball and Space Jump Boots
+          Shoot Darkburst or Shoot Sonic Boom
+
+* Activate Bomb Slot without Bombs (No Space Jump):
+      All of the following:
+          Morph Ball
+          Shoot Darkburst or Shoot Sonic Boom
+
+* Activate Bomb Slot without Bombs (Instant Morph):
+      All of the following:
+          Morph Ball
+          Shoot Darkburst or Shoot Sonic Boom or Shoot Sunburst
+
+* Activate Safe Zone:
+      All of the following:
+          Enabled Safe Zone
+          Power Beam or Shoot Annihilator Beam or Shoot Light Beam
+
+* Has Suit:
+      Dark Suit or Light Suit
+
+* Kill Quad MB:
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Boost Ball
+              All of the following:
+                  Combat (Beginner)
+                  Morph Ball Bomb or Power Bomb
+              Knowledge (Beginner) and Use Screw Attack (Space Jump)
+
+* Shoot Supers:
+      Charge Beam and Missile ≥ 5 and Power Beam and Super Missile
+
+* Destroy Underwater Seeker Locks:
+      All of the following:
+          Missile ≥ 5 and Missile Launcher and Seeker Launcher
+          Combat Visor or Dark Visor
+
+* Destroy Seeker Locks:
+      All of the following:
+          Missile Launcher and Seeker Launcher
+          Combat Visor or Dark Visor
+          Any of the following:
+              Missile ≥ 5
+              Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
+
+* Shoot Any Beam:
+      Power Beam or Shoot Annihilator Beam or Shoot Dark Beam or Shoot Light Beam
+
+* Open Normal Door:
+      Any of the following:
+          Shoot Any Beam
+          Morph Ball Bomb and Morph Ball
+
+====================
+Dock Weaknesses
+
+> Door
+  * Normal Door
+      Extra - door_type: Normal
+      Open:
+          Open Normal Door
+      No lock
+
+
+  * Normal Door (Forced)
+      Extra - door_type: Normal
+      Open:
+          Open Normal Door
+      No lock
+
+
+  * Dark Door
+      Extra - door_type: Dark
+      Open:
+          Shoot Dark Beam
+      No lock
+
+
+  * Light Door
+      Extra - door_type: Light
+      Open:
+          Shoot Light Beam
+      No lock
+
+
+  * Annihilator Door
+      Extra - door_type: Annihilator
+      Open:
+          Shoot Annihilator Beam
+      No lock
+
+
+  * Missile Blast Shield
+      Extra - door_type: Missile
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Missile
+
+
+  * Super Missile Blast Shield
+      Extra - door_type: SuperMissile
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Charge Beam and Missile ≥ 5 and Power Beam and Super Missile
+
+
+  * Seeker Launcher Blast Shield
+      Extra - door_type: SeekerMissile
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Destroy Seeker Locks
+
+
+  * Seeker Launcher Blast Shield (patched)
+      Extra - door_type: SeekerMissile
+      Extra - display_name: Seeker Launcher Blast Shield
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Destroy Underwater Seeker Locks
+
+
+  * Power Bomb Blast Shield
+      Extra - door_type: PowerBomb
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Morph Ball and Power Bomb
+
+
+  * Permanently Locked
+      Extra - door_type: Disabled
+      Open:
+          Impossible
+      No lock
+
+
+  * Darkburst Blast Shield
+      Extra - door_type: Darkburst
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Shoot Darkburst
+
+
+  * Sunburst Blast Shield
+      Extra - door_type: Sunburst
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Shoot Sunburst
+
+
+  * Sonic Boom Blast Shield
+      Extra - door_type: SonicBoom
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Shoot Sonic Boom
+
+
+  * Bomb Blast Shield
+      Extra - door_type: Bomb
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Morph Ball Bomb and Morph Ball
+
+
+  * Boost Ball Blast Shield
+      Extra - door_type: Boost
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Boost Ball and Morph Ball
+
+
+  * Screw Attack Blast Shield
+      Extra - door_type: ScrewAttack
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Use Screw Attack (Space Jump)
+
+
+  * Dark Visor Blast Shield
+      Extra - door_type: DarkVisor
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Dark Visor
+
+
+  * Echo Visor Blast Shield
+      Extra - door_type: EchoVisor
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Echo Visor
+
+  > Dock Rando:
+      Unlocked: Normal Door
+      Locked: Permanently Locked
+      Change from:
+          Annihilator Door
+          Dark Door
+          Light Door
+          Missile Blast Shield
+          Normal Door
+          Power Bomb Blast Shield
+          Seeker Launcher Blast Shield
+          Super Missile Blast Shield
+      Change to:
+          Annihilator Door
+          Bomb Blast Shield
+          Boost Ball Blast Shield
+          Dark Door
+          Dark Visor Blast Shield
+          Darkburst Blast Shield
+          Echo Visor Blast Shield
+          Light Door
+          Missile Blast Shield
+          Normal Door
+          Permanently Locked
+          Power Bomb Blast Shield
+          Screw Attack Blast Shield
+          Seeker Launcher Blast Shield (patched)
+          Sonic Boom Blast Shield
+          Sunburst Blast Shield
+          Super Missile Blast Shield
+
+
+> Portal
+* Extra - ignore_for_hints: True
+  * Scan Portal
+      Open:
+          Scan Visor
+      No lock
+
+
+  * Dark Portal
+      Open:
+          Shoot Annihilator Beam or Shoot Dark Beam
+      No lock
+
+
+  * Light Portal
+      Open:
+          Shoot Annihilator Beam or Shoot Light Beam
+      No lock
+
+
+  * No Return Portal
+      Open:
+          Impossible
+      No lock
+
+
+  * Unknown Portal Type
+      Open:
+          Trivial
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Morph Ball Door
+  * Morph Ball Door
+      Open:
+          Morph Ball
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Elevator
+* Extra - is_teleporter: True
+* Extra - ignore_for_hints: True
+  * Elevator
+      Open:
+          Trivial
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Teleporter
+* Extra - ignore_for_hints: True
+  * Teleporter
+      Open:
+          Trivial
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Dock
+  * Open Passage
+      Open:
+          Trivial
+      No lock
+
+
+  * Not Determined
+      Open:
+          Impossible
+      No lock
+
+  > Dock Rando: Disabled
+

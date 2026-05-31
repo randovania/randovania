@@ -48,6 +48,7 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.layout_description import LayoutDescription
@@ -584,7 +585,7 @@ def _get_model_mapping(randomizer_data: dict) -> EchoesModelNameMapping:
     )
 
 
-def should_keep_elevator_sounds(configuration: EchoesConfiguration) -> bool:
+def should_keep_elevator_sounds(configuration: EchoesConfiguration | EchoesOPRConfiguration) -> bool:
     elev = configuration.teleporters
     if elev.is_vanilla:
         return True

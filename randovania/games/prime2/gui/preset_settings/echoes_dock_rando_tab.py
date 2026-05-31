@@ -39,6 +39,7 @@ class PresetEchoesDockRando(PresetDockRando[EchoesConfiguration]):
 
     def _on_mode_changed(self, value: DockRandoMode) -> None:
         super()._on_mode_changed(value)
+
         if value != DockRandoMode.VANILLA:
             if not self._editor.configuration.use_new_patcher.is_enabled():
                 with self._editor as editor:

@@ -23,12 +23,10 @@ if TYPE_CHECKING:
     from randovania.generator.pre_fill_params import PreFillParams
 
 
-class EchoesHintDistributor(HintDistributor):
-    # Pre Filler
-    @override
-    @property
-    def num_joke_hints(self) -> int:
-        return 2
+class BaseEchoesHintDistributor(HintDistributor):
+    """
+    Base HintDistributor shared by both Echoes and EchoesOPR.
+    """
 
     @override
     def is_pickup_more_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
@@ -48,37 +46,6 @@ class EchoesHintDistributor(HintDistributor):
             # don't place a translator hint on its color of lore scan
             return hint_node.extra["translator"] not in target.pickup.name
         return super().is_pickup_interesting(target, player_id, hint_node)
-
-    @override
-    async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
-        def g(index: int, loc: str) -> tuple[PickupIndex, PrecisionPair]:
-            return (
-                PickupIndex(index),
-                PrecisionPair(patches.game.hint_feature_database[loc], HintItemPrecision.DETAILED, include_owner=False),
-            )
-
-        return [
-            g(24, "specific_hint_2mos"),  # Light Suit
-            g(43, "specific_hint_guardian"),  # Dark Suit (Amorbis)
-            g(79, "specific_hint_guardian"),  # Dark Visor (Chykka)
-            g(115, "specific_hint_guardian"),  # Annihilator Beam (Quadraxis)
-        ]
-
-    @override
-    async def assign_other_hints(
-        self, patches: GamePatches, identifiers: list[NodeIdentifier], prefill: PreFillParams
-    ) -> GamePatches:
-        all_hint_identifiers = [identifier for identifier in identifiers if identifier not in patches.hints]
-        prefill.rng.shuffle(all_hint_identifiers)
-
-        # Dark Temple hints
-        temple_hints = list(enum_lib.iterate_enum(HintDarkTemple))
-        while all_hint_identifiers and temple_hints:
-            identifier = all_hint_identifiers.pop()
-            patches = patches.assign_hint(identifier, RedTempleHint(dark_temple=temple_hints.pop(0)))
-            identifiers.remove(identifier)
-
-        return patches
 
     # Post Filler
     @override
@@ -112,3 +79,42 @@ class EchoesHintDistributor(HintDistributor):
     @property
     def use_region_location_precision(self) -> bool:
         return False
+
+
+class EchoesHintDistributor(BaseEchoesHintDistributor):
+    # Pre Filler
+    @override
+    @property
+    def num_joke_hints(self) -> int:
+        return 2
+
+    @override
+    async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
+        def g(index: int, loc: str) -> tuple[PickupIndex, PrecisionPair]:
+            return (
+                PickupIndex(index),
+                PrecisionPair(patches.game.hint_feature_database[loc], HintItemPrecision.DETAILED, include_owner=False),
+            )
+
+        return [
+            g(24, "specific_hint_2mos"),  # Light Suit
+            g(43, "specific_hint_guardian"),  # Dark Suit (Amorbis)
+            g(79, "specific_hint_guardian"),  # Dark Visor (Chykka)
+            g(115, "specific_hint_guardian"),  # Annihilator Beam (Quadraxis)
+        ]
+
+    @override
+    async def assign_other_hints(
+        self, patches: GamePatches, identifiers: list[NodeIdentifier], prefill: PreFillParams
+    ) -> GamePatches:
+        all_hint_identifiers = [identifier for identifier in identifiers if identifier not in patches.hints]
+        prefill.rng.shuffle(all_hint_identifiers)
+
+        # Dark Temple hints
+        temple_hints = list(enum_lib.iterate_enum(HintDarkTemple))
+        while all_hint_identifiers and temple_hints:
+            identifier = all_hint_identifiers.pop()
+            patches = patches.assign_hint(identifier, RedTempleHint(dark_temple=temple_hints.pop(0)))
+            identifiers.remove(identifier)
+
+        return patches
