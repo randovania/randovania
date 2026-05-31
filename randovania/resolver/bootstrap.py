@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, NamedTuple
+from typing import TYPE_CHECKING, Any, Generic, NamedTuple, TypeVar
 
 from randovania.game_description import default_database
 from randovania.game_description.db.configurable_node import ConfigurableNode
@@ -13,6 +13,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool.pool_creator import calculate_pool_results
 from randovania.graph import world_graph_factory
 from randovania.graph.state import State
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
@@ -35,7 +36,6 @@ if TYPE_CHECKING:
     from randovania.generator.pickup_pool import PoolResults
     from randovania.graph import world_graph
     from randovania.graph.world_graph import WorldGraph
-    from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
     from randovania.resolver.damage_state import DamageState
@@ -89,7 +89,10 @@ class EnergyConfig(NamedTuple):
     energy_per_tank: int
 
 
-class Bootstrap[Configuration: BaseConfiguration]:
+Configuration = TypeVar("Configuration", bound=BaseConfiguration)
+
+
+class Bootstrap(Generic[Configuration]):  # noqa: UP046
     configurable_nodes: ConfigurableNodeBootstrap[Configuration, Any]
 
     def __init__(self) -> None:
