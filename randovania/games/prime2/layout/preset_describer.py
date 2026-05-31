@@ -100,7 +100,6 @@ def shared_preset_description(
     """Shared logic between Echoes and EchoesOPR"""
     pickup_database = default_database.pickup_database_for_game(configuration.game)
 
-    template_strings = super().format_params(configuration)
     unified_ammo = configuration.ammo_pickup_configuration.pickups_state[
         pickup_database.ammo_pickups["Beam Ammo Expansion"]
     ]

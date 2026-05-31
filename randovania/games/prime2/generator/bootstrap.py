@@ -40,7 +40,7 @@ if TYPE_CHECKING:
     from randovania.resolver.damage_state import DamageState
 
 
-def is_boss_location(node: PickupNode, config: EchoesConfiguration) -> bool:
+def is_boss_location(node: PickupNode, config: EchoesConfiguration | EchoesOPRConfiguration) -> bool:
     mode = config.sky_temple_keys
     boss = node.extra.get("boss")
     if boss is not None:
@@ -91,7 +91,7 @@ class BaseEchoesBootstrap[Configuration: (EchoesConfiguration, EchoesOPRConfigur
             locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_boss_location)
             self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
 
-        return super().assign_pool_results(rng, configuration, patches, pool_results)
+        return super().assign_pool_results(rng, configuration, patches, pool_results)  # type: ignore[arg-type]
 
     @override
     @classmethod

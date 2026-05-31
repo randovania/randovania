@@ -33,9 +33,6 @@ class PresetEchoesOPRPatches(PresetTab[EchoesOPRConfiguration]):
 
         self.setCentralWidget(self.root_widget)
 
-        # Signals
-        self.include_extra_pickups_check.stateChanged.connect(self._persist_option_then_notify("include_extra_pickups"))
-
     @classmethod
     def tab_title(cls) -> str:
         return "Other"
@@ -45,5 +42,4 @@ class PresetEchoesOPRPatches(PresetTab[EchoesOPRConfiguration]):
         return cls.GAME_MODIFICATIONS_HEADER
 
     def on_preset_changed(self, preset: Preset[EchoesOPRConfiguration]) -> None:
-        config = preset.configuration
-        self.include_extra_pickups_check.setChecked(config.include_extra_pickups)
+        pass
