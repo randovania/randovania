@@ -17,6 +17,7 @@ if TYPE_CHECKING:
 class EchoesOPRGameExportParams(GameExportParams):
     input_path: Path
     output_path: Path
+    save_patch_data: bool = True
 
 
 class EchoesOPRGameExporter(GameExporter[EchoesOPRGameExportParams]):
@@ -70,13 +71,13 @@ class EchoesOPRGameExporter(GameExporter[EchoesOPRGameExportParams]):
             from open_prime_rando.echoes.rando_configuration import RandoConfiguration
 
             patch_data["title_screen_text"] += f"\nOPR v{open_prime_rando.version.version}"
-            json_lib.write_path(export_params.output_path.with_suffix(".json"), patch_data)
 
-            validated = RandoConfiguration.model_validate(patch_data)
+            if export_params.save_patch_data and not randovania_meta["in_race_setting"]:
+                json_lib.write_path(export_params.output_path.with_suffix(".json"), patch_data)
 
             open_prime_rando.echoes.patcher.patch_iso(
                 export_params.input_path,
                 export_params.output_path,
-                validated,
+                RandoConfiguration.model_validate(patch_data),
                 progress_update,
             )
