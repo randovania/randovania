@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import copy
 import shutil
-import tempfile
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -153,39 +152,6 @@ def classic_export(
     )
 
 
-def modern_export(
-    patch_data: dict,
-    export_params: EchoesGameExportParams,
-    progress_update: status_update_lib.ProgressUpdateCallable,
-) -> None:
-    assert export_params.input_path is not None
-    with monitoring.trace_block("open_prime_rando.echoes.patcher.patch_iso"), tempfile.TemporaryDirectory() as temp_dir:
-        import open_prime_rando.echoes.patcher
-        import open_prime_rando.echoes.rando_configuration
-
-        temp_path = Path(temp_dir)
-        updaters = status_update_lib.split_progress_update(progress_update, 3)
-
-        iso_packager.unpack_iso(
-            iso=export_params.input_path,
-            game_files_path=temp_path,
-            progress_update=updaters[0],
-        )
-
-        open_prime_rando.echoes.patcher.patch_iso(
-            export_params.input_path,
-            temp_path,  # OPR's output path is currently a dir, not an ISO
-            open_prime_rando.echoes.rando_configuration.RandoConfiguration.model_validate(patch_data),
-            updaters[1],
-        )
-
-        iso_packager.pack_iso(
-            iso=export_params.output_path,
-            game_files_path=temp_path,
-            progress_update=updaters[2],
-        )
-
-
 class EchoesGameExporter(GameExporter[EchoesGameExportParams]):
     _busy: bool = False
 
@@ -230,13 +196,13 @@ class EchoesGameExporter(GameExporter[EchoesGameExportParams]):
         randovania_meta: PatcherDataMeta,
     ) -> None:
         new_patcher_only = patch_data.pop("new_patcher_only")
+        assert not new_patcher_only
+
         new_patcher: dict | None = patch_data.pop("new_patcher", None)
 
-        monitoring.set_tag("echoes_new_patcher", "only" if new_patcher_only else (new_patcher is not None))
-        if new_patcher_only:
-            modern_export(patch_data, export_params, progress_update)
-        else:
-            classic_export(patch_data, export_params, progress_update, new_patcher)
+        monitoring.set_tag("echoes_new_patcher", (new_patcher is not None))
+
+        classic_export(patch_data, export_params, progress_update, new_patcher)
 
 
 def copy_coin_chest(contents_path: Path) -> None:
