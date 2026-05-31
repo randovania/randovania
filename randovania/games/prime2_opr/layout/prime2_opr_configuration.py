@@ -23,6 +23,8 @@ class EchoesOPRConfiguration(BaseConfiguration):
     dark_suit_damage: float = dataclasses.field(metadata={"min": 0.0, "max": 60.0, "precision": 3.0})
     dangerous_energy_tank: bool
 
+    practice_mod: bool
+
     inverted_mode: bool
 
     blue_save_doors: bool

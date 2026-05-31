@@ -13,6 +13,7 @@ from randovania.games.prime2.exporter.claris_randomizer_data import decode_rando
 from randovania.games.prime2.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement, TranslatorConfiguration
+from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.lib.enum_lib import iterate_enum
@@ -25,14 +26,13 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-def _translator_config(editor: PresetEditor) -> TranslatorConfiguration:
+def _translator_config(editor: PresetEditor[EchoesConfiguration | EchoesOPRConfiguration]) -> TranslatorConfiguration:
     config = editor.configuration
-    assert isinstance(config, EchoesConfiguration)
     return config.translator_configuration
 
 
-def gate_data() -> tuple[dict[int, str], dict[NodeIdentifier, int]]:
-    db = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
+def gate_data(game: RandovaniaGame) -> tuple[dict[int, str], dict[NodeIdentifier, int]]:
+    db = default_database.game_description_for(game)
     randomizer_data = decode_randomizer_data()
 
     gate_index_to_name = {gate["Index"]: gate["Name"] for gate in randomizer_data["TranslatorLocationData"]}
@@ -42,10 +42,15 @@ def gate_data() -> tuple[dict[int, str], dict[NodeIdentifier, int]]:
     return gate_index_to_name, identifier_to_gate
 
 
-class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
+class PresetEchoesTranslators(PresetTab[EchoesConfiguration | EchoesOPRConfiguration], Ui_PresetEchoesTranslators):
     _combo_for_gate: dict[NodeIdentifier, QComboBox]
 
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+    def __init__(
+        self,
+        editor: PresetEditor[EchoesConfiguration | EchoesOPRConfiguration],
+        game_description: GameDescription,
+        window_manager: WindowManager,
+    ):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
@@ -59,7 +64,7 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
 
         self._combo_for_gate = {}
 
-        gate_index_to_name, identifier_to_gate = gate_data()
+        gate_index_to_name, identifier_to_gate = gate_data(game_description.game)
 
         for i, (identifier, gate_index) in enumerate(sorted(identifier_to_gate.items(), key=lambda it: it[1])):
             label = QtWidgets.QLabel(self.translators_scroll_contents)
@@ -77,7 +82,7 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
 
     @classmethod
     def tab_title(cls) -> str:
-        return "Translators Gate"
+        return "Translator Gates"
 
     @classmethod
     def header_name(cls) -> str | None:
@@ -108,9 +113,8 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
                 _translator_config(editor).replace_requirement_for_gate(combo.identifier, combo.currentData()),  # type: ignore[attr-defined]
             )
 
-    def on_preset_changed(self, preset: Preset) -> None:
+    def on_preset_changed(self, preset: Preset[EchoesConfiguration | EchoesOPRConfiguration]) -> None:
         config = preset.configuration
-        assert isinstance(config, EchoesConfiguration)
 
         for identifier, combo in self._combo_for_gate.items():
             set_combo_with_value(combo, config.translator_configuration.translator_requirement[identifier])

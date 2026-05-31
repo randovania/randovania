@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from PySide6.QtWidgets import QFrame, QLabel
 
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, EchoesNewPatcher
+from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 
@@ -14,10 +15,10 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
 
 
-class PresetEchoesDockRando(PresetDockRando[EchoesConfiguration]):
+class PresetEchoesDockRando(PresetDockRando[EchoesConfiguration | EchoesOPRConfiguration]):
     def __init__(
         self,
-        editor: PresetEditor[EchoesConfiguration],
+        editor: PresetEditor[EchoesConfiguration | EchoesOPRConfiguration],
         game_description: GameDescription,
         window_manager: WindowManager,
     ) -> None:

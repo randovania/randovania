@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from PySide6 import QtWidgets
-
-from randovania.games.prime2_opr.layout import EchoesOPRConfiguration
+import randovania
+from randovania.games.prime2_opr.gui.generated.preset_prime2_opr_patches_ui import Ui_PresetEchoesOPRPatches
+from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:
@@ -14,24 +14,24 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class PresetEchoesOPRPatches(PresetTab[EchoesOPRConfiguration]):
+class PresetEchoesOPRPatches(PresetTab[EchoesOPRConfiguration], Ui_PresetEchoesOPRPatches):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
+        self.setupUi(self)
 
-        self.root_widget = QtWidgets.QWidget(self)
-        self.root_layout = QtWidgets.QVBoxLayout(self.root_widget)
+        self.include_practice_mod_label.setText(self.include_practice_mod_label.text().replace("color:#0000ff;", ""))
 
-        self.include_extra_pickups_check = QtWidgets.QCheckBox(self.root_widget)
-        self.include_extra_pickups_check.setEnabled(True)
-        self.include_extra_pickups_check.setText("Include Extra Pickups")
-        self.root_layout.addWidget(self.include_extra_pickups_check)
+        for widget in [
+            self.inverted_check,
+            self.inverted_label,
+            self.inverted_line,
+        ]:
+            widget.setVisible(randovania.is_dev_version())
 
-        self.include_extra_pickups_label = QtWidgets.QLabel(self.root_widget)
-        self.include_extra_pickups_label.setWordWrap(True)
-        self.include_extra_pickups_label.setText("Include some optional pickups.")
-        self.root_layout.addWidget(self.include_extra_pickups_label)
-
-        self.setCentralWidget(self.root_widget)
+        # Signals
+        self.include_practice_mod_check.stateChanged.connect(self._persist_option_then_notify("practice_mod"))
+        self.inverted_check.stateChanged.connect(self._persist_option_then_notify("inverted_mode"))
+        self.save_doors_check.stateChanged.connect(self._persist_option_then_notify("blue_save_doors"))
 
     @classmethod
     def tab_title(cls) -> str:
@@ -39,7 +39,11 @@ class PresetEchoesOPRPatches(PresetTab[EchoesOPRConfiguration]):
 
     @classmethod
     def header_name(cls) -> str | None:
-        return cls.GAME_MODIFICATIONS_HEADER
+        return None
 
     def on_preset_changed(self, preset: Preset[EchoesOPRConfiguration]) -> None:
-        pass
+        config = preset.configuration
+
+        self.include_practice_mod_check.setChecked(config.practice_mod)
+        self.inverted_check.setChecked(config.inverted_mode)
+        self.save_doors_check.setChecked(config.blue_save_doors)
