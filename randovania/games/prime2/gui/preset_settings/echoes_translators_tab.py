@@ -6,8 +6,6 @@ from typing import TYPE_CHECKING
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtWidgets import QComboBox
 
-from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import default_database
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
 from randovania.games.prime2.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
@@ -31,13 +29,12 @@ def _translator_config(editor: PresetEditor[EchoesConfiguration | EchoesOPRConfi
     return config.translator_configuration
 
 
-def gate_data(game: RandovaniaGame) -> tuple[dict[int, str], dict[NodeIdentifier, int]]:
-    db = default_database.game_description_for(game)
+def gate_data(game: GameDescription) -> tuple[dict[int, str], dict[NodeIdentifier, int]]:
     randomizer_data = decode_randomizer_data()
 
     gate_index_to_name = {gate["Index"]: gate["Name"] for gate in randomizer_data["TranslatorLocationData"]}
     identifier_to_gate = {
-        node.identifier: node.extra["gate_index"] for node in db.region_list.iterate_nodes_of_type(ConfigurableNode)
+        node.identifier: node.extra["gate_index"] for node in game.region_list.iterate_nodes_of_type(ConfigurableNode)
     }
     return gate_index_to_name, identifier_to_gate
 
@@ -64,7 +61,7 @@ class PresetEchoesTranslators(PresetTab[EchoesConfiguration | EchoesOPRConfigura
 
         self._combo_for_gate = {}
 
-        gate_index_to_name, identifier_to_gate = gate_data(game_description.game)
+        gate_index_to_name, identifier_to_gate = gate_data(game_description)
 
         for i, (identifier, gate_index) in enumerate(sorted(identifier_to_gate.items(), key=lambda it: it[1])):
             label = QtWidgets.QLabel(self.translators_scroll_contents)

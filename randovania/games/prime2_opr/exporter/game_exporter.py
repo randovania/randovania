@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 
@@ -20,6 +20,7 @@ class EchoesOPRGameExportParams(GameExportParams):
 class EchoesOPRGameExporter(GameExporter[EchoesOPRGameExportParams]):
     _busy: bool = False
 
+    @override
     @property
     def can_start_new_export(self) -> bool:
         """
@@ -27,6 +28,7 @@ class EchoesOPRGameExporter(GameExporter[EchoesOPRGameExportParams]):
         """
         return self._busy
 
+    @override
     @property
     def export_can_be_aborted(self) -> bool:
         """
@@ -34,12 +36,14 @@ class EchoesOPRGameExporter(GameExporter[EchoesOPRGameExportParams]):
         """
         return False
 
+    @override
     def export_params_type(self) -> type[EchoesOPRGameExportParams]:
         """
         Returns the type of the GameExportParams expected by this exporter.
         """
         return EchoesOPRGameExportParams
 
+    @override
     def _do_export_game(
         self,
         patch_data: dict,
