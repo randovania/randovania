@@ -6,11 +6,10 @@ from typing import TYPE_CHECKING, override
 
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.lib import json_lib
+from randovania.lib import json_lib, status_update_lib
 
 if TYPE_CHECKING:
     from randovania.exporter.patch_data_factory import PatcherDataMeta
-    from randovania.lib import status_update_lib
 
 
 @dataclasses.dataclass(frozen=True)
@@ -75,9 +74,23 @@ class EchoesOPRGameExporter(GameExporter[EchoesOPRGameExportParams]):
             if export_params.save_patch_data and not randovania_meta["in_race_setting"]:
                 json_lib.write_path(export_params.output_path.with_suffix(".json"), patch_data)
 
+            split = status_update_lib.DynamicSplitProgressUpdate(progress_update)
+            updaters = [
+                split.create_split(weight)
+                for weight in [
+                    1.0,  # area patcher
+                    1.0,  # build modified files
+                    0.2,  # build paks
+                    0.8,  # write ISO
+                ]
+            ]
+
             open_prime_rando.echoes.patcher.patch_iso(
                 export_params.input_path,
                 export_params.output_path,
                 RandoConfiguration.model_validate(patch_data),
-                progress_update,
+                updaters[0],
+                updaters[1],
+                updaters[2],
+                updaters[3],
             )
