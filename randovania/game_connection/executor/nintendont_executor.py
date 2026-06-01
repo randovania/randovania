@@ -258,14 +258,7 @@ class NintendontExecutor(MemoryOperationExecutor):
             for req_index, request in enumerate(requests):
                 log_message += f"Request {req_index}\n"
                 for op_index, op in enumerate(request.ops):
-                    read_write_part = ""
-                    if op.write_bytes:
-                        read_write_part = (
-                            f"write {('(and read) ' if op.read_byte_count else '')} '{op.write_bytes.hex()}'"
-                        )
-                    elif op.read_byte_count:
-                        read_write_part = f"read {op.read_byte_count} bytes"
-                    log_message += f"  Operation {op_index}: {read_write_part} at 0x{op.address:0x}\n"
+                    log_message += f"  Operation {op_index}: {op}\n"
             self.logger.debug(log_message)
 
         all_responses = await self._send_requests_to_socket(requests)
