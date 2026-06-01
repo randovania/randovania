@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.8.0] - 2026-06-0?
+## [10.9.0] - 2026-07-0?
+
+### Metroid Fusion
+
+#### Logic Database
+
+##### Main Deck
+
+- Changed: Dark Stairwell: Using the hidden connection to/from Central Nexus can now expect Mid-Air Morphs instead of Bombs/Hi-Jump.
+
+## [10.8.0] - 2026-06-01
 
 - Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
 
