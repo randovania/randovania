@@ -9,6 +9,7 @@ from randovania.exporter import pickup_exporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -102,6 +103,12 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
         for mlvl_id, mrea_id, pickup in self.create_pickups():
             area_changes[mlvl_id, mrea_id]["pickups"].append(pickup)
+
+        for mlvl_id, mrea_id, gate in self.create_translator_gates():
+            area_changes[mlvl_id, mrea_id]["translator_gates"].append(gate)
+
+        for mlvl_id, mrea_id, door_lock in self.create_door_locks():
+            area_changes[mlvl_id, mrea_id]["door_locks"].append(door_lock)
 
         world_changes: dict[int, list] = defaultdict(list)
         for (mlvl_id, mrea_id), area_change in area_changes.items():
@@ -281,3 +288,29 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
                 ],
             }
             yield mlvl, mrea, pickup
+
+    def create_translator_gates(self) -> Iterable[tuple[int, int, dict]]:
+        for identifier, requirement in self.patches.game_specific["translator_gates"].items():
+            node = self.game.region_list.node_by_identifier(NodeIdentifier.from_string(identifier))
+            mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
+
+            if requirement == "removed":
+                requirement = "unlocked"
+
+            gate = {
+                "translator": requirement,
+                **node.extra.get("gate_instances", {}),
+            }
+            yield mlvl, mrea, gate
+
+    def create_door_locks(self) -> Iterable[tuple[int, int, dict]]:
+        for dock, weakness in self.patches.all_dock_weaknesses(self.game):
+            mlvl, mrea = self._asset_ids_for_area(dock.identifier.area_identifier)
+
+            door_lock = {
+                "dock_name": dock.extra["dock_name"],
+                "old_door_type": dock.default_dock_weakness.extra["door_type"],
+                "new_door_type": weakness.extra["door_type"],
+            }
+
+            yield mlvl, mrea, door_lock
