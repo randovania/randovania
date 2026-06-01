@@ -555,7 +555,7 @@ def _create_starting_popup(patches: GamePatches) -> list:
         return []
 
 
-def _simplified_memo_data() -> dict[str, str]:
+def simplified_prime2_memo_data() -> dict[str, str]:
     result = pickup_exporter.GenericAcquiredMemo()
     result["Locked Power Bomb Expansion"] = (
         "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
@@ -957,6 +957,29 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         ]
 
 
+def echoes_raw_pickup_list(
+    memo_data: dict[str, str],
+    configuration: BaseConfiguration,
+    game: GameDatabaseView,
+    patches: GamePatches,
+    players_config: PlayersConfiguration,
+    rng: Random,
+) -> list[pickup_exporter.ExportedPickupDetails]:
+    resource_db = game.get_resource_database_view()
+    useless_target = PickupTarget(create_echoes_useless_pickup(resource_db), players_config.player_index)
+
+    return pickup_exporter.export_all_indices(
+        patches,
+        useless_target,
+        game,
+        rng,
+        configuration.pickup_model_style,
+        configuration.pickup_model_data_source,
+        exporter=pickup_exporter.create_pickup_exporter(memo_data, players_config, game.get_game_enum()),
+        visual_nothing=pickup_creator.create_visual_nothing(game.get_game_enum(), "EnergyTransferModule"),
+    )
+
+
 def _create_pickup_list(
     cosmetic_patches: EchoesCosmeticPatches,
     configuration: BaseConfiguration,
@@ -966,23 +989,19 @@ def _create_pickup_list(
     rng: Random,
 ) -> list[dict]:
     resource_db = game.get_resource_database_view()
-    useless_target = PickupTarget(create_echoes_useless_pickup(resource_db), players_config.player_index)
 
     if cosmetic_patches.disable_hud_popup:
-        memo_data = _simplified_memo_data()
+        memo_data = simplified_prime2_memo_data()
     else:
         memo_data = default_prime2_memo_data()
 
-    echoes_game = RandovaniaGame.METROID_PRIME_ECHOES
-    pickup_list = pickup_exporter.export_all_indices(
-        patches,
-        useless_target,
+    pickup_list = echoes_raw_pickup_list(
+        memo_data,
+        configuration,
         game,
+        patches,
+        players_config,
         rng,
-        configuration.pickup_model_style,
-        configuration.pickup_model_data_source,
-        exporter=pickup_exporter.create_pickup_exporter(memo_data, players_config, echoes_game),
-        visual_nothing=pickup_creator.create_visual_nothing(echoes_game, "EnergyTransferModule"),
     )
     multiworld_item = resource_db.get_item(echoes_items.MULTIWORLD_ITEM)
 
