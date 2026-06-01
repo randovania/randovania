@@ -84,7 +84,8 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
             world_status_results = await self.executor.perform_memory_operations(world_status_ops)
             world_asset_id, cplayer_vtable = world_status_results.values()
         except MemoryOperationException:
-            world_asset_id = cplayer_vtable = None
+            world_asset_id = None
+            cplayer_vtable = None
 
         has_pending_op = pending_byte_result != b"\x00"
 
