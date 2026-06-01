@@ -1246,6 +1246,16 @@ def _migrate_v113(preset: dict, game: RandovaniaGame, *, from_layout_description
         preset["configuration"]["subzero_damage"] = 6
 
 
+def _migrate_v114(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    if game in {RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES}:
+        preset["configuration"]["teleporters"].pop("allow_unvisited_room_names")
+
+
+def _migrate_v115(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
+        preset["configuration"].pop("portal_rando")
+
+
 _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1360,6 +1370,8 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v111,  # dread: add skip_item_popups setting
     _migrate_v112,  # echoes new patcher only
     _migrate_v113,  # fusion: add environmental damage
+    _migrate_v114,  # prime/echoes: remove `allow_unvisited_room_names` in teleporter config
+    _migrate_v115,  # echoes: remove portal rando
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -4,6 +4,8 @@ import argparse
 from argparse import ArgumentParser
 from typing import TYPE_CHECKING
 
+from randovania.game.game_enum import RandovaniaGame
+
 if TYPE_CHECKING:
     from argparse import Namespace
 
@@ -14,7 +16,6 @@ def render_region_graph_logic(args: Namespace) -> None:
 
     import graphviz
 
-    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description import default_database
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.pickup_node import PickupNode
@@ -26,6 +27,8 @@ def render_region_graph_logic(args: Namespace) -> None:
 
     single_image: bool = args.single_image
     added_edges = set()
+
+    # FIXME
     vulnerabilities_colors = {
         "Normal Door": None,
         "Morph Ball Door": None,
@@ -45,6 +48,7 @@ def render_region_graph_logic(args: Namespace) -> None:
         "Dark Portal": "#3b3647",
     }
 
+    # FIXME
     def _weakness_name(s: str) -> str:
         return re.sub(r"\([^)]*\)", "", s).replace(" Blast Shield", "").strip()
 
@@ -101,18 +105,17 @@ def render_region_graph_logic(args: Namespace) -> None:
     def _cross_region_dock(node: DockNode) -> bool:
         return node.default_connection.region != node.identifier.region
 
-    per_game_colors = {
-        RandovaniaGame.METROID_PRIME_ECHOES: {
+    # FIXME
+    colors = {region.name: _hash_to_color(region.name) for region in gd.region_list.regions}
+    colors.update(
+        {
             "Agon Wastes": "#ffc61c",
             "Torvus Bog": "#20ff1c",
             "Sanctuary Fortress": "#3d62ff",
             "Temple Grounds": "#c917ff",
             "Great Temple": "#c917ff",
-        },
-    }
-    colors = per_game_colors.get(gd.game)
-    if colors is None:
-        colors = {region.name: _hash_to_color(region.name) for region in gd.region_list.regions}
+        }
+    )
 
     if single_image:
         full_dot = graphviz.Digraph(name=gd.game.short_name, comment=gd.game.long_name)
@@ -175,6 +178,7 @@ def render_regions_graph(sub_parsers: argparse._SubParsersAction) -> None:
         help="Renders an image with all area connections",
         formatter_class=argparse.MetavarTypeHelpFormatter,
     )
+    parser.add_argument("game", type=str, choices=[game.value for game in RandovaniaGame.all_games()])
     parser.add_argument("--include-teleporters", action="store_true")
     parser.add_argument("--include-pickups", action="store_true")
     parser.add_argument("--single-image", action="store_true")
