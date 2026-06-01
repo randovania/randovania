@@ -123,13 +123,9 @@ class DolphinExecutor(MemoryOperationExecutor):
 
             try:
                 pointers[pointer] = self.dolphin.follow_pointers(pointer, [0])
-            except RuntimeError:
-                pointers[pointer] = None
+            except RuntimeError as e:
                 self.logger.debug(f"Failed to read a valid pointer from {pointer:x}")
-                self._test_still_hooked()
-
-            if not self.dolphin.is_hooked():
-                raise MemoryOperationException("Lost connection do Dolphin")
+                raise MemoryOperationException("Operation tried to read an invalid address") from e
 
         result = {}
         for op in ops:
