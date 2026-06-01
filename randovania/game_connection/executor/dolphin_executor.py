@@ -78,7 +78,7 @@ class DolphinExecutor(MemoryOperationExecutor):
         return self.dolphin.is_hooked()
 
     # Game Backend Stuff
-    def _memory_operation(self, op: MemoryOperation, pointers: dict[int, int | None]) -> bytes | None:
+    def _memory_operation(self, op: MemoryOperation, pointers: dict[int, int]) -> bytes | None:
         op.validate_byte_sizes()
 
         address = op.address
@@ -87,8 +87,6 @@ class DolphinExecutor(MemoryOperationExecutor):
                 raise MemoryOperationException(f"Invalid op: {address:x} is not in pointers")
 
             new_address = pointers[address]
-            if new_address is None:
-                return None
             address = new_address + op.offset
 
         _validate_range(address, op.byte_count)
