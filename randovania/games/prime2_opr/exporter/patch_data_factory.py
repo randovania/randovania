@@ -3,23 +3,32 @@ from __future__ import annotations
 import functools
 from collections import defaultdict
 from collections.abc import Iterable
+from random import Random
 from typing import TYPE_CHECKING, Literal, override
 
 from randovania.exporter import pickup_exporter
+from randovania.exporter.hints.temple_key_hint import create_temple_key_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
+from randovania.game_description.hint import HintDarkTemple
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.games.prime2.exporter import hints
+from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
+from randovania.games.prime2.exporter.joke_hints import ECHOES_JOKE_HINTS
 from randovania.games.prime2.exporter.patch_data_factory import (
+    _ELEVATOR_ROOMS_MAP_ASSET_IDS,
+    akul_testament_string_patch,
     default_prime2_memo_data,
     echoes_raw_pickup_list,
     simplified_prime2_memo_data,
 )
-from randovania.games.prime2_opr.exporter.hint_namer import EchoesOPRHintNamer
+from randovania.games.prime2.layout.beam_configuration import BeamAmmoConfiguration
 from randovania.games.prime2_opr.layout import EchoesOPRConfiguration, EchoesOPRCosmeticPatches
+from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.lib import frozen_lib
 
 if TYPE_CHECKING:
@@ -50,12 +59,28 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         # world changes
         data["world_changes"] = self.create_world_changes()
 
+        # string changes
+        data["string_changes"] = self.create_string_changes()
+
+        # other settings
+        data["practice_mod"] = "full" if self.configuration.practice_mod else "disabled"
+        data["inverted_mode"] = self.configuration.inverted_mode
+        data["auto_enabled_elevators"] = self._should_auto_enable_elevators()
+        data["beam_configuration"] = self.create_beam_ammo()
+        data["damage_changes"] = self.create_damage_changes()
+        data["custom_items"] = self.create_custom_items_config()
+
+        # cosmetic settings
+        data["game_options_defaults"] = self.cosmetic_patches.user_preferences.as_json
+        data["map_visibility"] = self.create_map_visibility()
+        data["suit_mapping"] = self.create_suit_mapping()
+
         return data
 
     @override
     @classmethod
     def hint_namer_type(cls) -> type[HintNamer]:
-        return EchoesOPRHintNamer
+        return EchoesHintNamer
 
     def _asset_id_for_region(self, region: Region) -> int:
         if "asset_id" in region.extra:
@@ -314,3 +339,129 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             }
 
             yield mlvl, mrea, door_lock
+
+    def _should_auto_enable_elevators(self) -> bool:
+        pickup_config = self.configuration.standard_pickup_configuration
+        scan_pickup = pickup_config.get_pickup_with_name("Scan Visor")
+        return pickup_config.pickups_state[scan_pickup].num_included_in_starting_pickups == 0
+
+    def _get_single_beam_config(self, beam_config: BeamAmmoConfiguration) -> dict:
+        beam = beam_config.as_json
+        beam.pop("item_index")
+        if beam["ammo_a"] < 0:
+            beam["ammo_a"] = None
+        if beam["ammo_b"] < 0:
+            beam["ammo_b"] = None
+        return beam
+
+    def create_beam_ammo(self) -> dict:
+        beam_config = self.configuration.beam_configuration
+
+        return {
+            "power": self._get_single_beam_config(beam_config.power),
+            "dark": self._get_single_beam_config(beam_config.dark),
+            "light": self._get_single_beam_config(beam_config.light),
+            "annihilator": self._get_single_beam_config(beam_config.annihilator),
+        }
+
+    def create_damage_changes(self) -> dict:
+        return {
+            "energy_per_tank": self.configuration.energy_per_tank,
+            "safe_zone_heal_per_second": self.configuration.safe_zone.heal_per_second,
+            "dangerous_energy_tanks": self.configuration.dangerous_energy_tank,
+            "dark_world_damage": self.configuration.varia_suit_damage,
+            "dark_suit_protection": self.configuration.dark_suit_damage / self.configuration.varia_suit_damage,
+        }
+
+    def _get_string_change(self, strg_id: int, strings: list[str]) -> dict:
+        return {
+            "strg_id": strg_id,
+            "strings": strings,
+        }
+
+    def _create_stk_hints(self, namer: EchoesHintNamer) -> list[dict]:
+        stk_mode = self.configuration.hints.specific_pickup_hints["sky_temple_keys"]
+        if stk_mode == SpecificPickupHintMode.DISABLED:
+            return hints.hide_stk_hints(namer)
+        else:
+            return hints.create_stk_hints(
+                self.description.all_patches,
+                self.players_config,
+                self.game.get_resource_database_view(),
+                namer,
+                hide_area=(stk_mode == SpecificPickupHintMode.HIDE_AREA),
+            )
+
+    def _create_red_key_hints(self, namer: EchoesHintNamer) -> list[dict]:
+        red_key_mode = self.configuration.hints.specific_pickup_hints["dark_temple_keys"]
+
+        strg_ids = {
+            HintDarkTemple.AGON_WASTES: 0xE858FBB5,
+            HintDarkTemple.TORVUS_BOG: 0x706A874F,
+            HintDarkTemple.SANCTUARY_FORTRESS: 0x7D3C74C2,
+        }
+
+        key_hints = []
+
+        for temple, strg_id in strg_ids.items():
+            if red_key_mode == SpecificPickupHintMode.DISABLED:
+                temple_name = namer.format_temple_name(temple.name, with_color=True)
+                hint = f"The keys to {temple_name} are hidden somewhere."
+            else:
+                hint = create_temple_key_hint(
+                    self.description.all_patches,
+                    self.players_config.player_index,
+                    temple,
+                    namer,
+                    with_color=True,
+                )
+
+            key_hints.append(hints.create_simple_logbook_hint(strg_id, hint))
+
+        return key_hints
+
+    def create_string_changes(self) -> list[dict]:
+        string_patches = []
+
+        hint_exporter = self.create_hint_exporter(ECHOES_JOKE_HINTS)
+
+        # tournament champions
+        string_patches.extend(akul_testament_string_patch(hint_exporter.namer))
+
+        # hints
+        string_patches.extend(hints.create_patches_hints(self.patches, hint_exporter))
+        string_patches.extend(self._create_stk_hints(hint_exporter.namer))
+        string_patches.extend(self._create_red_key_hints(hint_exporter.namer))
+
+        # convert old patcher format to new format
+        return [
+            self._get_string_change(
+                patch.get("asset_id", patch.get("strg_id")),
+                patch["strings"],
+            )
+            for patch in string_patches
+        ]
+
+    def create_map_visibility(self) -> dict:
+        if not self.configuration.teleporters.is_vanilla:
+            exclude_map_ids = _ELEVATOR_ROOMS_MAP_ASSET_IDS
+        else:
+            exclude_map_ids = []
+
+        return {
+            "reveal_map_at_start": self.cosmetic_patches.open_map,
+            "unvisited_room_names": self.cosmetic_patches.open_map,
+            "areas_to_never_reveal": exclude_map_ids,
+        }
+
+    def create_suit_mapping(self) -> dict:
+        suit_rng = Random(self.description.get_seed_for_world(self.players_config.player_index))
+
+        suits = self.cosmetic_patches.suit_colors.randomized(suit_rng).as_json
+        suits.pop("randomize_separately")
+
+        return suits
+
+    def create_custom_items_config(self) -> dict:
+        # TODO
+        return {}

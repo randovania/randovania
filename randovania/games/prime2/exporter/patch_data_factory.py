@@ -466,7 +466,7 @@ def _logbook_title_string_patches() -> list[dict[str, typing.Any]]:
     ]
 
 
-def _akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]]:
+def akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]]:
     # update after each tournament! ordered from newest to oldest
     raw_champs = [
         {"title": "2025 Co-op Champions", "name": "Naii the Baf, Bruh inc. and JayBee"},
@@ -514,10 +514,10 @@ def _create_string_patches(
 
     string_patches = []
 
-    string_patches.extend(_akul_testament_string_patch(exporter.namer))
+    string_patches.extend(akul_testament_string_patch(exporter.namer))
 
     # Location Hints
-    string_patches.extend(hints.create_patches_hints(all_patches, players_config, exporter))
+    string_patches.extend(hints.create_patches_hints(all_patches[players_config.player_index], exporter))
 
     # Sky Temple Keys
     stk_mode = hint_config.specific_pickup_hints["sky_temple_keys"]
