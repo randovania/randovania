@@ -7,7 +7,11 @@ from open_prime_rando.dol_patching import all_prime_dol_patches
 from open_prime_rando.dol_patching.prime1 import dol_patches
 
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperation,
+    MemoryOperationException,
+    MemoryOperationExecutor,
+)
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.prime1.patcher import prime_items
 
@@ -66,41 +70,23 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         asset_id_size = struct.calcsize(self._asset_id_format())
         mlvl_offset = 0x84
         cplayer_offset = 0x84C
-        empty_pointer = b"\x00" * 4
 
-        # Game State can be nullpointer while game is booting up
-        # Cplayer can be nullpointer on title screen/during elevators
-        # So let's do a first reading pass just normally reading the values
-        first_memory_ops = [
-            MemoryOperation(self.version.game_state_pointer, read_byte_count=asset_id_size),
-            MemoryOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1),
+        pending_byte_op = MemoryOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1)
+        pending_byte_result = await self.executor.perform_single_memory_operation(pending_byte_op)
+
+        # Both of these can be a nullpointer. The first one while the game is booting up, the second at
+        # title screen/elevators. In both cases we can just say that they're in an invalid World.
+        world_status_ops = [
+            MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
             MemoryOperation(cstate_manager_global + cplayer_offset, read_byte_count=4),
         ]
-        results = await self.executor.perform_memory_operations(first_memory_ops)
+        try:
+            world_status_results = await self.executor.perform_memory_operations(world_status_ops)
+            world_asset_id, cplayer_vtable = world_status_results.values()
+        except MemoryOperationException:
+            world_asset_id = cplayer_vtable = None
 
-        game_state_pointer, pending_op_byte, cplayer_pointer = results.values()
-
-        # If the values are valid pointers, lets batch them for a second reading operation
-        second_memory_ops = []
-        game_state_op = None
-        cplayer_memory_op = None
-        if game_state_pointer != empty_pointer:
-            game_state_op = MemoryOperation(int.from_bytes(game_state_pointer, "big") + mlvl_offset, read_byte_count=4)
-            second_memory_ops.append(game_state_op)
-        if cplayer_pointer != empty_pointer:
-            cplayer_memory_op = MemoryOperation(int.from_bytes(cplayer_pointer, "big"), read_byte_count=4)
-            second_memory_ops.append(cplayer_memory_op)
-
-        # Finally, read our asset id/vtable from the results if they exist
-        world_asset_id = None
-        has_pending_op = pending_op_byte != b"\x00"
-        cplayer_vtable = None
-        if second_memory_ops:
-            results = await self.executor.perform_memory_operations(second_memory_ops)
-            if game_state_op:
-                world_asset_id = results[game_state_op]
-            if cplayer_memory_op:
-                cplayer_vtable = results[cplayer_memory_op]
+        has_pending_op = pending_byte_result != b"\x00"
 
         current_world = self._current_status_world(world_asset_id, cplayer_vtable)
         return has_pending_op, current_world
