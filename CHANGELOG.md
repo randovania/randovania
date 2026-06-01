@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.8.0] - 2026-06-0?
+## [10.9.0] - 2026-07-0?
+
+### Metroid Fusion
+
+- Fixed: Typo in the description for the Knowledge trick.
+- Fixed: Typo in the name of Sector 6's Twin Caverns Save Room (was Twin Cavern Save Room).
+
+## [10.8.0] - 2026-06-01
 
 - Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
 
@@ -48,8 +55,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
-- Fixed: Typo in the description for the Knowledge trick.
-- Fixed: Typo in the name of Sector 6's Twin Caverns Save Room (was Twin Cavern Save Room).
 - Added: Environmental Damage (Heat, Lava, Cold, Acid) rates can now be configured.
 
 #### Logic Database
