@@ -1247,7 +1247,17 @@ def _migrate_v113(preset: dict, game: RandovaniaGame, *, from_layout_description
 
 
 def _migrate_v114(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
-    if game == RandovaniaGame.FUSION:
+    if game in {RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES}:
+        preset["configuration"]["teleporters"].pop("allow_unvisited_room_names")
+
+
+def _migrate_v115(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
+        preset["configuration"].pop("portal_rando")
+
+        
+def _migrate_v116(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+  if game == RandovaniaGame.FUSION:
         rename = {
             "Sector 6 (NOC)/Twin Caverns East/Door to Twin Cavern Save Room": "Sector 6 (NOC)/Twin Caverns East/Door to Twin Caverns Save Room"
         }
@@ -1378,7 +1388,9 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v111,  # dread: add skip_item_popups setting
     _migrate_v112,  # echoes new patcher only
     _migrate_v113,  # fusion: add environmental damage
-    _migrate_v114,  # fusion: rename twin cavern save room to twin caverns save room
+    _migrate_v114,  # prime/echoes: remove `allow_unvisited_room_names` in teleporter config
+    _migrate_v115,  # echoes: remove portal rando
+    _migrate_v116,  # fusion: rename twin cavern save room to twin caverns save room
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

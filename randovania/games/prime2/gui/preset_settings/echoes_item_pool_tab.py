@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.gui.preset_settings.metroid_pickup_pool_tab import MetroidPresetPickupPool
 from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget
@@ -37,18 +36,17 @@ class EchoesPresetItemPool(MetroidPresetPickupPool):
 
         self._split_ammo_widgets = []
 
-        if self.game == RandovaniaGame.METROID_PRIME_ECHOES:
-            beam_ammo = SplitAmmoWidget(
-                parent,
-                self._editor,
-                unified_ammo=pickup_database.ammo_pickups["Beam Ammo Expansion"],
-                split_ammo=[
-                    pickup_database.ammo_pickups["Dark Ammo Expansion"],
-                    pickup_database.ammo_pickups["Light Ammo Expansion"],
-                ],
-            )
-            beam_ammo.setText("Split Beam Ammo Expansions")
-            self._split_ammo_widgets.append(beam_ammo)
+        beam_ammo = SplitAmmoWidget(
+            parent,
+            self._editor,
+            unified_ammo=pickup_database.ammo_pickups["Beam Ammo Expansion"],
+            split_ammo=[
+                pickup_database.ammo_pickups["Dark Ammo Expansion"],
+                pickup_database.ammo_pickups["Light Ammo Expansion"],
+            ],
+        )
+        beam_ammo.setText("Split Beam Ammo Expansions")
+        self._split_ammo_widgets.append(beam_ammo)
 
         if self._split_ammo_widgets:
             line = QtWidgets.QFrame(parent)

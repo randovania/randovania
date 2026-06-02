@@ -48,6 +48,7 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.layout_description import LayoutDescription
@@ -468,6 +469,8 @@ def _logbook_title_string_patches() -> list[dict[str, typing.Any]]:
 def _akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]]:
     # update after each tournament! ordered from newest to oldest
     raw_champs = [
+        {"title": "2025 Co-op Champions", "name": "Naii the Baf, Bruh inc. and JayBee"},
+        {"title": "2025 Mentor Champion", "name": "Storm"},
         {"title": "2024 Champion", "name": "Naii the Baf"},
         {"title": "CGC 2023 Champions", "name": "TheGingerChris and BajaBlood"},
         {"title": "2022 Champion", "name": "Cestrion"},
@@ -582,7 +585,7 @@ def _get_model_mapping(randomizer_data: dict) -> EchoesModelNameMapping:
     )
 
 
-def should_keep_elevator_sounds(configuration: EchoesConfiguration) -> bool:
+def should_keep_elevator_sounds(configuration: EchoesConfiguration | EchoesOPRConfiguration) -> bool:
     elev = configuration.teleporters
     if elev.is_vanilla:
         return True
@@ -684,10 +687,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
                 "visor": default_pickups[pickup_category_visors].name,
                 "beam": default_pickups[pickup_category_beams].name,
             },
-            "unvisited_room_names": (
-                self.configuration.teleporters.can_use_unvisited_room_names
-                and self.cosmetic_patches.unvisited_room_names
-            ),
+            "unvisited_room_names": self.cosmetic_patches.unvisited_room_names,
             "teleporter_sounds": should_keep_elevator_sounds(self.configuration),
             "dangerous_energy_tank": self.configuration.dangerous_energy_tank,
         }
@@ -731,9 +731,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
         result["logbook_patches"] = self.create_logbook_patches()
 
-        if not self.configuration.teleporters.is_vanilla and (
-            self.cosmetic_patches.unvisited_room_names and self.configuration.teleporters.can_use_unvisited_room_names
-        ):
+        if not self.configuration.teleporters.is_vanilla and self.cosmetic_patches.unvisited_room_names:
             exclude_map_ids = _ELEVATOR_ROOMS_MAP_ASSET_IDS
         else:
             exclude_map_ids = []

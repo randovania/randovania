@@ -41,7 +41,7 @@ class TranslatorGateDetailsTab(GameDetailsTab):
         region_list = game.region_list
         patches = all_patches[players.player_index]
 
-        gate_index_to_name, identifier_to_gate = gate_data()
+        gate_index_to_name, identifier_to_gate = gate_data(game)
         resource_db = game.resource_database
 
         per_region: dict[str, dict[str, str]] = collections.defaultdict(dict)

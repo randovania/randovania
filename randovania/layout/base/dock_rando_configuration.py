@@ -228,3 +228,11 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
                     result.append(f"{dock_rando_params.locked.name} is unsafe as a target in Door Lock Types")
 
         return result
+
+    def settings_incompatible_with_map_tracker(self) -> list[str]:
+        result = []
+
+        if self.is_enabled():
+            result.append("Door Lock Rando")
+
+        return result

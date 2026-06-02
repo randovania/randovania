@@ -11,17 +11,24 @@ DEFAULT_HUD_COLOR = (102, 174, 225)
 
 
 @dataclasses.dataclass(frozen=True)
-class EchoesCosmeticPatches(BaseCosmeticPatches):
+class BaseEchoesCosmeticPatches(BaseCosmeticPatches):
     disable_hud_popup: bool = True
     speed_up_credits: bool = True
     open_map: bool = True
+    user_preferences: EchoesUserPreferences = dataclasses.field(default_factory=EchoesUserPreferences)
+    suit_colors: EchoesSuitPreferences = dataclasses.field(default_factory=EchoesSuitPreferences)
+
+    # TODO: convert other game assets
+    # TODO: hud color
+
+
+@dataclasses.dataclass(frozen=True)
+class EchoesCosmeticPatches(BaseEchoesCosmeticPatches):
     unvisited_room_names: bool = True
     pickup_markers: bool = True
-    user_preferences: EchoesUserPreferences = dataclasses.field(default_factory=EchoesUserPreferences)
     convert_other_game_assets: bool = False
     use_hud_color: bool = False
     hud_color: tuple[int, int, int] = DEFAULT_HUD_COLOR
-    suit_colors: EchoesSuitPreferences = dataclasses.field(default_factory=EchoesSuitPreferences)
 
     @classmethod
     def default(cls) -> EchoesCosmeticPatches:
