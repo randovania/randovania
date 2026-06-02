@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The seed hash text in the Multiplayer window can now be interacted with.
 - Added: The Data Visualizer now displays more information about Hint nodes.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Added: Single-wall Wall Jump traversal option to get to EMMI Zone Dome.
+- Added: Speed booster conservation trick to get to the top of the EMMI Zone Hub without diabled door lock randomizer.
+- Added: Added several videos for various connections in Artaria.
+
 ### Metroid Fusion
 
 #### Logic Database
@@ -37,7 +47,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Preset option to skip the opening storyboard cutscene (default: off)
 - Fixed: Spazer and Plasma beam projectiles no longer shoot through blocks without Wave
 
-
 ## [10.8.0] - 2026-06-01
 
 - Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
@@ -62,9 +71,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
-- Added: Single-wall Wall Jump traversal option to get to EMMI Zone Dome.
-- Added: Speed booster conservation trick to get to the top of the EMMI Zone Hub without diabled door lock randomizer.
-- Added: Added several videos for various connections in Artaria.
 
 ##### Dairon
 
