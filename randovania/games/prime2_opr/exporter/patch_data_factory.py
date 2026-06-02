@@ -29,6 +29,7 @@ from randovania.games.prime2.exporter.patch_data_factory import (
 from randovania.games.prime2.layout.beam_configuration import BeamAmmoConfiguration
 from randovania.games.prime2_opr.layout import EchoesOPRConfiguration, EchoesOPRCosmeticPatches
 from randovania.layout.base.hint_configuration import SpecificPickupHintMode
+from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.lib import frozen_lib
 
 if TYPE_CHECKING:
@@ -208,25 +209,37 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
         return sound_type
 
-    def _get_pickup_appearance(self, exported_pickup: pickup_exporter.ExportedPickupDetails, index: int) -> dict:
-        progressive_models = {
-            "ProgressiveSuit": ("DarkSuit", "LightSuit"),
-            "ProgressiveGrapple": ("GrappleBeam", "ScrewAttack"),
-        }
-        offworld_progressive = {
-            "ProgressiveSuit": "VariaSuit",
-            "ProgressiveGrapple": "GrappleBeam",
+    @property
+    def _progressive_model_data(self) -> dict[str, tuple[str, tuple[str, ...]]]:
+        """
+        Maps model names to their progressive model data, if necessary.
+        Standalone string is the model to use for offworld pickups.
+        Tuple of strings is the model to use for each stage of this
+        progressive pickup, when local.
+        """
+        return {
+            "ProgressiveSuit": ("VariaSuit", ("DarkSuit", "LightSuit")),
+            "ProgressiveGrapple": ("GrappleBeam", ("GrappleBeam", "ScrewAttack")),
         }
 
+    def _get_pickup_appearance(self, exported_pickup: pickup_exporter.ExportedPickupDetails, index: int) -> dict:
+        """Returns a patcher-format dict for this pickup stage's appearance."""
         model_name = exported_pickup.model.name
         scan = f"{exported_pickup.name}. {exported_pickup.description}".strip()
 
-        if model_name in progressive_models and exported_pickup.model == exported_pickup.original_model:
-            if exported_pickup.is_for_remote_player:
-                model_name = offworld_progressive[model_name]
-            else:
-                model_name = progressive_models[model_name][index]
+        if model_name in self._progressive_model_data:
+            default_model, progressive_models = self._progressive_model_data[model_name]
 
+            if (
+                self.configuration.pickup_model_style != PickupModelStyle.ALL_VISIBLE
+                or exported_pickup.is_for_remote_player
+            ):
+                # fall back to the default model, since the local pickup may not be progressive!
+                model_name = default_model
+
+            else:
+                # use the correct model for each stage of the pickup
+                model_name = progressive_models[index]
                 name = exported_pickup.conditional_resources[index].name
                 scan = f"{name}."
 
