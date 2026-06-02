@@ -50,6 +50,8 @@ class EchoesOPRGameExportDialog(GameExportDialog[EchoesOPRConfiguration], Ui_Ech
 
         per_game = options.per_game_options(EchoesOPRPerGameOptions)
 
+        # TODO: nod-rs supports more formats than just ISO, so we can too
+
         if per_game.input_path is not None:
             self.input_file_edit.setText(str(per_game.input_path))
 

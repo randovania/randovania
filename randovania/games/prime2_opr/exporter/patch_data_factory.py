@@ -366,12 +366,18 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         }
 
     def create_damage_changes(self) -> dict:
+        varia_damage = self.configuration.varia_suit_damage
+        dark_damage = self.configuration.dark_suit_damage
+
+        if not varia_damage:
+            raise ZeroDivisionError("Varia Suit damage cannot be 0!")
+
         return {
             "energy_per_tank": self.configuration.energy_per_tank,
             "safe_zone_heal_per_second": self.configuration.safe_zone.heal_per_second,
             "dangerous_energy_tanks": self.configuration.dangerous_energy_tank,
-            "dark_world_damage": self.configuration.varia_suit_damage,
-            "dark_suit_protection": self.configuration.dark_suit_damage / self.configuration.varia_suit_damage,
+            "dark_world_damage": varia_damage,
+            "dark_suit_protection": dark_damage / varia_damage,
         }
 
     def _get_string_change(self, strg_id: int, strings: list[str]) -> dict:
