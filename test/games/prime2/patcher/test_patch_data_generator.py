@@ -638,7 +638,7 @@ def test_create_string_patches(
     )
 
     mock_akul_testament: MagicMock = mocker.patch(
-        "randovania.games.prime2.exporter.patch_data_factory._akul_testament_string_patch",
+        "randovania.games.prime2.exporter.patch_data_factory.akul_testament_string_patch",
         autospec=True,
     )
     mock_akul_testament.return_values = []
@@ -661,7 +661,7 @@ def test_create_string_patches(
 
     # Assert
     expected_result = ["item", "hints"]
-    mock_item_create_hints.assert_called_once_with(all_patches, player_config, exporter)
+    mock_item_create_hints.assert_called_once_with(all_patches[0], exporter)
     mock_logbook_title_string_patches.assert_called_once_with()
     mock_akul_testament.assert_called_once_with(namer)
 

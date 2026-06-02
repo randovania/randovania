@@ -117,7 +117,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         return result
 
     def create_world_changes(self) -> list[dict]:
-        def _area_change():
+        def _area_change() -> dict:
             return {
                 "pickups": [],
                 "translator_gates": [],
@@ -310,6 +310,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
                         "required_item": conditional.item.extra["item_id"],
                     }
                     for i, conditional in enumerate(exported_pickup.conditional_resources[1:])
+                    if conditional.item is not None
                 ],
             }
             yield mlvl, mrea, pickup
@@ -424,21 +425,25 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         string_patches = []
 
         hint_exporter = self.create_hint_exporter(ECHOES_JOKE_HINTS)
+        namer = hint_exporter.namer
+        assert isinstance(namer, EchoesHintNamer)
 
         # tournament champions
         string_patches.extend(akul_testament_string_patch(hint_exporter.namer))
 
         # hints
         string_patches.extend(hints.create_patches_hints(self.patches, hint_exporter))
-        string_patches.extend(self._create_stk_hints(hint_exporter.namer))
-        string_patches.extend(self._create_red_key_hints(hint_exporter.namer))
+        string_patches.extend(self._create_stk_hints(namer))
+        string_patches.extend(self._create_red_key_hints(namer))
 
         # convert old patcher format to new format
         return [
             self._get_string_change(
-                patch.get("asset_id", patch.get("strg_id")),
+                patch["asset_id"],
                 patch["strings"],
             )
+            if "asset_id" in patch
+            else patch
             for patch in string_patches
         ]
 
