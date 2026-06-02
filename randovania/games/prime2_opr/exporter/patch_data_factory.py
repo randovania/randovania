@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import functools
 from collections import defaultdict
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from random import Random
-from typing import TYPE_CHECKING, Literal, override
+from typing import TYPE_CHECKING, Literal, TypedDict, override
 
 from randovania.exporter import pickup_exporter
 from randovania.exporter.hints.temple_key_hint import create_temple_key_hint
@@ -40,10 +40,18 @@ if TYPE_CHECKING:
 type SoundType = Literal["standard", "expansion", "key"]
 
 
+class AreaChange(TypedDict):
+    pickups: list[dict]
+    translator_gates: list[dict]
+    door_locks: list[dict]
+
+
 class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesOPRCosmeticPatches]):
+    @override
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_ECHOES_OPR
 
+    @override
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         # header data
         data = {
@@ -84,6 +92,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         return EchoesHintNamer
 
     def _asset_id_for_region(self, region: Region) -> int:
+        """Gets the MLVL asset ID for this region."""
         if "asset_id" in region.extra:
             return region.extra["asset_id"]
         else:
@@ -91,10 +100,12 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             return light_region.extra["asset_id"]
 
     def _asset_ids_for_area(self, identifier: AreaIdentifier) -> tuple[int, int]:
+        """Gets the MLVL asset ID for this area's region, and the MREA asset ID for this area."""
         region, area = self.game.region_list.region_and_area_by_area_identifier(identifier)
         return self._asset_id_for_region(region), area.extra["asset_id"]
 
     def _area_reference_from_identifier(self, identifier: AreaIdentifier) -> dict:
+        """Returns a patcher-format dict for the given area."""
         mlvl_id, mrea_id = self._asset_ids_for_area(identifier)
         return {
             "mlvl_id": mlvl_id,
@@ -102,6 +113,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         }
 
     def create_starting_items_data(self) -> list[dict]:
+        """Returns a patcher-format dict for starting items."""
         result = []
 
         for item, amount in self.patches.starting_resources().as_resource_gain():
@@ -117,25 +129,34 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
         return result
 
+    def _populate_area_changes(
+        self,
+        area_changes: dict[tuple[int, int], AreaChange],
+        field_name: Literal["pickups", "translator_gates", "door_locks"],
+        area_change_factory: Callable[[], Iterable[tuple[int, int, dict]]],
+    ) -> None:
+        """Populates `area_changes` with the results from the given change factory."""
+        for mlvl_id, mrea_id, change in area_change_factory():
+            area_changes[mlvl_id, mrea_id][field_name].append(change)
+
     def create_world_changes(self) -> list[dict]:
-        def _area_change() -> dict:
-            return {
-                "pickups": [],
-                "translator_gates": [],
-                "door_locks": [],
-            }
+        """
+        Returns a patcher-format dict for world changes.
+        This includes pickups, translator gates, and door locks.
+        """
 
-        area_changes: dict[tuple[int, int], dict] = defaultdict(_area_change)
+        def _area_change() -> AreaChange:
+            return AreaChange(pickups=[], translator_gates=[], door_locks=[])
 
-        for mlvl_id, mrea_id, pickup in self.create_pickups():
-            area_changes[mlvl_id, mrea_id]["pickups"].append(pickup)
+        # (MLVL, MREA) -> AreaChange
+        area_changes: dict[tuple[int, int], AreaChange] = defaultdict(_area_change)
 
-        for mlvl_id, mrea_id, gate in self.create_translator_gates():
-            area_changes[mlvl_id, mrea_id]["translator_gates"].append(gate)
+        # populate area changes
+        self._populate_area_changes(area_changes, "pickups", self.create_pickups)
+        self._populate_area_changes(area_changes, "translator_gates", self.create_translator_gates)
+        self._populate_area_changes(area_changes, "door_locks", self.create_door_locks)
 
-        for mlvl_id, mrea_id, door_lock in self.create_door_locks():
-            area_changes[mlvl_id, mrea_id]["door_locks"].append(door_lock)
-
+        # associate area changes with their world
         world_changes: dict[int, list] = defaultdict(list)
         for (mlvl_id, mrea_id), area_change in area_changes.items():
             world_changes[mlvl_id].append(
@@ -145,6 +166,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
                 }
             )
 
+        # return world changes formatted for the patcher
         return [
             {
                 "mlvl_id": mlvl_id,
@@ -154,6 +176,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         ]
 
     def _get_memo_data(self) -> dict[str, str]:
+        """Memo data to use when exporting pickups."""
         if self.cosmetic_patches.disable_hud_popup:
             return simplified_prime2_memo_data()
 
@@ -167,6 +190,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
     @functools.cached_property
     def sound_data(self) -> dict[SoundType, int]:
+        """Which sound ID to use for given SoundType."""
         return {
             "standard": 10057,
             "expansion": 10057,
@@ -175,6 +199,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
     @functools.cached_property
     def jingle_data(self) -> dict[SoundType, dict]:
+        """Which jingle to use for given SoundType."""
         return {
             "standard": {"file_name": "/audio/itm_x_long_00.dsp", "volume": 71},
             "expansion": {"file_name": "/audio/itm_x_short_00.dsp", "volume": 55},
@@ -182,6 +207,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         }
 
     def _get_sound_type(self, model_name: str) -> SoundType:
+        """Which SoundType to use for a given model."""
         sound_type: SoundType = "standard"
 
         if model_name in {
@@ -254,6 +280,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         }
 
     def _get_pickup_resources(self, exported_pickup: pickup_exporter.ExportedPickupDetails, index: int) -> list[dict]:
+        """Returns a patcher-format dict for this pickup stage's resources."""
         # TODO: multiworld
 
         conditional = exported_pickup.conditional_resources[index]
@@ -268,6 +295,11 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         ]
 
     def _get_pickup_stage(self, exported_pickup: pickup_exporter.ExportedPickupDetails, index: int) -> dict:
+        """
+        Returns a patcher-format dict for this pickup stage,
+        not including a progressive stage's item requirement.
+        """
+
         return {
             "resources": self._get_pickup_resources(exported_pickup, index),
             "appearance": self._get_pickup_appearance(exported_pickup, index),
@@ -281,6 +313,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         }
 
     def _get_location_data(self, pickup_node: PickupNode) -> dict:
+        """Returns a patcher-format dict for this pickup node's location data."""
         result = {}
         result.update(frozen_lib.unwrap(pickup_node.extra["location_data"]))
         if "instances" in result:
@@ -301,6 +334,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         return result
 
     def create_pickups(self) -> Iterable[tuple[int, int, dict]]:
+        """Creates the pickup changes, in a format usable for `_populate_area_changes`"""
         pickup_list = echoes_raw_pickup_list(
             self._get_memo_data(),
             self.configuration,
@@ -329,6 +363,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             yield mlvl, mrea, pickup
 
     def create_translator_gates(self) -> Iterable[tuple[int, int, dict]]:
+        """Creates the translator gate changes, in a format usable for `_populate_area_changes`"""
         for identifier, requirement in self.patches.game_specific["translator_gates"].items():
             node = self.game.region_list.node_by_identifier(NodeIdentifier.from_string(identifier))
             mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
@@ -343,6 +378,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             yield mlvl, mrea, gate
 
     def create_door_locks(self) -> Iterable[tuple[int, int, dict]]:
+        """Creates the door lock changes, in a format usable for `_populate_area_changes`"""
         for dock, weakness in self.patches.all_dock_weaknesses(self.game):
             mlvl, mrea = self._asset_ids_for_area(dock.identifier.area_identifier)
 
@@ -355,11 +391,13 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             yield mlvl, mrea, door_lock
 
     def _should_auto_enable_elevators(self) -> bool:
+        """Elevators are automatically enabled when the player doesn't start with Scan Visor."""
         pickup_config = self.configuration.standard_pickup_configuration
         scan_pickup = pickup_config.get_pickup_with_name("Scan Visor")
         return pickup_config.pickups_state[scan_pickup].num_included_in_starting_pickups == 0
 
     def _get_single_beam_config(self, beam_config: BeamAmmoConfiguration) -> dict:
+        """Returns a patcher-format dict for a single beam's ammo configuration."""
         beam = beam_config.as_json
         beam.pop("item_index")
         if beam["ammo_a"] < 0:
@@ -369,6 +407,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         return beam
 
     def create_beam_ammo(self) -> dict:
+        """Returns a patcher-format dict mapping beams to their ammo configurations."""
         beam_config = self.configuration.beam_configuration
 
         return {
@@ -379,6 +418,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         }
 
     def create_damage_changes(self) -> dict:
+        """Returns a patcher-format dict for various damage changes."""
         varia_damage = self.configuration.varia_suit_damage
         dark_damage = self.configuration.dark_suit_damage
 
@@ -394,12 +434,14 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         }
 
     def _get_string_change(self, strg_id: int, strings: list[str]) -> dict:
+        """Return a patcher-format dict for a given string change."""
         return {
             "strg_id": strg_id,
             "strings": strings,
         }
 
     def _create_stk_hints(self, namer: EchoesHintNamer) -> list[dict]:
+        """Returns a list of string changes to apply for the STK hints."""
         stk_mode = self.configuration.hints.specific_pickup_hints["sky_temple_keys"]
         if stk_mode == SpecificPickupHintMode.DISABLED:
             return hints.hide_stk_hints(namer)
@@ -413,6 +455,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             )
 
     def _create_red_key_hints(self, namer: EchoesHintNamer) -> list[dict]:
+        """Returns a list of string changes to apply for the Dark Temple Key hints."""
         red_key_mode = self.configuration.hints.specific_pickup_hints["dark_temple_keys"]
 
         strg_ids = {
@@ -441,6 +484,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         return key_hints
 
     def create_string_changes(self) -> list[dict]:
+        """Returns a patcher-format list of string changes to apply."""
         string_patches = []
 
         hint_exporter = self.create_hint_exporter(ECHOES_JOKE_HINTS)
@@ -467,6 +511,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         ]
 
     def create_map_visibility(self) -> dict:
+        """Returns a patcher-format dict for minimap visibility changes."""
         if not self.configuration.teleporters.is_vanilla:
             exclude_map_ids = _ELEVATOR_ROOMS_MAP_ASSET_IDS
         else:
@@ -479,6 +524,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         }
 
     def create_suit_mapping(self) -> dict:
+        """Returns a patcher-format dict for custom suit changes."""
         suit_rng = Random(self.description.get_seed_for_world(self.players_config.player_index))
 
         suits = self.cosmetic_patches.suit_colors.randomized(suit_rng).as_json
@@ -487,5 +533,6 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         return suits
 
     def create_custom_items_config(self) -> dict:
+        """Returns a patcher-format dict for custom item changes."""
         # TODO
         return {}
