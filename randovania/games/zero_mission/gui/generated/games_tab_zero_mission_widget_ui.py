@@ -23,11 +23,11 @@ from randovania.gui.widgets.generate_game_widget import GenerateGameWidget
 from randovania.gui.widgets.hint_feature_tab import PickupHintFeatureTab
 
 class Ui_MZMGameTabWidget(object):
-    def setupUi(self, BlankGameTabWidget):
-        if not BlankGameTabWidget.objectName():
-            BlankGameTabWidget.setObjectName(u"BlankGameTabWidget")
-        BlankGameTabWidget.resize(501, 393)
-        BlankGameTabWidget.setDocumentMode(True)
+    def setupUi(self, MZMGameTabWidget):
+        if not MZMGameTabWidget.objectName():
+            MZMGameTabWidget.setObjectName(u"MZMGameTabWidget")
+        MZMGameTabWidget.resize(501, 393)
+        MZMGameTabWidget.setDocumentMode(True)
         self.tab_intro = QWidget()
         self.tab_intro.setObjectName(u"tab_intro")
         self.intro_layout = QVBoxLayout(self.tab_intro)
@@ -60,10 +60,10 @@ class Ui_MZMGameTabWidget(object):
 
         self.intro_layout.addItem(self.intro_spacer)
 
-        BlankGameTabWidget.addTab(self.tab_intro, "")
+        MZMGameTabWidget.addTab(self.tab_intro, "")
         self.tab_generate_game = GenerateGameWidget()
         self.tab_generate_game.setObjectName(u"tab_generate_game")
-        BlankGameTabWidget.addTab(self.tab_generate_game, "")
+        MZMGameTabWidget.addTab(self.tab_generate_game, "")
         self.faq_tab = QWidget()
         self.faq_tab.setObjectName(u"faq_tab")
         self.faq_layout = QGridLayout(self.faq_tab)
@@ -92,28 +92,101 @@ class Ui_MZMGameTabWidget(object):
 
         self.faq_layout.addWidget(self.faq_scroll_area, 0, 0, 1, 1)
 
-        BlankGameTabWidget.addTab(self.faq_tab, "")
+        MZMGameTabWidget.addTab(self.faq_tab, "")
+        self.differences_tab = QWidget()
+        self.differences_tab.setObjectName(u"differences_tab")
+        self.horizontalLayout = QHBoxLayout(self.differences_tab)
+        self.horizontalLayout.setSpacing(6)
+        self.horizontalLayout.setContentsMargins(11, 11, 11, 11)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.differences_scroll_area = QScrollArea(self.differences_tab)
+        self.differences_scroll_area.setObjectName(u"differences_scroll_area")
+        self.differences_scroll_area.setWidgetResizable(True)
+        self.differences_scroll_contents = QWidget()
+        self.differences_scroll_contents.setObjectName(u"differences_scroll_contents")
+        self.differences_scroll_contents.setGeometry(QRect(0, 0, 467, 637))
+        self.verticalLayout = QVBoxLayout(self.differences_scroll_contents)
+        self.verticalLayout.setSpacing(6)
+        self.verticalLayout.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.differences_label = QLabel(self.differences_scroll_contents)
+        self.differences_label.setObjectName(u"differences_label")
+        self.differences_label.setTextFormat(Qt.MarkdownText)
+        self.differences_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.differences_label.setWordWrap(True)
+
+        self.verticalLayout.addWidget(self.differences_label)
+
+        self.differences_scroll_area.setWidget(self.differences_scroll_contents)
+
+        self.horizontalLayout.addWidget(self.differences_scroll_area)
+
+        MZMGameTabWidget.addTab(self.differences_tab, "")
         self.pickup_hint_features_tab = PickupHintFeatureTab()
         self.pickup_hint_features_tab.setObjectName(u"pickup_hint_features_tab")
-        BlankGameTabWidget.addTab(self.pickup_hint_features_tab, "")
+        MZMGameTabWidget.addTab(self.pickup_hint_features_tab, "")
 
-        self.retranslateUi(BlankGameTabWidget)
+        self.retranslateUi(MZMGameTabWidget)
 
-        BlankGameTabWidget.setCurrentIndex(0)
+        MZMGameTabWidget.setCurrentIndex(0)
 
 
-        QMetaObject.connectSlotsByName(BlankGameTabWidget)
+        QMetaObject.connectSlotsByName(MZMGameTabWidget)
     # setupUi
 
-    def retranslateUi(self, BlankGameTabWidget):
+    def retranslateUi(self, MZMGameTabWidget):
         self.game_cover_label.setText(QCoreApplication.translate("MZMGameTabWidget", u"TextLabel", None))
         self.intro_label.setText(QCoreApplication.translate("MZMGameTabWidget", u"<html><head/><body><p align=\"justify\">The Blank game is used by Randovania to serve as an example of how a game is integrated.</p></body></html>", None))
         self.quick_generate_button.setText(QCoreApplication.translate("MZMGameTabWidget", u"Quick generate", None))
-        BlankGameTabWidget.setTabText(BlankGameTabWidget.indexOf(self.tab_intro), QCoreApplication.translate("MZMGameTabWidget", u"Introduction", None))
-        BlankGameTabWidget.setTabText(BlankGameTabWidget.indexOf(self.tab_generate_game), QCoreApplication.translate("MZMGameTabWidget", u"Play", None))
+        MZMGameTabWidget.setTabText(MZMGameTabWidget.indexOf(self.tab_intro), QCoreApplication.translate("MZMGameTabWidget", u"Introduction", None))
+        MZMGameTabWidget.setTabText(MZMGameTabWidget.indexOf(self.tab_generate_game), QCoreApplication.translate("MZMGameTabWidget", u"Play", None))
         self.faq_label.setText(QCoreApplication.translate("MZMGameTabWidget", u"# updated from code", None))
-        BlankGameTabWidget.setTabText(BlankGameTabWidget.indexOf(self.faq_tab), QCoreApplication.translate("MZMGameTabWidget", u"FAQ", None))
-        BlankGameTabWidget.setTabText(BlankGameTabWidget.indexOf(self.pickup_hint_features_tab), QCoreApplication.translate("MZMGameTabWidget", u"Pickup Hint Features", None))
+        MZMGameTabWidget.setTabText(MZMGameTabWidget.indexOf(self.faq_tab), QCoreApplication.translate("MZMGameTabWidget", u"FAQ", None))
+        self.differences_label.setText(QCoreApplication.translate("MZMGameTabWidget", u"Randovania and the MARS patcher make some changes to the original game in order to improve the randomizer experience or to simply fix bugs in the original game. Key differences are: \n"
+"\n"
+"### Gameplay\n"
+"\n"
+"- New Launcher items have been added for Missiles, Super Missiles, and Power Bombs which are required to use their respective ammo.\n"
+"\n"
+"- New movement items have been added for Springball, Infinite Bomb Jump, and Wall Jump Boots.\n"
+"\n"
+"- The Ruins Test event is no longer required to activate Space Jump, Gravity Suit, or Plasma Beam. The Ruins Test is now a pickup location.\n"
+"\n"
+"- The Zipline activation is now shuffled into the pool as a pickup. The Zipline activation platform is now a pickup location.\n"
+"\n"
+"- Deorem will only spawn when the player has collected Missile Launcher and no longer flees. Deorem only spawns in the first location near the Norfair elevator.\n"
+"\n"
+"- The Acid Worm and Ridley now always spawn regardless of the events.\n"
+"\n"
+"- The suitless sequence has been r"
+                        "emoved.\n"
+"\n"
+"- Missile Hatches are no longer weak to Super Missiles.\n"
+"\n"
+"- Hatches locked by events now revert to there correct types.\n"
+"\n"
+"- TODO: Say something about goal here...\n"
+"\n"
+"### Room Changes\n"
+"\n"
+"- Crateria - TODO - The Chozo pillar is now always extended.\n"
+"\n"
+"- Norfair - TODO - The Imago Cocoon room now always has tunnels.\n"
+"\n"
+"### Quality of Life\n"
+"\n"
+"- You can now warp to start by pressing L on the map screen. All progress since your last save will be lost. This is NEVER considered logical.\n"
+"\n"
+"- On the inventory screen, you can now enable/disable acquired powerups.\n"
+"\n"
+"- Ammo drop rates have been reworked so that Super Missiles will drop when Missiles are not acquired and Power Bombs will always drop when Health and Missile ammo is full.\n"
+"\n"
+"- A cosmetic setting has been added to reveal all hidden blocks.\n"
+"\n"
+"\n"
+"", None))
+        MZMGameTabWidget.setTabText(MZMGameTabWidget.indexOf(self.differences_tab), QCoreApplication.translate("MZMGameTabWidget", u"Differences", None))
+        MZMGameTabWidget.setTabText(MZMGameTabWidget.indexOf(self.pickup_hint_features_tab), QCoreApplication.translate("MZMGameTabWidget", u"Pickup Hint Features", None))
         pass
     # retranslateUi
 
