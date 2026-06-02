@@ -70,23 +70,31 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         memory_ops = [
             MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
             MemoryOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1),
-            MemoryOperation(cstate_manager_global + cplayer_offset, offset=0, read_byte_count=4),
+            MemoryOperation(cstate_manager_global + cplayer_offset, read_byte_count=4),
         ]
         results = await self.executor.perform_memory_operations(memory_ops)
 
-        pending_op_byte = results[memory_ops[1]]
+        world_asset_id, pending_op_byte, cplayer_pointer = results.values()
 
         has_pending_op = pending_op_byte != b"\x00"
-        current_world = self._current_status_world(results.get(memory_ops[0]), results.get(memory_ops[2]))
+
+        cplayer_vtable = None
+        if cplayer_pointer != b"\x00" * 4:
+            cplayer_memory_op = MemoryOperation(int.from_bytes(cplayer_pointer, "big"), read_byte_count=4)
+            cplayer_vtable = await self.executor.perform_single_memory_operation(cplayer_memory_op)
+
+        current_world = self._current_status_world(world_asset_id, cplayer_vtable)
         return has_pending_op, current_world
 
     async def _memory_op_for_items(
         self,
         items: list[ItemResourceInfo],
     ) -> list[MemoryOperation]:
+        cplayer_state_offset = 0x8B8
+
         op = await self.executor.perform_single_memory_operation(
             MemoryOperation(
-                address=self.version.cstate_manager_global + 0x8B8,
+                address=self.version.cstate_manager_global + cplayer_state_offset,
                 read_byte_count=4,
             )
         )

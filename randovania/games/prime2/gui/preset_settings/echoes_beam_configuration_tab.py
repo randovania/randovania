@@ -9,6 +9,7 @@ from PySide6.QtWidgets import QComboBox
 
 from randovania.games.prime2.gui.generated.preset_echoes_beam_configuration_ui import Ui_PresetEchoesBeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -27,8 +28,15 @@ _BEAMS = {
 }
 
 
-class PresetEchoesBeamConfiguration(PresetTab[EchoesConfiguration], Ui_PresetEchoesBeamConfiguration):
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+class PresetEchoesBeamConfiguration(
+    PresetTab[EchoesConfiguration | EchoesOPRConfiguration], Ui_PresetEchoesBeamConfiguration
+):
+    def __init__(
+        self,
+        editor: PresetEditor[EchoesConfiguration | EchoesOPRConfiguration],
+        game_description: GameDescription,
+        window_manager: WindowManager,
+    ):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
@@ -138,7 +146,7 @@ class PresetEchoesBeamConfiguration(PresetTab[EchoesConfiguration], Ui_PresetEch
                 "beam_configuration", dataclasses.replace(beam_configuration, **{beam: new_config})
             )
 
-    def on_preset_changed(self, preset: Preset[EchoesConfiguration]) -> None:
+    def on_preset_changed(self, preset: Preset[EchoesConfiguration | EchoesOPRConfiguration]) -> None:
         beam_configuration = preset.configuration.beam_configuration
 
         for beam in _BEAMS:

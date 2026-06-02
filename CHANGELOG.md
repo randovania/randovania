@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [10.8.0] - 2026-06-01
 
 - Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
+- Changed: When using the Nintendont game connection, it will now give better feedback when you're in the Homebrew Channel and haven't launched Nintendont yet.
 
 ### Generator
 
@@ -38,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
+- Added: Added videos for reaching Door to EMMI Zone First Entrance from above before destroying the blob.
 
 ##### Dairon
 
@@ -69,8 +71,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Fixed: Observatory: Softlock if upper 1st-pass pirates killed before entering the room
-- Fixed: Training Chamber: Softlock if room unloaded after triggering fight but before killing both ghosts (e.g. wallcrawl)
+- Fixed: Metroid Prime Lair: Softlock when playing with Skippable/Competitive cutscenes on platforms with faster than disk read speed (Nintendont, Dolphin Emulate Disk Speed: false, etc.) and the Subchamber Five cutscene is skipped after the next room has finished loading.
+- Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
+- Fixed: Observatory: Softlock if the upper 1st-pass pirates are killed before entering the room
+- Fixed: Training Chamber: Softlock if the room unloaded after triggering fight but before killing both ghosts (e.g. wallcrawl)
 - Fixed: GM8E30 (Korean) support
 - Changed: Wavebuster no longer consumes ammo if cancelled due to "point blank range" rule
 - Changed: Updated tournament scan to include 2025 winners
@@ -88,6 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Changed: Dark, Light, and Beam Ammo Expansions are now considered dark-aligned, light-aligned and both, respectively.
+- Removed: A setting that disabled all room names on the map when elevators are randomized. This setting is redundant, since elevator rooms are not revealed on the map at all when randomized.
 
 #### Logic Database
 

@@ -32,6 +32,7 @@ def _gui() -> randovania.game.gui.GameGui:
         export_dialog=gui.FactorioGameExportDialog,
         progressive_item_gui_tuples=(),
         spoiler_visualizer=(),
+        hide_database_map_view=True,
     )
 
 

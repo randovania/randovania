@@ -137,6 +137,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
             "warp_to_start": self.configuration.warp_to_start,
             "open_missile_doors_with_one_missile": self.configuration.open_missile_doors_with_one_missile,
             "allow_downward_shots": self.configuration.allow_downward_shots,
+            "allow_screw_attack_to_break_blocks": self.configuration.allow_screw_attack_to_break_blocks,
             "credits_string": self._credits_spoiler(),
             "required_amount_of_keys": required_amount_of_keys,
         }
