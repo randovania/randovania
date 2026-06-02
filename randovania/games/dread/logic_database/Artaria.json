@@ -4309,21 +4309,41 @@
                             }
                         },
                         "Tunnel to EMMI Zone Exit North": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": "Ballspark https://youtu.be/CYEk65eZKJs",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Ballspark"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Charge below and shinespark diagonally while morphed",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Ballspark"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Speedbooster",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Speed Booster Conservation https://youtu.be/CYEk65eZKJs",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Ballspark"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
