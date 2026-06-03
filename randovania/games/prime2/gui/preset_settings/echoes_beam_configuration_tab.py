@@ -61,7 +61,7 @@ class PresetEchoesBeamConfiguration(
 
         def _create_ammo_combo() -> QComboBox:
             combo = QComboBox(self.beam_configuration_group)
-            combo.addItem("None", -1)
+            combo.addItem("None", None)
             combo.addItem("Power Bomb", 43)
             combo.addItem("Missile", 44)
             combo.addItem("Dark Ammo", 45)
@@ -154,7 +154,7 @@ class PresetEchoesBeamConfiguration(
 
             set_combo_with_value(self._beam_ammo_a[beam], config.ammo_a)
             set_combo_with_value(self._beam_ammo_b[beam], config.ammo_b)
-            self._beam_ammo_b[beam].setEnabled(config.ammo_a != -1)
+            self._beam_ammo_b[beam].setEnabled(config.ammo_a is not None)
             self._beam_uncharged[beam].setValue(config.uncharged_cost)
             self._beam_charged[beam].setValue(config.charged_cost)
             self._beam_combo[beam].setValue(config.combo_ammo_cost)

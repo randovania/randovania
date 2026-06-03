@@ -25,13 +25,13 @@ def create_beam_configuration_description(
 ) -> list[dict[str, bool]]:
     beam_names = ["Power", "Dark", "Light", "Annihilator"]
     default_config = BeamConfiguration(
-        power=BeamAmmoConfiguration(0, -1, -1, 0, 0, 5, 0),
-        dark=BeamAmmoConfiguration(1, 45, -1, 1, 5, 5, 30),
-        light=BeamAmmoConfiguration(2, 46, -1, 1, 5, 5, 30),
-        annihilator=BeamAmmoConfiguration(3, 46, 45, 1, 5, 5, 30),
+        power=BeamAmmoConfiguration(None, None, 0, 0, 5, 0),
+        dark=BeamAmmoConfiguration(45, None, 1, 5, 5, 30),
+        light=BeamAmmoConfiguration(46, None, 1, 5, 5, 30),
+        annihilator=BeamAmmoConfiguration(46, 45, 1, 5, 5, 30),
     )
     id_to_name = {
-        -1: "Nothing",
+        None: "Nothing",
         43: "Power Bomb",
         44: "Missile",
         45: "Dark Ammo",
@@ -41,7 +41,7 @@ def create_beam_configuration_description(
     result = []
 
     def format_ammo_cost(b: BeamAmmoConfiguration) -> list[str]:
-        if b.ammo_a == b.ammo_b == -1:
+        if b.ammo_a is b.ammo_b is None:
             return [""]
 
         return [
@@ -57,7 +57,7 @@ def create_beam_configuration_description(
         return "/".join(a for a, d in zip(a1, d1) if a != d)
 
     def format_ammo_name(b: BeamAmmoConfiguration) -> str:
-        if b.ammo_a == b.ammo_b == -1:
+        if b.ammo_a is b.ammo_b is None:
             return "no ammo"
 
         names = [id_to_name[b.ammo_a], id_to_name[b.ammo_b]]

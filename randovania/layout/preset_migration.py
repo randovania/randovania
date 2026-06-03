@@ -1256,6 +1256,16 @@ def _migrate_v115(preset: dict, game: RandovaniaGame, *, from_layout_description
         preset["configuration"].pop("portal_rando")
 
 
+def _migrate_v116(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    if game in {RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_ECHOES_OPR}:
+        for beam in preset["configuration"]["beam_configuration"].values():
+            beam.pop("item_index")
+            if beam["ammo_a"] < 0:
+                beam["ammo_a"] = None
+            if beam["ammo_b"] < 0:
+                beam["ammo_b"] = None
+
+
 _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1372,6 +1382,7 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v113,  # fusion: add environmental damage
     _migrate_v114,  # prime/echoes: remove `allow_unvisited_room_names` in teleporter config
     _migrate_v115,  # echoes: remove portal rando
+    _migrate_v116,  # echoes: update beam configuration to new format
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
