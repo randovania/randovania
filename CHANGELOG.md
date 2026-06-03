@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Single-wall Wall Jump traversal option to get to EMMI Zone Dome.
 - Added: Speed booster conservation trick to get to the top of the EMMI Zone Hub without diabled door lock randomizer.
 - Added: Added several videos for various connections in Artaria.
+- Changed: The connection from EMMI Zone Exit North to EMMI Zone Exit Northwest using Speedbooster is now classified as a Beginner Speedbooster Conservation trick.
 
 ### Metroid Fusion
 

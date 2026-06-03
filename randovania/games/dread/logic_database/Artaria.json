@@ -4316,11 +4316,20 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Charge below and shinespark diagonally while morphed",
+                                            "comment": "Charge below and shinespark diagonally",
                                             "items": [
                                                 {
                                                     "type": "template",
                                                     "data": "Ballspark"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4339,7 +4348,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Speedbooster",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -5510,27 +5519,6 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Speed Booster Conservation (Intermediate) https://youtu.be/fTvewcFs7a0",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Ballspark"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Speedbooster",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -6527,6 +6515,35 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Speed Booster Conservation (Intermediate) https://youtu.be/fTvewcFs7a0",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Ballspark"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Next to Water Device": {
                             "type": "and",
                             "data": {
@@ -10580,15 +10597,6 @@
                                                         "type": "tricks",
                                                         "name": "IBJ",
                                                         "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "DBJ",
-                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
