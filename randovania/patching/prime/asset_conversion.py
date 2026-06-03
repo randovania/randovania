@@ -31,7 +31,7 @@ if TYPE_CHECKING:
     from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 PRIME_MODELS_VERSION = 2
-ECHOES_MODELS_VERSION = 4
+ECHOES_MODELS_VERSION = 5
 
 
 def delete_converted_assets(assets_dir: Path):
@@ -336,7 +336,7 @@ def _read_prime1_from_cache(assets_path: Path, updaters):
 @monitoring.trace_function
 def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: ProgressUpdateCallable):
     metafile = output_path.joinpath("meta.json")
-    if get_asset_cache_version(output_path) >= ECHOES_MODELS_VERSION:
+    if get_asset_cache_version(output_path) == ECHOES_MODELS_VERSION:
         return json_lib.read_path(metafile)
 
     delete_converted_assets(output_path)
