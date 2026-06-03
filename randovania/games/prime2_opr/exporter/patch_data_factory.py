@@ -26,7 +26,6 @@ from randovania.games.prime2.exporter.patch_data_factory import (
     echoes_raw_pickup_list,
     simplified_prime2_memo_data,
 )
-from randovania.games.prime2.layout.beam_configuration import BeamAmmoConfiguration
 from randovania.games.prime2_opr.layout import EchoesOPRConfiguration, EchoesOPRCosmeticPatches
 from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.base.pickup_model import PickupModelStyle
@@ -75,7 +74,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         data["practice_mod"] = "full" if self.configuration.practice_mod else "disabled"
         data["inverted_mode"] = self.configuration.inverted_mode
         data["auto_enabled_elevators"] = self._should_auto_enable_elevators()
-        data["beam_configuration"] = self.create_beam_ammo()
+        data["beam_configuration"] = self.configuration.beam_configuration.as_json
         data["damage_changes"] = self.create_damage_changes()
         data["custom_items"] = self.create_custom_items_config()
 
@@ -395,27 +394,6 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         pickup_config = self.configuration.standard_pickup_configuration
         scan_pickup = pickup_config.get_pickup_with_name("Scan Visor")
         return pickup_config.pickups_state[scan_pickup].num_included_in_starting_pickups == 0
-
-    def _get_single_beam_config(self, beam_config: BeamAmmoConfiguration) -> dict:
-        """Returns a patcher-format dict for a single beam's ammo configuration."""
-        beam = beam_config.as_json
-        beam.pop("item_index")
-        if beam["ammo_a"] < 0:
-            beam["ammo_a"] = None
-        if beam["ammo_b"] < 0:
-            beam["ammo_b"] = None
-        return beam
-
-    def create_beam_ammo(self) -> dict:
-        """Returns a patcher-format dict mapping beams to their ammo configurations."""
-        beam_config = self.configuration.beam_configuration
-
-        return {
-            "power": self._get_single_beam_config(beam_config.power),
-            "dark": self._get_single_beam_config(beam_config.dark),
-            "light": self._get_single_beam_config(beam_config.light),
-            "annihilator": self._get_single_beam_config(beam_config.annihilator),
-        }
 
     def create_damage_changes(self) -> dict:
         """Returns a patcher-format dict for various damage changes."""

@@ -676,19 +676,11 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         [pickup_category_visors] = [cat for cat in default_pickups.keys() if cat.name == "visor"]
         [pickup_category_beams] = [cat for cat in default_pickups.keys() if cat.name == "beam"]
 
-        def _wrap_ammo_as_none(data: dict) -> dict:
-            for beam in data.values():
-                if beam["ammo_a"] < 0:
-                    beam["ammo_a"] = None
-                if beam["ammo_b"] < 0:
-                    beam["ammo_b"] = None
-            return data
-
         result["menu_mod"] = self.configuration.menu_mod
         result["dol_patches"] = {
             "world_uuid": str(self.players_config.get_own_uuid()),
             "energy_per_tank": self.configuration.energy_per_tank,
-            "beam_configuration": _wrap_ammo_as_none(self.configuration.beam_configuration.as_json),
+            "beam_configuration": self.configuration.beam_configuration.as_json,
             "safe_zone_heal_per_second": self.configuration.safe_zone.heal_per_second,
             "game_options_defaults": self.cosmetic_patches.user_preferences.as_json,
             "default_items": {
