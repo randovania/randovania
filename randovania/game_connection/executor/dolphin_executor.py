@@ -10,6 +10,7 @@ from randovania.game_connection.executor.memory_operation import (
     MemoryOperation,
     MemoryOperationException,
     MemoryOperationExecutor,
+    MemoryReadOperation,
 )
 
 MEM1_START = 0x80000000
@@ -79,8 +80,6 @@ class DolphinExecutor(MemoryOperationExecutor):
 
     # Game Backend Stuff
     def _memory_operation(self, op: MemoryOperation, pointers: dict[int, int | None]) -> bytes | None:
-        op.validate_byte_sizes()
-
         address = op.address
         if op.offset is not None:
             if address not in pointers:
@@ -98,10 +97,9 @@ class DolphinExecutor(MemoryOperationExecutor):
 
         try:
             result = None
-            if op.read_byte_count is not None:
+            if MemoryOperation.is_read_op(op):
                 result = self.dolphin.read_bytes(address, op.read_byte_count)
-
-            if op.write_bytes is not None:
+            elif MemoryOperation.is_write_op(op):
                 self.dolphin.write_bytes(address, op.write_bytes)
                 self.logger.debug(f"Wrote {op.write_bytes.hex()} to {address:x}")
 
@@ -110,7 +108,7 @@ class DolphinExecutor(MemoryOperationExecutor):
 
         return result
 
-    async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryOperation, bytes]:
+    async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryReadOperation, bytes]:
         pointers_to_read = set()
         for op in ops:
             if op.offset is not None:
@@ -134,6 +132,10 @@ class DolphinExecutor(MemoryOperationExecutor):
         result = {}
         for op in ops:
             op_result = self._memory_operation(op, pointers)
+            if not MemoryOperation.is_read_op(op) and op_result:
+                raise MemoryOperationException(
+                    f"Got a result back for the operation {op} despite it not being a reading operation."
+                )
             if op_result is not None:
                 result[op] = op_result
         return result

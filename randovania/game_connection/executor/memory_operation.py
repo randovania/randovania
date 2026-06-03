@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import logging
+from typing import TypeGuard
 
 
 class MemoryOperationException(Exception):
@@ -10,13 +11,7 @@ class MemoryOperationException(Exception):
 
 @dataclasses.dataclass(frozen=True)
 class MemoryOperation:
-    """
-    Represents an operation for reading and/or writing to the GameCube's RAM.
-    Note that there are the following limits with a MemoryOperation:
-    - The operation can only have one length on what to do, so if it's a read and write operation, both of their
-      lengths must match (can be validated with validate_byte_size)
-    - The length must be between 0 and 255, both inclusive.
-    """
+    """An abstract class representing an operation for dealing with the GameCube's RAM."""
 
     address: int
     """The memory address for the operation."""
@@ -25,45 +20,70 @@ class MemoryOperation:
     When offset is None, then do the operation on address as is. If it's given (even if 0), then do the
     operation on (read_4_bytes_at(address) + offset). This is useful, if you have a pointer to some struct/class.
     """
-    read_byte_count: int | None = None
-    """How many bytes to read, if any."""
-    write_bytes: bytes | None = None
-    "What bytes to write, if any."
 
     @property
     def byte_count(self) -> int:
-        """Return the number of bytes involved in the operation. The read count is prioritized over the write count."""
-        if self.read_byte_count is not None:
-            return self.read_byte_count
-        if self.write_bytes is not None:
-            return len(self.write_bytes)
-        return 0
+        """Return the number of bytes involved in the operation."""
+        raise NotImplementedError
 
-    def validate_byte_sizes(self) -> None:
-        """
-        Validate that if this is a read and write operation, that their lengths are the same.
-        Raises an exception if it doesn't.
-        """
-        if (
-            self.write_bytes is not None
-            and self.read_byte_count is not None
-            and len(self.write_bytes) != self.read_byte_count
-        ):
-            raise ValueError(f"Attempting to read {self.read_byte_count} bytes while writing {len(self.write_bytes)}.")
+    @staticmethod
+    def is_read_op(instance: MemoryOperation) -> TypeGuard[MemoryReadOperation]:
+        """Type guards on whether a given instance is a reading operation."""
+        return isinstance(instance, MemoryReadOperation)
+
+    @staticmethod
+    def is_write_op(instance: MemoryOperation) -> TypeGuard[MemoryWriteOperation]:
+        """Type guards on whether a given instance is a writing operation."""
+        return isinstance(instance, MemoryWriteOperation)
 
     def __str__(self) -> str:
-        """Return a readable description of this memory operation."""
         address_text = f"0x{self.address:08x}"
         if self.offset is not None:
             address_text = f"*{address_text} {self.offset:+05x}"
 
-        operation_pretty = []
-        if self.read_byte_count is not None:
-            operation_pretty.append(f"read {self.read_byte_count} bytes")
-        if self.write_bytes is not None:
-            operation_pretty.append(f"write {self.write_bytes.hex()}")
+        return address_text
 
-        return f"At {address_text}, {' and '.join(operation_pretty)}"
+
+@dataclasses.dataclass(frozen=True)
+class MemoryReadOperation(MemoryOperation):
+    """Represents an operation to read from the GameCube's RAM. Note, that reading has a limit of 255 bytes."""
+
+    read_byte_count: int = 0
+    """How many bytes to read."""
+
+    def __post_init__(self):
+        if not (0 <= self.read_byte_count <= 255):
+            raise ValueError("A read operation can only be between 0 and 255, inclusive.")
+
+    @property
+    def byte_count(self) -> int:
+        return self.read_byte_count
+
+    def __str__(self):
+        address_text = super().__str__()
+
+        return f"At {address_text}, read {self.read_byte_count} bytes"
+
+
+@dataclasses.dataclass(frozen=True)
+class MemoryWriteOperation(MemoryOperation):
+    """Represents an operation to write to the GameCube's RAM. Note, that writing has a limit of 255 bytes."""
+
+    write_bytes: bytes = 0
+    "What bytes to write."
+
+    def __post_init__(self):
+        if not (0 <= len(self.write_bytes) <= 255):
+            raise ValueError("A write operation's length can only be between 0 and 255, inclusive.")
+
+    @property
+    def byte_count(self) -> int:
+        return len(self.write_bytes)
+
+    def __str__(self):
+        address_text = super().__str__()
+
+        return f"At {address_text}, write {self.write_bytes.hex()}"
 
 
 class MemoryOperationExecutor:
@@ -84,7 +104,7 @@ class MemoryOperationExecutor:
         """Returns whether there is currently an active connection going on."""
         raise NotImplementedError
 
-    async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryOperation, bytes]:
+    async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryReadOperation, bytes]:
         """Execute given memory operations.
 
         Args:
@@ -102,4 +122,6 @@ class MemoryOperationExecutor:
         If it was a write operation, it will return None instead.
         """
         result = await self.perform_memory_operations([op])
-        return result.get(op)
+        if MemoryOperation.is_read_op(op):
+            return result[op]
+        return None

@@ -7,7 +7,10 @@ from typing import TYPE_CHECKING, TypeGuard, override
 from open_prime_rando.dol_patching import all_prime_dol_patches
 
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperationExecutor,
+    MemoryReadOperation,
+)
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.games.prime2.patcher import echoes_items
 
@@ -73,9 +76,9 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         cplayer_offset = 0x14FC
 
         memory_ops = [
-            MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
-            MemoryOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1),
-            MemoryOperation(cstate_manager_global + cplayer_offset, offset=0, read_byte_count=4),
+            MemoryReadOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
+            MemoryReadOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1),
+            MemoryReadOperation(cstate_manager_global + cplayer_offset, offset=0, read_byte_count=4),
         ]
         results = await self.executor.perform_memory_operations(memory_ops)
 
@@ -86,10 +89,10 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
     async def _memory_op_for_items(
         self,
         items: list[ItemResourceInfo],
-    ) -> list[MemoryOperation]:
+    ) -> list[MemoryReadOperation]:
         player_state_pointer = self.version.cstate_manager_global + 0x150C
         return [
-            MemoryOperation(
+            MemoryReadOperation(
                 address=player_state_pointer,
                 offset=_echoes_powerup_offset(item.extra["item_id"]),
                 read_byte_count=8,
@@ -136,7 +139,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         PASSES = 2
         arr_raws = [
             await self.executor.perform_single_memory_operation(
-                MemoryOperation(
+                MemoryReadOperation(
                     address=self.version.cstate_manager_global + 0x8C0 + 0x4 + 0xC,
                     read_byte_count=4 * (32 // PASSES),
                     offset=i * 4 * (32 // PASSES),

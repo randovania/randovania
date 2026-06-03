@@ -19,6 +19,8 @@ from randovania.game_connection.executor.memory_operation import (
     MemoryOperation,
     MemoryOperationException,
     MemoryOperationExecutor,
+    MemoryReadOperation,
+    MemoryWriteOperation,
 )
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
@@ -93,7 +95,9 @@ class PrimeRemoteConnector(RemoteConnector):
         Returns True if the accessible memory of the game matches the version of this connector.
         Also updates our internal uuid if it matches.
         """
-        operation = MemoryOperation(self.version.build_string_address, read_byte_count=len(self.version.build_string))
+        operation = MemoryReadOperation(
+            self.version.build_string_address, read_byte_count=len(self.version.build_string)
+        )
         build_string = await self.executor.perform_single_memory_operation(operation)
 
         assert build_string is not None
@@ -153,7 +157,7 @@ class PrimeRemoteConnector(RemoteConnector):
     async def _memory_op_for_items(
         self,
         items: list[ItemResourceInfo],
-    ) -> list[MemoryOperation]:
+    ) -> list[MemoryReadOperation]:
         """Creates a list of memory operations to read the given item resources."""
         raise NotImplementedError
 
@@ -289,8 +293,8 @@ class PrimeRemoteConnector(RemoteConnector):
         )
         memory_operations.extend(
             [
-                MemoryOperation(patch_address, write_bytes=patch_bytes),
-                MemoryOperation(self.version.cstate_manager_global + self._pending_op_offset, write_bytes=b"\x01"),
+                MemoryWriteOperation(patch_address, write_bytes=patch_bytes),
+                MemoryWriteOperation(self.version.cstate_manager_global + self._pending_op_offset, write_bytes=b"\x01"),
             ]
         )
         self.logger.debug(f"Performing {len(memory_operations)} ops with {len(patches)} patches")
@@ -342,7 +346,7 @@ class PrimeRemoteConnector(RemoteConnector):
         """
         raise NotImplementedError
 
-    def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
+    def _write_string_to_game_buffer(self, message: str) -> MemoryWriteOperation:
         overhead_size = 6  # 2 bytes for an extra char to differentiate sizes
         encoded_message = message.encode("utf-16_be")[: self.version.string_display.max_message_size - overhead_size]
 
@@ -359,7 +363,9 @@ class PrimeRemoteConnector(RemoteConnector):
             num_to_align = (len(encoded_message) | 3) - len(encoded_message) + 1
             encoded_message += b"\x00" * num_to_align
 
-        return MemoryOperation(self.version.string_display.message_receiver_string_ref, write_bytes=encoded_message)
+        return MemoryWriteOperation(
+            self.version.string_display.message_receiver_string_ref, write_bytes=encoded_message
+        )
 
     def _dol_patch_for_hud_message(self, message: str) -> DolRemotePatch:
         return DolRemotePatch(

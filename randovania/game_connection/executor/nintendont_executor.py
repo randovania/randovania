@@ -11,6 +11,7 @@ from randovania.game_connection.executor.memory_operation import (
     MemoryOperation,
     MemoryOperationException,
     MemoryOperationExecutor,
+    MemoryWriteOperation,
 )
 
 
@@ -63,13 +64,13 @@ class RequestBatch:
         if op.address not in self.addresses:
             self.addresses.append(op.address)
 
-        if op.read_byte_count is not None:
+        if MemoryOperation.is_read_op(op):
             self.num_read_bytes += op.read_byte_count
 
         op_byte = self.addresses.index(op.address)
-        if op.read_byte_count is not None:
+        if MemoryOperation.is_read_op(op):
             op_byte = op_byte | 0x80
-        if op.write_bytes is not None:
+        if MemoryOperation.is_write_op(op):
             op_byte = op_byte | 0x40
         if op.byte_count == 4:
             op_byte = op_byte | 0x20
@@ -81,7 +82,7 @@ class RequestBatch:
             self.data += struct.pack(">B", op.byte_count)
         if op.offset is not None:
             self.data += struct.pack(">h", op.offset)
-        if op.write_bytes is not None:
+        if MemoryOperation.is_write_op(op):
             self.data += op.write_bytes
 
         self.ops.append(op)
@@ -179,9 +180,8 @@ class NintendontExecutor(MemoryOperationExecutor):
         for i, op in enumerate(ops):
             if op.byte_count == 0:
                 continue
-            op.validate_byte_sizes()
 
-            if op.read_byte_count is None and (op.write_bytes is not None and len(op.write_bytes) > max_write_size):
+            if MemoryOperation.is_write_op(op) and len(op.write_bytes) > max_write_size:
                 self.logger.debug(
                     f"Operation {i} had {len(op.write_bytes)} bytes, above the limit of {max_write_size}. Splitting."
                 )
@@ -193,7 +193,7 @@ class NintendontExecutor(MemoryOperationExecutor):
                         address = op.address
                         op_offset = op.offset + offset
                     processes_ops.append(
-                        MemoryOperation(
+                        MemoryWriteOperation(
                             address=address,
                             offset=op_offset,
                             write_bytes=op.write_bytes[offset : min(offset + max_write_size, len(op.write_bytes))],
@@ -259,11 +259,9 @@ class NintendontExecutor(MemoryOperationExecutor):
                 log_message += f"Request {req_index}\n"
                 for op_index, op in enumerate(request.ops):
                     read_write_part = ""
-                    if op.write_bytes:
-                        read_write_part = (
-                            f"write {('(and read) ' if op.read_byte_count else '')} '{op.write_bytes.hex()}'"
-                        )
-                    elif op.read_byte_count:
+                    if MemoryOperation.is_write_op(op):
+                        read_write_part = f"write '{op.write_bytes.hex()}'"
+                    elif MemoryOperation.is_read_op(op):
                         read_write_part = f"read {op.read_byte_count} bytes"
                     log_message += f"  Operation {op_index}: {read_write_part} at 0x{op.address:0x}\n"
             self.logger.debug(log_message)
@@ -275,7 +273,7 @@ class NintendontExecutor(MemoryOperationExecutor):
         for request, response in zip(requests, all_responses):
             read_index = request.num_validator_bytes
             for i, op in enumerate(request.ops):
-                if op.read_byte_count is None:
+                if not MemoryOperation.is_read_op(op):
                     continue
 
                 if _was_invalid_address(response, i):

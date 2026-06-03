@@ -7,9 +7,9 @@ from typing import TYPE_CHECKING
 
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 from randovania.game_connection.executor.memory_operation import (
-    MemoryOperation,
     MemoryOperationException,
     MemoryOperationExecutor,
+    MemoryReadOperation,
 )
 
 if TYPE_CHECKING:
@@ -59,7 +59,7 @@ class PrimeConnectorBuilder(ConnectorBuilder):
             [EchoesRemoteConnector(version, executor) for version in echoes_dol_versions.ALL_VERSIONS]
         )
         read_first_ops = [
-            MemoryOperation(
+            MemoryReadOperation(
                 connectors.version.build_string_address, read_byte_count=min(len(connectors.version.build_string), 4)
             )
             for connectors in all_connectors

@@ -7,7 +7,11 @@ from open_prime_rando.dol_patching import all_prime_dol_patches
 from open_prime_rando.dol_patching.prime1 import dol_patches
 
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperationExecutor,
+    MemoryReadOperation,
+    MemoryWriteOperation,
+)
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.prime1.patcher import prime_items
 
@@ -68,9 +72,9 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         cplayer_offset = 0x84C
 
         memory_ops = [
-            MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
-            MemoryOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1),
-            MemoryOperation(cstate_manager_global + cplayer_offset, read_byte_count=4),
+            MemoryReadOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
+            MemoryReadOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1),
+            MemoryReadOperation(cstate_manager_global + cplayer_offset, read_byte_count=4),
         ]
         results = await self.executor.perform_memory_operations(memory_ops)
 
@@ -80,7 +84,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
 
         cplayer_vtable = None
         if cplayer_pointer != b"\x00" * 4:
-            cplayer_memory_op = MemoryOperation(int.from_bytes(cplayer_pointer, "big"), read_byte_count=4)
+            cplayer_memory_op = MemoryReadOperation(int.from_bytes(cplayer_pointer, "big"), read_byte_count=4)
             cplayer_vtable = await self.executor.perform_single_memory_operation(cplayer_memory_op)
 
         current_world = self._current_status_world(world_asset_id, cplayer_vtable)
@@ -89,11 +93,11 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
     async def _memory_op_for_items(
         self,
         items: list[ItemResourceInfo],
-    ) -> list[MemoryOperation]:
+    ) -> list[MemoryReadOperation]:
         cplayer_state_offset = 0x8B8
 
         op = await self.executor.perform_single_memory_operation(
-            MemoryOperation(
+            MemoryReadOperation(
                 address=self.version.cstate_manager_global + cplayer_state_offset,
                 read_byte_count=4,
             )
@@ -102,7 +106,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         player_state_pointer = int.from_bytes(op, "big")
 
         return [
-            MemoryOperation(
+            MemoryReadOperation(
                 address=player_state_pointer,
                 offset=_prime1_powerup_offset(item.extra["item_id"]),
                 read_byte_count=8,
@@ -157,7 +161,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
 
         return patches, format_received_item(item_name, provider_name)
 
-    def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
+    def _write_string_to_game_buffer(self, message: str) -> MemoryWriteOperation:
         return super()._write_string_to_game_buffer("&just=center;" + message)
 
     def at_end_of_game(self) -> bool:
