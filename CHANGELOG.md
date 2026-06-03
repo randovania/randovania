@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Waiting changes to be added.
 
+## [10.8.1] - 2026-06-??
+
+### Metroid Prime
+
+- Fixed: Converting Metroid Prime 2: Echoes models for multiworld, for certain pickups.
+
 ## [10.8.0] - 2026-06-01
 
 - Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
