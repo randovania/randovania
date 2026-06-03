@@ -71,22 +71,20 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         mlvl_offset = 0x84
         cplayer_offset = 0x84C
 
-        pending_byte_op = MemoryOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1)
-        pending_byte_result = await self.executor.perform_single_memory_operation(pending_byte_op)
-
         # Both of these can be a nullpointer. The first one while the game is booting up, the second at
-        # title screen/elevators. In both cases we can just say that they're in an invalid World.
+        # title screen/elevators. In both cases we can just say that they're in an invalid World / can't be acted on.
         world_status_ops = [
             MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
-            MemoryOperation(cstate_manager_global + cplayer_offset, read_byte_count=4),
+            MemoryOperation(cstate_manager_global + cplayer_offset, offset=0, read_byte_count=4),
         ]
         try:
             world_status_results = await self.executor.perform_memory_operations(world_status_ops)
             world_asset_id, cplayer_vtable = world_status_results.values()
         except MemoryOperationException:
-            world_asset_id = None
-            cplayer_vtable = None
+            return True, None
 
+        pending_byte_op = MemoryOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1)
+        pending_byte_result = await self.executor.perform_single_memory_operation(pending_byte_op)
         has_pending_op = pending_byte_result != b"\x00"
 
         current_world = self._current_status_world(world_asset_id, cplayer_vtable)
