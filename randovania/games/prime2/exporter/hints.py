@@ -24,12 +24,11 @@ def create_simple_logbook_hint(asset_id: int, hint: str) -> dict:
 
 
 def create_patches_hints(
-    all_patches: dict[int, GamePatches],
-    players_config: PlayersConfiguration,
+    patches: GamePatches,
     exporter: HintExporter,
 ) -> list:
     hints_for_asset: dict[NodeIdentifier, str] = {}
-    for identifier, hint in all_patches[players_config.player_index].hints.items():
+    for identifier, hint in patches.hints.items():
         hints_for_asset[identifier] = exporter.create_message_for_hint(hint, True)
 
     return [

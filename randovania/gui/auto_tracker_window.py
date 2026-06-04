@@ -12,6 +12,7 @@ from randovania.game_description.resources.inventory import Inventory
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
+from randovania.interface_common import persistence
 from randovania.lib import json_lib
 from randovania.network_common.game_connection_status import GameConnectionStatus
 
@@ -26,21 +27,33 @@ if TYPE_CHECKING:
 
 
 def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, dict[str, Path]]:
-    data = json_lib.read_path(get_data_path().joinpath("gui_assets/tracker/trackers.json"))
+    included_folder = get_data_path().joinpath("gui_assets/tracker")
+    user_folder = persistence.local_data_dir().joinpath("tracker/layout")
 
-    if for_solo:
-        exclude_trackers = {}
-    else:
-        exclude_trackers = data["solo_only"]
+    folders = [included_folder]
+    if user_folder.joinpath("trackers.json").is_file():
+        folders.append(user_folder)
 
-    return {
-        RandovaniaGame(game): {
-            name: get_data_path().joinpath("gui_assets/tracker", file_name)
-            for name, file_name in trackers.items()
-            if name not in exclude_trackers.get(game, [])
-        }
-        for game, trackers in data["trackers"].items()
-    }
+    result = {}
+
+    for folder in folders:
+        trackers = json_lib.read_path(folder.joinpath("trackers.json"))
+
+        if for_solo:
+            exclude_trackers = {}
+        else:
+            exclude_trackers = trackers["solo_only"]
+
+        for game_value, trackers in trackers["trackers"].items():
+            game = RandovaniaGame(game_value)
+            if game not in result:
+                result[game] = {}
+
+            for name, file_name in trackers.items():
+                if name not in exclude_trackers.get(game, []):
+                    result[game][name] = folder.joinpath(file_name)
+
+    return result
 
 
 class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):

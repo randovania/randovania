@@ -16,10 +16,10 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 def test_create_beam_configuration_description_vanilla():
     default_config = BeamConfiguration(
-        power=BeamAmmoConfiguration(0, -1, -1, 0, 0, 5, 0),
-        dark=BeamAmmoConfiguration(1, 45, -1, 1, 5, 5, 30),
-        light=BeamAmmoConfiguration(2, 46, -1, 1, 5, 5, 30),
-        annihilator=BeamAmmoConfiguration(3, 46, 45, 1, 5, 5, 30),
+        power=BeamAmmoConfiguration(None, None, 0, 0, 5, 0),
+        dark=BeamAmmoConfiguration(45, None, 1, 5, 5, 30),
+        light=BeamAmmoConfiguration(46, None, 1, 5, 5, 30),
+        annihilator=BeamAmmoConfiguration(46, 45, 1, 5, 5, 30),
     )
 
     # Run
@@ -31,10 +31,10 @@ def test_create_beam_configuration_description_vanilla():
 
 def test_create_beam_configuration_description_custom():
     default_config = BeamConfiguration(
-        power=BeamAmmoConfiguration(0, -1, -1, 0, 0, 6, 0),
-        dark=BeamAmmoConfiguration(1, 44, -1, 1, 5, 5, 30),
-        light=BeamAmmoConfiguration(2, 46, -1, 1, 5, 6, 10),
-        annihilator=BeamAmmoConfiguration(3, 46, 45, 1, 5, 5, 10),
+        power=BeamAmmoConfiguration(None, None, 0, 0, 6, 0),
+        dark=BeamAmmoConfiguration(44, None, 1, 5, 5, 30),
+        light=BeamAmmoConfiguration(46, None, 1, 5, 6, 10),
+        annihilator=BeamAmmoConfiguration(46, 45, 1, 5, 5, 10),
     )
 
     # Run
