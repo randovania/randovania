@@ -311,20 +311,8 @@
                 "long_name": "Ruins Test Completed",
                 "extra": {}
             },
-            "BrinstarC5Chozo": {
-                "long_name": "Brinstar Corridor 5 Chozo Statue",
-                "extra": {}
-            },
             "BrinstarAcidFruit": {
-                "long_name": "Brinstar Acid Tanglefruit Destroyed",
-                "extra": {}
-            },
-            "BrinstarC2Chozo": {
-                "long_name": "Brinstar Corridor 2 Chozo Statue",
-                "extra": {}
-            },
-            "BrinstarUnderhangChozo": {
-                "long_name": "Brinstar Underhang Corridor Chozo Statue",
+                "long_name": "Brinstar Varia Tanglefruit Destroyed",
                 "extra": {}
             },
             "KillAcidWorm": {
@@ -794,64 +782,6 @@
                     }
                 }
             },
-            "Can Use Missiles": {
-                "display_name": "Can Use Missiles",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": "This template is used when any requirement requires at least 1 Missile",
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "MissileLauncher",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Missiles",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "Can Use Super Missiles": {
-                "display_name": "Can Use Super Missiles",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": "This template is used when any requirement requires at least 1 Super Missile",
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "SuperMissileLauncher",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "SuperMissiles",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
             "Can Use Ball Launcher": {
                 "display_name": "Can Use Ball Launcher",
                 "requirement": {
@@ -1101,7 +1031,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "lock": null
@@ -1146,26 +1086,22 @@
         "Knowledge": [
             1
         ],
-        "MidairMorph": [
-            1,
-            2,
-            3
+        "Shinespark": [
+            1
         ],
         "WallJump": [
             1,
             2,
             3
         ],
+        "IBJ": [
+            3
+        ],
         "Movement": [
             1
         ],
-        "IBA": [
-            2
-        ],
-        "Shinespark": [
-            1
-        ],
-        "IBJ": [
+        "MidairMorph": [
+            1,
             3
         ],
         "Combat": [

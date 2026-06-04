@@ -28,7 +28,7 @@ Extra - room_id: [0]
   * Extra - X: 39
   * Extra - Y: 29
   > Open Passage to Broken Elevator to Brinstar
-      Can Use Bombs and Can Use Power Bombs
+      Can Use Ball Launcher and Can Use Power Bombs
   > Door to Fake Block Fork
       Trivial
   > Pickup (Morph Ball)
@@ -43,8 +43,8 @@ Extra - room_id: [1]
   * Pickup 0; Category? Minor
   * Extra - blockx: 13
   * Extra - blocky: 7
-  > Door to Guide Statue (Long Beam)
-      Morph Ball
+  > Door to Elevator to Kraid
+      Trivial
 
 > Door to Starting Room; Heals? False
   * Layers: default
@@ -57,8 +57,6 @@ Extra - room_id: [1]
   * Layers: default
   * Blue Door to Guide Statue (Long Beam)/Door to Fake Block Fork
   * Extra - door_idx: (3,)
-  > Pickup (Missile Tank)
-      Can Use Any Bombs
   > Door to Starting Room
       Trivial
   > Door to Elevator to Kraid
@@ -68,6 +66,8 @@ Extra - room_id: [1]
   * Layers: default
   * Blue Door to Elevator to Kraid/Door to Fake Block Fork
   * Extra - door_idx: (4,)
+  > Pickup (Missile Tank)
+      Can Use Any Bombs and Can Use Ball Launcher
   > Door to Guide Statue (Long Beam)
       Can Use Any Bombs
 
@@ -91,23 +91,24 @@ Extra - room_id: [2]
       Any of the following:
           Space Jump (Unknown Item 2)
           Hi-Jump Boots and Ice Beam
-  > Door to Blue-Tinted Hub
-      After Brinstar Corridor 2 Chozo Statue
-  > Event - Chozo Statue
+  > Hint - Long Beam Statue
       Morph Ball
 
 > Door to Blue-Tinted Hub; Heals? False
   * Layers: default
   * Blue Door to Blue-Tinted Hub/Door to Guide Statue (Long Beam)
   * Extra - door_idx: (6,)
-  > Door to Fake Block Fork
-      After Brinstar Corridor 2 Chozo Statue
+  > Hint - Long Beam Statue
+      Trivial
 
-> Event - Chozo Statue; Heals? False
+> Hint - Long Beam Statue; Heals? True
   * Layers: default
-  * Event Brinstar Corridor 2 Chozo Statue
+  * Hint
+  * Extra - hint_statue: LONG_BEAM
   > Door to Fake Block Fork
       Morph Ball
+  > Door to Blue-Tinted Hub
+      Trivial
 
 ----------------
 Blue-Tinted Hub
@@ -117,31 +118,45 @@ Extra - room_id: [3]
   * Layers: default
   * Blue Door to Guide Statue (Long Beam)/Door to Blue-Tinted Hub
   * Extra - door_idx: (7,)
+  > Door to Vestibule
+      Trivial
   > Door to Save Station (South)
       Trivial
-  > Lower Half
-      Trivial
+  > Tunnel to Speedbooster Passage
+      Can Use Springball or Tunnel Climb
+  > Tunnel to Hidden Tank Shaft (Lower)
+      Tunnel Climb
 
 > Door to Guide Statue (Bombs); Heals? False
   * Layers: default
   * Blue Door to Guide Statue (Bombs)/Door to Blue-Tinted Hub
   * Extra - door_idx: (10,)
-  > Upper Half
+  > Door to Long Beam Chamber Access
       Trivial
 
 > Door to Long Beam Chamber Access; Heals? False
   * Layers: default
   * Blue Door to Long Beam Chamber Access/Door to Blue-Tinted Hub
   * Extra - door_idx: (11,)
-  > Upper Half
+  > Door to Guide Statue (Bombs)
       Trivial
+  > Door to Vestibule
+      Trivial
+  > Tunnel to Sloped Alcove
+      Tunnel Climb
 
 > Door to Vestibule; Heals? False
   * Layers: default
   * Blue Door to Vestibule/Door to Blue-Tinted Hub
   * Extra - door_idx: (12,)
-  > Lower Half
+  > Door to Guide Statue (Long Beam)
       Trivial
+  > Door to Long Beam Chamber Access
+      Trivial
+  > Tunnel to Hidden Tank Shaft (Upper)
+      All of the following:
+          Can Use Any Bombs
+          Ice Beam or Climb High Ledges
 
 > Door to Save Station (South); Heals? False
   * Layers: default
@@ -154,67 +169,29 @@ Extra - room_id: [3]
   * Layers: default
   * Tunnel to Sloped Alcove/Tunnel to Blue-Tinted Hub
   * Extra - door_idx: (83,)
-  > Upper Half
-      Morph Ball
+  > Door to Long Beam Chamber Access
+      Trivial
 
 > Tunnel to Speedbooster Passage; Heals? False
   * Layers: default
   * Tunnel to Speedbooster Passage/Tunnel to Blue-Tinted Hub
   * Extra - door_idx: (91,)
-  > Lower Half
+  > Door to Guide Statue (Long Beam)
       Trivial
 
 > Tunnel to Hidden Tank Shaft (Lower); Heals? False
   * Layers: default
   * Tunnel to Hidden Tank Shaft/Tunnel to Blue-Tinted Hub (Lower)
   * Extra - door_idx: (92,)
-  > Lower Half
+  > Door to Guide Statue (Long Beam)
       Trivial
 
 > Tunnel to Hidden Tank Shaft (Upper); Heals? False
   * Layers: default
   * Tunnel to Hidden Tank Shaft/Tunnel to Blue-Tinted Hub (Upper)
   * Extra - door_idx: (95,)
-  > Lower Half
-      Can Use Any Bombs
-
-> Lower Half; Heals? False
-  * Layers: default
-  > Door to Guide Statue (Long Beam)
-      Trivial
   > Door to Vestibule
-      Any of the following:
-          Knowledge (Beginner)
-          Long Beam and Morph Ball
-  > Tunnel to Speedbooster Passage
-      All of the following:
-          Knowledge (Beginner)
-          Power Grip or Mid-Air Morphs (Beginner)
-  > Tunnel to Hidden Tank Shaft (Lower)
-      All of the following:
-          Knowledge (Beginner)
-          Any of the following:
-              Power Grip
-              All of the following:
-                  Mid-Air Morphs (Beginner)
-                  Wall Jumps (Intermediate) or Have Any Jump Upgrade
-  > Tunnel to Hidden Tank Shaft (Upper)
-      All of the following:
-          Can Use Any Bombs
-          Ice Beam or Wall Jumps (Beginner) or Have Any Jump Upgrade
-  > Upper Half
-      Trivial
-
-> Upper Half; Heals? False
-  * Layers: default
-  > Door to Guide Statue (Bombs)
-      Trivial
-  > Door to Long Beam Chamber Access
-      Trivial
-  > Tunnel to Sloped Alcove
-      Power Grip and Knowledge (Beginner)
-  > Lower Half
-      Trivial
+      Can Use Any Bombs
 
 ----------------
 Long Beam Chamber Access
@@ -295,7 +272,8 @@ Extra - room_id: [7]
       Trivial
   > Tunnel to Sloped Alcove
       All of the following:
-          Climb Ledges
+          # TODO: account for hard mode missing upper ripper?
+          Tunnel Climb
           Ice Beam or Space Jump (Unknown Item 2)
 
 > Door to Vestibule; Heals? False
@@ -321,11 +299,11 @@ Extra - room_id: [7]
   * Blue Door to Norfair Access Corridor/Door to Gold-Tinted Hub
   * Extra - door_idx: (21,)
   > Door to Vestibule
-      Speed Booster and Knowledge (Beginner)
+      Speed Booster
   > Door to Save Station (Central)
       Trivial
   > Tunnel to Speedbooster Passage
-      Morph Ball and Speed Booster
+      Morph Ball and Can Ballspark
 
 > Door to Save Station (Central); Heals? False
   * Layers: default
@@ -348,9 +326,7 @@ Extra - room_id: [7]
   * Tunnel to Speedbooster Passage/Tunnel to Gold-Tinted Hub
   * Extra - door_idx: (88,)
   > Door to Norfair Access Corridor
-      All of the following:
-          Morph Ball
-          Speed Booster or Can Use Any Bombs
+      Morph Ball and Can Use Any Bombs
 
 ----------------
 Elevator to Kraid
@@ -363,7 +339,7 @@ Extra - room_id: [8]
   > Open Passage to Elevator to Brinstar
       Trivial
   > Door to Guide Statue (Hi-Jump)
-      Trivial
+      After Boss Kraid Defeated
 
 > Open Passage to Elevator to Brinstar; Heals? False
   * Layers: default
@@ -377,7 +353,7 @@ Extra - room_id: [8]
   * Missile Door to Guide Statue (Hi-Jump)/Door to Elevator to Kraid
   * Extra - door_idx: (79,)
   > Door to Fake Block Fork
-      Trivial
+      After Boss Kraid Defeated
 
 ----------------
 Tourian Gate Access
@@ -463,9 +439,7 @@ Extra - room_id: [12]
   > Door to Elevator to Norfair
       Can Use Any Bombs
   > Event - Charge Beast
-      Any of the following:
-          Missiles ≥ 10 and Can Use Missiles
-          Super Missiles ≥ 5 and Can Use Super Missiles
+      Missiles ≥ 10 or Super Missiles ≥ 5
 
 > Door to Elevator to Norfair; Heals? False
   * Layers: default
@@ -515,7 +489,10 @@ Extra - room_id: [14]
   * Extra - blockx: 14
   * Extra - blocky: 23
   > Door to Mero Hive Chamber
-      Movement (Beginner) or Can Use Any Bombs
+      Any of the following:
+          # Softlock without bombs
+          Can Use Bombs
+          Power Bombs ≥ 2 and Can Use Power Bombs
 
 > Door to Mero Corridor; Heals? False
   * Layers: default
@@ -529,9 +506,7 @@ Extra - room_id: [14]
   * Blue Door to Mero Hive Chamber/Door to Mero Abyss
   * Extra - door_idx: (32,)
   > Pickup (Missile Tank)
-      All of the following:
-          Can Use Any Bombs
-          Power Grip or Mid-Air Morphs (Intermediate)
+      Can Break Single Bomb Blocks and Tunnel Climb
   > Door to Mero Corridor
       Trivial
 
@@ -616,6 +591,15 @@ Extra - room_id: [18]
   * Layers: default
   * Missile Door to Waver Cavern/Door to Guide Statue (Ice Beam)
   * Extra - door_idx: (40,)
+  > Hint - Ice Beam Statue
+      Trivial
+
+> Hint - Ice Beam Statue; Heals? True
+  * Layers: default
+  * Hint
+  * Extra - hint_statue: ICE_BEAM
+  > Door to Waver Cavern
+      Trivial
 
 ----------------
 Alternate Charge Beast Arena
@@ -714,7 +698,7 @@ Extra - room_id: [21]
   > Tunnel to Guide Statue (Wave Beam) (Lower)
       Morph Ball and Varia Suit
   > Tunnel to Guide Statue (Wave Beam) (Upper)
-      Morph Ball and Power Grip
+      Can Use Springball or Tunnel Climb
 
 > Tunnel to Guide Statue (Wave Beam) (Lower); Heals? False
   * Layers: default
@@ -746,7 +730,7 @@ Extra - room_id: [22]
   * Blue Door to Four Pipes Corridor/Door to Varia Chamber Ascent
   * Extra - door_idx: (49,)
   > Door to Varia Chamber Access
-      Ice Beam Abuse (Intermediate) or Have Any Jump Upgrade
+      Climb High Ledges
   > Door to Save Station (North)
       Trivial
 
@@ -766,24 +750,57 @@ Extra - room_id: [23]
   * Pickup 8; Category? Minor
   * Extra - blockx: 18
   * Extra - blocky: 16
-  > Door to Varia Chamber Ascent
-      Can Bounce in Ball
+  > Room Center
+      Morph Ball and Varia Suit
 
 > Door to Varia Chamber; Heals? False
   * Layers: default
   * Missile Door to Varia Chamber/Door to Varia Chamber Access
   * Extra - door_idx: (51,)
-  > Door to Varia Chamber Ascent
-      Can Bounce in Ball
+  > Event - Varia Access Left Tangle Fruit
+      After Brinstar Varia Tanglefruit Destroyed
 
 > Door to Varia Chamber Ascent; Heals? False
   * Layers: default
   * Blue Door to Varia Chamber Ascent/Door to Varia Chamber Access
   * Extra - door_idx: (52,)
+  > Room Center
+      All of the following:
+          Can Bounce in Ball
+          Any of the following:
+              # Go through the tunnel and past the crumble blocks
+              Can Use Springball and Tunnel Climb
+              All of the following:
+                  # Go through the acid
+                  Varia Suit
+                  Any of the following:
+                      Power Grip or Can Use Springball
+                      Gravity Suit and Climb Ledges
+
+> Room Center; Heals? False
+  * Layers: default
   > Pickup (Energy Tank)
-      Can Bounce in Ball
+      All of the following:
+          Morph Ball and Varia Suit
+          Wave Beam or Can Use Any Bombs
+  > Door to Varia Chamber Ascent
+      Varia Suit and Can Bounce in Ball
+  > Event - Varia Access Left Tangle Fruit
+      All of the following:
+          Can Use Bombs and Tunnel Climb
+          Any of the following:
+              # Climb into tunnel above acid
+              Climb High Ledges
+              # Go through acid
+              Varia Suit and Climb Ledges
+
+> Event - Varia Access Left Tangle Fruit; Heals? False
+  * Layers: default
+  * Event Brinstar Varia Tanglefruit Destroyed
   > Door to Varia Chamber
-      Can Bounce in Ball and Can Use Any Bombs
+      Trivial
+  > Room Center
+      Varia Suit
 
 ----------------
 Bomb Chamber Access
@@ -794,7 +811,7 @@ Extra - room_id: [24]
   * Missile Door to Bomb Chamber/Door to Bomb Chamber Access
   * Extra - door_idx: (53,)
   > Door to Short Shaft
-      Can Use Any Bombs
+      Morph Ball
 
 > Door to Short Shaft; Heals? False
   * Layers: default
@@ -824,7 +841,7 @@ Extra - room_id: [25]
   > Pickup (Bombs)
       Trivial
 
-> Pickup (Bombs); Heals? False
+> Pickup (Bombs); Heals? True
   * Layers: default
   * Pickup 87; Category? Major
   * Extra - source: BOMBS
@@ -860,7 +877,7 @@ Extra - room_id: [27]
   > Pickup (Varia Suit)
       Trivial
 
-> Pickup (Varia Suit); Heals? False
+> Pickup (Varia Suit); Heals? True
   * Layers: default
   * Pickup 56; Category? Major
   * Extra - source: VARIA_SUIT
@@ -876,13 +893,7 @@ Extra - room_id: [28]
   * Blue Door to Varia Chamber Ascent/Door to Four Pipes Corridor
   * Extra - door_idx: (58,)
   > Door to Gold-Tinted Hub
-      All of the following:
-          Can Use Any Bombs
-          Any of the following:
-              After Brinstar Acid Tanglefruit Destroyed
-              Power Grip and Super Missiles
-  > Event - Tangle Fruit
-      Varia Suit
+      Can Use Any Bombs
 
 > Door to Gold-Tinted Hub; Heals? False
   * Layers: default
@@ -890,12 +901,6 @@ Extra - room_id: [28]
   * Extra - door_idx: (60,)
   > Door to Varia Chamber Ascent
       Can Bounce in Ball and Can Use Any Bombs
-
-> Event - Tangle Fruit; Heals? False
-  * Layers: default
-  * Event Brinstar Acid Tanglefruit Destroyed
-  > Door to Varia Chamber Ascent
-      Trivial
 
 ----------------
 Sloped Alcove
@@ -931,22 +936,23 @@ Extra - room_id: [30]
   * Layers: default
   * Blue Door to Tourian Gate Access/Door to Guide Statue (Bombs)
   * Extra - door_idx: (96,)
-  > Door to Blue-Tinted Hub
-      After Brinstar Corridor 5 Chozo Statue
-  > Event - Chozo Statue
-      Morph Ball
+  > Hint - Bomb Statue
+      Trivial
 
 > Door to Blue-Tinted Hub; Heals? False
   * Layers: default
   * Blue Door to Blue-Tinted Hub/Door to Guide Statue (Bombs)
   * Extra - door_idx: (97,)
-  > Door to Tourian Gate Access
-      After Brinstar Corridor 5 Chozo Statue
+  > Hint - Bomb Statue
+      Trivial
 
-> Event - Chozo Statue; Heals? False
+> Hint - Bomb Statue; Heals? True
   * Layers: default
-  * Event Brinstar Corridor 5 Chozo Statue
+  * Hint
+  * Extra - hint_name: BOMBS
   > Door to Tourian Gate Access
+      Trivial
+  > Door to Blue-Tinted Hub
       Trivial
 
 ----------------
@@ -996,8 +1002,10 @@ Extra - room_id: [33]
   > Save Station
       Trivial
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
+  * Extra - X: 8
+  * Extra - Y: 9
   > Door to Short Shaft
       Trivial
 
@@ -1012,8 +1020,10 @@ Extra - room_id: [34]
   > Save Station
       Trivial
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
+  * Extra - X: 10
+  * Extra - Y: 9
   > Door to Gold-Tinted Hub
       Trivial
 
@@ -1046,8 +1056,10 @@ Extra - room_id: [36]
   > Save Station
       Trivial
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
+  * Extra - X: 10
+  * Extra - Y: 9
   > Door to Blue-Tinted Hub
       Trivial
 
@@ -1059,6 +1071,15 @@ Extra - room_id: [37]
   * Layers: default
   * Missile Door to Elevator to Kraid/Door to Guide Statue (Hi-Jump)
   * Extra - door_idx: (78,)
+  > Hint - Hi-Jump Statue
+      Trivial
+
+> Hint - Hi-Jump Statue; Heals? True
+  * Layers: default
+  * Hint
+  * Extra - hint_name: HI_JUMP
+  > Door to Elevator to Kraid
+      Trivial
 
 ----------------
 Guide Statue (Wave Beam)
@@ -1068,32 +1089,33 @@ Extra - room_id: [38]
   * Layers: default
   * Blue Door to Eastern Hub/Door to Guide Statue (Wave Beam)
   * Extra - door_idx: (47,)
-  > Tunnel to Acid Vine Puzzle (Lower)
-      Morph Ball and Varia Suit
-  > Tunnel to Acid Vine Puzzle (Upper)
-      After Brinstar Underhang Corridor Chozo Statue and Can Bounce in Ball
-  > Event - Chozo Statue
-      Morph Ball
+  > Hint - Wave Beam Statue
+      Trivial
 
 > Tunnel to Acid Vine Puzzle (Lower); Heals? False
   * Layers: default
   * Tunnel to Acid Vine Puzzle/Tunnel to Guide Statue (Wave Beam) (Lower)
   * Extra - door_idx: (65,)
-  > Door to Eastern Hub
-      Morph Ball or Varia Suit
+  > Hint - Wave Beam Statue
+      Varia Suit
 
 > Tunnel to Acid Vine Puzzle (Upper); Heals? False
   * Layers: default
   * Tunnel to Acid Vine Puzzle/Tunnel to Guide Statue (Wave Beam) (Upper)
   * Extra - door_idx: (87,)
-  > Door to Eastern Hub
-      After Brinstar Underhang Corridor Chozo Statue
+  > Hint - Wave Beam Statue
+      Trivial
 
-> Event - Chozo Statue; Heals? False
+> Hint - Wave Beam Statue; Heals? True
   * Layers: default
-  * Event Brinstar Underhang Corridor Chozo Statue
+  * Hint
+  * Extra - hint_name: WAVE_BEAM
   > Door to Eastern Hub
       Trivial
+  > Tunnel to Acid Vine Puzzle (Lower)
+      Morph Ball and Varia Suit
+  > Tunnel to Acid Vine Puzzle (Upper)
+      Can Bounce in Ball
 
 ----------------
 Save Station (North)
@@ -1113,8 +1135,10 @@ Extra - room_id: [39]
   > Save Station
       Trivial
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
+  * Extra - X: 9
+  * Extra - Y: 9
   > Door to Acid Vine Puzzle
       Trivial
   > Door to Varia Chamber Ascent
@@ -1137,22 +1161,16 @@ Extra - room_id: [40]
   * Tunnel to Gold-Tinted Hub/Tunnel to Speedbooster Passage
   * Extra - door_idx: (89,)
   > Pickup (Missile Tank)
-      Trivial
+      Ice Beam or Climb Ledges
   > Tunnel to Blue-Tinted Hub
-      All of the following:
-          Morph Ball
-          Speed Booster or Can Use Any Bombs
+      Can Ballspark or Can Use Any Bombs
 
 > Tunnel to Blue-Tinted Hub; Heals? False
   * Layers: default
   * Tunnel to Blue-Tinted Hub/Tunnel to Speedbooster Passage
   * Extra - door_idx: (90,)
-  > Pickup (Missile Tank)
-      Speed Booster and Shinespark (Beginner)
   > Tunnel to Gold-Tinted Hub
-      All of the following:
-          Morph Ball
-          Speed Booster or Can Use Any Bombs
+      Can Bounce in Ball and Can Use Any Bombs
 
 ----------------
 Hidden Tank Shaft
@@ -1172,14 +1190,15 @@ Extra - room_id: [41]
   * Extra - blockx: 5
   * Extra - blocky: 25
   > Tunnel to Blue-Tinted Hub (Lower)
-      Morph Ball
+      Trivial
 
 > Tunnel to Blue-Tinted Hub (Lower); Heals? False
   * Layers: default
   * Tunnel to Blue-Tinted Hub/Tunnel to Hidden Tank Shaft (Lower)
   * Extra - door_idx: (93,)
   > Pickup (Super Missile Tank)
-      Morph Ball and Speed Booster
+      # TODO: Add video, likely needs cross room shinespark requirements
+      Can Ballspark
 
 > Tunnel to Blue-Tinted Hub (Upper); Heals? False
   * Layers: default
