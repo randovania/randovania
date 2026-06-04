@@ -96,10 +96,10 @@ class DolphinExecutor(MemoryOperationExecutor):
         try:
             result = None
             if MemoryOperation.is_read_op(op):
-                result = self.dolphin.read_bytes(address, op.read_byte_count)
+                result = self.dolphin.read_bytes(address, op.count)
             elif MemoryOperation.is_write_op(op):
-                self.dolphin.write_bytes(address, op.write_bytes)
-                self.logger.debug(f"Wrote {op.write_bytes.hex()} to {address:x}")
+                self.dolphin.write_bytes(address, op.data)
+                self.logger.debug(f"Wrote {op.data.hex()} to {address:x}")
 
         except RuntimeError as e:
             raise MemoryOperationException(f"Lost connection do Dolphin: {e}")

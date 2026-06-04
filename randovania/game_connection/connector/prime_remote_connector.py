@@ -95,9 +95,7 @@ class PrimeRemoteConnector(RemoteConnector):
         Returns True if the accessible memory of the game matches the version of this connector.
         Also updates our internal uuid if it matches.
         """
-        operation = MemoryReadOperation(
-            self.version.build_string_address, read_byte_count=len(self.version.build_string)
-        )
+        operation = MemoryReadOperation(self.version.build_string_address, count=len(self.version.build_string))
         build_string = await self.executor.perform_single_memory_operation(operation)
 
         assert build_string is not None
@@ -293,8 +291,8 @@ class PrimeRemoteConnector(RemoteConnector):
         )
         memory_operations.extend(
             [
-                MemoryWriteOperation(patch_address, write_bytes=patch_bytes),
-                MemoryWriteOperation(self.version.cstate_manager_global + self._pending_op_offset, write_bytes=b"\x01"),
+                MemoryWriteOperation(patch_address, data=patch_bytes),
+                MemoryWriteOperation(self.version.cstate_manager_global + self._pending_op_offset, data=b"\x01"),
             ]
         )
         self.logger.debug(f"Performing {len(memory_operations)} ops with {len(patches)} patches")
@@ -363,9 +361,7 @@ class PrimeRemoteConnector(RemoteConnector):
             num_to_align = (len(encoded_message) | 3) - len(encoded_message) + 1
             encoded_message += b"\x00" * num_to_align
 
-        return MemoryWriteOperation(
-            self.version.string_display.message_receiver_string_ref, write_bytes=encoded_message
-        )
+        return MemoryWriteOperation(self.version.string_display.message_receiver_string_ref, data=encoded_message)
 
     def _dol_patch_for_hud_message(self, message: str) -> DolRemotePatch:
         return DolRemotePatch(

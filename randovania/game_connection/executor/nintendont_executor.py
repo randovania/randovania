@@ -65,7 +65,7 @@ class RequestBatch:
             self.addresses.append(op.address)
 
         if MemoryOperation.is_read_op(op):
-            self.num_read_bytes += op.read_byte_count
+            self.num_read_bytes += op.count
 
         op_byte = self.addresses.index(op.address)
         if MemoryOperation.is_read_op(op):
@@ -83,7 +83,7 @@ class RequestBatch:
         if op.offset is not None:
             self.data += struct.pack(">h", op.offset)
         if MemoryOperation.is_write_op(op):
-            self.data += op.write_bytes
+            self.data += op.data
 
         self.ops.append(op)
 
@@ -189,11 +189,11 @@ class NintendontExecutor(MemoryOperationExecutor):
             if op.byte_count == 0:
                 continue
 
-            if MemoryOperation.is_write_op(op) and len(op.write_bytes) > max_write_size:
+            if MemoryOperation.is_write_op(op) and len(op.data) > max_write_size:
                 self.logger.debug(
-                    f"Operation {i} had {len(op.write_bytes)} bytes, above the limit of {max_write_size}. Splitting."
+                    f"Operation {i} had {len(op.data)} bytes, above the limit of {max_write_size}. Splitting."
                 )
-                for offset in range(0, len(op.write_bytes), max_write_size):
+                for offset in range(0, len(op.data), max_write_size):
                     if op.offset is None:
                         address = op.address + offset
                         op_offset = None
@@ -204,7 +204,7 @@ class NintendontExecutor(MemoryOperationExecutor):
                         MemoryWriteOperation(
                             address=address,
                             offset=op_offset,
-                            write_bytes=op.write_bytes[offset : min(offset + max_write_size, len(op.write_bytes))],
+                            data=op.data[offset : min(offset + max_write_size, len(op.data))],
                         )
                     )
             else:
@@ -282,13 +282,13 @@ class NintendontExecutor(MemoryOperationExecutor):
                 if _was_invalid_address(response, i):
                     raise MemoryOperationException("Operation tried to read an invalid address")
 
-                split = response[read_index : read_index + op.read_byte_count]
-                if len(split) != op.read_byte_count:
-                    raise MemoryOperationException(f"Received {len(split)} bytes, expected {op.read_byte_count}")
+                split = response[read_index : read_index + op.count]
+                if len(split) != op.count:
+                    raise MemoryOperationException(f"Received {len(split)} bytes, expected {op.count}")
                 else:
                     assert op not in result
                     result[op] = split
 
-                read_index += op.read_byte_count
+                read_index += op.count
 
         return result

@@ -48,42 +48,42 @@ class MemoryOperation:
 class MemoryReadOperation(MemoryOperation):
     """Represents an operation to read from the GameCube's RAM. Note, that reading has a limit of 255 bytes."""
 
-    read_byte_count: int = 0
+    count: int = 0
     """How many bytes to read."""
 
     def __post_init__(self):
-        if not (0 <= self.read_byte_count <= 255):
+        if not (0 <= self.count <= 255):
             raise ValueError("A read operation can only be between 0 and 255, inclusive.")
 
     @property
     def byte_count(self) -> int:
-        return self.read_byte_count
+        return self.count
 
     def __str__(self):
         address_text = super().__str__()
 
-        return f"At {address_text}, read {self.read_byte_count} bytes"
+        return f"At {address_text}, read {self.count} bytes"
 
 
 @dataclasses.dataclass(frozen=True)
 class MemoryWriteOperation(MemoryOperation):
     """Represents an operation to write to the GameCube's RAM. Note, that writing has a limit of 255 bytes."""
 
-    write_bytes: bytes = 0
+    data: bytes = 0
     "What bytes to write."
 
     def __post_init__(self):
-        if not (0 <= len(self.write_bytes) <= 255):
+        if not (0 <= len(self.data) <= 255):
             raise ValueError("A write operation's length can only be between 0 and 255, inclusive.")
 
     @property
     def byte_count(self) -> int:
-        return len(self.write_bytes)
+        return len(self.data)
 
     def __str__(self):
         address_text = super().__str__()
 
-        return f"At {address_text}, write {self.write_bytes.hex()}"
+        return f"At {address_text}, write {self.data.hex()}"
 
 
 class MemoryOperationExecutor:

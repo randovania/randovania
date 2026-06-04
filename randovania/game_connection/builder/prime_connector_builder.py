@@ -60,7 +60,7 @@ class PrimeConnectorBuilder(ConnectorBuilder):
         )
         read_first_ops = [
             MemoryReadOperation(
-                connectors.version.build_string_address, read_byte_count=min(len(connectors.version.build_string), 4)
+                connectors.version.build_string_address, count=min(len(connectors.version.build_string), 4)
             )
             for connectors in all_connectors
         ]
