@@ -13,14 +13,14 @@ class EchoesOPRPerGameOptions(PerGameOptions):
     """ """
 
     input_path: Path | None = None
-    output_path: Path | None = None
+    output_directory: Path | None = None
 
     @property
     def as_json(self) -> dict:
         return {
             **super().as_json,
             "input_path": str(self.input_path) if self.input_path is not None else None,
-            "output_path": str(self.output_path) if self.output_path is not None else None,
+            "output_directory": str(self.output_directory) if self.output_directory is not None else None,
         }
 
     @classmethod
@@ -30,7 +30,7 @@ class EchoesOPRPerGameOptions(PerGameOptions):
         return cls(
             cosmetic_patches=cosmetic_patches,
             input_path=decode_if_not_none(value["input_path"], Path),
-            output_path=decode_if_not_none(value["output_path"], Path),
+            output_directory=decode_if_not_none(value["output_directory"], Path),
         )
 
     @classmethod

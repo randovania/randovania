@@ -133,7 +133,7 @@ def test_create_hints_nothing(echoes_game_patches, players_config):
     exporter = HintExporter(namer, rng, ECHOES_JOKE_HINTS, game_view)
 
     # Run
-    result = hints.create_patches_hints({0: patches}, players_config, exporter)
+    result = hints.create_patches_hints(patches, exporter)
 
     # Assert
     message = (
@@ -154,7 +154,7 @@ def test_create_hints_item_joke(echoes_game_patches, players_config):
     exporter = HintExporter(namer, rng, ECHOES_JOKE_HINTS, game_view)
 
     # Run
-    result = hints.create_patches_hints({0: patches}, players_config, exporter)
+    result = hints.create_patches_hints(patches, exporter)
 
     # Assert
     joke = "Your current Chozo Battle Suit version is SA1-4468-VM6-P."
@@ -275,10 +275,13 @@ def test_create_hints_item_dark_temple_keys_cross_game(
     )
 
 
-def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_config, echoes_hint_exporter):
+def test_create_message_for_hint_dark_temple_no_keys(
+    empty_patches, players_config, echoes_hint_exporter, echoes_game_description
+):
     # Setup
     hint = RedTempleHint(dark_temple=HintDarkTemple.TORVUS_BOG)
-    echoes_hint_exporter.namer.all_patches = {0: empty_patches}
+    patches = dataclasses.replace(empty_patches, game=echoes_game_description)
+    echoes_hint_exporter.namer.all_patches = {0: patches}
 
     # Run
     result = echoes_hint_exporter.create_message_for_hint(hint, True)
@@ -333,7 +336,7 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
     exporter = HintExporter(namer, rng, ECHOES_JOKE_HINTS, game_view)
 
     # Run
-    result = hints.create_patches_hints({0: patches}, players_config, exporter)
+    result = hints.create_patches_hints(patches, exporter)
 
     # Assert
     message = f"{determiner} {item_name} can be found in {location[1]}."
@@ -390,7 +393,7 @@ def test_create_hints_guardians(
     exporter = HintExporter(namer, rng, ECHOES_JOKE_HINTS, game_view)
 
     # Run
-    result = hints.create_patches_hints({0: patches}, players_config, exporter)
+    result = hints.create_patches_hints(patches, exporter)
 
     # Assert
     message = f"{guardian} is guarding {item[1]}."
@@ -429,7 +432,7 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
     exporter = HintExporter(namer, rng, ECHOES_JOKE_HINTS, game_view)
 
     # Run
-    result = hints.create_patches_hints({0: patches}, players_config, exporter)
+    result = hints.create_patches_hints(patches, exporter)
 
     # Assert
     message = f"U-Mos's reward for returning the Sanctuary energy is {item[1]}."

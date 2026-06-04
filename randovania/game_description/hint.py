@@ -23,6 +23,29 @@ class HintDarkTemple(Enum):
     TORVUS_BOG = "torvus-bog"
     SANCTUARY_FORTRESS = "sanctuary-fortress"
 
+    temple_name: str
+    item_names: tuple[str, str, str]
+
+
+enum_lib.add_per_enum_field(
+    HintDarkTemple,
+    "temple_name",
+    {
+        HintDarkTemple.AGON_WASTES: "Dark Agon Temple",
+        HintDarkTemple.TORVUS_BOG: "Dark Torvus Temple",
+        HintDarkTemple.SANCTUARY_FORTRESS: "Hive Temple",
+    },
+)
+enum_lib.add_per_enum_field(
+    HintDarkTemple,
+    "item_names",
+    {
+        HintDarkTemple.AGON_WASTES: ("AgonKey1", "AgonKey2", "AgonKey3"),
+        HintDarkTemple.TORVUS_BOG: ("TorvusKey1", "TorvusKey2", "TorvusKey3"),
+        HintDarkTemple.SANCTUARY_FORTRESS: ("HiveKey1", "HiveKey2", "HiveKey3"),
+    },
+)
+
 
 class HintItemPrecision(Enum):
     # Precision hasn't been assigned yet

@@ -1255,8 +1255,18 @@ def _migrate_v115(preset: dict, game: RandovaniaGame, *, from_layout_description
     if game == RandovaniaGame.METROID_PRIME_ECHOES:
         preset["configuration"].pop("portal_rando")
 
-        
+
 def _migrate_v116(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    if game in {RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_ECHOES_OPR}:
+        for beam in preset["configuration"]["beam_configuration"].values():
+            beam.pop("item_index")
+            if beam["ammo_a"] < 0:
+                beam["ammo_a"] = None
+            if beam["ammo_b"] < 0:
+                beam["ammo_b"] = None
+
+                
+def _migrate_v117(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
   if game == RandovaniaGame.FUSION:
         rename = {
             "Sector 6 (NOC)/Twin Caverns East/Door to Twin Cavern Save Room": "Sector 6 (NOC)/Twin Caverns East/Door to Twin Caverns Save Room"
@@ -1390,7 +1400,8 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v113,  # fusion: add environmental damage
     _migrate_v114,  # prime/echoes: remove `allow_unvisited_room_names` in teleporter config
     _migrate_v115,  # echoes: remove portal rando
-    _migrate_v116,  # fusion: rename twin cavern save room to twin caverns save room
+    _migrate_v116,  # echoes: update beam configuration to new format
+    _migrate_v117,  # fusion: rename twin cavern save room to twin caverns save room
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

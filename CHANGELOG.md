@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Typo in the description for the Knowledge trick.
 - Fixed: Typo in the name of Sector 6's Twin Caverns Save Room (was Twin Cavern Save Room).
 - Waiting changes to be added.
+- Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
 
 ## [10.8.0] - 2026-06-01
 
