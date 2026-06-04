@@ -79,15 +79,13 @@ class DolphinExecutor(MemoryOperationExecutor):
         return self.dolphin.is_hooked()
 
     # Game Backend Stuff
-    def _memory_operation(self, op: MemoryOperation, pointers: dict[int, int | None]) -> bytes | None:
+    def _memory_operation(self, op: MemoryOperation, pointers: dict[int, int]) -> bytes | None:
         address = op.address
         if op.offset is not None:
             if address not in pointers:
                 raise MemoryOperationException(f"Invalid op: {address:x} is not in pointers")
 
             new_address = pointers[address]
-            if new_address is None:
-                return None
             address = new_address + op.offset
 
         _validate_range(address, op.byte_count)
@@ -121,13 +119,9 @@ class DolphinExecutor(MemoryOperationExecutor):
 
             try:
                 pointers[pointer] = self.dolphin.follow_pointers(pointer, [0])
-            except RuntimeError:
-                pointers[pointer] = None
+            except RuntimeError as e:
                 self.logger.debug(f"Failed to read a valid pointer from {pointer:x}")
-                self._test_still_hooked()
-
-            if not self.dolphin.is_hooked():
-                raise MemoryOperationException("Lost connection do Dolphin")
+                raise MemoryOperationException("Operation tried to read an invalid address") from e
 
         result = {}
         for op in ops:
