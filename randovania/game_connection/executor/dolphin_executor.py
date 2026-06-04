@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import platform
+from collections.abc import Sequence
 
 import dolphin_memory_engine  # type: ignore[import-untyped]
 import pid
@@ -106,7 +107,7 @@ class DolphinExecutor(MemoryOperationExecutor):
 
         return result
 
-    async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryReadOperation, bytes]:
+    async def perform_memory_operations(self, ops: Sequence[MemoryOperation]) -> dict[MemoryReadOperation, bytes]:
         pointers_to_read = set()
         for op in ops:
             if op.offset is not None:
@@ -126,10 +127,13 @@ class DolphinExecutor(MemoryOperationExecutor):
         result = {}
         for op in ops:
             op_result = self._memory_operation(op, pointers)
-            if not MemoryOperation.is_read_op(op) and op_result:
-                raise MemoryOperationException(
-                    f"Got a result back for the operation {op} despite it not being a reading operation."
-                )
-            if op_result is not None:
-                result[op] = op_result
+            if not MemoryOperation.is_read_op(op):
+                if op_result:
+                    raise MemoryOperationException(
+                        f"Got a result back for the operation {op} despite it not being a reading operation."
+                    )
+                continue
+            if op_result is None:
+                raise MemoryOperationException(f"Got no read result back for the operation {op}.")
+            result[op] = op_result
         return result

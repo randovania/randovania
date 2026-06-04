@@ -4,6 +4,7 @@ import asyncio
 import dataclasses
 import logging
 import struct
+from collections.abc import Sequence
 from typing import TypeGuard
 
 from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
@@ -11,6 +12,7 @@ from randovania.game_connection.executor.memory_operation import (
     MemoryOperation,
     MemoryOperationException,
     MemoryOperationExecutor,
+    MemoryReadOperation,
     MemoryWriteOperation,
 )
 
@@ -172,7 +174,7 @@ class NintendontExecutor(MemoryOperationExecutor):
     def is_connected(self) -> bool:
         return self._is_socket_connected(self._socket)
 
-    def _prepare_requests_for(self, ops: list[MemoryOperation]) -> list[RequestBatch]:
+    def _prepare_requests_for(self, ops: Sequence[MemoryOperation]) -> list[RequestBatch]:
         assert self._is_socket_connected(self._socket)
 
         requests: list[RequestBatch] = []
@@ -183,7 +185,7 @@ class NintendontExecutor(MemoryOperationExecutor):
             requests.append(current_batch)
             current_batch = RequestBatch()
 
-        processes_ops = []
+        processes_ops: list[MemoryOperation] = []
         max_write_size = self._socket.max_input - 20
         for i, op in enumerate(ops):
             if op.byte_count == 0:
@@ -254,7 +256,7 @@ class NintendontExecutor(MemoryOperationExecutor):
 
         return all_responses
 
-    async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryOperation, bytes]:
+    async def perform_memory_operations(self, ops: Sequence[MemoryOperation]) -> dict[MemoryReadOperation, bytes]:
         if self._socket is None:
             raise MemoryOperationException("Not connected")
 

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import logging
+from collections.abc import Sequence
 from typing import TypeGuard
 
 
@@ -51,7 +52,7 @@ class MemoryReadOperation(MemoryOperation):
     count: int = 0
     """How many bytes to read."""
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not (0 <= self.count <= 255):
             raise ValueError("A read operation can only be between 0 and 255, inclusive.")
 
@@ -59,7 +60,7 @@ class MemoryReadOperation(MemoryOperation):
     def byte_count(self) -> int:
         return self.count
 
-    def __str__(self):
+    def __str__(self) -> str:
         address_text = super().__str__()
 
         return f"At {address_text}, read {self.count} bytes"
@@ -69,10 +70,10 @@ class MemoryReadOperation(MemoryOperation):
 class MemoryWriteOperation(MemoryOperation):
     """Represents an operation to write to the GameCube's RAM. Note, that writing has a limit of 255 bytes."""
 
-    data: bytes = 0
+    data: bytes = b""
     "What bytes to write."
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not (0 <= len(self.data) <= 255):
             raise ValueError("A write operation's length can only be between 0 and 255, inclusive.")
 
@@ -80,7 +81,7 @@ class MemoryWriteOperation(MemoryOperation):
     def byte_count(self) -> int:
         return len(self.data)
 
-    def __str__(self):
+    def __str__(self) -> str:
         address_text = super().__str__()
 
         return f"At {address_text}, write {self.data.hex()}"
@@ -104,7 +105,7 @@ class MemoryOperationExecutor:
         """Returns whether there is currently an active connection going on."""
         raise NotImplementedError
 
-    async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryReadOperation, bytes]:
+    async def perform_memory_operations(self, ops: Sequence[MemoryOperation]) -> dict[MemoryReadOperation, bytes]:
         """Execute given memory operations.
 
         Args:
