@@ -12,7 +12,10 @@ from retro_data_structures.game_check import Game as RDSGame
 
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperationException,
+    MemoryWriteOperation,
+)
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -81,7 +84,7 @@ async def test_write_string_to_game_buffer(
     result = connector._write_string_to_game_buffer(message_original)
 
     # Assert
-    assert result == MemoryOperation(version.string_display.message_receiver_string_ref, write_bytes=message_encoded)
+    assert result == MemoryWriteOperation(version.string_display.message_receiver_string_ref, data=message_encoded)
 
 
 async def test_get_inventory_valid(connector: EchoesRemoteConnector):
@@ -330,7 +333,7 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, version:
         return_value=(patch_address, patch_bytes),
     )
 
-    memory_op_a = MemoryOperation(1234, write_bytes=b"1234")
+    memory_op_a = MemoryWriteOperation(1234, data=b"1234")
     instructions = [BaseInstruction(), BaseInstruction()]
     patches = [
         DolRemotePatch([memory_op_a], instructions[:1]),
@@ -338,8 +341,8 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, version:
     ]
     memory_operations = [
         memory_op_a,
-        MemoryOperation(patch_address, write_bytes=patch_bytes),
-        MemoryOperation(version.cstate_manager_global + 0x2, write_bytes=b"\x01"),
+        MemoryWriteOperation(patch_address, data=patch_bytes),
+        MemoryWriteOperation(version.cstate_manager_global + 0x2, data=b"\x01"),
     ]
 
     # Run
