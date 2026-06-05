@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import typing
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from typing import TYPE_CHECKING, TextIO
 
 from randovania.game_description.data_writer import REGION_NAME_TO_FILE_NAME_RE
@@ -20,7 +21,6 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.base.trick_level import LayoutTrickLevel
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
     from pathlib import Path
 
     from randovania.game_description.db.area import Area
@@ -167,10 +167,57 @@ def pretty_print_hint_features(features: Iterable[HintFeature]) -> str:
     return f"Hint Features - {', '.join([feature.long_name for feature in sorted(features)])}"
 
 
+def _recurse_print_container(
+    prefix: str, key_name: str, value: Mapping, print_function: typing.Callable[[str], None], seen: set[int]
+) -> None:
+    was_seen = id(value) in seen
+    seen.add(id(value))
+
+    if isinstance(value, str):
+        print_function(f"{prefix}{key_name}{value}")
+
+    elif isinstance(value, Mapping):
+        if was_seen:
+            print_function(f"{prefix}{key_name}<recursion>")
+
+        elif value:
+            if key_name == "- ":
+                # Nesting a dict into a list.
+                first = True
+                for key, item in value.items():
+                    if first:
+                        new_prefix = prefix + "- "
+                        first = False
+                    else:
+                        new_prefix = prefix + "  "
+                    _recurse_print_container(new_prefix, f"{key}: ", item, print_function, seen)
+            else:
+                print_function(f"{prefix}{key_name.rstrip()}")
+                for key, item in value.items():
+                    _recurse_print_container("  " + prefix, f"{key}: ", item, print_function, seen)
+        else:
+            print_function(f"{prefix}{key_name}<empty>")
+
+    elif isinstance(value, Sequence):
+        if was_seen:
+            print_function(f"{prefix}{key_name}<recursion>")
+
+        elif value:
+            print_function(f"{prefix}{key_name.rstrip()}")
+            for item in value:
+                _recurse_print_container("  " + prefix, "- ", item, print_function, seen)
+        else:
+            print_function(f"{prefix}{key_name}<empty>")
+    else:
+        print_function(f"{prefix}{key_name}{value}")
+
+
 def pretty_print_area(game: GameDatabaseView, area: Area, print_function: typing.Callable[[str], None] = print) -> None:
     print_function(area.name)
-    for extra_name, extra_field in area.extra.items():
-        print_function(f"Extra - {extra_name}: {extra_field}")
+    if area.extra:
+        seen = set()
+        for extra_key, extra_value in area.extra.items():
+            _recurse_print_container("", f"Extra - {extra_key}: ", extra_value, print_function, seen)
 
     if area.hint_features:
         print_function(pretty_print_hint_features(area.hint_features))
