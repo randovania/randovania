@@ -177,7 +177,11 @@ def pretty_print_hint_features(features: Iterable[HintFeature]) -> str:
     return f"Hint Features - {', '.join([feature.long_name for feature in sorted(features)])}"
 
 
-def _pretty_print_extra(prefix: str, extra: Mapping[str, typing.Any], print_function: typing.Callable[[str], None]):
+def _pretty_print_extra(
+    prefix: str,
+    extra: Mapping[str, typing.Any],
+    print_function: typing.Callable[[str], None],
+) -> None:
     for extra_name, extra_field in extra.items():
         extra_field_decoded = frozen_lib.unwrap(extra_field)
         split = " "
