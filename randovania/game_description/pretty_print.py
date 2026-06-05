@@ -175,6 +175,8 @@ def pretty_print_area(game: GameDatabaseView, area: Area, print_function: typing
         extra_field_decoded = frozen_lib.unwrap(extra_field)
         if isinstance(extra_field_decoded, dict | list):
             extra_field_decoded = pprint.pformat(extra_field_decoded, width=120, sort_dicts=False)
+            if "\n" in extra_field_decoded:
+                extra_field_decoded = "\n" + extra_field_decoded
         print_function(f"Extra - {extra_name}: {extra_field_decoded}")
 
     if area.hint_features:
