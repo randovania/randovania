@@ -1151,6 +1151,20 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Hint Specific Location": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Hint Specific Pickup": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1223,6 +1237,72 @@
                             "items": []
                         }
                     },
+                    "connections": {
+                        "Door to Explosive Depot": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint Specific Location": {
+                    "node_type": "hint",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 91.12,
+                        "y": 45.82,
+                        "z": 0.0
+                    },
+                    "description": "This is a SpecificLocationHintNode. It provides a hint that always tells you\nabout the pickup with index 0.",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "kind": "specific-location",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "target_index": 0,
+                    "connections": {
+                        "Door to Explosive Depot": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint Specific Pickup": {
+                    "node_type": "hint",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 75.88,
+                        "y": 204.18,
+                        "z": 0.0
+                    },
+                    "description": "This is a SpecificPickupHintNode. It doesn't actually place any hints on its\nown - that gets handled later, by the game exporter. This node exists so that\nthe generator can have an increased weight for actions that unlock it, like\nother HintNodes do.",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "kind": "specific-pickup",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "specific_pickup_hint_id": "victory_key",
                     "connections": {
                         "Door to Explosive Depot": {
                             "type": "and",

@@ -58,7 +58,12 @@ def _hints() -> randovania.game.hints.GameHints:
 
     return randovania.game.hints.GameHints(
         hint_distributor=generator.BlankHintDistributor(),
-        specific_pickup_hints={},
+        specific_pickup_hints={
+            "victory_key": randovania.game.hints.SpecificHintDetails(
+                long_name="Victory Key",
+                description="This controls how precise the hint for the Victory Key is.",
+            )
+        },
     )
 
 
