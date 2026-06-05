@@ -22,7 +22,7 @@ from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib import frozen_lib
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
+    from collections.abc import Iterable, Iterator, Mapping
     from pathlib import Path
 
     from randovania.game_description.db.area import Area
@@ -169,16 +169,21 @@ def pretty_print_hint_features(features: Iterable[HintFeature]) -> str:
     return f"Hint Features - {', '.join([feature.long_name for feature in sorted(features)])}"
 
 
-def pretty_print_area(game: GameDatabaseView, area: Area, print_function: typing.Callable[[str], None] = print) -> None:
-    print_function(area.name)
-    for extra_name, extra_field in area.extra.items():
+def _pretty_print_extra(prefix: str, extra: Mapping[str, typing.Any], print_function: typing.Callable[[str], None]):
+    for extra_name, extra_field in extra.items():
         extra_field_decoded = frozen_lib.unwrap(extra_field)
         split = " "
         if isinstance(extra_field_decoded, dict | list):
             extra_field_decoded = pprint.pformat(extra_field_decoded, width=120, sort_dicts=False)
             if "\n" in extra_field_decoded:
                 split = "\n"
-        print_function(f"Extra - {extra_name}:{split}{extra_field_decoded}")
+
+        print_function(f"{prefix}Extra - {extra_name}:{split}{extra_field_decoded}")
+
+
+def pretty_print_area(game: GameDatabaseView, area: Area, print_function: typing.Callable[[str], None] = print) -> None:
+    print_function(area.name)
+    _pretty_print_extra("", area.extra, print_function)
 
     if area.hint_features:
         print_function(pretty_print_hint_features(area.hint_features))
@@ -202,8 +207,7 @@ def pretty_print_area(game: GameDatabaseView, area: Area, print_function: typing
             print_function(f"  * {pretty_print_hint_features(node.hint_features)}")
         if node.description:
             print_function(f"  * {node.description}")
-        for extra_name, extra_field in node.extra.items():
-            print_function(f"  * Extra - {extra_name}: {extra_field}")
+        _pretty_print_extra("  * ", node.extra, print_function)
 
         if isinstance(node, DockNode):
             for label, req in (
