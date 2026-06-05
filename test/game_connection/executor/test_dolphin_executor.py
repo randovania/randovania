@@ -131,27 +131,6 @@ async def test_perform_memory_operations_success(executor: DolphinExecutor):
 
 async def test_perform_memory_operations_follow_fail(executor: DolphinExecutor):
     executor.dolphin.follow_pointers = MagicMock(side_effect=RuntimeError("can't follow"))
-    executor._test_still_hooked = MagicMock()
-
-    # Run
-    result = await executor.perform_memory_operations(
-        [
-            MemoryOperation(0x80001000, offset=20, read_byte_count=50),
-        ]
-    )
-
-    # Assert
-    assert list(result.values()) == []
-    executor.dolphin.follow_pointers.assert_called_once_with(0x80001000, [0x0])
-    executor.dolphin.read_bytes.assert_not_called()
-    executor.dolphin.write_bytes.assert_not_called()
-    executor._test_still_hooked.assert_called_once_with()
-
-
-async def test_perform_memory_operations_follow_fail_disconnect(executor: DolphinExecutor):
-    executor.dolphin.follow_pointers = MagicMock(side_effect=RuntimeError("can't follow"))
-    executor._test_still_hooked = MagicMock()
-    executor.dolphin.is_hooked.side_effect = [True, False]
 
     # Run
     with pytest.raises(MemoryOperationException):
@@ -165,7 +144,6 @@ async def test_perform_memory_operations_follow_fail_disconnect(executor: Dolphi
     executor.dolphin.follow_pointers.assert_called_once_with(0x80001000, [0x0])
     executor.dolphin.read_bytes.assert_not_called()
     executor.dolphin.write_bytes.assert_not_called()
-    executor._test_still_hooked.assert_called_once_with()
 
 
 def test_test_still_hooked_success(executor: DolphinExecutor):

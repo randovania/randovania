@@ -277,6 +277,17 @@
                     "Jingle": "UNKNOWN",
                     "MessageID": 55
                 }
+            },
+            "Ziplines": {
+                "long_name": "Zipline Activation",
+                "max_capacity": 1,
+                "extra": {
+                    "item": "ZIPLINES",
+                    "StartingItemCategory": "Ziplines",
+                    "StartingItemName": "ZIPLINES",
+                    "Jingle": "MAJOR",
+                    "MessageID": 44
+                }
             }
         },
         "events": {
@@ -318,10 +329,6 @@
             },
             "KillAcidWorm": {
                 "long_name": "Boss Acid Worm Defeated",
-                "extra": {}
-            },
-            "Ziplines": {
-                "long_name": "Ziplines Activated",
                 "extra": {}
             },
             "RuinsChozoStatue": {
@@ -844,6 +851,62 @@
                         ]
                     }
                 }
+            },
+            "Can Use Ball Launcher": {
+                "display_name": "Can Use Ball Launcher",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "This template is used when any requirements requires using a Ball Launcher",
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Use Bombs"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Break Single Bomb Blocks": {
+                "display_name": "Can Break Single Bomb Blocks",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": "Breaking single bomb blocks in a space where Screw Attack can be used to destroy them",
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Use Any Bombs"
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "ScrewAttack",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Knowledge",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [],
@@ -1097,7 +1160,6 @@
             1
         ],
         "IBA": [
-            1,
             2
         ],
         "Shinespark": [

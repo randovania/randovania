@@ -37,3 +37,6 @@ class GameGui:
 
     spoiler_visualizer: tuple[type[GameDetailsTab], ...] = ()
     """Tuple of specializations of GameDetailsTab for providing extra details when visualizing a LayoutDescription."""
+
+    hide_database_map_view: bool = False
+    """If set, doesn't display the map view for this game in the data editor or map tracker."""

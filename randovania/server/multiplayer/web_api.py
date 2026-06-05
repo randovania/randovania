@@ -34,7 +34,7 @@ def RdvFileResponse(data: str, filename: str) -> Response:
 
 
 @router.get("/sessions", response_class=HTMLResponse)
-def admin_sessions(
+async def admin_sessions(
     sa: ServerAppDep, user: AdminDep, request: Request, page: Annotated[int, Query(ge=1)] = 1
 ) -> HTMLResponse:
     page_count = ceil(MultiplayerSession.select().count() / 20)
@@ -68,7 +68,7 @@ def admin_sessions(
 
 
 @router.get("/session/{session_id}", response_class=HTMLResponse)
-def admin_session(sa: ServerAppDep, user: AdminDep, request: Request, session_id: int) -> HTMLResponse:
+async def admin_session(sa: ServerAppDep, user: AdminDep, request: Request, session_id: int) -> HTMLResponse:
     try:
         session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
     except MultiplayerSession.DoesNotExist:
@@ -124,7 +124,7 @@ def admin_session(sa: ServerAppDep, user: AdminDep, request: Request, session_id
 
 
 @router.get("/session/{session_id}/rdvgame")
-def download_session_spoiler(user: AdminDep, session_id: int) -> Response:
+async def download_session_spoiler(user: AdminDep, session_id: int) -> Response:
     try:
         session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
     except MultiplayerSession.DoesNotExist:
@@ -138,7 +138,7 @@ def download_session_spoiler(user: AdminDep, session_id: int) -> Response:
 
 
 @router.get("/world/{world_id}/rdvpreset")
-def download_world_preset(user: AdminDep, world_id: int) -> Response:
+async def download_world_preset(user: AdminDep, world_id: int) -> Response:
     try:
         world = World.get_by_id(world_id)
     except World.DoesNotExist:
@@ -193,7 +193,7 @@ async def toggle_admin_status(
 
 
 @router.get("/session/{session_id}/delete", dependencies=[RequireAdminUser], response_class=HTMLResponse)
-def get_delete_session(sa: ServerAppDep, request: Request, session_id: int) -> HTMLResponse:
+async def get_delete_session(sa: ServerAppDep, request: Request, session_id: int) -> HTMLResponse:
     try:
         session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
     except MultiplayerSession.DoesNotExist:
@@ -209,7 +209,7 @@ def get_delete_session(sa: ServerAppDep, request: Request, session_id: int) -> H
 
 
 @router.post("/session/{session_id}/delete", dependencies=[RequireAdminUser], response_class=HTMLResponse)
-def delete_session(sa: ServerAppDep, request: Request, session_id: int) -> HTMLResponse:
+async def delete_session(sa: ServerAppDep, request: Request, session_id: int) -> HTMLResponse:
     try:
         session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
     except MultiplayerSession.DoesNotExist:

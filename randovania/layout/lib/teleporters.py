@@ -68,26 +68,17 @@ class TeleporterList(location_list.LocationList):
         return super().ensure_has_locations(area_locations, enabled)
 
 
-def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame) -> bool:
-    if (
-        game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES)
-        and area.name == "Credits"
-        and node.name in ("Event - Credits", "Event - Dark Samus 3 and 4")
-    ):
-        return True
-
-    if any(node.name == "Save Station" for node in area.nodes):
-        return False
-
-    return node.valid_starting_location and not node.is_derived_node
-
-
 class TeleporterTargetList(location_list.LocationList):
     @classmethod
     def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
-        return location_list.node_and_area_with_filter(
-            game, lambda area, node: _valid_teleporter_target(area, node, game)
-        )
+        return location_list.node_and_area_with_filter(game, cls.valid_teleporter_target)
+
+    @classmethod
+    def valid_teleporter_target(cls, area: Area, node: Node) -> bool:
+        """
+        Filter to determine if a given area and node are a valid target.
+        """
+        return node.valid_starting_location and not node.is_derived_node
 
 
 @dataclasses.dataclass(frozen=True)
