@@ -183,7 +183,7 @@ _GameChoices = discord.Option(
     description="The game's database to check.",
     choices=[
         discord.OptionChoice(name=game.long_name, value=game.value)
-        for game in enum_lib.iterate_enum(RandovaniaGame)
+        for game in RandovaniaGame.sorted_all_games()
         if game.data.development_state.can_view(from_bot=True)
     ],
 )
