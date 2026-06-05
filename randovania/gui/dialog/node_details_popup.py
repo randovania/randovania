@@ -6,7 +6,7 @@ import json
 import logging
 import traceback
 import typing
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from PySide6 import QtWidgets
 from qasync import asyncSlot
@@ -138,7 +138,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             for specific_hint, details in specific_pickup_hints.items():
                 self.specific_pickup_target_combo.addItem(details.long_name, specific_hint)
         else:
-            self.hint_kind_combo.removeItem(2)
+            signal_handling.remove_value_from_combo(self.hint_kind_combo, HintNodeKind.SPECIFIC_PICKUP)
 
         # Pickup
         for category in enum_lib.iterate_enum(LocationCategory):
@@ -368,7 +368,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.name_edit.setText(expected_name)
         self.on_name_edit(self.name_edit.text())
 
-    def on_hint_kind_combo(self, _) -> None:
+    def on_hint_kind_combo(self, value: Any) -> None:
         self._update_hint_target_visibility(self.hint_kind_combo.currentData())
 
     def on_specific_location_target_spin(self, value: int) -> None:
