@@ -606,80 +606,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Room Center": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Event76",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "VanillaGreatTempleEmeraldGate",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event91",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Transport A Translator Gate": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Event - Transport A Gate Removal": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "RoomRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "VanillaGreatTempleEmeraldGate",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    }
-                                ]
                             }
                         }
                     }
@@ -845,15 +776,6 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport A Access": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event91",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Door to Controller Transport": {
                             "type": "resource",
                             "data": {
@@ -1304,27 +1226,6 @@
                             }
                         }
                     }
-                },
-                "Event - Transport A Gate Removal": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Event91",
-                    "connections": {
-                        "Door to Transport A Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
                 }
             }
         },
@@ -1368,6 +1269,10 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Event - Transport C Access Light Block": {
+                            "type": "template",
+                            "data": "Shoot Light Beam"
                         }
                     }
                 },
