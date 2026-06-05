@@ -141,7 +141,7 @@ def _connections_from(
         requirement_to_leave = configurable_node_requirements[node.database_node.identifier]
 
     elif isinstance(node.database_node, HintNode):
-        requirement_to_leave = node.database_node.lock_requirement
+        requirement_to_leave = node.database_node.requirement_to_collect
 
     elif isinstance(node.database_node, TeleporterNetworkNode):
         for other_node in teleporter_networks[node.database_node.network]:
@@ -387,7 +387,7 @@ def create_patchless_graph(
 
     for node in nodes:
         if isinstance(node.database_node, HintNode):
-            node.requirement_to_collect = graph.converter.convert_db(node.database_node.lock_requirement)
+            node.requirement_to_collect = graph.converter.convert_db(node.database_node.requirement_to_collect)
 
     for node in nodes:
         if isinstance(node.database_node, HintNode | PickupNode | EventPickupNode):
