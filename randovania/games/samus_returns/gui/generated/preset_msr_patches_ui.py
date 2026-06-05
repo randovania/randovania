@@ -165,10 +165,6 @@ class Ui_PresetMSRPatches(object):
 
         self.verticalLayout_2.addWidget(self.nerf_super_missiles_label)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_2.addItem(self.verticalSpacer)
-
 
         self.scroll_layout.addWidget(self.item_group)
 
@@ -182,6 +178,10 @@ class Ui_PresetMSRPatches(object):
         self.skip_opening_check.setObjectName(u"skip_opening_check")
 
         self.verticalLayout_4.addWidget(self.skip_opening_check)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_4.addItem(self.verticalSpacer)
 
 
         self.scroll_layout.addWidget(self.misc_group)
