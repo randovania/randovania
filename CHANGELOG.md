@@ -19,6 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Dark Stairwell: Using the hidden connection to/from Central Nexus can now expect Mid-Air Morphs instead of Bombs/Hi-Jump.
 
+### Metroid: Samus Returns
+
+- Added: Cosmetic option to reveal the map at the start (default: on)
+- Added: Cosmetic option to use Fusion models (default: off)
+- Added: Preset option to skip the opening storyboard cutscene (default: off)
+- Fixed: Spazer and Plasma beam projectiles no longer shoot through blocks
+
+
 ## [10.8.0] - 2026-06-01
 
 - Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
