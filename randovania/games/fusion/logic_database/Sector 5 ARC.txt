@@ -6,14 +6,14 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 2}, {'x': 4, 'y': 3}, {'x': 4, 'y': 
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Lobby
-  * Extra - door_idx: (1,)
+  * Extra - door_idx: [1]
   > Door to Magic Box
       Trivial
 
 > Door to Magic Box; Heals? False
   * Layers: default
   * L3 Hatch to Magic Box/Door to Entrance Lobby
-  * Extra - door_idx: (66,)
+  * Extra - door_idx: [66]
   > Door to Entrance Recharge Room
       Trivial
   > Door to Training Grounds
@@ -24,14 +24,14 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 2}, {'x': 4, 'y': 3}, {'x': 4, 'y': 
 > Door to Training Grounds; Heals? False
   * Layers: default
   * L0 Hatch to Training Grounds/Door to Entrance Lobby
-  * Extra - door_idx: (77,)
+  * Extra - door_idx: [77]
   > Door to Magic Box
       Missiles and Morph Ball
 
 > Door to Gerubus Gully; Heals? False
   * Layers: default
   * L3 Hatch to Gerubus Gully/Door to Entrance Lobby
-  * Extra - door_idx: (81,)
+  * Extra - door_idx: [81]
   > Door to Magic Box
       Trivial
 
@@ -44,14 +44,14 @@ Extra - unlocked_save_recharge_station: True
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
-  * Extra - door_idx: (4,)
+  * Extra - door_idx: [4]
   > Door to Entrance Navigation Room
       Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
-  * Extra - door_idx: (5,)
+  * Extra - door_idx: [5]
   > Door to Entrance Recharge Room
       Trivial
   > Save Station
@@ -72,7 +72,7 @@ Extra - minimap_coordinates: [{'x': 1, 'y': 2}]
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
-  * Extra - door_idx: (6,)
+  * Extra - door_idx: [6]
   > Door to Sector 5 (ARC) Entrance Elevator
       Trivial
   > Navigation Terminal
@@ -81,7 +81,7 @@ Extra - minimap_coordinates: [{'x': 1, 'y': 2}]
 > Door to Sector 5 (ARC) Entrance Elevator; Heals? False
   * Layers: default
   * Open Hatch to Sector 5 (ARC) Entrance Elevator/Door to Entrance Navigation Room
-  * Extra - door_idx: (50,)
+  * Extra - door_idx: [50]
   > Door to Entrance Save Room
       Trivial
 
@@ -98,11 +98,23 @@ Extra - minimap_coordinates: [{'x': 1, 'y': 2}]
 Training Grounds
 Extra - map_name: Sector 53
 Extra - room_id: [3, 6]
-Extra - minimap_coordinates: [{'x': 6, 'y': 1}, {'x': 6, 'y': 2}, {'x': 6, 'y': 3}, {'x': 6, 'y': 4}, {'x': 7, 'y': 1}, {'x': 7, 'y': 2}, {'x': 7, 'y': 3}, {'x': 7, 'y': 4}, {'x': 8, 'y': 1}, {'x': 8, 'y': 2}, {'x': 8, 'y': 3}, {'x': 8, 'y': 4}]
+Extra - minimap_coordinates:
+[{'x': 6, 'y': 1},
+ {'x': 6, 'y': 2},
+ {'x': 6, 'y': 3},
+ {'x': 6, 'y': 4},
+ {'x': 7, 'y': 1},
+ {'x': 7, 'y': 2},
+ {'x': 7, 'y': 3},
+ {'x': 7, 'y': 4},
+ {'x': 8, 'y': 1},
+ {'x': 8, 'y': 2},
+ {'x': 8, 'y': 3},
+ {'x': 8, 'y': 4}]
 > Door to Gerubus Gully; Heals? False
   * Layers: default
   * L3 Hatch to Gerubus Gully/Door to Training Grounds
-  * Extra - door_idx: (7,)
+  * Extra - door_idx: [7]
   > Door to Training Aerie
       # Shinespark: https://youtu.be/Qe9eMPmoUcU
       Level 3 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Wall Jump (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
@@ -117,21 +129,21 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 1}, {'x': 6, 'y': 2}, {'x': 6, 'y': 
 > Door to Training Aerie; Heals? False
   * Layers: default
   * L0 Hatch to Training Aerie/Door to Training Grounds
-  * Extra - door_idx: (8,)
+  * Extra - door_idx: [8]
   > Door to Entrance Lobby
       Trivial
 
 > Door to Arctic Containment; Heals? False
   * Layers: default
   * L0 Hatch to Arctic Containment/Door to Training Grounds
-  * Extra - door_idx: (9,)
+  * Extra - door_idx: [9]
   > Door to Gerubus Gully
       Trivial
 
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Lobby/Door to Training Grounds
-  * Extra - door_idx: (78,)
+  * Extra - door_idx: [78]
   > Door to Gerubus Gully
       Trivial
   > Door to Training Aerie
@@ -176,7 +188,7 @@ Hint Features - Multiple Pickups
 > Door to Training Grounds; Heals? False
   * Layers: default
   * L0 Hatch to Training Grounds/Door to Training Aerie
-  * Extra - door_idx: (10,)
+  * Extra - door_idx: [10]
   > Pickup (Power Bomb Tank)
       # This can safely not have Door Lock Rando check
       Speed Booster and Disabled Entrance Rando
@@ -187,11 +199,21 @@ Hint Features - Multiple Pickups
 Arctic Containment
 Extra - map_name: Sector 57
 Extra - room_id: [7, 15]
-Extra - minimap_coordinates: [{'x': 9, 'y': 4}, {'x': 9, 'y': 5}, {'x': 9, 'y': 6}, {'x': 9, 'y': 7}, {'x': 9, 'y': 8}, {'x': 10, 'y': 4}, {'x': 10, 'y': 5}, {'x': 10, 'y': 6}, {'x': 10, 'y': 7}, {'x': 10, 'y': 8}]
+Extra - minimap_coordinates:
+[{'x': 9, 'y': 4},
+ {'x': 9, 'y': 5},
+ {'x': 9, 'y': 6},
+ {'x': 9, 'y': 7},
+ {'x': 9, 'y': 8},
+ {'x': 10, 'y': 4},
+ {'x': 10, 'y': 5},
+ {'x': 10, 'y': 6},
+ {'x': 10, 'y': 7},
+ {'x': 10, 'y': 8}]
 > Door to Training Grounds; Heals? False
   * Layers: default
   * L0 Hatch to Training Grounds/Door to Arctic Containment
-  * Extra - door_idx: (14,)
+  * Extra - door_idx: [14]
   > Door to Crow's Nest
       Any of the following:
           Varia Suit
@@ -201,7 +223,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 4}, {'x': 9, 'y': 5}, {'x': 9, 'y': 
 > Door to Zeela Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Zeela Checkpoint/Door to Arctic Containment
-  * Extra - door_idx: (15,)
+  * Extra - door_idx: [15]
   > Door to Data Checkpoint
       Any of the following:
           Varia Suit
@@ -214,7 +236,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 4}, {'x': 9, 'y': 5}, {'x': 9, 'y': 
 > Door to Waver Ward; Heals? False
   * Layers: default
   * L0 Hatch to Waver Ward/Door to Arctic Containment
-  * Extra - door_idx: (16,)
+  * Extra - door_idx: [16]
   > Door to Arctic Underside
       All of the following:
           Can Use Any Bombs
@@ -226,7 +248,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 4}, {'x': 9, 'y': 5}, {'x': 9, 'y': 
 > Door to Data Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Data Checkpoint/Door to Arctic Containment
-  * Extra - door_idx: (30,)
+  * Extra - door_idx: [30]
   > Door to Zeela Checkpoint
       Any of the following:
           Varia Suit
@@ -259,7 +281,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 4}, {'x': 9, 'y': 5}, {'x': 9, 'y': 
   * Layers: default
   * Open Hatch to Ripper Road/Door to Arctic Containment; Excluded from Dock Lock Rando
   * excluded from DLR due to hatch limitations
-  * Extra - door_idx: (56,)
+  * Extra - door_idx: [56]
   > Door to Data Checkpoint
       All of the following:
           Can Kill PB Geron
@@ -275,7 +297,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 4}, {'x': 9, 'y': 5}, {'x': 9, 'y': 
 > Door to Arctic Underside; Heals? False
   * Layers: default
   * L3 Hatch to Arctic Underside/Door to Arctic Containment
-  * Extra - door_idx: (99,)
+  * Extra - door_idx: [99]
   > Door to Zeela Checkpoint
       All of the following:
           Morph Ball
@@ -295,7 +317,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 4}, {'x': 9, 'y': 5}, {'x': 9, 'y': 
 > Door to Crow's Nest; Heals? False
   * Layers: default
   * L3 Hatch to Crow's Nest/Door to Arctic Containment
-  * Extra - door_idx: (53,)
+  * Extra - door_idx: [53]
   > Door to Training Grounds
       Any of the following:
           Varia Suit
@@ -315,7 +337,7 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 6}, {'x': 8, 'y': 6}]
 > Door to Arctic Containment; Heals? False
   * Layers: default
   * L0 Hatch to Arctic Containment/Door to Zeela Checkpoint
-  * Extra - door_idx: (36,)
+  * Extra - door_idx: [36]
   > Door to Security Save Room
       All of the following:
           Wave Beam
@@ -327,7 +349,7 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 6}, {'x': 8, 'y': 6}]
 > Door to Security Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Security Save Room/Door to Zeela Checkpoint
-  * Extra - door_idx: (64,)
+  * Extra - door_idx: [64]
   > Door to Arctic Containment
       Any of the following:
           # Damage Reqs
@@ -342,7 +364,7 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 6}, {'x': 5, 'y': 7}, {'x': 5, 'y': 
 > Door to Security Save Room; Heals? False
   * Layers: default
   * L3 Hatch to Security Save Room/Door to Security Shaft West
-  * Extra - door_idx: (18,)
+  * Extra - door_idx: [18]
   > Door to Level 3 Security Room
       Any of the following:
           # Damage Reqs
@@ -352,7 +374,7 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 6}, {'x': 5, 'y': 7}, {'x': 5, 'y': 
 > Door to Level 3 Security Room; Heals? False
   * Layers: default
   * L3 Hatch to Level 3 Security Room/Door to Security Shaft West
-  * Extra - door_idx: (20,)
+  * Extra - door_idx: [20]
   > Door to Security Save Room
       All of the following:
           Any of the following:
@@ -380,14 +402,14 @@ Hint Features - Security Room
 > Door to Security Shaft West; Heals? False
   * Layers: default
   * L3 Hatch to Security Shaft West/Door to Level 3 Security Room
-  * Extra - door_idx: (19,)
+  * Extra - door_idx: [19]
   > Door to Security Shaft East
       Trivial
 
 > Door to Security Shaft East; Heals? False
   * Layers: default
   * L0 Hatch to Security Shaft East/Door to Level 3 Security Room
-  * Extra - door_idx: (40,)
+  * Extra - door_idx: [40]
   > Door to Security Shaft West
       Trivial
   > Pickup (L3 Locks)
@@ -411,7 +433,7 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 8}]
 > Door to Arctic Containment; Heals? False
   * Layers: default
   * L0 Hatch to Arctic Containment/Door to Waver Ward
-  * Extra - door_idx: (21,)
+  * Extra - door_idx: [21]
   > Door to Cellar
       All of the following:
           Can Use Any Bombs
@@ -423,7 +445,7 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 8}]
 > Door to Cellar; Heals? False
   * Layers: default
   * L0 Hatch to Cellar/Door to Waver Ward
-  * Extra - door_idx: (22,)
+  * Extra - door_idx: [22]
   > Door to Arctic Containment
       All of the following:
           Can Use Any Bombs
@@ -452,7 +474,7 @@ Hint Features - Mimic
 > Door to Frozen Tower; Heals? False
   * Layers: default
   * L0 Hatch to Frozen Tower/Door to E-Tank Mimic Den
-  * Extra - door_idx: (23,)
+  * Extra - door_idx: [23]
   > Pickup (Hidden Energy Tank)
       Morph Ball and Can Break Single Bomb Blocks
 
@@ -464,7 +486,7 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 5}, {'x': 13, 'y': 6}, {'x': 13, 'y
 > Door to E-Tank Mimic Den; Heals? False
   * Layers: default
   * L0 Hatch to E-Tank Mimic Den/Door to Frozen Tower
-  * Extra - door_idx: (24,)
+  * Extra - door_idx: [24]
   > Door to Data Room
       # Damage Reqs
       Space Jump and Damage Runs (Advanced) and Cold Damage ≥ 280
@@ -477,7 +499,7 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 5}, {'x': 13, 'y': 6}, {'x': 13, 'y
 > Door to Cellar; Heals? False
   * Layers: default
   * L3 Hatch to Cellar/Door to Frozen Tower
-  * Extra - door_idx: (49,)
+  * Extra - door_idx: [49]
   > Bottom of Room
       Any of the following:
           # Damage Reqs
@@ -487,7 +509,7 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 5}, {'x': 13, 'y': 6}, {'x': 13, 'y
 > Other to Transmutation Trial; Heals? False
   * Layers: default
   * Tunnel to Transmutation Trial/Other to Frozen Tower
-  * Extra - door_idx: (79,)
+  * Extra - door_idx: [79]
   > Bottom of Room
       Any of the following:
           # Damage Reqs
@@ -497,7 +519,7 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 5}, {'x': 13, 'y': 6}, {'x': 13, 'y
 > Door to Data Room; Heals? False
   * Layers: default
   * L3 Hatch to Data Room/Door to Frozen Tower
-  * Extra - door_idx: (90,)
+  * Extra - door_idx: [90]
   > Door to E-Tank Mimic Den
       Any of the following:
           # Drop down from ledge above https://youtu.be/lUc4sT4UyQY
@@ -562,7 +584,7 @@ Hint Features - Extreme Temperatures, Pillar
 > Other to Flooded Tower; Heals? False
   * Layers: default
   * Tunnel to Flooded Tower/Other to Mini-Fridge
-  * Extra - door_idx: (69,)
+  * Extra - door_idx: [69]
   > Pickup (Energy Tank)
       All of the following:
           Morph Ball
@@ -584,14 +606,14 @@ Hint Features - Data Room
 > Other to Crow's Nest; Heals? False
   * Layers: default
   * Destroyed Door to Crow's Nest/Other to Data Room
-  * Extra - door_idx: (91,)
+  * Extra - door_idx: [91]
   > Other to Ruined Corridor
       Trivial
 
 > Door to Data Checkpoint; Heals? False
   * Layers: default
   * L3 Hatch to Data Checkpoint/Door to Data Room
-  * Extra - door_idx: (92,)
+  * Extra - door_idx: [92]
   > Pickup (Power Bomb Data)
       Trivial
   > Door to Frozen Tower
@@ -600,7 +622,7 @@ Hint Features - Data Room
 > Other to Ruined Corridor; Heals? False
   * Layers: default
   * Destroyed Door to Ruined Corridor/Other to Data Room
-  * Extra - door_idx: (93,)
+  * Extra - door_idx: [93]
   > Other to Crow's Nest
       Trivial
 
@@ -617,7 +639,7 @@ Hint Features - Data Room
 > Door to Frozen Tower; Heals? False
   * Layers: default
   * L3 Hatch to Frozen Tower/Door to Data Room
-  * Extra - door_idx: (89,)
+  * Extra - door_idx: [89]
   > Door to Data Checkpoint
       Trivial
 
@@ -629,14 +651,14 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 4}, {'x': 14, 'y': 4}, {'x': 14, 'y
 > Other to Data Room; Heals? False
   * Layers: default
   * Destroyed Door to Data Room/Other to Ruined Corridor
-  * Extra - door_idx: (32,)
+  * Extra - door_idx: [32]
   > Other to Flooded Tower
       Trivial
 
 > Other to Flooded Tower; Heals? False
   * Layers: default
   * Destroyed Door to Flooded Tower/Other to Ruined Corridor
-  * Extra - door_idx: (33,)
+  * Extra - door_idx: [33]
   > Other to Data Room
       Trivial
 
@@ -659,7 +681,7 @@ Extra - minimap_coordinates: [{'x': 18, 'y': 4}, {'x': 18, 'y': 5}, {'x': 18, 'y
 > Other to Ruined Break Room; Heals? False
   * Layers: default
   * Destroyed Door to Ruined Break Room/Other to Nightmare Hub
-  * Extra - door_idx: (34,)
+  * Extra - door_idx: [34]
   > Other to Nightmare Upper Access
       Trivial
   > Door to Flooded Access
@@ -670,21 +692,21 @@ Extra - minimap_coordinates: [{'x': 18, 'y': 4}, {'x': 18, 'y': 5}, {'x': 18, 'y
 > Other to Nightmare Upper Access; Heals? False
   * Layers: default
   * Destroyed Door to Nightmare Upper Access/Other to Nightmare Hub
-  * Extra - door_idx: (35,)
+  * Extra - door_idx: [35]
   > Other to Ruined Break Room
       Trivial
 
 > Door to Nightmare Lower Access; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Lower Access/Door to Nightmare Hub
-  * Extra - door_idx: (61,)
+  * Extra - door_idx: [61]
   > Door to Flooded Access
       Trivial
 
 > Door to Flooded Access; Heals? False
   * Layers: default
   * L0 Hatch to Flooded Access/Door to Nightmare Hub
-  * Extra - door_idx: (62,)
+  * Extra - door_idx: [62]
   > Other to Ruined Break Room
       Any of the following:
           Have Any Jump Upgrade
@@ -696,7 +718,7 @@ Extra - minimap_coordinates: [{'x': 18, 'y': 4}, {'x': 18, 'y': 5}, {'x': 18, 'y
 > Door to Nightmare Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Save Room/Door to Nightmare Hub
-  * Extra - door_idx: (119,)
+  * Extra - door_idx: [119]
   > Other to Ruined Break Room
       Trivial
   > Door to Nightmare Recharge Room
@@ -713,7 +735,7 @@ Extra - minimap_coordinates: [{'x': 18, 'y': 4}, {'x': 18, 'y': 5}, {'x': 18, 'y
 > Door to Nightmare Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Recharge Room/Door to Nightmare Hub
-  * Extra - door_idx: (120,)
+  * Extra - door_idx: [120]
   > Pickup (Hidden Power Bomb Tank)
       Can Bounce in Ball and Can Use Any Bombs
   > Door to Nightmare Save Room
@@ -727,7 +749,7 @@ Extra - minimap_coordinates: [{'x': 20, 'y': 5}, {'x': 21, 'y': 4}, {'x': 21, 'y
 > Other to Nightmare Hub; Heals? False
   * Layers: default
   * Destroyed Door to Nightmare Hub/Other to Nightmare Upper Access
-  * Extra - door_idx: (37,)
+  * Extra - door_idx: [37]
   > Door to Nightmare Nook
       All of the following:
           Can Kill Gadora
@@ -739,7 +761,7 @@ Extra - minimap_coordinates: [{'x': 20, 'y': 5}, {'x': 21, 'y': 4}, {'x': 21, 'y
 > Door to Nightmare Nook; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Nook/Door to Nightmare Upper Access
-  * Extra - door_idx: (38,)
+  * Extra - door_idx: [38]
   > Other to Nightmare Hub
       Trivial
 
@@ -752,14 +774,14 @@ Hint Features - Core-X, Climbable Surface
 > Door to Nightmare Lower Access; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Lower Access/Door to Nightmare Arena
-  * Extra - door_idx: (58,)
+  * Extra - door_idx: [58]
   > Arena
       Trivial
 
 > Other to Nightmare Nook; Heals? False
   * Layers: default
   * Open Passage to Nightmare Nook/Other to Nightmare Arena
-  * Extra - door_idx: (84,)
+  * Extra - door_idx: [84]
   > Arena
       Trivial
 
@@ -843,7 +865,7 @@ Hint Features - Climbable Surface, Extreme Temperatures
 > Door to Level 3 Security Room; Heals? False
   * Layers: default
   * L0 Hatch to Level 3 Security Room/Door to Security Shaft East
-  * Extra - door_idx: (108, 41)
+  * Extra - door_idx: [108, 41]
   > Door to Subway
       All of the following:
           Can Use Power Bombs
@@ -879,7 +901,7 @@ Hint Features - Climbable Surface, Extreme Temperatures
 > Door to Subway; Heals? False
   * Layers: default
   * L0 Hatch to Subway/Door to Security Shaft East
-  * Extra - door_idx: (109,)
+  * Extra - door_idx: [109]
   > Pickup (Power Bomb Tank)
       All of the following:
           Can Use Any Bombs
@@ -898,7 +920,7 @@ Hint Features - Climbable Surface, Extreme Temperatures
 > Door to Ripper's Treasure; Heals? False
   * Layers: default
   * L0 Hatch to Ripper's Treasure/Door to Security Shaft East
-  * Extra - door_idx: (110,)
+  * Extra - door_idx: [110]
   > Door to Level 3 Security Room
       All of the following:
           Can Use Power Bombs
@@ -910,7 +932,7 @@ Hint Features - Climbable Surface, Extreme Temperatures
 > Door to Kago Roadblock; Heals? False
   * Layers: default
   * L0 Hatch to Kago Roadblock/Door to Security Shaft East
-  * Extra - door_idx: (42,)
+  * Extra - door_idx: [42]
   > Door to Level 3 Security Room
       Any of the following:
           # Damage Reqs
@@ -936,7 +958,7 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 7}]
 > Door to Security Shaft East; Heals? False
   * Layers: default
   * L0 Hatch to Security Shaft East/Door to Ripper's Treasure
-  * Extra - door_idx: (111,)
+  * Extra - door_idx: [111]
   > Pickup (Power Bomb Tank)
       Trivial
 
@@ -948,21 +970,21 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 8}, {'x': 12, 'y': 9}, {'x': 12, 'y
 > Door to Waver Ward; Heals? False
   * Layers: default
   * L0 Hatch to Waver Ward/Door to Cellar
-  * Extra - door_idx: (25,)
+  * Extra - door_idx: [25]
   > Door to Kago Speedway
       Trivial
 
 > Door to Frozen Tower; Heals? False
   * Layers: default
   * L3 Hatch to Frozen Tower/Door to Cellar
-  * Extra - door_idx: (48,)
+  * Extra - door_idx: [48]
   > Door to Cellar Save Room
       Trivial
 
 > Door to Cellar Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Cellar Save Room/Door to Cellar
-  * Extra - door_idx: (97,)
+  * Extra - door_idx: [97]
   > Door to Frozen Tower
       Trivial
   > Door to Kago Speedway
@@ -974,7 +996,7 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 8}, {'x': 12, 'y': 9}, {'x': 12, 'y
 > Door to Kago Speedway; Heals? False
   * Layers: default
   * L0 Hatch to Kago Speedway/Door to Cellar
-  * Extra - door_idx: (104,)
+  * Extra - door_idx: [104]
   > Door to Waver Ward
       Any of the following:
           Space Jump
@@ -986,7 +1008,7 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 8}, {'x': 12, 'y': 9}, {'x': 12, 'y
 > Door to Subway; Heals? False
   * Layers: default
   * L0 Hatch to Subway/Door to Cellar
-  * Extra - door_idx: (105,)
+  * Extra - door_idx: [105]
 
 ----------------
 Sector 5 (ARC) Entrance Elevator
@@ -996,14 +1018,14 @@ Extra - minimap_coordinates: [{'x': 0, 'y': 1}, {'x': 0, 'y': 2}]
 > Elevator to Main Deck; Heals? False
   * Layers: default
   * Elevator to Sector Hub Lift 5/Elevator to Sector 5 (ARC)
-  * Extra - door_idx: (0,)
+  * Extra - door_idx: [0]
   > Door to Entrance Navigation Room
       Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Sector 5 (ARC) Entrance Elevator
-  * Extra - door_idx: (51,)
+  * Extra - door_idx: [51]
   > Elevator to Main Deck
       Trivial
 
@@ -1028,7 +1050,7 @@ Hint Features - Extreme Temperatures
   * Layers: default
   * Open Hatch to Arctic Containment/Door to Ripper Road; Excluded from Dock Lock Rando
   * excluded from DLR due to hatch limitations
-  * Extra - door_idx: (55,)
+  * Extra - door_idx: [55]
   > Pickup (Power Bomb Tank)
       All of the following:
           Morph Ball
@@ -1056,7 +1078,7 @@ Extra - minimap_coordinates: [{'x': 20, 'y': 6}, {'x': 21, 'y': 6}]
 > Door to Nightmare Arena; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Arena/Door to Nightmare Lower Access
-  * Extra - door_idx: (59,)
+  * Extra - door_idx: [59]
   > Door to Nightmare Hub
       # This can safely not have Door Lock Rando check
       Gravity Suit and Speed Booster and Disabled Entrance Rando
@@ -1064,7 +1086,7 @@ Extra - minimap_coordinates: [{'x': 20, 'y': 6}, {'x': 21, 'y': 6}]
 > Door to Nightmare Hub; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Hub/Door to Nightmare Lower Access
-  * Extra - door_idx: (60,)
+  * Extra - door_idx: [60]
   > Door to Nightmare Arena
       # This can safely not have Door Lock Rando check
       Gravity Suit and Speed Booster and Disabled Entrance Rando
@@ -1077,7 +1099,7 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 6}, {'x': 17, 'y': 7}]
 > Door to Nightmare Hub; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Hub/Door to Flooded Access
-  * Extra - door_idx: (63,)
+  * Extra - door_idx: [63]
   > Door to Zebesian Waters
       Any of the following:
           Can Kill Tough Underwater Beam-Resistant Enemy
@@ -1088,7 +1110,7 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 6}, {'x': 17, 'y': 7}]
 > Door to Zebesian Waters; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Waters/Door to Flooded Access
-  * Extra - door_idx: (117,)
+  * Extra - door_idx: [117]
   > Door to Nightmare Hub
       Any of the following:
           Can Kill Tough Underwater Beam-Resistant Enemy
@@ -1105,7 +1127,7 @@ Extra - unlocked_save_recharge_station: True
 > Door to Security Shaft West; Heals? False
   * Layers: default
   * L3 Hatch to Security Shaft West/Door to Security Save Room
-  * Extra - door_idx: (17,)
+  * Extra - door_idx: [17]
   > Door to Zeela Checkpoint
       Trivial
   > Save Station
@@ -1114,7 +1136,7 @@ Extra - unlocked_save_recharge_station: True
 > Door to Zeela Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Zeela Checkpoint/Door to Security Save Room
-  * Extra - door_idx: (65,)
+  * Extra - door_idx: [65]
   > Door to Security Shaft West
       Trivial
 
@@ -1144,7 +1166,7 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 4}, {'x': 3, 'y': 4}]
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L3 Hatch to Entrance Lobby/Door to Magic Box
-  * Extra - door_idx: (67,)
+  * Extra - door_idx: [67]
   > Pickup (Missile Tank)
       Trivial
   > Door to Sector 5 (ARC) Westbound Glass Tube
@@ -1153,7 +1175,7 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 4}, {'x': 3, 'y': 4}]
 > Door to Sector 5 (ARC) Westbound Glass Tube; Heals? False
   * Layers: default
   * L0 Hatch to Sector 5 (ARC) Westbound Glass Tube/Door to Magic Box
-  * Extra - door_idx: (73,)
+  * Extra - door_idx: [73]
   > Door to Entrance Lobby
       Screw Attack
 
@@ -1165,14 +1187,14 @@ Extra - minimap_coordinates: [{'x': 1, 'y': 4}]
 > Area Transition to Sector 6 (NOC); Heals? False
   * Layers: default
   * Open Passage to Sector 6 (NOC) Eastbound Glass Tube/Area Transition to Sector 5 (ARC)
-  * Extra - door_idx: (2,)
+  * Extra - door_idx: [2]
   > Door to Magic Box
       Trivial
 
 > Door to Magic Box; Heals? False
   * Layers: default
   * L0 Hatch to Magic Box/Door to Sector 5 (ARC) Westbound Glass Tube
-  * Extra - door_idx: (71,)
+  * Extra - door_idx: [71]
   > Area Transition to Sector 6 (NOC)
       Trivial
 
@@ -1185,14 +1207,14 @@ Extra - unlocked_save_recharge_station: True
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
-  * Extra - door_idx: (72,)
+  * Extra - door_idx: [72]
   > Recharge Terminal
       Trivial
 
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Lobby/Door to Entrance Recharge Room
-  * Extra - door_idx: (74,)
+  * Extra - door_idx: [74]
   > Recharge Terminal
       Trivial
 
@@ -1222,14 +1244,14 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 4}]
 > Door to Training Grounds; Heals? False
   * Layers: default
   * L3 Hatch to Training Grounds/Door to Gerubus Gully
-  * Extra - door_idx: (3,)
+  * Extra - door_idx: [3]
   > Door to Entrance Lobby
       Trivial
 
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L3 Hatch to Entrance Lobby/Door to Gerubus Gully
-  * Extra - door_idx: (82,)
+  * Extra - door_idx: [82]
   > Pickup (Hidden Missile Tank)
       All of the following:
           Morph Ball
@@ -1281,12 +1303,12 @@ Extra - minimap_coordinates: [{'x': 22, 'y': 4}]
 > Other to Nightmare Arena; Heals? False
   * Layers: default
   * Open Passage to Nightmare Arena/Other to Nightmare Nook
-  * Extra - door_idx: (26,)
+  * Extra - door_idx: [26]
 
 > Door to Nightmare Upper Access; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Upper Access/Door to Nightmare Nook
-  * Extra - door_idx: (39,)
+  * Extra - door_idx: [39]
   > Pickup (Energy Tank)
       All of the following:
           Morph Ball
@@ -1309,14 +1331,14 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 5}]
 > Door to Arctic Containment; Heals? False
   * Layers: default
   * L0 Hatch to Arctic Containment/Door to Data Checkpoint
-  * Extra - door_idx: (85,)
+  * Extra - door_idx: [85]
   > Door to Data Room
       Trivial
 
 > Door to Data Room; Heals? False
   * Layers: default
   * L3 Hatch to Data Room/Door to Data Checkpoint
-  * Extra - door_idx: (86,)
+  * Extra - door_idx: [86]
   > Door to Arctic Containment
       Wave Beam
 
@@ -1340,7 +1362,7 @@ Hint Features - 1-way Shutter
 > Door to Sector 5 (ARC) Eastbound Glass Tube; Heals? False
   * Layers: default
   * L0 Hatch to Sector 5 (ARC) Eastbound Glass Tube/Door to Crow's Nest
-  * Extra - door_idx: (75,)
+  * Extra - door_idx: [75]
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
           Morph Ball
@@ -1376,7 +1398,7 @@ Hint Features - 1-way Shutter
 > Door to Arctic Containment; Heals? False
   * Layers: default
   * L3 Hatch to Arctic Containment/Door to Crow's Nest
-  * Extra - door_idx: (87,)
+  * Extra - door_idx: [87]
   > Door to Sector 5 (ARC) Eastbound Glass Tube
       Any of the following:
           Wall Jump (Beginner) or Have Any Jump Upgrade
@@ -1388,7 +1410,7 @@ Hint Features - 1-way Shutter
 > Other to Data Room; Heals? False
   * Layers: default
   * Destroyed Door to Data Room/Other to Crow's Nest
-  * Extra - door_idx: (88,)
+  * Extra - door_idx: [88]
   > Door to Arctic Containment
       Trivial
 
@@ -1400,14 +1422,14 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 3}]
 > Door to Crow's Nest; Heals? False
   * Layers: default
   * L0 Hatch to Crow's Nest/Door to Sector 5 (ARC) Eastbound Glass Tube
-  * Extra - door_idx: (76,)
+  * Extra - door_idx: [76]
   > Area Transition to Sector 3 (PYR)
       Trivial
 
 > Area Transition to Sector 3 (PYR); Heals? False
   * Layers: default
   * Open Passage to Sector 3 (PYR) Westbound Glass Tube/Area Transition to Sector 5 (ARC)
-  * Extra - door_idx: (83,)
+  * Extra - door_idx: [83]
   > Door to Crow's Nest
       Trivial
 
@@ -1420,14 +1442,14 @@ Extra - unlocked_save_recharge_station: True
 > Door to Kago Roadblock; Heals? False
   * Layers: default
   * L0 Hatch to Kago Roadblock/Door to Cellar Save Room
-  * Extra - door_idx: (45,)
+  * Extra - door_idx: [45]
   > Door to Cellar
       Trivial
 
 > Door to Cellar; Heals? False
   * Layers: default
   * L0 Hatch to Cellar/Door to Cellar Save Room
-  * Extra - door_idx: (46,)
+  * Extra - door_idx: [46]
   > Door to Kago Roadblock
       Trivial
   > Save Station
@@ -1448,14 +1470,14 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 10}, {'x': 9, 'y': 10}, {'x': 10, 'y
 > Door to Security Shaft East; Heals? False
   * Layers: default
   * L0 Hatch to Security Shaft East/Door to Kago Roadblock
-  * Extra - door_idx: (43,)
+  * Extra - door_idx: [43]
   > Door to Cellar Save Room
       Trivial
 
 > Door to Cellar Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Cellar Save Room/Door to Kago Roadblock
-  * Extra - door_idx: (44, 98)
+  * Extra - door_idx: [44, 98]
   > Door to Security Shaft East
       Trivial
 
@@ -1467,14 +1489,14 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 9}, {'x': 11, 'y': 9}]
 > Door to Arctic Underside; Heals? False
   * Layers: default
   * L0 Hatch to Arctic Underside/Door to Kago Speedway
-  * Extra - door_idx: (102,)
+  * Extra - door_idx: [102]
   > Door to Cellar
       Trivial
 
 > Door to Cellar; Heals? False
   * Layers: default
   * L0 Hatch to Cellar/Door to Kago Speedway
-  * Extra - door_idx: (103,)
+  * Extra - door_idx: [103]
   > Door to Arctic Underside
       Trivial
 
@@ -1486,7 +1508,7 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 8}, {'x': 8, 'y': 9}, {'x': 9, 'y': 
 > Door to Arctic Containment; Heals? False
   * Layers: default
   * L3 Hatch to Arctic Containment/Door to Arctic Underside
-  * Extra - door_idx: (100,)
+  * Extra - door_idx: [100]
   > Door to Kago Speedway
       # Need good waver RNG, also aim for top blocks: https://youtu.be/RgtkGqBW3MU
       Level 0 Keycard and Level 3 Keycard and Speed Booster and Varia Suit and Shinespark Tricks (Ludicrous) and Disabled Door Lock Rando and Disabled Entrance Rando
@@ -1494,7 +1516,7 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 8}, {'x': 8, 'y': 9}, {'x': 9, 'y': 
 > Door to Kago Speedway; Heals? False
   * Layers: default
   * L0 Hatch to Kago Speedway/Door to Arctic Underside
-  * Extra - door_idx: (101,)
+  * Extra - door_idx: [101]
   > Door to Arctic Containment
       All of the following:
           # Need to charge spark in other room, This can safely not have Door Lock Rando check
@@ -1512,7 +1534,7 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 11}, {'x': 9, 'y': 11}, {'x': 10, 'y
 > Door to Cellar; Heals? False
   * Layers: default
   * L0 Hatch to Cellar/Door to Subway
-  * Extra - door_idx: (106,)
+  * Extra - door_idx: [106]
   > Door to Security Shaft East
       Any of the following:
           Can Use Power Bombs
@@ -1525,7 +1547,7 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 11}, {'x': 9, 'y': 11}, {'x': 10, 'y
 > Door to Security Shaft East; Heals? False
   * Layers: default
   * L0 Hatch to Security Shaft East/Door to Subway
-  * Extra - door_idx: (107,)
+  * Extra - door_idx: [107]
   > Door to Cellar
       Can Use Any Bombs
 
@@ -1537,7 +1559,7 @@ Extra - minimap_coordinates: [{'x': 16, 'y': 5}, {'x': 16, 'y': 6}, {'x': 16, 'y
 > Other to Ruined Corridor; Heals? False
   * Layers: default
   * Destroyed Door to Ruined Corridor/Other to Flooded Tower
-  * Extra - door_idx: (54,)
+  * Extra - door_idx: [54]
   > Door to Zebesian Waters
       Trivial
   > Beside Missile Block
@@ -1547,14 +1569,14 @@ Extra - minimap_coordinates: [{'x': 16, 'y': 5}, {'x': 16, 'y': 6}, {'x': 16, 'y
 > Other to Mini-Fridge; Heals? False
   * Layers: default
   * Tunnel to Mini-Fridge/Other to Flooded Tower
-  * Extra - door_idx: (68,)
+  * Extra - door_idx: [68]
   > Beside Missile Block
       Trivial
 
 > Door to Zebesian Waters; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Waters/Door to Flooded Tower
-  * Extra - door_idx: (112,)
+  * Extra - door_idx: [112]
   > Beside Missile Block
       Any of the following:
           Gravity Suit and Space Jump
@@ -1595,7 +1617,7 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 8}, {'x': 18, 'y': 7}, {'x': 18, 'y
 > Door to Flooded Tower; Heals? False
   * Layers: default
   * L0 Hatch to Flooded Tower/Door to Zebesian Waters
-  * Extra - door_idx: (113,)
+  * Extra - door_idx: [113]
   > Door to Flooded Airlock
       Any of the following:
           Can Use Power Bombs
@@ -1612,7 +1634,7 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 8}, {'x': 18, 'y': 7}, {'x': 18, 'y
 > Door to Flooded Airlock; Heals? False
   * Layers: default
   * L0 Hatch to Flooded Airlock/Door to Zebesian Waters
-  * Extra - door_idx: (114,)
+  * Extra - door_idx: [114]
   > Door to Flooded Tower
       Any of the following:
           Can Use Power Bombs
@@ -1637,7 +1659,7 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 8}, {'x': 18, 'y': 7}, {'x': 18, 'y
 > Door to Flooded Access; Heals? False
   * Layers: default
   * L0 Hatch to Flooded Access/Door to Zebesian Waters
-  * Extra - door_idx: (116,)
+  * Extra - door_idx: [116]
   > Door to Flooded Airlock
       Any of the following:
           Can Kill Tough Underwater Beam-Resistant Enemy
@@ -1665,7 +1687,7 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 5}]
 > Other to Nightmare Hub; Heals? False
   * Layers: default
   * Destroyed Door to Nightmare Hub/Other to Ruined Break Room
-  * Extra - door_idx: (118,)
+  * Extra - door_idx: [118]
   > Pickup (Hidden Power Bomb Tank)
       Can Use Power Bombs
 
@@ -1678,7 +1700,7 @@ Extra - unlocked_save_recharge_station: True
 > Door to Nightmare Hub; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Hub/Door to Nightmare Recharge Room
-  * Extra - door_idx: (121,)
+  * Extra - door_idx: [121]
   > Recharge Terminal
       Trivial
 
@@ -1696,7 +1718,7 @@ Extra - unlocked_save_recharge_station: True
 > Door to Nightmare Hub; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Hub/Door to Nightmare Save Room
-  * Extra - door_idx: (122,)
+  * Extra - door_idx: [122]
   > Save Station
       Trivial
 
@@ -1726,7 +1748,7 @@ Extra - minimap_coordinates: [{'x': 20, 'y': 7}, {'x': 20, 'y': 8}, {'x': 21, 'y
 > Door to Zebesian Waters; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Waters/Door to Flooded Airlock
-  * Extra - door_idx: (115,)
+  * Extra - door_idx: [115]
   > Pickup (Power Bomb Tank)
       All of the following:
           # This can safely not have Door Lock Rando check
@@ -1743,7 +1765,7 @@ Extra - minimap_coordinates: [{'x': 20, 'y': 7}, {'x': 20, 'y': 8}, {'x': 21, 'y
 > Area Transition to Sector 4 (AQA); Heals? False
   * Layers: default
   * Open Passage to Cargo Hold/Area Transition to Sector 5 (ARC)
-  * Extra - door_idx: (123,)
+  * Extra - door_idx: [123]
   > Door to Zebesian Waters
       # This can safely not have Door Lock Rando check
       Gravity Suit and Speed Booster and Disabled Entrance Rando
@@ -1768,7 +1790,7 @@ Hint Features - Extreme Temperatures
 > Other to Frozen Tower; Heals? False
   * Layers: default
   * Tunnel to Frozen Tower/Other to Transmutation Trial
-  * Extra - door_idx: (47,)
+  * Extra - door_idx: [47]
   > Pickup (Hidden Missile Tank)
       All of the following:
           Any of the following:
