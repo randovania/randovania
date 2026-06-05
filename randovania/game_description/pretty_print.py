@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pprint
 import typing
 from typing import TYPE_CHECKING, TextIO
 
@@ -18,6 +19,7 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.lib import frozen_lib
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
@@ -170,7 +172,10 @@ def pretty_print_hint_features(features: Iterable[HintFeature]) -> str:
 def pretty_print_area(game: GameDatabaseView, area: Area, print_function: typing.Callable[[str], None] = print) -> None:
     print_function(area.name)
     for extra_name, extra_field in area.extra.items():
-        print_function(f"Extra - {extra_name}: {extra_field}")
+        extra_field_decoded = frozen_lib.unwrap(extra_field)
+        if isinstance(extra_field_decoded, dict | list):
+            extra_field_decoded = pprint.pformat(extra_field_decoded, width=120, sort_dicts=False)
+        print_function(f"Extra - {extra_name}: {extra_field_decoded}")
 
     if area.hint_features:
         print_function(pretty_print_hint_features(area.hint_features))
