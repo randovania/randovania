@@ -285,7 +285,7 @@ class HintDistributor(ABC):
         patches = await self.assign_specific_location_hints(patches, prefill)
 
         if patches.configuration.hints.enable_random_hints:
-            hint_identifiers = prefill.game.iterate_nodes_of_type(GenericHintNode)
+            hint_identifiers = [node.identifier for _, _, node in prefill.game.iterate_nodes_of_type(GenericHintNode)]
             if rng_required or prefill.rng is not None:
                 prefill.rng.shuffle(hint_identifiers)
                 patches = await self.assign_guaranteed_indices_hints(patches, hint_identifiers, prefill)

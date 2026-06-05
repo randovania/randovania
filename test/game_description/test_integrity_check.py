@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import typing
+
 import pytest
 
 from randovania.game.game_enum import RandovaniaGame
@@ -31,7 +33,7 @@ def test_find_database_errors(game_enum: RandovaniaGame):
 
 def test_invalid_db(test_files_dir):
     data_path = test_files_dir.joinpath("integrity_check_invalid_db.json")
-    sample_data = json_lib.read_path(data_path)
+    sample_data = typing.cast("dict", json_lib.read_path(data_path))
     gd = data_reader.decode_data(sample_data)
 
     # # uncomment this line to migrate the test database format

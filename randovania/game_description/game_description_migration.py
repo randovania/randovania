@@ -381,10 +381,7 @@ def _migrate_v32(data: dict, game: RandovaniaGame) -> None:
         for area in region["areas"].values():
             for node in area["nodes"].values():
                 if node["node_type"] == "hint":
-                    if node["kind"] == "generic":
-                        if "translator" in node["extra"]:
-                            node["requirement_display_name"] = node["extra"]["translator"]
-                    elif node["kind"] == "specific-location":
+                    if node["kind"] == "specific-location":
                         node["target_index"] = node["extra"].pop("hint_index")
                     elif node["kind"] == "specific-pickup":
                         node["specific_pickup_hint_id"] = ""

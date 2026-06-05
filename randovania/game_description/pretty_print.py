@@ -156,7 +156,7 @@ def pretty_print_node_type(node: Node, game_view: GameDatabaseView, db: Resource
         if isinstance(node, SpecificLocationHintNode):
             message += f"; Target? {node.target_index}"
         elif isinstance(node, SpecificPickupHintNode):
-            details = db.game_enum.hints.specific_pickup_hints[node.specific_pickup_hint_id]
+            details = game_view.get_game_enum().hints.specific_pickup_hints[node.specific_pickup_hint_id]
             message += f"; Target? {details.long_name}"
         return message
 

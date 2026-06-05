@@ -414,11 +414,6 @@ class Ui_NodeDetailsPopup(object):
         self.hint_layout.setSpacing(6)
         self.hint_layout.setContentsMargins(11, 11, 11, 11)
         self.hint_layout.setObjectName(u"hint_layout")
-        self.override_requirement_display_name_label = QLabel(self.tab_hint)
-        self.override_requirement_display_name_label.setObjectName(u"override_requirement_display_name_label")
-
-        self.hint_layout.addWidget(self.override_requirement_display_name_label, 3, 0, 1, 1)
-
         self.hint_kind_label = QLabel(self.tab_hint)
         self.hint_kind_label.setObjectName(u"hint_kind_label")
 
@@ -439,11 +434,6 @@ class Ui_NodeDetailsPopup(object):
         self.specific_pickup_target_label.setObjectName(u"specific_pickup_target_label")
 
         self.hint_layout.addWidget(self.specific_pickup_target_label, 6, 0, 1, 1)
-
-        self.override_requirement_display_name_edit = QLineEdit(self.tab_hint)
-        self.override_requirement_display_name_edit.setObjectName(u"override_requirement_display_name_edit")
-
-        self.hint_layout.addWidget(self.override_requirement_display_name_edit, 3, 1, 1, 1)
 
         self.hint_requirement_to_collect_group = QGroupBox(self.tab_hint)
         self.hint_requirement_to_collect_group.setObjectName(u"hint_requirement_to_collect_group")
@@ -583,7 +573,6 @@ class Ui_NodeDetailsPopup(object):
         self.event_resource_label.setText(QCoreApplication.translate("NodeDetailsPopup", u"Event:", None))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_event), QCoreApplication.translate("NodeDetailsPopup", u"Event", None))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_configurable), QCoreApplication.translate("NodeDetailsPopup", u"Configurable", None))
-        self.override_requirement_display_name_label.setText(QCoreApplication.translate("NodeDetailsPopup", u"Override requirement display name:", None))
         self.hint_kind_label.setText(QCoreApplication.translate("NodeDetailsPopup", u"Kind:", None))
         self.specific_pickup_target_label.setText(QCoreApplication.translate("NodeDetailsPopup", u"Target Pickup:", None))
         self.hint_requirement_to_collect_group.setTitle("")

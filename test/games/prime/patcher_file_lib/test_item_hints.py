@@ -10,7 +10,7 @@ from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.hint_node import GenericHintNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
@@ -47,7 +47,7 @@ def players_config() -> PlayersConfiguration:
 def _create_region_list(asset_id: int, pickup_index: PickupIndex, num_pickups: int = 0):
     nc = NodeIdentifier.create
 
-    hint_node = HintNode(
+    hint_node = GenericHintNode(
         nc("World", "Area", "Logbook A"),
         0,
         True,
@@ -56,7 +56,6 @@ def _create_region_list(asset_id: int, pickup_index: PickupIndex, num_pickups: i
         ("default",),
         {"string_asset_id": asset_id},
         False,
-        None,
         Requirement.trivial(),
     )
     pickup_node = PickupNode(
@@ -97,7 +96,7 @@ def _create_region_list(asset_id: int, pickup_index: PickupIndex, num_pickups: i
 
     def iterate_nodes_of_type(node_type: type):
         for region, area, node in region_list.all_regions_areas_nodes:
-            if type(node) is node_type:
+            if isinstance(node, node_type):
                 yield region, area, node
 
     game_view = MagicMock()

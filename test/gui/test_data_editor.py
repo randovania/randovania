@@ -270,7 +270,7 @@ def test_ui_patch_and_simplify_template(echoes_resource_database: ResourceDataba
         ),
         (
             ("Hint Room", "Hint with Translator"),
-            ("Generic Hint\n<br />Requirement: BlueKey"),
+            ("Generic Hint\n<br />Requirement: (Blue Key ≥ 1)"),
         ),
         (
             ("Hint Room", "Hint no Translator"),

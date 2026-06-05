@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import typing
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import game_description_migration
@@ -379,7 +379,7 @@ class RegionReader:
             elif node_type == "hint":
                 kind = HintNodeKind(data["kind"])
 
-                hint_args = {
+                hint_args: dict[str, Any] = {
                     "requirement_to_collect": read_requirement(data["requirement_to_collect"], self.resource_database),
                 }
 

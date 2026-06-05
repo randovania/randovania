@@ -32,7 +32,7 @@ from randovania.lib.construct_lib import (
 if TYPE_CHECKING:
     from pathlib import Path
 
-current_format_version = 12
+current_format_version = 13
 
 _EXPECTED_FIELDS = [
     "schema_version",
@@ -254,13 +254,19 @@ ConstructNode = NodeAdapter(
                         **NodeBaseFields,
                         kind=ConstructHintNodeKind,
                         requirement_to_collect=ConstructRequirement,
-                        target_index=If(
-                            lambda ctx: ctx.kind == HintNodeKind.SPECIFIC_LOCATION,
-                            VarInt,
+                        target_index=Default(
+                            If(
+                                lambda ctx: ctx.kind == HintNodeKind.SPECIFIC_LOCATION.value,
+                                VarInt,
+                            ),
+                            None,
                         ),
-                        specific_pickup_hint_id=If(
-                            lambda ctx: ctx.kind == HintNodeKind.SPECIFIC_PICKUP,
-                            String,
+                        specific_pickup_hint_id=Default(
+                            If(
+                                lambda ctx: ctx.kind == HintNodeKind.SPECIFIC_PICKUP.value,
+                                String,
+                            ),
+                            None,
                         ),
                     ),
                 ),
