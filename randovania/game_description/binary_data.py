@@ -4,7 +4,7 @@ import copy
 from typing import TYPE_CHECKING, BinaryIO
 
 import construct.core
-from construct import Construct
+from construct import Construct, If
 from construct.core import (
     Compressed,
     Const,
@@ -249,10 +249,20 @@ ConstructNode = NodeAdapter(
                 "configurable_node": Struct(
                     **NodeBaseFields,
                 ),
-                "hint": Struct(
-                    **NodeBaseFields,
-                    kind=ConstructHintNodeKind,
-                    requirement_to_collect=ConstructRequirement,
+                "hint": DefaultsAdapter(
+                    Struct(
+                        **NodeBaseFields,
+                        kind=ConstructHintNodeKind,
+                        requirement_to_collect=ConstructRequirement,
+                        target_index=If(
+                            lambda ctx: ctx.kind == HintNodeKind.SPECIFIC_LOCATION,
+                            VarInt,
+                        ),
+                        specific_pickup_hint_id=If(
+                            lambda ctx: ctx.kind == HintNodeKind.SPECIFIC_PICKUP,
+                            String,
+                        ),
+                    ),
                 ),
                 "teleporter_network": Struct(
                     **NodeBaseFields,

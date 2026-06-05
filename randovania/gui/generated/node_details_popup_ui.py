@@ -414,10 +414,36 @@ class Ui_NodeDetailsPopup(object):
         self.hint_layout.setSpacing(6)
         self.hint_layout.setContentsMargins(11, 11, 11, 11)
         self.hint_layout.setObjectName(u"hint_layout")
-        self.hint_requirement_to_collect_button = QPushButton(self.tab_hint)
-        self.hint_requirement_to_collect_button.setObjectName(u"hint_requirement_to_collect_button")
+        self.override_requirement_display_name_label = QLabel(self.tab_hint)
+        self.override_requirement_display_name_label.setObjectName(u"override_requirement_display_name_label")
 
-        self.hint_layout.addWidget(self.hint_requirement_to_collect_button, 1, 0, 1, 2)
+        self.hint_layout.addWidget(self.override_requirement_display_name_label, 3, 0, 1, 1)
+
+        self.hint_kind_label = QLabel(self.tab_hint)
+        self.hint_kind_label.setObjectName(u"hint_kind_label")
+
+        self.hint_layout.addWidget(self.hint_kind_label, 0, 0, 1, 1)
+
+        self.specific_location_target_spin = QSpinBox(self.tab_hint)
+        self.specific_location_target_spin.setObjectName(u"specific_location_target_spin")
+        self.specific_location_target_spin.setMaximum(999)
+
+        self.hint_layout.addWidget(self.specific_location_target_spin, 5, 1, 1, 1)
+
+        self.specific_pickup_target_combo = QComboBox(self.tab_hint)
+        self.specific_pickup_target_combo.setObjectName(u"specific_pickup_target_combo")
+
+        self.hint_layout.addWidget(self.specific_pickup_target_combo, 6, 1, 1, 1)
+
+        self.specific_pickup_target_label = QLabel(self.tab_hint)
+        self.specific_pickup_target_label.setObjectName(u"specific_pickup_target_label")
+
+        self.hint_layout.addWidget(self.specific_pickup_target_label, 6, 0, 1, 1)
+
+        self.override_requirement_display_name_edit = QLineEdit(self.tab_hint)
+        self.override_requirement_display_name_edit.setObjectName(u"override_requirement_display_name_edit")
+
+        self.hint_layout.addWidget(self.override_requirement_display_name_edit, 3, 1, 1, 1)
 
         self.hint_requirement_to_collect_group = QGroupBox(self.tab_hint)
         self.hint_requirement_to_collect_group.setObjectName(u"hint_requirement_to_collect_group")
@@ -429,15 +455,24 @@ class Ui_NodeDetailsPopup(object):
 
         self.hint_layout.addWidget(self.hint_requirement_to_collect_group, 2, 0, 1, 2)
 
-        self.hint_kind_label = QLabel(self.tab_hint)
-        self.hint_kind_label.setObjectName(u"hint_kind_label")
+        self.hint_requirement_to_collect_button = QPushButton(self.tab_hint)
+        self.hint_requirement_to_collect_button.setObjectName(u"hint_requirement_to_collect_button")
 
-        self.hint_layout.addWidget(self.hint_kind_label, 0, 0, 1, 1)
+        self.hint_layout.addWidget(self.hint_requirement_to_collect_button, 1, 0, 1, 2)
+
+        self.specific_location_target_label = QLabel(self.tab_hint)
+        self.specific_location_target_label.setObjectName(u"specific_location_target_label")
+
+        self.hint_layout.addWidget(self.specific_location_target_label, 5, 0, 1, 1)
 
         self.hint_kind_combo = QComboBox(self.tab_hint)
         self.hint_kind_combo.setObjectName(u"hint_kind_combo")
 
         self.hint_layout.addWidget(self.hint_kind_combo, 0, 1, 1, 1)
+
+        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.hint_layout.addItem(self.verticalSpacer_6, 7, 1, 1, 1)
 
         self.tab_widget.addTab(self.tab_hint, "")
         self.tab_teleporter_network = QWidget()
@@ -548,9 +583,12 @@ class Ui_NodeDetailsPopup(object):
         self.event_resource_label.setText(QCoreApplication.translate("NodeDetailsPopup", u"Event:", None))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_event), QCoreApplication.translate("NodeDetailsPopup", u"Event", None))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_configurable), QCoreApplication.translate("NodeDetailsPopup", u"Configurable", None))
-        self.hint_requirement_to_collect_button.setText(QCoreApplication.translate("NodeDetailsPopup", u"Edit requirement to collect", None))
+        self.override_requirement_display_name_label.setText(QCoreApplication.translate("NodeDetailsPopup", u"Override requirement display name:", None))
+        self.hint_kind_label.setText(QCoreApplication.translate("NodeDetailsPopup", u"Kind:", None))
+        self.specific_pickup_target_label.setText(QCoreApplication.translate("NodeDetailsPopup", u"Target Pickup:", None))
         self.hint_requirement_to_collect_group.setTitle("")
-        self.hint_kind_label.setText(QCoreApplication.translate("NodeDetailsPopup", u"Kind", None))
+        self.hint_requirement_to_collect_button.setText(QCoreApplication.translate("NodeDetailsPopup", u"Edit requirement to collect", None))
+        self.specific_location_target_label.setText(QCoreApplication.translate("NodeDetailsPopup", u"Target Pickup Index:", None))
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.tab_hint), QCoreApplication.translate("NodeDetailsPopup", u"Hint", None))
         self.teleporter_network_unlocked_button.setText(QCoreApplication.translate("NodeDetailsPopup", u"Edit unlocked by", None))
         self.teleporter_network_unlocked_group.setTitle("")

@@ -376,6 +376,18 @@ def _migrate_v31(data: dict, game: RandovaniaGame) -> None:
             reductions["quantity"] = 1
 
 
+def _migrate_v32(data: dict, game: RandovaniaGame) -> None:
+    for region in data["regions"]:
+        for area in region["areas"].values():
+            for node in area["nodes"].values():
+                if node["node_type"] == "hint":
+                    if node["kind"] == "generic":
+                        if "translator" in node["extra"]:
+                            node["requirement_display_name"] = node["extra"]["translator"]
+                    elif node["kind"] == "specific-location":
+                        node["target_index"] = node["extra"].pop("hint_index")
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -408,6 +420,7 @@ _MIGRATIONS = [
     _migrate_v29,  # add custom_index_group
     _migrate_v30,  # split Echoes light/dark
     _migrate_v31,  # add quantity to damage reduction
+    _migrate_v32,  # split HintNode into three
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

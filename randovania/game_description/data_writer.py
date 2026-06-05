@@ -8,7 +8,11 @@ from randovania.game_description import game_description_migration
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.hint_node import (
+    HintNode,
+    SpecificLocationHintNode,
+    SpecificPickupHintNode,
+)
 from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
@@ -317,7 +321,12 @@ def write_node(node: Node) -> dict:
         data["node_type"] = "hint"
         data.update(common_fields)
         data["kind"] = node.kind.value
-        data["requirement_to_collect"] = write_requirement(node.lock_requirement)
+        data["requirement_to_collect"] = write_requirement(node.requirement_to_collect)
+
+        if isinstance(node, SpecificLocationHintNode):
+            data["target_index"] = node.target_index.index
+        elif isinstance(node, SpecificPickupHintNode):
+            data["specific_pickup_hint_id"] = node.specific_pickup_hint_id
 
     elif isinstance(node, TeleporterNetworkNode):
         data["node_type"] = "teleporter_network"
