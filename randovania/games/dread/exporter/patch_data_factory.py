@@ -111,8 +111,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
 
     def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, int]:
         result = {}
-        for resource, quantity in resources.as_resource_gain():
-            assert isinstance(resource, ItemResourceInfo)
+        for resource, quantity in resources.as_resource_gain_of_type(ItemResourceInfo):
             try:
                 result[get_item_id_for_item(resource)] = quantity
             except KeyError:

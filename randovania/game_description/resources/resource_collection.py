@@ -13,7 +13,13 @@ if typing.TYPE_CHECKING:
     import Cython as cython
 
     from randovania.game_description.game_database_view import ResourceDatabaseView
-    from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
+    from randovania.game_description.resources.resource_info import (
+        ResourceGain,
+        ResourceGainT,
+        ResourceGainTuple,
+        ResourceInfo,
+        ResourceInfoT,
+    )
 else:
     # However cython's compiler seems to expect the import to be this way, otherwise `cython.compiled` breaks
     import cython
@@ -200,6 +206,12 @@ class ResourceCollection:
 
     def as_resource_gain(self) -> ResourceGain:
         for index, resource in self._existing_resources.items():
+            yield resource, self._resource_array[index]
+
+    def as_resource_gain_of_type(self, resource_class: type[ResourceInfoT]) -> ResourceGainT[ResourceInfoT]:
+        """A generator of all resources in this collection of the given type."""
+        for index, resource in self._existing_resources.items():
+            assert isinstance(resource, resource_class)
             yield resource, self._resource_array[index]
 
     def remove_resource(self, resource: ResourceInfo) -> cython.void:

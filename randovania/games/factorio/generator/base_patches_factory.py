@@ -48,8 +48,7 @@ class FactorioBasePatchesFactory(BasePatchesFactory[FactorioConfiguration]):
 
         # Get all recipes available
         available_recipes = {recipe for recipe, data in recipes_raw.items() if data.get("enabled", True)}
-        for tech, _ in collection.as_resource_gain():
-            assert isinstance(tech, ItemResourceInfo)
+        for tech, _ in collection.as_resource_gain_of_type(ItemResourceInfo):
             available_recipes.update(tech.extra["recipes_unlocked"])
 
         # Get all recipe results

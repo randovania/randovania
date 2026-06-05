@@ -9,12 +9,11 @@ if typing.TYPE_CHECKING:
 
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 def _resource_in_item_list(
-    resource: ResourceInfo, items: Container[ItemResourceInfo]
+    resource: ItemResourceInfo, items: Container[ItemResourceInfo]
 ) -> typing.TypeGuard[ItemResourceInfo]:
     return resource in items
 
@@ -34,7 +33,7 @@ def find_locations_that_gives_items(
             # TODO: iterate over all tiers of progression
             resources = patches.game.get_resource_database_view().create_resource_collection()
             resources.add_resource_gain(target.pickup.resource_gain(resources))
-            for resource, quantity in resources.as_resource_gain():
+            for resource, quantity in resources.as_resource_gain_of_type(ItemResourceInfo):
                 if quantity > 0 and _resource_in_item_list(resource, result):
                     result[resource].append((other_player, PickupLocation(patches.configuration.game, pickup_index)))
 
@@ -50,7 +49,7 @@ def hint_text_if_items_are_starting(
 ) -> dict[ItemResourceInfo, str]:
     result: dict[ItemResourceInfo, str] = {}
 
-    for resource, quantity in all_patches[player].starting_resources().as_resource_gain():
+    for resource, quantity in all_patches[player].starting_resources().as_resource_gain_of_type(ItemResourceInfo):
         if quantity > 0 and _resource_in_item_list(resource, target_items):
             result[resource] = namer.format_resource_is_starting(resource, with_color)
 

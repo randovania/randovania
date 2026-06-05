@@ -123,8 +123,8 @@ class State:
         return state_native.state_collected_pickups_indices(self.resources, graph)
 
     def collected_hints(self, graph: WorldGraph) -> Iterator[NodeIdentifier]:
-        for resource, count in self.resources.as_resource_gain():
-            if count > 0 and isinstance(resource, NodeResourceInfo):
+        for resource, count in self.resources.as_resource_gain_of_type(NodeResourceInfo):
+            if count > 0:
                 if isinstance(graph.get_node_by_resource_info(resource).database_node, HintNode):
                     yield resource.node_identifier
 
