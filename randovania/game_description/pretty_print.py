@@ -151,7 +151,7 @@ def pretty_print_node_type(node: Node, game_view: GameDatabaseView, db: Resource
 
     elif isinstance(node, HintNode):
         message = f"{node.kind.long_name} Hint"
-        if (requirement := node.requirement_name) != "Trivial":
+        if (requirement := str(node.requirement_to_collect)) != "Trivial":
             message += f"; Requirement? {requirement}"
         if isinstance(node, SpecificLocationHintNode):
             message += f"; Target? {node.target_index}"

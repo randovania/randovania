@@ -495,8 +495,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 )
 
             elif isinstance(node, SpecificPickupHintNode):
-                details = self.resource_database.game_enum.hints.specific_pickup_hints[node.specific_pickup_hint_id]
-                msg += f"\n<br />Target: {details.long_name}"
+                specific_pickup_hints = self.resource_database.game_enum.hints.specific_pickup_hints
+                if node.specific_pickup_hint_id in specific_pickup_hints:
+                    hint_id = specific_pickup_hints[node.specific_pickup_hint_id].long_name
+                else:
+                    hint_id = "Unknown"
+                msg += f"\n<br />Target: {hint_id}"
 
             if (requirement := str(node.requirement_to_collect)) != "Trivial":
                 msg += f"\n<br />Requirement: {requirement}"
