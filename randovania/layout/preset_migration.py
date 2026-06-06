@@ -1266,6 +1266,11 @@ def _migrate_v116(preset: dict, game: RandovaniaGame, *, from_layout_description
                 beam["ammo_b"] = None
 
 
+def _migrate_v117(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    if game == RandovaniaGame.METROID_SAMUS_RETURNS:
+        preset["configuration"]["skip_opening"] = False
+
+
 _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1383,6 +1388,7 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v114,  # prime/echoes: remove `allow_unvisited_room_names` in teleporter config
     _migrate_v115,  # echoes: remove portal rando
     _migrate_v116,  # echoes: update beam configuration to new format
+    _migrate_v117,  # msr: skip the opening storyboard cutscene configuration
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
