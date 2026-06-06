@@ -22,6 +22,7 @@ from randovania.gui.preset_settings.standard_pickup_widget import StandardPickup
 from randovania.gui.widgets.foldable import Foldable
 from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox, ScrollProtectedSpinBox
 from randovania.layout.base.available_locations import RandomizationMode
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.exceptions import InvalidConfiguration
 
@@ -119,7 +120,7 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
     def header_name(cls) -> str | None:
         return None
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset[BaseConfiguration]):
         layout = preset.configuration
         major_configuration = layout.standard_pickup_configuration
 
@@ -169,8 +170,6 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
 
             if widgets.require_main_item_check is not None:
                 widgets.require_main_item_check.setChecked(state.requires_main_item)
-                if self.game == RandovaniaGame.METROID_PRIME:
-                    widgets.require_main_item_check.setChecked(False)
 
             self_counts = []
             for ammo_index, count in enumerate(state.ammo_count):

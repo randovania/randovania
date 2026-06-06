@@ -1,8 +1,13 @@
 from __future__ import annotations
 
 import dataclasses
+import re
 from typing import TYPE_CHECKING
 
+from PySide6 import QtCore
+
+from randovania.game_description.resources.resource_type import ResourceType
+from randovania.gui.dialog.trick_details_popup import ResourceDetailsPopup
 from randovania.gui.generated.preset_generation_ui import Ui_PresetGeneration
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -68,6 +73,9 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         self.damage_strictness_combo.setItemData(1, LayoutDamageStrictness.MEDIUM)
         self.damage_strictness_combo.setItemData(2, LayoutDamageStrictness.LENIENT)
         self.damage_strictness_combo.currentIndexChanged.connect(self._on_update_damage_strictness)
+
+        # URL handling
+        self._resource_details_re = re.compile(r"^resource-details:\/\/(\w+?)\/(\w+?)$")
 
     def update_experimental_visibility(self):
         super().update_experimental_visibility()
@@ -153,3 +161,25 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     def _on_logical_pickup_placement_mode_changed(self, logical_placement_config: LogicalPickupPlacementConfiguration):
         self._persist_logical_pickup_placement(logical_placement_config)
         self.logical_pickup_placement_description.setText(logical_placement_config.description)
+
+    def _on_click_link_resource_logic_details(self, link: str) -> None:
+        """
+        Parses the clicked URL, then opens the corresponding resource info popup.
+        """
+        res = self._resource_details_re.match(link)
+        if res is None:
+            return
+        res_type, name = res.groups()
+        self._show_resource_details(
+            ResourceType.from_str(res_type),
+            name,
+        )
+
+    def _show_resource_details(self, resource_type: ResourceType, name: str) -> None:
+        db_view = self.game_description.get_resource_database_view()
+        popup = ResourceDetailsPopup(
+            self, self._window_manager, self.game_description, db_view.get_resource_of_type(resource_type, name)
+        )
+        self._resource_details_popup = popup
+        self._resource_details_popup.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
+        self._resource_details_popup.open()

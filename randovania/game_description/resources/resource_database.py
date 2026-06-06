@@ -143,6 +143,10 @@ class ResourceDatabase(ResourceDatabaseView):
         return self.requirement_template[name]
 
     @override
+    def get_resource_of_type(self, resource_type: ResourceType, name: str) -> search.ResourceInfo:
+        return self.get_by_type_and_index(resource_type, name)
+
+    @override
     def get_all_resources_of_type(self, resource_type: ResourceType) -> Sequence[ResourceInfo]:
         return self.get_by_type(resource_type)
 
