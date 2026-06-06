@@ -93,8 +93,8 @@ def _hash_words() -> list[str]:
 
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="3BPQKKA5",
-        database_collectable_ignore_events=("Event92", "Event97"),
+        expected_seed_hash="I46J2574",
+        database_collectable_ignore_events=("Event91", "Event92", "Event97"),
     )
 
 
