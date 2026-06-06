@@ -320,15 +320,11 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore
   * Extra - dock_name: SouthLight
   > Pickup (Violet Translator)
       Trivial
-  > Teleporter to Agon Wastes
-      After Main Energy Controller Pickup
-  > Teleporter to Torvus Bog
-      After Main Energy Controller Pickup
-  > Teleporter to Sanctuary Fortress
-      After Main Energy Controller Pickup
-  > Event - Main Energy Controller Pickup
+  > Event - Activate Energy Controller Transports
       After Sanctuary Energy Returned
   > Lore Scan
+      Trivial
+  > Light Transport
       Trivial
 
 > Pickup (Violet Translator); Heals? False
@@ -369,36 +365,9 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore
   > Door to Controller Transport
       Trivial
 
-> Teleporter to Agon Wastes; Heals? False
+> Event - Activate Energy Controller Transports; Heals? False
   * Layers: default
-  * Teleporter to Agon Energy Controller/Teleporter to Great Temple
-  * Extra - scan_asset_id: None
-  * Extra - teleporter_instance_id: 939982960
-  * Extra - keep_name_when_vanilla: False
-  > Door to Controller Transport
-      Trivial
-
-> Teleporter to Torvus Bog; Heals? False
-  * Layers: default
-  * Teleporter to Torvus Energy Controller/Teleporter to Great Temple
-  * Extra - scan_asset_id: None
-  * Extra - teleporter_instance_id: 939982964
-  * Extra - keep_name_when_vanilla: False
-  > Door to Controller Transport
-      Trivial
-
-> Teleporter to Sanctuary Fortress; Heals? False
-  * Layers: default
-  * Teleporter to Sanctuary Energy Controller/Teleporter to Great Temple
-  * Extra - scan_asset_id: None
-  * Extra - teleporter_instance_id: 939982965
-  * Extra - keep_name_when_vanilla: False
-  > Door to Controller Transport
-      Trivial
-
-> Event - Main Energy Controller Pickup; Heals? False
-  * Layers: default
-  * Event Main Energy Controller Pickup
+  * Event Activate Energy Controller Transports
   > Pickup (Light Suit)
       Trivial
 
@@ -407,6 +376,12 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore
   * Generic Hint; Requirement? (Scan Visor ≥ 1 and Violet Translator ≥ 1)
   * Extra - translator: Violet
   * Extra - string_asset_id: 3277287077
+  > Door to Controller Transport
+      Trivial
+
+> Light Transport; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Activate Energy Controller Transports)
   > Door to Controller Transport
       Trivial
 

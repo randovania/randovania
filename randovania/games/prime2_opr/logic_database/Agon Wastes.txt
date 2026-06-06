@@ -1359,17 +1359,13 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Lumino
   * Layers: default
   * Normal Door to Controller Access/Door to Agon Energy Controller
   * Extra - dock_name: South
-  > Teleporter to Sanctuary Fortress
-      After Main Energy Controller Pickup
-  > Teleporter to Torvus Bog
-      After Main Energy Controller Pickup
-  > Teleporter to Great Temple
-      After Main Energy Controller Pickup
   > Event - Agon Energy Returned
       After Dark Agon Energy Taken
   > Event - Agon Energy Controller Pickup
       Trivial
   > Lore Scan
+      Trivial
+  > Light Transport
       Trivial
 
 > Pickup (Amber Translator); Heals? False
@@ -1384,33 +1380,6 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Lumino
  'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 1.0},
  'collision_size': {'x': 1.0, 'y': 1.0, 'z': 2.0},
  'layer': 'Default'}
-  > Door to Controller Access
-      Trivial
-
-> Teleporter to Sanctuary Fortress; Heals? False
-  * Layers: default
-  * Teleporter to Sanctuary Energy Controller/Teleporter to Agon Wastes
-  * Extra - scan_asset_id: None
-  * Extra - teleporter_instance_id: 405209185
-  * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
-      Trivial
-
-> Teleporter to Torvus Bog; Heals? False
-  * Layers: default
-  * Teleporter to Torvus Energy Controller/Teleporter to Agon Wastes
-  * Extra - scan_asset_id: None
-  * Extra - teleporter_instance_id: 405209407
-  * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
-      Trivial
-
-> Teleporter to Great Temple; Heals? False
-  * Layers: default
-  * Teleporter to Main Energy Controller/Teleporter to Agon Wastes
-  * Extra - scan_asset_id: None
-  * Extra - teleporter_instance_id: 405209411
-  * Extra - keep_name_when_vanilla: False
   > Door to Controller Access
       Trivial
 
@@ -1431,6 +1400,12 @@ Hint Features - Energy Controller, Light Energy Transport, Luminoth Lore, Lumino
   * Generic Hint; Requirement? (Amber Translator ≥ 1 and Scan Visor ≥ 1)
   * Extra - translator: Amber
   * Extra - string_asset_id: 4021961856
+  > Door to Controller Access
+      Trivial
+
+> Light Transport; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Activate Energy Controller Transports)
   > Door to Controller Access
       Trivial
 

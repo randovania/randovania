@@ -9254,33 +9254,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Teleporter to Sanctuary Fortress": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event77",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Teleporter to Torvus Bog": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event77",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Teleporter to Great Temple": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event77",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Event - Agon Energy Returned": {
                             "type": "resource",
                             "data": {
@@ -9298,6 +9271,13 @@
                             }
                         },
                         "Lore Scan": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Light Transport": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9352,114 +9332,6 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {
-                        "Door to Controller Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Teleporter to Sanctuary Fortress": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "scan_asset_id": null,
-                        "teleporter_instance_id": 405209185,
-                        "keep_name_when_vanilla": false
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "teleporter",
-                    "default_connection": {
-                        "region": "Sanctuary Fortress",
-                        "area": "Sanctuary Energy Controller",
-                        "node": "Teleporter to Agon Wastes"
-                    },
-                    "default_dock_weakness": "Teleporter",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Door to Controller Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Teleporter to Torvus Bog": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "scan_asset_id": null,
-                        "teleporter_instance_id": 405209407,
-                        "keep_name_when_vanilla": false
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "teleporter",
-                    "default_connection": {
-                        "region": "Torvus Bog",
-                        "area": "Torvus Energy Controller",
-                        "node": "Teleporter to Agon Wastes"
-                    },
-                    "default_dock_weakness": "Teleporter",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Door to Controller Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Teleporter to Great Temple": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "scan_asset_id": null,
-                        "teleporter_instance_id": 405209411,
-                        "keep_name_when_vanilla": false
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "teleporter",
-                    "default_connection": {
-                        "region": "Great Temple",
-                        "area": "Main Energy Controller",
-                        "node": "Teleporter to Agon Wastes"
-                    },
-                    "default_dock_weakness": "Teleporter",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -9550,6 +9422,43 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "connections": {
+                        "Door to Controller Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Light Transport": {
+                    "node_type": "teleporter_network",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "Event77",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "network": "Energy Controllers",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
                         }
                     },
                     "connections": {
