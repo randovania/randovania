@@ -3771,6 +3771,49 @@
                     "extra": {},
                     "valid_starting_location": true,
                     "connections": {
+                        "Door to Gateway Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "DarkWorld1",
+                                            "amount": 35,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "DarkWorld1",
+                                                        "amount": 25,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Elevator to Sky Temple": {
                             "type": "and",
                             "data": {
@@ -3867,6 +3910,44 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Hint - Sky Temple Keys": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint - Sky Temple Keys": {
+                    "node_type": "hint",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "kind": "specific-pickup",
+                    "requirement_to_collect": {
+                        "type": "resource",
+                        "data": {
+                            "type": "items",
+                            "name": "Scan",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "specific_pickup_hint_id": "sky_temple_keys",
+                    "connections": {
+                        "Spawn Point/Front of Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }

@@ -10331,6 +10331,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Hint - Dark Torvus Temple Keys": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -10455,6 +10462,37 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Hint - Dark Torvus Temple Keys": {
+                    "node_type": "hint",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "kind": "specific-pickup",
+                    "requirement_to_collect": {
+                        "type": "resource",
+                        "data": {
+                            "type": "items",
+                            "name": "Scan",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "specific_pickup_hint_id": "dark_temple_keys",
+                    "connections": {
+                        "Central Safe Zone (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
