@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [10.9.0] - 2026-07-0?
 
 - Waiting changes to be added.
+- Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
+- Changed: The seed hash text in the Multiplayer window can now be interacted with.
 
 ## [10.8.1] - 2026-06-??
 
