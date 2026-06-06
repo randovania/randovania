@@ -426,7 +426,7 @@ class Ui_MSRCosmeticPatchesDialog(object):
         self.custom_grapple_laser_locked_color_button.setText(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Set Grapple Target-Aim Color...", None))
         self.custom_grapple_laser_unlocked_color_button.setText(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Set Grapple Free-Aim Color...", None))
         self.custom_laser_locked_color_button.setText(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Set Standard Target-Aim Color...", None))
-        self.use_fusion_models_cb.setText(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Use Fusion models", None))
+        self.use_fusion_models_cb.setText(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Use Fusion suits", None))
         self.groupBox.setTitle(QCoreApplication.translate("MSRCosmeticPatchesDialog", u" HUD Changes", None))
         self.label.setText(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Color choices may appear differently in-game than what is selected.", None))
         self.custom_ammo_hud_color_check.setText(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Use a custom Ammo color", None))

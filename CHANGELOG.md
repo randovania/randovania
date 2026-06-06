@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Added: Cosmetic option to reveal the map at the start (default: on)
-- Added: Cosmetic option to use Fusion models (default: off)
+- Added: Cosmetic option to use Fusion suits (default: off)
 - Added: Preset option to skip the opening storyboard cutscene (default: off)
 - Fixed: Spazer and Plasma beam projectiles no longer shoot through blocks without Wave
 
