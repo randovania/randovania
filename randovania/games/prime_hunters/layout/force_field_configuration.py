@@ -17,6 +17,8 @@ if TYPE_CHECKING:
 
 
 class LayoutForceFieldRequirement(BitPackEnum, Enum):
+    long_name: str
+
     POWER_BEAM = "power-beam"
     VOLT_DRIVER = "volt-driver"
     MISSILE = "missile"
@@ -72,7 +74,7 @@ def _get_vanilla_force_field_configuration() -> dict[NodeIdentifier, LayoutForce
 
     game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_HUNTERS)
     return {
-        node.identifier: LayoutForceFieldRequirement.from_item_short_name(node.extra["entity_type_data"]["weapon"])
+        node.identifier: LayoutForceFieldRequirement.from_item_short_name(node.extra["fields"]["force_field_type"])
         for node in game.region_list.iterate_nodes_of_type(ConfigurableNode)
     }
 

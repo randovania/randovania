@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, NamedTuple
+from typing import TYPE_CHECKING, Any, Generic, NamedTuple, TypeVar
 
 from randovania.game_description import default_database
+from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -12,10 +13,12 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool.pool_creator import calculate_pool_results
 from randovania.graph import world_graph_factory
 from randovania.graph.state import State
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.lib import random_lib
+from randovania.lib.json_lib import JsonType
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Generator, Iterable
@@ -33,7 +36,6 @@ if TYPE_CHECKING:
     from randovania.generator.pickup_pool import PoolResults
     from randovania.graph import world_graph
     from randovania.graph.world_graph import WorldGraph
-    from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
     from randovania.resolver.damage_state import DamageState
@@ -87,7 +89,15 @@ class EnergyConfig(NamedTuple):
     energy_per_tank: int
 
 
-class Bootstrap[Configuration: BaseConfiguration]:
+Configuration = TypeVar("Configuration", bound=BaseConfiguration)
+
+
+class Bootstrap(Generic[Configuration]):  # noqa: UP046
+    configurable_nodes: ConfigurableNodeBootstrap[Configuration, Any]
+
+    def __init__(self) -> None:
+        self.configurable_nodes = self._configurable_node_class()()
+
     def trick_resources_for_configuration(
         self,
         configuration: TrickLevelConfiguration,
@@ -259,6 +269,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
             raise ValueError("Running logic_bootstrap with non-mutable game")
 
         self.apply_game_specific_patches(configuration, game, patches)
+        self.apply_configurable_node_patches(configuration, game, patches)
 
         # All majors/pickups required
         game.victory_condition = victory_condition_for_pickup_placement(
@@ -294,6 +305,14 @@ class Bootstrap[Configuration: BaseConfiguration]:
         self, configuration: Configuration, game: GameDescription, patches: GamePatches
     ) -> None:
         pass
+
+    def apply_configurable_node_patches(
+        self, configuration: Configuration, game: GameDescription, patches: GamePatches
+    ) -> None:
+        for _, _, node in game.iterate_nodes_of_type(ConfigurableNode):
+            node_config = self.configurable_nodes.get_node_config(configuration, game, patches, node)
+            requirement = self.configurable_nodes.get_requirement(configuration, game, node_config)
+            game.region_list.configurable_nodes[node.identifier] = requirement
 
     def assign_pool_results(
         self, rng: Random, configuration: Configuration, patches: GamePatches, pool_results: PoolResults
@@ -369,3 +388,86 @@ class Bootstrap[Configuration: BaseConfiguration]:
             pool_results,
             game,
         )
+
+    @classmethod
+    def _configurable_node_class(cls) -> type[ConfigurableNodeBootstrap]:
+        """What class to use for this Bootstrap's configurable nodes"""
+        return ConfigurableNodeBootstrap[Configuration, Any]
+
+
+class ConfigurableNodeBootstrap[Configuration: BaseConfiguration, ConfigNodeData]:
+    @property
+    def category_name(self) -> str:
+        """
+        The name used to refer to this game's configurable nodes.
+        """
+        raise NotImplementedError
+
+    def get_requirement(
+        self, configuration: Configuration, game: GameDescription, node_config: ConfigNodeData
+    ) -> Requirement:
+        """
+        Returns a Requirement to use, given data for a ConfigurableNode.
+        """
+        return Requirement.impossible()
+
+    def _get_standard_options(
+        self,
+        requirement: ConfigNodeData,
+        requirement_name: str,
+        random_reqs: set[ConfigNodeData],
+        items: dict[str, ConfigNodeData],
+    ) -> dict[str, ConfigNodeData | None]:
+        """
+        Standardized logic for configurable node options.
+        """
+        options: dict[str, ConfigNodeData | None] = {}
+
+        if requirement in random_reqs:
+            options["Unknown"] = None
+            for name, value in items.items():
+                options[name] = value
+        else:
+            options[requirement_name] = requirement
+
+        return options
+
+    def get_options(
+        self, configuration: Configuration, game: GameDescription, node: ConfigurableNode
+    ) -> dict[str, ConfigNodeData | None]:
+        """
+        Returns a mapping of option name and option data for a
+        given ConfigurableNode, according to the configuration.
+        Used by the map tracker to populate the dropdowns.
+        """
+        return {}
+
+    def get_node_config(
+        self, configuration: Configuration, game: GameDescription, patches: GamePatches, node: ConfigurableNode
+    ) -> ConfigNodeData:
+        """
+        Returns the config data for this node, according to the game patches.
+        """
+        raise NotImplementedError
+
+    def get_default_patches(
+        self, configuration: Configuration, game: GameDescription, patches: GamePatches
+    ) -> GamePatches:
+        """
+        Returns a GamePatches with the configurable nodes all assigned to an arbitrary default.
+        """
+        return patches
+
+    def config_data_to_json(self, value: ConfigNodeData) -> JsonType:
+        """
+        Serializes the data for a config node to JSON.
+        Used by the map tracker to maintain state.
+        """
+        raise NotImplementedError
+
+    def json_to_config_data(self, value: JsonType) -> ConfigNodeData:
+        """
+        Deerializes the data for a config node from JSON.
+        Used by the map tracker to maintain state.
+        """
+        raise NotImplementedError

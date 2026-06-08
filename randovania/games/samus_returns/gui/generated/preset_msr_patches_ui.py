@@ -24,7 +24,7 @@ class Ui_PresetMSRPatches(object):
         if not PresetMSRPatches.objectName():
             PresetMSRPatches.setObjectName(u"PresetMSRPatches")
         PresetMSRPatches.setEnabled(True)
-        PresetMSRPatches.resize(642, 535)
+        PresetMSRPatches.resize(642, 590)
         self.root_widget = QWidget(PresetMSRPatches)
         self.root_widget.setObjectName(u"root_widget")
         self.root_widget.setMaximumSize(QSize(16777215, 16777215))
@@ -32,7 +32,7 @@ class Ui_PresetMSRPatches(object):
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
+        self.verticalLayout.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.scroll_area = QScrollArea(self.root_widget)
         self.scroll_area.setObjectName(u"scroll_area")
@@ -40,7 +40,7 @@ class Ui_PresetMSRPatches(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_contents = QWidget()
         self.scroll_contents.setObjectName(u"scroll_contents")
-        self.scroll_contents.setGeometry(QRect(0, 0, 626, 681))
+        self.scroll_contents.setGeometry(QRect(0, -258, 626, 844))
         self.scroll_contents.setMinimumSize(QSize(0, 469))
         self.scroll_layout = QVBoxLayout(self.scroll_contents)
         self.scroll_layout.setSpacing(6)
@@ -115,59 +115,73 @@ class Ui_PresetMSRPatches(object):
 
         self.scroll_layout.addWidget(self.environment_group)
 
-        self.misc_group = QGroupBox(self.scroll_contents)
-        self.misc_group.setObjectName(u"misc_group")
-        self.verticalLayout_2 = QVBoxLayout(self.misc_group)
+        self.item_group = QGroupBox(self.scroll_contents)
+        self.item_group.setObjectName(u"item_group")
+        self.verticalLayout_2 = QVBoxLayout(self.item_group)
         self.verticalLayout_2.setSpacing(6)
         self.verticalLayout_2.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.charge_door_buff_check = QCheckBox(self.misc_group)
+        self.charge_door_buff_check = QCheckBox(self.item_group)
         self.charge_door_buff_check.setObjectName(u"charge_door_buff_check")
 
         self.verticalLayout_2.addWidget(self.charge_door_buff_check)
 
-        self.charge_door_buff_label = QLabel(self.misc_group)
+        self.charge_door_buff_label = QLabel(self.item_group)
         self.charge_door_buff_label.setObjectName(u"charge_door_buff_label")
         self.charge_door_buff_label.setWordWrap(True)
 
         self.verticalLayout_2.addWidget(self.charge_door_buff_label)
 
-        self.beam_door_buff_check = QCheckBox(self.misc_group)
+        self.beam_door_buff_check = QCheckBox(self.item_group)
         self.beam_door_buff_check.setObjectName(u"beam_door_buff_check")
 
         self.verticalLayout_2.addWidget(self.beam_door_buff_check)
 
-        self.beam_door_buff_label = QLabel(self.misc_group)
+        self.beam_door_buff_label = QLabel(self.item_group)
         self.beam_door_buff_label.setObjectName(u"beam_door_buff_label")
         self.beam_door_buff_label.setWordWrap(True)
 
         self.verticalLayout_2.addWidget(self.beam_door_buff_label)
 
-        self.beam_burst_buff_check = QCheckBox(self.misc_group)
+        self.beam_burst_buff_check = QCheckBox(self.item_group)
         self.beam_burst_buff_check.setObjectName(u"beam_burst_buff_check")
 
         self.verticalLayout_2.addWidget(self.beam_burst_buff_check)
 
-        self.beam_burst_buff_label = QLabel(self.misc_group)
+        self.beam_burst_buff_label = QLabel(self.item_group)
         self.beam_burst_buff_label.setObjectName(u"beam_burst_buff_label")
         self.beam_burst_buff_label.setWordWrap(True)
 
         self.verticalLayout_2.addWidget(self.beam_burst_buff_label)
 
-        self.nerf_super_missiles_check = QCheckBox(self.misc_group)
+        self.nerf_super_missiles_check = QCheckBox(self.item_group)
         self.nerf_super_missiles_check.setObjectName(u"nerf_super_missiles_check")
 
         self.verticalLayout_2.addWidget(self.nerf_super_missiles_check)
 
-        self.nerf_super_missiles_label = QLabel(self.misc_group)
+        self.nerf_super_missiles_label = QLabel(self.item_group)
         self.nerf_super_missiles_label.setObjectName(u"nerf_super_missiles_label")
         self.nerf_super_missiles_label.setWordWrap(True)
 
         self.verticalLayout_2.addWidget(self.nerf_super_missiles_label)
 
+
+        self.scroll_layout.addWidget(self.item_group)
+
+        self.misc_group = QGroupBox(self.scroll_contents)
+        self.misc_group.setObjectName(u"misc_group")
+        self.verticalLayout_4 = QVBoxLayout(self.misc_group)
+        self.verticalLayout_4.setSpacing(6)
+        self.verticalLayout_4.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.skip_opening_check = QCheckBox(self.misc_group)
+        self.skip_opening_check.setObjectName(u"skip_opening_check")
+
+        self.verticalLayout_4.addWidget(self.skip_opening_check)
+
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout_2.addItem(self.verticalSpacer)
+        self.verticalLayout_4.addItem(self.verticalSpacer)
 
 
         self.scroll_layout.addWidget(self.misc_group)
@@ -196,7 +210,7 @@ class Ui_PresetMSRPatches(object):
         self.area1_crumbles_label.setText(QCoreApplication.translate("PresetMSRPatches", u"Changes the Crumble Blocks leaving Area 1 to Power Beam Blocks, allowing for earlier access to Area 2 with only Morph Ball. This helps make item placement less restrictive.", None))
         self.reverse_area8_check.setText(QCoreApplication.translate("PresetMSRPatches", u"Reverse Area 8", None))
         self.reverse_area8_label.setText(QCoreApplication.translate("PresetMSRPatches", u"<html><head/><body><p>Removes the wall between the Queen Arena and Hatchling Room, allowing for earlier access into Area 8 by entering the area backwards.</p><p>If the Metroid Queen is the final boss, the wall will always be removed even if this option is unchecked.</p></body></html>", None))
-        self.misc_group.setTitle(QCoreApplication.translate("PresetMSRPatches", u"Item Changes", None))
+        self.item_group.setTitle(QCoreApplication.translate("PresetMSRPatches", u"Item Changes", None))
         self.charge_door_buff_check.setText(QCoreApplication.translate("PresetMSRPatches", u"Buff Charge Beam Doors", None))
         self.charge_door_buff_label.setText(QCoreApplication.translate("PresetMSRPatches", u"Makes Charge Doors invulnerable to Power Bombs. Beam Burst is unaffected.", None))
         self.beam_door_buff_check.setText(QCoreApplication.translate("PresetMSRPatches", u"Buff Beam Doors", None))
@@ -205,5 +219,7 @@ class Ui_PresetMSRPatches(object):
         self.beam_burst_buff_label.setText(QCoreApplication.translate("PresetMSRPatches", u"Makes Blob Throwers and Steel Orbs invulnerable to Power Bombs.", None))
         self.nerf_super_missiles_check.setText(QCoreApplication.translate("PresetMSRPatches", u"Buff Missile Doors", None))
         self.nerf_super_missiles_label.setText(QCoreApplication.translate("PresetMSRPatches", u"Makes Missile Doors invulnerable to Super Missiles. Missile blocks are unaffected.", None))
+        self.misc_group.setTitle(QCoreApplication.translate("PresetMSRPatches", u"Misc. Changes", None))
+        self.skip_opening_check.setText(QCoreApplication.translate("PresetMSRPatches", u"Skip the opening storyboard cutscene", None))
     # retranslateUi
 

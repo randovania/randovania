@@ -9,11 +9,9 @@ import pytest
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
-    PrimeTrilogyTeleporterConfiguration,
-)
 from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
+from randovania.games.prime2.layout.echoes_teleporters import EchoesTeleporterConfiguration
 from randovania.generator.pickup_pool import pool_creator
 
 _GUARDIAN_INDICES = [
@@ -38,7 +36,7 @@ def test_misc_resources_for_configuration(
     vanilla_teleporters: bool,
 ):
     # Setup
-    teleporters = MagicMock(spec=PrimeTrilogyTeleporterConfiguration)
+    teleporters = MagicMock(spec=EchoesTeleporterConfiguration)
     configuration = dataclasses.replace(default_echoes_configuration, teleporters=teleporters)
     teleporters.is_vanilla = vanilla_teleporters
     great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGreatTempleEmeraldGate")

@@ -24,7 +24,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v8.1.0
         with:
-          version: "0.11.16"
+          version: "0.11.18"
           enable-cache: true
 
       - name: Set up Python
@@ -39,16 +39,17 @@ jobs:
       - name: Install Python packages
         run: uv sync --locked --extra exporters --extra gui --extra server --extra test
 
-      - name: run pytest (benchmark)
-        uses: CodSpeedHQ/action@v4
-        if: ${{ github.event_name != 'merge_group' }}
-        with:
-          run: uv run pytest --codspeed --codspeed-max-rounds=2 --skip-gui-tests --test-group=${{ matrix.shard }} --test-group-count=4
-          mode: walltime
-          token: ${{ secrets.CODSPEED_TOKEN }}
+      # FIXME: Disable codpseed for now until we get a more stable environment
+      # - name: run pytest (benchmark)
+      #   uses: CodSpeedHQ/action@v4
+      #   if: ${{ github.event_name != 'merge_group' }}
+      #   with:
+      #     run: uv run pytest --codspeed --codspeed-max-rounds=2 --skip-gui-tests --test-group=${{ matrix.shard }} --test-group-count=4
+      #     mode: walltime
+      #     token: ${{ secrets.CODSPEED_TOKEN }}
 
       - name: run pytest (for merge group)
-        if: ${{ github.event_name == 'merge_group' }}
+        # if: ${{ github.event_name == 'merge_group' }}
         run: uv run pytest --codspeed --codspeed-max-rounds=1 --skip-gui-tests --test-group=${{ matrix.shard }} --test-group-count=4
 
   confirm:

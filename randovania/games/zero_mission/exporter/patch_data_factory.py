@@ -53,7 +53,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
             "super_missiles": 0,
             "power_bombs": 0,
             "suit_type": "FULLY_POWERED",
-            "ziplines_activated": self.configuration.starting_ziplines,
+            "ziplines_activated": False,
         }
 
         for item, quantity in self.patches.starting_resources().as_resource_gain():  # TODO update post #9153
@@ -70,6 +70,8 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
                     starting_dict["energy"] += self.configuration.energy_per_tank * quantity
                 case "Abilities":
                     starting_dict["abilities"].append(item.extra["StartingItemName"])
+                case "Ziplines":
+                    starting_dict["ziplines_activated"] = True
                 case _:
                     raise ValueError(f"{item.extra['StartingItemCategory']} is unsupported as starting")
 
@@ -256,9 +258,11 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
             # "intro_text": self._create_intro_text(),
             "title_text": self._create_title_text(),
             "credits_text": self._create_credits_text(),
-            "disable_demos": False,
+            "disable_demos": True,
+            "remove_cutscenes": True,
+            "fast_item_grab": True,
             "skip_door_transitions": False,
-            "unexplored_map": False,
+            "reveal_hidden_tiles": True,
             "room_names": self._create_room_names(),
             "accessibility_patches": True,
             "stereo_default": True,
