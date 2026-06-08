@@ -76,14 +76,14 @@ class Ui_MZMGameTabWidget(object):
         self.faq_scroll_area.setWidgetResizable(True)
         self.faq_scroll_area_contents = QWidget()
         self.faq_scroll_area_contents.setObjectName(u"faq_scroll_area_contents")
-        self.faq_scroll_area_contents.setGeometry(QRect(0, 0, 499, 363))
+        self.faq_scroll_area_contents.setGeometry(QRect(0, 0, 497, 365))
         self.faq_scroll_layout = QGridLayout(self.faq_scroll_area_contents)
         self.faq_scroll_layout.setSpacing(6)
         self.faq_scroll_layout.setContentsMargins(11, 11, 11, 11)
         self.faq_scroll_layout.setObjectName(u"faq_scroll_layout")
         self.faq_label = QLabel(self.faq_scroll_area_contents)
         self.faq_label.setObjectName(u"faq_label")
-        self.faq_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.faq_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
         self.faq_label.setWordWrap(True)
 
         self.faq_scroll_layout.addWidget(self.faq_label, 0, 0, 1, 1)
@@ -111,8 +111,8 @@ class Ui_MZMGameTabWidget(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.differences_label = QLabel(self.differences_scroll_contents)
         self.differences_label.setObjectName(u"differences_label")
-        self.differences_label.setTextFormat(Qt.MarkdownText)
-        self.differences_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.differences_label.setTextFormat(Qt.TextFormat.MarkdownText)
+        self.differences_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
         self.differences_label.setWordWrap(True)
 
         self.verticalLayout.addWidget(self.differences_label)
@@ -128,7 +128,7 @@ class Ui_MZMGameTabWidget(object):
 
         self.retranslateUi(MZMGameTabWidget)
 
-        MZMGameTabWidget.setCurrentIndex(0)
+        MZMGameTabWidget.setCurrentIndex(3)
 
 
         QMetaObject.connectSlotsByName(MZMGameTabWidget)
@@ -163,7 +163,7 @@ class Ui_MZMGameTabWidget(object):
 "\n"
 "- Missile Hatches are no longer weak to Super Missiles.\n"
 "\n"
-"- Hatches locked by events now revert to there correct types.\n"
+"- Hatches locked by events now revert to their correct types.\n"
 "\n"
 "- TODO: Say something about goal here...\n"
 "\n"
