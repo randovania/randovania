@@ -77,7 +77,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         cplayer_offset = 0x14FC
 
         # Both of these can be a nullpointer. The first one while the game is booting up, the second at
-        # title screen/elevators. In both cases we can just say that they're in an invalid World / can't be acted on.
+        # elevators. In both cases we can just say that they're in an invalid World / can't be acted on.
         world_status_ops = [
             MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
             MemoryOperation(cstate_manager_global + cplayer_offset, offset=0, read_byte_count=4),
