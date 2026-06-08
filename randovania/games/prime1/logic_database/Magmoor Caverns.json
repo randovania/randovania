@@ -9945,7 +9945,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "HeatDamage1",
-                                                        "amount": 90,
+                                                        "amount": 75,
                                                         "negate": false
                                                     }
                                                 }
@@ -10271,7 +10271,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "HeatRun",
-                                                        "amount": 3,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -10610,7 +10610,7 @@
                                                                                         "data": {
                                                                                             "type": "damage",
                                                                                             "name": "HeatDamage1",
-                                                                                            "amount": 170,
+                                                                                            "amount": 150,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
@@ -10696,7 +10696,7 @@
                                                                                                                             "data": {
                                                                                                                                 "type": "tricks",
                                                                                                                                 "name": "HeatRun",
-                                                                                                                                "amount": 3,
+                                                                                                                                "amount": 2,
                                                                                                                                 "negate": false
                                                                                                                             }
                                                                                                                         },
@@ -10728,7 +10728,7 @@
                                                                                                     "data": {
                                                                                                         "type": "tricks",
                                                                                                         "name": "RJump",
-                                                                                                        "amount": 3,
+                                                                                                        "amount": 2,
                                                                                                         "negate": false
                                                                                                     }
                                                                                                 },
@@ -10751,7 +10751,7 @@
                                                                                                                             "data": {
                                                                                                                                 "type": "tricks",
                                                                                                                                 "name": "HeatRun",
-                                                                                                                                "amount": 3,
+                                                                                                                                "amount": 2,
                                                                                                                                 "negate": false
                                                                                                                             }
                                                                                                                         },
@@ -10803,7 +10803,7 @@
                                                                                         "data": {
                                                                                             "type": "damage",
                                                                                             "name": "HeatDamage2",
-                                                                                            "amount": 20,
+                                                                                            "amount": 10,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
@@ -10867,7 +10867,7 @@
                                                                                         "data": {
                                                                                             "type": "damage",
                                                                                             "name": "HeatDamage2",
-                                                                                            "amount": 35,
+                                                                                            "amount": 20,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
@@ -11040,12 +11040,29 @@
                                             "comment": "Space Jump - https://youtu.be/sbwLymFj43s",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Standable",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -11066,8 +11083,8 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "Standable",
-                                                                                "amount": 1,
+                                                                                "name": "HeatRun",
+                                                                                "amount": 2,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -11108,7 +11125,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Standable",
-                                                        "amount": 3,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -11183,14 +11200,14 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Jump",
+                                                                    "comment": "Basic Jump",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "LJump",
-                                                                                "amount": 2,
+                                                                                "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -11199,7 +11216,7 @@
                                                                             "data": {
                                                                                 "type": "damage",
                                                                                 "name": "HeatDamage2",
-                                                                                "amount": 20,
+                                                                                "amount": 15,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -11211,7 +11228,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "RJump",
-                                                                    "amount": 3,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -11221,6 +11238,15 @@
                                                                     "type": "tricks",
                                                                     "name": "Dash",
                                                                     "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "LJump",
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -11246,7 +11272,7 @@
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "HeatRun",
-                                                                                "amount": 3,
+                                                                                "amount": 2,
                                                                                 "negate": false
                                                                             }
                                                                         },
