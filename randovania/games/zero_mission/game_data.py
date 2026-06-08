@@ -94,24 +94,14 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     presets=["starter_preset.rdvpreset"],
     faq=[
         (
-            "Which versions of Fusion are supported?",
-            "Only the USA version of Fusion is supported with no current plans to support additional versions.",
+            "Which versions of Zero Mission are supported?",
+            "Only the USA version of Zero Mission is supported with no current plans to support additional versions.",
         ),
         (
             "I saved in a place I can't get out of, am I softlocked?",
             'You can use the "Warp to Start" function in the pause menu by pressing L and confirming. '
             "This will place you back at your start location with everything collected since your last save. "
             "Please note that this is never logical.",
-        ),
-        (
-            "How do the Beam upgrades interact?",
-            "The beam upgrades have been split, allowing unique combinations of effects and damage.\n"
-            "- Long Beam - Increases the range of the beam\n"
-            "- Charge Beam - Adds the ability to charge Samus' beam\n"
-            "- Ice Beam - Adds the ability to freeze enemies\n"
-            "- Wave Beam - Adds the ability to penetrate walls\n"
-            "- Plasma Beam - Adds the ability to penetrate enemies\n\n"
-            "Each beam collected adds to the total damage dealt.",
         ),
         (
             "How do the Suit upgrades interact?",
