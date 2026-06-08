@@ -58,11 +58,11 @@ class GameConnection:
         self._timer = InfiniteTimer(self._auto_update, self._dt)
 
     async def start(self) -> None:
-        self.logger.info("Starting game connection")
+        self.logger.debug("Starting game connection")
         self._timer.start()
 
     async def stop(self) -> None:
-        self.logger.info("Stopping game connection")
+        self.logger.debug("Stopping game connection")
         for builder, connector in list(self.remote_connectors.items()):
             await connector.force_finish()
             if connector.is_disconnected():
@@ -84,10 +84,10 @@ class GameConnection:
                 self._handle_connector_removed(connector)
 
         async def try_build_connector(build: ConnectorBuilder) -> None:
-            self.logger.info(f"Attempting to build {build.pretty_text} ...")
+            self.logger.info(f"Building {build.pretty_text} ...")
             c = await build.build_connector()
             if c is not None:
-                self.logger.info(f"Building {build.pretty_text} was successful")
+                self.logger.debug(f"Building {build.pretty_text} was successful")
                 self.remote_connectors[build] = c
                 self._handle_new_connector(c)
 
