@@ -1267,6 +1267,11 @@ def _migrate_v116(preset: dict, game: RandovaniaGame, *, from_layout_description
 
 
 def _migrate_v117(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    if game == RandovaniaGame.METROID_SAMUS_RETURNS:
+        preset["configuration"]["skip_opening"] = False
+       
+      
+def _migrate_v118(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
     if game == RandovaniaGame.FUSION:
         rename = {
             "Sector 6 (NOC)/Twin Caverns East/Door to Twin Cavern Save Room": "Sector 6 (NOC)/Twin Caverns East/Door to Twin Caverns Save Room"
@@ -1401,7 +1406,8 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v114,  # prime/echoes: remove `allow_unvisited_room_names` in teleporter config
     _migrate_v115,  # echoes: remove portal rando
     _migrate_v116,  # echoes: update beam configuration to new format
-    _migrate_v117,  # fusion: rename twin cavern save room to twin caverns save room
+    _migrate_v117,  # msr: skip the opening storyboard cutscene configuration
+    _migrate_v118,  # fusion: rename twin cavern save room to twin caverns save room
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

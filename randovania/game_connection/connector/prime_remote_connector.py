@@ -148,6 +148,7 @@ class PrimeRemoteConnector(RemoteConnector):
         Fetches the region the player's currently at, or None if they're not in-game.
         :return: bool indicating if there's a pending `execute_remote_patches` operation, and the Region of the player.
         """
+        # TODO: the prime1 and echoes implementation are very similar to each other. Merge them into one?
         raise NotImplementedError
 
     async def _memory_op_for_items(
