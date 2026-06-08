@@ -169,6 +169,12 @@ Extra - entity_file: Unit1_b2_Ent.bin
       Any of the following:
           Combat (Advanced) or Damage ≥ 199
           Combat (Intermediate) and Damage ≥ 99
+  > Pickup (Medium Energy)
+      After Alinos - Defeat Cretaphid v3
+  > Pickup (Small Energy Right)
+      After Alinos - Defeat Cretaphid v3
+  > Pickup (Small Energy Left)
+      After Alinos - Defeat Cretaphid v3
 
 > Door to Stronghold Void B (Alinos); Heals? False
   * Layers: default
@@ -220,6 +226,75 @@ Extra - entity_file: Unit1_b2_Ent.bin
   > Pickup (Octolith)
       Trivial
 
+> Pickup (Medium Energy); Heals? False
+  * Layers: shuffled-refills
+  * Pickup 69; Category? Minor
+  * Extra - header:
+{'entity_id': 14,
+ 'position': {'x': -6.737548828125, 'y': -0.565673828125, 'z': -3.63623046875},
+ 'up_vector': {'x': 0.0, 'y': 1.0, 'z': 0.0},
+ 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': 1.0}}
+  * Extra - fields:
+{'item_type': 1,
+ 'enabled': True,
+ 'has_base': False,
+ 'always_active': False,
+ 'max_spawn_count': 1,
+ 'spawn_interval': 0,
+ 'spawn_delay': 0,
+ 'notify_entity_id': -1,
+ 'collected_message': 0,
+ 'collected_message_param1': 0,
+ 'collected_message_param2': 0}
+  > Room Center
+      Trivial
+
+> Pickup (Small Energy Right); Heals? False
+  * Layers: shuffled-refills
+  * Pickup 70; Category? Minor
+  * Extra - header:
+{'entity_id': 15,
+ 'position': {'x': 5.649658203125, 'y': -0.900390625, 'z': -5.28173828125},
+ 'up_vector': {'x': 0.0, 'y': 1.0, 'z': 0.0},
+ 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': 1.0}}
+  * Extra - fields:
+{'item_type': 0,
+ 'enabled': True,
+ 'has_base': False,
+ 'always_active': False,
+ 'max_spawn_count': 1,
+ 'spawn_interval': 0,
+ 'spawn_delay': 0,
+ 'notify_entity_id': -1,
+ 'collected_message': 0,
+ 'collected_message_param1': 0,
+ 'collected_message_param2': 0}
+  > Room Center
+      Trivial
+
+> Pickup (Small Energy Left); Heals? False
+  * Layers: shuffled-refills
+  * Pickup 68; Category? Minor
+  * Extra - header:
+{'entity_id': 16,
+ 'position': {'x': -4.717529296875, 'y': -0.146240234375, 'z': 5.677978515625},
+ 'up_vector': {'x': 0.0, 'y': 1.0, 'z': 0.0},
+ 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': 1.0}}
+  * Extra - fields:
+{'item_type': 0,
+ 'enabled': True,
+ 'has_base': False,
+ 'always_active': False,
+ 'max_spawn_count': 1,
+ 'spawn_interval': 0,
+ 'spawn_delay': 0,
+ 'notify_entity_id': -1,
+ 'collected_message': 0,
+ 'collected_message_param1': 0,
+ 'collected_message_param2': 0}
+  > Room Center
+      Trivial
+
 ----------------
 Biodefense Chamber A (Alinos)
 Extra - room_id: 35
@@ -236,6 +311,10 @@ Extra - entity_file: Unit1_b1_Ent.bin
       After Alinos - Defeat Slench 1
   > Event - Slench 1
       Combat (Beginner) or Damage ≥ 99
+  > Pickup (Small Energy Left)
+      After Alinos - Defeat Slench 1
+  > Pickup (Small Energy Right)
+      After Alinos - Defeat Slench 1
 
 > Door to Stronghold Void A (Alinos); Heals? False
   * Layers: default
@@ -287,6 +366,52 @@ Extra - entity_file: Unit1_b1_Ent.bin
   > Pickup (Octolith)
       Trivial
 
+> Pickup (Small Energy Left); Heals? False
+  * Layers: shuffled-refills
+  * Pickup 66; Category? Minor
+  * Extra - header:
+{'entity_id': 13,
+ 'position': {'x': -6.737548828125, 'y': 0.593994140625, 'z': 5.8447265625},
+ 'up_vector': {'x': 0.0, 'y': 1.0, 'z': 0.0},
+ 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': 1.0}}
+  * Extra - fields:
+{'item_type': 0,
+ 'enabled': True,
+ 'has_base': False,
+ 'always_active': False,
+ 'max_spawn_count': 1,
+ 'spawn_interval': 0,
+ 'spawn_delay': 0,
+ 'notify_entity_id': -1,
+ 'collected_message': 0,
+ 'collected_message_param1': 0,
+ 'collected_message_param2': 0}
+  > Room Center
+      Trivial
+
+> Pickup (Small Energy Right); Heals? False
+  * Layers: shuffled-refills
+  * Pickup 67; Category? Minor
+  * Extra - header:
+{'entity_id': 16,
+ 'position': {'x': 5.649658203125, 'y': 0.31298828125, 'z': 0.087646484375},
+ 'up_vector': {'x': 0.0, 'y': 1.0, 'z': 0.0},
+ 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': 1.0}}
+  * Extra - fields:
+{'item_type': 0,
+ 'enabled': True,
+ 'has_base': False,
+ 'always_active': False,
+ 'max_spawn_count': 1,
+ 'spawn_interval': 0,
+ 'spawn_delay': 0,
+ 'notify_entity_id': -1,
+ 'collected_message': 0,
+ 'collected_message_param1': 0,
+ 'collected_message_param2': 0}
+  > Room Center
+      Trivial
+
 ----------------
 Echo Hall
 Extra - room_id: 28
@@ -325,8 +450,10 @@ Extra - entity_file: Unit1_C0_Ent.bin
  'room_name': 'unit1_RM1_Ent.b'}
   > Pickup (Cartograph Artifact)
       Trivial
-  > Inside Tunnel
+  > Pickup (Energy Tank)
       Trivial
+  > Inside Tunnel
+      Alinos - Echo Hall Shield Key
 
 > Door to Alinos Gateway; Heals? False
   * Layers: default
@@ -392,13 +519,7 @@ Extra - entity_file: Unit1_C0_Ent.bin
  'collected_message': 0,
  'collected_message_param1': 0,
  'collected_message_param2': 0}
-  > Inside Tunnel
-      Trivial
-
-> Event - Morph Ball Door Unlocked; Heals? False
-  * Layers: default
-  * Event Alinos - Echo Hall Morph Ball Door Unlocked
-  > Inside Tunnel
+  > Door to High Ground
       Trivial
 
 > Inside Tunnel; Heals? False
@@ -406,10 +527,31 @@ Extra - entity_file: Unit1_C0_Ent.bin
   > Player Spawn
       Trivial
   > Door to High Ground
-      After Alinos - Echo Hall Morph Ball Door Unlocked
-  > Pickup (Energy Tank)
-      After Alinos - Echo Hall Morph Ball Door Unlocked
-  > Event - Morph Ball Door Unlocked
+      Alinos - Echo Hall Shield Key
+  > Pickup (Shield Key)
+      Trivial
+
+> Pickup (Shield Key); Heals? False
+  * Layers: default
+  * Pickup 95; Category? Major
+  * Extra - header:
+{'entity_id': 42,
+ 'position': {'x': -9.150634765625, 'y': -0.66943359375, 'z': -9.04541015625},
+ 'up_vector': {'x': 0.0, 'y': 1.0, 'z': 0.0},
+ 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': 1.0}}
+  * Extra - fields:
+{'item_type': 19,
+ 'enabled': False,
+ 'has_base': False,
+ 'always_active': False,
+ 'max_spawn_count': 1,
+ 'spawn_interval': 0,
+ 'spawn_delay': 0,
+ 'notify_entity_id': -1,
+ 'collected_message': 42,
+ 'collected_message_param1': 32,
+ 'collected_message_param2': 0}
+  > Inside Tunnel
       Trivial
 
 ----------------
@@ -548,10 +690,10 @@ Extra - entity_file: Unit1_C3_Ent.bin
   * Extra - fields: {'availabilty': 0, 'active': True}
   > Door to Alinos Perch (Upper)
       Trivial
-  > Door to Alinos Perch (Lower)
-      After Alinos - Crash Site Deactivate Force Field
-  > Event - Force Field Disabled
+  > Pickup (Shield Key)
       Trivial
+  > Lower Area
+      Alinos - Crash Site Shield Key
 
 > Door to Alinos Perch (Upper); Heals? False
   * Layers: default
@@ -594,8 +736,8 @@ Extra - entity_file: Unit1_C3_Ent.bin
  'out_loader_id': 117,
  'entity_file_name': 'unit1_RM2_Ent.b',
  'room_name': 'unit1_RM2_Ent.b'}
-  > Player Spawn
-      After Alinos - Crash Site Deactivate Force Field
+  > Lower Area
+      Trivial
 
 > Pickup (Cartograph Artifact); Heals? False
   * Layers: default
@@ -616,14 +758,40 @@ Extra - entity_file: Unit1_C3_Ent.bin
  'message2': 0,
  'message3_target': -1,
  'message3': 0}
+  > Lower Area
+      Trivial
+
+> Pickup (Shield Key); Heals? False
+  * Layers: default
+  * Pickup 94; Category? Major
+  * Extra - header:
+{'entity_id': 8,
+ 'position': {'x': -1.237548828125, 'y': 13.43896484375, 'z': -0.031494140625},
+ 'up_vector': {'x': 0.0, 'y': 1.0, 'z': 0.0},
+ 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': 1.0}}
+  * Extra - fields:
+{'item_type': 19,
+ 'enabled': True,
+ 'has_base': True,
+ 'always_active': False,
+ 'max_spawn_count': 1,
+ 'spawn_interval': 0,
+ 'spawn_delay': 0,
+ 'notify_entity_id': -1,
+ 'collected_message': 42,
+ 'collected_message_param1': 35,
+ 'collected_message_param2': 0}
   > Player Spawn
       Trivial
 
-> Event - Force Field Disabled; Heals? False
+> Lower Area; Heals? False
   * Layers: default
-  * Event Alinos - Crash Site Deactivate Force Field
-  > Pickup (Cartograph Artifact)
+  > Player Spawn
+      Alinos - Crash Site Shield Key
+  > Door to Alinos Perch (Lower)
       Trivial
+  > Pickup (Cartograph Artifact)
+      Alinos - Crash Site Shield Key
 
 ----------------
 Magma Drop
@@ -711,14 +879,18 @@ Extra - entity_file: Unit1_C5_Ent.bin
 > Player Spawn; Heals? False; Default Node
   * Layers: default
   * Extra - header:
-{'entity_id': 84,
- 'position': {'x': 25.201171875, 'y': 2.0, 'z': -34.593994140625},
+{'entity_id': 83,
+ 'position': {'x': -35.608642578125, 'y': 17.062255859375, 'z': -27.722412109375},
  'up_vector': {'x': 0.0, 'y': 1.0, 'z': 0.0},
- 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': -0.999755859375}}
-  * Extra - fields: {'availabilty': 0, 'active': True}
+ 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': 1.0}}
+  * Extra - fields: {'availabilty': 1, 'active': True}
   > Morph Ball Door to Processor Core (Entrance)
       Trivial
+  > Morph Ball Door to Processor Core (Exit)
+      Trivial
   > Pickup (Binary Subcripture Artifact)
+      Alinos - Echo Hall Shield Key
+  > Pickup (Shield Key)
       Trivial
 
 > Morph Ball Door to Processor Core (Entrance); Heals? False
@@ -762,7 +934,7 @@ Extra - entity_file: Unit1_C5_Ent.bin
  'out_loader_id': 117,
  'entity_file_name': 'unit1_RM5_Ent.b',
  'room_name': 'unit1_RM5_Ent.b'}
-  > Pickup (Binary Subcripture Artifact)
+  > Player Spawn
       Trivial
 
 > Pickup (Binary Subcripture Artifact); Heals? False
@@ -786,7 +958,28 @@ Extra - entity_file: Unit1_C5_Ent.bin
  'message3': 0}
   > Player Spawn
       Trivial
-  > Morph Ball Door to Processor Core (Exit)
+
+> Pickup (Shield Key); Heals? False
+  * Layers: default
+  * Pickup 98; Category? Major
+  * Extra - header:
+{'entity_id': 80,
+ 'position': {'x': -42.71728515625, 'y': 23.253662109375, 'z': -23.07763671875},
+ 'up_vector': {'x': 0.0, 'y': 1.0, 'z': 0.0},
+ 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': 1.0}}
+  * Extra - fields:
+{'item_type': 19,
+ 'enabled': True,
+ 'has_base': False,
+ 'always_active': False,
+ 'max_spawn_count': 1,
+ 'spawn_interval': 0,
+ 'spawn_delay': 0,
+ 'notify_entity_id': -1,
+ 'collected_message': 42,
+ 'collected_message_param1': 37,
+ 'collected_message_param2': 0}
+  > Player Spawn
       Trivial
 
 ----------------
@@ -1198,6 +1391,8 @@ Extra - portal_file_name: unit1_RM1_Ent
       Trivial
   > Lower Level
       Trivial
+  > Pickup (Large Energy)
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
@@ -1329,6 +1524,8 @@ Extra - portal_file_name: unit1_RM1_Ent
   * Layers: default
   > Door to Elder Passage (Bottom)
       Trivial
+  > Pickup (Binary Subscripture Artifact)
+      Alinos - High Ground Shield Key
   > Volt Driver Force Field (Upper)
       Trivial
   > Portal to Magma Drop
@@ -1339,7 +1536,7 @@ Extra - portal_file_name: unit1_RM1_Ent
   > Pickup (Missile Expansion)
       Trivial
   > Door to Elder Passage (Top)
-      After Alinos - High Ground Upper Platform Activated or Bomb Jump (Beginner) or Missile Jump (Intermediate)
+      After Alinos - High Ground Lower Platform Activated or After Alinos - High Ground Upper Platform Activated or Bomb Jump (Beginner) or Missile Jump (Intermediate)
   > Lower Level
       Trivial
   > Event - Spire Defeated
@@ -1350,7 +1547,7 @@ Extra - portal_file_name: unit1_RM1_Ent
 > Event - Spire Defeated; Heals? False
   * Layers: default
   * Event Alinos - High Ground Spire Defeated
-  > Pickup (Binary Subscripture Artifact)
+  > Pickup (Shield Key)
       Trivial
 
 > Event - Upper Platform Activated; Heals? False
@@ -1376,6 +1573,52 @@ Extra - portal_file_name: unit1_RM1_Ent
   > Upper Level
       Trivial
   > Event - Upper Platform Activated
+      Trivial
+
+> Pickup (Large Energy); Heals? False
+  * Layers: shuffled-refills
+  * Pickup 71; Category? Minor
+  * Extra - header:
+{'entity_id': 59,
+ 'position': {'x': -11.61865234375, 'y': -0.743408203125, 'z': 11.12109375},
+ 'up_vector': {'x': 0.0, 'y': 1.0, 'z': 0.0},
+ 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': 1.0}}
+  * Extra - fields:
+{'item_type': 2,
+ 'enabled': True,
+ 'has_base': False,
+ 'always_active': False,
+ 'max_spawn_count': 1,
+ 'spawn_interval': 0,
+ 'spawn_delay': 0,
+ 'notify_entity_id': -1,
+ 'collected_message': 0,
+ 'collected_message_param1': 0,
+ 'collected_message_param2': 0}
+  > Judicator Force Field (Lower)
+      Trivial
+
+> Pickup (Shield Key); Heals? False
+  * Layers: default
+  * Pickup 97; Category? Major
+  * Extra - header:
+{'entity_id': 81,
+ 'position': {'x': -0.529296875, 'y': 12.408447265625, 'z': 9.185791015625},
+ 'up_vector': {'x': 0.0, 'y': 1.0, 'z': 0.0},
+ 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': 1.0}}
+  * Extra - fields:
+{'item_type': 19,
+ 'enabled': False,
+ 'has_base': False,
+ 'always_active': False,
+ 'max_spawn_count': 1,
+ 'spawn_interval': 0,
+ 'spawn_delay': 0,
+ 'notify_entity_id': -1,
+ 'collected_message': 42,
+ 'collected_message_param1': 34,
+ 'collected_message_param2': 0}
+  > Upper Level
       Trivial
 
 ----------------
@@ -1771,7 +2014,7 @@ Extra - portal_file_name: unit1_RM3_Ent
   > Event - Fire Spawn Defeated
       Trivial
   > Upper Level
-      After Alinos - Council Chamber Deactivate Artifact Force Fields or After Alinos - Council Chamber Lower Force Fields Disabled
+      Alinos - Council Chamber Shield Key or After Alinos - Council Chamber Lower Force Fields Disabled
 
 > Event - Portal Unlocked; Heals? False
   * Layers: default
@@ -1784,26 +2027,51 @@ Extra - portal_file_name: unit1_RM3_Ent
   > Door to Processor Core
       Trivial
   > Pickup (Attameter Artifact)
-      After Alinos - Council Chamber Deactivate Artifact Force Fields
+      Alinos - Council Chamber Shield Key and After Alinos - Council Chamber Upper Scan Force Field Disabled
   > Portal to Alinos Gateway
       After Alinos - Council Chamber Ship Deck Portal Unlocked
   > Inside Arena
-      After Alinos - Council Chamber Deactivate Artifact Force Fields or After Alinos - Council Chamber Lower Force Fields Disabled
+      After Alinos - Council Chamber Lower Force Fields Disabled
   > Event - Portal Unlocked
       Trivial
-  > Event - Artifact Force Fields Disabled
+  > Pickup (Shield Key)
       Trivial
-
-> Event - Artifact Force Fields Disabled; Heals? False
-  * Layers: default
-  * Event Alinos - Council Chamber Deactivate Artifact Force Fields
-  > Upper Level
+  > Event - Upper Scan Force Field Disabled
       Trivial
 
 > Event - Lower Force Fields Disabled; Heals? False
   * Layers: default
   * Event Alinos - Council Chamber Lower Force Fields Disabled
   > Magmaul Force Field (Jump Pad)
+      Trivial
+
+> Pickup (Shield Key); Heals? False
+  * Layers: default
+  * Pickup 93; Category? Major
+  * Extra - header:
+{'entity_id': 61,
+ 'position': {'x': 35.430419921875, 'y': 13.80078125, 'z': -15.052001953125},
+ 'up_vector': {'x': 0.0, 'y': 1.0, 'z': 0.0},
+ 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': 1.0}}
+  * Extra - fields:
+{'item_type': 19,
+ 'enabled': False,
+ 'has_base': False,
+ 'always_active': False,
+ 'max_spawn_count': 1,
+ 'spawn_interval': 0,
+ 'spawn_delay': 0,
+ 'notify_entity_id': -1,
+ 'collected_message': 42,
+ 'collected_message_param1': 36,
+ 'collected_message_param2': 0}
+  > Upper Level
+      Trivial
+
+> Event - Upper Scan Force Field Disabled; Heals? False
+  * Layers: default
+  * Event Alinos - Council Chamber Upper Scan Force Field Disabled
+  > Upper Level
       Trivial
 
 ----------------
@@ -2022,6 +2290,8 @@ Extra - portal_file_name: unit1_RM6_Ent
  'out_loader_id': 117,
  'entity_file_name': 'unit1_RM1_Ent.b',
  'room_name': 'unit1_RM1_Ent.b'}
+  > Pickup (Attameter Artifact)
+      Alinos - Elder Passage Shield Key
   > Small Arena
       Trivial
 
@@ -2086,7 +2356,7 @@ Extra - portal_file_name: unit1_RM6_Ent
  'message2': 16,
  'message3_target': -1,
  'message3': 0}
-  > Small Arena
+  > Door to High Ground (Bottom)
       Trivial
 
 > Portal to Alinos Gateway; Heals? False
@@ -2112,7 +2382,7 @@ Extra - portal_file_name: unit1_RM6_Ent
 > Event - Spire Encounter; Heals? False
   * Layers: default
   * Event Alinos - Elder Passage Spire Encounter
-  > Pickup (Attameter Artifact)
+  > Small Arena
       Trivial
 
 > Event - Ship Deck Portal Unlocked; Heals? False
@@ -2129,6 +2399,8 @@ Extra - portal_file_name: unit1_RM6_Ent
       Trivial
   > Player Spawn
       Bomb Jump (Intermediate)
+  > Pickup (Shield Key)
+      After Alinos - Elder Passage Spire Encounter
 
 > Player Spawn; Heals? False; Default Node
   * Layers: default
@@ -2146,6 +2418,29 @@ Extra - portal_file_name: unit1_RM6_Ent
       After Alinos - Elder Passage Ship Deck Portal Unlocked
   > Event - Ship Deck Portal Unlocked
       Trivial
+  > Small Arena
+      Trivial
+
+> Pickup (Shield Key); Heals? False
+  * Layers: default
+  * Pickup 96; Category? Major
+  * Extra - header:
+{'entity_id': 29,
+ 'position': {'x': 33.88671875, 'y': 12.9541015625, 'z': 1.173828125},
+ 'up_vector': {'x': 0.0, 'y': 1.0, 'z': 0.0},
+ 'facing_vector': {'x': 0.0, 'y': 0.0, 'z': 1.0}}
+  * Extra - fields:
+{'item_type': 19,
+ 'enabled': False,
+ 'has_base': False,
+ 'always_active': False,
+ 'max_spawn_count': 1,
+ 'spawn_interval': 0,
+ 'spawn_delay': 0,
+ 'notify_entity_id': -1,
+ 'collected_message': 42,
+ 'collected_message_param1': 33,
+ 'collected_message_param2': 0}
   > Small Arena
       Trivial
 
