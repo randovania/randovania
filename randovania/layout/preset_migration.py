@@ -1269,8 +1269,8 @@ def _migrate_v116(preset: dict, game: RandovaniaGame, *, from_layout_description
 def _migrate_v117(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
     if game == RandovaniaGame.METROID_SAMUS_RETURNS:
         preset["configuration"]["skip_opening"] = False
-       
-      
+
+
 def _migrate_v118(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
     if game == RandovaniaGame.FUSION:
         rename = {
