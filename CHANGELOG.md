@@ -11,6 +11,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
 - Changed: The seed hash text in the Multiplayer window can now be interacted with.
 
+### Metroid Fusion
+
+#### Logic Database
+
+##### Main Deck
+
+- Changed: Dark Stairwell: Using the hidden connection to/from Central Nexus can now expect Mid-Air Morphs instead of Bombs/Hi-Jump.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
+
+### Metroid: Samus Returns
+
+- Added: Cosmetic option to reveal the map at the start (default: on)
+- Added: Cosmetic option to use Fusion suits (default: off)
+- Added: Preset option to skip the opening storyboard cutscene (default: off)
+- Fixed: Spazer and Plasma beam projectiles no longer shoot through blocks without Wave
+
 ## [10.8.1] - 2026-06-??
 
 ### Metroid Prime
