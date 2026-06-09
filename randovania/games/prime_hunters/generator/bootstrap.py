@@ -7,6 +7,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime_hunters.layout import HuntersConfiguration, force_field_configuration
 from randovania.games.prime_hunters.layout.force_field_configuration import LayoutForceFieldRequirement
 from randovania.lib.json_lib import JsonType
@@ -49,6 +50,40 @@ class HuntersBootstrap(Bootstrap[HuntersConfiguration]):
         ]
         locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_boss_location)
         self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
+
+        # Shield Keys
+        if not configuration.shield_keys:
+            vanilla_shield_keys = {
+                "Alinos EchoHall Shield Key": PickupIndex(95),
+                "Alinos ElderPassage Shield Key": PickupIndex(96),
+                "Alinos HighGround Shield Key": PickupIndex(97),
+                "Alinos CrashSite Shield Key": PickupIndex(94),
+                "Alinos CouncilChamber Shield Key": PickupIndex(93),
+                "Alinos PistonCave Shield Key": PickupIndex(98),
+                "CelestialArchives DataShrine01 Shield Key": PickupIndex(105),
+                "CelestialArchives DataShrine03 Shield Key": PickupIndex(106),
+                "CelestialArchives SynergyCore Shield Key": PickupIndex(110),
+                "CelestialArchives DockingBay Shield Key": PickupIndex(107),
+                "CelestialArchives IncubationVault01 Shield Key": PickupIndex(108),
+                "CelestialArchives NewArrivalRegistration Shield Key": PickupIndex(109),
+                "VDO WeaponsComplexSylux Shield Key": PickupIndex(116),
+                "VDO WeaponsComplexPsychoBits Shield Key": PickupIndex(115),
+                "VDO CompressionChamber Shield Key": PickupIndex(111),
+                "VDO StasisBunkerPuzzle Shield Key": PickupIndex(113),
+                "VDO StasisBunkerGuardians Shield Key": PickupIndex(114),
+                "VDO FuelStack Shield Key": PickupIndex(112),
+                "Arcterra SicTransit Shield Key": PickupIndex(103),
+                "Arcterra IceHive Shield Key": PickupIndex(101),
+                "Arcterra FrostLabyrinth Shield Key": PickupIndex(100),
+                "Arcterra FaultLine Shield Key": PickupIndex(99),
+                "Arcterra Sanctorus Shield Key": PickupIndex(102),
+                "Arcterra Subterranean Shield Key": PickupIndex(104),
+            }
+
+            for pickup_name, location in vanilla_shield_keys.items():
+                pickup = next(p for p in pool_results.to_place if p.name == pickup_name)
+                pool_results.to_place.remove(pickup)
+                pool_results.assignment[location] = pickup
 
         return super().assign_pool_results(rng, configuration, patches, pool_results)
 

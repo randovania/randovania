@@ -22,6 +22,8 @@ class HuntersConfiguration(BaseConfiguration):
     force_field_configuration: ForceFieldConfiguration
     teleporters: TeleporterConfiguration
     starting_energy: int = dataclasses.field(metadata={"min": 1, "max": 1099, "precision": 1})
+    item_refills: bool
+    shield_keys: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
