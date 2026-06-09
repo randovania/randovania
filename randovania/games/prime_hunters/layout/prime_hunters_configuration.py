@@ -22,9 +22,17 @@ class HuntersConfiguration(BaseConfiguration):
     force_field_configuration: ForceFieldConfiguration
     teleporters: TeleporterConfiguration
     starting_energy: int = dataclasses.field(metadata={"min": 1, "max": 1099, "precision": 1})
-    item_refills: bool
-    shield_keys: bool
+    shuffle_item_refills: bool
+    shuffle_shield_keys: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_HUNTERS
+
+    def active_layers(self) -> set[str]:
+        result = super().active_layers()
+
+        if self.shuffle_item_refills:
+            result.add("shuffled-item-refills")
+
+        return result

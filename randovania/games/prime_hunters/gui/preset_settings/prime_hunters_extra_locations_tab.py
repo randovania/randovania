@@ -20,8 +20,8 @@ if TYPE_CHECKING:
 
 
 _FIELDS = [
-    "item_refills",
-    "shield_keys",
+    "shuffle_item_refills",
+    "shuffle_shield_keys",
 ]
 
 

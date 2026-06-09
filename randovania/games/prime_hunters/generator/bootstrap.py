@@ -52,7 +52,7 @@ class HuntersBootstrap(Bootstrap[HuntersConfiguration]):
         self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
 
         # Shield Keys
-        if not configuration.shield_keys:
+        if not configuration.shuffle_shield_keys:
             vanilla_shield_keys = {
                 "Alinos EchoHall Shield Key": PickupIndex(95),
                 "Alinos ElderPassage Shield Key": PickupIndex(96),
