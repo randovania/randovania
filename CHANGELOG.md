@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Fixed: Typo in the description for the Knowledge trick.
+- Fixed: Typo in the name of Sector 6's Twin Caverns Save Room (was Twin Cavern Save Room).
+
 #### Logic Database
 
 ##### Main Deck
