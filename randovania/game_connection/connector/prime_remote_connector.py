@@ -183,7 +183,12 @@ class PrimeRemoteConnector(RemoteConnector):
         resource_db = self.game.get_resource_database_view()
         all_items = [item for item in resource_db.get_all_items() if item.extra["item_id"] < 1000]
         memory_ops = await self._memory_op_for_items(all_items)
-        ops_result = await self.executor.perform_memory_operations(memory_ops)
+        try:
+            ops_result = await self.executor.perform_memory_operations(memory_ops)
+        except MemoryOperationException:
+            # If player returns reboots the game while we try to read the inventory, don't disconnect. Just mark
+            # that they have an empty inventory
+            return Inventory({})
 
         inventory = {}
         for item, memory_op in zip(all_items, memory_ops, strict=True):
