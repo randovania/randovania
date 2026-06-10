@@ -19,9 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Dark Stairwell: Using the hidden connection to/from Central Nexus can now expect Mid-Air Morphs instead of Bombs/Hi-Jump.
 
+### Metroid Prime
+
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
+
 ### Metroid Prime 2: Echoes
 
 - Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
 
 ### Metroid: Samus Returns
 
