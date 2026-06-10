@@ -183,12 +183,7 @@ class PrimeRemoteConnector(RemoteConnector):
         resource_db = self.game.get_resource_database_view()
         all_items = [item for item in resource_db.get_all_items() if item.extra["item_id"] < 1000]
         memory_ops = await self._memory_op_for_items(all_items)
-        try:
-            ops_result = await self.executor.perform_memory_operations(memory_ops)
-        except MemoryOperationException:
-            # If player returns reboots the game while we try to read the inventory, don't disconnect. Just mark
-            # that they have an empty inventory
-            return Inventory.empty()
+        ops_result = await self.executor.perform_memory_operations(memory_ops)
 
         inventory = {}
         for item, memory_op in zip(all_items, memory_ops, strict=True):
@@ -438,7 +433,12 @@ class PrimeRemoteConnector(RemoteConnector):
 
     async def update_current_inventory(self) -> None:
         """Fetches the inventory from the game, saves it and emits the signal if it changed."""
-        new_inventory = await self.get_inventory()
+        try:
+            new_inventory = await self.get_inventory()
+        except MemoryOperationException:
+            # If player reboots the game while we try to read the inventory, don't disconnect. Just mark
+            # that they have an empty inventory
+            new_inventory = Inventory.empty()
         if new_inventory != self.last_inventory:
             self.InventoryUpdated.emit(new_inventory)
             self.last_inventory = new_inventory
