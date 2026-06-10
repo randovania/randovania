@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 from typing import TYPE_CHECKING
 
+from randovania.game_description import trick_documentation
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import SpecificLocationHintNode, SpecificPickupHintNode
@@ -14,6 +15,7 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.trick_documentation import TrickUsageState
 
 if TYPE_CHECKING:
     from collections.abc import Iterator, Mapping
@@ -187,6 +189,9 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
             yield f"{area.name} - '{node.name}': Node has paths in, but no connections out."
 
     yield from check_for_unnormalized_hint_features(area)
+
+    if game.game.data.reject_undocumented_tricks_in_database:
+        yield from find_undocumented_tricks(area)
 
 
 def find_region_errors(game: GameDescription, region: Region) -> Iterator[str]:
@@ -438,6 +443,20 @@ def check_for_unnormalized_hint_features(area: Area) -> Iterator[str]:
             f"{area.name}'s pickups all share the hint feature '{feature.long_name}'. "
             "Add feature to the area and remove from the pickups."
         )
+
+
+def find_undocumented_tricks(area: Area) -> Iterator[str]:
+    """
+    Reports all undocumented trick usage in the given area.
+    """
+
+    paths = trick_documentation.get_area_connection_docs(area)
+
+    for source_name, connections in paths.items():
+        for target_name, docs in connections.items():
+            for it, state in docs.items():
+                if state == TrickUsageState.UNDOCUMENTED:
+                    yield f"{area.name}: {source_name} -> {target_name} contains undocumented trick {it}"
 
 
 def find_database_errors(game: GameDescription) -> list[str]:
