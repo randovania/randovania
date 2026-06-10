@@ -41,7 +41,10 @@ class HuntersPresetDescriber(GamePresetDescriber):
         extra_message_tree = {
             "Logic Settings": [],
             "Difficulty": [],
-            "Pickup Pool": [],
+            "Pickup Pool": [
+                {"Shuffles Item Refills": configuration.shuffle_item_refills is True},
+                {"Shuffles Shield Keys": configuration.shuffle_shield_keys is True},
+            ],
             "Gameplay": [
                 {f"Force Fields: {configuration.force_field_configuration.description()}": True},
                 {
