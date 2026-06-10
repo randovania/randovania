@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Exporting for NTSC 0-01 and Korean
 - Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
 
 ### Metroid Prime 2: Echoes
