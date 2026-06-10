@@ -8,43 +8,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [10.9.0] - 2026-07-0?
 
 - Waiting changes to be added.
-- Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
-- Changed: The seed hash text in the Multiplayer window can now be interacted with.
-
-### Metroid Fusion
-
-#### Logic Database
-
-##### Main Deck
-
-- Changed: Dark Stairwell: Using the hidden connection to/from Central Nexus can now expect Mid-Air Morphs instead of Bombs/Hi-Jump.
-
-### Metroid Prime
-
-- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
-
-### Metroid Prime 2: Echoes
-
-- Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
-- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
-
-### Metroid: Samus Returns
-
-- Added: Cosmetic option to reveal the map at the start (default: on)
-- Added: Cosmetic option to use Fusion suits (default: off)
-- Added: Preset option to skip the opening storyboard cutscene (default: off)
-- Fixed: Spazer and Plasma beam projectiles no longer shoot through blocks without Wave
 
 ## [10.8.1] - 2026-06-??
 
+- Changed: The seed hash text in the Multiplayer window can now be interacted with.
+- Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
+- Changed: When using the Nintendont game connection, it will now give better feedback when you're in the Homebrew Channel and haven't launched Nintendont yet.
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
+
+
 ### Metroid Prime
 
+- Fixed: When having Randovania connected to the game while booting up or rebooting, it will not throw warnings (Dolphin) or disconnect (Nintendont) from the game.
 - Fixed: Converting Metroid Prime 2: Echoes models for multiworld, for certain pickups.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: When having Randovania connected to the game while booting up or rebooting, it will not throw warnings (Dolphin) or disconnect (Nintendont) from the game.
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
 
 ## [10.8.0] - 2026-06-01
 
 - Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
-- Changed: When using the Nintendont game connection, it will now give better feedback when you're in the Homebrew Channel and haven't launched Nintendont yet.
 
 ### Generator
 
