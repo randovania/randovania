@@ -188,7 +188,7 @@ class PrimeRemoteConnector(RemoteConnector):
         except MemoryOperationException:
             # If player returns reboots the game while we try to read the inventory, don't disconnect. Just mark
             # that they have an empty inventory
-            return Inventory({})
+            return Inventory.empty()
 
         inventory = {}
         for item, memory_op in zip(all_items, memory_ops, strict=True):
