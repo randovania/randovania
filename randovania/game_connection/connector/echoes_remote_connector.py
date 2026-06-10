@@ -7,7 +7,11 @@ from typing import TYPE_CHECKING, TypeGuard, override
 from open_prime_rando.dol_patching import all_prime_dol_patches
 
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperation,
+    MemoryOperationException,
+    MemoryOperationExecutor,
+)
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.games.prime2.patcher import echoes_items
 
@@ -72,16 +76,24 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         mlvl_offset = 4
         cplayer_offset = 0x14FC
 
-        memory_ops = [
+        # Both of these can be a nullpointer. The first one while the game is booting up, the second at
+        # elevators. In both cases we can just say that they're in an invalid World / can't be acted on.
+        world_status_ops = [
             MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
-            MemoryOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1),
             MemoryOperation(cstate_manager_global + cplayer_offset, offset=0, read_byte_count=4),
         ]
-        results = await self.executor.perform_memory_operations(memory_ops)
 
-        pending_op_byte = results[memory_ops[1]]
-        has_pending_op = pending_op_byte != b"\x00"
-        return has_pending_op, self._current_status_world(results.get(memory_ops[0]), results.get(memory_ops[2]))
+        try:
+            world_status_results = await self.executor.perform_memory_operations(world_status_ops)
+            world_asset_id, cplayer_vtable = world_status_results.values()
+        except MemoryOperationException:
+            return True, None
+
+        pending_byte_op = MemoryOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1)
+        pending_byte_result = await self.executor.perform_single_memory_operation(pending_byte_op)
+        has_pending_op = pending_byte_result != b"\x00"
+
+        return has_pending_op, self._current_status_world(world_asset_id, cplayer_vtable)
 
     async def _memory_op_for_items(
         self,
