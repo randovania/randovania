@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 import struct
 import typing
 from typing import TYPE_CHECKING, TypeGuard, override
@@ -145,7 +146,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
             return all(op is not None for op in ops)
 
         # multiple passes are required, as 128 bytes is too much at once for Nintendont
-        PASSES = 2
+        PASSES = math.ceil((4 * 32) // self.executor.max_output)
         arr_raws = [
             await self.executor.perform_single_memory_operation(
                 MemoryOperation(

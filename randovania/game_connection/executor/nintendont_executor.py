@@ -117,6 +117,18 @@ class NintendontExecutor(MemoryOperationExecutor):
     def lock_identifier(self) -> str | None:
         return None
 
+    @property
+    def max_output(self) -> int:
+        if self._is_socket_connected(self._socket):
+            return self._socket.max_output - 1
+        return -1
+
+    @property
+    def max_input(self) -> int:
+        if self._is_socket_connected(self._socket):
+            return self._socket.max_input - 1
+        return -1
+
     async def connect(self) -> str | None:
         if self._socket is not None:
             return None
