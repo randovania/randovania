@@ -433,7 +433,12 @@ class PrimeRemoteConnector(RemoteConnector):
 
     async def update_current_inventory(self) -> None:
         """Fetches the inventory from the game, saves it and emits the signal if it changed."""
-        new_inventory = await self.get_inventory()
+        try:
+            new_inventory = await self.get_inventory()
+        except MemoryOperationException:
+            # If player reboots the game while we try to read the inventory, don't disconnect. Just mark
+            # that they have an empty inventory
+            new_inventory = Inventory.empty()
         if new_inventory != self.last_inventory:
             self.InventoryUpdated.emit(new_inventory)
             self.last_inventory = new_inventory
