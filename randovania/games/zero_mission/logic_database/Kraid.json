@@ -2097,15 +2097,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "GravitySuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "template",
                                         "data": "Can Ballspark"
                                     },
@@ -2128,6 +2119,15 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -2192,29 +2192,12 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -2296,6 +2279,19 @@
                                 "comment": null,
                                 "items": [
                                     {
+                                        "type": "template",
+                                        "data": "Can Ballspark"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
@@ -2303,10 +2299,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Ballspark"
                                     }
                                 ]
                             }
@@ -2588,29 +2580,10 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Elevator to Brinstar": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 6,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -2668,29 +2641,10 @@
                             }
                         },
                         "Door to Pipe Shaft": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 6,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
