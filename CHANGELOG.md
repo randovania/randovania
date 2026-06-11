@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Exporting for NTSC 0-01 and Korean
 - Fixed: When having Randovania connected to the game while booting up or rebooting, it will not throw warnings (Dolphin) or disconnect (Nintendont) from the game.
 - Fixed: Converting Metroid Prime 2: Echoes models for multiworld, for certain pickups.
 
