@@ -9619,7 +9619,11 @@
                                 "hud_memo": 941621425,
                                 "streamed_audio": 941621426,
                                 "sound": 941621428,
-                                "audio_fade": 941621423
+                                "audio_fade": 941621423,
+                                "cutscene_model": {
+                                    "instance": 2098499,
+                                    "layer": "Stage 2 -> Post Battle Cinematic"
+                                }
                             }
                         }
                     },
@@ -10331,6 +10335,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Hint - Dark Torvus Temple Keys": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -10455,6 +10466,37 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Hint - Dark Torvus Temple Keys": {
+                    "node_type": "hint",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "kind": "specific-pickup",
+                    "requirement_to_collect": {
+                        "type": "resource",
+                        "data": {
+                            "type": "items",
+                            "name": "Scan",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "specific_pickup_hint_id": "dark_temple_keys",
+                    "connections": {
+                        "Central Safe Zone (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }

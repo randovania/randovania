@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.exporter.hints import guaranteed_item_hint
-from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.hint_node import GenericHintNode, HintNode, SpecificLocationHintNode
 from randovania.games.prime2.patcher import echoes_items
 
 if TYPE_CHECKING:
@@ -36,7 +36,9 @@ def create_patches_hints(
             logbook_node.extra["string_asset_id"],
             hints_for_asset.get(logbook_node.identifier, "Someone forgot to leave a message."),
         )
-        for _, _, logbook_node in exporter.owner_game_view.iterate_nodes_of_type(HintNode)
+        for _, _, logbook_node in exporter.owner_game_view.iterate_nodes_of_type(
+            GenericHintNode, SpecificLocationHintNode
+        )
     ]
 
 

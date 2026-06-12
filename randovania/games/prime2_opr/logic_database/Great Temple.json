@@ -606,80 +606,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Room Center": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Event76",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "VanillaGreatTempleEmeraldGate",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event91",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Transport A Translator Gate": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Event - Transport A Gate Removal": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "RoomRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "VanillaGreatTempleEmeraldGate",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    }
-                                ]
                             }
                         }
                     }
@@ -845,15 +776,6 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport A Access": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event91",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Door to Controller Transport": {
                             "type": "resource",
                             "data": {
@@ -1304,27 +1226,6 @@
                             }
                         }
                     }
-                },
-                "Event - Transport A Gate Removal": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Event91",
-                    "connections": {
-                        "Door to Transport A Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
                 }
             }
         },
@@ -1368,6 +1269,10 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Event - Transport C Access Light Block": {
+                            "type": "template",
+                            "data": "Shoot Light Beam"
                         }
                     }
                 },
@@ -1877,34 +1782,7 @@
                                 "items": []
                             }
                         },
-                        "Teleporter to Agon Wastes": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event77",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Teleporter to Torvus Bog": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event77",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Teleporter to Sanctuary Fortress": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event77",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Main Energy Controller Pickup": {
+                        "Event - Activate Energy Controller Transports": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1914,6 +1792,13 @@
                             }
                         },
                         "Lore Scan": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Light Transport": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2049,115 +1934,7 @@
                         }
                     }
                 },
-                "Teleporter to Agon Wastes": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "scan_asset_id": null,
-                        "teleporter_instance_id": 939982960,
-                        "keep_name_when_vanilla": false
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "teleporter",
-                    "default_connection": {
-                        "region": "Agon Wastes",
-                        "area": "Agon Energy Controller",
-                        "node": "Teleporter to Great Temple"
-                    },
-                    "default_dock_weakness": "Teleporter",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Door to Controller Transport": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Teleporter to Torvus Bog": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "scan_asset_id": null,
-                        "teleporter_instance_id": 939982964,
-                        "keep_name_when_vanilla": false
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "teleporter",
-                    "default_connection": {
-                        "region": "Torvus Bog",
-                        "area": "Torvus Energy Controller",
-                        "node": "Teleporter to Great Temple"
-                    },
-                    "default_dock_weakness": "Teleporter",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Door to Controller Transport": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Teleporter to Sanctuary Fortress": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "scan_asset_id": null,
-                        "teleporter_instance_id": 939982965,
-                        "keep_name_when_vanilla": false
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "teleporter",
-                    "default_connection": {
-                        "region": "Sanctuary Fortress",
-                        "area": "Sanctuary Energy Controller",
-                        "node": "Teleporter to Great Temple"
-                    },
-                    "default_dock_weakness": "Teleporter",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Door to Controller Transport": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Main Energy Controller Pickup": {
+                "Event - Activate Energy Controller Transports": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": null,
@@ -2216,6 +1993,43 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    "connections": {
+                        "Door to Controller Transport": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Light Transport": {
+                    "node_type": "teleporter_network",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "Event77",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "network": "Energy Controllers",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
                         }
                     },
                     "connections": {

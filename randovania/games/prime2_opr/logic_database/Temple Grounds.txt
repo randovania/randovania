@@ -172,7 +172,7 @@ Extra - asset_id: 2970881060
   * Layers: default
   * Normal Door to Landing Site/Door to Hive Access Tunnel
   * Extra - dock_name: West
-  > Dock to Hive Chamber A
+  > Door to Hive Transport Area
       Trivial
   > Translator Gate
       Trivial
@@ -181,13 +181,15 @@ Extra - asset_id: 2970881060
   * Layers: default
   * Normal Door to Hive Transport Area/Door to Hive Access Tunnel
   * Extra - dock_name: East
-  > Translator Gate
+  > Door to Landing Site
       Trivial
 
 > Dock to Hive Chamber A; Heals? False
   * Layers: default
   * Open Passage to Hive Chamber A/Dock to Hive Access Tunnel
   * Extra - dock_name: Floor
+  > Translator Gate
+      Trivial
 
 > Translator Gate; Heals? False
   * Layers: default
@@ -197,7 +199,7 @@ Extra - asset_id: 2970881060
   * Extra - vanilla_color: Violet
   > Door to Landing Site
       Trivial
-  > Door to Hive Transport Area
+  > Dock to Hive Chamber A
       Trivial
 
 ----------------
@@ -371,7 +373,11 @@ Hint Features - Boss
   > Door to Hive Tunnel
       After Hive Chamber A Gates
   > Pickup (Missile)
-      After Bomb Guardian
+      All of the following:
+          # Spawn DMT
+          Morph Ball Bomb
+          # TODO: Fight DMT
+          Shoot Any Beam
   > Event - Hive Chamber A Gates
       Scan Visor
 
@@ -1349,16 +1355,7 @@ Extra - asset_id: 3032508327
   * Normal Door to Communication Area/Door to Dynamo Chamber
   * Extra - dock_name: North
   > Door to Temple Assembly Site
-      All of the following:
-          After Dynamo Chamber Gates
-          Any of the following:
-              Space Jump Boots
-              All of the following:
-                  Morph Ball
-                  Any of the following:
-                      Power Bomb
-                      # Double Bomb Jump
-                      Morph Ball Bomb and Bomb Jump (Beginner)
+      After Dynamo Chamber Gates
   > Event - Dynamo Chamber Gates
       # https://www.youtube.com/watch?v=nfaLjCjc7vQ
       Scan Visor and Open Gates from Behind (Beginner)
@@ -1368,29 +1365,11 @@ Extra - asset_id: 3032508327
   * Normal Door to Temple Assembly Site/Door to Dynamo Chamber
   * Extra - dock_name: South
   > Door to Communication Area
-      All of the following:
-          After Dynamo Chamber Gates
-          Any of the following:
-              Space Jump Boots
-              All of the following:
-                  Morph Ball
-                  Any of the following:
-                      Power Bomb
-                      # Double Bomb Jump
-                      Morph Ball Bomb and Bomb Jump (Beginner)
+      After Dynamo Chamber Gates
   > Pickup (Power Bomb)
       Morph Ball and Power Bomb
   > Event - Dynamo Chamber Gates
-      All of the following:
-          Scan Visor
-          Any of the following:
-              Space Jump Boots or Before Dynamo Chamber Gates
-              All of the following:
-                  Morph Ball
-                  Any of the following:
-                      Power Bomb
-                      # Double Bomb Jump
-                      Morph Ball Bomb and Bomb Jump (Beginner)
+      Scan Visor
 
 > Pickup (Power Bomb); Heals? False
   * Layers: default
@@ -1416,14 +1395,7 @@ Extra - asset_id: 3032508327
   > Door to Communication Area
       Trivial
   > Door to Temple Assembly Site
-      Any of the following:
-          Space Jump Boots
-          All of the following:
-              Morph Ball
-              Any of the following:
-                  Power Bomb
-                  # Double Bomb Jump
-                  Morph Ball Bomb and Bomb Jump (Beginner)
+      Trivial
   > Pickup (Power Bomb)
       Morph Ball and Power Bomb
 
@@ -1580,9 +1552,6 @@ Hint Features - Abyss, Kinetic Orb Cannon, Translator Gate
   * Extra - dock_name: WestTop
   > Door to Windchamber Tunnel
       Morph Ball
-  > Pickup 2 (Missile On Ship)
-      # https://www.youtube.com/watch?v=QDybuMqc31g
-      After Jump Guardian and Movement (Advanced) and Use Screw Attack (No Space Jump)
   > Room Center
       Trivial
 
@@ -1675,12 +1644,7 @@ Hint Features - Abyss, Kinetic Orb Cannon, Translator Gate
                       Morph Ball
                       Morph Ball Bomb or Boost Ball or Power Bomb
   > Pickup 2 (Missile On Ship)
-      All of the following:
-          After Jump Guardian
-          Any of the following:
-              Space Jump Boots
-              # https://www.youtube.com/watch?v=9gwynCfioeg
-              Scan Visor and Extended Dash (Expert)
+      Space Jump Boots
   > Event - GFMC Compound Trooper Cutscene
       Trivial
   > Translator Gate
@@ -1722,28 +1686,20 @@ Extra - asset_id: 1441689027
   * Normal Door to GFMC Compound/Door to Trooper Security Station
   * Extra - dock_name: blue_0D_Temple_hall_West
   > Door to Communication Area
-      All of the following:
+      Any of the following:
           After Trooper Security Station Gate
-          Any of the following:
-              Morph Ball and Power Bomb
-              # https://youtu.be/fxm-wLscSf4
-              Knowledge (Beginner) and Use Screw Attack (Space Jump)
-  > Event - Trooper Security Station Gate
-      Trivial
+          Morph Ball and Power Bomb
+          # https://youtu.be/fxm-wLscSf4
+          Knowledge (Beginner) and Use Screw Attack (Space Jump)
 
 > Door to Communication Area; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Normal Door to Communication Area/Door to Trooper Security Station
   * Extra - dock_name: blue_0D_Temple_hall_South
   > Door to GFMC Compound
-      All of the following:
-          After Trooper Security Station Gate
-          Any of the following:
-              Morph Ball and Power Bomb
-              # https://youtu.be/fxm-wLscSf4
-              Knowledge (Beginner) and Use Screw Attack (Space Jump)
+      After Trooper Security Station Gate
   > Event - Trooper Security Station Gate
-      Morph Ball and Scan Visor and Before Trooper Security Station Gate
+      Morph Ball and Scan Visor
 
 > Event - Trooper Security Station Gate; Heals? False
   * Layers: default
@@ -1751,9 +1707,7 @@ Extra - asset_id: 1441689027
   > Door to GFMC Compound
       Morph Ball
   > Door to Communication Area
-      Any of the following:
-          Morph Ball and Power Bomb
-          Knowledge (Beginner) and Use Screw Attack (Space Jump)
+      Morph Ball
 
 ----------------
 Fortress Transport Access
@@ -1811,16 +1765,16 @@ Extra - asset_id: 3132939042
   * Missile Blast Shield to GFMC Compound/Door to Sacred Bridge
   * Extra - dock_name: East
   > Door to Sacred Path
-      Any of the following:
-          After Sacred Bridge Gate
-          All of the following:
-              Morph Ball
-              Any of the following:
-                  Scan Visor
-                  # https://www.youtube.com/watch?v=GfRyq1ki6es
-                  Space Jump Boots and Standable Terrain (Intermediate)
-                  # https://www.youtube.com/watch?v=GfRyq1ki6es&t=15s
-                  Morph Ball Bomb and Bomb Space Jump (Advanced)
+      After Sacred Bridge Gate
+  > Event - Gate Automatically Unlocked
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Scan Visor
+              # https://www.youtube.com/watch?v=GfRyq1ki6es
+              Space Jump Boots and Standable Terrain (Intermediate)
+              # https://www.youtube.com/watch?v=GfRyq1ki6es&t=15s
+              Morph Ball Bomb and Bomb Space Jump (Advanced)
 
 > Door to Sacred Path; Heals? False
   * Layers: default
@@ -1835,6 +1789,12 @@ Extra - asset_id: 3132939042
       Dark Visor and Missile ≥ 5 and Seeker Launcher
 
 > Event - Gate Unlocked; Heals? False
+  * Layers: default
+  * Event Sacred Bridge Gate
+  > Door to Sacred Path
+      Trivial
+
+> Event - Gate Automatically Unlocked; Heals? False
   * Layers: default
   * Event Sacred Bridge Gate
   > Door to Sacred Path

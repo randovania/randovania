@@ -94,9 +94,9 @@ def _create_region_list(asset_id: int, pickup_index: PickupIndex, num_pickups: i
         ]
     )
 
-    def iterate_nodes_of_type(node_type: type):
+    def iterate_nodes_of_type(*node_types: type):
         for region, area, node in region_list.all_regions_areas_nodes:
-            if isinstance(node, node_type):
+            if isinstance(node, node_types):
                 yield region, area, node
 
     game_view = MagicMock()
