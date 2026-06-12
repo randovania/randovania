@@ -93,6 +93,14 @@ class MemoryOperationExecutor:
     def __init__(self) -> None:
         self.logger = logging.getLogger(type(self).__name__)
 
+    @property
+    def max_output(self) -> int:
+        raise NotImplementedError
+
+    @property
+    def max_input(self) -> int:
+        raise NotImplementedError
+
     async def connect(self) -> str | None:
         """Establish a connection to the target interface so that it's ready to perform operations."""
         raise NotImplementedError

@@ -150,6 +150,7 @@ class PrimeRemoteConnector(RemoteConnector):
         Fetches the region the player's currently at, or None if they're not in-game.
         :return: bool indicating if there's a pending `execute_remote_patches` operation, and the Region of the player.
         """
+        # TODO: the prime1 and echoes implementation are very similar to each other. Merge them into one?
         raise NotImplementedError
 
     async def _memory_op_for_items(
@@ -434,7 +435,12 @@ class PrimeRemoteConnector(RemoteConnector):
 
     async def update_current_inventory(self) -> None:
         """Fetches the inventory from the game, saves it and emits the signal if it changed."""
-        new_inventory = await self.get_inventory()
+        try:
+            new_inventory = await self.get_inventory()
+        except MemoryOperationException:
+            # If player reboots the game while we try to read the inventory, don't disconnect. Just mark
+            # that they have an empty inventory
+            new_inventory = Inventory.empty()
         if new_inventory != self.last_inventory:
             self.InventoryUpdated.emit(new_inventory)
             self.last_inventory = new_inventory

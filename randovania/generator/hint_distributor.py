@@ -11,7 +11,7 @@ from enum import Enum, IntEnum
 from random import Random
 from typing import TYPE_CHECKING, Any, final, override
 
-from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+from randovania.game_description.db.hint_node import GenericHintNode, HintNode, HintNodeKind, SpecificLocationHintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (
@@ -214,13 +214,6 @@ class HintDistributor(ABC):
     def num_joke_hints(self) -> int:
         return 0
 
-    def get_generic_hint_nodes(self, prefill: PreFillParams) -> list[NodeIdentifier]:
-        return [
-            node.identifier
-            for _, _, node in prefill.game.iterate_nodes_of_type(HintNode)
-            if node.kind == HintNodeKind.GENERIC
-        ]
-
     async def get_specific_location_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
         """Assigns a PrecisionPair to each HintNode with kind SPECIFIC_LOCATION in the game's database."""
         return {}
@@ -228,18 +221,17 @@ class HintDistributor(ABC):
     async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
         specific_location_precisions = await self.get_specific_location_precision_pairs()
 
-        for _, _, node in prefill.game.iterate_nodes_of_type(HintNode):
-            if node.kind == HintNodeKind.SPECIFIC_LOCATION:
-                identifier = node.identifier
-                patches = patches.assign_hint(
-                    identifier,
-                    LocationHint(
-                        specific_location_precisions[identifier],
-                        PickupIndex(node.extra["hint_index"]),
-                    )
-                    if patches.configuration.hints.enable_specific_location_hints
-                    else JokeHint(),
+        for _, _, node in prefill.game.iterate_nodes_of_type(SpecificLocationHintNode):
+            identifier = node.identifier
+            patches = patches.assign_hint(
+                identifier,
+                LocationHint(
+                    specific_location_precisions[identifier],
+                    node.target_index,
                 )
+                if patches.configuration.hints.enable_specific_location_hints
+                else JokeHint(),
+            )
 
         return patches
 
@@ -293,7 +285,7 @@ class HintDistributor(ABC):
         patches = await self.assign_specific_location_hints(patches, prefill)
 
         if patches.configuration.hints.enable_random_hints:
-            hint_identifiers = self.get_generic_hint_nodes(prefill)
+            hint_identifiers = [node.identifier for _, _, node in prefill.game.iterate_nodes_of_type(GenericHintNode)]
             if rng_required or prefill.rng is not None:
                 prefill.rng.shuffle(hint_identifiers)
                 patches = await self.assign_guaranteed_indices_hints(patches, hint_identifiers, prefill)
@@ -414,8 +406,8 @@ class HintDistributor(ABC):
                 # hint has already been assigned
                 continue
 
-            node = region_list.typed_node_by_identifier(hint_node, HintNode)
-            if node.kind != HintNodeKind.GENERIC:
+            node = region_list.node_by_identifier(hint_node)
+            if not isinstance(node, GenericHintNode):
                 continue
 
             debug.debug_print(f"> Choosing hint target for {hint_node.as_string}:")
