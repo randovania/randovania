@@ -9,8 +9,7 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup, create_standard_pickup
-from randovania.generator.pickup_pool.standard_pickup import find_ammo_for
+from randovania.generator.pickup_pool.pool_creator import calculate_pool_results
 from randovania.graph import world_graph_factory
 from randovania.graph.state import State
 from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
@@ -40,41 +39,12 @@ if TYPE_CHECKING:
     from randovania.resolver.damage_state import DamageState
 
 
-def enabled_standard_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
-    for pickup, state in configuration.standard_pickup_configuration.pickups_state.items():
-        if len(pickup.ammo) != len(state.included_ammo):
-            raise InvalidConfiguration(
-                f"Item {pickup.name} uses {pickup.ammo} as ammo, "
-                f"but there's only {len(state.included_ammo)} values in included_ammo"
-            )
-
-        ammo, locked_ammo = find_ammo_for(pickup.ammo, configuration.ammo_pickup_configuration)
-
-        if state.include_copy_in_original_location:
-            if not pickup.original_locations:
-                raise InvalidConfiguration(
-                    f"Item {pickup.name} does not exist in the original game, cannot use state {state}",
-                )
-            for _ in pickup.original_locations:
-                yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
-
-        for _ in range(state.num_shuffled_pickups):
-            yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
-
-        for _ in range(state.num_included_in_starting_pickups):
-            yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
-
-
-def enabled_ammo_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
-    for ammo, state in configuration.ammo_pickup_configuration.pickups_state.items():
-        pickup = create_ammo_pickup(ammo, state.ammo_count, state.requires_main_item, game.get_resource_database_view())
-        for _ in range(state.pickup_count):
-            yield pickup
-
-
 def enabled_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
-    yield from enabled_standard_pickups(game, configuration)
-    yield from enabled_ammo_pickups(game, configuration)
+    pool_results: PoolResults = calculate_pool_results(configuration, game)
+
+    yield from pool_results.to_place
+    yield from pool_results.starting
+    yield from pool_results.assignment.values()
 
 
 def victory_condition_for_pickup_placement(

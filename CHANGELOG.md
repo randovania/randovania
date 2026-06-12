@@ -7,11 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.8.0] - 2026-06-0?
 
+- Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
+
+### Generator
+
+- Fixed: When using logical pickup placement set to Major pickups or All pickups, generated pickups would not be considered required. For example, Red Keys in Metroid Prime 2: Echoes.
+
+### Resolver
+
+- Fixed: An issue where damage reduction multipliers above 1.0 were being ignored.
+
 ### Metroid Dread
+
+- Added: Unique Save Slots cosmetic option. Stores this randomizer's saves in a unique location based on the seed hash.
 
 #### Logic Database
 
 - Fixed: Door override requirements for Shutter Gates (Flash Shift Doors) mentioned in version 10.5.0 didn't work and had no effect.
+
+##### Artaria
+
+- Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
+
+##### Ferenia
+
+- Changed: Added Movement (Beginner) requirement to reach Missile Tank Pickup in Space Jump Room using Space Jump and Normal Bomb.
+
+### Metroid Fusion
+
+- Added: Environmental Damage (Heat, Lava, Cold, Acid) rates can now be configured.
+
+#### Logic Database
+
+##### Main Deck
+
+- Changed: Habitation Deck Entrance: Changed the NHJ WJ Freeze trick from Movement (Advanced) to Stand on Frozen Enemies (Expert). Also added in Stand On Frozen Enemies (Beginner) to the other WJ trick to account for diffusion timing.
 
 ### Metroid Prime 2: Echoes
 
@@ -31,6 +61,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: X-B.O.X. Garage: Intermediate Wall Jump off stalactite to ascend.
 - Changed: Zozoro Wine Cellar: Zozoros can be frozen on the ground to give you enough height to reach the ledge, reducing Stand On Frozen Enemies to Beginner.
 - Added: Zozoro Wine Cellar: Ludicrous Wall Jump into back of a Zozoro to Ludicrous Damage Boost, then Ludicrous Jump Extend to reduce invincibility frames to d-boost off another zozoro, then use Morph Ball jump extends to turn more quickly and reach the ledge.
+
+### Metroid: Samus Returns
+
+- Fixed: When you changed the final boss setting to not being Ridley and the pickup Ridley drops after defeat was an item which was exclusively on Metroids, it would not have spawned.
+
+#### Logic Database
+
+##### Area 6 Poisonous Tunnel
+
+- Fixed: Going back from the Pickup to the upper section now has the correct requirements.
 
 ## [10.7.0] - 2026-05-02
 

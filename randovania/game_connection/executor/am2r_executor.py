@@ -128,7 +128,7 @@ class AM2RExecutor:
         ret_bytes: bytearray = bytearray(type.to_bytes())
         if msg is not None:
             ret_bytes.extend(msg)
-        return ret_bytes
+        return bytes(ret_bytes)
 
     async def _read_response(self) -> bytes | None:
         if self._socket is None:
