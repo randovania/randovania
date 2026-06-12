@@ -12,7 +12,7 @@ class MemoryOperationException(Exception):
 
 @dataclasses.dataclass(frozen=True)
 class MemoryOperation:
-    """An abstract class representing an operation for dealing with the GameCube's RAM."""
+    """An abstract class representing an operation for dealing with a system's RAM."""
 
     address: int
     """The memory address for the operation."""
@@ -47,7 +47,7 @@ class MemoryOperation:
 
 @dataclasses.dataclass(frozen=True)
 class MemoryReadOperation(MemoryOperation):
-    """Represents an operation to read from the GameCube's RAM. Note, that reading has a limit of 255 bytes."""
+    """Represents an operation to read from a system's RAM. Note, that reading has a limit of 255 bytes."""
 
     count: int = 0
     """How many bytes to read."""
@@ -68,7 +68,7 @@ class MemoryReadOperation(MemoryOperation):
 
 @dataclasses.dataclass(frozen=True)
 class MemoryWriteOperation(MemoryOperation):
-    """Represents an operation to write to the GameCube's RAM. Note, that writing has a limit of 255 bytes."""
+    """Represents an operation to write to the system's RAM. Note, that writing has a limit of 255 bytes."""
 
     data: bytes = b""
     "What bytes to write."
@@ -88,7 +88,7 @@ class MemoryWriteOperation(MemoryOperation):
 
 
 class MemoryOperationExecutor:
-    """Abstract executor for an interface to perform memory operations on a GameCube's RAM."""
+    """Abstract executor for an interface to perform memory operations on a system's RAM."""
 
     def __init__(self) -> None:
         self.logger = logging.getLogger(type(self).__name__)
