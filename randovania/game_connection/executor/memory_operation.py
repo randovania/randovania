@@ -95,10 +95,12 @@ class MemoryOperationExecutor:
 
     @property
     def max_output(self) -> int:
+        """The maximum of bytes the interface allows reading from RAM per MemoryOperation."""
         raise NotImplementedError
 
     @property
     def max_input(self) -> int:
+        """The maximum of bytes the interface allows writing to RAM per MemoryOperation."""
         raise NotImplementedError
 
     async def connect(self) -> str | None:
