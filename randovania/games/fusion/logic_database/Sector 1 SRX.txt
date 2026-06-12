@@ -6,14 +6,14 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 1}, {'x': 5, 'y': 2}, {'x': 6, 'y': 
 > Door to Lava Lake Annex; Heals? False
   * Layers: default
   * L1 Hatch to Lava Lake Annex/Door to Entrance Lobby
-  * Extra - door_idx: (1,)
+  * Extra - door_idx: [1]
   > Door to Entrance Recharge Room
       Trivial
 
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Lobby
-  * Extra - door_idx: (2,)
+  * Extra - door_idx: [2]
   > Door to Lava Lake Annex
       Trivial
   > Door to Yameba Corridor
@@ -24,14 +24,14 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 1}, {'x': 5, 'y': 2}, {'x': 6, 'y': 
 > Door to Yameba Corridor; Heals? False
   * Layers: default
   * L0 Hatch to Yameba Corridor/Door to Entrance Lobby
-  * Extra - door_idx: (3,)
+  * Extra - door_idx: [3]
   > Door to Entrance Recharge Room
       Trivial
 
 > Door to Antechamber; Heals? False
   * Layers: default
   * L2 Hatch to Antechamber/Door to Entrance Lobby
-  * Extra - door_idx: (76,)
+  * Extra - door_idx: [76]
   > Door to Entrance Recharge Room
       Trivial
 
@@ -44,14 +44,14 @@ Extra - unlocked_save_recharge_station: True
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
-  * Extra - door_idx: (4,)
+  * Extra - door_idx: [4]
   > Door to Entrance Navigation Room
       Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
-  * Extra - door_idx: (5,)
+  * Extra - door_idx: [5]
   > Door to Entrance Recharge Room
       Trivial
   > Save Station
@@ -72,14 +72,14 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 1}]
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
-  * Extra - door_idx: (6,)
+  * Extra - door_idx: [6]
   > Door to Sector 1 (SRX) Entrance Elevator
       Trivial
 
 > Door to Sector 1 (SRX) Entrance Elevator; Heals? False
   * Layers: default
   * Open Hatch to Sector 1 (SRX) Entrance Elevator/Door to Entrance Navigation Room
-  * Extra - door_idx: (87,)
+  * Extra - door_idx: [87]
   > Door to Entrance Save Room
       Trivial
   > Navigation Terminal
@@ -87,7 +87,7 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 1}]
 
 > Navigation Terminal; Heals? False
   * Layers: default
-  * Hint
+  * Generic Hint; Requirement? (Level 2 Keycard ≥ 1)
   * Extra - hint_name: SECTOR_1_ENTRANCE
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: PRECISE_CATEGORY
@@ -102,7 +102,7 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 2}, {'x': 8, 'y': 2}, {'x': 9, 'y': 
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Lobby/Door to Yameba Corridor
-  * Extra - door_idx: (9,)
+  * Extra - door_idx: [9]
   > Door to Atmospheric Stabilizer Northwest
       After Sector 1 Yameba Corridor Missile Geron Destroyed
   > Event - Missile Geron
@@ -113,17 +113,17 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 2}, {'x': 8, 'y': 2}, {'x': 9, 'y': 
 > Door to Atmospheric Stabilizer Northwest; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Northwest/Door to Yameba Corridor
-  * Extra - door_idx: (10,)
+  * Extra - door_idx: [10]
   > Door to Entrance Lobby
       After Sector 1 Yameba Corridor Missile Geron Destroyed
   > Event - Missile Geron
       Any of the following:
           Can Kill Missile Geron
           All of the following:
-              # Spark stored from Motos, restored in Stabilizer NE and each room after
+              # Spark stored from Motos, restored in Stabilizer NE and each room after: https://youtu.be/aq0PQxbFJQk
               Level 0 Keycard and Speed Booster and After Stabilizer Northwest Restored and After Stabilizer Northeast Restored and Knowledge (Intermediate) and Shinespark Tricks (Expert) and Disabled Door Lock Rando and Disabled Entrance Rando
               All of the following:
-                  # Accounting for Hornoad Hole post stabilizers roomstate: https://youtu.be/aq0PQxbFJQk
+                  # Accounting for Hornoad Hole post stabilizers roomstate
                   Combat (Advanced)
                   Charge Beam or Plasma Beam or Wave Beam or Wide Beam
 
@@ -143,7 +143,7 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 1}, {'x': 10, 'y': 2}, {'x': 11, 'y
 > Door to Yameba Corridor; Heals? False
   * Layers: default
   * L0 Hatch to Yameba Corridor/Door to Atmospheric Stabilizer Northwest
-  * Extra - door_idx: (11,)
+  * Extra - door_idx: [11]
   > Event - Stabilizer 1 Online
       # Kill with Shinespark from Yameba Corridor - https://youtu.be/DpeSE126r3M
       Level 0 Keycard and Speed Booster and After Sector 1 Yameba Corridor Missile Geron Destroyed and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
@@ -153,13 +153,13 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 1}, {'x': 10, 'y': 2}, {'x': 11, 'y
 > Door to Hornoad Hole; Heals? False
   * Layers: default
   * L0 Hatch to Hornoad Hole/Door to Atmospheric Stabilizer Northwest
-  * Extra - door_idx: (12,)
+  * Extra - door_idx: [12]
   > Event - Stabilizer 1 Online
       All of the following:
-          # Spark stored from Motos, restored in Stabilizer NE and Hornoad Hole
+          # Spark stored from Motos, restored in Stabilizer NE and Hornoad Hole: https://youtu.be/aq0PQxbFJQk
           Level 0 Keycard and Speed Booster and After Stabilizer Northeast Restored and Knowledge (Intermediate) and Shinespark Tricks (Expert) and Disabled Door Lock Rando and Disabled Entrance Rando
           Any of the following:
-              # Any Beam but Ice: https://youtu.be/aq0PQxbFJQk
+              # Any Beam but Ice
               All of the following:
                   Combat (Intermediate)
                   Wave Beam or Wide Beam
@@ -201,7 +201,7 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 2}, {'x': 13, 'y': 2}]
 > Door to Atmospheric Stabilizer Northwest; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Northwest/Door to Hornoad Hole
-  * Extra - door_idx: (13,)
+  * Extra - door_idx: [13]
   > Pickup (Energy Tank)
       Morph Ball
   > Door to Twin Junctions West
@@ -210,7 +210,7 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 2}, {'x': 13, 'y': 2}]
 > Door to Twin Junctions West; Heals? False
   * Layers: default
   * L0 Hatch to Twin Junctions West/Door to Hornoad Hole
-  * Extra - door_idx: (14,)
+  * Extra - door_idx: [14]
   > Door to Atmospheric Stabilizer Northwest
       Trivial
 
@@ -222,7 +222,7 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 2}, {'x': 14, 'y': 3}, {'x': 14, 'y
 > Door to Hornoad Hole; Heals? False
   * Layers: default
   * L0 Hatch to Hornoad Hole/Door to Twin Junctions West
-  * Extra - door_idx: (15,)
+  * Extra - door_idx: [15]
   > Door to Atmospheric Stabilizer Northeast
       Trivial
   > Door to Moto Motorway
@@ -233,21 +233,21 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 2}, {'x': 14, 'y': 3}, {'x': 14, 'y
 > Door to Atmospheric Stabilizer Northeast; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Northeast/Door to Twin Junctions West
-  * Extra - door_idx: (16,)
+  * Extra - door_idx: [16]
   > Door to Hornoad Hole
       Trivial
 
 > Door to Moto Motorway; Heals? False
   * Layers: default
   * L0 Hatch to Moto Motorway/Door to Twin Junctions West
-  * Extra - door_idx: (17,)
+  * Extra - door_idx: [17]
   > Door to Hornoad Hole
       Trivial
 
 > Door to Twin Junctions East; Heals? False
   * Layers: default
   * L0 Hatch to Twin Junctions East/Door to Twin Junctions West
-  * Extra - door_idx: (18,)
+  * Extra - door_idx: [18]
   > Door to Hornoad Hole
       Trivial
 
@@ -259,14 +259,14 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 3}, {'x': 10, 'y': 3}, {'x': 11, 'y'
 > Door to Twin Junctions West; Heals? False
   * Layers: default
   * L0 Hatch to Twin Junctions West/Door to Moto Motorway
-  * Extra - door_idx: (19,)
+  * Extra - door_idx: [19]
   > Door to Zebesian Zig
       Trivial
 
 > Door to Zebesian Zig; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Zig/Door to Moto Motorway
-  * Extra - door_idx: (20,)
+  * Extra - door_idx: [20]
   > Door to Twin Junctions West
       Trivial
 
@@ -278,7 +278,7 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 3}, {'x': 8, 'y': 4}, {'x': 8, 'y': 
 > Door to Moto Motorway; Heals? False
   * Layers: default
   * L0 Hatch to Moto Motorway/Door to Zebesian Zig
-  * Extra - door_idx: (21,)
+  * Extra - door_idx: [21]
   > Door to Sciser Puddle
       Any of the following:
           # Deal with the Pirates
@@ -291,7 +291,7 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 3}, {'x': 8, 'y': 4}, {'x': 8, 'y': 
 > Door to Sciser Puddle; Heals? False
   * Layers: default
   * L0 Hatch to Sciser Puddle/Door to Zebesian Zig
-  * Extra - door_idx: (31,)
+  * Extra - door_idx: [31]
   > Door to Moto Motorway
       Any of the following:
           # Deal with the Pirates
@@ -302,7 +302,7 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 3}, {'x': 8, 'y': 4}, {'x': 8, 'y': 
 > Door to Lava Lake; Heals? False
   * Layers: default
   * L0 Hatch to Lava Lake/Door to Zebesian Zig
-  * Extra - door_idx: (44,)
+  * Extra - door_idx: [44]
   > Door to Moto Motorway
       Trivial
 
@@ -314,14 +314,14 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 4}, {'x': 12, 'y': 5}, {'x': 13, 'y
 > Door to Charge Core Upper Access; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Upper Access/Door to Atmospheric Stabilizer Central
-  * Extra - door_idx: (23,)
+  * Extra - door_idx: [23]
   > Room Center
       Trivial
 
 > Door to Stabilizer Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Stabilizer Checkpoint/Door to Atmospheric Stabilizer Central
-  * Extra - door_idx: (88,)
+  * Extra - door_idx: [88]
   > Room Center
       Trivial
   > Event - Stabilizer 5 Online
@@ -365,7 +365,7 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 4}, {'x': 11, 'y': 5}]
 > Door to Atmospheric Stabilizer Central; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Central/Door to Charge Core Upper Access
-  * Extra - door_idx: (24,)
+  * Extra - door_idx: [24]
   > Door to Charge Core Arena
       Trivial
   > Other to Crab Rave
@@ -376,14 +376,14 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 4}, {'x': 11, 'y': 5}]
 > Door to Charge Core Arena; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Arena/Door to Charge Core Upper Access
-  * Extra - door_idx: (84,)
+  * Extra - door_idx: [84]
   > Door to Atmospheric Stabilizer Central
       Trivial
 
 > Other to Crab Rave; Heals? False
   * Layers: default
   * Tunnel to Crab Rave/Other to Charge Core Upper Access
-  * Extra - door_idx: (92,)
+  * Extra - door_idx: [92]
   > Door to Atmospheric Stabilizer Central
       Morph Ball and After Sector 1 Charge Core Escape Missile Block Destroyed
 
@@ -402,14 +402,14 @@ Extra - unlocked_save_recharge_station: True
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Lobby/Door to Entrance Recharge Room
-  * Extra - door_idx: (78,)
+  * Extra - door_idx: [78]
   > Recharge Terminal
       Trivial
 
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
-  * Extra - door_idx: (90,)
+  * Extra - door_idx: [90]
   > Recharge Terminal
       Trivial
 
@@ -428,14 +428,14 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 9}]
 > Door to Atmospheric Stabilizer Southwest; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Southwest/Door to Moto Manor
-  * Extra - door_idx: (27,)
+  * Extra - door_idx: [27]
   > Door to Tourian Trapdoor
       Trivial
 
 > Door to Tourian Trapdoor; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Trapdoor/Door to Moto Manor
-  * Extra - door_idx: (28,)
+  * Extra - door_idx: [28]
   > Door to Atmospheric Stabilizer Southwest
       Trivial
 
@@ -447,7 +447,7 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 8}, {'x': 10, 'y': 9}, {'x': 11, 'y
 > Door to Moto Manor; Heals? False
   * Layers: default
   * L0 Hatch to Moto Manor/Door to Atmospheric Stabilizer Southwest
-  * Extra - door_idx: (29,)
+  * Extra - door_idx: [29]
   > Room Center
       Trivial
   > Event - Stabilizer 3 Online
@@ -457,7 +457,7 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 8}, {'x': 10, 'y': 9}, {'x': 11, 'y
 > Door to Sciser Puddle; Heals? False
   * Layers: default
   * L0 Hatch to Sciser Puddle/Door to Atmospheric Stabilizer Southwest
-  * Extra - door_idx: (30,)
+  * Extra - door_idx: [30]
   > Room Center
       Trivial
 
@@ -484,14 +484,14 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 5}]
 > Door to Twin Junctions East; Heals? False
   * Layers: default
   * L0 Hatch to Twin Junctions East/Door to Stabilizer Checkpoint
-  * Extra - door_idx: (22,)
+  * Extra - door_idx: [22]
   > Door to Atmospheric Stabilizer Central
       Wave Beam
 
 > Door to Atmospheric Stabilizer Central; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Central/Door to Stabilizer Checkpoint
-  * Extra - door_idx: (89,)
+  * Extra - door_idx: [89]
   > Door to Twin Junctions East
       Trivial
 
@@ -503,14 +503,14 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 8}, {'x': 14, 'y': 9}, {'x': 15, 'y
 > Door to Stabilizer Storage; Heals? False
   * Layers: default
   * L0 Hatch to Stabilizer Storage/Door to Atmospheric Stabilizer Southeast
-  * Extra - door_idx: (32,)
+  * Extra - door_idx: [32]
   > Room Center
       Trivial
 
 > Door to Tourian Trapdoor; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Trapdoor/Door to Atmospheric Stabilizer Southeast
-  * Extra - door_idx: (33,)
+  * Extra - door_idx: [33]
   > Room Center
       Trivial
   > Shinespark from Below
@@ -519,7 +519,7 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 8}, {'x': 14, 'y': 9}, {'x': 15, 'y
 > Door to Zebesian Zag; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Zag/Door to Atmospheric Stabilizer Southeast
-  * Extra - door_idx: (75,)
+  * Extra - door_idx: [75]
   > Room Center
       Trivial
   > Shinespark from Below
@@ -573,14 +573,14 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 9}, {'x': 13, 'y': 10}, {'x': 13, '
 > Door to Atmospheric Stabilizer Southeast; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Southeast/Door to Tourian Trapdoor
-  * Extra - door_idx: (34,)
+  * Extra - door_idx: [34]
   > Door to Moto Manor
       Trivial
 
 > Door to Ripper Sauna; Heals? False
   * Layers: default
   * L0 Hatch to Ripper Sauna/Door to Tourian Trapdoor
-  * Extra - door_idx: (35,)
+  * Extra - door_idx: [35]
   > Door to Moto Manor
       All of the following:
           Screw Attack
@@ -618,7 +618,7 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 9}, {'x': 13, 'y': 10}, {'x': 13, '
 > Door to Moto Manor; Heals? False
   * Layers: default
   * L0 Hatch to Moto Manor/Door to Tourian Trapdoor
-  * Extra - door_idx: (94,)
+  * Extra - door_idx: [94]
   > Door to Atmospheric Stabilizer Southeast
       Trivial
   > Door to Ripper Sauna
@@ -690,7 +690,7 @@ Hint Features - Climbable Surface, Multiple Pickups
 > Door to Lava Lake Annex; Heals? False
   * Layers: default
   * L2 Hatch to Lava Lake Annex/Door to Lava Lake
-  * Extra - door_idx: (36,)
+  * Extra - door_idx: [36]
   > Door to Zebesian Zig
       Any of the following:
           # Intended
@@ -703,7 +703,7 @@ Hint Features - Climbable Surface, Multiple Pickups
 > Door to Zebesian Zig; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Zig/Door to Lava Lake
-  * Extra - door_idx: (37,)
+  * Extra - door_idx: [37]
   > Pickup (Missile Tank on Cliffside)
       Any of the following:
           Space Jump
@@ -749,14 +749,14 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 9}, {'x': 9, 'y': 10}, {'x': 9, 'y':
 > Door to Tourian Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Checkpoint/Door to Tourian Tower
-  * Extra - door_idx: (38,)
+  * Extra - door_idx: [38]
   > Door to Ripper Sauna
       Morph Ball and Screw Attack
 
 > Door to Ripper Sauna; Heals? False
   * Layers: default
   * L0 Hatch to Ripper Sauna/Door to Tourian Tower
-  * Extra - door_idx: (39,)
+  * Extra - door_idx: [39]
   > Door to Tourian Checkpoint
       All of the following:
           Morph Ball and Screw Attack
@@ -771,7 +771,7 @@ Extra - unlocked_save_recharge_station: True
 > Door to Tourian Eastern Hub; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Eastern Hub/Door to Tourian Save Room East
-  * Extra - door_idx: (40,)
+  * Extra - door_idx: [40]
   > Save Station
       Trivial
 
@@ -790,7 +790,7 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 2}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L1 Hatch to Entrance Lobby/Door to Lava Lake Annex
-  * Extra - door_idx: (42,)
+  * Extra - door_idx: [42]
   > Door to Lava Lake
       Any of the following:
           # Deal with Lava
@@ -804,7 +804,7 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 2}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
 > Door to Lava Lake; Heals? False
   * Layers: default
   * L2 Hatch to Lava Lake/Door to Lava Lake Annex
-  * Extra - door_idx: (43,)
+  * Extra - door_idx: [43]
   > Door to Entrance Lobby
       Any of the following:
           # Deal with Lava
@@ -816,7 +816,7 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 2}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
 > Door to Sector 1 (SRX) Westbound Glass Tube; Heals? False
   * Layers: default
   * L0 Hatch to Sector 1 (SRX) Westbound Glass Tube/Door to Lava Lake Annex
-  * Extra - door_idx: (106,)
+  * Extra - door_idx: [106]
   > Door to Entrance Lobby
       Morph Ball and Screw Attack
 
@@ -828,14 +828,14 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 7}, {'x': 7, 'y': 8}, {'x': 7, 'y': 
 > Door to Gold Pirate Crossing; Heals? False
   * Layers: default
   * Open Hatch to Gold Pirate Crossing/Door to Tourian Eastern Hub
-  * Extra - door_idx: (45,)
+  * Extra - door_idx: [45]
   > Left Ladder
       Can Use Any Bombs
 
 > Door to Tourian Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Checkpoint/Door to Tourian Eastern Hub
-  * Extra - door_idx: (46,)
+  * Extra - door_idx: [46]
   > Left Ladder
       All of the following:
           Morph Ball
@@ -847,7 +847,7 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 7}, {'x': 7, 'y': 8}, {'x': 7, 'y': 
 > Door to Yameba Pool; Heals? False
   * Layers: default
   * L0 Hatch to Yameba Pool/Door to Tourian Eastern Hub
-  * Extra - door_idx: (47,)
+  * Extra - door_idx: [47]
   > Door to Tourian Save Room East
       Trivial
   > Other to Animorphs
@@ -864,14 +864,14 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 7}, {'x': 7, 'y': 8}, {'x': 7, 'y': 
 > Door to Tourian Save Room East; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Save Room East/Door to Tourian Eastern Hub
-  * Extra - door_idx: (95,)
+  * Extra - door_idx: [95]
   > Door to Yameba Pool
       Trivial
 
 > Other to Animorphs; Heals? False
   * Layers: default
   * Open Passage to Animorphs/Other to Tourian Eastern Hub
-  * Extra - door_idx: (110,)
+  * Extra - door_idx: [110]
   > Door to Yameba Pool
       After Sector 1 Animorphs Entrance Uncovered
 
@@ -903,7 +903,7 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 7}, {'x': 6, 'y': 7}]
 > Door to Tourian Eastern Hub; Heals? False
   * Layers: default
   * Open Hatch to Tourian Eastern Hub/Door to Gold Pirate Crossing
-  * Extra - door_idx: (48,)
+  * Extra - door_idx: [48]
   > Door to Tourian Western Hub
       All of the following:
           Any of the following:
@@ -922,7 +922,7 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 7}, {'x': 6, 'y': 7}]
 > Door to Tourian Western Hub; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Western Hub/Door to Gold Pirate Crossing
-  * Extra - door_idx: (49,)
+  * Extra - door_idx: [49]
   > Door to Tourian Eastern Hub
       All of the following:
           Any of the following:
@@ -946,7 +946,7 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 6}, {'x': 4, 'y': 7}, {'x': 4, 'y': 
 > Door to Gold Pirate Crossing; Heals? False
   * Layers: default
   * L0 Hatch to Gold Pirate Crossing/Door to Tourian Western Hub
-  * Extra - door_idx: (50,)
+  * Extra - door_idx: [50]
   > Door to Tourian Save Room West
       Trivial
   > Door to Neo-Ridley Arena Access
@@ -955,21 +955,21 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 6}, {'x': 4, 'y': 7}, {'x': 4, 'y': 
 > Door to Tourian Save Room West; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Save Room West/Door to Tourian Western Hub
-  * Extra - door_idx: (51,)
+  * Extra - door_idx: [51]
   > Door to Gold Pirate Crossing
       Trivial
 
 > Door to Genesis Habitation; Heals? False
   * Layers: default
   * L0 Hatch to Genesis Habitation/Door to Tourian Western Hub
-  * Extra - door_idx: (52,)
+  * Extra - door_idx: [52]
   > Door to Neo-Ridley Arena Access
       Trivial
 
 > Door to Neo-Ridley Arena Access; Heals? False
   * Layers: default
   * L0 Hatch to Neo-Ridley Arena Access/Door to Tourian Western Hub
-  * Extra - door_idx: (53,)
+  * Extra - door_idx: [53]
   > Door to Gold Pirate Crossing
       Space Jump or Wall Jump (Beginner)
   > Door to Genesis Habitation
@@ -984,7 +984,7 @@ Extra - unlocked_save_recharge_station: True
 > Door to Tourian Western Hub; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Western Hub/Door to Tourian Save Room West
-  * Extra - door_idx: (54,)
+  * Extra - door_idx: [54]
   > Save Station
       Trivial
 
@@ -1003,7 +1003,7 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 8}, {'x': 6, 'y': 8}]
 > Door to Tourian Western Hub; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Western Hub/Door to Genesis Habitation
-  * Extra - door_idx: (55,)
+  * Extra - door_idx: [55]
 
 ----------------
 Neo-Ridley Arena Access
@@ -1013,7 +1013,7 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 8}, {'x': 3, 'y': 8}]
 > Door to Tourian Western Hub; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Western Hub/Door to Neo-Ridley Arena Access
-  * Extra - door_idx: (56,)
+  * Extra - door_idx: [56]
   > Door to Neo-Ridley Arena
       All of the following:
           Can Kill Gadora
@@ -1027,7 +1027,7 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 8}, {'x': 3, 'y': 8}]
 > Door to Neo-Ridley Arena; Heals? False
   * Layers: default
   * L0 Hatch to Neo-Ridley Arena/Door to Neo-Ridley Arena Access
-  * Extra - door_idx: (57,)
+  * Extra - door_idx: [57]
   > Door to Tourian Western Hub
       Any of the following:
           Screw Attack or Can Freeze Enemies With Any Weapon
@@ -1045,7 +1045,7 @@ Hint Features - Core-X
 > Door to Neo-Ridley Arena Access; Heals? False
   * Layers: default
   * L0 Hatch to Neo-Ridley Arena Access/Door to Neo-Ridley Arena
-  * Extra - door_idx: (58,)
+  * Extra - door_idx: [58]
   > Arena
       Trivial
 
@@ -1129,14 +1129,14 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 9}]
 > Door to Tourian Tower; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Tower/Door to Tourian Checkpoint
-  * Extra - door_idx: (41,)
+  * Extra - door_idx: [41]
   > Door to Tourian Eastern Hub
       Trivial
 
 > Door to Tourian Eastern Hub; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Eastern Hub/Door to Tourian Checkpoint
-  * Extra - door_idx: (59,)
+  * Extra - door_idx: [59]
   > Door to Tourian Tower
       Wave Beam
 
@@ -1148,14 +1148,14 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 10}, {'x': 6, 'y': 10}]
 > Door to Tourian Eastern Hub; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Eastern Hub/Door to Yameba Pool
-  * Extra - door_idx: (60,)
+  * Extra - door_idx: [60]
   > Door to Ripper Maze
       Trivial
 
 > Door to Ripper Maze; Heals? False
   * Layers: default
   * L0 Hatch to Ripper Maze/Door to Yameba Pool
-  * Extra - door_idx: (61,)
+  * Extra - door_idx: [61]
   > Door to Tourian Eastern Hub
       Trivial
 
@@ -1179,7 +1179,7 @@ Hint Features - Climbable Surface
 > Door to Yameba Pool; Heals? False
   * Layers: default
   * L0 Hatch to Yameba Pool/Door to Ripper Maze
-  * Extra - door_idx: (62,)
+  * Extra - door_idx: [62]
   > Top of Shaft
       All of the following:
           Any of the following:
@@ -1227,7 +1227,7 @@ Hint Features - Climbable Surface
 > Door to Tourian Elevator; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Elevator/Door to Ripper Maze
-  * Extra - door_idx: (63,)
+  * Extra - door_idx: [63]
   > Top of Shaft
       Wall Jump (Beginner) or Have Any Jump Upgrade
 
@@ -1287,14 +1287,14 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 11}, {'x': 2, 'y': 12}]
 > Door to Ripper Maze; Heals? False
   * Layers: default
   * L0 Hatch to Ripper Maze/Door to Tourian Elevator
-  * Extra - door_idx: (64,)
+  * Extra - door_idx: [64]
   > Elevator to Restricted Zone Elevator
       Trivial
 
 > Elevator to Restricted Zone Elevator; Heals? False
   * Layers: default
   * Elevator to Restricted Zone Elevator/Elevator to Tourian Elevator
-  * Extra - door_idx: (65,)
+  * Extra - door_idx: [65]
   > Door to Ripper Maze
       Trivial
 
@@ -1307,7 +1307,7 @@ Hint Features - Geron
 > Door to Twin Junctions West; Heals? False
   * Layers: default
   * L0 Hatch to Twin Junctions West/Door to Atmospheric Stabilizer Northeast
-  * Extra - door_idx: (66,)
+  * Extra - door_idx: [66]
   > Room Center
       Trivial
   > Event - Stabilizer 2 Online
@@ -1348,7 +1348,7 @@ Extra - minimap_coordinates: [{'x': 15, 'y': 4}, {'x': 15, 'y': 5}, {'x': 15, 'y
 > Door to Twin Junctions West; Heals? False
   * Layers: default
   * L0 Hatch to Twin Junctions West/Door to Twin Junctions East
-  * Extra - door_idx: (67,)
+  * Extra - door_idx: [67]
   > Door to Twin Junctions Save Room
       Trivial
   > Door to Stabilizer Checkpoint
@@ -1357,28 +1357,28 @@ Extra - minimap_coordinates: [{'x': 15, 'y': 4}, {'x': 15, 'y': 5}, {'x': 15, 'y
 > Door to Twin Junctions Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Twin Junctions Save Room/Door to Twin Junctions East
-  * Extra - door_idx: (68,)
+  * Extra - door_idx: [68]
   > Door to Twin Junctions West
       Trivial
 
 > Door to Stabilizer Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Stabilizer Checkpoint/Door to Twin Junctions East
-  * Extra - door_idx: (69,)
+  * Extra - door_idx: [69]
   > Door to Twin Junctions West
       Trivial
 
 > Door to Sciser Playground; Heals? False
   * Layers: default
   * L0 Hatch to Sciser Playground/Door to Twin Junctions East
-  * Extra - door_idx: (70,)
+  * Extra - door_idx: [70]
   > Door to Zebesian Zag
       Wave Beam
 
 > Door to Zebesian Zag; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Zag/Door to Twin Junctions East
-  * Extra - door_idx: (71,)
+  * Extra - door_idx: [71]
   > Door to Sciser Playground
       Trivial
 
@@ -1391,7 +1391,7 @@ Extra - unlocked_save_recharge_station: True
 > Door to Twin Junctions East; Heals? False
   * Layers: default
   * L0 Hatch to Twin Junctions East/Door to Twin Junctions Save Room
-  * Extra - door_idx: (74,)
+  * Extra - door_idx: [74]
   > Other to Wall Jump Tutorial
       All of the following:
           Morph Ball and After Sector 1 Save Room East Shot Block Destroyed
@@ -1404,7 +1404,7 @@ Extra - unlocked_save_recharge_station: True
 > Other to Wall Jump Tutorial; Heals? False
   * Layers: default
   * Tunnel to Wall Jump Tutorial/Other to Twin Junctions Save Room
-  * Extra - door_idx: (108,)
+  * Extra - door_idx: [108]
   > Door to Twin Junctions East
       After Sector 1 Save Room East Shot Block Destroyed
 
@@ -1429,7 +1429,7 @@ Extra - minimap_coordinates: [{'x': 16, 'y': 6}, {'x': 16, 'y': 7}, {'x': 16, 'y
 > Door to Twin Junctions East; Heals? False
   * Layers: default
   * L0 Hatch to Twin Junctions East/Door to Zebesian Zag
-  * Extra - door_idx: (72,)
+  * Extra - door_idx: [72]
   > Door to Atmospheric Stabilizer Southeast
       Any of the following:
           # Deal with the Pirates
@@ -1440,7 +1440,7 @@ Extra - minimap_coordinates: [{'x': 16, 'y': 6}, {'x': 16, 'y': 7}, {'x': 16, 'y
 > Door to Atmospheric Stabilizer Southeast; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Southeast/Door to Zebesian Zag
-  * Extra - door_idx: (73,)
+  * Extra - door_idx: [73]
   > Door to Twin Junctions East
       Any of the following:
           # Deal with the Pirates
@@ -1464,7 +1464,7 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 12}, {'x': 11, 'y': 12}, {'x': 12, 
 > Door to Tourian Trapdoor; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Trapdoor/Door to Ripper Sauna
-  * Extra - door_idx: (7,)
+  * Extra - door_idx: [7]
   > Door to Tourian Tower
       All of the following:
           Morph Ball and Screw Attack
@@ -1481,7 +1481,7 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 12}, {'x': 11, 'y': 12}, {'x': 12, 
 > Door to Tourian Tower; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Tower/Door to Ripper Sauna
-  * Extra - door_idx: (8,)
+  * Extra - door_idx: [8]
   > Door to Tourian Trapdoor
       All of the following:
           Morph Ball and Screw Attack and Wave Beam
@@ -1501,7 +1501,7 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 6}, {'x': 11, 'y': 7}]
 > Door to Sciser Playground; Heals? False
   * Layers: default
   * L0 Hatch to Sciser Playground/Door to Charge Core Lower Access
-  * Extra - door_idx: (25,)
+  * Extra - door_idx: [25]
   > Door to Hornoad Housing
       Morph Ball
   > Event - Bomb Blocks
@@ -1510,7 +1510,7 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 6}, {'x': 11, 'y': 7}]
 > Door to Hornoad Housing; Heals? False
   * Layers: default
   * L0 Hatch to Hornoad Housing/Door to Charge Core Lower Access
-  * Extra - door_idx: (77,)
+  * Extra - door_idx: [77]
   > Door to Charge Core Arena
       Can Kill Gadora
   > Other to Watering Hole
@@ -1524,14 +1524,14 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 6}, {'x': 11, 'y': 7}]
 > Door to Charge Core Arena; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Arena/Door to Charge Core Lower Access
-  * Extra - door_idx: (83,)
+  * Extra - door_idx: [83]
   > Door to Hornoad Housing
       Trivial
 
 > Other to Watering Hole; Heals? False
   * Layers: default
   * Open Passage to Watering Hole/Other to Charge Core Lower Access
-  * Extra - door_idx: (100,)
+  * Extra - door_idx: [100]
   > Door to Hornoad Housing
       After Sector 1 Charge Core Arena Access Bomb Blocks Destroyed
   > Event - Bomb Blocks
@@ -1551,14 +1551,14 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 6}, {'x': 13, 'y': 6}, {'x': 14, 'y
 > Door to Charge Core Lower Access; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Lower Access/Door to Sciser Playground
-  * Extra - door_idx: (79,)
+  * Extra - door_idx: [79]
   > Door to Twin Junctions East
       Morph Ball
 
 > Door to Twin Junctions East; Heals? False
   * Layers: default
   * L0 Hatch to Twin Junctions East/Door to Sciser Playground
-  * Extra - door_idx: (80,)
+  * Extra - door_idx: [80]
   > Door to Charge Core Lower Access
       Morph Ball
 
@@ -1581,7 +1581,7 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 0}]
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L2 Hatch to Entrance Lobby/Door to Antechamber
-  * Extra - door_idx: (81,)
+  * Extra - door_idx: [81]
   > Top of Room
       All of the following:
           Screw Attack
@@ -1592,7 +1592,7 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 0}]
 > Door to Sector 1 (SRX) Eastbound Glass Tube; Heals? False
   * Layers: default
   * L0 Hatch to Sector 1 (SRX) Eastbound Glass Tube/Door to Antechamber
-  * Extra - door_idx: (102,)
+  * Extra - door_idx: [102]
   > Top of Room
       Can Bounce in Ball
 
@@ -1625,7 +1625,7 @@ Hint Features - Multiple Pickups
 > Door to Charge Core Lower Access; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Lower Access/Door to Charge Core Arena
-  * Extra - door_idx: (82,)
+  * Extra - door_idx: [82]
   > Pickup (Energy Tank)
       All of the following:
           # Shinespark from Hornoad Housing -> Access
@@ -1643,7 +1643,7 @@ Hint Features - Multiple Pickups
 > Door to Charge Core Upper Access; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Upper Access/Door to Charge Core Arena
-  * Extra - door_idx: (85,)
+  * Extra - door_idx: [85]
   > Pickup (Energy Tank)
       # Shinespark from Central Stabilizer -> Escape: https://youtu.be/BsW39UKOYVw
       Level 0 Keycard and Speed Booster and After Stabilizer Central Restored and Shinespark Tricks (Ludicrous) and Disabled Door Lock Rando and Disabled Entrance Rando
@@ -1692,14 +1692,14 @@ Extra - minimap_coordinates: [{'x': 1, 'y': 0}, {'x': 1, 'y': 1}]
 > Elevator to Main Deck; Heals? False
   * Layers: default
   * Elevator to Sector Hub Lift 1/Elevator to Sector 1 (SRX)
-  * Extra - door_idx: (0,)
+  * Extra - door_idx: [0]
   > Door to Entrance Navigation Room
       Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Sector 1 (SRX) Entrance Elevator
-  * Extra - door_idx: (86,)
+  * Extra - door_idx: [86]
   > Elevator to Main Deck
       Trivial
 
@@ -1712,7 +1712,7 @@ Extra - unlocked_save_recharge_station: True
 > Door to Hornoad Housing; Heals? False
   * Layers: default
   * L0 Hatch to Hornoad Housing/Door to Central Save Room
-  * Extra - door_idx: (91,)
+  * Extra - door_idx: [91]
   > Save Station
       Trivial
 
@@ -1742,7 +1742,7 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 4}]
 > Other to Charge Core Upper Access; Heals? False
   * Layers: default
   * Tunnel to Charge Core Upper Access/Other to Crab Rave
-  * Extra - door_idx: (93,)
+  * Extra - door_idx: [93]
   > Pickup (Missile Tank)
       Trivial
 
@@ -1765,7 +1765,7 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 8}]
 > Door to Atmospheric Stabilizer Southeast; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Southeast/Door to Stabilizer Storage
-  * Extra - door_idx: (26,)
+  * Extra - door_idx: [26]
   > Pickup (Missile Tank)
       Trivial
 
@@ -1777,14 +1777,14 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 8}]
 > Door to Zebesian Zig; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Zig/Door to Sciser Puddle
-  * Extra - door_idx: (96,)
+  * Extra - door_idx: [96]
   > Door to Atmospheric Stabilizer Southwest
       Trivial
 
 > Door to Atmospheric Stabilizer Southwest; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Southwest/Door to Sciser Puddle
-  * Extra - door_idx: (97,)
+  * Extra - door_idx: [97]
   > Door to Zebesian Zig
       Trivial
 
@@ -1797,14 +1797,14 @@ Extra - unlocked_save_recharge_station_no_entrance_rando: True
 > Door to Central Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Central Save Room/Door to Hornoad Housing
-  * Extra - door_idx: (98,)
+  * Extra - door_idx: [98]
   > Door to Charge Core Lower Access
       Trivial
 
 > Door to Charge Core Lower Access; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Lower Access/Door to Hornoad Housing
-  * Extra - door_idx: (99,)
+  * Extra - door_idx: [99]
   > Door to Central Save Room
       Trivial
 
@@ -1828,7 +1828,7 @@ Hint Features - Climbable Surface
 > Other to Charge Core Lower Access; Heals? False
   * Layers: default
   * Open Passage to Charge Core Lower Access/Other to Watering Hole
-  * Extra - door_idx: (101,)
+  * Extra - door_idx: [101]
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
           Level 0 Keycard and Morph Ball and Speed Booster and After Sector 1 Charge Core Arena Access Bomb Blocks Destroyed and Disabled Door Lock Rando and Disabled Entrance Rando and Can Bounce in Ball
@@ -1855,14 +1855,14 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 0}]
 > Door to Antechamber; Heals? False
   * Layers: default
   * L0 Hatch to Antechamber/Door to Sector 1 (SRX) Eastbound Glass Tube
-  * Extra - door_idx: (103,)
+  * Extra - door_idx: [103]
   > Area Transition to Sector 2 (TRO)
       Trivial
 
 > Area Transition to Sector 2 (TRO); Heals? False
   * Layers: default
   * Open Passage to Sector 2 (TRO) Westbound Glass Tube/Area Transition to Sector 1 (SRX)
-  * Extra - door_idx: (104,)
+  * Extra - door_idx: [104]
   > Door to Antechamber
       Trivial
 
@@ -1874,14 +1874,14 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 2}]
 > Door to Lava Lake Annex; Heals? False
   * Layers: default
   * L0 Hatch to Lava Lake Annex/Door to Sector 1 (SRX) Westbound Glass Tube
-  * Extra - door_idx: (105,)
+  * Extra - door_idx: [105]
   > Area Transition to Sector 3 (PYR)
       Trivial
 
 > Area Transition to Sector 3 (PYR); Heals? False
   * Layers: default
   * Open Passage to Sector 3 (PYR) Eastbound Glass Tube/Area Transition to Sector 1 (SRX)
-  * Extra - door_idx: (107,)
+  * Extra - door_idx: [107]
   > Door to Lava Lake Annex
       Trivial
 
@@ -1904,7 +1904,7 @@ Extra - minimap_coordinates: [{'x': 17, 'y': 2}, {'x': 17, 'y': 3}, {'x': 17, 'y
 > Other to Twin Junctions Save Room; Heals? False
   * Layers: default
   * Tunnel to Twin Junctions Save Room/Other to Wall Jump Tutorial
-  * Extra - door_idx: (109,)
+  * Extra - door_idx: [109]
   > Pickup (Missile Tank)
       Trivial
 
@@ -1916,14 +1916,14 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 11}, {'x': 7, 'y': 11}]
 > Other to Tourian Eastern Hub; Heals? False
   * Layers: default
   * Open Passage to Tourian Eastern Hub/Other to Animorphs
-  * Extra - door_idx: (111,)
+  * Extra - door_idx: [111]
   > Room Center
       Trivial
 
 > Door to Animorphs Cache; Heals? False
   * Layers: default
   * L0 Hatch to Animorphs Cache/Door to Animorphs
-  * Extra - door_idx: (112,)
+  * Extra - door_idx: [112]
   > Room Center
       Trivial
 
@@ -1972,7 +1972,7 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 11}]
 > Door to Animorphs; Heals? False
   * Layers: default
   * L0 Hatch to Animorphs/Door to Animorphs Cache
-  * Extra - door_idx: (113,)
+  * Extra - door_idx: [113]
   > Pickup (Power Bomb Tank)
       Trivial
 
