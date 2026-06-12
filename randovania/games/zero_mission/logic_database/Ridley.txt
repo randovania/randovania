@@ -1,0 +1,936 @@
+----------------
+Elevator to Norfair
+Extra - map_name: Ridley0
+Extra - room_id: [0]
+> Open Passage to Elevator to Ridley; Heals? False
+  * Layers: default
+  * Horizontal Passage to Elevator to Ridley/Open Passage to Elevator to Norfair
+  * Extra - door_idx: [0]
+  > Door to Shortcut
+      Trivial
+
+> Door to Save Station (North); Heals? False
+  * Layers: default
+  * Blue Door to Save Station (North)/Door to Elevator to Norfair
+  * Extra - door_idx: [1]
+  > Door to Shortcut
+      Trivial
+
+> Door to Shortcut; Heals? False
+  * Layers: default
+  * Blue Door to Shortcut/Door to Elevator to Norfair
+  * Extra - door_idx: [2]
+  > Open Passage to Elevator to Ridley
+      Trivial
+  > Door to Save Station (North)
+      Trivial
+
+----------------
+Save Station (North)
+Extra - map_name: Ridley1
+Extra - room_id: [1]
+> Door to Elevator to Norfair; Heals? False
+  * Layers: default
+  * Blue Door to Elevator to Norfair/Door to Save Station (North)
+  * Extra - door_idx: [3]
+  > Save Station
+      Trivial
+
+> Door to Cocoon Cavern (Lower); Heals? False
+  * Layers: default
+  * Blue Door to Cocoon Cavern (Lower)/Door to Save Station (North)
+  * Extra - door_idx: [4]
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Elevator to Norfair
+      Trivial
+  > Door to Cocoon Cavern (Lower)
+      Trivial
+
+----------------
+Cocoon Cave (Upper)
+Extra - map_name: Ridley2
+Extra - room_id: [2, 28]
+> Door to Imago Arena; Heals? False
+  * Layers: default
+  * Blue Door to Imago Arena/Door to Cocoon Cave (Upper)
+  * Extra - door_idx: [43, 75]
+  > Tunnel to Cocoon Cavern (Lower)
+      Missiles
+
+> Open Passage to Norfair; Heals? False
+  * Layers: default
+  * Vertical Passage to Kiru-Giru Arena (FINAL)/Open Passage to Ridley
+  * Extra - door_idx: [60]
+  > Open Passage to Imago Arena
+      Climb Ledges
+
+> Open Passage to Imago Arena; Heals? False
+  * Layers: default
+  * Horizontal Passage to Imago Arena/Open Passage to Cocoon Cave (Upper)
+  * Extra - door_idx: [63]
+  > Open Passage to Norfair
+      Climb High Ledges
+
+> Tunnel to Cocoon Cavern (Lower); Heals? False
+  * Layers: default
+  * Tunnel to Cocoon Cavern (Lower)/Tunnel to Cocoon Cave (Upper)
+  * Extra - door_idx: [66]
+
+----------------
+Hall of Pillars
+Extra - map_name: Ridley3
+Extra - room_id: [3]
+> Door to Cocoon Cavern (Lower); Heals? False
+  * Layers: default
+  * Super Missile Door to Cocoon Cavern (Lower)/Door to Hall of Pillars
+  * Extra - door_idx: [7]
+  > Door to Artificial Passage
+      Power Grip or Can Use Any Bombs or Have Any Jump Upgrade
+
+> Door to Artificial Passage; Heals? False
+  * Layers: default
+  * Missile Door to Artificial Passage/Door to Hall of Pillars
+  * Extra - door_idx: [8]
+  > Door to Cocoon Cavern (Lower)
+      Power Grip or Can Use Any Bombs or Have Any Jump Upgrade
+
+----------------
+Artificial Passage
+Extra - map_name: Ridley4
+Extra - room_id: [4]
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 43; Category? Minor
+  * Extra - blockx: 6
+  * Extra - blocky: 8
+  > Door to Pronged Hall
+      Trivial
+
+> Door to Hall of Pillars; Heals? False
+  * Layers: default
+  * Missile Door to Hall of Pillars/Door to Artificial Passage
+  * Extra - door_idx: [9]
+  > Door to Pronged Hall
+      # There are other ways to get past this gap using various levels of skill/knowledge but keeping it simple for now
+      Power Grip or Use Space Jump
+  > Door to Path over Lava
+      Trivial
+
+> Door to Pronged Hall; Heals? False
+  * Layers: default
+  * Blue Door to Pronged Hall/Door to Artificial Passage
+  * Extra - door_idx: [10]
+  > Pickup (Energy Tank)
+      Trivial
+  > Door to Hall of Pillars
+      # There are other ways to get past this gap using various levels of skill/knowledge but keeping it simple for now
+      Power Grip or Use Space Jump
+  > Door to Path over Lava
+      Trivial
+
+> Door to Path over Lava; Heals? False
+  * Layers: default
+  * Blue Door to Path over Lava/Door to Artificial Passage
+  * Extra - door_idx: [11]
+  > Door to Pronged Hall
+      Use Space Jump
+
+----------------
+Pronged Hall
+Extra - map_name: Ridley5
+Extra - room_id: [5]
+> Door to Artificial Passage; Heals? False
+  * Layers: default
+  * Blue Door to Artificial Passage/Door to Pronged Hall
+  * Extra - door_idx: [13]
+  > Door to Western Hub
+      Can Use Any Bombs
+
+> Door to Western Hub; Heals? False
+  * Layers: default
+  * Blue Door to Western Hub/Door to Pronged Hall
+  * Extra - door_idx: [14]
+  > Door to Artificial Passage
+      Can Use Any Bombs
+
+----------------
+Western Hub
+Extra - map_name: Ridley6
+Extra - room_id: [6]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 44; Category? Minor
+  * Extra - blockx: 8
+  * Extra - blocky: 33
+  > Door to Path over Lava
+      Tunnel Climb and Use Space Jump
+  > Door to Map Station
+      Morph Ball
+
+> Door to Pronged Hall; Heals? False
+  * Layers: default
+  * Blue Door to Pronged Hall/Door to Western Hub
+  * Extra - door_idx: [15]
+  > Door to Path over Lava
+      Morph Ball or Climb Ledges
+
+> Door to Path over Lava; Heals? False
+  * Layers: default
+  * Blue Door to Path over Lava/Door to Western Hub
+  * Extra - door_idx: [16]
+  > Pickup (Missile Tank)
+      Morph Ball and Climb Ledges
+  > Door to Pronged Hall
+      Any of the following:
+          Climb High Ledges
+          All of the following:
+              Morph Ball
+              Hi-Jump Boots or Power Grip
+  > Door to Save Station (West)
+      Morph Ball or Climb Ledges
+
+> Door to Map Station; Heals? False
+  * Layers: default
+  * Missile Door to Map Station/Door to Western Hub
+  * Extra - door_idx: [17]
+  > Pickup (Missile Tank)
+      Tunnel Climb and Use Space Jump
+  > Door to Maze
+      Speed Booster
+
+> Door to Save Station (West); Heals? False
+  * Layers: default
+  * Blue Door to Save Station (West)/Door to Western Hub
+  * Extra - door_idx: [53]
+  > Door to Path over Lava
+      Morph Ball or Climb Ledges
+
+> Door to Maze; Heals? False
+  * Layers: default
+  * Blue Door to Maze/Door to Western Hub
+  * Extra - door_idx: [68]
+  > Door to Map Station
+      Speed Booster
+
+----------------
+Path over Lava
+Extra - map_name: Ridley7
+Extra - room_id: [7]
+> Door to Western Hub; Heals? False
+  * Layers: default
+  * Blue Door to Western Hub/Door to Path over Lava
+  * Extra - door_idx: [18]
+  > Door to Artificial Passage
+      Trivial
+
+> Door to Artificial Passage; Heals? False
+  * Layers: default
+  * Blue Door to Artificial Passage/Door to Path over Lava
+  * Extra - door_idx: [19]
+  > Door to Western Hub
+      Trivial
+
+----------------
+Desgeega Hall
+Extra - map_name: Ridley8
+Extra - room_id: [8]
+> Door to Hidden Climb; Heals? False
+  * Layers: default
+  * Blue Door to Hidden Climb/Door to Desgeega Hall
+  * Extra - door_idx: [20]
+  > Door to Gambit
+      Trivial
+
+> Door to Gambit; Heals? False
+  * Layers: default
+  * Blue Door to Gambit/Door to Desgeega Hall
+  * Extra - door_idx: [21]
+  > Door to Hidden Climb
+      Trivial
+
+----------------
+Gambit
+Extra - map_name: Ridley9
+Extra - room_id: [9]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 45; Category? Minor
+  * Extra - blockx: 9
+  * Extra - blocky: 4
+  > Door to Desgeega Hall
+      Trivial
+  > Door to Multiviola Cache
+      Trivial
+
+> Door to Desgeega Hall; Heals? False
+  * Layers: default
+  * Blue Door to Desgeega Hall/Door to Gambit
+  * Extra - door_idx: [22]
+  > Pickup (Missile Tank)
+      Ice Beam or Use Space Jump
+  > Door to Sloped Passage
+      Trivial
+
+> Door to Multiviola Cache; Heals? False
+  * Layers: default
+  * Blue Door to Multiviola Cache/Door to Gambit
+  * Extra - door_idx: [23]
+  > Pickup (Missile Tank)
+      Ice Beam or Use Space Jump
+  > Door to Sloped Passage
+      Trivial
+
+> Door to Save Station (Central); Heals? False
+  * Layers: default
+  * Blue Door to Save Station (Central)/Door to Gambit
+  * Extra - door_idx: [24]
+  > Door to Sloped Passage
+      Trivial
+
+> Door to Sloped Passage; Heals? False
+  * Layers: default
+  * Blue Door to Sloped Passage/Door to Gambit
+  * Extra - door_idx: [25]
+  > Door to Multiviola Cache
+      Speed Booster
+  > Door to Save Station (Central)
+      Trivial
+
+----------------
+Multiviola Cache
+Extra - map_name: Ridley10
+Extra - room_id: [10]
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 46; Category? Minor
+  * Extra - blockx: 27
+  * Extra - blocky: 6
+  > Door to Gambit
+      Morph Ball
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 47; Category? Minor
+  * Extra - blockx: 15
+  * Extra - blocky: 15
+  > Door to Gambit
+      Trivial
+
+> Door to Desgeega Corridor; Heals? False
+  * Layers: default
+  * Blue Door to Desgeega Corridor/Door to Multiviola Cache
+  * Extra - door_idx: [12]
+  > Door to Gambit
+      Can Use Springball or Tunnel Climb
+
+> Door to Gambit; Heals? False
+  * Layers: default
+  * Blue Door to Gambit/Door to Multiviola Cache
+  * Extra - door_idx: [26]
+  > Pickup (Super Missile Tank)
+      Super Missiles and Can Use Any Bombs and Climb High Ledges
+  > Pickup (Missile Tank)
+      Can Use Any Bombs and Climb Ledges
+  > Door to Desgeega Corridor
+      Tunnel Climb
+
+----------------
+Ridley Arena Access
+Extra - map_name: Ridley11
+Extra - room_id: [11]
+> Door to Save Station (Central); Heals? False
+  * Layers: default
+  * Blue Door to Save Station (Central)/Door to Ridley Arena Access
+  * Extra - door_idx: [27]
+  > Door to Ridley Arena
+      All of the following:
+          Climb Ledges
+          # To kill the Gadora
+          Charge Beam or Missiles ≥ 3 or Super Missiles
+
+> Door to Ridley Arena; Heals? False
+  * Layers: default
+  * Blue Door to Ridley Arena/Door to Ridley Arena Access
+  * Extra - door_idx: [28]
+  > Door to Save Station (Central)
+      All of the following:
+          After Ridley Chozo Statue Item Aquired
+          Any of the following:
+              Use Space Jump
+              All of the following:
+                  Ice Beam
+                  Hi-Jump Boots or Power Grip
+
+----------------
+Ridley Arena
+Extra - map_name: Ridley12
+Extra - room_id: [12]
+> Door to Ridley Arena Access; Heals? False
+  * Layers: default
+  * Blue Door to Ridley Arena Access/Door to Ridley Arena
+  * Extra - door_idx: [29]
+  > Arena
+      Trivial
+
+> Door to Ridley's Reliquary; Heals? False
+  * Layers: default
+  * Blue Door to Ridley's Reliquary/Door to Ridley Arena
+  * Extra - door_idx: [30]
+  > Arena
+      Trivial
+
+> Event - Ridley; Heals? False
+  * Layers: default
+  * Event Boss Ridley Defeated
+  > Arena
+      Trivial
+
+> Arena; Heals? False
+  * Layers: default
+  > Door to Ridley Arena Access
+      Trivial
+  > Door to Ridley's Reliquary
+      Trivial
+  > Event - Ridley
+      After Ridley Chozo Statue Item Aquired
+
+----------------
+Ridley's Reliquary
+Extra - map_name: Ridley13
+Extra - room_id: [13]
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 48; Category? Minor
+  * Extra - blockx: 8
+  * Extra - blocky: 7
+  > Door to Ridley Arena
+      Trivial
+
+> Door to Ridley Arena; Heals? False
+  * Layers: default
+  * Blue Door to Ridley Arena/Door to Ridley's Reliquary
+  * Extra - door_idx: [31]
+  > Pickup (Energy Tank)
+      After Ridley Chozo Statue Item Aquired
+  > Pickup (Unknown Item 3)
+      Trivial
+
+> Pickup (Unknown Item 3); Heals? False
+  * Layers: default
+  * Pickup 98; Category? Major
+  * Extra - source: GRAVITY_SUIT
+  > Event - Statue Item Aquired 
+      Trivial
+
+> Event - Statue Item Aquired ; Heals? False
+  * Layers: default
+  * Event Ridley Chozo Statue Item Aquired
+  > Door to Ridley Arena
+      Trivial
+
+----------------
+Holtz Hall
+Extra - map_name: Ridley14
+Extra - room_id: [14]
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 49; Category? Minor
+  * Extra - blockx: 27
+  * Extra - blocky: 9
+  > Door to Sloped Passage
+      Trivial
+
+> Door to Eastern Hub; Heals? False
+  * Layers: default
+  * Blue Door to Eastern Hub/Door to Holtz Hall
+  * Extra - door_idx: [33]
+
+> Door to Sloped Passage; Heals? False
+  * Layers: default
+  * Blue Door to Sloped Passage/Door to Holtz Hall
+  * Extra - door_idx: [58]
+  > Pickup (Energy Tank)
+      Trivial
+  > Door to Eastern Hub
+      Can Bounce in Ball or Tunnel Climb
+
+> Open Passage to Desgeega Corridor; Heals? False
+  * Layers: default
+  * Horizontal Passage to Desgeega Corridor/Open Passage to Holtz Hall
+  * Extra - door_idx: [62]
+  > Door to Eastern Hub
+      Trivial
+
+----------------
+Eastern Hub
+Extra - map_name: Ridley15
+Extra - room_id: [15]
+> Door to Shortcut; Heals? False
+  * Layers: default
+  * Blue Door to Shortcut/Door to Eastern Hub
+  * Extra - door_idx: [34]
+  > Door to Desgeega Corridor
+      Screw Attack or Can Use Any Bombs
+
+> Door to Desgeega Corridor; Heals? False
+  * Layers: default
+  * Blue Door to Desgeega Corridor/Door to Eastern Hub
+  * Extra - door_idx: [35]
+  > Door to Shortcut
+      After Ridley Chozo Statue Item Aquired and Climb Ledges
+  > Door to Holtz Hall
+      Trivial
+
+> Door to Holtz Hall; Heals? False
+  * Layers: default
+  * Blue Door to Holtz Hall/Door to Eastern Hub
+  * Extra - door_idx: [36]
+  > Door to Desgeega Corridor
+      Climb Ledges
+  > Door to Save Station (East)
+      Trivial
+  > Door to Chain Reaction Chamber
+      Speed Booster
+
+> Door to Save Station (East); Heals? False
+  * Layers: default
+  * Blue Door to Save Station (East)/Door to Eastern Hub
+  * Extra - door_idx: [37]
+  > Door to Holtz Hall
+      Climb Ledges
+
+> Door to Chain Reaction Chamber; Heals? False
+  * Layers: default
+  * Blue Door to Chain Reaction Chamber/Door to Eastern Hub
+  * Extra - door_idx: [70]
+  > Door to Holtz Hall
+      Speed Booster
+  > Door to Runway
+      Speed Booster
+
+> Door to Runway; Heals? False
+  * Layers: default
+  * Blue Door to Runway/Door to Eastern Hub
+  * Extra - door_idx: [72]
+  > Door to Desgeega Corridor
+      Speed Booster
+
+----------------
+Shortcut
+Extra - map_name: Ridley16
+Extra - room_id: [16]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 50; Category? Minor
+  * Extra - blockx: 54
+  * Extra - blocky: 6
+  > Door to Eastern Hub
+      Trivial
+
+> Door to Eastern Hub; Heals? False
+  * Layers: default
+  * Blue Door to Eastern Hub/Door to Shortcut
+  * Extra - door_idx: [38]
+  > Pickup (Missile Tank)
+      Any of the following:
+          Use Space Jump
+          Hi-Jump Boots and Ice Beam and Power Grip
+  > Door to Elevator to Norfair
+      All of the following:
+          Missiles and Climb Ledges
+          Screw Attack or Can Use Any Bombs
+
+> Door to Elevator to Norfair; Heals? False
+  * Layers: default
+  * Blue Door to Elevator to Norfair/Door to Shortcut
+  * Extra - door_idx: [39]
+  > Door to Eastern Hub
+      All of the following:
+          Missiles and Can Use Any Bombs and Tunnel Climb
+          Ice Beam or Have Any Jump Upgrade
+
+----------------
+Desgeega Corridor
+Extra - map_name: Ridley17
+Extra - room_id: [17]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 51; Category? Minor
+  * Extra - blockx: 28
+  * Extra - blocky: 20
+  > Door to Multiviola Cache
+      All of the following:
+          Tunnel Climb
+          Wall Jumps (Intermediate) or Have Any Jump Upgrade
+          Wave Beam or Can Use Any Bombs
+
+> Door to Eastern Hub; Heals? False
+  * Layers: default
+  * Blue Door to Eastern Hub/Door to Desgeega Corridor
+  * Extra - door_idx: [40]
+  > Door to Multiviola Cache
+      Trivial
+  > Open Passage to Holtz Hall
+      Trivial
+
+> Door to Multiviola Cache; Heals? False
+  * Layers: default
+  * Blue Door to Multiviola Cache/Door to Desgeega Corridor
+  * Extra - door_idx: [49]
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball
+          Wave Beam or Can Use Any Bombs
+  > Door to Eastern Hub
+      Trivial
+
+> Open Passage to Holtz Hall; Heals? False
+  * Layers: default
+  * Horizontal Passage to Holtz Hall/Open Passage to Desgeega Corridor
+  * Extra - door_idx: [61]
+
+----------------
+Zebbo Nest
+Extra - map_name: Ridley18
+Extra - room_id: [18]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 52; Category? Minor
+  * Extra - blockx: 72
+  * Extra - blocky: 6
+  > Door to Map Station
+      Trivial
+
+> Door to Save Station (East); Heals? False
+  * Layers: default
+  * Blue Door to Save Station (East)/Door to Zebbo Nest
+  * Extra - door_idx: [41]
+  > Door to Map Station
+      Trivial
+
+> Door to Map Station; Heals? False
+  * Layers: default
+  * Blue Door to Map Station/Door to Zebbo Nest
+  * Extra - door_idx: [42]
+  > Pickup (Missile Tank)
+      Trivial
+  > Door to Save Station (East)
+      Trivial
+
+----------------
+Imago Arena
+Extra - map_name: Ridley19
+Extra - room_id: [19, 27]
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 53; Category? Minor
+  * Extra - blockx: 7
+  * Extra - blocky: 21
+  > Door to Cocoon Cave (Upper)
+      Trivial
+
+> Door to Cocoon Cave (Upper); Heals? False
+  * Layers: default
+  * Blue Door to Cocoon Cave (Upper)/Door to Imago Arena
+  * Extra - door_idx: [44, 59]
+
+> Open Passage to Cocoon Cave (Upper); Heals? False
+  * Layers: default
+  * Horizontal Passage to Cocoon Cave (Upper)/Open Passage to Imago Arena
+  * Extra - door_idx: [64, 65]
+  > Pickup (Super Missile Tank)
+      Missiles ≥ 20
+
+----------------
+Save Station (Central)
+Extra - map_name: Ridley20
+Extra - room_id: [20]
+> Door to Ridley Arena Access; Heals? False
+  * Layers: default
+  * Blue Door to Ridley Arena Access/Door to Save Station (Central)
+  * Extra - door_idx: [45]
+  > Save Station
+      Trivial
+
+> Door to Gambit; Heals? False
+  * Layers: default
+  * Blue Door to Gambit/Door to Save Station (Central)
+  * Extra - door_idx: [46]
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Ridley Arena Access
+      Trivial
+  > Door to Gambit
+      Trivial
+
+----------------
+Map Station
+Extra - map_name: Ridley21
+Extra - room_id: [21]
+> Door to Western Hub; Heals? False
+  * Layers: default
+  * Missile Door to Western Hub/Door to Map Station
+  * Extra - door_idx: [47]
+  > Door to Zebbo Nest
+      Trivial
+
+> Door to Zebbo Nest; Heals? False
+  * Layers: default
+  * Blue Door to Zebbo Nest/Door to Map Station
+  * Extra - door_idx: [48]
+  > Door to Western Hub
+      Trivial
+  > Map Station
+      Trivial
+
+> Map Station; Heals? False
+  * Layers: default
+  > Door to Zebbo Nest
+      Trivial
+
+----------------
+Hidden Climb
+Extra - map_name: Ridley22
+Extra - room_id: [22]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 54; Category? Minor
+  * Extra - blockx: 11
+  * Extra - blocky: 6
+  > Door to Missile Cache
+      Trivial
+
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 55; Category? Minor
+  * Extra - blockx: 8
+  * Extra - blocky: 16
+  > Door to Desgeega Hall
+      Trivial
+
+> Door to Desgeega Hall; Heals? False
+  * Layers: default
+  * Blue Door to Desgeega Hall/Door to Hidden Climb
+  * Extra - door_idx: [50]
+  > Pickup (Super Missile Tank)
+      Trivial
+  > Door to Missile Cache
+      Can Use Springball or Tunnel Climb
+
+> Door to Missile Cache; Heals? False
+  * Layers: default
+  * Blue Door to Missile Cache/Door to Hidden Climb
+  * Extra - door_idx: [51]
+  > Pickup (Missile Tank)
+      Trivial
+  > Door to Desgeega Hall
+      Morph Ball
+
+----------------
+Missile Cache
+Extra - map_name: Ridley23
+Extra - room_id: [23]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 57; Category? Minor
+  * Extra - blockx: 13
+  * Extra - blocky: 13
+  > Door to Hidden Climb
+      Can Use Bombs
+
+> Door to Hidden Climb; Heals? False
+  * Layers: default
+  * Blue Door to Hidden Climb/Door to Missile Cache
+  * Extra - door_idx: [52]
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball
+          Power Grip or Wave Beam or Can Use Power Bombs
+  > Pickup (2nd Missile Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Can Use Springball
+              Power Grip and Use Space Jump
+
+> Pickup (2nd Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 97; Category? Minor
+  * Extra - blockx: 8
+  * Extra - blocky: 4
+  > Door to Hidden Climb
+      Morph Ball
+
+----------------
+Save Station (West)
+Extra - map_name: Ridley24
+Extra - room_id: [24]
+> Door to Western Hub; Heals? False
+  * Layers: default
+  * Blue Door to Western Hub/Door to Save Station (West)
+  * Extra - door_idx: [54]
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Western Hub
+      Trivial
+
+----------------
+Save Station (East)
+Extra - map_name: Ridley25
+Extra - room_id: [25]
+> Door to Eastern Hub; Heals? False
+  * Layers: default
+  * Blue Door to Eastern Hub/Door to Save Station (East)
+  * Extra - door_idx: [55]
+  > Save Station
+      Trivial
+
+> Door to Zebbo Nest; Heals? False
+  * Layers: default
+  * Blue Door to Zebbo Nest/Door to Save Station (East)
+  * Extra - door_idx: [56]
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Eastern Hub
+      Trivial
+  > Door to Zebbo Nest
+      Trivial
+
+----------------
+Sloped Passage
+Extra - map_name: Ridley26
+Extra - room_id: [26]
+> Door to Gambit; Heals? False
+  * Layers: default
+  * Blue Door to Gambit/Door to Sloped Passage
+  * Extra - door_idx: [32]
+  > Door to Holtz Hall
+      Trivial
+
+> Door to Holtz Hall; Heals? False
+  * Layers: default
+  * Blue Door to Holtz Hall/Door to Sloped Passage
+  * Extra - door_idx: [57]
+  > Door to Gambit
+      Trivial
+
+----------------
+Maze
+Extra - map_name: Ridley29
+Extra - room_id: [29]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 59; Category? Minor
+  * Extra - blockx: 20
+  * Extra - blocky: 15
+  > Maze center
+      Trivial
+
+> Door to Western Hub; Heals? False
+  * Layers: default
+  * Blue Door to Western Hub/Door to Maze
+  * Extra - door_idx: [69]
+  > Maze center
+      All of the following:
+          Speed Booster and Have Any Jump Upgrade and Tunnel Climb
+          Missiles or Super Missiles
+
+> Pickup (2nd Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 96; Category? Minor
+  * Extra - blockx: 24
+  * Extra - blocky: 3
+  > Maze center
+      Trivial
+
+> Maze center; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Trivial
+  > Door to Western Hub
+      Trivial
+  > Pickup (2nd Missile Tank)
+      All of the following:
+          Climb High Ledges
+          Missiles ≥ 5 or Super Missiles ≥ 5
+
+----------------
+Chain Reaction Chamber
+Extra - map_name: Ridley30
+Extra - room_id: [30]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 60; Category? Minor
+  * Extra - blockx: 4
+  * Extra - blocky: 13
+  > Door to Eastern Hub
+      Trivial
+
+> Door to Eastern Hub; Heals? False
+  * Layers: default
+  * Blue Door to Eastern Hub/Door to Chain Reaction Chamber
+  * Extra - door_idx: [71]
+  > Pickup (Missile Tank)
+      Speed Booster and Can Use Bombs and Tunnel Climb and Use Space Jump
+
+----------------
+Runway
+Extra - map_name: Ridley31
+Extra - room_id: [31]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 61; Category? Minor
+  * Extra - blockx: 42
+  * Extra - blocky: 7
+  > Door to Eastern Hub
+      Trivial
+
+> Door to Eastern Hub; Heals? False
+  * Layers: default
+  * Blue Door to Eastern Hub/Door to Runway
+  * Extra - door_idx: [73]
+  > Pickup (Missile Tank)
+      All of the following:
+          Speed Booster and Wave Beam
+          Missiles or Super Missiles
+
+----------------
+Cocoon Cavern (Lower)
+Extra - map_name: Ridley32
+Extra - room_id: [32]
+> Door to Save Station (North); Heals? False
+  * Layers: default
+  * Blue Door to Save Station (North)/Door to Cocoon Cavern (Lower)
+  * Extra - door_idx: [5]
+  > Door to Hall of Pillars
+      Trivial
+  > Tunnel to Cocoon Cave (Upper)
+      Climb Ledges
+
+> Door to Hall of Pillars; Heals? False
+  * Layers: default
+  * Super Missile Door to Hall of Pillars/Door to Cocoon Cavern (Lower)
+  * Extra - door_idx: [6]
+  > Door to Save Station (North)
+      Trivial
+
+> Tunnel to Cocoon Cave (Upper); Heals? False
+  * Layers: default
+  * Tunnel to Cocoon Cave (Upper)/Tunnel to Cocoon Cavern (Lower)
+  * Extra - door_idx: [74]
+  > Door to Save Station (North)
+      Trivial
+

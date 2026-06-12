@@ -1,0 +1,150 @@
+{
+    "schema_version": 112,
+    "base_preset_uuid": null,
+    "name": "Starter Preset",
+    "uuid": "c7369189-e1e1-4579-9cdb-d0f614d9cc47",
+    "description": "Basic preset.",
+    "game": "zero_mission",
+    "configuration": {
+        "trick_level": {
+            "minimal_logic": false,
+            "specific_levels": {}
+        },
+        "starting_location": [
+            {
+                "region": "Brinstar",
+                "area": "Starting Room",
+                "node": "Spawn Point"
+            }
+        ],
+        "available_locations": {
+            "randomization_mode": "full",
+            "excluded_indices": []
+        },
+        "standard_pickup_configuration": {
+            "pickups_state": {
+                "Charge Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Long Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Plasma Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Wave Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Ice Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Missile Launcher": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        10
+                    ]
+                },
+                "Super Missile Launcher": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        2
+                    ]
+                },
+                "Morph Ball": {
+                    "num_shuffled_pickups": 1
+                },
+                "Bombs": {
+                    "num_shuffled_pickups": 1
+                },
+                "Power Bomb Launcher": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        2
+                    ]
+                },
+                "Power Grip": {
+                    "num_shuffled_pickups": 1
+                },
+                "Hi-Jump": {
+                    "num_shuffled_pickups": 1
+                },
+                "Space Jump": {
+                    "num_shuffled_pickups": 1
+                },
+                "Speed Booster": {
+                    "num_shuffled_pickups": 1
+                },
+                "Screw Attack": {
+                    "num_shuffled_pickups": 1
+                },
+                "Zipline Activation": {
+                    "num_shuffled_pickups": 1
+                },
+                "Varia Suit": {
+                    "num_shuffled_pickups": 1
+                },
+                "Gravity Suit": {
+                    "num_shuffled_pickups": 1
+                },
+                "Energy Tank": {
+                    "num_shuffled_pickups": 12
+                }
+            },
+            "default_pickups": {},
+            "minimum_random_starting_pickups": 0,
+            "maximum_random_starting_pickups": 0
+        },
+        "ammo_pickup_configuration": {
+            "pickups_state": {
+                "Missile Tank": {
+                    "ammo_count": [
+                        5
+                    ],
+                    "pickup_count": 49,
+                    "requires_main_item": true
+                },
+                "Super Missile Tank": {
+                    "ammo_count": [
+                        2
+                    ],
+                    "pickup_count": 14,
+                    "requires_main_item": true
+                },
+                "Power Bomb Tank": {
+                    "ammo_count": [
+                        2
+                    ],
+                    "pickup_count": 9,
+                    "requires_main_item": true
+                }
+            }
+        },
+        "damage_strictness": 1.5,
+        "pickup_model_style": "all-visible",
+        "pickup_model_data_source": "etm",
+        "logical_resource_action": "randomly",
+        "first_progression_must_be_local": false,
+        "dock_rando": {
+            "mode": "vanilla",
+            "types_state": {
+                "door": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                }
+            }
+        },
+        "single_set_for_pickups_that_solve": true,
+        "staggered_multi_pickup_placement": true,
+        "check_if_beatable_after_base_patches": false,
+        "logical_pickup_placement": "minimal",
+        "hints": {
+            "enable_random_hints": true,
+            "enable_specific_location_hints": true,
+            "specific_pickup_hints": {},
+            "minimum_available_locations_for_hint_placement": 0,
+            "minimum_location_weight_for_hint_placement": 0.0,
+            "use_resolver_hints": false
+        },
+        "energy_per_tank": 100
+    }
+}

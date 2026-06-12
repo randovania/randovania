@@ -45,6 +45,7 @@ def _gui() -> randovania.game.gui.GameGui:
             HintDetailsTab,
         ),
         game_tab=gui.EchoesGameTabWidget,
+        hide_database_map_view=True,
     )
 
 
@@ -96,7 +97,7 @@ def _hash_words() -> list[str]:
 
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="C4JV33FH",
+        expected_seed_hash="3LNNNRTE",
         database_collectable_ignore_events=("Event91", "Event92", "Event97"),
     )
 

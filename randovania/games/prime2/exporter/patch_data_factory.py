@@ -48,6 +48,7 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.layout_description import LayoutDescription
@@ -465,9 +466,11 @@ def _logbook_title_string_patches() -> list[dict[str, typing.Any]]:
     ]
 
 
-def _akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]]:
+def akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]]:
     # update after each tournament! ordered from newest to oldest
     raw_champs = [
+        {"title": "2025 Co-op Champions", "name": "Naii the Baf, Bruh inc. and JayBee"},
+        {"title": "2025 Mentor Champion", "name": "Storm"},
         {"title": "2024 Champion", "name": "Naii the Baf"},
         {"title": "CGC 2023 Champions", "name": "TheGingerChris and BajaBlood"},
         {"title": "2022 Champion", "name": "Cestrion"},
@@ -511,10 +514,10 @@ def _create_string_patches(
 
     string_patches = []
 
-    string_patches.extend(_akul_testament_string_patch(exporter.namer))
+    string_patches.extend(akul_testament_string_patch(exporter.namer))
 
     # Location Hints
-    string_patches.extend(hints.create_patches_hints(all_patches, players_config, exporter))
+    string_patches.extend(hints.create_patches_hints(all_patches[players_config.player_index], exporter))
 
     # Sky Temple Keys
     stk_mode = hint_config.specific_pickup_hints["sky_temple_keys"]
@@ -552,7 +555,7 @@ def _create_starting_popup(patches: GamePatches) -> list:
         return []
 
 
-def _simplified_memo_data() -> dict[str, str]:
+def simplified_prime2_memo_data() -> dict[str, str]:
     result = pickup_exporter.GenericAcquiredMemo()
     result["Locked Power Bomb Expansion"] = (
         "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
@@ -582,7 +585,7 @@ def _get_model_mapping(randomizer_data: dict) -> EchoesModelNameMapping:
     )
 
 
-def should_keep_elevator_sounds(configuration: EchoesConfiguration) -> bool:
+def should_keep_elevator_sounds(configuration: EchoesConfiguration | EchoesOPRConfiguration) -> bool:
     elev = configuration.teleporters
     if elev.is_vanilla:
         return True
@@ -677,17 +680,14 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         result["dol_patches"] = {
             "world_uuid": str(self.players_config.get_own_uuid()),
             "energy_per_tank": self.configuration.energy_per_tank,
-            "beam_configurations": [b.as_json for b in self.configuration.beam_configuration.all_beams],
+            "beam_configuration": self.configuration.beam_configuration.as_json,
             "safe_zone_heal_per_second": self.configuration.safe_zone.heal_per_second,
-            "user_preferences": self.cosmetic_patches.user_preferences.as_json,
+            "game_options_defaults": self.cosmetic_patches.user_preferences.as_json,
             "default_items": {
                 "visor": default_pickups[pickup_category_visors].name,
                 "beam": default_pickups[pickup_category_beams].name,
             },
-            "unvisited_room_names": (
-                self.configuration.teleporters.can_use_unvisited_room_names
-                and self.cosmetic_patches.unvisited_room_names
-            ),
+            "unvisited_room_names": self.cosmetic_patches.unvisited_room_names,
             "teleporter_sounds": should_keep_elevator_sounds(self.configuration),
             "dangerous_energy_tank": self.configuration.dangerous_energy_tank,
         }
@@ -731,9 +731,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
         result["logbook_patches"] = self.create_logbook_patches()
 
-        if not self.configuration.teleporters.is_vanilla and (
-            self.cosmetic_patches.unvisited_room_names and self.configuration.teleporters.can_use_unvisited_room_names
-        ):
+        if not self.configuration.teleporters.is_vanilla and self.cosmetic_patches.unvisited_room_names:
             exclude_map_ids = _ELEVATOR_ROOMS_MAP_ASSET_IDS
         else:
             exclude_map_ids = []
@@ -951,6 +949,29 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         ]
 
 
+def echoes_raw_pickup_list(
+    memo_data: dict[str, str],
+    configuration: BaseConfiguration,
+    game: GameDatabaseView,
+    patches: GamePatches,
+    players_config: PlayersConfiguration,
+    rng: Random,
+) -> list[pickup_exporter.ExportedPickupDetails]:
+    resource_db = game.get_resource_database_view()
+    useless_target = PickupTarget(create_echoes_useless_pickup(resource_db), players_config.player_index)
+
+    return pickup_exporter.export_all_indices(
+        patches,
+        useless_target,
+        game,
+        rng,
+        configuration.pickup_model_style,
+        configuration.pickup_model_data_source,
+        exporter=pickup_exporter.create_pickup_exporter(memo_data, players_config, game.get_game_enum()),
+        visual_nothing=pickup_creator.create_visual_nothing(game.get_game_enum(), "EnergyTransferModule"),
+    )
+
+
 def _create_pickup_list(
     cosmetic_patches: EchoesCosmeticPatches,
     configuration: BaseConfiguration,
@@ -960,23 +981,19 @@ def _create_pickup_list(
     rng: Random,
 ) -> list[dict]:
     resource_db = game.get_resource_database_view()
-    useless_target = PickupTarget(create_echoes_useless_pickup(resource_db), players_config.player_index)
 
     if cosmetic_patches.disable_hud_popup:
-        memo_data = _simplified_memo_data()
+        memo_data = simplified_prime2_memo_data()
     else:
         memo_data = default_prime2_memo_data()
 
-    echoes_game = RandovaniaGame.METROID_PRIME_ECHOES
-    pickup_list = pickup_exporter.export_all_indices(
-        patches,
-        useless_target,
+    pickup_list = echoes_raw_pickup_list(
+        memo_data,
+        configuration,
         game,
+        patches,
+        players_config,
         rng,
-        configuration.pickup_model_style,
-        configuration.pickup_model_data_source,
-        exporter=pickup_exporter.create_pickup_exporter(memo_data, players_config, echoes_game),
-        visual_nothing=pickup_creator.create_visual_nothing(echoes_game, "EnergyTransferModule"),
     )
     multiworld_item = resource_db.get_item(echoes_items.MULTIWORLD_ITEM)
 

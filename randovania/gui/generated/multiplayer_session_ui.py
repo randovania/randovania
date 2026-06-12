@@ -91,6 +91,7 @@ class Ui_MultiplayerSessionWindow(object):
 
         self.seed_hash_label = QLabel(self.tab_worlds)
         self.seed_hash_label.setObjectName(u"seed_hash_label")
+        self.seed_hash_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
         self.user_and_worlds_bottom_layout.addWidget(self.seed_hash_label)
 

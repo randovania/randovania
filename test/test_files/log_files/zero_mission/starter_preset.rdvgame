@@ -1,0 +1,1205 @@
+{
+    "schema_version": 41,
+    "info": {
+        "randovania_version": "10.6.0.dev174",
+        "randovania_version_git": "15a767f6",
+        "permalink": "DYxG1AGD7RWnZ_YVQ6R-LxoQFCOevrUc_Sn0aU94FBJ8APl5",
+        "has_spoiler": true,
+        "seed": 1662435319,
+        "hash": "I3KADA7N",
+        "word_hash": "Chozodia Zebetite Barisute",
+        "presets": [
+            {
+                "schema_version": 112,
+                "base_preset_uuid": null,
+                "name": "Starter Preset Copy",
+                "uuid": "75efc21d-f831-4afa-9a9a-781b2a752f00",
+                "description": "A copy version of Starter Preset.",
+                "game": "zero_mission",
+                "configuration": {
+                    "trick_level": {
+                        "minimal_logic": true,
+                        "specific_levels": {}
+                    },
+                    "starting_location": [
+                        {
+                            "region": "Brinstar",
+                            "area": "Starting Room",
+                            "node": "Spawn Point"
+                        }
+                    ],
+                    "available_locations": {
+                        "randomization_mode": "full",
+                        "excluded_indices": []
+                    },
+                    "standard_pickup_configuration": {
+                        "pickups_state": {
+                            "Charge Beam": {
+                                "num_included_in_starting_pickups": 1
+                            },
+                            "Long Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Plasma Beam": {
+                                "num_included_in_starting_pickups": 1
+                            },
+                            "Wave Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Ice Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Missile Launcher": {
+                                "num_shuffled_pickups": 1,
+                                "included_ammo": [
+                                    10
+                                ]
+                            },
+                            "Super Missile Launcher": {
+                                "num_included_in_starting_pickups": 1,
+                                "included_ammo": [
+                                    2
+                                ]
+                            },
+                            "Morph Ball": {
+                                "num_included_in_starting_pickups": 1
+                            },
+                            "Bombs": {
+                                "num_included_in_starting_pickups": 1
+                            },
+                            "Power Bomb Launcher": {
+                                "num_shuffled_pickups": 1,
+                                "included_ammo": [
+                                    10
+                                ]
+                            },
+                            "Power Grip": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Hi-Jump": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Space Jump": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Speed Booster": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Screw Attack": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Varia Suit": {
+                                "num_included_in_starting_pickups": 1
+                            },
+                            "Gravity Suit": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Energy Tank": {
+                                "num_shuffled_pickups": 12
+                            }
+                        },
+                        "default_pickups": {},
+                        "minimum_random_starting_pickups": 0,
+                        "maximum_random_starting_pickups": 0
+                    },
+                    "ammo_pickup_configuration": {
+                        "pickups_state": {
+                            "Missile Tank": {
+                                "ammo_count": [
+                                    5
+                                ],
+                                "pickup_count": 48,
+                                "requires_main_item": true
+                            },
+                            "Super Missile Tank": {
+                                "ammo_count": [
+                                    5
+                                ],
+                                "pickup_count": 30,
+                                "requires_main_item": true
+                            },
+                            "Power Bomb Tank": {
+                                "ammo_count": [
+                                    2
+                                ],
+                                "pickup_count": 1,
+                                "requires_main_item": true
+                            }
+                        }
+                    },
+                    "damage_strictness": 1.5,
+                    "pickup_model_style": "all-visible",
+                    "pickup_model_data_source": "etm",
+                    "logical_resource_action": "randomly",
+                    "first_progression_must_be_local": false,
+                    "dock_rando": {
+                        "mode": "vanilla",
+                        "types_state": {
+                            "door": {
+                                "can_change_from": [],
+                                "can_change_to": []
+                            }
+                        }
+                    },
+                    "single_set_for_pickups_that_solve": true,
+                    "staggered_multi_pickup_placement": true,
+                    "check_if_beatable_after_base_patches": false,
+                    "logical_pickup_placement": "minimal",
+                    "hints": {
+                        "enable_random_hints": true,
+                        "enable_specific_location_hints": true,
+                        "specific_pickup_hints": {},
+                        "minimum_available_locations_for_hint_placement": 0,
+                        "minimum_location_weight_for_hint_placement": 0.0,
+                        "use_resolver_hints": false
+                    },
+                    "energy_per_tank": 100
+                }
+            }
+        ]
+    },
+    "game_modifications": [
+        {
+            "game": "zero_mission",
+            "starting_equipment": {
+                "pickups": [
+                    "Charge Beam",
+                    "Plasma Beam",
+                    "Super Missile Launcher",
+                    "Morph Ball",
+                    "Bombs",
+                    "Varia Suit"
+                ]
+            },
+            "starting_location": "Brinstar/Starting Room/Spawn Point",
+            "dock_connections": {},
+            "dock_weakness": {},
+            "locations": [
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Acid Vine Puzzle",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 7,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Alternate Charge Beast Arena",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 5,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Alternate Charge Beast Arena",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 6,
+                    "pickup": "Power Bomb Launcher",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Bomb Chamber",
+                        "node": "Pickup (Bombs)"
+                    },
+                    "index": 87,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Bomb Chamber",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 9,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Fake Block Fork",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 0,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Guide Statue (Long Beam)",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 1,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Hidden Tank Shaft",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 12,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Hidden Tank Shaft",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 13,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Long Beam Chamber",
+                        "node": "Pickup (Long Beam)"
+                    },
+                    "index": 32,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Mero Abyss",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 3,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Mero Hive Chamber",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 4,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Norfair Access Corridor",
+                        "node": "Pickup (Charge Beam)"
+                    },
+                    "index": 58,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Norfair Access Corridor",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 2,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Sloped Alcove",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 10,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Speedbooster Passage",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 11,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Starting Room",
+                        "node": "Pickup (Morph Ball)"
+                    },
+                    "index": 28,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Varia Chamber Access",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 8,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Varia Chamber",
+                        "node": "Pickup (Varia Suit)"
+                    },
+                    "index": 56,
+                    "pickup": "Screw Attack",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Armory Chamber",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 74,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Armory Reliquary",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 75,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Chozodia's Fork",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 73,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Chozodian Lava Pool",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 76,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Cracked Surface Shaft",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 70,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Crawlspace",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 72,
+                    "pickup": "Long Beam",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Energy Runway",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 81,
+                    "pickup": "Hi-Jump",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Energy Vault Hall",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 79,
+                    "pickup": "Power Grip",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Flooded Chamber",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 84,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Flooded Chamber",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 85,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Launchpad",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 86,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Missile Pit",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 80,
+                    "pickup": "Gravity Suit",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Mother Ship Approach (final)",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 82,
+                    "pickup": "Missile Launcher",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Mother Ship Exit East",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 69,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Pitfall",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 83,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Super Missile Maze A",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 77,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Super Missile Maze B",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 78,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Top of the Ruins",
+                        "node": "Pickup (Fully Powered Suit)"
+                    },
+                    "index": 102,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Chozodia",
+                        "area": "Wrecked Antechamber",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 71,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Crateria",
+                        "area": "Chozo Reliquary",
+                        "node": "Pickup (Power Grip)"
+                    },
+                    "index": 94,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Crateria",
+                        "area": "Chozo Ruins Valley",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 67,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Crateria",
+                        "area": "Chozo Ruins Valley",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 66,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Crateria",
+                        "area": "Flooded Cavern",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 65,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Crateria",
+                        "area": "Landing Site",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 64,
+                    "pickup": "Wave Beam",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Crateria",
+                        "area": "Plasma Beam Chamber",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 68,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Crateria",
+                        "area": "Plasma Beam Chamber",
+                        "node": "Pickup (Unknown Item 1)"
+                    },
+                    "index": 95,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Acid Fall",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 21,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Acidic Concourse",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 18,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Apex Launcher Hub",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 15,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Ball Launcher Speedway",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 22,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Barisute Pit",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 17,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Cache",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 24,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Caged Sidehopper Hall",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 14,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Gauntlet",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 20,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Illusionary Acid Pool",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 23,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Kraid's Reliquary",
+                        "node": "Pickup (Speed Booster)"
+                    },
+                    "index": 89,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Runway",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 19,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Space Jump Chamber",
+                        "node": "Pickup (Unknown Item 2)"
+                    },
+                    "index": 88,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Zipline Activation Chamber",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 16,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Zipline Activation Chamber",
+                        "node": "Pickup (Zipline Activation)"
+                    },
+                    "index": 101,
+                    "pickup": "Ice Beam",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Blue-Bubble Hub",
+                        "node": "Pickup (2nd Missile Tank)"
+                    },
+                    "index": 29,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Blue-Bubble Hub",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 93,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Dual Tank Chamber",
+                        "node": "Pickup (Hidden Missile Tank)"
+                    },
+                    "index": 90,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Dual Tank Chamber",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 33,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Fire-Sea Room",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 35,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Fire-Sea Room",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 34,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Gauntlet B",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 36,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Gauntlet C",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 37,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Heated Missile Room",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 30,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Hi-Jump Chamber",
+                        "node": "Pickup (Hi-Jump)"
+                    },
+                    "index": 99,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Ice Beam Chamber",
+                        "node": "Pickup (Ice Beam)"
+                    },
+                    "index": 100,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Ice Beam Tutorial C",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 40,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Kiru-Giru Larval Hall",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 38,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Lava-Filled Passage",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 42,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Lava-Filled Passage",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 41,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Main Corridor",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 27,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Missile Tank Tunnel",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 26,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Screw Attack Chamber Access",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 31,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Screw Attack Chamber",
+                        "node": "Pickup (Screw Attack)"
+                    },
+                    "index": 91,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Wave Beam Chamber",
+                        "node": "Pickup (Wave Beam)"
+                    },
+                    "index": 92,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Western Lava Corridor",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 25,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Artificial Passage",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 43,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Chain Reaction Chamber",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 60,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Desgeega Corridor",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 51,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Gambit",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 45,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Hidden Climb",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 54,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Hidden Climb",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 55,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Holtz Hall",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 49,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Imago Arena",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 53,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Maze",
+                        "node": "Pickup (2nd Missile Tank)"
+                    },
+                    "index": 96,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Maze",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 59,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Missile Cache",
+                        "node": "Pickup (2nd Missile Tank)"
+                    },
+                    "index": 97,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Missile Cache",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 57,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Multiviola Cache",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 47,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Multiviola Cache",
+                        "node": "Pickup (Super Missile Tank)"
+                    },
+                    "index": 46,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Ridley's Reliquary",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 48,
+                    "pickup": "Space Jump",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Ridley's Reliquary",
+                        "node": "Pickup (Unknown Item 3)"
+                    },
+                    "index": 98,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Runway",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 61,
+                    "pickup": "Speed Booster",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Shortcut",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 50,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Western Hub",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 44,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Zebbo Nest",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 52,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Tourian",
+                        "area": "Escape Shaft",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 63,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Tourian",
+                        "area": "Reliquary",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 62,
+                    "pickup": "Super Missile Tank",
+                    "owner": 0
+                }
+            ],
+            "hints": {},
+            "game_specific": {}
+        }
+    ],
+    "item_order": [],
+    "checksum": "5f0519879eb42f037214d8f253da54a112afb1e2c63f8d0b0e17ef66c7bec888bd5f008c1dc6eeadcb8d03a46083615844f5900eee8627a2695a40ca49bd115b"
+}

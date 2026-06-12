@@ -1,0 +1,1908 @@
+{
+    "name": "Tourian",
+    "extra": {
+        "area_id": 4
+    },
+    "areas": {
+        "Lava Passage": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian1",
+                "room_id": [
+                    1
+                ]
+            },
+            "nodes": {
+                "Door to Elevator to Brinstar": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            2
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Elevator to Brinstar",
+                        "node": "Door to Lava Passage"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Metroid Pit": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Metroid Pit": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1224.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            3
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Metroid Pit",
+                        "node": "Door to Lava Passage"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Elevator to Brinstar": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Ledged Shaft": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian2",
+                "room_id": [
+                    2
+                ]
+            },
+            "nodes": {
+                "Door to I Shaped Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 768.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            4
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "I Shaped Room",
+                        "node": "Door to Ledged Shaft"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Triple-Tiered Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Triple-Tiered Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            5
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Triple-Tiered Room",
+                        "node": "Door to Ledged Shaft"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to I Shaped Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Metroid"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Have Any Jump Upgrade"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Rinka Hall (INITIAL)": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian3",
+                "room_id": [
+                    3,
+                    10
+                ]
+            },
+            "nodes": {
+                "Door to Save Station (South)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 744.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            6,
+                            20
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Save Station (South)",
+                        "node": "Door to Rinka Hall (INITIAL)"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Command Center (INITIAL)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Command Center (INITIAL)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            7,
+                            19
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Command Center (INITIAL)",
+                        "node": "Door to Rinka Hall (INITIAL)"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Save Station (South)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Command Center (INITIAL)": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian4",
+                "room_id": [
+                    4,
+                    9
+                ]
+            },
+            "nodes": {
+                "Door to Rinka Hall (INITIAL)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 984.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            18
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Rinka Hall (INITIAL)",
+                        "node": "Door to Command Center (INITIAL)"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Escape Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            9,
+                            17
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Escape Shaft",
+                        "node": "Open Passage to Command Center (INITIAL)"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Reliquary": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 128.65,
+                        "y": 56.23,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            16
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Reliquary",
+                        "node": "Open Passage to Command Center (INITIAL)"
+                    },
+                    "default_dock_weakness": "Vertical Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Arena": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 258.88744900407966,
+                        "y": 149.60979121670266,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Rinka Hall (INITIAL)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Escape Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Open Passage to Reliquary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Mother Brain": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Mother Brain": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 181.48,
+                        "y": 196.3,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "MotherBrainDefeated",
+                    "connections": {
+                        "Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Save Station (South)": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian6",
+                "room_id": [
+                    6
+                ]
+            },
+            "nodes": {
+                "Door to Triple-Tiered Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 264.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            12
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Triple-Tiered Room",
+                        "node": "Door to Save Station (South)"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Rinka Hall (INITIAL)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            13
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Rinka Hall (INITIAL)",
+                        "node": "Door to Save Station (South)"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 150.79531031515543,
+                        "y": 99.09261051952244,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Triple-Tiered Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Rinka Hall (INITIAL)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Reliquary": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian7",
+                "room_id": [
+                    7
+                ]
+            },
+            "nodes": {
+                "Pickup (Power Bomb Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 88.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "blockx": 14,
+                        "blocky": 8
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 62,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Open Passage to Command Center (INITIAL)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Tunnel Climb"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Command Center (INITIAL)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 120.0,
+                        "y": 184.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            15
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Command Center (INITIAL)",
+                        "node": "Open Passage to Reliquary"
+                    },
+                    "default_dock_weakness": "Vertical Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Escape Shaft": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian8",
+                "room_id": [
+                    8,
+                    5
+                ]
+            },
+            "nodes": {
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 184.0,
+                        "y": 72.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "blockx": 11,
+                        "blocky": 109
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 63,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Open Passage to Command Center (INITIAL)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Elevator to Tourian": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 392.0,
+                        "y": 1784.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            21,
+                            11
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Elevator to Tourian",
+                        "node": "Open Passage to Escape Shaft"
+                    },
+                    "default_dock_weakness": "Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Open Passage to Command Center (INITIAL)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Command Center (INITIAL)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 504.0,
+                        "y": 144.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            22,
+                            10
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Command Center (INITIAL)",
+                        "node": "Door to Escape Shaft"
+                    },
+                    "default_dock_weakness": "Horizontal Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Space Jump"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to Elevator to Tourian": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PowerGrip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Have Any Jump Upgrade"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Save Station (North)": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian11",
+                "room_id": [
+                    11
+                ]
+            },
+            "nodes": {
+                "Door to Elevator to Brinstar": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 80.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            24
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Elevator to Brinstar",
+                        "node": "Door to Save Station (North)"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Antechamber": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 264.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            25
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Antechamber",
+                        "node": "Door to Save Station (North)"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 145.97655157577714,
+                        "y": 91.52027535764225,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Elevator to Brinstar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Antechamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Antechamber": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian12",
+                "room_id": [
+                    12
+                ]
+            },
+            "nodes": {
+                "Door to Save Station (North)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            26
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Save Station (North)",
+                        "node": "Door to Antechamber"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to First Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to First Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 264.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            27
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "First Shaft",
+                        "node": "Door to Antechamber"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Save Station (North)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "First Shaft": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian13",
+                "room_id": [
+                    13
+                ]
+            },
+            "nodes": {
+                "Door to Antechamber": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 272.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            28
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Antechamber",
+                        "node": "Door to First Shaft"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            29
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Entrance",
+                        "node": "Door to First Shaft"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Antechamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Entrance": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian14",
+                "room_id": [
+                    14
+                ]
+            },
+            "nodes": {
+                "Door to First Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 504.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            30
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "First Shaft",
+                        "node": "Door to Entrance"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Elevator to Brinstar": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Elevator to Brinstar": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 144.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            31
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Elevator to Brinstar",
+                        "node": "Door to Entrance"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to First Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Elevator to Brinstar": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian15",
+                "room_id": [
+                    15,
+                    0
+                ]
+            },
+            "nodes": {
+                "Door to Lava Passage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 264.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            23
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Lava Passage",
+                        "node": "Door to Elevator to Brinstar"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 264.0,
+                        "y": 464.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            32,
+                            35
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Entrance",
+                        "node": "Door to Elevator to Brinstar"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Lava Passage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Save Station (North)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 264.0,
+                        "y": 560.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            36,
+                            1
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Save Station (North)",
+                        "node": "Door to Elevator to Brinstar"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Open Passage to Brinstar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Open Passage to Brinstar": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 152.83,
+                        "y": 662.31,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            0
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "dock",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Elevator to Tourian",
+                        "node": "Open Passage to Tourian"
+                    },
+                    "default_dock_weakness": "Vertical Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Save Station (North)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Triple-Tiered Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian16",
+                "room_id": [
+                    16
+                ]
+            },
+            "nodes": {
+                "Door to Ledged Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 504.0,
+                        "y": 432.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            33
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Ledged Shaft",
+                        "node": "Door to Triple-Tiered Room"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Save Station (South)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Metroid"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Save Station (South)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 432.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            34
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Save Station (South)",
+                        "node": "Door to Triple-Tiered Room"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Ledged Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Metroid"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Save Station (East)": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian17",
+                "room_id": [
+                    17
+                ]
+            },
+            "nodes": {
+                "Door to I Shaped Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            42
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "I Shaped Room",
+                        "node": "Door to Save Station (East)"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 148.3859309454663,
+                        "y": 91.52027535764225,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to I Shaped Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "I Shaped Room": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian18",
+                "room_id": [
+                    18
+                ]
+            },
+            "nodes": {
+                "Door to Metroid Pit": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 288.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            37
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Metroid Pit",
+                        "node": "Door to I Shaped Room"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Save Station (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Ledged Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 264.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            38
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Ledged Shaft",
+                        "node": "Door to I Shaped Room"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Save Station (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Save Station (East)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 264.0,
+                        "y": 272.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            41
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Save Station (East)",
+                        "node": "Door to I Shaped Room"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Metroid Pit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Ledged Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Metroid Pit": {
+            "default_node": null,
+            "hint_features": [],
+            "extra": {
+                "map_name": "Tourian19",
+                "room_id": [
+                    19
+                ]
+            },
+            "nodes": {
+                "Door to Lava Passage": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 288.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            39
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Lava Passage",
+                        "node": "Door to Metroid Pit"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to I Shaped Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to I Shaped Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 504.0,
+                        "y": 288.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            40
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "I Shaped Room",
+                        "node": "Door to Metroid Pit"
+                    },
+                    "default_dock_weakness": "Blue Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Lava Passage": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

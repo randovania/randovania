@@ -24,3 +24,6 @@ class FactorioConfiguration(BaseConfiguration):
         if self.full_tech_tree:
             result.add("full_tree")
         return result
+
+    def settings_incompatible_with_map_tracker(self) -> list[str]:
+        return ["Factorio"]

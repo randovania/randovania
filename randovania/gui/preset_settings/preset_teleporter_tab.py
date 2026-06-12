@@ -14,7 +14,6 @@ from randovania.layout.base.base_configuration import ConfigurationT_co
 from randovania.layout.lib.teleporters import (
     TeleporterList,
     TeleporterShuffleMode,
-    TeleporterTargetList,
 )
 
 if TYPE_CHECKING:
@@ -57,11 +56,13 @@ class PresetTeleporterTab(PresetTab[ConfigurationT_co], NodeListHelper):
         # Teleporters Source
         self._create_source_teleporters()
 
+        target_list = editor.layout_configuration_teleporters.excluded_targets
+
         # Teleporter Target
         result = self.create_node_list_selection(
             self.teleporters_target_group,
             self.teleporters_target_layout,
-            TeleporterTargetList.nodes_list(self.game_enum),
+            target_list.nodes_list(self.game_enum),
             self._on_teleporter_target_check_changed,
         )
         (

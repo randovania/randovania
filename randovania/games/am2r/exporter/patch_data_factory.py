@@ -161,7 +161,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
                 },
             }
 
-            pickup_obj = pickup_map_dict[object_name]
+            pickup_obj: dict = pickup_map_dict[object_name]
             shiny_id = (pickup_obj["item_effect"], pickup_obj["sprite_details"]["name"], pickup_obj["text"]["header"])
 
             if (

@@ -8,7 +8,7 @@ import dataclasses
 from typing import TYPE_CHECKING, override
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
@@ -174,7 +174,7 @@ class GameDescription(GameDatabaseView):
             return result
 
     def _has_hint_with_kind(self, kind: HintNodeKind) -> bool:
-        return any(node.kind == kind for node in self.region_list.iterate_nodes_of_type(HintNode))
+        return any(self.region_list.iterate_nodes_of_type(kind.hint_node_class))
 
     @property
     def has_random_hints(self) -> bool:

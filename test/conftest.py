@@ -733,6 +733,7 @@ SOLO_RDVGAMES = [
         True,
     ),  # starter preset + random starting item + nothing items
     ("prime_hunters/two_way_unchecked_portal_shuffle.rdvgame", True),  # starter preset + two-way portal shuffle
+    ("prime_hunters/starting_energy_and_artifacts.rdvgame", True),  # starter preset + random starting items + artifacts
     # Prime 1
     ("prime1-vanilla.rdvgame", True),  # vanilla
     ("prime1_crazy_seed.rdvgame", False),  # chaos features
@@ -745,6 +746,8 @@ SOLO_RDVGAMES = [
     ("prime2/starts_with_cannon_ball.rdvgame", True),
     ("prime2/door_lock_rando.rdvgame", True),
     ("prime2/launcher_and_negative_expansions.rdvgame", True),
+    # Prime 2 (OPR)
+    ("prime2_opr/opr-starter-preset.rdvgame", True),
     # Samus Returns
     (
         "samus_returns/arachnus_boss_start_inventory.rdvgame",
@@ -757,6 +760,8 @@ SOLO_RDVGAMES = [
     ("samus_returns/starter_preset.rdvgame", True),  # starter preset
     ("samus_returns/progressive_beams_and_suits.rdvgame", False),  # starter preset + progressive beam and suit
     ("samus_returns/non_required_mains.rdvgame", True),  # non-required main for power bombs + hide model
+    # Zero Mission
+    ("zero_mission/starter_preset.rdvgame", True),  # starter preset
 ]
 
 COOP_RDVGAMES = [

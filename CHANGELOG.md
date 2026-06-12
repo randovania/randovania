@@ -5,9 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.8.0] - 2026-06-0?
+## [10.9.0] - 2026-07-0?
+
+- Waiting changes to be added.
+- Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
+- Changed: The seed hash text in the Multiplayer window can now be interacted with.
+- Added: The Data Visualizer now displays more information about Hint nodes.
+
+### Metroid Fusion
+
+#### Logic Database
+
+##### Main Deck
+
+- Changed: Dark Stairwell: Using the hidden connection to/from Central Nexus can now expect Mid-Air Morphs instead of Bombs/Hi-Jump.
+
+### Metroid Prime
+
+- Fixed: Exporting for NTSC 0-01 and Korean
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
+
+### Metroid: Samus Returns
+
+- Added: Cosmetic option to reveal the map at the start (default: on)
+- Added: Cosmetic option to use Fusion suits (default: off)
+- Added: Preset option to skip the opening storyboard cutscene (default: off)
+- Fixed: Spazer and Plasma beam projectiles no longer shoot through blocks without Wave
+
+
+## [10.8.0] - 2026-06-01
 
 - Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
+- Changed: When using the Nintendont game connection, it will now give better feedback when you're in the Homebrew Channel and haven't launched Nintendont yet.
 
 ### Generator
 
@@ -28,10 +62,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
+- Added: Added videos for reaching Door to EMMI Zone First Entrance from above before destroying the blob.
+
+##### Dairon
+
+- Changed: When comming in to Teleport to Artaria from Transport to Cataris, climbing up to above the Wide Block has these changes:
+  - Using Grapple Beam now requires Grapple Movement (Beginner)
+  - Using Simple IBJ now requires Diagonal Bomb Jump (Beginner)
+  - Added option to use just Speed Booster with Speed Booster Conservation (Intermediate)
 
 ##### Ferenia
 
 - Changed: Added Movement (Beginner) requirement to reach Missile Tank Pickup in Space Jump Room using Space Jump and Normal Bomb.
+- Changed: Added Speed Booster Conservation trick to reach Missile Tank Pickup in Space Jump Room using Speed Booster. Beginner with Power Bombs and Intermediate with Cross Bombs.
+
+##### Ghavoran
+
+- Changed: Some implementation details surrounding the Chozo-X to help the Resolver in some cases.
+- Fixed: Logic bug that failed to account for how, after fighting the Central Unit,  one needs to finish the Ice EMMI fight before leaving the EMMI Zone.
 
 ### Metroid Fusion
 
@@ -43,9 +91,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Habitation Deck Entrance: Changed the NHJ WJ Freeze trick from Movement (Advanced) to Stand on Frozen Enemies (Expert). Also added in Stand On Frozen Enemies (Beginner) to the other WJ trick to account for diffusion timing.
 
+### Metroid Prime
+
+- Fixed: Metroid Prime Lair: Softlock when playing with Skippable/Competitive cutscenes on platforms with faster than disk read speed (Nintendont, Dolphin Emulate Disk Speed: false, etc.) and the Subchamber Five cutscene is skipped after the next room has finished loading.
+- Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
+- Fixed: Observatory: Softlock if the upper 1st-pass pirates are killed before entering the room
+- Fixed: Training Chamber: Softlock if the room unloaded after triggering fight but before killing both ghosts (e.g. wallcrawl)
+- Fixed: GM8E30 (Korean) support
+- Changed: Wavebuster no longer consumes ammo if cancelled due to "point blank range" rule
+- Changed: Updated tournament scan to include 2025 winners
+
+#### Logic Database
+
+- Changed: Reduced logical cost to open Wavebuster door locks: 11->10
+
+##### Phendrana Drifts
+
+- Changed: Transport to Magmoor Caverns South: Reorganized the climb from the elevator up to Transport Access for readability and consistency.
+    - Changed: The L-Jump portion of the NSJ climb was increased from Beginner to Advanced.
+    - Added: A way to climb without Space Jump or Bombs using a Ledge Clip Jump (Movement Expert) and then a Slope + L-Jump (both Advanced).
+
 ### Metroid Prime 2: Echoes
 
 - Changed: Dark, Light, and Beam Ammo Expansions are now considered dark-aligned, light-aligned and both, respectively.
+- Removed: A setting that disabled all room names on the map when elevators are randomized. This setting is redundant, since elevator rooms are not revealed on the map at all when randomized.
+
+#### Logic Database
+
+##### Sanctuary Fortress
+
+- Changed: Minor adjustment aimed at making Aerie safer for the generator, no changes to requirements in practice.
+- Fixed: It was not logical to fight Dark Samus 2 when comming in to Aerie with a randomized elevator.
 
 ### Metroid Fusion
 
