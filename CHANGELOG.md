@@ -14,14 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The seed hash text in the Multiplayer window can now be interacted with.
 - Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
 - Changed: When using the Nintendont game connection, it will now give better feedback when you're in the Homebrew Channel and haven't launched Nintendont yet.
-- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
-
 
 ### Metroid Prime
 
 - Fixed: Exporting for NTSC 0-01 and Korean
 - Fixed: When having Randovania connected to the game while booting up or rebooting, it will not throw warnings (Dolphin) or disconnect (Nintendont) from the game.
 - Fixed: Converting Metroid Prime 2: Echoes models for multiworld, for certain pickups.
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
 
 ### Metroid Prime 2: Echoes
 
