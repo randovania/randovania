@@ -41,6 +41,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
 - Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
 
+#### Logic Database
+
+- Added: NSJ variant of the BSJ to go up through Sacrificial Chamber before Grapple Guardian, set as advanced.
+- Added: The various tricks that require power bombs to go up through Sacrificial Chamber now have videos.
+
 ### Metroid: Samus Returns
 
 - Added: Cosmetic option to reveal the map at the start (default: on)
