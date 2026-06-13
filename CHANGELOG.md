@@ -203,6 +203,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Burn Dome: Wasps remain active if Incinerator Drone death cutscene is skipped on first frame
 - Fixed: [PAL] Frost Cave: Game stutter when loading Hunter Metroid layer
 
+#### Logic Database
+
+##### Magmoor Caverns
+
+- Changed: Fiery Shores: Restructured existing connections for legibility, and:
+    - Added: Generic Node `Beside Shortcut Tunnel Exit`
+    - Changed: Most damage values regarding Heat Runs
+
 ### Metroid Prime 2: Echoes
 
 - Fixed: All custom randomizer text now properly appears in all languages, though always in English.
