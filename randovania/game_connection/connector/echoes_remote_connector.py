@@ -9,9 +9,9 @@ from open_prime_rando.dol_patching import all_prime_dol_patches
 
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import (
-    MemoryOperation,
     MemoryOperationException,
     MemoryOperationExecutor,
+    MemoryReadOperation,
 )
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.games.prime2.patcher import echoes_items
@@ -80,8 +80,8 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         # Both of these can be a nullpointer. The first one while the game is booting up, the second at
         # elevators. In both cases we can just say that they're in an invalid World / can't be acted on.
         world_status_ops = [
-            MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
-            MemoryOperation(cstate_manager_global + cplayer_offset, offset=0, read_byte_count=4),
+            MemoryReadOperation(self.version.game_state_pointer, offset=mlvl_offset, count=asset_id_size),
+            MemoryReadOperation(cstate_manager_global + cplayer_offset, offset=0, count=4),
         ]
 
         try:
@@ -90,7 +90,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         except MemoryOperationException:
             return True, None
 
-        pending_byte_op = MemoryOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1)
+        pending_byte_op = MemoryReadOperation(cstate_manager_global + self._pending_op_offset, count=1)
         pending_byte_result = await self.executor.perform_single_memory_operation(pending_byte_op)
         has_pending_op = pending_byte_result != b"\x00"
 
@@ -99,13 +99,13 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
     async def _memory_op_for_items(
         self,
         items: list[ItemResourceInfo],
-    ) -> list[MemoryOperation]:
+    ) -> list[MemoryReadOperation]:
         player_state_pointer = self.version.cstate_manager_global + 0x150C
         return [
-            MemoryOperation(
+            MemoryReadOperation(
                 address=player_state_pointer,
                 offset=_echoes_powerup_offset(item.extra["item_id"]),
-                read_byte_count=8,
+                count=8,
             )
             for item in items
         ]
@@ -149,9 +149,9 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         PASSES = math.ceil((4 * 32) // self.executor.max_output)
         arr_raws = [
             await self.executor.perform_single_memory_operation(
-                MemoryOperation(
+                MemoryReadOperation(
                     address=self.version.cstate_manager_global + 0x8C0 + 0x4 + 0xC,
-                    read_byte_count=4 * (32 // PASSES),
+                    count=4 * (32 // PASSES),
                     offset=i * 4 * (32 // PASSES),
                 )
             )
