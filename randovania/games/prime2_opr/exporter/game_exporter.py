@@ -88,7 +88,7 @@ class EchoesOPRGameExporter(GameExporter[EchoesOPRGameExportParams]):
             open_prime_rando.echoes.patcher.patch_iso(
                 export_params.input_path,
                 export_params.output_path,
-                RandoConfiguration.model_validate(patch_data),
+                RandoConfiguration.model_validate(patch_data, extra="forbid"),
                 updaters[0],
                 updaters[1],
                 updaters[2],

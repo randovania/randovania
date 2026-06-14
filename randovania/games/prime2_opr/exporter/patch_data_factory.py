@@ -4,18 +4,20 @@ import functools
 from collections import defaultdict
 from collections.abc import Callable, Iterable
 from random import Random
-from typing import TYPE_CHECKING, Literal, TypedDict, override
+from typing import TYPE_CHECKING, Literal, NotRequired, TypedDict, override
 
 from randovania.exporter import pickup_exporter
 from randovania.exporter.hints.temple_key_hint import create_temple_key_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.hint import HintDarkTemple
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.games.common import elevators
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.exporter.joke_hints import ECHOES_JOKE_HINTS
@@ -24,11 +26,13 @@ from randovania.games.prime2.exporter.patch_data_factory import (
     akul_testament_string_patch,
     default_prime2_memo_data,
     echoes_raw_pickup_list,
+    pretty_name_for_elevator,
     simplified_prime2_memo_data,
 )
 from randovania.games.prime2_opr.layout import EchoesOPRConfiguration, EchoesOPRCosmeticPatches
 from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import frozen_lib
 
 if TYPE_CHECKING:
@@ -40,9 +44,20 @@ type SoundType = Literal["standard", "expansion", "key"]
 
 
 class AreaChange(TypedDict):
+    mrea_id: NotRequired[int]
+
     pickups: list[dict]
     translator_gates: list[dict]
     door_locks: list[dict]
+    elevators: list[dict]
+    new_name: NotRequired[str]
+
+
+class WorldChange(TypedDict):
+    mlvl_id: NotRequired[int]
+
+    other_world_to_copy_in_mapu: NotRequired[int]
+    area_changes: list[AreaChange]
 
 
 class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesOPRCosmeticPatches]):
@@ -81,7 +96,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         # cosmetic settings
         data["game_options_defaults"] = self.cosmetic_patches.user_preferences.as_json
         data["map_visibility"] = self.create_map_visibility()
-        data["suit_mapping"] = self.create_suit_mapping()
+        data["suit_replacement"] = self.create_suit_mapping()
 
         return data
 
@@ -131,7 +146,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
     def _populate_area_changes(
         self,
         area_changes: dict[tuple[int, int], AreaChange],
-        field_name: Literal["pickups", "translator_gates", "door_locks"],
+        field_name: Literal["pickups", "translator_gates", "door_locks", "elevators"],
         area_change_factory: Callable[[], Iterable[tuple[int, int, dict]]],
     ) -> None:
         """Populates `area_changes` with the results from the given change factory."""
@@ -145,7 +160,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         """
 
         def _area_change() -> AreaChange:
-            return AreaChange(pickups=[], translator_gates=[], door_locks=[])
+            return AreaChange(pickups=[], translator_gates=[], door_locks=[], elevators=[])
 
         # (MLVL, MREA) -> AreaChange
         area_changes: dict[tuple[int, int], AreaChange] = defaultdict(_area_change)
@@ -154,24 +169,30 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         self._populate_area_changes(area_changes, "pickups", self.create_pickups)
         self._populate_area_changes(area_changes, "translator_gates", self.create_translator_gates)
         self._populate_area_changes(area_changes, "door_locks", self.create_door_locks)
+        self._populate_area_changes(area_changes, "elevators", self.create_elevators)
 
         # associate area changes with their world
-        world_changes: dict[int, list] = defaultdict(list)
+        def _world_change() -> WorldChange:
+            return WorldChange(area_changes=[])
+
+        world_changes: dict[int, WorldChange] = defaultdict(_world_change)
         for (mlvl_id, mrea_id), area_change in area_changes.items():
-            world_changes[mlvl_id].append(
+            world_changes[mlvl_id]["area_changes"].append(
                 {
                     "mrea_id": mrea_id,
                     **area_change,
                 }
             )
 
+        self.change_worlds_for_elevators(world_changes)
+
         # return world changes formatted for the patcher
         return [
             {
                 "mlvl_id": mlvl_id,
-                "area_changes": world_area_changes,
+                **world_change,
             }
-            for mlvl_id, world_area_changes in world_changes.items()
+            for mlvl_id, world_change in world_changes.items()
         ]
 
     def _get_memo_data(self) -> dict[str, str]:
@@ -394,6 +415,55 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         pickup_config = self.configuration.standard_pickup_configuration
         scan_pickup = pickup_config.get_pickup_with_name("Scan Visor")
         return pickup_config.pickups_state[scan_pickup].num_included_in_starting_pickups == 0
+
+    def create_elevators(self) -> Iterable[tuple[int, int, dict]]:
+        """Creates the elevator target changes, in a format usable for `_populate_area_changes`"""
+        elevator_type = self.game.dock_weakness_database.find_type("elevator")
+        for node, connection in self.patches.all_dock_connections(self.game):
+            if isinstance(node, DockNode) and node.dock_type == elevator_type:
+                mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
+
+                elevator = {
+                    "elevator_id": node.extra["teleporter_instance_id"],
+                    "target": self._area_reference_from_identifier(connection.identifier.area_identifier),
+                    "scan_strg": node.extra["scan_asset_id"],
+                    "target_name": elevators.get_elevator_or_area_name(connection, True),
+                }
+
+                yield mlvl, mrea, elevator
+
+    def change_worlds_for_elevators(self, world_changes: dict[int, WorldChange]) -> None:
+        """Sets the other fields in the WorldChanges and AreaChanges based on the elevator layout."""
+        # update room names
+        for node, connection in self.patches.all_dock_connections(self.game):
+            mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
+            world_change = world_changes[mlvl]
+            area_change = next(area for area in world_change["area_changes"] if area["mrea_id"] == mrea)
+            area_change["new_name"] = pretty_name_for_elevator(
+                self.game, self.game.region_list, node, connection.identifier, use_ui_name_when_vanilla=True
+            )
+
+        # move regions on world map
+        if self.configuration.teleporters.mode == TeleporterShuffleMode.ECHOES_SHUFFLED:
+
+            def tg_elevator(area: str, node: str) -> DockNode:
+                id_ = NodeIdentifier.create("Temple Grounds", area, node)
+                return self.game.region_list.typed_node_by_identifier(id_, DockNode)
+
+            tg_elevators = {
+                tg_elevator("Temple Transport A", "Elevator to Great Temple"): "Great Temple",
+                tg_elevator("Transport to Agon Wastes", "Elevator to Agon Wastes"): "Agon Wastes",
+                tg_elevator("Transport to Torvus Bog", "Elevator to Torvus Bog"): "Torvus Bog",
+                tg_elevator("Transport to Sanctuary Fortress", "Elevator to Sanctuary Fortress"): "Sanctuary Fortress",
+            }
+            for elevator, og_region_name in tg_elevators.items():
+                og_region = self.game.region_list.region_with_name(og_region_name)
+                target = self.patches.get_dock_connection_for(elevator)
+                new_region = self.game.region_list.region_with_name(target.region)
+
+                world_changes[self._asset_id_for_region(new_region)]["other_world_to_copy_in_mapu"] = (
+                    self._asset_id_for_region(og_region)
+                )
 
     def create_damage_changes(self) -> dict:
         """Returns a patcher-format dict for various damage changes."""
