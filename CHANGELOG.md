@@ -9,7 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Waiting changes to be added.
 
-## [10.8.1] - 2026-06-??
+## [10.8.2] - 2026-06-14
+
+### Metroid Prime
+
+- Fixed: Edge case of Randovania sending wrong items to the game when it cannot read the inventory.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Edge case of Randovania sending wrong items to the game when it cannot read the inventory.
+
+## [10.8.1] - 2026-06-13
 
 - Changed: The seed hash text in the Multiplayer window can now be interacted with.
 - Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
