@@ -407,6 +407,9 @@ class PrimeRemoteConnector(RemoteConnector):
             if region is not None:
                 await self.update_current_inventory()
 
+                if self.last_inventory == Inventory.empty():
+                    return
+
                 if self.at_end_of_game():
                     self.GameHasBeenBeaten.emit()
                     self.logger.debug("The game has been beaten")
