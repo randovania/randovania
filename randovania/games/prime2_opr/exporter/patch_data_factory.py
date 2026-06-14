@@ -39,7 +39,6 @@ if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.exporter.patch_data_factory import PatcherDataMeta
 
-
 type SoundType = Literal["standard", "expansion", "key"]
 
 
@@ -50,6 +49,7 @@ class AreaChange(TypedDict):
     translator_gates: list[dict]
     door_locks: list[dict]
     elevators: list[dict]
+    portals: list[dict]
     new_name: NotRequired[str]
 
 
@@ -87,6 +87,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
         # other settings
         data["practice_mod"] = "full" if self.configuration.practice_mod else "disabled"
+        data["two_way_portals"] = self.configuration.portal_rando
         data["inverted_mode"] = self.configuration.inverted_mode
         data["auto_enabled_elevators"] = self._should_auto_enable_elevators()
         data["beam_configuration"] = self.configuration.beam_configuration.as_json
@@ -160,7 +161,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         """
 
         def _area_change() -> AreaChange:
-            return AreaChange(pickups=[], translator_gates=[], door_locks=[], elevators=[])
+            return AreaChange(pickups=[], translator_gates=[], door_locks=[], elevators=[], portals=[])
 
         # (MLVL, MREA) -> AreaChange
         area_changes: dict[tuple[int, int], AreaChange] = defaultdict(_area_change)
@@ -170,6 +171,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         self._populate_area_changes(area_changes, "translator_gates", self.create_translator_gates)
         self._populate_area_changes(area_changes, "door_locks", self.create_door_locks)
         self._populate_area_changes(area_changes, "elevators", self.create_elevators)
+        self._populate_area_changes(area_changes, "portals", self.create_portals)
 
         # associate area changes with their world
         def _world_change() -> WorldChange:
@@ -432,16 +434,34 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
                 yield mlvl, mrea, elevator
 
+    def create_portals(self) -> Iterable[tuple[int, int, dict]]:
+        """Creates the portal target changes, in a format usable for `_populate_area_changes`"""
+        portal_type = self.game.dock_weakness_database.find_type("portal")
+        for node, connection in self.patches.all_dock_connections(self.game):
+            if isinstance(node, DockNode) and node.dock_type == portal_type:
+                target_dock = self.game.typed_node_by_identifier(connection.identifier, DockNode)
+
+                mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
+
+                change = {
+                    "source_dock_name": node.extra["dock_name"],
+                    "target_mrea_id": self._asset_ids_for_area(target_dock.identifier.area_identifier)[1],
+                    "target_dock_name": target_dock.extra["dock_name"],
+                }
+                yield mlvl, mrea, change
+
     def change_worlds_for_elevators(self, world_changes: dict[int, WorldChange]) -> None:
         """Sets the other fields in the WorldChanges and AreaChanges based on the elevator layout."""
         # update room names
+        elevator_type = self.game.dock_weakness_database.find_type("elevator")
         for node, connection in self.patches.all_dock_connections(self.game):
-            mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
-            world_change = world_changes[mlvl]
-            area_change = next(area for area in world_change["area_changes"] if area["mrea_id"] == mrea)
-            area_change["new_name"] = pretty_name_for_elevator(
-                self.game, self.game.region_list, node, connection.identifier, use_ui_name_when_vanilla=True
-            )
+            if isinstance(node, DockNode) and node.dock_type == elevator_type:
+                mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
+                world_change = world_changes[mlvl]
+                area_change = next(area for area in world_change["area_changes"] if area["mrea_id"] == mrea)
+                area_change["new_name"] = pretty_name_for_elevator(
+                    self.game, self.game.region_list, node, connection.identifier, use_ui_name_when_vanilla=True
+                )
 
         # move regions on world map
         if self.configuration.teleporters.mode == TeleporterShuffleMode.ECHOES_SHUFFLED:
