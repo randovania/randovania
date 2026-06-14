@@ -12,7 +12,7 @@ from retro_data_structures.game_check import Game as RDSGame
 
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException
+from randovania.game_connection.executor.memory_operation import MemoryOperation
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -122,7 +122,7 @@ async def test_get_inventory_invalid_capacity(connector: EchoesRemoteConnector):
 
     # Run
     msg = "Received InventoryItem(amount=0, capacity=50) for Darkburst, which is an invalid state."
-    with pytest.raises(MemoryOperationException, match=re.escape(msg)):
+    with pytest.raises(ValueError, match=re.escape(msg)):
         await connector.get_inventory()
 
 
@@ -141,7 +141,7 @@ async def test_get_inventory_invalid_amount(connector: EchoesRemoteConnector):
 
     # Run
     msg = "Received InventoryItem(amount=1, capacity=0) for Darkburst, which is an invalid state."
-    with pytest.raises(MemoryOperationException, match=re.escape(msg)):
+    with pytest.raises(ValueError, match=re.escape(msg)):
         await connector.get_inventory()
 
 
