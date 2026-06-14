@@ -189,7 +189,7 @@ class PrimeRemoteConnector(RemoteConnector):
         for item, memory_op in zip(all_items, memory_ops, strict=True):
             inv = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
             if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (item != self.multiworld_magic_item):
-                raise MemoryOperationException(f"Received {inv} for {item.long_name}, which is an invalid state.")
+                raise ValueError(f"Received {inv} for {item.long_name}, which is an invalid state.")
             inventory[item] = inv
 
         return Inventory(inventory)
@@ -427,7 +427,13 @@ class PrimeRemoteConnector(RemoteConnector):
             # It should automatically disconnect the executor, so fail loudly if that's not the case
             if self.executor.is_connected():
                 self.executor.disconnect()
-                self.logger.debug("Disconnecting due to an exception: %s", str(e))
+                self.logger.debug("Disconnecting due to a memory exception: %s", str(e))
+
+        except Exception as e:
+            # If any other exception occurs, something has gone horribly wrong, so scream.
+            if self.executor.is_connected():
+                self.executor.disconnect()
+                self.logger.warning("Disconnecting due to an exception: %s", str(e))
 
         finally:
             if self.is_disconnected():
