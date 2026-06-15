@@ -17,9 +17,14 @@ class BaseEchoesCosmeticPatches(BaseCosmeticPatches):
     open_map: bool = True
     user_preferences: EchoesUserPreferences = dataclasses.field(default_factory=EchoesUserPreferences)
     suit_colors: EchoesSuitPreferences = dataclasses.field(default_factory=EchoesSuitPreferences)
+    use_hud_color: bool = False
+    hud_color: tuple[int, int, int] = DEFAULT_HUD_COLOR
 
     # TODO: convert other game assets
-    # TODO: hud color
+
+    def __post_init__(self) -> None:
+        if len(self.hud_color) != 3:
+            raise ValueError("HUD color must be a tuple of 3 ints.")
 
 
 @dataclasses.dataclass(frozen=True)
@@ -27,8 +32,6 @@ class EchoesCosmeticPatches(BaseEchoesCosmeticPatches):
     unvisited_room_names: bool = True
     pickup_markers: bool = True
     convert_other_game_assets: bool = False
-    use_hud_color: bool = False
-    hud_color: tuple[int, int, int] = DEFAULT_HUD_COLOR
 
     @classmethod
     def default(cls) -> EchoesCosmeticPatches:
@@ -37,7 +40,3 @@ class EchoesCosmeticPatches(BaseEchoesCosmeticPatches):
     @classmethod
     def game(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_ECHOES
-
-    def __post_init__(self) -> None:
-        if len(self.hud_color) != 3:
-            raise ValueError("HUD color must be a tuple of 3 ints.")
