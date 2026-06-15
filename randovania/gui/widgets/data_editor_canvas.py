@@ -260,6 +260,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
             self.image_bounds = BoundsInt(min_x, min_y, max_x, max_y)
             self.region_bounds = BoundsFloat(min_x, min_y, max_x, max_y)
         else:
+            self._background_image = None
             self.update_region_bounds()
 
         self.area_bounds = BoundsFloat(
