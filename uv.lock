@@ -851,7 +851,7 @@ wheels = [
 
 [[package]]
 name = "fastapi"
-version = "0.137.0"
+version = "0.136.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "annotated-doc" },
@@ -860,9 +860,9 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "typing-inspection" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/da/fe/fb25c287ff7e0f79fc6acf2e8b812725dad28d2a1446c0410bab1422ac90/fastapi-0.137.0.tar.gz", hash = "sha256:d0565d551f65a803ecff245390840867186f456ef98971f750724eed16e1541c", size = 408023, upload-time = "2026-06-14T12:51:30.672Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/81/2d/ff8d91d7b564d464629a0fd50a4489c97fcb836ac230bf3a7269232a9b1f/fastapi-0.136.3.tar.gz", hash = "sha256:e487fae93ad408e6f47641ee4dfe389864fd7bec92e547ea8498fc13f43e83ab", size = 396410, upload-time = "2026-05-23T18:53:15.192Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e7/f1/b38481428e50131e5345b535414d11d196f14990122fe69c9020c64e5683/fastapi-0.137.0-py3-none-any.whl", hash = "sha256:6dcbde8d464f92117c1accb9e42720f8e423fa9b86cb563b1f5862f785a06498", size = 121777, upload-time = "2026-06-14T12:51:29.067Z" },
+    { url = "https://files.pythonhosted.org/packages/e0/82/45359b62a067409bd929ae8a56b8ed13e5a8c8a61194b3c236920999ab83/fastapi-0.136.3-py3-none-any.whl", hash = "sha256:3d2a69bdf04b7e9f3afa292c3bc7a98816bbfafa10bc9b45f3f3700d2f761620", size = 117481, upload-time = "2026-05-23T18:53:16.924Z" },
 ]
 
 [[package]]
@@ -1044,16 +1044,16 @@ wheels = [
 ]
 
 [[package]]
-name = "httpcore"
-version = "1.0.9"
+name = "httpcore2"
+version = "2.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "certifi" },
     { name = "h11" },
+    { name = "truststore" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/06/94/82699a10bca87a5556c9c59b5963f2d039dbd239f25bc2a63907a05a14cb/httpcore-1.0.9.tar.gz", hash = "sha256:6e34463af53fd2ab5d807f399a9b45ea31c3dfa2276f15a2c3f00afff6e176e8", size = 85484, upload-time = "2025-04-24T22:06:22.219Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7b/9b/2b1d1833a58236d1f6ee755e027a3917da0db59cc9708554cefc440ee8b6/httpcore2-2.4.0.tar.gz", hash = "sha256:3093a8ab8980d9f910b9cb4351df9186a0ad2350a6284a9107ac9a362a584422", size = 64618, upload-time = "2026-06-11T06:35:53.425Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7e/f5/f66802a942d491edb555dd61e3a9961140fd64c90bce1eafd741609d334d/httpcore-1.0.9-py3-none-any.whl", hash = "sha256:2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55", size = 78784, upload-time = "2025-04-24T22:06:20.566Z" },
+    { url = "https://files.pythonhosted.org/packages/7c/72/4fdf2306143a92a471fad9f3655aa542d43aa9188a7c9534e82c9aecf837/httpcore2-2.4.0-py3-none-any.whl", hash = "sha256:5218779da5d6e3c2013ac706121abfb3815d450e0613495c0de50264dce58242", size = 80151, upload-time = "2026-06-11T06:35:50.89Z" },
 ]
 
 [[package]]
@@ -1093,18 +1093,19 @@ wheels = [
 ]
 
 [[package]]
-name = "httpx"
-version = "0.28.1"
+name = "httpx2"
+version = "2.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
-    { name = "certifi" },
-    { name = "httpcore" },
+    { name = "httpcore2" },
     { name = "idna" },
+    { name = "truststore" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b1/df/48c586a5fe32a0f01324ee087459e112ebb7224f646c0b5023f5e79e9956/httpx-0.28.1.tar.gz", hash = "sha256:75e98c5f16b0f35b567856f597f06ff2270a374470a5c2392242528e3e3e42fc", size = 141406, upload-time = "2024-12-06T15:37:23.222Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/fc/60/b43ced4ccf26e95b396dbf67051d3e5042b645917d4da0469dd82a3bdd4f/httpx2-2.4.0.tar.gz", hash = "sha256:32e0734b61eb0824b3f56a9e98d6d92d381a3ef12c0045aa917ee63df6c411ef", size = 81691, upload-time = "2026-06-11T06:35:54.538Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2a/39/e50c7c3a983047577ee07d2a9e53faf5a69493943ec3f6a384bdc792deb2/httpx-0.28.1-py3-none-any.whl", hash = "sha256:d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad", size = 73517, upload-time = "2024-12-06T15:37:21.509Z" },
+    { url = "https://files.pythonhosted.org/packages/29/45/82bc57c3d9c3314f663b67cc057f1c017a6450685dde513f4f8db5cf431f/httpx2-2.4.0-py3-none-any.whl", hash = "sha256:425acd99297829599decf6701386dd84db3542597d36d3e2e4def930ecd57fd9", size = 74941, upload-time = "2026-06-11T06:35:52.235Z" },
 ]
 
 [[package]]
@@ -3010,7 +3011,7 @@ server = [
     { name = "uvicorn", extra = ["standard"] },
 ]
 test = [
-    { name = "httpx" },
+    { name = "httpx2" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
     { name = "pytest-codspeed" },
@@ -3061,12 +3062,12 @@ requires-dist = [
     { name = "dolphin-memory-engine", marker = "extra == 'gui'", specifier = ">=1.0.2" },
     { name = "dulwich", specifier = ">=0.24.6" },
     { name = "factorio-randovania-mod", marker = "extra == 'exporters'", specifier = "==0.8.1" },
-    { name = "fastapi", marker = "extra == 'server'" },
+    { name = "fastapi", marker = "extra == 'server'", specifier = "<0.137" },
     { name = "fastapi-socketio-handler", marker = "extra == 'server'", specifier = ">=0.4.0" },
     { name = "frozendict" },
     { name = "graphviz", marker = "extra == 'server'" },
     { name = "htmlmin2", marker = "extra == 'website'" },
-    { name = "httpx", marker = "extra == 'test'" },
+    { name = "httpx2", marker = "extra == 'test'" },
     { name = "humanize", marker = "extra == 'gui'" },
     { name = "itsdangerous", marker = "extra == 'server'" },
     { name = "jinja2", marker = "extra == 'server'" },
@@ -3440,6 +3441,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/ab/e2/e9a00f0ccb71718418230718b3d900e71a5d16e701a3dae079a21e9cd8f8/text-unidecode-1.3.tar.gz", hash = "sha256:bad6603bb14d279193107714b288be206cac565dfa49aa5b105294dd5c4aab93", size = 76885, upload-time = "2019-08-30T21:36:45.405Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a6/a5/c0b6468d3824fe3fde30dbb5e1f687b291608f9473681bbf7dabbf5a87d7/text_unidecode-1.3-py2.py3-none-any.whl", hash = "sha256:1311f10e8b895935241623731c2ba64f4c455287888b18189350b67134a822e8", size = 78154, upload-time = "2019-08-30T21:37:03.543Z" },
+]
+
+[[package]]
+name = "truststore"
+version = "0.10.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/53/a3/1585216310e344e8102c22482f6060c7a6ea0322b63e026372e6dcefcfd6/truststore-0.10.4.tar.gz", hash = "sha256:9d91bd436463ad5e4ee4aba766628dd6cd7010cf3e2461756b3303710eebc301", size = 26169, upload-time = "2025-08-12T18:49:02.73Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/19/97/56608b2249fe206a67cd573bc93cd9896e1efb9e98bce9c163bcdc704b88/truststore-0.10.4-py3-none-any.whl", hash = "sha256:adaeaecf1cbb5f4de3b1959b42d41f6fab57b2b1666adb59e89cb0b53361d981", size = 18660, upload-time = "2025-08-12T18:49:01.46Z" },
 ]
 
 [[package]]
