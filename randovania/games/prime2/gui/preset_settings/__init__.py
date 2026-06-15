@@ -13,7 +13,7 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> l
     from randovania.games.prime2.gui.preset_settings.echoes_dock_rando_tab import PresetEchoesDockRando
     from randovania.games.prime2.gui.preset_settings.echoes_energy_tab import PresetEchoesEnergy
     from randovania.games.prime2.gui.preset_settings.echoes_goal_tab import PresetEchoesGoal
-    from randovania.games.prime2.gui.preset_settings.echoes_item_pool_tab import EchoesPresetItemPool
+    from randovania.games.prime2.gui.preset_settings.echoes_item_pool_tab import EchoesPresetPickupPool
     from randovania.games.prime2.gui.preset_settings.echoes_patches_tab import PresetEchoesPatches
     from randovania.games.prime2.gui.preset_settings.echoes_starting_area import PresetEchoesStartingArea
     from randovania.games.prime2.gui.preset_settings.echoes_teleporters_tab import PresetTeleportersPrime2
@@ -29,7 +29,7 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> l
         PresetHints,
         PresetEchoesGoal,
         PresetLocationPool,
-        EchoesPresetItemPool,
+        EchoesPresetPickupPool,
         PresetEchoesEnergy,
         PresetTeleportersPrime2,
         PresetEchoesStartingArea,
