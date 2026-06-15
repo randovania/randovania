@@ -29,6 +29,11 @@ class EchoesOPRConfiguration(BaseConfiguration):
 
     blue_save_doors: bool
 
+    damage_increase_per_massive_damage: float = dataclasses.field(
+        metadata={"min": 0.0, "max": 1000.0, "precision": 0.5}
+    )
+    damage_reduction_per_defense_up: float = dataclasses.field(metadata={"min": 0.0, "max": 100.0, "precision": 0.5})
+
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_ECHOES_OPR
