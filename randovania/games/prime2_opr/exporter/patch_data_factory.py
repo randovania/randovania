@@ -45,11 +45,11 @@ type SoundType = Literal["standard", "expansion", "key"]
 class AreaChange(TypedDict):
     mrea_id: NotRequired[int]
 
-    pickups: list[dict]
-    translator_gates: list[dict]
-    door_locks: list[dict]
-    elevators: list[dict]
-    portals: list[dict]
+    pickups: NotRequired[list[dict]]
+    translator_gates: NotRequired[list[dict]]
+    door_locks: NotRequired[list[dict]]
+    elevators: NotRequired[list[dict]]
+    portals: NotRequired[list[dict]]
     new_name: NotRequired[str]
 
 
@@ -147,12 +147,15 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
     def _populate_area_changes(
         self,
         area_changes: dict[tuple[int, int], AreaChange],
-        field_name: Literal["pickups", "translator_gates", "door_locks", "elevators"],
+        field_name: Literal["pickups", "translator_gates", "door_locks", "elevators", "portals"],
         area_change_factory: Callable[[], Iterable[tuple[int, int, dict]]],
     ) -> None:
         """Populates `area_changes` with the results from the given change factory."""
         for mlvl_id, mrea_id, change in area_change_factory():
-            area_changes[mlvl_id, mrea_id][field_name].append(change)
+            container = area_changes[mlvl_id, mrea_id]
+            if field_name not in container:
+                container[field_name] = []
+            container[field_name].append(change)
 
     def create_world_changes(self) -> list[dict]:
         """
@@ -161,7 +164,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         """
 
         def _area_change() -> AreaChange:
-            return AreaChange(pickups=[], translator_gates=[], door_locks=[], elevators=[], portals=[])
+            return AreaChange()
 
         # (MLVL, MREA) -> AreaChange
         area_changes: dict[tuple[int, int], AreaChange] = defaultdict(_area_change)
@@ -447,6 +450,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
                     "source_dock_name": node.extra["dock_name"],
                     "target_mrea_id": self._asset_ids_for_area(target_dock.identifier.area_identifier)[1],
                     "target_dock_name": target_dock.extra["dock_name"],
+                    # "portal_scan_destination": target_dock.identifier.area,  # For next OPR
                 }
                 yield mlvl, mrea, change
 
