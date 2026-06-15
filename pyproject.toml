@@ -37,7 +37,7 @@ dependencies = [
     # permalinks
     "bitstruct",
     # obfuscator, guest login, server code
-    "cryptography",
+    "cryptography<49.0.0",  # v49 drops support for macOS x86-64
     # Generator
     "networkx",
     "tenacity>=7.0.0",
@@ -127,7 +127,7 @@ gui = [
 ]
 
 server = [
-    "fastapi", # REST server
+    "fastapi<0.137", # REST server
     "jinja2", # templating
     "uvicorn[standard]", # server runner
     "itsdangerous", # for starlette SessionMiddleware
@@ -165,7 +165,7 @@ test = [
     "pytest-xdist[psutil]",
     "pytest-codspeed",
     "pytest-test-groups>=1.2.1",
-    "httpx", # for server testing
+    "httpx2", # for server testing
 ]
 
 website = [
