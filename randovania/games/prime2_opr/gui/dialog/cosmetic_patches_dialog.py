@@ -2,11 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, override
 
-from randovania.games.prime2_opr.gui.generated.prime2_opr_cosmetic_patches_dialog_ui import (
-    Ui_EchoesOPRCosmeticPatchesDialog,
-)
+from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import BaseEchoesCosmeticPatchesDialog
 from randovania.games.prime2_opr.layout.prime2_opr_cosmetic_patches import EchoesOPRCosmeticPatches
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
@@ -14,32 +11,30 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class EchoesOPRCosmeticPatchesDialog(
-    BaseCosmeticPatchesDialog[EchoesOPRCosmeticPatches], Ui_EchoesOPRCosmeticPatchesDialog
-):
+class EchoesOPRCosmeticPatchesDialog(BaseEchoesCosmeticPatchesDialog[EchoesOPRCosmeticPatches]):
     def __init__(self, parent: QtWidgets.QWidget | None, current: EchoesOPRCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
-        self.setupUi(self)
 
-        self.on_new_cosmetic_patches(current)
-        self.connect_signals()
+        # hide fields only used by legacy echoes
+        self.experimental_label.setVisible(False)
+        self.pickup_markers_check.setVisible(False)
+        self.unvisited_room_names_check.setVisible(False)
 
     @classmethod
     @override
     def cosmetic_patches_type(cls) -> type[EchoesOPRCosmeticPatches]:
         return EchoesOPRCosmeticPatches
 
+    @override
     def connect_signals(self) -> None:
         super().connect_signals()
-        # More signals here!
+        self._persist_check_field(self.unvisited_map_icons_check, "reveal_all_map_icons")
+        self._persist_check_field(self.hud_color_text_check, "apply_hud_color_to_text")
+        self._persist_check_field(self.hud_color_beam_visor_check, "apply_hud_color_to_beams_visors")
 
+    @override
     def on_new_cosmetic_patches(self, patches: EchoesOPRCosmeticPatches) -> None:
-        # Update fields with the new values
-        pass
-
-    @property
-    def cosmetic_patches(self) -> EchoesOPRCosmeticPatches:
-        return self._cosmetic_patches
-
-    def reset(self) -> None:
-        self.on_new_cosmetic_patches(EchoesOPRCosmeticPatches())
+        super().on_new_cosmetic_patches(patches)
+        self.unvisited_map_icons_check.setChecked(patches.reveal_all_map_icons)
+        self.hud_color_text_check.setChecked(patches.apply_hud_color_to_text)
+        self.hud_color_beam_visor_check.setChecked(patches.apply_hud_color_to_beams_visors)
