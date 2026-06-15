@@ -27,9 +27,11 @@ _ITEMS_TO_PLURALIZE = {
 }
 
 
-def add_quantity_to_resource(resource: str, quantity: int, always_add_quantity: bool = False) -> str:
+def add_quantity_to_resource[T: (float, int)](
+    resource: str, quantity: T, always_add_quantity: bool = False, use_percentage: bool = False
+) -> str:
     if always_add_quantity or quantity > 1:
-        first_part = f"{quantity} "
+        first_part = "{}{} ".format(quantity, "%" if use_percentage else "")
     else:
         first_part = ""
     return "{}{}{}".format(first_part, resource, "s" if quantity > 1 and resource in _ITEMS_TO_PLURALIZE else "")

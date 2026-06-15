@@ -98,6 +98,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         data["game_options_defaults"] = self.cosmetic_patches.user_preferences.as_json
         data["map_visibility"] = self.create_map_visibility()
         data["suit_replacement"] = self.create_suit_mapping()
+        data["hud_color"] = self.create_hud_color()
 
         return data
 
@@ -593,6 +594,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             "reveal_map_at_start": self.cosmetic_patches.open_map,
             "unvisited_room_names": self.cosmetic_patches.open_map,
             "areas_to_never_reveal": exclude_map_ids,
+            "unvisited_map_icons": self.cosmetic_patches.reveal_all_map_icons,
         }
 
     def create_suit_mapping(self) -> dict:
@@ -604,7 +606,46 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
         return suits
 
+    def _percent_and_max_count_for_custom_pickup(self, pickup_name: str, percentage_field: str) -> tuple[float, int]:
+        """Gets the percentage modifier and the maximum count for this custom item."""
+        pickup_config = self.configuration.standard_pickup_configuration.pickups_state
+        pickup = self.game.get_pickup_database().standard_pickups[pickup_name]
+        max_count = pickup_config[pickup].num_shuffled_pickups
+
+        percent = getattr(self.configuration, percentage_field) / 100.0
+
+        return percent, max_count
+
     def create_custom_items_config(self) -> dict:
         """Returns a patcher-format dict for custom item changes."""
-        # TODO
-        return {}
+
+        defense_up = self._percent_and_max_count_for_custom_pickup("Defense Up", "damage_reduction_per_defense_up")
+        massive_damage = self._percent_and_max_count_for_custom_pickup(
+            "Massive Damage", "damage_increase_per_massive_damage"
+        )
+
+        return {
+            "defense_up_config": {
+                "damage_reduction_multiplier": defense_up[0],
+                "max_count": defense_up[1],
+            },
+            "massive_damage_config": {
+                "damage_increase_multiplier": massive_damage[0],
+                "max_count": massive_damage[1],
+            },
+        }
+
+    def create_hud_color(self) -> dict:
+        """Returns a patcher-format dict for HUD color changes."""
+
+        color: tuple[float, float, float] = self.cosmetic_patches.hud_color
+        r, g, b = color
+        r /= 255
+        g /= 255
+        b /= 255
+
+        return {
+            "main_color": [r, g, b],
+            "change_text_color": self.cosmetic_patches.apply_hud_color_to_text,
+            "change_beam_visor_select_color": self.cosmetic_patches.apply_hud_color_to_beams_visors,
+        }
