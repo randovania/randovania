@@ -97,6 +97,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         data["game_options_defaults"] = self.cosmetic_patches.user_preferences.as_json
         data["map_visibility"] = self.create_map_visibility()
         data["suit_replacement"] = self.create_suit_mapping()
+        data["hud_color"] = self.create_hud_color()
 
         return data
 
@@ -569,6 +570,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             "reveal_map_at_start": self.cosmetic_patches.open_map,
             "unvisited_room_names": self.cosmetic_patches.open_map,
             "areas_to_never_reveal": exclude_map_ids,
+            "unvisited_map_icons": self.cosmetic_patches.reveal_all_map_icons,
         }
 
     def create_suit_mapping(self) -> dict:
@@ -607,4 +609,19 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
                 "damage_increase_multiplier": massive_damage[0],
                 "max_count": massive_damage[1],
             },
+        }
+
+    def create_hud_color(self) -> dict:
+        """Returns a patcher-format dict for HUD color changes."""
+
+        color: tuple[float, float, float] = self.cosmetic_patches.hud_color
+        r, g, b = color
+        r /= 255
+        g /= 255
+        b /= 255
+
+        return {
+            "main_color": [r, g, b],
+            "change_text_color": self.cosmetic_patches.apply_hud_color_to_text,
+            "change_beam_visor_select_color": self.cosmetic_patches.apply_hud_color_to_beams_visors,
         }
