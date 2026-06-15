@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import typing
 from typing import Any, ClassVar
 
-from PySide6 import QtWidgets
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import QEvent, Qt
 
 
@@ -21,23 +22,26 @@ class ScrollProtectedWidgetMixin:
         self.installEventFilter(self)
         self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
-    def focusInEvent(self, event: QEvent):
+    def focusInEvent(self, event: QEvent) -> None:
         assert isinstance(self, QtWidgets.QWidget)
         self.setFocusPolicy(Qt.FocusPolicy.WheelFocus)
 
-    def focusOutEvent(self, event: QEvent):
+    def focusOutEvent(self, event: QEvent) -> None:
         assert isinstance(self, QtWidgets.QWidget)
         self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
-    def eventFilter(self, obj: QtWidgets.QWidget, event: QEvent) -> bool:
-        if event.type() == QEvent.Wheel and isinstance(obj, self.widget_type):
-            if obj.focusPolicy() == Qt.WheelFocus:
+    def eventFilter(self, watched: QtCore.QObject, event: QEvent, /) -> bool:
+        assert isinstance(self, QtWidgets.QWidget)
+        if event.type() == QEvent.Type.Wheel and isinstance(watched, self.widget_type):
+            if watched.focusPolicy() == Qt.FocusPolicy.WheelFocus:
                 event.accept()
                 return False
             else:
                 event.ignore()
                 return True
-        return super().eventFilter(obj, event)
+
+        parent = typing.cast("QtWidgets.QWidget", super())  # eww
+        return parent.eventFilter(watched, event)
 
 
 class ScrollProtectedSlider(ScrollProtectedWidgetMixin, QtWidgets.QSlider):

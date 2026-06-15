@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import collections
 import dataclasses
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from functools import partial
 from typing import TYPE_CHECKING
 
@@ -14,7 +14,6 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
 from randovania.game_description.pickup.pickup_definition.base_pickup import BasePickupDefinition
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool import pool_creator
 from randovania.gui.generated.preset_pickup_pool_ui import Ui_PresetPickupPool
 from randovania.gui.lib import common_qt_lib
@@ -53,23 +52,23 @@ def _create_separator(parent: QtWidgets.QWidget) -> QtWidgets.QFrame:
 def _format_expected_counts[T: (int, float)](
     ammo_items: Iterable[str],
     template: str,
-    ammo_provided: dict[str, T],
-    names: dict[str, str],
-    self_counts: list[T],
-    max_capacities: dict[str, T],
+    ammo_provided: Mapping[str, T],
+    names: Mapping[str, str],
+    self_counts: Sequence[T],
+    max_capacities: Mapping[str, T],
     use_percentage: bool = False,
 ) -> str:
     try:
         return template.format(
             total=" and ".join(
                 item_names.add_quantity_to_resource(names[ammo_index], self_count, True, use_percentage)
-                for ammo_index, self_count in zip(ammo_items, self_counts)
+                for ammo_index, self_count in zip(ammo_items, self_counts, strict=True)
             ),
             from_items=" and ".join(
                 item_names.add_quantity_to_resource(
                     names[ammo_index], ammo_provided[ammo_index] - self_count, True, use_percentage
                 )
-                for ammo_index, self_count in zip(ammo_items, self_counts)
+                for ammo_index, self_count in zip(ammo_items, self_counts, strict=True)
             ),
             maximum=" and ".join(
                 item_names.add_quantity_to_resource(
@@ -88,7 +87,7 @@ def _format_expected_counts[T: (int, float)](
 class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
     game: RandovaniaGame
     _boxes_for_category: dict[
-        str, tuple[QtWidgets.QGroupBox, QtWidgets.QGridLayout, dict[StandardPickupDefinition, StandardPickupWidget]]
+        str, tuple[Foldable, QtWidgets.QGridLayout, dict[StandardPickupDefinition, StandardPickupWidget]]
     ]
     _default_pickups: dict[HintFeature, QtWidgets.QComboBox]
 
@@ -124,7 +123,7 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
     def header_name(cls) -> str | None:
         return None
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         layout = preset.configuration
         major_configuration = layout.standard_pickup_configuration
 
@@ -223,23 +222,23 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
             common_qt_lib.set_error_border_stylesheet(self.pickup_pool_count_label, True)
 
     # Random Starting
-    def _register_random_starting_events(self):
+    def _register_random_starting_events(self) -> None:
         self.minimum_starting_spinbox.valueChanged.connect(self._on_update_minimum_starting)
         self.maximum_starting_spinbox.valueChanged.connect(self._on_update_maximum_starting)
 
-    def _on_update_minimum_starting(self, value: int):
+    def _on_update_minimum_starting(self, value: int) -> None:
         with self._editor as options:
             options.standard_pickup_configuration = dataclasses.replace(
                 options.standard_pickup_configuration, minimum_random_starting_pickups=value
             )
 
-    def _on_update_maximum_starting(self, value: int):
+    def _on_update_maximum_starting(self, value: int) -> None:
         with self._editor as options:
             options.standard_pickup_configuration = dataclasses.replace(
                 options.standard_pickup_configuration, maximum_random_starting_pickups=value
             )
 
-    def _create_categories_boxes(self, pickup_database: PickupDatabase, size_policy):
+    def _create_categories_boxes(self, pickup_database: PickupDatabase, size_policy: QtWidgets.QSizePolicy) -> None:
         self._boxes_for_category = {}
         all_categories = list(pickup_database.pickup_categories.values())
 
@@ -261,7 +260,7 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
             self.item_pool_layout.addWidget(category_box)
             self._boxes_for_category[standard_pickup_category.name] = category_box, category_layout, {}
 
-    def _create_customizable_default_items(self, pickup_database: PickupDatabase):
+    def _create_customizable_default_items(self, pickup_database: PickupDatabase) -> None:
         self._default_pickups = {}
 
         for category, possibilities in pickup_database.default_pickups.items():
@@ -283,7 +282,7 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
 
             self._default_pickups[category] = combo
 
-    def _on_default_pickup_updated(self, category: HintFeature, combo: QtWidgets.QComboBox, _):
+    def _on_default_pickup_updated(self, category: HintFeature, combo: QtWidgets.QComboBox, index: int) -> None:
         pickup: StandardPickupDefinition = combo.currentData()
         with self._editor as editor:
             new_config = editor.standard_pickup_configuration
@@ -296,7 +295,9 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
             )
             editor.standard_pickup_configuration = new_config
 
-    def _create_standard_pickup_boxes(self, pickup_database: PickupDatabase, resource_database: ResourceDatabase):
+    def _create_standard_pickup_boxes(
+        self, pickup_database: PickupDatabase, resource_database: ResourceDatabase
+    ) -> None:
         for standard_pickup in pickup_database.standard_pickups.values():
             if standard_pickup.hide_from_gui or standard_pickup.gui_category.name == "energy_tank":
                 continue
@@ -313,7 +314,7 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
             category_layout.addWidget(widget, row, 0, 1, 2)
             elements[standard_pickup] = widget
 
-    def _on_standard_pickup_updated(self, pickup_widget: StandardPickupWidget):
+    def _on_standard_pickup_updated(self, pickup_widget: StandardPickupWidget) -> None:
         with self._editor as editor:
             editor.standard_pickup_configuration = editor.standard_pickup_configuration.replace_state_for_pickup(
                 pickup_widget.pickup, pickup_widget.state
@@ -416,7 +417,7 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
         return AmmoPickupWidgets(pickup_spinbox, expected_count, expected_template, pickup_box, require_main_item_check)
 
     # Ammo
-    def _create_ammo_pickup_boxes(self, size_policy, pickup_database: PickupDatabase) -> None:
+    def _create_ammo_pickup_boxes(self, size_policy: QtWidgets.QSizePolicy, pickup_database: PickupDatabase) -> None:
         """
         Creates the GroupBox with SpinBoxes for selecting the pickup count of all the ammo
         :param pickup_database:
@@ -439,7 +440,7 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
             columns: list[QtWidgets.QWidget] = []
 
             for ammo_index, ammo_item in enumerate(ammo.items):
-                item = resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_item)
+                item = resource_database.get_item(ammo_item)
                 minimum_count = -item.max_capacity if ammo.allows_negative else 0
 
                 item_count_spinbox = ScrollProtectedSpinBox()
