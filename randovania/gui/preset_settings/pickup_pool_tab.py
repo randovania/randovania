@@ -169,8 +169,6 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
 
             if widgets.require_main_item_check is not None:
                 widgets.require_main_item_check.setChecked(state.requires_main_item)
-                if self.game == RandovaniaGame.METROID_PRIME:
-                    widgets.require_main_item_check.setChecked(False)
 
             self_counts = []
             for ammo_index, count in enumerate(state.ammo_count):
@@ -314,7 +312,7 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
             )
 
     # Ammo
-    def _create_ammo_pickup_boxes(self, size_policy, pickup_database: PickupDatabase):
+    def _create_ammo_pickup_boxes(self, size_policy, pickup_database: PickupDatabase) -> None:
         """
         Creates the GroupBox with SpinBoxes for selecting the pickup count of all the ammo
         :param pickup_database:
@@ -381,12 +379,10 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
             add_column(pickup_spinbox)
             current_row += 1
 
-            if ammo.temporary:
+            if ammo.temporary and ammo.show_requires_main:
                 require_main_item_check = QtWidgets.QCheckBox(pickup_box)
                 require_main_item_check.setText("Requires the main item to work?")
                 require_main_item_check.stateChanged.connect(partial(self._on_update_ammo_require_main_item, ammo))
-                if ammo.hide_requires_main:
-                    require_main_item_check.setVisible(False)
                 layout.addWidget(require_main_item_check, current_row, 0, 1, -1)
                 current_row += 1
             else:
@@ -419,7 +415,9 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
             )
             category_layout.addWidget(pickup_box)
 
-    def _on_update_ammo_pickup_item_count_spinbox(self, ammo: AmmoPickupDefinition, ammo_index: int, value: int):
+    def _on_update_ammo_pickup_item_count_spinbox(
+        self, ammo: AmmoPickupDefinition, ammo_index: int, value: int
+    ) -> None:
         with self._editor as options:
             ammo_configuration = options.ammo_pickup_configuration
             state = ammo_configuration.pickups_state[ammo]
@@ -430,21 +428,21 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
                 ammo, dataclasses.replace(state, ammo_count=tuple(ammo_count))
             )
 
-    def _on_update_ammo_pickup_num_count_spinbox(self, ammo: AmmoPickupDefinition, value: int):
+    def _on_update_ammo_pickup_num_count_spinbox(self, ammo: AmmoPickupDefinition, value: int) -> None:
         with self._editor as options:
             ammo_configuration = options.ammo_pickup_configuration
             options.ammo_pickup_configuration = ammo_configuration.replace_state_for_ammo(
                 ammo, dataclasses.replace(ammo_configuration.pickups_state[ammo], pickup_count=value)
             )
 
-    def _on_update_ammo_require_main_item(self, ammo: AmmoPickupDefinition, value: int):
+    def _on_update_ammo_require_main_item(self, ammo: AmmoPickupDefinition, value: int) -> None:
         with self._editor as options:
             ammo_configuration = options.ammo_pickup_configuration
             options.ammo_pickup_configuration = ammo_configuration.replace_state_for_ammo(
                 ammo, dataclasses.replace(ammo_configuration.pickups_state[ammo], requires_main_item=bool(value))
             )
 
-    def _create_progressive_widgets(self, pickup_database: PickupDatabase):
+    def _create_progressive_widgets(self, pickup_database: PickupDatabase) -> None:
         self._progressive_widgets = []
 
         all_progressive = list(self.game.gui.progressive_item_gui_tuples)
