@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.games.prime2 import dark_aether_helper
+from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 from randovania.gui.game_details.base_connection_details_tab import BaseConnectionDetailsTab
 
 if TYPE_CHECKING:
@@ -23,7 +24,7 @@ class PortalDetailsTab(BaseConnectionDetailsTab):
     def should_appear_for(
         cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
     ) -> bool:
-        return False  # TODO
+        return isinstance(configuration, EchoesOPRConfiguration) and configuration.portal_rando
 
     def _fill_per_region_connections(
         self,
