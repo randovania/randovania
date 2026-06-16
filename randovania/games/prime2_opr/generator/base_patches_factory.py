@@ -20,6 +20,20 @@ class EchoesOPRBasePatchesFactory(BasePatchesFactory[EchoesOPRConfiguration]):
         self, configuration: EchoesOPRConfiguration, game: GameDatabaseView, initial_patches: GamePatches
     ) -> GamePatches:
         parent = super().assign_static_dock_weakness(configuration, game, initial_patches)
+
+        if configuration.portal_rando:
+            portal_type = game.find_dock_type_by_short_name("portal")
+            light_portal = game.get_dock_weakness("portal", "Light Portal")
+            dark_portal = game.get_dock_weakness("portal", "Dark Portal")
+
+            static_portals = []
+            for region, area, node in game.iterate_nodes_of_type(DockNode):
+                if node.dock_type == portal_type and node.default_dock_weakness.name == "No Return Portal":
+                    static_portals.append(
+                        (node, dark_portal if dark_aether_helper.is_region_light(region) else light_portal)
+                    )
+            parent = parent.assign_dock_weakness(static_portals)
+
         return SharedEchoesBasePatches.unlock_save_doors(configuration.blue_save_doors, game, parent)
 
     def dock_connections_assignment(

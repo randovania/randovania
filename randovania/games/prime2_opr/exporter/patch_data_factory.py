@@ -11,6 +11,7 @@ from randovania.exporter.hints.temple_key_hint import create_temple_key_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock import DockType
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -274,6 +275,18 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             "ProgressiveGrapple": ("GrappleBeam", ("GrappleBeam", "ScrewAttack")),
         }
 
+    @property
+    def _door_dock_type(self) -> DockType:
+        return self.game.dock_weakness_database.find_type("door")
+
+    @property
+    def _elevator_dock_type(self) -> DockType:
+        return self.game.dock_weakness_database.find_type("elevator")
+
+    @property
+    def _portal_dock_type(self) -> DockType:
+        return self.game.dock_weakness_database.find_type("portal")
+
     def _get_pickup_appearance(self, exported_pickup: pickup_exporter.ExportedPickupDetails, index: int) -> dict:
         """Returns a patcher-format dict for this pickup stage's appearance."""
         model_name = exported_pickup.model.name
@@ -405,7 +418,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
     def create_door_locks(self) -> Iterable[tuple[int, int, dict]]:
         """Creates the door lock changes, in a format usable for `_populate_area_changes`"""
-        for dock, weakness in self.patches.all_dock_weaknesses(self.game):
+        for dock, weakness in self.patches.all_dock_weaknesses(self.game, self._door_dock_type):
             mlvl, mrea = self._asset_ids_for_area(dock.identifier.area_identifier)
 
             door_lock = {
@@ -424,49 +437,43 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
     def create_elevators(self) -> Iterable[tuple[int, int, dict]]:
         """Creates the elevator target changes, in a format usable for `_populate_area_changes`"""
-        elevator_type = self.game.dock_weakness_database.find_type("elevator")
-        for node, connection in self.patches.all_dock_connections(self.game):
-            if isinstance(node, DockNode) and node.dock_type == elevator_type:
-                mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
+        for node, connection in self.patches.all_dock_connections(self.game, self._elevator_dock_type):
+            mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
 
-                elevator = {
-                    "elevator_id": node.extra["teleporter_instance_id"],
-                    "target": self._area_reference_from_identifier(connection.identifier.area_identifier),
-                    "scan_strg": node.extra["scan_asset_id"],
-                    "target_name": elevators.get_elevator_or_area_name(connection, True),
-                }
+            elevator = {
+                "elevator_id": node.extra["teleporter_instance_id"],
+                "target": self._area_reference_from_identifier(connection.identifier.area_identifier),
+                "scan_strg": node.extra["scan_asset_id"],
+                "target_name": elevators.get_elevator_or_area_name(connection, True),
+            }
 
-                yield mlvl, mrea, elevator
+            yield mlvl, mrea, elevator
 
     def create_portals(self) -> Iterable[tuple[int, int, dict]]:
         """Creates the portal target changes, in a format usable for `_populate_area_changes`"""
-        portal_type = self.game.dock_weakness_database.find_type("portal")
-        for node, connection in self.patches.all_dock_connections(self.game):
-            if isinstance(node, DockNode) and node.dock_type == portal_type:
-                target_dock = self.game.typed_node_by_identifier(connection.identifier, DockNode)
+        for node, connection in self.patches.all_dock_connections(self.game, self._portal_dock_type):
+            target_dock = self.game.typed_node_by_identifier(connection.identifier, DockNode)
 
-                mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
+            mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
 
-                change = {
-                    "source_dock_name": node.extra["dock_name"],
-                    "target_mrea_id": self._asset_ids_for_area(target_dock.identifier.area_identifier)[1],
-                    "target_dock_name": target_dock.extra["dock_name"],
-                    # "portal_scan_destination": target_dock.identifier.area,  # For next OPR
-                }
-                yield mlvl, mrea, change
+            change = {
+                "source_dock_name": node.extra["dock_name"],
+                "target_mrea_id": self._asset_ids_for_area(target_dock.identifier.area_identifier)[1],
+                "target_dock_name": target_dock.extra["dock_name"],
+                # "portal_scan_destination": target_dock.identifier.area,  # For next OPR
+            }
+            yield mlvl, mrea, change
 
     def change_worlds_for_elevators(self, world_changes: dict[int, WorldChange]) -> None:
         """Sets the other fields in the WorldChanges and AreaChanges based on the elevator layout."""
         # update room names
-        elevator_type = self.game.dock_weakness_database.find_type("elevator")
-        for node, connection in self.patches.all_dock_connections(self.game):
-            if isinstance(node, DockNode) and node.dock_type == elevator_type:
-                mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
-                world_change = world_changes[mlvl]
-                area_change = next(area for area in world_change["area_changes"] if area["mrea_id"] == mrea)
-                area_change["new_name"] = pretty_name_for_elevator(
-                    self.game, self.game.region_list, node, connection.identifier, use_ui_name_when_vanilla=True
-                )
+        for node, connection in self.patches.all_dock_connections(self.game, self._elevator_dock_type):
+            mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
+            world_change = world_changes[mlvl]
+            area_change = next(area for area in world_change["area_changes"] if area["mrea_id"] == mrea)
+            area_change["new_name"] = pretty_name_for_elevator(
+                self.game, self.game.region_list, node, connection.identifier, use_ui_name_when_vanilla=True
+            )
 
         # move regions on world map
         if self.configuration.teleporters.mode == TeleporterShuffleMode.ECHOES_SHUFFLED:
@@ -627,11 +634,11 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         return {
             "defense_up_config": {
                 "damage_reduction_multiplier": defense_up[0],
-                "max_count": defense_up[1],
+                "max_count": max(defense_up[1], 1),
             },
             "massive_damage_config": {
                 "damage_increase_multiplier": massive_damage[0],
-                "max_count": massive_damage[1],
+                "max_count": max(massive_damage[1], 1),
             },
         }
 
