@@ -11,6 +11,7 @@ from randovania.exporter.hints.temple_key_hint import create_temple_key_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock import DockType
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -39,17 +40,17 @@ if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.exporter.patch_data_factory import PatcherDataMeta
 
-
 type SoundType = Literal["standard", "expansion", "key"]
 
 
 class AreaChange(TypedDict):
     mrea_id: NotRequired[int]
 
-    pickups: list[dict]
-    translator_gates: list[dict]
-    door_locks: list[dict]
-    elevators: list[dict]
+    pickups: NotRequired[list[dict]]
+    translator_gates: NotRequired[list[dict]]
+    door_locks: NotRequired[list[dict]]
+    elevators: NotRequired[list[dict]]
+    portals: NotRequired[list[dict]]
     new_name: NotRequired[str]
 
 
@@ -87,6 +88,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
         # other settings
         data["practice_mod"] = "full" if self.configuration.practice_mod else "disabled"
+        data["two_way_portals"] = self.configuration.portal_rando
         data["inverted_mode"] = self.configuration.inverted_mode
         data["auto_enabled_elevators"] = self._should_auto_enable_elevators()
         data["beam_configuration"] = self.configuration.beam_configuration.as_json
@@ -147,12 +149,15 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
     def _populate_area_changes(
         self,
         area_changes: dict[tuple[int, int], AreaChange],
-        field_name: Literal["pickups", "translator_gates", "door_locks", "elevators"],
+        field_name: Literal["pickups", "translator_gates", "door_locks", "elevators", "portals"],
         area_change_factory: Callable[[], Iterable[tuple[int, int, dict]]],
     ) -> None:
         """Populates `area_changes` with the results from the given change factory."""
         for mlvl_id, mrea_id, change in area_change_factory():
-            area_changes[mlvl_id, mrea_id][field_name].append(change)
+            container = area_changes[mlvl_id, mrea_id]
+            if field_name not in container:
+                container[field_name] = []
+            container[field_name].append(change)
 
     def create_world_changes(self) -> list[dict]:
         """
@@ -161,7 +166,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         """
 
         def _area_change() -> AreaChange:
-            return AreaChange(pickups=[], translator_gates=[], door_locks=[], elevators=[])
+            return AreaChange()
 
         # (MLVL, MREA) -> AreaChange
         area_changes: dict[tuple[int, int], AreaChange] = defaultdict(_area_change)
@@ -171,6 +176,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         self._populate_area_changes(area_changes, "translator_gates", self.create_translator_gates)
         self._populate_area_changes(area_changes, "door_locks", self.create_door_locks)
         self._populate_area_changes(area_changes, "elevators", self.create_elevators)
+        self._populate_area_changes(area_changes, "portals", self.create_portals)
 
         # associate area changes with their world
         def _world_change() -> WorldChange:
@@ -268,6 +274,18 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             "ProgressiveSuit": ("VariaSuit", ("DarkSuit", "LightSuit")),
             "ProgressiveGrapple": ("GrappleBeam", ("GrappleBeam", "ScrewAttack")),
         }
+
+    @property
+    def _door_dock_type(self) -> DockType:
+        return self.game.dock_weakness_database.find_type("door")
+
+    @property
+    def _elevator_dock_type(self) -> DockType:
+        return self.game.dock_weakness_database.find_type("elevator")
+
+    @property
+    def _portal_dock_type(self) -> DockType:
+        return self.game.dock_weakness_database.find_type("portal")
 
     def _get_pickup_appearance(self, exported_pickup: pickup_exporter.ExportedPickupDetails, index: int) -> dict:
         """Returns a patcher-format dict for this pickup stage's appearance."""
@@ -400,7 +418,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
     def create_door_locks(self) -> Iterable[tuple[int, int, dict]]:
         """Creates the door lock changes, in a format usable for `_populate_area_changes`"""
-        for dock, weakness in self.patches.all_dock_weaknesses(self.game):
+        for dock, weakness in self.patches.all_dock_weaknesses(self.game, self._door_dock_type):
             mlvl, mrea = self._asset_ids_for_area(dock.identifier.area_identifier)
 
             door_lock = {
@@ -419,24 +437,37 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
     def create_elevators(self) -> Iterable[tuple[int, int, dict]]:
         """Creates the elevator target changes, in a format usable for `_populate_area_changes`"""
-        elevator_type = self.game.dock_weakness_database.find_type("elevator")
-        for node, connection in self.patches.all_dock_connections(self.game):
-            if isinstance(node, DockNode) and node.dock_type == elevator_type:
-                mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
+        for node, connection in self.patches.all_dock_connections(self.game, self._elevator_dock_type):
+            mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
 
-                elevator = {
-                    "elevator_id": node.extra["teleporter_instance_id"],
-                    "target": self._area_reference_from_identifier(connection.identifier.area_identifier),
-                    "scan_strg": node.extra["scan_asset_id"],
-                    "target_name": elevators.get_elevator_or_area_name(connection, True),
-                }
+            elevator = {
+                "elevator_id": node.extra["teleporter_instance_id"],
+                "target": self._area_reference_from_identifier(connection.identifier.area_identifier),
+                "scan_strg": node.extra["scan_asset_id"],
+                "target_name": elevators.get_elevator_or_area_name(connection, True),
+            }
 
-                yield mlvl, mrea, elevator
+            yield mlvl, mrea, elevator
+
+    def create_portals(self) -> Iterable[tuple[int, int, dict]]:
+        """Creates the portal target changes, in a format usable for `_populate_area_changes`"""
+        for node, connection in self.patches.all_dock_connections(self.game, self._portal_dock_type):
+            target_dock = self.game.typed_node_by_identifier(connection.identifier, DockNode)
+
+            mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
+
+            change = {
+                "source_dock_name": node.extra["dock_name"],
+                "target_mrea_id": self._asset_ids_for_area(target_dock.identifier.area_identifier)[1],
+                "target_dock_name": target_dock.extra["dock_name"],
+                # "portal_scan_destination": target_dock.identifier.area,  # For next OPR
+            }
+            yield mlvl, mrea, change
 
     def change_worlds_for_elevators(self, world_changes: dict[int, WorldChange]) -> None:
         """Sets the other fields in the WorldChanges and AreaChanges based on the elevator layout."""
         # update room names
-        for node, connection in self.patches.all_dock_connections(self.game):
+        for node, connection in self.patches.all_dock_connections(self.game, self._elevator_dock_type):
             mlvl, mrea = self._asset_ids_for_area(node.identifier.area_identifier)
             world_change = world_changes[mlvl]
             area_change = next(area for area in world_change["area_changes"] if area["mrea_id"] == mrea)
@@ -603,11 +634,11 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         return {
             "defense_up_config": {
                 "damage_reduction_multiplier": defense_up[0],
-                "max_count": defense_up[1],
+                "max_count": max(defense_up[1], 1),
             },
             "massive_damage_config": {
                 "damage_increase_multiplier": massive_damage[0],
-                "max_count": massive_damage[1],
+                "max_count": max(massive_damage[1], 1),
             },
         }
 
