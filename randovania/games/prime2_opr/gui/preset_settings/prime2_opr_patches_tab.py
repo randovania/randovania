@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import randovania
 from randovania.games.prime2_opr.gui.generated.preset_prime2_opr_patches_ui import Ui_PresetEchoesOPRPatches
 from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -26,12 +25,13 @@ class PresetEchoesOPRPatches(PresetTab[EchoesOPRConfiguration], Ui_PresetEchoesO
             self.inverted_label,
             self.inverted_line,
         ]:
-            widget.setVisible(randovania.is_dev_version())
+            widget.setVisible(self._editor._options.experimental_settings)
 
         # Signals
         self.include_practice_mod_check.stateChanged.connect(self._persist_option_then_notify("practice_mod"))
         self.inverted_check.stateChanged.connect(self._persist_option_then_notify("inverted_mode"))
         self.save_doors_check.stateChanged.connect(self._persist_option_then_notify("blue_save_doors"))
+        self.portal_rando_check.stateChanged.connect(self._persist_option_then_notify("portal_rando"))
 
     @classmethod
     def tab_title(cls) -> str:
@@ -47,3 +47,4 @@ class PresetEchoesOPRPatches(PresetTab[EchoesOPRConfiguration], Ui_PresetEchoesO
         self.include_practice_mod_check.setChecked(config.practice_mod)
         self.inverted_check.setChecked(config.inverted_mode)
         self.save_doors_check.setChecked(config.blue_save_doors)
+        self.portal_rando_check.setChecked(config.portal_rando)
