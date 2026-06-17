@@ -7,7 +7,7 @@ from PySide6 import QtWidgets
 from randovania.games.prime2.patcher.claris_randomizer import ClarisRandomizerExportError
 
 
-def create_box_for_exception(val: Exception) -> QtWidgets.QMessageBox:
+def create_box_for_exception(val: BaseException) -> QtWidgets.QMessageBox:
     box = QtWidgets.QMessageBox(
         QtWidgets.QMessageBox.Critical,
         "An exception was raised",
