@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import abc
 import asyncio
 import functools
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Concatenate
 
 import PySide6
 from PySide6 import QtCore, QtWidgets
@@ -11,6 +12,7 @@ from PySide6.QtCore import Signal
 import randovania
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, wait_dialog
+from randovania.lib.type_lib import AsyncCallable
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect
 from randovania.network_common import error
 from randovania.network_common.async_race_room import AsyncRaceRoomEntry
@@ -31,29 +33,49 @@ if TYPE_CHECKING:
 AnyNetworkError = (error.BaseNetworkError, UnableToConnect)
 
 
-def handle_network_errors(fn):
+class NetworkErrorDelegator(abc.ABC):
+    """
+    Classes which want to use `handle_network_errors` but are not themselves a
+    `QWidget` can implement this interface to delegate the error popup.
+    """
+
+    @property
+    @abc.abstractmethod
+    def network_error_widget(self) -> QtWidgets.QWidget:
+        """The widget to use as a parent for the network error popup."""
+        raise NotImplementedError
+
+
+def handle_network_errors[SelfT: QtWidgets.QWidget | NetworkErrorDelegator, **P, RetT](
+    fn: AsyncCallable[Concatenate[SelfT, P], RetT],
+) -> AsyncCallable[Concatenate[SelfT, P], RetT]:
     @functools.wraps(fn)
-    async def wrapper(self, *args, **kwargs):
+    async def wrapper(self: SelfT, *args: P.args, **kwargs: P.kwargs) -> RetT:
+        if isinstance(self, QtWidgets.QWidget):
+            widget = self
+        else:
+            widget = self.network_error_widget
+
         try:
             return await fn(self, *args, **kwargs)
 
         except error.InvalidActionError as e:
-            await async_dialog.warning(self, "Invalid action", f"{e}")
+            await async_dialog.warning(widget, "Invalid action", f"{e}")
 
         except error.ServerError:
             await async_dialog.warning(
-                self, "Server error", "An error occurred on the server while processing your request."
+                widget, "Server error", "An error occurred on the server while processing your request."
             )
 
         except error.NotLoggedInError:
-            await async_dialog.warning(self, "Unauthenticated", "You must be logged in.")
+            await async_dialog.warning(widget, "Unauthenticated", "You must be logged in.")
 
         except error.NotAuthorizedForActionError:
-            await async_dialog.warning(self, "Unauthorized", "You're not authorized to perform that action.")
+            await async_dialog.warning(widget, "Unauthorized", "You're not authorized to perform that action.")
 
         except error.UserNotAuthorizedToUseServerError:
             await async_dialog.warning(
-                self,
+                widget,
                 "Unauthorized",
                 "You're not authorized to use this build.\nPlease check #dev-builds for more details.",
             )
@@ -61,7 +83,7 @@ def handle_network_errors(fn):
         except error.UnsupportedClientError as e:
             s = e.detail.replace("\n", "<br />")
             await async_dialog.warning(
-                self,
+                widget,
                 "Unsupported client",
                 s,
             )
@@ -69,12 +91,12 @@ def handle_network_errors(fn):
         except UnableToConnect as e:
             s = e.reason.replace("\n", "<br />")
             await async_dialog.warning(
-                self, "Connection Error", f"<b>Unable to connect to the server:</b><br /><br />{s}"
+                widget, "Connection Error", f"<b>Unable to connect to the server:</b><br /><br />{s}"
             )
 
         except error.RequestTimeoutError as e:
             await async_dialog.warning(
-                self,
+                widget,
                 "Connection Error",
                 f"<b>Timeout while communicating with the server:</b><br /><br />{e}"
                 f"<br />Further attempts will wait for longer.",

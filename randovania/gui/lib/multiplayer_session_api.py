@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 import contextlib
-import functools
 import logging
 import typing
 
 from PySide6 import QtCore, QtWidgets
 
-from randovania.gui.lib import async_dialog
+from randovania.gui.lib.qt_network_client import NetworkErrorDelegator, handle_network_errors
 from randovania.layout.layout_description import LayoutDescription
 from randovania.network_client.network_client import UnableToConnect
 from randovania.network_common import admin_actions, error
@@ -21,75 +20,6 @@ if typing.TYPE_CHECKING:
     from randovania.lib.json_lib import JsonType
     from randovania.network_common.multiplayer_session import MultiplayerWorld
     from randovania.network_common.session_visibility import MultiplayerSessionVisibility
-
-Param = typing.ParamSpec("Param")
-RetType = typing.TypeVar("RetType")
-OriginalFunc = typing.Callable[Param, RetType]
-
-
-def handle_network_errors[**Param, RetType](
-    fn: typing.Callable[typing.Concatenate[MultiplayerSessionApi, Param], RetType],
-) -> typing.Callable[Param, RetType]:
-    @functools.wraps(fn)
-    async def wrapper(self: MultiplayerSessionApi, *args: typing.Any, **kwargs: typing.Any) -> RetType | None:
-        parent = self.widget_root
-        try:
-            return await fn(self, *args, **kwargs)
-
-        except error.InvalidActionError as e:
-            await async_dialog.warning(parent, "Invalid action", f"{e}")
-
-        except error.ServerError:
-            await async_dialog.warning(
-                parent, "Server error", "An error occurred on the server while processing your request."
-            )
-
-        except error.NotLoggedInError:
-            await async_dialog.warning(parent, "Unauthenticated", "You must be logged in.")
-
-        except error.NotAuthorizedForActionError:
-            await async_dialog.warning(parent, "Unauthorized", "You're not authorized to perform that action.")
-
-        except error.UserNotAuthorizedToUseServerError:
-            await async_dialog.warning(
-                parent,
-                "Unauthorized",
-                "You're not authorized to use this build.\nPlease check #dev-builds for more details.",
-            )
-
-        except error.UnsupportedClientError as e:
-            s = e.detail.replace("\n", "<br />")
-            await async_dialog.warning(
-                parent,
-                "Unsupported client",
-                s,
-            )
-
-        except UnableToConnect as e:
-            s = e.reason.replace("\n", "<br />")
-            await async_dialog.warning(
-                parent, "Connection Error", f"<b>Unable to connect to the server:</b><br /><br />{s}"
-            )
-
-        except error.RequestTimeoutError as e:
-            await async_dialog.warning(
-                parent,
-                "Connection Error",
-                f"<b>Timeout while communicating with the server:</b><br /><br />{e}"
-                f"<br />Further attempts will wait for longer.",
-            )
-
-        except error.WorldDoesNotExistError:
-            await async_dialog.warning(
-                parent,
-                "World does not exist",
-                "The world you tried to change does not exist. "
-                "If this error keeps happening, please reopen the Window and/or Randovania.",
-            )
-
-        return None
-
-    return wrapper
 
 
 class SessionIdLoggingFilter(logging.Filter):
@@ -117,21 +47,28 @@ _base_logger = logging.getLogger("MultiplayerSessionApi")
 _base_logger.addFilter(SessionIdLoggingFilter())
 
 
-class MultiplayerSessionApi(QtCore.QObject):
+class MultiplayerSessionApi(NetworkErrorDelegator, QtCore.QObject):
     current_session_id: int
-    widget_root: QtWidgets.QWidget | None
+    widget_root: QtWidgets.QWidget
 
-    def __init__(self, network_client: QtNetworkClient, session_id: int):
+    def __init__(self, widget_root: QtWidgets.QWidget, network_client: QtNetworkClient, session_id: int):
         super().__init__()
-        self.widget_root = None
+        self.setParent(widget_root)
+        self.widget_root = widget_root
         self.network_client = network_client
         self.current_session_id = session_id
         self.logger = SessionIdLoggerAdapter(_base_logger, self)
 
-    async def _session_admin_global(
-        self, action: admin_actions.SessionAdminGlobalAction, *args: JsonType | bytes
-    ) -> JsonType | None:
-        assert self.widget_root is not None
+    @typing.override
+    @property
+    def network_error_widget(self) -> QtWidgets.QWidget:
+        return self.widget_root
+
+    async def _session_admin_global[T: JsonType | None](
+        self,
+        action: admin_actions.SessionAdminGlobalAction,
+        *args: JsonType | bytes,
+    ) -> T:
         try:
             self.widget_root.setEnabled(False)
             return await server_signals.Multiplayer.AdminSession.call_server(self.network_client)(
@@ -145,7 +82,6 @@ class MultiplayerSessionApi(QtCore.QObject):
     async def _session_admin_player(
         self, user_id: int, action: admin_actions.SessionAdminUserAction, *args: JsonType | bytes
     ) -> JsonType | None:
-        assert self.widget_root is not None
         try:
             self.widget_root.setEnabled(False)
             return await server_signals.Multiplayer.AdminPlayer.call_server(self.network_client)(
@@ -190,7 +126,9 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @contextlib.asynccontextmanager
-    async def prepare_to_upload_layout(self, world_order: list[uuid.UUID]) -> typing.AsyncIterator[int]:
+    async def prepare_to_upload_layout(
+        self, world_order: list[uuid.UUID]
+    ) -> typing.AsyncIterator[AsyncCallable[[LayoutDescription], None]]:
         ordered_ids = [str(world_id) for world_id in world_order]
         self.logger.info("Marking session with generation in progress")
         await self._session_admin_global(admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, ordered_ids)

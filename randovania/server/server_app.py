@@ -6,6 +6,7 @@ import json
 import logging
 import os
 import time
+import typing
 from collections.abc import AsyncGenerator, Coroutine
 from contextlib import asynccontextmanager
 from contextvars import ContextVar
@@ -41,16 +42,14 @@ from randovania.server.socketio import (
 )
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-
     from socketio import AsyncServer
     from socketio_handler import SocketManager
 
+    from randovania.lib.type_lib import AsyncCallable
     from randovania.network_common.configuration import NetworkConfiguration
     from randovania.server.fastapi_discord import DiscordOAuthClient
 
 type Lifespan[T] = AsyncGenerator[T, None, None]
-type AsyncCallable[**P, T] = Callable[P, Coroutine[None, None, T]]
 
 type MiddlewareNext[T] = AsyncCallable[[fastapi.Request], T]
 

@@ -24,3 +24,6 @@ def is_named_tuple(type_: type) -> bool:
         and hasattr(type_, "_fields")
         and hasattr(type_, "_field_defaults")
     )
+
+
+type AsyncCallable[**P, RetT] = typing.Callable[P, typing.Coroutine[typing.Any, typing.Any, RetT]]
