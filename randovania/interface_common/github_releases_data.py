@@ -80,7 +80,7 @@ async def _persist(data: list[dict]):
         )
 
 
-async def get_releases() -> list[dict] | None:
+async def get_releases() -> list[dict]:
     data = await _read_from_persisted()
 
     if data is None:
