@@ -1272,10 +1272,14 @@ def _migrate_v117(preset: dict, game: RandovaniaGame, *, from_layout_description
 
 
 def _migrate_v118(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
-    if game == RandovaniaGame.FUSION:
-        rename = {
-            "Sector 6 (NOC)/Twin Caverns East/Door to Twin Cavern Save Room": "Sector 6 (NOC)/Twin Caverns East/Door to Twin Caverns Save Room"
-        }
+    if game != RandovaniaGame.FUSION:
+        return
+
+    rename = {
+        "Sector 6 (NOC)/Twin Caverns East/Door to Twin Cavern Save Room": (
+            "Sector 6 (NOC)/Twin Caverns East/Door to Twin Caverns Save Room"
+        )
+    }
 
     def fix(identifier: dict) -> None:
         region_rename = rename.get(f"{identifier['region']}/{identifier['area']}")
