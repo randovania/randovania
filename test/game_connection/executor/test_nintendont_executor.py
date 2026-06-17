@@ -4,7 +4,11 @@ from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
 
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperationException,
+    MemoryReadOperation,
+    MemoryWriteOperation,
+)
 from randovania.game_connection.executor.nintendont_executor import NintendontExecutor, RequestBatch, SocketHolder
 
 
@@ -27,10 +31,11 @@ async def test_perform_memory_operations_success(executor: NintendontExecutor):
         ]
     )
     ops = {
-        MemoryOperation(0x1000, read_byte_count=50): b"A" * 50,
-        MemoryOperation(0x1000, offset=10, read_byte_count=30, write_bytes=b"1" * 30): b"B" * 30,
-        MemoryOperation(0x1000, read_byte_count=60): b"C" * 60,
+        MemoryReadOperation(0x1000, count=50): b"A" * 50,
+        MemoryWriteOperation(0x1000, offset=10, data=b"1" * 30): None,
+        MemoryReadOperation(0x1000, count=60): b"C" * 60,
     }
+    result_ops = {k: v for k, v in ops.items() if v is not None}
 
     # Run
     result = await executor.perform_memory_operations(list(ops.keys()))
@@ -39,11 +44,11 @@ async def test_perform_memory_operations_success(executor: NintendontExecutor):
     executor._socket.writer.drain.assert_has_awaits([call(), call()])
     executor._socket.writer.write.assert_has_calls(
         [
-            call(b"\x00\x02\x01\x01\x00\x00\x10\x00\x80\x32\xd0\x1e\x00\n" + (b"1" * 30)),
+            call(b"\x00\x02\x01\x01\x00\x00\x10\x00\x80\x32\x50\x1e\x00\n" + (b"1" * 30)),
             call(b"\x00\x01\x01\x01\x00\x00\x10\x00\x80\x3c"),
         ]
     )
-    assert result == ops
+    assert result == result_ops
     executor._socket.reader.read.assert_has_awaits([call(1024), call(1024)])
 
 
@@ -63,9 +68,9 @@ async def test_perform_memory_operations_invalid(executor: NintendontExecutor):
     with pytest.raises(MemoryOperationException):
         await executor.perform_memory_operations(
             [
-                MemoryOperation(0x1000, read_byte_count=50),
-                MemoryOperation(0x2000, read_byte_count=10),
-                MemoryOperation(0x2000, read_byte_count=10),
+                MemoryReadOperation(0x1000, count=50),
+                MemoryReadOperation(0x2000, count=10),
+                MemoryReadOperation(0x2000, count=10),
             ]
         )
 
@@ -94,7 +99,7 @@ async def test_perform_single_giant_memory_operation(executor: NintendontExecuto
 
     # Run
     result = await executor.perform_single_memory_operation(
-        MemoryOperation(0x1000, write_bytes=b"1" * 200),
+        MemoryWriteOperation(0x1000, data=b"1" * 200),
     )
 
     # Assert

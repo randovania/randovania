@@ -8,9 +8,10 @@ from open_prime_rando.dol_patching.prime1 import dol_patches
 
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import (
-    MemoryOperation,
     MemoryOperationException,
     MemoryOperationExecutor,
+    MemoryReadOperation,
+    MemoryWriteOperation,
 )
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.prime1.patcher import prime_items
@@ -74,8 +75,8 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         # Both of these can be a nullpointer. The first one while the game is booting up, the second at
         # title screen/elevators. In both cases we can just say that they're in an invalid World / can't be acted on.
         world_status_ops = [
-            MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
-            MemoryOperation(cstate_manager_global + cplayer_offset, offset=0, read_byte_count=4),
+            MemoryReadOperation(self.version.game_state_pointer, offset=mlvl_offset, count=asset_id_size),
+            MemoryReadOperation(cstate_manager_global + cplayer_offset, offset=0, count=4),
         ]
         try:
             world_status_results = await self.executor.perform_memory_operations(world_status_ops)
@@ -83,7 +84,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         except MemoryOperationException:
             return True, None
 
-        pending_byte_op = MemoryOperation(cstate_manager_global + self._pending_op_offset, read_byte_count=1)
+        pending_byte_op = MemoryReadOperation(cstate_manager_global + self._pending_op_offset, count=1)
         pending_byte_result = await self.executor.perform_single_memory_operation(pending_byte_op)
         has_pending_op = pending_byte_result != b"\x00"
 
@@ -93,23 +94,23 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
     async def _memory_op_for_items(
         self,
         items: list[ItemResourceInfo],
-    ) -> list[MemoryOperation]:
+    ) -> list[MemoryReadOperation]:
         cplayer_state_offset = 0x8B8
 
         op = await self.executor.perform_single_memory_operation(
-            MemoryOperation(
+            MemoryReadOperation(
                 address=self.version.cstate_manager_global + cplayer_state_offset,
-                read_byte_count=4,
+                count=4,
             )
         )
         assert op is not None
         player_state_pointer = int.from_bytes(op, "big")
 
         return [
-            MemoryOperation(
+            MemoryReadOperation(
                 address=player_state_pointer,
                 offset=_prime1_powerup_offset(item.extra["item_id"]),
-                read_byte_count=8,
+                count=8,
             )
             for item in items
         ]
@@ -161,7 +162,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
 
         return patches, format_received_item(item_name, provider_name)
 
-    def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
+    def _write_string_to_game_buffer(self, message: str) -> MemoryWriteOperation:
         return super()._write_string_to_game_buffer("&just=center;" + message)
 
     def at_end_of_game(self) -> bool:

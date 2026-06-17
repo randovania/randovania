@@ -4,6 +4,7 @@ import asyncio
 import dataclasses
 import logging
 import struct
+from collections.abc import Sequence
 from typing import TypeGuard
 
 from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
@@ -11,6 +12,8 @@ from randovania.game_connection.executor.memory_operation import (
     MemoryOperation,
     MemoryOperationException,
     MemoryOperationExecutor,
+    MemoryReadOperation,
+    MemoryWriteOperation,
 )
 
 
@@ -63,13 +66,13 @@ class RequestBatch:
         if op.address not in self.addresses:
             self.addresses.append(op.address)
 
-        if op.read_byte_count is not None:
-            self.num_read_bytes += op.read_byte_count
+        if MemoryOperation.is_read_op(op):
+            self.num_read_bytes += op.count
 
         op_byte = self.addresses.index(op.address)
-        if op.read_byte_count is not None:
+        if MemoryOperation.is_read_op(op):
             op_byte = op_byte | 0x80
-        if op.write_bytes is not None:
+        if MemoryOperation.is_write_op(op):
             op_byte = op_byte | 0x40
         if op.byte_count == 4:
             op_byte = op_byte | 0x20
@@ -81,8 +84,8 @@ class RequestBatch:
             self.data += struct.pack(">B", op.byte_count)
         if op.offset is not None:
             self.data += struct.pack(">h", op.offset)
-        if op.write_bytes is not None:
-            self.data += op.write_bytes
+        if MemoryOperation.is_write_op(op):
+            self.data += op.data
 
         self.ops.append(op)
 
@@ -183,7 +186,7 @@ class NintendontExecutor(MemoryOperationExecutor):
     def is_connected(self) -> bool:
         return self._is_socket_connected(self._socket)
 
-    def _prepare_requests_for(self, ops: list[MemoryOperation]) -> list[RequestBatch]:
+    def _prepare_requests_for(self, ops: Sequence[MemoryOperation]) -> list[RequestBatch]:
         assert self._is_socket_connected(self._socket)
 
         requests: list[RequestBatch] = []
@@ -194,18 +197,17 @@ class NintendontExecutor(MemoryOperationExecutor):
             requests.append(current_batch)
             current_batch = RequestBatch()
 
-        processes_ops = []
+        processes_ops: list[MemoryOperation] = []
         max_write_size = self._socket.max_input - 20
         for i, op in enumerate(ops):
             if op.byte_count == 0:
                 continue
-            op.validate_byte_sizes()
 
-            if op.read_byte_count is None and (op.write_bytes is not None and len(op.write_bytes) > max_write_size):
+            if MemoryOperation.is_write_op(op) and len(op.data) > max_write_size:
                 self.logger.debug(
-                    f"Operation {i} had {len(op.write_bytes)} bytes, above the limit of {max_write_size}. Splitting."
+                    f"Operation {i} had {len(op.data)} bytes, above the limit of {max_write_size}. Splitting."
                 )
-                for offset in range(0, len(op.write_bytes), max_write_size):
+                for offset in range(0, len(op.data), max_write_size):
                     if op.offset is None:
                         address = op.address + offset
                         op_offset = None
@@ -213,10 +215,10 @@ class NintendontExecutor(MemoryOperationExecutor):
                         address = op.address
                         op_offset = op.offset + offset
                     processes_ops.append(
-                        MemoryOperation(
+                        MemoryWriteOperation(
                             address=address,
                             offset=op_offset,
-                            write_bytes=op.write_bytes[offset : min(offset + max_write_size, len(op.write_bytes))],
+                            data=op.data[offset : min(offset + max_write_size, len(op.data))],
                         )
                     )
             else:
@@ -266,7 +268,7 @@ class NintendontExecutor(MemoryOperationExecutor):
 
         return all_responses
 
-    async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryOperation, bytes]:
+    async def perform_memory_operations(self, ops: Sequence[MemoryOperation]) -> dict[MemoryReadOperation, bytes]:
         if self._socket is None:
             raise MemoryOperationException("Not connected")
 
@@ -288,19 +290,19 @@ class NintendontExecutor(MemoryOperationExecutor):
         for request, response in zip(requests, all_responses):
             read_index = request.num_validator_bytes
             for i, op in enumerate(request.ops):
-                if op.read_byte_count is None:
+                if not MemoryOperation.is_read_op(op):
                     continue
 
                 if _was_invalid_address(response, i):
                     raise MemoryOperationException("Operation tried to read an invalid address")
 
-                split = response[read_index : read_index + op.read_byte_count]
-                if len(split) != op.read_byte_count:
-                    raise MemoryOperationException(f"Received {len(split)} bytes, expected {op.read_byte_count}")
+                split = response[read_index : read_index + op.count]
+                if len(split) != op.count:
+                    raise MemoryOperationException(f"Received {len(split)} bytes, expected {op.count}")
                 else:
                     assert op not in result
                     result[op] = split
 
-                read_index += op.read_byte_count
+                read_index += op.count
 
         return result
