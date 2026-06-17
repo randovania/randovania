@@ -39,16 +39,18 @@ class PortalDetailsTab(BaseConnectionDetailsTab):
             lambda: collections.defaultdict(int)
         )
 
-        for region, area, node in game.node_iterator():
-            if isinstance(node, DockNode) and node.dock_type.short_name == "portal":
-                portal_count_in_area[region.name][area.name] += 1
-                destination = game.node_by_identifier(patches.get_dock_connection_for(node))
-                if dark_aether_helper.is_region_light(region):
-                    per_area[region.name][area.name].add(node)
-                else:
-                    # All docks are two-way between light and dark aether right now
-                    assert isinstance(destination, DockNode)
-                    assert game.node_by_identifier(patches.get_dock_connection_for(destination)) == node
+        for region, area, node in game.iterate_nodes_of_type(DockNode):
+            if node.dock_type.short_name != "portal":
+                continue
+
+            portal_count_in_area[region.name][area.name] += 1
+            destination = game.node_by_identifier(patches.get_dock_connection_for(node))
+            if dark_aether_helper.is_region_light(region):
+                per_area[region.name][area.name].add(node)
+            else:
+                # All docks are two-way between light and dark aether right now
+                assert isinstance(destination, DockNode)
+                assert game.node_by_identifier(patches.get_dock_connection_for(destination)) == node
 
         def name_for(target: NodeIdentifier) -> str:
             target_name = target.area
@@ -62,13 +64,10 @@ class PortalDetailsTab(BaseConnectionDetailsTab):
                     continue
 
                 if len(area_docks) > 1:
-                    per_region[region_name][area_name] = {}
-                    for dock in sorted(area_docks, key=lambda it: it.name):
-                        assert isinstance(dock, DockNode)
-                        obj = per_region[region_name][area_name]
-                        assert isinstance(obj, dict)
-                        obj[dock.name] = name_for(patches.get_dock_connection_for(dock))
+                    per_region[region_name][area_name] = {
+                        dock.name: name_for(patches.get_dock_connection_for(dock))
+                        for dock in sorted(area_docks, key=lambda it: it.name)
+                    }
                 else:
                     dock = next(iter(area_docks))
-                    assert isinstance(dock, DockNode)
                     per_region[region_name][area_name] = name_for(patches.get_dock_connection_for(dock))
