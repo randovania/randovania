@@ -142,7 +142,7 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
     # Assert
     if valid_session:
         assert client.http.headers["X-Randovania-Sid"] == 12341234
-    client.sio.call.assert_awaited_once_with("restore_user_session", (b"foo",), namespace=None, timeout=30)
+    client.sio.call.assert_awaited_once_with("restore_user_session", b"foo", namespace=None, timeout=30)
 
     if valid_session:
         assert client.connection_state == ConnectionState.Connected
@@ -552,7 +552,7 @@ async def test_async_race_get_livesplit_url(client: NetworkClient):
     # Assert
     assert result == client.server_call.return_value
     client.server_call.assert_awaited_once_with(
-        "async_race_get_livesplit_url", (1234,), namespace=None, handle_invalid_session=True
+        "async_race_get_livesplit_url", 1234, namespace=None, handle_invalid_session=True
     )
 
 

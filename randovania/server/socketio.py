@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import typing
 from contextlib import asynccontextmanager
-from functools import partial
-from typing import TYPE_CHECKING, Concatenate, Protocol, Self, overload
+from typing import TYPE_CHECKING, Concatenate, Protocol
 
 from prometheus_client import Gauge
+from socketio import AsyncClient
 from socketio.exceptions import ConnectionRefusedError
 from socketio_handler import BaseSocketHandler, SocketManager, register_handler
 
@@ -99,7 +99,8 @@ class ServerEventHandler[**P, RetT](Protocol):
     ) -> AsyncCallable[P, RetT]:
         """
         Returns an async callable which, when called and awaited, uses the `NetworkClient` to call
-        this function on the server, and returns the result.
+        this function on the server, and returns the result. Provides full typing support,
+        so it's preferable to using `NetworkClient.server_call()` directly.
         """
 
 
@@ -121,7 +122,9 @@ def server_event_handler[**P, RetT](
             handle_invalid_session: bool = True,
         ) -> AsyncCallable[P, RetT]:
             async def inner(*args: P.args, **kwargs: P.kwargs) -> RetT:
-                data = typing.cast("tuple[SioDataType, ...]", args)
+                data: SioDataType | tuple[SioDataType, ...] = typing.cast("tuple[SioDataType, ...]", args)
+                if len(data) == 1:
+                    data = data[0]
                 result = await network_client.server_call(
                     handler.message, data, namespace=namespace, handle_invalid_session=handle_invalid_session
                 )
@@ -136,29 +139,13 @@ def server_event_handler[**P, RetT](
     return decorator
 
 
-class ClientEventHandler[**P]:
-    name: str
-    message: str
-
-    def __init__(self, fn: AsyncCallable[Concatenate[NetworkClient, P], None], message: str) -> None:
+class ClientSignal[**P]:
+    def __init__(self, fn: AsyncCallable[P, None], message: str):
         self.fn = fn
         self.message = message
 
-    @overload
-    def __get__(self, obj: NetworkClient, owner: type[NetworkClient] | None = None) -> AsyncCallable[P, None]: ...
-    @overload
-    def __get__(self, obj: None, owner: type[NetworkClient] | None = None) -> Self: ...
-
-    def __get__(
-        self, obj: NetworkClient | None, owner: type[NetworkClient] | None = None
-    ) -> AsyncCallable[P, None] | Self:
-        if obj is not None:
-            return partial(self.fn, obj)
-        return self
-
-    def __set_name__(self, owner: type[NetworkClient], name: str) -> None:
-        self.name = name
-        owner._event_handlers += (self,)
+    async def __call__(self, *args: P.args, **kwargs: P.kwargs) -> None:
+        return await self.fn(*args, **kwargs)
 
     def emit(
         self,
@@ -167,19 +154,34 @@ class ClientEventHandler[**P]:
         room: str | None = None,
         namespace: str | None = None,
     ) -> AsyncCallable[P, None]:
-        """ """
+        """
+        Returns an async callable which, when called and awaited, uses the `ServerApp`
+        to emit this signal. Provides full typing support, so it's preferred over directly
+        calling `sa.sio.emit()`.
+        """
 
         async def inner(*args: P.args, **kwargs: P.kwargs) -> None:
-            data = typing.cast("tuple[SioDataType, ...]", args)
+            data: SioDataType | tuple[SioDataType, ...] = typing.cast("tuple[SioDataType, ...]", args)
+            if len(data) == 1:
+                data = data[0]
             await sa.sio.emit(self.message, data, to=to, room=room, namespace=namespace)
 
         return inner
 
+    def register(self, sio: AsyncClient, callback: AsyncCallable[P, None]) -> None:
+        """
+        Registers the given callback with the SIO client on this signal's message.
 
-def client_event_handler[**P](
-    message: str,
-) -> Callable[[AsyncCallable[Concatenate[NetworkClient, P], None]], ClientEventHandler[P]]:
-    def decorator(fn: AsyncCallable[Concatenate[NetworkClient, P], None]) -> ClientEventHandler[P]:
-        return ClientEventHandler(fn, message)
+        Using this function allows checking that the signature of the registered callback
+        is compatible with this signal's expected signature.
+        """
+        sio.on(self.message, callback)
+
+
+def client_signal[**P](message: str) -> Callable[[AsyncCallable[P, None]], ClientSignal[P]]:
+    """Transforms the callable into a `ClientSignal` for fully type-checked signal emission from the server."""
+
+    def decorator(fn: AsyncCallable[P, None]) -> ClientSignal[P]:
+        return ClientSignal(fn, message)
 
     return decorator

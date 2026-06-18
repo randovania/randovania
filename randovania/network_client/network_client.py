@@ -10,7 +10,7 @@ import time
 import typing
 import uuid
 from enum import Enum
-from typing import TYPE_CHECKING, Any, ClassVar, Unpack
+from typing import TYPE_CHECKING, Any, Unpack
 
 import aiofiles
 import aiohttp
@@ -62,7 +62,7 @@ from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncRe
 from randovania.server import user_session
 from randovania.server.async_race import room_api as async_race_api
 from randovania.server.multiplayer import session_admin, session_api, world_api
-from randovania.server.socketio import ClientEventHandler, SioDataType, client_event_handler
+from randovania.server.socketio import SioDataType
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -168,8 +168,6 @@ class NetworkClient:
     _tracking_worlds: set[tuple[uuid.UUID, int]]
     _allow_reporting_username: bool = False
 
-    _event_handlers: ClassVar[tuple[ClientEventHandler, ...]] = ()
-
     def __init__(self, user_data_dir: Path, configuration: NetworkConfiguration):
         self.logger = logging.getLogger("NetworkClient")
 
@@ -203,8 +201,18 @@ class NetworkClient:
         self.server_data_path = user_data_dir / encoded_address
         self.session_data_path = self.server_data_path / "session_persistence.bin"
 
-        for event_handler in self._event_handlers:
-            self.sio.on(event_handler.message, event_handler.fn)
+        self.sio.on("connect", self.on_connect)
+        self.sio.on("connect_error", self.on_connect_error)
+        self.sio.on("disconnect", self.on_disconnect)
+
+        signals.USER_SESSION_UPDATE.register(self.sio, self.on_user_session_updated)
+        signals.SESSION_META_UPDATE.register(self.sio, self._on_multiplayer_session_meta_update_raw)
+        signals.SESSION_ACTIONS_UPDATE.register(self.sio, self._on_multiplayer_session_actions_update_raw)
+        signals.SESSION_AUDIT_UPDATE.register(self.sio, self._on_multiplayer_session_audit_update_raw)
+        signals.WORLD_PICKUPS_UPDATE.register(self.sio, self._on_world_pickups_update_raw)
+        signals.WORLD_BINARY_INVENTORY.register(self.sio, self._on_world_user_inventory_raw)
+        signals.WORLD_JSON_INVENTORY.register(self.sio, self._on_world_user_inventory_json)
+        signals.ASYNC_RACE_ROOM_UPDATE.register(self.sio, self._on_async_race_room_update_raw)
 
     @property
     def connection_state(self) -> ConnectionState:
@@ -337,7 +345,6 @@ class NetworkClient:
             self.logger.info("no session to restore")
             self.connection_state = ConnectionState.ConnectedNotLogged
 
-    @client_event_handler("connect")
     async def on_connect(self) -> None:
         self.logger.debug("Received on_connect")
         error_message = None
@@ -355,7 +362,6 @@ class NetworkClient:
         finally:
             self.notify_on_connect(error_message)
 
-    @client_event_handler("connect_error")
     async def on_connect_error(self, error_message: str) -> None:
         if isinstance(error_message, dict) and "message" in error_message:
             error_message = error_message["message"]
@@ -369,14 +375,12 @@ class NetworkClient:
         finally:
             self.notify_on_connect(socketio.exceptions.ConnectionError(error_message))
 
-    @client_event_handler("disconnect")
     async def on_disconnect(self) -> None:
         self.logger.info("on_disconnect")
         self.connection_state = ConnectionState.Disconnected
         if self._restore_session_task is not None:
             self._restore_session_task.cancel()
 
-    @client_event_handler("user_session_update")
     async def on_user_session_updated(self, new_session: dict) -> None:
         if new_session["sid"] is not None:
             self.http.headers["X-Randovania-Sid"] = new_session["sid"]
@@ -398,7 +402,6 @@ class NetworkClient:
 
     # Multiplayer Session Updated
 
-    @client_event_handler(signals.SESSION_META_UPDATE)
     async def _on_multiplayer_session_meta_update_raw(self, data: dict) -> None:
         entry = MultiplayerSessionEntry.from_json(data)
         self.logger.debug("%s: %s", entry.id, hashlib.blake2b(str(data).encode("utf-8")).hexdigest())
@@ -407,7 +410,6 @@ class NetworkClient:
     async def on_multiplayer_session_meta_update(self, entry: MultiplayerSessionEntry) -> None:
         self.logger.info("name: %s, users: %d, game: %s", entry.name, len(entry.users), str(entry.game_details))
 
-    @client_event_handler(signals.SESSION_ACTIONS_UPDATE)
     async def _on_multiplayer_session_actions_update_raw(self, data: bytes) -> None:
         await self.on_multiplayer_session_actions_update(
             construct_pack.decode(data, multiplayer_session.MultiplayerSessionActions)
@@ -416,7 +418,6 @@ class NetworkClient:
     async def on_multiplayer_session_actions_update(self, actions: MultiplayerSessionActions) -> None:
         self.logger.info("num actions: %d", len(actions.actions))
 
-    @client_event_handler(signals.SESSION_AUDIT_UPDATE)
     async def _on_multiplayer_session_audit_update_raw(self, data: bytes) -> None:
         await self.on_multiplayer_session_audit_update(
             construct_pack.decode(data, multiplayer_session.MultiplayerSessionAuditLog)
@@ -426,7 +427,6 @@ class NetworkClient:
         self.logger.info("num audit: %d", len(audit_log.entries))
 
     # World Events
-    @client_event_handler(signals.WORLD_PICKUPS_UPDATE)
     async def _on_world_pickups_update_raw(self, data: dict) -> None:
         game = RandovaniaGame(data["game"])
         resource_database = default_database.resource_database_for(game)
@@ -449,7 +449,6 @@ class NetworkClient:
     async def on_world_pickups_update(self, pickups: MultiplayerWorldPickups) -> None:
         self.logger.info("world %s, num pickups: %d", pickups.world_id, len(pickups.pickups))
 
-    @client_event_handler(signals.WORLD_BINARY_INVENTORY)
     async def _on_world_user_inventory_raw(self, entry_id: str, user_id: int, raw_inventory: bytes) -> None:
         inventory_or_error = remote_inventory.decode_remote_inventory(raw_inventory)
         if isinstance(inventory_or_error, construct.ConstructError):
@@ -468,11 +467,9 @@ class NetworkClient:
     async def on_world_user_inventory(self, inventory: WorldUserInventory) -> None:
         pass
 
-    @client_event_handler(signals.WORLD_JSON_INVENTORY)
     async def _on_world_user_inventory_json(self, *args: Any, **kwargs: Any) -> None:
         print(*args, **kwargs)
 
-    @client_event_handler(signals.ASYNC_RACE_ROOM_UPDATE)
     async def _on_async_race_room_update_raw(self, data: dict) -> None:
         """Event triggered when the server pushes an e"""
         await self.on_async_race_room_update(AsyncRaceRoomEntry.from_json(data))

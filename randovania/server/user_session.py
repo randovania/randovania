@@ -18,6 +18,7 @@ from starlette import status
 from starlette.responses import JSONResponse
 
 from randovania.network_common import error as network_error
+from randovania.network_common import signals
 from randovania.network_common.authentication import AuthenticationMethod
 from randovania.server import fastapi_discord
 from randovania.server.database import User, UserAccessToken
@@ -266,9 +267,7 @@ async def browser_discord_login_callback(
 
             result = await _create_client_side_session(sa, sid, user, session)
 
-            from randovania.network_client.network_client import NetworkClient
-
-            await NetworkClient.on_user_session_updated.emit(sa, to=sid, namespace="/")(result)
+            await signals.USER_SESSION_UPDATE.emit(sa, to=sid, namespace="/")(result)
 
             return sa.templates.TemplateResponse(
                 request,

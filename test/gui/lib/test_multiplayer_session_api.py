@@ -519,7 +519,7 @@ async def test_request_session_update(session_api, caplog):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_request_session_update",
-        (1234,),
+        1234,
         namespace=None,
         handle_invalid_session=True,
     )

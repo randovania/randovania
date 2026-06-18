@@ -5,10 +5,11 @@ import peewee
 import sentry_sdk
 
 from randovania.bitpacking import construct_pack
-from randovania.network_common import error
+from randovania.network_common import error, signals
 from randovania.server import database
 from randovania.server.database import MultiplayerAuditEntry, MultiplayerSession, World
-from randovania.server.server_app import ServerApp
+from randovania.server.server_app import AsyncCallable, ServerApp
+from randovania.server.socketio import ClientSignal
 
 
 def room_name_for(session_id: int) -> str:
@@ -21,6 +22,10 @@ def _emit_session_args(session: MultiplayerSession) -> dict[Literal["room", "nam
         "room": room_name_for(session.id),
         "namespace": "/",
     }
+
+
+def _emit[**P](signal: ClientSignal[P], sa: ServerApp, session: MultiplayerSession) -> AsyncCallable[P, None]:
+    return signal.emit(sa, room=room_name_for(session.id), namespace="/")
 
 
 async def get_membership_for(
@@ -53,12 +58,7 @@ async def emit_session_meta_update(sa: ServerApp, session: MultiplayerSession) -
         span.set_data("session.name", session.name)
         sa.logger.debug("multiplayer_session_meta_update for session %d (%s)", session.id, session.name)
 
-        from randovania.network_client.network_client import NetworkClient
-
-        await NetworkClient._on_multiplayer_session_meta_update_raw.emit(
-            sa,
-            **_emit_session_args(session),
-        )(session.create_session_entry().as_json)
+        await _emit(signals.SESSION_META_UPDATE, sa, session)(session.create_session_entry().as_json)
 
 
 async def emit_session_actions_update(sa: ServerApp, session: MultiplayerSession) -> None:
@@ -72,11 +72,7 @@ async def emit_session_actions_update(sa: ServerApp, session: MultiplayerSession
         span.set_data("session.name", session.name)
         span.set_data("session.actions", len(actions.actions))
 
-        from randovania.network_client.network_client import NetworkClient
-
-        await NetworkClient._on_multiplayer_session_actions_update_raw.emit(sa, **_emit_session_args(session))(
-            construct_pack.encode(actions)
-        )
+        await _emit(signals.SESSION_ACTIONS_UPDATE, sa, session)(construct_pack.encode(actions))
 
 
 async def emit_session_audit_update(sa: ServerApp, session: MultiplayerSession) -> None:
@@ -88,11 +84,7 @@ async def emit_session_audit_update(sa: ServerApp, session: MultiplayerSession) 
         span.set_data("session.name", session.name)
         span.set_data("session.audit", len(log.entries))
 
-        from randovania.network_client.network_client import NetworkClient
-
-        await NetworkClient._on_multiplayer_session_audit_update_raw.emit(sa, **_emit_session_args(session))(
-            construct_pack.encode(log)
-        )
+        await _emit(signals.SESSION_AUDIT_UPDATE, sa, session)(construct_pack.encode(log))
 
 
 async def add_audit_entry(sa: ServerApp, sid: str, session: MultiplayerSession, message: str) -> None:

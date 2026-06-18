@@ -246,7 +246,7 @@ async def test_on_session_meta_update(
     await window.on_meta_update(second_session)
     network_client.server_call.assert_awaited_once_with(
         "multiplayer_request_session_update",
-        (1234,),
+        1234,
         namespace=None,
         handle_invalid_session=True,
     )
