@@ -82,6 +82,20 @@ class PrimeRemoteConnector(RemoteConnector):
         self._timer = InfiniteTimer(self.update, self._dt)
 
     @property
+    def total_item_length(self) -> int:
+        """Returns the length of the inventory array for this game."""
+        raise NotImplementedError
+
+    @property
+    def powerup_size(self) -> int:
+        """Returns the size of each element in the inventory array for this game."""
+        raise NotImplementedError
+
+    def powerup_offset(self, item_index: int) -> int:
+        """Returns the offset in relation to the player state pointer for a given item index."""
+        raise NotImplementedError
+
+    @property
     def game_enum(self) -> RandovaniaGame:
         return self.game.game
 
@@ -151,12 +165,36 @@ class PrimeRemoteConnector(RemoteConnector):
         # TODO: the prime1 and echoes implementation are very similar to each other. Merge them into one?
         raise NotImplementedError
 
+    async def _get_cplayer_state_pointer(self) -> int:
+        """Returns the address on where the pointer to the CPlayerState class for the game lies in RAM."""
+        raise NotImplementedError
+
     async def _memory_op_for_items(
         self,
-        items: list[ItemResourceInfo],
     ) -> list[MemoryOperation]:
         """Creates a list of memory operations to read the given item resources."""
-        raise NotImplementedError
+        player_state_pointer = await self._get_cplayer_state_pointer()
+
+        # Create a chunked list. Subtracting [N+1] - [N] results in how many bytes one can read at once while still
+        # being aligned to the power ups and not surpassing the executor's max output.
+        total_bytes = self.total_item_length * self.powerup_size
+        chunk_size = self.executor.max_output - (self.executor.max_output % self.powerup_size)
+        splits = [i * chunk_size for i in range((total_bytes // chunk_size) + 1)]
+        if total_bytes % chunk_size:
+            splits.append(total_bytes)
+
+        # Create memory ops to read each chunk.
+        mem_ops = []
+        for index, element in enumerate(splits[:-1]):
+            mem_ops.append(
+                MemoryOperation(
+                    address=player_state_pointer,
+                    offset=self.powerup_offset(0) + element,
+                    read_byte_count=splits[index + 1] - element,
+                )
+            )
+
+        return mem_ops
 
     @property
     def multiworld_magic_item(self) -> ItemResourceInfo:
@@ -181,13 +219,23 @@ class PrimeRemoteConnector(RemoteConnector):
         """Fetches the inventory represented by the given game memory."""
 
         resource_db = self.game.get_resource_database_view()
-        all_items = [item for item in resource_db.get_all_items() if item.extra["item_id"] < 1000]
-        memory_ops = await self._memory_op_for_items(all_items)
+        memory_ops = await self._memory_op_for_items()
         ops_result = await self.executor.perform_memory_operations(memory_ops)
+        # Join all results together and then split them up per power up.
+        joined_result = b"".join(ops_result.values())
+        item_responses = [
+            joined_result[i : i + self.powerup_size] for i in range(0, len(joined_result), self.powerup_size)
+        ]
 
         inventory = {}
-        for item, memory_op in zip(all_items, memory_ops, strict=True):
-            inv = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
+        items_by_id = {
+            item.extra["item_id"]: item for item in resource_db.get_all_items() if item.extra["item_id"] < 1000
+        }
+        for index, item_response in enumerate(item_responses):
+            if index not in items_by_id:
+                continue
+            item = items_by_id[index]
+            inv = InventoryItem(*struct.unpack(">II", item_response))
             if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (item != self.multiworld_magic_item):
                 raise ValueError(f"Received {inv} for {item.long_name}, which is an invalid state.")
             inventory[item] = inv

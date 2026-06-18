@@ -45,13 +45,6 @@ def format_received_item(item_name: str, player_name: str) -> str:
     return special.get(item_name, generic).format(item_name=item_name, provider_name=player_name)
 
 
-def _echoes_powerup_offset(item_index: int) -> int:
-    powerups_offset = 0x58
-    vector_data_offset = 0x4
-    powerup_size = 0xC
-    return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
-
-
 class EchoesRemoteConnector(PrimeRemoteConnector):
     _should_read_object_count: bool = False
 
@@ -96,19 +89,10 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
 
         return has_pending_op, self._current_status_world(world_asset_id, cplayer_vtable)
 
-    async def _memory_op_for_items(
-        self,
-        items: list[ItemResourceInfo],
-    ) -> list[MemoryOperation]:
-        player_state_pointer = self.version.cstate_manager_global + 0x150C
-        return [
-            MemoryOperation(
-                address=player_state_pointer,
-                offset=_echoes_powerup_offset(item.extra["item_id"]),
-                read_byte_count=8,
-            )
-            for item in items
-        ]
+    async def _get_cplayer_state_pointer(self) -> int:
+        # CPlayerState is an array / normal pointer within CStateManager:
+        # https://github.com/PrimeDecomp/echoes/blob/main/include/MetroidPrime/CStateManager.hpp#L159
+        return self.version.cstate_manager_global + 0x150C
 
     async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory) -> PickupPatches:
         item_name, resources_to_give = self._resources_to_give_for_pickup(pickup, inventory)
