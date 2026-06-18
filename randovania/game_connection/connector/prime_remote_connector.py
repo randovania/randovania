@@ -226,13 +226,20 @@ class PrimeRemoteConnector(RemoteConnector):
         item_responses = [
             joined_result[i : i + self.powerup_size] for i in range(0, len(joined_result), self.powerup_size)
         ]
+        if len(item_responses) != self.total_item_length:
+            raise ValueError(
+                f"Should have read {self.total_item_length} items from the game, instead read {len(item_responses)}"
+            )
 
         inventory = {}
         for item in resource_db.get_all_items():
             if item.extra["item_id"] >= 1000:
                 continue
             item_response = item_responses[item.extra["item_id"]]
-            inv = InventoryItem(*struct.unpack(">II", item_response))
+            struct_format = ">II"
+            if self.powerup_size > 8:
+                struct_format += f"{self.powerup_size - 8}x"
+            inv = InventoryItem(*struct.unpack(struct_format, item_response))
             if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (item != self.multiworld_magic_item):
                 raise ValueError(f"Received {inv} for {item.long_name}, which is an invalid state.")
             inventory[item] = inv
