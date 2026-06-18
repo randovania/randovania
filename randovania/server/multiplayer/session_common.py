@@ -1,5 +1,4 @@
 import hashlib
-from typing import Literal
 
 import peewee
 import sentry_sdk
@@ -14,13 +13,6 @@ from randovania.server.server_app import AsyncCallable, ServerApp
 def room_name_for(session_id: int) -> str:
     assert isinstance(session_id, int)
     return f"multiplayer-session-{session_id}"
-
-
-def _emit_session_args(session: MultiplayerSession) -> dict[Literal["room", "namespace"], str]:
-    return {
-        "room": room_name_for(session.id),
-        "namespace": "/",
-    }
 
 
 def _emit[**P](signal: signals.ClientSignal[P], sa: ServerApp, session: MultiplayerSession) -> AsyncCallable[P, None]:
