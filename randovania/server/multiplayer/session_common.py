@@ -9,7 +9,6 @@ from randovania.network_common import error, signals
 from randovania.server import database
 from randovania.server.database import MultiplayerAuditEntry, MultiplayerSession, World
 from randovania.server.server_app import AsyncCallable, ServerApp
-from randovania.server.socketio import ClientSignal
 
 
 def room_name_for(session_id: int) -> str:
@@ -24,7 +23,7 @@ def _emit_session_args(session: MultiplayerSession) -> dict[Literal["room", "nam
     }
 
 
-def _emit[**P](signal: ClientSignal[P], sa: ServerApp, session: MultiplayerSession) -> AsyncCallable[P, None]:
+def _emit[**P](signal: signals.ClientSignal[P], sa: ServerApp, session: MultiplayerSession) -> AsyncCallable[P, None]:
     return signal.emit(sa, room=room_name_for(session.id), namespace="/")
 
 
