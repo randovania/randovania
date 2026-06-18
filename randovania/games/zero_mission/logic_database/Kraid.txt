@@ -333,7 +333,7 @@ Extra - room_id: [7]
   * Blue Door to Illusionary Acid Pool/Door to Barisute Pit (Lower)
   * Extra - door_idx: [24]
   > Door to Illusionary Acid Pool (Upper)
-      Morph Ball and Power Grip
+      Can Kill Tough Enemy and Tunnel Climb
 
 > Tunnel to Save Station (North); Heals? False
   * Layers: default
@@ -358,6 +358,10 @@ Extra - room_id: [8]
   * Pickup 18; Category? Minor
   * Extra - blockx: 74
   * Extra - blocky: 20
+  > Door to Elevator to Brinstar
+      All of the following:
+          Varia Suit and Can Ballspark
+          Wave Beam or Can Use Any Bombs
   > Underneath Zipline
       Trivial
 
@@ -366,23 +370,23 @@ Extra - room_id: [8]
   * Blue Door to Illusionary Acid Pool/Door to Acidic Concourse
   * Extra - door_idx: [26]
   > Underneath Zipline
-      Zipline Activation or Use Space Jump
+      Varia Suit or Zipline Activation or Use Space Jump
 
 > Door to Elevator to Brinstar; Heals? False
   * Layers: default
   * Blue Door to Elevator to Brinstar/Door to Acidic Concourse
   * Extra - door_idx: [27]
   > Underneath Zipline
-      Power Grip and Can Use Any Bombs
+      Can Bounce in Ball and Can Use Any Bombs and Tunnel Climb
 
 > Underneath Zipline; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
-      Gravity Suit and Morph Ball and Speed Booster
+      Gravity Suit and Varia Suit and Can Ballspark
   > Door to Illusionary Acid Pool
       Zipline Activation or Use Space Jump
   > Door to Elevator to Brinstar
-      Power Grip and Can Use Any Bombs
+      Can Use Any Bombs and Tunnel Climb
 
 ----------------
 Runway
@@ -394,14 +398,18 @@ Extra - room_id: [9]
   * Extra - blockx: 60
   * Extra - blocky: 9
   > Door to Elevator to Brinstar
-      Trivial
+      Zipline Activation or Acid ≥ 40 or Use Space Jump
 
 > Door to Elevator to Brinstar; Heals? False
   * Layers: default
   * Missile Door to Elevator to Brinstar/Door to Runway
   * Extra - door_idx: [28]
   > Pickup (Energy Tank)
-      Speed Booster and Have Any Jump Upgrade
+      All of the following:
+          Speed Booster
+          Any of the following:
+              Shinespark (Beginner) or Use Space Jump
+              Hi-Jump Boots and Morph Ball
 
 ----------------
 Gauntlet
@@ -420,7 +428,7 @@ Extra - room_id: [10]
   * Blue Door to Pipe Shaft/Door to Gauntlet
   * Extra - door_idx: [29]
   > Door to Elevator to Brinstar
-      Missiles or Combat (Beginner)
+      Trivial
 
 > Door to Elevator to Brinstar; Heals? False
   * Layers: default
@@ -429,7 +437,7 @@ Extra - room_id: [10]
   > Pickup (Missile Tank)
       Zipline Activation and Can Use Springball
   > Door to Pipe Shaft
-      Missiles or Combat (Beginner)
+      Trivial
 
 ----------------
 Sidehopper Hall
@@ -494,7 +502,7 @@ Extra - room_id: [13]
   * Blue Door to Sidehopper Hall/Door to Pipe Shaft
   * Extra - door_idx: [36]
   > Door to Gauntlet
-      Can Use Bombs
+      Can Use Ball Launcher
   > Door to Map Station
       Trivial
 
@@ -675,7 +683,12 @@ Extra - room_id: [21]
   * Missile Door to Drain/Door to Ball Launcher Speedway
   * Extra - door_idx: [51]
   > Pickup (Missile Tank)
-      Can Use Bombs
+      All of the following:
+          Zipline Activation
+          Any of the following:
+              Can Use Ball Launcher
+              # shinespark the three block columns and springball into the zipline
+              Speed Booster and Shinespark (Beginner) and Can Use Springball
   > Door to Pit Block Chamber
       Trivial
 
@@ -715,7 +728,9 @@ Extra - room_id: [23]
   > Door to Ball Launcher Speedway
       Trivial
   > Open Passage to Space Jump Access
-      Can Use Any Bombs
+      Any of the following:
+          Can Use Any Bombs
+          Screw Attack and Knowledge (Beginner)
 
 > Door to Ball Launcher Speedway; Heals? False
   * Layers: default
@@ -833,7 +848,7 @@ Extra - room_id: [26]
           Use Space Jump
           Any of the following:
               Can Use Power Bombs
-              Mid-Air Morphs (Advanced) and Can Use Bombs
+              Can Use Bombs and Tunnel Climb
 
 > Door to Barisute Pit (Upper); Heals? False
   * Layers: default
@@ -989,8 +1004,10 @@ Extra - room_id: [31]
   > Save Station
       Trivial
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
+  * Extra - X: 8
+  * Extra - Y: 9
   > Door to Elevator to Brinstar
       Trivial
   > Tunnel to Barisute Pit
@@ -1145,6 +1162,11 @@ Extra - room_id: [39]
   * Extra - door_idx: [94]
   > Door to Apex Launcher Hub
       Trivial
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - X: 9
+  * Extra - Y: 9
 
 ----------------
 Acid Worm Arena Access
