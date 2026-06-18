@@ -38,6 +38,7 @@ from randovania.server.database import (
     User,
 )
 from randovania.server.server_app import RdvFastAPI, ServerApp
+from randovania.server.socketio import server_event_handler
 
 MAX_AUTH_TOKEN_LENGTH = 3600 * 24
 
@@ -84,6 +85,7 @@ def _fast_get_games_list_from_raw_layout(layout_description_json: bytes) -> list
     return [g for g in RandovaniaGame.sorted_all_games() if g.value in present_games]
 
 
+@server_event_handler("async_race_list_rooms")
 async def list_rooms(sa: ServerApp, sid: str, limit: int | None) -> Sequence[JsonObject_RO]:
     now = lib.datetime_now()
 
@@ -125,6 +127,7 @@ async def list_rooms(sa: ServerApp, sid: str, limit: int | None) -> Sequence[Jso
     return [session.as_json for session in sessions]
 
 
+@server_event_handler("async_race_create_room")
 async def create_room(sa: ServerApp, sid: str, layout_bin: bytes, settings_json: JsonObject) -> JsonObject:
     current_user = await sa.get_current_user(sid)
 
@@ -154,6 +157,7 @@ async def create_room(sa: ServerApp, sid: str, layout_bin: bytes, settings_json:
     return (await AsyncRaceRoom.get_by_id(new_room_id).create_session_entry(sa, sid)).as_json
 
 
+@server_event_handler("async_race_change_room_settings")
 async def change_room_settings(sa: ServerApp, sid: str, room_id: int, settings_json: JsonObject) -> JsonObject:
     """
     Updates the settings for the given room
@@ -192,6 +196,7 @@ async def change_room_settings(sa: ServerApp, sid: str, room_id: int, settings_j
     return (await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, sid)).as_json
 
 
+@server_event_handler("async_race_listen_to_room")
 async def listen_to_room(sa: ServerApp, sid: str, room_id: int, listen: bool) -> None:
     room = AsyncRaceRoom.get_by_id(room_id)
     user = await sa.get_current_user(sid)
@@ -203,6 +208,7 @@ async def listen_to_room(sa: ServerApp, sid: str, room_id: int, listen: bool) ->
         await sa.sio.leave_room(sid, socketio_room)
 
 
+@server_event_handler("async_race_get_room")
 async def get_room(sa: ServerApp, sid: str, room_id: int, password: str | None) -> JsonObject_RO:
     """
     Gets details about the given room id
@@ -217,6 +223,7 @@ async def get_room(sa: ServerApp, sid: str, room_id: int, password: str | None) 
     return (await room.create_session_entry(sa, sid)).as_json
 
 
+@server_event_handler("async_race_refresh_room")
 async def refresh_room(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonObject_RO:
     """
     Gets details about the given room id
@@ -230,6 +237,7 @@ async def refresh_room(sa: ServerApp, sid: str, room_id: int, auth_token: str) -
     return (await room.create_session_entry(sa, sid)).as_json
 
 
+@server_event_handler("async_race_get_leaderboard")
 async def get_leaderboard(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonObject_RO:
     """
     Gets the race results. Only accessible after the end time is reached.
@@ -274,6 +282,7 @@ async def get_leaderboard(sa: ServerApp, sid: str, room_id: int, auth_token: str
     return RaceRoomLeaderboard(entries).as_json
 
 
+@server_event_handler("async_race_get_layout")
 async def get_layout(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> bytes:
     """
     Gets the layout description for the room, if it has finished
@@ -291,6 +300,7 @@ async def get_layout(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> 
     return room.layout_description_json
 
 
+@server_event_handler("async_race_get_audit_log")
 async def get_audit_log(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonArray:
     """
     Gets the audit log for the given room.
@@ -305,6 +315,7 @@ async def get_audit_log(sa: ServerApp, sid: str, room_id: int, auth_token: str) 
     return [log.as_entry().as_json for log in room.audit_log]
 
 
+@server_event_handler("async_race_admin_get_admin_data")
 async def admin_get_admin_data(sa: ServerApp, sid: str, room_id: int) -> JsonObject_RO:
     """
     Gets the all details of every user who has joined the room. Only accessible by admins.
@@ -322,6 +333,7 @@ async def admin_get_admin_data(sa: ServerApp, sid: str, room_id: int) -> JsonObj
     ).as_json
 
 
+@server_event_handler("async_race_admin_update_entries")
 async def admin_update_entries(sa: ServerApp, sid: str, room_id: int, raw_new_entries: list[JsonObject]) -> JsonObject:
     """
     Updates multiple entries for the given room, all at once.
@@ -366,6 +378,7 @@ async def admin_update_entries(sa: ServerApp, sid: str, room_id: int, raw_new_en
     return (await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, sid)).as_json
 
 
+@server_event_handler("async_race_join_and_export")
 async def join_and_export(
     sa: ServerApp, sid: str, room_id: int, auth_token: str, cosmetic_json: JsonObject
 ) -> JsonObject:
@@ -481,6 +494,7 @@ async def perform_state_change(
             it.save()
 
 
+@server_event_handler("async_race_change_state")
 async def change_state(sa: ServerApp, sid: str, room_id: int, new_state: str) -> JsonObject_RO:
     """
     Adjusts the start date, finish date or forfeit flag of the user's entry based on the requested state.
@@ -498,6 +512,7 @@ async def change_state(sa: ServerApp, sid: str, room_id: int, new_state: str) ->
     return (await room.create_session_entry(sa, sid)).as_json
 
 
+@server_event_handler("async_race_get_own_proof")
 async def get_own_proof(sa: ServerApp, sid: str, room_id: int) -> tuple[str, str]:
     """
     This endpoint allows a user to request their own submission notes and proof url.
@@ -516,6 +531,7 @@ async def get_own_proof(sa: ServerApp, sid: str, room_id: int) -> tuple[str, str
     return entry.submission_notes, entry.proof_url
 
 
+@server_event_handler("async_race_submit_proof")
 async def submit_proof(sa: ServerApp, sid: str, room_id: int, submission_notes: str, proof_url: str) -> None:
     """
     This endpoint allows a user to record submission notes and a link to proof for their run.
@@ -536,6 +552,7 @@ async def submit_proof(sa: ServerApp, sid: str, room_id: int, submission_notes: 
     entry.save()
 
 
+@server_event_handler("async_race_get_livesplit_url")
 async def get_livesplit_url(sa: ServerApp, sid: str, room_id: int) -> str:
     room = AsyncRaceRoom.get_by_id(room_id)
     user = await sa.get_current_user(sid)
@@ -638,19 +655,19 @@ async def livesplit_integration(
 
 def setup_app(sa: ServerApp) -> None:
     sa.app.include_router(router)
-    sa.on("async_race_list_rooms", list_rooms, with_header_check=True)
-    sa.on("async_race_create_room", create_room, with_header_check=True)
-    sa.on("async_race_change_room_settings", change_room_settings, with_header_check=True)
-    sa.on("async_race_listen_to_room", listen_to_room, with_header_check=True)
-    sa.on("async_race_get_room", get_room, with_header_check=True)
-    sa.on("async_race_refresh_room", refresh_room, with_header_check=True)
-    sa.on("async_race_get_leaderboard", get_leaderboard, with_header_check=True)
-    sa.on("async_race_get_layout", get_layout, with_header_check=True)
-    sa.on("async_race_get_audit_log", get_audit_log, with_header_check=True)
-    sa.on("async_race_admin_get_admin_data", admin_get_admin_data, with_header_check=True)
-    sa.on("async_race_admin_update_entries", admin_update_entries, with_header_check=True)
-    sa.on("async_race_join_and_export", join_and_export, with_header_check=True)
-    sa.on("async_race_change_state", change_state, with_header_check=True)
-    sa.on("async_race_get_own_proof", get_own_proof, with_header_check=True)
-    sa.on("async_race_submit_proof", submit_proof, with_header_check=True)
-    sa.on("async_race_get_livesplit_url", get_livesplit_url, with_header_check=True)
+    sa.on(list_rooms, with_header_check=True)
+    sa.on(create_room, with_header_check=True)
+    sa.on(change_room_settings, with_header_check=True)
+    sa.on(listen_to_room, with_header_check=True)
+    sa.on(get_room, with_header_check=True)
+    sa.on(refresh_room, with_header_check=True)
+    sa.on(get_leaderboard, with_header_check=True)
+    sa.on(get_layout, with_header_check=True)
+    sa.on(get_audit_log, with_header_check=True)
+    sa.on(admin_get_admin_data, with_header_check=True)
+    sa.on(admin_update_entries, with_header_check=True)
+    sa.on(join_and_export, with_header_check=True)
+    sa.on(change_state, with_header_check=True)
+    sa.on(get_own_proof, with_header_check=True)
+    sa.on(submit_proof, with_header_check=True)
+    sa.on(get_livesplit_url, with_header_check=True)

@@ -8,6 +8,7 @@ import peewee
 import pytest
 from frozendict import frozendict
 
+from randovania.bitpacking import construct_pack
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel, StartingPickupBehavior
@@ -314,10 +315,10 @@ async def test_world_sync(mock_sa, solo_two_world_session, mocker: MockerFixture
     )
 
     # Run
-    result = await world_api.world_sync(mock_sa, "TheSid", request)
+    result = await world_api.world_sync(mock_sa, "TheSid", construct_pack.encode(request))
 
     # Assert
-    assert result == ServerSyncResponse(
+    assert construct_pack.decode(result, ServerSyncResponse) == ServerSyncResponse(
         worlds=frozendict(
             {
                 w1.uuid: ServerWorldResponse(
@@ -394,10 +395,10 @@ async def test_dont_change_has_beaten(
     )
 
     # Run
-    result = await world_api.world_sync(mock_sa, "TheSid", request)
+    result = await world_api.world_sync(mock_sa, "TheSid", construct_pack.encode(request))
 
     # Assert
-    assert result == ServerSyncResponse(
+    assert construct_pack.decode(result, ServerSyncResponse) == ServerSyncResponse(
         worlds=frozendict(
             {
                 w1.uuid: ServerWorldResponse(

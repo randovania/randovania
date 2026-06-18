@@ -11,6 +11,7 @@ from randovania.gui.lib import async_dialog
 from randovania.layout.layout_description import LayoutDescription
 from randovania.network_client.network_client import UnableToConnect
 from randovania.network_common import admin_actions, error
+from randovania.server.multiplayer import session_admin, session_api
 
 if typing.TYPE_CHECKING:
     import uuid
@@ -133,9 +134,10 @@ class MultiplayerSessionApi(QtCore.QObject):
         assert self.widget_root is not None
         try:
             self.widget_root.setEnabled(False)
-            return await self.network_client.server_call(
-                "multiplayer_admin_session",
-                [self.current_session_id, action.value, *args],
+            return await session_admin.admin_session.call_server(self.network_client)(
+                self.current_session_id,
+                action.value,
+                *args,
             )
         finally:
             self.widget_root.setEnabled(True)
@@ -146,9 +148,11 @@ class MultiplayerSessionApi(QtCore.QObject):
         assert self.widget_root is not None
         try:
             self.widget_root.setEnabled(False)
-            return await self.network_client.server_call(
-                "multiplayer_admin_player",
-                [self.current_session_id, user_id, action.value, *args],
+            return await session_admin.admin_player.call_server(self.network_client)(
+                self.current_session_id,
+                user_id,
+                action.value,
+                *args,
             )
         finally:
             self.widget_root.setEnabled(True)
@@ -329,4 +333,4 @@ class MultiplayerSessionApi(QtCore.QObject):
 
     async def request_session_update(self) -> None:
         self.logger.info("Requesting updated session data")
-        await self.network_client.server_call("multiplayer_request_session_update", self.current_session_id)
+        await session_api.request_session_update.call_server(self.network_client)(self.current_session_id)

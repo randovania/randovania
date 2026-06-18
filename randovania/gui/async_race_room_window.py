@@ -23,6 +23,7 @@ from randovania.network_common.async_race_room import (
     AsyncRaceRoomRaceStatus,
     AsyncRaceRoomUserStatus,
 )
+from randovania.server import async_race
 
 if TYPE_CHECKING:
     from randovania.gui.lib.qt_network_client import QtNetworkClient
@@ -471,9 +472,9 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
 
     @asyncSlot()
     async def _stop_listening_room_update_events(self) -> None:
-        await self._network_client.server_call("async_race_listen_to_room", (self.room.id, False))
+        await async_race.room_api.listen_to_room.call_server(self._network_client)(self.room.id, False)
 
     async def request_room_update_events(self) -> None:
         # TODO: this does not restart the listener if we disconnect from the server
-        await self._network_client.server_call("async_race_listen_to_room", (self.room.id, True))
+        await async_race.room_api.listen_to_room.call_server(self._network_client)(self.room.id, True)
         self.CloseEvent.connect(self._stop_listening_room_update_events)

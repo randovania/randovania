@@ -25,6 +25,7 @@ from randovania.server.database import (
 )
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
+from randovania.server.socketio import server_event_handler
 
 
 async def _check_user_associated_with(sa: ServerApp, sid: str, world: World) -> None:
@@ -395,6 +396,7 @@ async def _get_permalink(sa: ServerApp, sid: str, session: MultiplayerSession) -
     return session.layout_description.permalink.as_base64_str
 
 
+@server_event_handler("multiplayer_admin_session")
 async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *args: typing.Any) -> typing.Any:
     monitoring.set_tag("action", action)
 
@@ -648,6 +650,7 @@ async def _create_patcher_file(
         raise error.InvalidActionError(f"Unable to export game: {e}")
 
 
+@server_event_handler("multiplayer_admin_player")
 async def admin_player(sa: ServerApp, sid: str, session_id: int, user_id: int, action: str, *args: typing.Any) -> None:
     monitoring.set_tag("action", action)
 
@@ -683,5 +686,5 @@ async def admin_player(sa: ServerApp, sid: str, session_id: int, user_id: int, a
 
 
 def setup_app(sa: ServerApp) -> None:
-    sa.on("multiplayer_admin_session", admin_session)
-    sa.on("multiplayer_admin_player", admin_player)
+    sa.on(admin_session)
+    sa.on(admin_player)

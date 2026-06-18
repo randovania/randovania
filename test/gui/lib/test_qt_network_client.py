@@ -85,7 +85,7 @@ async def test_login_to_discord(client):
 
     # Assert
     assert result == "http://localhost:5000/login?sid=THE_SID"
-    client.server_call.assert_awaited_once_with("get_sid")
+    client.server_call.assert_awaited_once_with("get_sid", (), namespace=None, handle_invalid_session=True)
 
 
 @pytest.mark.parametrize(

@@ -15,10 +15,12 @@ from randovania.server import database
 from randovania.server.database import MultiplayerMembership, MultiplayerSession, User, World
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp, ServerAppDep, SidDep, UserDep
+from randovania.server.socketio import server_event_handler
 
 router = APIRouter()
 
 
+@server_event_handler("multiplayer_list_sessions")
 async def list_sessions(sa: ServerApp, sid: str, limit: int | None) -> list[dict]:
     # Note: this query fails to list any session that has no memberships
     # But that's fine, because these sessions should've been deleted!
@@ -87,6 +89,7 @@ async def create_session(
     return new_session.create_session_entry()
 
 
+@server_event_handler("multiplayer_join_session")
 async def join_session(sa: ServerApp, sid: str, session_id: int, password: str | None) -> dict:
     session = MultiplayerSession.get_by_id(session_id)
     user = await sa.get_current_user(sid)
@@ -105,6 +108,7 @@ async def join_session(sa: ServerApp, sid: str, session_id: int, password: str |
     return session.create_session_entry().as_json
 
 
+@server_event_handler("multiplayer_listen_to_session")
 async def listen_to_session(sa: ServerApp, sid: str, session_id: int, listen: bool) -> None:
     if listen:
         membership = await session_common.get_membership_for(sa, session_id, sid)
@@ -113,6 +117,7 @@ async def listen_to_session(sa: ServerApp, sid: str, session_id: int, listen: bo
         await session_common.leave_room(sa, sid, session_id)
 
 
+@server_event_handler("multiplayer_request_session_update")
 async def request_session_update(sa: ServerApp, sid: str, session_id: int) -> None:
     session = MultiplayerSession.get_by_id(session_id)
 
@@ -125,7 +130,7 @@ async def request_session_update(sa: ServerApp, sid: str, session_id: int) -> No
 
 def setup_app(sa: ServerApp) -> None:
     sa.app.include_router(router)
-    sa.on("multiplayer_list_sessions", list_sessions, with_header_check=True)
-    sa.on("multiplayer_join_session", join_session, with_header_check=True)
-    sa.on("multiplayer_listen_to_session", listen_to_session, with_header_check=True)
-    sa.on("multiplayer_request_session_update", request_session_update)
+    sa.on(list_sessions, with_header_check=True)
+    sa.on(join_session, with_header_check=True)
+    sa.on(listen_to_session, with_header_check=True)
+    sa.on(request_session_update)

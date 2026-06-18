@@ -79,11 +79,13 @@ async def test_rename_session(session_api, caplog, preset_manager):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [
+        (
             1234,
             admin_actions.SessionAdminGlobalAction.CHANGE_TITLE.value,
             "New Name",
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         ("MultiplayerSessionApi", logging.INFO, "[Session 1234] Renaming session to New Name")
@@ -97,11 +99,13 @@ async def test_change_password(session_api, caplog, preset_manager):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [
+        (
             1234,
             admin_actions.SessionAdminGlobalAction.CHANGE_PASSWORD.value,
             "New Password",
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [("MultiplayerSessionApi", logging.INFO, "[Session 1234] Changing password")]
 
@@ -113,7 +117,9 @@ async def test_duplicate_session(session_api, caplog, preset_manager):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [1234, admin_actions.SessionAdminGlobalAction.DUPLICATE_SESSION.value, "New Name"],
+        (1234, admin_actions.SessionAdminGlobalAction.DUPLICATE_SESSION.value, "New Name"),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         ("MultiplayerSessionApi", logging.INFO, "[Session 1234] Duplicating session as New Name")
@@ -128,11 +134,13 @@ async def test_change_visibility(session_api, caplog, visibility):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [
+        (
             1234,
             admin_actions.SessionAdminGlobalAction.CHANGE_VISIBILITY.value,
             visibility.value,
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         ("MultiplayerSessionApi", logging.INFO, f"[Session 1234] Setting visibility to {visibility}")
@@ -146,7 +154,9 @@ async def test_abort_generation(session_api, caplog, preset_manager):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [1234, admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION.value, []],
+        (1234, admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION.value, []),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [("MultiplayerSessionApi", logging.INFO, "[Session 1234] Aborting generation")]
 
@@ -160,7 +170,9 @@ async def test_upload_layout(session_api, caplog, preset_manager):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [1234, admin_actions.SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value, layout.as_binary.return_value],
+        (1234, admin_actions.SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value, layout.as_binary.return_value),
+        namespace=None,
+        handle_invalid_session=True,
     )
     layout.as_binary.assert_called_once_with(force_spoiler=True, include_presets=False)
     assert caplog.record_tuples == [
@@ -178,11 +190,13 @@ async def test_prepare_to_upload_layout(session_api, caplog, preset_manager):
         # Assert
         mock_server_call.assert_called_once_with(
             "multiplayer_admin_session",
-            [
+            (
                 1234,
                 admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION.value,
                 ["487fd145-d590-4984-b761-056974ce7d6d", "ec0cb868-341e-4688-89ce-9757e003b143"],
-            ],
+            ),
+            namespace=None,
+            handle_invalid_session=True,
         )
         assert caplog.record_tuples == [
             ("MultiplayerSessionApi", logging.INFO, "[Session 1234] Marking session with generation in progress")
@@ -195,7 +209,9 @@ async def test_prepare_to_upload_layout(session_api, caplog, preset_manager):
 
     mock_server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [1234, admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION.value, []],
+        (1234, admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION.value, []),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         ("MultiplayerSessionApi", logging.INFO, "[Session 1234] Clearing generation in progress")
@@ -211,12 +227,14 @@ async def test_replace_preset_for(session_api, caplog, preset_manager):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [
+        (
             1234,
             admin_actions.SessionAdminGlobalAction.CHANGE_WORLD.value,
             "487fd145-d590-4984-b761-056974ce7d6d",
             preset_manager.default_preset.as_bytes(),
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         (
@@ -236,7 +254,9 @@ async def test_claim_world(session_api, caplog):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_player",
-        [1234, 20, admin_actions.SessionAdminUserAction.CLAIM.value, "487fd145-d590-4984-b761-056974ce7d6d"],
+        (1234, 20, admin_actions.SessionAdminUserAction.CLAIM.value, "487fd145-d590-4984-b761-056974ce7d6d"),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         ("MultiplayerSessionApi", logging.INFO, "[Session 1234] Claiming 487fd145-d590-4984-b761-056974ce7d6d for 20")
@@ -252,7 +272,9 @@ async def test_unclaim_world(session_api, caplog):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_player",
-        [1234, 20, admin_actions.SessionAdminUserAction.UNCLAIM.value, "487fd145-d590-4984-b761-056974ce7d6d"],
+        (1234, 20, admin_actions.SessionAdminUserAction.UNCLAIM.value, "487fd145-d590-4984-b761-056974ce7d6d"),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         (
@@ -272,12 +294,14 @@ async def test_rename_world(session_api, caplog):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [
+        (
             1234,
             admin_actions.SessionAdminGlobalAction.RENAME_WORLD.value,
             "487fd145-d590-4984-b761-056974ce7d6d",
             "the name",
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         (
@@ -297,11 +321,13 @@ async def test_delete_world(session_api, caplog):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [
+        (
             1234,
             admin_actions.SessionAdminGlobalAction.DELETE_WORLD.value,
             "487fd145-d590-4984-b761-056974ce7d6d",
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         ("MultiplayerSessionApi", logging.INFO, "[Session 1234] Deleting world 487fd145-d590-4984-b761-056974ce7d6d")
@@ -315,13 +341,15 @@ async def test_create_new_world(session_api, caplog, preset_manager):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_player",
-        [
+        (
             1234,
             50,
             admin_actions.SessionAdminUserAction.CREATE_WORLD_FOR.value,
             "a friend",
             preset_manager.default_preset.as_bytes(),
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         (
@@ -339,12 +367,14 @@ async def test_create_unclaimed_world(session_api, caplog, preset_manager):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [
+        (
             1234,
             admin_actions.SessionAdminGlobalAction.CREATE_WORLD.value,
             "a friend",
             preset_manager.default_preset.as_bytes(),
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         (
@@ -364,12 +394,14 @@ async def test_create_patcher_file(session_api, caplog):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [
+        (
             1234,
             admin_actions.SessionAdminGlobalAction.CREATE_PATCHER_FILE.value,
             "487fd145-d590-4984-b761-056974ce7d6d",
             {},
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         (
@@ -387,11 +419,13 @@ async def test_kick_player(session_api, caplog):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_player",
-        [
+        (
             1234,
             50,
             admin_actions.SessionAdminUserAction.KICK.value,
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [("MultiplayerSessionApi", logging.INFO, "[Session 1234] Kicking player 50")]
 
@@ -403,11 +437,13 @@ async def test_switch_admin(session_api, caplog):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_player",
-        [
+        (
             1234,
             50,
             admin_actions.SessionAdminUserAction.SWITCH_ADMIN.value,
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         ("MultiplayerSessionApi", logging.INFO, "[Session 1234] Switching admin-ness of 50")
@@ -422,11 +458,13 @@ async def test_set_everyone_can_claim(session_api, caplog, new_state):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [
+        (
             1234,
             admin_actions.SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM.value,
             new_state,
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         ("MultiplayerSessionApi", logging.INFO, f"[Session 1234] Setting whether everyone can claim to {new_state}")
@@ -441,11 +479,13 @@ async def test_set_allow_coop(session_api, caplog, new_state):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [
+        (
             1234,
             admin_actions.SessionAdminGlobalAction.SET_ALLOW_COOP.value,
             new_state,
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         ("MultiplayerSessionApi", logging.INFO, f"[Session 1234] Setting whether to allow coop to {new_state}")
@@ -459,11 +499,13 @@ async def test_switch_readiness(session_api, caplog):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_player",
-        [
+        (
             1234,
             50,
             admin_actions.SessionAdminUserAction.SWITCH_READY.value,
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         ("MultiplayerSessionApi", logging.INFO, "[Session 1234] Switching ready-ness of 50")
@@ -477,7 +519,9 @@ async def test_request_session_update(session_api, caplog):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_request_session_update",
-        1234,
+        (1234,),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         ("MultiplayerSessionApi", logging.INFO, "[Session 1234] Requesting updated session data")
@@ -491,10 +535,12 @@ async def test_request_permalink(session_api, caplog):
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [
+        (
             1234,
             admin_actions.SessionAdminGlobalAction.REQUEST_PERMALINK.value,
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert result is session_api.network_client.server_call.return_value
     assert caplog.record_tuples == [("MultiplayerSessionApi", logging.INFO, "[Session 1234] Requesting permalink")]
@@ -515,10 +561,12 @@ async def test_request_layout_description(session_api, caplog, mocker: pytest_mo
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session",
-        [
+        (
             1234,
             admin_actions.SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION.value,
-        ],
+        ),
+        namespace=None,
+        handle_invalid_session=True,
     )
     assert caplog.record_tuples == [
         ("MultiplayerSessionApi", logging.INFO, "[Session 1234] Requesting layout description")

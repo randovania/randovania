@@ -23,6 +23,7 @@ from randovania.network_common.multiplayer_session import (
     WorldUserInventory,
 )
 from randovania.network_common.user import CurrentUser
+from randovania.server.server_app import get_sid
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -156,7 +157,7 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
         self.AsyncRaceRoomUpdated.emit(room)
 
     async def login_with_discord(self) -> str:
-        sid = await self.server_call("get_sid")
+        sid = await get_sid.call_server(self)()
         url = self.configuration["server_address"] + f"/login?sid={sid}"
         return url
 

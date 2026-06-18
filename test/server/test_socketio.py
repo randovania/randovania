@@ -2,12 +2,13 @@ from __future__ import annotations
 
 from contextlib import AbstractContextManager, nullcontext
 from typing import TYPE_CHECKING, Any
-from unittest.mock import ANY, AsyncMock, MagicMock
+from unittest.mock import AsyncMock
 
 import pytest
 import socketio.exceptions
 
 from randovania.network_common import connection_headers, error
+from randovania.server.socketio import server_event_handler
 from test.server.sio_test_client import SocketIOTestClient
 
 if TYPE_CHECKING:
@@ -79,8 +80,8 @@ async def test_sio_connect_client_check_error(test_client, mocker: MockerFixture
 )
 async def test_on_success(side_effect: Any, rval: dict, test_client, sio_test_client):
     # Setup
-    custom = AsyncMock(side_effect=side_effect)
-    test_client.sa.on("custom", custom)
+    custom = server_event_handler("custom")(AsyncMock(side_effect=side_effect))
+    test_client.sa.on(custom)
 
     # Run
     result = await sio_test_client.emit("custom", callback=True)
@@ -88,21 +89,3 @@ async def test_on_success(side_effect: Any, rval: dict, test_client, sio_test_cl
     # Assert
     custom.assert_awaited_once_with(test_client.sa, sio_test_client.sid)
     assert result == rval
-
-
-async def test_on_with_wrapper(test_client):
-    async def my_function(sa, sid_: str, arg: bytes) -> list[int]:
-        return list(arg)
-
-    def on(message, handler, with_header_check):
-        return handler
-
-    test_client.sa.on = MagicMock(side_effect=on)
-
-    # Run
-    wrapped = test_client.sa.on_with_wrapper("my_func", my_function)
-
-    # Assert
-    result = await wrapped(test_client.sa, "TheSid", b"\x041234")
-    assert result == b"\x04bdfh"
-    test_client.sa.on.assert_called_once_with("my_func", ANY, with_header_check=True)

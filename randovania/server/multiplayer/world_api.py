@@ -7,7 +7,7 @@ import peewee
 import sentry_sdk
 from frozendict import frozendict
 
-from randovania.bitpacking import bitpacking
+from randovania.bitpacking import bitpacking, construct_pack
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
@@ -28,6 +28,7 @@ from randovania.network_common.world_sync import (
 from randovania.server.database import MultiplayerSession, User, World, WorldAction, WorldUserAssociation
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
+from randovania.server.socketio import server_event_handler
 
 
 def _get_world_room(world: World) -> str:
@@ -178,9 +179,9 @@ async def collect_locations(
     return receiver_worlds
 
 
-async def watch_inventory(
-    sa: ServerApp, sid: str, world_uid: uuid.UUID, user_id: int, watch: bool, binary: bool
-) -> None:
+@server_event_handler("multiplayer_watch_inventory")
+async def watch_inventory(sa: ServerApp, sid: str, raw_world_uid: str, user_id: int, watch: bool, binary: bool) -> None:
+    world_uid = uuid.UUID(raw_world_uid)
     sa.logger.debug("Watching inventory of %s/%d: %s", world_uid, user_id, watch)
     room_name = get_inventory_room_name_raw(world_uid, user_id)
 
@@ -297,7 +298,9 @@ async def sync_one_world(
     return response, session_id_to_return, worlds_to_emit_update
 
 
-async def world_sync(sa: ServerApp, sid: str, request: ServerSyncRequest) -> ServerSyncResponse:
+@server_event_handler("multiplayer_world_sync")
+async def world_sync(sa: ServerApp, sid: str, raw_request: bytes) -> bytes:
+    request = construct_pack.decode(raw_request, ServerSyncRequest)
     user = await sa.get_current_user(sid)
 
     world_details = {}
@@ -355,9 +358,11 @@ async def world_sync(sa: ServerApp, sid: str, request: ServerSyncRequest) -> Ser
     for session_id in sessions_to_update_actions:
         await session_common.emit_session_actions_update(sa, MultiplayerSession.get_by_id(session_id))
 
-    return ServerSyncResponse(
-        worlds=frozendict(world_details),
-        errors=frozendict(failed_syncs),
+    return construct_pack.encode(
+        ServerSyncResponse(
+            worlds=frozendict(world_details),
+            errors=frozendict(failed_syncs),
+        )
     )
 
 
@@ -446,5 +451,5 @@ async def report_disconnect(sa: ServerApp, session_dict: dict) -> None:
 
 
 def setup_app(sa: ServerApp) -> None:
-    sa.on("multiplayer_watch_inventory", watch_inventory)
-    sa.on_with_wrapper("multiplayer_world_sync", world_sync)
+    sa.on(watch_inventory)
+    sa.on(world_sync, with_header_check=True)
