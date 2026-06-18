@@ -87,5 +87,5 @@ async def test_on_success(side_effect: Any, rval: dict, test_client, sio_test_cl
     result = await sio_test_client.emit("custom", callback=True)
 
     # Assert
-    custom.assert_awaited_once_with(test_client.sa, sio_test_client.sid)
+    custom.fn.assert_awaited_once_with(test_client.sa, sio_test_client.sid)
     assert result == rval

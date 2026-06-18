@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import typing
 from contextlib import asynccontextmanager
-from typing import TYPE_CHECKING, Concatenate, Protocol
+from typing import TYPE_CHECKING, Any, Concatenate
 
 from prometheus_client import Gauge
 from socketio import AsyncClient
@@ -86,10 +86,20 @@ def get_socket_handler(sa: ServerApp) -> type[BaseSocketHandler]:
     return RdvSocketHandler
 
 
-class ServerEventHandler[**P, RetT](Protocol):
-    message: str
+def _args_to_sio_data(*args: Any) -> SioDataType | tuple[SioDataType, ...]:
+    if len(args) == 1:
+        return typing.cast("SioDataType", args[0])
+    else:
+        return typing.cast("tuple[SioDataType, ...]", args)
 
-    async def __call__(self, sa: ServerApp, sid: str, *args: P.args, **kwargs: P.kwargs) -> RetT: ...
+
+class ServerEventHandler[**P, RetT]:
+    def __init__(self, fn: AsyncCallable[Concatenate[ServerApp, str, P], RetT], message: str):
+        self.fn = fn
+        self.message = message
+
+    async def __call__(self, sa: ServerApp, sid: str, *args: P.args, **kwargs: P.kwargs) -> RetT:
+        return await self.fn(sa, sid, *args, **kwargs)
 
     def call_server(
         self,
@@ -103,6 +113,17 @@ class ServerEventHandler[**P, RetT](Protocol):
         so it's preferable to using `NetworkClient.server_call()` directly.
         """
 
+        async def inner(*args: P.args, **kwargs: P.kwargs) -> RetT:
+            result = await network_client.server_call(
+                self.message,
+                _args_to_sio_data(*args),
+                namespace=namespace,
+                handle_invalid_session=handle_invalid_session,
+            )
+            return typing.cast("RetT", result)
+
+        return inner
+
 
 def server_event_handler[**P, RetT](
     message: str,
@@ -110,31 +131,21 @@ def server_event_handler[**P, RetT](
     """
     Transforms a function into a `ServerEventHandler` so that it can be registered via
     `ServerApp.on()` or called from the client using `fn.server_call()`.
+
+    Example usage::
+
+        @server_event_handler("multiplayer_list_sessions")
+        async def list_sessions(sa: ServerApp, sid: str, limit: int | None) -> list[dict]:
+            return [{"number": i} for i in range(limit if limit is not None else 100)]
+
+        result = await list_sessions.call_server(NetworkClient())(2)
+
+        # prints "[{'number': 0}, {'number': 1}, {'number': 2}]"
+        print(result)
     """
 
     def decorator(fn: AsyncCallable[Concatenate[ServerApp, str, P], RetT]) -> ServerEventHandler[P, RetT]:
-        handler = typing.cast("ServerEventHandler[P, RetT]", fn)
-        handler.message = message
-
-        def call_server(
-            network_client: NetworkClient,
-            namespace: str | None = None,
-            handle_invalid_session: bool = True,
-        ) -> AsyncCallable[P, RetT]:
-            async def inner(*args: P.args, **kwargs: P.kwargs) -> RetT:
-                data: SioDataType | tuple[SioDataType, ...] = typing.cast("tuple[SioDataType, ...]", args)
-                if len(data) == 1:
-                    data = data[0]
-                result = await network_client.server_call(
-                    handler.message, data, namespace=namespace, handle_invalid_session=handle_invalid_session
-                )
-                return typing.cast("RetT", result)
-
-            return inner
-
-        handler.call_server = call_server  # type: ignore[method-assign]
-
-        return handler
+        return ServerEventHandler(fn, message)
 
     return decorator
 
@@ -161,10 +172,7 @@ class ClientSignal[**P]:
         """
 
         async def inner(*args: P.args, **kwargs: P.kwargs) -> None:
-            data: SioDataType | tuple[SioDataType, ...] = typing.cast("tuple[SioDataType, ...]", args)
-            if len(data) == 1:
-                data = data[0]
-            await sa.sio.emit(self.message, data, to=to, room=room, namespace=namespace)
+            await sa.sio.emit(self.message, _args_to_sio_data(*args), to=to, room=room, namespace=namespace)
 
         return inner
 
@@ -179,7 +187,27 @@ class ClientSignal[**P]:
 
 
 def client_signal[**P](message: str) -> Callable[[AsyncCallable[P, None]], ClientSignal[P]]:
-    """Transforms the callable into a `ClientSignal` for fully type-checked signal emission from the server."""
+    """
+    Transforms the callable into a `ClientSignal` for fully type-checked signal emission from the server.
+
+    Example usage::
+
+        @client_signal("multiplayer_binary_inventory")
+        async def WORLD_BINARY_INVENTORY(entry_id: str, user_id: int, raw_inventory: bytes) -> None: ...
+
+        class NetworkClient:
+            def __init__(self, sio: AsyncClient):
+                self.sio = sio
+
+                WORLD_BINARY_INVENTORY.register(self.sio, self._on_world_user_inventory_raw)
+
+            def _on_world_user_inventory_raw(self, entry_id: str, user_id: int, raw_inventory: bytes) -> None:
+                print(entry_id, user_id, raw_inventory)
+
+        # prints "'entry', 1234, b'4321'"
+        await WORLD_BINARY_INVENTORY.emit(ServerApp())("entry", 1234, b"4321")
+
+    """
 
     def decorator(fn: AsyncCallable[P, None]) -> ClientSignal[P]:
         return ClientSignal(fn, message)
