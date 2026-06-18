@@ -98,8 +98,8 @@ async def test_get_inventory_valid(connector: EchoesRemoteConnector):
     for i in range(109):
         if custom_response[i] == b"":
             custom_response[i] = struct.pack(">III", 0, 0, 0)
-    custom_response = b"".join(custom_response)
-    connector.executor.perform_memory_operations.side_effect = lambda op: {op[0]: custom_response}
+    custom_response_mock = b"".join(custom_response)
+    connector.executor.perform_memory_operations.side_effect = lambda op: {op[0]: custom_response_mock}
 
     # Run
     inventory = await connector.get_inventory()
@@ -128,8 +128,8 @@ async def test_invalid_read_invalid_inventory_length(connector: EchoesRemoteConn
         )
         break
 
-    custom_response = b"".join(custom_response)
-    connector.executor.perform_memory_operations.side_effect = lambda op: {op[0]: custom_response}
+    custom_response_mock = b"".join(custom_response)
+    connector.executor.perform_memory_operations.side_effect = lambda op: {op[0]: custom_response_mock}
 
     # Run
     msg = "Should have read 109 items from the game, instead read 1"
@@ -153,8 +153,8 @@ async def test_get_inventory_invalid_capacity(connector: EchoesRemoteConnector):
     for i in range(109):
         if custom_response[i] == b"":
             custom_response[i] = struct.pack(">III", 0, 0, 0)
-    custom_response = b"".join(custom_response)
-    connector.executor.perform_memory_operations.side_effect = lambda op: {op[0]: custom_response}
+    custom_response_mock = b"".join(custom_response)
+    connector.executor.perform_memory_operations.side_effect = lambda op: {op[0]: custom_response_mock}
 
     # Run
     msg = "Received InventoryItem(amount=0, capacity=50) for Darkburst, which is an invalid state."
@@ -178,8 +178,8 @@ async def test_get_inventory_invalid_amount(connector: EchoesRemoteConnector):
     for i in range(109):
         if custom_response[i] == b"":
             custom_response[i] = struct.pack(">III", 0, 0, 0)
-    custom_response = b"".join(custom_response)
-    connector.executor.perform_memory_operations.side_effect = lambda op: {op[0]: custom_response}
+    custom_response_mock = b"".join(custom_response)
+    connector.executor.perform_memory_operations.side_effect = lambda op: {op[0]: custom_response_mock}
 
     # Run
     msg = "Received InventoryItem(amount=1, capacity=0) for Darkburst, which is an invalid state."
