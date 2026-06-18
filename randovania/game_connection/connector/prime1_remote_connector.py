@@ -45,6 +45,19 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
     def __init__(self, version: Prime1DolVersion, executor: MemoryOperationExecutor):
         super().__init__(version, executor)
 
+    @property
+    def total_item_length(self) -> int:
+        return 40
+
+    @property
+    def powerup_size(self) -> int:
+        return 0x8
+
+    def powerup_offset(self, item_index: int) -> int:
+        powerups_offset = 0x24
+        vector_data_offset = 0x4
+        return (powerups_offset + vector_data_offset) + (item_index * self.powerup_size)
+
     def _asset_id_format(self) -> str:
         return ">I"
 
