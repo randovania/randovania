@@ -40,7 +40,7 @@ class MultiplayerSessionListEntry(JsonDataclass):
     is_user_in_session: bool
     join_date: datetime.datetime
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         tzinfo = self.creation_date.tzinfo
         assert tzinfo is not None
         assert tzinfo.utcoffset(self.creation_date) is not None
@@ -87,7 +87,7 @@ class MultiplayerSessionAction(JsonDataclass):
     time: datetime.datetime
 
     @property
-    def location_index(self):
+    def location_index(self) -> PickupIndex:
         return PickupIndex(self.location)
 
 

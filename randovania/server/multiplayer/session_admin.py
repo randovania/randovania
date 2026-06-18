@@ -398,6 +398,8 @@ async def _get_permalink(sa: ServerApp, sid: str, session: MultiplayerSession) -
 
 @server_event_handler("multiplayer_admin_session")
 async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *args: typing.Any) -> typing.Any:
+    # FIXME: break this out into separate event handlers for each action
+
     monitoring.set_tag("action", action)
 
     action_ = SessionAdminGlobalAction(action)
@@ -652,6 +654,8 @@ async def _create_patcher_file(
 
 @server_event_handler("multiplayer_admin_player")
 async def admin_player(sa: ServerApp, sid: str, session_id: int, user_id: int, action: str, *args: typing.Any) -> None:
+    # FIXME: break this out into separate event handlers for each action
+
     monitoring.set_tag("action", action)
 
     await verify_has_admin(sa, sid, session_id, user_id)

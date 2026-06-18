@@ -95,7 +95,7 @@ def _hash_address(server_address: str) -> str:
 
 def _decode_pickup(d: str, resource_database: ResourceDatabase) -> PickupEntry:
     decoder = bitpacking.BitPackDecoder(base64.b85decode(d))
-    return pickup_serializer.BitPackPickupEntry.bit_pack_unpack(decoder, resource_database)
+    return pickup_serializer.BitPackPickupEntry.bit_pack_unpack(decoder, {"database": resource_database}).value
 
 
 class UnableToConnect(Exception):
