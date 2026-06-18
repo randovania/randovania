@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import typing
 from contextlib import asynccontextmanager
-from typing import TYPE_CHECKING, Concatenate, Protocol
+from functools import partial
+from typing import TYPE_CHECKING, Concatenate, Protocol, Self, overload
 
 from prometheus_client import Gauge
 from socketio.exceptions import ConnectionRefusedError
@@ -85,15 +86,6 @@ def get_socket_handler(sa: ServerApp) -> type[BaseSocketHandler]:
     return RdvSocketHandler
 
 
-class _CallServer[**P, RetT](Protocol):
-    def __call__(
-        self,
-        network_client: NetworkClient,
-        namespace: str | None = None,
-        handle_invalid_session: bool = True,
-    ) -> AsyncCallable[P, RetT]: ...
-
-
 class ServerEventHandler[**P, RetT](Protocol):
     message: str
 
@@ -140,5 +132,54 @@ def server_event_handler[**P, RetT](
         handler.call_server = call_server  # type: ignore[method-assign]
 
         return handler
+
+    return decorator
+
+
+class ClientEventHandler[**P]:
+    name: str
+    message: str
+
+    def __init__(self, fn: AsyncCallable[Concatenate[NetworkClient, P], None], message: str) -> None:
+        self.fn = fn
+        self.message = message
+
+    @overload
+    def __get__(self, obj: NetworkClient, owner: type[NetworkClient] | None = None) -> AsyncCallable[P, None]: ...
+    @overload
+    def __get__(self, obj: None, owner: type[NetworkClient] | None = None) -> Self: ...
+
+    def __get__(
+        self, obj: NetworkClient | None, owner: type[NetworkClient] | None = None
+    ) -> AsyncCallable[P, None] | Self:
+        if obj is not None:
+            return partial(self.fn, obj)
+        return self
+
+    def __set_name__(self, owner: type[NetworkClient], name: str) -> None:
+        self.name = name
+        owner._event_handlers += (self,)
+
+    def emit(
+        self,
+        sa: ServerApp,
+        to: str | None = None,
+        room: str | None = None,
+        namespace: str | None = None,
+    ) -> AsyncCallable[P, None]:
+        """ """
+
+        async def inner(*args: P.args, **kwargs: P.kwargs) -> None:
+            data = typing.cast("tuple[SioDataType, ...]", args)
+            await sa.sio.emit(self.message, data, to=to, room=room, namespace=namespace)
+
+        return inner
+
+
+def client_event_handler[**P](
+    message: str,
+) -> Callable[[AsyncCallable[Concatenate[NetworkClient, P], None]], ClientEventHandler[P]]:
+    def decorator(fn: AsyncCallable[Concatenate[NetworkClient, P], None]) -> ClientEventHandler[P]:
+        return ClientEventHandler(fn, message)
 
     return decorator

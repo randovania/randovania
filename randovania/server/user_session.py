@@ -265,7 +265,10 @@ async def browser_discord_login_callback(
                 return unable_to_login(sa, request, "Unable to find your Randovania client.", 401)
 
             result = await _create_client_side_session(sa, sid, user, session)
-            await sa.sio.emit("user_session_update", result, to=sid, namespace="/")
+
+            from randovania.network_client.network_client import NetworkClient
+
+            await NetworkClient.on_user_session_updated.emit(sa, to=sid, namespace="/")(result)
 
             return sa.templates.TemplateResponse(
                 request,

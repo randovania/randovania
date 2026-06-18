@@ -15,7 +15,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.json_lib import JsonObject, JsonObject_RO
-from randovania.network_common import error, signals
+from randovania.network_common import error
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
     AsyncRaceRoomAdminData,
@@ -581,12 +581,13 @@ _livesplit_event_mapping = {
 async def emit_async_room_update(sa: ServerApp, room: AsyncRaceRoom, sid_or_user: str | User) -> None:
     user = await sa.get_current_user(sid_or_user) if isinstance(sid_or_user, str) else sid_or_user
 
-    await sa.sio.emit(
-        signals.ASYNC_RACE_ROOM_UPDATE,
-        (await room.create_session_entry(sa, user)).as_json,
-        namespace="/",
+    from randovania.network_client.network_client import NetworkClient
+
+    await NetworkClient._on_async_race_room_update_raw.emit(
+        sa,
         to=_get_async_race_socketio_room(room, user),
-    )
+        namespace="/",
+    )((await room.create_session_entry(sa, user)).as_json)
 
 
 @router.websocket("/async-race-room/{room_id}/livesplit/{token}")

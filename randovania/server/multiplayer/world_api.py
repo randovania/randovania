@@ -16,7 +16,7 @@ from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.layout.layout_description import LayoutDescription
-from randovania.network_common import error, remote_inventory, signals
+from randovania.network_common import error, remote_inventory
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.world_sync import (
@@ -42,12 +42,13 @@ def get_inventory_room_name_raw(world_uuid: uuid.UUID, user_id: int) -> str:
 async def emit_inventory_update(sa: ServerApp, world: World, user_id: int, inventory: bytes) -> None:
     room_name = get_inventory_room_name_raw(world.uuid, user_id)
 
-    await sa.sio.emit(
-        signals.WORLD_BINARY_INVENTORY,
-        (str(world.uuid), user_id, inventory),
-        namespace="/",
+    from randovania.network_client.network_client import NetworkClient
+
+    await NetworkClient._on_world_user_inventory_raw.emit(
+        sa,
         to=room_name,
-    )
+        namespace="/",
+    )(str(world.uuid), user_id, inventory)
     # try:
     #     inventory: RemoteInventory = construct_pack.decode(association.inventory, RemoteInventory)
     #     flask_socketio.emit(
@@ -420,7 +421,9 @@ async def emit_world_pickups_update(sa: ServerApp, world: World) -> None:
         "game": resource_database.game_enum.value,
         "pickups": result,
     }
-    await sa.sio.emit(signals.WORLD_PICKUPS_UPDATE, data, room=_get_world_room(world))
+    from randovania.network_client.network_client import NetworkClient
+
+    await NetworkClient._on_world_pickups_update_raw.emit(sa, room=_get_world_room(world))(data)
 
 
 async def report_disconnect(sa: ServerApp, session_dict: dict) -> None:
