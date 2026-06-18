@@ -191,7 +191,7 @@ async def test_interact_with_game(
         connector._multiworld_interaction.side_effect = MemoryOperationException("error at _check_for_collected_index")
         should_disconnect = depth > 1
 
-    expected_depth = min(depth, failure_at) if (failure_at is not None and failure_at > 1) else depth
+    expected_depth = min(depth, failure_at) if (failure_at is not None) else depth
     if failure_at != 1 and (failure_at or 999) <= depth:
         should_disconnect = True
 
@@ -218,7 +218,7 @@ async def test_interact_with_game(
 
     if 0 < depth:
         assert connector._last_emitted_region is not None
-        if is_at_end_of_game:
+        if is_at_end_of_game and failure_at != 1:
             game_has_been_beaten_mock.assert_called_once_with()
         else:
             game_has_been_beaten_mock.assert_not_called()
