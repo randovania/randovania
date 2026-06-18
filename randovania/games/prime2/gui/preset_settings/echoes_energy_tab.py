@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.prime2.gui.generated.preset_echoes_energy_ui import Ui_PresetEchoesEnergy
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -15,8 +16,13 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class PresetEchoesEnergy(PresetTab[EchoesConfiguration], Ui_PresetEchoesEnergy):
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager) -> None:
+class PresetEchoesEnergy(PresetTab[EchoesConfiguration | EchoesOPRConfiguration], Ui_PresetEchoesEnergy):
+    def __init__(
+        self,
+        editor: PresetEditor[EchoesConfiguration | EchoesOPRConfiguration],
+        game_description: GameDescription,
+        window_manager: WindowManager,
+    ) -> None:
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
@@ -24,7 +30,7 @@ class PresetEchoesEnergy(PresetTab[EchoesConfiguration], Ui_PresetEchoesEnergy):
         signal_handling.on_checked(self.dangerous_tank_check, self._persist_dangerous_tank)
 
         # Dark Aether Damage
-        config_fields = {field.name: field for field in dataclasses.fields(EchoesConfiguration)}
+        config_fields = {field.name: field for field in dataclasses.fields(editor.configuration)}
         self.varia_suit_spin_box.setMinimum(config_fields["varia_suit_damage"].metadata["min"])
         self.varia_suit_spin_box.setMaximum(config_fields["varia_suit_damage"].metadata["max"])
         self.dark_suit_spin_box.setMinimum(config_fields["dark_suit_damage"].metadata["min"])
@@ -44,7 +50,7 @@ class PresetEchoesEnergy(PresetTab[EchoesConfiguration], Ui_PresetEchoesEnergy):
     def header_name(cls) -> str | None:
         return cls.GAME_MODIFICATIONS_HEADER
 
-    def on_preset_changed(self, preset: Preset[EchoesConfiguration]) -> None:
+    def on_preset_changed(self, preset: Preset[EchoesConfiguration | EchoesOPRConfiguration]) -> None:
         config = preset.configuration
 
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)

@@ -33,6 +33,18 @@ class DolphinExecutor(MemoryOperationExecutor):
     def lock_identifier(self) -> str | None:
         return "randovania-dolphin-backend"
 
+    @property
+    def max_output(self) -> int:
+        if self.is_connected():
+            return 2 ^ 31 - 1
+        return -1
+
+    @property
+    def max_input(self) -> int:
+        if self.is_connected():
+            return 2 ^ 31 - 1
+        return -1
+
     async def connect(self) -> str | None:
         if platform.system() == "Darwin":
             return "macOS is not supported"
@@ -78,7 +90,7 @@ class DolphinExecutor(MemoryOperationExecutor):
         return self.dolphin.is_hooked()
 
     # Game Backend Stuff
-    def _memory_operation(self, op: MemoryOperation, pointers: dict[int, int | None]) -> bytes | None:
+    def _memory_operation(self, op: MemoryOperation, pointers: dict[int, int]) -> bytes | None:
         op.validate_byte_sizes()
 
         address = op.address
@@ -87,8 +99,6 @@ class DolphinExecutor(MemoryOperationExecutor):
                 raise MemoryOperationException(f"Invalid op: {address:x} is not in pointers")
 
             new_address = pointers[address]
-            if new_address is None:
-                return None
             address = new_address + op.offset
 
         _validate_range(address, op.byte_count)
@@ -123,13 +133,9 @@ class DolphinExecutor(MemoryOperationExecutor):
 
             try:
                 pointers[pointer] = self.dolphin.follow_pointers(pointer, [0])
-            except RuntimeError:
-                pointers[pointer] = None
+            except RuntimeError as e:
                 self.logger.debug(f"Failed to read a valid pointer from {pointer:x}")
-                self._test_still_hooked()
-
-            if not self.dolphin.is_hooked():
-                raise MemoryOperationException("Lost connection do Dolphin")
+                raise MemoryOperationException("Operation tried to read an invalid address") from e
 
         result = {}
         for op in ops:

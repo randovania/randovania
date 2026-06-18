@@ -48,6 +48,7 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.layout_description import LayoutDescription
@@ -137,11 +138,12 @@ def _create_spawn_point_field(
     }
 
 
-def _pretty_name_for_elevator(
+def pretty_name_for_elevator(
     game: GameDescription,
     region_list: RegionList,
     original_teleporter_node: DockNode,
     connection: NodeIdentifier,
+    use_ui_name_when_vanilla: bool = False,
 ) -> str:
     """
     Calculates the name the room that contains this elevator should have
@@ -152,7 +154,10 @@ def _pretty_name_for_elevator(
     """
     if original_teleporter_node.extra.get("keep_name_when_vanilla", False):
         if original_teleporter_node.default_connection.area_identifier == connection.area_identifier:
-            return region_list.nodes_to_area(original_teleporter_node).name
+            if use_ui_name_when_vanilla and (ui_name := original_teleporter_node.ui_custom_name) is not None:
+                return ui_name
+            else:
+                return region_list.nodes_to_area(original_teleporter_node).name
 
     return f"Transport to {elevators.get_elevator_or_area_name(game.node_by_identifier(connection), False)}"
 
@@ -176,7 +181,7 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
                     "instance_id": node.extra["teleporter_instance_id"],
                     "origin_location": _area_identifier_to_json(game.region_list, node.identifier.area_identifier),
                     "target_location": _area_identifier_to_json(game.region_list, target_area_location),
-                    "room_name": _pretty_name_for_elevator(game, region_list, node, connection.identifier),
+                    "room_name": pretty_name_for_elevator(game, region_list, node, connection.identifier),
                 }
             )
 
@@ -465,7 +470,7 @@ def _logbook_title_string_patches() -> list[dict[str, typing.Any]]:
     ]
 
 
-def _akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]]:
+def akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]]:
     # update after each tournament! ordered from newest to oldest
     raw_champs = [
         {"title": "2025 Co-op Champions", "name": "Naii the Baf, Bruh inc. and JayBee"},
@@ -513,10 +518,10 @@ def _create_string_patches(
 
     string_patches = []
 
-    string_patches.extend(_akul_testament_string_patch(exporter.namer))
+    string_patches.extend(akul_testament_string_patch(exporter.namer))
 
     # Location Hints
-    string_patches.extend(hints.create_patches_hints(all_patches, players_config, exporter))
+    string_patches.extend(hints.create_patches_hints(all_patches[players_config.player_index], exporter))
 
     # Sky Temple Keys
     stk_mode = hint_config.specific_pickup_hints["sky_temple_keys"]
@@ -554,7 +559,7 @@ def _create_starting_popup(patches: GamePatches) -> list:
         return []
 
 
-def _simplified_memo_data() -> dict[str, str]:
+def simplified_prime2_memo_data() -> dict[str, str]:
     result = pickup_exporter.GenericAcquiredMemo()
     result["Locked Power Bomb Expansion"] = (
         "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
@@ -584,7 +589,7 @@ def _get_model_mapping(randomizer_data: dict) -> EchoesModelNameMapping:
     )
 
 
-def should_keep_elevator_sounds(configuration: EchoesConfiguration) -> bool:
+def should_keep_elevator_sounds(configuration: EchoesConfiguration | EchoesOPRConfiguration) -> bool:
     elev = configuration.teleporters
     if elev.is_vanilla:
         return True
@@ -679,9 +684,9 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         result["dol_patches"] = {
             "world_uuid": str(self.players_config.get_own_uuid()),
             "energy_per_tank": self.configuration.energy_per_tank,
-            "beam_configurations": [b.as_json for b in self.configuration.beam_configuration.all_beams],
+            "beam_configuration": self.configuration.beam_configuration.as_json,
             "safe_zone_heal_per_second": self.configuration.safe_zone.heal_per_second,
-            "user_preferences": self.cosmetic_patches.user_preferences.as_json,
+            "game_options_defaults": self.cosmetic_patches.user_preferences.as_json,
             "default_items": {
                 "visor": default_pickups[pickup_category_visors].name,
                 "beam": default_pickups[pickup_category_beams].name,
@@ -857,7 +862,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
             )
 
             if "new_name" not in area_patches:
-                area_patches["new_name"] = _pretty_name_for_elevator(
+                area_patches["new_name"] = pretty_name_for_elevator(
                     self.game, self.game.region_list, node, node_identifier
                 )
 
@@ -948,6 +953,29 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         ]
 
 
+def echoes_raw_pickup_list(
+    memo_data: dict[str, str],
+    configuration: BaseConfiguration,
+    game: GameDatabaseView,
+    patches: GamePatches,
+    players_config: PlayersConfiguration,
+    rng: Random,
+) -> list[pickup_exporter.ExportedPickupDetails]:
+    resource_db = game.get_resource_database_view()
+    useless_target = PickupTarget(create_echoes_useless_pickup(resource_db), players_config.player_index)
+
+    return pickup_exporter.export_all_indices(
+        patches,
+        useless_target,
+        game,
+        rng,
+        configuration.pickup_model_style,
+        configuration.pickup_model_data_source,
+        exporter=pickup_exporter.create_pickup_exporter(memo_data, players_config, game.get_game_enum()),
+        visual_nothing=pickup_creator.create_visual_nothing(game.get_game_enum(), "EnergyTransferModule"),
+    )
+
+
 def _create_pickup_list(
     cosmetic_patches: EchoesCosmeticPatches,
     configuration: BaseConfiguration,
@@ -957,23 +985,19 @@ def _create_pickup_list(
     rng: Random,
 ) -> list[dict]:
     resource_db = game.get_resource_database_view()
-    useless_target = PickupTarget(create_echoes_useless_pickup(resource_db), players_config.player_index)
 
     if cosmetic_patches.disable_hud_popup:
-        memo_data = _simplified_memo_data()
+        memo_data = simplified_prime2_memo_data()
     else:
         memo_data = default_prime2_memo_data()
 
-    echoes_game = RandovaniaGame.METROID_PRIME_ECHOES
-    pickup_list = pickup_exporter.export_all_indices(
-        patches,
-        useless_target,
+    pickup_list = echoes_raw_pickup_list(
+        memo_data,
+        configuration,
         game,
+        patches,
+        players_config,
         rng,
-        configuration.pickup_model_style,
-        configuration.pickup_model_data_source,
-        exporter=pickup_exporter.create_pickup_exporter(memo_data, players_config, echoes_game),
-        visual_nothing=pickup_creator.create_visual_nothing(echoes_game, "EnergyTransferModule"),
     )
     multiworld_item = resource_db.get_item(echoes_items.MULTIWORLD_ITEM)
 

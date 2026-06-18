@@ -29,7 +29,7 @@ def test_create_graph(
         flatten_to_set_on_patch=False,
     )
 
-    assert len(graph.nodes) == 42
+    assert len(graph.nodes) == 44
     assert graph.dangerous_resources == set()
 
 

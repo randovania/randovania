@@ -69,7 +69,6 @@ class EchoesConfiguration(BaseConfiguration):
     dangerous_energy_tank: bool
     use_new_patcher: EchoesNewPatcher
     inverted_mode: bool
-    portal_rando: bool
 
     blue_save_doors: bool
 
@@ -102,18 +101,7 @@ class EchoesConfiguration(BaseConfiguration):
         if self.inverted_mode:
             result.append("Inverted Aether")
 
-        if self.portal_rando:
-            result.append("Portal Rando")
-
         if self.use_new_patcher == EchoesNewPatcher.ONLY:
             result.append("Using the new patcher exclusively")
-
-        return result
-
-    def settings_incompatible_with_map_tracker(self) -> list[str]:
-        result = super().settings_incompatible_with_map_tracker()
-
-        if self.portal_rando:
-            result.append("Portal Rando")
 
         return result

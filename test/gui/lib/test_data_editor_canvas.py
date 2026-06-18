@@ -7,7 +7,7 @@ from PySide6.QtCore import QPoint
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.gui.widgets.data_editor_canvas import DataEditorCanvas
+from randovania.gui.widgets.data_editor_canvas import CameraData, DataEditorCanvas
 
 
 @pytest.fixture
@@ -90,3 +90,60 @@ def test_area_maps(skip_qtbot, canvas: DataEditorCanvas, mocker):
         break
 
     assert canvas._background_image is not None
+
+
+@pytest.mark.parametrize(
+    ("camera_data", "expected"),
+    [
+        (
+            CameraData(
+                coords="opengl",
+                projection=(
+                    (1.7127298, 0.0, 0.0, 0.0),
+                    (0.0, 1.9209821, 0.0, 0.0),
+                    (0.0, 0.0, -1.0000489, -0.20000489),
+                    (0.0, 0.0, -1.0, 0.0),
+                ),
+                view=(
+                    (-0.34270626, -0.93944263, 0, -172.76392),
+                    (0.14038785, -0.051213127, 0.98877126, 50.90325),
+                    (-0.9288938, 0.33885807, 0.14943738, -235.46387),
+                    (0.0, 0.0, 0.0, 1.0),
+                ),
+            ),
+            (-0.12832976063125112, 0.7076416905953024),
+        ),
+        (
+            CameraData(
+                coords="opengl",
+                projection=(
+                    (1.7963935, 0.0, 0.0, 0.0),
+                    (0.0, 1.9209821, 0.0, 0.0),
+                    (0.0, 0.0, -1.0000489, -0.20000489),
+                    (0.0, 0.0, -1.0, 0.0),
+                ),
+                view=(
+                    (-0.23653346, -0.97162336, 0.0, -164.78668),
+                    (-0.08732812, 0.021259291, 0.9959528, 46.97933),
+                    (-0.96769094, 0.2355761, -0.089878574, -143.77861),
+                    (0.0, 0.0, 0.0, 1.0),
+                ),
+            ),
+            (-0.529435883538518, 0.8138382406117051),
+        ),
+    ],
+)
+def test_camera_data_game_loc_to_qt_local(
+    camera_data: CameraData,
+    expected: tuple[float, float],
+):
+    x, y, z = (0.0, 0.0, 0.0)
+    result = camera_data.game_loc_to_qt_local(x, y, z)
+
+    assert result == expected
+
+
+def test_camera_data_invalid():
+    camera_data = CameraData("something_wrong", (), ())  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="Unknown coordinate system"):
+        camera_data.game_loc_to_qt_local(0.0, 0.0, 0.0)
