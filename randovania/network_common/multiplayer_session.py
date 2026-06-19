@@ -3,14 +3,19 @@ from __future__ import annotations
 import dataclasses
 import datetime
 import re
+import typing
 import uuid
+from collections.abc import Mapping
 from functools import cached_property
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib.json_lib import JsonObject_RO
 from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.game_details import GameDetails
@@ -76,6 +81,26 @@ class MultiplayerWorldPickups:
     world_id: uuid.UUID
     game: RandovaniaGame
     pickups: tuple[RemotePickup, ...]
+
+    @classmethod
+    def from_json(cls, data: JsonObject_RO) -> Self:
+        data_ = typing.cast("Mapping", data)
+
+        game = RandovaniaGame(data_["game"])
+        resource_database = default_database.resource_database_for(game)
+
+        return cls(
+            world_id=uuid.UUID(data_["world"]),
+            game=game,
+            pickups=tuple(RemotePickup.from_json(item, resource_database) for item in data_["pickups"]),
+        )
+
+    def as_json(self, resource_database: ResourceDatabase) -> JsonObject_RO:
+        return {
+            "world": str(self.world_id),
+            "game": self.game.value,
+            "pickups": [item.as_json(resource_database) for item in self.pickups],
+        }
 
 
 @dataclasses.dataclass(frozen=True)

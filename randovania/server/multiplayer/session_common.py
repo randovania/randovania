@@ -53,7 +53,7 @@ async def emit_session_meta_update(sa: ServerApp, session: MultiplayerSession) -
         span.set_data("session.name", session.name)
         sa.logger.debug("multiplayer_session_meta_update for session %d (%s)", session.id, session.name)
 
-        await _emit(client_signals.SESSION_META_UPDATE, sa, session)(session.create_session_entry().as_json)
+        await _emit(client_signals.SessionMetaUpdate, sa, session)(session.create_session_entry().as_json)
 
 
 async def emit_session_actions_update(sa: ServerApp, session: MultiplayerSession) -> None:
@@ -67,7 +67,7 @@ async def emit_session_actions_update(sa: ServerApp, session: MultiplayerSession
         span.set_data("session.name", session.name)
         span.set_data("session.actions", len(actions.actions))
 
-        await _emit(client_signals.SESSION_ACTIONS_UPDATE, sa, session)(construct_pack.encode(actions))
+        await _emit(client_signals.SessionActionsUpdate, sa, session)(construct_pack.encode(actions))
 
 
 async def emit_session_audit_update(sa: ServerApp, session: MultiplayerSession) -> None:
@@ -79,7 +79,7 @@ async def emit_session_audit_update(sa: ServerApp, session: MultiplayerSession) 
         span.set_data("session.name", session.name)
         span.set_data("session.audit", len(log.entries))
 
-        await _emit(client_signals.SESSION_AUDIT_UPDATE, sa, session)(construct_pack.encode(log))
+        await _emit(client_signals.SessionAuditUpdate, sa, session)(construct_pack.encode(log))
 
 
 async def add_audit_entry(sa: ServerApp, sid: str, session: MultiplayerSession, message: str) -> None:

@@ -269,7 +269,7 @@ async def browser_discord_login_callback(
 
             result = await _create_client_side_session(sa, sid, user, session)
 
-            await client_signals.USER_SESSION_UPDATE.emit(sa, to=sid, namespace="/")(result)
+            await client_signals.UserSessionUpdate.emit(sa, to=sid, namespace="/")(result)
 
             return sa.templates.TemplateResponse(
                 request,

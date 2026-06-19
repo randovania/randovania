@@ -21,10 +21,7 @@ import socketio.exceptions
 
 import randovania
 from randovania.bitpacking import bitpacking, construct_pack
-from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import default_database
 from randovania.game_description.pickup.pickup_entry import PickupEntry
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.lib import container_lib, http_lib
 from randovania.lib.json_lib import JsonObject_RO
@@ -57,7 +54,6 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerWorldPickups,
     WorldUserInventory,
 )
-from randovania.network_common.remote_pickup import RemotePickup
 from randovania.network_common.user import CurrentUser
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
 
@@ -202,14 +198,14 @@ class NetworkClient:
         self.sio.on("connect_error", self.on_connect_error)
         self.sio.on("disconnect", self.on_disconnect)
 
-        client_signals.USER_SESSION_UPDATE.register(self.sio, self.on_user_session_updated)
-        client_signals.SESSION_META_UPDATE.register(self.sio, self._on_multiplayer_session_meta_update_raw)
-        client_signals.SESSION_ACTIONS_UPDATE.register(self.sio, self._on_multiplayer_session_actions_update_raw)
-        client_signals.SESSION_AUDIT_UPDATE.register(self.sio, self._on_multiplayer_session_audit_update_raw)
-        client_signals.WORLD_PICKUPS_UPDATE.register(self.sio, self._on_world_pickups_update_raw)
-        client_signals.WORLD_BINARY_INVENTORY.register(self.sio, self._on_world_user_inventory_raw)
-        client_signals.WORLD_JSON_INVENTORY.register(self.sio, self._on_world_user_inventory_json)
-        client_signals.ASYNC_RACE_ROOM_UPDATE.register(self.sio, self._on_async_race_room_update_raw)
+        client_signals.UserSessionUpdate.register(self.sio, self.on_user_session_updated)
+        client_signals.SessionMetaUpdate.register(self.sio, self._on_multiplayer_session_meta_update_raw)
+        client_signals.SessionActionsUpdate.register(self.sio, self._on_multiplayer_session_actions_update_raw)
+        client_signals.SessionAuditUpdate.register(self.sio, self._on_multiplayer_session_audit_update_raw)
+        client_signals.WorldPickupsUpdate.register(self.sio, self._on_world_pickups_update_raw)
+        client_signals.WorldBinaryInventory.register(self.sio, self._on_world_user_inventory_raw)
+        client_signals.WorldJsonInventory.register(self.sio, self._on_world_user_inventory_json)
+        client_signals.AsyncRaceRoomUpdate.register(self.sio, self._on_async_race_room_update_raw)
 
     @property
     def connection_state(self) -> ConnectionState:
@@ -402,7 +398,9 @@ class NetworkClient:
 
     # Multiplayer Session Updated
 
-    async def _on_multiplayer_session_meta_update_raw(self, data: dict) -> None:
+    async def _on_multiplayer_session_meta_update_raw(
+        self, data: server_signals.TypedJsonObject[MultiplayerSessionEntry]
+    ) -> None:
         entry = MultiplayerSessionEntry.from_json(data)
         self.logger.debug("%s: %s", entry.id, hashlib.blake2b(str(data).encode("utf-8")).hexdigest())
         await self.on_multiplayer_session_meta_update(entry)
@@ -427,29 +425,15 @@ class NetworkClient:
         self.logger.info("num audit: %d", len(audit_log.entries))
 
     # World Events
-    async def _on_world_pickups_update_raw(self, data: dict) -> None:
-        game = RandovaniaGame(data["game"])
-        resource_database = default_database.resource_database_for(game)
-
-        await self.on_world_pickups_update(
-            MultiplayerWorldPickups(
-                world_id=uuid.UUID(data["world"]),
-                game=game,
-                pickups=tuple(
-                    RemotePickup(
-                        item["provider_name"],
-                        _decode_pickup(item["pickup"], resource_database),
-                        PickupIndex(item["coop_location"]) if item["coop_location"] is not None else None,
-                    )
-                    for item in data["pickups"]
-                ),
-            )
-        )
+    async def _on_world_pickups_update_raw(self, data: server_signals.TypedJsonObject[MultiplayerWorldPickups]) -> None:
+        await self.on_world_pickups_update(MultiplayerWorldPickups.from_json(data))
 
     async def on_world_pickups_update(self, pickups: MultiplayerWorldPickups) -> None:
         self.logger.info("world %s, num pickups: %d", pickups.world_id, len(pickups.pickups))
 
-    async def _on_world_user_inventory_raw(self, entry_id: str, user_id: int, raw_inventory: bytes) -> None:
+    async def _on_world_user_inventory_raw(
+        self, entry_id: str, user_id: int, raw_inventory: server_signals.TypedBytes[remote_inventory.RemoteInventory]
+    ) -> None:
         inventory_or_error = remote_inventory.decode_remote_inventory(raw_inventory)
         if isinstance(inventory_or_error, construct.ConstructError):
             self.logger.debug("Unable to parse inventory for entry %d: %s", entry_id, str(inventory_or_error))
@@ -470,7 +454,7 @@ class NetworkClient:
     async def _on_world_user_inventory_json(self, *args: Any, **kwargs: Any) -> None:
         print(*args, **kwargs)
 
-    async def _on_async_race_room_update_raw(self, data: dict) -> None:
+    async def _on_async_race_room_update_raw(self, data: server_signals.TypedJsonObject[AsyncRaceRoomEntry]) -> None:
         """Event triggered when the server pushes an e"""
         await self.on_async_race_room_update(AsyncRaceRoomEntry.from_json(data))
 

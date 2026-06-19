@@ -3,6 +3,16 @@ from __future__ import annotations
 import typing
 from typing import TYPE_CHECKING
 
+from randovania.network_common.async_race_room import AsyncRaceRoomEntry
+from randovania.network_common.multiplayer_session import (
+    MultiplayerSessionActions,
+    MultiplayerSessionAuditLog,
+    MultiplayerSessionEntry,
+    MultiplayerWorldPickups,
+)
+from randovania.network_common.remote_inventory import RemoteInventory
+from randovania.network_common.server_signals import TypedBytes, TypedJsonObject
+
 if TYPE_CHECKING:
     from collections.abc import Callable, Mapping, Sequence
     from typing import Any
@@ -65,19 +75,19 @@ def client_signal[**P](message: str) -> Callable[[AsyncCallable[P, None]], Clien
     Example usage::
 
         @client_signal("multiplayer_binary_inventory")
-        async def WORLD_BINARY_INVENTORY(entry_id: str, user_id: int, raw_inventory: bytes) -> None: ...
+        async def WorldBinaryInventory(entry_id: str, user_id: int, raw_inventory: bytes) -> None: ...
 
         class NetworkClient:
             def __init__(self, sio: AsyncClient):
                 self.sio = sio
 
-                WORLD_BINARY_INVENTORY.register(self.sio, self._on_world_user_inventory_raw)
+                WorldBinaryInventory.register(self.sio, self._on_world_user_inventory_raw)
 
             def _on_world_user_inventory_raw(self, entry_id: str, user_id: int, raw_inventory: bytes) -> None:
                 print(entry_id, user_id, raw_inventory)
 
         # prints "'entry', 1234, b'4321'"
-        await WORLD_BINARY_INVENTORY.emit(ServerApp())("entry", 1234, b"4321")
+        await WorldBinaryInventory.emit(ServerApp())("entry", 1234, b"4321")
 
     """
 
@@ -88,32 +98,32 @@ def client_signal[**P](message: str) -> Callable[[AsyncCallable[P, None]], Clien
 
 
 @client_signal("user_session_update")
-async def USER_SESSION_UPDATE(new_session: dict) -> None: ...
+async def UserSessionUpdate(new_session: dict) -> None: ...
 
 
 @client_signal("multiplayer_session_meta_update")
-async def SESSION_META_UPDATE(data: dict) -> None: ...
+async def SessionMetaUpdate(data: TypedJsonObject[MultiplayerSessionEntry]) -> None: ...
 
 
 @client_signal("multiplayer_session_actions_update")
-async def SESSION_ACTIONS_UPDATE(data: bytes) -> None: ...
+async def SessionActionsUpdate(data: TypedBytes[MultiplayerSessionActions]) -> None: ...
 
 
 @client_signal("multiplayer_session_audit_update")
-async def SESSION_AUDIT_UPDATE(data: bytes) -> None: ...
+async def SessionAuditUpdate(data: TypedBytes[MultiplayerSessionAuditLog]) -> None: ...
 
 
 @client_signal("world_pickups_update")
-async def WORLD_PICKUPS_UPDATE(data: dict) -> None: ...
+async def WorldPickupsUpdate(data: TypedJsonObject[MultiplayerWorldPickups]) -> None: ...
 
 
 @client_signal("multiplayer_json_inventory")
-async def WORLD_JSON_INVENTORY(*args: Any, **kwargs: Any) -> None: ...
+async def WorldJsonInventory(*args: Any, **kwargs: Any) -> None: ...
 
 
 @client_signal("multiplayer_binary_inventory")
-async def WORLD_BINARY_INVENTORY(entry_id: str, user_id: int, raw_inventory: bytes) -> None: ...
+async def WorldBinaryInventory(entry_id: str, user_id: int, raw_inventory: TypedBytes[RemoteInventory]) -> None: ...
 
 
 @client_signal("async_race_room_update")
-async def ASYNC_RACE_ROOM_UPDATE(data: dict) -> None: ...
+async def AsyncRaceRoomUpdate(data: TypedJsonObject[AsyncRaceRoomEntry]) -> None: ...

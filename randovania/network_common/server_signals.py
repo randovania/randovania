@@ -82,8 +82,13 @@ def server_event_handler[**P, RetT](
     Example usage::
 
         @server_event_handler("multiplayer_list_sessions")
-        async def list_sessions(sa: ServerApp, sid: str, limit: int | None) -> list[dict]:
+        async def ListSessions(sa: ServerApp: sid: str, limit: int | None) -> Sequence[dict]:
+            raise NotImplementedError
+
+        async def list_sessions(sa: ServerApp, sid: str, limit: int | None) -> Sequence[dict]:
             return [{"number": i} for i in range(limit if limit is not None else 100)]
+
+        ListSessions.register(ServerApp(), list_sessions)
 
         result = await list_sessions.call_server(NetworkClient())(2)
 

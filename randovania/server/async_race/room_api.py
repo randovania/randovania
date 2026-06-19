@@ -593,7 +593,7 @@ _livesplit_event_mapping = {
 async def emit_async_room_update(sa: ServerApp, room: AsyncRaceRoom, sid_or_user: str | User) -> None:
     user = await sa.get_current_user(sid_or_user) if isinstance(sid_or_user, str) else sid_or_user
 
-    await client_signals.ASYNC_RACE_ROOM_UPDATE.emit(
+    await client_signals.AsyncRaceRoomUpdate.emit(
         sa,
         to=_get_async_race_socketio_room(room, user),
         namespace="/",
