@@ -17,14 +17,13 @@ from pydantic import BaseModel, model_validator
 from starlette import status
 from starlette.responses import JSONResponse
 
+from randovania.network_common import client_signals, server_signals
 from randovania.network_common import error as network_error
-from randovania.network_common import signals
 from randovania.network_common.authentication import AuthenticationMethod
 from randovania.server import fastapi_discord
 from randovania.server.database import User, UserAccessToken
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerAppDep, UserDep
-from randovania.server.socketio import server_event_handler
 
 if typing.TYPE_CHECKING:
     from randovania.server.fastapi_discord import DiscordUser
@@ -116,8 +115,12 @@ async def _create_session_with_discord_token(sa: ServerApp, sid: str | None, tok
     return user
 
 
-@server_event_handler("restore_user_session")
-async def restore_user_session(sa: ServerApp, sid: str, encrypted_session: bytes, _old_session_id: None = None) -> dict:
+async def restore_user_session(
+    sa: ServerApp,
+    sid: str,
+    encrypted_session: bytes,
+    _old_session_id: None = None,
+) -> dict:
     # _old_session_id exists to keep compatibility with old dev build clients that try to connect
     try:
         decrypted_session: bytes = sa.fernet_encrypt.decrypt(encrypted_session)
@@ -163,7 +166,6 @@ async def restore_user_session(sa: ServerApp, sid: str, encrypted_session: bytes
         raise network_error.InvalidSessionError
 
 
-@server_event_handler("logout")
 async def logout(sa: ServerApp, sid: str) -> None:
     await session_common.leave_all_rooms(sa, sid)
     async with sa.sio.session(sid) as session:
@@ -267,7 +269,7 @@ async def browser_discord_login_callback(
 
             result = await _create_client_side_session(sa, sid, user, session)
 
-            await signals.USER_SESSION_UPDATE.emit(sa, to=sid, namespace="/")(result)
+            await client_signals.USER_SESSION_UPDATE.emit(sa, to=sid, namespace="/")(result)
 
             return sa.templates.TemplateResponse(
                 request,
@@ -404,7 +406,7 @@ async def authentication_methods(sa: ServerAppDep, request: Request) -> list[Aut
 
 
 def setup_app(sa: ServerApp) -> None:
-    sa.on(restore_user_session)
-    sa.on(logout)
+    server_signals.RestoreUserSession.register(sa, restore_user_session)
+    server_signals.Logout.register(sa, logout)
 
     sa.app.include_router(router)

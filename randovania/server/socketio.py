@@ -1,24 +1,17 @@
 from __future__ import annotations
 
-import typing
 from contextlib import asynccontextmanager
-from typing import TYPE_CHECKING, Concatenate
+from typing import TYPE_CHECKING
 
 from prometheus_client import Gauge
 from socketio.exceptions import ConnectionRefusedError
 from socketio_handler import BaseSocketHandler, SocketManager, register_handler
 
 import randovania
-from randovania.network_common.signals import SioDataType, _args_to_sio_data
 from randovania.server import client_check
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-
-    from randovania.network_client.network_client import NetworkClient
-    from randovania.server.server_app import AsyncCallable, Lifespan, RdvFastAPI, ServerApp
-
-EventHandlerReturnType = SioDataType | tuple[SioDataType, ...] | None
+    from randovania.server.server_app import Lifespan, RdvFastAPI, ServerApp
 
 
 @asynccontextmanager
@@ -83,60 +76,3 @@ def get_socket_handler(sa: ServerApp) -> type[BaseSocketHandler]:
             await world_api.report_disconnect(sa, session)
 
     return RdvSocketHandler
-
-
-class ServerEventHandler[**P, RetT]:
-    def __init__(self, fn: AsyncCallable[Concatenate[ServerApp, str, P], RetT], message: str):
-        self.fn = fn
-        self.message = message
-
-    async def __call__(self, sa: ServerApp, sid: str, *args: P.args, **kwargs: P.kwargs) -> RetT:
-        return await self.fn(sa, sid, *args, **kwargs)
-
-    def call_server(
-        self,
-        network_client: NetworkClient,
-        namespace: str | None = None,
-        handle_invalid_session: bool = True,
-    ) -> AsyncCallable[P, RetT]:
-        """
-        Returns an async callable which, when called and awaited, uses the `NetworkClient` to call
-        this function on the server, and returns the result. Provides full typing support,
-        so it's preferable to using `NetworkClient.server_call()` directly.
-        """
-
-        async def inner(*args: P.args, **kwargs: P.kwargs) -> RetT:
-            result = await network_client.server_call(
-                self.message,
-                _args_to_sio_data(*args),
-                namespace=namespace,
-                handle_invalid_session=handle_invalid_session,
-            )
-            return typing.cast("RetT", result)
-
-        return inner
-
-
-def server_event_handler[**P, RetT](
-    message: str,
-) -> Callable[[AsyncCallable[Concatenate[ServerApp, str, P], RetT]], ServerEventHandler[P, RetT]]:
-    """
-    Transforms a function into a `ServerEventHandler` so that it can be registered via
-    `ServerApp.on()` or called from the client using `fn.server_call()`.
-
-    Example usage::
-
-        @server_event_handler("multiplayer_list_sessions")
-        async def list_sessions(sa: ServerApp, sid: str, limit: int | None) -> list[dict]:
-            return [{"number": i} for i in range(limit if limit is not None else 100)]
-
-        result = await list_sessions.call_server(NetworkClient())(2)
-
-        # prints "[{'number': 0}, {'number': 1}, {'number': 2}]"
-        print(result)
-    """
-
-    def decorator(fn: AsyncCallable[Concatenate[ServerApp, str, P], RetT]) -> ServerEventHandler[P, RetT]:
-        return ServerEventHandler(fn, message)
-
-    return decorator

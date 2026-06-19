@@ -12,7 +12,7 @@ import randovania
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, wait_dialog
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect
-from randovania.network_common import error
+from randovania.network_common import error, server_signals
 from randovania.network_common.async_race_room import AsyncRaceRoomEntry
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionActions,
@@ -23,7 +23,6 @@ from randovania.network_common.multiplayer_session import (
     WorldUserInventory,
 )
 from randovania.network_common.user import CurrentUser
-from randovania.server.server_app import get_sid
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -157,7 +156,7 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
         self.AsyncRaceRoomUpdated.emit(room)
 
     async def login_with_discord(self) -> str:
-        sid = await get_sid.call_server(self)()
+        sid = await server_signals.GetSid.call_server(self)()
         url = self.configuration["server_address"] + f"/login?sid={sid}"
         return url
 

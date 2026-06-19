@@ -27,15 +27,16 @@ from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.lib import container_lib, http_lib
-from randovania.lib.json_lib import JsonObject
+from randovania.lib.json_lib import JsonObject_RO
 from randovania.network_common import (
     admin_actions,
+    client_signals,
     connection_headers,
     error,
     multiplayer_session,
     pickup_serializer,
     remote_inventory,
-    signals,
+    server_signals,
 )
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
@@ -59,10 +60,6 @@ from randovania.network_common.multiplayer_session import (
 from randovania.network_common.remote_pickup import RemotePickup
 from randovania.network_common.user import CurrentUser
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
-from randovania.server import user_session
-from randovania.server.async_race import room_api as async_race_api
-from randovania.server.multiplayer import session_admin, session_api, world_api
-from randovania.server.socketio import SioDataType
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -205,14 +202,14 @@ class NetworkClient:
         self.sio.on("connect_error", self.on_connect_error)
         self.sio.on("disconnect", self.on_disconnect)
 
-        signals.USER_SESSION_UPDATE.register(self.sio, self.on_user_session_updated)
-        signals.SESSION_META_UPDATE.register(self.sio, self._on_multiplayer_session_meta_update_raw)
-        signals.SESSION_ACTIONS_UPDATE.register(self.sio, self._on_multiplayer_session_actions_update_raw)
-        signals.SESSION_AUDIT_UPDATE.register(self.sio, self._on_multiplayer_session_audit_update_raw)
-        signals.WORLD_PICKUPS_UPDATE.register(self.sio, self._on_world_pickups_update_raw)
-        signals.WORLD_BINARY_INVENTORY.register(self.sio, self._on_world_user_inventory_raw)
-        signals.WORLD_JSON_INVENTORY.register(self.sio, self._on_world_user_inventory_json)
-        signals.ASYNC_RACE_ROOM_UPDATE.register(self.sio, self._on_async_race_room_update_raw)
+        client_signals.USER_SESSION_UPDATE.register(self.sio, self.on_user_session_updated)
+        client_signals.SESSION_META_UPDATE.register(self.sio, self._on_multiplayer_session_meta_update_raw)
+        client_signals.SESSION_ACTIONS_UPDATE.register(self.sio, self._on_multiplayer_session_actions_update_raw)
+        client_signals.SESSION_AUDIT_UPDATE.register(self.sio, self._on_multiplayer_session_audit_update_raw)
+        client_signals.WORLD_PICKUPS_UPDATE.register(self.sio, self._on_world_pickups_update_raw)
+        client_signals.WORLD_BINARY_INVENTORY.register(self.sio, self._on_world_user_inventory_raw)
+        client_signals.WORLD_JSON_INVENTORY.register(self.sio, self._on_world_user_inventory_json)
+        client_signals.ASYNC_RACE_ROOM_UPDATE.register(self.sio, self._on_async_race_room_update_raw)
 
     @property
     def connection_state(self) -> ConnectionState:
@@ -316,17 +313,20 @@ class NetworkClient:
                 self.connection_state = ConnectionState.ConnectedRestoringSession
                 self.logger.debug("session restoring session")
                 await self.on_user_session_updated(
-                    await user_session.restore_user_session.call_server(self, handle_invalid_session=False)(
-                        persisted_session
-                    )
+                    await server_signals.RestoreUserSession.call_server(
+                        self,
+                        handle_invalid_session=False,
+                    )(persisted_session)
                 )
 
                 # re-join rooms
                 self.logger.info("calling listen to session for %s", self._sessions_interested_in)
                 for session_id in list(self._sessions_interested_in):
-                    await session_api.listen_to_session.call_server(self)(session_id, True)
+                    await server_signals.Multiplayer.ListenToSession.call_server(self)(session_id, True)
                 for world_uid, user_id in list(self._tracking_worlds):
-                    await world_api.watch_inventory.call_server(self)(str(world_uid), user_id, True, True)
+                    await server_signals.Multiplayer.WatchInventory.call_server(self)(
+                        str(world_uid), user_id, True, True
+                    )
 
                 self.logger.info("session restored successful")
 
@@ -492,11 +492,11 @@ class NetworkClient:
     async def server_call(
         self,
         event: str,
-        data: SioDataType | tuple[SioDataType, ...] | None = None,
+        data: client_signals.SioDataType | tuple[client_signals.SioDataType, ...] | None = None,
         *,
         namespace: str | None = None,
         handle_invalid_session: bool = True,
-    ) -> SioDataType | None:
+    ) -> client_signals.SioDataType | None:
         self.logger.debug("performing call for %s", event)
 
         if self.connection_state.is_disconnected:
@@ -546,7 +546,7 @@ class NetworkClient:
         :param settings:
         :return:
         """
-        result = await async_race_api.create_room.call_server(self)(
+        result = await server_signals.AsyncRace.CreateRoom.call_server(self)(
             layout.as_binary(force_spoiler=True),
             settings.as_json,
         )
@@ -555,7 +555,7 @@ class NetworkClient:
     async def get_async_race_room_list(self, ignore_limit: bool) -> list[AsyncRaceRoomListEntry]:
         return [
             AsyncRaceRoomListEntry.from_json(item)
-            for item in await async_race_api.list_rooms.call_server(self)(None if ignore_limit else 100)
+            for item in await server_signals.AsyncRace.ListRooms.call_server(self)(None if ignore_limit else 100)
         ]
 
     async def get_async_race_room(self, room_id: int, password: str | None) -> AsyncRaceRoomEntry:
@@ -565,7 +565,7 @@ class NetworkClient:
         :param password: The room password
         :return: The room details
         """
-        return AsyncRaceRoomEntry.from_json(await async_race_api.get_room.call_server(self)(room_id, password))
+        return AsyncRaceRoomEntry.from_json(await server_signals.AsyncRace.GetRoom.call_server(self)(room_id, password))
 
     async def async_race_refresh_room(self, room: AsyncRaceRoomEntry) -> AsyncRaceRoomEntry:
         """
@@ -574,7 +574,7 @@ class NetworkClient:
         :return: The room details
         """
         return AsyncRaceRoomEntry.from_json(
-            await async_race_api.refresh_room.call_server(self)(room.id, room.auth_token)
+            await server_signals.AsyncRace.RefreshRoom.call_server(self)(room.id, room.auth_token)
         )
 
     async def async_race_get_leaderboard(self, room: AsyncRaceRoomEntry) -> RaceRoomLeaderboard:
@@ -584,7 +584,7 @@ class NetworkClient:
         :return: The room's leaderboard
         """
         return RaceRoomLeaderboard.from_json(
-            await async_race_api.get_leaderboard.call_server(self)(room.id, room.auth_token)
+            await server_signals.AsyncRace.GetLeaderboard.call_server(self)(room.id, room.auth_token)
         )
 
     async def async_race_get_layout(self, room: AsyncRaceRoomEntry) -> LayoutDescription:
@@ -595,7 +595,9 @@ class NetworkClient:
         """
         from randovania.layout.layout_description import LayoutDescription
 
-        return LayoutDescription.from_bytes(await async_race_api.get_layout.call_server(self)(room.id, room.auth_token))
+        return LayoutDescription.from_bytes(
+            await server_signals.AsyncRace.GetLayout.call_server(self)(room.id, room.auth_token)
+        )
 
     async def async_race_get_audit_log(self, room: AsyncRaceRoomEntry) -> list[AuditEntry]:
         """
@@ -603,8 +605,8 @@ class NetworkClient:
         :param room: The room's data from get_async_race_room
         :return: The room's audit log entries
         """
-        log_entries = await async_race_api.get_audit_log.call_server(self)(room.id, room.auth_token)
-        return [AuditEntry.from_json(entry) for entry in typing.cast("list[JsonObject]", log_entries)]
+        log_entries = await server_signals.AsyncRace.GetAuditLog.call_server(self)(room.id, room.auth_token)
+        return [AuditEntry.from_json(entry) for entry in log_entries]
 
     async def async_race_get_livesplit_url(self, room: AsyncRaceRoomEntry) -> str:
         """
@@ -612,7 +614,7 @@ class NetworkClient:
         :param room: The room's data from get_async_race_room
         :return: the URL to configure LiveSplit One with
         """
-        return await async_race_api.get_livesplit_url.call_server(self)(room.id)
+        return await server_signals.AsyncRace.GetLivesplitUrl.call_server(self)(room.id)
 
     async def async_race_admin_get_admin_data(self, room_id: int) -> AsyncRaceRoomAdminData:
         """
@@ -620,7 +622,9 @@ class NetworkClient:
         :param room_id:
         :return: The room's data exclusive to administrators
         """
-        return AsyncRaceRoomAdminData.from_json(await async_race_api.admin_get_admin_data.call_server(self)(room_id))
+        return AsyncRaceRoomAdminData.from_json(
+            await server_signals.AsyncRace.AdminGetAdminData.call_server(self)(room_id)
+        )
 
     async def async_race_admin_update_entries(
         self, room_id: int, modified_entries: Sequence[AsyncRaceEntryData]
@@ -631,19 +635,23 @@ class NetworkClient:
         :return: The room details
         """
         return AsyncRaceRoomEntry.from_json(
-            await async_race_api.admin_update_entries.call_server(self)(
+            await server_signals.AsyncRace.AdminUpdateEntries.call_server(self)(
                 room_id, [entry.as_json for entry in modified_entries]
             )
         )
 
-    async def async_race_join_and_export(self, room: AsyncRaceRoomEntry, cosmetic: BaseCosmeticPatches) -> dict:
+    async def async_race_join_and_export(
+        self, room: AsyncRaceRoomEntry, cosmetic: BaseCosmeticPatches
+    ) -> JsonObject_RO:
         """
         Requests to join the given room, along with some patcher data to export the game.
         :param room: The room's data from get_async_race_room
         :param cosmetic: Cosmetic Patches to use for creating the patcher data
         :return: The patcher data necessary for exporting the game
         """
-        return await async_race_api.join_and_export.call_server(self)(room.id, room.auth_token, cosmetic.as_json)
+        return await server_signals.AsyncRace.JoinAndExport.call_server(self)(
+            room.id, room.auth_token, cosmetic.as_json
+        )
 
     async def async_race_change_state(self, room_id: int, status: AsyncRaceRoomUserStatus) -> AsyncRaceRoomEntry:
         """
@@ -652,7 +660,9 @@ class NetworkClient:
         :param status:
         :return: Updated room details
         """
-        return AsyncRaceRoomEntry.from_json(await async_race_api.change_state.call_server(self)(room_id, status.value))
+        return AsyncRaceRoomEntry.from_json(
+            await server_signals.AsyncRace.ChangeState.call_server(self)(room_id, status.value)
+        )
 
     async def async_race_get_own_proof(self, room_id: int) -> tuple[str, str]:
         """
@@ -660,7 +670,7 @@ class NetworkClient:
         :param room_id:
         :return: submission_notes and proof_url
         """
-        return await async_race_api.get_own_proof.call_server(self)(room_id)
+        return await server_signals.AsyncRace.GetOwnProof.call_server(self)(room_id)
 
     async def async_race_submit_proof(self, room_id: int, submission_notes: str, proof_url: str) -> None:
         """
@@ -670,7 +680,7 @@ class NetworkClient:
         :param proof_url:
         :return:
         """
-        await async_race_api.submit_proof.call_server(self)(room_id, submission_notes, proof_url)
+        await server_signals.AsyncRace.SubmitProof.call_server(self)(room_id, submission_notes, proof_url)
 
     async def async_race_change_room_settings(self, room_id: int, settings: AsyncRaceSettings) -> AsyncRaceRoomEntry:
         """
@@ -680,16 +690,16 @@ class NetworkClient:
         :return: The updated room entry.
         """
         return AsyncRaceRoomEntry.from_json(
-            await async_race_api.change_room_settings.call_server(self)(room_id, settings.as_json)
+            await server_signals.AsyncRace.ChangeRoomSettings.call_server(self)(room_id, settings.as_json)
         )
 
     async def get_multiplayer_session_list(self, ignore_limit: bool) -> list[MultiplayerSessionListEntry]:
         return [
             MultiplayerSessionListEntry.from_json(item)
-            for item in await session_api.list_sessions.call_server(self)(None if ignore_limit else 100)
+            for item in await server_signals.Multiplayer.ListSessions.call_server(self)(None if ignore_limit else 100)
         ]
 
-    def _with_new_session(self, data: dict) -> MultiplayerSessionEntry:
+    def _with_new_session(self, data: JsonObject_RO) -> MultiplayerSessionEntry:
         result = MultiplayerSessionEntry.from_json(data)
         self._sessions_interested_in.add(result.id)
         return result
@@ -712,30 +722,30 @@ class NetworkClient:
             return self._with_new_session(await response.json())
 
     async def join_multiplayer_session(self, session_id: int, password: str | None) -> MultiplayerSessionEntry:
-        result = await session_api.join_session.call_server(self)(session_id, password)
+        result = await server_signals.Multiplayer.JoinSession.call_server(self)(session_id, password)
         return self._with_new_session(result)
 
     async def listen_to_session(self, session_id: int, listen: bool) -> None:
-        await session_api.listen_to_session.call_server(self)(session_id, listen)
+        await server_signals.Multiplayer.ListenToSession.call_server(self)(session_id, listen)
         container_lib.ensure_in_set(session_id, self._sessions_interested_in, listen)
 
     async def session_admin_global(
         self, session: MultiplayerSessionEntry, action: admin_actions.SessionAdminGlobalAction, arg: Any
     ) -> Any:
-        return await session_admin.admin_session.call_server(self)(session.id, action.value, arg)
+        return await server_signals.Multiplayer.AdminSession.call_server(self)(session.id, action.value, arg)
 
     async def session_admin_player(
         self, session: MultiplayerSessionEntry, user_id: int, action: admin_actions.SessionAdminUserAction, arg: Any
     ) -> Any:
-        return await session_admin.admin_player.call_server(self)(session.id, user_id, action.value, arg)
+        return await server_signals.Multiplayer.AdminPlayer.call_server(self)(session.id, user_id, action.value, arg)
 
     async def world_track_inventory(self, world_uid: uuid.UUID, user_id: int, enable: bool) -> None:
-        await world_api.watch_inventory.call_server(self)(str(world_uid), user_id, enable, True)
+        await server_signals.Multiplayer.WatchInventory.call_server(self)(str(world_uid), user_id, enable, True)
         container_lib.ensure_in_set((world_uid, user_id), self._tracking_worlds, enable)
 
     async def perform_world_sync(self, request: ServerSyncRequest) -> ServerSyncResponse:
         return construct_pack.decode(
-            await world_api.world_sync.call_server(self)(construct_pack.encode(request)),
+            await server_signals.Multiplayer.WorldSync.call_server(self)(construct_pack.encode(request)),
             ServerSyncResponse,
         )
 
@@ -759,7 +769,7 @@ class NetworkClient:
         if self.connection_state != ConnectionState.Connected:
             return
         self.connection_state = ConnectionState.ConnectedNotLogged
-        await user_session.logout.call_server(self)()
+        await server_signals.Logout.call_server(self)()
 
     def _update_reported_username(self) -> None:
         if self.allow_reporting_username and self._current_user and self._current_user.discord_id:

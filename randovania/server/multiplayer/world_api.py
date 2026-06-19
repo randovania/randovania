@@ -16,7 +16,7 @@ from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.layout.layout_description import LayoutDescription
-from randovania.network_common import error, remote_inventory, signals
+from randovania.network_common import client_signals, error, remote_inventory, server_signals
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.world_sync import (
@@ -28,7 +28,6 @@ from randovania.network_common.world_sync import (
 from randovania.server.database import MultiplayerSession, User, World, WorldAction, WorldUserAssociation
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
-from randovania.server.socketio import server_event_handler
 
 
 def _get_world_room(world: World) -> str:
@@ -42,7 +41,7 @@ def get_inventory_room_name_raw(world_uuid: uuid.UUID, user_id: int) -> str:
 async def emit_inventory_update(sa: ServerApp, world: World, user_id: int, inventory: bytes) -> None:
     room_name = get_inventory_room_name_raw(world.uuid, user_id)
 
-    await signals.WORLD_BINARY_INVENTORY.emit(
+    await client_signals.WORLD_BINARY_INVENTORY.emit(
         sa,
         to=room_name,
         namespace="/",
@@ -178,7 +177,6 @@ async def collect_locations(
     return receiver_worlds
 
 
-@server_event_handler("multiplayer_watch_inventory")
 async def watch_inventory(sa: ServerApp, sid: str, raw_world_uid: str, user_id: int, watch: bool, binary: bool) -> None:
     world_uid = uuid.UUID(raw_world_uid)
     sa.logger.debug("Watching inventory of %s/%d: %s", world_uid, user_id, watch)
@@ -297,7 +295,6 @@ async def sync_one_world(
     return response, session_id_to_return, worlds_to_emit_update
 
 
-@server_event_handler("multiplayer_world_sync")
 async def world_sync(sa: ServerApp, sid: str, raw_request: bytes) -> bytes:
     request = construct_pack.decode(raw_request, ServerSyncRequest)
     user = await sa.get_current_user(sid)
@@ -420,7 +417,7 @@ async def emit_world_pickups_update(sa: ServerApp, world: World) -> None:
         "pickups": result,
     }
 
-    await signals.WORLD_PICKUPS_UPDATE.emit(sa, room=_get_world_room(world))(data)
+    await client_signals.WORLD_PICKUPS_UPDATE.emit(sa, room=_get_world_room(world))(data)
 
 
 async def report_disconnect(sa: ServerApp, session_dict: dict) -> None:
@@ -451,5 +448,5 @@ async def report_disconnect(sa: ServerApp, session_dict: dict) -> None:
 
 
 def setup_app(sa: ServerApp) -> None:
-    sa.on(watch_inventory)
-    sa.on(world_sync, with_header_check=True)
+    server_signals.Multiplayer.WatchInventory.register(sa, watch_inventory)
+    server_signals.Multiplayer.WorldSync.register(sa, world_sync, with_header_check=True)

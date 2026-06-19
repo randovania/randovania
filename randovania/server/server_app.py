@@ -30,15 +30,13 @@ from starlette.responses import JSONResponse
 from uvicorn.logging import ColourizedFormatter
 
 import randovania
-from randovania.network_common import connection_headers, error
+from randovania.network_common import connection_headers, error, server_signals
 from randovania.network_common.authentication import AuthenticationMethod
 from randovania.server import client_check, fastapi_discord
 from randovania.server.database import User, World, database_lifespan
 from randovania.server.discord_auth import EnforceDiscordRole, discord_oauth_lifespan
 from randovania.server.socketio import (
-    ServerEventHandler,
     fastapi_socketio_lifespan,
-    server_event_handler,
 )
 
 if TYPE_CHECKING:
@@ -76,11 +74,6 @@ class ServerLoggingFormatter(ColourizedFormatter):
         record.context = ctx_context.get()
 
         return super().formatMessage(record)
-
-
-@server_event_handler("get_sid")
-async def get_sid(sa: ServerApp, sid: str) -> str:
-    return sid
 
 
 class ServerApp:
@@ -187,7 +180,7 @@ class ServerApp:
             )
             return randovania.VERSION
 
-        self.on(get_sid)
+        server_signals.GetSid.register(self, server_signals.GetSid)
 
     def _setup_exception_handlers(self) -> None:
         def status_message(status_code: int) -> str:
@@ -271,7 +264,8 @@ class ServerApp:
 
     def on[**P, T](
         self,
-        handler: ServerEventHandler[P, T],
+        message: str,
+        callback: server_signals.ServerEventCallback[P, T],
         namespace: str | None = None,
         *,
         with_header_check: bool = False,
@@ -287,9 +281,9 @@ class ServerApp:
             running the event handler. Default: `False`
         """
 
-        @functools.wraps(handler)
+        @functools.wraps(callback)
         async def _handler(sid: str, *args: P.args, **kwargs: P.kwargs) -> dict | dict[str, T]:
-            ctx_where.set(handler.message)
+            ctx_where.set(message)
             ctx_who.set(self.current_client_ip(sid))
             ctx_context.set("SocketIO")
 
@@ -297,7 +291,7 @@ class ServerApp:
                 args = args[0]  # type: ignore[assignment] # ???
             self.logger.debug("Starting call with args %s", args)
 
-            with sentry_sdk.start_transaction(op="message", name=handler.message) as span:
+            with sentry_sdk.start_transaction(op="message", name=message) as span:
                 try:
                     user = await self.get_current_user(sid)
                     ctx_who.set(user.name)
@@ -319,7 +313,7 @@ class ServerApp:
                 try:
                     span.set_tag("message.error", 0)
                     return {
-                        "result": await handler(self, sid, *args, **kwargs),
+                        "result": await callback(self, sid, *args, **kwargs),
                     }
 
                 except error.BaseNetworkError as err:
@@ -329,18 +323,18 @@ class ServerApp:
                 except (Exception, TypeError):
                     span.set_tag("message.error", error.ServerError.code())
                     self.logger.exception(
-                        f"Unhandled exception while processing request for message {handler.message}. Args: {args}"
+                        f"Unhandled exception while processing request for message {message}. Args: {args}"
                     )
                     return error.ServerError().as_json
 
-        metric = Summary(f"socket_{handler.message}", f"Socket.io messages of type {handler.message}")
+        metric = Summary(f"socket_{message}", f"Socket.io messages of type {message}")
 
         @functools.wraps(_handler)
         async def metric_wrapper(sid: str, *args: P.args, **kwargs: P.kwargs) -> dict | dict[str, T]:
             with metric.time():
                 return await _handler(sid, *args, **kwargs)
 
-        return self.sio.on(handler.message, namespace=namespace)(metric_wrapper)  # type: ignore[type-var]
+        return self.sio.on(message, namespace=namespace)(metric_wrapper)  # type: ignore[type-var]
 
     def current_client_ip(self, sid: str) -> str:
         """Returns the IP address of the client with this sid."""

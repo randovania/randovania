@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime
 import logging
+import typing
 from typing import TYPE_CHECKING, override
 
 import humanize
@@ -18,12 +19,12 @@ from randovania.gui.generated.async_race_room_window_ui import Ui_AsyncRaceRoomW
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.widgets.audit_log_model import AuditEntryListDatabaseModel
 from randovania.layout import preset_describer
+from randovania.network_common import server_signals
 from randovania.network_common.async_race_room import (
     AsyncRaceRoomEntry,
     AsyncRaceRoomRaceStatus,
     AsyncRaceRoomUserStatus,
 )
-from randovania.server import async_race
 
 if TYPE_CHECKING:
     from randovania.gui.lib.qt_network_client import QtNetworkClient
@@ -296,8 +297,11 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         if result != QtWidgets.QDialog.DialogCode.Accepted:
             return
 
-        patch_data = await self._network_client.async_race_join_and_export(
-            self.room, self._options.generic_per_game_options(game).cosmetic_patches
+        patch_data = typing.cast(
+            "dict",
+            await self._network_client.async_race_join_and_export(
+                self.room, self._options.generic_per_game_options(game).cosmetic_patches
+            ),
         )
 
         dialog.save_options()
@@ -472,9 +476,9 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
 
     @asyncSlot()
     async def _stop_listening_room_update_events(self) -> None:
-        await async_race.room_api.listen_to_room.call_server(self._network_client)(self.room.id, False)
+        await server_signals.AsyncRace.ListenToRoom.call_server(self._network_client)(self.room.id, False)
 
     async def request_room_update_events(self) -> None:
         # TODO: this does not restart the listener if we disconnect from the server
-        await async_race.room_api.listen_to_room.call_server(self._network_client)(self.room.id, True)
+        await server_signals.AsyncRace.ListenToRoom.call_server(self._network_client)(self.room.id, True)
         self.CloseEvent.connect(self._stop_listening_room_update_events)
