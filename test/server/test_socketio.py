@@ -8,7 +8,7 @@ import pytest
 import socketio.exceptions
 
 from randovania.network_common import connection_headers, error
-from randovania.network_common.signals.server_signals import server_event_handler
+from randovania.network_common.signals.server_signals import server_signal
 from test.server.sio_test_client import SocketIOTestClient
 
 if TYPE_CHECKING:
@@ -80,8 +80,8 @@ async def test_sio_connect_client_check_error(test_client, mocker: MockerFixture
 )
 async def test_on_success(side_effect: Any, rval: dict, test_client, sio_test_client):
     # Setup
-    custom = server_event_handler("custom")(AsyncMock(side_effect=side_effect))
-    custom.register(test_client.sa, custom)
+    custom = server_signal("custom")(AsyncMock(side_effect=side_effect))
+    custom.register(test_client.sa, custom.fn)
 
     # Run
     result = await sio_test_client.emit("custom", callback=True)

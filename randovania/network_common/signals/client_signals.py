@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Never
 
 from randovania.network_common.async_race_room import AsyncRaceRoomEntry
 from randovania.network_common.multiplayer_session import (
@@ -26,8 +26,11 @@ class ClientSignal[**P]:
         self.fn = fn
         self.message = message
 
-    async def __call__(self, *args: P.args, **kwargs: P.kwargs) -> None:
-        return await self.fn(*args, **kwargs)
+    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> Never:
+        raise TypeError(
+            f"Cannot call ClientSignal {self.fn.__name__} directly. "
+            f"Did you mean to call {self.fn.__name__}.emit() instead?"
+        )
 
     def emit(
         self,
@@ -60,6 +63,9 @@ class ClientSignal[**P]:
 def client_signal[**P](message: str) -> Callable[[AsyncCallable[P, None]], ClientSignal[P]]:
     """
     Transforms the callable into a `ClientSignal` for fully type-checked signal emission from the server.
+
+    Can be registered with a callback with `signal.register()` or
+    called from the server using `signal.emit()`.
 
     Example usage::
 

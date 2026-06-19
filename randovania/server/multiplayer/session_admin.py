@@ -397,7 +397,7 @@ async def _get_permalink(sa: ServerApp, sid: str, session: MultiplayerSession) -
 
 
 async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *args: typing.Any) -> typing.Any:
-    # FIXME: break this out into separate event handlers for each action
+    # FIXME: break this out into separate functions for each action
 
     monitoring.set_tag("action", action)
 
@@ -652,7 +652,7 @@ async def _create_patcher_file(
 
 
 async def admin_player(sa: ServerApp, sid: str, session_id: int, user_id: int, action: str, *args: typing.Any) -> None:
-    # FIXME: break this out into separate event handlers for each action
+    # FIXME: break this out into separate functions for each action
 
     monitoring.set_tag("action", action)
 

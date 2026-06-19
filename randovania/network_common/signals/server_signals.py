@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import typing
 from collections.abc import Sequence
-from typing import TYPE_CHECKING, Annotated, Any
+from typing import TYPE_CHECKING, Annotated, Any, Never
 
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
@@ -29,13 +29,16 @@ if TYPE_CHECKING:
 type ServerEventCallback[**P, RetT] = AsyncCallable[Concatenate[ServerApp, str, P], RetT]
 
 
-class ServerEventHandler[**P, RetT]:
+class ServerSignal[**P, RetT]:
     def __init__(self, fn: ServerEventCallback[P, RetT], message: str):
         self.fn = fn
         self.message = message
 
-    async def __call__(self, sa: ServerApp, sid: str, *args: P.args, **kwargs: P.kwargs) -> RetT:
-        return await self.fn(sa, sid, *args, **kwargs)
+    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> Never:
+        raise TypeError(
+            f"Cannot call ServerSignal {self.fn.__name__} directly. "
+            f"Did you mean to call {self.fn.__name__}.call_server() instead?"
+        )
 
     def call_server(
         self,
@@ -46,7 +49,7 @@ class ServerEventHandler[**P, RetT]:
         """
         Returns an async callable which, when called and awaited, uses the `NetworkClient` to call
         this function on the server, and returns the result. Provides full typing support,
-        so it's preferable to using `NetworkClient.server_call()` directly.
+        so it's preferable over using `NetworkClient.server_call()` directly.
         """
 
         async def inner(*args: P.args, **kwargs: P.kwargs) -> RetT:
@@ -68,19 +71,27 @@ class ServerEventHandler[**P, RetT]:
         namespace: str | None = None,
         with_header_check: bool = False,
     ) -> AsyncCallable[Concatenate[str, P], dict | dict[str, RetT]]:
+        """
+        Registers the given callback with the ServerApp's SIO server on this signal's message.
+
+        Using this function allows checking that the signature of the registered callback
+        if compatible with this signal's expected signature.
+        """
         return sa.on(self.message, callback, namespace, with_header_check=with_header_check)
 
 
-def server_event_handler[**P, RetT](
+def server_signal[**P, RetT](
     message: str,
-) -> Callable[[ServerEventCallback[P, RetT]], ServerEventHandler[P, RetT]]:
+) -> Callable[[ServerEventCallback[P, RetT]], ServerSignal[P, RetT]]:
     """
-    Transforms a function into a `ServerEventHandler` so that it can be registered via
-    `ServerApp.on()` or called from the client using `fn.server_call()`.
+    Transforms a function into a `ServerEventHandler` for fully typed-checked calls from the client.
+
+    Can be registered with a callback with `signal.register()` or
+    called from the client using `signal.call_server()`.
 
     Example usage::
 
-        @server_event_handler("multiplayer_list_sessions")
+        @server_signal("multiplayer_list_sessions")
         async def ListSessions(sa: ServerApp: sid: str, limit: int | None) -> Sequence[dict]:
             raise NotImplementedError
 
@@ -95,21 +106,25 @@ def server_event_handler[**P, RetT](
         print(result)
     """
 
-    def decorator(fn: AsyncCallable[Concatenate[ServerApp, str, P], RetT]) -> ServerEventHandler[P, RetT]:
-        return ServerEventHandler(fn, message)
+    def decorator(fn: AsyncCallable[Concatenate[ServerApp, str, P], RetT]) -> ServerSignal[P, RetT]:
+        return ServerSignal(fn, message)
 
     return decorator
 
 
-@server_event_handler("get_sid")
+@server_signal("get_sid")
 async def GetSid(
     sa: ServerApp,
     sid: str,
 ) -> str:
+    raise NotImplementedError
+
+
+async def get_sid(sa: ServerApp, sid: str) -> str:
     return sid
 
 
-@server_event_handler("restore_user_session")
+@server_signal("restore_user_session")
 async def RestoreUserSession(
     sa: ServerApp,
     sid: str,
@@ -119,7 +134,7 @@ async def RestoreUserSession(
     raise NotImplementedError
 
 
-@server_event_handler("logout")
+@server_signal("logout")
 async def Logout(
     sa: ServerApp,
     sid: str,
@@ -128,7 +143,7 @@ async def Logout(
 
 
 class Multiplayer:
-    @server_event_handler("multiplayer_admin_session")
+    @server_signal("multiplayer_admin_session")
     @staticmethod
     async def AdminSession(
         sa: ServerApp,
@@ -139,7 +154,7 @@ class Multiplayer:
     ) -> Any:
         raise NotImplementedError
 
-    @server_event_handler("multiplayer_admin_player")
+    @server_signal("multiplayer_admin_player")
     @staticmethod
     async def AdminPlayer(
         sa: ServerApp,
@@ -151,7 +166,7 @@ class Multiplayer:
     ) -> Any:
         raise NotImplementedError
 
-    @server_event_handler("multiplayer_list_sessions")
+    @server_signal("multiplayer_list_sessions")
     @staticmethod
     async def ListSessions(
         sa: ServerApp,
@@ -160,7 +175,7 @@ class Multiplayer:
     ) -> Sequence[TypedJsonObject[MultiplayerSessionListEntry]]:
         raise NotImplementedError
 
-    @server_event_handler("multiplayer_join_session")
+    @server_signal("multiplayer_join_session")
     @staticmethod
     async def JoinSession(
         sa: ServerApp,
@@ -170,7 +185,7 @@ class Multiplayer:
     ) -> TypedJsonObject[MultiplayerSessionEntry]:
         raise NotImplementedError
 
-    @server_event_handler("multiplayer_listen_to_session")
+    @server_signal("multiplayer_listen_to_session")
     @staticmethod
     async def ListenToSession(
         sa: ServerApp,
@@ -180,7 +195,7 @@ class Multiplayer:
     ) -> None:
         raise NotImplementedError
 
-    @server_event_handler("multiplayer_request_session_update")
+    @server_signal("multiplayer_request_session_update")
     @staticmethod
     async def RequestSessionUpdate(
         sa: ServerApp,
@@ -189,7 +204,7 @@ class Multiplayer:
     ) -> None:
         raise NotImplementedError
 
-    @server_event_handler("multiplayer_watch_inventory")
+    @server_signal("multiplayer_watch_inventory")
     @staticmethod
     async def WatchInventory(
         sa: ServerApp,
@@ -201,7 +216,7 @@ class Multiplayer:
     ) -> None:
         raise NotImplementedError
 
-    @server_event_handler("multiplayer_world_sync")
+    @server_signal("multiplayer_world_sync")
     @staticmethod
     async def WorldSync(
         sa: ServerApp,
@@ -212,7 +227,7 @@ class Multiplayer:
 
 
 class AsyncRace:
-    @server_event_handler("async_race_list_rooms")
+    @server_signal("async_race_list_rooms")
     @staticmethod
     async def ListRooms(
         sa: ServerApp,
@@ -221,7 +236,7 @@ class AsyncRace:
     ) -> Sequence[TypedJsonObject[AsyncRaceRoomListEntry]]:
         raise NotImplementedError
 
-    @server_event_handler("async_race_create_room")
+    @server_signal("async_race_create_room")
     @staticmethod
     async def CreateRoom(
         sa: ServerApp,
@@ -231,7 +246,7 @@ class AsyncRace:
     ) -> TypedJsonObject[AsyncRaceRoomEntry]:
         raise NotImplementedError
 
-    @server_event_handler("async_race_change_room_settings")
+    @server_signal("async_race_change_room_settings")
     @staticmethod
     async def ChangeRoomSettings(
         sa: ServerApp,
@@ -241,11 +256,11 @@ class AsyncRace:
     ) -> TypedJsonObject[AsyncRaceRoomEntry]:
         raise NotImplementedError
 
-    @server_event_handler("async_race_listen_to_room")
+    @server_signal("async_race_listen_to_room")
     @staticmethod
     async def ListenToRoom(sa: ServerApp, sid: str, room_id: int, listen: bool) -> None: ...
 
-    @server_event_handler("async_race_get_room")
+    @server_signal("async_race_get_room")
     @staticmethod
     async def GetRoom(
         sa: ServerApp,
@@ -255,7 +270,7 @@ class AsyncRace:
     ) -> TypedJsonObject[AsyncRaceRoomEntry]:
         raise NotImplementedError
 
-    @server_event_handler("async_race_refresh_room")
+    @server_signal("async_race_refresh_room")
     @staticmethod
     async def RefreshRoom(
         sa: ServerApp,
@@ -265,7 +280,7 @@ class AsyncRace:
     ) -> TypedJsonObject[AsyncRaceRoomEntry]:
         raise NotImplementedError
 
-    @server_event_handler("async_race_get_leaderboard")
+    @server_signal("async_race_get_leaderboard")
     @staticmethod
     async def GetLeaderboard(
         sa: ServerApp,
@@ -275,7 +290,7 @@ class AsyncRace:
     ) -> TypedJsonObject[RaceRoomLeaderboard]:
         raise NotImplementedError
 
-    @server_event_handler("async_race_get_layout")
+    @server_signal("async_race_get_layout")
     @staticmethod
     async def GetLayout(
         sa: ServerApp,
@@ -285,14 +300,14 @@ class AsyncRace:
     ) -> TypedBytes[LayoutDescription]:
         raise NotImplementedError
 
-    @server_event_handler("async_race_get_audit_log")
+    @server_signal("async_race_get_audit_log")
     @staticmethod
     async def GetAuditLog(
         sa: ServerApp, sid: str, room_id: int, auth_token: str
     ) -> Sequence[TypedJsonObject[AuditEntry]]:
         raise NotImplementedError
 
-    @server_event_handler("async_race_admin_get_admin_data")
+    @server_signal("async_race_admin_get_admin_data")
     @staticmethod
     async def AdminGetAdminData(
         sa: ServerApp,
@@ -301,7 +316,7 @@ class AsyncRace:
     ) -> TypedJsonObject[AsyncRaceRoomAdminData]:
         raise NotImplementedError
 
-    @server_event_handler("async_race_admin_update_entries")
+    @server_signal("async_race_admin_update_entries")
     @staticmethod
     async def AdminUpdateEntries(
         sa: ServerApp,
@@ -311,7 +326,7 @@ class AsyncRace:
     ) -> TypedJsonObject[AsyncRaceRoomEntry]:
         raise NotImplementedError
 
-    @server_event_handler("async_race_join_and_export")
+    @server_signal("async_race_join_and_export")
     @staticmethod
     async def JoinAndExport(
         sa: ServerApp,
@@ -322,7 +337,7 @@ class AsyncRace:
     ) -> dict:
         raise NotImplementedError
 
-    @server_event_handler("async_race_change_state")
+    @server_signal("async_race_change_state")
     @staticmethod
     async def ChangeState(
         sa: ServerApp,
@@ -332,7 +347,7 @@ class AsyncRace:
     ) -> TypedJsonObject[AsyncRaceRoomEntry]:
         raise NotImplementedError
 
-    @server_event_handler("async_race_get_own_proof")
+    @server_signal("async_race_get_own_proof")
     @staticmethod
     async def GetOwnProof(
         sa: ServerApp,
@@ -341,7 +356,7 @@ class AsyncRace:
     ) -> tuple[Annotated[str, "submission notes"], Annotated[str, "proof url"]]:
         raise NotImplementedError
 
-    @server_event_handler("async_race_submit_proof")
+    @server_signal("async_race_submit_proof")
     @staticmethod
     async def SubmitProof(
         sa: ServerApp,
@@ -352,7 +367,7 @@ class AsyncRace:
     ) -> None:
         raise NotImplementedError
 
-    @server_event_handler("async_race_get_livesplit_url")
+    @server_signal("async_race_get_livesplit_url")
     @staticmethod
     async def GetLivesplitUrl(
         sa: ServerApp,

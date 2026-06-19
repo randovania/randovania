@@ -181,7 +181,7 @@ class ServerApp:
             )
             return randovania.VERSION
 
-        server_signals.GetSid.register(self, server_signals.GetSid)
+        server_signals.GetSid.register(self, server_signals.get_sid)
 
     def _setup_exception_handlers(self) -> None:
         def status_message(status_code: int) -> str:
