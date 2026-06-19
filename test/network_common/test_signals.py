@@ -1,15 +1,17 @@
 from __future__ import annotations
 
 import re
+from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 from socketio import AsyncClient, AsyncServer
 
-from randovania.network_client.network_client import NetworkClient
 from randovania.network_common.signals.client_signals import ClientSignal, client_signal
 from randovania.network_common.signals.server_signals import ServerSignal, server_signal
-from randovania.server.server_app import ServerApp
+
+if TYPE_CHECKING:
+    from randovania.server.server_app import ServerApp
 
 
 @pytest.fixture
@@ -31,14 +33,15 @@ def server_test_signal() -> ServerSignal[[str], str]:
 
 @pytest.fixture
 def client() -> MagicMock:
-    result = MagicMock(spec=NetworkClient)
+    result = MagicMock()
+    result.server_call = AsyncMock()
     result.sio = MagicMock(spec=AsyncClient)
     return result
 
 
 @pytest.fixture
 def server() -> MagicMock:
-    result = MagicMock(spec=ServerApp)
+    result = MagicMock()
     result.sio = MagicMock(spec=AsyncServer)
     return result
 
