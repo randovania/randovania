@@ -108,6 +108,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
     highlighted_node: Node | None = None
     connected_node: Node | None = None
     _background_image: QtGui.QImage | None = None
+    _region_image: QtGui.QImage | None = None
+    _region_image_bounds: BoundsInt | None = None
     region_bounds: BoundsFloat
     area_bounds: BoundsFloat
     area_size: QSizeF
@@ -181,14 +183,17 @@ class DataEditorCanvas(QtWidgets.QWidget):
             self.game.data_path.joinpath("assets", "maps", f"{region.name}.png") if self.game is not None else None
         )
         if image_path is not None and image_path.exists():
-            self._background_image = QtGui.QImage(os.fspath(image_path))
-            self.image_bounds = BoundsInt(
+            self._region_image = QtGui.QImage(os.fspath(image_path))
+            self._region_image_bounds = BoundsInt(
                 min_x=region.extra.get("map_min_x", 0),
                 min_y=region.extra.get("map_min_y", 0),
-                max_x=self._background_image.width() - region.extra.get("map_max_x", 0),
-                max_y=self._background_image.height() - region.extra.get("map_max_y", 0),
+                max_x=self._region_image.width() - region.extra.get("map_max_x", 0),
+                max_y=self._region_image.height() - region.extra.get("map_max_y", 0),
             )
+            self._background_image = None
         else:
+            self._region_image = None
+            self._region_image_bounds = None
             self._background_image = None
 
         self.update_region_bounds()
@@ -259,6 +264,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
             max_y = self._background_image.height() - area.extra.get("map_max_y", 0)
             self.image_bounds = BoundsInt(min_x, min_y, max_x, max_y)
             self.region_bounds = BoundsFloat(min_x, min_y, max_x, max_y)
+        # some games (msr + dread) do not use area images but one per region
+        # the image to use was already set by `select_region`
+        elif self._region_image is not None:
+            assert self._region_image_bounds is not None
+            self._background_image = self._region_image
+            self.image_bounds = self._region_image_bounds
+            self.update_region_bounds()
         else:
             self._background_image = None
             self.update_region_bounds()
