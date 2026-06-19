@@ -17,9 +17,9 @@ from pydantic import BaseModel, model_validator
 from starlette import status
 from starlette.responses import JSONResponse
 
-from randovania.network_common import client_signals, server_signals
 from randovania.network_common import error as network_error
 from randovania.network_common.authentication import AuthenticationMethod
+from randovania.network_common.signals import client_signals, server_signals
 from randovania.server import fastapi_discord
 from randovania.server.database import User, UserAccessToken
 from randovania.server.multiplayer import session_common

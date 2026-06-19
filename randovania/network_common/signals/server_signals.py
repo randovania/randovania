@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Annotated, Any
 
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib.json_lib import JsonObject_RO
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
     AsyncRaceRoomAdminData,
@@ -16,8 +15,8 @@ from randovania.network_common.async_race_room import (
     RaceRoomLeaderboard,
 )
 from randovania.network_common.audit import AuditEntry
-from randovania.network_common.client_signals import _args_to_sio_data
 from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerSessionListEntry
+from randovania.network_common.signals.common import TypedBytes, TypedJsonObject, args_to_sio_data
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
 
 if TYPE_CHECKING:
@@ -53,7 +52,7 @@ class ServerEventHandler[**P, RetT]:
         async def inner(*args: P.args, **kwargs: P.kwargs) -> RetT:
             result = await network_client.server_call(
                 self.message,
-                _args_to_sio_data(*args),
+                args_to_sio_data(*args),
                 namespace=namespace,
                 handle_invalid_session=handle_invalid_session,
             )
@@ -100,13 +99,6 @@ def server_event_handler[**P, RetT](
         return ServerEventHandler(fn, message)
 
     return decorator
-
-
-type TypedBytes[T] = Annotated[bytes, T]
-""""""
-
-type TypedJsonObject[T] = Annotated[JsonObject_RO, T]
-""""""
 
 
 @server_event_handler("get_sid")

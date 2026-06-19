@@ -10,7 +10,8 @@ from PySide6 import QtCore, QtWidgets
 from randovania.gui.lib import async_dialog
 from randovania.layout.layout_description import LayoutDescription
 from randovania.network_client.network_client import UnableToConnect
-from randovania.network_common import admin_actions, error, server_signals
+from randovania.network_common import admin_actions, error
+from randovania.network_common.signals import server_signals
 
 if typing.TYPE_CHECKING:
     import uuid

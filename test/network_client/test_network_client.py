@@ -354,7 +354,7 @@ async def test_refresh_received_pickups(client: NetworkClient, blank_game_descri
     }
 
     pickups = [MagicMock(), MagicMock(), MagicMock()]
-    mock_decode = mocker.patch("randovania.network_client.network_client._decode_pickup", side_effect=pickups)
+    mock_decode = mocker.patch("randovania.network_common.remote_pickup._decode_pickup", side_effect=pickups)
 
     client.on_world_pickups_update = AsyncMock()
 

@@ -9,7 +9,7 @@ from randovania.network_common import pickup_serializer
 
 if typing.TYPE_CHECKING:
     from collections.abc import Mapping
-    from typing import NamedTuple, Self
+    from typing import Self
 
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -26,7 +26,7 @@ def _base64_encode_pickup(pickup: PickupEntry, resource_database: ResourceDataba
     return base64.b85encode(encoded_pickup).decode("utf-8")
 
 
-class RemotePickup(NamedTuple):
+class RemotePickup(typing.NamedTuple):
     provider_name: str
     pickup_entry: PickupEntry
     coop_location: PickupIndex | None

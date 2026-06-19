@@ -17,7 +17,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.json_lib import JsonObject_RO
-from randovania.network_common import client_signals, error, server_signals
+from randovania.network_common import error
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
     AsyncRaceRoomAdminData,
@@ -33,6 +33,7 @@ from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
 )
+from randovania.network_common.signals import client_signals, server_signals
 from randovania.server import database, lib
 from randovania.server.database import (
     AsyncRaceEntryPause,
@@ -44,7 +45,7 @@ from randovania.server.server_app import RdvFastAPI, ServerApp
 
 if typing.TYPE_CHECKING:
     from randovania.network_common.async_race_room import AsyncRaceRoomEntry
-    from randovania.network_common.server_signals import TypedBytes, TypedJsonObject
+    from randovania.network_common.signals.common import TypedBytes, TypedJsonObject
 
 MAX_AUTH_TOKEN_LENGTH = 3600 * 24
 

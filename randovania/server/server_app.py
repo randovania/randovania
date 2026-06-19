@@ -30,8 +30,9 @@ from starlette.responses import JSONResponse
 from uvicorn.logging import ColourizedFormatter
 
 import randovania
-from randovania.network_common import connection_headers, error, server_signals
+from randovania.network_common import connection_headers, error
 from randovania.network_common.authentication import AuthenticationMethod
+from randovania.network_common.signals import server_signals
 from randovania.server import client_check, fastapi_discord
 from randovania.server.database import User, World, database_lifespan
 from randovania.server.discord_auth import EnforceDiscordRole, discord_oauth_lifespan

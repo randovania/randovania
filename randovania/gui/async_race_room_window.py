@@ -19,12 +19,12 @@ from randovania.gui.generated.async_race_room_window_ui import Ui_AsyncRaceRoomW
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.widgets.audit_log_model import AuditEntryListDatabaseModel
 from randovania.layout import preset_describer
-from randovania.network_common import server_signals
 from randovania.network_common.async_race_room import (
     AsyncRaceRoomEntry,
     AsyncRaceRoomRaceStatus,
     AsyncRaceRoomUserStatus,
 )
+from randovania.network_common.signals import server_signals
 
 if TYPE_CHECKING:
     from randovania.gui.lib.qt_network_client import QtNetworkClient

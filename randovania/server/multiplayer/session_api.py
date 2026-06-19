@@ -6,13 +6,14 @@ from fastapi import APIRouter
 from peewee import Case, fn
 from pydantic import StringConstraints
 
-from randovania.network_common import error, multiplayer_session, server_signals
+from randovania.network_common import error, multiplayer_session
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
     MultiplayerSessionEntry,
     MultiplayerSessionListEntry,
 )
-from randovania.network_common.server_signals import TypedJsonObject
+from randovania.network_common.signals import server_signals
+from randovania.network_common.signals.common import TypedJsonObject
 from randovania.server import database
 from randovania.server.database import MultiplayerMembership, MultiplayerSession, User, World
 from randovania.server.multiplayer import session_common

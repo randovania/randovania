@@ -19,12 +19,12 @@ from randovania.lib.json_lib import JsonObject_RO
 from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.game_details import GameDetails
+from randovania.network_common.remote_pickup import RemotePickup
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.network_common.user import RandovaniaUser, UserID
 
 if TYPE_CHECKING:
     from randovania.network_common.remote_inventory import RemoteInventory
-    from randovania.network_common.remote_pickup import RemotePickup
 
 MAX_SESSION_NAME_LENGTH = 50
 MAX_WORLD_NAME_LENGTH = 30

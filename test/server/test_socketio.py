@@ -8,7 +8,7 @@ import pytest
 import socketio.exceptions
 
 from randovania.network_common import connection_headers, error
-from randovania.network_common.server_signals import server_event_handler
+from randovania.network_common.signals.server_signals import server_event_handler
 from test.server.sio_test_client import SocketIOTestClient
 
 if TYPE_CHECKING:

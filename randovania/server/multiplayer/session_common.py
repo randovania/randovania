@@ -4,7 +4,8 @@ import peewee
 import sentry_sdk
 
 from randovania.bitpacking import construct_pack
-from randovania.network_common import client_signals, error
+from randovania.network_common import error
+from randovania.network_common.signals import client_signals
 from randovania.server import database
 from randovania.server.database import MultiplayerAuditEntry, MultiplayerSession, World
 from randovania.server.server_app import AsyncCallable, ServerApp

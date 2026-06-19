@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import typing
 from typing import TYPE_CHECKING
 
 from randovania.network_common.async_race_room import AsyncRaceRoomEntry
@@ -11,25 +10,15 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerWorldPickups,
 )
 from randovania.network_common.remote_inventory import RemoteInventory
-from randovania.network_common.server_signals import TypedBytes, TypedJsonObject
+from randovania.network_common.signals.common import TypedBytes, TypedJsonObject, args_to_sio_data
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Mapping, Sequence
+    from collections.abc import Callable
     from typing import Any
 
     from socketio import AsyncClient
 
     from randovania.server.server_app import AsyncCallable, ServerApp
-
-
-type SioDataType = str | bytes | Mapping[str, SioDataType] | Sequence[SioDataType]
-
-
-def _args_to_sio_data(*args: Any) -> SioDataType | tuple[SioDataType, ...]:
-    if len(args) == 1:
-        return typing.cast("SioDataType", args[0])
-    else:
-        return typing.cast("tuple[SioDataType, ...]", args)
 
 
 class ClientSignal[**P]:
@@ -54,7 +43,7 @@ class ClientSignal[**P]:
         """
 
         async def inner(*args: P.args, **kwargs: P.kwargs) -> None:
-            await sa.sio.emit(self.message, _args_to_sio_data(*args), to=to, room=room, namespace=namespace)
+            await sa.sio.emit(self.message, args_to_sio_data(*args), to=to, room=room, namespace=namespace)
 
         return inner
 

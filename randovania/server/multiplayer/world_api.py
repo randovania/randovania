@@ -15,10 +15,11 @@ from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.layout.layout_description import LayoutDescription
-from randovania.network_common import client_signals, error, remote_inventory, server_signals
+from randovania.network_common import error, remote_inventory
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups
 from randovania.network_common.remote_pickup import RemotePickup
+from randovania.network_common.signals import client_signals, server_signals
 from randovania.network_common.world_sync import (
     ServerSyncRequest,
     ServerSyncResponse,

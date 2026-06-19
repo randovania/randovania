@@ -9,10 +9,11 @@ from randovania import monitoring
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import InvalidLayoutDescription, LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.network_common import error, server_signals
+from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH, WORLD_NAME_RE
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
+from randovania.network_common.signals import server_signals
 from randovania.server import database
 from randovania.server.database import (
     MultiplayerAuditEntry,
