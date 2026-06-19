@@ -7,11 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.9.0] - 2026-07-0?
 
-- Waiting changes to be added.
 - Added: The Data Visualizer now displays more information about Hint nodes.
 
 ### Metroid Dread
 
+- Changed: Usages of Power Bombs to open Charge Beam Doors and destroying Enkies with the Power Bomb Limitations disabled have been changed to no longer require Knowledge (Beginner).
 - Removed: The option for disabling required mains for Power Bombs has been removed. Old presets will still work, but
   are unsupported.
 
