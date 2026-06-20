@@ -836,6 +836,7 @@ async def test_emit_async_room_update(simple_room):
         ANY,
         namespace="/",
         to="async-race-1-1235",
+        room=None,
     )
 
 

@@ -1,4 +1,3 @@
-import base64
 import datetime
 import uuid
 
@@ -7,7 +6,7 @@ import peewee
 import sentry_sdk
 from frozendict import frozendict
 
-from randovania.bitpacking import bitpacking
+from randovania.bitpacking import construct_pack
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
@@ -16,9 +15,11 @@ from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.layout.layout_description import LayoutDescription
-from randovania.network_common import error, remote_inventory, signals
+from randovania.network_common import error, remote_inventory
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.pickup_serializer import BitPackPickupEntry
+from randovania.network_common.multiplayer_session import MultiplayerWorldPickups
+from randovania.network_common.remote_pickup import RemotePickup
+from randovania.network_common.signals import client_signals, server_signals
 from randovania.network_common.world_sync import (
     ServerSyncRequest,
     ServerSyncResponse,
@@ -41,12 +42,11 @@ def get_inventory_room_name_raw(world_uuid: uuid.UUID, user_id: int) -> str:
 async def emit_inventory_update(sa: ServerApp, world: World, user_id: int, inventory: bytes) -> None:
     room_name = get_inventory_room_name_raw(world.uuid, user_id)
 
-    await sa.sio.emit(
-        signals.WORLD_BINARY_INVENTORY,
-        (str(world.uuid), user_id, inventory),
-        namespace="/",
+    await client_signals.WorldBinaryInventory.emit(
+        sa,
         to=room_name,
-    )
+        namespace="/",
+    )(str(world.uuid), user_id, inventory)
     # try:
     #     inventory: RemoteInventory = construct_pack.decode(association.inventory, RemoteInventory)
     #     flask_socketio.emit(
@@ -61,11 +61,6 @@ async def emit_inventory_update(sa: ServerApp, world: World, user_id: int, inven
     # except construct.ConstructError as e:
     #     sa.logger.warning("Unable to encode inventory for world %s, user %d: %s",
     #                      association.world.uuid, association.user.id, str(e))
-
-
-def _base64_encode_pickup(pickup: PickupEntry, resource_database: ResourceDatabase) -> str:
-    encoded_pickup = bitpacking.pack_value(BitPackPickupEntry(pickup, resource_database))
-    return base64.b85encode(encoded_pickup).decode("utf-8")
 
 
 def _get_resource_database(description: LayoutDescription, player: int) -> ResourceDatabase:
@@ -178,9 +173,8 @@ async def collect_locations(
     return receiver_worlds
 
 
-async def watch_inventory(
-    sa: ServerApp, sid: str, world_uid: uuid.UUID, user_id: int, watch: bool, binary: bool
-) -> None:
+async def watch_inventory(sa: ServerApp, sid: str, raw_world_uid: str, user_id: int, watch: bool, binary: bool) -> None:
+    world_uid = uuid.UUID(raw_world_uid)
     sa.logger.debug("Watching inventory of %s/%d: %s", world_uid, user_id, watch)
     room_name = get_inventory_room_name_raw(world_uid, user_id)
 
@@ -297,7 +291,8 @@ async def sync_one_world(
     return response, session_id_to_return, worlds_to_emit_update
 
 
-async def world_sync(sa: ServerApp, sid: str, request: ServerSyncRequest) -> ServerSyncResponse:
+async def world_sync(sa: ServerApp, sid: str, raw_request: bytes) -> bytes:
+    request = construct_pack.decode(raw_request, ServerSyncRequest)
     user = await sa.get_current_user(sid)
 
     world_details = {}
@@ -355,9 +350,11 @@ async def world_sync(sa: ServerApp, sid: str, request: ServerSyncRequest) -> Ser
     for session_id in sessions_to_update_actions:
         await session_common.emit_session_actions_update(sa, MultiplayerSession.get_by_id(session_id))
 
-    return ServerSyncResponse(
-        worlds=frozendict(world_details),
-        errors=frozendict(failed_syncs),
+    return construct_pack.encode(
+        ServerSyncResponse(
+            worlds=frozendict(world_details),
+            errors=frozendict(failed_syncs),
+        )
     )
 
 
@@ -371,7 +368,7 @@ async def emit_world_pickups_update(sa: ServerApp, world: World) -> None:
     assert world.order is not None
     resource_database = _get_resource_database(description, world.order)
 
-    result: list[dict | None] = []
+    result: list[RemotePickup] = []
     actions: list[WorldAction] = (
         WorldAction.select(
             WorldAction.location,
@@ -388,15 +385,13 @@ async def emit_world_pickups_update(sa: ServerApp, world: World) -> None:
         assert action.provider.order is not None
         pickup_target = _get_pickup_target(description, action.provider.order, action.location)
 
-        if pickup_target is None:
-            result.append(None)
-        else:
+        if pickup_target is not None:
             result.append(
-                {
-                    "provider_name": action.provider.name,
-                    "pickup": _base64_encode_pickup(pickup_target.pickup, resource_database),
-                    "coop_location": action.location if action.provider.uuid == world.uuid else None,
-                }
+                RemotePickup(
+                    provider_name=action.provider.name,
+                    pickup_entry=pickup_target.pickup,
+                    coop_location=PickupIndex(action.location) if action.provider.uuid == world.uuid else None,
+                )
             )
 
     sa.logger.info(
@@ -410,12 +405,9 @@ async def emit_world_pickups_update(sa: ServerApp, world: World) -> None:
         },
     )
 
-    data = {
-        "world": str(world.uuid),
-        "game": resource_database.game_enum.value,
-        "pickups": result,
-    }
-    await sa.sio.emit(signals.WORLD_PICKUPS_UPDATE, data, room=_get_world_room(world))
+    data = MultiplayerWorldPickups(world_id=world.uuid, game=resource_database.game_enum, pickups=tuple(result))
+
+    await client_signals.WorldPickupsUpdate.emit(sa, room=_get_world_room(world))(data.as_json(resource_database))
 
 
 async def report_disconnect(sa: ServerApp, session_dict: dict) -> None:
@@ -446,5 +438,5 @@ async def report_disconnect(sa: ServerApp, session_dict: dict) -> None:
 
 
 def setup_app(sa: ServerApp) -> None:
-    sa.on("multiplayer_watch_inventory", watch_inventory)
-    sa.on_with_wrapper("multiplayer_world_sync", world_sync)
+    server_signals.Multiplayer.WatchInventory.register(sa, watch_inventory)
+    server_signals.Multiplayer.WorldSync.register(sa, world_sync, with_header_check=True)
