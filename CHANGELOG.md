@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Waiting changes to be added.
 - Added: The Data Visualizer now displays more information about Hint nodes.
 
+### Another Metroid 2 Remake
+
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
+
 ### Metroid Dread
 
 - Removed: The option for disabling required mains for Power Bombs has been removed. Old presets will still work, but
@@ -31,6 +35,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Main Deck
 
 - Changed: Dark Stairwell: Using the hidden connection to/from Central Nexus can now expect Mid-Air Morphs instead of Bombs/Hi-Jump.
+
+### Metroid Prime
+
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
 
 ### Metroid: Samus Returns
 
