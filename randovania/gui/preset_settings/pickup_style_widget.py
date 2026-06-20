@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 class PickupStyleWidget(QDialog, Ui_PickupStyleWidget):
     Changed = Signal()
 
-    def __init__(self, parent: QWidget | None, editor: PresetEditor):
+    def __init__(self, parent: QWidget | None, editor: PresetEditor) -> None:
         super().__init__(parent)
         self.setupUi(self)
         self._editor = editor
@@ -40,13 +40,13 @@ class PickupStyleWidget(QDialog, Ui_PickupStyleWidget):
         )
 
     def _persist_enum(self, combo: QtWidgets.QComboBox, attribute_name: str):
-        def persist(index: int):
+        def persist(index: int) -> None:
             with self._editor as options:
                 options.set_configuration_field(attribute_name, combo.itemData(index))
 
         return persist
 
-    def update(self, layout: BaseConfiguration):
+    def update(self, layout: BaseConfiguration) -> None:
         signal_handling.set_combo_with_value(self.pickup_model_combo, layout.pickup_model_style)
         signal_handling.set_combo_with_value(self.pickup_data_source_combo, layout.pickup_model_data_source)
         self.pickup_data_source_combo.setEnabled(layout.pickup_model_style != PickupModelStyle.ALL_VISIBLE)

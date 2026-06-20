@@ -74,7 +74,7 @@ def _calculate_previous_versions(
         yield date, old_preset, old_description
 
 
-def _set_item_data(item: QtWidgets.QListWidgetItem, data: tuple[Preset | None, tuple[str, ...]]):
+def _set_item_data(item: QtWidgets.QListWidgetItem, data: tuple[Preset | None, tuple[str, ...]]) -> None:
     item.setData(QtCore.Qt.ItemDataRole.UserRole, data)
 
 
@@ -83,7 +83,7 @@ def _get_item_data(item: QtWidgets.QListWidgetItem) -> tuple[Preset | None, tupl
 
 
 class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
-    def __init__(self, preset_manager: PresetManager, preset: VersionedPreset):
+    def __init__(self, preset_manager: PresetManager, preset: VersionedPreset) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -123,7 +123,7 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
             return None
 
     @asyncSlot()
-    async def _export_selected_preset(self):
+    async def _export_selected_preset(self) -> None:
         preset = self.selected_preset()
         assert preset is not None
 
@@ -133,7 +133,7 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
         if path is not None:
             preset.save_to_file(path)
 
-    def _on_selection_changed(self):
+    def _on_selection_changed(self) -> None:
         items = self.version_widget.selectedItems()
         self.accept_button.setEnabled(False)
         self.export_button.setEnabled(False)

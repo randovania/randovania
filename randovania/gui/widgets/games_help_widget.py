@@ -25,7 +25,7 @@ class GamesHelpWidget(QtWidgets.QTabWidget):
     _pending_current_game: RandovaniaGame | None = None
     _pending_select_preset_tab: bool = False
 
-    def __init__(self, parent: QtWidgets.QWidget | None = None, **kwargs: typing.Any):
+    def __init__(self, parent: QtWidgets.QWidget | None = None, **kwargs: typing.Any) -> None:
         super().__init__(parent, **kwargs)
 
         self._index_for_game = {}

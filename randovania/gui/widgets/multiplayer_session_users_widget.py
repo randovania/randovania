@@ -131,7 +131,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         generation_in_progress: int | None
         game_details: GameDetails | None
 
-    def __init__(self, options: Options, window_manager: WindowManager, session_api: MultiplayerSessionApi):
+    def __init__(self, options: Options, window_manager: WindowManager, session_api: MultiplayerSessionApi) -> None:
         super().__init__()
         self.setContentsMargins(0, 0, 0, 0)
         self.setFrameShape(QtWidgets.QFrame.Shape.Panel)

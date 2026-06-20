@@ -53,7 +53,7 @@ GENERIC_FIELDS: list[FieldDefinition] = [
 class ResourceDatabaseGenericModel[T: DataclassResourceInfo](AppendableEditableTableModel[T]):
     """Model for editing a database of ResourceInfo using a QTableView"""
 
-    def __init__(self, db: ResourceDatabase, resource_type: ResourceType):
+    def __init__(self, db: ResourceDatabase, resource_type: ResourceType) -> None:
         super().__init__()
         self.db = db
         self.resource_type = resource_type
@@ -89,7 +89,7 @@ ITEM_FIELDS.insert(2, FieldDefinition("Max Capacity", "max_capacity", from_qt=la
 class ResourceDatabaseItemModel(ResourceDatabaseGenericModel[ItemResourceInfo]):
     """Model for editing a database of ItemResourceInfo using a QTableView"""
 
-    def __init__(self, db: ResourceDatabase):
+    def __init__(self, db: ResourceDatabase) -> None:
         super().__init__(db, ResourceType.ITEM)
 
     @typing.override
@@ -108,7 +108,7 @@ TRICK_FIELDS.insert(2, FieldDefinition("Description", "description"))
 class ResourceDatabaseTrickModel(ResourceDatabaseGenericModel[TrickResourceInfo]):
     """Model for editing a database of TrickResourceInfo using a QTableView"""
 
-    def __init__(self, db: ResourceDatabase):
+    def __init__(self, db: ResourceDatabase) -> None:
         super().__init__(db, ResourceType.TRICK)
 
     @typing.override
@@ -145,7 +145,7 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
 
     ResourceChanged = QtCore.Signal(object)
 
-    def __init__(self, parent: QtWidgets.QWidget, db: ResourceDatabase, region_list: RegionList):
+    def __init__(self, parent: QtWidgets.QWidget, db: ResourceDatabase, region_list: RegionList) -> None:
         super().__init__(parent)
         self.setupUi(self)
 

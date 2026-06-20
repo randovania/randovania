@@ -5,7 +5,7 @@ from PySide6.QtCore import Qt
 
 
 class ComboBoxItemDelegate(QtWidgets.QStyledItemDelegate):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.items = []
 

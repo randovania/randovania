@@ -26,7 +26,7 @@ if TYPE_CHECKING:
 
 
 class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager) -> None:
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 

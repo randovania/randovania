@@ -54,7 +54,7 @@ class DockWeaknessListModel(EditableListModel[DockWeakness]):
     delegate: ComboBoxItemDelegate
     type: DockType
 
-    def __init__(self, db: DockWeaknessDatabase, delegate: ComboBoxItemDelegate):
+    def __init__(self, db: DockWeaknessDatabase, delegate: ComboBoxItemDelegate) -> None:
         super().__init__()
         self.db = db
         self.delegate = delegate
@@ -79,7 +79,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     _connections_visualizers: dict[QtWidgets.QWidget, ConnectionsVisualizer]
     _edit_popup: ConnectionsEditor | None = None
 
-    def __init__(self, game: GameDescription, node: Node):
+    def __init__(self, game: GameDescription, node: Node) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)

@@ -20,7 +20,7 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
         max_length: int | None,
         is_password: bool,
         check_re: typing.Pattern | None,
-    ):
+    ) -> None:
         super().__init__(parent)
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)

@@ -48,7 +48,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         network_client: QtNetworkClient,
         options: Options,
         window_manager: WindowManager,
-    ):
+    ) -> None:
         super().__init__()
         self._network_client = network_client
         self._options = options

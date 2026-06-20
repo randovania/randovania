@@ -25,7 +25,7 @@ class WidgetWithClose(typing.Protocol):
 class WindowManager(QtWidgets.QMainWindow):
     tracked_windows: list[WidgetWithClose]
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.tracked_windows = []
 
@@ -67,7 +67,7 @@ class WindowManager(QtWidgets.QMainWindow):
         raise NotImplementedError
 
     def track_window(self, window: WidgetWithClose) -> None:
-        def remove_window():
+        def remove_window() -> None:
             self.tracked_windows.remove(window)
 
         window.CloseEvent.connect(remove_window)

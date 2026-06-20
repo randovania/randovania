@@ -28,7 +28,7 @@ async def execute_dialog(dialog: DialogLike) -> QtWidgets.QDialog.DialogCode:
     """
     future = asyncio.get_event_loop().create_future()
 
-    def set_result(result: QtWidgets.QDialog.DialogCode):
+    def set_result(result: QtWidgets.QDialog.DialogCode) -> None:
         future.set_result(result)
 
     dialog.finished.connect(set_result)

@@ -123,7 +123,7 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
 
     AsyncRaceRoomUpdated = Signal(AsyncRaceRoomEntry)
 
-    def __init__(self, user_data_dir: Path):
+    def __init__(self, user_data_dir: Path) -> None:
         configuration = randovania.get_configuration()
         user_data_dir = user_data_dir.joinpath("network_client")
 
@@ -134,43 +134,43 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
             NetworkClient.__init__(self, user_data_dir=user_data_dir, configuration=configuration)
 
     @NetworkClient.connection_state.setter
-    def connection_state(self, value: ConnectionState):
+    def connection_state(self, value: ConnectionState) -> None:
         NetworkClient.connection_state.fset(self, value)
         self.ConnectionStateUpdated.emit(value)
 
-    async def on_connect(self):
+    async def on_connect(self) -> None:
         await super().on_connect()
         self.Connect.emit()
 
-    async def on_connect_error(self, error_message: str):
+    async def on_connect_error(self, error_message: str) -> None:
         await super().on_connect_error(error_message)
         self.ConnectError.emit()
 
-    async def on_disconnect(self):
+    async def on_disconnect(self) -> None:
         await super().on_disconnect()
         self.Disconnect.emit()
 
-    async def on_user_session_updated(self, new_session: dict):
+    async def on_user_session_updated(self, new_session: dict) -> None:
         await super().on_user_session_updated(new_session)
         self.UserChanged.emit(self.current_user)
 
-    async def on_multiplayer_session_meta_update(self, entry: MultiplayerSessionEntry):
+    async def on_multiplayer_session_meta_update(self, entry: MultiplayerSessionEntry) -> None:
         await super().on_multiplayer_session_meta_update(entry)
         self.MultiplayerSessionMetaUpdated.emit(entry)
 
-    async def on_multiplayer_session_actions_update(self, actions: MultiplayerSessionActions):
+    async def on_multiplayer_session_actions_update(self, actions: MultiplayerSessionActions) -> None:
         await super().on_multiplayer_session_actions_update(actions)
         self.MultiplayerSessionActionsUpdated.emit(actions)
 
-    async def on_multiplayer_session_audit_update(self, audit_log: MultiplayerSessionAuditLog):
+    async def on_multiplayer_session_audit_update(self, audit_log: MultiplayerSessionAuditLog) -> None:
         await super().on_multiplayer_session_audit_update(audit_log)
         self.MultiplayerAuditLogUpdated.emit(audit_log)
 
-    async def on_world_pickups_update(self, pickups: MultiplayerWorldPickups):
+    async def on_world_pickups_update(self, pickups: MultiplayerWorldPickups) -> None:
         await super().on_world_pickups_update(pickups)
         self.WorldPickupsUpdated.emit(pickups)
 
-    async def on_world_user_inventory(self, inventory: WorldUserInventory):
+    async def on_world_user_inventory(self, inventory: WorldUserInventory) -> None:
         await super().on_world_user_inventory(inventory)
         self.WorldUserInventoryUpdated.emit(inventory)
 

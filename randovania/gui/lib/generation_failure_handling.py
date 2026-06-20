@@ -20,16 +20,16 @@ if TYPE_CHECKING:
 class GenerationFailureHandler(QtCore.QObject):
     failed_to_generate_signal = QtCore.Signal(GenerationFailure)
 
-    def __init__(self, parent: QtWidgets.QWidget):
+    def __init__(self, parent: QtWidgets.QWidget) -> None:
         super().__init__(parent)
 
         self.parent = parent
         self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
 
-    def handle_failure(self, failure: GenerationFailure):
+    def handle_failure(self, failure: GenerationFailure) -> None:
         self.failed_to_generate_signal.emit(failure)
 
-    async def handle_exception(self, exception: Exception, progress_update: Callable[[str, int], None]):
+    async def handle_exception(self, exception: Exception, progress_update: Callable[[str, int], None]) -> None:
         message = "Error"
         if isinstance(exception, GenerationFailure):
             message = "Generation Failure"
@@ -44,7 +44,7 @@ class GenerationFailureHandler(QtCore.QObject):
         progress_update(f"{message}: {exception}", 0)
 
     @asyncSlot(GenerationFailure)
-    async def _show_failed_generation_exception(self, exception: GenerationFailure):
+    async def _show_failed_generation_exception(self, exception: GenerationFailure) -> None:
         box = ScrollMessageBox(
             QtWidgets.QMessageBox.Icon.Critical,
             "An error occurred while generating game",
@@ -70,7 +70,7 @@ class GenerationFailureHandler(QtCore.QObject):
 
         await async_dialog.execute_dialog(box)
 
-    async def handle_invalid_configuration(self, exception: InvalidConfiguration):
+    async def handle_invalid_configuration(self, exception: InvalidConfiguration) -> None:
         msg = str(exception)
         if exception.world_name is not None:
             msg = f"{msg}.\nThis preset belongs to world '{exception.world_name}'."

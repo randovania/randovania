@@ -4,7 +4,7 @@ from PySide6 import QtCore, QtWidgets
 
 
 class ScrollMessageBox(QtWidgets.QMessageBox):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
         children: list[QtWidgets.QWidget] = self.children()

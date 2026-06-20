@@ -74,7 +74,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
     _last_selected_builder: ConnectorBuilder | None = None
     _has_any_tracker: bool = False
 
-    def __init__(self, game_connection: GameConnection, window_manager: WindowManager | None, options: Options):
+    def __init__(self, game_connection: GameConnection, window_manager: WindowManager | None, options: Options) -> None:
         super().__init__()
         self.setupUi(self)
         self.game_connection = game_connection

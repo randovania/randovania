@@ -24,7 +24,7 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
     visible_sessions: list[MultiplayerSessionListEntry]
     joined_session: MultiplayerSessionEntry | None = None
 
-    def __init__(self, network_client: QtNetworkClient):
+    def __init__(self, network_client: QtNetworkClient) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -72,7 +72,7 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         return self.table_widget.selectionModel()
 
     @handle_network_errors
-    async def refresh(self, *, ignore_limit: bool = False):
+    async def refresh(self, *, ignore_limit: bool = False) -> bool:
         self.refresh_button.setEnabled(False)
         try:
             self.sessions = await self.network_client.get_multiplayer_session_list(ignore_limit)
@@ -82,10 +82,10 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         return True
 
     @asyncSlot()
-    async def _refresh_slot(self):
+    async def _refresh_slot(self) -> None:
         await self.refresh(ignore_limit=True)
 
-    def on_selection_changed(self):
+    def on_selection_changed(self) -> None:
         self.button_box.button(QDialogButtonBox.StandardButton.Ok).setEnabled(
             not self._selection_model().selection().empty()
         )
@@ -99,7 +99,7 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         return selection_range.topLeft().data(Qt.ItemDataRole.UserRole)
 
     @asyncSlot(QTableWidgetItem)
-    async def on_double_click(self, item):
+    async def on_double_click(self, item) -> None:
         await self._attempt_join()
 
     @asyncSlot()
@@ -119,7 +119,7 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         if self.joined_session is not None:
             return self.accept()
 
-    def update_list(self):
+    def update_list(self) -> None:
         self.item_model.removeRows(0, self.item_model.rowCount())
 
         name_filter = self.filter_name_edit.text().strip()
@@ -190,5 +190,5 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         for i in range(9):
             self.table_widget.resizeColumnToContents(i)
 
-    def on_server_connection_state_updated(self, state: ConnectionState):
+    def on_server_connection_state_updated(self, state: ConnectionState) -> None:
         self.server_connection_label.setText(f"Server: {state.value}")

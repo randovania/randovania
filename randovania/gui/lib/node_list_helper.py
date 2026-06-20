@@ -61,11 +61,11 @@ class NodeListHelper:
         region_groups, areas_by_region, nodes_by_area = self.nodes_by_areas_by_region_from_locations(all_node_locations)
         region_groups.sort(key=lambda it: it[0].name)
 
-        def _on_check_node(c: QtWidgets.QCheckBox, _):
+        def _on_check_node(c: QtWidgets.QCheckBox, _) -> None:
             if not self.during_batch_check_update:
                 on_check([c.node_location], c.isChecked())
 
-        def _on_check_area(c: QtWidgets.QCheckBox, _):
+        def _on_check_area(c: QtWidgets.QCheckBox, _) -> None:
             if not self.during_batch_check_update:
                 area_identifier = c.area_location
                 new_node_list = [
@@ -76,7 +76,7 @@ class NodeListHelper:
 
                 on_check(new_node_list, c.isChecked())
 
-        def _on_check_region(c: QtWidgets.QCheckBox, _):
+        def _on_check_region(c: QtWidgets.QCheckBox, _) -> None:
             if not self.during_batch_check_update:
                 region_list = self.game_description.region_list
                 areas = areas_by_region[c.region_name]

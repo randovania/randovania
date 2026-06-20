@@ -75,7 +75,7 @@ class ConnectionsVisualizer:
 
     def __init__(
         self, parent: QWidget, grid_layout: QGridLayout, requirement: Requirement, resource_database: ResourceDatabase
-    ):
+    ) -> None:
         self.parent = parent
         self.grid_layout = grid_layout
         self.resource_database = resource_database

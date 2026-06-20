@@ -51,7 +51,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
     give_item_signal = QtCore.Signal(PickupEntry)
     current_state: Inventory
 
-    def __init__(self, tracker_config: TrackerLayout):
+    def __init__(self, tracker_config: TrackerLayout) -> None:
         super().__init__()
         self._layout = QtWidgets.QGridLayout(self)
         self.tracker_config = tracker_config

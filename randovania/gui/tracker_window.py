@@ -118,7 +118,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         await result.configure()
         return result
 
-    def __init__(self, persistence_path: Path, preset: Preset):
+    def __init__(self, persistence_path: Path, preset: Preset) -> None:
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)

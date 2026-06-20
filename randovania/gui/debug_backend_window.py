@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 
 
 class RangeSpinBoxItemEditorCreator(QtWidgets.QItemEditorCreatorBase):
-    def __init__(self, minimum: int, maximum: int):
+    def __init__(self, minimum: int, maximum: int) -> None:
         super().__init__()
         self.minimum = minimum
         self.maximum = maximum
@@ -32,7 +32,7 @@ class RangeSpinBoxItemEditorCreator(QtWidgets.QItemEditorCreatorBase):
         spin.setMaximum(self.maximum)
         return spin
 
-    def valuePropertyName(self):
+    def valuePropertyName(self) -> str:
         return "value"
 
 
@@ -50,7 +50,7 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
     _timer: QtCore.QTimer
     _resource_to_item: dict[ResourceInfo, QtGui.QStandardItem]
 
-    def __init__(self, connector: DebugRemoteConnector):
+    def __init__(self, connector: DebugRemoteConnector) -> None:
         super().__init__()
         self.window = QMainWindow()
         self.setupUi(self.window)
@@ -101,13 +101,13 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
         self.update_inventory_table()
         self.update_message_list()
 
-    def _on_collect_randomly_toggle(self, value: int):
+    def _on_collect_randomly_toggle(self, value: int) -> None:
         if bool(value):
             self._timer.start()
         else:
             self._timer.stop()
 
-    def _on_current_region_changed(self, _):
+    def _on_current_region_changed(self, _) -> None:
         self.connector.PlayerLocationChanged.emit(
             PlayerLocationEvent(
                 self.current_region_combo.currentData(),
@@ -115,20 +115,20 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
             )
         )
 
-    def _collect_randomly(self):
+    def _collect_randomly(self) -> None:
         row = random.randint(0, self.collect_location_combo.count())
         self._collect_location(self.collect_location_combo.itemData(row))
 
-    def show(self):
+    def show(self) -> None:
         self.window.show()
 
-    def _emit_collection(self):
+    def _emit_collection(self) -> None:
         self._collect_location(self.collect_location_combo.currentData())
 
-    def _collect_location(self, location: int):
+    def _collect_location(self, location: int) -> None:
         self.connector.PickupIndexCollected.emit(PickupIndex(location))
 
-    def _setup_locations_combo(self):
+    def _setup_locations_combo(self) -> None:
         game = default_database.game_description_for(self.connector.game_enum)
         index_to_name = {
             node.pickup_index.index: game.region_list.area_name(area)
@@ -150,30 +150,30 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
         self.collect_location_combo.setVisible(True)
 
     @asyncSlot()
-    async def finish(self):
+    async def finish(self) -> None:
         await self.connector.force_finish()
         self.window.close()
 
-    def on_beat_game_clicked(self):
+    def on_beat_game_clicked(self) -> None:
         self.connector.GameHasBeenBeaten.emit()
 
-    def update_message_list(self):
+    def update_message_list(self) -> None:
         self.messages_item_model.setRowCount(len(self.connector.messages))
         for i, message in enumerate(self.connector.messages):
             self.messages_item_model.setItem(i, QtGui.QStandardItem(message))
 
-    def update_inventory_table(self):
+    def update_inventory_table(self) -> None:
         for resource, quantity in self.connector.item_collection.as_resource_gain():
             if resource in self._resource_to_item:
                 self._update_item_amount(resource, quantity)
 
-    def _update_item_amount(self, item: ItemResourceInfo, amount: int):
+    def _update_item_amount(self, item: ItemResourceInfo, amount: int) -> None:
         if item.max_capacity > 1:
             self._resource_to_item[item].setData(amount, QtCore.Qt.ItemDataRole.DisplayRole)
         else:
             self._resource_to_item[item].setData(amount > 0, QtCore.Qt.ItemDataRole.DisplayRole)
 
-    def _on_item_changed(self, widget: QtGui.QStandardItem):
+    def _on_item_changed(self, widget: QtGui.QStandardItem) -> None:
         item = widget.data(QtCore.Qt.ItemDataRole.UserRole)
         if not isinstance(item, ItemResourceInfo):
             return

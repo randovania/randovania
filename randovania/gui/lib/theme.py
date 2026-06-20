@@ -6,7 +6,7 @@ from PySide6.QtCore import Qt
 _current_dark_theme = None
 
 
-def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QApplication = None):
+def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QApplication = None) -> None:
     global _current_dark_theme
     if _current_dark_theme == active:
         return

@@ -11,7 +11,7 @@ class HintFeatureListModel(EditableListModel[HintFeature]):
     Underlying model for editing lists of HintFeatures
     """
 
-    def __init__(self, hint_features: dict[str, HintFeature]):
+    def __init__(self, hint_features: dict[str, HintFeature]) -> None:
         super().__init__()
         self.db = hint_features
 
@@ -29,7 +29,7 @@ class HintFeatureListView(EditableListView):
     For editing lists of HintFeatures
     """
 
-    def __init__(self, parent: QtWidgets.QWidget | None, model: EditableListModel | None = None):
+    def __init__(self, parent: QtWidgets.QWidget | None, model: EditableListModel | None = None) -> None:
         super().__init__(parent, model)
 
         self.no_features_label = QtWidgets.QLabel("No features are defined for this game.")

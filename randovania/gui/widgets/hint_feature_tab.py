@@ -28,7 +28,7 @@ if TYPE_CHECKING:
 class HintFeatureTab(QWidget, Ui_HintFeatureTab):
     """Base class for GUI tabs listing HintFeatures"""
 
-    def __init__(self, parent: QWidget | None = None):
+    def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.setupUi(self)
         self.description_label.setText(self.description)

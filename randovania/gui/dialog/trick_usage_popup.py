@@ -70,7 +70,7 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
         parent: QWidget,
         window_manager: WindowManager,
         preset: Preset,
-    ):
+    ) -> None:
         super().__init__(parent)
         self.setupUi(self)
         set_default_window_icon(self)
@@ -123,5 +123,5 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
 
         self.area_list_label.setText("".join(lines))
 
-    def button_box_close(self):
+    def button_box_close(self) -> None:
         self.reject()

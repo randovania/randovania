@@ -32,7 +32,7 @@ class GameExportDialog[Configuration: BaseConfiguration](QtWidgets.QDialog):
 
     def __init__(
         self, options: Options, configuration: Configuration, word_hash: str, spoiler: bool, games: list[RandovaniaGame]
-    ):
+    ) -> None:
         super().__init__()
         common_qt_lib.set_default_window_icon(self)
         self._options = options
@@ -67,7 +67,7 @@ class GameExportDialog[Configuration: BaseConfiguration](QtWidgets.QDialog):
     def update_per_game_options(self, per_game: PerGameOptions) -> PerGameOptions:
         raise NotImplementedError
 
-    def save_options(self):
+    def save_options(self) -> None:
         with self._options as options:
             if self._has_spoiler:
                 options.auto_save_spoiler = self.auto_save_spoiler
@@ -167,12 +167,14 @@ def spoiler_path_for_directory(save_spoiler: bool, output_dir: Path) -> Path | N
         return None
 
 
-def add_field_validation(accept_button: QtWidgets.QPushButton, fields: dict[QtWidgets.QLineEdit, Callable[[], bool]]):
-    def accept_validation():
+def add_field_validation(
+    accept_button: QtWidgets.QPushButton, fields: dict[QtWidgets.QLineEdit, Callable[[], bool]]
+) -> None:
+    def accept_validation() -> None:
         accept_button.setEnabled(not any(f.has_error for f in fields.keys()))
 
     def make_validation(obj, check_err):
-        def field_validation():
+        def field_validation() -> None:
             common_qt_lib.set_error_border_stylesheet(obj, check_err())
             accept_validation()
 
@@ -194,7 +196,7 @@ def path_in_edit(line: QtWidgets.QLineEdit) -> Path | None:
         return None
 
 
-def update_validation(widget: QtWidgets.QLineEdit):
+def update_validation(widget: QtWidgets.QLineEdit) -> None:
     if hasattr(widget, "field_validation"):
         widget.field_validation()
 

@@ -111,7 +111,7 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
     races: list[RaceEntry]
     permalink: Permalink | None = None
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -174,7 +174,7 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
         finally:
             self.refresh_button.setEnabled(True)
 
-    def on_selection_changed(self):
+    def on_selection_changed(self) -> None:
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(len(self.table_widget.selectedItems()) > 0)
 
     @property
@@ -182,7 +182,7 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
         return self.table_widget.selectedItems()[0].data(Qt.UserRole)
 
     @asyncSlot(QTableWidgetItem)
-    async def on_double_click(self, item: QTableWidgetItem):
+    async def on_double_click(self, item: QTableWidgetItem) -> None:
         await self.attempt_join()
 
     @asyncSlot()
@@ -211,7 +211,7 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
             self.permalink = permalink
             return self.accept()
 
-    def update_list(self):
+    def update_list(self) -> None:
         self.table_widget.clear()
         self.table_widget.setHorizontalHeaderLabels(["Name", "Game", "Status", "Entrants", "Goal", "Info", "Opened At"])
 

@@ -9,7 +9,7 @@ class EditableListModel[T](QtCore.QAbstractListModel):
 
     items: list[T]
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.items = []
 
@@ -74,7 +74,7 @@ class EditableListView(QtWidgets.QGroupBox):
     in the GUI, such as dock weaknesses or hint features.
     """
 
-    def __init__(self, parent: QtWidgets.QWidget | None, model: EditableListModel | None = None):
+    def __init__(self, parent: QtWidgets.QWidget | None, model: EditableListModel | None = None) -> None:
         super().__init__(parent)
 
         self.model = model

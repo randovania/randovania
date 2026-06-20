@@ -137,7 +137,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         network_client: QtNetworkClient,
         multiworld_client: MultiworldClient,
         preview: bool,
-    ):
+    ) -> None:
         monitoring.metrics.incr("gui_rdv_started")
 
         super().__init__()

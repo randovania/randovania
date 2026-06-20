@@ -22,10 +22,10 @@ class MultiFormatOutputMixin:
         return self.valid_output_file_types
 
     @property
-    def default_output_name(self):
+    def default_output_name(self) -> str:
         return f"{self._base_output_name}.{self._selected_output_format}"
 
-    def setup_multi_format(self, output_format: str | None):
+    def setup_multi_format(self, output_format: str | None) -> None:
         available_types = self.available_output_file_types
 
         if output_format is not None and output_format in available_types:
@@ -44,7 +44,7 @@ class MultiFormatOutputMixin:
             self.format_radio_buttons[filetype] = radio
             self.output_format_layout.addWidget(radio)
 
-    def _on_output_format_changed(self):
+    def _on_output_format_changed(self) -> None:
         button = typing.cast("QtWidgets.QWidget", self).sender()
         if button.isChecked():
             self._selected_output_format = button.text()[1:]

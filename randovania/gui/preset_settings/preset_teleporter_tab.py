@@ -41,7 +41,7 @@ class PresetTeleporterTab(PresetTab[ConfigurationT_co], NodeListHelper):
 
     def __init__(
         self, editor: PresetEditor[ConfigurationT_co], game_description: GameDescription, window_manager: WindowManager
-    ):
+    ) -> None:
         super().__init__(editor, game_description, window_manager)
         self.setup_ui()
 

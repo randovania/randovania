@@ -23,7 +23,7 @@ def _get_license(dist: importlib.metadata.Distribution) -> str:
 class DependenciesModel(QtCore.QAbstractTableModel):
     _headers = ("Dependency", "Version", "License")
 
-    def __init__(self, parent):
+    def __init__(self, parent) -> None:
         super().__init__(parent)
         self._packages = [(dist.name, dist.version, _get_license(dist)) for dist in importlib.metadata.distributions()]
 
@@ -53,7 +53,7 @@ class DependenciesModel(QtCore.QAbstractTableModel):
 
 
 class DependenciesWidget(QtWidgets.QTableView):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(None)
         self.root_model = DependenciesModel(self)
         self.proxy_model = QtCore.QSortFilterProxyModel(self)

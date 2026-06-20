@@ -76,7 +76,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         for item in self.selectedItems():
             return self.preset_for_item(item)
 
-    def update_items(self):
+    def update_items(self) -> None:
         if self.expanded_connected:
             self.itemExpanded.disconnect(self.on_item_expanded)
             self.itemCollapsed.disconnect(self.on_item_collapsed)
@@ -161,18 +161,18 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         self.itemCollapsed.connect(self.on_item_collapsed)
         self.expanded_connected = True
 
-    def select_preset(self, preset: VersionedPreset):
+    def select_preset(self, preset: VersionedPreset) -> None:
         if preset.uuid in self.preset_to_item:
             self.setCurrentItem(self.preset_to_item[preset.uuid])
 
-    def _on_item_new_state(self, item: QtWidgets.QTreeWidgetItem, new_state: bool):
+    def _on_item_new_state(self, item: QtWidgets.QTreeWidgetItem, new_state: bool) -> None:
         uid = item.data(0, Qt.UserRole)
         if uid is not None:
             with self.options as options:
                 options.set_preset_uuid_hidden(uid, not new_state)
 
-    def on_item_expanded(self, item):
+    def on_item_expanded(self, item) -> None:
         self._on_item_new_state(item, True)
 
-    def on_item_collapsed(self, item):
+    def on_item_collapsed(self, item) -> None:
         self._on_item_new_state(item, False)

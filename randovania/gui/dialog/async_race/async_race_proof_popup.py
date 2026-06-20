@@ -13,7 +13,7 @@ class AsyncRaceProofPopup(QtWidgets.QDialog):
 
     ui: Ui_AsyncRaceProof
 
-    def __init__(self, parent: QtWidgets.QWidget):
+    def __init__(self, parent: QtWidgets.QWidget) -> None:
         super().__init__(parent)
         self.ui = Ui_AsyncRaceProof()
         self.ui.setupUi(self)

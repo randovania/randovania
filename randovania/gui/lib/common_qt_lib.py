@@ -21,12 +21,12 @@ if typing.TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-def map_set_checked(iterable: Iterator[QtWidgets.QCheckBox], new_status: bool):
+def map_set_checked(iterable: Iterator[QtWidgets.QCheckBox], new_status: bool) -> None:
     for checkbox in iterable:
         checkbox.setChecked(new_status)
 
 
-def lock_application(value: bool):
+def lock_application(value: bool) -> None:
     QtWidgets.QApplication.instance().main_window.setEnabled(value)
 
 
@@ -191,7 +191,7 @@ def prompt_user_for_preset_folder(window: QtWidgets.QWidget) -> None | Path:
     return _prompt_user_for_directory(window, caption="Select a directory in which to place preset files")
 
 
-def set_default_window_icon(window: QtWidgets.QWidget):
+def set_default_window_icon(window: QtWidgets.QWidget) -> None:
     """
     Sets the window icon for the given widget to the default icon
     :param window:
@@ -200,7 +200,7 @@ def set_default_window_icon(window: QtWidgets.QWidget):
     window.setWindowIcon(QtGui.QIcon(os.fspath(randovania.get_icon_path())))
 
 
-def set_error_border_stylesheet(edit: QtWidgets.QWidget, has_error: bool):
+def set_error_border_stylesheet(edit: QtWidgets.QWidget, has_error: bool) -> None:
     edit.has_error = has_error
     if has_error:
         edit.setStyleSheet(":enabled { border: 1px solid red; }:disabled { border: 1px solid red; background: #CCC }")
@@ -208,7 +208,7 @@ def set_error_border_stylesheet(edit: QtWidgets.QWidget, has_error: bool):
         edit.setStyleSheet("")
 
 
-def set_edit_if_different(edit: QtWidgets.QLineEdit, new_text: str):
+def set_edit_if_different(edit: QtWidgets.QLineEdit, new_text: str) -> None:
     """
     Sets the text of the given QLineEdit only if it differs from the current value.
     Prevents snapping the user's cursor to the end unnecessarily.
@@ -220,7 +220,7 @@ def set_edit_if_different(edit: QtWidgets.QLineEdit, new_text: str):
         edit.setText(new_text)
 
 
-def set_edit_if_different_text(edit: QtWidgets.QTextEdit, new_text: str):
+def set_edit_if_different_text(edit: QtWidgets.QTextEdit, new_text: str) -> None:
     if edit.toPlainText() != new_text:
         edit.setPlainText(new_text)
 
@@ -233,7 +233,7 @@ def get_game_connection():
     return typing.cast("GameConnection", QtWidgets.QApplication.instance().game_connection)
 
 
-def show_install_visual_cpp_redist(details: str):
+def show_install_visual_cpp_redist(details: str) -> None:
     from PySide6 import QtWidgets
 
     download_url = "https://aka.ms/vs/16/release/vc_redist.x64.exe"
@@ -252,7 +252,7 @@ def show_install_visual_cpp_redist(details: str):
     box.exec_()
 
 
-def set_clipboard(text: str):
+def set_clipboard(text: str) -> None:
     from PySide6 import QtWidgets
 
     QtWidgets.QApplication.clipboard().setText(text)
@@ -264,7 +264,7 @@ class FallbackDialog(typing.NamedTuple):
     parent: QtWidgets.QWidget
 
 
-def open_directory_in_explorer(path: Path, fallback_dialog: FallbackDialog | None = None):
+def open_directory_in_explorer(path: Path, fallback_dialog: FallbackDialog | None = None) -> None:
     try:
         if platform.system() == "Windows":
             os.startfile(path)
@@ -288,7 +288,7 @@ def open_directory_in_explorer(path: Path, fallback_dialog: FallbackDialog | Non
             box.show()
 
 
-def set_icon_data_paths(label: QtWidgets.QLabel):
+def set_icon_data_paths(label: QtWidgets.QLabel) -> None:
     image_pattern = re.compile('<img src="data/(.*?)"/>')
 
     repl = rf'<img src="{get_data_path().as_posix()}/\g<1>"/>'

@@ -29,7 +29,7 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
 
     _num_quick_fill_buttons: int
 
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager) -> None:
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
@@ -52,7 +52,7 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
         self._num_quick_fill_buttons = 0
         self.create_quick_fill_buttons()
 
-    def create_quick_fill_buttons(self):
+    def create_quick_fill_buttons(self) -> None:
         self.starting_area_quick_fill_default = self._quick_fill_button(
             "Default", self._starting_location_on_select_default
         )
@@ -83,13 +83,13 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
         )
         return f"Default: Just {default_name}, the vanilla location."
 
-    def _on_starting_area_check_changed(self, areas, checked: bool):
+    def _on_starting_area_check_changed(self, areas, checked: bool) -> None:
         with self._editor as editor:
             editor.set_configuration_field(
                 "starting_location", editor.configuration.starting_location.ensure_has_locations(areas, checked)
             )
 
-    def _starting_location_on_select_default(self):
+    def _starting_location_on_select_default(self) -> None:
         with self._editor as editor:
             editor.set_configuration_field(
                 "starting_location",
@@ -99,7 +99,7 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
                 ),
             )
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         self.update_node_list(
             preset.configuration.starting_location.locations,
             False,
@@ -112,7 +112,7 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
 class PresetMetroidStartingArea(PresetStartingArea):
     starting_area_quick_fill_save_station: QtWidgets.QPushButton
 
-    def create_quick_fill_buttons(self):
+    def create_quick_fill_buttons(self) -> None:
         super().create_quick_fill_buttons()
         self.starting_area_quick_fill_save_station = self._quick_fill_button(
             "Save Station",
@@ -126,7 +126,7 @@ class PresetMetroidStartingArea(PresetStartingArea):
             if node.name == "Save Station" and node.valid_starting_location
         ]
 
-    def _starting_location_on_select_save_station(self):
+    def _starting_location_on_select_save_station(self) -> None:
         save_stations = self._save_station_nodes()
 
         with self._editor as editor:

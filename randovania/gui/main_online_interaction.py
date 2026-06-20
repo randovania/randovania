@@ -29,7 +29,7 @@ BaseSession = typing.TypeVar("BaseSession")
 
 
 class BaseBrowser(async_dialog.DialogLike, typing.Protocol[BaseSession]):
-    def __init__(self, network_client: QtNetworkClient): ...
+    def __init__(self, network_client: QtNetworkClient) -> None: ...
 
     async def refresh(self, *, ignore_limit: bool = False) -> bool: ...
 
@@ -48,7 +48,7 @@ class OnlineInteractions(QtWidgets.QWidget):
         network_client: QtNetworkClient,
         main_window: Ui_MainWindow,
         options: Options,
-    ):
+    ) -> None:
         super().__init__(window_manager)
 
         self.window_manager = window_manager

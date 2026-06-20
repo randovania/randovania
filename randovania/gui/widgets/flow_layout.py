@@ -52,7 +52,7 @@ class FlowLayout(QLayout):
     A custom layout that adjusts the position of widgets within depending on the width of the application window.
     """
 
-    def __init__(self, parent=None, center=False):
+    def __init__(self, parent=None, center=False) -> None:
         super().__init__(parent)
 
         if parent is not None:
@@ -61,12 +61,12 @@ class FlowLayout(QLayout):
         self._item_list: list[QWidgetItem] = []
         self.center = center
 
-    def __del__(self):
+    def __del__(self) -> None:
         item = self.takeAt(0)
         while item:
             item = self.takeAt(0)
 
-    def addItem(self, item):
+    def addItem(self, item) -> None:
         self._item_list.append(item)
 
     def count(self):
@@ -87,14 +87,14 @@ class FlowLayout(QLayout):
     def expandingDirections(self):
         return Qt.Orientation(0)
 
-    def hasHeightForWidth(self):
+    def hasHeightForWidth(self) -> bool:
         return True
 
     def heightForWidth(self, width):
         height = self._do_layout(QRect(0, 0, width, 0), True)
         return height
 
-    def setGeometry(self, rect):
+    def setGeometry(self, rect) -> None:
         super().setGeometry(rect)
         self._do_layout(rect, False)
 

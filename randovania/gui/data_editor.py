@@ -111,7 +111,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     _warning_dialogs_disabled = False
     _collection_for_filtering: ResourceCollection | None = None
 
-    def __init__(self, data: dict, data_path: Path | None, is_internal: bool, edit_mode: bool):
+    def __init__(self, data: dict, data_path: Path | None, is_internal: bool, edit_mode: bool) -> None:
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)

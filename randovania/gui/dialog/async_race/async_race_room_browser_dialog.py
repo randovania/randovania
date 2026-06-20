@@ -26,7 +26,7 @@ class AsyncRaceRoomBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
     visible_sessions: list[AsyncRaceRoomListEntry]
     joined_session: AsyncRaceRoomEntry | None = None
 
-    def __init__(self, network_client: QtNetworkClient):
+    def __init__(self, network_client: QtNetworkClient) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)

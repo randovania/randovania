@@ -30,7 +30,7 @@ class BackgroundTaskMixin:
         loop = asyncio.get_event_loop()
         last_progress = 0.0
 
-        def progress_update(message: str, progress: float | None):
+        def progress_update(message: str, progress: float | None) -> None:
             nonlocal last_progress
             if progress is None:
                 progress = last_progress

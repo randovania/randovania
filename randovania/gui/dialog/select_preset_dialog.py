@@ -27,7 +27,7 @@ class SelectPresetDialog(QtWidgets.QDialog, Ui_SelectPresetDialog):
         allowed_games: list[RandovaniaGame] | None = None,
         default_game: RandovaniaGame | None = None,
         include_world_name_prompt: bool = False,
-    ):
+    ) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)

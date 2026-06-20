@@ -15,7 +15,7 @@ if typing.TYPE_CHECKING:
 
 
 class ItemTrackerPopupWindow(QtWidgets.QWidget):
-    def __init__(self, title: str, themes: dict[str, Path], on_close: typing.Callable[[], None]):
+    def __init__(self, title: str, themes: dict[str, Path], on_close: typing.Callable[[], None]) -> None:
         super().__init__(None)
         common_qt_lib.set_default_window_icon(self)
         self.on_close = on_close

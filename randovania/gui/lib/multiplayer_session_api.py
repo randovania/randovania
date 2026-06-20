@@ -8,8 +8,7 @@ from PySide6 import QtCore, QtWidgets
 
 from randovania.gui.lib.qt_network_client import NetworkErrorDelegator, handle_network_errors
 from randovania.layout.layout_description import LayoutDescription
-from randovania.network_client.network_client import UnableToConnect
-from randovania.network_common import admin_actions, error
+from randovania.network_common import admin_actions
 from randovania.network_common.signals import server_signals
 
 if typing.TYPE_CHECKING:
@@ -18,6 +17,7 @@ if typing.TYPE_CHECKING:
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.layout.versioned_preset import VersionedPreset
     from randovania.lib.json_lib import JsonType
+    from randovania.lib.type_lib import AsyncCallable
     from randovania.network_common.multiplayer_session import MultiplayerWorld
     from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
@@ -30,7 +30,7 @@ class SessionIdLoggingFilter(logging.Filter):
 
 
 class SessionIdLoggerAdapter(logging.LoggerAdapter):
-    def __init__(self, logger: logging.Logger, api: MultiplayerSessionApi):
+    def __init__(self, logger: logging.Logger, api: MultiplayerSessionApi) -> None:
         super().__init__(logger)
         self.api = api
 
@@ -51,7 +51,7 @@ class MultiplayerSessionApi(NetworkErrorDelegator, QtCore.QObject):
     current_session_id: int
     widget_root: QtWidgets.QWidget
 
-    def __init__(self, widget_root: QtWidgets.QWidget, network_client: QtNetworkClient, session_id: int):
+    def __init__(self, widget_root: QtWidgets.QWidget, network_client: QtNetworkClient, session_id: int) -> None:
         super().__init__()
         self.setParent(widget_root)
         self.widget_root = widget_root

@@ -20,7 +20,7 @@ class PresetTab[BaseConfigurationT: BaseConfiguration](QtWidgets.QMainWindow):
 
     def __init__(
         self, editor: PresetEditor[BaseConfigurationT], game_description: GameDescription, window_manager: WindowManager
-    ):
+    ) -> None:
         super().__init__()
         self._editor = editor
         self.game_description = game_description
@@ -66,21 +66,21 @@ class PresetTab[BaseConfigurationT: BaseConfiguration](QtWidgets.QMainWindow):
 
     # Persistence helpers
     def _persist_enum(self, combo: QtWidgets.QComboBox, attribute_name: str):
-        def persist(index: int):
+        def persist(index: int) -> None:
             with self._editor as options:
                 options.set_configuration_field(attribute_name, combo.itemData(index))
 
         return persist
 
     def _persist_bool_layout_field(self, field_name: str):
-        def bound(value: int):
+        def bound(value: int) -> None:
             with self._editor as editor:
                 editor.set_configuration_field(field_name, bool(value))
 
         return bound
 
     def _persist_bool_major_configuration_field(self, field_name: str):
-        def bound(value: int):
+        def bound(value: int) -> None:
             with self._editor as editor:
                 kwargs = {field_name: bool(value)}
                 editor.standard_pickup_configuration = dataclasses.replace(
@@ -91,14 +91,14 @@ class PresetTab[BaseConfigurationT: BaseConfiguration](QtWidgets.QMainWindow):
         return bound
 
     def _persist_option_then_notify(self, attribute_name: str):
-        def persist(value: int):
+        def persist(value: int) -> None:
             with self._editor as options:
                 options.set_configuration_field(attribute_name, bool(value))
 
         return persist
 
     def _persist_argument(self, attribute_name: str):
-        def persist(value: float):
+        def persist(value: float) -> None:
             with self._editor as options:
                 options.set_configuration_field(attribute_name, value)
 

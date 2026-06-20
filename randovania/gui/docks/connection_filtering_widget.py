@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 class ConnectionFilteringWidget(QtWidgets.QDockWidget):
     FiltersUpdated = Signal()
 
-    def __init__(self, parent: QtWidgets.QWidget, game: GameDescription):
+    def __init__(self, parent: QtWidgets.QWidget, game: GameDescription) -> None:
         super().__init__(parent)
         self.setWindowTitle("Connection Filtering")
 
@@ -88,7 +88,7 @@ class ConnectionFilteringWidget(QtWidgets.QDockWidget):
         )
         self.contents_layout.addItem(self.vertical_spacer)
 
-    def set_edit_mode(self, edit_mode: bool):
+    def set_edit_mode(self, edit_mode: bool) -> None:
         for layer_check in self.layer_checks:
             layer_check.setEnabled(not edit_mode and layer_check.text() != "default")
             if edit_mode:
@@ -99,7 +99,7 @@ class ConnectionFilteringWidget(QtWidgets.QDockWidget):
         self.load_preset_button.setVisible(not edit_mode)
 
     @asyncSlot()
-    async def _on_load_preset_slot(self):
+    async def _on_load_preset_slot(self) -> None:
         await self._on_load_preset()
 
     async def _on_load_preset(self):
@@ -121,7 +121,7 @@ class ConnectionFilteringWidget(QtWidgets.QDockWidget):
 
         self.set_selected_tricks(preset.configuration.trick_level)
 
-    def set_selected_tricks(self, trick_level: TrickLevelConfiguration):
+    def set_selected_tricks(self, trick_level: TrickLevelConfiguration) -> None:
         for (trick, trick_check), combo in self.tricks.items():
             trick_check.setChecked(True)
             signal_handling.set_combo_with_value(combo, trick_level.level_for_trick(trick).as_number)
@@ -134,5 +134,5 @@ class ConnectionFilteringWidget(QtWidgets.QDockWidget):
     def selected_layers(self) -> set[str]:
         return {layer_check.text() for layer_check in self.layer_checks if layer_check.isChecked()}
 
-    def _notify_change(self):
+    def _notify_change(self) -> None:
         self.FiltersUpdated.emit()

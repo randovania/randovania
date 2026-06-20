@@ -70,7 +70,7 @@ class ActionDescription(NamedTuple):
 class HistoryItemModel(QtCore.QAbstractTableModel):
     actions: MultiplayerSessionActions
 
-    def __init__(self, parent: MultiplayerSessionWindow, actions: MultiplayerSessionActions):
+    def __init__(self, parent: MultiplayerSessionWindow, actions: MultiplayerSessionActions) -> None:
         super().__init__(parent)
         self.session_window = parent
         self.actions = actions
@@ -126,7 +126,7 @@ class HistoryFilterModel(QtCore.QSortFilterProxyModel):
     receiver_filter: str | None
     generic_filter: str
 
-    def __init__(self, parent: MultiplayerSessionWindow):
+    def __init__(self, parent: MultiplayerSessionWindow) -> None:
         super().__init__(parent)
         self.provider_filter = None
         self.receiver_filter = None
@@ -183,7 +183,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     def __init__(
         self, network_client: QtNetworkClient, session_id: int, window_manager: WindowManager, options: Options
-    ):
+    ) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)

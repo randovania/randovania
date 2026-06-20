@@ -15,7 +15,7 @@ class Foldable(QtWidgets.QWidget):
     _content_area: QtWidgets.QFrame
     _folded: bool
 
-    def __init__(self, parent: QtWidgets.QWidget | None, title: str = "", initially_folded: bool = True):
+    def __init__(self, parent: QtWidgets.QWidget | None, title: str = "", initially_folded: bool = True) -> None:
         super().__init__(parent)
 
         self._folded = initially_folded
@@ -54,37 +54,37 @@ class Foldable(QtWidgets.QWidget):
     def contents(self):
         return self._content_area
 
-    def _on_click(self, checked: bool):
+    def _on_click(self, checked: bool) -> None:
         self.setFolded(not self._folded)
 
-    def _unfold(self):
+    def _unfold(self) -> None:
         self._folded = False
         self._content_area.show()
         self._toggle_button.setArrowType(Qt.ArrowType.DownArrow)
 
-    def _fold(self):
+    def _fold(self) -> None:
         self._folded = True
         self._content_area.hide()
         self._toggle_button.setArrowType(Qt.ArrowType.RightArrow)
 
-    def set_content_layout(self, content_layout: QtWidgets.QLayout):
+    def set_content_layout(self, content_layout: QtWidgets.QLayout) -> None:
         self._content_area.setLayout(content_layout)
         if self._folded:
             self._fold()
         else:
             self._unfold()
 
-    def setTitle(self, title: str):
+    def setTitle(self, title: str) -> None:
         self._toggle_button.setText(title)
 
-    def setFolded(self, folded: bool):
+    def setFolded(self, folded: bool) -> None:
         if folded:
             self._fold()
         else:
             self._unfold()
 
     @Signal
-    def notify(self):
+    def notify(self) -> None:
         pass
 
     folded = Property(
