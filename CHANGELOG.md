@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.9.0] - 2026-07-0?
 
-- Waiting changes to be added.
 - Added: The Data Visualizer now displays more information about Hint nodes.
+- Changed: Nintendont Connector: Better error messages when connecting to an invalid Nintendont.
 
 ### Metroid Dread
 
