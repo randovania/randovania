@@ -5,7 +5,8 @@ import datetime
 import functools
 import logging
 import uuid
-from typing import TYPE_CHECKING
+from collections.abc import Callable
+from typing import TYPE_CHECKING, NamedTuple
 
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt, Signal
@@ -22,6 +23,7 @@ from randovania.interface_common.options import InfoAlert, Options
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.game_connection_status import GameConnectionStatus
+from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MAX_WORLD_NAME_LENGTH,
     WORLD_NAME_RE,
@@ -40,7 +42,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-def make_tool(text: str):
+def make_tool(text: str) -> QtWidgets.QToolButton:
     tool = QtWidgets.QToolButton()
     tool.setText(text)
     tool.setPopupMode(QtWidgets.QToolButton.ToolButtonPopupMode.InstantPopup)
@@ -49,10 +51,16 @@ def make_tool(text: str):
     return tool
 
 
-def connect_to(action: QtGui.QAction, target, *args):
-    if args:
-        target = functools.partial(target, *args)
-    action.triggered.connect(target)
+def connect_to[**P](
+    action: QtGui.QAction, target: Callable[P, None], *args: P.args, **kwargs: P.kwargs
+) -> QtGui.QAction:
+    actual_target: Callable[[], None]
+    if args or kwargs:
+        actual_target = functools.partial(target, *args, **kwargs)
+    else:
+        actual_target = target
+
+    action.triggered.connect(actual_target)
     return action
 
 
@@ -62,7 +70,7 @@ class UserWidgetEntry:
     ready_check: QtWidgets.QCheckBox
     switch_admin: QtGui.QAction | None
 
-    def update(self, user: MultiplayerUser):
+    def update(self, user: MultiplayerUser) -> None:
         self.item.setText(0, user.name)
         self.item.setText(1, "(Admin)" if user.admin else "")
         self.ready_check.setChecked(user.ready)
@@ -75,7 +83,7 @@ class WorldWidgetEntry:
     item: QtWidgets.QTreeWidgetItem
     preset_menu: QtWidgets.QMenu
 
-    def update(self, world_details: MultiplayerWorld, detail: UserWorldDetail):
+    def update(self, world_details: MultiplayerWorld, detail: UserWorldDetail) -> None:
         self.item.setText(0, world_details.name)
         self.item.setText(1, world_details.preset.game.long_name)
         self.item.setText(2, detail.connection_state.pretty_text)
@@ -108,6 +116,20 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     UNCLAIMED_PSEUDO_USER_ID = -1
     ALL_WORLDS_PSEUDO_USER_ID = -2
+
+    class UserState(NamedTuple):
+        user_id: UserID
+        name: str
+        worlds: frozenset[uuid.UUID]
+
+    class SessionState(NamedTuple):
+        admin: bool
+        allow_coop: bool
+        allow_everyone_claim_world: bool
+        users: tuple[MultiplayerSessionUsersWidget.UserState, ...]
+        worlds: tuple[uuid.UUID, ...]
+        generation_in_progress: int | None
+        game_details: GameDetails | None
 
     def __init__(self, options: Options, window_manager: WindowManager, session_api: MultiplayerSessionApi):
         super().__init__()
@@ -142,24 +164,32 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             return user.id
         return None
 
-    def _widget_state_for(self, session: MultiplayerSessionEntry | None):
+    def _widget_state_for(self, session: MultiplayerSessionEntry | None) -> SessionState | None:
         if session is None:
-            return []
+            return None
 
-        you = session.users.get(self.your_id)
-        return [
-            you is not None and you.admin,
+        return MultiplayerSessionUsersWidget.SessionState(
+            self.is_admin(),
             session.allow_coop,
             session.allow_everyone_claim_world,
-            [(user.id, user.name, list(user.worlds.keys())) for user in session.users_list],
-            [w.id for w in session.worlds],
+            tuple(
+                MultiplayerSessionUsersWidget.UserState(
+                    user.id,
+                    user.name,
+                    frozenset(user.worlds.keys()),
+                )
+                for user in session.users_list
+            ),
+            tuple(world.id for world in session.worlds),
             session.generation_in_progress,
             session.game_details,
-        ]
+        )
 
     #
 
-    def _create_select_preset_dialog(self, include_world_name_prompt: bool, default_game: RandovaniaGame | None):
+    def _create_select_preset_dialog(
+        self, include_world_name_prompt: bool, default_game: RandovaniaGame | None
+    ) -> SelectPresetDialog:
         return SelectPresetDialog(
             self._window_manager,
             self._options,
@@ -169,7 +199,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             include_world_name_prompt=include_world_name_prompt,
         )
 
-    async def _prompt_for_preset(self, default_game: RandovaniaGame | None):
+    async def _prompt_for_preset(self, default_game: RandovaniaGame | None) -> VersionedPreset | None:
         dialog = self._create_select_preset_dialog(False, default_game)
         result = await async_dialog.execute_dialog(dialog)
         if result == QtWidgets.QDialog.DialogCode.Accepted:
@@ -180,7 +210,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     #
 
     @asyncSlot()
-    async def _world_replace_preset(self, world_uid: uuid.UUID):
+    async def _world_replace_preset(self, world_uid: uuid.UUID) -> None:
         game = self._session.get_world(world_uid).preset.game
 
         for user in self._session.users.values():
@@ -193,27 +223,27 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             await self._session_api.replace_preset_for(world_uid, preset)
 
     @asyncSlot()
-    async def _world_claim_with(self, world_uid: uuid.UUID, owner: int):
+    async def _world_claim_with(self, world_uid: uuid.UUID, owner: int) -> None:
         await self._session_api.claim_world_for(world_uid, owner)
 
     @asyncSlot()
-    async def _world_unclaim(self, world_uid: uuid.UUID, owner: int):
+    async def _world_unclaim(self, world_uid: uuid.UUID, owner: int) -> None:
         await self._session_api.unclaim_world(world_uid, owner)
 
     @asyncSlot()
-    async def _kick_player(self, kick_id: int):
+    async def _kick_player(self, kick_id: int) -> None:
         await self._session_api.kick_player(kick_id)
 
     @asyncSlot()
-    async def _switch_admin(self, new_admin_id: int):
+    async def _switch_admin(self, new_admin_id: int) -> None:
         await self._session_api.switch_admin(new_admin_id)
 
     @asyncSlot()
-    async def _switch_readiness(self, user_id: int):
+    async def _switch_readiness(self, user_id: int) -> None:
         await self._session_api.switch_readiness(user_id)
 
     @asyncSlot()
-    async def _world_rename(self, world_uid: uuid.UUID):
+    async def _world_rename(self, world_uid: uuid.UUID) -> None:
         old_name = self._session.get_world(world_uid).name
         new_name = await TextPromptDialog.prompt(
             parent=self,
@@ -229,14 +259,13 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         if new_name is not None:
             if any(new_name == world.name for world in self._session.worlds):
-                return await async_dialog.warning(
-                    self, "Name already exists", f"A world named '{new_name}' already exists."
-                )
+                await async_dialog.warning(self, "Name already exists", f"A world named '{new_name}' already exists.")
+                return
 
             await self._session_api.rename_world(world_uid, new_name)
 
     @asyncSlot()
-    async def _world_delete(self, world_uid: uuid.UUID):
+    async def _world_delete(self, world_uid: uuid.UUID) -> None:
         result = await async_dialog.warning(
             self,
             "Delete world?",
@@ -248,7 +277,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             await self._session_api.delete_world(world_uid)
 
     @asyncSlot()
-    async def _preset_view_summary(self, world_uid: uuid.UUID):
+    async def _preset_view_summary(self, world_uid: uuid.UUID) -> None:
         preset = self._get_preset(world_uid).get_preset()
         description = preset_describer.merge_categories(preset_describer.describe(preset))
 
@@ -262,7 +291,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         return VersionedPreset.from_str(self._session.get_world(world_uid).preset_raw)
 
     @asyncSlot()
-    async def _world_save_preset_copy(self, world_uid: uuid.UUID):
+    async def _world_save_preset_copy(self, world_uid: uuid.UUID) -> None:
         preset = self._get_preset(world_uid)
 
         if preset.is_included_preset:
@@ -272,7 +301,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         self._window_manager.preset_manager.add_new_preset(preset)
 
     @asyncSlot()
-    async def _world_save_preset_to_file(self, world_uid: uuid.UUID):
+    async def _world_save_preset_to_file(self, world_uid: uuid.UUID) -> None:
         path = common_qt_lib.prompt_user_for_preset_file(self, new_file=True)
         if path is None:
             return
@@ -281,7 +310,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         preset.save_to_file(path)
 
     @asyncSlot()
-    async def world_export(self, world_uid: uuid.UUID):
+    async def world_export(self, world_uid: uuid.UUID) -> None:
         options = self._options
 
         if not options.is_alert_displayed(InfoAlert.MULTIWORLD_FAQ):
@@ -303,7 +332,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     #
 
     @asyncSlot()
-    async def _new_world(self, user_id: int):
+    async def _new_world(self, user_id: int) -> None:
         dialog = self._create_select_preset_dialog(True, None)
 
         result = await async_dialog.execute_dialog(dialog)
@@ -311,12 +340,13 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             return
 
         preset = dialog.selected_preset
+        assert preset is not None
+
         new_name = dialog.world_name_edit.text().strip()
 
         if any(new_name == world.name for world in self._session.worlds):
-            return await async_dialog.warning(
-                self, "Name already exists", f"A world named '{new_name}' already exists."
-            )
+            await async_dialog.warning(self, "Name already exists", f"A world named '{new_name}' already exists.")
+            return
 
         # Temp
         await self._session_api.create_new_world(new_name, preset, user_id)
@@ -331,7 +361,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             "multiplayer_session_window_cosmetic_clicked",
         )
 
-    def _register_debug_connector(self, world_uid: uuid.UUID):
+    def _register_debug_connector(self, world_uid: uuid.UUID) -> None:
         common_qt_lib.get_game_connection().add_connection_builder(
             DebugConnectorBuilder.create(
                 self._get_preset(world_uid).game,
@@ -341,18 +371,18 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     #
 
-    def _watch_inventory(self, world_uid: uuid.UUID, user_id: int):
+    def _watch_inventory(self, world_uid: uuid.UUID, user_id: int) -> None:
         self.TrackWorldRequested.emit(world_uid, user_id)
 
     #
     def is_admin(self) -> bool:
-        return self._session.users[self.your_id].admin
+        return self.your_id is not None and self._session.users[self.your_id].admin
 
     def _create_world_item(
-        self, world_id: uuid.UUID, parent: QtWidgets.QTreeWidgetItem, owner: int | None
+        self, world_id: uuid.UUID, parent: QtWidgets.QTreeWidgetItem, owner: int
     ) -> WorldWidgetEntry:
-        def is_valid_owner(owner: int) -> bool:
-            return owner is not None and owner >= 0
+        def is_valid_owner(_owner: int) -> bool:
+            return _owner >= 0
 
         in_generation = self._session.generation_in_progress is not None
         has_layout = self._session.game_details is not None
@@ -406,7 +436,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 connect_to(world_menu.addAction(menu_caption), self._world_unclaim, world_id, owner)
 
             if not is_valid_owner(owner) and (self.is_admin() or self._session.allow_everyone_claim_world):
-                if self._session.users[self.your_id].worlds.get(world_id):
+                if self.your_id is not None and self._session.users[self.your_id].worlds.get(world_id):
                     world_menu.addSeparator()
                     create_unclaim_entry("Unclaim from yourself")
                 else:
@@ -450,7 +480,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         )
         return self._world_widgets[(owner, world_id)]
 
-    def _create_all_widgets_from_scratch(self):
+    def _create_all_widgets_from_scratch(self) -> None:
         self.clear()
         self._world_widgets.clear()
         self._user_widgets.clear()
@@ -489,11 +519,11 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
             if not has_layout and (user.id == self.your_id or self.is_admin()):
                 new_game_item = QtWidgets.QTreeWidgetItem(item)
-                tool = QtWidgets.QPushButton("Add new world")
-                tool.clicked.connect(functools.partial(self._new_world, user.id))
-                tool.setMinimumWidth(100)
-                tool.setEnabled(not in_generation)
-                self.setItemWidget(new_game_item, 0, tool)
+                pushbutton = QtWidgets.QPushButton("Add new world")
+                pushbutton.clicked.connect(functools.partial(self._new_world, user.id))
+                pushbutton.setMinimumWidth(100)
+                pushbutton.setEnabled(not in_generation)
+                self.setItemWidget(new_game_item, 0, pushbutton)
 
             self._user_widgets[user.id] = UserWidgetEntry(
                 item=item,
@@ -530,7 +560,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         self.resizeColumnToContents(0)
         self.resizeColumnToContents(1)
 
-    def update_state(self, session: MultiplayerSessionEntry):
+    def update_state(self, session: MultiplayerSessionEntry) -> None:
         self._last_session = getattr(self, "_session", None)
         self._session = session
 
