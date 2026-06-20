@@ -99,12 +99,12 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         return selection_range.topLeft().data(Qt.ItemDataRole.UserRole)
 
     @asyncSlot(QTableWidgetItem)
-    async def on_double_click(self, item) -> None:
+    async def on_double_click(self, item: QTableWidgetItem) -> None:
         await self._attempt_join()
 
     @asyncSlot()
     @handle_network_errors
-    async def _attempt_join(self):
+    async def _attempt_join(self) -> None:
         if not self.visible_sessions:
             return
 
@@ -114,10 +114,11 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
             self.joined_session = await self.network_client.attempt_join_with_password_check(session)
 
         except error.WrongPasswordError:
-            return await async_dialog.warning(self, "Incorrect Password", "The password entered was incorrect.")
+            await async_dialog.warning(self, "Incorrect Password", "The password entered was incorrect.")
+            return
 
         if self.joined_session is not None:
-            return self.accept()
+            self.accept()
 
     def update_list(self) -> None:
         self.item_model.removeRows(0, self.item_model.rowCount())
