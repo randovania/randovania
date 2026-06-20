@@ -13,18 +13,17 @@ if TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.interface_common.players_configuration import PlayersConfiguration
-    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class PortalDetailsTab(BaseConnectionDetailsTab):
+class PortalDetailsTab(BaseConnectionDetailsTab[EchoesOPRConfiguration]):
     def tab_title(self) -> str:
         return "Portals"
 
     @classmethod
     def should_appear_for(
-        cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: EchoesOPRConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
     ) -> bool:
-        return isinstance(configuration, EchoesOPRConfiguration) and configuration.portal_rando
+        return configuration.portal_rando
 
     def _fill_per_region_connections(
         self,

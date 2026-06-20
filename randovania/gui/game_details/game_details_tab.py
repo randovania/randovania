@@ -11,8 +11,8 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class GameDetailsTab:
-    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame):
+class GameDetailsTab[ConfigurationT: BaseConfiguration]:
+    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame) -> None:
         self.game_enum = game
 
     def widget(self) -> QtWidgets.QWidget:
@@ -22,12 +22,12 @@ class GameDetailsTab:
         raise NotImplementedError
 
     def update_content(
-        self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
-    ):
+        self, configuration: ConfigurationT, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+    ) -> None:
         raise NotImplementedError
 
     @classmethod
     def should_appear_for(
-        cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: ConfigurationT, all_patches: dict[int, GamePatches], players: PlayersConfiguration
     ) -> bool:
         return True
