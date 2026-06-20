@@ -236,10 +236,9 @@ class PrimeRemoteConnector(RemoteConnector):
             if item.extra["item_id"] >= 1000:
                 continue
             item_response = item_responses[item.extra["item_id"]]
-            struct_format = ">II"
-            if self.powerup_size > 8:
-                struct_format += f"{self.powerup_size - 8}x"
-            inv = InventoryItem(*struct.unpack(struct_format, item_response))
+            # using "unpack_from", because Prime has amount/capacity, while
+            # Echoes has amount/capacity/how-many-seconds-item-stil-has
+            inv = InventoryItem(*struct.unpack_from(">II", item_response, 0))
             if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (item != self.multiworld_magic_item):
                 raise ValueError(f"Received {inv} for {item.long_name}, which is an invalid state.")
             inventory[item] = inv
