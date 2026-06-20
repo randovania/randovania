@@ -806,7 +806,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             options.visual_generation_alert = self.menu_action_visual_generation_alert.isChecked()
 
     def _open_auto_tracker(self) -> None:
-        from randovania.gui.auto_tracker_window import AutoTrackerWindow
+        from randovania.gui.item_tracker.auto_tracker_window import AutoTrackerWindow
 
         self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self, self._options)
         self.auto_tracker_window.show()

@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 from PySide6 import QtWidgets
 
 from randovania.game_description.resources.inventory import Inventory
-from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
+from randovania.gui.item_tracker.item_tracker_popup_window import ItemTrackerPopupWindow
 
 if TYPE_CHECKING:
     import pytest_mock

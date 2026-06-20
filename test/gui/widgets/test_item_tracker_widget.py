@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
-from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
+from randovania.gui.item_tracker.item_tracker_widget import ItemTrackerWidget
 
 
 @pytest.fixture(name="widget")

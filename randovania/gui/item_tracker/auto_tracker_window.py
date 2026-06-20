@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import collections
 import functools
+import typing
 from typing import TYPE_CHECKING
 
 from PySide6 import QtGui, QtWidgets
@@ -10,8 +11,9 @@ from randovania import get_data_path
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.inventory import Inventory
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
+from randovania.gui.item_tracker.item_tracker_widget import ItemTrackerWidget
+from randovania.gui.item_tracker.tracker_layout import TrackerLayout
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 from randovania.interface_common import persistence
 from randovania.lib import json_lib
 from randovania.network_common.game_connection_status import GameConnectionStatus
@@ -34,23 +36,25 @@ def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, dict[str
     if user_folder.joinpath("trackers.json").is_file():
         folders.append(user_folder)
 
-    result = {}
+    result: dict[RandovaniaGame, dict[str, Path]] = {}
 
     for folder in folders:
-        trackers = json_lib.read_path(folder.joinpath("trackers.json"))
+        trackers_config = json_lib.read_dict(folder.joinpath("trackers.json"))
 
+        exclude_trackers: dict[str, list[str]]
         if for_solo:
             exclude_trackers = {}
         else:
-            exclude_trackers = trackers["solo_only"]
+            exclude_trackers = typing.cast("dict", trackers_config["solo_only"])
 
-        for game_value, trackers in trackers["trackers"].items():
+        all_trackers: dict[str, dict[str, str]] = typing.cast("dict", trackers_config["trackers"])
+        for game_value, trackers in all_trackers.items():
             game = RandovaniaGame(game_value)
             if game not in result:
                 result[game] = {}
 
             for name, file_name in trackers.items():
-                if name not in exclude_trackers.get(game, []):
+                if name not in exclude_trackers.get(game_value, []):
                     result[game][name] = folder.joinpath(file_name)
 
     return result
@@ -62,12 +66,13 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
     _full_name_to_path: dict[str, Path]
     _connected_game: RandovaniaGame | None = None
     _current_tracker_game: RandovaniaGame | None = None
-    _current_tracker_name: str = "undefined"
-    _current_tracker_details: dict | None = None
+    _current_tracker_name: str | None = None
+    _current_tracker_details: TrackerLayout | None = None
     item_tracker: ItemTrackerWidget | None = None
     _dummy_tracker: QtWidgets.QLabel | None = None
     _last_source: RemoteConnector | None = None
     _last_selected_builder: ConnectorBuilder | None = None
+    _has_any_tracker: bool = False
 
     def __init__(self, game_connection: GameConnection, window_manager: WindowManager | None, options: Options):
         super().__init__()
@@ -129,7 +134,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
 
         return None
 
-    def _on_action_default_game(self, game: RandovaniaGame):
+    def _on_action_default_game(self, game: RandovaniaGame | None) -> None:
         with self.options as options:
             options.tracker_default_game = game
 
@@ -139,12 +144,12 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
                 self.delete_tracker()
             self.create_tracker()
 
-    def _on_action_select_tracker(self, game: RandovaniaGame, name: str):
+    def _on_action_select_tracker(self, game: RandovaniaGame, name: str) -> None:
         with self.options as options:
             options.set_selected_tracker_for(game, name)
         self.create_tracker()
 
-    def delete_tracker(self):
+    def delete_tracker(self) -> None:
         if self.item_tracker is not None:
             self.item_tracker.deleteLater()
             self.item_tracker = None
@@ -153,8 +158,12 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             self._dummy_tracker.deleteLater()
             self._dummy_tracker = None
 
-    def create_tracker(self):
-        connector = self.game_connection.get_connector_for_builder(self.selected_builder())
+    def get_connector(self) -> RemoteConnector | None:
+        builder = self.selected_builder()
+        return self.game_connection.get_connector_for_builder(builder)
+
+    def create_tracker(self) -> None:
+        connector = self.get_connector()
         tracker_name: str | None = None
         target_game: RandovaniaGame | None = None
 
@@ -182,7 +191,11 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         if target_game is not None:
             tracker_name = self.selected_tracker_for(target_game)
 
-        if tracker_name == self._current_tracker_name and target_game == self._current_tracker_game:
+        if (
+            self._has_any_tracker
+            and tracker_name == self._current_tracker_name
+            and target_game == self._current_tracker_game
+        ):
             return
 
         self.delete_tracker()
@@ -198,19 +211,20 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             self.gridLayout.addWidget(self._dummy_tracker, 0, 0, 1, 1)
             tracker_details = None
         else:
-            tracker_details = json_lib.read_path(self.trackers[target_game][tracker_name])
+            tracker_details = TrackerLayout.read_json(self.trackers[target_game][tracker_name])
 
             self.item_tracker = ItemTrackerWidget(tracker_details)
             self.gridLayout.addWidget(self.item_tracker, 0, 0, 1, 1)
             self.item_tracker.update_state(inventory)
 
+        self._has_any_tracker = True
         self._current_tracker_game = target_game
         self._current_tracker_name = tracker_name
         self._current_tracker_details = tracker_details
         if connector is not None:
             connector.inform_connected_tracker(tracker_details)
 
-    def update_sources_combo(self):
+    def update_sources_combo(self) -> None:
         old_builder = self.selected_builder()
         self.select_game_combo.currentIndexChanged.disconnect(self.on_select_game_combo)
         self.select_game_combo.clear()
@@ -236,7 +250,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
     def selected_builder(self) -> ConnectorBuilder | None:
         return self.select_game_combo.currentData()
 
-    def on_select_game_combo(self, _):
+    def on_select_game_combo(self, index: int) -> None:
         builder = self.selected_builder()
         if builder != self._last_selected_builder:
             self.delete_tracker()
@@ -244,9 +258,9 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             self.create_tracker()
         self._last_selected_builder = builder
 
-    def on_game_state_updated(self, state: ConnectedGameState):
+    def on_game_state_updated(self, state: ConnectedGameState) -> None:
         self.create_tracker()
-        expected_connector = self.game_connection.get_connector_for_builder(self.selected_builder())
+        expected_connector = self.get_connector()
         if expected_connector == state.source or self._last_source == state.source:
             if self._last_source != state.source:
                 state.source.inform_connected_tracker(self._current_tracker_details)

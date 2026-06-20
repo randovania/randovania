@@ -24,9 +24,9 @@ if typing.TYPE_CHECKING:
     import qasync
 
     from randovania.game_connection.game_connection import GameConnection
-    from randovania.gui.auto_tracker_window import AutoTrackerWindow
     from randovania.gui.data_editor import DataEditorWindow
     from randovania.gui.game_details.game_details_window import GameDetailsWindow
+    from randovania.gui.item_tracker.auto_tracker_window import AutoTrackerWindow
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.gui.main_window import MainWindow
     from randovania.gui.multiworld_client import MultiworldClient
@@ -156,7 +156,7 @@ async def show_main_window(app: RdvApplication, options: Options, is_preview: bo
 
 
 async def show_tracker(app: RdvApplication, options: Options) -> None:
-    from randovania.gui.auto_tracker_window import AutoTrackerWindow
+    from randovania.gui.item_tracker.auto_tracker_window import AutoTrackerWindow
 
     app.tracker = AutoTrackerWindow(app.game_connection, None, options)
     logger.info("Displaying auto tracker")

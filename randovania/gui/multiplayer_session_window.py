@@ -13,11 +13,12 @@ from qasync import asyncClose, asyncSlot
 from randovania import monitoring
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
-from randovania.gui.auto_tracker_window import load_trackers_configuration
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
+from randovania.gui.item_tracker.auto_tracker_window import load_trackers_configuration
+from randovania.gui.item_tracker.item_tracker_popup_window import ItemTrackerPopupWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader
 from randovania.gui.lib.async_dialog import StandardButton
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
@@ -25,7 +26,6 @@ from randovania.gui.lib.generation_failure_handling import GenerationFailureHand
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.gui.lib.qt_network_client import AnyNetworkError, QtNetworkClient, handle_network_errors
 from randovania.gui.widgets.audit_log_model import AuditEntryListDatabaseModel
-from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
 from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget, connect_to
 from randovania.interface_common import generator_frontend
 from randovania.layout.base.base_configuration import BaseConfiguration
