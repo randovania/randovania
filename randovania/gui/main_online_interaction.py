@@ -9,8 +9,8 @@ from qasync import asyncSlot
 
 from randovania import monitoring
 from randovania.gui.async_race_room_window import AsyncRaceRoomWindow
-from randovania.gui.dialog.async_race_creation_dialog import AsyncRaceCreationDialog
-from randovania.gui.dialog.async_race_room_browser_dialog import AsyncRaceRoomBrowserDialog
+from randovania.gui.dialog.async_race.async_race_creation_dialog import AsyncRaceCreationDialog
+from randovania.gui.dialog.async_race.async_race_room_browser_dialog import AsyncRaceRoomBrowserDialog
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.multiplayer_session_browser_dialog import MultiplayerSessionBrowserDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog

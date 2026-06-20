@@ -10,10 +10,10 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui import game_specific_gui
-from randovania.gui.dialog.async_race_admin_dialog import AsyncRaceAdminDialog
-from randovania.gui.dialog.async_race_leaderboard_dialog import AsyncRaceLeaderboardDialog
-from randovania.gui.dialog.async_race_proof_popup import AsyncRaceProofPopup
-from randovania.gui.dialog.async_race_settings_dialog import AsyncRaceSettingsDialog
+from randovania.gui.dialog.async_race.async_race_admin_dialog import AsyncRaceAdminDialog
+from randovania.gui.dialog.async_race.async_race_leaderboard_dialog import AsyncRaceLeaderboardDialog
+from randovania.gui.dialog.async_race.async_race_proof_popup import AsyncRaceProofPopup
+from randovania.gui.dialog.async_race.async_race_settings_dialog import AsyncRaceSettingsDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.async_race_room_window_ui import Ui_AsyncRaceRoomWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
