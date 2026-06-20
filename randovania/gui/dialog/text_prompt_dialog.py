@@ -51,7 +51,7 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
     def text_value(self) -> str:
         return self.prompt_edit.text().strip()
 
-    def _on_text_changed(self, value: str):
+    def _on_text_changed(self, value: str) -> None:
         error_message = None
 
         if self.check_re is not None:

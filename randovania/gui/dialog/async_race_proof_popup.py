@@ -34,7 +34,7 @@ class AsyncRaceProofPopup(QtWidgets.QDialog):
         # Mark proof url as error only if one was given that does not look like a url
         common_qt_lib.set_error_border_stylesheet(
             self.ui.proof_edit,
-            self.proof_url and self._proof_re.match(self.proof_url) is None,
+            bool(self.proof_url and self._proof_re.match(self.proof_url) is None),
         )
 
         # Mark submission notes as error only if none were given and no proof url was given

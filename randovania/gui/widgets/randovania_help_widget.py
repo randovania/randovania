@@ -10,7 +10,7 @@ from randovania.gui.lib import common_qt_lib
 class RandovaniaHelpWidget(QtWidgets.QTabWidget, Ui_RandovaniaHelpWidget):
     _first_show: bool = True
 
-    def _on_first_show(self):
+    def _on_first_show(self) -> None:
         monitoring.metrics.incr("gui_show_rdv_help_widget")
         self.setupUi(self)
         common_qt_lib.set_icon_data_paths(self.database_viewer_label)
