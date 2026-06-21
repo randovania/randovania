@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [10.9.0] - 2026-07-0?
 
 - Added: The Data Visualizer now displays more information about Hint nodes.
+- Changed: Updated the Nintendont version that is used when uploading it directly to the Wii.
+  Includes faster connection speeds and better crash resilience.
 - Changed: Nintendont Connector: Better error messages when connecting to an invalid Nintendont.
 
 ### Another Metroid 2 Remake
