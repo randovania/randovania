@@ -10,13 +10,13 @@ from randovania.gui.lib.qt_network_client import NetworkErrorDelegator, handle_n
 from randovania.layout.layout_description import LayoutDescription
 from randovania.network_common import admin_actions
 from randovania.network_common.signals import server_signals
+from randovania.network_common.signals.common import SioDataType
 
 if typing.TYPE_CHECKING:
     import uuid
 
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.layout.versioned_preset import VersionedPreset
-    from randovania.lib.json_lib import JsonType
     from randovania.lib.type_lib import AsyncCallable
     from randovania.network_common.multiplayer_session import MultiplayerWorld
     from randovania.network_common.session_visibility import MultiplayerSessionVisibility
@@ -64,11 +64,11 @@ class MultiplayerSessionApi(NetworkErrorDelegator, QtCore.QObject):
     def network_error_widget(self) -> QtWidgets.QWidget:
         return self.widget_root
 
-    async def _session_admin_global[T: JsonType | None](
+    async def _session_admin_global(
         self,
         action: admin_actions.SessionAdminGlobalAction,
-        *args: JsonType | bytes,
-    ) -> T:
+        *args: SioDataType,
+    ) -> SioDataType:
         try:
             self.widget_root.setEnabled(False)
             return await server_signals.Multiplayer.AdminSession.call_server(self.network_client)(
@@ -80,8 +80,8 @@ class MultiplayerSessionApi(NetworkErrorDelegator, QtCore.QObject):
             self.widget_root.setEnabled(True)
 
     async def _session_admin_player(
-        self, user_id: int, action: admin_actions.SessionAdminUserAction, *args: JsonType | bytes
-    ) -> JsonType | None:
+        self, user_id: int, action: admin_actions.SessionAdminUserAction, *args: SioDataType
+    ) -> SioDataType:
         try:
             self.widget_root.setEnabled(False)
             return await server_signals.Multiplayer.AdminPlayer.call_server(self.network_client)(

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import typing
 
+from randovania.lib.json_lib import JsonPrimitive
+
 if typing.TYPE_CHECKING:
     from collections.abc import Mapping, Sequence
     from typing import Annotated, Any
@@ -13,7 +15,8 @@ type TypedBytes[T] = Annotated[bytes, T]
 
 type TypedJsonObject[T] = Annotated[JsonObject_RO, T]
 
-type SioDataType = str | bytes | Mapping[str, SioDataType] | Sequence[SioDataType]
+# the socketio stubs are incorrect about what's actually supported. annoying
+type SioDataType = JsonPrimitive | bytes | Mapping[str, SioDataType] | Sequence[SioDataType]
 
 
 def args_to_sio_data(*args: Any) -> SioDataType | tuple[SioDataType, ...]:
