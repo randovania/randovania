@@ -8,6 +8,7 @@ from qasync import asyncSlot
 
 from randovania.gui.lib import async_dialog, file_prompts, signal_handling
 from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib
@@ -102,18 +103,17 @@ class ConnectionFilteringWidget(QtWidgets.QDockWidget):
     async def _on_load_preset_slot(self) -> None:
         await self._on_load_preset()
 
-    async def _on_load_preset(self):
+    async def _on_load_preset(self) -> None:
         preset_file = await file_prompts.prompt_preset(self, False)
         if preset_file is None:
             return
 
         try:
-            preset = (await VersionedPreset.from_file(preset_file)).get_preset()
+            preset = (await VersionedPreset[BaseConfiguration].from_file(preset_file)).get_preset()
 
         except Exception as e:
-            return await async_dialog.warning(
-                self, "Invalid preset", f"Unable to load a preset from {preset_file}: {e}"
-            )
+            await async_dialog.warning(self, "Invalid preset", f"Unable to load a preset from {preset_file}: {e}")
+            return
 
         active_layers = preset.configuration.active_layers()
         for layer_check in self.layer_checks:
