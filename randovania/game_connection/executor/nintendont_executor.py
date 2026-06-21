@@ -99,6 +99,14 @@ class NintendontExecutor(MemoryOperationExecutor):
     _socket: SocketHolder | None = None
     _socket_error: Exception | None = None
 
+    SUPPORTED_API_VERSION = 1
+
+    _timeout = 5
+    # timeout in seconds on when we disconnect when we don't get a response.
+    # The Prime games (which this is currently used for) are somewhat time-sensitive. If we can't ensure a timely
+    # response the experience is going to be bad and things *will* break. So make sure early then to
+    # Once the prime games are reworked, or this is used for other games, a reconsideration can be done to rework this.
+
     def __init__(self, ip: str):
         super().__init__()
         self._ip = ip
@@ -111,6 +119,18 @@ class NintendontExecutor(MemoryOperationExecutor):
     def lock_identifier(self) -> str | None:
         return None
 
+    @property
+    def max_output(self) -> int:
+        if self._is_socket_connected(self._socket):
+            return self._socket.max_output - 1
+        return -1
+
+    @property
+    def max_input(self) -> int:
+        if self._is_socket_connected(self._socket):
+            return self._socket.max_input - 1
+        return -1
+
     async def connect(self) -> str | None:
         if self._socket is not None:
             return None
@@ -118,23 +138,50 @@ class NintendontExecutor(MemoryOperationExecutor):
         try:
             self._socket_error = None
             self.logger.debug(f"Connecting to {self._ip}:{self._port}.")
-            reader, writer = await asyncio.open_connection(self._ip, self._port)
+            reader, writer = await asyncio.wait_for(
+                asyncio.open_connection(self._ip, self._port), timeout=self._timeout
+            )
 
             # Send API details request
             self.logger.debug("Connection open, requesting API details.")
 
             writer.write(struct.pack(">BBBB", 1, 0, 0, 1))
-            await asyncio.wait_for(writer.drain(), timeout=30)
+            await asyncio.wait_for(writer.drain(), timeout=self._timeout)
 
             self.logger.debug("Waiting for API details response.")
-            response = await asyncio.wait_for(reader.read(1024), timeout=15)
-            api_version, max_input, max_output, max_addresses = struct.unpack_from(">IIII", response, 0)
+            response = await asyncio.wait_for(reader.read(1024), timeout=self._timeout)
+            invalid_message = f"Unable to connect to {self._ip}:{self._port} - Unsupported Nintendont version!"
+            try:
+                api_version, max_input, max_output, max_addresses = struct.unpack(">IIII", response)
+
+            except struct.error as e:
+                writer.close()
+                self._socket_error = e
+                return f"{invalid_message} Invalid response when requesting API details."
+
+            if api_version != self.SUPPORTED_API_VERSION:
+                writer.close()
+                return f"{invalid_message} Nintendont has API {api_version} but expected {self.SUPPORTED_API_VERSION}."
+
+            if max_input > 256 or max_output > 256 or max_addresses > 16:
+                # 256, 256 and 16 are the current theoretical maximum values for input/output/address per the protocol.
+                writer.close()
+                return f"{invalid_message} Nintendont responding with invalid API details."
 
             self.logger.debug(f"Remote replied with API level {api_version}, connection successful.")
             self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
             return None
 
-        except (TimeoutError, OSError, struct.error, UnicodeError) as e:
+        except ConnectionRefusedError as e:
+            # Ip exists, maybe it's listening to the HBC port instead?
+            try:
+                reader, writer = await asyncio.wait_for(asyncio.open_connection(self._ip, 4299), timeout=self._timeout)
+                writer.close()
+            except Exception:
+                raise e
+
+            return "Currently in the Homebrew Channel. Upload Nintendont or launch it manually."
+        except (TimeoutError, OSError, UnicodeError) as e:
             # UnicodeError is for some invalid ip addresses
             self._socket = None
             message = f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}"
@@ -219,7 +266,7 @@ class NintendontExecutor(MemoryOperationExecutor):
                 self._socket.writer.write(data)
                 await self._socket.writer.drain()
                 if request.output_bytes > 0:
-                    response = await asyncio.wait_for(self._socket.reader.read(1024), timeout=15)
+                    response = await asyncio.wait_for(self._socket.reader.read(1024), timeout=self._timeout)
                     all_responses.append(response)
                 else:
                     all_responses.append(b"")
@@ -249,14 +296,7 @@ class NintendontExecutor(MemoryOperationExecutor):
             for req_index, request in enumerate(requests):
                 log_message += f"Request {req_index}\n"
                 for op_index, op in enumerate(request.ops):
-                    read_write_part = ""
-                    if op.write_bytes:
-                        read_write_part = (
-                            f"write {('(and read) ' if op.read_byte_count else '')} '{op.write_bytes.hex()}'"
-                        )
-                    elif op.read_byte_count:
-                        read_write_part = f"read {op.read_byte_count} bytes"
-                    log_message += f"  Operation {op_index}: {read_write_part} at 0x{op.address:0x}\n"
+                    log_message += f"  Operation {op_index}: {op}\n"
             self.logger.debug(log_message)
 
         all_responses = await self._send_requests_to_socket(requests)

@@ -128,6 +128,7 @@ class Ui_DataEditorWindow(object):
 
         self.node_details_label = QLabel(self.node_info_group)
         self.node_details_label.setObjectName(u"node_details_label")
+        self.node_details_label.setTextFormat(Qt.RichText)
         self.node_details_label.setWordWrap(True)
 
         self.gridLayout_4.addWidget(self.node_details_label, 1, 0, 1, 2)

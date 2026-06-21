@@ -11,6 +11,7 @@ from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.lib import enum_lib
+from randovania.lib.json_lib import JsonObject, JsonObject_RO
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
@@ -22,6 +23,29 @@ class HintDarkTemple(Enum):
     AGON_WASTES = "agon-wastes"
     TORVUS_BOG = "torvus-bog"
     SANCTUARY_FORTRESS = "sanctuary-fortress"
+
+    temple_name: str
+    item_names: tuple[str, str, str]
+
+
+enum_lib.add_per_enum_field(
+    HintDarkTemple,
+    "temple_name",
+    {
+        HintDarkTemple.AGON_WASTES: "Dark Agon Temple",
+        HintDarkTemple.TORVUS_BOG: "Dark Torvus Temple",
+        HintDarkTemple.SANCTUARY_FORTRESS: "Hive Temple",
+    },
+)
+enum_lib.add_per_enum_field(
+    HintDarkTemple,
+    "item_names",
+    {
+        HintDarkTemple.AGON_WASTES: ("AgonKey1", "AgonKey2", "AgonKey3"),
+        HintDarkTemple.TORVUS_BOG: ("TorvusKey1", "TorvusKey2", "TorvusKey3"),
+        HintDarkTemple.SANCTUARY_FORTRESS: ("HiveKey1", "HiveKey2", "HiveKey3"),
+    },
+)
 
 
 class HintItemPrecision(Enum):
@@ -88,30 +112,41 @@ class RelativeData:
             return RelativeDataItem.from_json(json_dict, **extra)
 
 
+class _RelativeDataJson(typing.TypedDict):
+    distance_offset: int | None
+
+
+class _RelativeDataItemJson(_RelativeDataJson, total=False):
+    other_index: int
+    precision: str
+    precision_feature: str
+
+
 @dataclass(frozen=True)
 class RelativeDataItem(JsonDataclass, RelativeData):
     other_index: PickupIndex
     precision: HintItemPrecision | HintFeature
 
     @classmethod
-    def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
+    def from_json(cls, json_dict: JsonObject_RO, **extra: typing.Any) -> typing.Self:
+        data = typing.cast("_RelativeDataItemJson", json_dict)
         pickup_database: PickupDatabase = extra["other_pickup_db"]
 
-        item_json = json_dict.get("precision")
+        item_json = data.get("precision")
         item: HintItemPrecision | HintFeature
         if item_json is not None:
             item = HintItemPrecision(item_json)
         else:
-            item = pickup_database.pickup_categories[json_dict["precision_feature"]]
+            item = pickup_database.pickup_categories[data["precision_feature"]]
 
         return cls(
-            other_index=PickupIndex(json_dict["other_index"]),
+            other_index=PickupIndex(data["other_index"]),
             precision=item,
-            distance_offset=json_dict["distance_offset"],
+            distance_offset=data["distance_offset"],
         )
 
     @property
-    def as_json(self) -> dict:
+    def as_json(self) -> JsonObject:
         data = super().as_json
         if isinstance(self.precision, HintFeature):
             del data["precision"]
@@ -125,6 +160,15 @@ class RelativeDataArea(JsonDataclass, RelativeData):
     precision: HintRelativeAreaName
 
 
+class _PrecisionPairJson(typing.TypedDict, total=False):
+    location: str
+    location_feature: str
+    relative: dict
+    item: str
+    item_feature: str
+    include_owner: bool | None
+
+
 @dataclass(frozen=True)
 class PrecisionPair(JsonDataclass):
     location: HintLocationPrecision | HintFeature | SpecificHintPrecision
@@ -133,35 +177,37 @@ class PrecisionPair(JsonDataclass):
     relative: RelativeDataItem | RelativeDataArea | None = None
 
     @classmethod
-    def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
+    def from_json(cls, json_dict: JsonObject_RO, **extra: typing.Any) -> typing.Self:
+        data = typing.cast("_PrecisionPairJson", json_dict)
+
         game: GameDescription = extra["game"]
         pickup_database: PickupDatabase = extra["pickup_db"]
 
-        relative = json_dict.get("relative")
+        relative = data.get("relative")
 
-        location_json = json_dict.get("location")
+        location_json = data.get("location")
         location: HintLocationPrecision | HintFeature
         if location_json is not None:
             location = HintLocationPrecision(location_json)
         else:
-            location = game.hint_feature_database[json_dict["location_feature"]]
+            location = game.hint_feature_database[data["location_feature"]]
 
-        item_json = json_dict.get("item")
+        item_json = data.get("item")
         item: HintItemPrecision | HintFeature
         if item_json is not None:
             item = HintItemPrecision(item_json)
         else:
-            item = pickup_database.pickup_categories[json_dict["item_feature"]]
+            item = pickup_database.pickup_categories[data["item_feature"]]
 
         return cls(
             location=location,
             item=item,
-            include_owner=json_dict["include_owner"],
+            include_owner=data["include_owner"],
             relative=RelativeData.from_json(relative, **extra) if relative is not None else None,
         )
 
     @property
-    def as_json(self) -> dict:
+    def as_json(self) -> JsonObject:
         if isinstance(self.location, SpecificHintPrecision) or isinstance(self.item, SpecificHintPrecision):
             raise TypeError(f"PrecisionPair {self} with SpecificHintPrecision is not JSON encodable!")
 
@@ -193,13 +239,13 @@ PRECISION_PAIR_UNASSIGNED = PrecisionPair(
 @dataclass(frozen=True)
 class BaseHint(JsonDataclass):
     @classmethod
-    def from_json(cls, json_dict: dict, **extra: typing.Any) -> Hint:
+    def from_json(cls, json_dict: JsonObject_RO, **extra: typing.Any) -> Hint:
         hint_type = HintType(json_dict["hint_type"])
         assert hint_type.hint_class is not BaseHint
         return hint_type.hint_class.from_json(json_dict, **extra)
 
     @property
-    def as_json(self) -> dict:
+    def as_json(self) -> JsonObject:
         data = super().as_json
         data["hint_type"] = self.hint_type().value
         return data
@@ -215,7 +261,10 @@ class LocationHint(BaseHint):
     target: PickupIndex
 
     @classmethod
-    def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
+    def from_json(cls, json_dict: JsonObject_RO, **extra: typing.Any) -> typing.Self:
+        assert isinstance(json_dict["target"], int)
+        assert isinstance(json_dict["precision"], dict)
+
         return cls(
             target=PickupIndex(json_dict["target"]),
             precision=PrecisionPair.from_json(json_dict["precision"], **extra),
@@ -244,7 +293,7 @@ def is_unassigned_location(hint: BaseHint) -> typing.TypeGuard[LocationHint]:
 @dataclass(frozen=True)
 class JokeHint(BaseHint):
     @classmethod
-    def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
+    def from_json(cls, json_dict: JsonObject_RO, **extra: typing.Any) -> typing.Self:
         return cls()
 
     @classmethod
@@ -257,7 +306,7 @@ class RedTempleHint(BaseHint):
     dark_temple: HintDarkTemple
 
     @classmethod
-    def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
+    def from_json(cls, json_dict: JsonObject_RO, **extra: typing.Any) -> typing.Self:
         return cls(
             dark_temple=HintDarkTemple(json_dict["dark_temple"]),
         )
@@ -283,10 +332,8 @@ class HintType(Enum):
     hint_class: type[BaseHint]
 
 
-HINT_TYPE_TO_CLASS = {cls.hint_type(): cls for cls in (LocationHint, JokeHint, RedTempleHint)}
-
 enum_lib.add_per_enum_field(
     HintType,
     "hint_class",
-    HINT_TYPE_TO_CLASS,
+    {cls.hint_type(): cls for cls in BaseHint.__subclasses__()},
 )

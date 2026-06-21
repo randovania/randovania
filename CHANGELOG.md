@@ -5,9 +5,87 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.8.0] - 2026-06-0?
+## [10.9.0] - 2026-07-0?
+
+- Added: The Data Visualizer now displays more information about Hint nodes.
+- Changed: Updated the Nintendont version that is used when uploading it directly to the Wii.
+  Includes faster connection speeds and better crash resilience.
+- Changed: Nintendont Connector: Better error messages when connecting to an invalid Nintendont.
+
+### Another Metroid 2 Remake
+
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
+
+### Metroid Dread
+
+- Removed: The option for disabling required mains for Power Bombs has been removed. Old presets will still work, but
+  are unsupported.
+
+#### Logic Database
+
+##### Artaria
+
+- Added: Single-wall Wall Jump traversal option to get to EMMI Zone Dome.
+- Added: Speed booster conservation trick to get to the top of the EMMI Zone Hub without diabled door lock randomizer.
+- Added: Added several videos for various connections in Artaria.
+- Changed: The connection from EMMI Zone Exit North to EMMI Zone Exit Northwest using Speedbooster is now classified as a Beginner Speedbooster Conservation trick.
+
+### Metroid Fusion
+
+#### Logic Database
+
+##### Main Deck
+
+- Changed: Dark Stairwell: Using the hidden connection to/from Central Nexus can now expect Mid-Air Morphs instead of Bombs/Hi-Jump.
+
+### Metroid Prime
+
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
+- Changed: The Dangerous Gravity Suit Logic setting has been moved from the Trick Level tab to the Generation tab.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
+
+### Metroid: Samus Returns
+
+- Added: Cosmetic option to reveal the map at the start (default: on)
+- Added: Cosmetic option to use Fusion suits (default: off)
+- Added: Preset option to skip the opening storyboard cutscene (default: off)
+- Fixed: Spazer and Plasma beam projectiles no longer shoot through blocks without Wave
+
+## [10.8.2] - 2026-06-14
+
+### Metroid Prime
+
+- Fixed: Edge case of Randovania sending wrong items to the game when it cannot read the inventory.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Edge case of Randovania sending wrong items to the game when it cannot read the inventory.
+
+## [10.8.1] - 2026-06-13
+
+- Changed: The seed hash text in the Multiplayer window can now be interacted with.
+- Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
+- Changed: When using the Nintendont game connection, it will now give better feedback when you're in the Homebrew Channel and haven't launched Nintendont yet.
+
+### Metroid Prime
+
+- Fixed: Exporting for NTSC 0-01 and Korean
+- Fixed: When having Randovania connected to the game while booting up or rebooting, it will not throw warnings (Dolphin) or disconnect (Nintendont) from the game.
+- Fixed: Converting Metroid Prime 2: Echoes models for multiworld, for certain pickups.
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
+
+## [10.8.0] - 2026-06-01
 
 - Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
+- Changed: When using the Nintendont game connection, it will now give better feedback when you're in the Homebrew Channel and haven't launched Nintendont yet.
 
 ### Generator
 
@@ -59,13 +137,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Metroid Prime Lair: Softlock when playing with Skippable/Competitive cutscenes on platforms with faster than disk read speed (Nintendont, Dolphin Emulate Disk Speed: false, etc.) and the Subchamber Five cutscene is skipped after the next room has finished loading.
 - Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
 - Fixed: Observatory: Softlock if the upper 1st-pass pirates are killed before entering the room
 - Fixed: Training Chamber: Softlock if the room unloaded after triggering fight but before killing both ghosts (e.g. wallcrawl)
 - Fixed: GM8E30 (Korean) support
 - Changed: Wavebuster no longer consumes ammo if cancelled due to "point blank range" rule
 - Changed: Updated tournament scan to include 2025 winners
-- Changed: The Dangerous Gravity Suit Logic setting has been moved from the Trick Level tab to the Generation tab.
 
 #### Logic Database
 
@@ -80,6 +158,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Changed: Dark, Light, and Beam Ammo Expansions are now considered dark-aligned, light-aligned and both, respectively.
+- Removed: A setting that disabled all room names on the map when elevators are randomized. This setting is redundant, since elevator rooms are not revealed on the map at all when randomized.
 
 #### Logic Database
 

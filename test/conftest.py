@@ -746,6 +746,9 @@ SOLO_RDVGAMES = [
     ("prime2/starts_with_cannon_ball.rdvgame", True),
     ("prime2/door_lock_rando.rdvgame", True),
     ("prime2/launcher_and_negative_expansions.rdvgame", True),
+    # Prime 2 (OPR)
+    ("prime2_opr/opr-starter-preset.rdvgame", True),
+    ("prime2_opr/dlr-elevator-portal-rando.rdvgame", True),
     # Samus Returns
     (
         "samus_returns/arachnus_boss_start_inventory.rdvgame",

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import base64
 import datetime
 import json
@@ -8,14 +10,14 @@ from collections.abc import Sequence
 import fastapi
 import peewee
 from peewee import Case
-from retro_data_structures.json_util import JsonArray
 from starlette.websockets import WebSocket, WebSocketDisconnect
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib.json_lib import JsonObject, JsonObject_RO
-from randovania.network_common import error, signals
+from randovania.lib.json_lib import JsonObject_RO
+from randovania.network_common import error
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
     AsyncRaceRoomAdminData,
@@ -26,10 +28,12 @@ from randovania.network_common.async_race_room import (
     RaceRoomLeaderboard,
     RaceRoomLeaderboardEntry,
 )
+from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
 )
+from randovania.network_common.signals import client_signals, server_signals
 from randovania.server import database, lib
 from randovania.server.database import (
     AsyncRaceEntryPause,
@@ -38,6 +42,10 @@ from randovania.server.database import (
     User,
 )
 from randovania.server.server_app import RdvFastAPI, ServerApp
+
+if typing.TYPE_CHECKING:
+    from randovania.network_common.async_race_room import AsyncRaceRoomEntry
+    from randovania.network_common.signals.common import TypedBytes, TypedJsonObject
 
 MAX_AUTH_TOKEN_LENGTH = 3600 * 24
 
@@ -84,7 +92,7 @@ def _fast_get_games_list_from_raw_layout(layout_description_json: bytes) -> list
     return [g for g in RandovaniaGame.sorted_all_games() if g.value in present_games]
 
 
-async def list_rooms(sa: ServerApp, sid: str, limit: int | None) -> Sequence[JsonObject_RO]:
+async def list_rooms(sa: ServerApp, sid: str, limit: int | None) -> Sequence[TypedJsonObject[AsyncRaceRoomListEntry]]:
     now = lib.datetime_now()
 
     def construct_helper(**args: typing.Any) -> AsyncRaceRoomListEntry:
@@ -125,7 +133,12 @@ async def list_rooms(sa: ServerApp, sid: str, limit: int | None) -> Sequence[Jso
     return [session.as_json for session in sessions]
 
 
-async def create_room(sa: ServerApp, sid: str, layout_bin: bytes, settings_json: JsonObject) -> JsonObject:
+async def create_room(
+    sa: ServerApp,
+    sid: str,
+    layout_bin: TypedBytes[LayoutDescription],
+    settings_json: TypedJsonObject[AsyncRaceSettings],
+) -> TypedJsonObject[AsyncRaceRoomEntry]:
     current_user = await sa.get_current_user(sid)
 
     layout = LayoutDescription.from_bytes(layout_bin)
@@ -154,7 +167,12 @@ async def create_room(sa: ServerApp, sid: str, layout_bin: bytes, settings_json:
     return (await AsyncRaceRoom.get_by_id(new_room_id).create_session_entry(sa, sid)).as_json
 
 
-async def change_room_settings(sa: ServerApp, sid: str, room_id: int, settings_json: JsonObject) -> JsonObject:
+async def change_room_settings(
+    sa: ServerApp,
+    sid: str,
+    room_id: int,
+    settings_json: TypedJsonObject[AsyncRaceSettings],
+) -> TypedJsonObject[AsyncRaceRoomEntry]:
     """
     Updates the settings for the given room
     :param sa:
@@ -203,7 +221,7 @@ async def listen_to_room(sa: ServerApp, sid: str, room_id: int, listen: bool) ->
         await sa.sio.leave_room(sid, socketio_room)
 
 
-async def get_room(sa: ServerApp, sid: str, room_id: int, password: str | None) -> JsonObject_RO:
+async def get_room(sa: ServerApp, sid: str, room_id: int, password: str | None) -> TypedJsonObject[AsyncRaceRoomEntry]:
     """
     Gets details about the given room id
     :param sa:
@@ -217,7 +235,7 @@ async def get_room(sa: ServerApp, sid: str, room_id: int, password: str | None) 
     return (await room.create_session_entry(sa, sid)).as_json
 
 
-async def refresh_room(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonObject_RO:
+async def refresh_room(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> TypedJsonObject[AsyncRaceRoomEntry]:
     """
     Gets details about the given room id
     :param sa:
@@ -230,7 +248,12 @@ async def refresh_room(sa: ServerApp, sid: str, room_id: int, auth_token: str) -
     return (await room.create_session_entry(sa, sid)).as_json
 
 
-async def get_leaderboard(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonObject_RO:
+async def get_leaderboard(
+    sa: ServerApp,
+    sid: str,
+    room_id: int,
+    auth_token: str,
+) -> TypedJsonObject[RaceRoomLeaderboard]:
     """
     Gets the race results. Only accessible after the end time is reached.
     :param sa:
@@ -274,7 +297,7 @@ async def get_leaderboard(sa: ServerApp, sid: str, room_id: int, auth_token: str
     return RaceRoomLeaderboard(entries).as_json
 
 
-async def get_layout(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> bytes:
+async def get_layout(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> TypedBytes[LayoutDescription]:
     """
     Gets the layout description for the room, if it has finished
     :param sa:
@@ -291,7 +314,12 @@ async def get_layout(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> 
     return room.layout_description_json
 
 
-async def get_audit_log(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonArray:
+async def get_audit_log(
+    sa: ServerApp,
+    sid: str,
+    room_id: int,
+    auth_token: str,
+) -> Sequence[TypedJsonObject[AuditEntry]]:
     """
     Gets the audit log for the given room.
     :param sa:
@@ -322,7 +350,9 @@ async def admin_get_admin_data(sa: ServerApp, sid: str, room_id: int) -> JsonObj
     ).as_json
 
 
-async def admin_update_entries(sa: ServerApp, sid: str, room_id: int, raw_new_entries: list[JsonObject]) -> JsonObject:
+async def admin_update_entries(
+    sa: ServerApp, sid: str, room_id: int, raw_new_entries: Sequence[TypedJsonObject[AsyncRaceEntryData]]
+) -> TypedJsonObject[AsyncRaceRoomEntry]:
     """
     Updates multiple entries for the given room, all at once.
     :param sa:
@@ -367,8 +397,8 @@ async def admin_update_entries(sa: ServerApp, sid: str, room_id: int, raw_new_en
 
 
 async def join_and_export(
-    sa: ServerApp, sid: str, room_id: int, auth_token: str, cosmetic_json: JsonObject
-) -> JsonObject:
+    sa: ServerApp, sid: str, room_id: int, auth_token: str, cosmetic_json: TypedJsonObject[BaseCosmeticPatches]
+) -> dict:
     """
 
     :param sa:
@@ -564,12 +594,11 @@ _livesplit_event_mapping = {
 async def emit_async_room_update(sa: ServerApp, room: AsyncRaceRoom, sid_or_user: str | User) -> None:
     user = await sa.get_current_user(sid_or_user) if isinstance(sid_or_user, str) else sid_or_user
 
-    await sa.sio.emit(
-        signals.ASYNC_RACE_ROOM_UPDATE,
-        (await room.create_session_entry(sa, user)).as_json,
-        namespace="/",
+    await client_signals.AsyncRaceRoomUpdate.emit(
+        sa,
         to=_get_async_race_socketio_room(room, user),
-    )
+        namespace="/",
+    )((await room.create_session_entry(sa, user)).as_json)
 
 
 @router.websocket("/async-race-room/{room_id}/livesplit/{token}")
@@ -638,19 +667,19 @@ async def livesplit_integration(
 
 def setup_app(sa: ServerApp) -> None:
     sa.app.include_router(router)
-    sa.on("async_race_list_rooms", list_rooms, with_header_check=True)
-    sa.on("async_race_create_room", create_room, with_header_check=True)
-    sa.on("async_race_change_room_settings", change_room_settings, with_header_check=True)
-    sa.on("async_race_listen_to_room", listen_to_room, with_header_check=True)
-    sa.on("async_race_get_room", get_room, with_header_check=True)
-    sa.on("async_race_refresh_room", refresh_room, with_header_check=True)
-    sa.on("async_race_get_leaderboard", get_leaderboard, with_header_check=True)
-    sa.on("async_race_get_layout", get_layout, with_header_check=True)
-    sa.on("async_race_get_audit_log", get_audit_log, with_header_check=True)
-    sa.on("async_race_admin_get_admin_data", admin_get_admin_data, with_header_check=True)
-    sa.on("async_race_admin_update_entries", admin_update_entries, with_header_check=True)
-    sa.on("async_race_join_and_export", join_and_export, with_header_check=True)
-    sa.on("async_race_change_state", change_state, with_header_check=True)
-    sa.on("async_race_get_own_proof", get_own_proof, with_header_check=True)
-    sa.on("async_race_submit_proof", submit_proof, with_header_check=True)
-    sa.on("async_race_get_livesplit_url", get_livesplit_url, with_header_check=True)
+
+    server_signals.AsyncRace.ListRooms.register(sa, list_rooms, with_header_check=True)
+    server_signals.AsyncRace.CreateRoom.register(sa, create_room, with_header_check=True)
+    server_signals.AsyncRace.ChangeRoomSettings.register(sa, change_room_settings, with_header_check=True)
+    server_signals.AsyncRace.ListenToRoom.register(sa, listen_to_room, with_header_check=True)
+    server_signals.AsyncRace.GetRoom.register(sa, get_room, with_header_check=True)
+    server_signals.AsyncRace.RefreshRoom.register(sa, refresh_room, with_header_check=True)
+    server_signals.AsyncRace.GetLeaderboard.register(sa, get_leaderboard, with_header_check=True)
+    server_signals.AsyncRace.GetLayout.register(sa, get_layout, with_header_check=True)
+    server_signals.AsyncRace.AdminGetAdminData.register(sa, admin_get_admin_data, with_header_check=True)
+    server_signals.AsyncRace.AdminUpdateEntries.register(sa, admin_update_entries, with_header_check=True)
+    server_signals.AsyncRace.JoinAndExport.register(sa, join_and_export, with_header_check=True)
+    server_signals.AsyncRace.ChangeState.register(sa, change_state, with_header_check=True)
+    server_signals.AsyncRace.GetOwnProof.register(sa, get_own_proof, with_header_check=True)
+    server_signals.AsyncRace.SubmitProof.register(sa, submit_proof, with_header_check=True)
+    server_signals.AsyncRace.GetLivesplitUrl.register(sa, get_livesplit_url, with_header_check=True)

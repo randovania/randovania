@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from collections.abc import Sequence
 from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING
 
@@ -9,14 +8,10 @@ from socketio.exceptions import ConnectionRefusedError
 from socketio_handler import BaseSocketHandler, SocketManager, register_handler
 
 import randovania
-from randovania.lib.json_lib import JsonObject_RO, JsonType_RO
 from randovania.server import client_check
 
 if TYPE_CHECKING:
     from randovania.server.server_app import Lifespan, RdvFastAPI, ServerApp
-
-SioDataType = str | bytes | JsonObject_RO | Sequence[JsonType_RO]
-EventHandlerReturnType = SioDataType | tuple[SioDataType, ...] | None
 
 
 @asynccontextmanager

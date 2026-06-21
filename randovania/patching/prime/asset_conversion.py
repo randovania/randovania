@@ -8,11 +8,12 @@ import time
 from typing import TYPE_CHECKING, NamedTuple
 
 import open_prime_rando.echoes.custom_assets
-from retro_data_structures.asset_manager import AssetManager, IsoFileProvider
+from retro_data_structures.asset_manager import AssetManager
 from retro_data_structures.conversion import conversions
 from retro_data_structures.conversion.asset_converter import AssetConverter, ConvertedAsset
 from retro_data_structures.dependencies import Dependency, all_converted_dependencies
 from retro_data_structures.exceptions import InvalidAssetId, UnknownAssetId
+from retro_data_structures.file_provider import IsoFileProvider
 from retro_data_structures.formats import format_for
 from retro_data_structures.formats.pak import PakBody, PakFile
 from retro_data_structures.formats.pak_gc import PAK_GC
@@ -31,7 +32,7 @@ if TYPE_CHECKING:
     from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 PRIME_MODELS_VERSION = 2
-ECHOES_MODELS_VERSION = 4
+ECHOES_MODELS_VERSION = 5
 
 
 def delete_converted_assets(assets_dir: Path):
@@ -336,7 +337,7 @@ def _read_prime1_from_cache(assets_path: Path, updaters):
 @monitoring.trace_function
 def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: ProgressUpdateCallable):
     metafile = output_path.joinpath("meta.json")
-    if get_asset_cache_version(output_path) >= ECHOES_MODELS_VERSION:
+    if get_asset_cache_version(output_path) == ECHOES_MODELS_VERSION:
         return json_lib.read_path(metafile)
 
     delete_converted_assets(output_path)

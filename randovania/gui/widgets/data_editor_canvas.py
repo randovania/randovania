@@ -3,11 +3,14 @@ from __future__ import annotations
 import functools
 import math
 import os
-from typing import TYPE_CHECKING, NamedTuple
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Literal, NamedTuple
 
+import numpy as np
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import QPointF, QRectF, QSizeF, Signal
 
+from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
@@ -51,6 +54,44 @@ class BoundsFloat(NamedTuple):
         return QRectF(QPointF(self.min_x, self.min_y), QPointF(self.max_x, self.max_y))
 
 
+Matrix4f = tuple[
+    tuple[float, float, float, float],
+    tuple[float, float, float, float],
+    tuple[float, float, float, float],
+    tuple[float, float, float, float],
+]
+
+
+@dataclass(frozen=True)
+class CameraData(JsonDataclass):
+    """
+    The data necessary to project 3D world-space node coordinates onto the 2D canvas.
+    Most useful if generated at the same time as the area image is taken.
+    """
+
+    coords: Literal["opengl"]
+    """The coordinate system the nodes are using."""
+
+    projection: Matrix4f
+    """The projection matrix of the camera that took the screenshot."""
+
+    view: Matrix4f
+    """The view matrix of the camera that took the screenshot."""
+
+    def game_loc_to_qt_local(self, x: float, y: float, z: float) -> tuple[float, float]:
+        """Transforms the 3D coordinates into a pair of 2D coordinates, within the range [0.0, 1.0]."""
+
+        if self.coords == "opengl":
+            pos = np.array([x, y, z, 1.0])
+
+            clip_space_pos = np.array(self.projection) @ (np.array(self.view) @ pos)
+            ndc_space_pos = clip_space_pos[0:3] / clip_space_pos[3]
+
+            return (ndc_space_pos[0] + 1.0) / 2.0, (ndc_space_pos[1] + 1.0) / 2.0
+
+        raise ValueError("Unknown coordinate system")
+
+
 def centered_text(painter: QtGui.QPainter, pos: QPointF, text: str) -> None:
     rect = QRectF(pos.x() - 32767 * 0.5, pos.y() - 32767 * 0.5, 32767, 32767)
     painter.drawText(rect, QtGui.Qt.AlignmentFlag.AlignCenter, text)
@@ -67,9 +108,12 @@ class DataEditorCanvas(QtWidgets.QWidget):
     highlighted_node: Node | None = None
     connected_node: Node | None = None
     _background_image: QtGui.QImage | None = None
+    _region_image: QtGui.QImage | None = None
+    _region_image_bounds: BoundsInt | None = None
     region_bounds: BoundsFloat
     area_bounds: BoundsFloat
     area_size: QSizeF
+    camera_data: CameraData | None = None
     image_bounds: BoundsInt
     edit_mode: bool = True
 
@@ -139,14 +183,17 @@ class DataEditorCanvas(QtWidgets.QWidget):
             self.game.data_path.joinpath("assets", "maps", f"{region.name}.png") if self.game is not None else None
         )
         if image_path is not None and image_path.exists():
-            self._background_image = QtGui.QImage(os.fspath(image_path))
-            self.image_bounds = BoundsInt(
+            self._region_image = QtGui.QImage(os.fspath(image_path))
+            self._region_image_bounds = BoundsInt(
                 min_x=region.extra.get("map_min_x", 0),
                 min_y=region.extra.get("map_min_y", 0),
-                max_x=self._background_image.width() - region.extra.get("map_max_x", 0),
-                max_y=self._background_image.height() - region.extra.get("map_max_y", 0),
+                max_x=self._region_image.width() - region.extra.get("map_max_x", 0),
+                max_y=self._region_image.height() - region.extra.get("map_max_y", 0),
             )
+            self._background_image = None
         else:
+            self._region_image = None
+            self._region_image_bounds = None
             self._background_image = None
 
         self.update_region_bounds()
@@ -201,6 +248,11 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 max_x = max(max_x, node.location.x)
                 max_y = max(max_y, node.location.y)
 
+        if "camera_data" in area.extra:
+            self.camera_data = CameraData.from_json(area.extra["camera_data"])
+        else:
+            self.camera_data = None
+
         image_path = (
             self.game.data_path.joinpath("assets", "maps", f"{area.map_name}.png") if self.game is not None else None
         )
@@ -212,7 +264,15 @@ class DataEditorCanvas(QtWidgets.QWidget):
             max_y = self._background_image.height() - area.extra.get("map_max_y", 0)
             self.image_bounds = BoundsInt(min_x, min_y, max_x, max_y)
             self.region_bounds = BoundsFloat(min_x, min_y, max_x, max_y)
+        # some games (msr + dread) do not use area images but one per region
+        # the image to use was already set by `select_region`
+        elif self._region_image is not None:
+            assert self._region_image_bounds is not None
+            self._background_image = self._region_image
+            self.image_bounds = self._region_image_bounds
+            self.update_region_bounds()
         else:
+            self._background_image = None
             self.update_region_bounds()
 
         self.area_bounds = BoundsFloat(
@@ -225,6 +285,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
             max(max_x - min_x, 1),
             max(max_y - min_y, 1),
         )
+
+        if self.camera_data is not None:
+            # when using 3D projection, normalize coordinates to within [0.0, 1.0]
+            self.region_bounds = BoundsFloat(0.0, 0.0, 1.0, 1.0)
+            self.area_bounds = BoundsFloat(0.0, 0.0, 1.0, 1.0)
+            self.area_size = QSizeF(1.0, 1.0)
+
         self.update()
 
     def highlight_node(self, node: Node) -> None:
@@ -382,11 +449,15 @@ class DataEditorCanvas(QtWidgets.QWidget):
         if self.state is None:
             menu.addAction(self._show_all_connections_action)
         if self.edit_mode:
-            menu.addAction(self._create_node_action)
-            menu.addAction(self._move_node_action)
-            self._move_node_action.setEnabled(self.highlighted_node is not None)
+            # doing stuff with nodes at a screen location is difficult when we're using 3d projection
+            self._create_node_action.setEnabled(self.camera_data is None)
+            self._move_node_action.setEnabled(self.camera_data is None and self.highlighted_node is not None)
+
             if self.highlighted_node is not None:
                 self._move_node_action.setText(f"Move {self.highlighted_node.name} here")
+
+            menu.addAction(self._create_node_action)
+            menu.addAction(self._move_node_action)
 
         # Areas Menu
         menu.addSeparator()
@@ -473,8 +544,12 @@ class DataEditorCanvas(QtWidgets.QWidget):
         if isinstance(pos, NodeLocation):
             x = pos.x
             y = pos.y
+            z = pos.z
         else:
-            x, y = pos[0], pos[1]
+            x, y, z = pos[0], pos[1], 0.0
+
+        if self.camera_data is not None:
+            x, y = self.camera_data.game_loc_to_qt_local(x, y, z)
 
         return QPointF(self.scale * (x - self.area_bounds.min_x), self.scale * (self.area_bounds.max_y - y))
 

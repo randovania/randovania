@@ -61,7 +61,7 @@ class PrimeRemoteConnector(RemoteConnector):
     executor: MemoryOperationExecutor
     remote_pickups: tuple[RemotePickup, ...]
     message_cooldown: float = 0.0
-    last_inventory = Inventory.empty()
+    last_inventory: Inventory | None = Inventory.empty()
     _dt: float = 2.5
     _pending_op_offset: int = 0x2
     """Offset compared to CStateManager where we store whether we still have pending write operations going on."""
@@ -148,6 +148,7 @@ class PrimeRemoteConnector(RemoteConnector):
         Fetches the region the player's currently at, or None if they're not in-game.
         :return: bool indicating if there's a pending `execute_remote_patches` operation, and the Region of the player.
         """
+        # TODO: the prime1 and echoes implementation are very similar to each other. Merge them into one?
         raise NotImplementedError
 
     async def _memory_op_for_items(
@@ -188,7 +189,7 @@ class PrimeRemoteConnector(RemoteConnector):
         for item, memory_op in zip(all_items, memory_ops, strict=True):
             inv = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
             if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (item != self.multiworld_magic_item):
-                raise MemoryOperationException(f"Received {inv} for {item.long_name}, which is an invalid state.")
+                raise ValueError(f"Received {inv} for {item.long_name}, which is an invalid state.")
             inventory[item] = inv
 
         return Inventory(inventory)
@@ -198,6 +199,10 @@ class PrimeRemoteConnector(RemoteConnector):
         Queries the game for the multiworld magic item and checks if a new location was collected.
         :return: True, if a new location was found and remote patches were executed. False otherwise.
         """
+
+        if self.last_inventory is None:
+            # If we don't have any valid inventory, just pretend that we cannot keep writnig
+            return True
 
         multiworld_magic_item = self.multiworld_magic_item
         magic_inv = self.last_inventory.get(multiworld_magic_item)
@@ -369,6 +374,8 @@ class PrimeRemoteConnector(RemoteConnector):
 
     def _check_magic_capacity(self) -> None:
         # Safety/debugging check to see what causes magic item randomly increases by 2 instead of 1.
+        if self.last_inventory is None:
+            return
         magic_inv = self.last_inventory.get(self.multiworld_magic_item)
         expected_capacity = self._debug_expected_capacity
         expected_capacity += magic_inv.amount
@@ -406,6 +413,9 @@ class PrimeRemoteConnector(RemoteConnector):
             if region is not None:
                 await self.update_current_inventory()
 
+                if self.last_inventory is None:
+                    return
+
                 if self.at_end_of_game():
                     self.GameHasBeenBeaten.emit()
                     self.logger.debug("The game has been beaten")
@@ -423,7 +433,13 @@ class PrimeRemoteConnector(RemoteConnector):
             # It should automatically disconnect the executor, so fail loudly if that's not the case
             if self.executor.is_connected():
                 self.executor.disconnect()
-                self.logger.debug("Disconnecting due to an exception: %s", str(e))
+                self.logger.debug("Disconnecting due to a memory exception: %s", str(e))
+
+        except Exception as e:
+            # If any other exception occurs, something has gone horribly wrong, so scream.
+            if self.executor.is_connected():
+                self.executor.disconnect()
+                self.logger.warning("Disconnecting due to an exception: %s", str(e))
 
         finally:
             if self.is_disconnected():
@@ -432,7 +448,15 @@ class PrimeRemoteConnector(RemoteConnector):
 
     async def update_current_inventory(self) -> None:
         """Fetches the inventory from the game, saves it and emits the signal if it changed."""
-        new_inventory = await self.get_inventory()
+        try:
+            new_inventory = await self.get_inventory()
+        except MemoryOperationException:
+            # If player reboots the game while we try to read the inventory, don't disconnect. Just mark
+            # that they have an empty inventory
+            self.InventoryUpdated.emit(Inventory.empty())
+            self.last_inventory = None
+            return
+
         if new_inventory != self.last_inventory:
             self.InventoryUpdated.emit(new_inventory)
             self.last_inventory = new_inventory
@@ -442,6 +466,10 @@ class PrimeRemoteConnector(RemoteConnector):
         Tries to do the next Multiworld interaction. Priority is checking locations first, and then sending new items.
         Returns true if remote patches were executed.
         """
+        if self.last_inventory is None:
+            # Don't do any MW interactions if we don't have a valid inventory
+            return True
+
         if await self.check_for_collected_location():
             return True
         else:
