@@ -223,22 +223,19 @@ class PrimeRemoteConnector(RemoteConnector):
         ops_result = await self.executor.perform_memory_operations(memory_ops)
         # Join all results together and then split them up per power up.
         joined_result = b"".join(ops_result.values())
-        item_responses = [
-            joined_result[i : i + self.powerup_size] for i in range(0, len(joined_result), self.powerup_size)
-        ]
-        if len(item_responses) != self.total_item_length:
+        if len(joined_result) != (self.total_item_length * self.powerup_size):
             raise ValueError(
-                f"Should have read {self.total_item_length} items from the game, instead read {len(item_responses)}"
+                f"Should have read {self.total_item_length} items from the game, "
+                f"instead read {len(joined_result) / self.powerup_size}"
             )
 
         inventory = {}
         for item in resource_db.get_all_items():
             if item.extra["item_id"] >= 1000:
                 continue
-            item_response = item_responses[item.extra["item_id"]]
-            # using "unpack_from", because Prime has amount/capacity, while
-            # Echoes has amount/capacity/how-many-seconds-item-stil-has
-            inv = InventoryItem(*struct.unpack_from(">II", item_response, 0))
+            item_id = item.extra["item_id"]
+            # Each element in the powerup array starts with amount/capacity in all Prime games.
+            inv = InventoryItem(*struct.unpack_from(">II", joined_result, item_id * self.powerup_size))
             if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (item != self.multiworld_magic_item):
                 raise ValueError(f"Received {inv} for {item.long_name}, which is an invalid state.")
             inventory[item] = inv
