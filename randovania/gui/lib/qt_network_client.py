@@ -5,7 +5,6 @@ import asyncio
 import functools
 from typing import TYPE_CHECKING, Concatenate
 
-import PySide6
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Signal
 
@@ -48,13 +47,13 @@ class NetworkErrorDelegator(abc.ABC):
 
 def handle_network_errors[SelfT: QtWidgets.QWidget | NetworkErrorDelegator, **P, RetT](
     fn: AsyncCallable[Concatenate[SelfT, P], RetT],
-) -> AsyncCallable[Concatenate[SelfT, P], RetT]:
+) -> AsyncCallable[Concatenate[SelfT, P], RetT | None]:
     @functools.wraps(fn)
-    async def wrapper(self: SelfT, *args: P.args, **kwargs: P.kwargs) -> RetT:
-        if isinstance(self, QtWidgets.QWidget):
-            widget = self
-        else:
+    async def wrapper(self: SelfT, *args: P.args, **kwargs: P.kwargs) -> RetT | None:
+        if not isinstance(self, QtWidgets.QWidget):
             widget = self.network_error_widget
+        else:
+            widget = self
 
         try:
             return await fn(self, *args, **kwargs)
@@ -127,15 +126,13 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
         configuration = randovania.get_configuration()
         user_data_dir = user_data_dir.joinpath("network_client")
 
-        if PySide6.__version_info__ >= (6, 5):
-            super().__init__(None, user_data_dir=user_data_dir, configuration=configuration)
-        else:
-            super().__init__(None)
-            NetworkClient.__init__(self, user_data_dir=user_data_dir, configuration=configuration)
+        QtCore.QObject.__init__(self, None)
+        NetworkClient.__init__(self, user_data_dir=user_data_dir, configuration=configuration)
 
-    @NetworkClient.connection_state.setter
+    # https://github.com/python/mypy/issues/5936
+    @NetworkClient.connection_state.setter  # type: ignore[attr-defined]
     def connection_state(self, value: ConnectionState) -> None:
-        NetworkClient.connection_state.fset(self, value)
+        NetworkClient.connection_state.fset(self, value)  # type: ignore[attr-defined]
         self.ConnectionStateUpdated.emit(value)
 
     async def on_connect(self) -> None:
@@ -183,7 +180,9 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
         url = self.configuration["server_address"] + f"/login?sid={sid}"
         return url
 
-    async def attempt_join_with_password_check(self, session: MultiplayerSessionListEntry):
+    async def attempt_join_with_password_check(
+        self, session: MultiplayerSessionListEntry
+    ) -> MultiplayerSessionEntry | None:
         if session.has_password and not session.is_user_in_session:
             password = await TextPromptDialog.prompt(
                 title="Enter password",
@@ -191,13 +190,13 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
                 is_password=True,
             )
             if password is None:
-                return
+                return None
         else:
             password = None
 
         return await self.join_multiplayer_session(session.id, password)
 
-    async def ensure_logged_in(self, parent: QtWidgets.QWidget | None):
+    async def ensure_logged_in(self, parent: QtWidgets.QWidget | None) -> bool:
         if self.connection_state == ConnectionState.Connected:
             return True
 
