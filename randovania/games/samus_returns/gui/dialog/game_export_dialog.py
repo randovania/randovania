@@ -16,6 +16,7 @@ from randovania.games.samus_returns.gui.generated.msr_game_export_dialog_ui impo
 from randovania.games.samus_returns.layout import MSRConfiguration
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
+    add_tabbed_field_validation,
     is_directory_validator,
     is_file_validator,
     output_input_intersection_validator,
@@ -25,14 +26,11 @@ from randovania.gui.dialog.game_export_dialog import (
     spoiler_path_for_directory,
     update_validation,
 )
-from randovania.gui.lib import common_qt_lib
 from randovania.lib import windows_lib
 from randovania.lib.ftp_uploader import FtpUploader
 from randovania.lib.windows_lib import get_windows_drives
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-
     from randovania.exporter.game_exporter import GameExportParams
     from randovania.interface_common.options import Options, PerGameOptions
 
@@ -60,17 +58,6 @@ def decode_path(s: str | None) -> Path | None:
     return Path(s)
 
 
-def add_validation(
-    edit: QtWidgets.QLineEdit, validation: Callable[[], bool], post_validation: Callable[[], None]
-) -> None:
-    def field_validation() -> None:
-        common_qt_lib.set_error_border_stylesheet(edit, not validation())
-        post_validation()
-
-    common_qt_lib.set_error_border_stylesheet(edit, False)
-    edit.textChanged.connect(field_validation)
-
-
 class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDialog):
     title_id: str = ""
 
@@ -90,11 +77,8 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
 
         per_game = options.per_game_options(MSRPerGameOptions)
 
-        self._validate_input_file()
-        self._validate_custom_path()
-
         # Input
-        self.input_file_edit.textChanged.connect(self._on_input_file_change)
+        self.input_file_edit.textChanged.connect(self.update_azahar_ui)
         self.input_file_button.clicked.connect(self._on_input_file_button)
 
         # Target Platform
@@ -115,23 +99,11 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
             "non_removable": self.sd_non_removable.isChecked(),
         }
         self.tab_sd_card.restore_options = self.sd_restore_options
-        self.tab_sd_card.is_valid = lambda: self.sd_combo.currentData() is not None
 
         # Output to FTP
         self.tab_ftp.is_valid = self.ftp_is_valid
         self.ftp_test_button.setVisible(False)
         self.ftp_anonymous_check.clicked.connect(self.ftp_on_anonymous_check)
-        add_validation(
-            self.ftp_username_edit,
-            lambda: self.ftp_anonymous_check.isChecked() or self.ftp_username_edit.text(),
-            self.update_accept_validation,
-        )
-        add_validation(
-            self.ftp_password_edit,
-            lambda: self.ftp_anonymous_check.isChecked() or self.ftp_password_edit.text(),
-            self.update_accept_validation,
-        )
-        add_validation(self.ftp_ip_edit, self.ftp_ip_edit.text, self.update_accept_validation)
         self.ftp_port_edit.setValidator(QtGui.QIntValidator(1, 65535, self))
 
         self.tab_ftp.serialize_options = lambda: {
@@ -142,26 +114,20 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
             "port": self.ftp_port_edit.text(),
         }
         self.tab_ftp.restore_options = self.ftp_restore_options
-        update_validation(self.ftp_username_edit)
-        update_validation(self.ftp_ip_edit)
-        self.ftp_on_anonymous_check()
 
         # Output to Azahar
         self._azahar_label_placeholder = self.azahar_label.text()
         self.tab_azahar.serialize_options = dict
         self.tab_azahar.restore_options = lambda p: None
-        self.tab_azahar.is_valid = lambda: True
 
         self.update_azahar_ui()
 
         # Output to Custom
-        self.custom_path_edit.textChanged.connect(self._on_custom_path_change)
         self.custom_path_button.clicked.connect(self._on_custom_path_button)
         self.tab_custom_path.serialize_options = lambda: {
             "path": serialize_path(path_in_edit(self.custom_path_edit)),
         }
         self.tab_custom_path.restore_options = self.custom_restore_options
-        self.tab_custom_path.is_valid = lambda: not self.custom_path_edit.has_error
 
         self._output_tab_by_name = {
             "sd": self.tab_sd_card,
@@ -191,10 +157,40 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
                     logging.exception("Unable to restore preferences for output")
 
         # Accept
-        self.output_tab_widget.currentChanged.connect(self.update_accept_validation)
-        self.sd_combo.currentIndexChanged.connect(self.update_accept_validation)
+        def validate_input_file() -> bool:
+            return self.rom_validation(self.input_file_edit)
 
-        self.update_accept_validation()
+        add_tabbed_field_validation(
+            self.accept_button,
+            {
+                self.tab_sd_card: {
+                    self.input_file_edit: validate_input_file,
+                    self.sd_combo: lambda: self.sd_combo.currentData() is None,
+                },
+                self.tab_ftp: {
+                    self.input_file_edit: validate_input_file,
+                    self.ftp_username_edit: lambda: (
+                        not (self.ftp_anonymous_check.isChecked() or self.ftp_username_edit.text())
+                    ),
+                    self.ftp_password_edit: lambda: (
+                        not (self.ftp_anonymous_check.isChecked() or self.ftp_password_edit.text())
+                    ),
+                    self.ftp_ip_edit: lambda: not self.ftp_ip_edit.text(),
+                },
+                self.tab_azahar: {
+                    self.input_file_edit: validate_input_file,
+                },
+                self.tab_custom_path: {
+                    self.input_file_edit: validate_input_file,
+                    self.custom_path_edit: lambda: (
+                        is_directory_validator(self.custom_path_edit)
+                        or output_input_intersection_validator(self.custom_path_edit, self.input_file_edit)
+                    ),
+                },
+            },
+            self.output_tab_widget,
+        )
+        self.ftp_on_anonymous_check()
 
     def update_per_game_options(self, per_game: PerGameOptions) -> MSRPerGameOptions:
         assert isinstance(per_game, MSRPerGameOptions)
@@ -282,14 +278,6 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
             file_stream.close()
         return False
 
-    def _validate_input_file(self) -> None:
-        common_qt_lib.set_error_border_stylesheet(self.input_file_edit, self.rom_validation(self.input_file_edit))
-
-    def _on_input_file_change(self) -> None:
-        self._validate_input_file()
-        self.update_azahar_ui()
-        self.update_accept_validation()
-
     def _on_input_file_button(self) -> None:
         input_file = prompt_for_input_file(self, self.input_file_edit, ["3ds", "cci", "cia", "cxi", "app"])
         if input_file is not None:
@@ -310,9 +298,6 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
 
         if self.sd_combo.count() == 0:
             self.sd_combo.addItem("None found", None)
-            common_qt_lib.set_error_border_stylesheet(self.sd_combo, True)
-        else:
-            common_qt_lib.set_error_border_stylesheet(self.sd_combo, False)
 
         index = self.sd_combo.findText(old_value)
         if index >= 0:
@@ -343,7 +328,6 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
         self.ftp_password_edit.setEnabled(not self.ftp_anonymous_check.isChecked())
         update_validation(self.ftp_username_edit)
         update_validation(self.ftp_password_edit)
-        self.update_accept_validation()
 
     def ftp_restore_options(self, options: dict) -> None:
         self.ftp_anonymous_check.setChecked(options["anonymous"])
@@ -374,19 +358,6 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
         )
 
     # Custom Path
-    def _validate_custom_path(self) -> None:
-        common_qt_lib.set_error_border_stylesheet(
-            self.custom_path_edit,
-            (
-                is_directory_validator(self.custom_path_edit)
-                or output_input_intersection_validator(self.custom_path_edit, self.input_file_edit)
-            ),
-        )
-
-    def _on_custom_path_change(self) -> None:
-        self._validate_custom_path()
-        self.update_accept_validation()
-
     def _on_custom_path_button(self) -> None:
         output_file = prompt_for_output_directory(self, "MSRRandovania", self.custom_path_edit)
         if output_file is not None:

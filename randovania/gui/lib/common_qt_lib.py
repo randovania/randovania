@@ -200,12 +200,18 @@ def set_default_window_icon(window: QtWidgets.QWidget) -> None:
     window.setWindowIcon(QtGui.QIcon(os.fspath(randovania.get_icon_path())))
 
 
+class ErrorBorderWidget(QtWidgets.QWidget):
+    has_error: bool
+
+
 def set_error_border_stylesheet(edit: QtWidgets.QWidget, has_error: bool) -> None:
-    edit.has_error = has_error
+    widget = typing.cast("ErrorBorderWidget", edit)
+
+    widget.has_error = has_error
     if has_error:
-        edit.setStyleSheet(":enabled { border: 1px solid red; }:disabled { border: 1px solid red; background: #CCC }")
+        widget.setStyleSheet(":enabled { border: 1px solid red; }:disabled { border: 1px solid red; background: #CCC }")
     else:
-        edit.setStyleSheet("")
+        widget.setStyleSheet("")
 
 
 def set_edit_if_different(edit: QtWidgets.QLineEdit, new_text: str) -> None:
