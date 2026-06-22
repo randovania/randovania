@@ -282,7 +282,7 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
                 output.write("      No lock\n")
             output.write("\n")
 
-        dock_rando = game.dock_weakness_database.dock_rando_params.get(dock_type)
+        dock_rando = game.dock_weakness_database.distributor_settings.get(dock_type)
         if dock_rando is None:
             output.write("  > Dock Rando: Disabled\n\n")
         else:

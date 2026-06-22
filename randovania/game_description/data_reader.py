@@ -12,11 +12,10 @@ from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock import (
     DockLock,
     DockLockType,
-    DockRandoConfig,
-    DockRandoParams,
     DockType,
     DockWeakness,
     DockWeaknessDatabase,
+    WeaknessDistributorSettings,
 )
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
@@ -235,7 +234,7 @@ def read_dock_weakness_database(
 ) -> DockWeaknessDatabase:
     dock_types = read_dict(data["types"], read_dock_type)
     weaknesses: dict[DockType, dict[str, DockWeakness]] = {}
-    dock_rando: dict[DockType, DockRandoParams] = {}
+    distributor_settings: dict[DockType, WeaknessDistributorSettings] = {}
     next_index = 0
 
     def get_index() -> int:
@@ -250,13 +249,16 @@ def read_dock_weakness_database(
             for weak_name, weak_data in type_data["items"].items()
         }
 
-        dr = type_data["dock_rando"]
+        dr = type_data["distributor_settings"]
         if dr is not None:
-            dock_rando[dock_type] = DockRandoParams(
+            distributor_settings[dock_type] = WeaknessDistributorSettings(
                 unlocked=weaknesses[dock_type][dr["unlocked"]],
                 locked=weaknesses[dock_type][dr["locked"]],
                 change_from={weaknesses[dock_type][weak] for weak in dr["change_from"]},
                 change_to={weaknesses[dock_type][weak] for weak in dr["change_to"]},
+                force_change_two_way=dr["force_change_two_way"],
+                resolver_attempts=dr["resolver_attempts"],
+                to_shuffle_proportion=dr["to_shuffle_proportion"],
             )
 
     default_dock_type = next(
@@ -264,18 +266,11 @@ def read_dock_weakness_database(
     )
     default_dock_weakness = weaknesses[default_dock_type][data["default_weakness"]["name"]]
 
-    dock_rando_config = DockRandoConfig(
-        force_change_two_way=data["dock_rando"]["force_change_two_way"],
-        resolver_attempts=data["dock_rando"]["resolver_attempts"],
-        to_shuffle_proportion=data["dock_rando"]["to_shuffle_proportion"],
-    )
-
     return DockWeaknessDatabase(
         dock_types=dock_types,
         weaknesses=weaknesses,
-        dock_rando_params=dock_rando,
+        distributor_settings=distributor_settings,
         default_weakness=(default_dock_type, default_dock_weakness),
-        dock_rando_config=dock_rando_config,
     )
 
 

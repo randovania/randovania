@@ -15,7 +15,7 @@ from frozendict import frozendict
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import data_writer, default_database, pretty_print
 from randovania.game_description.db.area import Area
-from randovania.game_description.db.dock import DockRandoConfig, DockType, DockWeakness, DockWeaknessDatabase
+from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
 from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -175,13 +175,8 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
                 "Not Determined": impossible_weak,
             },
         },
-        dock_rando_params={},
+        distributor_settings={},
         default_weakness=(dock_types[1], impossible_weak),
-        dock_rando_config=DockRandoConfig(
-            force_change_two_way=False,
-            resolver_attempts=100,
-            to_shuffle_proportion=1.0,
-        ),
     )
 
     node_index = 0

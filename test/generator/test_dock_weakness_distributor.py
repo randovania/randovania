@@ -15,14 +15,17 @@ from randovania.layout.generator_parameters import GeneratorParameters
 
 @pytest.fixture
 def _force_blank_two_way(blank_game_description):
+    dock_type = blank_game_description.dock_weakness_database.find_type("door")
+    rando_settings = blank_game_description.dock_weakness_database.distributor_settings[dock_type]
+    dock_type
     object.__setattr__(
-        blank_game_description.dock_weakness_database.dock_rando_config,
+        rando_settings,
         "force_change_two_way",
         True,
     )
     yield
     object.__setattr__(
-        blank_game_description.dock_weakness_database.dock_rando_config,
+        rando_settings,
         "force_change_two_way",
         False,
     )
@@ -30,18 +33,21 @@ def _force_blank_two_way(blank_game_description):
 
 def test_distribute_pre_fill_weaknesses_swap(blank_game_description, empty_patches):
     rng = Random(5000)
+    dock_rando_config = dataclasses.replace(
+        empty_patches.configuration.dock_rando,
+        mode=DockRandoMode.WEAKNESSES,
+    )
     patches = dataclasses.replace(
         empty_patches,
         configuration=dataclasses.replace(
             empty_patches.configuration,
-            dock_rando=dataclasses.replace(
-                empty_patches.configuration.dock_rando,
-                mode=DockRandoMode.WEAKNESSES,
-            ),
+            dock_rando=dock_rando_config,
         ),
     )
 
     result = dock_weakness_distributor.distribute_pre_fill_weaknesses(
+        blank_game_description,
+        dock_rando_config,
         patches,
         rng,
     )
@@ -71,18 +77,21 @@ def test_distribute_pre_fill_weaknesses_swap(blank_game_description, empty_patch
 @pytest.mark.usefixtures("_force_blank_two_way")
 def test_distribute_pre_fill_weaknesses_swap_force_two_way(blank_game_description, empty_patches):
     rng = Random(10000)
+    dock_rando_config = dataclasses.replace(
+        empty_patches.configuration.dock_rando,
+        mode=DockRandoMode.WEAKNESSES,
+    )
     patches = dataclasses.replace(
         empty_patches,
         configuration=dataclasses.replace(
             empty_patches.configuration,
-            dock_rando=dataclasses.replace(
-                empty_patches.configuration.dock_rando,
-                mode=DockRandoMode.WEAKNESSES,
-            ),
+            dock_rando=dock_rando_config,
         ),
     )
 
     result = dock_weakness_distributor.distribute_pre_fill_weaknesses(
+        blank_game_description,
+        dock_rando_config,
         patches,
         rng,
     )
@@ -111,18 +120,21 @@ def test_distribute_pre_fill_weaknesses_swap_force_two_way(blank_game_descriptio
 
 def test_distribute_pre_fill_docks(blank_game_description, empty_patches, monkeypatch):
     rng = Random(5000)
+    dock_rando_config = dataclasses.replace(
+        empty_patches.configuration.dock_rando,
+        mode=DockRandoMode.DOCKS,
+    )
     patches = dataclasses.replace(
         empty_patches,
         configuration=dataclasses.replace(
             empty_patches.configuration,
-            dock_rando=dataclasses.replace(
-                empty_patches.configuration.dock_rando,
-                mode=DockRandoMode.DOCKS,
-            ),
+            dock_rando=dock_rando_config,
         ),
     )
 
     result = dock_weakness_distributor.distribute_pre_fill_weaknesses(
+        blank_game_description,
+        dock_rando_config,
         patches,
         rng,
     )

@@ -18,7 +18,7 @@ from randovania.layout.base.dock_rando_configuration import DockRandoMode
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-    from randovania.game_description.db.dock import DockRandoParams, DockType, DockWeakness
+    from randovania.game_description.db.dock import DockType, DockWeakness, WeaknessDistributorSettings
     from randovania.game_description.game_description import GameDescription
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
@@ -42,7 +42,7 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
 
         # Types
         self.type_checks = {}
-        for dock_type, type_params in game_description.dock_weakness_database.dock_rando_params.items():
+        for dock_type, type_params in game_description.dock_weakness_database.distributor_settings.items():
             self._add_dock_type(dock_type, type_params)
 
     @classmethod
@@ -63,7 +63,7 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
         self.dock_types_group.setVisible(dock_rando.mode != DockRandoMode.VANILLA)
 
         for dock_type, weakness_checks in self.type_checks.items():
-            rando_params = self.game_description.dock_weakness_database.dock_rando_params[dock_type]
+            rando_params = self.game_description.dock_weakness_database.distributor_settings[dock_type]
             unlocked_check = weakness_checks[rando_params.unlocked]["can_change_from"]
             unlocked_check.setEnabled(dock_rando.mode != DockRandoMode.WEAKNESSES)
             unlocked_check_to = weakness_checks[rando_params.unlocked]["can_change_to"]
@@ -80,7 +80,7 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
                 if "can_change_to" in checks:
                     checks["can_change_to"].setChecked(weakness in state.can_change_to)
 
-    def _add_dock_type(self, dock_type: DockType, type_params: DockRandoParams):
+    def _add_dock_type(self, dock_type: DockType, type_params: WeaknessDistributorSettings):
         self.type_checks[dock_type] = defaultdict(dict)
 
         type_box = Foldable(self.dock_types_group, dock_type.long_name)

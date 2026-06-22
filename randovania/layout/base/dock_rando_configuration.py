@@ -118,7 +118,7 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
     @staticmethod
     def _possible_change_from(game: RandovaniaGame, dock_type_name: str) -> Iterator[DockWeakness]:
         weakness_database = DockTypeState._get_weakness_database(game)
-        yield from weakness_database.dock_rando_params[weakness_database.find_type(dock_type_name)].change_from
+        yield from weakness_database.distributor_settings[weakness_database.find_type(dock_type_name)].change_from
 
     @property
     def possible_change_from(self) -> Iterator[DockWeakness]:
@@ -127,7 +127,7 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
     @staticmethod
     def _possible_change_to(game: RandovaniaGame, dock_type_name: str) -> Iterator[DockWeakness]:
         weakness_database = DockTypeState._get_weakness_database(game)
-        yield from weakness_database.dock_rando_params[weakness_database.find_type(dock_type_name)].change_to
+        yield from weakness_database.distributor_settings[weakness_database.find_type(dock_type_name)].change_to
 
     @property
     def possible_change_to(self) -> Iterator[DockWeakness]:
@@ -208,7 +208,7 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
         return self.mode != DockRandoMode.VANILLA
 
     def can_shuffle(self, dock_type: DockType) -> bool:
-        return dock_type in self.weakness_database.dock_rando_params and self.types_state[dock_type].can_shuffle
+        return dock_type in self.weakness_database.distributor_settings and self.types_state[dock_type].can_shuffle
 
     def settings_incompatible_with_multiworld(self) -> list[str]:
         danger = []
@@ -223,7 +223,7 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
 
         if self.mode == DockRandoMode.WEAKNESSES:
             for dock_type, state in self.types_state.items():
-                dock_rando_params = weakness_database.dock_rando_params.get(dock_type)
+                dock_rando_params = weakness_database.distributor_settings.get(dock_type)
                 if dock_rando_params is not None and dock_rando_params.locked in state.can_change_to:
                     result.append(f"{dock_rando_params.locked.name} is unsafe as a target in Door Lock Types")
 

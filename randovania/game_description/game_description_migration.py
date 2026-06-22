@@ -387,6 +387,16 @@ def _migrate_v32(data: dict, game: RandovaniaGame) -> None:
                         node["specific_pickup_hint_id"] = ""
 
 
+def _migrate_v33(data: dict, game: RandovaniaGame) -> None:
+    global_config = data["dock_weakness_database"].pop("dock_rando")
+    for dock_type in data["dock_weakness_database"]["types"].values():
+        settings = dock_type.pop("dock_rando")
+        if settings is not None:
+            settings.update(global_config)
+
+        dock_type["distributor_settings"] = settings
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -420,6 +430,7 @@ _MIGRATIONS = [
     _migrate_v30,  # split Echoes light/dark
     _migrate_v31,  # add quantity to damage reduction
     _migrate_v32,  # split HintNode into three
+    _migrate_v33,  # dock lock parameters
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

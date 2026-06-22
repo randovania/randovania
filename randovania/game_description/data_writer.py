@@ -28,7 +28,12 @@ if TYPE_CHECKING:
     from pathlib import Path
 
     from randovania.game_description.db.area import Area
-    from randovania.game_description.db.dock import DockLock, DockRandoParams, DockWeakness, DockWeaknessDatabase
+    from randovania.game_description.db.dock import (
+        DockLock,
+        DockWeakness,
+        DockWeaknessDatabase,
+        WeaknessDistributorSettings,
+    )
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription, MinimalLogicData
@@ -222,12 +227,15 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
     }
 
 
-def write_dock_rando_params(dock_rando: DockRandoParams) -> dict:
+def write_dock_weakness_distributor_settings(settings: WeaknessDistributorSettings) -> dict:
     return {
-        "unlocked": dock_rando.unlocked.name,
-        "locked": dock_rando.locked.name,
-        "change_from": sorted(weakness.name for weakness in dock_rando.change_from),
-        "change_to": sorted(weakness.name for weakness in dock_rando.change_to),
+        "unlocked": settings.unlocked.name,
+        "locked": settings.locked.name,
+        "change_from": sorted(weakness.name for weakness in settings.change_from),
+        "change_to": sorted(weakness.name for weakness in settings.change_to),
+        "force_change_two_way": settings.force_change_two_way,
+        "resolver_attempts": settings.resolver_attempts,
+        "to_shuffle_proportion": settings.to_shuffle_proportion,
     }
 
 
@@ -240,9 +248,9 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
                 "items": {
                     name: write_dock_weakness(weakness) for name, weakness in database.weaknesses[dock_type].items()
                 },
-                "dock_rando": (
-                    write_dock_rando_params(database.dock_rando_params[dock_type])
-                    if dock_type in database.dock_rando_params
+                "distributor_settings": (
+                    write_dock_weakness_distributor_settings(database.distributor_settings[dock_type])
+                    if dock_type in database.distributor_settings
                     else None
                 ),
             }
@@ -251,11 +259,6 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
         "default_weakness": {
             "type": database.default_weakness[0].short_name,
             "name": database.default_weakness[1].name,
-        },
-        "dock_rando": {
-            "force_change_two_way": database.dock_rando_config.force_change_two_way,
-            "resolver_attempts": database.dock_rando_config.resolver_attempts,
-            "to_shuffle_proportion": database.dock_rando_config.to_shuffle_proportion,
         },
     }
 
