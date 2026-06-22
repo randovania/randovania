@@ -27,7 +27,7 @@ _MIGRATIONS = [
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
-def migrate_to_current(data: dict):
+def migrate_to_current(data: dict) -> dict:
     return migration_lib.apply_migrations(data, _MIGRATIONS, copy_before_migrating=True)
 
 
@@ -76,7 +76,7 @@ class WorldDatabase:
 
     WorldDataUpdate = RdvSignal()
 
-    def __init__(self, persist_path: Path):
+    def __init__(self, persist_path: Path) -> None:
         super().__init__()
         self.logger = logging.getLogger(__name__)
 
@@ -100,7 +100,7 @@ class WorldDatabase:
             path.unlink()
             return None
 
-    async def _write_data(self, uid: uuid.UUID, data: WorldData):
+    async def _write_data(self, uid: uuid.UUID, data: WorldData) -> None:
         json_lib.write_path(
             self._persist_path.joinpath(str(CURRENT_VERSION), f"{uid}.json"),
             {
@@ -135,10 +135,10 @@ class WorldDatabase:
 
         return self._all_data[uid]
 
-    async def set_data_for(self, uid: uuid.UUID, data: WorldData):
+    async def set_data_for(self, uid: uuid.UUID, data: WorldData) -> None:
         await self.set_many_data({uid: data})
 
-    async def set_many_data(self, new_data: dict[uuid.UUID, WorldData]):
+    async def set_many_data(self, new_data: dict[uuid.UUID, WorldData]) -> None:
         async with self._lock:
             for uid, data in new_data.items():
                 if data != self._all_data.get(uid):

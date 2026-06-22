@@ -21,7 +21,7 @@ def _last_check_file() -> Path:
     return persistence.local_data_dir() / "last_releases.json"
 
 
-def _is_recent(last_check) -> bool:
+def _is_recent(last_check: dict) -> bool:
     last_check_date = datetime.datetime.fromisoformat(last_check["last_check"])
     return (datetime.datetime.now() - last_check_date) <= datetime.timedelta(days=1)
 
@@ -65,7 +65,7 @@ async def _download_from_github(page_size: int = 100) -> list[dict] | None:
             return None
 
 
-async def _persist(data: list[dict]):
+async def _persist(data: list[dict]) -> None:
     _last_check_file().parent.mkdir(parents=True, exist_ok=True)
 
     async with aiofiles.open(_last_check_file(), "w") as open_file:

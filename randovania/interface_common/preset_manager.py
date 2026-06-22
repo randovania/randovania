@@ -13,6 +13,7 @@ from dulwich.objects import Blob
 
 import randovania
 from randovania.game.game_enum import RandovaniaGame
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib
 
@@ -30,16 +31,14 @@ def read_preset_list() -> list[Path]:
     return preset_list
 
 
-def _commit(message: str, file_path: Path, repository: Path, remove: bool):
+def _commit(message: str, file_path: Path, repository: Path, remove: bool) -> None:
     with dulwich.porcelain.open_repo_closing(repository) as r:
-        r = typing.cast("dulwich.repo.Repo", r)
-
         # Detect invalid index
         try:
             r.open_index()
         except Exception:
             Path(r.index_path()).unlink()
-            r.reset_index()
+            r.get_worktree().reset_index()
 
     author = b"randovania <nobody@example.com>"
     if remove:
@@ -82,15 +81,16 @@ def _history_for_file(repository: Path, file_path: Path) -> Iterator[tuple[datet
 
 
 class PresetManager:
-    included_presets: dict[uuid.UUID, VersionedPreset]
-    custom_presets: dict[uuid.UUID, VersionedPreset]
+    included_presets: dict[uuid.UUID, VersionedPreset[BaseConfiguration]]
+    custom_presets: dict[uuid.UUID, VersionedPreset[BaseConfiguration]]
     _data_dir: Path | None
     _fallback_dir: Path | None
 
-    def __init__(self, data_dir: Path | None):
+    def __init__(self, data_dir: Path | None) -> None:
         self.logger = logging.getLogger("PresetManager")
         self.included_presets = {
-            preset.uuid: preset for preset in [VersionedPreset.from_file_sync(f) for f in read_preset_list()]
+            preset.uuid: preset
+            for preset in [VersionedPreset[BaseConfiguration].from_file_sync(f) for f in read_preset_list()]
         }
         for preset in self.included_presets.values():
             preset.is_included_preset = True
@@ -101,15 +101,16 @@ class PresetManager:
         else:
             self._data_dir = None
 
-    async def load_user_presets(self):
+    async def load_user_presets(self) -> None:
+        assert self._data_dir is not None
         all_files = self._data_dir.glob(f"*.{VersionedPreset.file_extension()}")
-        user_presets = await asyncio.gather(*[VersionedPreset.from_file(f) for f in all_files])
-        for preset in typing.cast("list[VersionedPreset]", user_presets):
+        user_presets = await asyncio.gather(*[VersionedPreset[BaseConfiguration].from_file(f) for f in all_files])
+        for preset in user_presets:
             if preset.is_for_known_game():
                 self.custom_presets[preset.uuid] = preset
 
     @property
-    def data_dir(self):
+    def data_dir(self) -> Path | None:
         return self._data_dir
 
     @property
@@ -134,10 +135,11 @@ class PresetManager:
         yield from self.included_presets.values()
         yield from self.custom_presets.values()
 
-    def _get_repository_root(self):
+    def _get_repository_root(self) -> Path:
+        assert self._data_dir is not None
         return self._data_dir.parent
 
-    def _commit(self, message: str, file_path: Path, remove: bool):
+    def _commit(self, message: str, file_path: Path, remove: bool) -> None:
         repo_root = self._get_repository_root()
         try:
             self.logger.info("Will perform git operation: %s for path %s", message, str(file_path))
@@ -162,7 +164,7 @@ class PresetManager:
 
         return not existed_before
 
-    def delete_preset(self, preset: VersionedPreset):
+    def delete_preset(self, preset: VersionedPreset) -> None:
         del self.custom_presets[preset.uuid]
         path = self._file_path_for_preset(preset)
         path.unlink()
@@ -180,12 +182,17 @@ class PresetManager:
         if reference_name is None:
             return self.default_preset_for_game(game)
         else:
-            return self.included_preset_with(game, reference_name)
+            result = self.included_preset_with(game, reference_name)
+            assert result is not None
+            return result
 
     def preset_for_uuid(self, the_uid: uuid.UUID | None) -> VersionedPreset | None:
+        if the_uid is None:
+            return None
         return self.included_presets.get(the_uid, self.custom_presets.get(the_uid))
 
     def _file_path_for_preset(self, preset: VersionedPreset) -> Path:
+        assert self._data_dir is not None
         return self._data_dir.joinpath(f"{preset.uuid}.{preset.file_extension()}")
 
     def is_included_preset_uuid(self, the_uid: uuid.UUID) -> bool:
