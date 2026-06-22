@@ -49,6 +49,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
             new_order.append(source.uuid)
         else:
             target = self.preset_for_item(item)
+            assert target is not None
 
             if self.dropIndicatorPosition() != QtWidgets.QAbstractItemView.DropIndicatorPosition.OnItem:
                 target_uuid = self.options.get_parent_for_preset(target.uuid)
@@ -75,6 +76,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
     def current_preset_data(self) -> VersionedPreset | None:
         for item in self.selectedItems():
             return self.preset_for_item(item)
+        return None
 
     def update_items(self) -> None:
         if self.expanded_connected:
@@ -110,6 +112,8 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
             if default_parent is None:
                 # The first included preset will be the parent of all presets with missing parents
                 default_parent = item
+
+        assert default_parent is not None
 
         # Custom Presets
         order_by_key = {pid: i for i, pid in enumerate(self.options.get_preset_order_for(self.game))}
@@ -171,8 +175,8 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
             with self.options as options:
                 options.set_preset_uuid_hidden(uid, not new_state)
 
-    def on_item_expanded(self, item) -> None:
+    def on_item_expanded(self, item: QtWidgets.QTreeWidgetItem) -> None:
         self._on_item_new_state(item, True)
 
-    def on_item_collapsed(self, item) -> None:
+    def on_item_collapsed(self, item: QtWidgets.QTreeWidgetItem) -> None:
         self._on_item_new_state(item, False)
