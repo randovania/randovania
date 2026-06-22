@@ -24,25 +24,23 @@ class MetroidPresetPickupPool(PresetPickupPool):
         super().__init__(editor, game_description, window_manager)
         pickup_database = default_database.pickup_database_for_game(self.game)
 
-        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
-
         self._energy_tank_item = pickup_database.standard_pickups["Energy Tank"]
         self._create_energy_tank_box(game_description.resource_database.energy_tank)
-        self._create_pickup_style_box(size_policy)
+        self._create_pickup_style_box()
 
     def on_preset_changed(self, preset: Preset) -> None:
         super().on_preset_changed(preset)
         layout = preset.configuration
         major_configuration = layout.standard_pickup_configuration
 
-        self.pickup_style_widget.update(layout)
+        self.pickup_style_widget.update_from_layout(layout)
 
         # Energy Tank
         energy_tank_state = major_configuration.pickups_state[self._energy_tank_item]
         self.energy_tank_starting_spinbox.setValue(energy_tank_state.num_included_in_starting_pickups)
         self.energy_tank_shuffled_spinbox.setValue(energy_tank_state.num_shuffled_pickups)
 
-    def _create_pickup_style_box(self, size_policy) -> None:
+    def _create_pickup_style_box(self) -> None:
         self.pickup_style_widget = PickupStyleWidget(None, self._editor)
         self.item_pool_layout.insertWidget(1, self.pickup_style_widget)
 

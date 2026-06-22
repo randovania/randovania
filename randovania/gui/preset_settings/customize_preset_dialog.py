@@ -45,8 +45,9 @@ class PresetTabRoot(QtWidgets.QWidget):
         return super().showEvent(arg)
 
     def release_widget(self) -> None:
-        self.current_tab.deleteLater()
-        self.current_tab = None
+        if self.current_tab is not None:
+            self.current_tab.deleteLater()
+            self.current_tab = None
 
 
 class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
@@ -127,7 +128,7 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
             editor.name = value
 
     @property
-    def editor(self):
+    def editor(self) -> PresetEditor:
         return self._editor
 
     @property

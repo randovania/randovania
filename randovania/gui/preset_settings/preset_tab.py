@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import dataclasses
 import typing
 
 from PySide6 import QtWidgets
@@ -65,39 +64,21 @@ class PresetTab[BaseConfigurationT: BaseConfiguration](QtWidgets.QMainWindow):
         raise NotImplementedError
 
     # Persistence helpers
-    def _persist_enum(self, combo: QtWidgets.QComboBox, attribute_name: str):
+    def _persist_enum(self, combo: QtWidgets.QComboBox, attribute_name: str) -> typing.Callable[[int], None]:
         def persist(index: int) -> None:
             with self._editor as options:
                 options.set_configuration_field(attribute_name, combo.itemData(index))
 
         return persist
 
-    def _persist_bool_layout_field(self, field_name: str):
-        def bound(value: int) -> None:
-            with self._editor as editor:
-                editor.set_configuration_field(field_name, bool(value))
-
-        return bound
-
-    def _persist_bool_major_configuration_field(self, field_name: str):
-        def bound(value: int) -> None:
-            with self._editor as editor:
-                kwargs = {field_name: bool(value)}
-                editor.standard_pickup_configuration = dataclasses.replace(
-                    editor.standard_pickup_configuration,
-                    **kwargs,
-                )
-
-        return bound
-
-    def _persist_option_then_notify(self, attribute_name: str):
+    def _persist_bool(self, attribute_name: str) -> typing.Callable[[int], None]:
         def persist(value: int) -> None:
             with self._editor as options:
                 options.set_configuration_field(attribute_name, bool(value))
 
         return persist
 
-    def _persist_argument(self, attribute_name: str):
+    def _persist_float(self, attribute_name: str) -> typing.Callable[[float], None]:
         def persist(value: float) -> None:
             with self._editor as options:
                 options.set_configuration_field(attribute_name, value)

@@ -60,7 +60,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         # Development
         signal_handling.on_checked(
             self.check_if_beatable_after_base_patches_check,
-            self._persist_bool_layout_field("check_if_beatable_after_base_patches"),
+            self._persist_bool("check_if_beatable_after_base_patches"),
         )
 
         # Damage strictness

@@ -7,7 +7,7 @@ from PySide6 import QtCore, QtWidgets
 from randovania.gui.generated.preset_starting_area_ui import Ui_PresetStartingArea
 from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.layout.base.base_configuration import StartingLocationList
+from randovania.layout.base.base_configuration import BaseConfiguration, StartingLocationList
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -21,7 +21,9 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
+class PresetStartingArea[ConfigurationT: BaseConfiguration](
+    PresetTab[ConfigurationT], Ui_PresetStartingArea, NodeListHelper
+):
     starting_area_quick_fill_default: QtWidgets.QPushButton
     _starting_location_for_region: dict[str, QtWidgets.QCheckBox]
     _starting_location_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
@@ -29,7 +31,9 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
 
     _num_quick_fill_buttons: int
 
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager) -> None:
+    def __init__(
+        self, editor: PresetEditor[ConfigurationT], game_description: GameDescription, window_manager: WindowManager
+    ) -> None:
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
@@ -83,7 +87,7 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
         )
         return f"Default: Just {default_name}, the vanilla location."
 
-    def _on_starting_area_check_changed(self, areas, checked: bool) -> None:
+    def _on_starting_area_check_changed(self, areas: list[NodeIdentifier], checked: bool) -> None:
         with self._editor as editor:
             editor.set_configuration_field(
                 "starting_location", editor.configuration.starting_location.ensure_has_locations(areas, checked)
@@ -119,7 +123,7 @@ class PresetMetroidStartingArea(PresetStartingArea):
             self._starting_location_on_select_save_station,
         )
 
-    def _save_station_nodes(self):
+    def _save_station_nodes(self) -> list[NodeIdentifier]:
         return [
             node.identifier
             for node in self.game_description.region_list.iterate_nodes()

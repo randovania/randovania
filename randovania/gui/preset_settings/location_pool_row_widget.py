@@ -33,5 +33,5 @@ class LocationPoolRowWidget(QWidget, Ui_LocationPoolRowWidget):
             self.changed.emit(self.node)
 
     @property
-    def can_have_progression(self):
+    def can_have_progression(self) -> bool:
         return self.radio_shuffled.isChecked()
