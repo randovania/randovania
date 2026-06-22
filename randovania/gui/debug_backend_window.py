@@ -10,6 +10,7 @@ from qasync import asyncSlot
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.generated.debug_connector_window_ui import Ui_DebugConnectorWindow
@@ -17,7 +18,6 @@ from randovania.gui.lib import common_qt_lib, signal_handling
 
 if TYPE_CHECKING:
     from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
-    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 class RangeSpinBoxItemEditorCreator(QtWidgets.QItemEditorCreatorBase):
@@ -26,19 +26,19 @@ class RangeSpinBoxItemEditorCreator(QtWidgets.QItemEditorCreatorBase):
         self.minimum = minimum
         self.maximum = maximum
 
-    def createWidget(self, parent):
+    def createWidget(self, parent: QtWidgets.QWidget) -> QtWidgets.QSpinBox:
         spin = QtWidgets.QSpinBox(parent)
         spin.setMinimum(self.minimum)
         spin.setMaximum(self.maximum)
         return spin
 
-    def valuePropertyName(self) -> str:
-        return "value"
+    def valuePropertyName(self) -> QtCore.QByteArray:
+        return QtCore.QByteArray.fromStdString("value")
 
 
-def _create_delegate_for(item: ItemResourceInfo):
+def _create_delegate_for(item: ItemResourceInfo) -> QtWidgets.QStyledItemDelegate:
     factory = QtWidgets.QItemEditorFactory()
-    factory.registerEditor(QtCore.QMetaType.Int.value, RangeSpinBoxItemEditorCreator(0, item.max_capacity))
+    factory.registerEditor(QtCore.QMetaType.Type.Int.value, RangeSpinBoxItemEditorCreator(0, item.max_capacity))
 
     delegate = QtWidgets.QStyledItemDelegate()
     delegate.setItemEditorFactory(factory)
@@ -48,7 +48,7 @@ def _create_delegate_for(item: ItemResourceInfo):
 class DebugConnectorWindow(Ui_DebugConnectorWindow):
     _connected: bool = False
     _timer: QtCore.QTimer
-    _resource_to_item: dict[ResourceInfo, QtGui.QStandardItem]
+    _resource_to_item: dict[ItemResourceInfo, QtGui.QStandardItem]
 
     def __init__(self, connector: DebugRemoteConnector) -> None:
         super().__init__()
@@ -98,7 +98,7 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
         self._timer.setInterval(10000)
 
         self._setup_locations_combo()
-        self.update_inventory_table()
+        self.update_inventory_table(Inventory.from_collection(self.connector.item_collection))
         self.update_message_list()
 
     def _on_collect_randomly_toggle(self, value: int) -> None:
@@ -107,7 +107,7 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
         else:
             self._timer.stop()
 
-    def _on_current_region_changed(self, _) -> None:
+    def _on_current_region_changed(self, index: int) -> None:
         self.connector.PlayerLocationChanged.emit(
             PlayerLocationEvent(
                 self.current_region_combo.currentData(),
@@ -162,8 +162,8 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
         for i, message in enumerate(self.connector.messages):
             self.messages_item_model.setItem(i, QtGui.QStandardItem(message))
 
-    def update_inventory_table(self) -> None:
-        for resource, quantity in self.connector.item_collection.as_resource_gain():
+    def update_inventory_table(self, inventory: Inventory) -> None:
+        for resource, quantity in inventory.as_resource_gain():
             if resource in self._resource_to_item:
                 self._update_item_amount(resource, quantity)
 
