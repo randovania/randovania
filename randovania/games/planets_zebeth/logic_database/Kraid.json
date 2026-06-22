@@ -1581,8 +1581,25 @@
                             }
                         },
                         "Door to Hall of Illusion": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "AllowDownwardShots",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -1768,8 +1785,25 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Dock to Kraid Arena Access": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "AllowDownwardShots",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Door to Lower Side Room Access": {
                             "type": "and",
