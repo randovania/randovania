@@ -78,6 +78,9 @@ class PresetPrimeGeneration(PresetGeneration):
                 To prevent the creation of an uncompletable save file, it is advised that
                 you not pick up Gravity Suit until these rooms are cleared.
             </p>
+            <p>
+                Requires enabling <em>Gravityless Underwater Movement</em> in the Trick Level tab to have any effect.
+            </p>
             </body></html>
             """
         )
