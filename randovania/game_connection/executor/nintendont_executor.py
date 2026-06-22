@@ -152,16 +152,20 @@ class NintendontExecutor(MemoryOperationExecutor):
             response = await asyncio.wait_for(reader.read(1024), timeout=self._timeout)
             invalid_message = f"Unable to connect to {self._ip}:{self._port} - Unsupported Nintendont version!"
             try:
-                api_version, max_input, max_output, max_addresses = struct.unpack(">IIII", response)
+                api_version = struct.unpack_from(">I", response)[0]
+
+                if api_version != self.SUPPORTED_API_VERSION:
+                    writer.close()
+                    return (
+                        f"{invalid_message} Nintendont has API {api_version} but expected {self.SUPPORTED_API_VERSION}."
+                    )
+
+                max_input, max_output, max_addresses = struct.unpack(">4xIII", response)
 
             except struct.error as e:
                 writer.close()
                 self._socket_error = e
                 return f"{invalid_message} Invalid response when requesting API details."
-
-            if api_version != self.SUPPORTED_API_VERSION:
-                writer.close()
-                return f"{invalid_message} Nintendont has API {api_version} but expected {self.SUPPORTED_API_VERSION}."
 
             if max_input > 256 or max_output > 256 or max_addresses > 16:
                 # 256, 256 and 16 are the current theoretical maximum values for input/output/address per the protocol.
