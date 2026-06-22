@@ -14,7 +14,7 @@ from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.gui.generated.game_details_window_ui import Ui_GameDetailsWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.lib.close_event_widget import CloseEventWidget
+from randovania.gui.lib.close_event_window import CloseEventWindow
 from randovania.gui.lib.common_qt_lib import (
     prompt_user_for_output_game_log,
     set_default_window_icon,
@@ -34,7 +34,7 @@ if typing.TYPE_CHECKING:
     from randovania.layout.layout_description import LayoutDescription
 
 
-class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMixin):
+class GameDetailsWindow(CloseEventWindow, Ui_GameDetailsWindow, BackgroundTaskMixin):
     _on_bulk_change: bool = False
     layout_description: LayoutDescription
     _options: Options
