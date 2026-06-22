@@ -493,7 +493,12 @@ class NetworkClient:
             try:
                 result = typing.cast(
                     "dict | None",
-                    await self.sio.call(event, data, namespace=namespace, timeout=timeout),
+                    await self.sio.call(
+                        event,
+                        data,  # type: ignore[arg-type]
+                        namespace=namespace,
+                        timeout=timeout,
+                    ),
                 )
                 request_time = time.time() - request_start
                 self._update_timeout_with(request_time, True)
