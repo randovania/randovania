@@ -25,15 +25,14 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_manager import PresetManager
     from randovania.network_common.async_race_room import AsyncRaceRoomEntry
 
-BaseSession = typing.TypeVar("BaseSession")
 
-
-class BaseBrowser(async_dialog.DialogLike, typing.Protocol[BaseSession]):
+class BaseBrowser[T](async_dialog.DialogLike, typing.Protocol):
     def __init__(self, network_client: QtNetworkClient) -> None: ...
 
+    @handle_network_errors  # type: ignore[type-var]
     async def refresh(self, *, ignore_limit: bool = False) -> bool: ...
 
-    joined_session: BaseSession | None
+    joined_session: T | None
 
 
 class OnlineInteractions(QtWidgets.QWidget):
@@ -66,11 +65,11 @@ class OnlineInteractions(QtWidgets.QWidget):
         main_window.menu_action_login_window.triggered.connect(self._action_login_window)
         main_window.menu_action_async_race.triggered.connect(self._action_create_async_race)
 
-    async def _base_browse(
+    async def _base_browse[T](
         self,
-        type_: type[BaseBrowser[BaseSession]],
+        type_: type[BaseBrowser[T]],
         wait_message: str,
-    ) -> BaseSession | None:
+    ) -> T | None:
         """
         Requests a list of sessions via the given widget, then returns the one the user selected.
         :param type_: The type of the widget to use to display sessions
