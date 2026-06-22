@@ -562,12 +562,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if new_change_logs:
             from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 
-            message_box = ScrollMessageBox.create_new(
-                self,
+            message_box = ScrollMessageBox(
                 QtWidgets.QMessageBox.Icon.Information,
                 "What's new",
                 "\n".join(new_change_logs),
-                QtWidgets.QMessageBox.StandardButton.Ok,
+                parent=self,
             )
             message_box.label.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
             message_box.scroll_area.setMinimumSize(500, 300)

@@ -656,17 +656,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if self._warning_dialogs_disabled:
             return True
 
-        options = QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
         message = "Database has the following errors:\n\n" + "\n\n".join(errors)
         message += "\n\nIgnore?"
 
-        box = ScrollMessageBox.create_new(
-            self,
-            QtWidgets.QMessageBox.Icon.Critical,
+        box = ScrollMessageBox(
+            QMessageBox.Icon.Critical,
             "Integrity Check",
             message,
-            options,
-            QMessageBox.StandardButton.No,
+            buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            parent=self,
+            default_button=QMessageBox.StandardButton.No,
         )
         user_response = box.exec_()
 

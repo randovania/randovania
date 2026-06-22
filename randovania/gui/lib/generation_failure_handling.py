@@ -23,7 +23,7 @@ class GenerationFailureHandler(QtCore.QObject):
     def __init__(self, parent: QtWidgets.QWidget) -> None:
         super().__init__(parent)
 
-        self.parent = parent
+        self._parent = parent
         self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
 
     def handle_failure(self, failure: GenerationFailure) -> None:
@@ -49,8 +49,7 @@ class GenerationFailureHandler(QtCore.QObject):
             QtWidgets.QMessageBox.Icon.Critical,
             "An error occurred while generating game",
             str(exception),
-            QtWidgets.QMessageBox.StandardButton.Ok,
-            self.parent,
+            parent=self._parent,
         )
         common_qt_lib.set_default_window_icon(box)
 
@@ -77,7 +76,7 @@ class GenerationFailureHandler(QtCore.QObject):
 
         logging.warning("Invalid Preset: %s", msg)
         await async_dialog.warning(
-            self.parent,
+            self._parent,
             "Invalid Preset",
             msg,
         )
