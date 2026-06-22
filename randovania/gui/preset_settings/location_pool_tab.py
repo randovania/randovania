@@ -12,7 +12,6 @@ from PySide6.QtWidgets import QFrame, QGraphicsOpacityEffect, QSizePolicy, QSpac
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.gui.generated.preset_location_pool_ui import Ui_PresetLocationPool
-from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.widgets.foldable import Foldable
@@ -26,9 +25,7 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
-    _starting_location_for_region: dict[str, QtWidgets.QCheckBox]
-    _starting_location_for_area: dict[int, QtWidgets.QCheckBox]
+class PresetLocationPool(Ui_PresetLocationPool, PresetTab):
     _row_widget_for_node: dict[PickupNode, LocationPoolRowWidget]
     _during_batch_update: bool
     _major_minor: bool

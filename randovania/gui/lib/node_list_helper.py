@@ -5,6 +5,9 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.region import Region
 from randovania.games.common import elevators
 from randovania.games.common.elevators import NodeListGrouping
 
@@ -16,15 +19,31 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
 
 
+class RegionCheckBox(QtWidgets.QCheckBox):
+    region_name: str
+
+
+class AreaCheckBox(QtWidgets.QCheckBox):
+    area_location: AreaIdentifier
+
+
+class NodeCheckBox(QtWidgets.QCheckBox):
+    node_location: NodeIdentifier
+
+
+class RegionGroupBox(QtWidgets.QGroupBox):
+    vertical_layout: QtWidgets.QVBoxLayout
+
+
 class NodeListHelper:
     game_description: GameDescription
     during_batch_check_update: bool
 
     def nodes_by_areas_by_region_from_locations(self, all_node_locations: list[NodeIdentifier]) -> NodeListGrouping:
         region_list = self.game_description.region_list
-        region_groups = []
-        areas_by_region = {}
-        nodes_by_area = {}
+        region_groups: list[list[Region]] = []
+        areas_by_region: dict[str, list[Area]] = {}
+        nodes_by_area: dict[AreaIdentifier, list[Node]] = {}
 
         for identifier in all_node_locations:
             region, area = region_list.region_and_area_by_area_identifier(identifier.area_identifier)
@@ -37,7 +56,9 @@ class NodeListHelper:
                 areas_by_region[region.name].append(area)
             if identifier.area_identifier not in nodes_by_area:
                 nodes_by_area[identifier.area_identifier] = []
-            nodes_by_area[identifier.area_identifier].append(area.node_with_name(identifier.node))
+            node = area.node_with_name(identifier.node)
+            if node is not None:
+                nodes_by_area[identifier.area_identifier].append(node)
 
         return NodeListGrouping(region_groups, areas_by_region, nodes_by_area)
 
@@ -48,24 +69,24 @@ class NodeListHelper:
         all_node_locations: list[NodeIdentifier],
         on_check: Callable[[list[NodeIdentifier], bool], None],
     ) -> tuple[
-        dict[str, QtWidgets.QCheckBox],
-        dict[AreaIdentifier, QtWidgets.QCheckBox],
-        dict[NodeIdentifier, QtWidgets.QCheckBox],
+        dict[str, RegionCheckBox],
+        dict[AreaIdentifier, AreaCheckBox],
+        dict[NodeIdentifier, NodeCheckBox],
     ]:
         """"""
-        region_to_group: dict[str, QtWidgets.QGroupBox] = {}
-        checks_for_region = {}
-        checks_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox] = {}
-        checks_for_node: dict[NodeIdentifier, QtWidgets.QCheckBox] = {}
+        region_to_group: dict[str, RegionGroupBox] = {}
+        checks_for_region: dict[str, RegionCheckBox] = {}
+        checks_for_area: dict[AreaIdentifier, AreaCheckBox] = {}
+        checks_for_node: dict[NodeIdentifier, NodeCheckBox] = {}
 
         region_groups, areas_by_region, nodes_by_area = self.nodes_by_areas_by_region_from_locations(all_node_locations)
         region_groups.sort(key=lambda it: it[0].name)
 
-        def _on_check_node(c: QtWidgets.QCheckBox, _) -> None:
+        def _on_check_node(c: NodeCheckBox, value: bool) -> None:
             if not self.during_batch_check_update:
                 on_check([c.node_location], c.isChecked())
 
-        def _on_check_area(c: QtWidgets.QCheckBox, _) -> None:
+        def _on_check_area(c: AreaCheckBox, value: bool) -> None:
             if not self.during_batch_check_update:
                 area_identifier = c.area_location
                 new_node_list = [
@@ -76,7 +97,7 @@ class NodeListHelper:
 
                 on_check(new_node_list, c.isChecked())
 
-        def _on_check_region(c: QtWidgets.QCheckBox, _) -> None:
+        def _on_check_region(c: RegionCheckBox, value: bool) -> None:
             if not self.during_batch_check_update:
                 region_list = self.game_description.region_list
                 areas = areas_by_region[c.region_name]
@@ -91,8 +112,8 @@ class NodeListHelper:
 
         for row, region_group in enumerate(region_groups):
             for column, region in enumerate(region_group):
-                group_box = QtWidgets.QGroupBox(parent)
-                region_check = QtWidgets.QCheckBox(group_box)
+                group_box = RegionGroupBox(parent)
+                region_check = RegionCheckBox(group_box)
                 region_check.setText(region.name.replace("&", "&&"))
                 region_check.region_name = region.name
                 region_check.stateChanged.connect(functools.partial(_on_check_region, region_check))
@@ -115,7 +136,7 @@ class NodeListHelper:
         for region_name, area_list in areas_by_region.items():
             for area in sorted(area_list, key=lambda a: a.name):
                 group_box = region_to_group[region_name]
-                area_check = QtWidgets.QCheckBox(group_box)
+                area_check = AreaCheckBox(group_box)
                 area_check.area_location = self.game_description.region_list.identifier_for_area(area)
                 area_text = area.name
                 if len(nodes_by_area[area_check.area_location]) == 1:
@@ -131,7 +152,7 @@ class NodeListHelper:
                 checks_for_area[area_check.area_location] = area_check
 
                 for node in nodes_by_area[area_check.area_location]:
-                    node_check = QtWidgets.QCheckBox(group_box)
+                    node_check = NodeCheckBox(group_box)
                     node_check.setText(
                         elevators.get_elevator_name_or_default(
                             self.game_description, node.identifier, node.name
@@ -159,9 +180,9 @@ class NodeListHelper:
         self,
         nodes_to_check: Sequence[NodeIdentifier],
         invert_check: bool,
-        location_for_region: dict[str, QtWidgets.QCheckBox],
-        location_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox],
-        location_for_nodes: dict[NodeIdentifier, QtWidgets.QCheckBox],
+        location_for_region: dict[str, RegionCheckBox],
+        location_for_area: dict[AreaIdentifier, AreaCheckBox],
+        location_for_nodes: dict[NodeIdentifier, NodeCheckBox],
     ) -> None:
         self.during_batch_check_update = True
 

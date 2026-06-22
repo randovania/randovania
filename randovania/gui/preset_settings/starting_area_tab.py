@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtCore, QtWidgets
 
 from randovania.gui.generated.preset_starting_area_ui import Ui_PresetStartingArea
-from randovania.gui.lib.node_list_helper import NodeListHelper
+from randovania.gui.lib.node_list_helper import AreaCheckBox, NodeCheckBox, NodeListHelper, RegionCheckBox
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.layout.base.base_configuration import BaseConfiguration, StartingLocationList
 
@@ -25,9 +25,9 @@ class PresetStartingArea[ConfigurationT: BaseConfiguration](
     PresetTab[ConfigurationT], Ui_PresetStartingArea, NodeListHelper
 ):
     starting_area_quick_fill_default: QtWidgets.QPushButton
-    _starting_location_for_region: dict[str, QtWidgets.QCheckBox]
-    _starting_location_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
-    _starting_location_for_node: dict[NodeIdentifier, QtWidgets.QCheckBox]
+    _starting_location_for_region: dict[str, RegionCheckBox]
+    _starting_location_for_area: dict[AreaIdentifier, AreaCheckBox]
+    _starting_location_for_node: dict[NodeIdentifier, NodeCheckBox]
 
     _num_quick_fill_buttons: int
 

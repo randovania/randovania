@@ -8,7 +8,7 @@ from PySide6 import QtCore, QtWidgets
 
 from randovania.games.common import elevators
 from randovania.gui.lib import signal_handling
-from randovania.gui.lib.node_list_helper import NodeListHelper
+from randovania.gui.lib.node_list_helper import AreaCheckBox, NodeCheckBox, NodeListHelper, RegionCheckBox
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.layout.lib.teleporters import (
     TeleporterList,
@@ -28,9 +28,9 @@ if TYPE_CHECKING:
 
 class PresetTeleporterTab[ConfigurationT: BaseConfiguration](NodeListHelper, PresetTab[ConfigurationT]):
     _teleporters_source_for_location: dict[NodeIdentifier, QtWidgets.QCheckBox]
-    _teleporters_target_for_region: dict[str, QtWidgets.QCheckBox]
-    _teleporters_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
-    _teleporters_target_for_node: dict[NodeIdentifier, QtWidgets.QCheckBox]
+    _teleporters_target_for_region: dict[str, RegionCheckBox]
+    _teleporters_target_for_area: dict[AreaIdentifier, AreaCheckBox]
+    _teleporters_target_for_node: dict[NodeIdentifier, NodeCheckBox]
     teleporter_mode_to_description: typing.ClassVar[dict[TeleporterShuffleMode, str]] = {}
     teleporters_layout: QtWidgets.QVBoxLayout
     teleporters_combo: ScrollProtectedComboBox
