@@ -27,7 +27,7 @@ if TYPE_CHECKING:
 
 
 class PresetTeleporterTab[ConfigurationT: BaseConfiguration](NodeListHelper, PresetTab[ConfigurationT]):
-    _teleporters_source_for_location: dict[NodeIdentifier, QtWidgets.QCheckBox]
+    _teleporters_source_for_location: dict[NodeIdentifier, NodeCheckBox]
     _teleporters_target_for_region: dict[str, RegionCheckBox]
     _teleporters_target_for_area: dict[AreaIdentifier, AreaCheckBox]
     _teleporters_target_for_node: dict[NodeIdentifier, NodeCheckBox]
@@ -114,12 +114,12 @@ class PresetTeleporterTab[ConfigurationT: BaseConfiguration](NodeListHelper, Pre
                 excluded_targets=config.excluded_targets.ensure_has_locations(areas, not checked),
             )
 
-    def _create_check_for_source_teleporters(self, location: NodeIdentifier) -> QtWidgets.QCheckBox:
+    def _create_check_for_source_teleporters(self, location: NodeIdentifier) -> NodeCheckBox:
         name = elevators.get_elevator_or_area_name(self.game_description.node_by_identifier(location), True)
 
-        check = QtWidgets.QCheckBox(self.teleporters_source_group)
+        check = NodeCheckBox(self.teleporters_source_group)
         check.setText(name)
-        check.area_location = location
+        check.node_location = location
         signal_handling.on_checked(check, self._on_teleporter_source_check_changed)
         return check
 
