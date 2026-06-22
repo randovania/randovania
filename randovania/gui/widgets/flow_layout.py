@@ -43,8 +43,9 @@
 
 from __future__ import annotations
 
+from PySide6 import QtWidgets
 from PySide6.QtCore import QMargins, QPoint, QRect, QSize, Qt
-from PySide6.QtWidgets import QLayout, QSizePolicy, QWidgetItem
+from PySide6.QtWidgets import QLayout, QLayoutItem, QSizePolicy, QWidgetItem
 
 
 class FlowLayout(QLayout):
@@ -52,7 +53,7 @@ class FlowLayout(QLayout):
     A custom layout that adjusts the position of widgets within depending on the width of the application window.
     """
 
-    def __init__(self, parent=None, center=False) -> None:
+    def __init__(self, parent: QtWidgets.QWidget | None = None, center: bool = False) -> None:
         super().__init__(parent)
 
         if parent is not None:
@@ -66,42 +67,43 @@ class FlowLayout(QLayout):
         while item:
             item = self.takeAt(0)
 
-    def addItem(self, item) -> None:
+    def addItem(self, item: QLayoutItem) -> None:
+        assert isinstance(item, QWidgetItem)
         self._item_list.append(item)
 
-    def count(self):
+    def count(self) -> int:
         return len(self._item_list)
 
-    def itemAt(self, index):
+    def itemAt(self, index: int) -> QWidgetItem | None:
         if 0 <= index < len(self._item_list):
             return self._item_list[index]
 
         return None
 
-    def takeAt(self, index):
+    def takeAt(self, index: int) -> QWidgetItem | None:
         if 0 <= index < len(self._item_list):
             return self._item_list.pop(index)
 
         return None
 
-    def expandingDirections(self):
+    def expandingDirections(self) -> Qt.Orientation:
         return Qt.Orientation(0)
 
     def hasHeightForWidth(self) -> bool:
         return True
 
-    def heightForWidth(self, width):
+    def heightForWidth(self, width: int) -> int:
         height = self._do_layout(QRect(0, 0, width, 0), True)
         return height
 
-    def setGeometry(self, rect) -> None:
+    def setGeometry(self, rect: QRect) -> None:
         super().setGeometry(rect)
         self._do_layout(rect, False)
 
-    def sizeHint(self):
+    def sizeHint(self) -> QSize:
         return self.minimumSize()
 
-    def minimumSize(self):
+    def minimumSize(self) -> QSize:
         size = QSize()
 
         for item in self._item_list:
@@ -110,7 +112,7 @@ class FlowLayout(QLayout):
         size += QSize(2 * self.contentsMargins().top(), 2 * self.contentsMargins().top())
         return size
 
-    def _do_layout(self, rect, test_only):
+    def _do_layout(self, rect: QRect, test_only: bool) -> int:
         x = rect.x()
         y = rect.y()
         line_height = 0
@@ -118,14 +120,21 @@ class FlowLayout(QLayout):
 
         rows: list[tuple[list[QWidgetItem], int, int]] = []
 
-        row = []
+        row: list[QWidgetItem] = []
         for item in self._item_list:
-            style = item.widget().style()
-            layout_spacing_x = style.layoutSpacing(QSizePolicy.PushButton, QSizePolicy.PushButton, Qt.Horizontal)
-            layout_spacing_y = style.layoutSpacing(QSizePolicy.PushButton, QSizePolicy.PushButton, Qt.Vertical)
+            widget = item.widget()
+            assert widget is not None
+
+            style = widget.style()
+            layout_spacing_x = style.layoutSpacing(
+                QSizePolicy.ControlType.PushButton, QSizePolicy.ControlType.PushButton, Qt.Orientation.Horizontal
+            )
+            layout_spacing_y = style.layoutSpacing(
+                QSizePolicy.ControlType.PushButton, QSizePolicy.ControlType.PushButton, Qt.Orientation.Vertical
+            )
             space_x = (
                 spacing + layout_spacing_x
-            ) * item.widget().isVisible()  # If an item isn't visible, it does not have any influence on the next
+            ) * widget.isVisible()  # If an item isn't visible, it does not have any influence on the next
             space_y = spacing + layout_spacing_y
             next_x = x + item.sizeHint().width() + space_x
             if next_x - space_x > rect.right() and line_height > 0:
@@ -149,12 +158,12 @@ class FlowLayout(QLayout):
 
         if not test_only and self.center:
             for items, x_margin, y_size in rows:
-                x_margin /= 2
+                x_margin //= 2
                 for item in items:
                     r = item.geometry()
                     new_y = r.y()
                     if r.height() < y_size:
-                        new_y += (y_size - r.height()) / 2
+                        new_y += (y_size - r.height()) // 2
                     item.setGeometry(QRect(QPoint(r.x() + x_margin, new_y), item.sizeHint()))
 
         return y + line_height - rect.y()
