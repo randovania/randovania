@@ -26,7 +26,7 @@ if TYPE_CHECKING:
     from randovania.network_common.async_race_room import AsyncRaceRoomEntry
 
 
-class BaseBrowser[T](async_dialog.DialogLike, typing.Protocol):
+class BaseBrowser[T](typing.Protocol):
     def __init__(self, network_client: QtNetworkClient) -> None: ...
 
     @handle_network_errors  # type: ignore[type-var]
@@ -94,6 +94,7 @@ class OnlineInteractions(QtWidgets.QWidget):
         if not result:
             return None
 
+        assert isinstance(browser, QtWidgets.QDialog)
         if await async_dialog.execute_dialog(browser) == QtWidgets.QDialog.DialogCode.Accepted:
             joined_session = browser.joined_session
             assert joined_session is not None
