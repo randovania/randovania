@@ -1,18 +1,21 @@
 from __future__ import annotations
 
-from PySide6 import QtGui, QtWidgets
+from PySide6 import QtGui
 from PySide6.QtCore import Qt
+
+from randovania.gui.lib.common_qt_lib import current_application
+from randovania.gui.qt import RdvApplication
 
 _current_dark_theme = None
 
 
-def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QApplication = None) -> None:
+def set_dark_theme(active: bool, compact: bool = False, *, app: RdvApplication | None = None) -> None:
     global _current_dark_theme
     if _current_dark_theme == active:
         return
 
     if app is None:
-        app = QtWidgets.QApplication.instance()
+        app = current_application()
     new_palette = QtGui.QPalette(app.palette())
 
     import qdarktheme
