@@ -27,7 +27,9 @@ class DockLockDetailsTab(BaseConnectionDetailsTab):
         game: GameDatabaseView,
         patches: GamePatches,
     ) -> None:
-        for source, weakness in patches.all_dock_weaknesses(game, game.find_dock_type_by_short_name("door")):
+        dock_type = next(dock_t for dock_t in game.get_dock_types() if dock_t.short_name.lower() == "door")
+
+        for source, weakness in patches.all_dock_weaknesses(game, dock_type):
             source_region = source.identifier.region
             source_area = source.identifier.area
             if source_area not in per_region[source_region]:
