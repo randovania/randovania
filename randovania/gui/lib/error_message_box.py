@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import traceback
+import typing
 
 from PySide6 import QtWidgets
 
@@ -37,7 +38,7 @@ def create_box_for_exception(val: BaseException) -> QtWidgets.QMessageBox:
             button.click()
             break
 
-    box_layout: QtWidgets.QGridLayout = box.layout()
+    box_layout = typing.cast("QtWidgets.QGridLayout", box.layout())
     box_layout.addItem(
         QtWidgets.QSpacerItem(600, 0, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding),
         box_layout.rowCount(),
