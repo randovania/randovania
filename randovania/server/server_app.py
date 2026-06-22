@@ -6,8 +6,7 @@ import json
 import logging
 import os
 import time
-import typing
-from collections.abc import AsyncGenerator, Coroutine
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from contextvars import ContextVar
 from http.client import responses as HTTP_RESPONSES
