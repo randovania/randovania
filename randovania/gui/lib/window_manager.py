@@ -19,7 +19,7 @@ if typing.TYPE_CHECKING:
 
 
 class WidgetWithClose(typing.Protocol):
-    CloseEvent = QtCore.Signal()
+    CloseEvent: typing.ClassVar[QtCore.Signal]
 
 
 class WindowManager(QtWidgets.QMainWindow):
@@ -37,7 +37,7 @@ class WindowManager(QtWidgets.QMainWindow):
     def multiworld_client(self) -> MultiworldClient:
         raise NotImplementedError
 
-    async def open_map_tracker(self, configuration: Preset):
+    async def open_map_tracker(self, configuration: Preset) -> None:
         raise NotImplementedError
 
     def open_data_visualizer_at(
@@ -46,16 +46,16 @@ class WindowManager(QtWidgets.QMainWindow):
         area_name: str | None,
         game: RandovaniaGame,
         trick_levels: TrickLevelConfiguration | None = None,
-    ):
+    ) -> None:
         raise NotImplementedError
 
-    def open_game_details(self, layout: LayoutDescription, players: list[str] | None = None):
+    def open_game_details(self, layout: LayoutDescription, players: list[str] | None = None) -> None:
         raise NotImplementedError
 
-    def open_game_connection_window(self):
+    def open_game_connection_window(self) -> None:
         raise NotImplementedError
 
-    def set_games_selector_visible(self, visible: bool):
+    def set_games_selector_visible(self, visible: bool) -> None:
         raise NotImplementedError
 
     @property
@@ -67,6 +67,8 @@ class WindowManager(QtWidgets.QMainWindow):
         raise NotImplementedError
 
     def track_window(self, window: WidgetWithClose) -> None:
+        assert isinstance(window, QtCore.QObject)
+
         def remove_window() -> None:
             self.tracked_windows.remove(window)
 
@@ -75,10 +77,10 @@ class WindowManager(QtWidgets.QMainWindow):
 
     async def ensure_multiplayer_session_window(
         self, network_client: QtNetworkClient, session_id: int, options: Options
-    ):
+    ) -> None:
         raise NotImplementedError
 
-    def open_app_navigation_link(self, link: str):
+    def open_app_navigation_link(self, link: str) -> None:
         raise NotImplementedError
 
     def import_preset_file(self, path: Path) -> VersionedPreset | None:
