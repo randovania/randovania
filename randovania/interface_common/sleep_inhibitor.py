@@ -39,14 +39,14 @@ class WindowsInhibitorSource(InhibitorSource):
         self.ctypes = ctypes
 
     def inhibit(self) -> None:
-        assert sys.platform == "win32"
-        self.ctypes.windll.kernel32.SetThreadExecutionState(
-            WindowsInhibitorSource.ES_CONTINUOUS | WindowsInhibitorSource.ES_SYSTEM_REQUIRED
-        )
+        if sys.platform == "win32":
+            self.ctypes.windll.kernel32.SetThreadExecutionState(
+                WindowsInhibitorSource.ES_CONTINUOUS | WindowsInhibitorSource.ES_SYSTEM_REQUIRED
+            )
 
     def uninhibit(self) -> None:
-        assert sys.platform == "win32"
-        self.ctypes.windll.kernel32.SetThreadExecutionState(WindowsInhibitorSource.ES_CONTINUOUS)
+        if sys.platform == "win32":
+            self.ctypes.windll.kernel32.SetThreadExecutionState(WindowsInhibitorSource.ES_CONTINUOUS)
 
 
 class DummyInhibitorSource(InhibitorSource):
