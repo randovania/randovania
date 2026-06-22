@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import itertools
 import logging
 import struct
 import uuid
@@ -184,17 +185,14 @@ class PrimeRemoteConnector(RemoteConnector):
             splits.append(total_bytes)
 
         # Create memory ops to read each chunk.
-        mem_ops = []
-        for index, element in enumerate(splits[:-1]):
-            mem_ops.append(
-                MemoryOperation(
-                    address=player_state_pointer,
-                    offset=self.powerup_offset(0) + element,
-                    read_byte_count=splits[index + 1] - element,
-                )
+        return [
+            MemoryOperation(
+                address=player_state_pointer,
+                offset=self.powerup_offset(0) + element,
+                read_byte_count=next_element - element,
             )
-
-        return mem_ops
+            for element, next_element in itertools.pairwise(splits)
+        ]
 
     @property
     def multiworld_magic_item(self) -> ItemResourceInfo:
