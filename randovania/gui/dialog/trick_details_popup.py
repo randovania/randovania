@@ -25,8 +25,8 @@ if TYPE_CHECKING:
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 
-def _requirement_at_value(resource: ResourceInfo, level: LayoutTrickLevel):
-    def criteria(individual: ResourceRequirement):
+def _requirement_at_value(resource: ResourceInfo, level: LayoutTrickLevel) -> Callable[[ResourceRequirement], bool]:
+    def criteria(individual: ResourceRequirement) -> bool:
         return individual.resource == resource and individual.amount == level.as_number
 
     return criteria
@@ -156,7 +156,7 @@ class ResourceDetailsPopup(BaseResourceDetailsPopup):
         game_description: GameDescription,
         resource: ResourceInfo,
     ) -> None:
-        def is_resource(individual: ResourceRequirement):
+        def is_resource(individual: ResourceRequirement) -> bool:
             return individual.resource == resource
 
         areas_to_show = [
