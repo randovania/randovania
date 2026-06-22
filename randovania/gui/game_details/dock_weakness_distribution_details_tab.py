@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
+from randovania.game_description.db.dock import DockType
 from randovania.gui.game_details.base_connection_details_tab import BaseConnectionDetailsTab
 
 if TYPE_CHECKING:
@@ -11,23 +12,31 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class DockLockDetailsTab(BaseConnectionDetailsTab):
-    def tab_title(self) -> str:
-        return "Door Locks"
+class DockWeaknessDistributionDetailsTab(BaseConnectionDetailsTab):
+    """Displays details for the results of the Dock Weakness Distribution, for one specific dock type."""
 
     @classmethod
+    def dock_type(cls, game: GameDatabaseView) -> DockType:
+        """What dock type are we displaying details of?"""
+        raise NotImplementedError
+
+    @classmethod
+    @override
     def should_appear_for(
         cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
     ) -> bool:
-        return configuration.dock_rando.is_enabled()
+        return configuration.dock_rando.is_enabled_for(
+            cls.dock_type(all_patches[players.player_index].game),
+        )
 
+    @override
     def _fill_per_region_connections(
         self,
         per_region: dict[str, dict[str, str | dict[str, str]]],
         game: GameDatabaseView,
         patches: GamePatches,
     ) -> None:
-        dock_type = next(dock_t for dock_t in game.get_dock_types() if dock_t.short_name.lower() == "door")
+        dock_type = self.dock_type(game)
 
         for source, weakness in patches.all_dock_weaknesses(game, dock_type):
             source_region = source.identifier.region

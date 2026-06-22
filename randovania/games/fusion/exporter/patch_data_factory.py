@@ -534,7 +534,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "tank_increments": self._create_tank_increments(),
             "missile_limit": 3,
             "door_locks": self._create_door_locks(),
-            "hide_doors_on_minimap": self.configuration.dock_rando.is_enabled(),
+            "hide_doors_on_minimap": self.configuration.dock_rando.is_enabled_for_any_type(),
             "palettes": self._create_palette(),
             "navigation_text": self._create_nav_text(),
             "nav_station_locks": self._create_nav_locks(),

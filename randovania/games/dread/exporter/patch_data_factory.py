@@ -588,7 +588,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
                 "nerf_power_bombs": self.configuration.nerf_power_bombs,
                 "warp_to_start": self.configuration.warp_to_start,
             },
-            "show_shields_on_minimap": not self.configuration.dock_rando.is_enabled(),
+            "show_shields_on_minimap": not self.configuration.dock_rando.is_enabled_for_any_type(),
             "door_patches": self._door_patches(),
             "tile_group_patches": self._tilegroup_patches(),
             "new_spawn_points": list(self.new_spawn_points.values()),

@@ -33,12 +33,16 @@ def _gui() -> randovania.game.gui.GameGui:
         PrimeTrilogyTeleporterDetailsTab,
     )
     from randovania.games.prime1 import gui
+    from randovania.gui.game_details.door_lock_rando_details_tab import DoorLockRandoDetailsTab
 
     return randovania.game.gui.GameGui(
         tab_provider=gui.prime1_preset_tabs,
         cosmetic_dialog=gui.PrimeCosmeticPatchesDialog,
         export_dialog=gui.PrimeGameExportDialog,
-        spoiler_visualizer=(PrimeTrilogyTeleporterDetailsTab,),
+        spoiler_visualizer=(
+            DoorLockRandoDetailsTab,
+            PrimeTrilogyTeleporterDetailsTab,
+        ),
         game_tab=gui.PrimeGameTabWidget,
     )
 

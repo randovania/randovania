@@ -81,7 +81,7 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
-        if configuration.dock_rando.is_enabled():
+        if configuration.dock_rando.is_enabled_for_any_type():
             enabled_resources.add("DoorLocks")
 
         if configuration.dock_rando.mode == DockRandoMode.WEAKNESSES:

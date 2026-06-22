@@ -62,7 +62,7 @@ class AM2RBootstrap(Bootstrap[AM2RConfiguration]):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
-        if configuration.dock_rando.is_enabled():
+        if configuration.dock_rando.is_enabled_for_any_type():
             enabled_resources.add("DoorLockRando")
 
             door_db = configuration.dock_rando.weakness_database

@@ -23,6 +23,7 @@ def _options() -> type[PerGameOptions]:
 
 def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.planets_zebeth import gui
+    from randovania.gui.game_details.door_lock_rando_details_tab import DoorLockRandoDetailsTab
 
     return randovania.game.gui.GameGui(
         game_tab=gui.PlanetsZebethGameTabWidget,
@@ -30,7 +31,7 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.PlanetsZebethCosmeticPatchesDialog,
         export_dialog=gui.PlanetsZebethGameExportDialog,
         progressive_item_gui_tuples=(),
-        spoiler_visualizer=(),
+        spoiler_visualizer=(DoorLockRandoDetailsTab,),
     )
 
 

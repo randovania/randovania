@@ -43,7 +43,6 @@ sample_data = {
             "type": "",
             "name": "",
         },
-        "dock_rando": {"force_change_two_way": False, "resolver_attempts": 200, "to_shuffle_proportion": 1.0},
     },
     "hint_feature_database": {
         "key": {

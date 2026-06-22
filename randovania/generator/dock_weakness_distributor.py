@@ -416,7 +416,7 @@ async def distribute_post_fill_weaknesses(
         # If at least one dock type is configured for Dock mode distribution, then run the resolver
         # TODO: shouldn't this just be a check if `unassigned_docks` is not empty?
         if not any(
-            configuration.dock_rando.can_shuffle(dock_type) and configuration.dock_rando.mode != DockRandoMode.DOCKS
+            configuration.dock_rando.can_shuffle(dock_type) and configuration.dock_rando.mode == DockRandoMode.DOCKS
             for dock_type in configuration.dock_rando.weakness_database.dock_types
         ):
             continue

@@ -204,12 +204,12 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
             types_state=types_state,
         )
 
-    def is_enabled(self) -> bool:
-        return self.mode != DockRandoMode.VANILLA
-
     def is_enabled_for(self, dock_type: DockType) -> bool:
         # FIXME: this really should be per type :)
-        return self.is_enabled()
+        return self.mode != DockRandoMode.VANILLA
+
+    def is_enabled_for_any_type(self) -> bool:
+        return any(self.is_enabled_for(dock_type) for dock_type in self.types_state)
 
     def can_shuffle(self, dock_type: DockType) -> bool:
         return (
@@ -240,7 +240,7 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
     def settings_incompatible_with_map_tracker(self) -> list[str]:
         result = []
 
-        if self.is_enabled():
+        if self.is_enabled_for_any_type():
             result.append("Door Lock Rando")
 
         return result

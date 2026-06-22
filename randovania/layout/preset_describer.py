@@ -207,7 +207,7 @@ class GamePresetDescriber:
 
         # Dock Locks
         dock_rando = configuration.dock_rando
-        if dock_rando.is_enabled():
+        if dock_rando.is_enabled_for_any_type():  # FIXME: should mention what type!
             template_strings["Gameplay"].append(dock_rando.mode.description)
 
         # Hints

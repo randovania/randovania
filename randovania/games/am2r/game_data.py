@@ -28,6 +28,7 @@ def _options() -> type[PerGameOptions]:
 def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.am2r import gui
     from randovania.games.am2r.layout import progressive_items
+    from randovania.gui.game_details.door_lock_rando_details_tab import DoorLockRandoDetailsTab
 
     return randovania.game.gui.GameGui(
         game_tab=gui.AM2RGameTabWidget,
@@ -35,7 +36,10 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.AM2RCosmeticPatchesDialog,
         export_dialog=gui.AM2RGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(gui.AM2RTeleporterDetailsTab,),
+        spoiler_visualizer=(
+            DoorLockRandoDetailsTab,
+            gui.AM2RTeleporterDetailsTab,
+        ),
     )
 
 
