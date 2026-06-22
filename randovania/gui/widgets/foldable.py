@@ -51,7 +51,7 @@ class Foldable(QtWidgets.QWidget):
         self._main_layout.addWidget(self._content_area, 1, 0, 1, 2)
 
     @property
-    def contents(self):
+    def contents(self) -> QtWidgets.QFrame:
         return self._content_area
 
     def _on_click(self, checked: bool) -> None:
@@ -83,17 +83,15 @@ class Foldable(QtWidgets.QWidget):
         else:
             self._unfold()
 
-    @Signal
-    def notify(self) -> None:
-        pass
+    Notify = Signal()
 
     folded = Property(
         bool,
         fset=setFolded,
-        notify=notify,
+        notify=Notify,
     )
     title = Property(
         str,
         fset=setTitle,
-        notify=notify,
+        notify=Notify,
     )
