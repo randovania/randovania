@@ -182,7 +182,7 @@ class PresetManager:
         else:
             return self.included_preset_with(game, reference_name)
 
-    def preset_for_uuid(self, the_uid: uuid.UUID) -> VersionedPreset | None:
+    def preset_for_uuid(self, the_uid: uuid.UUID | None) -> VersionedPreset | None:
         return self.included_presets.get(the_uid, self.custom_presets.get(the_uid))
 
     def _file_path_for_preset(self, preset: VersionedPreset) -> Path:

@@ -76,6 +76,7 @@ class PresetMenu(QtWidgets.QMenu):
         self.action_view_deleted.setVisible(False)
 
     def set_preset(self, preset: VersionedPreset | None) -> None:
+        # https://github.com/python/mypy/issues/11979
         has_any_preset = preset is not None
         has_valid_preset = has_any_preset
         try:
@@ -85,9 +86,9 @@ class PresetMenu(QtWidgets.QMenu):
             has_valid_preset = False
 
         for p in [self.action_delete, self.action_history]:
-            p.setEnabled(has_any_preset and not preset.is_included_preset)
+            p.setEnabled(has_any_preset and not preset.is_included_preset)  # type: ignore[union-attr]
 
-        self.action_export.setEnabled(has_valid_preset and not preset.is_included_preset)
+        self.action_export.setEnabled(has_valid_preset and not preset.is_included_preset)  # type: ignore[union-attr]
 
         for p in [self.action_customize, self.action_duplicate, self.action_map_tracker, self.action_required_tricks]:
             p.setEnabled(has_valid_preset)
@@ -212,6 +213,9 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
 
     @asyncSlot()
     async def _on_delete_preset(self) -> None:
+        if self._current_preset_data is None:
+            return
+
         monitoring.metrics.incr("gui_preset_delete_clicked", tags={"game": self._game.value})
         result = await async_dialog.warning(
             self,
@@ -227,12 +231,16 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             self._on_select_preset()
 
     @asyncSlot()
-    async def _on_view_preset_history(self):
+    async def _on_view_preset_history(self) -> None:
+        if self._current_preset_data is None:
+            return
+
         monitoring.metrics.incr("gui_preset_history_clicked", tags={"game": self._game.value})
         if self._preset_history is not None:
-            return await async_dialog.warning(
+            await async_dialog.warning(
                 self, "Dialog already open", "Another preset history dialog is already open. Please close it first."
             )
+            return
 
         preset = self._current_preset_data
         assert preset is not None
@@ -248,6 +256,9 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             self._update_preset_tree_items()
 
     def _on_export_preset(self) -> None:
+        if self._current_preset_data is None:
+            return
+
         default_name = f"{self._current_preset_data.slug_name}.rdvpreset"
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=True, name=default_name)
         if path is not None:
@@ -259,6 +270,9 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
                 )
 
     def _on_duplicate_preset(self) -> None:
+        if self._current_preset_data is None:
+            return
+
         old_preset = self._current_preset_data
         new_preset = VersionedPreset.with_preset(old_preset.get_preset().fork())
         self._add_new_preset(new_preset, parent=old_preset.uuid)
@@ -274,9 +288,15 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
 
     @asyncSlot()
     async def _on_open_map_tracker_for_preset(self) -> None:
+        if self._current_preset_data is None:
+            return
+
         await self._window_manager.open_map_tracker(self._current_preset_data.get_preset())
 
     def _on_open_required_tricks_for_preset(self) -> None:
+        if self._current_preset_data is None:
+            return
+
         from randovania.gui.dialog.trick_usage_popup import TrickUsagePopup
 
         self._trick_usage_popup = TrickUsagePopup(self, self._window_manager, self._current_preset_data.get_preset())
