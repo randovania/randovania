@@ -193,6 +193,7 @@ class MultiworldClient(QtCore.QObject):
                     modified_data[uid] = get_data(uid).extend_with_game_beaten_uploaded()
 
             for uid, world_response in result.worlds.items():
+                assert world_response.session_name is not None
                 modified_data[uid] = dataclasses.replace(
                     get_data(uid),
                     server_data=WorldServerData(

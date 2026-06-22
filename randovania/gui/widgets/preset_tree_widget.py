@@ -113,42 +113,41 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
                 # The first included preset will be the parent of all presets with missing parents
                 default_parent = item
 
-        assert default_parent is not None
+        if default_parent is not None:
+            # Custom Presets
+            order_by_key = {pid: i for i, pid in enumerate(self.options.get_preset_order_for(self.game))}
+            ordered_custom_presets = [
+                preset for preset in self.preset_manager.custom_presets.values() if preset.game == self.game
+            ]
+            ordered_custom_presets.sort(key=lambda p: (order_by_key.get(p.uuid, math.inf), p.name.lower()))
 
-        # Custom Presets
-        order_by_key = {pid: i for i, pid in enumerate(self.options.get_preset_order_for(self.game))}
-        ordered_custom_presets = [
-            preset for preset in self.preset_manager.custom_presets.values() if preset.game == self.game
-        ]
-        ordered_custom_presets.sort(key=lambda p: (order_by_key.get(p.uuid, math.inf), p.name.lower()))
+            for preset in ordered_custom_presets:
+                preset_parent = self.options.get_parent_for_preset(preset.uuid)
+                item = create_item(self if preset_parent is None else default_parent, preset)
+                if preset_parent is None:
+                    root_parents.add(item)
 
-        for preset in ordered_custom_presets:
-            preset_parent = self.options.get_parent_for_preset(preset.uuid)
-            item = create_item(self if preset_parent is None else default_parent, preset)
-            if preset_parent is None:
-                root_parents.add(item)
+            monitoring.metrics.gauge(
+                "amount_of_presets", value=len(self.preset_to_item), tags={"game": self.game.short_name}
+            )
 
-        monitoring.metrics.gauge(
-            "amount_of_presets", value=len(self.preset_to_item), tags={"game": self.game.short_name}
-        )
+            # Set parents after, so don't have issues with order
+            for preset in ordered_custom_presets:
+                preset_parent = self.options.get_parent_for_preset(preset.uuid)
+                if preset_parent in self.preset_to_item:
+                    self_item = self.preset_to_item[preset.uuid]
+                    target_parent = parent_item = self.preset_to_item[preset_parent]
 
-        # Set parents after, so don't have issues with order
-        for preset in ordered_custom_presets:
-            preset_parent = self.options.get_parent_for_preset(preset.uuid)
-            if preset_parent in self.preset_to_item:
-                self_item = self.preset_to_item[preset.uuid]
-                target_parent = parent_item = self.preset_to_item[preset_parent]
+                    while parent_item not in root_parents:
+                        if parent_item == self_item:
+                            # LOOP DETECTED!
+                            target_parent = default_parent
+                            break
+                        parent_item = parent_item.parent()
 
-                while parent_item not in root_parents:
-                    if parent_item == self_item:
-                        # LOOP DETECTED!
-                        target_parent = default_parent
-                        break
-                    parent_item = parent_item.parent()
-
-                if default_parent != target_parent:
-                    default_parent.removeChild(self_item)
-                    target_parent.addChild(self_item)
+                    if default_parent != target_parent:
+                        default_parent.removeChild(self_item)
+                        target_parent.addChild(self_item)
 
         for preset_uuid, item in self.preset_to_item.items():
             item.setExpanded(not self.options.is_preset_uuid_hidden(preset_uuid))

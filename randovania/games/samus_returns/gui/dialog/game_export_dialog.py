@@ -369,12 +369,6 @@ class MSRGameExportDialog(GameExportDialog[MSRConfiguration], Ui_MSRGameExportDi
 
     # Export
 
-    def update_accept_validation(self) -> None:
-        tab = self.output_tab_widget.currentWidget()
-        self.accept_button.setEnabled(
-            hasattr(tab, "is_valid") and tab.is_valid() and not self.input_file_edit.has_error
-        )
-
     def get_game_export_params(self) -> GameExportParams:
         clean_output_path = False
         output_tab = self.output_tab_widget.currentWidget()

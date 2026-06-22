@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os.path
 import typing
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
@@ -15,8 +15,6 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-
     from randovania.exporter.game_exporter import GameExportParams
     from randovania.game.game_enum import RandovaniaGame
     from randovania.interface_common.options import Options, PerGameOptions

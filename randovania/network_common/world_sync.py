@@ -28,7 +28,7 @@ class ServerSyncRequest:
 class ServerWorldResponse(JsonDataclass):
     world_name: str
     session_id: int
-    session_name: str
+    session_name: str | None
 
 
 @dataclasses.dataclass(frozen=True)

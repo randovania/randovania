@@ -3,8 +3,8 @@ from __future__ import annotations
 import asyncio
 import multiprocessing
 import operator
+import sys
 from concurrent.futures import Future, ProcessPoolExecutor
-from multiprocessing.connection import PipeConnection
 from typing import TYPE_CHECKING, Any
 
 from randovania import monitoring
@@ -21,6 +21,11 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
     from randovania.layout.generator_parameters import GeneratorParameters
     from randovania.layout.layout_description import LayoutDescription
+
+    if sys.platform == "win32":
+        from multiprocessing.connection import PipeConnection as Connection
+    else:
+        from multiprocessing.connection import Connection
 
 export_busy = False
 
@@ -120,7 +125,7 @@ def generate_layout(
 
 
 def _generate_layout_worker(
-    output_pipe: PipeConnection, debug_level: debug.LogLevel, extra_args: dict
+    output_pipe: Connection, debug_level: debug.LogLevel, extra_args: dict
 ) -> LayoutDescription:
     def status_update(message: str) -> None:
         output_pipe.send(message)

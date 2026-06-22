@@ -18,7 +18,8 @@ if TYPE_CHECKING:
 
     from socketio import AsyncClient
 
-    from randovania.server.server_app import AsyncCallable, ServerApp
+    from randovania.lib.type_lib import AsyncCallable
+    from randovania.server.server_app import ServerApp
 
 
 class ClientSignal[**P]:

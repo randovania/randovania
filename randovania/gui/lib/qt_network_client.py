@@ -32,7 +32,7 @@ if TYPE_CHECKING:
 AnyNetworkError = (error.BaseNetworkError, UnableToConnect)
 
 
-class NetworkErrorDelegator(abc.ABC):
+class NetworkErrorDelegator:
     """
     Classes which want to use `handle_network_errors` but are not themselves a
     `QWidget` can implement this interface to delegate the error popup.
@@ -99,6 +99,14 @@ def handle_network_errors[SelfT: QtWidgets.QWidget | NetworkErrorDelegator, **P,
                 "Connection Error",
                 f"<b>Timeout while communicating with the server:</b><br /><br />{e}"
                 f"<br />Further attempts will wait for longer.",
+            )
+
+        except error.WorldDoesNotExistError:
+            await async_dialog.warning(
+                widget,
+                "World does not exist",
+                "The world you tried to change does not exist. "
+                "If this error keeps happening, please reopen the Window and/or Randovania.",
             )
 
         return None

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 import platform
+import sys
 from abc import abstractmethod
 from types import TracebackType
 
@@ -38,11 +39,13 @@ class WindowsInhibitorSource(InhibitorSource):
         self.ctypes = ctypes
 
     def inhibit(self) -> None:
+        assert sys.platform == "win32"
         self.ctypes.windll.kernel32.SetThreadExecutionState(
             WindowsInhibitorSource.ES_CONTINUOUS | WindowsInhibitorSource.ES_SYSTEM_REQUIRED
         )
 
     def uninhibit(self) -> None:
+        assert sys.platform == "win32"
         self.ctypes.windll.kernel32.SetThreadExecutionState(WindowsInhibitorSource.ES_CONTINUOUS)
 
 

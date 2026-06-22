@@ -19,8 +19,9 @@ def test_change_tracker_layout(skip_qtbot, mocker: pytest_mock.MockerFixture, tm
     skip_qtbot.addWidget(result)
 
     mock_tracker = mocker.patch(
-        "randovania.gui.widgets.item_tracker_popup_window.ItemTrackerWidget", return_value=result
+        "randovania.gui.item_tracker.item_tracker_popup_window.ItemTrackerWidget", return_value=result
     )
+    mocker.patch("randovania.gui.item_tracker.tracker_layout.TrackerLayout.model_validate", side_effect=[[1], [2]])
     on_close = MagicMock()
 
     p1 = tmp_path.joinpath("p1.json")

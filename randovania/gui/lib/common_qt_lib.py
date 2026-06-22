@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import os
-import platform
 import re
 import subprocess
+import sys
 import typing
 from pathlib import Path
 from subprocess import CalledProcessError
@@ -278,9 +278,9 @@ class FallbackDialog(typing.NamedTuple):
 
 def open_directory_in_explorer(path: Path, fallback_dialog: FallbackDialog | None = None) -> None:
     try:
-        if platform.system() == "Windows":
+        if sys.platform == "win32":
             os.startfile(path)
-        elif platform.system() == "Darwin":
+        elif sys.platform == "darwin":
             subprocess.run(["open", path], check=True)
         else:
             subprocess.run(["xdg-open", path], check=True)
