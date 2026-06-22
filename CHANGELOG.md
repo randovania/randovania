@@ -63,6 +63,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Preset option to skip the opening storyboard cutscene (default: off)
 - Fixed: Spazer and Plasma beam projectiles no longer shoot through blocks without Wave
 
+### Metroid Prime
+
+ - Changed: Slightly reworked the way the inventory is read for the sake of a slight speedup. No expected changes in fuctionality.
+
+### Metroid Prime 2: Echoes
+
+ - Changed: Slightly reworked the way the inventory is read for the sake of a significant speedup. No expected changes in fuctionality.
+
 ## [10.8.2] - 2026-06-14
 
 ### Metroid Prime
