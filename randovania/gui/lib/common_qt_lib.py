@@ -18,6 +18,7 @@ if typing.TYPE_CHECKING:
 
     from randovania.game_connection.game_connection import GameConnection
     from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.gui.qt import RdvApplication
     from randovania.interface_common.options import Options
 
 
@@ -26,8 +27,12 @@ def map_set_checked(iterable: Iterator[QtWidgets.QCheckBox], new_status: bool) -
         checkbox.setChecked(new_status)
 
 
+def current_application() -> RdvApplication:
+    return typing.cast("RdvApplication", QtWidgets.QApplication.instance())
+
+
 def lock_application(value: bool) -> None:
-    QtWidgets.QApplication.instance().main_window.setEnabled(value)
+    current_application().main_window.setEnabled(value)
 
 
 def _prompt_user_for_file(
@@ -45,7 +50,7 @@ def _prompt_user_for_file(
         method = QtWidgets.QFileDialog.getSaveFileName
     else:
         method = QtWidgets.QFileDialog.getOpenFileName
-    open_result = method(window, caption=caption, dir=dir, filter=filter)
+    open_result = method(window, caption=caption, dir=dir if dir is not None else "", filter=filter)
     if not open_result or open_result == ("", ""):
         return None
     return Path(open_result[0])
@@ -54,6 +59,7 @@ def _prompt_user_for_file(
 def _prompt_user_for_directory(
     window: QtWidgets.QWidget, caption: str, dir: str | None = None, new_file: bool = False
 ) -> Path | None:
+    dir = dir if dir is not None else ""
     if new_file:
         dialog = QtWidgets.QFileDialog(window)
         dialog.setFileMode(QtWidgets.QFileDialog.FileMode.Directory)
@@ -61,19 +67,19 @@ def _prompt_user_for_directory(
         dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptMode.AcceptSave)
         dialog.setDirectory(dir)
         if dialog.exec_():
-            open_result = dialog.selectedFiles()
-            if not open_result:
+            new_open_result = dialog.selectedFiles()
+            if not new_open_result:
                 return None
-            return Path(open_result[0])
+            return Path(new_open_result[0])
         return None
 
     else:
-        open_result = QtWidgets.QFileDialog.getExistingDirectory(
+        existing_open_result = QtWidgets.QFileDialog.getExistingDirectory(
             window, caption, dir, QtWidgets.QFileDialog.Option.ShowDirsOnly
         )
-        if not open_result or open_result == ("", ""):
+        if not existing_open_result or existing_open_result == ("", ""):
             return None
-        return Path(open_result)
+        return Path(existing_open_result)
 
 
 def prompt_user_for_vanilla_input_file(
@@ -231,12 +237,12 @@ def set_edit_if_different_text(edit: QtWidgets.QTextEdit, new_text: str) -> None
         edit.setPlainText(new_text)
 
 
-def get_network_client():
-    return typing.cast("QtNetworkClient", QtWidgets.QApplication.instance().network_client)
+def get_network_client() -> QtNetworkClient:
+    return current_application().network_client
 
 
-def get_game_connection():
-    return typing.cast("GameConnection", QtWidgets.QApplication.instance().game_connection)
+def get_game_connection() -> GameConnection:
+    return current_application().game_connection
 
 
 def show_install_visual_cpp_redist(details: str) -> None:
