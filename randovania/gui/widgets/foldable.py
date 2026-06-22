@@ -36,7 +36,7 @@ class Foldable(QtWidgets.QWidget):
 
         self._header_line = QtWidgets.QFrame(self)
         self._header_line.setFrameShape(QtWidgets.QFrame.Shape.HLine)
-        self._header_line.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Maximum)
+        self._header_line.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Maximum)
 
         self._content_area = QtWidgets.QFrame(self)
         self._content_area.setObjectName("foldable_contentArea")
@@ -46,7 +46,7 @@ class Foldable(QtWidgets.QWidget):
         self._main_layout = QtWidgets.QGridLayout(self)
         self._main_layout.setVerticalSpacing(0)
         self._main_layout.setContentsMargins(0, 0, 0, 0)
-        self._main_layout.addWidget(self._toggle_button, 0, 0, 1, 1, Qt.AlignLeft)
+        self._main_layout.addWidget(self._toggle_button, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
         self._main_layout.addWidget(self._header_line, 0, 1, 1, 1)
         self._main_layout.addWidget(self._content_area, 1, 0, 1, 2)
 

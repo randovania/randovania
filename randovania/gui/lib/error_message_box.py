@@ -9,14 +9,14 @@ from randovania.games.prime2.patcher.claris_randomizer import ClarisRandomizerEx
 
 def create_box_for_exception(val: BaseException) -> QtWidgets.QMessageBox:
     box = QtWidgets.QMessageBox(
-        QtWidgets.QMessageBox.Critical,
+        QtWidgets.QMessageBox.Icon.Critical,
         "An exception was raised",
         (
             f"An unhandled Exception occurred:\n{val}\n\n"
             "When reporting, make sure to paste the entire contents of the following box."
             "\nIt has already been copied to your clipboard."
         ),
-        QtWidgets.QMessageBox.Ok,
+        QtWidgets.QMessageBox.StandardButton.Ok,
     )
     from randovania.gui.lib import common_qt_lib
 
@@ -33,7 +33,7 @@ def create_box_for_exception(val: BaseException) -> QtWidgets.QMessageBox:
 
     # Expand the detailed text
     for button in box.buttons():
-        if box.buttonRole(button) == QtWidgets.QMessageBox.ActionRole:
+        if box.buttonRole(button) == QtWidgets.QMessageBox.ButtonRole.ActionRole:
             button.click()
             break
 

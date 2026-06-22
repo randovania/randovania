@@ -50,7 +50,7 @@ class ScrollMessageBox(QtWidgets.QMessageBox):
         icon: QtWidgets.QMessageBox.Icon,
         title: str,
         body: str,
-        buttons: QtWidgets.QMessageBox.StandardButtons,
+        buttons: QtWidgets.QMessageBox.StandardButton,
         default_button: QtWidgets.QMessageBox.StandardButton = QtWidgets.QMessageBox.StandardButton.Ok,
     ) -> ScrollMessageBox:
         box = cls(icon, title, body, buttons, parent)

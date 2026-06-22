@@ -56,9 +56,9 @@ def _prompt_user_for_directory(
 ) -> Path | None:
     if new_file:
         dialog = QtWidgets.QFileDialog(window)
-        dialog.setFileMode(QtWidgets.QFileDialog.FileMode.DirectoryOnly)
-        dialog.setOption(QtWidgets.QFileDialog.ShowDirsOnly)
-        dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
+        dialog.setFileMode(QtWidgets.QFileDialog.FileMode.Directory)
+        dialog.setOption(QtWidgets.QFileDialog.Option.ShowDirsOnly)
+        dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptMode.AcceptSave)
         dialog.setDirectory(dir)
         if dialog.exec_():
             open_result = dialog.selectedFiles()
@@ -69,7 +69,7 @@ def _prompt_user_for_directory(
 
     else:
         open_result = QtWidgets.QFileDialog.getExistingDirectory(
-            window, caption, dir, QtWidgets.QFileDialog.ShowDirsOnly
+            window, caption, dir, QtWidgets.QFileDialog.Option.ShowDirsOnly
         )
         if not open_result or open_result == ("", ""):
             return None
@@ -240,12 +240,12 @@ def show_install_visual_cpp_redist(details: str) -> None:
     support_url = "https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads"
 
     box = QtWidgets.QMessageBox(
-        QtWidgets.QMessageBox.Critical,
+        QtWidgets.QMessageBox.Icon.Critical,
         "Unable to load Dolphin backend",
         "Please install the latest "
         f"<a href='{download_url}'>Microsoft Visual C++ Redistributable</a>.<br /><br />"
         f"For more details, see <a href='{support_url}'>Microsoft's webpage</a>.",
-        QtWidgets.QMessageBox.Ok,
+        QtWidgets.QMessageBox.StandardButton.Ok,
     )
     set_default_window_icon(box)
     box.setDetailedText(details)

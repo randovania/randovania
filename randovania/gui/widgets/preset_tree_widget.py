@@ -31,10 +31,10 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
     def dropEvent(self, event: QtGui.QDropEvent) -> None:
         source = self.preset_for_item(self.currentItem())
         if source is None:
-            return event.setDropAction(Qt.IgnoreAction)
+            return event.setDropAction(Qt.DropAction.IgnoreAction)
 
         if source.is_included_preset:
-            return event.setDropAction(Qt.IgnoreAction)
+            return event.setDropAction(Qt.DropAction.IgnoreAction)
 
         new_order = self.options.get_preset_order_for(self.game)
         try:
@@ -66,10 +66,10 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
             options.set_preset_order_for(self.game, new_order)
 
         self.update_items()
-        return event.setDropAction(Qt.IgnoreAction)
+        return event.setDropAction(Qt.DropAction.IgnoreAction)
 
     def preset_for_item(self, item: QtWidgets.QTreeWidgetItem) -> VersionedPreset | None:
-        return self.preset_manager.preset_for_uuid(item.data(0, Qt.UserRole))
+        return self.preset_manager.preset_for_uuid(item.data(0, Qt.ItemDataRole.UserRole))
 
     @property
     def current_preset_data(self) -> VersionedPreset | None:
@@ -95,7 +95,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         ) -> QtWidgets.QTreeWidgetItem:
             it = QtWidgets.QTreeWidgetItem(parent)
             it.setText(0, the_preset.name)
-            it.setData(0, Qt.UserRole, the_preset.uuid)
+            it.setData(0, Qt.ItemDataRole.UserRole, the_preset.uuid)
             self.preset_to_item[the_preset.uuid] = it
             return it
 
@@ -150,7 +150,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
             item.setExpanded(not self.options.is_preset_uuid_hidden(preset_uuid))
 
         final_order = [
-            item.data(0, Qt.UserRole)
+            item.data(0, Qt.ItemDataRole.UserRole)
             for item in self.findItems("", Qt.MatchFlag.MatchRecursive | Qt.MatchFlag.MatchStartsWith)
         ]
 
@@ -166,7 +166,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
             self.setCurrentItem(self.preset_to_item[preset.uuid])
 
     def _on_item_new_state(self, item: QtWidgets.QTreeWidgetItem, new_state: bool) -> None:
-        uid = item.data(0, Qt.UserRole)
+        uid = item.data(0, Qt.ItemDataRole.UserRole)
         if uid is not None:
             with self.options as options:
                 options.set_preset_uuid_hidden(uid, not new_state)
