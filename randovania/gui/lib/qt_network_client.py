@@ -126,8 +126,8 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
         configuration = randovania.get_configuration()
         user_data_dir = user_data_dir.joinpath("network_client")
 
-        QtCore.QObject.__init__(self, None)
-        NetworkClient.__init__(self, user_data_dir=user_data_dir, configuration=configuration)
+        # QObject.__init__ calls super() with any additional args/kwargs, but the stubs don't say so
+        super().__init__(None, user_data_dir=user_data_dir, configuration=configuration)  # type: ignore[call-arg]
 
     # https://github.com/python/mypy/issues/5936
     @NetworkClient.connection_state.setter  # type: ignore[attr-defined]
