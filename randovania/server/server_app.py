@@ -2,18 +2,16 @@ from __future__ import annotations
 
 import base64
 import functools
-import inspect
 import json
 import logging
 import os
 import time
-import typing
 from collections.abc import AsyncGenerator, Coroutine
 from contextlib import asynccontextmanager
 from contextvars import ContextVar
 from http.client import responses as HTTP_RESPONSES
 from pathlib import Path
-from typing import TYPE_CHECKING, Annotated, Concatenate, Self, cast
+from typing import TYPE_CHECKING, Annotated, Concatenate, cast
 
 import fastapi
 import peewee
@@ -32,13 +30,15 @@ from starlette.responses import JSONResponse
 from uvicorn.logging import ColourizedFormatter
 
 import randovania
-from randovania.bitpacking import construct_pack
 from randovania.network_common import connection_headers, error
 from randovania.network_common.authentication import AuthenticationMethod
+from randovania.network_common.signals import server_signals
 from randovania.server import client_check, fastapi_discord
 from randovania.server.database import User, World, database_lifespan
 from randovania.server.discord_auth import EnforceDiscordRole, discord_oauth_lifespan
-from randovania.server.socketio import EventHandlerReturnType, fastapi_socketio_lifespan
+from randovania.server.socketio import (
+    fastapi_socketio_lifespan,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -75,10 +75,6 @@ class ServerLoggingFormatter(ColourizedFormatter):
         record.context = ctx_context.get()
 
         return super().formatMessage(record)
-
-
-async def get_sid(sa: ServerApp, sid: str) -> str:
-    return sid
 
 
 class ServerApp:
@@ -185,7 +181,7 @@ class ServerApp:
             )
             return randovania.VERSION
 
-        self.on("get_sid", get_sid)
+        server_signals.GetSid.register(self, server_signals.get_sid)
 
     def _setup_exception_handlers(self) -> None:
         def status_message(status_code: int) -> str:
@@ -267,10 +263,10 @@ class ServerApp:
             if "worlds" in sio_session and world.id in sio_session["worlds"]:
                 sio_session["worlds"].remove(world.id)
 
-    def on[**P, T: EventHandlerReturnType](
+    def on[**P, T](
         self,
         message: str,
-        handler: AsyncCallable[Concatenate[Self, str, P], T],
+        callback: server_signals.ServerEventCallback[P, T],
         namespace: str | None = None,
         *,
         with_header_check: bool = False,
@@ -286,7 +282,7 @@ class ServerApp:
             running the event handler. Default: `False`
         """
 
-        @functools.wraps(handler)
+        @functools.wraps(callback)
         async def _handler(sid: str, *args: P.args, **kwargs: P.kwargs) -> dict | dict[str, T]:
             ctx_where.set(message)
             ctx_who.set(self.current_client_ip(sid))
@@ -318,7 +314,7 @@ class ServerApp:
                 try:
                     span.set_tag("message.error", 0)
                     return {
-                        "result": await handler(self, sid, *args, **kwargs),
+                        "result": await callback(self, sid, *args, **kwargs),
                     }
 
                 except error.BaseNetworkError as err:
@@ -339,33 +335,7 @@ class ServerApp:
             with metric.time():
                 return await _handler(sid, *args, **kwargs)
 
-        typed_handler = cast("AsyncCallable[Concatenate[str, P], dict | dict[str, T]]", metric_wrapper)
-
-        return self.sio.on(message, namespace=namespace)(typed_handler)
-
-    def on_with_wrapper[T, R](
-        self, message: str, handler: AsyncCallable[[Self, str, T], R]
-    ) -> AsyncCallable[[str, T], dict | dict[str, R]]:
-        """
-        Registers a socket.io event handler, encoding and decoding the data via construct.
-
-        :param message: The event name.
-        :param handler: The event handler to register. Must be a coroutine (`async def`)
-            with exactly three arguments: a `ServerApp`, a `str` (the sid), and
-            a construct-encodable type.
-        """
-
-        types = typing.get_type_hints(handler)
-        arg_spec = inspect.getfullargspec(handler)
-
-        @functools.wraps(handler)
-        async def _handler(sa: Self, sid: str, arg: bytes) -> bytes:
-            decoded_arg = construct_pack.decode(arg, types[arg_spec.args[2]])
-            return construct_pack.encode(await handler(sa, sid, decoded_arg), types["return"])
-
-        typed_handler = cast("AsyncCallable[[Self, str, T], bytes]", _handler)
-
-        return self.on(message, typed_handler, with_header_check=True)
+        return self.sio.on(message, namespace=namespace)(metric_wrapper)  # type: ignore[type-var]
 
     def current_client_ip(self, sid: str) -> str:
         """Returns the IP address of the client with this sid."""

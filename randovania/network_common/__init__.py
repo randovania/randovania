@@ -5,7 +5,7 @@ import randovania
 SERVER_API_VERSION = 20
 
 
-def connection_headers():
+def connection_headers() -> dict[str, str]:
     from randovania.layout import description_migration, permalink, preset_migration
 
     return {

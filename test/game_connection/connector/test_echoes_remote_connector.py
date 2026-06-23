@@ -12,7 +12,7 @@ from retro_data_structures.game_check import Game as RDSGame
 
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException
+from randovania.game_connection.executor.memory_operation import MemoryOperation
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -88,10 +88,18 @@ async def test_get_inventory_valid(connector: EchoesRemoteConnector):
     # Setup
     assert isinstance(connector.executor, AsyncMock)
 
-    connector.executor.perform_memory_operations.side_effect = lambda ops: {
-        op: struct.pack(">II", item.max_capacity, item.max_capacity)
-        for op, item in zip(ops, connector.game.resource_database.item)
-    }
+    custom_response = [b"" for _ in range(109)]
+    for item in connector.game.resource_database.item:
+        if item.extra["item_id"] >= 1000:
+            continue
+        custom_response[item.extra["item_id"]] = struct.pack(
+            ">III", *InventoryItem(item.max_capacity, item.max_capacity), 0
+        )
+    for i in range(109):
+        if custom_response[i] == b"":
+            custom_response[i] = struct.pack(">III", 0, 0, 0)
+    custom_response_mock = b"".join(custom_response)
+    connector.executor.perform_memory_operations.side_effect = lambda op: {op[0]: custom_response_mock}
 
     # Run
     inventory = await connector.get_inventory()
@@ -107,22 +115,50 @@ async def test_get_inventory_valid(connector: EchoesRemoteConnector):
     )
 
 
+async def test_invalid_read_invalid_inventory_length(connector: EchoesRemoteConnector):
+    # Setup
+    assert isinstance(connector.executor, AsyncMock)
+
+    custom_response = [b"" for _ in range(109)]
+    for item in connector.game.resource_database.item:
+        if item.extra["item_id"] >= 1000:
+            continue
+        custom_response[item.extra["item_id"]] = struct.pack(
+            ">III", *InventoryItem(item.max_capacity, item.max_capacity), 0
+        )
+        break
+
+    custom_response_mock = b"".join(custom_response)
+    connector.executor.perform_memory_operations.side_effect = lambda op: {op[0]: custom_response_mock}
+
+    # Run
+    msg = "Should have read 109 items from the game, instead read 1"
+    with pytest.raises(ValueError, match=re.escape(msg)):
+        await connector.get_inventory()
+
+
 async def test_get_inventory_invalid_capacity(connector: EchoesRemoteConnector):
     # Setup
     assert isinstance(connector.executor, AsyncMock)
 
     custom_inventory = {"Darkburst": InventoryItem(0, 50)}
 
-    connector.executor.perform_memory_operations.side_effect = lambda ops: {
-        op: struct.pack(
-            ">II", *custom_inventory.get(item.short_name, InventoryItem(item.max_capacity, item.max_capacity))
+    custom_response = [b"" for _ in range(109)]
+    for item in connector.game.resource_database.item:
+        if item.extra["item_id"] >= 1000:
+            continue
+        custom_response[item.extra["item_id"]] = struct.pack(
+            ">III", *custom_inventory.get(item.short_name, InventoryItem(item.max_capacity, item.max_capacity)), 0
         )
-        for op, item in zip(ops, connector.game.resource_database.item)
-    }
+    for i in range(109):
+        if custom_response[i] == b"":
+            custom_response[i] = struct.pack(">III", 0, 0, 0)
+    custom_response_mock = b"".join(custom_response)
+    connector.executor.perform_memory_operations.side_effect = lambda op: {op[0]: custom_response_mock}
 
     # Run
     msg = "Received InventoryItem(amount=0, capacity=50) for Darkburst, which is an invalid state."
-    with pytest.raises(MemoryOperationException, match=re.escape(msg)):
+    with pytest.raises(ValueError, match=re.escape(msg)):
         await connector.get_inventory()
 
 
@@ -132,16 +168,22 @@ async def test_get_inventory_invalid_amount(connector: EchoesRemoteConnector):
 
     custom_inventory = {"Darkburst": InventoryItem(1, 0)}
 
-    connector.executor.perform_memory_operations.side_effect = lambda ops: {
-        op: struct.pack(
-            ">II", *custom_inventory.get(item.short_name, InventoryItem(item.max_capacity, item.max_capacity))
+    custom_response = [b"" for _ in range(109)]
+    for item in connector.game.resource_database.item:
+        if item.extra["item_id"] >= 1000:
+            continue
+        custom_response[item.extra["item_id"]] = struct.pack(
+            ">III", *custom_inventory.get(item.short_name, InventoryItem(item.max_capacity, item.max_capacity)), 0
         )
-        for op, item in zip(ops, connector.game.resource_database.item)
-    }
+    for i in range(109):
+        if custom_response[i] == b"":
+            custom_response[i] = struct.pack(">III", 0, 0, 0)
+    custom_response_mock = b"".join(custom_response)
+    connector.executor.perform_memory_operations.side_effect = lambda op: {op[0]: custom_response_mock}
 
     # Run
     msg = "Received InventoryItem(amount=1, capacity=0) for Darkburst, which is an invalid state."
-    with pytest.raises(MemoryOperationException, match=re.escape(msg)):
+    with pytest.raises(ValueError, match=re.escape(msg)):
         await connector.get_inventory()
 
 
@@ -363,9 +405,9 @@ async def test_fetch_game_status(
 
     connector.executor.perform_memory_operations.side_effect = lambda ops: {
         ops[0]: expected_world.extra["asset_id"].to_bytes(4, "big") if has_world else b"DEAD",
-        ops[1]: b"\x01" if has_pending_op else b"\x00",
-        ops[2]: version.cplayer_vtable.to_bytes(4, "big") if correct_vtable else b"CAFE",
+        ops[1]: version.cplayer_vtable.to_bytes(4, "big") if correct_vtable else b"CAFE",
     }
+    connector.executor.perform_single_memory_operation.side_effect = (b"\x01" if has_pending_op else b"\x00",)
 
     # Run
     actual_has_op, actual_world = await connector.current_game_status()

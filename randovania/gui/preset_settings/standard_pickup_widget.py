@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Signal
@@ -28,7 +28,7 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
 
     def __init__(
         self,
-        parent: QWidget,
+        parent: QWidget | None,
         pickup: StandardPickupDefinition,
         starting_state: StandardPickupState,
         resources_database: ResourceDatabase,
@@ -118,7 +118,7 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
         else:
             self.set_new_state(starting_state)
 
-    def set_custom_fields_visible(self, visible: bool):
+    def set_custom_fields_visible(self, visible: bool) -> None:
         for item in [
             self.vanilla_check,
             self.starting_check,
@@ -129,7 +129,7 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
             item.setVisible(visible)
 
     @property
-    def pickup(self):
+    def pickup(self) -> StandardPickupDefinition:
         return self._pickup
 
     @property
@@ -137,7 +137,7 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
         return self.state_case_combo.currentData()
 
     @case.setter
-    def case(self, value: StandardPickupStateCase):
+    def case(self, value: StandardPickupStateCase) -> None:
         new_index = self.state_case_combo.findData(value)
         if new_index != self.state_case_combo.currentIndex():
             assert self.state_case_combo.isEnabled() or not self.isEnabled(), "Can't set case when locked"
@@ -156,14 +156,16 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
                 included_ammo=self.included_ammo,
             )
         else:
-            return StandardPickupState.from_case(self.pickup, self.case, self.included_ammo)
+            state = StandardPickupState.from_case(self.pickup, self.case, self.included_ammo)
+            assert state is not None
+            return state
 
-    def set_new_state(self, value: StandardPickupState):
+    def set_new_state(self, value: StandardPickupState) -> None:
         if self.state != value:
             self.case = value.closest_case(self.pickup)
             self._update_for_state(value)
 
-    def _update_for_state(self, state):
+    def _update_for_state(self, state: StandardPickupState) -> None:
         if state.included_ammo:
             self.provided_ammo_spinbox.setValue(state.included_ammo[0])
 
@@ -177,11 +179,11 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
 
         self.Changed.emit()
 
-    def _on_select_case(self, _):
+    def _on_select_case(self, index: int) -> None:
         self.set_custom_fields_visible(self.case == StandardPickupStateCase.CUSTOM)
         self.Changed.emit()
 
-    def _on_select(self, value):
+    def _on_select(self, value: Any) -> None:
         self._update_for_state(self.state)
 
     @property

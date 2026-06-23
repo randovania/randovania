@@ -24,7 +24,7 @@ from randovania.lib import http_lib, json_lib
 from randovania.lib.enum_lib import iterate_enum
 
 _ROOT_FOLDER = Path(__file__).parents[1]
-_NINTENDONT_DOWNLOAD_URL = "https://github.com/randovania/Nintendont/releases/download/v7-multiworld/boot.dol"
+_NINTENDONT_DOWNLOAD_URL = "https://github.com/randovania/Nintendont/releases/download/v8-multiworld/boot.dol"
 zip_folder = f"randovania-{VERSION}"
 
 

@@ -20,7 +20,7 @@ class CurrentUser:
     discord_id: int | None = None
 
     @classmethod
-    def from_json(cls, data) -> CurrentUser:
+    def from_json(cls, data: dict) -> CurrentUser:
         return cls(
             id=data["id"],
             name=data["name"],
