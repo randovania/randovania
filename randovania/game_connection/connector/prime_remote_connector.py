@@ -479,7 +479,7 @@ class PrimeRemoteConnector(RemoteConnector):
             # It should automatically disconnect the executor, so fail loudly if that's not the case
             if self.executor.is_connected():
                 self.executor.disconnect()
-                self.logger.debug("Disconnecting due to a memory exception: %s", str(e))
+                self.logger.warning("Disconnecting due to a memory exception: %s", str(e))
 
         except Exception as e:
             # If any other exception occurs, something has gone horribly wrong, so scream.
