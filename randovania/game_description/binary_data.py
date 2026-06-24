@@ -336,6 +336,7 @@ ConstructDockTypeDatabase = Struct(
                     force_change_two_way=Flag,
                     resolver_attempts=VarInt,
                     to_shuffle_proportion=Float64b,
+                    ui_label=String,
                 )
             ),
         )

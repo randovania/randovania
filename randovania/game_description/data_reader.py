@@ -262,6 +262,7 @@ def read_dock_type_database(
                     force_change_two_way=dr["force_change_two_way"],
                     resolver_attempts=dr["resolver_attempts"],
                     to_shuffle_proportion=dr["to_shuffle_proportion"],
+                    ui_label=dr["ui_label"],
                 ),
             )
 

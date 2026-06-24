@@ -32,7 +32,6 @@ def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.prime2.gui import PortalDetailsTab, TranslatorGateDetailsTab
     from randovania.games.prime2_opr import gui
     from randovania.games.prime2_opr.layout import progressive_items
-    from randovania.gui.game_details.door_lock_rando_details_tab import DoorLockRandoDetailsTab
     from randovania.gui.game_details.hint_details_tab import HintDetailsTab
 
     return randovania.game.gui.GameGui(
@@ -42,7 +41,6 @@ def _gui() -> randovania.game.gui.GameGui:
         export_dialog=gui.EchoesOPRGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
         spoiler_visualizer=(
-            DoorLockRandoDetailsTab,
             PrimeTrilogyTeleporterDetailsTab,
             TranslatorGateDetailsTab,
             PortalDetailsTab,

@@ -35,10 +35,7 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.FusionCosmeticPatchesDialog,
         export_dialog=gui.FusionGameExportDialog,
         progressive_item_gui_tuples=(),
-        spoiler_visualizer=(
-            gui.FusionDoorLockRandoDetailsTab,
-            HintDetailsTab,
-        ),
+        spoiler_visualizer=(HintDetailsTab,),
     )
 
 

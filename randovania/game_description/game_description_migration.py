@@ -395,6 +395,7 @@ def _migrate_v33(data: dict, game: RandovaniaGame) -> None:
         settings = dock_type.pop("dock_rando")
         if settings is not None:
             settings.update(global_config)
+            settings["ui_label"] = f"{dock_type['name']} Locks"
 
         dock_type["weakness_distributor"] = settings
 

@@ -103,6 +103,12 @@ class WeaknessDistributorSettings:
 
     to_shuffle_proportion: float
 
+    ui_label: str
+    """
+    The label used for GUI elements that mention this type, when talking about Dock Weakness Distributor.
+    Examples are the Preset Editor and Game Details tabs.
+    """
+
 
 @dataclass(frozen=True, slots=True, order=True)
 class DockType:

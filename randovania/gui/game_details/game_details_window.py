@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import typing
+from collections.abc import Iterable
 
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
@@ -8,6 +9,7 @@ from qasync import asyncSlot
 import randovania
 from randovania import monitoring
 from randovania.gui import game_specific_gui
+from randovania.gui.game_details.dock_weakness_distribution_details_tab import DockWeaknessDistributionDetailsTab
 from randovania.gui.game_details.generation_order_widget import GenerationOrderWidget
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.gui.generated.game_details_window_ui import Ui_GameDetailsWindow
@@ -41,6 +43,16 @@ def _unique(iterable):
             continue
         seen.add(item)
         yield item
+
+
+def _create_default_visualizers(game: RandovaniaGame) -> Iterable[type[GameDetailsTab]]:
+    yield PickupDetailsTab
+
+    for dock_type in game.game_description.get_dock_type_database().dock_types:
+        if dock_type.weakness_distributor is not None:
+            yield DockWeaknessDistributionDetailsTab.create_for_type(dock_type)
+
+    yield from game.gui.spoiler_visualizer
 
 
 class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMixin):
@@ -305,9 +317,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         if description.has_spoiler:
             players_config = self.players_configuration
 
-            spoiler_visualizer = list(preset.game.gui.spoiler_visualizer)
-            spoiler_visualizer.insert(0, PickupDetailsTab)
-            for missing_tab in spoiler_visualizer:
+            for missing_tab in _create_default_visualizers(preset.game):
                 if not missing_tab.should_appear_for(preset.configuration, description.all_patches, players_config):
                     continue
                 new_tab = missing_tab(self.layout_info_tab, preset.game)

@@ -236,10 +236,11 @@ def write_dock_weakness_distributor_settings(settings: WeaknessDistributorSettin
         "force_change_two_way": settings.force_change_two_way,
         "resolver_attempts": settings.resolver_attempts,
         "to_shuffle_proportion": settings.to_shuffle_proportion,
+        "ui_label": settings.ui_label,
     }
 
 
-def write_dock_weakness_database(database: DockTypeDatabase) -> dict:
+def write_dock_type_database(database: DockTypeDatabase) -> dict:
     return {
         "types": {
             dock_type.short_name: {
@@ -447,7 +448,7 @@ def write_game_description(game: GameDescription) -> dict:
         "starting_location": game.starting_location.as_json,
         "minimal_logic": write_minimal_logic_db(game.minimal_logic),
         "victory_condition": write_requirement(game.victory_condition),
-        "dock_type_database": write_dock_weakness_database(game.dock_type_database),
+        "dock_type_database": write_dock_type_database(game.dock_type_database),
         "hint_feature_database": write_hint_feature_database(game.hint_feature_database),
         "used_trick_levels": write_used_trick_levels(game),
         "flatten_to_set_on_patch": game.region_list.flatten_to_set_on_patch,

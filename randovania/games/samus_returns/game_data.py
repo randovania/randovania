@@ -29,7 +29,6 @@ def _options() -> type[PerGameOptions]:
 
 def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.samus_returns import gui
-    from randovania.gui.game_details.door_lock_rando_details_tab import DoorLockRandoDetailsTab
     from randovania.gui.game_details.hint_details_tab import HintDetailsTab
 
     return randovania.game.gui.GameGui(
@@ -39,7 +38,6 @@ def _gui() -> randovania.game.gui.GameGui:
         export_dialog=gui.MSRGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
         spoiler_visualizer=(
-            DoorLockRandoDetailsTab,
             HintDetailsTab,
             gui.MSRTeleporterDetailsTab,
         ),

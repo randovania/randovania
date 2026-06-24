@@ -47,3 +47,19 @@ class DockWeaknessDistributionDetailsTab(BaseConnectionDetailsTab):
             target = per_region[source_region][source_area]
             assert isinstance(target, dict)
             target[source.name] = weakness.long_name
+
+    @classmethod
+    def create_for_type[T](cls: T, dock_type: DockType) -> type[T]:
+        assert dock_type.weakness_distributor is not None
+
+        class SpecificDockDockWeaknessDistributionDetailsTab(cls):
+            @override
+            def tab_title(self) -> str:
+                return dock_type.weakness_distributor.ui_label
+
+            @classmethod
+            @override
+            def dock_type(cls, game: GameDatabaseView) -> DockType:
+                return dock_type
+
+        return SpecificDockDockWeaknessDistributionDetailsTab
