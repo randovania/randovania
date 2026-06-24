@@ -155,7 +155,7 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
         await super().on_world_user_inventory(inventory)
         self.WorldUserInventoryUpdated.emit(inventory)
 
-    async def on_world_important_status_message(self, world_uuid: uuid.UUID, message: ImportantStatusMessage):
+    async def on_world_important_status_message(self, world_uuid: uuid.UUID, message: ImportantStatusMessage) -> None:
         await super().on_world_important_status_message(world_uuid, message)
         self.WorldImportantStatusMessageRequested.emit(world_uuid, message)
 

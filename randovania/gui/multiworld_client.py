@@ -280,7 +280,9 @@ class MultiworldClient(QtCore.QObject):
         self.start_server_sync_task()
 
     @asyncSlot(uuid.UUID, ImportantStatusMessage)
-    async def on_important_status_message_requested(self, world_uuid: uuid.UUID, message: ImportantStatusMessage):
+    async def on_important_status_message_requested(
+        self, world_uuid: uuid.UUID, message: ImportantStatusMessage
+    ) -> None:
         for connector in self.game_connection.connected_states.keys():
             if connector.layout_uuid == world_uuid:
                 await connector.display_important_message(message)

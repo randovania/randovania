@@ -454,7 +454,7 @@ class NetworkClient:
     async def _on_world_user_inventory_json(self, *args: Any, **kwargs: Any) -> None:
         print(*args, **kwargs)
 
-    async def on_world_important_status_message(self, world_uuid: uuid.UUID, message: ImportantStatusMessage):
+    async def on_world_important_status_message(self, world_uuid: uuid.UUID, message: ImportantStatusMessage) -> None:
         pass
 
     async def _on_world_important_status_message_raw(self, world_uuid_bytes: bytes, message: str) -> None:
