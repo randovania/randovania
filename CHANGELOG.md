@@ -50,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Changed: All beam charge combos now additionally have a pickup hint feature of being "a missile system" and "a missile-related upgrade" for consistency with Echoes.
 - Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
 
 ### Metroid Prime 2: Echoes
