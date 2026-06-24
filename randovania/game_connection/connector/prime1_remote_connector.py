@@ -47,7 +47,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
 
     @property
     def total_item_length(self) -> int:
-        return 40
+        return 41
 
     @property
     def powerup_size(self) -> int:
