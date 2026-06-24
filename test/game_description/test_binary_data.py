@@ -37,7 +37,7 @@ sample_data = {
         "type": "and",
         "data": {"comment": None, "items": []},
     },
-    "dock_weakness_database": {
+    "dock_type_database": {
         "types": {},
         "default_weakness": {
             "type": "",

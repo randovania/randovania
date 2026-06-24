@@ -197,7 +197,7 @@ def test_basic_search_with_translator_gate(
     )
     game = GameDescription(
         RandovaniaGame.METROID_PRIME_ECHOES,
-        DockTypeDatabase([], {}, {}, (MagicMock(), MagicMock())),
+        DockTypeDatabase([], {}, (MagicMock(), MagicMock())),
         echoes_resource_database,
         {},
         ("default",),
