@@ -4,6 +4,7 @@ import asyncio
 import dataclasses
 import logging
 import struct
+from datetime import datetime
 from typing import TypeGuard
 
 from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
@@ -265,12 +266,15 @@ class NintendontExecutor(MemoryOperationExecutor):
 
         all_responses = []
         try:
-            for request in requests:
+            for req_number, request in enumerate(requests):
                 data = request.build_request_data()
                 self._socket.writer.write(data)
                 await self._socket.writer.drain()
                 if request.output_bytes > 0:
+                    before_sending = datetime.now()
                     response = await asyncio.wait_for(self._socket.reader.read(1024), timeout=self._timeout)
+                    after_sending = datetime.now()
+                    self.logger.debug(f"Request {req_number} took {after_sending - before_sending}")
                     all_responses.append(response)
                 else:
                     all_responses.append(b"")
