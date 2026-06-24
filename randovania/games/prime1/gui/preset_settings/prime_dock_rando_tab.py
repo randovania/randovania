@@ -8,7 +8,7 @@ from PySide6 import QtWidgets
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
@@ -68,11 +68,11 @@ class PresetPrimeDockRando(PresetDockRando):
         for f in _CHECKBOX_FIELDS:
             self._add_checkbox_persist_option(getattr(self, f"{f}_check"), f)
 
-    def _on_mode_changed(self, value: DockRandoMode) -> None:
+    def _on_mode_changed(self, value: DockWeaknessDistributorMode) -> None:
         super()._on_mode_changed(value)
         with self._editor as editor:
             assert isinstance(editor.configuration, PrimeConfiguration)
-            if value == DockRandoMode.VANILLA:
+            if value == DockWeaknessDistributorMode.ORIGINAL:
                 editor.set_configuration_field("blast_shield_lockon", False)
             else:
                 editor.set_configuration_field("blue_save_doors", True)

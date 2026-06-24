@@ -6,7 +6,7 @@ from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
@@ -64,8 +64,8 @@ class AM2RConfiguration(BaseConfiguration):
         if self.darkness_chance > 0:
             result.append("Darkened Rooms")
 
-        if self.dock_rando.mode == DockRandoMode.WEAKNESSES:
-            weakness_database = self.dock_rando.weakness_database
+        if self.dock_rando.mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS:
+            weakness_database = self.game.game_description.dock_type_database
             for dock_type, state in self.dock_rando.types_state.items():
                 queen = weakness_database.get_by_weakness("door", "Queen Metroid-Locked Door")
                 if queen in state.can_change_to:

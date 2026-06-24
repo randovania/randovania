@@ -11,7 +11,10 @@ from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
-from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration, DockRandoMode
+from randovania.layout.base.dock_weakness_distributor_configuration import (
+    DockWeaknessDistributorConfiguration,
+    DockWeaknessDistributorMode,
+)
 from randovania.layout.base.hint_configuration import HintConfiguration
 from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
@@ -56,7 +59,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     pickup_model_data_source: PickupModelDataSource
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool
-    dock_rando: DockRandoConfiguration
+    dock_rando: DockWeaknessDistributorConfiguration
     single_set_for_pickups_that_solve: bool
     staggered_multi_pickup_placement: bool
     check_if_beatable_after_base_patches: bool
@@ -105,7 +108,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
 
     def should_hide_generation_log(self) -> bool:
         """Certain settings makes the generation log full of nonsense. It should be hidden in these cases."""
-        return self.dock_rando.mode == DockRandoMode.DOCKS
+        return self.dock_rando.mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK
 
 
 ConfigurationT_co = TypeVar("ConfigurationT_co", bound=BaseConfiguration, default=BaseConfiguration, covariant=True)

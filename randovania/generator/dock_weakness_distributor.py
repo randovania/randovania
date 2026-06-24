@@ -24,7 +24,11 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
 from randovania.layout import filtered_database
-from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration, DockRandoMode, DockTypeState
+from randovania.layout.base.dock_weakness_distributor_configuration import (
+    DockWeaknessDistributorConfiguration,
+    DockWeaknessDistributorMode,
+    WeaknessDistributorTypeState,
+)
 from randovania.lib import random_lib
 from randovania.resolver import debug, exceptions, resolver
 from randovania.resolver.logic import Logic
@@ -44,7 +48,7 @@ if TYPE_CHECKING:
 
 def _distribute_mode_weakness(
     patches: GamePatches,
-    configuration: DockRandoConfiguration,
+    configuration: DockWeaknessDistributorConfiguration,
     rng: Random,
     dock_type: DockType,
     weakness_database: DockTypeDatabase,
@@ -114,10 +118,10 @@ def _distribute_mode_weakness(
 
 
 def distribute_pre_fill_weaknesses(
-    game: GameDescription, dock_rando_config: DockRandoConfiguration, patches: GamePatches, rng: Random
+    game: GameDescription, dock_rando_config: DockWeaknessDistributorConfiguration, patches: GamePatches, rng: Random
 ) -> GamePatches:
 
-    weakness_database = dock_rando_config.weakness_database
+    dock_type_db = game.get_dock_type_database()
 
     all_docks: dict[DockNode, DockNode] = {
         node: target
@@ -125,7 +129,7 @@ def distribute_pre_fill_weaknesses(
         if isinstance((target := game.node_by_identifier(node.default_connection)), DockNode)
     }
 
-    for dock_type in game.get_dock_types():
+    for dock_type in dock_type_db.dock_types:
         if not dock_rando_config.can_shuffle(dock_type):
             continue
 
@@ -140,7 +144,7 @@ def distribute_pre_fill_weaknesses(
             )
         ]
 
-        if dock_rando_config.mode == DockRandoMode.DOCKS:
+        if dock_rando_config.mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK:
             distributor_settings = dock_type.get_weakness_distributor()
             docks_to_unlock = [(node, distributor_settings.unlocked) for node in nodes_to_shuffle]
             if distributor_settings.force_change_two_way:
@@ -156,13 +160,13 @@ def distribute_pre_fill_weaknesses(
             patches = patches.assign_dock_weakness(docks_to_unlock)
 
         else:
-            assert dock_rando_config.mode == DockRandoMode.WEAKNESSES
+            assert dock_rando_config.mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS
             patches = _distribute_mode_weakness(
                 patches,
                 dock_rando_config,
                 rng,
                 dock_type,
-                weakness_database,
+                dock_type_db,
                 all_docks,
                 nodes_to_shuffle,
             )
@@ -326,7 +330,7 @@ def _determine_valid_weaknesses(
     dock: DockNode,
     target: DockNode,
     dock_type_params: WeaknessDistributorSettings,
-    dock_type_state: DockTypeState,
+    dock_type_state: WeaknessDistributorTypeState,
     state: State | None,
     logic: Logic,
 ) -> dict[DockWeakness, float]:
@@ -413,15 +417,17 @@ async def distribute_post_fill_weaknesses(
     for player, patches in new_patches.items():
         configuration = patches.configuration
 
+        dock_type_db = filler_results.player_results[player].game.get_dock_type_database()
+
         # If at least one dock type is configured for Dock mode distribution, then run the resolver
         # TODO: shouldn't this just be a check if `unassigned_docks` is not empty?
         compatible_dock_types = [
             dock_type
-            for dock_type in configuration.dock_rando.weakness_database.dock_types
+            for dock_type in dock_type_db.dock_types
             if dock_type.weakness_distributor is not None and configuration.dock_rando.can_shuffle(dock_type)
         ]
         if not any(
-            configuration.dock_rando.get_mode_for(dock_type) == DockRandoMode.DOCKS
+            configuration.dock_rando.get_mode_for(dock_type) == DockWeaknessDistributorMode.INDIVIDUAL_DOCK
             for dock_type in compatible_dock_types
         ):
             continue

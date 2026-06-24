@@ -9,7 +9,7 @@ import pytest
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.generator import generate_and_validate_description
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 from randovania.layout.generator_parameters import GeneratorParameters
 
 
@@ -35,7 +35,7 @@ def test_distribute_pre_fill_weaknesses_swap(blank_game_description, empty_patch
     rng = Random(5000)
     dock_rando_config = dataclasses.replace(
         empty_patches.configuration.dock_rando,
-        mode=DockRandoMode.WEAKNESSES,
+        mode=DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS,
     )
     patches = dataclasses.replace(
         empty_patches,
@@ -79,7 +79,7 @@ def test_distribute_pre_fill_weaknesses_swap_force_two_way(blank_game_descriptio
     rng = Random(10000)
     dock_rando_config = dataclasses.replace(
         empty_patches.configuration.dock_rando,
-        mode=DockRandoMode.WEAKNESSES,
+        mode=DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS,
     )
     patches = dataclasses.replace(
         empty_patches,
@@ -122,7 +122,7 @@ def test_distribute_pre_fill_docks(blank_game_description, empty_patches, monkey
     rng = Random(5000)
     dock_rando_config = dataclasses.replace(
         empty_patches.configuration.dock_rando,
-        mode=DockRandoMode.DOCKS,
+        mode=DockWeaknessDistributorMode.INDIVIDUAL_DOCK,
     )
     patches = dataclasses.replace(
         empty_patches,
@@ -183,7 +183,9 @@ async def test_dock_weakness_distribute(default_blank_preset, blank_game_descrip
     options = MagicMock()
     _editor = PresetEditor(default_blank_preset.fork(), options)
     with _editor as editor:
-        editor.dock_rando_configuration = dataclasses.replace(editor.dock_rando_configuration, mode=DockRandoMode.DOCKS)
+        editor.dock_rando_configuration = dataclasses.replace(
+            editor.dock_rando_configuration, mode=DockWeaknessDistributorMode.INDIVIDUAL_DOCK
+        )
         preset = editor.create_custom_preset_with()
 
     gen_params = GeneratorParameters(6000, False, [preset])

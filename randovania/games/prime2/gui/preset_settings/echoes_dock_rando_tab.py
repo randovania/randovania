@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QFrame, QLabel
 
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, EchoesNewPatcher
 from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
@@ -37,10 +37,10 @@ class PresetEchoesDockRando(PresetDockRando[EchoesConfiguration]):
 
         self.settings_layout.insertWidget(1, self.padline)
 
-    def _on_mode_changed(self, value: DockRandoMode) -> None:
+    def _on_mode_changed(self, value: DockWeaknessDistributorMode) -> None:
         super()._on_mode_changed(value)
 
-        if value != DockRandoMode.VANILLA:
+        if value != DockWeaknessDistributorMode.ORIGINAL:
             if not self._editor.configuration.use_new_patcher.is_enabled():
                 with self._editor as editor:
                     editor.set_configuration_field("use_new_patcher", EchoesNewPatcher.BOTH)

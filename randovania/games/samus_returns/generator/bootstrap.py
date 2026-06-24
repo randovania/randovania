@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.samus_returns.layout import MSRConfiguration
 from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
@@ -84,7 +84,7 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
         if configuration.dock_rando.is_enabled_for_any_type():
             enabled_resources.add("DoorLocks")
 
-        if configuration.dock_rando.mode == DockRandoMode.WEAKNESSES:
+        if configuration.dock_rando.mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS:
             enabled_resources.add("DoorLockRandoTypes")
 
         if configuration.final_boss == FinalBossConfiguration.ARACHNUS:

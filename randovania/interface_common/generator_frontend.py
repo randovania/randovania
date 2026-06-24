@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any
 from randovania import monitoring
 from randovania.generator import generator
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.status_update_lib import ConstantPercentageCallback, ProgressUpdateCallable
 from randovania.resolver import debug
@@ -52,7 +52,10 @@ def generate_layout(
         span.set_tag("use_world_graph", True)
         span.set_tag(
             "dock_rando",
-            any(preset.configuration.dock_rando.mode == DockRandoMode.DOCKS for preset in parameters.presets),
+            any(
+                preset.configuration.dock_rando.mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK
+                for preset in parameters.presets
+            ),
         )
         span.set_tag(
             "minimal_logic", any(preset.configuration.trick_level.minimal_logic for preset in parameters.presets)

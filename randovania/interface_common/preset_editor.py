@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.available_locations import AvailableLocationsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.damage_strictness import LayoutDamageStrictness
-    from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
+    from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorConfiguration
     from randovania.layout.base.hint_configuration import HintConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
     from randovania.layout.lib.teleporters import TeleporterConfiguration
@@ -139,11 +139,11 @@ class PresetEditor[Configuration: BaseConfiguration]:
         self.set_configuration_field("ammo_pickup_configuration", value)
 
     @property
-    def dock_rando_configuration(self) -> DockRandoConfiguration:
+    def dock_rando_configuration(self) -> DockWeaknessDistributorConfiguration:
         return self.configuration.dock_rando
 
     @dock_rando_configuration.setter
-    def dock_rando_configuration(self, value: DockRandoConfiguration):
+    def dock_rando_configuration(self, value: DockWeaknessDistributorConfiguration):
         self.set_configuration_field("dock_rando", value)
 
     @property

@@ -1,7 +1,10 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, override
+from typing import TYPE_CHECKING, Self, override
 
+from PySide6 import QtWidgets
+
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock import DockType
 from randovania.gui.game_details.base_connection_details_tab import BaseConnectionDetailsTab
 
@@ -15,19 +18,20 @@ if TYPE_CHECKING:
 class DockWeaknessDistributionDetailsTab(BaseConnectionDetailsTab):
     """Displays details for the results of the Dock Weakness Distribution, for one specific dock type."""
 
-    @classmethod
-    def dock_type(cls, game: GameDatabaseView) -> DockType:
-        """What dock type are we displaying details of?"""
-        raise NotImplementedError
+    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame, dock_type: DockType):
+        super().__init__(parent, game)
+        self.dock_type = dock_type
+
+    @override
+    def tab_title(self) -> str:
+        return self.dock_type.get_weakness_distributor().ui_label
 
     @classmethod
     @override
     def should_appear_for(
         cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
     ) -> bool:
-        return configuration.dock_rando.is_enabled_for(
-            cls.dock_type(all_patches[players.player_index].game),
-        )
+        raise RuntimeError("Should not be called for this class")
 
     @override
     def _fill_per_region_connections(
@@ -36,7 +40,7 @@ class DockWeaknessDistributionDetailsTab(BaseConnectionDetailsTab):
         game: GameDatabaseView,
         patches: GamePatches,
     ) -> None:
-        dock_type = self.dock_type(game)
+        dock_type = self.dock_type
 
         for source, weakness in patches.all_dock_weaknesses(game, dock_type):
             source_region = source.identifier.region
@@ -49,17 +53,14 @@ class DockWeaknessDistributionDetailsTab(BaseConnectionDetailsTab):
             target[source.name] = weakness.long_name
 
     @classmethod
-    def create_for_type[T](cls: T, dock_type: DockType) -> type[T]:
-        assert dock_type.weakness_distributor is not None
-
-        class SpecificDockDockWeaknessDistributionDetailsTab(cls):
-            @override
-            def tab_title(self) -> str:
-                return dock_type.weakness_distributor.ui_label
-
-            @classmethod
-            @override
-            def dock_type(cls, game: GameDatabaseView) -> DockType:
-                return dock_type
-
-        return SpecificDockDockWeaknessDistributionDetailsTab
+    def create_when_relevant_for_type(
+        cls,
+        parent: QtWidgets.QWidget,
+        configuration: BaseConfiguration,
+        all_patches: dict[int, GamePatches],
+        players: PlayersConfiguration,
+        dock_type: DockType,
+    ) -> Self | None:
+        if configuration.dock_rando.is_enabled_for(dock_type):
+            return cls(parent, configuration.game, dock_type)
+        return None

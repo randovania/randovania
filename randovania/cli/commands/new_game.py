@@ -33,7 +33,11 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase, default_base_damage_reduction
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration, StartingLocationList
-from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration, DockRandoMode, DockTypeState
+from randovania.layout.base.dock_weakness_distributor_configuration import (
+    DockWeaknessDistributorConfiguration,
+    DockWeaknessDistributorMode,
+    WeaknessDistributorTypeState,
+)
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.versioned_preset import VersionedPreset
@@ -342,11 +346,10 @@ def copy_presets(old_presets: dict[str, VersionedPreset], gd: GameDescription, p
                 ammo_pickup_configuration=AmmoPickupConfiguration(
                     pickups_state={},
                 ),
-                dock_rando=DockRandoConfiguration(
-                    game=new_game,
-                    mode=DockRandoMode.VANILLA,
+                dock_rando=DockWeaknessDistributorConfiguration(
+                    mode=DockWeaknessDistributorMode.ORIGINAL,
                     types_state={
-                        dock_type: DockTypeState(new_game, dock_type.short_name, set(), set())
+                        dock_type: WeaknessDistributorTypeState(new_game, dock_type.short_name, set(), set())
                         for dock_type in gd.dock_type_database.dock_types
                     },
                 ),

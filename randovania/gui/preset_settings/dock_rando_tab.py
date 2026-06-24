@@ -13,7 +13,7 @@ from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.widgets.foldable import Foldable
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -35,7 +35,7 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
         self.setupUi(self)
 
         # Mode
-        for mode in DockRandoMode:
+        for mode in DockWeaknessDistributorMode:
             self.mode_combo.addItem(mode.long_name, mode)
 
         signal_handling.on_combo(self.mode_combo, self._on_mode_changed)
@@ -61,15 +61,15 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
 
         self.multiworld_label.setVisible(len(dock_rando.settings_incompatible_with_multiworld()) > 0)
         self.line.setVisible(self.multiworld_label.isVisible())
-        self.dock_types_group.setVisible(dock_rando.mode != DockRandoMode.VANILLA)
+        self.dock_types_group.setVisible(dock_rando.mode != DockWeaknessDistributorMode.ORIGINAL)
 
         for dock_type, weakness_checks in self.type_checks.items():
             rando_params = dock_type.get_weakness_distributor()
             unlocked_check = weakness_checks[rando_params.unlocked]["can_change_from"]
-            unlocked_check.setEnabled(dock_rando.mode != DockRandoMode.WEAKNESSES)
+            unlocked_check.setEnabled(dock_rando.mode != DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS)
             unlocked_check_to = weakness_checks[rando_params.unlocked]["can_change_to"]
-            unlocked_check_to.setEnabled(dock_rando.mode == DockRandoMode.WEAKNESSES)
-            if dock_rando.mode == DockRandoMode.WEAKNESSES:
+            unlocked_check_to.setEnabled(dock_rando.mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS)
+            if dock_rando.mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS:
                 unlocked_check.setChecked(False)
             else:
                 unlocked_check_to.setChecked(True)
@@ -159,6 +159,6 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
 
         return _persist
 
-    def _on_mode_changed(self, value: DockRandoMode):
+    def _on_mode_changed(self, value: DockWeaknessDistributorMode):
         with self._editor as editor:
             editor.dock_rando_configuration = dataclasses.replace(editor.dock_rando_configuration, mode=value)

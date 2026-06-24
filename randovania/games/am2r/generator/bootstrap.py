@@ -65,7 +65,7 @@ class AM2RBootstrap(Bootstrap[AM2RConfiguration]):
         if configuration.dock_rando.is_enabled_for_any_type():
             enabled_resources.add("DoorLockRando")
 
-            door_db = configuration.dock_rando.weakness_database
+            door_db = configuration.game.game_description.dock_type_database
             door_type = door_db.find_type("door")
             open_transition_door = door_db.get_by_weakness("door", "Open Transition")
             are_transitions_shuffled = (

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import functools
 import typing
 from collections.abc import Iterable
 
@@ -30,7 +31,7 @@ from randovania.layout.versioned_preset import VersionedPreset
 
 if typing.TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.gui.game_details.game_details_tab import GameDetailsTab
+    from randovania.gui.game_details.game_details_tab import CreateWhenRelevantMethod, GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.layout.layout_description import LayoutDescription
 
@@ -45,14 +46,17 @@ def _unique(iterable):
         yield item
 
 
-def _create_default_visualizers(game: RandovaniaGame) -> Iterable[type[GameDetailsTab]]:
-    yield PickupDetailsTab
+def _create_default_visualizers(game: RandovaniaGame) -> Iterable[CreateWhenRelevantMethod]:
+    yield PickupDetailsTab.create_when_relevant
 
     for dock_type in game.game_description.get_dock_type_database().dock_types:
         if dock_type.weakness_distributor is not None:
-            yield DockWeaknessDistributionDetailsTab.create_for_type(dock_type)
+            yield functools.partial(
+                DockWeaknessDistributionDetailsTab.create_when_relevant_for_type, dock_type=dock_type
+            )
 
-    yield from game.gui.spoiler_visualizer
+    for visualizer in game.gui.spoiler_visualizer:
+        yield visualizer.create_when_relevant
 
 
 class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMixin):
@@ -317,10 +321,12 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         if description.has_spoiler:
             players_config = self.players_configuration
 
-            for missing_tab in _create_default_visualizers(preset.game):
-                if not missing_tab.should_appear_for(preset.configuration, description.all_patches, players_config):
+            for tab_factory in _create_default_visualizers(preset.game):
+                new_tab = tab_factory(
+                    self.layout_info_tab, preset.configuration, description.all_patches, players_config
+                )
+                if new_tab is None:
                     continue
-                new_tab = missing_tab(self.layout_info_tab, preset.game)
                 new_tab.update_content(preset.configuration, description.all_patches, players_config)
                 self.layout_info_tab.addTab(new_tab.widget(), f"Spoiler: {new_tab.tab_title()}")
                 self._game_details_tabs.append(new_tab)

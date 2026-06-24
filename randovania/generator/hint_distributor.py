@@ -29,7 +29,7 @@ from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.player_state import HintState, PlayerState
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 from randovania.resolver import debug, resolver
 
 if TYPE_CHECKING:
@@ -756,7 +756,7 @@ class AllJokesHintDistributor(HintDistributor):
 def _should_use_resolver_hints(config: BaseConfiguration) -> bool:
     return (
         config.hints.enable_random_hints  # don't waste time running the resolver!
-        and (config.hints.use_resolver_hints or config.dock_rando.mode == DockRandoMode.DOCKS)
+        and (config.hints.use_resolver_hints or config.dock_rando.mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK)
     )
 
 

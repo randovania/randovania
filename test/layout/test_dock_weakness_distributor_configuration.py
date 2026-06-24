@@ -7,7 +7,7 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game.game_enum import RandovaniaGame
-from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorConfiguration
 
 core_blank_json = {
     "mode": "docks",
@@ -30,7 +30,7 @@ core_blank_json = {
 def config_with_data(request):
     game: RandovaniaGame = request.param["game"]
 
-    default = DockRandoConfiguration.from_json(core_blank_json, game)
+    default = DockWeaknessDistributorConfiguration.from_json(core_blank_json, game)
     data = copy.deepcopy(core_blank_json)
 
     if "can_change_from" in request.param:
@@ -39,7 +39,7 @@ def config_with_data(request):
     if "can_change_to" in request.param:
         data["types_state"]["door"]["can_change_to"] = request.param["can_change_to"]
 
-    config = DockRandoConfiguration.from_json(data, game)
+    config = DockWeaknessDistributorConfiguration.from_json(data, game)
     return request.param["encoded"], config, default
 
 
@@ -49,7 +49,15 @@ def test_decode(config_with_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = DockRandoConfiguration.bit_pack_unpack(decoder, {"reference": reference})
+    result = DockWeaknessDistributorConfiguration.bit_pack_unpack(
+        decoder,
+        {
+            "reference": reference,
+            "parent_metadata": {
+                "game": RandovaniaGame.BLANK,
+            },
+        },
+    )
 
     # Assert
     assert result == expected
@@ -60,7 +68,15 @@ def test_encode(config_with_data):
     expected, value, reference = config_with_data
 
     # Run
-    result = bitpacking.pack_value(value, metadata={"reference": reference})
+    result = bitpacking.pack_value(
+        value,
+        metadata={
+            "reference": reference,
+            "parent_metadata": {
+                "game": RandovaniaGame.BLANK,
+            },
+        },
+    )
 
     # Assert
     assert result == expected
@@ -91,12 +107,17 @@ def test_prime_thing(default_prime_configuration):
             }
         },
     }
-    ref = {"reference": default_prime_configuration.dock_rando}
+    ref = {
+        "reference": default_prime_configuration.dock_rando,
+        "parent_metadata": {
+            "game": default_prime_configuration.game,
+        },
+    }
 
-    dc = DockRandoConfiguration.from_json(config, RandovaniaGame.METROID_PRIME)
+    dc = DockWeaknessDistributorConfiguration.from_json(config, RandovaniaGame.METROID_PRIME)
     encoded = bitpacking.pack_value(dc, metadata=ref)
 
     decoder = BitPackDecoder(encoded)
-    decoded = DockRandoConfiguration.bit_pack_unpack(decoder, ref)
+    decoded = DockWeaknessDistributorConfiguration.bit_pack_unpack(decoder, ref)
 
     assert dc == decoded
