@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import dataclasses
 import logging
+import uuid
 from typing import TYPE_CHECKING
 
 import construct
@@ -10,6 +11,7 @@ from frozendict import frozendict
 from PySide6 import QtCore
 from qasync import asyncSlot
 
+from randovania.game_connection.connector.remote_connector import ImportantStatusMessage
 from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.interface_common.world_database import WorldData, WorldDatabase, WorldServerData
@@ -23,7 +25,6 @@ from randovania.network_common.multiplayer_session import (
 from randovania.network_common.world_sync import ServerSyncRequest, ServerWorldSync
 
 if TYPE_CHECKING:
-    import uuid
     from pathlib import Path
 
     from randovania.gui.lib.qt_network_client import QtNetworkClient
@@ -65,6 +66,7 @@ class MultiworldClient(QtCore.QObject):
         self.game_connection.GameStateUpdated.connect(self.on_game_state_updated)
         self.network_client.MultiplayerSessionMetaUpdated.connect(self.on_session_meta_update)
         self.network_client.WorldPickupsUpdated.connect(self.on_network_game_updated)
+        self.network_client.WorldImportantStatusMessageRequested.connect(self.on_important_status_message_requested)
         self.network_client.ConnectionStateUpdated.connect(self.on_connection_state_updated)
 
     async def start(self):
@@ -276,6 +278,12 @@ class MultiworldClient(QtCore.QObject):
                 await connector.set_remote_pickups(pickups.pickups)
 
         self.start_server_sync_task()
+
+    @asyncSlot(uuid.UUID, ImportantStatusMessage)
+    async def on_important_status_message_requested(self, world_uuid: uuid.UUID, message: ImportantStatusMessage):
+        for connector in self.game_connection.connected_states.keys():
+            if connector.layout_uuid == world_uuid:
+                await connector.display_important_message(message)
 
     def on_connection_state_updated(self, state: ConnectionState):
         if state != ConnectionState.Connected:

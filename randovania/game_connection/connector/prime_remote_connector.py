@@ -11,6 +11,7 @@ from retro_data_structures.game_check import Game as RDSGame
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.remote_connector import (
+    ImportantStatusMessage,
     PlayerLocationEvent,
     RemoteConnector,
 )
@@ -497,6 +498,13 @@ class PrimeRemoteConnector(RemoteConnector):
         :param remote_pickups: Ordered list of pickups sent from other players, with the name of the player.
         """
         self.remote_pickups = remote_pickups
+
+    async def display_important_message(self, message: ImportantStatusMessage) -> None:
+        final_message = message.long_name
+        if message == ImportantStatusMessage.INVALID_PICKUP_INDEX:
+            final_message = "An invalid location was collected. Did you play while disconnected?"
+
+        await self.display_arbitrary_message(final_message)
 
     async def force_finish(self) -> None:
         self._timer.stop()

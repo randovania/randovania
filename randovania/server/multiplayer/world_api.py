@@ -8,6 +8,7 @@ from frozendict import frozendict
 
 from randovania.bitpacking import construct_pack
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_connection.connector.remote_connector import ImportantStatusMessage
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -113,7 +114,15 @@ async def _collect_location(
         )
 
     if pickup_target is None:
-        log("It's nothing.")
+        try:
+            description.all_patches[world.order].game.node_from_pickup_index(PickupIndex(pickup_location))
+            log("It's nothing.")
+        except KeyError:
+            log("It's invalid.")
+            await client_signals.WorldImportantStatusMessage.emit(sa, room=_get_world_room(world))(
+                world.uuid.bytes, ImportantStatusMessage.INVALID_PICKUP_INDEX.value
+            )
+
         return None
 
     if pickup_target.player == world.order and not session.allow_coop:
