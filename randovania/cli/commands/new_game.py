@@ -15,7 +15,7 @@ from frozendict import frozendict
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import data_writer, default_database, pretty_print
 from randovania.game_description.db.area import Area
-from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
+from randovania.game_description.db.dock import DockType, DockTypeDatabase, DockWeakness
 from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -162,12 +162,12 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
     )
 
     dock_types = [
-        DockType("Door", "Door", frozendict()),
-        DockType("Other", "Other", frozendict()),
+        DockType("Door", "Door", frozendict(), None),
+        DockType("Other", "Other", frozendict(), None),
     ]
     impossible_weak = DockWeakness(0, "Not Determined", frozendict(), Requirement.impossible(), None)
 
-    dock_weakness_database = DockWeaknessDatabase(
+    dock_type_database = DockTypeDatabase(
         dock_types,
         weaknesses={
             dock_types[0]: {"Normal": DockWeakness(0, "Normal", frozendict(), Requirement.trivial(), None)},
@@ -175,7 +175,6 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
                 "Not Determined": impossible_weak,
             },
         },
-        distributor_settings={},
         default_weakness=(dock_types[1], impossible_weak),
     )
 
@@ -215,7 +214,7 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
 
     game_db = GameDescription(
         game=game_enum,
-        dock_weakness_database=dock_weakness_database,
+        dock_type_database=dock_type_database,
         resource_database=resource_database,
         hint_feature_database={},
         layers=("default",),
@@ -348,7 +347,7 @@ def copy_presets(old_presets: dict[str, VersionedPreset], gd: GameDescription, p
                     mode=DockRandoMode.VANILLA,
                     types_state={
                         dock_type: DockTypeState(new_game, dock_type.short_name, set(), set())
-                        for dock_type in gd.dock_weakness_database.dock_types
+                        for dock_type in gd.dock_type_database.dock_types
                     },
                 ),
             ),

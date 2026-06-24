@@ -42,7 +42,7 @@ _EXPECTED_FIELDS = [
     "starting_location",
     "minimal_logic",
     "victory_condition",
-    "dock_weakness_database",
+    "dock_type_database",
     "hint_feature_database",
     "used_trick_levels",
     "flatten_to_set_on_patch",
@@ -321,18 +321,21 @@ ConstructMinimalLogicDatabase = Struct(
     description=String,
 )
 
-ConstructDockWeaknessDatabase = Struct(
+ConstructDockTypeDatabase = Struct(
     types=ConstructDict(
         Struct(
             name=String,
             extra=JsonEncodedValue,
             items=ConstructDict(ConstructDockWeakness),
-            dock_rando=OptionalValue(
+            weakness_distributor=OptionalValue(
                 Struct(
                     unlocked=String,
                     locked=String,
                     change_from=PrefixedArray(VarInt, String),
                     change_to=PrefixedArray(VarInt, String),
+                    force_change_two_way=Flag,
+                    resolver_attempts=VarInt,
+                    to_shuffle_proportion=Float64b,
                 )
             ),
         )
@@ -340,11 +343,6 @@ ConstructDockWeaknessDatabase = Struct(
     default_weakness=Struct(
         type=String,
         name=String,
-    ),
-    dock_rando=Struct(
-        force_change_two_way=Flag,
-        resolver_attempts=VarInt,
-        to_shuffle_proportion=Float64b,
     ),
 )
 
@@ -374,7 +372,7 @@ ConstructGame = Struct(
             starting_location=ConstructNodeIdentifier,
             minimal_logic=OptionalValue(ConstructMinimalLogicDatabase),
             victory_condition=ConstructRequirement,
-            dock_weakness_database=ConstructDockWeaknessDatabase,
+            dock_type_database=ConstructDockTypeDatabase,
             hint_feature_database=ConstructHintFeatureDatabase,
             used_trick_levels=ConstructUsedTrickLevels,
             flatten_to_set_on_patch=Flag,

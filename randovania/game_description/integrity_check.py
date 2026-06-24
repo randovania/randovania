@@ -151,8 +151,7 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
                     )
 
     elif any(
-        re.match(rf"{dock_type.long_name}\s*(to|from)", node.name)
-        for dock_type in game.dock_weakness_database.dock_types
+        re.match(rf"{dock_type.long_name}\s*(to|from)", node.name) for dock_type in game.dock_type_database.dock_types
     ):
         yield f"{node.name} is not a Dock Node, naming suggests it should be."
 
@@ -337,8 +336,8 @@ def _does_requirement_contain_resource(req: Requirement, resource: str) -> bool:
 
 
 def get_possible_connections(game: GameDescription) -> Iterator[tuple[str, Requirement]]:
-    for dock_type in game.dock_weakness_database.dock_types:
-        for weakness in game.dock_weakness_database.weaknesses[dock_type].values():
+    for dock_type in game.dock_type_database.dock_types:
+        for weakness in game.dock_type_database.weaknesses[dock_type].values():
             yield f"DockWeakness {weakness.name} ({dock_type.long_name}", weakness.requirement
 
     for region, area, source_node in game.node_iterator():

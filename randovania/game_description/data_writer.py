@@ -30,8 +30,8 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.dock import (
         DockLock,
+        DockTypeDatabase,
         DockWeakness,
-        DockWeaknessDatabase,
         WeaknessDistributorSettings,
     )
     from randovania.game_description.db.region import Region
@@ -239,7 +239,7 @@ def write_dock_weakness_distributor_settings(settings: WeaknessDistributorSettin
     }
 
 
-def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
+def write_dock_weakness_database(database: DockTypeDatabase) -> dict:
     return {
         "types": {
             dock_type.short_name: {
@@ -248,9 +248,9 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
                 "items": {
                     name: write_dock_weakness(weakness) for name, weakness in database.weaknesses[dock_type].items()
                 },
-                "distributor_settings": (
-                    write_dock_weakness_distributor_settings(database.distributor_settings[dock_type])
-                    if dock_type in database.distributor_settings
+                "weakness_distributor": (
+                    write_dock_weakness_distributor_settings(dock_type.weakness_distributor)
+                    if dock_type.weakness_distributor is not None
                     else None
                 ),
             }
@@ -447,7 +447,7 @@ def write_game_description(game: GameDescription) -> dict:
         "starting_location": game.starting_location.as_json,
         "minimal_logic": write_minimal_logic_db(game.minimal_logic),
         "victory_condition": write_requirement(game.victory_condition),
-        "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
+        "dock_type_database": write_dock_weakness_database(game.dock_type_database),
         "hint_feature_database": write_hint_feature_database(game.hint_feature_database),
         "used_trick_levels": write_used_trick_levels(game),
         "flatten_to_set_on_patch": game.region_list.flatten_to_set_on_patch,

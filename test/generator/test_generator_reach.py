@@ -12,7 +12,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database, derived_nodes
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.game_description.db.dock import DockWeaknessDatabase
+from randovania.game_description.db.dock import DockTypeDatabase
 from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -197,7 +197,7 @@ def test_basic_search_with_translator_gate(
     )
     game = GameDescription(
         RandovaniaGame.METROID_PRIME_ECHOES,
-        DockWeaknessDatabase([], {}, {}, (MagicMock(), MagicMock())),
+        DockTypeDatabase([], {}, {}, (MagicMock(), MagicMock())),
         echoes_resource_database,
         {},
         ("default",),

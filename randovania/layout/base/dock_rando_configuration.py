@@ -16,7 +16,7 @@ from randovania.lib import enum_lib
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.db.dock import DockWeaknessDatabase
+    from randovania.game_description.db.dock import DockTypeDatabase
 
 
 class DockRandoMode(BitPackEnum, Enum):
@@ -56,11 +56,11 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
     can_change_to: set[DockWeakness]
 
     @staticmethod
-    def _get_weakness_database(game: RandovaniaGame) -> DockWeaknessDatabase:
-        return default_database.game_description_for(game).dock_weakness_database
+    def _get_weakness_database(game: RandovaniaGame) -> DockTypeDatabase:
+        return default_database.game_description_for(game).dock_type_database
 
     @property
-    def weakness_database(self) -> DockWeaknessDatabase:
+    def weakness_database(self) -> DockTypeDatabase:
         return self._get_weakness_database(self.game)
 
     @property
@@ -118,7 +118,7 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
     @staticmethod
     def _possible_change_from(game: RandovaniaGame, dock_type_name: str) -> Iterator[DockWeakness]:
         weakness_database = DockTypeState._get_weakness_database(game)
-        yield from weakness_database.distributor_settings[weakness_database.find_type(dock_type_name)].change_from
+        yield from weakness_database.find_type(dock_type_name).get_weakness_distributor().change_from
 
     @property
     def possible_change_from(self) -> Iterator[DockWeakness]:
@@ -127,7 +127,7 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
     @staticmethod
     def _possible_change_to(game: RandovaniaGame, dock_type_name: str) -> Iterator[DockWeakness]:
         weakness_database = DockTypeState._get_weakness_database(game)
-        yield from weakness_database.distributor_settings[weakness_database.find_type(dock_type_name)].change_to
+        yield from weakness_database.find_type(dock_type_name).get_weakness_distributor().change_to
 
     @property
     def possible_change_to(self) -> Iterator[DockWeakness]:
@@ -141,11 +141,11 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
     types_state: dict[DockType, DockTypeState]
 
     @staticmethod
-    def _get_weakness_database(game: RandovaniaGame) -> DockWeaknessDatabase:
-        return default_database.game_description_for(game).dock_weakness_database
+    def _get_weakness_database(game: RandovaniaGame) -> DockTypeDatabase:
+        return default_database.game_description_for(game).dock_type_database
 
     @property
-    def weakness_database(self) -> DockWeaknessDatabase:
+    def weakness_database(self) -> DockTypeDatabase:
         return self._get_weakness_database(self.game)
 
     @property
@@ -208,13 +208,17 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
         # FIXME: this really should be per type :)
         return self.mode != DockRandoMode.VANILLA
 
+    def get_mode_for(self, dock_type: DockType) -> DockRandoMode:
+        # FIXME: this really should be per type :)
+        return self.mode
+
     def is_enabled_for_any_type(self) -> bool:
         return any(self.is_enabled_for(dock_type) for dock_type in self.types_state)
 
     def can_shuffle(self, dock_type: DockType) -> bool:
         return (
             self.is_enabled_for(dock_type)
-            and dock_type in self.weakness_database.distributor_settings
+            and dock_type.weakness_distributor is not None
             and self.types_state[dock_type].can_shuffle
         )
 
@@ -227,13 +231,11 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
     def dangerous_settings(self) -> list[str]:
         result = []
 
-        weakness_database = self.weakness_database
-
         if self.mode == DockRandoMode.WEAKNESSES:
             for dock_type, state in self.types_state.items():
-                dock_rando_params = weakness_database.distributor_settings.get(dock_type)
-                if dock_rando_params is not None and dock_rando_params.locked in state.can_change_to:
-                    result.append(f"{dock_rando_params.locked.name} is unsafe as a target in Door Lock Types")
+                weakness_distributor = dock_type.weakness_distributor
+                if weakness_distributor is not None and weakness_distributor.locked in state.can_change_to:
+                    result.append(f"{weakness_distributor.locked.name} is unsafe as a target in Door Lock Types")
 
         return result
 

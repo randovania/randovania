@@ -13,8 +13,8 @@ from randovania.game_description.db.dock import (
     DockLock,
     DockLockType,
     DockType,
+    DockTypeDatabase,
     DockWeakness,
-    DockWeaknessDatabase,
     WeaknessDistributorSettings,
 )
 from randovania.game_description.db.dock_node import DockNode
@@ -225,16 +225,16 @@ def read_dock_type(name: str, data: dict) -> DockType:
         short_name=name,
         long_name=data["name"],
         extra=frozen_lib.wrap(data["extra"]),
+        weakness_distributor=None,
     )
 
 
-def read_dock_weakness_database(
+def read_dock_type_database(
     data: dict,
     resource_database: ResourceDatabase,
-) -> DockWeaknessDatabase:
+) -> DockTypeDatabase:
     dock_types = read_dict(data["types"], read_dock_type)
     weaknesses: dict[DockType, dict[str, DockWeakness]] = {}
-    distributor_settings: dict[DockType, WeaknessDistributorSettings] = {}
     next_index = 0
 
     def get_index() -> int:
@@ -249,16 +249,20 @@ def read_dock_weakness_database(
             for weak_name, weak_data in type_data["items"].items()
         }
 
-        dr = type_data["distributor_settings"]
+        dr = type_data["weakness_distributor"]
         if dr is not None:
-            distributor_settings[dock_type] = WeaknessDistributorSettings(
-                unlocked=weaknesses[dock_type][dr["unlocked"]],
-                locked=weaknesses[dock_type][dr["locked"]],
-                change_from={weaknesses[dock_type][weak] for weak in dr["change_from"]},
-                change_to={weaknesses[dock_type][weak] for weak in dr["change_to"]},
-                force_change_two_way=dr["force_change_two_way"],
-                resolver_attempts=dr["resolver_attempts"],
-                to_shuffle_proportion=dr["to_shuffle_proportion"],
+            object.__setattr__(
+                dock_type,
+                "weakness_distributor",
+                WeaknessDistributorSettings(
+                    unlocked=weaknesses[dock_type][dr["unlocked"]],
+                    locked=weaknesses[dock_type][dr["locked"]],
+                    change_from={weaknesses[dock_type][weak] for weak in dr["change_from"]},
+                    change_to={weaknesses[dock_type][weak] for weak in dr["change_to"]},
+                    force_change_two_way=dr["force_change_two_way"],
+                    resolver_attempts=dr["resolver_attempts"],
+                    to_shuffle_proportion=dr["to_shuffle_proportion"],
+                ),
             )
 
     default_dock_type = next(
@@ -266,10 +270,9 @@ def read_dock_weakness_database(
     )
     default_dock_weakness = weaknesses[default_dock_type][data["default_weakness"]["name"]]
 
-    return DockWeaknessDatabase(
+    return DockTypeDatabase(
         dock_types=dock_types,
         weaknesses=weaknesses,
-        distributor_settings=distributor_settings,
         default_weakness=(default_dock_type, default_dock_weakness),
     )
 
@@ -285,7 +288,7 @@ def read_hint_feature_database(data: dict[str, dict]) -> dict[str, HintFeature]:
 
 class RegionReader:
     resource_database: ResourceDatabase
-    dock_weakness_database: DockWeaknessDatabase
+    dock_weakness_database: DockTypeDatabase
     hint_feature_database: dict[str, HintFeature]
     current_region_name: str
     current_area_name: str
@@ -294,7 +297,7 @@ class RegionReader:
     def __init__(
         self,
         resource_database: ResourceDatabase,
-        dock_weakness_database: DockWeaknessDatabase,
+        dock_weakness_database: DockTypeDatabase,
         hint_feature_database: dict[str, HintFeature],
     ):
         self.resource_database = resource_database
@@ -516,11 +519,11 @@ def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescri
     data = game_description_migration.migrate_to_current(data, game)
 
     resource_database = read_resource_database(game, data["resource_database"])
-    dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
+    dock_type_database = read_dock_type_database(data["dock_type_database"], resource_database)
     hint_feature_database = read_hint_feature_database(data["hint_feature_database"])
 
     layers = frozen_lib.wrap(data["layers"])
-    region_reader = RegionReader(resource_database, dock_weakness_database, hint_feature_database)
+    region_reader = RegionReader(resource_database, dock_type_database, hint_feature_database)
     region_list = region_reader.read_region_list(data["regions"], data["flatten_to_set_on_patch"])
 
     victory_condition = read_requirement(data["victory_condition"], resource_database)
@@ -532,7 +535,7 @@ def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescri
         game=game,
         resource_database=resource_database,
         layers=layers,
-        dock_weakness_database=dock_weakness_database,
+        dock_type_database=dock_type_database,
         hint_feature_database=hint_feature_database,
         region_list=region_list,
         victory_condition=victory_condition,

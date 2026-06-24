@@ -258,12 +258,12 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
             output.write("      {}{}\n".format("    " * level, text))
 
     output.write("\n====================\nDock Weaknesses\n")
-    for dock_type in game.dock_weakness_database.dock_types:
+    for dock_type in game.dock_type_database.dock_types:
         output.write(f"\n> {dock_type.long_name}")
         for extra_name, extra_field in dock_type.extra.items():
             output.write(f"\n* Extra - {extra_name}: {extra_field}")
 
-        for weakness in game.dock_weakness_database.get_by_type(dock_type):
+        for weakness in game.dock_type_database.get_by_type(dock_type):
             output.write(f"\n  * {weakness.name}\n")
             for extra_name, extra_field in weakness.extra.items():
                 output.write(f"      Extra - {extra_name}: {extra_field}\n")
@@ -282,21 +282,21 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
                 output.write("      No lock\n")
             output.write("\n")
 
-        dock_rando = game.dock_weakness_database.distributor_settings.get(dock_type)
-        if dock_rando is None:
+        distributor_settings = dock_type.weakness_distributor
+        if distributor_settings is None:
             output.write("  > Dock Rando: Disabled\n\n")
         else:
             output.write("  > Dock Rando:")
 
-            output.write(f"\n      Unlocked: {dock_rando.unlocked.name}")
-            output.write(f"\n      Locked: {dock_rando.locked.name}")
+            output.write(f"\n      Unlocked: {distributor_settings.unlocked.name}")
+            output.write(f"\n      Locked: {distributor_settings.locked.name}")
 
             output.write("\n      Change from:")
-            for weakness in sorted(dock_rando.change_from):
+            for weakness in sorted(distributor_settings.change_from):
                 output.write(f"\n          {weakness.name}")
 
             output.write("\n      Change to:")
-            for weakness in sorted(dock_rando.change_to):
+            for weakness in sorted(distributor_settings.change_to):
                 output.write(f"\n          {weakness.name}")
 
             output.write("\n\n")

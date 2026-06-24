@@ -343,7 +343,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
     def _build_teleporter_name_dict(self) -> dict[str, dict[str, str]]:
         cc_dict: dict = {}
         for node, connection in self.patches.all_dock_connections(self.game):
-            if node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types:
+            if node.dock_type in self.game.dock_type_database.all_teleporter_dock_types:
                 src_region, src_area = self.game.region_list.region_and_area_by_area_identifier(
                     node.identifier.area_identifier
                 )
@@ -528,7 +528,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             }
             for node, connection in self.patches.all_dock_connections(self.game)
             if (
-                node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+                node.dock_type in self.game.dock_type_database.all_teleporter_dock_types
                 or node.dock_type.extra.get("is_teleportal", False)
             )
         ]

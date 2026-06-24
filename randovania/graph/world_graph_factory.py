@@ -269,9 +269,9 @@ def _should_create_front_node(database_view: GameDatabaseView, original_node: Do
 
     if not may_have_lock:
         # If the dock can be shuffled, check if it can be changed into something with locks
-        dock_weakness_database = database_view.get_game_enum().game_description.dock_weakness_database
-        if dock_weakness_database.can_weakness_be_shuffled(original_node.default_dock_weakness):
-            dock_rando_params = dock_weakness_database.distributor_settings[original_node.dock_type]
+        dock_type_database = database_view.get_dock_type_database()
+        if dock_type_database.can_weakness_be_shuffled(original_node.default_dock_weakness):
+            dock_rando_params = original_node.dock_type.get_weakness_distributor()
             may_have_lock = any(possible.lock is not None for possible in dock_rando_params.change_to)
 
     # Docks without locks don't have resources
@@ -429,7 +429,7 @@ def _calculate_dangerous_resources(graph: WorldGraph) -> None:
         for connection in node.connections:
             process_requirement(connection.requirement)
 
-    for weakness in graph.game_enum.game_description.dock_weakness_database.all_weaknesses:
+    for weakness in graph.game_enum.game_description.dock_type_database.all_weaknesses:
         process_requirement(graph.converter.convert_db(weakness.requirement))
         if weakness.lock is not None:
             process_requirement(graph.converter.convert_db(weakness.lock.requirement))

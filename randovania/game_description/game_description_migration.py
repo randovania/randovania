@@ -388,13 +388,15 @@ def _migrate_v32(data: dict, game: RandovaniaGame) -> None:
 
 
 def _migrate_v33(data: dict, game: RandovaniaGame) -> None:
-    global_config = data["dock_weakness_database"].pop("dock_rando")
-    for dock_type in data["dock_weakness_database"]["types"].values():
+    data["dock_type_database"] = data.pop("dock_weakness_database")
+
+    global_config = data["dock_type_database"].pop("dock_rando")
+    for dock_type in data["dock_type_database"]["types"].values():
         settings = dock_type.pop("dock_rando")
         if settings is not None:
             settings.update(global_config)
 
-        dock_type["distributor_settings"] = settings
+        dock_type["weakness_distributor"] = settings
 
 
 _MIGRATIONS = [

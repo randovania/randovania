@@ -42,8 +42,9 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
 
         # Types
         self.type_checks = {}
-        for dock_type, type_params in game_description.dock_weakness_database.distributor_settings.items():
-            self._add_dock_type(dock_type, type_params)
+        for dock_type in game_description.get_dock_type_database().dock_types:
+            if dock_type.weakness_distributor is not None:
+                self._add_dock_type(dock_type, dock_type.weakness_distributor)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -63,7 +64,7 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
         self.dock_types_group.setVisible(dock_rando.mode != DockRandoMode.VANILLA)
 
         for dock_type, weakness_checks in self.type_checks.items():
-            rando_params = self.game_description.dock_weakness_database.distributor_settings[dock_type]
+            rando_params = dock_type.get_weakness_distributor()
             unlocked_check = weakness_checks[rando_params.unlocked]["can_change_from"]
             unlocked_check.setEnabled(dock_rando.mode != DockRandoMode.WEAKNESSES)
             unlocked_check_to = weakness_checks[rando_params.unlocked]["can_change_to"]

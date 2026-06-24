@@ -112,12 +112,18 @@ class DockType:
     long_name: str
     extra: frozendict
 
+    weakness_distributor: WeaknessDistributorSettings | None = dataclasses.field(hash=False)
+    """When set, indicates this type supports dock weakness distribution."""
+
+    def get_weakness_distributor(self) -> WeaknessDistributorSettings:
+        assert self.weakness_distributor is not None
+        return self.weakness_distributor
+
 
 @dataclass(frozen=True, slots=True)
-class DockWeaknessDatabase:
+class DockTypeDatabase:
     dock_types: list[DockType]
     weaknesses: dict[DockType, dict[str, DockWeakness]]
-    distributor_settings: dict[DockType, WeaknessDistributorSettings]
     default_weakness: tuple[DockType, DockWeakness]
 
     def find_type(self, dock_type_name: str) -> DockType:
@@ -158,6 +164,6 @@ class DockWeaknessDatabase:
         Checks if the given DockWeakness is allowed to ever be shuffled into something else.
         """
         dock_type = self.find_type_for_weakness(weakness)
-        if dock_type not in self.distributor_settings:
+        if dock_type.weakness_distributor is None:
             return False
-        return weakness in self.distributor_settings[dock_type].change_from
+        return weakness in dock_type.weakness_distributor.change_from

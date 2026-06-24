@@ -15,8 +15,8 @@ from randovania.layout.generator_parameters import GeneratorParameters
 
 @pytest.fixture
 def _force_blank_two_way(blank_game_description):
-    dock_type = blank_game_description.dock_weakness_database.find_type("door")
-    rando_settings = blank_game_description.dock_weakness_database.distributor_settings[dock_type]
+    dock_type = blank_game_description.dock_type_database.find_type("door")
+    rando_settings = dock_type.get_weakness_distributor()
     dock_type
     object.__setattr__(
         rando_settings,
