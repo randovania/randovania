@@ -145,6 +145,32 @@ def test_add_pickup_to_inventory_bad(dread_spider_pickup):
     assert new_inventory == inventory
 
 
+async def test_game_session_collect_invalid_pickup_location(mock_sa, two_player_session, mocker) -> None:
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    mocker.patch("randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock)
+    mocker.patch("randovania.server.multiplayer.world_api._get_pickup_target", autospec=True, return_value=None)
+    mocker.patch("randovania.server.multiplayer.world_api._get_pickup_node", autospec=True, return_value=None)
+    status_message_return_value_mock = AsyncMock()
+    status_message_mock: MagicMock = mocker.patch(
+        "randovania.network_common.signals.client_signals.ClientSignal.emit",
+        return_value=status_message_return_value_mock,
+    )
+
+    mock_sa.sio.emit = AsyncMock()
+
+    w1 = database.World.get_by_id(1)
+
+    # Run
+    result = await world_api.collect_locations(mock_sa, w1, ((2**31),))
+
+    # Assert
+    assert result == set()
+    mock_sa.sio.emit.assert_not_awaited()
+    status_message_mock.assert_called_once()
+    status_message_return_value_mock.assert_awaited_once_with(w1.uuid.bytes, "invalid-pickup-index")
+
+
 @pytest.mark.parametrize("has_pickup", [True, False])
 async def test_game_session_collect_pickup_for_self(
     has_pickup: bool,

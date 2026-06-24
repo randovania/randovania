@@ -11,6 +11,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.remote_connector import ImportantStatusMessage
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -73,6 +74,13 @@ def _get_pickup_target(description: LayoutDescription, provider: int, location: 
     return pickup_assignment.get(PickupIndex(location))
 
 
+def _get_pickup_node(description: LayoutDescription, world: int, index: int) -> PickupNode | None:
+    try:
+        return description.all_patches[world].game.node_from_pickup_index(PickupIndex(index))
+    except KeyError:
+        return None
+
+
 def _add_pickup_to_inventory(inventory: bytes, pickup: PickupEntry, game: RandovaniaGame) -> bytes:
     decoded_or_err = remote_inventory.decode_remote_inventory(inventory)
     if isinstance(decoded_or_err, construct.ConstructError):
@@ -114,14 +122,13 @@ async def _collect_location(
         )
 
     if pickup_target is None:
-        try:
-            description.all_patches[world.order].game.node_from_pickup_index(PickupIndex(pickup_location))
-            log("It's nothing.")
-        except KeyError:
+        if _get_pickup_node(description, world.order, pickup_location) is None:
             log("It's invalid.")
             await client_signals.WorldImportantStatusMessage.emit(sa, room=_get_world_room(world))(
                 world.uuid.bytes, ImportantStatusMessage.INVALID_PICKUP_INDEX.value
             )
+        else:
+            log("It's nothing.")
 
         return None
 
