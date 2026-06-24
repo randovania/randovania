@@ -877,7 +877,9 @@ def _migrate_v41(data: dict) -> None:
             continue
 
         doors_to_migrate = {
-            "Sector 6 (NOC)/Twin Caverns East/Door to Twin Cavern Save Room": "Sector 6 (NOC)/Twin Caverns East/Door to Twin Caverns Save Room"
+            "Sector 6 (NOC)/Twin Caverns East/Door to Twin Cavern Save Room": (
+                "Sector 6 (NOC)/Twin Caverns East/Door to Twin Caverns Save Room"
+            )
         }
         for target_door in list(game["dock_weakness"].items()):
             if target_door[0] in doors_to_migrate:
