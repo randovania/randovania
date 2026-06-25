@@ -222,6 +222,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: The resolver now correctly handles damage requirements with item alternatives.
 
+### Door Lock Rando
+
+- Fixed: Resolved an unintended behavior affecting individual door lock rando where games where only a proportion of doors locks get randomized. Docks not chosen for randomization will now be left with the original dock locks instead of being unlocked. This currently only affects Metroid Dread.
+
 ### Metroid Dread
 
 #### Logic Database
