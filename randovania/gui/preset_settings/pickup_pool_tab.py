@@ -24,6 +24,7 @@ from randovania.gui.preset_settings.standard_pickup_widget import StandardPickup
 from randovania.gui.widgets.foldable import Foldable
 from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox, ScrollProtectedSpinBox
 from randovania.layout.base.available_locations import RandomizationMode
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.exceptions import InvalidConfiguration
 
@@ -84,7 +85,7 @@ def _format_expected_counts[T: (int, float)](
         return str(invalid_config)
 
 
-class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
+class PresetPickupPool[ConfigurationT: BaseConfiguration](PresetTab[ConfigurationT], Ui_PresetPickupPool):
     game: RandovaniaGame
     _boxes_for_category: dict[
         str, tuple[Foldable, QtWidgets.QGridLayout, dict[StandardPickupDefinition, StandardPickupWidget]]
@@ -123,7 +124,7 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
     def header_name(cls) -> str | None:
         return None
 
-    def on_preset_changed(self, preset: Preset) -> None:
+    def on_preset_changed(self, preset: Preset[ConfigurationT]) -> None:
         layout = preset.configuration
         major_configuration = layout.standard_pickup_configuration
 
@@ -201,12 +202,12 @@ class PresetPickupPool(PresetTab, Ui_PresetPickupPool):
 
             if layout.available_locations.randomization_mode is not RandomizationMode.FULL:
                 parts = []
-                for category, (count, num_nodes) in per_category_pool.items():
-                    if isinstance(category, str):
+                for location_category, (count, num_nodes) in per_category_pool.items():
+                    if isinstance(location_category, str):
                         if num_nodes > 0:
-                            parts.append(f"{category}: {num_nodes}")
+                            parts.append(f"{location_category}: {num_nodes}")
                     else:
-                        parts.append(f"{category.long_name}: {count}/{num_nodes}")
+                        parts.append(f"{location_category.long_name}: {count}/{num_nodes}")
 
                 message += "<br />"
                 message += " - ".join(parts)
