@@ -5,9 +5,9 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
+from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.gui.lib import signal_handling
-from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
+from randovania.gui.preset_settings.dock_weakness_distributor_tab import PresetDockWeaknessDistributor
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
@@ -15,33 +15,46 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
 
-_CHECKBOX_FIELDS = ["open_save_recharge_hatches", "unlock_sector_hub"]
+_CHECKBOX_FIELDS = ["blue_save_doors", "force_blue_labs", "supers_on_missile_doors"]
 
 
-class PresetFusionDocks(PresetDockRando):
+class PresetAM2RDockWeaknessDistributor(PresetDockWeaknessDistributor):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager) -> None:
         super().__init__(editor, game_description, window_manager)
 
-        # Fusion specific stuff
-        self.changes_box = QtWidgets.QGroupBox()
-        self.changes_box.setTitle("Door Changes")
-        self.changes_layout = QtWidgets.QVBoxLayout(self.changes_box)
+        # AM2R specific stuff
+        self.changes_box.setVisible(True)
 
         extra_widgets: list[tuple[type[QtWidgets.QCheckBox | QtWidgets.QLabel], str, str]] = [
-            (QtWidgets.QCheckBox, "unlock_sector_hub_check", "Unlock hatches in Sector Hub"),
+            (QtWidgets.QCheckBox, "blue_save_doors_check", "Unlock Save Station Doors"),
             (
                 QtWidgets.QLabel,
-                "unlock_sector_hub_label",
+                "blue_save_doors_label",
+                "Ensures all Save Station doors are normal (blue) doors, even with door lock rando enabled.",
+            ),
+            (
+                QtWidgets.QCheckBox,
+                "force_blue_labs_check",
+                "Unlock Genetics Laboratory Doors",
+            ),
+            (
+                QtWidgets.QLabel,
+                "force_blue_labs_label",
                 (
-                    "Ensures all doors in the Sector Hub are open hatches, "
-                    "giving access to the sector elevators at all times."
+                    "Ensures that the doors in the later parts of Genetics Laboratory are normal (blue) doors, "
+                    "even with door lock rando enabled.\nTo be more precise, "
+                    'all rooms after "Hatchling Room Underside" will have their doors changed.'
                 ),
             ),
-            (QtWidgets.QCheckBox, "open_save_recharge_hatches_check", "Unlock Save and Recharge Station Hatches"),
+            (
+                QtWidgets.QCheckBox,
+                "supers_on_missile_doors_check",
+                "Open Missile Doors with Super Missiles",
+            ),
             (
                 QtWidgets.QLabel,
-                "open_save_recharge_hatches_label",
-                "Ensures all Save and Recharge Station doors are open hatches, even with Door Lock Rando enabled.",
+                "supers_on_missile_doors_label",
+                "Determines whether Super Missiles can be used to open Missile Doors.",
             ),
         ]
 
@@ -55,9 +68,6 @@ class PresetFusionDocks(PresetDockRando):
                 widget.setWordWrap(True)
 
             self.changes_layout.addWidget(widget)
-
-        # Add the group box
-        self.scroll_area_layout.insertWidget(0, self.changes_box)
 
         # Checkbox Signals
         for f in _CHECKBOX_FIELDS:
@@ -73,6 +83,6 @@ class PresetFusionDocks(PresetDockRando):
     def on_preset_changed(self, preset: Preset) -> None:
         super().on_preset_changed(preset)
         config = preset.configuration
-        assert isinstance(config, FusionConfiguration)
+        assert isinstance(config, AM2RConfiguration)
         for f in _CHECKBOX_FIELDS:
             typing.cast("QtWidgets.QCheckBox", getattr(self, f"{f}_check")).setChecked(getattr(config, f))

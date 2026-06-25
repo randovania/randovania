@@ -11,7 +11,6 @@ from PySide6 import QtWidgets
 from randovania.gui.generated.preset_dock_rando_ui import Ui_PresetDockRando
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.gui.widgets.foldable import Foldable
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 
@@ -25,7 +24,9 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfigurationT], Ui_PresetDockRando):
+class PresetDockWeaknessDistributor[BaseConfigurationT: BaseConfiguration](
+    PresetTab[BaseConfigurationT], Ui_PresetDockRando
+):
     type_checks: dict[DockType, dict[DockWeakness, dict[str, QtWidgets.QCheckBox]]]
 
     def __init__(
@@ -33,6 +34,8 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
     ):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
+
+        self.changes_box.setVisible(False)
 
         # Mode
         for mode in DockWeaknessDistributorMode:
@@ -82,23 +85,10 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
                     checks["can_change_to"].setChecked(weakness in state.can_change_to)
 
     def _add_dock_type(self, dock_type: DockType, type_params: WeaknessDistributorSettings):
+        assert len(self.type_checks) == 0, "Only one type allowed"
         self.type_checks[dock_type] = defaultdict(dict)
 
-        type_box = Foldable(self.dock_types_group, dock_type.long_name)
-        type_box.setObjectName(f"type_box {dock_type.short_name}")
-        type_layout = QtWidgets.QHBoxLayout()
-        type_layout.setObjectName(f"type_layout {dock_type.short_name}")
-        type_box.set_content_layout(type_layout)
-
-        self.dock_types_group.layout().addWidget(type_box)
-
-        def add_group(name: str, desc: str, weaknesses: dict[DockWeakness, bool]):
-            group = QtWidgets.QGroupBox()
-            group.setObjectName(f"{name}_group {dock_type.short_name}")
-            group.setTitle(desc)
-            layout = QtWidgets.QVBoxLayout()
-            group.setLayout(layout)
-
+        def add_group(name: str, layout: QtWidgets.QVBoxLayout, weaknesses: dict[DockWeakness, bool]):
             for weakness, enabled in weaknesses.items():
                 check = QtWidgets.QCheckBox()
                 check.setObjectName(f"{name}_check {dock_type.short_name} {weakness.name}")
@@ -112,8 +102,6 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
                 0, 0, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding
             )
             layout.addSpacerItem(vertical_spacer)
-
-            type_layout.addWidget(group)
 
         def names(weaknesses: set[DockWeakness]) -> set[str]:
             return {weak.long_name for weak in weaknesses}
@@ -137,8 +125,8 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
             weakness: weakness != type_params.unlocked
             for weakness in natsort.natsorted(type_params.change_to, key=keyfunc)
         }
-        add_group("can_change_from", "Doors to Change", change_from)
-        add_group("can_change_to", "Change Doors To", change_to)
+        add_group("can_change_from", self.can_change_from_layout, change_from)
+        add_group("can_change_to", self.can_change_to_layout, change_to)
 
     def _persist_weakness_setting(
         self,

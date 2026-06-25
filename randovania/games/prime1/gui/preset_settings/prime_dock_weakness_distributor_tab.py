@@ -7,7 +7,7 @@ from PySide6 import QtWidgets
 
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.gui.lib import signal_handling
-from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
+from randovania.gui.preset_settings.dock_weakness_distributor_tab import PresetDockWeaknessDistributor
 from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 
 if TYPE_CHECKING:
@@ -19,13 +19,11 @@ if TYPE_CHECKING:
 _CHECKBOX_FIELDS = ["blue_save_doors", "blast_shield_lockon"]
 
 
-class PresetPrimeDockRando(PresetDockRando):
+class PresetPrimeDockWeaknessDistributor(PresetDockWeaknessDistributor):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
 
-        self.changes_box = QtWidgets.QGroupBox()
-        self.changes_box.setTitle("Door Changes")
-        self.changes_layout = QtWidgets.QVBoxLayout(self.changes_box)
+        self.changes_box.setVisible(True)
 
         extra_widgets: list[tuple[type[QtWidgets.QCheckBox | QtWidgets.QLabel], str, str]] = [
             (
@@ -60,9 +58,6 @@ class PresetPrimeDockRando(PresetDockRando):
                 widget.setWordWrap(True)
 
             self.changes_layout.addWidget(widget)
-
-        # Add the group box
-        self.scroll_area_layout.insertWidget(0, self.changes_box)
 
         # Checkbox Signals
         for f in _CHECKBOX_FIELDS:

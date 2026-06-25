@@ -31,9 +31,9 @@ class DockWeaknessDistributorMode(BitPackEnum, Enum):
 enum_lib.add_long_name(
     DockWeaknessDistributorMode,
     {
-        DockWeaknessDistributorMode.ORIGINAL: "Vanilla",
-        DockWeaknessDistributorMode.INDIVIDUAL_DOCK: "Individual Doors",
-        DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS: "Door Types",
+        DockWeaknessDistributorMode.ORIGINAL: "Unmodified",
+        DockWeaknessDistributorMode.INDIVIDUAL_DOCK: "Individually",
+        DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS: "By Type",
     },
 )
 
@@ -41,6 +41,7 @@ enum_lib.add_per_enum_field(
     DockWeaknessDistributorMode,
     "description",
     {
+        # FIXME: these are Door specific
         DockWeaknessDistributorMode.ORIGINAL: "Original door locks",
         DockWeaknessDistributorMode.INDIVIDUAL_DOCK: "Randomizes each door individually",
         DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS: (

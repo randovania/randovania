@@ -289,7 +289,7 @@ def read_hint_feature_database(data: dict[str, dict]) -> dict[str, HintFeature]:
 
 class RegionReader:
     resource_database: ResourceDatabase
-    dock_weakness_database: DockTypeDatabase
+    dock_type_database: DockTypeDatabase
     hint_feature_database: dict[str, HintFeature]
     current_region_name: str
     current_area_name: str
@@ -298,11 +298,11 @@ class RegionReader:
     def __init__(
         self,
         resource_database: ResourceDatabase,
-        dock_weakness_database: DockTypeDatabase,
+        dock_type_database: DockTypeDatabase,
         hint_feature_database: dict[str, HintFeature],
     ):
         self.resource_database = resource_database
-        self.dock_weakness_database = dock_weakness_database
+        self.dock_type_database = dock_type_database
         self.hint_feature_database = hint_feature_database
         self.next_node_index = 0
 
@@ -336,9 +336,9 @@ class RegionReader:
             elif node_type == "dock":
                 return DockNode(
                     **generic_args,
-                    dock_type=self.dock_weakness_database.find_type(data["dock_type"]),
+                    dock_type=self.dock_type_database.find_type(data["dock_type"]),
                     default_connection=NodeIdentifier.from_json(data["default_connection"]),
-                    default_dock_weakness=self.dock_weakness_database.get_by_weakness(
+                    default_dock_weakness=self.dock_type_database.get_by_weakness(
                         data["dock_type"],
                         data["default_dock_weakness"],
                     ),
@@ -351,7 +351,7 @@ class RegionReader:
                     exclude_from_dock_rando=data["exclude_from_dock_rando"],
                     incompatible_dock_weaknesses=tuple(
                         [
-                            self.dock_weakness_database.get_by_weakness(data["dock_type"], name)
+                            self.dock_type_database.get_by_weakness(data["dock_type"], name)
                             for name in data["incompatible_dock_weaknesses"]
                         ]
                     ),

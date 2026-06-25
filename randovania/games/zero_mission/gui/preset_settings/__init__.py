@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
     from randovania.games.zero_mission.gui.preset_settings.zero_mission_patches_tab import PresetMZMPatches
-    from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
+    from randovania.gui.preset_settings.dock_weakness_distributor_tab import PresetDockWeaknessDistributor
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.hints_tab import PresetHints
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
@@ -26,6 +26,6 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetLocationPool,
         MetroidPresetPickupPool,
         PresetMZMPatches,
-        PresetDockRando,
+        PresetDockWeaknessDistributor,
         PresetStartingArea,
     ]

@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from PySide6.QtWidgets import QFrame, QLabel
 
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, EchoesNewPatcher
-from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
+from randovania.gui.preset_settings.dock_weakness_distributor_tab import PresetDockWeaknessDistributor
 from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 
 if TYPE_CHECKING:
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
 
 
-class PresetEchoesDockRando(PresetDockRando[EchoesConfiguration]):
+class PresetEchoesDockWeaknessDistributor(PresetDockWeaknessDistributor[EchoesConfiguration]):
     def __init__(
         self,
         editor: PresetEditor[EchoesConfiguration],

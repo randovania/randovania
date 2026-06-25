@@ -10,7 +10,9 @@ if TYPE_CHECKING:
 
 def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
     from randovania.games.prime2.gui.preset_settings.echoes_beam_configuration_tab import PresetEchoesBeamConfiguration
-    from randovania.games.prime2.gui.preset_settings.echoes_dock_rando_tab import PresetEchoesDockRando
+    from randovania.games.prime2.gui.preset_settings.echoes_dock_weakness_distributor_tab import (
+        PresetEchoesDockWeaknessDistributor,
+    )
     from randovania.games.prime2.gui.preset_settings.echoes_energy_tab import PresetEchoesEnergy
     from randovania.games.prime2.gui.preset_settings.echoes_goal_tab import PresetEchoesGoal
     from randovania.games.prime2.gui.preset_settings.echoes_patches_tab import PresetEchoesPatches
@@ -33,7 +35,7 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> l
         PresetEchoesEnergy,
         PresetTeleportersPrime2,
         PresetEchoesStartingArea,
-        PresetEchoesDockRando,
+        PresetEchoesDockWeaknessDistributor,
         PresetEchoesTranslators,
         PresetEchoesBeamConfiguration,
         PresetEchoesPatches,

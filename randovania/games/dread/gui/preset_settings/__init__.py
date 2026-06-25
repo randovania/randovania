@@ -17,7 +17,7 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> li
     from randovania.games.dread.gui.preset_settings.dread_patches_tab import PresetDreadPatches
     from randovania.games.dread.gui.preset_settings.dread_pickup_pool_tab import DreadPresetPickupPool
     from randovania.games.dread.gui.preset_settings.dread_teleporters_tab import PresetTeleportersDread
-    from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
+    from randovania.gui.preset_settings.dock_weakness_distributor_tab import PresetDockWeaknessDistributor
     from randovania.gui.preset_settings.hints_tab import PresetHints
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
@@ -32,7 +32,7 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> li
         DreadPresetPickupPool,
         PresetTeleportersDread,
         PresetMetroidStartingArea,
-        PresetDockRando,
+        PresetDockWeaknessDistributor,
         PresetDreadEnergy,
         PresetDreadPatches,
         PresetDreadLights,

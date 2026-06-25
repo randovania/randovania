@@ -10,7 +10,9 @@ if TYPE_CHECKING:
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
     from randovania.games.am2r.gui.preset_settings.am2r_chaos_tab import PresetAM2RChaos
-    from randovania.games.am2r.gui.preset_settings.am2r_dock_tab import PresetAM2RDoors
+    from randovania.games.am2r.gui.preset_settings.am2r_dock_weakness_distributor_tab import (
+        PresetAM2RDockWeaknessDistributor,
+    )
     from randovania.games.am2r.gui.preset_settings.am2r_gameplay_tab import PresetAM2RGameplay
     from randovania.games.am2r.gui.preset_settings.am2r_goal_tab import PresetAM2RGoal
     from randovania.games.am2r.gui.preset_settings.am2r_room_design_tab import PresetAM2RRoomDesign
@@ -30,7 +32,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetAM2RGoal,
         MetroidPresetPickupPool,
         PresetAM2RStartingArea,
-        PresetAM2RDoors,
+        PresetAM2RDockWeaknessDistributor,
         PresetTeleportersAM2R,
         PresetAM2RGameplay,
         PresetAM2RRoomDesign,

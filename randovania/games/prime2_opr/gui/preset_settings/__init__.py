@@ -17,7 +17,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
     from randovania.games.prime2.gui.preset_settings.echoes_translators_tab import PresetEchoesTranslators
     from randovania.games.prime2_opr.gui.preset_settings.prime2_opr_patches_tab import PresetEchoesOPRPatches
     from randovania.games.prime2_opr.gui.preset_settings.prime2_opr_pickup_pool_tab import EchoesOPRPresetPickupPool
-    from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
+    from randovania.gui.preset_settings.dock_weakness_distributor_tab import PresetDockWeaknessDistributor
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.hints_tab import PresetHints
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
@@ -33,7 +33,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetEchoesEnergy,
         PresetTeleportersPrime2,
         PresetEchoesStartingArea,
-        PresetDockRando,
+        PresetDockWeaknessDistributor,
         PresetEchoesTranslators,
         PresetEchoesBeamConfiguration,
         PresetEchoesOPRPatches,
