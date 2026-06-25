@@ -102,10 +102,10 @@ class NintendontExecutor(MemoryOperationExecutor):
 
     SUPPORTED_API_VERSION = 1
 
-    _timeout = 5
+    _timeout = 15
     # timeout in seconds on when we disconnect when we don't get a response.
     # The Prime games (which this is currently used for) are somewhat time-sensitive. If we can't ensure a timely
-    # response the experience is going to be bad and things *will* break. So make sure early then to
+    # response the experience is going to be bad and things *will* break.
     # Once the prime games are reworked, or this is used for other games, a reconsideration can be done to rework this.
 
     def __init__(self, ip: str):
