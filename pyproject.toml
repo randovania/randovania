@@ -1,7 +1,7 @@
 [build-system]
 requires = [
     "setuptools>=64",
-    "setuptools_scm>=8",
+    "setuptools_scm>=8,<10",
     "wheel>=0.37.0",
     "dulwich",
     "randovania-scm-version-schema",
@@ -37,7 +37,7 @@ dependencies = [
     # permalinks
     "bitstruct",
     # obfuscator, guest login, server code
-    "cryptography",
+    "cryptography<49.0.0",  # v49 drops support for macOS x86-64
     # Generator
     "networkx",
     "tenacity>=7.0.0",
@@ -95,8 +95,8 @@ exporters = [
 
     # Metroid Prime 1/2
     "ppc-asm>=1.2.1",  # for multiworld
-    "open-prime-rando[nod]==0.18.0",  # but also for echoes exporting
-    "retro-data-structures==0.43.0",
+    "open-prime-rando[nod]==0.20.1",  # but also for echoes exporting
+    "retro-data-structures==0.44.1",
 
     # Metroid Prime 2
     "mp2hudcolor==1.0.14",
@@ -127,7 +127,7 @@ gui = [
 ]
 
 server = [
-    "fastapi", # REST server
+    "fastapi<0.137", # REST server
     "jinja2", # templating
     "uvicorn[standard]", # server runner
     "itsdangerous", # for starlette SessionMiddleware
@@ -165,7 +165,7 @@ test = [
     "pytest-xdist[psutil]",
     "pytest-codspeed",
     "pytest-test-groups>=1.2.1",
-    "httpx", # for server testing
+    "httpx2", # for server testing
 ]
 
 website = [
@@ -329,16 +329,23 @@ files = [
     "randovania/gui/lib/pixmap_lib.py",
     "randovania/gui/lib/signal_handling.py",
     "randovania/gui/preset_settings/hints_tab.py",
+    "randovania/gui/preset_settings/pickup_pool_tab.py",
+    "randovania/gui/preset_settings/progressive_item_widget.py",
+    "randovania/gui/preset_settings/split_ammo_widget.py",
+    "randovania/gui/preset_settings/standard_pickup_widget.py",
     "randovania/gui/preset_settings/trick_level_tab.py",
     "randovania/gui/widgets/async_race_room_settings_widget.py",
     "randovania/gui/widgets/data_editor_canvas.py",
     "randovania/gui/widgets/game_connection_window.py",
     "randovania/gui/widgets/game_validator_widget.py",
     "randovania/gui/widgets/node_selector_widget.py",
+    "randovania/gui/widgets/scroll_protected.py",
     "randovania/gui/widgets/tracker_item_image.py",
     "randovania/gui/widgets/tracker_map.py",
     "randovania/layout/",
     "randovania/lib/",
+    "randovania/network_client/",
+    "randovania/network_common/",
     "randovania/resolver/",
     "randovania/server/",
     "test/bitpacking/",

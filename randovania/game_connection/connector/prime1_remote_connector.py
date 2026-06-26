@@ -12,6 +12,7 @@ from randovania.game_connection.executor.memory_operation import (
     MemoryOperationException,
     MemoryOperationExecutor,
 )
+from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.prime1.patcher import prime_items
 
@@ -21,7 +22,6 @@ if TYPE_CHECKING:
     from randovania.game_connection.connector.prime_remote_connector import PatchInstructions, PickupPatches
     from randovania.game_description.db.region import Region
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.resources.inventory import Inventory
 
 
 def format_received_item(item_name: str, player_name: str) -> str:
@@ -39,18 +39,24 @@ def format_received_item(item_name: str, player_name: str) -> str:
     return special.get(item_name, generic).format(item_name=item_name, provider_name=player_name)
 
 
-def _prime1_powerup_offset(item_index: int) -> int:
-    powerups_offset = 0x24
-    vector_data_offset = 0x4
-    powerup_size = 0x8
-    return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
-
-
 class Prime1RemoteConnector(PrimeRemoteConnector):
     version: Prime1DolVersion
 
     def __init__(self, version: Prime1DolVersion, executor: MemoryOperationExecutor):
         super().__init__(version, executor)
+
+    @property
+    def total_item_length(self) -> int:
+        return 41
+
+    @property
+    def powerup_size(self) -> int:
+        return 0x8
+
+    def powerup_offset(self, item_index: int) -> int:
+        powerups_offset = 0x24
+        vector_data_offset = 0x4
+        return (powerups_offset + vector_data_offset) + (item_index * self.powerup_size)
 
     def _asset_id_format(self) -> str:
         return ">I"
@@ -90,10 +96,9 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         current_world = self._current_status_world(world_asset_id, cplayer_vtable)
         return has_pending_op, current_world
 
-    async def _memory_op_for_items(
-        self,
-        items: list[ItemResourceInfo],
-    ) -> list[MemoryOperation]:
+    async def _get_cplayer_state_pointer(self) -> int:
+        # CPlayerState a ref counted pointer within CStatemanager:
+        # https://github.com/PrimeDecomp/prime/blob/main/include/MetroidPrime/CStateManager.hpp#L395
         cplayer_state_offset = 0x8B8
 
         op = await self.executor.perform_single_memory_operation(
@@ -104,15 +109,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         )
         assert op is not None
         player_state_pointer = int.from_bytes(op, "big")
-
-        return [
-            MemoryOperation(
-                address=player_state_pointer,
-                offset=_prime1_powerup_offset(item.extra["item_id"]),
-                read_byte_count=8,
-            )
-            for item in items
-        ]
+        return player_state_pointer
 
     async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory) -> PickupPatches:
         item_name, resources_to_give = self._resources_to_give_for_pickup(pickup, inventory)

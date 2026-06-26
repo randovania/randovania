@@ -87,13 +87,6 @@
                     "item_id": 11
                 }
             },
-            "Varia": {
-                "long_name": "Varia Suit",
-                "max_capacity": 1,
-                "extra": {
-                    "item_id": 12
-                }
-            },
             "DarkSuit": {
                 "long_name": "Dark Suit",
                 "max_capacity": 1,
@@ -312,11 +305,22 @@
                     "exclude_from_logical_pickup_placement": true
                 }
             },
-            "DoubleDamage": {
+            "MassiveDamage": {
                 "long_name": "Massive Damage",
-                "max_capacity": 1,
+                "max_capacity": 255,
                 "extra": {
-                    "item_id": 58
+                    "item_id": 58,
+                    "maximum_percentage": 1000.0,
+                    "suffix": "bonus damage"
+                }
+            },
+            "DefenseUp": {
+                "long_name": "Defense Up",
+                "max_capacity": 255,
+                "extra": {
+                    "item_id": 12,
+                    "maximum_percentage": 100.0,
+                    "suffix": "damage reduction"
                 }
             },
             "Temporary1": {

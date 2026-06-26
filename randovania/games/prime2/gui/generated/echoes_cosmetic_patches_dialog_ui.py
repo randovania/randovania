@@ -57,7 +57,7 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 448, 2361))
+        self.scroll_area_contents.setGeometry(QRect(0, 0, 448, 2424))
         self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -68,42 +68,6 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.game_changes_layout.setSpacing(6)
         self.game_changes_layout.setContentsMargins(11, 11, 11, 11)
         self.game_changes_layout.setObjectName(u"game_changes_layout")
-        self.hud_color_layout = QHBoxLayout()
-        self.hud_color_layout.setSpacing(6)
-        self.hud_color_layout.setObjectName(u"hud_color_layout")
-        self.custom_hud_color = QCheckBox(self.game_changes_box)
-        self.custom_hud_color.setObjectName(u"custom_hud_color")
-
-        self.hud_color_layout.addWidget(self.custom_hud_color)
-
-        self.custom_hud_color_button = QPushButton(self.game_changes_box)
-        self.custom_hud_color_button.setObjectName(u"custom_hud_color_button")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.custom_hud_color_button.sizePolicy().hasHeightForWidth())
-        self.custom_hud_color_button.setSizePolicy(sizePolicy1)
-
-        self.hud_color_layout.addWidget(self.custom_hud_color_button)
-
-        self.custom_hud_color_square = QFrame(self.game_changes_box)
-        self.custom_hud_color_square.setObjectName(u"custom_hud_color_square")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.custom_hud_color_square.sizePolicy().hasHeightForWidth())
-        self.custom_hud_color_square.setSizePolicy(sizePolicy2)
-        self.custom_hud_color_square.setMinimumSize(QSize(22, 22))
-        self.custom_hud_color_square.setAutoFillBackground(False)
-        self.custom_hud_color_square.setFrameShape(QFrame.Shape.StyledPanel)
-        self.custom_hud_color_square.setFrameShadow(QFrame.Shadow.Raised)
-        self.custom_hud_color_square.setLineWidth(1)
-
-        self.hud_color_layout.addWidget(self.custom_hud_color_square)
-
-
-        self.game_changes_layout.addLayout(self.hud_color_layout)
-
         self.faster_credits_check = QCheckBox(self.game_changes_box)
         self.faster_credits_check.setObjectName(u"faster_credits_check")
 
@@ -129,8 +93,68 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.game_changes_layout.addWidget(self.unvisited_room_names_check)
 
+        self.unvisited_map_icons_check = QCheckBox(self.game_changes_box)
+        self.unvisited_map_icons_check.setObjectName(u"unvisited_map_icons_check")
+
+        self.game_changes_layout.addWidget(self.unvisited_map_icons_check)
+
 
         self.verticalLayout.addWidget(self.game_changes_box)
+
+        self.hud_color_group_box = QGroupBox(self.scroll_area_contents)
+        self.hud_color_group_box.setObjectName(u"hud_color_group_box")
+        self.verticalLayout_6 = QVBoxLayout(self.hud_color_group_box)
+        self.verticalLayout_6.setSpacing(6)
+        self.verticalLayout_6.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.hud_color_layout = QHBoxLayout()
+        self.hud_color_layout.setSpacing(6)
+        self.hud_color_layout.setObjectName(u"hud_color_layout")
+        self.custom_hud_color = QCheckBox(self.hud_color_group_box)
+        self.custom_hud_color.setObjectName(u"custom_hud_color")
+
+        self.hud_color_layout.addWidget(self.custom_hud_color)
+
+        self.custom_hud_color_button = QPushButton(self.hud_color_group_box)
+        self.custom_hud_color_button.setObjectName(u"custom_hud_color_button")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.custom_hud_color_button.sizePolicy().hasHeightForWidth())
+        self.custom_hud_color_button.setSizePolicy(sizePolicy1)
+
+        self.hud_color_layout.addWidget(self.custom_hud_color_button)
+
+        self.custom_hud_color_square = QFrame(self.hud_color_group_box)
+        self.custom_hud_color_square.setObjectName(u"custom_hud_color_square")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.custom_hud_color_square.sizePolicy().hasHeightForWidth())
+        self.custom_hud_color_square.setSizePolicy(sizePolicy2)
+        self.custom_hud_color_square.setMinimumSize(QSize(22, 22))
+        self.custom_hud_color_square.setAutoFillBackground(False)
+        self.custom_hud_color_square.setFrameShape(QFrame.Shape.StyledPanel)
+        self.custom_hud_color_square.setFrameShadow(QFrame.Shadow.Raised)
+        self.custom_hud_color_square.setLineWidth(1)
+
+        self.hud_color_layout.addWidget(self.custom_hud_color_square)
+
+
+        self.verticalLayout_6.addLayout(self.hud_color_layout)
+
+        self.hud_color_text_check = QCheckBox(self.hud_color_group_box)
+        self.hud_color_text_check.setObjectName(u"hud_color_text_check")
+
+        self.verticalLayout_6.addWidget(self.hud_color_text_check)
+
+        self.hud_color_beam_visor_check = QCheckBox(self.hud_color_group_box)
+        self.hud_color_beam_visor_check.setObjectName(u"hud_color_beam_visor_check")
+
+        self.verticalLayout_6.addWidget(self.hud_color_beam_visor_check)
+
+
+        self.verticalLayout.addWidget(self.hud_color_group_box)
 
         self.suits_foldable = Foldable(self.scroll_area_contents)
         self.suits_foldable.setObjectName(u"suits_foldable")
@@ -644,13 +668,17 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.accept_button.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Accept", None))
         self.cancel_button.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Cancel", None))
         self.game_changes_box.setTitle(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Game Changes", None))
-        self.custom_hud_color.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Use a custom HUD color", None))
-        self.custom_hud_color_button.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Set Color...", None))
         self.faster_credits_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Faster Credits", None))
         self.remove_hud_popup_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Skip Item Acquisition Popups", None))
         self.pickup_markers_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Replace Translator icons on map with item icons", None))
         self.open_map_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Open map from start", None))
         self.unvisited_room_names_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Always display room names on map", None))
+        self.unvisited_map_icons_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Always display non-door map icons on map", None))
+        self.hud_color_group_box.setTitle(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"HUD Color", None))
+        self.custom_hud_color.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Use a custom HUD color", None))
+        self.custom_hud_color_button.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Set Color...", None))
+        self.hud_color_text_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Apply custom HUD color to basic text", None))
+        self.hud_color_beam_visor_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Apply custom HUD color to beam and visor selection icons", None))
         self.suits_foldable.setProperty(u"title", QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Suit Colors", None))
         self.experimental_label.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Note: requires the experimental patcher to be enabled.", None))
         self.simple_left_button.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"<", None))

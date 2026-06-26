@@ -147,3 +147,15 @@ def test_camera_data_invalid():
     camera_data = CameraData("something_wrong", (), ())  # type: ignore[arg-type]
     with pytest.raises(ValueError, match="Unknown coordinate system"):
         camera_data.game_loc_to_qt_local(0.0, 0.0, 0.0)
+
+
+def test_region_image(skip_qtbot, canvas: DataEditorCanvas, dread_game_description):
+    canvas.select_game(RandovaniaGame.METROID_DREAD)
+
+    region = dread_game_description.region_list.region_with_name("Artaria")
+    canvas.select_region(region)
+    assert canvas._region_image is not None
+    assert canvas._background_image is None
+
+    canvas.select_area(region.areas[0])
+    assert canvas._background_image is not None

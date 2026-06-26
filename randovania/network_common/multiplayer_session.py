@@ -3,23 +3,28 @@ from __future__ import annotations
 import dataclasses
 import datetime
 import re
+import typing
 import uuid
+from collections.abc import Mapping
 from functools import cached_property
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib.json_lib import JsonObject_RO
 from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.game_details import GameDetails
+from randovania.network_common.remote_pickup import RemotePickup
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.network_common.user import RandovaniaUser, UserID
 
 if TYPE_CHECKING:
     from randovania.network_common.remote_inventory import RemoteInventory
-    from randovania.network_common.remote_pickup import RemotePickup
 
 MAX_SESSION_NAME_LENGTH = 50
 MAX_WORLD_NAME_LENGTH = 30
@@ -40,7 +45,7 @@ class MultiplayerSessionListEntry(JsonDataclass):
     is_user_in_session: bool
     join_date: datetime.datetime
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         tzinfo = self.creation_date.tzinfo
         assert tzinfo is not None
         assert tzinfo.utcoffset(self.creation_date) is not None
@@ -77,6 +82,26 @@ class MultiplayerWorldPickups:
     game: RandovaniaGame
     pickups: tuple[RemotePickup, ...]
 
+    @classmethod
+    def from_json(cls, data: JsonObject_RO) -> Self:
+        data_ = typing.cast("Mapping", data)
+
+        game = RandovaniaGame(data_["game"])
+        resource_database = default_database.resource_database_for(game)
+
+        return cls(
+            world_id=uuid.UUID(data_["world"]),
+            game=game,
+            pickups=tuple(RemotePickup.from_json(item, resource_database) for item in data_["pickups"]),
+        )
+
+    def as_json(self, resource_database: ResourceDatabase) -> JsonObject_RO:
+        return {
+            "world": str(self.world_id),
+            "game": self.game.value,
+            "pickups": [item.as_json(resource_database) for item in self.pickups],
+        }
+
 
 @dataclasses.dataclass(frozen=True)
 class MultiplayerSessionAction(JsonDataclass):
@@ -87,7 +112,7 @@ class MultiplayerSessionAction(JsonDataclass):
     time: datetime.datetime
 
     @property
-    def location_index(self):
+    def location_index(self) -> PickupIndex:
         return PickupIndex(self.location)
 
 

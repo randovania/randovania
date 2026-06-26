@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class EchoesPresetItemPool(MetroidPresetPickupPool):
+class EchoesPresetPickupPool(MetroidPresetPickupPool):
     _split_ammo_widgets: list[SplitAmmoWidget]
 
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
