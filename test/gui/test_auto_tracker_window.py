@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import uuid
+from collections.abc import Iterator
+from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
@@ -9,8 +11,9 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.game_connection import ConnectedGameState
-from randovania.gui.auto_tracker_window import AutoTrackerWindow
-from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
+from randovania.gui.item_tracker.auto_tracker_window import AutoTrackerWindow, load_trackers_configuration
+from randovania.gui.item_tracker.item_tracker_widget import ItemTrackerWidget
+from randovania.gui.item_tracker.tracker_layout import TrackerLayout
 from randovania.network_common.game_connection_status import GameConnectionStatus
 
 
@@ -147,3 +150,14 @@ def test_on_game_state_updated(skip_qtbot, correct_source):
         window.item_tracker.update_state.assert_called_once_with(inventory)
     else:
         window.item_tracker.update_state.assert_not_called()
+
+
+def _get_tracker_jsons() -> Iterator[tuple[RandovaniaGame, str, Path]]:
+    for game, trackers in load_trackers_configuration(False).items():
+        for name, path in trackers.items():
+            yield game, name, path
+
+
+@pytest.mark.parametrize(("game", "name", "path"), list(_get_tracker_jsons()))
+def test_validate_tracker_json(game: RandovaniaGame, name: str, path: Path):
+    TrackerLayout.read_json(path)

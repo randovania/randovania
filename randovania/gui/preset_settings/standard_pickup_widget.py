@@ -32,7 +32,7 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
         pickup: StandardPickupDefinition,
         starting_state: StandardPickupState,
         resources_database: ResourceDatabase,
-    ):
+    ) -> None:
         super().__init__(parent)
         self.setupUi(self)
         self._pickup = pickup

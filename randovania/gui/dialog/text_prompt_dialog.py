@@ -20,7 +20,7 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
         max_length: int | None,
         is_password: bool,
         check_re: typing.Pattern | None,
-    ):
+    ) -> None:
         super().__init__(parent)
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -51,7 +51,7 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
     def text_value(self) -> str:
         return self.prompt_edit.text().strip()
 
-    def _on_text_changed(self, value: str):
+    def _on_text_changed(self, value: str) -> None:
         error_message = None
 
         if self.check_re is not None:

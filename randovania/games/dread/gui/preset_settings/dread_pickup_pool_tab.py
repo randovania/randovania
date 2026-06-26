@@ -39,7 +39,7 @@ class DreadPresetPickupPool(PresetPickupPool):
         layout = preset.configuration
         major_configuration = layout.standard_pickup_configuration
 
-        self.pickup_style_widget.update(layout)
+        self.pickup_style_widget.update_from_layout(layout)
 
         # Energy Tank
         for item in [self._energy_tank_item, self._energy_part_item]:

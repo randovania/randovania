@@ -11,7 +11,7 @@ class LocationPoolRowWidget(QWidget, Ui_LocationPoolRowWidget):
     changed = Signal(PickupNode)
     node: PickupNode
 
-    def __init__(self, node: PickupNode, location_name: str):
+    def __init__(self, node: PickupNode, location_name: str) -> None:
         super().__init__()
         self.setupUi(self)
 
@@ -21,17 +21,17 @@ class LocationPoolRowWidget(QWidget, Ui_LocationPoolRowWidget):
         self.radio_shuffled.toggled.connect(self._on_radio_changed)
         self.radio_shuffled_no_progression.toggled.connect(self._on_radio_changed)
 
-    def set_can_have_progression(self, progression: bool):
+    def set_can_have_progression(self, progression: bool) -> None:
         if progression:
             self.radio_shuffled.setChecked(True)
         else:
             self.radio_shuffled_no_progression.setChecked(True)
         self.changed.emit(self.node)
 
-    def _on_radio_changed(self, checked: bool):
+    def _on_radio_changed(self, checked: bool) -> None:
         if checked:
             self.changed.emit(self.node)
 
     @property
-    def can_have_progression(self):
+    def can_have_progression(self) -> bool:
         return self.radio_shuffled.isChecked()

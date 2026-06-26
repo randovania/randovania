@@ -27,7 +27,7 @@ class SelectPresetDialog(QtWidgets.QDialog, Ui_SelectPresetDialog):
         allowed_games: list[RandovaniaGame] | None = None,
         default_game: RandovaniaGame | None = None,
         include_world_name_prompt: bool = False,
-    ):
+    ) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -60,15 +60,15 @@ class SelectPresetDialog(QtWidgets.QDialog, Ui_SelectPresetDialog):
     def selected_preset(self) -> VersionedPreset | None:
         return self.select_preset_widget.preset
 
-    def _on_select_game(self, _):
+    def _on_select_game(self, index: int) -> None:
         game: RandovaniaGame = self.game_selection_combo.currentData()
         self.select_preset_widget.change_game(game)
 
-    def _on_can_generate(self, can_generate: bool):
+    def _on_can_generate(self, can_generate: bool) -> None:
         self.valid_preset = can_generate
         self.update_accept_button()
 
-    def update_accept_button(self):
+    def update_accept_button(self) -> None:
         can_accept = self.valid_preset
 
         if self.include_world_name_prompt:

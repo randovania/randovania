@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import dataclasses
 import json
+import typing
 import uuid
 from enum import Enum
-from typing import TYPE_CHECKING, TypeVar
+from types import TracebackType
+from typing import TYPE_CHECKING, TypeVar, overload
 
 import randovania
 from randovania.game.game_enum import RandovaniaGame
@@ -44,7 +46,7 @@ def serialize_alerts(alerts: set[InfoAlert]) -> list[str]:
     return sorted(a.value for a in alerts)
 
 
-def decode_alerts(data: list[str]):
+def decode_alerts(data: list[str]) -> set[InfoAlert]:
     result = set()
     for item in data:
         try:
@@ -72,13 +74,13 @@ def decode_uuid_container(data: list[str], add_item: Callable[[uuid.UUID], None]
 
 
 def decode_uuid_set(data: list[str]) -> set[uuid.UUID]:
-    result = set()
+    result: set[uuid.UUID] = set()
     decode_uuid_container(data, result.add)
     return result
 
 
 def decode_uuid_list(data: list[str]) -> list[uuid.UUID]:
-    result = []
+    result: list[uuid.UUID] = []
     decode_uuid_container(data, result.append)
     return result
 
@@ -98,7 +100,13 @@ def decode_uuid_dict(data: dict[str, str]) -> dict[uuid.UUID, uuid.UUID]:
     return result
 
 
-def decode_if_not_none(value, decoder):
+@overload
+def decode_if_not_none[ValueT, RetT](value: ValueT, decoder: Callable[[ValueT], RetT]) -> RetT: ...
+@overload
+def decode_if_not_none[ValueT, RetT](value: None, decoder: Callable[[ValueT], RetT]) -> None: ...
+
+
+def decode_if_not_none[ValueT, RetT](value: ValueT | None, decoder: Callable[[ValueT], RetT]) -> RetT | None:
     if value is not None:
         return decoder(value)
     else:
@@ -161,8 +169,8 @@ _PER_GAME_SERIALIZERS = {
 }
 
 
-def add_per_game_serializer():
-    def make_decoder(g: RandovaniaGame):
+def add_per_game_serializer() -> None:
+    def make_decoder(g: RandovaniaGame) -> Callable[[JsonObject], PerGameOptions]:
         return lambda it: g.options.from_json(it)  # noqa: PLW0108
 
     for game in RandovaniaGame.all_games():
@@ -220,7 +228,7 @@ class Options:
     _tracker_default_game: RandovaniaGame | None = None
     _connector_builders: list[ConnectorBuilderOption] | None = None
 
-    def __init__(self, data_dir: Path, user_dir: Path | None = None):
+    def __init__(self, data_dir: Path, user_dir: Path | None = None) -> None:
         self._data_dir = data_dir
         self._user_dir = user_dir or data_dir
         self._raw_set_last_changelog_displayed(version_lib.current_version())
@@ -230,7 +238,7 @@ class Options:
             for key in _PER_GAME_SERIALIZERS.keys():
                 self._set_field(f"{key}_{game.value}", None)
 
-    def __getattr__(self, item):
+    def __getattr__(self, item: object) -> Any:
         if isinstance(item, str):
             game_name = None
             if item.startswith("game_"):
@@ -259,7 +267,7 @@ class Options:
 
         raise AttributeError(item)
 
-    def _set_field(self, field_name: str, value):
+    def _set_field(self, field_name: str, value: Any) -> None:
         setattr(self, "_" + field_name, value)
 
     def load_from_disk(self, ignore_decode_errors: bool = False) -> bool:
@@ -296,7 +304,7 @@ class Options:
         self,
         persisted: dict,
         ignore_decode_errors: bool,
-    ):
+    ) -> None:
         """
         Loads fields from the given persisted options.
         :param persisted:
@@ -326,17 +334,22 @@ class Options:
 
         return persisted_options.serialized_data_for_options(data_to_persist)
 
-    def _save_to_disk(self):
+    def _save_to_disk(self) -> None:
         """Serializes the fields of this Option and writes then to a file."""
         self._is_dirty = False
         data_to_persist = self._serialize_fields()
         persisted_options.replace_config_file_with(self._data_dir, data_to_persist)
 
-    def __enter__(self):
+    def __enter__(self) -> Self:
         self._nested_autosave_level += 1
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> None:
         if self._nested_autosave_level == 1:
             if self._is_dirty:
                 # TODO: maybe it should be an error to change options to different values in on_options_changed?
@@ -348,14 +361,14 @@ class Options:
         self._nested_autosave_level -= 1
 
     # Events
-    def _set_on_options_changed(self, value):
+    def _set_on_options_changed(self, value: Callable[[], None]) -> None:
         self._on_options_changed = value
 
     on_options_changed = property(fset=_set_on_options_changed)
 
     # Reset
 
-    def reset_to_defaults(self):
+    def reset_to_defaults(self) -> None:
         self._check_editable_and_mark_dirty()
         for field_name in _SERIALIZER_FOR_FIELD.keys():
             if field_name.startswith("last_changelog_displayed"):
@@ -400,7 +413,7 @@ class Options:
             return self._last_changelog_displayed
 
     @last_changelog_displayed.setter
-    def last_changelog_displayed(self, value: version_lib.Version):
+    def last_changelog_displayed(self, value: version_lib.Version) -> None:
         if value != self.last_changelog_displayed:
             self._check_editable_and_mark_dirty()
             self._raw_set_last_changelog_displayed(value)
@@ -416,7 +429,7 @@ class Options:
         return _return_with_default(self._auto_save_spoiler, lambda: False)
 
     @auto_save_spoiler.setter
-    def auto_save_spoiler(self, value: bool):
+    def auto_save_spoiler(self, value: bool) -> None:
         self._edit_field("auto_save_spoiler", value)
 
     @property
@@ -424,7 +437,7 @@ class Options:
         return _return_with_default(self._dark_mode, lambda: False)
 
     @dark_mode.setter
-    def dark_mode(self, value: bool):
+    def dark_mode(self, value: bool) -> None:
         self._edit_field("dark_mode", value)
 
     @property
@@ -440,7 +453,7 @@ class Options:
         return _return_with_default(self._experimental_settings, lambda: False)
 
     @experimental_settings.setter
-    def experimental_settings(self, value: bool):
+    def experimental_settings(self, value: bool) -> None:
         self._edit_field("experimental_settings", value)
 
     @property
@@ -448,7 +461,7 @@ class Options:
         return _return_with_default(self._audible_generation_alert, lambda: True)
 
     @audible_generation_alert.setter
-    def audible_generation_alert(self, value: bool):
+    def audible_generation_alert(self, value: bool) -> None:
         self._edit_field("audible_generation_alert", value)
 
     @property
@@ -456,7 +469,7 @@ class Options:
         return _return_with_default(self._visual_generation_alert, lambda: True)
 
     @visual_generation_alert.setter
-    def visual_generation_alert(self, value: bool):
+    def visual_generation_alert(self, value: bool) -> None:
         self._edit_field("visual_generation_alert", value)
 
     @property
@@ -464,7 +477,7 @@ class Options:
         return _return_with_default(self._allow_crash_reporting, lambda: True)
 
     @allow_crash_reporting.setter
-    def allow_crash_reporting(self, value: bool):
+    def allow_crash_reporting(self, value: bool) -> None:
         self._edit_field("allow_crash_reporting", value)
 
     @property
@@ -472,7 +485,7 @@ class Options:
         return _return_with_default(self._use_user_for_crash_reporting, lambda: True)
 
     @use_user_for_crash_reporting.setter
-    def use_user_for_crash_reporting(self, value):
+    def use_user_for_crash_reporting(self, value: bool) -> None:
         self._edit_field("use_user_for_crash_reporting", value)
 
     @property
@@ -480,13 +493,13 @@ class Options:
         return self._tracker_default_game
 
     @tracker_default_game.setter
-    def tracker_default_game(self, value: RandovaniaGame | None):
+    def tracker_default_game(self, value: RandovaniaGame | None) -> None:
         self._edit_field("tracker_default_game", value)
 
     def selected_tracker_for(self, game: RandovaniaGame) -> str:
         return getattr(self, f"selected_tracker_{game.value}")
 
-    def set_selected_tracker_for(self, game: RandovaniaGame, value: str):
+    def set_selected_tracker_for(self, game: RandovaniaGame, value: str) -> None:
         self._edit_field(f"selected_tracker_{game.value}", value)
 
     @property
@@ -494,7 +507,7 @@ class Options:
         return self._connector_builders or []
 
     @connector_builders.setter
-    def connector_builders(self, value: list[ConnectorBuilderOption]):
+    def connector_builders(self, value: list[ConnectorBuilderOption]) -> None:
         self._edit_field("connector_builders", value)
 
     @property
@@ -502,13 +515,13 @@ class Options:
         return _return_with_default(self._displayed_alerts, set)
 
     @displayed_alerts.setter
-    def displayed_alerts(self, value: set[InfoAlert]):
+    def displayed_alerts(self, value: set[InfoAlert]) -> None:
         self._edit_field("displayed_alerts", value)
 
-    def is_alert_displayed(self, value: InfoAlert):
+    def is_alert_displayed(self, value: InfoAlert) -> bool:
         return value in self.displayed_alerts
 
-    def mark_alert_as_displayed(self, value: InfoAlert):
+    def mark_alert_as_displayed(self, value: InfoAlert) -> None:
         if value not in self.displayed_alerts:
             # Create a copy so we don't modify the existing field
             alerts = set(self.displayed_alerts)
@@ -519,12 +532,12 @@ class Options:
     # Per Game
 
     def per_game_options[PerGame: PerGameOptions](self, per_game: type[PerGame]) -> PerGame:
-        return self.generic_per_game_options(per_game.game_enum())
+        return typing.cast("PerGame", self.generic_per_game_options(per_game.game_enum()))
 
     def generic_per_game_options(self, game: RandovaniaGame) -> PerGameOptions:
         return getattr(self, f"game_{game.value}")
 
-    def set_per_game_options(self, per_game: PerGameOptions):
+    def set_per_game_options(self, per_game: PerGameOptions) -> None:
         game = per_game.game_enum()
         if type(per_game) is not game.options:
             raise ValueError(f"Expected {game.options}, got {type(per_game)}")
@@ -534,33 +547,33 @@ class Options:
     def is_game_expanded(self, game: RandovaniaGame) -> bool:
         return getattr(self, f"is_game_expanded_{game.value}")
 
-    def set_is_game_expanded(self, game: RandovaniaGame, value: bool):
+    def set_is_game_expanded(self, game: RandovaniaGame, value: bool) -> None:
         self._edit_field(f"is_game_expanded_{game.value}", value)
 
     def selected_preset_uuid_for(self, game: RandovaniaGame) -> uuid.UUID | None:
         return getattr(self, f"selected_preset_uuid_{game.value}")
 
-    def set_selected_preset_uuid_for(self, game: RandovaniaGame, value: uuid.UUID | None):
+    def set_selected_preset_uuid_for(self, game: RandovaniaGame, value: uuid.UUID | None) -> None:
         self._edit_field(f"selected_preset_uuid_{game.value}", value)
 
     @property
-    def hidden_preset_uuids(self):
+    def hidden_preset_uuids(self) -> set[uuid.UUID]:
         return _return_with_default(self._hidden_preset_uuids, set)
 
     @hidden_preset_uuids.setter
-    def hidden_preset_uuids(self, value):
+    def hidden_preset_uuids(self, value: set[uuid.UUID]) -> None:
         self._edit_field("hidden_preset_uuids", value)
 
     def get_preset_order_for(self, game: RandovaniaGame) -> list[uuid.UUID]:
         return list(_return_with_default(getattr(self, f"preset_order_{game.value}"), list))
 
-    def set_preset_order_for(self, game: RandovaniaGame, value: list[uuid.UUID]):
+    def set_preset_order_for(self, game: RandovaniaGame, value: list[uuid.UUID]) -> None:
         self._edit_field(f"preset_order_{game.value}", value)
 
     def is_preset_uuid_hidden(self, the_uuid: uuid.UUID) -> bool:
         return the_uuid in self.hidden_preset_uuids
 
-    def set_preset_uuid_hidden(self, the_uuid: uuid.UUID, value: bool):
+    def set_preset_uuid_hidden(self, the_uuid: uuid.UUID, value: bool) -> None:
         is_present = the_uuid in self.hidden_preset_uuids
 
         if is_present != value:
@@ -578,13 +591,13 @@ class Options:
         return _return_with_default(self._parent_for_presets, dict)
 
     @parent_for_presets.setter
-    def parent_for_presets(self, value: dict[uuid.UUID, uuid.UUID]):
+    def parent_for_presets(self, value: dict[uuid.UUID, uuid.UUID]) -> None:
         self._edit_field("parent_for_presets", value)
 
     def get_parent_for_preset(self, preset: uuid.UUID) -> uuid.UUID | None:
         return self.parent_for_presets.get(preset)
 
-    def set_parent_for_preset(self, preset: uuid.UUID, parent: uuid.UUID | None):
+    def set_parent_for_preset(self, preset: uuid.UUID, parent: uuid.UUID | None) -> None:
         current_dict = self.parent_for_presets
 
         if current_dict.get(preset) != parent:
@@ -604,7 +617,7 @@ class Options:
         return _return_with_default(self._advanced_validate_seed_after, lambda: True)
 
     @advanced_validate_seed_after.setter
-    def advanced_validate_seed_after(self, value: bool):
+    def advanced_validate_seed_after(self, value: bool) -> None:
         self._edit_field("advanced_validate_seed_after", value)
 
     @property
@@ -612,7 +625,7 @@ class Options:
         return _return_with_default(self._advanced_timeout_during_generation, lambda: True)
 
     @advanced_timeout_during_generation.setter
-    def advanced_timeout_during_generation(self, value: bool):
+    def advanced_timeout_during_generation(self, value: bool) -> None:
         self._edit_field("advanced_timeout_during_generation", value)
 
     @property
@@ -620,17 +633,17 @@ class Options:
         return _return_with_default(self._advanced_generate_in_another_process, lambda: True)
 
     @advanced_generate_in_another_process.setter
-    def advanced_generate_in_another_process(self, value: bool):
+    def advanced_generate_in_another_process(self, value: bool) -> None:
         self._edit_field("advanced_generate_in_another_process", value)
 
     ######
 
-    def _check_editable_and_mark_dirty(self):
+    def _check_editable_and_mark_dirty(self) -> None:
         """Checks if _nested_autosave_level is not 0 and marks at least one value was changed."""
         assert self._nested_autosave_level != 0, "Attempting to edit an Options, but it wasn't made editable"
         self._is_dirty = True
 
-    def _edit_field(self, field_name: str, new_value):
+    def _edit_field(self, field_name: str, new_value: Any) -> None:
         current_value = getattr(self, field_name)
         if current_value != new_value:
             self._check_editable_and_mark_dirty()

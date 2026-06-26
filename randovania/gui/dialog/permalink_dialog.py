@@ -8,7 +8,7 @@ from randovania.layout.permalink import Permalink, UnsupportedPermalink
 
 
 class PermalinkDialog(QDialog, Ui_PermalinkDialog):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -27,7 +27,7 @@ class PermalinkDialog(QDialog, Ui_PermalinkDialog):
     def get_permalink_from_field(self) -> Permalink:
         return Permalink.from_str(self.permalink_edit.text())
 
-    def _on_permalink_changed(self, value: str):
+    def _on_permalink_changed(self, value: str) -> None:
         common_qt_lib.set_error_border_stylesheet(self.permalink_edit, False)
         common_qt_lib.set_edit_if_different(self.permalink_edit, self.permalink_edit.text().strip())
         self.accept_button.setEnabled(False)
@@ -51,5 +51,5 @@ class PermalinkDialog(QDialog, Ui_PermalinkDialog):
             self.import_error_label.setText(msg)
             common_qt_lib.set_error_border_stylesheet(self.permalink_edit, True)
 
-    def _on_paste_button(self):
+    def _on_paste_button(self) -> None:
         self.permalink_edit.setText(QApplication.clipboard().text())

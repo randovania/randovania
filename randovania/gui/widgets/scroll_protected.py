@@ -51,7 +51,7 @@ class ScrollProtectedSlider(ScrollProtectedWidgetMixin, QtWidgets.QSlider):
 
     widget_type = QtWidgets.QSlider
 
-    def __init__(self, orientation: Qt.Orientation, parent: QtWidgets.QWidget | None = None):
+    def __init__(self, orientation: Qt.Orientation, parent: QtWidgets.QWidget | None = None) -> None:
         super().__init__(orientation, parent)
 
 
@@ -62,7 +62,7 @@ class ScrollProtectedSpinBox(ScrollProtectedWidgetMixin, QtWidgets.QSpinBox):
 
     widget_type = QtWidgets.QSpinBox
 
-    def __init__(self, parent: QtWidgets.QWidget | None = None):
+    def __init__(self, parent: QtWidgets.QWidget | None = None) -> None:
         super().__init__(parent)
 
 
@@ -73,7 +73,7 @@ class ScrollProtectedDoubleSpinBox(ScrollProtectedWidgetMixin, QtWidgets.QDouble
 
     widget_type = QtWidgets.QDoubleSpinBox
 
-    def __init__(self, parent: QtWidgets.QWidget | None = None):
+    def __init__(self, parent: QtWidgets.QWidget | None = None) -> None:
         super().__init__(parent)
 
 
@@ -84,5 +84,5 @@ class ScrollProtectedComboBox(ScrollProtectedWidgetMixin, QtWidgets.QComboBox):
 
     widget_type = QtWidgets.QComboBox
 
-    def __init__(self, parent: QtWidgets.QWidget | None = None):
+    def __init__(self, parent: QtWidgets.QWidget | None = None) -> None:
         super().__init__(parent)

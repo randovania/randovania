@@ -1,26 +1,27 @@
 from __future__ import annotations
 
 import os.path
+import typing
+from collections.abc import Callable, Mapping
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
-from PySide6 import QtWidgets
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtWidgets import QMessageBox
+from typing_extensions import TypeForm
 
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-
     from randovania.exporter.game_exporter import GameExportParams
     from randovania.game.game_enum import RandovaniaGame
     from randovania.interface_common.options import Options, PerGameOptions
     from randovania.patching.patchers.exceptions import UnableToExportError
 
 
-def _try_get_field[T](obj, field_name: str, cls: type[T]) -> T | None:
+def _try_get_field[T](obj: object, field_name: str, cls: TypeForm[T]) -> T | None:
     return getattr(obj, field_name, None)
 
 
@@ -32,7 +33,7 @@ class GameExportDialog[Configuration: BaseConfiguration](QtWidgets.QDialog):
 
     def __init__(
         self, options: Options, configuration: Configuration, word_hash: str, spoiler: bool, games: list[RandovaniaGame]
-    ):
+    ) -> None:
         super().__init__()
         common_qt_lib.set_default_window_icon(self)
         self._options = options
@@ -40,7 +41,7 @@ class GameExportDialog[Configuration: BaseConfiguration](QtWidgets.QDialog):
         self._has_spoiler = spoiler
         self._games = games
 
-        if (func := _try_get_field(self, "setupUi", None)) is not None:
+        if (func := _try_get_field(self, "setupUi", Callable[[Any], None])) is not None:
             func(self)
 
         # Spoiler
@@ -67,7 +68,7 @@ class GameExportDialog[Configuration: BaseConfiguration](QtWidgets.QDialog):
     def update_per_game_options(self, per_game: PerGameOptions) -> PerGameOptions:
         raise NotImplementedError
 
-    def save_options(self):
+    def save_options(self) -> None:
         with self._options as options:
             if self._has_spoiler:
                 options.auto_save_spoiler = self.auto_save_spoiler
@@ -167,24 +168,76 @@ def spoiler_path_for_directory(save_spoiler: bool, output_dir: Path) -> Path | N
         return None
 
 
-def add_field_validation(accept_button: QtWidgets.QPushButton, fields: dict[QtWidgets.QLineEdit, Callable[[], bool]]):
-    def accept_validation():
-        accept_button.setEnabled(not any(f.has_error for f in fields.keys()))
+class ValidatorPushButton(QtWidgets.QPushButton):
+    update_validation: Callable[[], None]
 
-    def make_validation(obj, check_err):
-        def field_validation():
+
+class ValidatorField(common_qt_lib.ErrorBorderWidget):
+    field_validation: Callable[[], None]
+
+
+def _add_field_validation(
+    accept_button: QtWidgets.QPushButton,
+    fields: Mapping[QtWidgets.QWidget | None, Mapping[QtWidgets.QWidget, Callable[[], bool]]],
+    tab_widget: QtWidgets.QTabWidget | None,
+) -> None:
+    validator_button = typing.cast("ValidatorPushButton", accept_button)
+
+    def accept_validation() -> None:
+        if tab_widget is None:
+            tab = None
+        else:
+            tab = tab_widget.currentWidget()
+
+        tab_fields = typing.cast("Mapping[ValidatorField, Callable[[], bool]]", fields.get(tab, {}))
+        validator_button.setEnabled(not any(f.has_error for f in tab_fields.keys()))
+
+    validator_button.update_validation = accept_validation
+    if tab_widget is not None:
+        tab_widget.currentChanged.connect(accept_validation)
+
+    def make_validation(obj: ValidatorField, check_err: Callable[[], bool]) -> Callable[[], None]:
+        def field_validation() -> None:
             common_qt_lib.set_error_border_stylesheet(obj, check_err())
             accept_validation()
 
         return field_validation
 
-    accept_button.update_validation = accept_validation
-    for field, check_error_function in fields.items():
-        common_qt_lib.set_error_border_stylesheet(field, check_error_function())
-        field.field_validation = make_validation(field, check_error_function)
-        field.textChanged.connect(field.field_validation)
+    for group_fields in fields.values():
+        for field, check_error_function in group_fields.items():
+            validator_field = typing.cast("ValidatorField", field)
+
+            signal_name = validator_field.metaObject().userProperty().notifySignal().name().toStdString()
+            signal: QtCore.SignalInstance = getattr(validator_field, signal_name)
+
+            common_qt_lib.set_error_border_stylesheet(validator_field, check_error_function())
+            validator_field.field_validation = make_validation(validator_field, check_error_function)
+            signal.connect(validator_field.field_validation)
 
     accept_validation()
+
+
+def add_tabbed_field_validation(
+    accept_button: QtWidgets.QPushButton,
+    fields: Mapping[QtWidgets.QWidget | None, Mapping[QtWidgets.QWidget, Callable[[], bool]]],
+    tab_widget: QtWidgets.QTabWidget,
+) -> None:
+    _add_field_validation(
+        accept_button,
+        fields,
+        tab_widget,
+    )
+
+
+def add_field_validation(
+    accept_button: QtWidgets.QPushButton,
+    fields: dict[QtWidgets.QWidget, Callable[[], bool]],
+) -> None:
+    _add_field_validation(
+        accept_button,
+        {None: fields},
+        None,
+    )
 
 
 def path_in_edit(line: QtWidgets.QLineEdit) -> Path | None:
@@ -194,9 +247,10 @@ def path_in_edit(line: QtWidgets.QLineEdit) -> Path | None:
         return None
 
 
-def update_validation(widget: QtWidgets.QLineEdit):
+def update_validation(widget: QtWidgets.QWidget) -> None:
     if hasattr(widget, "field_validation"):
-        widget.field_validation()
+        validator_widget = typing.cast("ValidatorField", widget)
+        validator_widget.field_validation()
 
 
 def output_file_validator(output_file: Path) -> bool:

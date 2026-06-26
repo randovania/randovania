@@ -6,16 +6,16 @@ import typing
 from PySide6 import QtGui, QtWidgets
 
 from randovania.game_description.resources.inventory import Inventory
+from randovania.gui.item_tracker.item_tracker_widget import ItemTrackerWidget
+from randovania.gui.item_tracker.tracker_layout import TrackerLayout
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
-from randovania.lib import json_lib
 
 if typing.TYPE_CHECKING:
     from pathlib import Path
 
 
 class ItemTrackerPopupWindow(QtWidgets.QWidget):
-    def __init__(self, title: str, themes: dict[str, Path], on_close: typing.Callable[[], None]):
+    def __init__(self, title: str, themes: dict[str, Path], on_close: typing.Callable[[], None]) -> None:
         super().__init__(None)
         common_qt_lib.set_default_window_icon(self)
         self.on_close = on_close
@@ -36,18 +36,20 @@ class ItemTrackerPopupWindow(QtWidgets.QWidget):
             action.setActionGroup(group)
 
             if tracker_layout is None:
-                tracker_layout = json_lib.read_path(theme_path)
+                tracker_layout = TrackerLayout.read_json(theme_path)
                 action.setChecked(True)
+
+        assert tracker_layout is not None
 
         self.main_layout.addWidget(self.menu_bar)
         self.item_tracker = ItemTrackerWidget(tracker_layout)
         self.item_tracker.update_state(Inventory.empty())
         self.main_layout.addWidget(self.item_tracker)
 
-    def _on_select_theme(self, path: Path):
-        self.change_tracker_layout(json_lib.read_path(path))
+    def _on_select_theme(self, path: Path) -> None:
+        self.change_tracker_layout(TrackerLayout.read_json(path))
 
-    def change_tracker_layout(self, tracker_layout: dict):
+    def change_tracker_layout(self, tracker_layout: TrackerLayout) -> None:
         self.item_tracker.deleteLater()
         current_state = self.item_tracker.current_state
         self.item_tracker = ItemTrackerWidget(tracker_layout)

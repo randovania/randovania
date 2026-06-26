@@ -9,8 +9,8 @@ from qasync import asyncSlot
 
 from randovania import monitoring
 from randovania.gui.async_race_room_window import AsyncRaceRoomWindow
-from randovania.gui.dialog.async_race_creation_dialog import AsyncRaceCreationDialog
-from randovania.gui.dialog.async_race_room_browser_dialog import AsyncRaceRoomBrowserDialog
+from randovania.gui.dialog.async_race.async_race_creation_dialog import AsyncRaceCreationDialog
+from randovania.gui.dialog.async_race.async_race_room_browser_dialog import AsyncRaceRoomBrowserDialog
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.multiplayer_session_browser_dialog import MultiplayerSessionBrowserDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
@@ -25,15 +25,14 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_manager import PresetManager
     from randovania.network_common.async_race_room import AsyncRaceRoomEntry
 
-BaseSession = typing.TypeVar("BaseSession")
 
+class BaseBrowser[T](typing.Protocol):
+    def __init__(self, network_client: QtNetworkClient) -> None: ...
 
-class BaseBrowser(async_dialog.DialogLike, typing.Protocol[BaseSession]):
-    def __init__(self, network_client: QtNetworkClient): ...
-
+    @handle_network_errors  # type: ignore[type-var]
     async def refresh(self, *, ignore_limit: bool = False) -> bool: ...
 
-    joined_session: BaseSession | None
+    joined_session: T | None
 
 
 class OnlineInteractions(QtWidgets.QWidget):
@@ -48,7 +47,7 @@ class OnlineInteractions(QtWidgets.QWidget):
         network_client: QtNetworkClient,
         main_window: Ui_MainWindow,
         options: Options,
-    ):
+    ) -> None:
         super().__init__(window_manager)
 
         self.window_manager = window_manager
@@ -66,11 +65,11 @@ class OnlineInteractions(QtWidgets.QWidget):
         main_window.menu_action_login_window.triggered.connect(self._action_login_window)
         main_window.menu_action_async_race.triggered.connect(self._action_create_async_race)
 
-    async def _base_browse(
+    async def _base_browse[T](
         self,
-        type_: type[BaseBrowser[BaseSession]],
+        type_: type[BaseBrowser[T]],
         wait_message: str,
-    ) -> BaseSession | None:
+    ) -> T | None:
         """
         Requests a list of sessions via the given widget, then returns the one the user selected.
         :param type_: The type of the widget to use to display sessions
@@ -95,6 +94,7 @@ class OnlineInteractions(QtWidgets.QWidget):
         if not result:
             return None
 
+        assert isinstance(browser, QtWidgets.QDialog)
         if await async_dialog.execute_dialog(browser) == QtWidgets.QDialog.DialogCode.Accepted:
             joined_session = browser.joined_session
             assert joined_session is not None

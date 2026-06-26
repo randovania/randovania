@@ -110,8 +110,9 @@ def test_save_database_integrity_failure(tmp_path, echoes_game_data, skip_qtbot,
         "randovania.game_description.integrity_check.find_database_errors", return_value=["DB Errors", "Unknown"]
     )
     mock_write_human_readable_game = mocker.patch("randovania.game_description.pretty_print.write_human_readable_game")
-    mock_create_new = mocker.patch("randovania.gui.lib.scroll_message_box.ScrollMessageBox.create_new")
+    mock_create_new = mocker.patch("randovania.gui.lib.scroll_message_box.ScrollMessageBox.__new__")
     mock_create_new.return_value.exec_.return_value = QtWidgets.QMessageBox.No
+    mock_init = mocker.patch("randovania.gui.data_editor.ScrollMessageBox")
 
     tmp_path.joinpath("test-game", "game").mkdir(parents=True)
     tmp_path.joinpath("human-readable").mkdir()
@@ -127,13 +128,13 @@ def test_save_database_integrity_failure(tmp_path, echoes_game_data, skip_qtbot,
     # Assert
     mock_find_database_errors.assert_called_once_with(window.game_description)
     mock_write_human_readable_game.assert_not_called()
-    mock_create_new.assert_called_once_with(
-        window,
+    mock_init.assert_called_once_with(
         QtWidgets.QMessageBox.Icon.Critical,
         "Integrity Check",
         "Database has the following errors:\n\nDB Errors\n\nUnknown\n\nIgnore?",
-        QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
-        QtWidgets.QMessageBox.No,
+        parent=window,
+        buttons=QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+        default_button=QtWidgets.QMessageBox.No,
     )
 
 

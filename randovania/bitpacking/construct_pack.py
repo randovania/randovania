@@ -176,6 +176,10 @@ def construct_for_type(type_: type) -> construct.Construct:
 
     type_origin = typing.get_origin(type_)
 
+    if isinstance(type_origin, typing.TypeAliasType):
+        type_ = type_origin.__value__
+        type_origin = typing.get_origin(type_)
+
     if type_ in _direct_mapping:
         return _direct_mapping[type_]
 

@@ -31,7 +31,7 @@ class PresetPrimeEnergy(PresetTab[PrimeConfiguration], Ui_PresetPrimeEnergy):
         for i, reduction in enumerate(DamageReduction):
             self.damage_reduction_combo.setItemData(i, reduction)
         signal_handling.on_combo(self.damage_reduction_combo, self._persist_suit_damage)
-        self.heated_damage_spin.valueChanged.connect(self._persist_argument("heat_damage"))
+        self.heated_damage_spin.valueChanged.connect(self._persist_float("heat_damage"))
 
         # In-Game Difficulty
         for i, difficulty in enumerate(IngameDifficulty):
