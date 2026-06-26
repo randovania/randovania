@@ -32,7 +32,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetAM2RGoal,
         MetroidPresetPickupPool,
         PresetAM2RStartingArea,
-        PresetAM2RDockWeaknessDistributor,
+        *PresetAM2RDockWeaknessDistributor.subclass_for_compatible_dock_types(editor.game),
         PresetTeleportersAM2R,
         PresetAM2RGameplay,
         PresetAM2RRoomDesign,

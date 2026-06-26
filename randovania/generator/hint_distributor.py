@@ -756,7 +756,10 @@ class AllJokesHintDistributor(HintDistributor):
 def _should_use_resolver_hints(config: BaseConfiguration) -> bool:
     return (
         config.hints.enable_random_hints  # don't waste time running the resolver!
-        and (config.hints.use_resolver_hints or config.dock_rando.mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK)
+        and (
+            config.hints.use_resolver_hints
+            or config.dock_weakness_distributor.is_any_type_mode(DockWeaknessDistributorMode.INDIVIDUAL_DOCK)
+        )
     )
 
 

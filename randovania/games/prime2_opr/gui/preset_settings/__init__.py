@@ -33,7 +33,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetEchoesEnergy,
         PresetTeleportersPrime2,
         PresetEchoesStartingArea,
-        PresetDockWeaknessDistributor,
+        *PresetDockWeaknessDistributor.subclass_for_compatible_dock_types(editor.game),
         PresetEchoesTranslators,
         PresetEchoesBeamConfiguration,
         PresetEchoesOPRPatches,

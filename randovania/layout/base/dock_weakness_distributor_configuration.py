@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import dataclasses
 from dataclasses import dataclass
 from enum import Enum
 from typing import TYPE_CHECKING, Self
@@ -60,6 +61,7 @@ class WeaknessDistributorTypeState(BitPackValue, DataclassPostInitTypeCheck):
     """Controls how any given Dock is randomized in DockWeaknessDistributor."""
 
     dock_type_name: str
+    mode: DockWeaknessDistributorMode
     can_change_from: set[DockWeakness]
     can_change_to: set[DockWeakness]
 
@@ -70,6 +72,7 @@ class WeaknessDistributorTypeState(BitPackValue, DataclassPostInitTypeCheck):
     @property
     def as_json(self) -> dict:
         return {
+            "mode": self.mode.value,
             "can_change_from": sorted(weakness.name for weakness in self.can_change_from),
             "can_change_to": sorted(weakness.name for weakness in self.can_change_to),
         }
@@ -79,6 +82,7 @@ class WeaknessDistributorTypeState(BitPackValue, DataclassPostInitTypeCheck):
         weakness_database = _get_weakness_database(game)
         return cls(
             dock_type_name=dock_type_name,
+            mode=DockWeaknessDistributorMode(value["mode"]),
             can_change_from={
                 weakness_database.get_by_weakness(dock_type_name, weakness) for weakness in value["can_change_from"]
             },
@@ -89,6 +93,7 @@ class WeaknessDistributorTypeState(BitPackValue, DataclassPostInitTypeCheck):
 
     def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         game: RandovaniaGame = metadata["game"]
+        yield from self.mode.bit_pack_encode({})
         yield from bitpacking.pack_sorted_array_elements(
             sorted(self.can_change_from),
             sorted(self.possible_change_from(game)),
@@ -105,8 +110,11 @@ class WeaknessDistributorTypeState(BitPackValue, DataclassPostInitTypeCheck):
         ref_change_from = sorted(cls._possible_change_from(game, reference.dock_type_name))
         ref_change_to = sorted(cls._possible_change_to(game, reference.dock_type_name))
 
+        mode = DockWeaknessDistributorMode.bit_pack_unpack(decoder, {})
+
         return cls(
             dock_type_name=reference.dock_type_name,
+            mode=mode,
             can_change_from=set(bitpacking.decode_sorted_array_elements(decoder, ref_change_from)),
             can_change_to=set(bitpacking.decode_sorted_array_elements(decoder, ref_change_to)),
         )
@@ -130,13 +138,11 @@ class WeaknessDistributorTypeState(BitPackValue, DataclassPostInitTypeCheck):
 
 @dataclass(frozen=True)
 class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCheck):
-    mode: DockWeaknessDistributorMode
     types_state: dict[DockType, WeaknessDistributorTypeState]
 
     @property
     def as_json(self) -> dict:
         return {
-            "mode": self.mode.value,
             "types_state": {
                 dock_type.short_name: type_state.as_json for dock_type, type_state in self.types_state.items()
             },
@@ -146,7 +152,6 @@ class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCh
     def from_json(cls, value: dict, game: RandovaniaGame) -> Self:
         weakness_database = _get_weakness_database(game)
         return cls(
-            mode=DockWeaknessDistributorMode(value["mode"]),
             types_state={
                 weakness_database.find_type(dock_type): WeaknessDistributorTypeState.from_json(
                     type_state, game, dock_type
@@ -160,8 +165,6 @@ class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCh
         reference: DockWeaknessDistributorConfiguration = metadata["reference"]
 
         weakness_database = _get_weakness_database(game)
-
-        yield from self.mode.bit_pack_encode({})
 
         modified_types = sorted(
             dock_type
@@ -184,8 +187,6 @@ class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCh
         game: RandovaniaGame = metadata["parent_metadata"]["game"]
         reference: DockWeaknessDistributorConfiguration = metadata["reference"]
 
-        mode = DockWeaknessDistributorMode.bit_pack_unpack(decoder, {})
-
         modified_types = bitpacking.decode_sorted_array_elements(
             decoder, sorted(_get_weakness_database(game).dock_types)
         )
@@ -200,17 +201,29 @@ class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCh
             )
 
         return cls(
-            mode=mode,
             types_state=types_state,
         )
 
     def is_enabled_for(self, dock_type: DockType) -> bool:
-        # FIXME: this really should be per type :)
-        return self.mode != DockWeaknessDistributorMode.ORIGINAL
+        """
+        If the given dock_type has any mode enabled. Safe for any kind of dock type.
+        """
+        return (
+            dock_type in self.types_state and self.types_state[dock_type].mode != DockWeaknessDistributorMode.ORIGINAL
+        )
+
+    def is_any_type_mode(self, mode: DockWeaknessDistributorMode) -> bool:
+        """
+        True, if at least one type is configured as the given mode.
+        """
+        return any(type_state == mode for type_state in self.types_state.values())
 
     def get_mode_for(self, dock_type: DockType) -> DockWeaknessDistributorMode:
-        # FIXME: this really should be per type :)
-        return self.mode
+        """
+        Gets what mode is configured for the given type.
+        Not safe to be called with dock types that doesn't support weakness distribution.
+        """
+        return self.types_state[dock_type].mode
 
     def is_enabled_for_any_type(self) -> bool:
         return any(self.is_enabled_for(dock_type) for dock_type in self.types_state)
@@ -224,18 +237,23 @@ class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCh
 
     def settings_incompatible_with_multiworld(self) -> list[str]:
         danger = []
-        if self.mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK:
-            danger.append(f"{self.mode.long_name}: {self.mode.description}")
+
+        for dock_type in self.types_state:
+            mode = self.get_mode_for(dock_type)
+            if mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK:
+                danger.append(f"{dock_type.get_weakness_distributor().ui_label} - {mode.long_name}: {mode.description}")
         return danger
 
     def dangerous_settings(self) -> list[str]:
         result = []
 
-        if self.mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS:
-            for dock_type, state in self.types_state.items():
+        for dock_type, state in self.types_state.items():
+            if state.mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS:
                 weakness_distributor = dock_type.weakness_distributor
                 if weakness_distributor is not None and weakness_distributor.locked in state.can_change_to:
-                    result.append(f"{weakness_distributor.locked.name} is unsafe as a target in Door Lock Types")
+                    result.append(
+                        f"{weakness_distributor.locked.name} is unsafe as a target in mode {state.mode.long_name}"
+                    )
 
         return result
 
@@ -246,3 +264,11 @@ class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCh
             result.append("Door Lock Rando")
 
         return result
+
+    def replace_state(self, dock_type: DockType, state: WeaknessDistributorTypeState) -> Self:
+        types_state = copy.copy(self.types_state)
+        types_state[dock_type] = state
+        return dataclasses.replace(
+            self,
+            types_state=types_state,
+        )

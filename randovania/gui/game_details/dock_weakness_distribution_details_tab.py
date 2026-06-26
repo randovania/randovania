@@ -61,6 +61,6 @@ class DockWeaknessDistributionDetailsTab(BaseConnectionDetailsTab):
         players: PlayersConfiguration,
         dock_type: DockType,
     ) -> Self | None:
-        if configuration.dock_rando.is_enabled_for(dock_type):
+        if configuration.dock_weakness_distributor.is_enabled_for(dock_type):
             return cls(parent, configuration.game, dock_type)
         return None

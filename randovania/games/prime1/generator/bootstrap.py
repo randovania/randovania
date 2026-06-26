@@ -96,7 +96,7 @@ class PrimeBootstrap(Bootstrap):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
-        if configuration.dock_rando.is_enabled_for_any_type():
+        if configuration.dock_weakness_distributor.is_enabled_for_any_type():
             enabled_resources.add("dock_rando")
 
         if configuration.ingame_difficulty == IngameDifficulty.HARD:

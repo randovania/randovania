@@ -26,6 +26,6 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetLocationPool,
         PresetPickupPool,
         PresetBlankPatches,
-        PresetDockWeaknessDistributor,
+        *PresetDockWeaknessDistributor.subclass_for_compatible_dock_types(editor.game),
         PresetStartingArea,
     ]

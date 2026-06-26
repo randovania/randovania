@@ -35,7 +35,7 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> l
         PresetEchoesEnergy,
         PresetTeleportersPrime2,
         PresetEchoesStartingArea,
-        PresetEchoesDockWeaknessDistributor,
+        *PresetEchoesDockWeaknessDistributor.subclass_for_compatible_dock_types(editor.game),
         PresetEchoesTranslators,
         PresetEchoesBeamConfiguration,
         PresetEchoesPatches,

@@ -32,7 +32,7 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> li
         DreadPresetPickupPool,
         PresetTeleportersDread,
         PresetMetroidStartingArea,
-        PresetDockWeaknessDistributor,
+        *PresetDockWeaknessDistributor.subclass_for_compatible_dock_types(editor.game),
         PresetDreadEnergy,
         PresetDreadPatches,
         PresetDreadLights,

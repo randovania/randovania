@@ -62,14 +62,14 @@ class AM2RBootstrap(Bootstrap[AM2RConfiguration]):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
-        if configuration.dock_rando.is_enabled_for_any_type():
+        if configuration.dock_weakness_distributor.is_enabled_for_any_type():
             enabled_resources.add("DoorLockRando")
 
             door_db = configuration.game.game_description.dock_type_database
             door_type = door_db.find_type("door")
             open_transition_door = door_db.get_by_weakness("door", "Open Transition")
             are_transitions_shuffled = (
-                open_transition_door in configuration.dock_rando.types_state[door_type].can_change_from
+                open_transition_door in configuration.dock_weakness_distributor.types_state[door_type].can_change_from
             )
             if are_transitions_shuffled:
                 enabled_resources.add("ShuffledOpenHatches")

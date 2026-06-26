@@ -144,7 +144,8 @@ def distribute_pre_fill_weaknesses(
             )
         ]
 
-        if dock_rando_config.mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK:
+        mode = dock_rando_config.get_mode_for(dock_type)
+        if mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK:
             distributor_settings = dock_type.get_weakness_distributor()
             docks_to_unlock = [(node, distributor_settings.unlocked) for node in nodes_to_shuffle]
             if distributor_settings.force_change_two_way:
@@ -160,7 +161,7 @@ def distribute_pre_fill_weaknesses(
             patches = patches.assign_dock_weakness(docks_to_unlock)
 
         else:
-            assert dock_rando_config.mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS
+            assert mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS
             patches = _distribute_mode_weakness(
                 patches,
                 dock_rando_config,
@@ -422,10 +423,13 @@ async def distribute_post_fill_weaknesses(
         # If at least one dock type is configured for Dock mode distribution, then run the resolver
         # TODO: shouldn't this just be a check if `unassigned_docks` is not empty?
         compatible_dock_types = [
-            dock_type for dock_type in dock_type_db.dock_types if configuration.dock_rando.can_shuffle(dock_type)
+            dock_type
+            for dock_type in dock_type_db.dock_types
+            if configuration.dock_weakness_distributor.can_shuffle(dock_type)
         ]
         if not any(
-            configuration.dock_rando.get_mode_for(dock_type) == DockWeaknessDistributorMode.INDIVIDUAL_DOCK
+            configuration.dock_weakness_distributor.get_mode_for(dock_type)
+            == DockWeaknessDistributorMode.INDIVIDUAL_DOCK
             for dock_type in compatible_dock_types
         ):
             continue
@@ -488,7 +492,7 @@ async def distribute_post_fill_weaknesses(
 
         target = game.typed_node_by_identifier(patches.get_dock_connection_for(dock), DockNode)
         dock_type_settings = dock.dock_type.get_weakness_distributor()
-        dock_type_state = patches.configuration.dock_rando.types_state[dock.dock_type]
+        dock_type_state = patches.configuration.dock_weakness_distributor.types_state[dock.dock_type]
 
         def should_skip() -> bool:
             if dock_type_state.can_change_to == {dock_type_settings.unlocked}:

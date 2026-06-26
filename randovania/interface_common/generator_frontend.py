@@ -49,11 +49,12 @@ def generate_layout(
         span.set_tag("unique_games", str(sorted(set(games))))
         span.set_tag("attempts", retries if retries is not None else generator.DEFAULT_ATTEMPTS)
         span.set_tag("validate_after", options.advanced_validate_seed_after)
-        span.set_tag("use_world_graph", True)
         span.set_tag(
             "dock_rando",
             any(
-                preset.configuration.dock_rando.mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK
+                preset.configuration.dock_weakness_distributor.is_any_type_mode(
+                    DockWeaknessDistributorMode.INDIVIDUAL_DOCK
+                )
                 for preset in parameters.presets
             ),
         )

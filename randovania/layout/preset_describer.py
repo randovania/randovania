@@ -206,9 +206,12 @@ class GamePresetDescriber:
         template_strings["Gameplay"].append(starting_location)
 
         # Dock Locks
-        dock_rando = configuration.dock_rando
-        if dock_rando.is_enabled_for_any_type():  # FIXME: should mention what type!
-            template_strings["Gameplay"].append(dock_rando.mode.description)
+        dock_rando = configuration.dock_weakness_distributor
+        for dock_type in game_description.get_dock_type_database().dock_types:
+            if dock_rando.is_enabled_for(dock_type):
+                template_strings["Gameplay"].append(
+                    f"{dock_type.get_weakness_distributor().ui_label}: {dock_rando.get_mode_for(dock_type).long_name}"
+                )
 
         # Hints
         hint_strings = self._hints_info(configuration)

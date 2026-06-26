@@ -50,7 +50,7 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         self.warp_to_start_check.setChecked(config.warp_to_start)
         self.include_menu_mod_check.setChecked(config.menu_mod)
         self.new_patcher_check.setChecked(has_new_patcher)
-        self.new_patcher_check.setEnabled(config.dock_rando.mode == DockWeaknessDistributorMode.ORIGINAL)
+        self.new_patcher_check.setEnabled(config.dock_weakness_distributor.mode == DockWeaknessDistributorMode.ORIGINAL)
         self.inverted_check.setEnabled(has_new_patcher)
         self.inverted_check.setChecked(config.inverted_mode)
         self.save_doors_check.setChecked(config.blue_save_doors)

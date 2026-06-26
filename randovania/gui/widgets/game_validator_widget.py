@@ -92,7 +92,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             "Minor": False,
             "Event": True,
             "Hint": False,
-            "Lock": configs[players.player_index].dock_rando.is_enabled_for_any_type(),
+            "Lock": configs[players.player_index].dock_weakness_distributor.is_enabled_for_any_type(),
         }
         self._last_run_filters: dict[str, bool] | None = None
 

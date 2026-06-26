@@ -31,7 +31,7 @@ def msr_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list
         MetroidPresetPickupPool,
         PresetMSRStartingArea,
         PresetTeleportersMSR,
-        PresetDockWeaknessDistributor,
+        *PresetDockWeaknessDistributor.subclass_for_compatible_dock_types(editor.game),
         PresetMSRAeionAndEnergy,
         PresetMSRReserves,
         PresetMSRPatches,

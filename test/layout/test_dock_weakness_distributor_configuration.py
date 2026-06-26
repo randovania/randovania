@@ -108,7 +108,7 @@ def test_prime_thing(default_prime_configuration):
         },
     }
     ref = {
-        "reference": default_prime_configuration.dock_rando,
+        "reference": default_prime_configuration.dock_weakness_distributor,
         "parent_metadata": {
             "game": default_prime_configuration.game,
         },

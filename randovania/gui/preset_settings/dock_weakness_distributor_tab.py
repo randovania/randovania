@@ -3,11 +3,12 @@ from __future__ import annotations
 import dataclasses
 import sys
 from collections import defaultdict
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 import natsort
 from PySide6 import QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.generated.preset_dock_rando_ui import Ui_PresetDockRando
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -27,13 +28,14 @@ if TYPE_CHECKING:
 class PresetDockWeaknessDistributor[BaseConfigurationT: BaseConfiguration](
     PresetTab[BaseConfigurationT], Ui_PresetDockRando
 ):
-    type_checks: dict[DockType, dict[DockWeakness, dict[str, QtWidgets.QCheckBox]]]
+    weakness_checks: dict[DockWeakness, dict[str, QtWidgets.QCheckBox]]
 
     def __init__(
         self, editor: PresetEditor[BaseConfigurationT], game_description: GameDescription, window_manager: WindowManager
     ):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
+        # FIXME: .ui file still has many references to Door
 
         self.changes_box.setVisible(False)
 
@@ -44,49 +46,81 @@ class PresetDockWeaknessDistributor[BaseConfigurationT: BaseConfiguration](
         signal_handling.on_combo(self.mode_combo, self._on_mode_changed)
 
         # Types
-        self.type_checks = {}
-        for dock_type in game_description.get_dock_type_database().dock_types:
-            if dock_type.weakness_distributor is not None:
-                self._add_dock_type(dock_type, dock_type.weakness_distributor)
+        self._add_dock_type(self.dock_type, self.dock_type.get_weakness_distributor())
+
+    @classmethod
+    def subclass_for_dock_type(cls, dock_type: DockType) -> type[PresetDockWeaknessDistributor]:
+        """Creates a new subclass that is specific for the given DockType."""
+        distributor_settings = dock_type.get_weakness_distributor()
+
+        class SpecificPresetDockWeaknessDistributor(cls):  # type: ignore[valid-type, misc]
+            @override
+            @classmethod
+            def tab_title(cls) -> str:
+                return distributor_settings.ui_label
+
+            @override
+            @property
+            def dock_type(self) -> DockType:
+                return dock_type
+
+        SpecificPresetDockWeaknessDistributor.__name__ = f"Preset{dock_type.short_name.title()}DockWeaknessDistributor"
+        return SpecificPresetDockWeaknessDistributor
+
+    @classmethod
+    def subclass_for_compatible_dock_types(cls, game: RandovaniaGame) -> list[type[PresetDockWeaknessDistributor]]:
+        """
+        Creates a subclasses for every DockType in the given game that has Dock Weakness Distributor enabled.
+        Can be an empty list.
+        """
+        return [
+            cls.subclass_for_dock_type(dock_type)
+            for dock_type in game.game_description.get_dock_type_database().dock_types
+            if dock_type.weakness_distributor is not None
+        ]
 
     @classmethod
     def tab_title(cls) -> str:
-        return "Door Locks"
+        raise NotImplementedError
+
+    @property
+    def dock_type(self) -> DockType:
+        raise NotImplementedError
 
     @classmethod
     def header_name(cls) -> str | None:
         return None
 
-    def on_preset_changed(self, preset: Preset):
-        dock_rando = preset.configuration.dock_rando
-        signal_handling.set_combo_with_value(self.mode_combo, dock_rando.mode)
-        self.mode_description.setText(dock_rando.mode.description)
+    def on_preset_changed(self, preset: Preset[BaseConfiguration]) -> None:
+        weakness_distributor_config = preset.configuration.dock_weakness_distributor
 
-        self.multiworld_label.setVisible(len(dock_rando.settings_incompatible_with_multiworld()) > 0)
+        mode = weakness_distributor_config.get_mode_for(self.dock_type)
+        signal_handling.set_combo_with_value(self.mode_combo, mode)
+        self.mode_description.setText(mode.description)
+
+        self.multiworld_label.setVisible(len(weakness_distributor_config.settings_incompatible_with_multiworld()) > 0)
         self.line.setVisible(self.multiworld_label.isVisible())
-        self.dock_types_group.setVisible(dock_rando.mode != DockWeaknessDistributorMode.ORIGINAL)
+        self.dock_types_group.setVisible(mode != DockWeaknessDistributorMode.ORIGINAL)
 
-        for dock_type, weakness_checks in self.type_checks.items():
-            rando_params = dock_type.get_weakness_distributor()
-            unlocked_check = weakness_checks[rando_params.unlocked]["can_change_from"]
-            unlocked_check.setEnabled(dock_rando.mode != DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS)
-            unlocked_check_to = weakness_checks[rando_params.unlocked]["can_change_to"]
-            unlocked_check_to.setEnabled(dock_rando.mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS)
-            if dock_rando.mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS:
-                unlocked_check.setChecked(False)
-            else:
-                unlocked_check_to.setChecked(True)
+        rando_params = self.dock_type.get_weakness_distributor()
+        unlocked_check = self.weakness_checks[rando_params.unlocked]["can_change_from"]
+        unlocked_check.setEnabled(mode != DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS)
+        unlocked_check_to = self.weakness_checks[rando_params.unlocked]["can_change_to"]
+        unlocked_check_to.setEnabled(mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS)
+        if mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS:
+            unlocked_check.setChecked(False)
+        else:
+            unlocked_check_to.setChecked(True)
 
-            state = dock_rando.types_state[dock_type]
-            for weakness, checks in weakness_checks.items():
-                if "can_change_from" in checks:
-                    checks["can_change_from"].setChecked(weakness in state.can_change_from)
-                if "can_change_to" in checks:
-                    checks["can_change_to"].setChecked(weakness in state.can_change_to)
+        state = weakness_distributor_config.types_state[self.dock_type]
+        for weakness, checks in self.weakness_checks.items():
+            if "can_change_from" in checks:
+                checks["can_change_from"].setChecked(weakness in state.can_change_from)
+            if "can_change_to" in checks:
+                checks["can_change_to"].setChecked(weakness in state.can_change_to)
 
     def _add_dock_type(self, dock_type: DockType, type_params: WeaknessDistributorSettings):
-        assert len(self.type_checks) == 0, "Only one type allowed"
-        self.type_checks[dock_type] = defaultdict(dict)
+        self.weakness_checks = defaultdict(dict)
 
         def add_group(name: str, layout: QtWidgets.QVBoxLayout, weaknesses: dict[DockWeakness, bool]):
             for weakness, enabled in weaknesses.items():
@@ -94,9 +128,9 @@ class PresetDockWeaknessDistributor[BaseConfigurationT: BaseConfiguration](
                 check.setObjectName(f"{name}_check {dock_type.short_name} {weakness.name}")
                 check.setText(weakness.long_name)
                 check.setEnabled(enabled)
-                signal_handling.on_checked(check, self._persist_weakness_setting(name, dock_type, weakness))
+                signal_handling.on_checked(check, self._persist_weakness_setting(name, weakness))
                 layout.addWidget(check)
-                self.type_checks[dock_type][weakness][name] = check
+                self.weakness_checks[weakness][name] = check
 
             vertical_spacer = QtWidgets.QSpacerItem(
                 0, 0, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding
@@ -131,22 +165,23 @@ class PresetDockWeaknessDistributor[BaseConfigurationT: BaseConfiguration](
     def _persist_weakness_setting(
         self,
         field: str,
-        dock_type: DockType,
         dock_weakness: DockWeakness,
     ) -> Callable[[bool], None]:
         def _persist(value: bool):
             with self._editor as editor:
-                state = editor.dock_rando_configuration.types_state[dock_type]
+                state = editor.dock_weakness_distributor.types_state[self.dock_type]
                 can_change: set[DockWeakness] = getattr(state, field)
                 if value:
                     can_change.add(dock_weakness)
                 elif dock_weakness in can_change:
                     can_change.remove(dock_weakness)
                 state = dataclasses.replace(state, **{field: can_change})
-                editor.dock_rando_configuration.types_state[dock_type] = state
+                editor.dock_weakness_distributor = editor.dock_weakness_distributor.replace_state(self.dock_type, state)
 
         return _persist
 
     def _on_mode_changed(self, value: DockWeaknessDistributorMode):
         with self._editor as editor:
-            editor.dock_rando_configuration = dataclasses.replace(editor.dock_rando_configuration, mode=value)
+            state = editor.dock_weakness_distributor.types_state[self.dock_type]
+            state = dataclasses.replace(state, mode=value)
+            editor.dock_weakness_distributor = editor.dock_weakness_distributor.replace_state(self.dock_type, state)

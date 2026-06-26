@@ -139,12 +139,12 @@ class PresetEditor[Configuration: BaseConfiguration]:
         self.set_configuration_field("ammo_pickup_configuration", value)
 
     @property
-    def dock_rando_configuration(self) -> DockWeaknessDistributorConfiguration:
-        return self.configuration.dock_rando
+    def dock_weakness_distributor(self) -> DockWeaknessDistributorConfiguration:
+        return self.configuration.dock_weakness_distributor
 
-    @dock_rando_configuration.setter
-    def dock_rando_configuration(self, value: DockWeaknessDistributorConfiguration):
-        self.set_configuration_field("dock_rando", value)
+    @dock_weakness_distributor.setter
+    def dock_weakness_distributor(self, value: DockWeaknessDistributorConfiguration):
+        self.set_configuration_field("dock_weakness_distributor", value)
 
     @property
     def hint_configuration(self) -> HintConfiguration:

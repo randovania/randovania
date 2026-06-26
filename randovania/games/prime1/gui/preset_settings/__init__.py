@@ -35,7 +35,7 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> l
         PresetPrimeEnergy,
         PresetTeleportersPrime1,
         PresetMetroidStartingArea,
-        PresetPrimeDockWeaknessDistributor,
+        *PresetPrimeDockWeaknessDistributor.subclass_for_compatible_dock_types(editor.game),
         PresetPrimeQol,
         PresetEnemyAttributeRandomizer,
         PresetPrimeChaos,

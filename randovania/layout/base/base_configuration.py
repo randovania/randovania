@@ -59,7 +59,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     pickup_model_data_source: PickupModelDataSource
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool
-    dock_rando: DockWeaknessDistributorConfiguration
+    dock_weakness_distributor: DockWeaknessDistributorConfiguration
     single_set_for_pickups_that_solve: bool
     staggered_multi_pickup_placement: bool
     check_if_beatable_after_base_patches: bool
@@ -108,7 +108,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
 
     def should_hide_generation_log(self) -> bool:
         """Certain settings makes the generation log full of nonsense. It should be hidden in these cases."""
-        return self.dock_rando.mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK
+        return self.dock_weakness_distributor.is_any_type_mode(DockWeaknessDistributorMode.INDIVIDUAL_DOCK)
 
 
 ConfigurationT_co = TypeVar("ConfigurationT_co", bound=BaseConfiguration, default=BaseConfiguration, covariant=True)
