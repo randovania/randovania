@@ -734,6 +734,10 @@ SOLO_RDVGAMES = [
     ),  # starter preset + random starting item + nothing items
     ("prime_hunters/two_way_unchecked_portal_shuffle.rdvgame", True),  # starter preset + two-way portal shuffle
     ("prime_hunters/starting_energy_and_artifacts.rdvgame", True),  # starter preset + random starting items + artifacts
+    (
+        "prime_hunters/shuffled_extra_locations_and_skip_planet_intros.rdvgame",
+        True,
+    ),  # starter prest with shuffled item refills and shield keys, added extra locations, skip planet intros
     # Prime 1
     ("prime1-vanilla.rdvgame", True),  # vanilla
     ("prime1_crazy_seed.rdvgame", False),  # chaos features

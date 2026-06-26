@@ -21,7 +21,7 @@ class SuitColor(BitPackEnum, Enum):
     RANDOM = "random"
 
     @property
-    def ui_icons(self) -> dict[str, Path]:
+    def ui_icons(self) -> Path:
         base_path = RandovaniaGame.METROID_PRIME_HUNTERS.data_path.joinpath("assets", "suit_renders")
         return base_path.joinpath(f"{self.value}.png")
 

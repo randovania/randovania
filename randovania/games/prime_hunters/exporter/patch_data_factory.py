@@ -69,14 +69,14 @@ _STRING_ID_TO_SCAN_TITLE = {
     "214L": "OCTOLITH HINTS 04",
 }
 
-type StartingInventory = dict[str, str | int | dict[str, str]]
+type StartingInventory = dict[str, str | int | dict[str, str] | dict[str, bool]]
 
 
 class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosmeticPatches]):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_HUNTERS
 
-    def _calculate_starting_inventory(self, resources: ResourceCollection) -> StartingInventory:
+    def _calculate_starting_inventory(self, resources: ResourceCollection) -> tuple[StartingInventory, defaultdict]:
         result: StartingInventory = {}
 
         starting_items: defaultdict = defaultdict(int)
@@ -285,7 +285,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
 
             i += 2
 
-            return hints
+        return hints
 
     def _update_intro_text(self, starting_items: defaultdict[str, int]) -> dict:
         intro_text = {}
@@ -300,6 +300,9 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 starting_items_text += f"{item_name.upper()}\n"
             if value > 1:
                 starting_items_text += f"{item_name.upper()} x{value}\n"
+
+        if starting_items_text == "":
+            starting_items_text = "no additional starting items given."
 
         # Goal
         gorea_text = "defeat GOREA in OUBLIETTE."
