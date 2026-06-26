@@ -260,11 +260,14 @@ class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCh
 
         for dock_type, state in self.types_state.items():
             if state.mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS:
-                weakness_distributor = dock_type.weakness_distributor
-                if weakness_distributor is not None and weakness_distributor.locked in state.can_change_to:
-                    result.append(
-                        f"{weakness_distributor.locked.name} is unsafe as a target in mode {state.mode.long_name}"
-                    )
+                distributor_config = dock_type.weakness_distributor
+                if distributor_config is not None:
+                    for weakness in sorted(state.can_change_to):
+                        if weakness.unsafe_target_in_distributor_wtw:
+                            result.append(
+                                f"{distributor_config.ui_label}: {weakness.name} is unsafe as "
+                                f"a target in mode {state.mode.long_name}"
+                            )
 
         return result
 

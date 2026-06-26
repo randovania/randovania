@@ -217,6 +217,7 @@ def read_dock_weakness(index: int, name: str, item: dict, resource_database: Res
         frozen_lib.wrap(item["extra"]),
         read_requirement(item["requirement"], resource_database),
         read_dock_lock(item["lock"], resource_database),
+        unsafe_target_in_distributor_wtw=item["unsafe_target_in_distributor_wtw"],
     )
 
 

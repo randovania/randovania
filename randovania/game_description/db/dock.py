@@ -67,6 +67,12 @@ class DockWeakness:
     requirement: Requirement
     lock: DockLock | None
 
+    unsafe_target_in_distributor_wtw: bool = False
+    """
+    When True, having this weakness set as a valid target for DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS is
+    considered a dangerous setting.
+    """
+
     def __hash__(self) -> int:
         return hash((self.name, self.extra))
 
@@ -91,7 +97,18 @@ class DockWeakness:
 @dataclass(frozen=True, slots=True)
 class WeaknessDistributorSettings:
     unlocked: DockWeakness
+    """
+    The weakness that is trivial to open.
+    In INDIVIDUAL_DOCK, it's used for the generator step and as fallback. Will always be present in change_to.
+    In WEAKNESS_TO_WEAKNESS, it'll never be present in change_from.
+    """
+
     locked: DockWeakness
+    """
+    The weakness that is impossible to open.
+    Must have unsafe_target_in_distributor_wtw set to True.
+    """
+
     change_from: set[DockWeakness]
     change_to: set[DockWeakness]
 

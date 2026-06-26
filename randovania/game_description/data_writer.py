@@ -224,6 +224,7 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
         "extra": frozen_lib.unwrap(dock_weakness.extra),
         "requirement": write_requirement(dock_weakness.requirement),
         "lock": write_dock_lock(dock_weakness.lock),
+        "unsafe_target_in_distributor_wtw": dock_weakness.unsafe_target_in_distributor_wtw,
     }
 
 

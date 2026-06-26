@@ -103,12 +103,12 @@ class PresetDockWeaknessDistributor[BaseConfigurationT: BaseConfiguration](
         self.dock_types_group.setVisible(mode != DockWeaknessDistributorMode.ORIGINAL)
 
         rando_params = self.dock_type.get_weakness_distributor()
-        unlocked_check = self.weakness_checks[rando_params.unlocked]["can_change_from"]
-        unlocked_check.setEnabled(mode != DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS)
+        unlocked_check_from = self.weakness_checks[rando_params.unlocked]["can_change_from"]
+        unlocked_check_from.setEnabled(mode != DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS)
         unlocked_check_to = self.weakness_checks[rando_params.unlocked]["can_change_to"]
         unlocked_check_to.setEnabled(mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS)
         if mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS:
-            unlocked_check.setChecked(False)
+            unlocked_check_from.setChecked(False)
         else:
             unlocked_check_to.setChecked(True)
 

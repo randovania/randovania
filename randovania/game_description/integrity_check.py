@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
-    from randovania.game_description.db.dock import DockType, DockWeakness
+    from randovania.game_description.db.dock import DockType, DockTypeDatabase, DockWeakness
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
@@ -295,6 +295,18 @@ def find_duplicated_pickup_index(region_list: RegionList) -> Iterator[str]:
             known_indices[node.pickup_index] = name
 
 
+def find_inconsistent_dock_configuration(dock_db: DockTypeDatabase) -> Iterator[str]:
+
+    for dock_type in dock_db.dock_types:
+        if dock_type.weakness_distributor is not None:
+            locked = dock_type.weakness_distributor.locked
+            if not locked.unsafe_target_in_distributor_wtw:
+                yield (
+                    f"{dock_type.short_name} - {locked.name}: Configured as the disabled weakness, "
+                    f"but unsafe_target_in_distributor_wtw is not set"
+                )
+
+
 def _needed_resources_partly_satisfied(
     req: Requirement,
     resources: tuple[str, tuple[str, ...]],
@@ -451,6 +463,7 @@ def find_database_errors(game: GameDescription) -> list[str]:
     result.extend(find_invalid_strongly_connected_components(game))
     result.extend(find_recursive_templates(game))
     result.extend(find_duplicated_pickup_index(game.region_list))
+    result.extend(find_inconsistent_dock_configuration(game.dock_type_database))
     result.extend(game.game.data.logic_db_integrity(game))
     result.extend(find_incompatible_video_links(game))
 

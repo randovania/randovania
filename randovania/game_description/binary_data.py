@@ -156,6 +156,7 @@ ConstructDockWeakness = Struct(
     extra=JsonEncodedValue,
     requirement=ConstructRequirement,
     lock=OptionalValue(ConstructDockLock),
+    unsafe_target_in_distributor_wtw=Flag,
 )
 
 ConstructNamedTemplate = Struct(

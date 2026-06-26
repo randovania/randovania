@@ -392,10 +392,16 @@ def _migrate_v33(data: dict, game: RandovaniaGame) -> None:
 
     global_config = data["dock_type_database"].pop("dock_rando")
     for dock_type in data["dock_type_database"]["types"].values():
+        locked_name = None
         settings = dock_type.pop("dock_rando")
+
         if settings is not None:
             settings.update(global_config)
             settings["ui_label"] = f"{dock_type['name']} Locks"
+            locked_name = settings["locked"]
+
+        for weak_name, weak_data in dock_type["items"].items():
+            weak_data["unsafe_target_in_distributor_wtw"] = weak_name == locked_name
 
         dock_type["weakness_distributor"] = settings
 
