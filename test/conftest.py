@@ -729,11 +729,10 @@ SOLO_RDVGAMES = [
     ("prime_hunters/starter_preset.rdvgame", True),  # starter preset
     ("prime_hunters/shuffled_force_fields.rdvgame", True),  # starter preset with shuffled force fields
     (
-        "prime_hunters/starting_items_with_nothings.rdvgame",
+        "prime_hunters/starting_items_and_energy_with_nothings.rdvgame",
         True,
-    ),  # starter preset + random starting item + nothing items
+    ),  # starter preset + random starting items + nothing items + starting energy
     ("prime_hunters/two_way_unchecked_portal_shuffle.rdvgame", True),  # starter preset + two-way portal shuffle
-    ("prime_hunters/starting_energy_and_artifacts.rdvgame", True),  # starter preset + random starting items + artifacts
     (
         "prime_hunters/shuffled_extra_locations_and_skip_planet_intros.rdvgame",
         True,
