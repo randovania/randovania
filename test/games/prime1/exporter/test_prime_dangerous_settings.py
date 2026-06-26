@@ -9,7 +9,7 @@ def test_dangerous_settings(test_files_dir):
     preset = layout_description.get_preset(0)
 
     assert preset.dangerous_settings() == [
-        "Permanently Locked is unsafe as a target in Door Lock Types",
+        "Permanently Locked is unsafe as a target in mode By Type",
         "One-way anywhere teleporters",
         "Shuffled Item Position",
         "Room Randomizer",

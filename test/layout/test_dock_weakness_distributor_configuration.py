@@ -10,21 +10,20 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorConfiguration
 
 core_blank_json = {
-    "mode": "docks",
     "types_state": {
         "door": {
+            "mode": "individual-dock",
             "can_change_from": ["Back-Only Door", "Blue Key Door", "Explosive Door", "Locked Door", "Normal Door"],
             "can_change_to": ["Back-Only Door", "Blue Key Door", "Explosive Door", "Locked Door", "Normal Door"],
         },
-        "other": {"can_change_from": [], "can_change_to": []},
     },
 }
 
 
 @pytest.fixture(
     params=[
-        {"game": RandovaniaGame.BLANK, "encoded": b"@"},
-        {"game": RandovaniaGame.BLANK, "encoded": b"J\x05\x00", "can_change_to": ["Explosive Door"]},
+        {"game": RandovaniaGame.BLANK, "encoded": b"\x00"},
+        {"game": RandovaniaGame.BLANK, "encoded": b"X\x14", "can_change_to": ["Explosive Door"]},
     ],
 )
 def config_with_data(request):
@@ -84,9 +83,9 @@ def test_encode(config_with_data):
 
 def test_prime_thing(default_prime_configuration):
     config = {
-        "mode": "docks",
         "types_state": {
             "door": {
+                "mode": "individual-dock",
                 "can_change_from": [
                     "Ice Door",
                     "Missile Blast Shield (randomprime)",

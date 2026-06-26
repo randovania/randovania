@@ -24,9 +24,9 @@ class DockWeaknessDistributorMode(BitPackEnum, Enum):
     long_name: str
     description: str
 
-    ORIGINAL = "vanilla"
-    INDIVIDUAL_DOCK = "docks"
-    WEAKNESS_TO_WEAKNESS = "weaknesses"
+    ORIGINAL = "original"
+    INDIVIDUAL_DOCK = "individual-dock"
+    WEAKNESS_TO_WEAKNESS = "weaknesses-to-weakness"
 
 
 enum_lib.add_long_name(
@@ -54,6 +54,10 @@ enum_lib.add_per_enum_field(
 
 def _get_weakness_database(game: RandovaniaGame) -> DockTypeDatabase:
     return default_database.game_description_for(game).dock_type_database
+
+
+def _distributor_enabled_types(database: DockTypeDatabase) -> list[DockType]:
+    return [dock_type for dock_type in database.dock_types if dock_type.weakness_distributor is not None]
 
 
 @dataclass(frozen=True)
@@ -151,13 +155,18 @@ class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCh
     @classmethod
     def from_json(cls, value: dict, game: RandovaniaGame) -> Self:
         weakness_database = _get_weakness_database(game)
+
+        types_state = {}
+
+        for dock_type in _distributor_enabled_types(weakness_database):
+            # Raises KeyError if the preset doesn't have a configuration for the given type
+            # When adding support for DWD to a type, a preset migration is required.
+            types_state[dock_type] = WeaknessDistributorTypeState.from_json(
+                value["types_state"][dock_type.short_name], game, dock_type.short_name
+            )
+
         return cls(
-            types_state={
-                weakness_database.find_type(dock_type): WeaknessDistributorTypeState.from_json(
-                    type_state, game, dock_type
-                )
-                for dock_type, type_state in value["types_state"].items()
-            },
+            types_state=types_state,
         )
 
     def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
@@ -171,7 +180,9 @@ class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCh
             for dock_type, type_state in self.types_state.items()
             if type_state != reference.types_state[dock_type]
         )
-        yield from bitpacking.pack_sorted_array_elements(modified_types, sorted(weakness_database.dock_types))
+        yield from bitpacking.pack_sorted_array_elements(
+            modified_types, sorted(_distributor_enabled_types(weakness_database))
+        )
         for dock_type in modified_types:
             yield from self.types_state[dock_type].bit_pack_encode(
                 {
@@ -188,7 +199,7 @@ class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCh
         reference: DockWeaknessDistributorConfiguration = metadata["reference"]
 
         modified_types = bitpacking.decode_sorted_array_elements(
-            decoder, sorted(_get_weakness_database(game).dock_types)
+            decoder, sorted(_distributor_enabled_types(_get_weakness_database(game)))
         )
         types_state = copy.copy(reference.types_state)
         for dock_type in modified_types:

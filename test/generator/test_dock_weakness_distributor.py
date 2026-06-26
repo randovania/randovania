@@ -6,10 +6,14 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game_description.game_description import GameDescription
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.generator import generate_and_validate_description
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
+from randovania.layout.base.dock_weakness_distributor_configuration import (
+    DockWeaknessDistributorConfiguration,
+    DockWeaknessDistributorMode,
+)
 from randovania.layout.generator_parameters import GeneratorParameters
 
 
@@ -31,23 +35,41 @@ def _force_blank_two_way(blank_game_description):
     )
 
 
+def _replace_mode(
+    game: GameDescription,
+    configuration: DockWeaknessDistributorConfiguration,
+    mode: DockWeaknessDistributorMode,
+) -> DockWeaknessDistributorConfiguration:
+    dock_type = game.dock_type_database.find_type("door")
+    return configuration.replace_state(
+        dock_type,
+        dataclasses.replace(
+            configuration.types_state[dock_type],
+            mode=mode,
+        ),
+    )
+
+
 def test_distribute_pre_fill_weaknesses_swap(blank_game_description, empty_patches):
     rng = Random(5000)
-    dock_rando_config = dataclasses.replace(
+
+    distributor_config = _replace_mode(
+        blank_game_description,
         empty_patches.configuration.dock_weakness_distributor,
-        mode=DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS,
+        DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS,
     )
+
     patches = dataclasses.replace(
         empty_patches,
         configuration=dataclasses.replace(
             empty_patches.configuration,
-            dock_rando=dock_rando_config,
+            dock_weakness_distributor=distributor_config,
         ),
     )
 
     result = dock_weakness_distributor.distribute_pre_fill_weaknesses(
         blank_game_description,
-        dock_rando_config,
+        distributor_config,
         patches,
         rng,
     )
@@ -77,21 +99,23 @@ def test_distribute_pre_fill_weaknesses_swap(blank_game_description, empty_patch
 @pytest.mark.usefixtures("_force_blank_two_way")
 def test_distribute_pre_fill_weaknesses_swap_force_two_way(blank_game_description, empty_patches):
     rng = Random(10000)
-    dock_rando_config = dataclasses.replace(
+
+    distributor_config = _replace_mode(
+        blank_game_description,
         empty_patches.configuration.dock_weakness_distributor,
-        mode=DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS,
+        DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS,
     )
     patches = dataclasses.replace(
         empty_patches,
         configuration=dataclasses.replace(
             empty_patches.configuration,
-            dock_rando=dock_rando_config,
+            dock_weakness_distributor=distributor_config,
         ),
     )
 
     result = dock_weakness_distributor.distribute_pre_fill_weaknesses(
         blank_game_description,
-        dock_rando_config,
+        distributor_config,
         patches,
         rng,
     )
@@ -120,21 +144,23 @@ def test_distribute_pre_fill_weaknesses_swap_force_two_way(blank_game_descriptio
 
 def test_distribute_pre_fill_docks(blank_game_description, empty_patches, monkeypatch):
     rng = Random(5000)
-    dock_rando_config = dataclasses.replace(
+
+    distributor_config = _replace_mode(
+        blank_game_description,
         empty_patches.configuration.dock_weakness_distributor,
-        mode=DockWeaknessDistributorMode.INDIVIDUAL_DOCK,
+        DockWeaknessDistributorMode.INDIVIDUAL_DOCK,
     )
     patches = dataclasses.replace(
         empty_patches,
         configuration=dataclasses.replace(
             empty_patches.configuration,
-            dock_rando=dock_rando_config,
+            dock_weakness_distributor=distributor_config,
         ),
     )
 
     result = dock_weakness_distributor.distribute_pre_fill_weaknesses(
         blank_game_description,
-        dock_rando_config,
+        distributor_config,
         patches,
         rng,
     )
@@ -183,8 +209,10 @@ async def test_dock_weakness_distribute(default_blank_preset, blank_game_descrip
     options = MagicMock()
     _editor = PresetEditor(default_blank_preset.fork(), options)
     with _editor as editor:
-        editor.dock_weakness_distributor = dataclasses.replace(
-            editor.dock_weakness_distributor, mode=DockWeaknessDistributorMode.INDIVIDUAL_DOCK
+        editor.dock_weakness_distributor = _replace_mode(
+            blank_game_description,
+            editor.dock_weakness_distributor,
+            DockWeaknessDistributorMode.INDIVIDUAL_DOCK,
         )
         preset = editor.create_custom_preset_with()
 

@@ -97,7 +97,7 @@ def layout_config_with_data(request, default_echoes_configuration):
         "translator_configuration": TranslatorConfiguration,
         "hints": HintConfiguration,
         "beam_configuration": BeamConfiguration,
-        "dock_rando": DockWeaknessDistributorConfiguration,
+        "dock_weakness_distributor": DockWeaknessDistributorConfiguration,
     }
 
     with contextlib.ExitStack() as stack:

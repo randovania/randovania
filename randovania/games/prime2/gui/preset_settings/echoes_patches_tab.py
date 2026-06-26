@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 from randovania.games.prime2.gui.generated.preset_echoes_patches_ui import Ui_PresetEchoesPatches
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, EchoesNewPatcher
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
@@ -50,7 +49,7 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         self.warp_to_start_check.setChecked(config.warp_to_start)
         self.include_menu_mod_check.setChecked(config.menu_mod)
         self.new_patcher_check.setChecked(has_new_patcher)
-        self.new_patcher_check.setEnabled(config.dock_weakness_distributor.mode == DockWeaknessDistributorMode.ORIGINAL)
+        self.new_patcher_check.setEnabled(not config.dock_weakness_distributor.is_enabled_for_any_type())
         self.inverted_check.setEnabled(has_new_patcher)
         self.inverted_check.setChecked(config.inverted_mode)
         self.save_doors_check.setChecked(config.blue_save_doors)

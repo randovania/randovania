@@ -84,7 +84,7 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
         if configuration.dock_weakness_distributor.is_enabled_for_any_type():
             enabled_resources.add("DoorLocks")
 
-        if configuration.dock_weakness_distributor.mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS:
+        if configuration.dock_weakness_distributor.is_any_type_mode(DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS):
             enabled_resources.add("DoorLockRandoTypes")
 
         if configuration.final_boss == FinalBossConfiguration.ARACHNUS:

@@ -1274,12 +1274,19 @@ def _migrate_v117(preset: dict, game: RandovaniaGame, *, from_layout_description
 def _migrate_v118(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
     config = preset["configuration"].pop("dock_rando")
     preset["configuration"]["dock_weakness_distributor"] = config
-    mode = config.pop("mode")
+
+    if game in {RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_ECHOES_OPR}:
+        config["types_state"].pop("portal", None)
+
+    _mode_translation = {
+        "vanilla": "original",
+        "docks": "individual-dock",
+        "weaknesses": "weaknesses-to-weakness",
+    }
+    mode = _mode_translation[config.pop("mode")]
+
     for type_name, state in config["types_state"].items():
-        if state["can_change_from"]:
-            state["mode"] = mode
-        else:
-            state["mode"] = "vanilla"
+        state["mode"] = mode
 
 
 _MIGRATIONS: list[PresetMigration | None] = [
