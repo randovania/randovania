@@ -1275,19 +1275,10 @@ def _migrate_v118(preset: dict, game: RandovaniaGame, *, from_layout_description
     if game != RandovaniaGame.FUSION:
         return
 
-    rename = {
-        "Sector 6 (NOC)/Twin Caverns East/Door to Twin Cavern Save Room": (
-            "Sector 6 (NOC)/Twin Caverns East/Door to Twin Caverns Save Room"
-        )
-    }
-
     def fix(identifier: dict) -> None:
-        region_rename = rename.get(f"{identifier['region']}/{identifier['area']}")
-        if region_rename:
-            identifier["region"] = region_rename
-            if region_rename in {"Sector 6 (NOC)", "Twin Caverns East"}:
-                if identifier["node"] == "Door to Twin Cavern Save Room":
-                    identifier["node"] = "Door to Twin Caverns Save Room"
+        if identifier["region"] == "Sector 6 (NOC)":
+            if identifier["area"] == "Twin Cavern Save Room":
+                identifier["area"] = "Twin Caverns Save Room"
 
     for starting_location in preset["configuration"]["starting_location"]:
         fix(starting_location)
