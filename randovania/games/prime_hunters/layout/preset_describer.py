@@ -56,6 +56,7 @@ class HuntersPresetDescriber(GamePresetDescriber):
             "Goal": describe_objective(configuration.octoliths),
             "Game Changes": [
                 {f"Starting Energy: {configuration.starting_energy}": configuration.starting_energy != 99},
+                {"Skip Planet Intros": configuration.skip_planet_intros is True},
             ],
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)

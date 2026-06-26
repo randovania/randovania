@@ -4,7 +4,7 @@ import dataclasses
 import uuid
 from unittest.mock import MagicMock
 
-from randovania.games.prime_hunters.gui.preset_settings.prime_hunters_energy_tab import PresetHuntersEnergy
+from randovania.games.prime_hunters.gui.preset_settings.prime_hunters_gameplay_tab import PresetHuntersGameplay
 from randovania.games.prime_hunters.layout.prime_hunters_configuration import HuntersConfiguration
 from randovania.interface_common.preset_editor import PresetEditor
 
@@ -17,7 +17,7 @@ def test_energy_increase(skip_qtbot, prime_hunters_game_description, preset_mana
     options = MagicMock()
     assert isinstance(base_configuration, HuntersConfiguration)
 
-    tab = PresetHuntersEnergy(editor := PresetEditor(preset, options), prime_hunters_game_description, MagicMock())
+    tab = PresetHuntersGameplay(editor := PresetEditor(preset, options), prime_hunters_game_description, MagicMock())
     skip_qtbot.addWidget(tab)
     tab.on_preset_changed(preset)
 

@@ -24,6 +24,7 @@ class HuntersConfiguration(BaseConfiguration):
     starting_energy: int = dataclasses.field(metadata={"min": 1, "max": 1099, "precision": 1})
     shuffle_item_refills: bool
     shuffle_shield_keys: bool
+    skip_planet_intros: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
