@@ -18,6 +18,7 @@ from randovania.game_description.requirements.requirement_or import RequirementO
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib import frozen_lib
 
@@ -267,6 +268,11 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
             output.write(f"\n  * {weakness.name}\n")
             for extra_name, extra_field in weakness.extra.items():
                 output.write(f"      Extra - {extra_name}: {extra_field}\n")
+            if weakness.unsafe_target_in_distributor_wtw:
+                output.write(
+                    f"      Considered unsafe as target for "
+                    f"{DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS.long_name}\n"
+                )
 
             output.write("      Open:\n")
             for level, text in pretty_format_requirement(weakness.requirement, game.resource_database, level=1):
