@@ -35,9 +35,6 @@
                 "Echo Visor": {
                     "num_shuffled_pickups": 1
                 },
-                "Varia Suit": {
-                    "num_included_in_starting_pickups": 1
-                },
                 "Dark Suit": {},
                 "Light Suit": {},
                 "Progressive Suit": {
@@ -68,7 +65,6 @@
                         0
                     ]
                 },
-                "Massive Damage": {},
                 "Unlimited Beam Ammo": {},
                 "Morph Ball": {
                     "num_included_in_starting_pickups": 1
@@ -140,6 +136,12 @@
                 },
                 "Energy Tank": {
                     "num_shuffled_pickups": 14
+                },
+                "Massive Damage": {
+                    "num_shuffled_pickups": 4
+                },
+                "Defense Up": {
+                    "num_shuffled_pickups": 4
                 }
             },
             "default_pickups": {
@@ -155,7 +157,7 @@
                     "ammo_count": [
                         5
                     ],
-                    "pickup_count": 33,
+                    "pickup_count": 25,
                     "requires_main_item": true
                 },
                 "Power Bomb Expansion": {
@@ -271,7 +273,7 @@
         "sky_temple_keys": 9,
         "translator_configuration": {
             "translator_requirement": {
-                "Temple Grounds/Hive Access Tunnel/Translator Gate": "removed",
+                "Temple Grounds/Hive Access Tunnel/Translator Gate": "violet",
                 "Temple Grounds/Meeting Grounds/Translator Gate": "amber",
                 "Temple Grounds/Hive Transport Area/Translator Gate": "removed",
                 "Temple Grounds/Industrial Site/Translator Gate": "removed",
@@ -334,11 +336,14 @@
             "prevents_dark_aether": true,
             "heal_per_second": 1.0
         },
+        "portal_rando": false,
         "varia_suit_damage": 6.0,
         "dark_suit_damage": 1.2,
         "dangerous_energy_tank": false,
         "practice_mod": true,
         "inverted_mode": false,
-        "blue_save_doors": false
+        "blue_save_doors": false,
+        "damage_increase_per_massive_damage": 25.0,
+        "damage_reduction_per_defense_up": 12.5
     }
 }

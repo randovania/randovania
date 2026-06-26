@@ -7,15 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.9.0] - 2026-07-0?
 
-- Waiting changes to be added.
-- Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
-- Changed: The seed hash text in the Multiplayer window can now be interacted with.
 - Added: The Data Visualizer now displays more information about Hint nodes.
+- Changed: Updated the Nintendont version that is used when uploading it directly to the Wii.
+  Includes faster connection speeds and better crash resilience.
+- Changed: Nintendont Connector: Better error messages when connecting to an invalid Nintendont.
+
+### Another Metroid 2 Remake
+
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
+
+### Metroid Dread
+
+- Changed: Usages of Power Bombs to open Charge Beam Doors and destroying Enkies with the Power Bomb Limitations disabled have been changed to no longer require Knowledge (Beginner).
+- Removed: The option for disabling required mains for Power Bombs has been removed. Old presets will still work, but
+  are unsupported.
+
+#### Logic Database
+
+##### Artaria
+
+- Added: Single-wall Wall Jump traversal option to get to EMMI Zone Dome.
+- Added: Speed booster conservation trick to get to the top of the EMMI Zone Hub without diabled door lock randomizer.
+- Added: Added several videos for various connections in Artaria.
+- Changed: The connection from EMMI Zone Exit North to EMMI Zone Exit Northwest using Speedbooster is now classified as a Beginner Speedbooster Conservation trick.
 
 ### Metroid Fusion
 
 - Fixed: Typo in the description for the Knowledge trick.
 - Fixed: Typo in the name of Sector 6's Twin Caverns Save Room (was Twin Cavern Save Room).
+- Fixed: Missile and Power Bomb ammo is now correctly capped at 999 and 99 respectively. This also prevents a softlock when using a Recharge Station with more than 246 Power Bombs.
+- Changed: In Sector 5 - Training Grounds, lowered the Speed Booster runway by one tile to make it easier to shinespark through the door.
 
 #### Logic Database
 
@@ -23,9 +44,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Dark Stairwell: Using the hidden connection to/from Central Nexus can now expect Mid-Air Morphs instead of Bombs/Hi-Jump.
 
+##### Sector 1 (SRX)
+
+- Added: Atmospheric Stabilizer Northwest: Shinespark chain starting from Moto Motorway, recharging in Atmospheric Stabilizer Northeast, using any combination of either Wide, Plasma, or Wave Beam to clear Hornoad Hole and run off ledge in time to spark into the left slope, to ultimately spark into the stabilizer geron. Intermediate Knowledge, Intermediate or Advanced Combat, and Ludicrous Shinespark. Potential softlock after the hard parts are done.
+- Added: Yameba Corridor: As above, but chaining sparks one room further, and including Charge Beam option. This trick must account for Hornoad Hole's room state after all stabilizers are restored: dodging the aerial enemy requires moving further left, necessitating tighter movement in Twin Junctions West, but no risk of softlock. Intermediate Knowledge, Advanced Combat, and Ludicrous Shinespark.
+
+##### Sector 3 (PYR)
+
+- Fixed: Attic: Breaking the bottom right bomb block with Screw Attack now requires Beginner Knowledge.
+- Changed: Attic: Breaking the bottom right bomb block with an Intermediate Shinespark from Deserted Runway is no longer excluded from Door Lock Rando.
+
+##### Sector 6 (NOC)
+
+- Changed: Zozoro Wine Cellar: Zozoros can be frozen on the ground to give you enough height to reach the ledge, reducing Stand On Frozen Enemies to Beginner. Video replaced.
+- Added: Zozoro Wine Cellar: Ludicrous Wall Jump into back of a Zozoro to Ludicrous Damage Boost, then Ludicrous Jump Extend to reduce invincibility frames to d-boost off another zozoro, then use Morph Ball jump extends to turn more quickly and reach the ledge.
+
+### Metroid Prime
+
+- Changed: Slightly reworked the way the inventory is read for the sake of a slight speedup. No expected changes in fuctionality.
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
+
 ### Metroid Prime 2: Echoes
 
-- Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
+- Changed: Slightly reworked the way the inventory is read for the sake of a significant speedup. No expected changes in fuctionality.
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
 
 ### Metroid: Samus Returns
 
@@ -34,6 +76,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Preset option to skip the opening storyboard cutscene (default: off)
 - Fixed: Spazer and Plasma beam projectiles no longer shoot through blocks without Wave
 
+## [10.8.2] - 2026-06-14
+
+### Metroid Prime
+
+- Fixed: Edge case of Randovania sending wrong items to the game when it cannot read the inventory.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Edge case of Randovania sending wrong items to the game when it cannot read the inventory.
+
+## [10.8.1] - 2026-06-13
+
+- Changed: The seed hash text in the Multiplayer window can now be interacted with.
+- Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
+- Changed: When using the Nintendont game connection, it will now give better feedback when you're in the Homebrew Channel and haven't launched Nintendont yet.
+
+### Metroid Prime
+
+- Fixed: Exporting for NTSC 0-01 and Korean
+- Fixed: When having Randovania connected to the game while booting up or rebooting, it will not throw warnings (Dolphin) or disconnect (Nintendont) from the game.
+- Fixed: Converting Metroid Prime 2: Echoes models for multiworld, for certain pickups.
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
 
 ## [10.8.0] - 2026-06-01
 

@@ -26,6 +26,10 @@ def _options() -> type[PerGameOptions]:
 
 
 def _gui() -> randovania.game.gui.GameGui:
+    from randovania.games.common.prime_family.gui.prime_trilogy_teleporter_details_tab import (
+        PrimeTrilogyTeleporterDetailsTab,
+    )
+    from randovania.games.prime2.gui import PortalDetailsTab, TranslatorGateDetailsTab
     from randovania.games.prime2_opr import gui
     from randovania.games.prime2_opr.layout import progressive_items
     from randovania.gui.game_details.hint_details_tab import HintDetailsTab
@@ -36,7 +40,12 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.EchoesOPRCosmeticPatchesDialog,
         export_dialog=gui.EchoesOPRGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(HintDetailsTab,),
+        spoiler_visualizer=(
+            PrimeTrilogyTeleporterDetailsTab,
+            TranslatorGateDetailsTab,
+            PortalDetailsTab,
+            HintDetailsTab,
+        ),
     )
 
 
@@ -93,8 +102,8 @@ def _hash_words() -> list[str]:
 
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="3BPQKKA5",
-        database_collectable_ignore_events=("Event92", "Event97"),
+        expected_seed_hash="QGOUYTAB",
+        database_collectable_ignore_events=("Event91", "Event92", "Event97"),
     )
 
 
@@ -133,6 +142,7 @@ Taking the transport hologram at the center of this room.
         what_can_randomize=(
             "All items including Temple Keys",
             "Elevator destinations",
+            "Portal destinations",
             "Starting locations",
             "Door locks",
             "Translator gate requirements",

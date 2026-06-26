@@ -1,19 +1,21 @@
 from __future__ import annotations
 
+import abc
 from typing import Self
 
 
-class BaseNetworkError(Exception):
+class BaseNetworkError(Exception, abc.ABC):
     @classmethod
     def human_readable_name(cls) -> str:
         return cls.__name__
 
     @classmethod
-    def code(cls):
-        return NotImplementedError()
+    @abc.abstractmethod
+    def code(cls) -> int:
+        raise NotImplementedError
 
     @property
-    def detail(self):
+    def detail(self) -> str | None:
         return None
 
     @property
@@ -26,11 +28,11 @@ class BaseNetworkError(Exception):
         }
 
     @classmethod
-    def from_detail(cls, detail) -> Self:
+    def from_detail(cls, detail: str) -> Self:
         return cls()
 
     @classmethod
-    def from_json(cls, data: dict) -> Self | None:
+    def from_json(cls, data: dict) -> BaseNetworkError | None:
         if "error" not in data:
             return None
 
@@ -46,28 +48,28 @@ class BaseNetworkError(Exception):
     def __hash__(self) -> int:
         return hash(self.detail)
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         return isinstance(other, type(self)) and self.detail == other.detail
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.human_readable_name()
 
 
 class NotLoggedInError(BaseNetworkError):
     @classmethod
-    def code(cls):
+    def code(cls) -> int:
         return 1
 
 
 class WrongPasswordError(BaseNetworkError):
     @classmethod
-    def code(cls):
+    def code(cls) -> int:
         return 2
 
 
 class NotAuthorizedForActionError(BaseNetworkError):
     @classmethod
-    def code(cls):
+    def code(cls) -> int:
         return 3
 
 
@@ -76,24 +78,24 @@ class InvalidActionError(BaseNetworkError):
         self.message = message
 
     @classmethod
-    def code(cls):
+    def code(cls) -> int:
         return 4
 
     @property
-    def detail(self):
+    def detail(self) -> str:
         return self.message
 
     @classmethod
-    def from_detail(cls, detail) -> Self:
+    def from_detail(cls, detail: str) -> Self:
         return cls(detail)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Invalid Action: {self.message}"
 
 
 class InvalidSessionError(BaseNetworkError):
     @classmethod
-    def code(cls):
+    def code(cls) -> int:
         return 5
 
 
@@ -105,7 +107,7 @@ class ServerError(BaseNetworkError):
         return "Internal Server Error"
 
     @classmethod
-    def code(cls):
+    def code(cls) -> int:
         return 6
 
 
@@ -114,18 +116,18 @@ class RequestTimeoutError(BaseNetworkError):
         self.message = message
 
     @classmethod
-    def code(cls):
+    def code(cls) -> int:
         return 7
 
     @property
-    def detail(self):
+    def detail(self) -> str:
         return self.message
 
     @classmethod
-    def from_detail(cls, detail) -> Self:
+    def from_detail(cls, detail: str) -> Self:
         return cls(detail)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Request timed out: {self.message}"
 
 
@@ -137,15 +139,15 @@ class UserNotAuthorizedToUseServerError(BaseNetworkError):
         self.unauthorized_user = unauthorized_user
 
     @classmethod
-    def code(cls):
+    def code(cls) -> int:
         return 8
 
     @property
-    def detail(self):
+    def detail(self) -> str:
         return self.unauthorized_user
 
     @classmethod
-    def from_detail(cls, detail) -> Self:
+    def from_detail(cls, detail: str) -> Self:
         return cls(detail)
 
     def __str__(self) -> str:
@@ -159,18 +161,18 @@ class UnsupportedClientError(BaseNetworkError):
         self.message = message
 
     @classmethod
-    def code(cls):
+    def code(cls) -> int:
         return 9
 
     @property
-    def detail(self):
+    def detail(self) -> str:
         return self.message
 
     @classmethod
-    def from_detail(cls, detail) -> Self:
+    def from_detail(cls, detail: str) -> Self:
         return cls(detail)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Unsupported client: {self.message}"
 
 
@@ -178,7 +180,7 @@ class WorldDoesNotExistError(BaseNetworkError):
     """When the UUID of a request does not mention a world that exists"""
 
     @classmethod
-    def code(cls):
+    def code(cls) -> int:
         return 10
 
 
@@ -186,5 +188,5 @@ class WorldNotAssociatedError(BaseNetworkError):
     """When the World mentioned with a request is not associated with the user currently authenticated."""
 
     @classmethod
-    def code(cls):
+    def code(cls) -> int:
         return 11

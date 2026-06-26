@@ -65,6 +65,14 @@
             ],
             "hidden": true
         },
+        "misc": {
+            "long_name": "Miscellaneous",
+            "hint_details": [
+                "a ",
+                "miscellaneous upgrade"
+            ],
+            "hidden": true
+        },
         "missile_related": {
             "long_name": "Missile Related",
             "hint_details": [
@@ -367,30 +375,6 @@
                 118
             ]
         },
-        "Varia Suit": {
-            "gui_category": "suit",
-            "hint_features": [
-                "chassis",
-                "chozo",
-                "life_support",
-                "major",
-                "suit"
-            ],
-            "model_name": "VariaSuit",
-            "offworld_models": {
-                "am2r": "sItemVariaSuitPrime",
-                "prime1": "Varia Suit",
-                "dread": "powerup_variasuit",
-                "samus_returns": "powerup_variasuit"
-            },
-            "preferred_location_category": "major",
-            "progression": [
-                "Varia"
-            ],
-            "expected_case_for_describer": "starting_item",
-            "hide_from_gui": true,
-            "starting_condition": "must_start"
-        },
         "Dark Suit": {
             "gui_category": "suit",
             "hint_features": [
@@ -598,22 +582,8 @@
                 115
             ]
         },
-        "Massive Damage": {
-            "gui_category": "beam",
-            "hint_features": [
-                "cheat"
-            ],
-            "model_name": "MassiveDamage",
-            "offworld_models": {},
-            "preferred_location_category": "major",
-            "progression": [
-                "DoubleDamage"
-            ],
-            "expected_case_for_describer": "missing",
-            "starting_condition": "never_start"
-        },
         "Unlimited Beam Ammo": {
-            "gui_category": "beam",
+            "gui_category": "misc",
             "hint_features": [
                 "cheat"
             ],
@@ -931,7 +901,7 @@
             ]
         },
         "Unlimited Missiles": {
-            "gui_category": "missile",
+            "gui_category": "misc",
             "hint_features": [
                 "cheat"
             ],
@@ -1162,6 +1132,36 @@
             "show_in_credits_spoiler": false,
             "expected_case_for_describer": "shuffled",
             "custom_count_for_shuffled_case": 14
+        },
+        "Massive Damage": {
+            "gui_category": "misc",
+            "hint_features": [
+                "cheat"
+            ],
+            "model_name": "MassiveDamage",
+            "offworld_models": {},
+            "preferred_location_category": "minor",
+            "progression": [
+                "MassiveDamage"
+            ],
+            "show_in_credits_spoiler": false,
+            "expected_case_for_describer": "missing",
+            "hide_from_gui": true
+        },
+        "Defense Up": {
+            "gui_category": "misc",
+            "hint_features": [
+                "cheat"
+            ],
+            "model_name": "DefenseUp",
+            "offworld_models": {},
+            "preferred_location_category": "minor",
+            "progression": [
+                "DefenseUp"
+            ],
+            "show_in_credits_spoiler": false,
+            "expected_case_for_describer": "missing",
+            "hide_from_gui": true
         }
     },
     "ammo_pickups": {
@@ -1186,8 +1186,7 @@
             ],
             "unlocked_by": "MissileLauncher",
             "temporary": "Temporary1",
-            "allows_negative": true,
-            "hide_requires_main": true
+            "allows_negative": true
         },
         "Power Bomb Expansion": {
             "gui_category": "morph_ball",
@@ -1210,8 +1209,7 @@
             ],
             "unlocked_by": "PowerBomb",
             "temporary": "Temporary2",
-            "allows_negative": true,
-            "hide_requires_main": true
+            "allows_negative": true
         },
         "Dark Ammo Expansion": {
             "gui_category": "beam",

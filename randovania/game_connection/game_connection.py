@@ -58,9 +58,11 @@ class GameConnection:
         self._timer = InfiniteTimer(self._auto_update, self._dt)
 
     async def start(self) -> None:
+        self.logger.debug("Starting game connection")
         self._timer.start()
 
     async def stop(self) -> None:
+        self.logger.debug("Stopping game connection")
         for builder, connector in list(self.remote_connectors.items()):
             await connector.force_finish()
             if connector.is_disconnected():
@@ -72,16 +74,20 @@ class GameConnection:
     async def _auto_update(self) -> None:
         for builder, connector in list(self.remote_connectors.items()):
             if builder not in self.connection_builders:
+                self.logger.info(f"Builder {builder.pretty_text} is not valid anymore. Finishing it out.")
                 await connector.force_finish()
 
             if connector.is_disconnected():
+                self.logger.info(f"Connector from builder {builder.pretty_text} is disconnected. Finishing it out.")
                 await connector.force_finish()
                 del self.remote_connectors[builder]
                 self._handle_connector_removed(connector)
 
         async def try_build_connector(build: ConnectorBuilder) -> None:
+            self.logger.info(f"Building {build.pretty_text} ...")
             c = await build.build_connector()
             if c is not None:
+                self.logger.debug(f"Building {build.pretty_text} was successful")
                 self.remote_connectors[build] = c
                 self._handle_new_connector(c)
 
@@ -94,12 +100,14 @@ class GameConnection:
         )
 
     def add_connection_builder(self, builder: ConnectorBuilder) -> None:
+        self.logger.info(f"Adding builder {builder.pretty_text} ...")
         self.connection_builders.append(builder)
         builder.StatusUpdate.connect(self._on_builder_status_update)
         self._on_builders_changed()
 
     def remove_connection_builder(self, builder: ConnectorBuilder) -> None:
         assert builder in self.connection_builders
+        self.logger.info(f"Removing builder {builder.pretty_text} ...")
         builder.StatusUpdate.disconnect(self._on_builder_status_update)
         self.connection_builders.remove(builder)
         self._on_builders_changed()

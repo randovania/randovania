@@ -8,11 +8,12 @@ import peewee
 import pytest
 from frozendict import frozendict
 
+from randovania.bitpacking import construct_pack
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel, StartingPickupBehavior
 from randovania.game_description.resources.inventory import Inventory
-from randovania.network_common import error, remote_inventory, signals
+from randovania.network_common import error, remote_inventory
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.world_sync import (
     ServerSyncRequest,
@@ -123,6 +124,8 @@ async def test_emit_world_pickups_update_one_action(
             "world": "1179c986-758a-4170-9b07-fe4541d78db0",
         },
         room="world-1179c986-758a-4170-9b07-fe4541d78db0",
+        namespace=None,
+        to=None,
     )
 
 
@@ -314,10 +317,10 @@ async def test_world_sync(mock_sa, solo_two_world_session, mocker: MockerFixture
     )
 
     # Run
-    result = await world_api.world_sync(mock_sa, "TheSid", request)
+    result = await world_api.world_sync(mock_sa, "TheSid", construct_pack.encode(request))
 
     # Assert
-    assert result == ServerSyncResponse(
+    assert construct_pack.decode(result, ServerSyncResponse) == ServerSyncResponse(
         worlds=frozendict(
             {
                 w1.uuid: ServerWorldResponse(
@@ -394,10 +397,10 @@ async def test_dont_change_has_beaten(
     )
 
     # Run
-    result = await world_api.world_sync(mock_sa, "TheSid", request)
+    result = await world_api.world_sync(mock_sa, "TheSid", construct_pack.encode(request))
 
     # Assert
-    assert result == ServerSyncResponse(
+    assert construct_pack.decode(result, ServerSyncResponse) == ServerSyncResponse(
         worlds=frozendict(
             {
                 w1.uuid: ServerWorldResponse(
@@ -449,8 +452,9 @@ async def test_emit_inventory_room(mock_sa, solo_two_world_session):
 
     # Assert
     mock_sa.sio.emit.assert_awaited_once_with(
-        signals.WORLD_BINARY_INVENTORY,
+        "multiplayer_binary_inventory",
         (str(world.uuid), 1234, b"foo"),
         namespace="/",
         to=f"multiplayer-{world.uuid}-1234-inventory",
+        room=None,
     )

@@ -866,7 +866,7 @@ Hint Features - Bomb Slot, Half-Pipe, Keybearer Corpse, Luminoth Corpse, Portal,
           Boost Ball or Spider Ball
   > Event - Spider Guardian
       All of the following:
-          Morph Ball Bomb and Boost Ball and Morph Ball and After Dynamo Works Quads Gone
+          Morph Ball Bomb and Boost Ball and Morph Ball
           # Spider Guardian is a Difficult Boss.
           Energy Tank or Combat (Intermediate)
 
@@ -953,7 +953,7 @@ Hint Features - Bomb Slot, Half-Pipe, Keybearer Corpse, Luminoth Corpse, Portal,
       Trivial
   > Door to Central Area Transport East
       Any of the following:
-          Morph Ball and Spider Ball and After Spider Guardian
+          Morph Ball and Spider Ball
           # https://www.youtube.com/watch?v=yrXFvJcN308
           Morph Ball Bomb and Bomb Space Jump (Expert) and Screw Attack at Z-Axis (Expert) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
           All of the following:
@@ -1563,7 +1563,8 @@ Hint Features - Bomb Slot, Boost Spinner, Echo Visor Lock, Elevator, Luminoth Lo
                'hud_memo': 136577150,
                'streamed_audio': 136577155,
                'sound': 136577159,
-               'audio_fade': 136577153}}
+               'audio_fade': 136577153,
+               'cutscene_model': {'instance': 2359569, 'layer': 'Cannon'}}}
   > Room Bottom
       Trivial
 
@@ -2170,15 +2171,11 @@ Hint Features - Abyss, Energy Controller, Light Energy Transport, Luminoth Lore,
   * Extra - dock_name: North
   > Pickup (Cobalt Translator)
       Trivial
-  > Teleporter to Great Temple
-      After Main Energy Controller Pickup
-  > Teleporter to Agon Wastes
-      After Main Energy Controller Pickup
-  > Teleporter to Torvus Bog
-      After Main Energy Controller Pickup
   > Event - Sanctuary Energy Returned
       After Ing Hive Energy Taken
   > Lore Scan
+      Trivial
+  > Light Transport
       Trivial
 
 > Pickup (Cobalt Translator); Heals? False
@@ -2196,33 +2193,6 @@ Hint Features - Abyss, Energy Controller, Light Energy Transport, Luminoth Lore,
   > Door to Controller Access
       Trivial
 
-> Teleporter to Great Temple; Heals? False
-  * Layers: default
-  * Teleporter to Main Energy Controller/Teleporter to Sanctuary Fortress
-  * Extra - scan_asset_id: None
-  * Extra - teleporter_instance_id: 137822369
-  * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
-      Trivial
-
-> Teleporter to Agon Wastes; Heals? False
-  * Layers: default
-  * Teleporter to Agon Energy Controller/Teleporter to Sanctuary Fortress
-  * Extra - scan_asset_id: None
-  * Extra - teleporter_instance_id: 137822376
-  * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
-      Trivial
-
-> Teleporter to Torvus Bog; Heals? False
-  * Layers: default
-  * Teleporter to Torvus Energy Controller/Teleporter to Sanctuary Fortress
-  * Extra - scan_asset_id: None
-  * Extra - teleporter_instance_id: 137822482
-  * Extra - keep_name_when_vanilla: False
-  > Door to Controller Access
-      Trivial
-
 > Event - Sanctuary Energy Returned; Heals? False
   * Layers: default
   * Event Sanctuary Energy Returned
@@ -2234,6 +2204,12 @@ Hint Features - Abyss, Energy Controller, Light Energy Transport, Luminoth Lore,
   * Generic Hint; Requirement? (Cobalt Translator ≥ 1 and Scan Visor ≥ 1)
   * Extra - translator: Cobalt
   * Extra - string_asset_id: 1041207119
+  > Door to Controller Access
+      Trivial
+
+> Light Transport; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Activate Energy Controller Transports)
   > Door to Controller Access
       Trivial
 

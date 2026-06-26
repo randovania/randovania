@@ -13,6 +13,7 @@ from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH, WORLD_NAME_RE
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
+from randovania.network_common.signals import server_signals
 from randovania.server import database
 from randovania.server.database import (
     MultiplayerAuditEntry,
@@ -396,6 +397,8 @@ async def _get_permalink(sa: ServerApp, sid: str, session: MultiplayerSession) -
 
 
 async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *args: typing.Any) -> typing.Any:
+    # FIXME: break this out into separate functions for each action
+
     monitoring.set_tag("action", action)
 
     action_ = SessionAdminGlobalAction(action)
@@ -649,6 +652,8 @@ async def _create_patcher_file(
 
 
 async def admin_player(sa: ServerApp, sid: str, session_id: int, user_id: int, action: str, *args: typing.Any) -> None:
+    # FIXME: break this out into separate functions for each action
+
     monitoring.set_tag("action", action)
 
     await verify_has_admin(sa, sid, session_id, user_id)
@@ -683,5 +688,5 @@ async def admin_player(sa: ServerApp, sid: str, session_id: int, user_id: int, a
 
 
 def setup_app(sa: ServerApp) -> None:
-    sa.on("multiplayer_admin_session", admin_session)
-    sa.on("multiplayer_admin_player", admin_player)
+    server_signals.Multiplayer.AdminSession.register(sa, admin_session)
+    server_signals.Multiplayer.AdminPlayer.register(sa, admin_player)

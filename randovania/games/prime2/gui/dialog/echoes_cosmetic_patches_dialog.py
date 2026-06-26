@@ -7,24 +7,30 @@ from typing import TYPE_CHECKING, override
 from PySide6 import QtCore, QtGui, QtWidgets
 
 from randovania.games.prime2.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog
-from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime2.layout.echoes_cosmetic_patches import BaseEchoesCosmeticPatches, EchoesCosmeticPatches
 from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences, SoundMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.lib import slider_updater
 from randovania.gui.lib.signal_handling import set_combo_with_value
+from randovania.interface_common.options import Options
 
 if TYPE_CHECKING:
     from randovania.games.prime2.layout.echoes_cosmetic_suits import EchoesSuitPreferences, SuitColor
     from randovania.interface_common.options import Options
 
 
-class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog[EchoesCosmeticPatches], Ui_EchoesCosmeticPatchesDialog):
-    def __init__(self, parent: QtWidgets.QWidget | None, current: EchoesCosmeticPatches, options: Options):
+class BaseEchoesCosmeticPatchesDialog[EchoesCosmeticPatchesT: BaseEchoesCosmeticPatches](
+    BaseCosmeticPatchesDialog[EchoesCosmeticPatchesT], Ui_EchoesCosmeticPatchesDialog
+):
+    def __init__(self, parent: QtWidgets.QWidget | None, current: EchoesCosmeticPatchesT, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
 
         self.options_foldable.set_content_layout(self.options_foldable_layout)
+        self.options_foldable.title = "In-Game Options"
+
         self.suits_foldable.set_content_layout(self.suits_foldable_layout)
+        self.suits_foldable.title = "Suit Colors"
 
         self.field_to_slider_mapping = {
             "screen_brightness": self.screen_brightness_slider,
@@ -60,19 +66,12 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog[EchoesCosmeticPatche
         self.on_new_cosmetic_patches(current)
         self._update_color_squares()
 
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[EchoesCosmeticPatches]:
-        return EchoesCosmeticPatches
-
     def connect_signals(self) -> None:
         super().connect_signals()
 
         self._persist_check_field(self.remove_hud_popup_check, "disable_hud_popup")
         self._persist_check_field(self.faster_credits_check, "speed_up_credits")
         self._persist_check_field(self.open_map_check, "open_map")
-        self._persist_check_field(self.unvisited_room_names_check, "unvisited_room_names")
-        self._persist_check_field(self.pickup_markers_check, "pickup_markers")
         self._persist_check_field(self.custom_hud_color, "use_hud_color")
         self.sound_mode_combo.currentIndexChanged.connect(self._on_sound_mode_update)
         self.custom_hud_color_button.clicked.connect(self._open_color_picker)
@@ -92,12 +91,10 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog[EchoesCosmeticPatche
             getattr(self, f"{suit_name}_left_button").clicked.connect(on_left)
             getattr(self, f"{suit_name}_right_button").clicked.connect(on_right)
 
-    def on_new_cosmetic_patches(self, patches: EchoesCosmeticPatches) -> None:
+    def on_new_cosmetic_patches(self, patches: EchoesCosmeticPatchesT) -> None:
         self.remove_hud_popup_check.setChecked(patches.disable_hud_popup)
         self.faster_credits_check.setChecked(patches.speed_up_credits)
         self.open_map_check.setChecked(patches.open_map)
-        self.unvisited_room_names_check.setChecked(patches.unvisited_room_names)
-        self.pickup_markers_check.setChecked(patches.pickup_markers)
         self.on_new_user_preferences(patches.user_preferences)
         self.custom_hud_color.setChecked(patches.use_hud_color)
         self._set_suit_colors(patches.suit_colors)
@@ -205,7 +202,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog[EchoesCosmeticPatche
         return color_square
 
     @property
-    def cosmetic_patches(self) -> EchoesCosmeticPatches:
+    def cosmetic_patches(self) -> EchoesCosmeticPatchesT:
         return self._cosmetic_patches
 
     @property
@@ -236,4 +233,31 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog[EchoesCosmeticPatche
         )
 
     def reset(self) -> None:
-        self.on_new_cosmetic_patches(EchoesCosmeticPatches())
+        self.on_new_cosmetic_patches(self.cosmetic_patches_type().default())
+
+
+class EchoesCosmeticPatchesDialog(BaseEchoesCosmeticPatchesDialog[EchoesCosmeticPatches]):
+    def __init__(self, parent: QtWidgets.QWidget | None, current: EchoesCosmeticPatches, options: Options):
+        super().__init__(parent, current, options)
+
+        # hide fields only used by OPR
+        self.unvisited_map_icons_check.setVisible(False)
+        self.hud_color_beam_visor_check.setVisible(False)
+        self.hud_color_text_check.setVisible(False)
+
+    @classmethod
+    @override
+    def cosmetic_patches_type(cls) -> type[EchoesCosmeticPatches]:
+        return EchoesCosmeticPatches
+
+    @override
+    def connect_signals(self) -> None:
+        super().connect_signals()
+        self._persist_check_field(self.unvisited_room_names_check, "unvisited_room_names")
+        self._persist_check_field(self.pickup_markers_check, "pickup_markers")
+
+    @override
+    def on_new_cosmetic_patches(self, patches: EchoesCosmeticPatches) -> None:
+        super().on_new_cosmetic_patches(patches)
+        self.unvisited_room_names_check.setChecked(patches.unvisited_room_names)
+        self.pickup_markers_check.setChecked(patches.pickup_markers)
