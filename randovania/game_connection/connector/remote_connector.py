@@ -26,6 +26,7 @@ class ImportantStatusMessage(enum.Enum):
     """Messages that Randovania can request the game displays."""
 
     DISCONNECTED_FROM_SERVER = "disconnected-from-server"
+    INVALID_PICKUP_INDEX = "invalid-pickup-index"
 
     long_name: str
 
@@ -35,7 +36,8 @@ enum_lib.add_long_name(
     {
         ImportantStatusMessage.DISCONNECTED_FROM_SERVER: (
             "Connection to the server has been lost. Please check Randovania application for details."
-        )
+        ),
+        ImportantStatusMessage.INVALID_PICKUP_INDEX: ("An invalid location was collected. Please submit a bug report."),
     },
 )
 
