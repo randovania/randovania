@@ -1,5 +1,5 @@
 {
-    "schema_version": 33,
+    "schema_version": 34,
     "game": "samus_returns",
     "resource_database": {
         "items": {
@@ -5299,7 +5299,7 @@
             "negate": false
         }
     },
-    "dock_weakness_database": {
+    "dock_type_database": {
         "types": {
             "door": {
                 "name": "Door",
@@ -5316,7 +5316,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Access Closed": {
                         "extra": {},
@@ -5327,7 +5328,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Access Locked": {
                         "extra": {},
@@ -5347,7 +5349,8 @@
                                     "items": []
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Permanently Locked Door": {
                         "extra": {
@@ -5360,7 +5363,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": true
                     },
                     "Power Beam Door": {
                         "extra": {
@@ -5373,7 +5377,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Charge Beam Door": {
                         "extra": {
@@ -5455,7 +5460,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Wave Beam Door": {
                         "extra": {
@@ -5517,7 +5523,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Spazer Beam Door": {
                         "extra": {
@@ -5579,7 +5586,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Plasma Beam Door": {
                         "extra": {
@@ -5641,7 +5649,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Missile Door": {
                         "extra": {
@@ -5699,7 +5708,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Super Missile Door": {
                         "extra": {
@@ -5723,7 +5733,8 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Power Bomb Door": {
                         "extra": {
@@ -5742,7 +5753,8 @@
                                 "type": "template",
                                 "data": "Lay Power Bomb"
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Ice Beam Door": {
                         "extra": {
@@ -5766,7 +5778,8 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Grapple Beam Door": {
                         "extra": {
@@ -5790,7 +5803,8 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Bomb Door": {
                         "extra": {
@@ -5809,7 +5823,8 @@
                                 "type": "template",
                                 "data": "Lay Bomb"
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Beam Burst Door": {
                         "extra": {
@@ -5828,7 +5843,8 @@
                                 "type": "template",
                                 "data": "Shoot Beam Burst"
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Lightning Armor Door": {
                         "extra": {
@@ -5852,10 +5868,11 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": {
+                "weakness_distributor": {
                     "unlocked": "Power Beam Door",
                     "locked": "Permanently Locked Door",
                     "change_from": [
@@ -5884,7 +5901,11 @@
                         "Spazer Beam Door",
                         "Super Missile Door",
                         "Wave Beam Door"
-                    ]
+                    ],
+                    "force_change_two_way": true,
+                    "resolver_attempts": 300,
+                    "to_shuffle_proportion": 1.0,
+                    "ui_label": "Door Locks"
                 }
             },
             "tunnel": {
@@ -5902,7 +5923,8 @@
                                 "negate": false
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Tunnel with Bomb Block": {
                         "extra": {},
@@ -5910,10 +5932,11 @@
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "other": {
                 "name": "Dock",
@@ -5928,7 +5951,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Not Determined": {
                         "extra": {},
@@ -5939,7 +5963,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Blocked Passage": {
                         "extra": {},
@@ -5950,10 +5975,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "elevator": {
                 "name": "Elevator",
@@ -5971,20 +5997,16 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             }
         },
         "default_weakness": {
             "type": "other",
             "name": "Not Determined"
-        },
-        "dock_rando": {
-            "force_change_two_way": true,
-            "resolver_attempts": 300,
-            "to_shuffle_proportion": 1.0
         }
     },
     "hint_feature_database": {
