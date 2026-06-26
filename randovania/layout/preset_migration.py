@@ -1275,13 +1275,10 @@ def _migrate_v118(preset: dict, game: RandovaniaGame, *, from_layout_description
     if game != RandovaniaGame.FUSION:
         return
 
-    def fix(identifier: dict) -> None:
+    for identifier in preset["configuration"]["starting_location"]:
         if identifier["region"] == "Sector 6 (NOC)":
             if identifier["area"] == "Twin Cavern Save Room":
                 identifier["area"] = "Twin Caverns Save Room"
-
-    for starting_location in preset["configuration"]["starting_location"]:
-        fix(starting_location)
 
 
 _MIGRATIONS: list[PresetMigration | None] = [
