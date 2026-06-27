@@ -21,7 +21,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
 
-    tabs = [
+    tabs: list[type[PresetTab]] = [
         PresetTrickLevel,
         PresetGeneration,
         PresetHints,
