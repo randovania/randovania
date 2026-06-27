@@ -14,7 +14,13 @@ if TYPE_CHECKING:
 
 @pytest.mark.parametrize(
     "patch_data_name",
-    ["starter_preset", "shuffled_force_fields", "starting_items_with_nothings", "two_way_unchecked_portal_shuffle"],
+    [
+        "starter_preset",
+        "shuffled_force_fields",
+        "starting_items_and_energy_with_nothings",
+        "two_way_unchecked_portal_shuffle",
+        "shuffled_extra_locations_and_skip_planet_intros",
+    ],
 )
 def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     # Setup
