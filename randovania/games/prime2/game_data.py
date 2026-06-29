@@ -196,6 +196,7 @@ Taking the transport hologram at the center of this room.""",
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     test_data=_test_data,
+    reject_undocumented_tricks_in_database=False,
     defaults_available_in_game_sessions=True,
     racetime_url="https://racetime.gg/mp2r/data",
 )
