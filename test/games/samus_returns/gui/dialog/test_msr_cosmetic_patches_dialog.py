@@ -130,3 +130,29 @@ def test_room_names_dropdown(skip_qtbot: pytestqt.qtbot.QtBot, options: Options)
     set_combo_with_value(dialog.room_names_dropdown, MSRRoomGuiType.ALWAYS)
 
     assert dialog.cosmetic_patches == MSRCosmeticPatches(show_room_names=MSRRoomGuiType.ALWAYS)
+
+
+@pytest.mark.parametrize(
+    ("widget_field", "field_name"),
+    [
+        ("reveal_map_cb", "reveal_map"),
+        ("use_fusion_models_cb", "use_fusion_models"),
+    ],
+)
+def test_checkboxes(skip_qtbot: pytestqt.qtbot.QtBot, widget_field: str, field_name: str, options: Options) -> None:
+    cosmetic_patches = MSRCosmeticPatches(**{field_name: False})  # type: ignore[arg-type]
+
+    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches, options)
+    skip_qtbot.addWidget(dialog)
+
+    # test checking box
+    skip_qtbot.mouseClick(getattr(dialog, widget_field), QtCore.Qt.MouseButton.LeftButton)
+    assert dialog.cosmetic_patches == MSRCosmeticPatches(
+        **{field_name: True}  # type: ignore[arg-type]
+    )
+
+    # test unchecking box
+    skip_qtbot.mouseClick(getattr(dialog, widget_field), QtCore.Qt.MouseButton.LeftButton)
+    assert dialog.cosmetic_patches == MSRCosmeticPatches(
+        **{field_name: False}  # type: ignore[arg-type]
+    )

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pprint
 import typing
 from typing import TYPE_CHECKING, TextIO
 
@@ -7,7 +8,7 @@ from randovania.game_description.data_writer import REGION_NAME_TO_FILE_NAME_RE
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.hint_node import HintNode, SpecificLocationHintNode, SpecificPickupHintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.array_base import RequirementArrayBase
@@ -18,9 +19,10 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.lib import frozen_lib
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
+    from collections.abc import Iterable, Iterator, Mapping
     from pathlib import Path
 
     from randovania.game_description.db.area import Area
@@ -150,7 +152,15 @@ def pretty_print_node_type(node: Node, game_view: GameDatabaseView, db: Resource
         return "Configurable Node"
 
     elif isinstance(node, HintNode):
-        return "Hint"
+        message = f"{node.kind.long_name} Hint"
+        if (requirement := str(node.requirement_to_collect)) != "Trivial":
+            message += f"; Requirement? {requirement}"
+        if isinstance(node, SpecificLocationHintNode):
+            message += f"; Target? {node.target_index}"
+        elif isinstance(node, SpecificPickupHintNode):
+            details = game_view.get_game_enum().hints.specific_pickup_hints[node.specific_pickup_hint_id]
+            message += f"; Target? {details.long_name}"
+        return message
 
     elif isinstance(node, TeleporterNetworkNode):
         unlocked_pretty = list(pretty_format_requirement(node.is_unlocked, db))
@@ -167,10 +177,25 @@ def pretty_print_hint_features(features: Iterable[HintFeature]) -> str:
     return f"Hint Features - {', '.join([feature.long_name for feature in sorted(features)])}"
 
 
+def _pretty_print_extra(
+    prefix: str,
+    extra: Mapping[str, typing.Any],
+    print_function: typing.Callable[[str], None],
+) -> None:
+    for extra_name, extra_field in extra.items():
+        extra_field_decoded = frozen_lib.unwrap(extra_field)
+        split = " "
+        if isinstance(extra_field_decoded, dict | list):
+            extra_field_decoded = pprint.pformat(extra_field_decoded, width=120, sort_dicts=False)
+            if "\n" in extra_field_decoded:
+                split = "\n"
+
+        print_function(f"{prefix}Extra - {extra_name}:{split}{extra_field_decoded}")
+
+
 def pretty_print_area(game: GameDatabaseView, area: Area, print_function: typing.Callable[[str], None] = print) -> None:
     print_function(area.name)
-    for extra_name, extra_field in area.extra.items():
-        print_function(f"Extra - {extra_name}: {extra_field}")
+    _pretty_print_extra("", area.extra, print_function)
 
     if area.hint_features:
         print_function(pretty_print_hint_features(area.hint_features))
@@ -194,8 +219,7 @@ def pretty_print_area(game: GameDatabaseView, area: Area, print_function: typing
             print_function(f"  * {pretty_print_hint_features(node.hint_features)}")
         if node.description:
             print_function(f"  * {node.description}")
-        for extra_name, extra_field in node.extra.items():
-            print_function(f"  * Extra - {extra_name}: {extra_field}")
+        _pretty_print_extra("  * ", node.extra, print_function)
 
         if isinstance(node, DockNode):
             for label, req in (

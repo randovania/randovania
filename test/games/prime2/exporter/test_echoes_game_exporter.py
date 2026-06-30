@@ -73,10 +73,8 @@ def test_do_export_game(
     mock_coin_chest = mocker.patch("randovania.games.prime2.exporter.game_exporter.copy_coin_chest")
 
     mock_dol_file = mocker.patch("ppc_asm.dol_file.DolFile")
-    mock_apply_dol = mocker.patch("open_prime_rando.dol_patching.echoes.dol_patcher.apply_patches")
-    mock_dol_patches_from_json = mocker.patch(
-        "open_prime_rando.dol_patching.echoes.dol_patcher.EchoesDolPatchesData.from_json"
-    )
+    mock_apply_dol = mocker.patch("open_prime_rando.echoes.legacy_patcher.patch_dol")
+    mock_dol_patches_from_json = mocker.patch("open_prime_rando.echoes.legacy_patcher.DolPatchesData.model_validate")
 
     exporter = EchoesGameExporter()
     new_patcher_data = {

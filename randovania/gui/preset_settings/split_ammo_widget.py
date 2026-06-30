@@ -47,7 +47,9 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
         if len(unified_ammo.items) != len(self.split_ammo):
             raise ValueError("The unified ammo should have as many items as there are split ammo items.")
 
-    def on_preset_changed(self, preset: Preset, ammo_pickup_widgets: dict[AmmoPickupDefinition, AmmoPickupWidgets]):
+    def on_preset_changed(
+        self, preset: Preset, ammo_pickup_widgets: dict[AmmoPickupDefinition, AmmoPickupWidgets]
+    ) -> None:
         ammo_configuration = preset.configuration.ammo_pickup_configuration
 
         has_unified = ammo_configuration.pickups_state[self.unified_ammo].pickup_count > 0
@@ -68,7 +70,7 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
         for item in self.split_ammo:
             ammo_pickup_widgets[item].pickup_box.setVisible(has_split)
 
-    def change_split(self, has_split: bool):
+    def change_split(self, has_split: bool) -> None:
         with self._editor as editor:
             ammo_configuration = editor.ammo_pickup_configuration
 
@@ -81,7 +83,7 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
                 ref = ammo_configuration.pickups_state[self.unified_ammo]
                 for i, split in enumerate(self.split_ammo):
                     new_count = current_total // len(self.split_ammo)
-                    ammo_multiplier = 0
+                    ammo_multiplier = 0.0
                     if current_total > 0:
                         ammo_multiplier = current_total / new_count
                     new_states[split] = AmmoPickupState(
@@ -100,7 +102,7 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
             else:
                 for split in self.split_ammo:
                     new_states[split] = AmmoPickupState(ammo_count=(0,), pickup_count=0)
-                ammo_multiplier = 0
+                ammo_multiplier = 0.0
                 if current_total > 0:
                     ammo_multiplier = ammo_configuration.pickups_state[split].pickup_count / current_total
                 new_states[self.unified_ammo] = AmmoPickupState(

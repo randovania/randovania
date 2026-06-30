@@ -26,6 +26,7 @@ _FIELDS = [
     "surface_crumbles",
     "area1_crumbles",
     "reverse_area8",
+    "skip_opening",
 ]
 
 

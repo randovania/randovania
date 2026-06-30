@@ -18,7 +18,6 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PlanetsZebethPresetPickupPool,
     )
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
-    from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
 
     return [
@@ -26,7 +25,6 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetLocationPool,
         PresetPlanetsZebethGoal,
         PlanetsZebethPresetPickupPool,
-        PresetPatcherEnergy,
         PresetStartingArea,
         PresetPlanetsZebethPatches,
     ]

@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.hint_node import SpecificLocationHintNode, SpecificPickupHintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements import fast_as_set
@@ -91,6 +92,10 @@ def dock_has_correct_name(area: Area, node: DockNode) -> bool:
     return False
 
 
+def pickup_index_exists(pickup_index: PickupIndex, game: GameDescription) -> bool:
+    return any(pickup_node.pickup_index == pickup_index for _, _, pickup_node in game.iterate_nodes_of_type(PickupNode))
+
+
 def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
     region_list = game.region_list
     area = region_list.nodes_to_area(node)
@@ -111,6 +116,14 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
             yield f"{node.name} is a Pickup Node, but naming doesn't match 'Pickup (...)'"
     elif pickup_node_re.match(node.name) is not None:
         yield f"{node.name} is not a Pickup Node, but naming matches 'Pickup (...)'"
+
+    if isinstance(node, SpecificLocationHintNode):
+        if not pickup_index_exists(node.target_index, game):
+            yield f"{node.name} points to {node.target_index}, which does not exist."
+
+    if isinstance(node, SpecificPickupHintNode):
+        if node.specific_pickup_hint_id not in game.game.hints.specific_pickup_hints:
+            yield f"{node.name} points to {node.specific_pickup_hint_id}, which does not exist."
 
     if isinstance(node, DockNode):
         valid_name = dock_has_correct_name(area, node)

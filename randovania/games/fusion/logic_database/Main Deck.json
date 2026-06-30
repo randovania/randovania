@@ -3889,16 +3889,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Break Single Bomb Blocks"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Break Single Bomb Blocks"
                                     },
                                     {
                                         "type": "and",
@@ -4474,6 +4466,15 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
                                             "name": "ScrewAttack",
                                             "amount": 1,
                                             "negate": false
@@ -4489,8 +4490,46 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Bounce in Ball"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Kickclimb off the platform",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Have Any Jump Upgrade"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Bounce in Ball"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4667,6 +4706,15 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
                                             "name": "ScrewAttack",
                                             "amount": 1,
                                             "negate": false
@@ -4682,12 +4730,24 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Bounce in Ball"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]

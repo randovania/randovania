@@ -58,7 +58,12 @@ def _hints() -> randovania.game.hints.GameHints:
 
     return randovania.game.hints.GameHints(
         hint_distributor=generator.BlankHintDistributor(),
-        specific_pickup_hints={},
+        specific_pickup_hints={
+            "victory_key": randovania.game.hints.SpecificHintDetails(
+                long_name="Victory Key",
+                description="This controls how precise the hint for the Victory Key is.",
+            )
+        },
     )
 
 
@@ -82,7 +87,7 @@ def _hash_words() -> list[str]:
 
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="O4DMH5PE",
+        expected_seed_hash="BURBIEUO",
     )
 
 

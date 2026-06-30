@@ -576,6 +576,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
             "music": c.music_volume / 100,
             "environment_sfx": c.ambience_volume / 100,
         }
+        cosmetic_patches["use_fusion_models"] = c.use_fusion_models
 
         return cosmetic_patches
 
@@ -727,6 +728,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
                 "patch_surface_crumbles": self.configuration.surface_crumbles,
                 "patch_area1_crumbles": self.configuration.area1_crumbles,
                 "reverse_area8": self.configuration.reverse_area8,
+                "skip_opening": self.configuration.skip_opening,
             },
             "text_patches": dict(sorted(self._static_text_changes().items())),
             "spoiler_log": self._credits_spoiler() if not randovania_meta["in_race_setting"] else {},
@@ -745,6 +747,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
             "objective": self._objective(self.configuration),
             "layout_uuid": str(self.players_config.get_own_uuid()),
             "enable_remote_lua": True,
+            "reveal_map_on_start": self.cosmetic_patches.reveal_map,
         }
 
 

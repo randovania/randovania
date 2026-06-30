@@ -6,10 +6,8 @@ from enum import Enum
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
-from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
-    PrimeTrilogyTeleporterConfiguration,
-)
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
+from randovania.games.prime1.layout.prime_teleporters import PrimeTeleporterConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib import enum_lib
 
@@ -83,7 +81,7 @@ class EnemyAttributeRandomizer(BitPackDataclass, JsonDataclass):
 
 @dataclasses.dataclass(frozen=True)
 class PrimeConfiguration(BaseConfiguration):
-    teleporters: PrimeTrilogyTeleporterConfiguration
+    teleporters: PrimeTeleporterConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     artifact_target: LayoutArtifactMode
     artifact_required: LayoutArtifactMode

@@ -6,6 +6,7 @@ from PySide6 import QtCore
 
 from randovania.games.prime2.gui.generated.preset_echoes_goal_ui import Ui_PresetEchoesGoal
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
+from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -16,8 +17,13 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+class PresetEchoesGoal(PresetTab[EchoesConfiguration | EchoesOPRConfiguration], Ui_PresetEchoesGoal):
+    def __init__(
+        self,
+        editor: PresetEditor[EchoesConfiguration | EchoesOPRConfiguration],
+        game_description: GameDescription,
+        window_manager: WindowManager,
+    ):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
@@ -60,8 +66,7 @@ class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
         self.skytemple_slider_label.setText(str(self.skytemple_slider.value()))
         self._on_sky_temple_key_combo_changed()
 
-    def on_preset_changed(self, preset: Preset) -> None:
-        assert isinstance(preset.configuration, EchoesConfiguration)
+    def on_preset_changed(self, preset: Preset[EchoesConfiguration | EchoesOPRConfiguration]) -> None:
         keys = preset.configuration.sky_temple_keys
         data: LayoutSkyTempleKeyMode | type[int]
         if isinstance(keys.value, int):

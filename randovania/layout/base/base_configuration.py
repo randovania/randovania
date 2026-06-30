@@ -99,6 +99,10 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     def unsupported_features(self) -> list[str]:
         return _collect_from_fields(self, "unsupported_features")
 
+    def settings_incompatible_with_map_tracker(self) -> list[str]:
+        """Certain settings make the map tracker useless."""
+        return _collect_from_fields(self, "settings_incompatible_with_map_tracker")
+
     def should_hide_generation_log(self) -> bool:
         """Certain settings makes the generation log full of nonsense. It should be hidden in these cases."""
         return self.dock_rando.mode == DockRandoMode.DOCKS

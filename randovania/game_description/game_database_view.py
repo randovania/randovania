@@ -270,11 +270,11 @@ class GameDatabaseView(ABC):
         """
 
     @final
-    def iterate_nodes_of_type[NodeT: Node](self, node_type: type[NodeT]) -> Iterator[tuple[Region, Area, NodeT]]:
+    def iterate_nodes_of_type[NodeT: Node](self, *node_types: type[NodeT]) -> Iterator[tuple[Region, Area, NodeT]]:
         """
-        Iterates over only the nodes that are of the given type.
+        Iterates over only the nodes that are of the given types.
         """
-        yield from ((region, area, node) for region, area, node in self.node_iterator() if isinstance(node, node_type))
+        yield from ((region, area, node) for region, area, node in self.node_iterator() if isinstance(node, node_types))
 
     @abc.abstractmethod
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:

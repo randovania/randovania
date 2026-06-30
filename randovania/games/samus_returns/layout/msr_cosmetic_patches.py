@@ -58,6 +58,8 @@ class MSRCosmeticPatches(BaseCosmeticPatches):
     music: MusicMode = MusicMode.VANILLA
     music_volume: int = 100
     ambience_volume: int = 100
+    reveal_map: bool = True
+    use_fusion_models: bool = False
 
     @classmethod
     def default(cls) -> MSRCosmeticPatches:

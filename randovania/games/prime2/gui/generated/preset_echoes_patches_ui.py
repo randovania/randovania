@@ -23,7 +23,7 @@ class Ui_PresetEchoesPatches(object):
     def setupUi(self, PresetEchoesPatches):
         if not PresetEchoesPatches.objectName():
             PresetEchoesPatches.setObjectName(u"PresetEchoesPatches")
-        PresetEchoesPatches.resize(466, 552)
+        PresetEchoesPatches.resize(466, 611)
         self.centralWidget = QWidget(PresetEchoesPatches)
         self.centralWidget.setObjectName(u"centralWidget")
         self.centralWidget.setMaximumSize(QSize(16777215, 16777215))
@@ -111,23 +111,6 @@ class Ui_PresetEchoesPatches(object):
 
         self.verticalLayout.addWidget(self.new_patcher_label)
 
-        self.portal_rando_line = QFrame(self.centralWidget)
-        self.portal_rando_line.setObjectName(u"portal_rando_line")
-        self.portal_rando_line.setFrameShape(QFrame.Shape.HLine)
-        self.portal_rando_line.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.verticalLayout.addWidget(self.portal_rando_line)
-
-        self.portal_rando_check = QCheckBox(self.centralWidget)
-        self.portal_rando_check.setObjectName(u"portal_rando_check")
-
-        self.verticalLayout.addWidget(self.portal_rando_check)
-
-        self.portal_rando_label = QLabel(self.centralWidget)
-        self.portal_rando_label.setObjectName(u"portal_rando_label")
-
-        self.verticalLayout.addWidget(self.portal_rando_label)
-
         self.inverted_line = QFrame(self.centralWidget)
         self.inverted_line.setObjectName(u"inverted_line")
         self.inverted_line.setFrameShape(QFrame.Shape.HLine)
@@ -168,8 +151,6 @@ class Ui_PresetEchoesPatches(object):
         self.save_doors_label.setText(QCoreApplication.translate("PresetEchoesPatches", u"This ensures you can easily access Save Stations, regardless of your inventory or of door lock randomization.", None))
         self.new_patcher_check.setText(QCoreApplication.translate("PresetEchoesPatches", u"[Experimental] Use new patcher", None))
         self.new_patcher_label.setText(QCoreApplication.translate("PresetEchoesPatches", u"<html><head/><body><p>Activates the use of the new patcher in addition to the existing one.</p><p>With this enabled:<br/>- Certain in-game puzzles will have their solution randomized, but are also modified to have better accessibility.<br/>- Dynamo Chamber and Trooper Security Station now start in post-layer change state</p><p>It's also required for certain new features, such as Inverted Aether.</p><p>This setting causes additional stuttering during gameplay, especially on Dolphin. It's recommended to unlock disc read speeds.</p></body></html>", None))
-        self.portal_rando_check.setText(QCoreApplication.translate("PresetEchoesPatches", u"[Experimental] Portal Randomizer", None))
-        self.portal_rando_label.setText(QCoreApplication.translate("PresetEchoesPatches", u"<html><head/><body><p>Randomizes portals inside each region. Requires the new patcher to be enabled.</p></body></html>", None))
         self.inverted_check.setText(QCoreApplication.translate("PresetEchoesPatches", u"[Unsupported] Inverted Aether", None))
         self.inverted_label.setText(QCoreApplication.translate("PresetEchoesPatches", u"<html><head/><body><p>In this mode, it's the Light Aether atmosphere that is dangerous!<br/>All safe zones are moved to Light Aether, but that's not enough so it's still extremely dangerous.</p><p>Logic always acts as if this option is disabled.</p></body></html>", None))
     # retranslateUi

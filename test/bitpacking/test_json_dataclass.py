@@ -11,6 +11,7 @@ import pytest
 from randovania.bitpacking.construct_pack import construct_for_type
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
+from randovania.lib.json_lib import JsonObject
 
 
 class A(Enum):
@@ -105,13 +106,13 @@ def test_from_json(sample_values):
 
 def test_from_json_old():
     value = D2OldSyntax(a=A.bar, b=D1(a=5, b="foo", c=1))
-    data = {"a": "bar", "b": {"a": 5, "b": "foo", "c": 1}}
+    data: JsonObject = {"a": "bar", "b": {"a": 5, "b": "foo", "c": 1}}
     assert D2OldSyntax.from_json(data) == value
 
 
 def test_from_json_missing_field_with_default():
     value = D1(2, "foo")
-    data = {"a": 2, "b": "foo"}
+    data: JsonObject = {"a": 2, "b": "foo"}
     assert D1.from_json(data) == value
 
 
@@ -126,7 +127,7 @@ def test_has_dict():
         N(2403, True),
         (60, RandovaniaGame.METROID_PRIME_ECHOES, "foo"),
     )
-    data = {
+    data: JsonObject = {
         "a": 10,
         "b": {"77000000-0000-1111-0000-000000000000": 15},
         "c": ["blank"],

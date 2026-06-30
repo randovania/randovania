@@ -419,7 +419,7 @@ def test_apply_translator_gate_patches(teleporters):
 def test_get_single_hud_text_locked_pbs():
     # Run
     result = pickup_exporter._get_single_hud_text(
-        "Locked Power Bomb Expansion", patch_data_factory._simplified_memo_data(), ()
+        "Locked Power Bomb Expansion", patch_data_factory.simplified_prime2_memo_data(), ()
     )
 
     # Assert
@@ -442,7 +442,7 @@ def test_pickup_data_for_seeker_launcher(echoes_pickup_database, multiworld_item
         True,
     )
     creator = pickup_exporter.PickupExporterSolo(
-        patch_data_factory._simplified_memo_data(), RandovaniaGame.METROID_PRIME_ECHOES
+        patch_data_factory.simplified_prime2_memo_data(), RandovaniaGame.METROID_PRIME_ECHOES
     )
 
     # Run
@@ -492,7 +492,7 @@ def test_pickup_data_for_pb_expansion_locked(
         echoes_resource_database,
     )
     if simplified:
-        memo = patch_data_factory._simplified_memo_data()
+        memo = patch_data_factory.simplified_prime2_memo_data()
         hud_text = [
             "Power Bomb Expansion acquired, but the main Power Bomb is required to use it.",
             "Power Bomb Expansion acquired!",
@@ -538,7 +538,7 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_pickup_database, multiworl
         echoes_resource_database,
     )
     creator = pickup_exporter.PickupExporterSolo(
-        patch_data_factory._simplified_memo_data(), RandovaniaGame.METROID_PRIME_ECHOES
+        patch_data_factory.simplified_prime2_memo_data(), RandovaniaGame.METROID_PRIME_ECHOES
     )
 
     # Run
@@ -563,7 +563,7 @@ def test_create_pickup_all_from_pool(echoes_game_description, default_echoes_con
     item_pool = pool_creator.calculate_pool_results(default_echoes_configuration, echoes_game_description)
     index = PickupIndex(0)
     if disable_hud_popup:
-        memo_data = patch_data_factory._simplified_memo_data()
+        memo_data = patch_data_factory.simplified_prime2_memo_data()
     else:
         memo_data = patch_data_factory.default_prime2_memo_data()
     creator = pickup_exporter.PickupExporterSolo(memo_data, RandovaniaGame.METROID_PRIME_ECHOES)
@@ -638,7 +638,7 @@ def test_create_string_patches(
     )
 
     mock_akul_testament: MagicMock = mocker.patch(
-        "randovania.games.prime2.exporter.patch_data_factory._akul_testament_string_patch",
+        "randovania.games.prime2.exporter.patch_data_factory.akul_testament_string_patch",
         autospec=True,
     )
     mock_akul_testament.return_values = []
@@ -661,7 +661,7 @@ def test_create_string_patches(
 
     # Assert
     expected_result = ["item", "hints"]
-    mock_item_create_hints.assert_called_once_with(all_patches, player_config, exporter)
+    mock_item_create_hints.assert_called_once_with(all_patches[0], exporter)
     mock_logbook_title_string_patches.assert_called_once_with()
     mock_akul_testament.assert_called_once_with(namer)
 

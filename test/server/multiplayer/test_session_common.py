@@ -72,6 +72,7 @@ async def test_emit_session_meta_update(session_update, mock_sa, default_game_li
         session_json,
         room=f"multiplayer-session-{session_update.id}",
         namespace="/",
+        to=None,
     )
 
 
@@ -100,6 +101,7 @@ async def test_emit_session_actions_update(session_update, mock_sa):
         construct_pack.encode(actions),
         room=f"multiplayer-session-{session_update.id}",
         namespace="/",
+        to=None,
     )
 
 
@@ -144,6 +146,7 @@ async def test_emit_session_audit_update(session_update, mock_sa):
         construct_pack.encode(audit_log),
         room=f"multiplayer-session-{session_update.id}",
         namespace="/",
+        to=None,
     )
 
 

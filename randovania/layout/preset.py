@@ -52,6 +52,9 @@ class Preset[BaseConfigurationT: BaseConfiguration](BitPackValue):
     def settings_incompatible_with_multiworld(self) -> list[str]:
         return self.configuration.settings_incompatible_with_multiworld()
 
+    def settings_incompatible_with_map_tracker(self) -> list[str]:
+        return self.configuration.settings_incompatible_with_map_tracker()
+
     def is_same_configuration(self, other: Preset) -> bool:
         return self.configuration == other.configuration
 

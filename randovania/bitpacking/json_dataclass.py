@@ -11,6 +11,7 @@ from enum import Enum
 from frozendict import frozendict
 
 from randovania.lib import type_lib
+from randovania.lib.json_lib import JsonObject, JsonObject_RO
 
 if typing.TYPE_CHECKING:
     from _typeshed import DataclassInstance
@@ -140,12 +141,13 @@ def _encode_value(value: typing.Any, metadata: Metadata) -> typing.Any:
 
 class JsonDataclass:
     @property
-    def as_json(self: DataclassInstance) -> dict:
+    def as_json(self) -> JsonObject:
+        dc: DataclassInstance = self  # type: ignore[assignment]
         result = {}
-        for field in dataclasses.fields(self):
+        for field in dataclasses.fields(dc):
             if not field.init or field.metadata.get("init_from_extra"):
                 continue
-            value = getattr(self, field.name)
+            value = getattr(dc, field.name)
 
             if field.metadata.get("exclude_if_default"):
                 if field.default is not dataclasses.MISSING:
@@ -165,7 +167,7 @@ class JsonDataclass:
         return {}
 
     @classmethod
-    def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
+    def from_json(cls, json_dict: JsonObject_RO, **extra: typing.Any) -> typing.Self:
         assert issubclass(cls, JsonDataclass)
         extra_args = cls.json_extra_arguments()
         extra_args.update(extra)

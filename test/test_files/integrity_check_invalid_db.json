@@ -1,0 +1,840 @@
+{
+    "schema_version": 33,
+    "game": "prime2",
+    "resource_database": {
+        "items": {
+            "LightAmmo": {
+                "long_name": "Light Ammo",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 46
+                }
+            },
+            "BombsItem": {
+                "long_name": "Bombs",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 47
+                }
+            }
+        },
+        "events": {
+            "Boss": {
+                "long_name": "First Boss Killed",
+                "extra": {}
+            }
+        },
+        "tricks": {
+            "BombHoverTrick": {
+                "long_name": "Bomb Hovering",
+                "description": "Trick that allows you to hover with bombs",
+                "require_documentation_above": 0,
+                "extra": {}
+            }
+        },
+        "damage": {},
+        "versions": {},
+        "misc": {},
+        "requirement_template": {
+            "A": {
+                "display_name": "A",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "LightAmmo",
+                                    "amount": 5,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "B"
+                            }
+                        ]
+                    }
+                }
+            },
+            "B": {
+                "display_name": "B",
+                "requirement": {
+                    "type": "template",
+                    "data": "A"
+                }
+            },
+            "Use Bombs": {
+                "display_name": "Use Bombs",
+                "requirement": {
+                    "type": "resource",
+                    "data": {
+                        "type": "items",
+                        "name": "BombsItem",
+                        "amount": 1,
+                        "negate": false
+                    }
+                }
+            }
+        },
+        "damage_reductions": [],
+        "energy_tank_item_index": "LightAmmo"
+    },
+    "layers": [
+        "default"
+    ],
+    "starting_location": {
+        "region": "World",
+        "area": "Area 2",
+        "node": "Generic Node"
+    },
+    "minimal_logic": null,
+    "victory_condition": {
+        "type": "and",
+        "data": {
+            "comment": null,
+            "items": []
+        }
+    },
+    "dock_weakness_database": {
+        "types": {
+            "door": {
+                "name": "Door",
+                "extra": {},
+                "items": {
+                    "Normal Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            },
+            "portal": {
+                "name": "Portal",
+                "extra": {
+                    "ignore_for_hints": true
+                },
+                "items": {},
+                "dock_rando": null
+            },
+            "morph_ball": {
+                "name": "Morph Ball Door",
+                "extra": {},
+                "items": {},
+                "dock_rando": null
+            },
+            "other": {
+                "name": "Other",
+                "extra": {},
+                "items": {
+                    "Open Passage": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Not Determined": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            },
+            "teleporter": {
+                "name": "Teleporter",
+                "extra": {
+                    "is_teleporter": true,
+                    "ignore_for_hints": true
+                },
+                "items": {
+                    "Teleporter": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            }
+        },
+        "default_weakness": {
+            "type": "other",
+            "name": "Not Determined"
+        },
+        "dock_rando": {
+            "force_change_two_way": false,
+            "resolver_attempts": 125,
+            "to_shuffle_proportion": 1.0
+        }
+    },
+    "hint_feature_database": {
+        "redundant": {
+            "long_name": "Redundant Feature",
+            "hint_details": [
+                "",
+                ""
+            ]
+        },
+        "unnormalized": {
+            "long_name": "Un-normalized Feature",
+            "hint_details": [
+                "",
+                ""
+            ]
+        }
+    },
+    "used_trick_levels": {
+        "BombHoverTrick": [
+            1
+        ]
+    },
+    "flatten_to_set_on_patch": false,
+    "regions": [
+        {
+            "name": "World",
+            "extra": {},
+            "areas": {
+                "Area 1": {
+                    "default_node": null,
+                    "hint_features": [],
+                    "extra": {},
+                    "nodes": {
+                        "Event - Foo": {
+                            "node_type": "generic",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default",
+                                "unknown"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "connections": {
+                                "Event - Foo": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                }
+                            }
+                        },
+                        "Door to Area 2 (Generic)": {
+                            "node_type": "dock",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "dock_type": "other",
+                            "default_connection": {
+                                "region": "World",
+                                "area": "Area 2",
+                                "node": "Generic Node"
+                            },
+                            "default_dock_weakness": "Open Passage",
+                            "exclude_from_dock_rando": false,
+                            "incompatible_dock_weaknesses": [],
+                            "override_default_open_requirement": null,
+                            "override_default_lock_requirement": null,
+                            "ui_custom_name": null,
+                            "connections": {}
+                        },
+                        "Door to Area 2 (Dock)": {
+                            "node_type": "dock",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "dock_type": "other",
+                            "default_connection": {
+                                "region": "World",
+                                "area": "Area 2",
+                                "node": "Door to Area 1"
+                            },
+                            "default_dock_weakness": "Open Passage",
+                            "exclude_from_dock_rando": false,
+                            "incompatible_dock_weaknesses": [],
+                            "override_default_open_requirement": null,
+                            "override_default_lock_requirement": null,
+                            "ui_custom_name": null,
+                            "connections": {}
+                        }
+                    }
+                },
+                "Area 2": {
+                    "default_node": "Generic Node",
+                    "hint_features": [],
+                    "extra": {},
+                    "nodes": {
+                        "Generic Node": {
+                            "node_type": "generic",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": true,
+                            "connections": {}
+                        },
+                        "Door to Area 1": {
+                            "node_type": "dock",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": true,
+                            "dock_type": "other",
+                            "default_connection": {
+                                "region": "World",
+                                "area": "Area 1",
+                                "node": "Door to Area 2 (Generic)"
+                            },
+                            "default_dock_weakness": "Open Passage",
+                            "exclude_from_dock_rando": false,
+                            "incompatible_dock_weaknesses": [],
+                            "override_default_open_requirement": null,
+                            "override_default_lock_requirement": null,
+                            "ui_custom_name": null,
+                            "connections": {}
+                        }
+                    }
+                },
+                "Warm": {
+                    "default_node": null,
+                    "hint_features": [],
+                    "extra": {},
+                    "nodes": {
+                        "Door to Hot": {
+                            "node_type": "dock",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "dock_type": "door",
+                            "default_connection": {
+                                "region": "Lava World",
+                                "area": "Hot",
+                                "node": "Door to World (1)"
+                            },
+                            "default_dock_weakness": "Normal Door",
+                            "exclude_from_dock_rando": false,
+                            "incompatible_dock_weaknesses": [],
+                            "override_default_open_requirement": null,
+                            "override_default_lock_requirement": null,
+                            "ui_custom_name": null,
+                            "connections": {}
+                        },
+                        "Door to Lava World": {
+                            "node_type": "dock",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "dock_type": "door",
+                            "default_connection": {
+                                "region": "Lava World",
+                                "area": "Hot",
+                                "node": "Door to World (2)"
+                            },
+                            "default_dock_weakness": "Normal Door",
+                            "exclude_from_dock_rando": false,
+                            "incompatible_dock_weaknesses": [],
+                            "override_default_open_requirement": null,
+                            "override_default_lock_requirement": null,
+                            "ui_custom_name": null,
+                            "connections": {}
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Grass World",
+            "extra": {},
+            "areas": {
+                "Plains": {
+                    "default_node": null,
+                    "hint_features": [],
+                    "extra": {},
+                    "nodes": {
+                        "Hut": {
+                            "node_type": "generic",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": true,
+                            "connections": {
+                                "Windmill": {
+                                    "type": "or",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "BombsItem",
+                                                    "amount": 0,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "BombsItem",
+                                                    "amount": 1,
+                                                    "negate": true
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "BombsItem",
+                                                    "amount": 2,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "Windmill": {
+                            "node_type": "generic",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "connections": {
+                                "Hut": {
+                                    "type": "or",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "BombHoverTrick",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "BombsItem",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "Lava World",
+            "extra": {},
+            "areas": {
+                "Hot": {
+                    "default_node": null,
+                    "hint_features": [
+                        "redundant"
+                    ],
+                    "extra": {},
+                    "nodes": {
+                        "Door to World (1)": {
+                            "node_type": "dock",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {
+                                "different_strongly_connected_component": true
+                            },
+                            "valid_starting_location": false,
+                            "dock_type": "door",
+                            "default_connection": {
+                                "region": "World",
+                                "area": "Warm",
+                                "node": "Door to Hot"
+                            },
+                            "default_dock_weakness": "Normal Door",
+                            "exclude_from_dock_rando": false,
+                            "incompatible_dock_weaknesses": [],
+                            "override_default_open_requirement": null,
+                            "override_default_lock_requirement": null,
+                            "ui_custom_name": null,
+                            "connections": {
+                                "Door to World (2)": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                },
+                                "Door to Nowhere": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                },
+                                "Bad Event": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                },
+                                "Pickup (Not A Pickup)": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                },
+                                "Bad Pickup": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                },
+                                "Pickup (Duplicate Id)": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                },
+                                "Bad Connection Comment": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "https://cdn.discordapp.com/attachments/this-is-a-bad-attachment",
+                                        "items": []
+                                    }
+                                },
+                                "Bad Specific Location Hint": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                },
+                                "Bad Specific Pickup Hint": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                }
+                            }
+                        },
+                        "Door to World (2)": {
+                            "node_type": "dock",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "dock_type": "door",
+                            "default_connection": {
+                                "region": "World",
+                                "area": "Warm",
+                                "node": "Door to Lava World"
+                            },
+                            "default_dock_weakness": "Normal Door",
+                            "exclude_from_dock_rando": false,
+                            "incompatible_dock_weaknesses": [],
+                            "override_default_open_requirement": null,
+                            "override_default_lock_requirement": null,
+                            "ui_custom_name": null,
+                            "connections": {
+                                "Door to World (1)": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                }
+                            }
+                        },
+                        "Door to Nowhere": {
+                            "node_type": "dock",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {
+                                "different_strongly_connected_component": true
+                            },
+                            "valid_starting_location": false,
+                            "dock_type": "door",
+                            "default_connection": {
+                                "region": "World",
+                                "area": "Nowhere",
+                                "node": "Random Door"
+                            },
+                            "default_dock_weakness": "Normal Door",
+                            "exclude_from_dock_rando": false,
+                            "incompatible_dock_weaknesses": [],
+                            "override_default_open_requirement": null,
+                            "override_default_lock_requirement": null,
+                            "ui_custom_name": null,
+                            "connections": {
+                                "Door to World (1)": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                }
+                            }
+                        },
+                        "Bad Event": {
+                            "node_type": "event",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "event_name": "Boss",
+                            "connections": {
+                                "Door to World (1)": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                }
+                            }
+                        },
+                        "Bad Specific Location Hint": {
+                            "node_type": "hint",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": ["default"],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "kind": "specific-location",
+                            "requirement_to_collect": {
+                                "type": "and",
+                                "data": {
+                                    "comment": "",
+                                    "items": []
+                                }
+                            },
+                            "target_index": 2403,
+                            "connections": {
+                                "Door to World (1)": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                }
+                            }
+                        },
+                        "Bad Specific Pickup Hint": {
+                            "node_type": "hint",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": ["default"],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "kind": "specific-pickup",
+                            "requirement_to_collect": {
+                                "type": "and",
+                                "data": {
+                                    "comment": "",
+                                    "items": []
+                                }
+                            },
+                            "specific_pickup_hint_id": "some_invalid_hint_id",
+                            "connections": {
+                                "Door to World (1)": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                }
+                            }
+                        },
+                        "Pickup (Not A Pickup)": {
+                            "node_type": "generic",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "connections": {
+                                "Door to World (1)": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                }
+                            }
+                        },
+                        "Bad Pickup": {
+                            "node_type": "pickup",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "pickup_index": 5,
+                            "location_category": "minor",
+                            "custom_index_group": null,
+                            "hint_features": [
+                                "redundant",
+                                "unnormalized"
+                            ],
+                            "connections": {
+                                "Door to World (1)": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                }
+                            }
+                        },
+                        "Pickup (Duplicate Id)": {
+                            "node_type": "pickup",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "pickup_index": 5,
+                            "location_category": "minor",
+                            "custom_index_group": null,
+                            "hint_features": [
+                                "unnormalized"
+                            ],
+                            "connections": {
+                                "Door to World (1)": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                }
+                            }
+                        },
+                        "Bad Connection Comment": {
+                            "node_type": "generic",
+                            "heal": false,
+                            "coordinates": null,
+                            "description": "",
+                            "layers": [
+                                "default"
+                            ],
+                            "extra": {},
+                            "valid_starting_location": false,
+                            "connections": {
+                                "Door to World (1)": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=invalid-playlist",
+                                        "items": []
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

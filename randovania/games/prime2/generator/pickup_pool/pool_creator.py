@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from randovania.games.prime2.generator.pickup_pool.dark_temple_keys import add_dark_temple_keys
 from randovania.games.prime2.generator.pickup_pool.sky_temple_keys import add_sky_temple_key_distribution_logic
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 
 if TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView
@@ -13,7 +14,7 @@ if TYPE_CHECKING:
 
 
 def echoes_specific_pool(results: PoolResults, configuration: BaseConfiguration, game: GameDatabaseView) -> None:
-    assert isinstance(configuration, EchoesConfiguration)
+    assert isinstance(configuration, EchoesConfiguration | EchoesOPRConfiguration)
     # Adding Dark Temple Keys to pool
     results.extend_with(add_dark_temple_keys(game.get_resource_database_view(), game.get_pickup_database()))
 

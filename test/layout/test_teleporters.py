@@ -9,9 +9,7 @@ from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
-    PrimeTrilogyTeleporterConfiguration,
-)
+from randovania.games.prime2.layout.echoes_teleporters import EchoesTeleporterConfiguration, EchoesTeleporterTargetList
 from randovania.layout.lib.teleporters import (
     TeleporterConfiguration,
     TeleporterList,
@@ -21,10 +19,10 @@ from randovania.layout.lib.teleporters import (
 
 
 class Data(NamedTuple):
-    reference: TeleporterConfiguration | PrimeTrilogyTeleporterConfiguration
+    reference: TeleporterConfiguration | EchoesTeleporterConfiguration
     encoded: bytes
     bit_count: int
-    expected: TeleporterConfiguration | PrimeTrilogyTeleporterConfiguration
+    expected: TeleporterConfiguration | EchoesTeleporterConfiguration
     description: str
     num_valid_targets: int
 
@@ -33,10 +31,10 @@ def _m(
     encoded: bytes,
     bit_count: int,
     description: str,
+    *,
     num_valid_targets: int = 22,
     mode: str = "vanilla",
     skip_final_bosses=False,
-    allow_unvisited_room_names=True,
     excluded_teleporters=None,
     excluded_targets=None,
 ):
@@ -52,7 +50,6 @@ def _m(
         "json": {
             "mode": mode,
             "skip_final_bosses": skip_final_bosses,
-            "allow_unvisited_room_names": allow_unvisited_room_names,
             "excluded_teleporters": excluded_teleporters,
             "excluded_targets": excluded_targets,
         },
@@ -150,28 +147,26 @@ def test_generic_data(request):
 )
 def test_echoes_data(request):
     game = RandovaniaGame.METROID_PRIME_ECHOES
-    reference = PrimeTrilogyTeleporterConfiguration(
+    reference = EchoesTeleporterConfiguration(
         mode=TeleporterShuffleMode.VANILLA,
         skip_final_bosses=False,
-        allow_unvisited_room_names=False,
         excluded_teleporters=TeleporterList((), game),
-        excluded_targets=TeleporterTargetList((), game),
+        excluded_targets=EchoesTeleporterTargetList((), game),
     )
     return Data(
         reference=reference,
         encoded=request.param["encoded"],
         bit_count=request.param["bit_count"],
-        expected=PrimeTrilogyTeleporterConfiguration.from_json(request.param["json"], game=game),
+        expected=EchoesTeleporterConfiguration.from_json(request.param["json"], game=game),
         description=request.param["description"],
         num_valid_targets=request.param["num_valid_targets"],
     )
 
 
 def test_valid_targets_echoes(test_echoes_data):
-    config = PrimeTrilogyTeleporterConfiguration(
+    config = EchoesTeleporterConfiguration(
         mode=test_echoes_data.expected.mode,
         skip_final_bosses=False,
-        allow_unvisited_room_names=False,
         excluded_teleporters=test_echoes_data.expected.excluded_teleporters,
         excluded_targets=test_echoes_data.expected.excluded_targets,
     )
@@ -192,7 +187,7 @@ def test_valid_targets_msr(test_generic_data):
 
 
 @pytest.fixture(
-    params=[(test_echoes_data, PrimeTrilogyTeleporterConfiguration), (test_generic_data, TeleporterConfiguration)]
+    params=[(test_echoes_data, EchoesTeleporterConfiguration), (test_generic_data, TeleporterConfiguration)]
 )
 def test_decode(data, configuration):
     # Run

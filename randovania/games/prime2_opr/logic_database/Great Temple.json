@@ -1,0 +1,2743 @@
+{
+    "name": "Great Temple",
+    "extra": {
+        "asset_id": 2252328306,
+        "associated_region": "Sky Temple"
+    },
+    "areas": {
+        "Temple Transport A": {
+            "default_node": "Elevator to Temple Grounds",
+            "hint_features": [],
+            "extra": {
+                "asset_id": 408633584,
+                "map_name": "Emerald Gate Transport",
+                "camera_data": {
+                    "coords": "opengl",
+                    "projection": [
+                        [
+                            1.2748599,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            1.9209821,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            -1.0000489,
+                            -0.20000489
+                        ],
+                        [
+                            0,
+                            0,
+                            -1,
+                            0
+                        ]
+                    ],
+                    "view": [
+                        [
+                            -0.99192405,
+                            0.12683342,
+                            0,
+                            -14.521677
+                        ],
+                        [
+                            -0.042894606,
+                            -0.33546513,
+                            0.9410756,
+                            58.56924
+                        ],
+                        [
+                            0.11935968,
+                            0.9334755,
+                            0.3381964,
+                            -140.22412
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1
+                        ]
+                    ]
+                }
+            },
+            "nodes": {
+                "Door to Transport A Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.3206959962844849,
+                        "y": 89.10395812988281,
+                        "z": -12.700155258178711
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "South"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Transport A Access",
+                        "node": "Door to Temple Transport A"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Elevator to Temple Grounds": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Scan",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Elevator to Temple Grounds": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2.1175179481506348,
+                        "y": 98.60032653808594,
+                        "z": -14.75407600402832
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "scan_asset_id": 827726881,
+                        "teleporter_instance_id": 152,
+                        "keep_name_when_vanilla": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "elevator",
+                    "default_connection": {
+                        "region": "Temple Grounds",
+                        "area": "Temple Transport A",
+                        "node": "Elevator to Great Temple"
+                    },
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": "Temple Transport Emerald",
+                    "connections": {
+                        "Door to Transport A Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Transport A Access": {
+            "default_node": "Save Station",
+            "hint_features": [],
+            "extra": {
+                "asset_id": 3885674414,
+                "camera_data": {
+                    "coords": "opengl",
+                    "projection": [
+                        [
+                            1.2748599,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            1.9209821,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            -1.0000489,
+                            -0.20000489
+                        ],
+                        [
+                            0,
+                            0,
+                            -1,
+                            0
+                        ]
+                    ],
+                    "view": [
+                        [
+                            -0.8819633,
+                            0.4713181,
+                            0,
+                            -21.83285
+                        ],
+                        [
+                            -0.13522579,
+                            -0.25304392,
+                            0.9579576,
+                            27.956184
+                        ],
+                        [
+                            0.451503,
+                            0.8448833,
+                            0.28690982,
+                            -99.09251
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1
+                        ]
+                    ]
+                }
+            },
+            "nodes": {
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 25.0,
+                        "y": 37.0,
+                        "z": -19.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Temple Sanctuary": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Missile)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bombs",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PowerBomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=a5GsV49RVDs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "versions",
+                                                        "name": "NTSC",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "MorphBall",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Boost",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Power",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Supers",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Charge",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missile",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Screw Attack (Space Jump)"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Temple Sanctuary": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.3313040733337402,
+                        "y": 17.99344825744629,
+                        "z": -17.700166702270508
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "South"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Temple Sanctuary",
+                        "node": "Door to Transport A Access"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Temple Transport A": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Double Bomb Jump",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "MorphBall",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bombs",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "BombJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://www.youtube.com/watch?v=feHJ7rsjW0g&t=22s",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Screw Attack (No Space Jump)"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SlopeJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://www.youtube.com/watch?v=feHJ7rsjW0g",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "MorphBall",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallBoost",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Temple Transport A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.3206959962844849,
+                        "y": 89.10395050048828,
+                        "z": -12.700155258178711
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "North"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Temple Transport A",
+                        "node": "Door to Transport A Access"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Temple Sanctuary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Missile)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.57,
+                        "y": 37.14,
+                        "z": -25.25
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "location_data": {
+                            "type": "standard",
+                            "exclude_memo_from_removal": false,
+                            "original_model": "MissileExpansion",
+                            "connections": [],
+                            "removals": [
+                                65678
+                            ],
+                            "collision_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 1.0
+                            },
+                            "instances": {
+                                "pickup": 65689,
+                                "hud_memo": 65681,
+                                "streamed_audio": 65676,
+                                "sound": 65686,
+                                "audio_fade": 65683
+                            }
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 20,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Temple Sanctuary": {
+            "default_node": "Door to Transport A Access",
+            "hint_features": [
+                "boss",
+                "temple",
+                "translator_gate"
+            ],
+            "extra": {
+                "asset_id": 2731245106,
+                "camera_data": {
+                    "coords": "opengl",
+                    "projection": [
+                        [
+                            1.2748599,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            1.9209821,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            -1.0000489,
+                            -0.20000489
+                        ],
+                        [
+                            0,
+                            0,
+                            -1,
+                            0
+                        ]
+                    ],
+                    "view": [
+                        [
+                            0.9999202,
+                            0.01263472,
+                            0,
+                            -2.2210612
+                        ],
+                        [
+                            -0.012599201,
+                            0.99710923,
+                            0.07492959,
+                            46.995735
+                        ],
+                        [
+                            0.00094672665,
+                            -0.07492361,
+                            0.9971888,
+                            -112.38955
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1
+                        ]
+                    ]
+                }
+            },
+            "nodes": {
+                "Door to Transport B Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 62.23332595825195,
+                        "y": -42.896549224853516,
+                        "z": -17.68570899963379
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "East"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Transport B Access",
+                        "node": "Door to Temple Sanctuary"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Transport B Translator Gate": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Transport A Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.3313040733337402,
+                        "y": 17.993450164794922,
+                        "z": -17.700166702270508
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "North"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Transport A Access",
+                        "node": "Door to Temple Sanctuary"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Transport A Translator Gate": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Controller Transport": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.3313040733337402,
+                        "y": -103.78829956054688,
+                        "z": -17.700185775756836
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "South"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Controller Transport",
+                        "node": "Door to Temple Sanctuary"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Transport C Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -59.548423767089844,
+                        "y": -42.896549224853516,
+                        "z": -17.68570899963379
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "West"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Transport C Access",
+                        "node": "Door to Temple Sanctuary"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Transport C Translator Gate": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Energy Transfer Module)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.97,
+                        "y": -43.56,
+                        "z": -15.4
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "location_data": {
+                            "type": "standard",
+                            "exclude_memo_from_removal": false,
+                            "original_model": "EnergyTransferModule",
+                            "connections": [
+                                {
+                                    "target": 268566936,
+                                    "message": "ACTV"
+                                },
+                                {
+                                    "target": 268566936,
+                                    "message": "ZERO"
+                                }
+                            ],
+                            "removals": [
+                                131365,
+                                268566702,
+                                268566946
+                            ],
+                            "collision_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 1.0
+                            },
+                            "instances": {
+                                "pickup": 131367,
+                                "hud_memo": 131360,
+                                "streamed_audio": 131379,
+                                "sound": 131343,
+                                "audio_fade": 131359
+                            }
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 21,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Alpha Splinter": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4.0,
+                        "y": -38.0,
+                        "z": -17.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Event76",
+                    "connections": {
+                        "Pickup (Energy Transfer Module)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.0,
+                        "y": -54.0,
+                        "z": -18.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Controller Transport": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event76",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Alpha Splinter": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "PowerBomb",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Boost",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Bombs",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Power",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Light",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Charge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "LightAmmo",
+                                                                    "amount": 15,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Dark",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Charge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "DarkAmmo",
+                                                                    "amount": 40,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Annihilator",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Charge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "LightAmmo",
+                                                                                "amount": 30,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "DarkAmmo",
+                                                                                "amount": 30,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Transport A Translator Gate": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event76",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Transport B Translator Gate": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event76",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Transport C Translator Gate": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event76",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Transport A Translator Gate": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.0,
+                        "y": -3.0,
+                        "z": -12.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "gate_index": 9,
+                        "vanilla_actual": "Emerald",
+                        "vanilla_color": "Emerald",
+                        "gate_instances": {
+                            "holo1": {
+                                "hologram": 131268,
+                                "glow": 131323
+                            },
+                            "holo2": {
+                                "hologram": 131273,
+                                "glow": 131237
+                            },
+                            "conditional_relay": 131458
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Transport A Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Transport B Translator Gate": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": -44.0,
+                        "z": -13.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "gate_index": 7,
+                        "vanilla_actual": "Violet",
+                        "vanilla_color": "Violet",
+                        "gate_instances": {
+                            "holo1": {
+                                "hologram": 131438,
+                                "glow": 131442
+                            },
+                            "holo2": {
+                                "hologram": 131441,
+                                "glow": 131444
+                            },
+                            "conditional_relay": 131460
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Transport B Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Transport C Translator Gate": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -38.0,
+                        "y": -42.0,
+                        "z": -13.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "gate_index": 8,
+                        "vanilla_actual": "Amber",
+                        "vanilla_color": "Amber",
+                        "gate_instances": {
+                            "holo1": {
+                                "hologram": 131426,
+                                "glow": 131431
+                            },
+                            "holo2": {
+                                "hologram": 131408,
+                                "glow": 131415
+                            },
+                            "conditional_relay": 131459
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Transport C Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Transport C Access": {
+            "default_node": "Door to Temple Sanctuary",
+            "hint_features": [],
+            "extra": {
+                "asset_id": 441310400,
+                "camera_data": {
+                    "coords": "opengl",
+                    "projection": [
+                        [
+                            1.2748599,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            1.9209821,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            -1.0000489,
+                            -0.20000489
+                        ],
+                        [
+                            0,
+                            0,
+                            -1,
+                            0
+                        ]
+                    ],
+                    "view": [
+                        [
+                            0.8680225,
+                            0.49652487,
+                            0,
+                            113.42427
+                        ],
+                        [
+                            -0.21597128,
+                            0.37756,
+                            0.900447,
+                            20.73472
+                        ],
+                        [
+                            0.4470945,
+                            -0.7816082,
+                            0.43496567,
+                            -54.0369
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1
+                        ]
+                    ]
+                }
+            },
+            "nodes": {
+                "Door to Temple Transport C": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -135.10980224609375,
+                        "y": -79.06395721435547,
+                        "z": -17.685718536376953
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "West"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Temple Transport C",
+                        "node": "Door to Transport C Access"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Temple Sanctuary": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event7",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Transport C Access Light Block": {
+                            "type": "template",
+                            "data": "Shoot Light Beam"
+                        }
+                    }
+                },
+                "Door to Temple Sanctuary": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -59.548423767089844,
+                        "y": -42.896549224853516,
+                        "z": -17.68570899963379
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "East"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Temple Sanctuary",
+                        "node": "Door to Transport C Access"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Temple Transport C": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event7",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Transport C Access Light Block": {
+                            "type": "template",
+                            "data": "Shoot Light Beam"
+                        }
+                    }
+                },
+                "Event - Transport C Access Light Block": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -91.0,
+                        "y": -59.0,
+                        "z": -18.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Event7",
+                    "connections": {
+                        "Door to Temple Transport C": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Temple Sanctuary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Controller Transport": {
+            "default_node": "Door to Main Energy Controller",
+            "hint_features": [],
+            "extra": {
+                "asset_id": 300223430,
+                "camera_data": {
+                    "coords": "opengl",
+                    "projection": [
+                        [
+                            1.2748599,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            1.9209821,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            -1.0000489,
+                            -0.20000489
+                        ],
+                        [
+                            0,
+                            0,
+                            -1,
+                            0
+                        ]
+                    ],
+                    "view": [
+                        [
+                            0.2096373,
+                            -0.9777792,
+                            0,
+                            -126.847565
+                        ],
+                        [
+                            0.31961644,
+                            0.06852624,
+                            0.9450659,
+                            7.2568398
+                        ],
+                        [
+                            -0.92406577,
+                            -0.19812106,
+                            0.32687998,
+                            -88.39737
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1
+                        ]
+                    ]
+                }
+            },
+            "nodes": {
+                "Door to Temple Sanctuary": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.3313039541244507,
+                        "y": -103.78829956054688,
+                        "z": -17.700185775756836
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "NorthBottom"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Temple Sanctuary",
+                        "node": "Door to Controller Transport"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Main Energy Controller": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Scan",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Main Energy Controller": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.3312890529632568,
+                        "y": -113.53443145751953,
+                        "z": 12.299812316894531
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "NorthTop"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Main Energy Controller",
+                        "node": "Door to Controller Transport"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Temple Sanctuary": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Scan",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Transport B Access": {
+            "default_node": "Door to Temple Sanctuary",
+            "hint_features": [
+                "morph"
+            ],
+            "extra": {
+                "asset_id": 4273454375,
+                "camera_data": {
+                    "coords": "opengl",
+                    "projection": [
+                        [
+                            1.5466279,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            1.9209821,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            -1.0000489,
+                            -0.20000489
+                        ],
+                        [
+                            0,
+                            0,
+                            -1,
+                            0
+                        ]
+                    ],
+                    "view": [
+                        [
+                            0.92695135,
+                            -0.3751816,
+                            0,
+                            -115.500145
+                        ],
+                        [
+                            0.123702474,
+                            0.30562848,
+                            0.94408107,
+                            21.333263
+                        ],
+                        [
+                            -0.35420176,
+                            -0.8751172,
+                            0.3297136,
+                            -78.73208
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1
+                        ]
+                    ]
+                }
+            },
+            "nodes": {
+                "Door to Temple Sanctuary": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 62.23332977294922,
+                        "y": -42.896549224853516,
+                        "z": -17.68570899963379
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "West"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Temple Sanctuary",
+                        "node": "Door to Transport B Access"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Temple Transport B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Missile)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bombs",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://www.youtube.com/watch?v=F167mmNCEWc",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Boost",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallBoost",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://www.youtube.com/watch?v=mwdZjDuRuGM",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SlopeJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Temple Transport B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 135.3751220703125,
+                        "y": -76.1244888305664,
+                        "z": -17.685718536376953
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "East"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Temple Transport B",
+                        "node": "Door to Transport B Access"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Temple Sanctuary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Missile)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 86.51,
+                        "y": -53.35,
+                        "z": -12.29
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "location_data": {
+                            "type": "standard",
+                            "exclude_memo_from_removal": false,
+                            "original_model": "MissileExpansion",
+                            "connections": [],
+                            "removals": [
+                                327910
+                            ],
+                            "collision_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 1.0
+                            },
+                            "instances": {
+                                "pickup": 327887,
+                                "hud_memo": 327911,
+                                "streamed_audio": 327906,
+                                "sound": 327891,
+                                "audio_fade": 327904
+                            }
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 22,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Temple Sanctuary": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Temple Transport C": {
+            "default_node": "Elevator to Temple Grounds",
+            "hint_features": [],
+            "extra": {
+                "asset_id": 2556480432,
+                "map_name": "Amber Gate Transport",
+                "camera_data": {
+                    "coords": "opengl",
+                    "projection": [
+                        [
+                            1.5466279,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            1.9209821,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            -1.0000489,
+                            -0.20000489
+                        ],
+                        [
+                            0,
+                            0,
+                            -1,
+                            0
+                        ]
+                    ],
+                    "view": [
+                        [
+                            0.6625405,
+                            -0.7490261,
+                            0,
+                            38.972435
+                        ],
+                        [
+                            0.26806426,
+                            0.23711246,
+                            0.93376625,
+                            92.023476
+                        ],
+                        [
+                            -0.69941527,
+                            -0.6186579,
+                            0.35788372,
+                            -194.52179
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1
+                        ]
+                    ]
+                }
+            },
+            "nodes": {
+                "Door to Transport C Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -135.10980224609375,
+                        "y": -79.06395721435547,
+                        "z": -17.685718536376953
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "East"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Transport C Access",
+                        "node": "Door to Temple Transport C"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Elevator to Temple Grounds": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Scan",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Elevator to Temple Grounds": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -162.4551239013672,
+                        "y": -93.19361114501953,
+                        "z": -19.683338165283203
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "scan_asset_id": 1430348762,
+                        "teleporter_instance_id": 393260,
+                        "keep_name_when_vanilla": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "elevator",
+                    "default_connection": {
+                        "region": "Temple Grounds",
+                        "area": "Temple Transport C",
+                        "node": "Elevator to Great Temple"
+                    },
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": "Temple Transport Amber",
+                    "connections": {
+                        "Door to Transport C Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Main Energy Controller": {
+            "default_node": "Door to Controller Transport",
+            "hint_features": [
+                "energy_controller",
+                "light_energy_transport",
+                "lore"
+            ],
+            "extra": {
+                "asset_id": 44045108,
+                "camera_data": {
+                    "coords": "opengl",
+                    "projection": [
+                        [
+                            1.2748599,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            1.9209821,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            -1.0000489,
+                            -0.20000489
+                        ],
+                        [
+                            0,
+                            0,
+                            -1,
+                            0
+                        ]
+                    ],
+                    "view": [
+                        [
+                            -0.9676644,
+                            -0.25224105,
+                            0,
+                            -11.805312
+                        ],
+                        [
+                            0.09309289,
+                            -0.35712934,
+                            0.9294043,
+                            -34.649513
+                        ],
+                        [
+                            -0.23443386,
+                            0.89935154,
+                            0.3690632,
+                            5.8519793
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1
+                        ]
+                    ]
+                }
+            },
+            "nodes": {
+                "Door to Controller Transport": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.3312889337539673,
+                        "y": -113.53443145751953,
+                        "z": 12.299812316894531
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "SouthLight"
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Controller Transport",
+                        "node": "Door to Main Energy Controller"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Violet Translator)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Activate Energy Controller Transports": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event66",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Lore Scan": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Light Transport": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Violet Translator)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5.16,
+                        "y": -53.49,
+                        "z": 12.8
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "location_data": {
+                            "type": "custom",
+                            "exclude_memo_from_removal": false,
+                            "original_model": "VioletTranslator",
+                            "connections": [],
+                            "removals": [
+                                459696,
+                                459075,
+                                134677499
+                            ],
+                            "collision_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 1.0
+                            },
+                            "collision_size": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 2.0
+                            },
+                            "layer": "Default"
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 23,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Controller Transport": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Light Suit)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.34,
+                        "y": -42.9,
+                        "z": 15.28
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "location_data": {
+                            "type": "standard",
+                            "exclude_memo_from_removal": false,
+                            "original_model": "LightSuit",
+                            "connections": [
+                                {
+                                    "target": 459647,
+                                    "message": "INCR"
+                                },
+                                {
+                                    "target": 537330382,
+                                    "message": "ACTV"
+                                },
+                                {
+                                    "target": 537330382,
+                                    "message": "ZERO"
+                                },
+                                {
+                                    "target": 458813,
+                                    "message": "STRT"
+                                },
+                                {
+                                    "target": 459538,
+                                    "message": "ULCK"
+                                },
+                                {
+                                    "target": 459661,
+                                    "message": "ACTV"
+                                }
+                            ],
+                            "removals": [
+                                537330383,
+                                537330343
+                            ],
+                            "collision_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "instances": {
+                                "pickup": 537330375,
+                                "hud_memo": 537330376,
+                                "streamed_audio": 537330381,
+                                "sound": 537330373,
+                                "audio_fade": 537330384
+                            }
+                        }
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 24,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "connections": {
+                        "Door to Controller Transport": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Activate Energy Controller Transports": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.0,
+                        "y": -60.0,
+                        "z": 15.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Event77",
+                    "connections": {
+                        "Pickup (Light Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Lore Scan": {
+                    "node_type": "hint",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6.734829902648926,
+                        "y": -79.36587524414062,
+                        "z": 16.79358673095703
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "translator": "Violet",
+                        "string_asset_id": 3277287077
+                    },
+                    "valid_starting_location": false,
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "items",
+                                        "name": "Scan",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "items",
+                                        "name": "Violet",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "connections": {
+                        "Door to Controller Transport": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Light Transport": {
+                    "node_type": "teleporter_network",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1.0,
+                        "y": -43.0,
+                        "z": 18.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "Event77",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "network": "Energy Controllers",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Door to Controller Transport": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Temple Transport B": {
+            "default_node": "Elevator to Temple Grounds",
+            "hint_features": [],
+            "extra": {
+                "asset_id": 2399252740,
+                "map_name": "Violet Gate Transport",
+                "camera_data": {
+                    "coords": "opengl",
+                    "projection": [
+                        [
+                            1.5466279,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            1.9209821,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            -1.0000489,
+                            -0.20000489
+                        ],
+                        [
+                            0,
+                            0,
+                            -1,
+                            0
+                        ]
+                    ],
+                    "view": [
+                        [
+                            0.56563926,
+                            0.8246528,
+                            0,
+                            -18.183937
+                        ],
+                        [
+                            -0.22472541,
+                            0.15414186,
+                            0.9621532,
+                            72.82717
+                        ],
+                        [
+                            0.7934424,
+                            -0.54423153,
+                            0.27250913,
+                            -208.09627
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1
+                        ]
+                    ]
+                }
+            },
+            "nodes": {
+                "Door to Transport B Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 135.3751220703125,
+                        "y": -76.12448120117188,
+                        "z": -17.685718536376953
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_name": "West"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Great Temple",
+                        "area": "Transport B Access",
+                        "node": "Door to Temple Transport B"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Elevator to Temple Grounds": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Scan",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Elevator to Temple Grounds": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 164.33387756347656,
+                        "y": -90.2776107788086,
+                        "z": -19.685766220092773
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "scan_asset_id": 2113337837,
+                        "teleporter_instance_id": 524321,
+                        "keep_name_when_vanilla": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "elevator",
+                    "default_connection": {
+                        "region": "Temple Grounds",
+                        "area": "Temple Transport B",
+                        "node": "Elevator to Great Temple"
+                    },
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": "Temple Transport Violet",
+                    "connections": {
+                        "Door to Transport B Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

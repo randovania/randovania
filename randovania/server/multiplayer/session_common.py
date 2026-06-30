@@ -1,15 +1,14 @@
 import hashlib
-from collections.abc import Sequence
 
 import peewee
 import sentry_sdk
 
 from randovania.bitpacking import construct_pack
-from randovania.lib.json_lib import JsonObject_RO, JsonType_RO
-from randovania.network_common import error, signals
+from randovania.network_common import error
+from randovania.network_common.signals import client_signals
 from randovania.server import database
 from randovania.server.database import MultiplayerAuditEntry, MultiplayerSession, World
-from randovania.server.server_app import ServerApp
+from randovania.server.server_app import AsyncCallable, ServerApp
 
 
 def room_name_for(session_id: int) -> str:
@@ -17,13 +16,12 @@ def room_name_for(session_id: int) -> str:
     return f"multiplayer-session-{session_id}"
 
 
-async def emit_session_global_event(
+def _emit[**P](
+    signal: client_signals.ClientSignal[P],
     sa: ServerApp,
     session: MultiplayerSession,
-    name: str,
-    data: str | bytes | Sequence[JsonType_RO] | JsonObject_RO,
-) -> None:
-    await sa.sio.emit(name, data, room=room_name_for(session.id), namespace="/")
+) -> AsyncCallable[P, None]:
+    return signal.emit(sa, room=room_name_for(session.id), namespace="/")
 
 
 async def get_membership_for(
@@ -55,9 +53,8 @@ async def emit_session_meta_update(sa: ServerApp, session: MultiplayerSession) -
         span.set_data("session.id", session.id)
         span.set_data("session.name", session.name)
         sa.logger.debug("multiplayer_session_meta_update for session %d (%s)", session.id, session.name)
-        await emit_session_global_event(
-            sa, session, signals.SESSION_META_UPDATE, session.create_session_entry().as_json
-        )
+
+        await _emit(client_signals.SessionMetaUpdate, sa, session)(session.create_session_entry().as_json)
 
 
 async def emit_session_actions_update(sa: ServerApp, session: MultiplayerSession) -> None:
@@ -70,7 +67,8 @@ async def emit_session_actions_update(sa: ServerApp, session: MultiplayerSession
         span.set_data("session.id", session.id)
         span.set_data("session.name", session.name)
         span.set_data("session.actions", len(actions.actions))
-        await emit_session_global_event(sa, session, signals.SESSION_ACTIONS_UPDATE, construct_pack.encode(actions))
+
+        await _emit(client_signals.SessionActionsUpdate, sa, session)(construct_pack.encode(actions))
 
 
 async def emit_session_audit_update(sa: ServerApp, session: MultiplayerSession) -> None:
@@ -81,7 +79,8 @@ async def emit_session_audit_update(sa: ServerApp, session: MultiplayerSession) 
         span.set_data("session.id", session.id)
         span.set_data("session.name", session.name)
         span.set_data("session.audit", len(log.entries))
-        await emit_session_global_event(sa, session, signals.SESSION_AUDIT_UPDATE, construct_pack.encode(log))
+
+        await _emit(client_signals.SessionAuditUpdate, sa, session)(construct_pack.encode(log))
 
 
 async def add_audit_entry(sa: ServerApp, sid: str, session: MultiplayerSession, message: str) -> None:

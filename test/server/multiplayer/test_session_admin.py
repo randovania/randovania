@@ -64,6 +64,7 @@ async def test_admin_player_kick_last(
         },
         room="multiplayer-session-1",
         namespace="/",
+        to=None,
     )
     mock_audit.assert_awaited_once_with(mock_sa, "TheSid", session, "Left session")
 
@@ -127,6 +128,7 @@ async def test_admin_player_kick_member(two_player_session, mock_sa, mocker, moc
         },
         room="multiplayer-session-1",
         namespace="/",
+        to=None,
     )
     mock_audit.assert_awaited_once_with(mock_sa, "TheSid", session, "Kicked Other Name")
 

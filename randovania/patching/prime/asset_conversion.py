@@ -8,11 +8,12 @@ import time
 from typing import TYPE_CHECKING, NamedTuple
 
 import open_prime_rando.echoes.custom_assets
-from retro_data_structures.asset_manager import AssetManager, IsoFileProvider
+from retro_data_structures.asset_manager import AssetManager
 from retro_data_structures.conversion import conversions
 from retro_data_structures.conversion.asset_converter import AssetConverter, ConvertedAsset
 from retro_data_structures.dependencies import Dependency, all_converted_dependencies
 from retro_data_structures.exceptions import InvalidAssetId, UnknownAssetId
+from retro_data_structures.file_provider import IsoFileProvider
 from retro_data_structures.formats import format_for
 from retro_data_structures.formats.pak import PakBody, PakFile
 from retro_data_structures.formats.pak_gc import PAK_GC

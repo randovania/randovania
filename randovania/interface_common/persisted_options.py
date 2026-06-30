@@ -218,6 +218,7 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # add advanced_use_world_graph
     _only_new_fields,  # fusion: cosmetic option for alternative hud display
     _only_new_fields,  # dread: show_dna_in_hud/enable_debug_logging
+    _only_new_fields,  # msr: option to use fusion models and reveal map
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

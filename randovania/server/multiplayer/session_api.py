@@ -9,8 +9,11 @@ from pydantic import StringConstraints
 from randovania.network_common import error, multiplayer_session
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
+    MultiplayerSessionEntry,
     MultiplayerSessionListEntry,
 )
+from randovania.network_common.signals import server_signals
+from randovania.network_common.signals.common import TypedJsonObject
 from randovania.server import database
 from randovania.server.database import MultiplayerMembership, MultiplayerSession, User, World
 from randovania.server.multiplayer import session_common
@@ -87,7 +90,12 @@ async def create_session(
     return new_session.create_session_entry()
 
 
-async def join_session(sa: ServerApp, sid: str, session_id: int, password: str | None) -> dict:
+async def join_session(
+    sa: ServerApp,
+    sid: str,
+    session_id: int,
+    password: str | None,
+) -> TypedJsonObject[MultiplayerSessionEntry]:
     session = MultiplayerSession.get_by_id(session_id)
     user = await sa.get_current_user(sid)
 
@@ -125,7 +133,8 @@ async def request_session_update(sa: ServerApp, sid: str, session_id: int) -> No
 
 def setup_app(sa: ServerApp) -> None:
     sa.app.include_router(router)
-    sa.on("multiplayer_list_sessions", list_sessions, with_header_check=True)
-    sa.on("multiplayer_join_session", join_session, with_header_check=True)
-    sa.on("multiplayer_listen_to_session", listen_to_session, with_header_check=True)
-    sa.on("multiplayer_request_session_update", request_session_update)
+
+    server_signals.Multiplayer.ListSessions.register(sa, list_sessions, with_header_check=True)
+    server_signals.Multiplayer.JoinSession.register(sa, join_session, with_header_check=True)
+    server_signals.Multiplayer.ListenToSession.register(sa, listen_to_session, with_header_check=True)
+    server_signals.Multiplayer.RequestSessionUpdate.register(sa, request_session_update)

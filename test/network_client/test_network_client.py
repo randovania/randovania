@@ -237,7 +237,9 @@ async def test_session_admin_global(client: NetworkClient):
 
     # Assert
     assert result == client.server_call.return_value
-    client.server_call.assert_awaited_once_with("multiplayer_admin_session", (1234, "change_world", 5))
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_admin_session", (1234, "change_world", 5), namespace=None, handle_invalid_session=True
+    )
 
 
 @pytest.mark.parametrize("was_listening", [False, True])
@@ -253,7 +255,9 @@ async def test_listen_to_session(client: NetworkClient, listen, was_listening):
     await client.listen_to_session(session_meta.id, listen)
 
     # Assert
-    client.server_call.assert_awaited_once_with("multiplayer_listen_to_session", (1234, listen))
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_listen_to_session", (1234, listen), namespace=None, handle_invalid_session=True
+    )
     if listen:
         assert client._sessions_interested_in == {1234}
     else:
@@ -274,7 +278,9 @@ async def test_world_track_inventory(client: NetworkClient, listen, was_listenin
     await client.world_track_inventory(uid, 4567, listen)
 
     # Assert
-    client.server_call.assert_awaited_once_with("multiplayer_watch_inventory", (str(uid), 4567, listen, True))
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_watch_inventory", (str(uid), 4567, listen, True), namespace=None, handle_invalid_session=True
+    )
     if listen:
         assert client._tracking_worlds == {(uid, 9999), (uid, 4567)}
     else:
@@ -348,7 +354,7 @@ async def test_refresh_received_pickups(client: NetworkClient, blank_game_descri
     }
 
     pickups = [MagicMock(), MagicMock(), MagicMock()]
-    mock_decode = mocker.patch("randovania.network_client.network_client._decode_pickup", side_effect=pickups)
+    mock_decode = mocker.patch("randovania.network_common.remote_pickup._decode_pickup", side_effect=pickups)
 
     client.on_world_pickups_update = AsyncMock()
 
@@ -480,7 +486,9 @@ async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mo
 
     # Assert
     assert result is mock_session_from.return_value
-    client.server_call.assert_awaited_once_with("multiplayer_join_session", (session.id, "mahSecret"))
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_join_session", (session.id, "mahSecret"), namespace=None, handle_invalid_session=True
+    )
     mock_session_from.assert_called_once_with(client.server_call.return_value)
     assert client._sessions_interested_in == {mock_session_from.return_value.id}
 
@@ -543,7 +551,9 @@ async def test_async_race_get_livesplit_url(client: NetworkClient):
 
     # Assert
     assert result == client.server_call.return_value
-    client.server_call.assert_awaited_once_with("async_race_get_livesplit_url", 1234)
+    client.server_call.assert_awaited_once_with(
+        "async_race_get_livesplit_url", 1234, namespace=None, handle_invalid_session=True
+    )
 
 
 async def test_on_async_race_room_update_raw(client: NetworkClient):

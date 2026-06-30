@@ -45,6 +45,7 @@ def _gui() -> randovania.game.gui.GameGui:
             HintDetailsTab,
         ),
         game_tab=gui.EchoesGameTabWidget,
+        hide_database_map_view=True,
     )
 
 

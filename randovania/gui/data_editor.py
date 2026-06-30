@@ -23,6 +23,7 @@ from randovania.game_description import (
 )
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.hint_node import HintNode, SpecificLocationHintNode, SpecificPickupHintNode
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.editor import Editor
@@ -218,10 +219,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.resource_editor.ResourceChanged.connect(self._on_resource_changed)
         self.connection_filters.FiltersUpdated.connect(self._on_filters_changed)
 
-        if self.game_description.game in {
-            RandovaniaGame.METROID_PRIME_ECHOES,
-            RandovaniaGame.FACTORIO,
-        }:
+        if self.game_description.game.gui.hide_database_map_view:
             self.area_view_dock.hide()
 
         self.zoom_slider.setTickInterval(1)
@@ -472,6 +470,43 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 return
             self.replace_node_with(area, node_edit_popup.node, new_node)
 
+    def node_details(self, node: Node) -> str:
+        try:
+            msg = pretty_print.pretty_print_node_type(node, self.game_description, self.resource_database)
+        except Exception as e:
+            msg = f"Unable to describe node: {e}"
+
+        if isinstance(node, DockNode):
+            msg = f'{node.default_dock_weakness.name} to <a href="node://{node.default_connection.as_string}">{node.default_connection.node}</a>'
+            if node.override_default_open_requirement is not None:
+                msg += f"\n<br />Open Override: {node.override_default_open_requirement}"
+            if node.override_default_lock_requirement is not None:
+                msg += f"\n<br />Lock Override: {node.override_default_lock_requirement}"
+
+        elif isinstance(node, HintNode):
+            msg = f"{node.kind.long_name} Hint"
+
+            if isinstance(node, SpecificLocationHintNode):
+                target = self.region_list.node_from_pickup_index(node.target_index)
+                fmt_message = '\n<br />Target: <a href="node://{}">{}</a>'
+                msg += fmt_message.format(
+                    target.identifier.as_string,
+                    target.identifier.display_name(with_region=False, separator=": "),
+                )
+
+            elif isinstance(node, SpecificPickupHintNode):
+                specific_pickup_hints = self.resource_database.game_enum.hints.specific_pickup_hints
+                if node.specific_pickup_hint_id in specific_pickup_hints:
+                    hint_id = specific_pickup_hints[node.specific_pickup_hint_id].long_name
+                else:
+                    hint_id = "Unknown"
+                msg += f"\n<br />Target: {hint_id}"
+
+            if (requirement := str(node.requirement_to_collect)) != "Trivial":
+                msg += f"\n<br />Requirement: {requirement}"
+
+        return msg
+
     def update_selected_node(self) -> None:
         node = self.current_node
         self.node_info_group.setEnabled(node is not None)
@@ -489,20 +524,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.area_view_canvas.highlight_node(node)
 
-        try:
-            msg = pretty_print.pretty_print_node_type(node, self.game_description, self.resource_database)
-        except Exception as e:
-            msg = f"Unable to describe node: {e}"
-
-        if isinstance(node, DockNode):
-            msg = f'{node.default_dock_weakness.name} to <a href="node://{node.default_connection.as_string}">{node.default_connection.node}</a>'
-            if node.override_default_open_requirement is not None:
-                msg += f"\n<br />Open Override: {node.override_default_open_requirement}"
-            if node.override_default_lock_requirement is not None:
-                msg += f"\n<br />Lock Override: {node.override_default_lock_requirement}"
-
         self.node_name_label.setText(node.name)
-        self.node_details_label.setText(msg)
+        self.node_details_label.setText(self.node_details(node))
         self.node_description_label.setText(node.description)
         self.update_other_node_connection()
 
