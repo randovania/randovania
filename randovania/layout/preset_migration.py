@@ -1271,6 +1271,16 @@ def _migrate_v117(preset: dict, game: RandovaniaGame, *, from_layout_description
         preset["configuration"]["skip_opening"] = False
 
 
+def _migrate_v118(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    if game != RandovaniaGame.FUSION:
+        return
+
+    for identifier in preset["configuration"]["starting_location"]:
+        if identifier["region"] == "Sector 6 (NOC)":
+            if identifier["area"] == "Twin Cavern Save Room":
+                identifier["area"] = "Twin Caverns Save Room"
+
+
 _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1389,6 +1399,7 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v115,  # echoes: remove portal rando
     _migrate_v116,  # echoes: update beam configuration to new format
     _migrate_v117,  # msr: skip the opening storyboard cutscene configuration
+    _migrate_v118,  # fusion: rename twin cavern save room to twin caverns save room
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
