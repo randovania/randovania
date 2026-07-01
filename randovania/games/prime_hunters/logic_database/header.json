@@ -1,5 +1,5 @@
 {
-    "schema_version": 33,
+    "schema_version": 34,
     "game": "prime_hunters",
     "resource_database": {
         "items": {
@@ -757,7 +757,7 @@
             "negate": false
         }
     },
-    "dock_weakness_database": {
+    "dock_type_database": {
         "types": {
             "Door": {
                 "name": "Door",
@@ -774,7 +774,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Missile Blast Shield": {
                         "extra": {
@@ -798,7 +799,8 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Volt Driver Blast Shield": {
                         "extra": {
@@ -822,7 +824,8 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Battlehammer Blast Shield": {
                         "extra": {
@@ -846,7 +849,8 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Imperialist Blast Shield": {
                         "extra": {
@@ -870,7 +874,8 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Judicator Blast Shield": {
                         "extra": {
@@ -894,7 +899,8 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Magmaul Blast Shield": {
                         "extra": {
@@ -918,7 +924,8 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Shock Coil Blast Shield": {
                         "extra": {
@@ -942,10 +949,11 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "Morph Ball": {
                 "name": "Morph Ball Door",
@@ -960,10 +968,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "Portal": {
                 "name": "Portal",
@@ -981,7 +990,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "No Return Portal": {
                         "extra": {},
@@ -992,10 +1002,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "Dock": {
                 "name": "Dock",
@@ -1010,10 +1021,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "Other": {
                 "name": "Other",
@@ -1028,20 +1040,16 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             }
         },
         "default_weakness": {
             "type": "Other",
             "name": "Not Determined"
-        },
-        "dock_rando": {
-            "force_change_two_way": false,
-            "resolver_attempts": 100,
-            "to_shuffle_proportion": 1.0
         }
     },
     "hint_feature_database": {},

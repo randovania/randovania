@@ -1,5 +1,5 @@
 {
-    "schema_version": 33,
+    "schema_version": 34,
     "game": "planets_zebeth",
     "resource_database": {
         "items": {
@@ -438,7 +438,7 @@
             ]
         }
     },
-    "dock_weakness_database": {
+    "dock_type_database": {
         "types": {
             "door": {
                 "name": "Door",
@@ -453,7 +453,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Missile Door": {
                         "extra": {},
@@ -509,7 +510,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "10 Missiles Door": {
                         "extra": {},
@@ -539,7 +541,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Wave Beam Door": {
                         "extra": {},
@@ -569,7 +572,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Ice Beam Door": {
                         "extra": {},
@@ -599,7 +603,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Bomb Door": {
                         "extra": {},
@@ -607,7 +612,8 @@
                             "type": "template",
                             "data": "Can Use Bombs"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Screw Attack Door": {
                         "extra": {},
@@ -620,7 +626,8 @@
                                 "negate": false
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Locked Door": {
                         "extra": {},
@@ -640,10 +647,11 @@
                                     "items": []
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": true
                     }
                 },
-                "dock_rando": {
+                "weakness_distributor": {
                     "unlocked": "Normal Door",
                     "locked": "Locked Door",
                     "change_from": [
@@ -660,7 +668,11 @@
                         "Normal Door",
                         "Screw Attack Door",
                         "Wave Beam Door"
-                    ]
+                    ],
+                    "force_change_two_way": false,
+                    "resolver_attempts": 125,
+                    "to_shuffle_proportion": 1.0,
+                    "ui_label": "Door Locks"
                 }
             },
             "other": {
@@ -676,7 +688,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Not Determined": {
                         "extra": {},
@@ -687,10 +700,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "teleporter": {
                 "name": "Teleporter",
@@ -708,20 +722,16 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             }
         },
         "default_weakness": {
             "type": "other",
             "name": "Not Determined"
-        },
-        "dock_rando": {
-            "force_change_two_way": false,
-            "resolver_attempts": 125,
-            "to_shuffle_proportion": 1.0
         }
     },
     "hint_feature_database": {},

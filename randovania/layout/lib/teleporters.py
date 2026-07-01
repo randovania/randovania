@@ -50,7 +50,7 @@ class TeleporterList(location_list.LocationList):
     @classmethod
     def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
         game_description = default_database.game_description_for(game)
-        teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
+        teleporter_dock_types = game_description.dock_type_database.all_teleporter_dock_types
         region_list = game_description.region_list
         nodes = [
             node.identifier
@@ -120,7 +120,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
             TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
         }:
             game_description = default_database.game_description_for(self.game)
-            teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
+            teleporter_dock_types = game_description.dock_type_database.all_teleporter_dock_types
             region_list = game_description.region_list
 
             result = []

@@ -584,7 +584,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         # generate a 2D dictionary of source (scenario, actor) => target (scenario, actor)
         elevator_dict: dict = {}
         for node, connection in self.patches.all_dock_connections(self.game):
-            if node.dock_type not in self.game.dock_weakness_database.all_teleporter_dock_types:
+            if node.dock_type not in self.game.dock_type_database.all_teleporter_dock_types:
                 continue
 
             scenario = self._level_name_for(node)

@@ -37,7 +37,10 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.MSRCosmeticPatchesDialog,
         export_dialog=gui.MSRGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(HintDetailsTab, gui.MSRTeleporterDetailsTab),
+        spoiler_visualizer=(
+            HintDetailsTab,
+            gui.MSRTeleporterDetailsTab,
+        ),
     )
 
 

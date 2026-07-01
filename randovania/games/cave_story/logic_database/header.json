@@ -1,5 +1,5 @@
 {
-    "schema_version": 33,
+    "schema_version": 34,
     "game": "cave_story",
     "resource_database": {
         "items": {
@@ -1269,7 +1269,7 @@
             ]
         }
     },
-    "dock_weakness_database": {
+    "dock_type_database": {
         "types": {
             "door": {
                 "name": "Door",
@@ -1284,10 +1284,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "trigger": {
                 "name": "H/V Trigger",
@@ -1302,10 +1303,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "entrance": {
                 "name": "Entrance",
@@ -1320,10 +1322,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "exit": {
                 "name": "Exit",
@@ -1338,10 +1341,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "teleporter": {
                 "name": "Teleporter",
@@ -1356,10 +1360,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "debug cat": {
                 "name": "Debug Cat",
@@ -1374,10 +1379,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "other": {
                 "name": "Other",
@@ -1392,7 +1398,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Not Determined": {
                         "extra": {},
@@ -1403,20 +1410,16 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             }
         },
         "default_weakness": {
             "type": "other",
             "name": "Not Determined"
-        },
-        "dock_rando": {
-            "force_change_two_way": false,
-            "resolver_attempts": 125,
-            "to_shuffle_proportion": 1.0
         }
     },
     "hint_feature_database": {

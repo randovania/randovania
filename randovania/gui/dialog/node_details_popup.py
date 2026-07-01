@@ -38,7 +38,7 @@ from randovania.lib import enum_lib, frozen_lib
 
 if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
-    from randovania.game_description.db.dock import DockType, DockWeaknessDatabase
+    from randovania.game_description.db.dock import DockType, DockTypeDatabase
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_description import GameDescription
     from randovania.gui.widgets.combo_box_item_delegate import ComboBoxItemDelegate
@@ -53,7 +53,7 @@ class DockWeaknessListModel(EditableListModel[DockWeakness]):
     delegate: ComboBoxItemDelegate
     type: DockType
 
-    def __init__(self, db: DockWeaknessDatabase, delegate: ComboBoxItemDelegate):
+    def __init__(self, db: DockTypeDatabase, delegate: ComboBoxItemDelegate):
         super().__init__()
         self.db = db
         self.delegate = delegate
@@ -107,12 +107,12 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.layers_combo.setCurrentIndex(self.layers_combo.findText(node.layers[0]))
 
         self.dock_incompatible_model = DockWeaknessListModel(
-            self.game.dock_weakness_database, self.dock_incompatible_box.delegate
+            self.game.dock_type_database, self.dock_incompatible_box.delegate
         )
         self.dock_incompatible_box.setModel(self.dock_incompatible_model)
 
         self.dock_type_combo.clear()
-        for i, dock_type in enumerate(game.dock_weakness_database.dock_types):
+        for i, dock_type in enumerate(game.dock_type_database.dock_types):
             self.dock_type_combo.addItem(dock_type.long_name, userData=dock_type)
         refresh_if_needed(self.dock_type_combo, self.on_dock_type_combo)
 
@@ -358,7 +358,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_incompatible_model.change_type(current_type)
         self.dock_incompatible_box.list.reset()
 
-        for weakness in self.game.dock_weakness_database.get_by_type(current_type):
+        for weakness in self.game.dock_type_database.get_by_type(current_type):
             self.dock_weakness_combo.addItem(weakness.name, weakness)
 
     def on_dock_update_name_button(self) -> None:

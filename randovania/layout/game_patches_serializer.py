@@ -82,7 +82,7 @@ def serialize_single(world_index: int, num_worlds: int, patches: GamePatches) ->
     game = filtered_database.game_description_for_layout(patches.configuration)
 
     dock_weakness_to_type = {}
-    for dock_type, weaknesses in game.dock_weakness_database.weaknesses.items():
+    for dock_type, weaknesses in game.dock_type_database.weaknesses.items():
         for weakness in weaknesses.values():
             dock_weakness_to_type[weakness] = dock_type
 
@@ -205,7 +205,7 @@ def decode_single(
     :return:
     """
     region_list = game.region_list
-    weakness_db = game.dock_weakness_database
+    weakness_db = game.dock_type_database
 
     if game_modifications["game"] != game.game.value:
         raise ValueError(f"Expected '{game.game.value}', got '{game_modifications['game']}'")

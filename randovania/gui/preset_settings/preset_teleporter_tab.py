@@ -46,7 +46,7 @@ class PresetTeleporterTab(PresetTab[ConfigurationT_co], NodeListHelper):
         self.setup_ui()
 
         self.teleporters_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
-        self.teleporter_types = game_description.dock_weakness_database.all_teleporter_dock_types
+        self.teleporter_types = game_description.dock_type_database.all_teleporter_dock_types
 
         for value in self.teleporter_mode_to_description:
             self.teleporters_combo.addItem(value.long_name, value)

@@ -681,7 +681,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         pickup_list = self.export_pickup_list()
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
-        elevator_dock_types = self.game.dock_weakness_database.all_teleporter_dock_types
+        elevator_dock_types = self.game.dock_type_database.all_teleporter_dock_types
 
         # Initialize serialized db data
         level_data: dict = {}
@@ -837,7 +837,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                     level_data[region.name]["rooms"][area.name]["doors"][str(dock_index)] = dock_data
 
         # serialize dock destination modifications
-        dock_types_to_ignore = self.game.dock_weakness_database.all_teleporter_dock_types
+        dock_types_to_ignore = self.game.dock_type_database.all_teleporter_dock_types
         _serialize_dock_modifications(
             level_data, regions, self.configuration.room_rando, self.rng, dock_types_to_ignore
         )

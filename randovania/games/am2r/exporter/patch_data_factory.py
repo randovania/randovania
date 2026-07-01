@@ -526,7 +526,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
                 ],
             }
             for node, connection in self.patches.all_dock_connections(self.game)
-            if (node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types)
+            if (node.dock_type in self.game.dock_type_database.all_teleporter_dock_types)
         }
 
         return {

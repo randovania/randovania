@@ -277,15 +277,15 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
     @property
     def _door_dock_type(self) -> DockType:
-        return self.game.dock_weakness_database.find_type("door")
+        return self.game.dock_type_database.find_type("door")
 
     @property
     def _elevator_dock_type(self) -> DockType:
-        return self.game.dock_weakness_database.find_type("elevator")
+        return self.game.dock_type_database.find_type("elevator")
 
     @property
     def _portal_dock_type(self) -> DockType:
-        return self.game.dock_weakness_database.find_type("portal")
+        return self.game.dock_type_database.find_type("portal")
 
     def _get_pickup_appearance(self, exported_pickup: pickup_exporter.ExportedPickupDetails, index: int) -> dict:
         """Returns a patcher-format dict for this pickup stage's appearance."""

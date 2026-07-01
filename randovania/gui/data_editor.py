@@ -766,7 +766,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         target_identifier = self.region_list.identifier_for_area(target_area)
         source_identifier = self.region_list.identifier_for_area(current_area)
 
-        dock_type, dock_weakness = self.game_description.dock_weakness_database.default_weakness
+        dock_type, dock_weakness = self.game_description.dock_type_database.default_weakness
         source_name_base = next(
             integrity_check.raw_expected_dock_names(
                 dock_type, dock_weakness, target_identifier, source_identifier.region

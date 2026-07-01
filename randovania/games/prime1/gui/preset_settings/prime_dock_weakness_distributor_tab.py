@@ -5,9 +5,10 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.gui.lib import signal_handling
-from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
+from randovania.gui.preset_settings.dock_weakness_distributor_tab import PresetDockWeaknessDistributor
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
@@ -15,33 +16,35 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
 
-_CHECKBOX_FIELDS = ["open_save_recharge_hatches", "unlock_sector_hub"]
+_CHECKBOX_FIELDS = ["blue_save_doors", "blast_shield_lockon"]
 
 
-class PresetFusionDocks(PresetDockRando):
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager) -> None:
+class PresetPrimeDockWeaknessDistributor(PresetDockWeaknessDistributor):
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
 
-        # Fusion specific stuff
-        self.changes_box = QtWidgets.QGroupBox()
-        self.changes_box.setTitle("Door Changes")
-        self.changes_layout = QtWidgets.QVBoxLayout(self.changes_box)
+        self.changes_box.setVisible(True)
 
         extra_widgets: list[tuple[type[QtWidgets.QCheckBox | QtWidgets.QLabel], str, str]] = [
-            (QtWidgets.QCheckBox, "unlock_sector_hub_check", "Unlock hatches in Sector Hub"),
             (
-                QtWidgets.QLabel,
-                "unlock_sector_hub_label",
-                (
-                    "Ensures all doors in the Sector Hub are open hatches, "
-                    "giving access to the sector elevators at all times."
-                ),
+                QtWidgets.QCheckBox,
+                "blue_save_doors_check",
+                "Unlock Save Station Doors",
             ),
-            (QtWidgets.QCheckBox, "open_save_recharge_hatches_check", "Unlock Save and Recharge Station Hatches"),
             (
                 QtWidgets.QLabel,
-                "open_save_recharge_hatches_label",
-                "Ensures all Save and Recharge Station doors are open hatches, even with Door Lock Rando enabled.",
+                "blue_save_doors_label",
+                "Sets all Save Station doors to blue regardless of door randomization mode",
+            ),
+            (
+                QtWidgets.QCheckBox,
+                "blast_shield_lockon_check",
+                "Enable Blast Shield Lock-On",
+            ),
+            (
+                QtWidgets.QLabel,
+                "blast_shield_lockon_label",
+                "Makes all Blast Shield locks targetable in Combat Visor",
             ),
         ]
 
@@ -56,12 +59,19 @@ class PresetFusionDocks(PresetDockRando):
 
             self.changes_layout.addWidget(widget)
 
-        # Add the group box
-        self.scroll_area_layout.insertWidget(0, self.changes_box)
-
         # Checkbox Signals
         for f in _CHECKBOX_FIELDS:
             self._add_checkbox_persist_option(getattr(self, f"{f}_check"), f)
+
+    def _on_mode_changed(self, value: DockWeaknessDistributorMode) -> None:
+        super()._on_mode_changed(value)
+        with self._editor as editor:
+            assert isinstance(editor.configuration, PrimeConfiguration)
+            if value == DockWeaknessDistributorMode.ORIGINAL:
+                editor.set_configuration_field("blast_shield_lockon", False)
+            else:
+                editor.set_configuration_field("blue_save_doors", True)
+                editor.set_configuration_field("blast_shield_lockon", True)
 
     def _add_checkbox_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
         def persist(value: bool) -> None:
@@ -73,6 +83,6 @@ class PresetFusionDocks(PresetDockRando):
     def on_preset_changed(self, preset: Preset) -> None:
         super().on_preset_changed(preset)
         config = preset.configuration
-        assert isinstance(config, FusionConfiguration)
+        assert isinstance(config, PrimeConfiguration)
         for f in _CHECKBOX_FIELDS:
             typing.cast("QtWidgets.QCheckBox", getattr(self, f"{f}_check")).setChecked(getattr(config, f))
