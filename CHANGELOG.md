@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.10.0] - 2026-08-0?
+
+- Changed: Automatic Item Tracker: The selected theme for the default game is now always shown while the selected game connection is not connected.
+
 ## [10.9.0] - 2026-07-0?
 
 - Added: The Data Visualizer now displays more information about Hint nodes.
