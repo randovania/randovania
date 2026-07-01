@@ -178,7 +178,11 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         if target_game is not None:
             tracker_name = self.selected_tracker_for(target_game)
 
-        if tracker_name == self._current_tracker_name and target_game == self._current_tracker_game:
+        if (
+            tracker_name == self._current_tracker_name
+            and target_game == self._current_tracker_game
+            and (self.item_tracker is not None or self._dummy_tracker is not None)
+        ):
             return
 
         self.delete_tracker()

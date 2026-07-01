@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [10.10.0] - 2026-08-0?
 
 - Changed: Automatic Item Tracker: The selected theme for the default game is now always shown while the selected game connection is not connected.
+- Fixed: Automatic Item Tracker: The text "Not currently connected to any games" is now always shown when the selected game connection is not connected and no default game is set.
 
 ## [10.9.0] - 2026-07-0?
 
