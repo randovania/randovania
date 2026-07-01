@@ -868,6 +868,14 @@ def _migrate_v40(data: dict) -> None:
             node["area"] = item_locations.get(area, area)
 
 
+def _migrate_v41(data: dict) -> None:
+    for game in data["game_modifications"]:
+        if game["game"] != "samus_returns":
+            continue
+
+        game["game_specific"]["charge_door_burst_buff"] = False
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -909,6 +917,7 @@ _MIGRATIONS = [
     _migrate_v38,  # Redo am2r pickup features
     _migrate_v39,  # Redo msr pickup features
     _migrate_v40,  # Renamed Fusion rooms that reference other sectors or unofficial enemy names
+    _migrate_v41,  # MSR: force charge_door_burst_buff off for old seeds via game_specific
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
