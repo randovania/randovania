@@ -67,6 +67,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Slightly reworked the way the inventory is read for the sake of a significant speedup. No expected changes in fuctionality.
 - Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
 
+#### Logic Database
+
+- Added: NSJ variant of the BSJ to go up through Sacrificial Chamber before Grapple Guardian, set as advanced.
+- Added: The various tricks that require power bombs to go up through Sacrificial Chamber now have videos.
+
 ### Metroid: Samus Returns
 
 - Added: Cosmetic option to reveal the map at the start (default: on)
