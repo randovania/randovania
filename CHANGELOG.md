@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.9.0] - 2026-07-0?
+## [10.10.0] - 2026-08-0?
+
+- Put new changes here.
+
+## [10.9.0] - 2026-07-01
 
 - Added: The Data Visualizer now displays more information about Hint nodes.
 - Changed: Updated the Nintendont version that is used when uploading it directly to the Wii.
@@ -27,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Added: Single-wall Wall Jump traversal option to get to EMMI Zone Dome.
-- Added: Speed booster conservation trick to get to the top of the EMMI Zone Hub without diabled door lock randomizer.
+- Added: Speed booster conservation trick to get to the top of the EMMI Zone Hub without disabled door lock randomizer.
 - Added: Added several videos for various connections in Artaria.
 - Changed: The connection from EMMI Zone Exit North to EMMI Zone Exit Northwest using Speedbooster is now classified as a Beginner Speedbooster Conservation trick.
 
@@ -73,6 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Cosmetic option to use Fusion suits (default: off)
 - Added: Preset option to skip the opening storyboard cutscene (default: off)
 - Fixed: Spazer and Plasma beam projectiles no longer shoot through blocks without Wave
+- Fixed: Exporter error when Door Lock Randomizer used "Access Open" as a "Doors to Change" option.
 
 ## [10.8.2] - 2026-06-14
 
