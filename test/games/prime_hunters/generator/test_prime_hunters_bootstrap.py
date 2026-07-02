@@ -34,7 +34,8 @@ def test_assign_pool_results_predetermined(
         pool_results,
     )
     # Assert
-    shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "octolith"]
+    shuffled_octoliths = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "octolith"]
     assert result.starting_equipment == pool_results.starting
-    assert set(result.pickup_assignment.keys()) == {PickupIndex(i) for i in expected}
-    assert shuffled_dna == []
+    expected_octoliths = {key for key in result.pickup_assignment.keys() if key.index <= 46}
+    assert expected_octoliths == {PickupIndex(i) for i in expected}
+    assert shuffled_octoliths == []

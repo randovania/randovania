@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PresetHuntersEnergy</class>
- <widget class="QMainWindow" name="PresetHuntersEnergy">
+ <class>PresetHuntersGameplay</class>
+ <widget class="QMainWindow" name="PresetHuntersGameplay">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -123,6 +123,29 @@
              </property>
              <property name="wordWrap">
               <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="optional_box">
+          <property name="title">
+           <string>Optional Patches</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QCheckBox" name="skip_planet_intros_check">
+             <property name="text">
+              <string>Skip Planet Intros</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="skip_planet_intros_label">
+             <property name="text">
+              <string>If enabled, this disables the ship landing sequence for each planet.</string>
              </property>
             </widget>
            </item>
