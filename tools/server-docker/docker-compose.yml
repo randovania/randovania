@@ -45,6 +45,7 @@ services:
 
         # backwards-compat redirect for old LEGACY_DOMAIN/PATH_PREFIX -> APP_DOMAIN, remove once clients migrate
         - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_redirect.rule=Host(`${LEGACY_DOMAIN}`) && PathPrefix(`/${PATH_PREFIX}`)
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_redirect.priority=${LEGACY_REDIRECT_PRIORITY}
         - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_redirect.entrypoints=websecure
         - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_redirect.tls.certresolver=le
         - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_redirect.middlewares=rdv_${SERVER_ENVIRONMENT}_redirect
