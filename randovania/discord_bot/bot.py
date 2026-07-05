@@ -5,6 +5,7 @@ import discord
 
 import randovania
 from randovania.discord_bot.randovania_cog import RandovaniaCog
+from randovania.network_common.configuration import NetworkConfiguration
 
 
 async def application_command_error(ctx: discord.ApplicationContext, error: discord.DiscordException):
@@ -25,16 +26,17 @@ class BotConfiguration(TypedDict, total=False):
 
 
 class RandovaniaBot(discord.Bot):
-    def __init__(self, configuration: BotConfiguration):
+    def __init__(self, bot_configuration: BotConfiguration, network_configuration: NetworkConfiguration):
         debug_guilds = []
-        if configuration.get("debug_guild"):
-            debug_guilds.append(configuration["debug_guild"])
+        if bot_configuration.get("debug_guild"):
+            debug_guilds.append(bot_configuration["debug_guild"])
 
         intents = discord.Intents.default()
         intents.message_content = True
         super().__init__(debug_guilds=debug_guilds, auto_sync_commands=False, intents=intents)
 
-        self.configuration = configuration
+        self.configuration = bot_configuration
+        self.network_configuration = network_configuration
         self.add_listener(application_command_error, "on_application_command_error")
         self.load_extension("randovania.discord_bot.preset_lookup")
         self.load_extension("randovania.discord_bot.database_command")
@@ -59,8 +61,9 @@ class RandovaniaBot(discord.Bot):
         logging.info("Finished syncing commands.")
 
 
-def run():
-    configuration = randovania.get_configuration()["discord_bot"]
+def run() -> None:
+    network_config = randovania.get_configuration()
+    bot_configuration = network_config["discord_bot"]
 
-    client = RandovaniaBot(configuration)
-    client.run(configuration["token"])
+    client = RandovaniaBot(bot_configuration, network_config)
+    client.run(bot_configuration["token"])
