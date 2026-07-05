@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import functools
+import hashlib
 import json
 import logging
 import os
@@ -491,9 +492,25 @@ async def get_admin_user(
     return user
 
 
+async def check_admin_user_or_bot(
+    sa: ServerAppDep,
+    request: fastapi.Request,
+    x_randovania_session: Annotated[str | None, fastapi.Header()] = None,
+    x_randovania_discord_bot: Annotated[str | None, fastapi.Header()] = None,
+) -> None:
+    if x_randovania_discord_bot is not None and "discord_bot" in sa.configuration:
+        token_hash = hashlib.sha256(sa.configuration["discord_bot"]["token"].encode()).hexdigest()
+        if x_randovania_discord_bot == token_hash:
+            return
+
+    await get_admin_user(sa, request, x_randovania_session)
+
+
 RequireUser = fastapi.Depends(get_user)
 """Ensure that there is a User associated with the request before handling it."""
 RequireAdminUser = fastapi.Depends(get_admin_user)
+"""Ensure that there is an admin User associated with the request before handling it."""
+RequireAdminUserOrDiscordBot = fastapi.Depends(check_admin_user_or_bot)
 """Ensure that there is an admin User associated with the request before handling it."""
 
 UserDep = Annotated[User, RequireUser]
