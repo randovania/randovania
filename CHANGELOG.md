@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Updated the Nintendont version that is used when uploading it directly to the Wii.
   Includes faster connection speeds and better crash resilience.
 - Changed: Nintendont Connector: Better error messages when connecting to an invalid Nintendont.
+- Changed: Nintendont Connector: Increase the timeout limit from 5s to 10s.
 
 ### Another Metroid 2 Remake
 
