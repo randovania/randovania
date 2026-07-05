@@ -24,7 +24,7 @@ async def deploy(
     if server_environment == "production":
         new_env["PATH_PREFIX"] = "randovania"
         new_env["DATA_PATH"] = "/var/randovania/production/data"
-        new_env["DOMAIN2"] = f"server.{host2}"
+        new_env["DOMAIN2"] = f"production.{host2}"
 
     elif server_environment == "staging":
         new_env["PATH_PREFIX"] = "randovania-staging"
