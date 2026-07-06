@@ -4,6 +4,9 @@ import abc
 from abc import ABC
 from typing import TYPE_CHECKING, final, override
 
+from randovania.game_description.resources.resource_info import ResourceInfo
+from randovania.game_description.resources.resource_type import ResourceType
+
 if TYPE_CHECKING:
     from collections.abc import Iterator, Mapping, Sequence
 
@@ -134,6 +137,14 @@ class ResourceDatabaseView(ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_resource_of_type(self, resource_type: ResourceType, name: str) -> ResourceInfo:
+        """
+        Gets a ResourceInfo of the given type, using internal name
+        Raises KeyError if it doesn't exist
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_all_resources_of_type(self, resource_type: ResourceType) -> Sequence[ResourceInfo]:
         """
         Gets a list of all resources of the given type.
@@ -232,6 +243,10 @@ class ResourceDatabaseViewProxy(ResourceDatabaseView):
     @override
     def get_template_requirement(self, name: str) -> NamedRequirementTemplate:
         return self._original.get_template_requirement(name)
+
+    @override
+    def get_resource_of_type(self, resource_type: ResourceType, name: str) -> ResourceInfo:
+        return self._original.get_resource_of_type(resource_type, name)
 
     @override
     def get_all_resources_of_type(self, resource_type: ResourceType) -> Sequence[ResourceInfo]:

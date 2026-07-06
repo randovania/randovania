@@ -2,10 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from PySide6 import QtCore, QtWidgets
+from PySide6 import QtWidgets
 
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.gui.dialog.trick_details_popup import ResourceDetailsPopup
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
 
@@ -26,7 +25,7 @@ class PresetDreadGeneration(PresetGeneration):
         super().__init__(editor, game_description, window_manager)
 
         signal_handling.on_checked(self.highdanger_logic_check, self._on_highdanger_logic_check)
-        self.highdanger_logic_label.linkActivated.connect(self._on_click_link_highdanger_logic_details)
+        self.highdanger_logic_label.linkActivated.connect(self._on_click_link_resource_logic_details)
 
     def setupUi(self, obj: QtWidgets.QWidget) -> None:
         super().setupUi(obj)
@@ -37,8 +36,8 @@ class PresetDreadGeneration(PresetGeneration):
             """<html><head/><body>
             <p>Highly Dangerous Logic is a setting which enables dangerous actions that are not as obvious.</p>
             <p>Using these dangerous actions could render a seed unbeatable if the player were to save afterwards.</p>
-            <p><a href=\"resource-details://misc/highdanger\"><span style=\" text-decoration: underline;
-            color:#0000ff;\">Click here</span></a> to see which rooms are affected.</p></body></html>""",
+            <p><a href=\"resource-details://misc/HighDanger\"><span style=\" text-decoration: underline;\"
+            >Click here</span></a> to see which rooms are affected.</p></body></html>""",
         )
 
     @property
@@ -57,18 +56,3 @@ class PresetDreadGeneration(PresetGeneration):
                 "allow_highly_dangerous_logic",
                 state,
             )
-
-    def _on_click_link_highdanger_logic_details(self, link: str) -> None:
-        self._exec_trick_details(
-            ResourceDetailsPopup(
-                self,
-                self._window_manager,
-                self.game_description,
-                self.game_description.get_resource_database_view().get_misc("HighDanger"),
-            )
-        )
-
-    def _exec_trick_details(self, popup: ResourceDetailsPopup) -> None:
-        self._trick_details_popup = popup
-        self._trick_details_popup.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
-        self._trick_details_popup.open()
