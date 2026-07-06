@@ -138,11 +138,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         with self.options as options:
             options.tracker_default_game = game
 
-        if self._last_source is None:
-            self._current_tracker_game = game
-            if game is None:
-                self.delete_tracker()
-            self.create_tracker()
+        self.create_tracker()
 
     def _on_action_select_tracker(self, game: RandovaniaGame, name: str) -> None:
         with self.options as options:
@@ -185,8 +181,8 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         else:
             self.connected_game_state_label.setText("Not Connected")
 
-        if target_game is None and self._current_tracker_game is not None:
-            target_game = self._current_tracker_game
+        if target_game is None:
+            target_game = self.options.tracker_default_game
 
         if target_game is not None:
             tracker_name = self.selected_tracker_for(target_game)
@@ -262,6 +258,10 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         self.create_tracker()
         expected_connector = self.get_connector()
         if expected_connector == state.source or self._last_source == state.source:
+            if state.status == GameConnectionStatus.Disconnected:
+                self._last_source = None
+                return
+
             if self._last_source != state.source:
                 state.source.inform_connected_tracker(self._current_tracker_details)
 

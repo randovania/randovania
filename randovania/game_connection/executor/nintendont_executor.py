@@ -4,6 +4,7 @@ import asyncio
 import dataclasses
 import logging
 import struct
+from datetime import datetime
 from typing import TypeGuard
 
 from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
@@ -101,10 +102,10 @@ class NintendontExecutor(MemoryOperationExecutor):
 
     SUPPORTED_API_VERSION = 1
 
-    _timeout = 5
+    _timeout = 15
     # timeout in seconds on when we disconnect when we don't get a response.
     # The Prime games (which this is currently used for) are somewhat time-sensitive. If we can't ensure a timely
-    # response the experience is going to be bad and things *will* break. So make sure early then to
+    # response the experience is going to be bad and things *will* break.
     # Once the prime games are reworked, or this is used for other games, a reconsideration can be done to rework this.
 
     def __init__(self, ip: str):
@@ -152,16 +153,20 @@ class NintendontExecutor(MemoryOperationExecutor):
             response = await asyncio.wait_for(reader.read(1024), timeout=self._timeout)
             invalid_message = f"Unable to connect to {self._ip}:{self._port} - Unsupported Nintendont version!"
             try:
-                api_version, max_input, max_output, max_addresses = struct.unpack(">IIII", response)
+                api_version = struct.unpack_from(">I", response)[0]
+
+                if api_version != self.SUPPORTED_API_VERSION:
+                    writer.close()
+                    return (
+                        f"{invalid_message} Nintendont has API {api_version} but expected {self.SUPPORTED_API_VERSION}."
+                    )
+
+                max_input, max_output, max_addresses = struct.unpack(">4xIII", response)
 
             except struct.error as e:
                 writer.close()
                 self._socket_error = e
                 return f"{invalid_message} Invalid response when requesting API details."
-
-            if api_version != self.SUPPORTED_API_VERSION:
-                writer.close()
-                return f"{invalid_message} Nintendont has API {api_version} but expected {self.SUPPORTED_API_VERSION}."
 
             if max_input > 256 or max_output > 256 or max_addresses > 16:
                 # 256, 256 and 16 are the current theoretical maximum values for input/output/address per the protocol.
@@ -261,12 +266,15 @@ class NintendontExecutor(MemoryOperationExecutor):
 
         all_responses = []
         try:
-            for request in requests:
+            for req_number, request in enumerate(requests):
                 data = request.build_request_data()
                 self._socket.writer.write(data)
                 await self._socket.writer.drain()
                 if request.output_bytes > 0:
+                    before_sending = datetime.now()
                     response = await asyncio.wait_for(self._socket.reader.read(1024), timeout=self._timeout)
+                    after_sending = datetime.now()
+                    self.logger.debug(f"Request {req_number} took {after_sending - before_sending}")
                     all_responses.append(response)
                 else:
                     all_responses.append(b"")
