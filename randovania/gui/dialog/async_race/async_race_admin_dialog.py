@@ -18,7 +18,7 @@ from randovania.network_common.async_race_room import AsyncRaceEntryData, AsyncR
 class AsyncRaceEntryDataDatabaseModel(EditableTableModel[AsyncRaceEntryData]):
     """Model for editing a AsyncRaceEntryData database using a QTableView."""
 
-    def __init__(self, db: list[AsyncRaceEntryData]):
+    def __init__(self, db: list[AsyncRaceEntryData]) -> None:
         super().__init__()
         self.db = db
 
@@ -75,7 +75,7 @@ class AsyncRaceAdminDialog(QtWidgets.QDialog):
 
     ui: Ui_AsyncRaceAdminDialog
 
-    def __init__(self, parent: QtWidgets.QWidget, admin_data: AsyncRaceRoomAdminData):
+    def __init__(self, parent: QtWidgets.QWidget, admin_data: AsyncRaceRoomAdminData) -> None:
         super().__init__(parent)
         self.ui = Ui_AsyncRaceAdminDialog()
         self.ui.setupUi(self)

@@ -14,7 +14,7 @@ from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.gui.generated.game_details_window_ui import Ui_GameDetailsWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.lib.close_event_widget import CloseEventWidget
+from randovania.gui.lib.close_event_window import CloseEventWindow
 from randovania.gui.lib.common_qt_lib import (
     prompt_user_for_output_game_log,
     set_default_window_icon,
@@ -34,17 +34,7 @@ if typing.TYPE_CHECKING:
     from randovania.layout.layout_description import LayoutDescription
 
 
-def _unique(iterable):
-    seen = set()
-
-    for item in iterable:
-        if item in seen:
-            continue
-        seen.add(item)
-        yield item
-
-
-class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMixin):
+class GameDetailsWindow(CloseEventWindow, Ui_GameDetailsWindow, BackgroundTaskMixin):
     _on_bulk_change: bool = False
     layout_description: LayoutDescription
     _options: Options
@@ -55,7 +45,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
     _game_details_tabs: list[GameDetailsTab]
     validator_widget: GameValidatorWidget | None = None
 
-    def __init__(self, window_manager: WindowManager | None, options: Options):
+    def __init__(self, window_manager: WindowManager | None, options: Options) -> None:
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
@@ -91,6 +81,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
         self._action_view_trick_usages = QtGui.QAction(self)
         self._action_view_trick_usages.setText("View current player's expected trick usage")
+        self._action_view_trick_usages.setEnabled(self._window_manager is not None)
         self._tool_button_menu.addAction(self._action_view_trick_usages)
 
         # Signals
@@ -111,7 +102,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         # Cosmetic
         self.customize_user_preferences_button.clicked.connect(self._open_user_preferences_dialog)
 
-    def closeEvent(self, event: QtGui.QCloseEvent):
+    def closeEvent(self, event: QtGui.QCloseEvent) -> None:
         if self.validator_widget is not None:
             self.validator_widget.stop_validator()
 
@@ -141,7 +132,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         if not await network_client.ensure_logged_in(self):
             return
 
-    def _export_log(self):
+    def _export_log(self) -> None:
         all_games = self.layout_description.all_games
         if len(all_games) > 1:
             game_name = "Crossgame Multiworld"
@@ -155,18 +146,20 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         if json_path is not None:
             self.layout_description.save_to_file(json_path)
 
-    def _export_preset(self):
+    def _export_preset(self) -> None:
         preset = self.layout_description.get_preset(self.current_player_index)
         output_path = common_qt_lib.prompt_user_for_preset_file(self, new_file=True)
         if output_path is not None:
             VersionedPreset.with_preset(preset).save_to_file(output_path)
 
-    def _view_trick_usages(self):
+    def _view_trick_usages(self) -> None:
+        assert self._window_manager is not None
+
         from randovania.gui.dialog.trick_usage_popup import TrickUsagePopup
 
         preset = self.layout_description.get_preset(self.current_player_index)
         self._trick_usage_popup = TrickUsagePopup(self, self._window_manager, preset)
-        self._trick_usage_popup.setWindowModality(QtCore.Qt.WindowModal)
+        self._trick_usage_popup.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
         self._trick_usage_popup.open()
 
     @property
@@ -174,7 +167,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         return self.layout_description.get_preset(self.current_player_index).game
 
     @asyncSlot()
-    async def _export_iso(self):
+    async def _export_iso(self) -> None:
         layout = self.layout_description
         has_spoiler = layout.has_spoiler
         options = self._options
@@ -220,13 +213,14 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self._can_stop_background_process = True
 
     @asyncSlot()
-    async def _open_map_tracker(self):
+    async def _open_map_tracker(self) -> None:
+        assert self._window_manager is not None
         current_preset = self.layout_description.get_preset(self.current_player_index)
         await self._window_manager.open_map_tracker(current_preset)
 
     # Layout Visualization
 
-    def update_layout_description(self, description: LayoutDescription, players: list[str] | None = None):
+    def update_layout_description(self, description: LayoutDescription, players: list[str] | None = None) -> None:
         self.layout_description = description
         self.layout_info_tab.show()
 
@@ -275,7 +269,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
         self._update_current_player()
 
-    def _update_current_player(self):
+    def _update_current_player(self) -> None:
         description = self.layout_description
         current_player = self.current_player_index
         preset = description.get_preset(current_player)
@@ -318,7 +312,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
                 self._game_details_tabs.append(new_tab)
 
     @asyncSlot()
-    async def _open_user_preferences_dialog(self):
+    async def _open_user_preferences_dialog(self) -> None:
         await game_specific_gui.customize_cosmetic_patcher_button(
             self,
             self.current_player_game,
@@ -326,7 +320,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             "gui_export_window_cosmetic_clicked",
         )
 
-    def enable_buttons_with_background_tasks(self, value: bool):
+    def enable_buttons_with_background_tasks(self, value: bool) -> None:
         self.stop_background_process_button.setVisible(True)
         self.stop_background_process_button.setEnabled(not value and self._can_stop_background_process)
         self.export_iso_button.setEnabled(value)
@@ -337,7 +331,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         else:
             self.stop_background_process_button.setToolTip("")
 
-    def update_progress(self, message: str, percentage: int):
+    def update_progress(self, message: str, percentage: int) -> None:
         self.progress_bar.setVisible(True)
         self.progress_label.setText(message)
         if "Aborted" in message:

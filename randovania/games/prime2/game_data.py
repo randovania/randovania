@@ -41,7 +41,6 @@ def _gui() -> randovania.game.gui.GameGui:
         spoiler_visualizer=(
             PrimeTrilogyTeleporterDetailsTab,
             gui.TranslatorGateDetailsTab,
-            gui.PortalDetailsTab,
             HintDetailsTab,
         ),
         game_tab=gui.EchoesGameTabWidget,

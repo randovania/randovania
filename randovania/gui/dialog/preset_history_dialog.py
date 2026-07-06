@@ -10,6 +10,7 @@ from qasync import asyncSlot
 from randovania.gui.generated.preset_history_dialog_ui import Ui_PresetHistoryDialog
 from randovania.gui.lib import common_qt_lib, file_prompts
 from randovania.layout import preset_describer
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 
@@ -27,9 +28,9 @@ def _get_invalid_preset_error(preset: VersionedPreset, error: InvalidPreset) -> 
     )
 
 
-def _get_old_preset(preset_str: str) -> Preset | str:
+def _get_old_preset(preset_str: str) -> Preset[BaseConfiguration] | str:
     try:
-        old_preset = VersionedPreset.from_str(preset_str)
+        old_preset = VersionedPreset[BaseConfiguration].from_str(preset_str)
     except json.JSONDecodeError as e:
         return f"Preset at this version contains json errors: {e}"
 
@@ -57,7 +58,7 @@ def _describe_preset(preset: Preset) -> list[str]:
 def _calculate_previous_versions(
     preset_manager: PresetManager,
     preset: VersionedPreset,
-    original_lines: tuple[str, ...],
+    original_lines: tuple[str, ...] | None,
 ) -> Iterator[tuple[datetime.datetime, Preset, tuple[str, ...]]]:
     previous_description = None
 
@@ -74,7 +75,7 @@ def _calculate_previous_versions(
         yield date, old_preset, old_description
 
 
-def _set_item_data(item: QtWidgets.QListWidgetItem, data: tuple[Preset | None, tuple[str, ...]]):
+def _set_item_data(item: QtWidgets.QListWidgetItem, data: tuple[Preset | None, tuple[str, ...]]) -> None:
     item.setData(QtCore.Qt.ItemDataRole.UserRole, data)
 
 
@@ -83,7 +84,9 @@ def _get_item_data(item: QtWidgets.QListWidgetItem) -> tuple[Preset | None, tupl
 
 
 class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
-    def __init__(self, preset_manager: PresetManager, preset: VersionedPreset):
+    _original_lines: tuple[str, ...] | None
+
+    def __init__(self, preset_manager: PresetManager, preset: VersionedPreset) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -123,17 +126,17 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
             return None
 
     @asyncSlot()
-    async def _export_selected_preset(self):
+    async def _export_selected_preset(self) -> None:
         preset = self.selected_preset()
         assert preset is not None
 
-        preset = VersionedPreset.with_preset(preset)
-        default_name = f"{preset.slug_name}.rdvpreset"
+        versioned_preset = VersionedPreset[BaseConfiguration].with_preset(preset)
+        default_name = f"{versioned_preset.slug_name}.rdvpreset"
         path = await file_prompts.prompt_preset(self, new_file=True, name=default_name)
         if path is not None:
-            preset.save_to_file(path)
+            versioned_preset.save_to_file(path)
 
-    def _on_selection_changed(self):
+    def _on_selection_changed(self) -> None:
         items = self.version_widget.selectedItems()
         self.accept_button.setEnabled(False)
         self.export_button.setEnabled(False)

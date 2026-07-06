@@ -24,9 +24,6 @@ from randovania.layout.lib.teleporters import (
 )
 
 if TYPE_CHECKING:
-    from PySide6 import QtWidgets
-
-    from randovania.game_description.db.area import Area
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
     from randovania.games.common.elevators import NodeListGrouping
@@ -98,12 +95,8 @@ class PresetTeleportersPrime2(
         region_list = self.game_description.region_list
 
         locations = TeleporterList.nodes_list(self.game_enum)
-        node_identifiers: dict[NodeIdentifier, Area] = {
-            loc: region_list.area_by_area_location(loc.area_identifier) for loc in locations
-        }
-        checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
-            loc: self._create_check_for_source_teleporters(loc) for loc in locations
-        }
+        node_identifiers = {loc: region_list.area_by_area_location(loc.area_identifier) for loc in locations}
+        checks = {loc: self._create_check_for_source_teleporters(loc) for loc in locations}
         self._teleporters_source_for_location = copy.copy(checks)
         self._teleporters_source_destination: dict[NodeIdentifier, NodeIdentifier | None] = {}
 

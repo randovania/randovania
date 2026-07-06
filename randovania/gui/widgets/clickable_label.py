@@ -13,7 +13,7 @@ class ClickableLabel(QtWidgets.QLabel):
     entered = Signal()
     left = Signal()
 
-    def _is_in_rect(self, event_data: QtGui.QMouseEvent) -> bool:
+    def _is_in_rect(self, event_data: QtGui.QMouseEvent | QtGui.QEnterEvent) -> bool:
         return 0 <= event_data.x() <= self.width() and 0 <= event_data.y() <= self.height()
 
     def mouseReleaseEvent(self, event_data: QtGui.QMouseEvent) -> None:

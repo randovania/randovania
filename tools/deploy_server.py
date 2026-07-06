@@ -40,6 +40,9 @@ async def deploy(
     else:
         raise ValueError(f"Unknown server_environment: {server_environment}")
 
+    # Check `randovania-staging` over production's `randovania`.
+    new_env["LEGACY_REDIRECT_PRIORITY"] = str(200 + len(new_env["PATH_PREFIX"]))
+
     context_args = []
     if context is not None:
         context_args = ["--context", context]

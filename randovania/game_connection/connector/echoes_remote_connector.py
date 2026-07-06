@@ -15,6 +15,7 @@ from randovania.game_connection.executor.memory_operation import (
 )
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.games.prime2.patcher import echoes_items
+from randovania.gui.item_tracker.tracker_layout import TrackerLayout
 
 if TYPE_CHECKING:
     from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
@@ -178,8 +179,8 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         return inventory
 
     @override
-    def inform_connected_tracker(self, tracker_details: dict | None) -> None:
+    def inform_connected_tracker(self, tracker_details: TrackerLayout | None) -> None:
         if tracker_details is not None:
-            self._should_read_object_count = tracker_details.get("extra", {}).get("read_object_count", False)
+            self._should_read_object_count = bool(tracker_details.extra.get("read_object_count", False))
         else:
             self._should_read_object_count = False
