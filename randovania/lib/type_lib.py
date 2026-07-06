@@ -3,6 +3,7 @@ from __future__ import annotations
 import inspect
 import types
 import typing
+from collections.abc import Callable, Coroutine
 
 
 def resolve_optional(type_: type) -> tuple[type, bool]:
@@ -24,3 +25,6 @@ def is_named_tuple(type_: type) -> bool:
         and hasattr(type_, "_fields")
         and hasattr(type_, "_field_defaults")
     )
+
+
+type AsyncCallable[**P, T] = Callable[P, Coroutine[None, None, T]]

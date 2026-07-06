@@ -32,6 +32,7 @@ from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, WorldUserInventory
 from randovania.network_common.remote_pickup import RemotePickup
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
+from randovania.network_common.signals.client_signals import ClientSignal
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -578,3 +579,8 @@ async def test_on_async_race_room_update_raw(client: NetworkClient):
 
     await client._on_async_race_room_update_raw(room.as_json)
     client.on_async_race_room_update.assert_awaited_once_with(room)
+
+
+@pytest.mark.parametrize("signal", list(ClientSignal.all_signals))
+async def test_all_signals_registered(signal, client):
+    signal._check_handlers()

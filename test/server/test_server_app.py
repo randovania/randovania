@@ -9,6 +9,7 @@ import pytest
 
 from randovania.network_common import error
 from randovania.network_common.authentication import AuthenticationMethod
+from randovania.network_common.signals.server_signals import ServerSignal
 from randovania.server import database
 from randovania.server.server_app import EnforceDiscordRole, ServerLoggingFormatter
 
@@ -152,3 +153,8 @@ def test_is_authentication_method_supported_neither(server_app):
 
     assert not server_app.is_authentication_method_supported(AuthenticationMethod.GUEST)
     assert not server_app.is_authentication_method_supported(AuthenticationMethod.DISCORD)
+
+
+@pytest.mark.parametrize("signal", list(ServerSignal.all_signals))
+def test_all_signals_registered(signal, test_client):
+    signal._check_handlers()

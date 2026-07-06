@@ -80,3 +80,9 @@ async def test_server_register_and_call(server_test_signal, client, server):
 
     server.on.assert_called_once_with("server_test", callback, None, with_header_check=False)
     client.server_call.assert_awaited_once_with("server_test", "bar", namespace=None, handle_invalid_session=True)
+
+
+def test_unregistered_signal_call(client_test_signal, server):
+    client_match = r"ClientSignal ClientTestSignal has no signal handlers registered."
+    with pytest.raises(TypeError, match=re.escape(client_match)):
+        client_test_signal._check_handlers()

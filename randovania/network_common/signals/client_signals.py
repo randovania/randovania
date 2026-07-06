@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Never
+from typing import TYPE_CHECKING
 
+from randovania.lib.type_lib import AsyncCallable
 from randovania.network_common.async_race_room import AsyncRaceRoomEntry
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionActions,
@@ -10,7 +11,7 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerWorldPickups,
 )
 from randovania.network_common.remote_inventory import RemoteInventory
-from randovania.network_common.signals.common import TypedBytes, TypedJsonObject, args_to_sio_data
+from randovania.network_common.signals.common import SignalBase, TypedBytes, TypedJsonObject, args_to_sio_data
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -18,19 +19,13 @@ if TYPE_CHECKING:
 
     from socketio import AsyncClient
 
-    from randovania.server.server_app import AsyncCallable, ServerApp
+    from randovania.server.server_app import ServerApp
 
 
-class ClientSignal[**P]:
-    def __init__(self, fn: AsyncCallable[P, None], message: str):
-        self.fn = fn
-        self.message = message
-
-    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> Never:
-        raise TypeError(
-            f"Cannot call ClientSignal {self.fn.__name__} directly. "
-            f"Did you mean to call {self.fn.__name__}.emit() instead?"
-        )
+class ClientSignal[**P](SignalBase[P, None, AsyncCallable[P, None]]):
+    @property
+    def _public_call_site(self) -> Callable:
+        return self.emit
 
     def emit(
         self,
@@ -57,6 +52,8 @@ class ClientSignal[**P]:
         Using this function allows checking that the signature of the registered callback
         is compatible with this signal's expected signature.
         """
+
+        self._add_handler(callback)
         sio.on(self.message, callback)
 
 
