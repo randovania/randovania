@@ -38,6 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Fixed: Typo in the description for the Knowledge trick.
+- Fixed: Typo in the name of Sector 6's Twin Caverns Save Room (was Twin Cavern Save Room).
 - Fixed: Missile and Power Bomb ammo is now correctly capped at 999 and 99 respectively. This also prevents a softlock when using a Recharge Station with more than 246 Power Bombs.
 - Changed: In Sector 5 - Training Grounds, lowered the Speed Booster runway by one tile to make it easier to shinespark through the door.
 
