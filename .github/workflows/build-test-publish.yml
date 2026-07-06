@@ -516,7 +516,7 @@ jobs:
           body: "Release executable"
 
       - name: Publish 📦 to TestPyPI
-        if: ${{ startsWith(github.ref, 'refs/heads/stable') }}
+        if: ${{ startsWith(github.ref, 'refs/heads/stable') && !inputs.deploy_server }}
         run: |
           uvx twine upload --repository testpypi packages/Python\ Package/*
         env:
