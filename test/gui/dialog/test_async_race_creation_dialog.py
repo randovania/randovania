@@ -9,8 +9,8 @@ import pytest
 from PySide6 import QtCore, QtWidgets
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.gui.dialog.async_race_creation_dialog import AsyncRaceCreationDialog
-from randovania.gui.dialog.async_race_settings_dialog import AsyncRaceSettingsDialog
+from randovania.gui.dialog.async_race.async_race_creation_dialog import AsyncRaceCreationDialog
+from randovania.gui.dialog.async_race.async_race_settings_dialog import AsyncRaceSettingsDialog
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.network_common.async_race_room import (

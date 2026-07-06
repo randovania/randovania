@@ -112,7 +112,9 @@ class GameConnection:
         self.connection_builders.remove(builder)
         self._on_builders_changed()
 
-    def get_connector_for_builder(self, builder: ConnectorBuilder) -> RemoteConnector | None:
+    def get_connector_for_builder(self, builder: ConnectorBuilder | None) -> RemoteConnector | None:
+        if builder is None:
+            return None
         return self.remote_connectors.get(builder)
 
     def _on_builders_changed(self) -> None:

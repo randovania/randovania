@@ -52,7 +52,7 @@ class BuilderUi:
     send_arbitrary_message_action: QtGui.QAction | None = None
     connector: RemoteConnector | None = None
 
-    def __init__(self, parent: QtWidgets.QWidget):
+    def __init__(self, parent: QtWidgets.QWidget) -> None:
         self.group = QtWidgets.QGroupBox(parent)
         self.layout = QtWidgets.QGridLayout(self.group)
         self.join_session = None
@@ -168,7 +168,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         network_client: QtNetworkClient,
         options: Options,
         game_connection: GameConnection,
-    ):
+    ) -> None:
         super().__init__()
         common_qt_lib.set_default_window_icon(self)
         self.setupUi(self)

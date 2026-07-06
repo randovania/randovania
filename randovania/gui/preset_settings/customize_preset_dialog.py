@@ -20,7 +20,7 @@ class PresetTabRoot(QtWidgets.QWidget):
     tab_type: type[PresetTab]
     current_tab: PresetTab | None
 
-    def __init__(self, owner: CustomizePresetDialog, tab_type: type[PresetTab]):
+    def __init__(self, owner: CustomizePresetDialog, tab_type: type[PresetTab]) -> None:
         super().__init__()
         self.owner = owner
         self.tab_type = tab_type
@@ -44,16 +44,17 @@ class PresetTabRoot(QtWidgets.QWidget):
 
         return super().showEvent(arg)
 
-    def release_widget(self):
-        self.current_tab.deleteLater()
-        self.current_tab = None
+    def release_widget(self) -> None:
+        if self.current_tab is not None:
+            self.current_tab.deleteLater()
+            self.current_tab = None
 
 
 class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
     _editor: PresetEditor
     _current_tab: PresetTabRoot | None
 
-    def __init__(self, window_manager: WindowManager, editor: PresetEditor):
+    def __init__(self, window_manager: WindowManager, editor: PresetEditor) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -106,28 +107,28 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
 
-    def set_visible_tab(self, tab: PresetTabRoot):
+    def set_visible_tab(self, tab: PresetTabRoot) -> None:
         if tab != self._current_tab:
             if self._current_tab is not None:
                 self._current_tab.release_widget()
             self._current_tab = tab
 
-    def changed_list_item_selection(self, item: QtWidgets.QListWidgetItem):
+    def changed_list_item_selection(self, item: QtWidgets.QListWidgetItem) -> None:
         widget = self.item_to_widget[item.text()]
         self.stackedWidget.setCurrentWidget(widget)
 
     # Options
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         common_qt_lib.set_edit_if_different(self.name_edit, preset.name)
         if (tab := self.current_preset_tab) is not None:
             tab.on_preset_changed(preset)
 
-    def _edit_name(self, value: str):
+    def _edit_name(self, value: str) -> None:
         with self._editor as editor:
             editor.name = value
 
     @property
-    def editor(self):
+    def editor(self) -> PresetEditor:
         return self._editor
 
     @property

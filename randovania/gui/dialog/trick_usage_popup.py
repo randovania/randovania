@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, TypeGuard
 
 from PySide6 import QtWidgets
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.generated.trick_usage_popup_ui import Ui_TrickUsagePopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
@@ -50,9 +51,12 @@ def _area_requirement_sets(
 def _check_used_tricks(area: Area, trick_resources: ResourceCollection, database: ResourceDatabase) -> list[str]:
     result = set()
 
+    def _is_trick(resource: ResourceInfo) -> TypeGuard[TrickResourceInfo]:
+        return resource.resource_type == ResourceType.TRICK
+
     for alternative in set(_area_requirement_sets(area, database)):
         tricks: dict[TrickResourceInfo, ResourceRequirement] = {
-            req.resource: req for req in alternative.values() if req.resource.resource_type == ResourceType.TRICK
+            req.resource: req for req in alternative.values() if _is_trick(req.resource)
         }
         if tricks and all(trick_resources[trick] >= tricks[trick].amount for trick in tricks):
             line = [
@@ -70,7 +74,7 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
         parent: QWidget,
         window_manager: WindowManager,
         preset: Preset,
-    ):
+    ) -> None:
         super().__init__(parent)
         self.setupUi(self)
         set_default_window_icon(self)
@@ -123,5 +127,5 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
 
         self.area_list_label.setText("".join(lines))
 
-    def button_box_close(self):
+    def button_box_close(self) -> None:
         self.reject()

@@ -7,7 +7,9 @@ from PySide6 import QtWidgets
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.prime2.gui.preset_settings.echoes_translators_tab import gate_data
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.layout import filtered_database
 from randovania.lib.container_lib import iterate_key_sorted
@@ -16,10 +18,9 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_patches import GamePatches
     from randovania.interface_common.players_configuration import PlayersConfiguration
-    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class TranslatorGateDetailsTab(GameDetailsTab):
+class TranslatorGateDetailsTab(GameDetailsTab[EchoesConfiguration | EchoesOPRConfiguration]):
     def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame):
         super().__init__(parent, game)
         self.tree_widget = QtWidgets.QTreeWidget(parent)
@@ -31,7 +32,10 @@ class TranslatorGateDetailsTab(GameDetailsTab):
         return "Translator Gate"
 
     def update_content(
-        self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        self,
+        configuration: EchoesConfiguration | EchoesOPRConfiguration,
+        all_patches: dict[int, GamePatches],
+        players: PlayersConfiguration,
     ) -> None:
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(2)

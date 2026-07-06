@@ -168,12 +168,12 @@ class RegionList(NodeProvider):
     def region_by_area_location(self, location: AreaIdentifier) -> Region:
         return self.region_with_name(location.region)
 
-    def region_and_area_by_area_identifier(self, identifier: AreaIdentifier) -> tuple[Region, Area]:
+    def region_and_area_by_area_identifier(self, identifier: AreaIdentifier | NodeIdentifier) -> tuple[Region, Area]:
         region = self.region_with_name(identifier.region)
         area = region.area_by_name(identifier.area)
         return region, area
 
-    def correct_area_identifier_name(self, identifier: AreaIdentifier) -> str:
+    def correct_area_identifier_name(self, identifier: AreaIdentifier | NodeIdentifier) -> str:
         region, area = self.region_and_area_by_area_identifier(identifier)
         return f"{region.name} - {area.name}"
 

@@ -145,7 +145,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     _is_panning: bool = False
     _pan_threshold: float = 5.0  # Minimum pixels to move before considering it a pan
 
-    def __init__(self, parent: QtWidgets.QWidget | None = None):
+    def __init__(self, parent: QtWidgets.QWidget | None = None) -> None:
         super().__init__(parent)
 
         # Enable mouse tracking to update cursor when hovering
