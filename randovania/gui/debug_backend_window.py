@@ -162,7 +162,7 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
         for i, message in enumerate(self.connector.messages):
             self.messages_item_model.setItem(i, QtGui.QStandardItem(message))
 
-    def update_inventory_table(self):
+    def update_inventory_table(self, _inventory=None):
         for resource, quantity in self.connector.item_collection.as_resource_gain():
             if resource in self._resource_to_item:
                 self._update_item_amount(resource, quantity)
