@@ -1,6 +1,13 @@
 import pydantic
+import pytest
 
-from randovania.lib import pydantic_util
+import randovania
+
+try:
+    from randovania.lib import pydantic_util
+except ImportError:
+    # This will fail in executables, so leaving it explicitly broken!
+    pass
 
 
 class CustomModelForTests(pydantic.BaseModel):
@@ -10,6 +17,7 @@ class CustomModelForTests(pydantic.BaseModel):
     d: dict[str, int]
 
 
+@pytest.mark.xfail(randovania.is_frozen(), reason="pydantic_util is excluded")
 def test_encode_small():
     source = CustomModelForTests(a=0, b=None, d={"foo": 1})
     encoded = pydantic_util.encode_model(source)
@@ -18,6 +26,7 @@ def test_encode_small():
     assert pydantic_util.decode_model(encoded, CustomModelForTests) == source
 
 
+@pytest.mark.xfail(randovania.is_frozen(), reason="pydantic_util is excluded")
 def test_encode_big():
     source = CustomModelForTests(a=35000, b="bar" * 50, d={"foo": 1234})
     encoded = pydantic_util.encode_model(source)
