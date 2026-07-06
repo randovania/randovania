@@ -222,6 +222,16 @@ def add_tabbed_field_validation(
     fields: Mapping[QtWidgets.QWidget | None, Mapping[QtWidgets.QWidget, Callable[[], bool]]],
     tab_widget: QtWidgets.QTabWidget,
 ) -> None:
+    """
+    Adds validation to the provided fields, on a tab-by-tab basis.
+
+    The `fields` argument maps each tab to another mapping, in the format
+    used by :func:`add_field_validation`. When a tab is active, its mapping
+    is used to determine invalid fields.
+
+    For more info, see :func:`add_field_validation`.
+    """
+
     _add_field_validation(
         accept_button,
         fields,
@@ -231,8 +241,17 @@ def add_tabbed_field_validation(
 
 def add_field_validation(
     accept_button: QtWidgets.QPushButton,
-    fields: dict[QtWidgets.QWidget, Callable[[], bool]],
+    fields: Mapping[QtWidgets.QWidget, Callable[[], bool]],
 ) -> None:
+    """
+    Adds validation to the provided fields.
+
+    Each widget in `fields` has a callable assigned. If that callable returns `True`,
+    then the widget will be highlighted in red and the `accept_button` will be disabled.
+
+    This prevents exporting with invalid input, and shows the user exactly which field(s) are invalid.
+    """
+
     _add_field_validation(
         accept_button,
         {None: fields},
