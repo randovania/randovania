@@ -21,6 +21,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.games import default_data
 from randovania.games.blank.layout import BlankConfiguration
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
@@ -202,6 +203,20 @@ def prime_game_description() -> GameDescription:
 @pytest.fixture(scope="session")
 def dread_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.METROID_DREAD)
+
+
+@pytest.fixture(scope="session")
+def default_dread_configuration() -> DreadConfiguration:
+    preset = PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_DREAD).get_preset()
+    assert isinstance(preset.configuration, DreadConfiguration)
+    return preset.configuration
+
+
+@pytest.fixture
+def dread_game_patches(
+    default_dread_configuration: DreadConfiguration, dread_game_description: GameDescription
+) -> GamePatches:
+    return GamePatches.create_from_game(dread_game_description, 0, default_dread_configuration)
 
 
 @pytest.fixture(scope="session")

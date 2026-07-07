@@ -75,7 +75,26 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
                     if node not in unlocked and target in unlocked and node.dock_type is target.dock_type
                 ]
             )
-        patches = patches.assign_weaknesses_to_shuffle([(node, True) for node, _ in docks_to_unlock])
+        docks_to_shuffle: list[DockNode] = []
+        for dock_node, weakness in docks_to_unlock:
+            target_node = game.node_by_identifier(patches.get_dock_connection_for(dock_node))
+            if target_node not in docks_to_shuffle:
+                docks_to_shuffle.append(dock_node)
+
+        to_shuffle_proportion = game.dock_weakness_database.dock_rando_config.to_shuffle_proportion
+
+        if to_shuffle_proportion < 1.0:
+            rng.shuffle(docks_to_shuffle)
+            limit = int(len(docks_to_shuffle) * to_shuffle_proportion)
+            docks_to_shuffle = docks_to_shuffle[:limit]
+            docks_to_unlock = [
+                (node, weakness)
+                for node, weakness in docks_to_unlock
+                if node in docks_to_shuffle
+                or game.node_by_identifier(patches.get_dock_connection_for(node)) in docks_to_shuffle
+            ]
+
+        patches = patches.assign_weaknesses_to_shuffle([(node, True) for node in docks_to_shuffle])
         return patches.assign_dock_weakness(docks_to_unlock)
 
     else:
@@ -137,7 +156,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
                 ),
             )
             for node in nodes_to_shuffle
-            if (weakness := all_mapping.get(node.default_dock_weakness)) is not None
+            if (weakness := all_mapping.get(node.default_dock_weakness)) is not None  # type: ignore[assignment]
         )
 
         if weakness_database.dock_rando_config.force_change_two_way:
@@ -223,21 +242,8 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
     for player, results in filler_results.player_results.items():
         game = results.game
         patches = results.patches
-        player_docks: list[tuple[int, DockNode]] = []
 
-        for dock in patches.all_weaknesses_to_shuffle(game):
-            target_node = game.node_by_identifier(patches.get_dock_connection_for(dock))
-            if (player, target_node) not in player_docks:
-                player_docks.append((player, dock))
-
-        to_shuffle_proportion = game.dock_weakness_database.dock_rando_config.to_shuffle_proportion
-
-        if to_shuffle_proportion < 1.0:
-            rng.shuffle(player_docks)
-            limit = int(len(player_docks) * to_shuffle_proportion)
-            player_docks = player_docks[:limit]
-
-        unassigned_docks.extend(player_docks)
+        unassigned_docks.extend((player, node) for node in patches.all_weaknesses_to_shuffle(game))
 
     rng.shuffle(unassigned_docks)
     return unassigned_docks
