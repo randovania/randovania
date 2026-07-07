@@ -54,6 +54,40 @@ class BoundsFloat(NamedTuple):
         return QRectF(QPointF(self.min_x, self.min_y), QPointF(self.max_x, self.max_y))
 
 
+def _expand_bounds_to_match_aspect(image_bounds: BoundsInt, world_bounds: BoundsFloat) -> BoundsInt:
+    """
+    Expands the image bounds symmetrically on one axis until its aspect ratio matches the world bounds.
+    """
+    world_width = world_bounds.max_x - world_bounds.min_x
+    world_height = world_bounds.max_y - world_bounds.min_y
+    if world_width <= 0 or world_height <= 0:
+        return image_bounds
+
+    image_width = image_bounds.max_x - image_bounds.min_x
+    image_height = image_bounds.max_y - image_bounds.min_y
+    if image_width <= 0 or image_height <= 0:
+        return image_bounds
+
+    if image_width * world_height < image_height * world_width:
+        # image is proportionally narrower than the world: include more columns
+        padding = (image_height * world_width / world_height - image_width) / 2
+        return BoundsInt(
+            min_x=round(image_bounds.min_x - padding),
+            min_y=image_bounds.min_y,
+            max_x=round(image_bounds.max_x + padding),
+            max_y=image_bounds.max_y,
+        )
+    else:
+        # image is proportionally shorter than the world: include more rows
+        padding = (image_width * world_height / world_width - image_height) / 2
+        return BoundsInt(
+            min_x=image_bounds.min_x,
+            min_y=round(image_bounds.min_y - padding),
+            max_x=image_bounds.max_x,
+            max_y=round(image_bounds.max_y + padding),
+        )
+
+
 Matrix4f = tuple[
     tuple[float, float, float, float],
     tuple[float, float, float, float],
@@ -109,7 +143,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
     connected_node: Node | None = None
     _background_image: QtGui.QImage | None = None
     _region_image: QtGui.QImage | None = None
-    _region_image_bounds: BoundsInt | None = None
+    _calculated_region_image_bounds: BoundsInt | None = None
+    _manual_region_image_bounds: BoundsInt | None = None
     region_bounds: BoundsFloat
     area_bounds: BoundsFloat
     area_size: QSizeF
@@ -145,7 +180,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     _is_panning: bool = False
     _pan_threshold: float = 5.0  # Minimum pixels to move before considering it a pan
 
-    def __init__(self, parent: QtWidgets.QWidget | None = None):
+    def __init__(self, parent: QtWidgets.QWidget | None = None) -> None:
         super().__init__(parent)
 
         # Enable mouse tracking to update cursor when hovering
@@ -184,7 +219,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         )
         if image_path is not None and image_path.exists():
             self._region_image = QtGui.QImage(os.fspath(image_path))
-            self._region_image_bounds = BoundsInt(
+            self._manual_region_image_bounds = BoundsInt(
                 min_x=region.extra.get("map_min_x", 0),
                 min_y=region.extra.get("map_min_y", 0),
                 max_x=self._region_image.width() - region.extra.get("map_max_x", 0),
@@ -193,7 +228,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
             self._background_image = None
         else:
             self._region_image = None
-            self._region_image_bounds = None
+            self._manual_region_image_bounds = None
             self._background_image = None
 
         self.update_region_bounds()
@@ -221,6 +256,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
             max_x=max_x,
             max_y=max_y,
         )
+
+        if self._manual_region_image_bounds is not None:
+            self._calculated_region_image_bounds = _expand_bounds_to_match_aspect(
+                self._manual_region_image_bounds, self.region_bounds
+            )
+        else:
+            self._calculated_region_image_bounds = None
 
     def get_image_point(self, x: float, y: float) -> QPointF:
         bounds = self.image_bounds
@@ -267,9 +309,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
         # some games (msr + dread) do not use area images but one per region
         # the image to use was already set by `select_region`
         elif self._region_image is not None:
-            assert self._region_image_bounds is not None
+            assert self._calculated_region_image_bounds is not None
             self._background_image = self._region_image
-            self.image_bounds = self._region_image_bounds
+            self.image_bounds = self._calculated_region_image_bounds
             self.update_region_bounds()
         else:
             self._background_image = None

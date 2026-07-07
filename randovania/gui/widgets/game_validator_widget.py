@@ -74,7 +74,7 @@ async def _run_validator(logger: ResolverLogger, debug_level: debug.LogLevel, la
 class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
     _current_task: asyncio.Task | None
 
-    def __init__(self, layout: LayoutDescription, players: PlayersConfiguration):
+    def __init__(self, layout: LayoutDescription, players: PlayersConfiguration) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)

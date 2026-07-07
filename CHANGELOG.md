@@ -5,12 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.9.0] - 2026-07-0?
+## [10.10.0] - 2026-08-02
+
+- Changed: Automatic Item Tracker: The selected theme for the default game is now always shown while the selected game connection is not connected.
+- Fixed: Automatic Item Tracker: The text "Not currently connected to any games" is now always shown when the selected game connection is not connected and no default game is set.
+- Fixed: In the Data Visualizer and Editor, when the game uses region images these images are no longer be stretched in certain situations.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Ferenia
+
+- Changed: The Twin Robot fight is now logically active from the start of the game, unless Highly Dangerous Logic is active. That means passing through the arena now logically requires meeting the fight requirements also before obtaining the Storm Missiles.
+
+### Metroid: Samus Returns
+
+- Changed: The Buff Charge Beam Doors option now also affects Beam Burst.
+- Changed: Solo Plasma Beam now deals more damage to Steel Orbs.
+- Changed: Grapple Beam is now auto-selected when you aim at a Grapple Beam shield.
+- Changed: Usages of Power Bombs and Beam Burst to open Charge Beam Doors with the Buff Charge Beam Doors option disabled have been changed to no longer require Knowledge (Beginner).
+- Fixed: The area item collection percentage is now correct and counts all items and all Metroids.
+
+## [10.9.0] - 2026-07-06
 
 - Added: The Data Visualizer now displays more information about Hint nodes.
 - Changed: Updated the Nintendont version that is used when uploading it directly to the Wii.
   Includes faster connection speeds and better crash resilience.
 - Changed: Nintendont Connector: Better error messages when connecting to an invalid Nintendont.
+- Changed: Nintendont Connector: Increase the timeout limit from 5s to 10s.
 
 ### Another Metroid 2 Remake
 
@@ -27,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Added: Single-wall Wall Jump traversal option to get to EMMI Zone Dome.
-- Added: Speed booster conservation trick to get to the top of the EMMI Zone Hub without diabled door lock randomizer.
+- Added: Speed booster conservation trick to get to the top of the EMMI Zone Hub without disabled door lock randomizer.
 - Added: Added several videos for various connections in Artaria.
 - Changed: The connection from EMMI Zone Exit North to EMMI Zone Exit Northwest using Speedbooster is now classified as a Beginner Speedbooster Conservation trick.
 
@@ -73,6 +96,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Cosmetic option to use Fusion suits (default: off)
 - Added: Preset option to skip the opening storyboard cutscene (default: off)
 - Fixed: Spazer and Plasma beam projectiles no longer shoot through blocks without Wave
+- Fixed: Exporter error when Door Lock Randomizer used "Access Open" as a "Doors to Change" option.
 
 ## [10.8.2] - 2026-06-14
 

@@ -44,6 +44,6 @@ class Inventory:
     def get(self, key: ItemResourceInfo) -> InventoryItem:
         return self.raw.get(key, InventoryItem(0, 0))
 
-    def as_resource_gain(self) -> ResourceGain:
+    def as_resource_gain(self) -> ResourceGain[ItemResourceInfo]:
         for info, item in self.raw.items():
             yield info, item.capacity

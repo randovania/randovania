@@ -1,23 +1,37 @@
 from __future__ import annotations
 
+import typing
+
 from PySide6 import QtCore, QtWidgets
 
 
 class ScrollMessageBox(QtWidgets.QMessageBox):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(
+        self,
+        icon: QtWidgets.QMessageBox.Icon,
+        title: str,
+        text: str,
+        /,
+        buttons: QtWidgets.QMessageBox.StandardButton = QtWidgets.QMessageBox.StandardButton.Ok,
+        parent: QtWidgets.QWidget | None = None,
+        flags: QtCore.Qt.WindowType = QtCore.Qt.WindowType.Dialog | QtCore.Qt.WindowType.MSWindowsFixedSizeDialogHint,
+        *,
+        default_button: QtWidgets.QMessageBox.StandardButton | None = QtWidgets.QMessageBox.StandardButton.Ok,
+    ):
+        super().__init__(icon, title, text, buttons, parent, flags)
 
-        children: list[QtWidgets.QWidget] = self.children()
+        children = self.children()
 
         grid = self.findChild(QtWidgets.QGridLayout)
         assert isinstance(grid, QtWidgets.QGridLayout)
 
-        old_label = None
-        position = None
+        old_label: QtWidgets.QLabel | None = None
+        position: tuple[int, int, int, int] | None = None
         for i, it in enumerate(children):
             if it.objectName() == "qt_msgbox_label":
-                position = grid.getItemPosition(i)
-                old_label = it
+                # Qt stubs are wrong about this return value
+                position = grid.getItemPosition(i)  # type: ignore[assignment]
+                old_label = typing.cast("QtWidgets.QLabel", it)
                 break
         assert old_label is not None
         assert position is not None
@@ -37,6 +51,11 @@ class ScrollMessageBox(QtWidgets.QMessageBox):
 
         old_label.setText("")
 
+        if default_button is not None:
+            if not buttons & default_button:
+                raise ValueError(f"Default button {default_button} is not present in {buttons}")
+            self.setDefaultButton(default_button)
+
     def text(self) -> str:
         return self.label.text()
 
@@ -50,7 +69,7 @@ class ScrollMessageBox(QtWidgets.QMessageBox):
         icon: QtWidgets.QMessageBox.Icon,
         title: str,
         body: str,
-        buttons: QtWidgets.QMessageBox.StandardButtons,
+        buttons: QtWidgets.QMessageBox.StandardButton,
         default_button: QtWidgets.QMessageBox.StandardButton = QtWidgets.QMessageBox.StandardButton.Ok,
     ) -> ScrollMessageBox:
         box = cls(icon, title, body, buttons, parent)

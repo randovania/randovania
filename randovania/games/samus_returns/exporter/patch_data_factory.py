@@ -720,6 +720,9 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
             },
             "game_patches": {
                 "charge_door_buff": self.configuration.charge_door_buff,
+                "charge_door_burst_buff": self.patches.game_specific.get(
+                    "charge_door_burst_buff", self.configuration.charge_door_buff
+                ),
                 "beam_door_buff": self.configuration.beam_door_buff,
                 "beam_burst_buff": self.configuration.beam_burst_buff,
                 "nerf_super_missiles": self.configuration.nerf_super_missiles,

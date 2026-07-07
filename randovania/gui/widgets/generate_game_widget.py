@@ -105,17 +105,17 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget, GenerateGameM
     @asyncSlot()
     async def generate_new_layout_regular(self) -> None:
         monitoring.metrics.incr("gui_generate_plain", tags={"game": self.game.value})
-        return await self.generate_new_layout(spoiler=True)
+        await self.generate_new_layout(spoiler=True)
 
     @asyncSlot()
     async def generate_new_layout_no_retry(self) -> None:
         monitoring.metrics.incr("gui_generate_no_retry", tags={"game": self.game.value})
-        return await self.generate_new_layout(spoiler=True, retries=0)
+        await self.generate_new_layout(spoiler=True, retries=0)
 
     @asyncSlot()
     async def generate_new_layout_race(self) -> None:
         monitoring.metrics.incr("gui_generate_race", tags={"game": self.game.value})
-        return await self.generate_new_layout(spoiler=False)
+        await self.generate_new_layout(spoiler=False)
 
     @property
     def generate_parent_widget(self) -> QtWidgets.QWidget:

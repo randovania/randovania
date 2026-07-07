@@ -19,7 +19,7 @@ class BaseCosmeticPatchesDialog[CosmeticPatches: BaseCosmeticPatches](QtWidgets.
     cancel_button: QtWidgets.QPushButton
     reset_button: QtWidgets.QPushButton
 
-    def __init__(self, parent: QtWidgets.QWidget | None, current: CosmeticPatches, options: Options):
+    def __init__(self, parent: QtWidgets.QWidget | None, current: CosmeticPatches, options: Options) -> None:
         super().__init__(parent)
         assert isinstance(current, self.cosmetic_patches_type())
         self._cosmetic_patches = current

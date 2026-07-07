@@ -10,17 +10,7 @@ from randovania.gui.lib import common_qt_lib
 StandardButton = QtWidgets.QMessageBox.StandardButton
 
 
-class DialogLike(typing.Protocol):
-    """
-    Represents the part of QDialog's API needed for execute_dialog.
-    """
-
-    def show(self) -> None: ...
-
-    finished: typing.ClassVar[QtCore.Signal]
-
-
-async def execute_dialog(dialog: DialogLike) -> QtWidgets.QDialog.DialogCode:
+async def execute_dialog(dialog: QtWidgets.QDialog) -> QtWidgets.QDialog.DialogCode:
     """
     An async version of dialog.exec_, internally using QDialog.show
     :param dialog:
@@ -28,7 +18,7 @@ async def execute_dialog(dialog: DialogLike) -> QtWidgets.QDialog.DialogCode:
     """
     future = asyncio.get_event_loop().create_future()
 
-    def set_result(result: QtWidgets.QDialog.DialogCode):
+    def set_result(result: QtWidgets.QDialog.DialogCode) -> None:
         future.set_result(result)
 
     dialog.finished.connect(set_result)

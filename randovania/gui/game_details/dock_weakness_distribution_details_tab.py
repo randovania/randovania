@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class DockWeaknessDistributionDetailsTab(BaseConnectionDetailsTab):
+class DockWeaknessDistributionDetailsTab[ConfigurationT: BaseConfiguration](BaseConnectionDetailsTab[ConfigurationT]):
     """Displays details for the results of the Dock Weakness Distribution, for one specific dock type."""
 
     def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame, dock_type: DockType):
@@ -29,7 +29,7 @@ class DockWeaknessDistributionDetailsTab(BaseConnectionDetailsTab):
     @classmethod
     @override
     def should_appear_for(
-        cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: ConfigurationT, all_patches: dict[int, GamePatches], players: PlayersConfiguration
     ) -> bool:
         raise RuntimeError("Should not be called for this class")
 
@@ -56,7 +56,7 @@ class DockWeaknessDistributionDetailsTab(BaseConnectionDetailsTab):
     def create_when_relevant_for_type(
         cls,
         parent: QtWidgets.QWidget,
-        configuration: BaseConfiguration,
+        configuration: ConfigurationT,
         all_patches: dict[int, GamePatches],
         players: PlayersConfiguration,
         dock_type: DockType,

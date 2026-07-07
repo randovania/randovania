@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 class AreaDetailsPopup(QtWidgets.QDialog, Ui_AreaDetailsPopup):
     """Editor dialog for modifying Area fields such as `name` or `extra`"""
 
-    def __init__(self, game: GameDescription, area: Area):
+    def __init__(self, game: GameDescription, area: Area) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
