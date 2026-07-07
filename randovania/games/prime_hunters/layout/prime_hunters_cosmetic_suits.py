@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
 from pathlib import Path
@@ -25,7 +27,7 @@ class SuitColor(BitPackEnum, Enum):
         base_path = RandovaniaGame.METROID_PRIME_HUNTERS.data_path.joinpath("assets", "suit_renders")
         return base_path.joinpath(f"{self.value}.png")
 
-    def next_color(self, reverse: bool) -> "SuitColor":
+    def next_color(self, reverse: bool) -> SuitColor:
         upcoming = list(SuitColor)
         offset = -1 if reverse else 1
         return upcoming[(upcoming.index(self) + offset) % len(upcoming)]
@@ -49,7 +51,7 @@ enum_lib.add_long_name(
 class HuntersSuitPreferences(JsonDataclass):
     varia: SuitColor = SuitColor.VARIA
 
-    def randomized(self, rng: Random) -> "HuntersSuitPreferences":
+    def randomized(self, rng: Random) -> HuntersSuitPreferences:
         if SuitColor.RANDOM != self.varia:
             # no change needed
             return self

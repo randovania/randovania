@@ -21,7 +21,7 @@ _FIELDS = [
 ]
 
 
-class PresetHuntersGameplay(PresetTab, Ui_PresetHuntersGameplay):
+class PresetHuntersGameplay(PresetTab[HuntersConfiguration], Ui_PresetHuntersGameplay):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
@@ -40,8 +40,8 @@ class PresetHuntersGameplay(PresetTab, Ui_PresetHuntersGameplay):
     def header_name(cls) -> str | None:
         return None
 
-    def on_preset_changed(self, preset: Preset) -> None:
-        config = typing.cast("HuntersConfiguration", preset.configuration)
+    def on_preset_changed(self, preset: Preset[HuntersConfiguration]) -> None:
+        config = preset.configuration
 
         self.energy_capacity_spin_box.setValue(config.starting_energy)
 
