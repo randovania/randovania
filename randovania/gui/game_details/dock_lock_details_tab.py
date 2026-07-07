@@ -11,13 +11,13 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class DockLockDetailsTab(BaseConnectionDetailsTab):
+class DockLockDetailsTab[ConfigurationT: BaseConfiguration](BaseConnectionDetailsTab[ConfigurationT]):
     def tab_title(self) -> str:
         return "Door Locks"
 
     @classmethod
     def should_appear_for(
-        cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: ConfigurationT, all_patches: dict[int, GamePatches], players: PlayersConfiguration
     ) -> bool:
         return configuration.dock_rando.is_enabled()
 

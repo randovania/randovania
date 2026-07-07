@@ -26,7 +26,7 @@ if TYPE_CHECKING:
 class MatplotlibWidget(QtWidgets.QWidget):
     ax: Axes
 
-    def __init__(self, parent: QtWidgets.QWidget, region_list: RegionList):
+    def __init__(self, parent: QtWidgets.QWidget, region_list: RegionList) -> None:
         super().__init__(parent)
 
         self.region_list = region_list

@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.10.0] - 2026-08-0?
+## [10.10.0] - 2026-08-02
 
 - Changed: Automatic Item Tracker: The selected theme for the default game is now always shown while the selected game connection is not connected.
 - Fixed: Automatic Item Tracker: The text "Not currently connected to any games" is now always shown when the selected game connection is not connected and no default game is set.
@@ -18,12 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The Twin Robot fight is now logically active from the start of the game, unless Highly Dangerous Logic is active. That means passing through the arena now logically requires meeting the fight requirements also before obtaining the Storm Missiles.
 
-## [10.9.0] - 2026-07-0?
+## [10.9.0] - 2026-07-06
 
 - Added: The Data Visualizer now displays more information about Hint nodes.
 - Changed: Updated the Nintendont version that is used when uploading it directly to the Wii.
   Includes faster connection speeds and better crash resilience.
 - Changed: Nintendont Connector: Better error messages when connecting to an invalid Nintendont.
+- Changed: Nintendont Connector: Increase the timeout limit from 5s to 10s.
 
 ### Another Metroid 2 Remake
 

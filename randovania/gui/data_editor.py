@@ -111,7 +111,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     _warning_dialogs_disabled = False
     _collection_for_filtering: ResourceCollection | None = None
 
-    def __init__(self, data: dict, data_path: Path | None, is_internal: bool, edit_mode: bool):
+    def __init__(self, data: dict, data_path: Path | None, is_internal: bool, edit_mode: bool) -> None:
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
@@ -656,17 +656,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if self._warning_dialogs_disabled:
             return True
 
-        options = QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
         message = "Database has the following errors:\n\n" + "\n\n".join(errors)
         message += "\n\nIgnore?"
 
-        box = ScrollMessageBox.create_new(
-            self,
-            QtWidgets.QMessageBox.Icon.Critical,
+        box = ScrollMessageBox(
+            QMessageBox.Icon.Critical,
             "Integrity Check",
             message,
-            options,
-            QMessageBox.StandardButton.No,
+            buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            parent=self,
+            default_button=QMessageBox.StandardButton.No,
         )
         user_response = box.exec_()
 
