@@ -20,7 +20,8 @@ import starlette
 import starlette.exceptions
 from cryptography.fernet import Fernet
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import PlainTextResponse, RedirectResponse
+from fastapi.routing import APIRoute
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from prometheus_client import Summary
@@ -55,6 +56,16 @@ type MiddlewareNext[T] = AsyncCallable[[fastapi.Request], T]
 
 class RdvFastAPI(fastapi.FastAPI):
     sa: ServerApp
+
+
+class RedirectToLoginError(Exception):
+    """
+    Raised by dependencies that require a User, to send the browser to the login page
+    (returning to `next_url` afterwards) instead of responding with an HTTP error.
+    """
+
+    def __init__(self, next_url: str):
+        self.next_url = next_url
 
 
 ctx_who: ContextVar[str | None] = ContextVar("who", default=None)
@@ -204,6 +215,11 @@ class ServerApp:
                 body,
                 status_code=exc.status_code,
             )
+
+        @self.app.exception_handler(RedirectToLoginError)
+        async def redirect_to_login_handler(request: fastapi.Request, exc: RedirectToLoginError) -> fastapi.Response:
+            login_url = request.url_for("browser_login_with_discord").include_query_params(next=exc.next_url)
+            return RedirectResponse(login_url)
 
         @self.app.exception_handler(RequestValidationError)
         async def validation_exception_handler(
@@ -489,14 +505,44 @@ async def get_admin_user(
     return user
 
 
+async def get_user_or_redirect_to_login(
+    sa: ServerAppDep,
+    request: fastapi.Request,
+    x_randovania_session: Annotated[str | None, fastapi.Header()] = None,
+) -> User:
+    """
+    Like `get_user`, but instead of raising an HTTP error for an unauthenticated request, redirects
+    the browser to the login page and back, if it's not an API request.
+    """
+
+    try:
+        return await get_user(sa, request, x_randovania_session)
+    except fastapi.HTTPException:
+        if sa.is_api_request(request):
+            raise
+
+        route: APIRoute | None = request.scope.get("route")
+        if route is not None:
+            next_url = request.url_for(route.name, **request.path_params).path
+        else:
+            next_url = request.url.path
+        if request.url.query:
+            next_url = f"{next_url}?{request.url.query}"
+        raise RedirectToLoginError(next_url)
+
+
 RequireUser = fastapi.Depends(get_user)
 """Ensure that there is a User associated with the request before handling it."""
 RequireAdminUser = fastapi.Depends(get_admin_user)
 """Ensure that there is an admin User associated with the request before handling it."""
+RequireUserOrRedirectToLogin = fastapi.Depends(get_user_or_redirect_to_login)
+"""Ensure that there is a User associated with the request, redirecting to login instead of erroring out."""
 
 UserDep = Annotated[User, RequireUser]
 """The User associated with the request."""
 AdminDep = Annotated[User, RequireAdminUser]
 """The admin User associated with the request."""
+UserOrRedirectDep = Annotated[User, RequireUserOrRedirectToLogin]
+"""The User associated with the request. Unauthenticated browser requests are redirected to login and back."""
 SidDep = Annotated[str | None, fastapi.Header(alias="X-Randovania-Sid")]
 """The client's socketio sid as well."""
