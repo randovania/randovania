@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 import sys
 from collections import defaultdict
-from typing import TYPE_CHECKING, override
+from typing import TYPE_CHECKING, Literal, override
 
 import natsort
 from PySide6 import QtWidgets
@@ -119,10 +119,14 @@ class PresetDockWeaknessDistributor[BaseConfigurationT: BaseConfiguration](
             if "can_change_to" in checks:
                 checks["can_change_to"].setChecked(weakness in state.can_change_to)
 
-    def _add_dock_type(self, dock_type: DockType, type_params: WeaknessDistributorSettings):
+    def _add_dock_type(self, dock_type: DockType, type_params: WeaknessDistributorSettings) -> None:
         self.weakness_checks = defaultdict(dict)
 
-        def add_group(name: str, layout: QtWidgets.QVBoxLayout, weaknesses: dict[DockWeakness, bool]):
+        def add_group(
+            name: Literal["can_change_from", "can_change_to"],
+            layout: QtWidgets.QVBoxLayout,
+            weaknesses: dict[DockWeakness, bool],
+        ) -> None:
             for weakness, enabled in weaknesses.items():
                 check = QtWidgets.QCheckBox()
                 check.setObjectName(f"{name}_check {dock_type.short_name} {weakness.name}")
@@ -164,10 +168,10 @@ class PresetDockWeaknessDistributor[BaseConfigurationT: BaseConfiguration](
 
     def _persist_weakness_setting(
         self,
-        field: str,
+        field: Literal["can_change_from", "can_change_to"],
         dock_weakness: DockWeakness,
     ) -> Callable[[bool], None]:
-        def _persist(value: bool):
+        def _persist(value: bool) -> None:
             with self._editor as editor:
                 state = editor.dock_weakness_distributor.types_state[self.dock_type]
                 can_change: set[DockWeakness] = getattr(state, field)
@@ -175,12 +179,14 @@ class PresetDockWeaknessDistributor[BaseConfigurationT: BaseConfiguration](
                     can_change.add(dock_weakness)
                 elif dock_weakness in can_change:
                     can_change.remove(dock_weakness)
-                state = dataclasses.replace(state, **{field: can_change})
+
+                # https://github.com/python/mypy/issues/5382
+                state = dataclasses.replace(state, **{field: can_change})  # type: ignore[arg-type]
                 editor.dock_weakness_distributor = editor.dock_weakness_distributor.replace_state(self.dock_type, state)
 
         return _persist
 
-    def _on_mode_changed(self, value: DockWeaknessDistributorMode):
+    def _on_mode_changed(self, value: DockWeaknessDistributorMode) -> None:
         with self._editor as editor:
             state = editor.dock_weakness_distributor.types_state[self.dock_type]
             state = dataclasses.replace(state, mode=value)
