@@ -157,5 +157,13 @@ def test_region_image(skip_qtbot, canvas: DataEditorCanvas, dread_game_descripti
     assert canvas._region_image is not None
     assert canvas._background_image is None
 
+    # the image bounds must have the same aspect ratio as the world bounds, or the image is drawn stretched
+    image_bounds = canvas._calculated_region_image_bounds
+    assert image_bounds is not None
+    world_bounds = canvas.region_bounds
+    image_ratio = (image_bounds.max_x - image_bounds.min_x) / (image_bounds.max_y - image_bounds.min_y)
+    world_ratio = (world_bounds.max_x - world_bounds.min_x) / (world_bounds.max_y - world_bounds.min_y)
+    assert image_ratio == pytest.approx(world_ratio, abs=0.005)
+
     canvas.select_area(region.areas[0])
     assert canvas._background_image is not None
