@@ -626,25 +626,21 @@ class DataEditorCanvas(QtWidgets.QWidget):
         painter.translate(self.get_area_canvas_offset())
 
         if self._background_image is not None:
-            scaled_border_x = 8 * self.border_x / self.scale
-            scaled_border_y = 8 * self.border_y / self.scale
-
             wbounds = self.region_bounds
-            abounds = self.area_bounds
+            offset = self.get_area_canvas_offset()
 
-            # Calculate the top-left corner and bottom-right of the background image
-            percent_x_start = (abounds.min_x - wbounds.min_x - scaled_border_x) / (wbounds.max_x - wbounds.min_x)
-            percent_x_end = (abounds.max_x - wbounds.min_x + scaled_border_x) / (wbounds.max_x - wbounds.min_x)
-            percent_y_start = 1 - (abounds.max_y - wbounds.min_y + scaled_border_y) / (wbounds.max_y - wbounds.min_y)
-            percent_y_end = 1 - (abounds.min_y - wbounds.min_y - scaled_border_y) / (wbounds.max_y - wbounds.min_y)
+            # Draw the part of the region visible in the widget, so panning and zooming never
+            # reveal an area of the widget the image was not drawn to.
+            top_left = self.qt_local_to_game_loc(-offset)
+            bottom_right = self.qt_local_to_game_loc(QPointF(self.width(), self.height()) - offset)
+
+            percent_x_start = (top_left.x - wbounds.min_x) / (wbounds.max_x - wbounds.min_x)
+            percent_x_end = (bottom_right.x - wbounds.min_x) / (wbounds.max_x - wbounds.min_x)
+            percent_y_start = 1 - (top_left.y - wbounds.min_y) / (wbounds.max_y - wbounds.min_y)
+            percent_y_end = 1 - (bottom_right.y - wbounds.min_y) / (wbounds.max_y - wbounds.min_y)
 
             painter.drawImage(
-                QRectF(
-                    -scaled_border_x * self.scale,
-                    -scaled_border_y * self.scale,
-                    (scaled_border_x * 2 + self.area_size.width()) * self.scale,
-                    (scaled_border_y * 2 + self.area_size.height()) * self.scale,
-                ),
+                QRectF(-offset.x(), -offset.y(), self.width(), self.height()),
                 self._background_image,
                 QRectF(
                     self.get_image_point(percent_x_start, percent_y_start),
