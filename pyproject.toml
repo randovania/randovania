@@ -1,10 +1,7 @@
 [build-system]
 requires = [
     "setuptools>=64",
-    "setuptools_scm>=8,<10",
-    "wheel>=0.37.0",
-    "dulwich",
-    "randovania-scm-version-schema",
+    "setuptools_scm>=10",
     "cython",
 ]
 build-backend = "setuptools.build_meta"
@@ -210,12 +207,12 @@ include = ["randovania*"]
 [tool.setuptools_scm]
 local_scheme = "no-local-version"
 version_file = "randovania/version.py"
-version_scheme = "randovania_scm_version_schema:version_scheme"
 scm.git.describe_command = [
     "git",
     "describe",
     "--dirty",
     "--tags",
+    "--abbrev=40",  # ensures the full hash is included, which ends in `version.node`
     "--long",
     "--match",
     "v[0-9]*",

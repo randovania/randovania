@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Automatic Item Tracker: The selected theme for the default game is now always shown while the selected game connection is not connected.
 - Fixed: Automatic Item Tracker: The text "Not currently connected to any games" is now always shown when the selected game connection is not connected and no default game is set.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Ferenia
+
+- Changed: The Twin Robot fight is now logically active from the start of the game, unless Highly Dangerous Logic is active. That means passing through the arena now logically requires meeting the fight requirements also before obtaining the Storm Missiles.
+
 ### Metroid: Samus Returns
 
 - Changed: The Buff Charge Beam Doors option now also affects Beam Burst.
