@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import re
 import traceback
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Never
 
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
@@ -39,7 +39,7 @@ class PresetMenu(QtWidgets.QMenu):
     action_import: QtGui.QAction
     action_view_deleted: QtGui.QAction
 
-    def __init__(self, parent: QtWidgets.QWidget):
+    def __init__(self, parent: QtWidgets.QWidget) -> None:
         super().__init__(parent)
         self.action_customize = QtGui.QAction(parent)
         self.action_delete = QtGui.QAction(parent)
@@ -75,7 +75,8 @@ class PresetMenu(QtWidgets.QMenu):
         # TODO: Hide the ones that aren't implemented
         self.action_view_deleted.setVisible(False)
 
-    def set_preset(self, preset: VersionedPreset | None):
+    def set_preset(self, preset: VersionedPreset | None) -> None:
+        # https://github.com/python/mypy/issues/11979
         has_any_preset = preset is not None
         has_valid_preset = has_any_preset
         try:
@@ -85,9 +86,9 @@ class PresetMenu(QtWidgets.QMenu):
             has_valid_preset = False
 
         for p in [self.action_delete, self.action_history]:
-            p.setEnabled(has_any_preset and not preset.is_included_preset)
+            p.setEnabled(has_any_preset and not preset.is_included_preset)  # type: ignore[union-attr]
 
-        self.action_export.setEnabled(has_valid_preset and not preset.is_included_preset)
+        self.action_export.setEnabled(has_valid_preset and not preset.is_included_preset)  # type: ignore[union-attr]
 
         for p in [self.action_customize, self.action_duplicate, self.action_map_tracker, self.action_required_tricks]:
             p.setEnabled(has_valid_preset)
@@ -106,11 +107,11 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
     _game: RandovaniaGame
     _can_generate: bool = False
 
-    def __init__(self, parent: QtWidgets.QWidget | None = None):
+    def __init__(self, parent: QtWidgets.QWidget | None = None) -> None:
         super().__init__(parent)
         self.setupUi(self)
 
-    def setup_ui(self, game: RandovaniaGame, window_manager: WindowManager, options: Options):
+    def setup_ui(self, game: RandovaniaGame, window_manager: WindowManager, options: Options) -> None:
         self._window_manager = window_manager
         self._options = options
         self._game = game
@@ -141,14 +142,14 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         self._update_preset_tree_items()
         self.on_preset_changed(None)
 
-    def _update_preset_tree_items(self):
+    def _update_preset_tree_items(self) -> None:
         self.create_preset_tree.update_items()
 
     @property
     def _current_preset_data(self) -> VersionedPreset | None:
         return self.create_preset_tree.current_preset_data
 
-    def _add_new_preset(self, preset: VersionedPreset, *, parent: uuid.UUID | None):
+    def _add_new_preset(self, preset: VersionedPreset, *, parent: uuid.UUID | None) -> None:
         """
         Handle a preset being created, by internal means.
         This also
@@ -211,7 +212,10 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         await self._customize_preset_with_dialog(old_preset, parent_uuid)
 
     @asyncSlot()
-    async def _on_delete_preset(self):
+    async def _on_delete_preset(self) -> None:
+        if self._current_preset_data is None:
+            return
+
         monitoring.metrics.incr("gui_preset_delete_clicked", tags={"game": self._game.value})
         result = await async_dialog.warning(
             self,
@@ -227,12 +231,16 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             self._on_select_preset()
 
     @asyncSlot()
-    async def _on_view_preset_history(self):
+    async def _on_view_preset_history(self) -> None:
+        if self._current_preset_data is None:
+            return
+
         monitoring.metrics.incr("gui_preset_history_clicked", tags={"game": self._game.value})
         if self._preset_history is not None:
-            return await async_dialog.warning(
+            await async_dialog.warning(
                 self, "Dialog already open", "Another preset history dialog is already open. Please close it first."
             )
+            return
 
         preset = self._current_preset_data
         assert preset is not None
@@ -247,7 +255,10 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             self._window_manager.preset_manager.add_new_preset(VersionedPreset.with_preset(new_preset))
             self._update_preset_tree_items()
 
-    def _on_export_preset(self):
+    def _on_export_preset(self) -> None:
+        if self._current_preset_data is None:
+            return
+
         default_name = f"{self._current_preset_data.slug_name}.rdvpreset"
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=True, name=default_name)
         if path is not None:
@@ -258,7 +269,10 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
                     self, "Unable to save", f"The following error occurred when writing to '{path}': {e}."
                 )
 
-    def _on_duplicate_preset(self):
+    def _on_duplicate_preset(self) -> None:
+        if self._current_preset_data is None:
+            return
+
         old_preset = self._current_preset_data
         new_preset = VersionedPreset.with_preset(old_preset.get_preset().fork())
         self._add_new_preset(new_preset, parent=old_preset.uuid)
@@ -273,26 +287,32 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         await self._customize_preset_with_dialog(new_preset, None)
 
     @asyncSlot()
-    async def _on_open_map_tracker_for_preset(self):
+    async def _on_open_map_tracker_for_preset(self) -> None:
+        if self._current_preset_data is None:
+            return
+
         await self._window_manager.open_map_tracker(self._current_preset_data.get_preset())
 
-    def _on_open_required_tricks_for_preset(self):
+    def _on_open_required_tricks_for_preset(self) -> None:
+        if self._current_preset_data is None:
+            return
+
         from randovania.gui.dialog.trick_usage_popup import TrickUsagePopup
 
         self._trick_usage_popup = TrickUsagePopup(self, self._window_manager, self._current_preset_data.get_preset())
         self._trick_usage_popup.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
         self._trick_usage_popup.open()
 
-    def _on_import_preset(self):
+    def _on_import_preset(self) -> None:
         monitoring.metrics.incr("gui_preset_import_clicked", tags={"game": self._game.value})
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=False)
         if path is not None:
             self._window_manager.import_preset_file(path)
 
-    def _on_view_deleted(self):
+    def _on_view_deleted(self) -> Never:
         raise RuntimeError("Feature not implemented")
 
-    def _on_select_preset(self):
+    def _on_select_preset(self) -> None:
         preset_data = self._current_preset_data
         self.on_preset_changed(preset_data)
 
@@ -300,7 +320,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             with self._options as options:
                 options.set_selected_preset_uuid_for(self._game, preset_data.uuid)
 
-    def _on_tree_context_menu(self, pos: QtCore.QPoint):
+    def _on_tree_context_menu(self, pos: QtCore.QPoint) -> None:
         item: QtWidgets.QTreeWidgetItem = self.create_preset_tree.itemAt(pos)
         preset = None
         if item is not None:
@@ -313,7 +333,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
     def preset(self) -> VersionedPreset | None:
         return self._current_preset_data
 
-    def on_options_changed(self, options: Options):
+    def on_options_changed(self, options: Options) -> None:
         if not self._has_set_from_last_selected:
             self._has_set_from_last_selected = True
             preset_manager = self._window_manager.preset_manager
@@ -322,7 +342,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
                 preset = preset_manager.default_preset_for_game(self._game)
             self.create_preset_tree.select_preset(preset)
 
-    def on_preset_changed(self, preset: VersionedPreset | None):
+    def on_preset_changed(self, preset: VersionedPreset | None) -> None:
         import markdown
 
         can_generate = False
@@ -360,7 +380,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         self._can_generate = can_generate
         self.CanGenerate.emit(can_generate)
 
-    def _on_click_create_preset_description(self, link: str):
+    def _on_click_create_preset_description(self, link: str) -> None:
         info = re.match(r"^open-preset://([0-9a-f\-]{36})$", link)
         if info is None:
             return
@@ -378,7 +398,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             ),
         )
 
-    def change_game(self, game: RandovaniaGame):
+    def change_game(self, game: RandovaniaGame) -> None:
         self._game = game
         self.create_preset_tree.game = game
         self.create_preset_tree.update_items()

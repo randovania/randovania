@@ -36,7 +36,7 @@ class AsyncRaceCreationDialog(QtWidgets.QDialog, GenerateGameMixin, BackgroundTa
         parent: QtWidgets.QWidget,
         window_manager: WindowManager,
         options: Options,
-    ):
+    ) -> None:
         super().__init__(parent)
         self.ui = Ui_AsyncRaceCreationDialog()
         self.ui.setupUi(self)

@@ -30,7 +30,7 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
     location_hint_features_tab: LocationHintFeatureTab | None = None
     hint_locations_tree_widget: QtWidgets.QTreeWidget | None = None
 
-    def __init__(self, window_manager: WindowManager, background_task: BackgroundTaskMixin, options: Options):
+    def __init__(self, window_manager: WindowManager, background_task: BackgroundTaskMixin, options: Options) -> None:
         super().__init__()
         self.setup_ui()
         self._window_manager = window_manager

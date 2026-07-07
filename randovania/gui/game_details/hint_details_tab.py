@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 
 
 class HintDetailsTab(GameDetailsTab):
-    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame):
+    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame) -> None:
         super().__init__(parent, game)
         self.tree_widget = QtWidgets.QTreeWidget(parent)
         self.tree_widget.setWordWrap(True)
@@ -36,7 +36,7 @@ class HintDetailsTab(GameDetailsTab):
 
     def update_content(
         self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
-    ):
+    ) -> None:
         NUM_COLUMNS = 4
 
         self.tree_widget.clear()

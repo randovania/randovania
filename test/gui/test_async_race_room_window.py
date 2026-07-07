@@ -28,7 +28,7 @@ if TYPE_CHECKING:
     import pytest_mock
     from pytestqt.qtbot import QtBot
 
-    from randovania.gui.dialog.async_race_admin_dialog import AsyncRaceAdminDialog
+    from randovania.gui.dialog.async_race.async_race_admin_dialog import AsyncRaceAdminDialog
     from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
     from randovania.interface_common.options import Options
     from randovania.layout.preset import Preset

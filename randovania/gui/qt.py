@@ -6,7 +6,9 @@ import logging.handlers
 import os
 import sys
 import typing
+from argparse import _SubParsersAction
 from pathlib import Path
+from types import TracebackType
 
 from PySide6 import QtCore, QtWidgets
 
@@ -19,15 +21,23 @@ if typing.TYPE_CHECKING:
     import argparse
     from argparse import ArgumentParser
 
+    import qasync
+
+    from randovania.game_connection.game_connection import GameConnection
+    from randovania.gui.data_editor import DataEditorWindow
+    from randovania.gui.game_details.game_details_window import GameDetailsWindow
+    from randovania.gui.item_tracker.auto_tracker_window import AutoTrackerWindow
     from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.gui.main_window import MainWindow
     from randovania.gui.multiworld_client import MultiworldClient
     from randovania.interface_common.options import Options
     from randovania.interface_common.preset_manager import PresetManager
+    from randovania.interface_common.world_database import WorldDatabase
 
 logger = logging.getLogger(__name__)
 
 
-def display_exception(val: Exception):
+def display_exception(val: BaseException) -> None:
     if not isinstance(val, KeyboardInterrupt):
         monitoring.metrics.incr("amount_of_exceptions")
         logging.exception("unhandled exception", exc_info=val)
@@ -41,13 +51,13 @@ def display_exception(val: Exception):
 old_handler = None
 
 
-def catch_exceptions(t, val, tb):
+def catch_exceptions(t: type[BaseException], val: BaseException, tb: TracebackType | None) -> None:
     display_exception(val)
     if old_handler is not None:
         return old_handler(t, val, tb)
 
 
-def catch_exceptions_async(loop, context):
+def catch_exceptions_async(loop: asyncio.AbstractEventLoop, context: dict) -> None:
     if "future" in context:
         future: asyncio.Future = context["future"]
         logger.exception(context["message"], exc_info=future.exception())
@@ -57,15 +67,24 @@ def catch_exceptions_async(loop, context):
         logger.critical(str(context))
 
 
-def _migrate_old_base_preset_uuid(preset_manager: PresetManager, options: Options):
+def _migrate_old_base_preset_uuid(preset_manager: PresetManager, options: Options) -> None:
     for uuid, preset in preset_manager.custom_presets.items():
         if options.get_parent_for_preset(uuid) is None and (parent_uuid := preset.recover_old_base_uuid()) is not None:
             options.set_parent_for_preset(uuid, parent_uuid)
 
 
-async def show_main_window(
-    app: QtWidgets.QApplication, options: Options, is_preview: bool, instantly_quit: bool
-) -> None:
+class RdvApplication(QtWidgets.QApplication):
+    network_client: QtNetworkClient
+    world_database: WorldDatabase
+    game_connection: GameConnection
+    multiworld_client: MultiworldClient
+    main_window: MainWindow
+    tracker: AutoTrackerWindow
+    data_editor: DataEditorWindow
+    details_window: GameDetailsWindow
+
+
+async def show_main_window(app: RdvApplication, options: Options, is_preview: bool, instantly_quit: bool) -> None:
     from randovania.interface_common.preset_manager import PresetManager
 
     preset_manager = PresetManager(options.presets_path)
@@ -79,7 +98,7 @@ async def show_main_window(
 
     multiworld_client: MultiworldClient = app.multiworld_client
 
-    async def attempt_login():
+    async def attempt_login() -> bool:
         from randovania.gui.lib import async_dialog
         from randovania.network_client.network_client import UnableToConnect
 
@@ -111,7 +130,7 @@ async def show_main_window(
 
         finally:
 
-            def reset_last_window_quit():
+            def reset_last_window_quit() -> None:
                 logger.info("Re-enabling quit on last window closed")
                 app.setQuitOnLastWindowClosed(True)
 
@@ -136,15 +155,15 @@ async def show_main_window(
     await main_window.request_new_data()
 
 
-async def show_tracker(app: QtWidgets.QApplication, options):
-    from randovania.gui.auto_tracker_window import AutoTrackerWindow
+async def show_tracker(app: RdvApplication, options: Options) -> None:
+    from randovania.gui.item_tracker.auto_tracker_window import AutoTrackerWindow
 
     app.tracker = AutoTrackerWindow(app.game_connection, None, options)
     logger.info("Displaying auto tracker")
     app.tracker.show()
 
 
-def show_data_editor(app: QtWidgets.QApplication, options, game: RandovaniaGame):
+def show_data_editor(app: RdvApplication, options: Options, game: RandovaniaGame) -> None:
     from randovania.gui import data_editor
 
     data_editor.SHOW_REGION_MIN_MAX_SPINNER = True
@@ -152,7 +171,7 @@ def show_data_editor(app: QtWidgets.QApplication, options, game: RandovaniaGame)
     app.data_editor.show()
 
 
-async def show_game_details(app: QtWidgets.QApplication, options, file_path: Path):
+async def show_game_details(app: RdvApplication, options: Options, file_path: Path) -> None:
     from randovania.gui.game_details.game_details_window import GameDetailsWindow
     from randovania.gui.lib import layout_loader
 
@@ -167,7 +186,7 @@ async def show_game_details(app: QtWidgets.QApplication, options, file_path: Pat
     app.details_window = details_window
 
 
-async def display_window_for(app: QtWidgets.QApplication, options: Options, command: str, args):
+async def display_window_for(app: RdvApplication, options: Options, command: str, args: argparse.Namespace) -> None:
     if command == "tracker":
         await show_tracker(app, options)
     elif command == "main":
@@ -180,11 +199,11 @@ async def display_window_for(app: QtWidgets.QApplication, options: Options, comm
         raise RuntimeError(f"Unknown command: {command}")
 
 
-def abs_path_for_args(path: str):
+def abs_path_for_args(path: str) -> Path:
     return Path(path).resolve()
 
 
-def add_options_cli_args(parser: ArgumentParser):
+def add_options_cli_args(parser: ArgumentParser) -> None:
     parser.add_argument(
         "--local-data",
         type=abs_path_for_args,
@@ -234,11 +253,11 @@ def start_logger(data_dir: Path, is_preview: bool) -> None:
     randovania.setup_logging("DEBUG" if is_preview else "INFO", log_dir.joinpath("logger.log"))
 
 
-def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
+def create_loop(app: QtWidgets.QApplication) -> qasync.QEventLoop:
     os.environ["QT_API"] = "PySide6"
     import qasync
 
-    loop: asyncio.AbstractEventLoop = qasync.QEventLoop(app)
+    loop = qasync.QEventLoop(app)
     asyncio.set_event_loop(loop)
 
     global old_handler
@@ -255,6 +274,8 @@ def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
 
 
 async def qt_main(app: QtWidgets.QApplication, args: argparse.Namespace) -> None:
+    app = typing.cast("RdvApplication", app)
+
     app.setQuitOnLastWindowClosed(False)
 
     options = await _load_options(args)
@@ -269,7 +290,6 @@ async def qt_main(app: QtWidgets.QApplication, args: argparse.Namespace) -> None
 
         randovania.monitoring.client_init()
 
-    app.network_client = None
     logging.info("Loading server client...")
     from randovania.gui.lib.qt_network_client import QtNetworkClient
 
@@ -302,7 +322,7 @@ async def qt_main(app: QtWidgets.QApplication, args: argparse.Namespace) -> None
     import qasync
 
     @qasync.asyncClose
-    async def _on_last_window_closed():
+    async def _on_last_window_closed() -> None:
         if app.quitOnLastWindowClosed():
             await app.network_client.shutdown()
             await app.game_connection.stop()
@@ -339,8 +359,8 @@ def run(args: argparse.Namespace) -> None:
     app = QtWidgets.QApplication(sys.argv)
     app.applicationStateChanged.connect(_on_application_state_changed)
 
-    def main_done(done: asyncio.Task):
-        e: Exception | None = done.exception()
+    def main_done(done: asyncio.Task) -> None:
+        e: BaseException | None = done.exception()
         if e is not None:
             display_exception(e)
             app.exit(1)
@@ -351,7 +371,7 @@ def run(args: argparse.Namespace) -> None:
         loop.run_forever()
 
 
-def create_subparsers(sub_parsers):
+def create_subparsers(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("gui", help="Run the Graphical User Interface")
     parser.add_argument("--preview", action="store_true", help="Activates preview features")
     parser.add_argument("--login-as-guest", type=str, help="Login as the given quest user")
@@ -371,7 +391,7 @@ def create_subparsers(sub_parsers):
     game_parser.add_argument("rdvgame", type=Path, help="Path ")
     game_parser.set_defaults(func=run)
 
-    def check_command(args):
+    def check_command(args: argparse.Namespace) -> None:
         if args.command is None:
             parser.print_help()
             raise SystemExit(1)

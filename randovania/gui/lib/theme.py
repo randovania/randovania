@@ -1,18 +1,21 @@
 from __future__ import annotations
 
-from PySide6 import QtGui, QtWidgets
+from PySide6 import QtGui
 from PySide6.QtCore import Qt
+
+from randovania.gui.lib.common_qt_lib import current_application
+from randovania.gui.qt import RdvApplication
 
 _current_dark_theme = None
 
 
-def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QApplication = None):
+def set_dark_theme(active: bool, compact: bool = False, *, app: RdvApplication | None = None) -> None:
     global _current_dark_theme
     if _current_dark_theme == active:
         return
 
     if app is None:
-        app = QtWidgets.QApplication.instance()
+        app = current_application()
     new_palette = QtGui.QPalette(app.palette())
 
     import qdarktheme
@@ -57,8 +60,8 @@ def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QAppli
     """
 
     if active:
-        new_palette.setColor(QtGui.QPalette.Link, Qt.cyan)
-        new_palette.setColor(QtGui.QPalette.LinkVisited, Qt.cyan)
+        new_palette.setColor(QtGui.QPalette.ColorRole.Link, Qt.GlobalColor.cyan)
+        new_palette.setColor(QtGui.QPalette.ColorRole.LinkVisited, Qt.GlobalColor.cyan)
         style += """
         QToolTip {
             background-color: black;
@@ -77,7 +80,7 @@ def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QAppli
         }
         """
 
-        new_palette.setColor(QtGui.QPalette.Link, Qt.blue)
+        new_palette.setColor(QtGui.QPalette.ColorRole.Link, Qt.GlobalColor.blue)
 
     _current_dark_theme = active
     app.setStyleSheet(style)

@@ -49,7 +49,9 @@ class MultiworldClient(QtCore.QObject):
 
     SyncFailure = QtCore.Signal()
 
-    def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection, database: WorldDatabase):
+    def __init__(
+        self, network_client: QtNetworkClient, game_connection: GameConnection, database: WorldDatabase
+    ) -> None:
         super().__init__()
         self.logger = logging.getLogger(__name__)
 
@@ -67,12 +69,12 @@ class MultiworldClient(QtCore.QObject):
         self.network_client.WorldPickupsUpdated.connect(self.on_network_game_updated)
         self.network_client.ConnectionStateUpdated.connect(self.on_connection_state_updated)
 
-    async def start(self):
+    async def start(self) -> None:
         self.logger.debug("start")
 
         self.start_server_sync_task()
 
-    async def stop(self):
+    async def stop(self) -> None:
         self.logger.debug("stop")
 
         if self._sync_task is not None:
@@ -126,7 +128,7 @@ class MultiworldClient(QtCore.QObject):
             worlds=frozendict(sync_requests),
         )
 
-    async def _server_sync(self):
+    async def _server_sync(self) -> None:
         while True:
             # Wait a bit, in case a RemoteConnector is sending multiple events in quick succession
             await asyncio.sleep(1)
@@ -173,30 +175,31 @@ class MultiworldClient(QtCore.QObject):
             self._last_sync_exception = None
             modified_data: dict[uuid.UUID, WorldData] = {}
 
-            def get_data(u: uuid.UUID):
+            def get_data(u: uuid.UUID) -> WorldData:
                 if u not in modified_data:
                     modified_data[u] = self.database.get_data_for(u)
                 return modified_data[u]
 
-            for uid, world in request.worlds.items():
+            for uid, world_sync in request.worlds.items():
                 if uid in result.errors:
                     continue
 
-                self._last_reported_status[uid] = world.status
+                self._last_reported_status[uid] = world_sync.status
                 self._world_sync_errors.pop(uid, None)
-                if world.collected_locations:
-                    modified_data[uid] = get_data(uid).extend_uploaded_locations(world.collected_locations)
+                if world_sync.collected_locations:
+                    modified_data[uid] = get_data(uid).extend_uploaded_locations(world_sync.collected_locations)
 
-                if world.has_been_beaten:
+                if world_sync.has_been_beaten:
                     modified_data[uid] = get_data(uid).extend_with_game_beaten_uploaded()
 
-            for uid, world in result.worlds.items():
+            for uid, world_response in result.worlds.items():
+                assert world_response.session_name is not None
                 modified_data[uid] = dataclasses.replace(
                     get_data(uid),
                     server_data=WorldServerData(
-                        world_name=world.world_name,
-                        session_id=world.session_id,
-                        session_name=world.session_name,
+                        world_name=world_response.world_name,
+                        session_id=world_response.session_id,
+                        session_name=world_response.session_name,
                     ),
                 )
                 self._worlds_with_details.add(uid)
@@ -217,14 +220,14 @@ class MultiworldClient(QtCore.QObject):
             # Wait a bit, and try sending a new request in case new data came while waiting for the server response
             await asyncio.sleep(4)
 
-    def start_server_sync_task(self):
+    def start_server_sync_task(self) -> None:
         if self._sync_task is not None and not self._sync_task.done():
             return
 
         self._sync_task = asyncio.create_task(self._server_sync())
 
     @asyncSlot(ConnectedGameState)
-    async def on_game_state_updated(self, state: ConnectedGameState):
+    async def on_game_state_updated(self, state: ConnectedGameState) -> None:
         if state.id == INVALID_UUID:
             return
 
@@ -239,7 +242,7 @@ class MultiworldClient(QtCore.QObject):
         self.start_server_sync_task()
 
     @asyncSlot(MultiplayerSessionEntry)
-    async def on_session_meta_update(self, session: MultiplayerSessionEntry):
+    async def on_session_meta_update(self, session: MultiplayerSessionEntry) -> None:
         worlds_by_id = {world.id for world in session.worlds}
         user_worlds = {}
 
@@ -267,7 +270,7 @@ class MultiworldClient(QtCore.QObject):
             self.SyncFailure.emit()
 
     @asyncSlot(MultiplayerWorldPickups)
-    async def on_network_game_updated(self, pickups: MultiplayerWorldPickups):
+    async def on_network_game_updated(self, pickups: MultiplayerWorldPickups) -> None:
         async with self._pickups_lock:
             self._remote_games[pickups.world_id] = pickups
 
@@ -277,7 +280,7 @@ class MultiworldClient(QtCore.QObject):
 
         self.start_server_sync_task()
 
-    def on_connection_state_updated(self, state: ConnectionState):
+    def on_connection_state_updated(self, state: ConnectionState) -> None:
         if state != ConnectionState.Connected:
             self._worlds_with_details.clear()
 
@@ -287,13 +290,13 @@ class MultiworldClient(QtCore.QObject):
             self.start_server_sync_task()
 
     @property
-    def last_sync_exception(self):
+    def last_sync_exception(self) -> Exception | None:
         return self._last_sync_exception
 
     def get_world_sync_error(self, uid: uuid.UUID) -> error.BaseNetworkError | None:
         return self._world_sync_errors.get(uid)
 
-    def _update_sync_exception(self, err: Exception | None):
+    def _update_sync_exception(self, err: Exception | None) -> None:
         last = self._last_sync_exception
         self._last_sync_exception = err
         if last != err:

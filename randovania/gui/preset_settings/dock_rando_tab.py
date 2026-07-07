@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 import sys
 from collections import defaultdict
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 
 import natsort
 from PySide6 import QtWidgets
@@ -30,7 +30,7 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
 
     def __init__(
         self, editor: PresetEditor[BaseConfigurationT], game_description: GameDescription, window_manager: WindowManager
-    ):
+    ) -> None:
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
@@ -53,7 +53,7 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
     def header_name(cls) -> str | None:
         return None
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         dock_rando = preset.configuration.dock_rando
         signal_handling.set_combo_with_value(self.mode_combo, dock_rando.mode)
         self.mode_description.setText(dock_rando.mode.description)
@@ -80,7 +80,7 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
                 if "can_change_to" in checks:
                     checks["can_change_to"].setChecked(weakness in state.can_change_to)
 
-    def _add_dock_type(self, dock_type: DockType, type_params: DockRandoParams):
+    def _add_dock_type(self, dock_type: DockType, type_params: DockRandoParams) -> None:
         self.type_checks[dock_type] = defaultdict(dict)
 
         type_box = Foldable(self.dock_types_group, dock_type.long_name)
@@ -91,7 +91,9 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
 
         self.dock_types_group.layout().addWidget(type_box)
 
-        def add_group(name: str, desc: str, weaknesses: dict[DockWeakness, bool]):
+        def add_group(
+            name: Literal["can_change_from", "can_change_to"], desc: str, weaknesses: dict[DockWeakness, bool]
+        ) -> None:
             group = QtWidgets.QGroupBox()
             group.setObjectName(f"{name}_group {dock_type.short_name}")
             group.setTitle(desc)
@@ -141,11 +143,11 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
 
     def _persist_weakness_setting(
         self,
-        field: str,
+        field: Literal["can_change_from", "can_change_to"],
         dock_type: DockType,
         dock_weakness: DockWeakness,
     ) -> Callable[[bool], None]:
-        def _persist(value: bool):
+        def _persist(value: bool) -> None:
             with self._editor as editor:
                 state = editor.dock_rando_configuration.types_state[dock_type]
                 can_change: set[DockWeakness] = getattr(state, field)
@@ -153,11 +155,13 @@ class PresetDockRando[BaseConfigurationT: BaseConfiguration](PresetTab[BaseConfi
                     can_change.add(dock_weakness)
                 elif dock_weakness in can_change:
                     can_change.remove(dock_weakness)
-                state = dataclasses.replace(state, **{field: can_change})
+
+                # https://github.com/python/mypy/issues/5382
+                state = dataclasses.replace(state, **{field: can_change})  # type: ignore[arg-type]
                 editor.dock_rando_configuration.types_state[dock_type] = state
 
         return _persist
 
-    def _on_mode_changed(self, value: DockRandoMode):
+    def _on_mode_changed(self, value: DockRandoMode) -> None:
         with self._editor as editor:
             editor.dock_rando_configuration = dataclasses.replace(editor.dock_rando_configuration, mode=value)
