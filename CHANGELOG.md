@@ -18,6 +18,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The Twin Robot fight is now logically active from the start of the game, unless Highly Dangerous Logic is active. That means passing through the arena now logically requires meeting the fight requirements also before obtaining the Storm Missiles.
 
+### Metroid: Samus Returns
+
+- Changed: The Buff Charge Beam Doors option now also affects Beam Burst.
+- Changed: Solo Plasma Beam now deals more damage to Steel Orbs.
+- Changed: Grapple Beam is now auto-selected when you aim at a Grapple Beam shield.
+- Changed: Usages of Power Bombs and Beam Burst to open Charge Beam Doors with the Buff Charge Beam Doors option disabled have been changed to no longer require Knowledge (Beginner).
+- Fixed: The area item collection percentage is now correct and counts all items and all Metroids.
+
 ## [10.9.0] - 2026-07-06
 
 - Added: The Data Visualizer now displays more information about Hint nodes.
