@@ -551,7 +551,7 @@ RequireUser = fastapi.Depends(get_user)
 RequireAdminUser = fastapi.Depends(get_admin_user)
 """Ensure that there is an admin User associated with the request before handling it."""
 RequireAdminUserOrDiscordBot = fastapi.Depends(check_admin_user_or_bot)
-"""Ensure that there is an admin User associated with the request before handling it."""
+"""Ensure the request is associated with either the Discord Bot or an admin User before handling it."""
 RequireUserOrRedirectToLogin = fastapi.Depends(get_user_or_redirect_to_login)
 """Ensure that there is a User associated with the request, redirecting to login instead of erroring out."""
 
