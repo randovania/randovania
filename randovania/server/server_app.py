@@ -50,7 +50,7 @@ if TYPE_CHECKING:
     from randovania.network_common.configuration import NetworkConfiguration
     from randovania.server.fastapi_discord import DiscordOAuthClient
 
-type Lifespan[T] = AsyncGenerator[T, None, None]
+type Lifespan[T] = AsyncGenerator[T, None]
 
 type MiddlewareNext[T] = AsyncCallable[[fastapi.Request], T]
 
