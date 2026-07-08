@@ -175,6 +175,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     pan_offset_x: float = 0.0
     pan_offset_y: float = 0.0
+    _wheel_zoom_anchor: QPointF | None = None
     _last_pan_point: QPointF | None = None
     _pan_start_point: QPointF | None = None
     _is_panning: bool = False
@@ -726,8 +727,31 @@ class DataEditorCanvas(QtWidgets.QWidget):
             centered_text(painter, p + QPointF(0, 15), node.name)
 
     def set_zoom_value(self, new_zoom: int) -> None:
-        self.additional_zoom = new_zoom / 20
+        """Changes the zoom level, adjusting the pan offset so the anchor point stays over the same world point."""
+        new_additional_zoom = new_zoom / 20
+        anchor = self._wheel_zoom_anchor
+        self._wheel_zoom_anchor = None
+
+        if self.area is not None and new_additional_zoom != self.additional_zoom:
+            self._update_scale_variables()
+            old_scale = self.scale
+            if anchor is None:
+                # When updating the zoom via the slider, use widget center as anchor.
+                anchor = QPointF(self.width() / 2, self.height() / 2)
+            local = anchor - self.get_area_canvas_offset()
+
+            self.additional_zoom = new_additional_zoom
+            self._update_scale_variables()
+
+            desired_offset = anchor - local * (self.scale / old_scale)
+            delta = desired_offset - self.get_area_canvas_offset()
+            self.pan_offset_x += delta.x()
+            self.pan_offset_y += delta.y()
+        else:
+            self.additional_zoom = new_additional_zoom
+
         self.repaint()
 
     def wheelEvent(self, event: QtGui.QWheelEvent) -> None:
+        self._wheel_zoom_anchor = event.position()
         self.UpdateSlider.emit(event.angleDelta().y() > 0)

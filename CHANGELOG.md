@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Automatic Item Tracker: The text "Not currently connected to any games" is now always shown when the selected game connection is not connected and no default game is set.
 - Fixed: In the Data Visualizer and Editor, when the game uses region images these images are no longer be stretched in certain situations.
 - Fixed: In the Data Visualizer and Editor, when panning away from the selected area the region image is now displayed correctly.
+- Fixed: In the Data Visualizer and Editor, when changing the zoom the pan is adjusted now relative to either the center or the mouse position.
 
 ### Metroid Dread
 
