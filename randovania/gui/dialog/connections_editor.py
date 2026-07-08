@@ -1,12 +1,38 @@
 from __future__ import annotations
 
-import typing
-from typing import override
+from collections.abc import Callable, Iterator
+from contextlib import contextmanager
+from typing import Any, cast
 
-from PySide6 import QtGui, QtWidgets
-from PySide6.QtCore import Qt
+from PySide6.QtCore import (
+    QItemSelectionModel,
+    QModelIndex,
+    QObject,
+    QPersistentModelIndex,
+    Qt,
+    Signal,
+)
+from PySide6.QtGui import QKeySequence, QStandardItem, QStandardItemModel, QUndoCommand, QUndoStack
+from PySide6.QtWidgets import (
+    QAbstractItemView,
+    QCheckBox,
+    QComboBox,
+    QDialog,
+    QHBoxLayout,
+    QLayout,
+    QLineEdit,
+    QMessageBox,
+    QSpinBox,
+    QStackedWidget,
+    QTreeView,
+    QWidget,
+)
 
-from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.region import Region
+from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.node_requirement import NodeRequirement
@@ -14,574 +40,22 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.resource_database import NamedRequirementTemplate, ResourceDatabase
+from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.generated.connections_editor_ui import Ui_ConnectionEditor
-from randovania.gui.lib import signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.widgets.node_selector_widget import NodeSelectorWidget
+from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.enum_lib import iterate_enum
 
-if typing.TYPE_CHECKING:
-    from randovania.game_description.db.region_list import RegionList
-    from randovania.game_description.resources.resource_database import NamedRequirementTemplate, ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceInfo
 
-
-def _create_resource_name_combo(
-    resource_database: ResourceDatabase,
-    resource_type: ResourceType,
-    current_resource: ResourceInfo | None,
-    parent: QtWidgets.QWidget,
-) -> QtWidgets.QComboBox:
-    """
-
-    :param resource_database:
-    :param current_resource:
-    :param parent:
-    :return:
-    """
-
-    resource_name_combo = ScrollProtectedComboBox(parent)
-
-    sorted_resources: list[ResourceInfo] = sorted(
-        resource_database.get_by_type(resource_type), key=lambda x: x.long_name
-    )
-    for resource in sorted_resources:
-        resource_name_combo.addItem(resource.long_name, resource)
-        if resource is current_resource:
-            resource_name_combo.setCurrentIndex(resource_name_combo.count() - 1)
-
-    return resource_name_combo
-
-
-def _create_resource_type_combo(
-    current_resource_type: ResourceType, parent: QtWidgets.QWidget, resource_database: ResourceDatabase
-) -> QtWidgets.QComboBox:
-    """
-
-    :param current_resource_type:
-    :param parent:
-    :return:
-    """
-    resource_type_combo = ScrollProtectedComboBox(parent)
-
-    for resource_type in iterate_enum(ResourceType):
-        try:
-            count_elements = len(resource_database.get_by_type(resource_type))
-        except ValueError:
-            count_elements = 0
-
-        if count_elements == 0:
-            continue
-
-        resource_type_combo.addItem(resource_type.name, resource_type)
-        if resource_type is current_resource_type:
-            resource_type_combo.setCurrentIndex(resource_type_combo.count() - 1)
-
-    return resource_type_combo
-
-
-def _create_default_resource_requirement(resource_database: ResourceDatabase) -> ResourceRequirement:
-    return ResourceRequirement.simple(
-        resource_database.get_by_type(ResourceType.ITEM)[0],
-    )
-
-
-def _create_default_template_requirement(resource_database: ResourceDatabase) -> RequirementTemplate:
-    template_name = None
-    for template_name in resource_database.requirement_template.keys():
-        break
-    if template_name is None:
-        raise RuntimeError("No templates?!")
-    return RequirementTemplate(template_name)
-
-
-def _create_default_node_requirement(region_list: RegionList) -> NodeRequirement:
-    for node in region_list.all_nodes:
-        if isinstance(node, ResourceNode):
-            return NodeRequirement(node.identifier)
-    raise RuntimeError("No nodes?!")
-
-
-class BaseEditor:
-    def delete_later(self) -> None:
-        raise NotImplementedError
-
-    @property
-    def current_requirement(self) -> Requirement | None:
-        raise NotImplementedError
-
-    def requirement_type(self) -> type[Requirement]:
-        raise NotImplementedError
-
-
-class ResourceRequirementEditor(BaseEditor):
+class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
     def __init__(
         self,
-        parent: QtWidgets.QWidget,
-        layout: QtWidgets.QHBoxLayout,
-        resource_database: ResourceDatabase,
-        item: ResourceRequirement,
-    ) -> None:
-        self.parent_widget = parent
-        self.layout = layout
-        self.resource_database = resource_database
-
-        self.resource_type_combo = _create_resource_type_combo(item.resource.resource_type, parent, resource_database)
-        self.resource_type_combo.setMinimumWidth(75)
-        self.resource_type_combo.setMaximumWidth(75)
-
-        self.resource_name_combo = _create_resource_name_combo(
-            self.resource_database, item.resource.resource_type, item.resource, self.parent_widget
-        )
-
-        self.negate_combo = ScrollProtectedComboBox(parent)
-        self.negate_combo.addItem("≥", False)
-        self.negate_combo.addItem("<", True)
-        self.negate_combo.setCurrentIndex(int(item.negate))
-        self.negate_combo.setMinimumWidth(40)
-        self.negate_combo.setMaximumWidth(40)
-
-        self.negate_check = QtWidgets.QCheckBox(parent)
-        self.negate_check.setChecked(item.negate)
-
-        self.amount_edit = QtWidgets.QLineEdit(parent)
-        self.amount_edit.setValidator(QtGui.QIntValidator(1, 10000))
-        self.amount_edit.setText(str(item.amount))
-        self.amount_edit.setMinimumWidth(45)
-        self.amount_edit.setMaximumWidth(45)
-
-        self.amount_combo = ScrollProtectedComboBox(parent)
-        for trick_level in iterate_enum(LayoutTrickLevel):
-            self.amount_combo.addItem(trick_level.long_name, userData=trick_level.as_number)
-        signal_handling.set_combo_with_value(self.amount_combo, item.amount)
-
-        for widget in self._all_widgets:
-            self.layout.addWidget(widget)
-
-        self.resource_type_combo.currentIndexChanged.connect(self._update_type)
-        self._update_visible_elements_by_type()
-
-    @property
-    def resource_type(self) -> ResourceType:
-        return self.resource_type_combo.currentData()
-
-    def _update_visible_elements_by_type(self) -> None:
-        resource_type = self.resource_type
-
-        if resource_type == ResourceType.DAMAGE:
-            self.negate_combo.setCurrentIndex(0)
-
-        self.negate_check.setText("Before" if resource_type == ResourceType.EVENT else "Not")
-        self.negate_check.setVisible(resource_type in {ResourceType.EVENT, ResourceType.VERSION, ResourceType.MISC})
-        self.negate_combo.setVisible(resource_type in {ResourceType.ITEM, ResourceType.DAMAGE})
-        self.negate_combo.setEnabled(resource_type == ResourceType.ITEM)
-        self.amount_edit.setVisible(resource_type in {ResourceType.ITEM, ResourceType.DAMAGE})
-        self.amount_combo.setVisible(resource_type == ResourceType.TRICK)
-
-    def _update_type(self) -> None:
-        old_combo = self.resource_name_combo
-
-        self.resource_name_combo = _create_resource_name_combo(
-            self.resource_database, self.resource_type_combo.currentData(), None, self.parent_widget
-        )
-
-        self.layout.replaceWidget(old_combo, self.resource_name_combo)
-        old_combo.deleteLater()
-        self._update_visible_elements_by_type()
-
-    def delete_later(self) -> None:
-        for widget in self._all_widgets:
-            widget.deleteLater()
-
-    @property
-    def _all_widgets(self) -> typing.Iterable[QtWidgets.QWidget]:
-        yield self.resource_type_combo
-        yield self.negate_check
-        yield self.resource_name_combo
-        yield self.negate_combo
-        yield self.amount_edit
-        yield self.amount_combo
-
-    @property
-    def current_requirement(self) -> Requirement:
-        resource_type = self.resource_type
-
-        # Quantity
-        if resource_type == ResourceType.TRICK:
-            quantity: int = self.amount_combo.currentData()
-        elif resource_type == ResourceType.EVENT:
-            quantity = 1
-        else:
-            quantity = int(self.amount_edit.text())
-
-        # Negate flag
-        if resource_type == ResourceType.ITEM:
-            negate: bool = self.negate_combo.currentData()
-        elif resource_type in {ResourceType.EVENT, ResourceType.MISC}:
-            negate = self.negate_check.isChecked()
-        else:
-            negate = False
-
-        return ResourceRequirement.create(self.resource_name_combo.currentData(), quantity, negate)
-
-    def requirement_type(self) -> type[Requirement]:
-        return ResourceRequirement
-
-
-class ArrayRequirementEditor(BaseEditor):
-    _editors: list[RequirementEditor]
-
-    def __init__(
-        self,
-        parent: QtWidgets.QWidget,
-        parent_layout: QtWidgets.QVBoxLayout,
-        line_layout: QtWidgets.QHBoxLayout,
-        resource_database: ResourceDatabase,
-        region_list: RegionList,
-        requirement: RequirementArrayBase,
-    ) -> None:
-        self._editors = []
-        self.resource_database = resource_database
-        self.region_list = region_list
-        self._array_type = type(requirement)
-
-        # the parent is added to a layout which is added to parent_layout, so we
-        index = parent_layout.indexOf(line_layout) + 1
-
-        self.group_box = QtWidgets.QGroupBox(parent)
-        self.group_box.setStyleSheet("QGroupBox { margin-top: 2px; }")
-        parent_layout.insertWidget(index, self.group_box)
-        self.item_layout = QtWidgets.QVBoxLayout(self.group_box)
-        self.item_layout.setContentsMargins(8, 2, 2, 6)
-        self.item_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
-
-        self.new_item_button = QtWidgets.QPushButton(self.group_box)
-        self.new_item_button.setMaximumWidth(75)
-        self.new_item_button.setText("New Row")
-        self.new_item_button.clicked.connect(self.new_item)
-
-        self.comment_text_box = QtWidgets.QLineEdit(parent)
-        self.comment_text_box.setText(requirement.comment or "")
-        self.comment_text_box.setPlaceholderText("Comment")
-        line_layout.addWidget(self.comment_text_box)
-
-        for item in requirement.items:
-            self._create_item(item)
-
-        self.item_layout.addWidget(self.new_item_button)
-
-    def _create_item(self, item: Requirement) -> None:
-        def on_remove() -> None:
-            self._editors.remove(nested_editor)
-            nested_editor.delete_later()
-
-        nested_editor = RequirementEditor(
-            self.group_box, self.item_layout, self.resource_database, self.region_list, on_remove=on_remove
-        )
-        nested_editor.create_specialized_editor(item)
-        self._editors.append(nested_editor)
-
-    def new_item(self) -> None:
-        self._create_item(_create_default_resource_requirement(self.resource_database))
-
-        self.item_layout.removeWidget(self.new_item_button)
-        self.item_layout.addWidget(self.new_item_button)
-
-    def delete_later(self) -> None:
-        self.group_box.deleteLater()
-        self.comment_text_box.deleteLater()
-        for editor in self._editors:
-            editor.delete_later()
-        self.new_item_button.deleteLater()
-
-    @property
-    def current_requirement(self) -> RequirementArrayBase | None:
-        comment: str | None = self.comment_text_box.text().strip()
-        if comment == "":
-            comment = None
-
-        nested: list[Requirement] = []
-        for editor in self._editors:
-            req = editor.current_requirement
-            if req is None:
-                return None
-            nested.append(req)
-
-        return self._array_type(nested, comment=comment)
-
-    def requirement_type(self) -> type[Requirement]:
-        return self._array_type
-
-
-class TemplateRequirementEditor(BaseEditor):
-    def __init__(
-        self,
-        parent: QtWidgets.QWidget,
-        layout: QtWidgets.QHBoxLayout,
-        resource_database: ResourceDatabase,
-        item: RequirementTemplate,
-    ) -> None:
-        self.parent = parent
-        self.layout = layout
-        self.resource_database = resource_database
-
-        template_name_combo = QtWidgets.QComboBox(parent)
-
-        def key_get(it: tuple[str, NamedRequirementTemplate]) -> str:
-            return it[1].display_name
-
-        for template_name, template in sorted(resource_database.requirement_template.items(), key=key_get):
-            template_name_combo.addItem(template.display_name, template_name)
-            if template_name == item.template_name:
-                template_name_combo.setCurrentIndex(template_name_combo.count() - 1)
-
-        self.template_name_combo = template_name_combo
-        self.layout.addWidget(self.template_name_combo)
-
-    def delete_later(self) -> None:
-        self.template_name_combo.deleteLater()
-
-    @property
-    def current_requirement(self) -> RequirementTemplate:
-        return RequirementTemplate(self.template_name_combo.currentData())
-
-    def requirement_type(self) -> type[Requirement]:
-        return RequirementTemplate
-
-
-class NodeRequirementEditor(BaseEditor):
-    def __init__(
-        self,
-        parent: QtWidgets.QWidget,
-        layout: QtWidgets.QHBoxLayout,
-        region_list: RegionList,
-        item: NodeRequirement,
-    ) -> None:
-        self.parent = parent
-        self.layout = layout
-        self.selector = NodeSelectorWidget(
-            region_list, lambda node: isinstance(node, ResourceNode) and not node.is_derived_node
-        )
-        self.selector.select_by_identifier(item.node_identifier)
-
-        self.layout.addWidget(self.selector)
-
-    def delete_later(self) -> None:
-        self.selector.deleteLater()
-
-    @property
-    def current_requirement(self) -> NodeRequirement | None:
-        selected_node = self.selector.selected_node()
-        if selected_node is not None:
-            return NodeRequirement(selected_node.identifier)
-        return None
-
-    def requirement_type(self) -> type[Requirement]:
-        return NodeRequirement
-
-
-class StaticRequirementEditor(BaseEditor):
-    def __init__(
-        self,
-        parent: QtWidgets.QWidget,
-        layout: QtWidgets.QHBoxLayout,
-        item: Requirement,
-        message: str,
-    ) -> None:
-        self.parent = parent
-        self.layout = layout
-        self.item = item
-        self.label = QtWidgets.QLabel(message, parent)
-        self.layout.addWidget(self.label)
-
-    @override
-    def delete_later(self) -> None:
-        self.label.deleteLater()
-
-    @override
-    @property
-    def current_requirement(self) -> Requirement:
-        return self.item
-
-    @override
-    def requirement_type(self) -> type[Requirement]:
-        return type(self.item)
-
-
-CUSTOM_MAPPING = {
-    Requirement.trivial(): object(),
-    Requirement.impossible(): object(),
-}
-
-
-class RequirementEditor:
-    remove_button: QtWidgets.QToolButton | None
-    _editor: BaseEditor | None
-    # for ResourceRequirement
-    _last_resource: Requirement | None
-    # for RequirementArrayBase
-    _last_items: tuple[Requirement, ...] = ()
-    _last_comment: str | None
-
-    def __init__(
-        self,
-        parent: QtWidgets.QWidget,
-        parent_layout: QtWidgets.QVBoxLayout,
-        resource_database: ResourceDatabase,
-        region_list: RegionList,
-        *,
-        on_remove: typing.Callable[[], None] | None = None,
-    ) -> None:
-        self.parent = parent
-        self.parent_layout = parent_layout
-        self.resource_database = resource_database
-        self.region_list = region_list
-        self._editor = None
-        self._last_resource = None
-        self._last_items = ()
-        self._last_comment = None
-
-        self.line_layout = QtWidgets.QHBoxLayout()
-        self.line_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        self.parent_layout.addLayout(self.line_layout)
-
-        if on_remove is not None:
-            self.remove_button = QtWidgets.QToolButton(parent)
-            self.remove_button.setText("X")
-            self.remove_button.setMaximumWidth(20)
-            self.remove_button.clicked.connect(on_remove)
-            self.line_layout.addWidget(self.remove_button)
-        else:
-            self.remove_button = None
-
-        self.requirement_type_combo = QtWidgets.QComboBox(parent)
-        self.requirement_type_combo.addItem("Resource", ResourceRequirement)
-        self.requirement_type_combo.addItem("Or", RequirementOr)
-        self.requirement_type_combo.addItem("And", RequirementAnd)
-        self.requirement_type_combo.addItem("Trivial", CUSTOM_MAPPING[Requirement.trivial()])
-        self.requirement_type_combo.addItem("Impossible", CUSTOM_MAPPING[Requirement.impossible()])
-        self.requirement_type_combo.addItem("Node", NodeRequirement)
-        if resource_database.requirement_template:
-            self.requirement_type_combo.addItem("Template", RequirementTemplate)
-        self.requirement_type_combo.setMaximumWidth(80)
-        self.requirement_type_combo.activated.connect(self._on_change_requirement_type)
-        self.line_layout.addWidget(self.requirement_type_combo)
-
-    def create_specialized_editor(self, requirement: Requirement) -> None:
-        requirement_type: object
-        if requirement in CUSTOM_MAPPING:
-            requirement_type = CUSTOM_MAPPING[requirement]
-        elif isinstance(requirement, ResourceRequirement):
-            requirement_type = ResourceRequirement
-        else:
-            requirement_type = type(requirement)
-        signal_handling.set_combo_with_value(self.requirement_type_combo, requirement_type)
-        self._create_editor(requirement)
-
-    def _create_editor(self, requirement: Requirement) -> None:
-        current_data = self.requirement_type_combo.currentData()
-
-        if current_data == CUSTOM_MAPPING[Requirement.trivial()]:
-            self._editor = StaticRequirementEditor(
-                self.parent, self.line_layout, Requirement.trivial(), "A trivial requirement is always satisfied."
-            )
-
-        elif current_data == CUSTOM_MAPPING[Requirement.impossible()]:
-            self._editor = StaticRequirementEditor(
-                self.parent,
-                self.line_layout,
-                Requirement.impossible(),
-                "An impossible requirement can never be satisfied.",
-            )
-
-        elif isinstance(requirement, ResourceRequirement):
-            self._editor = ResourceRequirementEditor(self.parent, self.line_layout, self.resource_database, requirement)
-
-        elif isinstance(requirement, RequirementArrayBase):
-            self._editor = ArrayRequirementEditor(
-                self.parent, self.parent_layout, self.line_layout, self.resource_database, self.region_list, requirement
-            )
-
-        elif isinstance(requirement, RequirementTemplate):
-            self._editor = TemplateRequirementEditor(self.parent, self.line_layout, self.resource_database, requirement)
-
-        elif isinstance(requirement, NodeRequirement):
-            self._editor = NodeRequirementEditor(self.parent, self.line_layout, self.region_list, requirement)
-
-        else:
-            raise RuntimeError(f"Unknown requirement type: {type(requirement)} - {requirement}")
-
-    def _on_change_requirement_type(self) -> None:
-        assert self._editor is not None
-        current_requirement = self.current_requirement
-        self._editor.delete_later()
-
-        if isinstance(current_requirement, ResourceRequirement):
-            self._last_resource = current_requirement
-
-        elif isinstance(current_requirement, RequirementArrayBase):
-            if current_requirement not in {Requirement.trivial(), Requirement.impossible()}:
-                self._last_items = current_requirement.items
-                self._last_comment = current_requirement.comment
-
-        elif isinstance(current_requirement, RequirementTemplate):
-            pass
-
-        elif isinstance(current_requirement, NodeRequirement):
-            pass
-
-        elif current_requirement is not None:
-            raise RuntimeError(f"Unknown requirement type: {type(current_requirement)} - {current_requirement}")
-
-        new_requirement: Requirement
-        new_class = self.requirement_type_combo.currentData()
-        inverted_mapping = {value: key for key, value in CUSTOM_MAPPING.items()}
-
-        if new_class in inverted_mapping:
-            new_requirement = inverted_mapping[new_class]
-
-        elif new_class == ResourceRequirement:
-            if self._last_resource is None:
-                new_requirement = _create_default_resource_requirement(self.resource_database)
-            else:
-                new_requirement = self._last_resource
-
-        elif new_class == RequirementTemplate:
-            new_requirement = _create_default_template_requirement(self.resource_database)
-
-        elif new_class == NodeRequirement:
-            new_requirement = _create_default_node_requirement(self.region_list)
-        else:
-            new_requirement = new_class(self._last_items, self._last_comment)
-
-        self._create_editor(new_requirement)
-
-    def delete_later(self) -> None:
-        if self.remove_button is not None:
-            self.remove_button.deleteLater()
-
-        self.requirement_type_combo.deleteLater()
-
-        if self._editor is not None:
-            self._editor.delete_later()
-
-    @property
-    def current_requirement(self) -> Requirement | None:
-        assert self._editor is not None
-        return self._editor.current_requirement
-
-
-class ConnectionsEditor(QtWidgets.QDialog, Ui_ConnectionEditor):
-    parent_widget: QtWidgets.QWidget
-    resource_database: ResourceDatabase
-    _elements: list[QtWidgets.QWidget]
-
-    def __init__(
-        self,
-        parent: QtWidgets.QWidget,
+        parent: QWidget,
         resource_database: ResourceDatabase,
         region_list: RegionList,
         requirement: Requirement,
@@ -590,34 +64,921 @@ class ConnectionsEditor(QtWidgets.QDialog, Ui_ConnectionEditor):
         self.setupUi(self)
         set_default_window_icon(self)
 
-        self.parent_widget = parent
-        self.resource_database = resource_database
-        self.region_list = region_list
+        self._undo_stack = QUndoStack(self)
 
-        self.contents_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+        undo_action = self._undo_stack.createUndoAction(self)
+        undo_action.setShortcut(QKeySequence.StandardKey.Undo)
+        redo_action = self._undo_stack.createRedoAction(self)
+        redo_action.setShortcut(QKeySequence.StandardKey.Redo)
 
-        self._root_editor = RequirementEditor(self, self.contents_layout, resource_database, region_list)
-        self._root_editor.create_specialized_editor(requirement)
+        self.addAction(undo_action)
+        self.addAction(redo_action)
+
+        self._model = RequirementModel()
+        self._view = RequirementView(parent, self.tree_view, self._model)
+        self._controller = RequirementController(
+            parent,
+            self.stacked_widget,
+            self.combo_requirement_type,
+            resource_database,
+            region_list,
+            self._model,
+            self._view,
+            self._undo_stack,
+        )
+
+        # Connect Signals
+        self._model.model_rebuilt.connect(self._view._on_model_rebuilt)
+        self._view.selection_changed.connect(self._controller._on_item_selected)
+
+        self.button_add_requirement.clicked.connect(self._controller._on_add_requirement_pressed)
+        self.button_delete.clicked.connect(self._controller._on_delete_requirement_pressed)
+        self.button_shift_up.clicked.connect(self._controller._on_shift_up_pressed)
+        self.button_shift_down.clicked.connect(self._controller._on_shift_down_pressed)
+        self.button_undo.clicked.connect(self._undo_stack.undo)
+        self.button_redo.clicked.connect(self._undo_stack.redo)
+
+        # Don't push command for initial build so it can't be undone
+        self._model.build_tree(requirement)
 
     def deleteLater(self) -> None:
-        self._root_editor.delete_later()
-
-    def build_requirement(self) -> Requirement | None:
-        return self._root_editor.current_requirement
+        self._controller.deleteLater()
+        self._view.deleteLater()
+        self._model.deleteLater()
 
     @property
-    def final_requirement(self) -> Requirement | None:
-        result = self.build_requirement()
+    def final_requirement(self) -> Requirement:
+        result = self._model.build_requirement()
         assert result is not None
-        if result == Requirement.impossible():
-            return None
         return result
 
     def accept(self) -> None:
-        result = self.build_requirement()
+        result = self._model.build_requirement()
         if result is None:
-            QtWidgets.QMessageBox.critical(
-                self, "Invalid Configuration", "Unable to confirm selection, invalid values found."
-            )
+            QMessageBox.critical(self, "Invalid Configuration", "Unable to confirm selection, invalid values found.")
         else:
             super().accept()
+
+
+_ROLE = Qt.ItemDataRole.UserRole
+
+
+class Command(QUndoCommand):
+    """
+    Captures tree state to allow for undo/redo
+    """
+
+    def __init__(
+        self,
+        model: RequirementModel,
+        view: RequirementView,
+        before: Requirement,
+        after: Requirement,
+        selection_path: list[int],
+        description: str,
+    ) -> None:
+        super().__init__(description)
+        self._model = model
+        self._view = view
+        self._before = before
+        self._after = after
+        self._selection_path = selection_path
+
+    def redo(self) -> None:
+        self._model.build_tree(self._after)
+        index: QModelIndex = self._model._index_from_path(self._selection_path)
+        self._view._tree.selectionModel().select(index, QItemSelectionModel.SelectionFlag.ClearAndSelect)
+        self._view._tree.setFocus()
+        self._view._notify_selection_changed(index)
+
+    def undo(self) -> None:
+        self._model.build_tree(self._before)
+
+
+class RequirementModel(QStandardItemModel):
+    model_rebuilt = Signal()
+
+    def __init__(self) -> None:
+        super().__init__()
+
+    def _requirement_to_str(self, requirement: Requirement) -> str:
+        if isinstance(requirement, RequirementArrayBase):
+            text = "All" if isinstance(requirement, RequirementAnd) else "Any"
+            if len(requirement.items) == 0:
+                text += " (Empty)"
+            if requirement.comment is not None:
+                text += f"\n{requirement.comment}"
+            return text
+
+        if isinstance(requirement, ResourceRequirement):
+            if requirement.resource.resource_type == ResourceType.TRICK:
+                return (
+                    f"{requirement.resource.long_name} ({LayoutTrickLevel.from_number(requirement.amount).long_name})"
+                )
+            return requirement.pretty_text
+
+        if isinstance(requirement, RequirementTemplate):
+            return str(requirement)
+
+        if isinstance(requirement, NodeRequirement):
+            return requirement.node_identifier.as_string
+
+        raise RuntimeError(f"Unknown requirement type: {type(requirement)} - {requirement}")
+
+    def _item_from_requirement(self, requirement: Requirement) -> QStandardItem:
+        item = QStandardItem(self._requirement_to_str(requirement))
+        item.setData(requirement, _ROLE)
+        return item
+
+    def _path_from_index(self, index: QModelIndex) -> list[int]:
+        path = []
+        while index.isValid():
+            path.append(index.row())
+            index = index.parent()
+        path.reverse()
+        return path
+
+    def _index_from_path(self, path: list[int]) -> QModelIndex:
+        index = QModelIndex()
+        for row in path:
+            next_index = self.index(row, 0, index)
+            if not next_index.isValid():
+                return index  # Fallback to deepest valid ancenstor
+            index = next_index
+        return index
+
+    def build_tree(self, requirement: Requirement) -> None:
+        """
+        Populates the model with the given Requirement
+        """
+
+        def walk(_requirement: Requirement, parent: QStandardItem) -> None:
+            item = self._item_from_requirement(_requirement)
+            if isinstance(_requirement, RequirementArrayBase):
+                for inner_requirement in _requirement.items:
+                    walk(inner_requirement, item)
+            parent.appendRow(item)
+
+        self.clear()
+        self.setColumnCount(1)
+        self.setHorizontalHeaderLabels(["Requirement"])
+        walk(requirement, self.invisibleRootItem())
+        self.model_rebuilt.emit()
+
+    def build_requirement(self) -> Requirement:
+        """
+        Constructs a requirement from the current model state
+        """
+
+        def walk(item: QStandardItem) -> Requirement:
+            requirement: Requirement = item.data(_ROLE)
+
+            if isinstance(requirement, RequirementArrayBase):
+                children = [walk(item.child(idx)) for idx in range(item.rowCount())]
+                return type(requirement)(children, requirement.comment)
+
+            return requirement
+
+        return walk(self.invisibleRootItem().child(0))
+
+    def flags(self, index: QModelIndex | QPersistentModelIndex) -> Qt.ItemFlag:
+        if not index.isValid():
+            return Qt.ItemFlag.NoItemFlags
+
+        flags = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
+
+        # if index.parent().isValid():
+        #    flags |= Qt.ItemFlag.ItemIsDragEnabled
+
+        # requirement = self.itemFromIndex(index).data(_ROLE)
+        # if isinstance(requirement, RequirementArrayBase):
+        #    flags |= Qt.ItemFlag.ItemIsDropEnabled
+
+        return flags
+
+
+class RequirementView(QObject):
+    selection_changed = Signal(QModelIndex)
+
+    def __init__(self, parent: QWidget, tree: QTreeView, model: RequirementModel) -> None:
+        super().__init__(parent)
+
+        tree.setModel(model)
+        tree.expandAll()
+
+        tree.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+
+        tree.clicked.connect(self._notify_selection_changed)
+
+        self._tree = tree
+
+    def _on_model_rebuilt(self) -> None:
+        self._tree.expandAll()
+
+    def _notify_selection_changed(self, index: QModelIndex) -> None:
+        self.selection_changed.emit(index)
+
+    def deleteLater(self) -> None:
+        self._tree.deleteLater()
+
+
+class RequirementController(QObject):
+    requirement_changed = Signal(QModelIndex, Requirement)
+
+    def __init__(
+        self,
+        parent: QWidget,
+        stacked_widget: QStackedWidget,
+        combo_requirement_type: QComboBox,
+        db: ResourceDatabase,
+        region_list: RegionList,
+        model: RequirementModel,
+        view: RequirementView,
+        undo_stack: QUndoStack,
+    ) -> None:
+        super().__init__(parent)
+
+        self._stacked_widget = stacked_widget
+        self._combo_type = combo_requirement_type
+        self._db = db
+        self._region_list = region_list
+        self._view = view
+        self._model = model
+        self._undo_stack = undo_stack
+
+        self._editors: dict[ResourceType | type[Requirement], Editor] = {}
+        self._active_item_index: QModelIndex | None = None
+
+        self._build_editors()
+
+        self._combo_type.currentIndexChanged.connect(self._on_type_combo_changed)
+
+    def _build_editors(self) -> None:
+        editors: list[Editor] = [
+            CountedResourceEditor(self._db, self._stacked_widget, "Item", ResourceType.ITEM),
+            SimpleResourceEditor(self._db, self._stacked_widget, "Event", ResourceType.EVENT),
+            TrickResourceEditor(self._db, self._stacked_widget),
+            CountedResourceEditor(self._db, self._stacked_widget, "Damage", ResourceType.DAMAGE),
+            SimpleResourceEditor(self._db, self._stacked_widget, "Version", ResourceType.VERSION),
+            SimpleResourceEditor(self._db, self._stacked_widget, "Misc", ResourceType.MISC),
+            TemplateEditor(self._db, self._stacked_widget),
+            NodeEditor(self._db, self._stacked_widget, self._region_list),
+            ArrayEditor(self._db, self._stacked_widget),
+        ]
+
+        for editor in editors:
+            self._editors[editor.type()] = editor
+            self._stacked_widget.addWidget(editor.widget())
+
+            self._combo_type.addItem(editor.name(), editor.type())
+
+            editor.changed.connect(self._on_editor_field_changed)
+
+    def _insert_requirement_item(
+        self, items: tuple[Requirement, ...], item: Requirement, idx: int
+    ) -> tuple[Requirement, ...]:
+        return (*items[:idx], item, *items[idx:])
+
+    def _replace_requirement_item(
+        self, items: tuple[Requirement, ...], item: Requirement, idx: int
+    ) -> tuple[Requirement, ...]:
+        return (*items[:idx], item, *items[idx + 1 :])
+
+    def _insert_at_path(
+        self, root: RequirementArrayBase, path: list[int], at_idx: int, requirement: Requirement
+    ) -> Requirement:
+        """
+        Returns a new Requirement tree with the Requirement inserted
+        """
+        if len(path) == 0:
+            new_items = self._insert_requirement_item(root.items, requirement, at_idx)
+            return type(root)(new_items, root.comment)
+
+        idx = path[0]
+        next_root = root.items[idx]
+        assert isinstance(next_root, RequirementArrayBase)
+        child = self._insert_at_path(next_root, path[1:], at_idx, requirement)
+        new_items = self._replace_requirement_item(root.items, child, idx)
+        return type(root)(new_items, root.comment)
+
+    def _remove_at_path(self, root: RequirementArrayBase, path: list[int]) -> Requirement:
+        """
+        Returns a new Requirement tree with the Requirement at `path` removed
+        """
+        idx = path[0]
+
+        if len(path) == 1:
+            new_items = (*root.items[:idx], *root.items[idx + 1 :])
+            return type(root)(new_items, root.comment)
+
+        next_root = root.items[idx]
+        assert isinstance(next_root, RequirementArrayBase)
+        child = self._remove_at_path(next_root, path[1:])
+        new_items = self._replace_requirement_item(root.items, child, idx)
+        return type(root)(new_items, root.comment)
+
+    def _replace_at_path(self, root: RequirementArrayBase, path: list[int], requirement: Requirement) -> Requirement:
+        """
+        Returns a new Requirement tree with the Requirement at `path` replaced
+        """
+        if len(path) == 0:
+            return requirement
+
+        idx = path[0]
+        next_root = root.items[idx]
+        child = (
+            self._replace_at_path(next_root, path[1:], requirement)
+            if isinstance(next_root, RequirementArrayBase)
+            else requirement
+        )
+        new_items = self._replace_requirement_item(root.items, child, idx)
+        return type(root)(new_items, root.comment)
+
+    def _default_requirement_for_type(self, _type: type) -> Requirement:
+        if isinstance(_type, ResourceType):
+            resource_info: ResourceInfo = self._db.get_by_type(_type)[0]
+            return ResourceRequirement.simple(resource_info)
+
+        if issubclass(_type, RequirementArrayBase):
+            return RequirementAnd([], None)
+
+        if _type == RequirementTemplate:
+            template_name = next(iter(self._db.requirement_template))
+            return RequirementTemplate(template_name)
+
+        if _type == NodeRequirement:
+            node: Node = next(self._region_list.iterate_nodes())
+            return NodeRequirement(node.identifier)
+
+        raise RuntimeError(f"Unknown requirement type: {_type}")
+
+    def _change_requirement_type(self, current: Requirement, to_type: type) -> Requirement:
+        # Array -> Array
+        if isinstance(current, RequirementArrayBase) and issubclass(type(to_type), RequirementArrayBase):
+            return to_type(current.items, current.comment)
+
+        return self._default_requirement_for_type(to_type)
+
+    def _show_editor(self, editor: Editor) -> None:
+        self._stacked_widget.setCurrentWidget(editor.widget())
+
+    def _get_editor_for(self, requirement: Requirement) -> Editor | None:
+        if requirement is None:
+            return None
+
+        if isinstance(requirement, ResourceRequirement):
+            return self._editors[requirement.resource.resource_type]
+        elif isinstance(requirement, RequirementArrayBase):
+            return self._editors[RequirementArrayBase]
+        else:
+            return self._editors[type(requirement)]
+
+    def _on_item_selected(self, index: QModelIndex) -> None:
+        """
+        Switch to the editor for the selected Requirement type and update fields
+        """
+        self._active_item_index = index
+        requirement: Requirement = index.data(_ROLE)
+        editor: Editor | None = self._get_editor_for(requirement)
+        type_idx: int = -1
+
+        if editor is not None:
+            editor.populate(requirement)
+            self._show_editor(editor)
+            type_idx = self._combo_type.findData(editor.type(), _ROLE)
+
+        with signals_blocked(self._combo_type):
+            self._combo_type.setCurrentIndex(type_idx)
+
+    def _on_add_requirement_pressed(self) -> None:
+        if self._active_item_index is None:
+            return
+
+        before: Requirement = self._model.build_requirement()
+
+        # Root is not array type, can't add requirement
+        if not self._active_item_index.parent().isValid() and not isinstance(before, RequirementArrayBase):
+            return
+
+        assert isinstance(before, RequirementArrayBase)
+        path: list[int] = self._model._path_from_index(self._active_item_index)
+        requirement_path = path[1:]
+        row: int = path[-1]
+        selected = self._active_item_index.data(_ROLE)
+
+        new_type = self._combo_type.currentData(_ROLE)
+        requirement: Requirement = self._default_requirement_for_type(new_type)
+
+        if isinstance(selected, RequirementArrayBase):
+            # Array, add as child
+            row = len(selected.items)
+        elif self._active_item_index.parent().isValid():
+            # Leaf, add as sibling
+            requirement_path.pop()
+            row += 1
+        else:
+            # Root is leaf, can't add sibling
+            return
+
+        after: Requirement = self._insert_at_path(before, requirement_path, row, requirement)
+        selection_path: list[int] = path[:1] + requirement_path + [row]
+
+        self._undo_stack.push(Command(self._model, self._view, before, after, selection_path, "Add Requirement"))
+
+    def _on_delete_requirement_pressed(self) -> None:
+        if self._active_item_index is None:
+            return
+
+        # Can't delete root
+        if not self._active_item_index.parent().isValid():
+            return
+
+        before: Requirement = self._model.build_requirement()
+        assert isinstance(before, RequirementArrayBase)
+        path: list[int] = self._model._path_from_index(self._active_item_index)
+        row: int = path[-1]
+        after: Requirement = self._remove_at_path(before, path[1:])
+
+        # Determine path for re-selection
+        selection_path: list[int] = list(path)
+        sibling_count: int = self._model.itemFromIndex(self._active_item_index).parent().rowCount()
+
+        if sibling_count == 1:
+            # No siblings remain, select parent
+            selection_path.pop()
+        elif row == sibling_count - 1:
+            # Was last child, select previous sibling
+            selection_path[-1] = row - 1
+
+        self._undo_stack.push(Command(self._model, self._view, before, after, selection_path, "Delete Requirement"))
+
+    def _on_shift_up_pressed(self) -> None:
+        if self._active_item_index is None:
+            return
+
+        # Can't shift root
+        if not self._active_item_index.parent().isValid():
+            return
+
+        path: list[int] = self._model._path_from_index(self._active_item_index)
+        requirement_path = path[1:]
+        row: int = path[-1]
+
+        selected: Requirement = self._active_item_index.data(_ROLE)
+        before: Requirement = self._model.build_requirement()
+        assert isinstance(before, RequirementArrayBase)
+        after_remove: Requirement = self._remove_at_path(before, requirement_path)
+        assert isinstance(after_remove, RequirementArrayBase)
+
+        if row > 0:
+            # Next sibling exists
+            row -= 1
+            sibling_path: list[int] = [*path[:-1], row]
+            sibling_requirement = self._model._index_from_path(sibling_path).data(_ROLE)
+            if isinstance(sibling_requirement, RequirementArrayBase):
+                # Sibling is an array, ascend into
+                row = len(sibling_requirement.items)
+                requirement_path = [*sibling_path[1:], row]
+        elif len(requirement_path) > 1:
+            # Escape parent
+            requirement_path.pop()
+            row = requirement_path[-1]
+        else:
+            # Already at top, can't shift up
+            return
+
+        after: Requirement = self._insert_at_path(after_remove, requirement_path[:-1], row, selected)
+        selection_path: list[int] = path[:1] + requirement_path[:-1] + [row]
+
+        self._undo_stack.push(Command(self._model, self._view, before, after, selection_path, "Move up"))
+
+    def _on_shift_down_pressed(self) -> None:
+        if self._active_item_index is None:
+            return
+
+        # Can't shift root
+        if not self._active_item_index.parent().isValid():
+            return
+
+        path: list[int] = self._model._path_from_index(self._active_item_index)
+        requirement_path = path[1:]
+        row: int = path[-1]
+        rows: int = self._model.itemFromIndex(self._active_item_index).parent().rowCount()
+
+        selected: Requirement = self._active_item_index.data(_ROLE)
+        before: Requirement = self._model.build_requirement()
+        assert isinstance(before, RequirementArrayBase)
+        after_remove: Requirement = self._remove_at_path(before, requirement_path)
+        assert isinstance(after_remove, RequirementArrayBase)
+
+        if row < rows - 1:
+            # Next sibling exists
+            row += 1
+            sibling_path: list[int] = [*path[:-1], row]
+            if isinstance(self._model._index_from_path(sibling_path).data(_ROLE), RequirementArrayBase):
+                # Sibling is an array, descend into
+                row = 0
+                requirement_path.extend([row])
+        elif len(requirement_path) > 1:
+            # Escape parent
+            requirement_path.pop()
+            row = requirement_path[-1] + 1
+        else:
+            # Already at bottom, can't shift down
+            return
+
+        after: Requirement = self._insert_at_path(after_remove, requirement_path[:-1], row, selected)
+        selection_path: list[int] = path[:1] + requirement_path[:-1] + [row]
+
+        self._undo_stack.push(Command(self._model, self._view, before, after, selection_path, "Move down"))
+
+    def _on_type_combo_changed(self, idx: int = -1) -> None:
+        if self._active_item_index is None:
+            return
+
+        before: Requirement = self._model.build_requirement()
+
+        current: Requirement = self._active_item_index.data(_ROLE)
+        new_type: type = self._combo_type.currentData(_ROLE)
+        changed: Requirement = self._change_requirement_type(current, new_type)
+
+        path: list[int] = self._model._path_from_index(self._active_item_index)
+        after: Requirement = (
+            self._replace_at_path(before, path[1:], changed) if isinstance(before, RequirementArrayBase) else changed
+        )
+
+        self._undo_stack.push(Command(self._model, self._view, before, after, path, "Change Type"))
+
+    def _on_editor_field_changed(self, requirement: Requirement) -> None:
+        if self._active_item_index is None:
+            return
+
+        current: Requirement = self._active_item_index.data(_ROLE)
+        if isinstance(requirement, RequirementArrayBase) and isinstance(current, RequirementArrayBase):
+            requirement.items = current.items
+
+        before: Requirement = self._model.build_requirement()
+        path: list[int] = self._model._path_from_index(self._active_item_index)
+        after: Requirement = (
+            self._replace_at_path(before, path[1:], requirement)
+            if isinstance(before, RequirementArrayBase)
+            else requirement
+        )
+
+        self._undo_stack.push(Command(self._model, self._view, before, after, path, "Requirement edit"))
+
+    def deleteLater(self) -> None:
+        self._stacked_widget.deleteLater()
+        self._combo_type.deleteLater()
+
+
+class Editor(QObject):
+    _db: ResourceDatabase
+    _widget: QWidget
+    _display_name: str
+    _type: ResourceType | type[Requirement]
+
+    changed = Signal(Requirement)
+
+    def __init__(
+        self, db: ResourceDatabase, parent: QWidget, display_name: str, type: ResourceType | type[Requirement]
+    ) -> None:
+        super().__init__()
+        self._db = db
+        self._create_base(parent)
+        self._display_name = display_name
+        self._type = type
+
+    def populate(self, requirement: Requirement) -> None:
+        """
+        Populate editor widgets with requirement data without emitting signals
+        """
+        raise NotImplementedError
+
+    def requirement(self) -> Requirement:
+        """
+        Assemble a new requirement with current widget selections
+        """
+        raise NotImplementedError
+
+    def widget(self) -> QWidget:
+        return self._widget
+
+    def name(self) -> str:
+        return self._display_name
+
+    def type(self) -> ResourceType | type[Requirement]:
+        return self._type
+
+    def _create_base(self, parent: QWidget) -> None:
+        self._widget = QWidget(parent)
+        layout = QHBoxLayout(self._widget)
+        self._widget.setLayout(layout)
+
+    def _create_combo_with_data(
+        self, data: list[Any], to_string: Callable[[Any], str] = str
+    ) -> ScrollProtectedComboBox:
+        """
+        Creates a QComboBox and attaches data <br>
+        Optionally accepts a custom Callable to convert the data to string, defaulting to str()
+        """
+        combo = ScrollProtectedComboBox(self._widget)
+        combo.setEditable(False)
+        for resource in data:
+            combo.addItem(to_string(resource), resource)
+        return combo
+
+    def _create_boolean_combo(self) -> ScrollProtectedComboBox:
+        return self._create_combo_with_data([False, True], lambda b: "<" if b else "≥")
+
+    def _create_spin_box(self, min: int, max: int) -> QSpinBox:
+        spin_box = QSpinBox(self._widget)
+        spin_box.setMinimum(min)
+        spin_box.setMaximum(max)
+        return spin_box
+
+    def _create_check_box(self) -> QCheckBox:
+        return QCheckBox(self._widget)
+
+    def _create_line_edit(self, placeholder: str = "") -> QLineEdit:
+        line_edit = QLineEdit()
+        line_edit.setPlaceholderText(placeholder)
+        return line_edit
+
+    def _add_to_layout(self, widgets: list[QWidget]) -> None:
+        layout: QLayout | None = self._widget.layout()
+        assert layout is not None
+        for widget in widgets:
+            layout.addWidget(widget)
+
+    def _notify_changed(self, *args: Any) -> None:
+        self.changed.emit(self.requirement())
+
+
+class ResourceEditor(Editor):
+    _resource_type: ResourceType
+
+    def __init__(self, db: ResourceDatabase, parent: QWidget, display_name: str, resource_type: ResourceType) -> None:
+        super().__init__(db, parent, display_name, ResourceRequirement)
+        self._resource_type = resource_type
+
+        resources = self._db.get_by_type(self._resource_type)
+        self._combo_name = self._create_combo_with_data(resources, self.to_string)
+
+        self._combo_name.currentIndexChanged.connect(self._notify_changed)
+
+        self._add_to_layout([self._combo_name])
+
+    def type(self) -> ResourceType:
+        return self._resource_type
+
+    def to_string(self, resource_info: ResourceInfo) -> str:
+        return resource_info.long_name
+
+    def populate(self, requirement: Requirement) -> None:
+        requirement = cast(ResourceRequirement, requirement)
+        with signals_blocked(self._combo_name):
+            self._set_name_combo(requirement.resource)
+
+    def _set_name_combo(self, resource_info: ResourceInfo) -> None:
+        set_combo_with_value(self._combo_name, resource_info)
+
+    def _make_requirement(self, amount: int, negate: bool) -> ResourceRequirement:
+        resource_info: ResourceInfo = self._combo_name.currentData(_ROLE)
+        return ResourceRequirement.create(resource_info, amount, negate)
+
+    def requirement(self) -> Requirement:
+        raise NotImplementedError
+
+
+class CountedResourceEditor(ResourceEditor):
+    """
+    Editor for resources with varying amounts: Item, Damage
+    """
+
+    def __init__(self, db: ResourceDatabase, parent: QWidget, display_name: str, resource_type: ResourceType) -> None:
+        super().__init__(db, parent, display_name, resource_type)
+
+        self._combo_negate = self._create_boolean_combo()
+        self._spinbox_amount = self._create_spin_box(1, 1)
+
+        self._combo_negate.currentIndexChanged.connect(self._notify_changed)
+        self._spinbox_amount.valueChanged.connect(self._notify_changed)
+
+        self._add_to_layout([self._combo_negate, self._spinbox_amount])
+
+    def populate(self, requirement: Requirement) -> None:
+        super().populate(requirement)
+        requirement = cast(ResourceRequirement, requirement)
+        with signals_blocked(self._combo_negate):
+            self._set_negate_combo(requirement.negate)
+        with signals_blocked(self._spinbox_amount):
+            self._set_spinbox(requirement)
+
+    def _set_negate_combo(self, value: bool) -> None:
+        set_combo_with_value(self._combo_negate, value)
+
+    def _set_spinbox(self, requirement: ResourceRequirement) -> None:
+        resource_info: ResourceInfo = requirement.resource
+        max: int = 10_000  # NOTE - Arbitrary value for damage
+
+        if isinstance(resource_info, ItemResourceInfo):
+            max = resource_info.max_capacity
+
+        self._spinbox_amount.setMaximum(max)
+        self._spinbox_amount.setValue(requirement.amount)
+
+    def requirement(self) -> ResourceRequirement:
+        return self._make_requirement(self._spinbox_amount.value(), self._combo_negate.currentData(_ROLE))
+
+
+class TrickResourceEditor(ResourceEditor):
+    def __init__(self, db: ResourceDatabase, parent: QWidget) -> None:
+        super().__init__(db, parent, "Trick", ResourceType.TRICK)
+
+        difficulties = list(iterate_enum(LayoutTrickLevel))[1:]  # Discard LayoutTrickLevel.DISABLED
+        self._combo_difficulty = self._create_combo_with_data(difficulties, lambda level: level.long_name)
+
+        self._combo_difficulty.currentIndexChanged.connect(self._notify_changed)
+
+        self._add_to_layout([self._combo_difficulty])
+
+    def populate(self, requirement: Requirement) -> None:
+        super().populate(requirement)
+        requirement = cast(ResourceRequirement, requirement)
+        with signals_blocked(self._combo_difficulty):
+            self._set_difficulty_combo(requirement.amount)
+
+    def _set_difficulty_combo(self, value: int) -> None:
+        set_combo_with_value(self._combo_difficulty, LayoutTrickLevel.from_number(value))
+
+    def requirement(self) -> ResourceRequirement:
+        return self._make_requirement(self._combo_difficulty.currentData(_ROLE).as_number, False)
+
+
+class SimpleResourceEditor(ResourceEditor):
+    """
+    Editor for resources with an unchanging amount (1): Event, Version, Misc
+    """
+
+    def __init__(self, db: ResourceDatabase, parent: QWidget, display_name: str, resource_type: ResourceType) -> None:
+        super().__init__(db, parent, display_name, resource_type)
+
+        self._checkbox_negate = self._create_check_box()
+
+        self._checkbox_negate.checkStateChanged.connect(self._notify_changed)
+
+        self._add_to_layout([self._checkbox_negate])
+
+    def populate(self, requirement: Requirement) -> None:
+        super().populate(requirement)
+        requirement = cast(ResourceRequirement, requirement)
+        with signals_blocked(self._checkbox_negate):
+            self._set_negate_combo(requirement)
+
+    def _set_negate_combo(self, requirement: ResourceRequirement) -> None:
+        self._checkbox_negate.setChecked(requirement.negate)
+
+        if requirement.resource.resource_type == ResourceType.EVENT:
+            self._checkbox_negate.setText(
+                ResourceType.EVENT.negated_prefix if requirement.negate else ResourceType.EVENT.non_negated_prefix
+            )
+
+    def requirement(self) -> ResourceRequirement:
+        return self._make_requirement(1, self._checkbox_negate.isChecked())
+
+
+class TemplateEditor(Editor):
+    def __init__(self, db: ResourceDatabase, parent: QWidget) -> None:
+        super().__init__(db, parent, "Template", RequirementTemplate)
+
+        templates = list(self._db.requirement_template.values())
+        self._combo_name = self._create_combo_with_data(templates, self.to_string)
+
+        self._combo_name.currentIndexChanged.connect(self._notify_changed)
+
+        self._add_to_layout([self._combo_name])
+
+    def to_string(self, template: NamedRequirementTemplate) -> str:
+        return template.display_name
+
+    def populate(self, requirement: Requirement) -> None:
+        requirement = cast(RequirementTemplate, requirement)
+        with signals_blocked(self._combo_name):
+            self._set_name_combo(requirement.template_name)
+
+    def _set_name_combo(self, template_name: str) -> None:
+        template: NamedRequirementTemplate = self._db.requirement_template[template_name]
+        set_combo_with_value(self._combo_name, template)
+
+    def requirement(self) -> RequirementTemplate:
+        name: str = self.to_string(self._combo_name.currentData(_ROLE))
+        return RequirementTemplate(name)
+
+
+class NodeEditor(Editor):
+    def __init__(self, db: ResourceDatabase, parent: QWidget, region_list: RegionList) -> None:
+        super().__init__(db, parent, "Node", NodeRequirement)
+        self._region_list = region_list
+
+        self._combo_region = self._create_combo_with_data(self._region_list.regions, self.to_string)
+        self._combo_area = self._create_combo_with_data([])
+        self._combo_node = self._create_combo_with_data([])
+
+        self._add_to_layout([self._combo_region, self._combo_area, self._combo_node])
+
+        self._combo_region.currentIndexChanged.connect(self._region_changed)
+        self._combo_area.currentIndexChanged.connect(self._area_changed)
+        self._combo_node.currentIndexChanged.connect(self._notify_changed)
+
+    def to_string(self, data: Region | Area | Node) -> str:
+        return data.name
+
+    def _repopulate_combo(self, combo: QComboBox, data: list[Any]) -> None:
+        combo.clear()
+        for item in data:
+            combo.addItem(self.to_string(item), item)
+
+    def populate(self, requirement: Requirement) -> None:
+        requirement = cast(NodeRequirement, requirement)
+        region: Region = self._region_list.region_with_name(requirement.node_identifier.region)
+        with signals_blocked(self._combo_region):
+            set_combo_with_value(self._combo_region, region)
+        with signals_blocked(self._combo_node):
+            self._region_changed(requirement=requirement)
+
+    def _region_changed(self, idx: int = -1, requirement: NodeRequirement | None = None) -> None:
+        region: Region = self._combo_region.currentData(_ROLE)
+        with signals_blocked(self._combo_area):
+            self._repopulate_combo(self._combo_area, region.areas)
+
+        if requirement is not None:
+            area: Area = region.area_by_identifier(requirement.node_identifier.area_identifier)
+            with signals_blocked(self._combo_area):
+                set_combo_with_value(self._combo_area, area)
+
+        self._area_changed(requirement=requirement)
+
+    def _area_changed(self, idx: int = -1, requirement: NodeRequirement | None = None) -> None:
+        area: Area = self._combo_area.currentData(_ROLE)
+        with signals_blocked(self._combo_node):
+            self._repopulate_combo(self._combo_node, area.nodes)
+
+        if requirement is not None:
+            node: Node = self._region_list.node_by_identifier(requirement.node_identifier)
+            with signals_blocked(self._combo_node):
+                set_combo_with_value(self._combo_node, node)
+
+    def requirement(self) -> NodeRequirement:
+        node_identifier = NodeIdentifier(
+            self.to_string(self._combo_region.currentData(_ROLE)),
+            self.to_string(self._combo_area.currentData(_ROLE)),
+            self.to_string(self._combo_node.currentData(_ROLE)),
+        )
+        return NodeRequirement(node_identifier)
+
+
+class ArrayEditor(Editor):
+    def __init__(self, db: ResourceDatabase, parent: QWidget) -> None:
+        super().__init__(db, parent, "Array", RequirementArrayBase)
+
+        self._combo_type = self._create_combo_with_data([RequirementAnd, RequirementOr], self.to_string)
+        self._line_edit_comment = self._create_line_edit("Comment")
+
+        self._combo_type.currentIndexChanged.connect(self._notify_changed)
+        self._line_edit_comment.editingFinished.connect(self._notify_changed)
+
+        self._add_to_layout([self._combo_type, self._line_edit_comment])
+
+    def to_string(self, _type: type[RequirementAnd] | type[RequirementOr]) -> str:
+        return _type.combinator().strip().title()
+
+    def populate(self, requirement: Requirement) -> None:
+        requirement = cast(RequirementArrayBase, requirement)
+        with signals_blocked(self._combo_type):
+            self._set_type_combo(requirement)
+        with signals_blocked(self._line_edit_comment):
+            self._set_comment_line_edit(requirement.comment)
+
+    def _set_type_combo(self, requirement: RequirementArrayBase) -> None:
+        set_combo_with_value(self._combo_type, type(requirement))
+
+    def _set_comment_line_edit(self, text: str | None) -> None:
+        if text is None:
+            self._line_edit_comment.clear()
+            return
+        self._line_edit_comment.setText(text)
+
+    def requirement(self) -> RequirementArrayBase:
+        _type: type = self._combo_type.currentData(_ROLE)
+        text: str = self._line_edit_comment.text()
+        comment: str | None = text if len(text) > 0 else None
+        return _type([], comment)
+
+
+@contextmanager
+def signals_blocked(widget: QWidget) -> Iterator[None]:
+    previous = widget.signalsBlocked()
+    widget.blockSignals(True)
+    yield
+    widget.blockSignals(previous)

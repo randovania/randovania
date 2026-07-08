@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pytest
 from PySide6 import QtWidgets
@@ -15,7 +15,6 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.dialog import connections_editor
-from randovania.gui.lib import signal_handling
 
 if TYPE_CHECKING:
     import pytestqt.qtbot
@@ -68,13 +67,13 @@ def test_build_change_root(
     parent = QtWidgets.QWidget()
     skip_qtbot.addWidget(parent)
 
-    expected: Requirement | None
+    expected: Requirement
 
     if resource_type == ResourceRequirement:
         expected = ResourceRequirement.simple(gd.resource_database.item[0])
 
     elif resource_type == RequirementOr:
-        expected = None
+        expected = Requirement.impossible()
 
     elif resource_type == NodeRequirement:
         expected = NodeRequirement(
@@ -88,9 +87,14 @@ def test_build_change_root(
         raise NotImplementedError
 
     # Run
-    editor = connections_editor.ConnectionsEditor(parent, gd.resource_database, gd.region_list, Requirement.trivial())
-    signal_handling.set_combo_with_value(editor._root_editor.requirement_type_combo, resource_type)
-    editor._root_editor._on_change_requirement_type()  # signal not emitted programmatically
+    root_requirement = cast(RequirementAnd, Requirement.trivial())
+    editor = connections_editor.ConnectionsEditor(parent, gd.resource_database, gd.region_list, root_requirement)
+    after: Requirement = editor._controller._replace_at_path(root_requirement, [], expected)
+    # Command expects a path to the edited requirement for re-selection
+    # [0] points toward the first child of the tree's invisible root item i.e. the root requirement
+    editor._controller._undo_stack.push(
+        connections_editor.Command(editor._model, editor._view, root_requirement, after, [0], "Test change root")
+    )
 
     # Assert
     assert editor.final_requirement == expected
