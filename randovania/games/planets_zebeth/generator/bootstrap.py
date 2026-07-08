@@ -31,6 +31,7 @@ class PlanetsZebethBootstrap(Bootstrap[PlanetsZebethConfiguration]):
 
         logical_patches = {
             "open_missile_doors_with_one_missile": "OpenMissileDoorWithOneMissile",
+            "allow_downward_shots": "AllowDownwardShots",
         }
 
         for name, index in logical_patches.items():
