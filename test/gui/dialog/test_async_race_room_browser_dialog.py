@@ -8,7 +8,7 @@ import pytest
 from PySide6 import QtCore
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.gui.dialog.async_race_room_browser_dialog import AsyncRaceRoomBrowserDialog
+from randovania.gui.dialog.async_race.async_race_room_browser_dialog import AsyncRaceRoomBrowserDialog
 from randovania.network_common import error
 from randovania.network_common.async_race_room import AsyncRaceRoomListEntry, AsyncRaceRoomRaceStatus
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility

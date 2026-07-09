@@ -460,7 +460,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
                 "source_dock_name": node.extra["dock_name"],
                 "target_mrea_id": self._asset_ids_for_area(target_dock.identifier.area_identifier)[1],
                 "target_dock_name": target_dock.extra["dock_name"],
-                # "portal_scan_destination": target_dock.identifier.area,  # For next OPR
+                "portal_scan_destination": target_dock.identifier.area,
             }
             yield mlvl, mrea, change
 

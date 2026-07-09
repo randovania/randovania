@@ -11,13 +11,13 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class DockLockDetailsTab(BaseConnectionDetailsTab):
+class DockLockDetailsTab[ConfigurationT: BaseConfiguration](BaseConnectionDetailsTab[ConfigurationT]):
     def tab_title(self) -> str:
         return "Door Locks"
 
     @classmethod
     def should_appear_for(
-        cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: ConfigurationT, all_patches: dict[int, GamePatches], players: PlayersConfiguration
     ) -> bool:
         return configuration.dock_rando.is_enabled()
 
@@ -27,7 +27,9 @@ class DockLockDetailsTab(BaseConnectionDetailsTab):
         game: GameDatabaseView,
         patches: GamePatches,
     ) -> None:
-        for source, weakness in patches.all_dock_weaknesses(game, game.find_dock_type_by_short_name("door")):
+        dock_type = next(dock_t for dock_t in game.get_dock_types() if dock_t.short_name.lower() == "door")
+
+        for source, weakness in patches.all_dock_weaknesses(game, dock_type):
             source_region = source.identifier.region
             source_area = source.identifier.area
             if source_area not in per_region[source_region]:

@@ -24,7 +24,7 @@ from randovania.lib import http_lib, json_lib
 from randovania.lib.enum_lib import iterate_enum
 
 _ROOT_FOLDER = Path(__file__).parents[1]
-_NINTENDONT_DOWNLOAD_URL = "https://github.com/randovania/Nintendont/releases/download/v7-multiworld/boot.dol"
+_NINTENDONT_DOWNLOAD_URL = "https://github.com/randovania/Nintendont/releases/download/v8-multiworld/boot.dol"
 zip_folder = f"randovania-{VERSION}"
 
 
@@ -209,13 +209,13 @@ async def main():
         )
 
     if is_production():
-        server_suffix = "randovania"
+        server_prefix = "production"
     else:
-        server_suffix = "randovania-staging"
+        server_prefix = "staging"
 
     configuration = {
-        "server_address": f"https://randovania.metroidprime.run/{server_suffix}",
-        "socketio_path": f"/{server_suffix}/socket.io",
+        "server_address": f"https://{server_prefix}.randovania.org",
+        "socketio_path": "/socket.io",
         "sentry_urls": {"client": os.environ.get("SENTRY_CLIENT_URL")},
     }
     json_lib.write_path(_ROOT_FOLDER.joinpath("randovania", "data", "configuration.json"), configuration)

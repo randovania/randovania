@@ -259,7 +259,7 @@ def find_config_files(data_path: Path) -> Iterator[str]:
         yield result
 
 
-def replace_config_file_with(data_path: Path, new_data: dict):
+def replace_config_file_with(data_path: Path, new_data: dict) -> None:
     # Write to a separate file, so we don't corrupt the existing one in case we unexpectedly
     # are unable to finish writing the file
     new_config_path = data_path.joinpath("config_new.json")

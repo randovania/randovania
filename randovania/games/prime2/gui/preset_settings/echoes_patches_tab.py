@@ -29,11 +29,11 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
             widget.setVisible(False)
 
         # Signals
-        self.warp_to_start_check.stateChanged.connect(self._persist_option_then_notify("warp_to_start"))
-        self.include_menu_mod_check.stateChanged.connect(self._persist_option_then_notify("menu_mod"))
+        self.warp_to_start_check.stateChanged.connect(self._persist_bool("warp_to_start"))
+        self.include_menu_mod_check.stateChanged.connect(self._persist_bool("menu_mod"))
         self.new_patcher_check.stateChanged.connect(self._persist_new_patcher)
-        self.inverted_check.stateChanged.connect(self._persist_option_then_notify("inverted_mode"))
-        self.save_doors_check.stateChanged.connect(self._persist_option_then_notify("blue_save_doors"))
+        self.inverted_check.stateChanged.connect(self._persist_bool("inverted_mode"))
+        self.save_doors_check.stateChanged.connect(self._persist_bool("blue_save_doors"))
 
     @classmethod
     def tab_title(cls) -> str:

@@ -36,13 +36,13 @@ class DolphinExecutor(MemoryOperationExecutor):
     @property
     def max_output(self) -> int:
         if self.is_connected():
-            return 2 ^ 31 - 1
+            return (2**31) - 1
         return -1
 
     @property
     def max_input(self) -> int:
         if self.is_connected():
-            return 2 ^ 31 - 1
+            return (2**31) - 1
         return -1
 
     async def connect(self) -> str | None:

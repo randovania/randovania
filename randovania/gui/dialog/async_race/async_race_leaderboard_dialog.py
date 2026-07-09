@@ -4,7 +4,7 @@ from randovania.network_common.async_race_room import RaceRoomLeaderboard
 
 
 class AsyncRaceLeaderboardDialog(QtWidgets.QDialog):
-    def __init__(self, parent: QtWidgets.QWidget, leaderboard: RaceRoomLeaderboard):
+    def __init__(self, parent: QtWidgets.QWidget, leaderboard: RaceRoomLeaderboard) -> None:
         super().__init__(parent)
         self.setWindowTitle("Leaderboard")
 
