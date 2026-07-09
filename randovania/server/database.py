@@ -22,9 +22,11 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib import pydantic_util
 from randovania.network_common import async_race_room, error, multiplayer_session
 from randovania.network_common.async_race_room import AsyncRaceRoomRaceStatus
 from randovania.network_common.audit import AuditEntry
+from randovania.network_common.discord_preferences import GuildPreferences
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
@@ -772,6 +774,27 @@ class AsyncRaceEntryPause(BaseModel):
         )
 
 
+class DiscordGuildPreferences(BaseModel):
+    guild_id: int = peewee.IntegerField(primary_key=True)
+    preferences_json: bytes = peewee.BlobField()
+
+    @classmethod
+    def get_with_default(cls, guild_id: int) -> DiscordGuildPreferences:
+        try:
+            return cls.get(guild_id)
+        except cls.DoesNotExist:
+            return cls.create(
+                guild_id=guild_id,
+                preferences_json=pydantic_util.encode_model(GuildPreferences()),
+            )
+
+    def get_preferences(self) -> GuildPreferences:
+        return pydantic_util.decode_model(self.preferences_json, GuildPreferences)
+
+    def set_preferences(self, preferences: GuildPreferences) -> None:
+        self.preferences_json = pydantic_util.encode_model(preferences)
+
+
 class DatabaseMigrations(enum.Enum):
     ADD_READY_TO_MEMBERSHIP = "ready_membership"
     SESSION_STATE_TO_VISIBILITY = "session_state_to_visibility"
@@ -795,6 +818,7 @@ all_classes: list[type[BaseModel]] = [
     AsyncRaceEntry,
     AsyncRaceEntryPause,
     AsyncRaceAuditEntry,
+    # DiscordGuildPreferences,  # TODO: For later!
     PerformedDatabaseMigrations,
 ]
 
