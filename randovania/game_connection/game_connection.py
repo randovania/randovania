@@ -77,6 +77,10 @@ class GameConnection:
                 self.logger.debug(f"Builder {builder.pretty_text} is not valid anymore. Finishing it out.")
                 await connector.force_finish()
 
+            elif not builder.enabled:
+                self.logger.debug(f"Builder {builder.pretty_text} is now disabled. Finishing it out.")
+                await connector.force_finish()
+
             if connector.is_disconnected():
                 self.logger.debug(f"Connector from builder {builder.pretty_text} is disconnected. Finishing it out.")
                 await connector.force_finish()
@@ -95,7 +99,7 @@ class GameConnection:
             *[
                 try_build_connector(builder)
                 for builder in list(self.connection_builders)
-                if builder not in self.remote_connectors
+                if builder not in self.remote_connectors and builder.enabled
             ]
         )
 
@@ -112,6 +116,10 @@ class GameConnection:
         self.connection_builders.remove(builder)
         self._on_builders_changed()
 
+    def toggle_builder_enabled(self, builder: ConnectorBuilder) -> None:
+        builder.enabled = not builder.enabled
+        self._on_builders_changed()
+
     def get_connector_for_builder(self, builder: ConnectorBuilder | None) -> RemoteConnector | None:
         if builder is None:
             return None
@@ -123,6 +131,7 @@ class GameConnection:
                 ConnectorBuilderOption(
                     builder.connector_builder_choice,
                     builder.configuration_params(),
+                    enabled=builder.enabled,
                 )
                 for builder in self.connection_builders
             ]
