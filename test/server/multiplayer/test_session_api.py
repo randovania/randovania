@@ -60,7 +60,12 @@ async def test_list_sessions(clean_database, mock_sa, limit):
     mock_sa.get_current_user.return_value = someone
 
     # Run
-    result = await session_api.list_sessions(mock_sa, "TheSid", limit)
+    if limit is None:
+        # omit the `limit` parameter, since a single parameter with the value `None` is not
+        # distinguishable from no parameter at all and it will be called without the parameter
+        result = await session_api.list_sessions(mock_sa, "TheSid")
+    else:
+        result = await session_api.list_sessions(mock_sa, "TheSid", limit)
 
     # Assert
     expected = [
