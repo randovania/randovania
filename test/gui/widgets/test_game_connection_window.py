@@ -189,6 +189,7 @@ def test_update_builder_ui(skip_qtbot, mocker: MockerFixture):
         builder_a := MagicMock(spec=ConnectorBuilder),
         builder_b := MagicMock(spec=ConnectorBuilder),
         builder_c := MagicMock(spec=ConnectorBuilder),
+        builder_d := MagicMock(spec=ConnectorBuilder),
     ]
     builder_a.pretty_text = "ConnectorBuilder A"
     builder_a.get_status_message.return_value = None
@@ -196,6 +197,9 @@ def test_update_builder_ui(skip_qtbot, mocker: MockerFixture):
     builder_b.get_status_message.return_value = "Connecting!"
     builder_c.pretty_text = "ConnectorBuilder C"
     builder_c.get_status_message.return_value = None
+    builder_d.pretty_text = "ConnectorBuilder D"
+    builder_d.get_status_message.return_value = None
+    builder_d.enabled = False
 
     connector_a = MagicMock()
     connector_a.description.return_value = "Game A"
@@ -214,12 +218,14 @@ def test_update_builder_ui(skip_qtbot, mocker: MockerFixture):
     assert window.ui_for_builder[builder_b].description.text() == "ConnectorBuilder B"
     assert window.ui_for_builder[builder_a].status.text() == "Not Connected."
     assert window.ui_for_builder[builder_b].status.text() == "Not Connected. Connecting!"
+    assert window.ui_for_builder[builder_d].status.text() == "Disabled."
 
     game_connection.get_connector_for_builder = MagicMock(
         side_effect=lambda builder: {
             builder_a: connector_a,
             builder_b: connector_b,
             builder_c: connector_c,
+            builder_d: None,
         }[builder]
     )
 

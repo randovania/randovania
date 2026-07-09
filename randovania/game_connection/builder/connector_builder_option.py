@@ -31,6 +31,9 @@ _CHOICE_TO_BUILDER = {
 class ConnectorBuilderOption(JsonDataclass):
     choice: ConnectorBuilderChoice
     params: dict
+    enabled: bool = True
 
     def create_builder(self) -> ConnectorBuilder:
-        return _CHOICE_TO_BUILDER[self.choice](**self.params)
+        result = _CHOICE_TO_BUILDER[self.choice](**self.params)
+        result.enabled = self.enabled
+        return result
