@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import typing
 from collections.abc import Sequence
-from typing import TYPE_CHECKING, Annotated, Any, Never
+from typing import TYPE_CHECKING, Annotated, Any
 
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
+from randovania.lib.type_lib import AsyncCallable
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
     AsyncRaceRoomAdminData,
@@ -16,7 +17,7 @@ from randovania.network_common.async_race_room import (
 )
 from randovania.network_common.audit import AuditEntry
 from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerSessionListEntry
-from randovania.network_common.signals.common import TypedBytes, TypedJsonObject, args_to_sio_data
+from randovania.network_common.signals.common import SignalBase, TypedBytes, TypedJsonObject, args_to_sio_data
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
 
 if TYPE_CHECKING:
@@ -24,21 +25,15 @@ if TYPE_CHECKING:
     from typing import Concatenate
 
     from randovania.network_client.network_client import NetworkClient
-    from randovania.server.server_app import AsyncCallable, ServerApp
+    from randovania.server.server_app import ServerApp
 
 type ServerEventCallback[**P, RetT] = AsyncCallable[Concatenate[ServerApp, str, P], RetT]
 
 
-class ServerSignal[**P, RetT]:
-    def __init__(self, fn: ServerEventCallback[P, RetT], message: str):
-        self.fn = fn
-        self.message = message
-
-    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> Never:
-        raise TypeError(
-            f"Cannot call ServerSignal {self.fn.__name__} directly. "
-            f"Did you mean to call {self.fn.__name__}.call_server() instead?"
-        )
+class ServerSignal[**P, RetT](SignalBase[P, RetT, ServerEventCallback[P, RetT]]):
+    @property
+    def _public_call_site(self) -> Callable:
+        return self.call_server
 
     def call_server(
         self,
@@ -77,6 +72,8 @@ class ServerSignal[**P, RetT]:
         Using this function allows checking that the signature of the registered callback
         if compatible with this signal's expected signature.
         """
+
+        self._add_handler(callback)
         return sa.on(self.message, callback, namespace, with_header_check=with_header_check)
 
 
