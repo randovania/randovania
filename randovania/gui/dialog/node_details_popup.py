@@ -6,7 +6,8 @@ import json
 import logging
 import traceback
 import typing
-from typing import TYPE_CHECKING, Any
+from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 from qasync import asyncSlot
@@ -44,7 +45,7 @@ if TYPE_CHECKING:
     from randovania.gui.widgets.combo_box_item_delegate import ComboBoxItemDelegate
 
 
-def refresh_if_needed(combo: QtWidgets.QComboBox, func) -> None:
+def refresh_if_needed(combo: QtWidgets.QComboBox, func: Callable[[int], None]) -> None:
     if combo.currentIndex() == 0:
         func(0)
 
@@ -53,7 +54,7 @@ class DockWeaknessListModel(EditableListModel[DockWeakness]):
     delegate: ComboBoxItemDelegate
     type: DockType
 
-    def __init__(self, db: DockWeaknessDatabase, delegate: ComboBoxItemDelegate):
+    def __init__(self, db: DockWeaknessDatabase, delegate: ComboBoxItemDelegate) -> None:
         super().__init__()
         self.db = db
         self.delegate = delegate
@@ -76,8 +77,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     _unlocked_by_requirement = Requirement.trivial()
     _activated_by_requirement = Requirement.trivial()
     _connections_visualizers: dict[QtWidgets.QWidget, ConnectionsVisualizer]
+    _edit_popup: ConnectionsEditor | None = None
 
-    def __init__(self, game: GameDescription, node: Node):
+    def __init__(self, game: GameDescription, node: Node) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -329,17 +331,17 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         common_qt_lib.set_error_border_stylesheet(self.name_edit, has_error)
 
-    def on_node_type_combo(self, _: None) -> None:
+    def on_node_type_combo(self, index: int) -> None:
         self.tab_widget.setCurrentWidget(self._type_to_tab[self.node_type_combo.currentData()])
 
-    def on_dock_connection_region_combo(self, _: None) -> None:
+    def on_dock_connection_region_combo(self, index: int) -> None:
         region: Region = self.dock_connection_region_combo.currentData()
 
         self.dock_connection_area_combo.clear()
         for area in sorted(region.areas, key=lambda x: x.name):
             self.dock_connection_area_combo.addItem(area.name, userData=area)
 
-    def on_dock_connection_area_combo(self, _: None) -> None:
+    def on_dock_connection_area_combo(self, index: int) -> None:
         area: Area | None = self.dock_connection_area_combo.currentData()
 
         self.dock_connection_node_combo.clear()
@@ -351,7 +353,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         if empty:
             self.dock_connection_node_combo.addItem("Other", None)
 
-    def on_dock_type_combo(self, _) -> None:
+    def on_dock_type_combo(self, index: int) -> None:
         self.dock_weakness_combo.clear()
         current_type: DockType = self.dock_type_combo.currentData()
 
@@ -368,7 +370,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.name_edit.setText(expected_name)
         self.on_name_edit(self.name_edit.text())
 
-    def on_hint_kind_combo(self, value: Any) -> None:
+    def on_hint_kind_combo(self, index: int) -> None:
         self._update_hint_target_visibility(self.hint_kind_combo.currentData())
 
     def on_specific_location_target_spin(self, value: int) -> None:
@@ -390,7 +392,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 self.pickup_index_spin.setValue(new_index)
                 return
 
-    def on_teleporter_destination_region_combo(self, _) -> None:
+    def on_teleporter_destination_region_combo(self, index: int) -> None:
         region: Region = self.teleporter_destination_region_combo.currentData()
 
         self.teleporter_destination_area_combo.clear()

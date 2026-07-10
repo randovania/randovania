@@ -34,7 +34,7 @@ class PresetBlankPatches(PresetTab[BlankConfiguration]):
         self.setCentralWidget(self.root_widget)
 
         # Signals
-        self.include_extra_pickups_check.stateChanged.connect(self._persist_option_then_notify("include_extra_pickups"))
+        self.include_extra_pickups_check.stateChanged.connect(self._persist_bool("include_extra_pickups"))
 
     @classmethod
     def tab_title(cls) -> str:

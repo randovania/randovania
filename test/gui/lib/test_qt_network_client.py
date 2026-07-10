@@ -36,6 +36,7 @@ async def test_handle_network_errors_success(skip_qtbot, qapp):
     callee = AsyncMock()
     callee.return_value = MagicMock()
     data = MagicMock()
+    qapp.network_error_widget = qapp
 
     # Run
     wrapped = qt_network_client.handle_network_errors(callee)
@@ -66,6 +67,8 @@ async def test_handle_network_errors_exception(skip_qtbot, qapp, mocker, excepti
     callee = AsyncMock()
     callee.side_effect = exception
     data = MagicMock()
+
+    qapp.network_error_widget = qapp
 
     # Run
     wrapped = qt_network_client.handle_network_errors(callee)

@@ -52,7 +52,7 @@ if TYPE_CHECKING:
 
 @pytest.fixture
 async def window(skip_qtbot: QtBot) -> MultiplayerSessionWindow:
-    window = MultiplayerSessionWindow(MagicMock(), MagicMock(spec=WindowManager), MagicMock())
+    window = MultiplayerSessionWindow(MagicMock(), 1234, MagicMock(spec=WindowManager), MagicMock())
     skip_qtbot.addWidget(window)
     window.connect_to_events()
 
@@ -1193,7 +1193,7 @@ async def test_update_multiworld_client_status(
     window_manager = MagicMock()
     window_manager.multiworld_client = multiworld_client
 
-    window = MultiplayerSessionWindow(MagicMock(), window_manager, options)
+    window = MultiplayerSessionWindow(MagicMock(), 1234, window_manager, options)
     skip_qtbot.addWidget(window)
 
     # Don't use threads during tests

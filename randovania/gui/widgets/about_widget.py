@@ -8,7 +8,7 @@ from randovania import get_readme_section
 class AboutWidget(QtWidgets.QTextBrowser):
     _first_show: bool = True
 
-    def _on_first_show(self):
+    def _on_first_show(self) -> None:
         self.setup_about_text()
 
     def showEvent(self, arg: QtGui.QShowEvent) -> None:
@@ -18,7 +18,7 @@ class AboutWidget(QtWidgets.QTextBrowser):
 
         return super().showEvent(arg)
 
-    def setup_about_text(self):
+    def setup_about_text(self) -> None:
         ABOUT_TEXT = "\n".join(
             [
                 "# Randovania",

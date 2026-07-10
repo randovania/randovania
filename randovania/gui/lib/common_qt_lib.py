@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import os
-import platform
 import re
 import subprocess
+import sys
 import typing
 from pathlib import Path
 from subprocess import CalledProcessError
@@ -18,16 +18,21 @@ if typing.TYPE_CHECKING:
 
     from randovania.game_connection.game_connection import GameConnection
     from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.gui.qt import RdvApplication
     from randovania.interface_common.options import Options
 
 
-def map_set_checked(iterable: Iterator[QtWidgets.QCheckBox], new_status: bool):
+def map_set_checked(iterable: Iterator[QtWidgets.QCheckBox], new_status: bool) -> None:
     for checkbox in iterable:
         checkbox.setChecked(new_status)
 
 
-def lock_application(value: bool):
-    QtWidgets.QApplication.instance().main_window.setEnabled(value)
+def current_application() -> RdvApplication:
+    return typing.cast("RdvApplication", QtWidgets.QApplication.instance())
+
+
+def lock_application(value: bool) -> None:
+    current_application().main_window.setEnabled(value)
 
 
 def _prompt_user_for_file(
@@ -45,7 +50,7 @@ def _prompt_user_for_file(
         method = QtWidgets.QFileDialog.getSaveFileName
     else:
         method = QtWidgets.QFileDialog.getOpenFileName
-    open_result = method(window, caption=caption, dir=dir, filter=filter)
+    open_result = method(window, caption=caption, dir=dir if dir is not None else "", filter=filter)
     if not open_result or open_result == ("", ""):
         return None
     return Path(open_result[0])
@@ -54,26 +59,27 @@ def _prompt_user_for_file(
 def _prompt_user_for_directory(
     window: QtWidgets.QWidget, caption: str, dir: str | None = None, new_file: bool = False
 ) -> Path | None:
+    dir = dir if dir is not None else ""
     if new_file:
         dialog = QtWidgets.QFileDialog(window)
-        dialog.setFileMode(QtWidgets.QFileDialog.FileMode.DirectoryOnly)
-        dialog.setOption(QtWidgets.QFileDialog.ShowDirsOnly)
-        dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
+        dialog.setFileMode(QtWidgets.QFileDialog.FileMode.Directory)
+        dialog.setOption(QtWidgets.QFileDialog.Option.ShowDirsOnly)
+        dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptMode.AcceptSave)
         dialog.setDirectory(dir)
         if dialog.exec_():
-            open_result = dialog.selectedFiles()
-            if not open_result:
+            new_open_result = dialog.selectedFiles()
+            if not new_open_result:
                 return None
-            return Path(open_result[0])
+            return Path(new_open_result[0])
         return None
 
     else:
-        open_result = QtWidgets.QFileDialog.getExistingDirectory(
-            window, caption, dir, QtWidgets.QFileDialog.ShowDirsOnly
+        existing_open_result = QtWidgets.QFileDialog.getExistingDirectory(
+            window, caption, dir, QtWidgets.QFileDialog.Option.ShowDirsOnly
         )
-        if not open_result or open_result == ("", ""):
+        if not existing_open_result or existing_open_result == ("", ""):
             return None
-        return Path(open_result)
+        return Path(existing_open_result)
 
 
 def prompt_user_for_vanilla_input_file(
@@ -191,7 +197,7 @@ def prompt_user_for_preset_folder(window: QtWidgets.QWidget) -> None | Path:
     return _prompt_user_for_directory(window, caption="Select a directory in which to place preset files")
 
 
-def set_default_window_icon(window: QtWidgets.QWidget):
+def set_default_window_icon(window: QtWidgets.QWidget) -> None:
     """
     Sets the window icon for the given widget to the default icon
     :param window:
@@ -200,15 +206,21 @@ def set_default_window_icon(window: QtWidgets.QWidget):
     window.setWindowIcon(QtGui.QIcon(os.fspath(randovania.get_icon_path())))
 
 
-def set_error_border_stylesheet(edit: QtWidgets.QWidget, has_error: bool):
-    edit.has_error = has_error
+class ErrorBorderWidget(QtWidgets.QWidget):
+    has_error: bool
+
+
+def set_error_border_stylesheet(edit: QtWidgets.QWidget, has_error: bool) -> None:
+    widget = typing.cast("ErrorBorderWidget", edit)
+
+    widget.has_error = has_error
     if has_error:
-        edit.setStyleSheet(":enabled { border: 1px solid red; }:disabled { border: 1px solid red; background: #CCC }")
+        widget.setStyleSheet(":enabled { border: 1px solid red; }:disabled { border: 1px solid red; background: #CCC }")
     else:
-        edit.setStyleSheet("")
+        widget.setStyleSheet("")
 
 
-def set_edit_if_different(edit: QtWidgets.QLineEdit, new_text: str):
+def set_edit_if_different(edit: QtWidgets.QLineEdit, new_text: str) -> None:
     """
     Sets the text of the given QLineEdit only if it differs from the current value.
     Prevents snapping the user's cursor to the end unnecessarily.
@@ -220,39 +232,39 @@ def set_edit_if_different(edit: QtWidgets.QLineEdit, new_text: str):
         edit.setText(new_text)
 
 
-def set_edit_if_different_text(edit: QtWidgets.QTextEdit, new_text: str):
+def set_edit_if_different_text(edit: QtWidgets.QTextEdit, new_text: str) -> None:
     if edit.toPlainText() != new_text:
         edit.setPlainText(new_text)
 
 
-def get_network_client():
-    return typing.cast("QtNetworkClient", QtWidgets.QApplication.instance().network_client)
+def get_network_client() -> QtNetworkClient:
+    return current_application().network_client
 
 
-def get_game_connection():
-    return typing.cast("GameConnection", QtWidgets.QApplication.instance().game_connection)
+def get_game_connection() -> GameConnection:
+    return current_application().game_connection
 
 
-def show_install_visual_cpp_redist(details: str):
+def show_install_visual_cpp_redist(details: str) -> None:
     from PySide6 import QtWidgets
 
     download_url = "https://aka.ms/vs/16/release/vc_redist.x64.exe"
     support_url = "https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads"
 
     box = QtWidgets.QMessageBox(
-        QtWidgets.QMessageBox.Critical,
+        QtWidgets.QMessageBox.Icon.Critical,
         "Unable to load Dolphin backend",
         "Please install the latest "
         f"<a href='{download_url}'>Microsoft Visual C++ Redistributable</a>.<br /><br />"
         f"For more details, see <a href='{support_url}'>Microsoft's webpage</a>.",
-        QtWidgets.QMessageBox.Ok,
+        QtWidgets.QMessageBox.StandardButton.Ok,
     )
     set_default_window_icon(box)
     box.setDetailedText(details)
     box.exec_()
 
 
-def set_clipboard(text: str):
+def set_clipboard(text: str) -> None:
     from PySide6 import QtWidgets
 
     QtWidgets.QApplication.clipboard().setText(text)
@@ -264,11 +276,11 @@ class FallbackDialog(typing.NamedTuple):
     parent: QtWidgets.QWidget
 
 
-def open_directory_in_explorer(path: Path, fallback_dialog: FallbackDialog | None = None):
+def open_directory_in_explorer(path: Path, fallback_dialog: FallbackDialog | None = None) -> None:
     try:
-        if platform.system() == "Windows":
+        if sys.platform == "win32":
             os.startfile(path)
-        elif platform.system() == "Darwin":
+        elif sys.platform == "darwin":
             subprocess.run(["open", path], check=True)
         else:
             subprocess.run(["xdg-open", path], check=True)
@@ -288,7 +300,7 @@ def open_directory_in_explorer(path: Path, fallback_dialog: FallbackDialog | Non
             box.show()
 
 
-def set_icon_data_paths(label: QtWidgets.QLabel):
+def set_icon_data_paths(label: QtWidgets.QLabel) -> None:
     image_pattern = re.compile('<img src="data/(.*?)"/>')
 
     repl = rf'<img src="{get_data_path().as_posix()}/\g<1>"/>'

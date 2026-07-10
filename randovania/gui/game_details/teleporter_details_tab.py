@@ -12,16 +12,16 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class TeleporterDetailsTab(BaseConnectionDetailsTab):
+class TeleporterDetailsTab[ConfigurationT: BaseConfiguration](BaseConnectionDetailsTab[ConfigurationT]):
     @classmethod
     def should_appear_for(
-        cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: ConfigurationT, all_patches: dict[int, GamePatches], players: PlayersConfiguration
     ) -> bool:
         raise NotImplementedError
 
     def _fill_per_region_connections(
         self,
-        per_region: dict[str, dict[str, str]],
+        per_region: dict[str, dict[str, str | dict[str, str]]],
         game: GameDatabaseView,
         patches: GamePatches,
     ) -> None:

@@ -25,8 +25,8 @@ if TYPE_CHECKING:
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 
-def _requirement_at_value(resource: ResourceInfo, level: LayoutTrickLevel):
-    def criteria(individual: ResourceRequirement):
+def _requirement_at_value(resource: ResourceInfo, level: LayoutTrickLevel) -> Callable[[ResourceRequirement], bool]:
+    def criteria(individual: ResourceRequirement) -> bool:
         return individual.resource == resource and individual.amount == level.as_number
 
     return criteria
@@ -48,7 +48,7 @@ def _area_uses_resource(
     def _uses_trick(requirements: Requirement) -> bool:
         return any(criteria(individual) for individual in requirements.iterate_resource_requirements(database))
 
-    def _dock_uses_trick(dock: DockNode):
+    def _dock_uses_trick(dock: DockNode) -> bool:
         if _uses_trick(dock.default_dock_weakness.requirement):
             return True
 
@@ -84,7 +84,7 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         game_description: GameDescription,
         areas_to_show: list[tuple[Region, Area, list[str]]],
         trick_levels: TrickLevelConfiguration | None = None,
-    ):
+    ) -> None:
         super().__init__(parent)
         self.setupUi(self)
         set_default_window_icon(self)
@@ -112,7 +112,7 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         else:
             self.area_list_label.setText("This trick is not used in this level.")
 
-    def button_box_close(self):
+    def button_box_close(self) -> None:
         self.reject()
 
 
@@ -125,7 +125,7 @@ class TrickDetailsPopup(BaseResourceDetailsPopup):
         trick: TrickResourceInfo,
         level: LayoutTrickLevel,
         trick_levels: TrickLevelConfiguration | None = None,
-    ):
+    ) -> None:
         areas_to_show = [
             (region, area, usages)
             for region in game_description.region_list.regions
@@ -155,8 +155,8 @@ class ResourceDetailsPopup(BaseResourceDetailsPopup):
         window_manager: WindowManager,
         game_description: GameDescription,
         resource: ResourceInfo,
-    ):
-        def is_resource(individual: ResourceRequirement):
+    ) -> None:
+        def is_resource(individual: ResourceRequirement) -> bool:
             return individual.resource == resource
 
         areas_to_show = [

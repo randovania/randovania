@@ -150,6 +150,26 @@ async def test_auto_update_remove_connector(connection, qapp):
     assert connection.remote_connectors == {}
 
 
+async def test_auto_update_remove_connector_from_disabled_builder(connection, qapp):
+    # Setup
+    builder = MagicMock(name="builder")
+    builder.build_connector = AsyncMock(return_value=None)
+    builder.enabled = False
+    connector = MagicMock()
+    connector.force_finish = AsyncMock()
+    connector.is_disconnected.return_value = False
+    connector.has_been_beaten.return_value = False
+    connection.remote_connectors[builder] = connector
+    connection.connection_builders = [builder]
+
+    # Run
+    await connection._auto_update()
+
+    # Assert
+    connector.force_finish.assert_awaited_once_with()
+    builder.build_connector.assert_not_called()
+
+
 async def test_connector_state_update(connection, qapp, blank_resource_db):
     # Setup
     builder = DebugConnectorBuilder(RandovaniaGame.BLANK.value)

@@ -23,8 +23,9 @@ if TYPE_CHECKING:
     from collections.abc import Callable
     from typing import Concatenate
 
+    from randovania.lib.type_lib import AsyncCallable
     from randovania.network_client.network_client import NetworkClient
-    from randovania.server.server_app import AsyncCallable, ServerApp
+    from randovania.server.server_app import ServerApp
 
 type ServerEventCallback[**P, RetT] = AsyncCallable[Concatenate[ServerApp, str, P], RetT]
 

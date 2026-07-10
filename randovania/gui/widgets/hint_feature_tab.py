@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from collections.abc import Mapping
 from typing import TYPE_CHECKING
 
 from PySide6.QtWidgets import QLabel, QSizePolicy, QSpacerItem, QVBoxLayout, QWidget
@@ -28,7 +29,7 @@ if TYPE_CHECKING:
 class HintFeatureTab(QWidget, Ui_HintFeatureTab):
     """Base class for GUI tabs listing HintFeatures"""
 
-    def __init__(self, parent: QWidget | None = None):
+    def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.setupUi(self)
         self.description_label.setText(self.description)
@@ -113,7 +114,7 @@ class LocationHintFeatureTab(HintFeatureTab):
             )
         )
 
-    def create_element_label(self, feature: HintFeature, element: str):
+    def create_element_label(self, feature: HintFeature, element: str) -> QLabel:
         element_label = super().create_element_label(feature, element)
         element_label.linkActivated.connect(
             on_click_data_editor_link(
@@ -167,7 +168,7 @@ class PickupHintFeatureTab(HintFeatureTab):
             if feature.hidden:
                 continue
 
-            def pickups_with_feature(group: dict[str, BasePickupDefinition]) -> Iterable[str]:
+            def pickups_with_feature(group: Mapping[str, BasePickupDefinition]) -> Iterable[str]:
                 yield from (
                     name
                     for name, pickup in group.items()

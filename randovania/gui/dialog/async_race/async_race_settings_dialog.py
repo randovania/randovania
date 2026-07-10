@@ -14,7 +14,7 @@ def _from_date(date: datetime.datetime) -> QtCore.QDateTime:
 class AsyncRaceSettingsDialog(QtWidgets.QDialog):
     settings_widget: AsyncRaceRoomSettingsWidget
 
-    def __init__(self, parent: QtWidgets.QWidget, current_room: AsyncRaceRoomEntry):
+    def __init__(self, parent: QtWidgets.QWidget, current_room: AsyncRaceRoomEntry) -> None:
         super().__init__(parent)
 
         self.room = current_room

@@ -676,6 +676,7 @@ def setup_app(sa: ServerApp) -> None:
     server_signals.AsyncRace.RefreshRoom.register(sa, refresh_room, with_header_check=True)
     server_signals.AsyncRace.GetLeaderboard.register(sa, get_leaderboard, with_header_check=True)
     server_signals.AsyncRace.GetLayout.register(sa, get_layout, with_header_check=True)
+    server_signals.AsyncRace.GetAuditLog.register(sa, get_audit_log, with_header_check=True)
     server_signals.AsyncRace.AdminGetAdminData.register(sa, admin_get_admin_data, with_header_check=True)
     server_signals.AsyncRace.AdminUpdateEntries.register(sa, admin_update_entries, with_header_check=True)
     server_signals.AsyncRace.JoinAndExport.register(sa, join_and_export, with_header_check=True)

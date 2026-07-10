@@ -12,6 +12,8 @@ if TYPE_CHECKING:
 class ConnectorBuilder:
     StatusUpdate = RdvSignal[[str]]()
 
+    enabled: bool = True
+
     @property
     def pretty_text(self) -> str:
         """Describes which builder and with what parameters it's been configured."""

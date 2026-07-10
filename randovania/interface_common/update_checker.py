@@ -35,16 +35,16 @@ MAJOR_ENTRY = "- **Major** "
 
 
 def _get_major_entries(log: str) -> str:
-    result = []
+    result: list[str] = []
     last_added_header = None
     current_found_header = None
 
-    def finish_entry():
+    def finish_entry() -> None:
         pass
 
     for s in log.split("\n"):
         if s.startswith(MAJOR_ENTRY):
-            if current_found_header != last_added_header:
+            if current_found_header is not None and current_found_header != last_added_header:
                 result.append(current_found_header)
                 last_added_header = current_found_header
 

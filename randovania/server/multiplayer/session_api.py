@@ -22,7 +22,7 @@ from randovania.server.server_app import ServerApp, ServerAppDep, SidDep, UserDe
 router = APIRouter()
 
 
-async def list_sessions(sa: ServerApp, sid: str, limit: int | None) -> list[dict]:
+async def list_sessions(sa: ServerApp, sid: str, limit: int | None = None) -> list[dict]:
     # Note: this query fails to list any session that has no memberships
     # But that's fine, because these sessions should've been deleted!
     def construct_helper(**args: Any) -> MultiplayerSessionListEntry:

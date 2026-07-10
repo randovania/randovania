@@ -9,35 +9,45 @@ import asyncio
 import os
 import subprocess
 from pathlib import Path
+from typing import Literal
 
 _FOLDER = Path(__file__).parent
 
 
 async def deploy(
-    remote_host: str, host2: str, remote_user: str, server_environment: str, version: str, context: str | None
+    base_host: str,
+    legacy_host: str,
+    remote_user: str,
+    server_environment: Literal["production", "staging"],
+    version: str,
+    context: str | None,
 ) -> None:
     new_env = os.environ.copy()
 
-    new_env["DOMAIN"] = remote_host
+    new_env["APP_DOMAIN"] = f"{server_environment}.{base_host}"
+    new_env["ADMIN_DOMAIN"] = f"server.{base_host}"
+    new_env["LEGACY_DOMAIN"] = legacy_host
     new_env["VERSION"] = version
     new_env["SERVER_ENVIRONMENT"] = server_environment
+
     if server_environment == "production":
         new_env["PATH_PREFIX"] = "randovania"
         new_env["DATA_PATH"] = "/var/randovania/production/data"
-        new_env["DOMAIN2"] = f"server.{host2}"
 
     elif server_environment == "staging":
         new_env["PATH_PREFIX"] = "randovania-staging"
         new_env["DATA_PATH"] = "/var/randovania/staging/data"
-        new_env["DOMAIN2"] = f"staging.{host2}"
     else:
         raise ValueError(f"Unknown server_environment: {server_environment}")
+
+    # Check `randovania-staging` over production's `randovania`.
+    new_env["LEGACY_REDIRECT_PRIORITY"] = str(200 + len(new_env["PATH_PREFIX"]))
 
     context_args = []
     if context is not None:
         context_args = ["--context", context]
     else:
-        new_env["DOCKER_HOST"] = f"ssh://{remote_user}@{remote_host}"
+        new_env["DOCKER_HOST"] = f"ssh://{remote_user}@server.{base_host}"
 
     stack_file = _FOLDER.joinpath("server-docker", "docker-compose.yml")
     subprocess.run(
@@ -61,8 +71,8 @@ async def main():
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--user", default="root")
     group.add_argument("--context")
-    parser.add_argument("--host", default="randovania.metroidprime.run")
-    parser.add_argument("--host2", default="randovania.org")
+    parser.add_argument("--host", default="randovania.org")
+    parser.add_argument("--legacy-host", default="randovania.metroidprime.run")
     version = parser.add_mutually_exclusive_group()
     version.add_argument("--ref")
     version.add_argument("--sha")
@@ -84,8 +94,8 @@ async def main():
         version = f"sha-{sha[:8]}"
 
     await deploy(
-        remote_host=args.host,
-        host2=args.host2,
+        base_host=args.host,
+        legacy_host=args.legacy_host,
         remote_user=args.user,
         server_environment=server_environment,
         version=version,

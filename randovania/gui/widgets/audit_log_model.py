@@ -7,7 +7,7 @@ from randovania.network_common.audit import AuditEntry
 class AuditEntryListDatabaseModel(DataclassTableModel[AuditEntry]):
     """Model for viewing a list of AuditEntry using a QTableView."""
 
-    def __init__(self, db: list[AuditEntry]):
+    def __init__(self, db: list[AuditEntry]) -> None:
         super().__init__()
         self.db = db
 

@@ -202,6 +202,10 @@
             "OpenMissileDoorWithOneMissile": {
                 "long_name": "Open Missile Door With One Missile",
                 "extra": {}
+            },
+            "AllowDownwardShots": {
+                "long_name": "Allow Downward Shots",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -374,6 +378,30 @@
                                             }
                                         }
                                     ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Break Floor Blocks": {
+                "display_name": "Can Break Floor Blocks",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Use Bombs"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "misc",
+                                    "name": "AllowDownwardShots",
+                                    "amount": 1,
+                                    "negate": false
                                 }
                             }
                         ]

@@ -39,8 +39,8 @@ class PresetEchoesEnergy(PresetTab[EchoesConfiguration | EchoesOPRConfiguration]
         # Safe Zones
         signal_handling.on_checked(self.safe_zone_logic_heal_check, self._persist_safe_zone_logic_heal)
         self.safe_zone_regen_spin.valueChanged.connect(self._persist_safe_zone_regen)
-        self.varia_suit_spin_box.valueChanged.connect(self._persist_argument("varia_suit_damage"))
-        self.dark_suit_spin_box.valueChanged.connect(self._persist_argument("dark_suit_damage"))
+        self.varia_suit_spin_box.valueChanged.connect(self._persist_float("varia_suit_damage"))
+        self.dark_suit_spin_box.valueChanged.connect(self._persist_float("dark_suit_damage"))
 
     @classmethod
     def tab_title(cls) -> str:

@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.gui.dialog.async_race_leaderboard_dialog import AsyncRaceLeaderboardDialog
+from randovania.gui.dialog.async_race.async_race_leaderboard_dialog import AsyncRaceLeaderboardDialog
 from randovania.network_common.async_race_room import RaceRoomLeaderboard, RaceRoomLeaderboardEntry
 from randovania.network_common.user import RandovaniaUser
 

@@ -8,7 +8,7 @@ _player_re = re.compile(r"[pP]layer (\d+)")
 
 
 class GenerationOrderWidget(QtWidgets.QWidget):
-    def __init__(self, parent: QtWidgets.QWidget | None, description: LayoutDescription, players: list[str]):
+    def __init__(self, parent: QtWidgets.QWidget | None, description: LayoutDescription, players: list[str]) -> None:
         super().__init__(parent)
         self.root_layout = QtWidgets.QVBoxLayout(self)
 
@@ -23,7 +23,7 @@ class GenerationOrderWidget(QtWidgets.QWidget):
         self.list_view = QtWidgets.QListView(self)
         self.root_layout.addWidget(self.list_view)
 
-        def get_name(m: re.Match):
+        def get_name(m: re.Match) -> str:
             return players[int(m.group(1)) - 1]
 
         for item_order in description.item_order:
