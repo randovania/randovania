@@ -141,10 +141,8 @@ async def _compute_one_round(
     try:
         result = await advance_depth(state, logic, lambda s: None, max_attempts=_MAX_RESOLVER_ATTEMPTS)
     except ResolverTimeoutError:
-        logger.warning(
-            "Abandoned-world bot hit the resolver attempt cap (%d); treating world as exhausted for now.",
-            _MAX_RESOLVER_ATTEMPTS,
-        )
+        logger.info("Abandoned world bot paused; will retry when new items arrive.")
+        logger.debug("Resolver attempt cap reached (%d).", _MAX_RESOLVER_ATTEMPTS)
         return set(), state
     if result is None:
         return set(), state  # nothing new reachable
