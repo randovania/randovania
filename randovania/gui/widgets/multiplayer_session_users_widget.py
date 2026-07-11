@@ -528,10 +528,10 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         if world_is_abandoned:
             # An abandoned world is ownerless and driven by a bot; any session member can pick the
-            # bot up where it stopped (e.g. when the abandoning client is gone).
+            # bot up where it stopped (e.g. when whoever was running it has closed Randovania).
             world_menu.addSeparator()
             connect_to(
-                world_menu.addAction("Play abandoned world with this client"),
+                world_menu.addAction("Play abandoned world on this device"),
                 self._register_bot_connector,
                 world_id,
             )

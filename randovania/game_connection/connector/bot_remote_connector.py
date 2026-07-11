@@ -154,7 +154,7 @@ class BotRemoteConnector(RemoteConnector):
     """Plays an abandoned world by resolving it, one paced round at a time. See the module docstring."""
 
     # Pause between rounds while the world keeps yielding locations. Bounds the resolver to one round
-    # per this window, keeping the client responsive even with many bots running.
+    # per this window, keeping the GUI responsive even with many bots running.
     ROUND_DELAY_SECONDS: float = 10.0
 
     remote_pickups: tuple[RemotePickup, ...] = ()
@@ -201,7 +201,7 @@ class BotRemoteConnector(RemoteConnector):
 
     async def set_remote_pickups(self, remote_pickups: tuple[RemotePickup, ...]) -> None:
         # TODO: Lengthy llm summary for discussion if it has to be changed for now:
-        # two bots driving the same world (on different clients) don't fully coordinate.
+        # two bots driving the same world (on different Randovania instances) don't fully coordinate.
         # A world's own collected locations come back here as coop_location entries, so both bots
         # share those and never re-collect them. But a location holding *another* world's item is
         # reported to the server with that other world as the receiver, so collecting it only
