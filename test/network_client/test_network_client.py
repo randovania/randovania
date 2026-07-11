@@ -476,6 +476,33 @@ async def test_create_new_session_bad(client: NetworkClient, mocker: pytest_mock
     assert client._sessions_interested_in == set()
 
 
+async def test_get_abandoned_world_data(client: NetworkClient):
+    world_uid = uuid.UUID("00000000-0000-0000-0000-000000000001")
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 200
+    response.json.return_value = {"order": 2}
+
+    # Run
+    result = await client.get_abandoned_world_data(world_uid)
+
+    # Assert
+    assert result == {"order": 2}
+    client.server_get.assert_called_once_with(f"world/{world_uid}/abandoned-data")
+
+
+async def test_get_abandoned_world_data_error(client: NetworkClient):
+    world_uid = uuid.UUID("00000000-0000-0000-0000-000000000001")
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 403
+    response.json.return_value = {"detail": "Not a member of the session"}
+
+    # Run
+    with pytest.raises(InvalidActionError, match="Not a member of the session"):
+        await client.get_abandoned_world_data(world_uid)
+
+
 async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mock.MockerFixture):
     session = MagicMock()
     mock_session_from = mocker.patch("randovania.network_common.multiplayer_session.MultiplayerSessionEntry.from_json")

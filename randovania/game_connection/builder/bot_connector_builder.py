@@ -12,7 +12,6 @@ from randovania.game_connection.connector_builder_choice import ConnectorBuilder
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_client.network_client import ConnectionState, UnableToConnect
 from randovania.network_common import error
-from randovania.network_common.signals import server_signals
 
 if TYPE_CHECKING:
     from randovania.game_connection.connector.remote_connector import RemoteConnector
@@ -70,9 +69,7 @@ class BotConnectorBuilder(ConnectorBuilder):
             return None
 
         try:
-            data = await server_signals.Multiplayer.AbandonedWorldData.call_server(network_client)(
-                str(self.layout_uuid)
-            )
+            data = await network_client.get_abandoned_world_data(self.layout_uuid)
         except (error.BaseNetworkError, UnableToConnect) as e:
             self.logger.info("Unable to get abandoned world data for %s: %s", self.layout_uuid, e)
             self._status_message = f"Unable to get world data from the server: {e}"

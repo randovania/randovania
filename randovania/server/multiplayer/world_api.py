@@ -4,6 +4,7 @@ import uuid
 import construct
 import peewee
 import sentry_sdk
+from fastapi import APIRouter, HTTPException
 from frozendict import frozendict
 
 from randovania.bitpacking import construct_pack
@@ -29,7 +30,9 @@ from randovania.network_common.world_sync import (
 )
 from randovania.server.database import MultiplayerSession, User, World, WorldAction, WorldUserAssociation
 from randovania.server.multiplayer import session_common
-from randovania.server.server_app import ServerApp
+from randovania.server.server_app import ServerApp, UserDep
+
+router = APIRouter()
 
 
 def _get_world_room(world: World) -> str:
@@ -203,22 +206,23 @@ async def watch_inventory(sa: ServerApp, sid: str, raw_world_uid: str, user_id: 
         await sa.sio.leave_room(sid, room_name)
 
 
-async def get_abandoned_world_data(sa: ServerApp, sid: str, raw_world_uid: str) -> dict:
+@router.get("/world/{world_uuid}/abandoned-data")
+async def get_abandoned_world_data(user: UserDep, world_uuid: str) -> dict:
     """
-    The data a client needs to drive an abandoned world with a bot connector: the world's own game
+    The data the GUI needs to drive an abandoned world with a bot connector: the world's own game
     modifications (stripped of anything about other worlds) and the locations already collected.
     """
-    world = World.get_by_uuid(uuid.UUID(raw_world_uid))
-    user = await sa.get_current_user(sid)
+    world = World.get_by_uuid(uuid.UUID(world_uuid))
     # An abandoned world is ownerless and driven by a bot, so any session member may attach to it.
-    await session_common.get_membership_for(user, world.session, sid)
+    if not world.session.is_user_in_session(user):
+        raise HTTPException(status_code=403, detail="Not a member of the session")
 
     if not world.abandoned:
-        raise error.InvalidActionError("World is not abandoned")
+        raise HTTPException(status_code=409, detail="World is not abandoned")
 
     description = world.session.layout_description
     if description is None or world.order is None:
-        raise error.InvalidActionError("Session has no generated game")
+        raise HTTPException(status_code=409, detail="Session has no generated game")
 
     collected_locations = [
         action.location for action in WorldAction.select(WorldAction.location).where(WorldAction.provider == world)
@@ -488,6 +492,7 @@ async def report_disconnect(sa: ServerApp, session_dict: dict) -> None:
 
 
 def setup_app(sa: ServerApp) -> None:
+    sa.app.include_router(router)
+
     server_signals.Multiplayer.WatchInventory.register(sa, watch_inventory)
     server_signals.Multiplayer.WorldSync.register(sa, world_sync, with_header_check=True)
-    server_signals.Multiplayer.AbandonedWorldData.register(sa, get_abandoned_world_data)

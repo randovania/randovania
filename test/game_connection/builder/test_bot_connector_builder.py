@@ -43,7 +43,7 @@ async def test_build_connector_success(default_preset, mocker):
     builder.network_client.connection_state = ConnectionState.Connected
 
     preset_raw = json.dumps(VersionedPreset.with_preset(default_preset).as_json)
-    builder.network_client.server_call = AsyncMock(
+    builder.network_client.get_abandoned_world_data = AsyncMock(
         return_value={
             "order": 2,
             "preset_raw": preset_raw,
@@ -58,12 +58,7 @@ async def test_build_connector_success(default_preset, mocker):
     result = await builder.build_connector()
 
     assert result is mock_connector.return_value
-    builder.network_client.server_call.assert_awaited_once_with(
-        "multiplayer_abandoned_world_data",
-        str(builder.layout_uuid),
-        namespace=None,
-        handle_invalid_session=True,
-    )
+    builder.network_client.get_abandoned_world_data.assert_awaited_once_with(builder.layout_uuid)
     args = mock_connector.call_args.args
     assert args[0] == builder.layout_uuid
     assert args[1].as_json == VersionedPreset.with_preset(default_preset).as_json
@@ -75,14 +70,14 @@ async def test_build_connector_error_backs_off(mocker):
     builder = make_builder()
     builder.network_client = MagicMock()
     builder.network_client.connection_state = ConnectionState.Connected
-    builder.network_client.server_call = AsyncMock(side_effect=error.NotAuthorizedForActionError())
+    builder.network_client.get_abandoned_world_data = AsyncMock(side_effect=error.NotAuthorizedForActionError())
 
     assert await builder.build_connector() is None
     assert builder.get_status_message() is not None
 
     # The next attempt within the retry interval doesn't contact the server again.
     assert await builder.build_connector() is None
-    builder.network_client.server_call.assert_awaited_once()
+    builder.network_client.get_abandoned_world_data.assert_awaited_once()
 
 
 def test_configuration_params_round_trip():

@@ -461,8 +461,8 @@ async def test_emit_inventory_room(mock_sa, solo_two_world_session):
     )
 
 
-async def test_get_abandoned_world_data(mock_sa, solo_two_world_session, solo_two_world_session_layout):
-    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+async def test_get_abandoned_world_data(test_client, solo_two_world_session, solo_two_world_session_layout):
+    test_client.set_logged_in_user(1234)
 
     world = database.World.get_by_id(1)
     world.abandoned = True
@@ -473,7 +473,9 @@ async def test_get_abandoned_world_data(mock_sa, solo_two_world_session, solo_tw
     )
 
     # Run
-    result = await world_api.get_abandoned_world_data(mock_sa, "TheSid", str(world.uuid))
+    response = test_client.get(f"/world/{world.uuid}/abandoned-data")
+    response.raise_for_status()
+    result = response.json()
 
     # Assert
     assert result["order"] == 0
@@ -492,58 +494,61 @@ async def test_get_abandoned_world_data(mock_sa, solo_two_world_session, solo_tw
     assert result["game_modifications"]["hints"] == {}
 
 
-async def test_get_abandoned_world_data_admin_no_association(mock_sa, solo_two_world_session, mock_audit):
+async def test_get_abandoned_world_data_admin_no_association(test_client, solo_two_world_session, mock_audit):
     # An abandoned world is owned by nobody and driven by a bot: attaching creates no association
     # (and no audit entry). The bot's reports are authorized by session membership at sync time.
     admin_user = database.User.create(id=5555, name="Session Admin")
     database.MultiplayerMembership.create(user=admin_user, session=solo_two_world_session, admin=True)
-    mock_sa.get_current_user.return_value = admin_user
+    test_client.set_logged_in_user(5555)
 
     world = database.World.get_by_id(1)
     world.abandoned = True
     world.save()
 
-    result = await world_api.get_abandoned_world_data(mock_sa, "TheSid", str(world.uuid))
+    response = test_client.get(f"/world/{world.uuid}/abandoned-data")
+    response.raise_for_status()
 
-    assert result["order"] == 0
+    assert response.json()["order"] == 0
     with pytest.raises(peewee.DoesNotExist):
         database.WorldUserAssociation.get_by_instances(world=world, user=5555)
     mock_audit.assert_not_awaited()
 
 
-async def test_get_abandoned_world_data_not_abandoned(mock_sa, solo_two_world_session):
-    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+async def test_get_abandoned_world_data_not_abandoned(test_client, solo_two_world_session):
+    test_client.set_logged_in_user(1234)
     world = database.World.get_by_id(1)
 
-    with pytest.raises(error.InvalidActionError, match="World is not abandoned"):
-        await world_api.get_abandoned_world_data(mock_sa, "TheSid", str(world.uuid))
+    response = test_client.get(f"/world/{world.uuid}/abandoned-data", headers={"Accept": "application/json"})
+    assert response.status_code == 409
+    assert response.json()["detail"] == "World is not abandoned"
 
 
-async def test_get_abandoned_world_data_member_without_association(mock_sa, solo_two_world_session):
+async def test_get_abandoned_world_data_member_without_association(test_client, solo_two_world_session):
     # An abandoned world is ownerless, so any session member may attach the bot even without an
     # association with it.
     member = database.User.create(id=9999, name="Member")
     database.MultiplayerMembership.create(user=member, session=solo_two_world_session, admin=False)
-    mock_sa.get_current_user.return_value = member
+    test_client.set_logged_in_user(9999)
 
     world = database.World.get_by_id(1)
     world.abandoned = True
     world.save()
 
-    result = await world_api.get_abandoned_world_data(mock_sa, "TheSid", str(world.uuid))
+    response = test_client.get(f"/world/{world.uuid}/abandoned-data")
+    response.raise_for_status()
 
-    assert result["order"] == 0
+    assert response.json()["order"] == 0
     with pytest.raises(peewee.DoesNotExist):
         database.WorldUserAssociation.get_by_instances(world=world, user=9999)
 
 
-async def test_get_abandoned_world_data_non_member(mock_sa, solo_two_world_session):
-    intruder = database.User.create(id=9999, name="Intruder")
-    mock_sa.get_current_user.return_value = intruder
+async def test_get_abandoned_world_data_non_member(test_client, solo_two_world_session):
+    database.User.create(id=9999, name="Intruder")
+    test_client.set_logged_in_user(9999)
 
     world = database.World.get_by_id(1)
     world.abandoned = True
     world.save()
 
-    with pytest.raises(error.NotAuthorizedForActionError):
-        await world_api.get_abandoned_world_data(mock_sa, "TheSid", str(world.uuid))
+    response = test_client.get(f"/world/{world.uuid}/abandoned-data", headers={"Accept": "application/json"})
+    assert response.status_code == 403
