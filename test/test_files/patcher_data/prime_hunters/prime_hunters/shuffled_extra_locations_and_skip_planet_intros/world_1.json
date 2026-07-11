@@ -1,8 +1,16 @@
 {
-    "configuration_id": 1837168670,
+    "configuration_id": 298617331,
     "starting_items": {
-        "weapons": "00011101",
-        "missiles": 5,
+        "weapons": {
+            "battlehammer": false,
+            "imperialist": false,
+            "judicator": false,
+            "magmaul": false,
+            "missile_launcher": false,
+            "shock_coil": false,
+            "volt_driver": false
+        },
+        "missiles": 0,
         "ammo": 40,
         "energy": 99,
         "artifacts": {
@@ -15,7 +23,7 @@
             "arcterra_1": "000",
             "arcterra_2": "000"
         },
-        "octoliths": "00000000"
+        "octoliths": "11110000"
     },
     "areas": {
         "Celestial Archives": {
@@ -24,9 +32,23 @@
                     "pickups": [
                         {
                             "entity_id": 8,
-                            "entity_type": 17,
-                            "model_id": 8,
-                            "artifact_id": 7
+                            "entity_type": 4,
+                            "item_type": 4
+                        },
+                        {
+                            "entity_id": 16,
+                            "entity_type": 4,
+                            "item_type": 13
+                        },
+                        {
+                            "entity_id": 14,
+                            "entity_type": 4,
+                            "item_type": 13
+                        },
+                        {
+                            "entity_id": 15,
+                            "entity_type": 4,
+                            "item_type": 18
                         }
                     ],
                     "force_fields": [],
@@ -38,7 +60,23 @@
                             "entity_id": 2,
                             "entity_type": 17,
                             "model_id": 8,
-                            "artifact_id": 6
+                            "artifact_id": 3
+                        },
+                        {
+                            "entity_id": 3,
+                            "entity_type": 4,
+                            "item_type": 14
+                        },
+                        {
+                            "entity_id": 5,
+                            "entity_type": 4,
+                            "item_type": 6
+                        },
+                        {
+                            "entity_id": 15,
+                            "entity_type": 17,
+                            "model_id": 5,
+                            "artifact_id": 2
                         }
                     ],
                     "force_fields": [],
@@ -68,8 +106,14 @@
                     "pickups": [
                         {
                             "entity_id": 3,
+                            "entity_type": 17,
+                            "model_id": 6,
+                            "artifact_id": 2
+                        },
+                        {
+                            "entity_id": 56,
                             "entity_type": 4,
-                            "item_type": 4
+                            "item_type": 15
                         }
                     ],
                     "force_fields": [
@@ -82,17 +126,17 @@
                         {
                             "entity_id": 2,
                             "target_index": 2,
-                            "entity_filename": "Unit2_TP1_Ent"
+                            "entity_file_name": "Unit2_TP1_Ent"
                         },
                         {
                             "entity_id": 7,
                             "target_index": 10,
-                            "entity_filename": "unit2_RM4_Ent"
+                            "entity_file_name": "unit2_RM4_Ent"
                         },
                         {
                             "entity_id": 38,
                             "target_index": 20,
-                            "entity_filename": "unit2_Land_Ent"
+                            "entity_file_name": "unit2_Land_Ent"
                         }
                     ]
                 },
@@ -103,7 +147,7 @@
                         {
                             "entity_id": 1,
                             "target_index": 31,
-                            "entity_filename": "unit2_RM7_Ent"
+                            "entity_file_name": "unit2_RM7_Ent"
                         }
                     ]
                 },
@@ -112,13 +156,18 @@
                         {
                             "entity_id": 19,
                             "entity_type": 4,
-                            "item_type": 6
+                            "item_type": 4
                         },
                         {
                             "entity_id": 21,
-                            "entity_type": 17,
-                            "model_id": 5,
-                            "artifact_id": 1
+                            "entity_type": 4,
+                            "item_type": 15
+                        },
+                        {
+                            "entity_id": 49,
+                            "entity_type": 4,
+                            "item_type": 19,
+                            "state_bit": 43
                         }
                     ],
                     "force_fields": [],
@@ -126,12 +175,12 @@
                         {
                             "entity_id": 24,
                             "target_index": 3,
-                            "entity_filename": "Unit2_TP2_Ent"
+                            "entity_file_name": "Unit2_TP2_Ent"
                         },
                         {
                             "entity_id": 41,
                             "target_index": 21,
-                            "entity_filename": "unit2_Land_Ent"
+                            "entity_file_name": "unit2_Land_Ent"
                         }
                     ]
                 },
@@ -140,7 +189,8 @@
                         {
                             "entity_id": 21,
                             "entity_type": 4,
-                            "item_type": 4
+                            "item_type": 19,
+                            "state_bit": 32
                         }
                     ],
                     "force_fields": [
@@ -153,12 +203,12 @@
                         {
                             "entity_id": 15,
                             "target_index": 20,
-                            "entity_filename": "unit2_C4_Ent"
+                            "entity_file_name": "unit2_C4_Ent"
                         },
                         {
                             "entity_id": 16,
                             "target_index": 21,
-                            "entity_filename": "unit2_C7_Ent"
+                            "entity_file_name": "unit2_C7_Ent"
                         }
                     ]
                 },
@@ -167,13 +217,30 @@
                         {
                             "entity_id": 2,
                             "entity_type": 4,
-                            "item_type": 6
+                            "item_type": 15
                         },
                         {
                             "entity_id": 14,
+                            "entity_type": 4,
+                            "item_type": 19,
+                            "state_bit": 37
+                        },
+                        {
+                            "entity_id": 57,
                             "entity_type": 17,
-                            "model_id": 2,
-                            "artifact_id": 2
+                            "model_id": 0,
+                            "artifact_id": 1
+                        },
+                        {
+                            "entity_id": 55,
+                            "entity_type": 4,
+                            "item_type": 19,
+                            "state_bit": 47
+                        },
+                        {
+                            "entity_id": 46,
+                            "entity_type": 4,
+                            "item_type": 0
                         }
                     ],
                     "force_fields": [],
@@ -184,18 +251,23 @@
                         {
                             "entity_id": 14,
                             "entity_type": 4,
-                            "item_type": 18
+                            "item_type": 19,
+                            "state_bit": 45
                         },
                         {
                             "entity_id": 18,
                             "entity_type": 4,
-                            "item_type": 6
+                            "item_type": 0
                         },
                         {
                             "entity_id": 41,
-                            "entity_type": 17,
-                            "model_id": 5,
-                            "artifact_id": 0
+                            "entity_type": 4,
+                            "item_type": 6
+                        },
+                        {
+                            "entity_id": 15,
+                            "entity_type": 4,
+                            "item_type": 16
                         }
                     ],
                     "force_fields": [],
@@ -205,9 +277,20 @@
                     "pickups": [
                         {
                             "entity_id": 2,
-                            "entity_type": 17,
-                            "model_id": 7,
-                            "artifact_id": 0
+                            "entity_type": 4,
+                            "item_type": 13
+                        },
+                        {
+                            "entity_id": 46,
+                            "entity_type": 4,
+                            "item_type": 19,
+                            "state_bit": 52
+                        },
+                        {
+                            "entity_id": 45,
+                            "entity_type": 4,
+                            "item_type": 19,
+                            "state_bit": 48
                         }
                     ],
                     "force_fields": [],
@@ -218,7 +301,7 @@
                         {
                             "entity_id": 64,
                             "entity_type": 4,
-                            "item_type": 18
+                            "item_type": 6
                         }
                     ],
                     "force_fields": [],
@@ -226,12 +309,12 @@
                         {
                             "entity_id": 3,
                             "target_index": 10,
-                            "entity_filename": "unit2_C4_Ent"
+                            "entity_file_name": "unit2_C4_Ent"
                         },
                         {
                             "entity_id": 15,
                             "target_index": 12,
-                            "entity_filename": "unit2_RM8_Ent"
+                            "entity_file_name": "unit2_RM8_Ent"
                         }
                     ]
                 },
@@ -239,8 +322,15 @@
                     "pickups": [
                         {
                             "entity_id": 10,
+                            "entity_type": 17,
+                            "model_id": 6,
+                            "artifact_id": 1
+                        },
+                        {
+                            "entity_id": 29,
                             "entity_type": 4,
-                            "item_type": 18
+                            "item_type": 19,
+                            "state_bit": 41
                         }
                     ],
                     "force_fields": [
@@ -253,32 +343,32 @@
                         {
                             "entity_id": 2,
                             "target_index": 50,
-                            "entity_filename": "unit2_RM8_Ent"
+                            "entity_file_name": "unit2_RM8_Ent"
                         },
                         {
                             "entity_id": 3,
                             "target_index": 26,
-                            "entity_filename": "unit2_RM6_Ent"
+                            "entity_file_name": "unit2_RM6_Ent"
                         },
                         {
                             "entity_id": 7,
                             "target_index": 19,
-                            "entity_filename": "unit2_RM5_Ent"
+                            "entity_file_name": "unit2_RM5_Ent"
                         },
                         {
                             "entity_id": 9,
                             "target_index": 18,
-                            "entity_filename": "unit2_RM5_Ent"
+                            "entity_file_name": "unit2_RM5_Ent"
                         },
                         {
                             "entity_id": 11,
                             "target_index": 24,
-                            "entity_filename": "unit2_RM6_Ent"
+                            "entity_file_name": "unit2_RM6_Ent"
                         },
                         {
                             "entity_id": 1,
                             "target_index": 13,
-                            "entity_filename": "unit2_RM8_Ent"
+                            "entity_file_name": "unit2_RM8_Ent"
                         }
                     ]
                 },
@@ -286,8 +376,9 @@
                     "pickups": [
                         {
                             "entity_id": 7,
-                            "entity_type": 4,
-                            "item_type": 9
+                            "entity_type": 17,
+                            "model_id": 6,
+                            "artifact_id": 0
                         }
                     ],
                     "force_fields": [
@@ -300,22 +391,22 @@
                         {
                             "entity_id": 1,
                             "target_index": 16,
-                            "entity_filename": "unit2_RM8_Ent"
+                            "entity_file_name": "unit2_RM8_Ent"
                         },
                         {
                             "entity_id": 2,
                             "target_index": 21,
-                            "entity_filename": "unit2_RM5_Ent"
+                            "entity_file_name": "unit2_RM5_Ent"
                         },
                         {
                             "entity_id": 6,
                             "target_index": 30,
-                            "entity_filename": "unit2_RM7_Ent"
+                            "entity_file_name": "unit2_RM7_Ent"
                         },
                         {
                             "entity_id": 8,
                             "target_index": 22,
-                            "entity_filename": "unit2_RM5_Ent"
+                            "entity_file_name": "unit2_RM5_Ent"
                         }
                     ]
                 },
@@ -324,7 +415,8 @@
                         {
                             "entity_id": 10,
                             "entity_type": 4,
-                            "item_type": 6
+                            "item_type": 19,
+                            "state_bit": 35
                         }
                     ],
                     "force_fields": [
@@ -341,22 +433,22 @@
                         {
                             "entity_id": 1,
                             "target_index": 32,
-                            "entity_filename": "unit2_C6_Ent"
+                            "entity_file_name": "unit2_C6_Ent"
                         },
                         {
                             "entity_id": 11,
                             "target_index": 25,
-                            "entity_filename": "unit2_RM6_Ent"
+                            "entity_file_name": "unit2_RM6_Ent"
                         },
                         {
                             "entity_id": 2,
                             "target_index": 50,
-                            "entity_filename": "unit2_RM8_Ent"
+                            "entity_file_name": "unit2_RM8_Ent"
                         },
                         {
                             "entity_id": 12,
                             "target_index": 14,
-                            "entity_filename": "unit2_RM8_Ent"
+                            "entity_file_name": "unit2_RM8_Ent"
                         }
                     ]
                 },
@@ -365,13 +457,18 @@
                         {
                             "entity_id": 1,
                             "entity_type": 4,
-                            "item_type": 6
+                            "item_type": 19,
+                            "state_bit": 46
                         },
                         {
                             "entity_id": 6,
-                            "entity_type": 17,
-                            "model_id": 5,
-                            "artifact_id": 2
+                            "entity_type": 4,
+                            "item_type": 2
+                        },
+                        {
+                            "entity_id": 14,
+                            "entity_type": 4,
+                            "item_type": 18
                         }
                     ],
                     "force_fields": [],
@@ -379,32 +476,32 @@
                         {
                             "entity_id": 5,
                             "target_index": 17,
-                            "entity_filename": "unit2_RM5_Ent"
+                            "entity_file_name": "unit2_RM5_Ent"
                         },
                         {
                             "entity_id": 7,
                             "target_index": 29,
-                            "entity_filename": "unit2_RM7_Ent"
+                            "entity_file_name": "unit2_RM7_Ent"
                         },
                         {
                             "entity_id": 8,
                             "target_index": 23,
-                            "entity_filename": "unit2_RM6_Ent"
+                            "entity_file_name": "unit2_RM6_Ent"
                         },
                         {
                             "entity_id": 3,
                             "target_index": 11,
-                            "entity_filename": "unit2_RM4_Ent"
+                            "entity_file_name": "unit2_RM4_Ent"
                         },
                         {
                             "entity_id": 23,
                             "target_index": 20,
-                            "entity_filename": "unit2_RM5_Ent"
+                            "entity_file_name": "unit2_RM5_Ent"
                         },
                         {
                             "entity_id": 23,
                             "target_index": 27,
-                            "entity_filename": "unit2_RM7_Ent"
+                            "entity_file_name": "unit2_RM7_Ent"
                         }
                     ]
                 },
@@ -415,7 +512,7 @@
                         {
                             "entity_id": 1,
                             "target_index": 2,
-                            "entity_filename": "unit2_C4_Ent"
+                            "entity_file_name": "unit2_C4_Ent"
                         }
                     ]
                 },
@@ -426,7 +523,7 @@
                         {
                             "entity_id": 1,
                             "target_index": 3,
-                            "entity_filename": "unit2_C7_Ent"
+                            "entity_file_name": "unit2_C7_Ent"
                         }
                     ]
                 }
@@ -443,9 +540,25 @@
                     "pickups": [
                         {
                             "entity_id": 8,
+                            "entity_type": 4,
+                            "item_type": 4
+                        },
+                        {
+                            "entity_id": 16,
                             "entity_type": 17,
-                            "model_id": 8,
-                            "artifact_id": 5
+                            "model_id": 7,
+                            "artifact_id": 0
+                        },
+                        {
+                            "entity_id": 14,
+                            "entity_type": 17,
+                            "model_id": 4,
+                            "artifact_id": 1
+                        },
+                        {
+                            "entity_id": 15,
+                            "entity_type": 4,
+                            "item_type": 18
                         }
                     ],
                     "force_fields": [],
@@ -458,6 +571,16 @@
                             "entity_type": 17,
                             "model_id": 8,
                             "artifact_id": 2
+                        },
+                        {
+                            "entity_id": 13,
+                            "entity_type": 4,
+                            "item_type": 0
+                        },
+                        {
+                            "entity_id": 16,
+                            "entity_type": 4,
+                            "item_type": 4
                         }
                     ],
                     "force_fields": [],
@@ -468,13 +591,19 @@
                         {
                             "entity_id": 3,
                             "entity_type": 4,
-                            "item_type": 18
+                            "item_type": 19,
+                            "state_bit": 55
                         },
                         {
                             "entity_id": 15,
                             "entity_type": 17,
-                            "model_id": 4,
+                            "model_id": 2,
                             "artifact_id": 1
+                        },
+                        {
+                            "entity_id": 42,
+                            "entity_type": 4,
+                            "item_type": 2
                         }
                     ],
                     "force_fields": [],
@@ -494,8 +623,14 @@
                     "pickups": [
                         {
                             "entity_id": 4,
+                            "entity_type": 17,
+                            "model_id": 2,
+                            "artifact_id": 0
+                        },
+                        {
+                            "entity_id": 8,
                             "entity_type": 4,
-                            "item_type": 18
+                            "item_type": 14
                         }
                     ],
                     "force_fields": [],
@@ -506,7 +641,7 @@
                         {
                             "entity_id": 14,
                             "entity_type": 4,
-                            "item_type": 10
+                            "item_type": 1
                         }
                     ],
                     "force_fields": [],
@@ -514,12 +649,12 @@
                         {
                             "entity_id": 29,
                             "target_index": 11,
-                            "entity_filename": "unit1_RM1_Ent"
+                            "entity_file_name": "unit1_RM1_Ent"
                         },
                         {
                             "entity_id": 28,
                             "target_index": 11,
-                            "entity_filename": "unit1_RM1_Ent"
+                            "entity_file_name": "unit1_RM1_Ent"
                         }
                     ]
                 },
@@ -528,7 +663,13 @@
                         {
                             "entity_id": 38,
                             "entity_type": 4,
-                            "item_type": 4
+                            "item_type": 6
+                        },
+                        {
+                            "entity_id": 80,
+                            "entity_type": 17,
+                            "model_id": 3,
+                            "artifact_id": 1
                         }
                     ],
                     "force_fields": [],
@@ -538,9 +679,8 @@
                     "pickups": [
                         {
                             "entity_id": 13,
-                            "entity_type": 17,
-                            "model_id": 0,
-                            "artifact_id": 2
+                            "entity_type": 4,
+                            "item_type": 8
                         }
                     ],
                     "force_fields": [],
@@ -548,12 +688,12 @@
                         {
                             "entity_id": 24,
                             "target_index": 21,
-                            "entity_filename": "unit1_RM3_Ent"
+                            "entity_file_name": "unit1_RM3_Ent"
                         },
                         {
                             "entity_id": 25,
                             "target_index": 20,
-                            "entity_filename": "unit1_RM6_Ent"
+                            "entity_file_name": "unit1_RM6_Ent"
                         }
                     ]
                 },
@@ -561,14 +701,23 @@
                     "pickups": [
                         {
                             "entity_id": 24,
-                            "entity_type": 17,
-                            "model_id": 7,
-                            "artifact_id": 1
+                            "entity_type": 4,
+                            "item_type": 21
                         },
                         {
                             "entity_id": 80,
                             "entity_type": 4,
+                            "item_type": 1
+                        },
+                        {
+                            "entity_id": 59,
+                            "entity_type": 4,
                             "item_type": 18
+                        },
+                        {
+                            "entity_id": 81,
+                            "entity_type": 4,
+                            "item_type": 6
                         }
                     ],
                     "force_fields": [
@@ -601,12 +750,12 @@
                         {
                             "entity_id": 57,
                             "target_index": 10,
-                            "entity_filename": "unit1_C4_Ent"
+                            "entity_file_name": "unit1_C4_Ent"
                         },
                         {
                             "entity_id": 58,
                             "target_index": 11,
-                            "entity_filename": "unit1_C4_Ent"
+                            "entity_file_name": "unit1_C4_Ent"
                         }
                     ]
                 },
@@ -614,8 +763,9 @@
                     "pickups": [
                         {
                             "entity_id": 15,
-                            "entity_type": 4,
-                            "item_type": 18
+                            "entity_type": 17,
+                            "model_id": 2,
+                            "artifact_id": 2
                         }
                     ],
                     "force_fields": [
@@ -630,20 +780,26 @@
                     "pickups": [
                         {
                             "entity_id": 5,
-                            "entity_type": 17,
-                            "model_id": 3,
-                            "artifact_id": 2
+                            "entity_type": 4,
+                            "item_type": 13
                         },
                         {
                             "entity_id": 19,
-                            "entity_type": 17,
-                            "model_id": 4,
-                            "artifact_id": 0
+                            "entity_type": 4,
+                            "item_type": 19,
+                            "state_bit": 44
                         },
                         {
                             "entity_id": 21,
                             "entity_type": 4,
-                            "item_type": 18
+                            "item_type": 19,
+                            "state_bit": 49
+                        },
+                        {
+                            "entity_id": 61,
+                            "entity_type": 17,
+                            "model_id": 1,
+                            "artifact_id": 2
                         }
                     ],
                     "force_fields": [
@@ -664,7 +820,7 @@
                         {
                             "entity_id": 52,
                             "target_index": 21,
-                            "entity_filename": "unit1_Land_Ent"
+                            "entity_file_name": "unit1_Land_Ent"
                         }
                     ]
                 },
@@ -677,9 +833,8 @@
                     "pickups": [
                         {
                             "entity_id": 23,
-                            "entity_type": 17,
-                            "model_id": 6,
-                            "artifact_id": 0
+                            "entity_type": 4,
+                            "item_type": 2
                         }
                     ],
                     "force_fields": [],
@@ -687,7 +842,7 @@
                         {
                             "entity_id": 8,
                             "target_index": 1,
-                            "entity_filename": "Unit1_TP2_Ent"
+                            "entity_file_name": "Unit1_TP2_Ent"
                         }
                     ]
                 },
@@ -696,7 +851,13 @@
                         {
                             "entity_id": 4,
                             "entity_type": 4,
-                            "item_type": 5
+                            "item_type": 1
+                        },
+                        {
+                            "entity_id": 29,
+                            "entity_type": 4,
+                            "item_type": 19,
+                            "state_bit": 34
                         }
                     ],
                     "force_fields": [],
@@ -704,12 +865,12 @@
                         {
                             "entity_id": 2,
                             "target_index": 0,
-                            "entity_filename": "Unit1_TP1_Ent"
+                            "entity_file_name": "Unit1_TP1_Ent"
                         },
                         {
                             "entity_id": 19,
                             "target_index": 20,
-                            "entity_filename": "unit1_Land_Ent"
+                            "entity_file_name": "unit1_Land_Ent"
                         }
                     ]
                 },
@@ -720,7 +881,7 @@
                         {
                             "entity_id": 1,
                             "target_index": 0,
-                            "entity_filename": "unit1_RM6_Ent"
+                            "entity_file_name": "unit1_RM6_Ent"
                         }
                     ]
                 },
@@ -731,7 +892,7 @@
                         {
                             "entity_id": 1,
                             "target_index": 1,
-                            "entity_filename": "unit1_RM5_Ent"
+                            "entity_file_name": "unit1_RM5_Ent"
                         }
                     ]
                 }
@@ -743,9 +904,24 @@
                     "pickups": [
                         {
                             "entity_id": 2,
+                            "entity_type": 4,
+                            "item_type": 15
+                        },
+                        {
+                            "entity_id": 15,
+                            "entity_type": 4,
+                            "item_type": 18
+                        },
+                        {
+                            "entity_id": 9,
+                            "entity_type": 4,
+                            "item_type": 6
+                        },
+                        {
+                            "entity_id": 5,
                             "entity_type": 17,
-                            "model_id": 8,
-                            "artifact_id": 3
+                            "model_id": 1,
+                            "artifact_id": 1
                         }
                     ],
                     "force_fields": [],
@@ -755,9 +931,24 @@
                     "pickups": [
                         {
                             "entity_id": 8,
+                            "entity_type": 4,
+                            "item_type": 4
+                        },
+                        {
+                            "entity_id": 14,
+                            "entity_type": 4,
+                            "item_type": 14
+                        },
+                        {
+                            "entity_id": 16,
+                            "entity_type": 4,
+                            "item_type": 18
+                        },
+                        {
+                            "entity_id": 15,
                             "entity_type": 17,
-                            "model_id": 8,
-                            "artifact_id": 0
+                            "model_id": 3,
+                            "artifact_id": 2
                         }
                     ],
                     "force_fields": [],
@@ -767,13 +958,20 @@
                     "pickups": [
                         {
                             "entity_id": 6,
-                            "entity_type": 4,
-                            "item_type": 17
+                            "entity_type": 17,
+                            "model_id": 0,
+                            "artifact_id": 0
                         },
                         {
                             "entity_id": 18,
                             "entity_type": 4,
-                            "item_type": 6
+                            "item_type": 19,
+                            "state_bit": 36
+                        },
+                        {
+                            "entity_id": 31,
+                            "entity_type": 4,
+                            "item_type": 0
                         }
                     ],
                     "force_fields": [],
@@ -783,9 +981,8 @@
                     "pickups": [
                         {
                             "entity_id": 50,
-                            "entity_type": 17,
-                            "model_id": 4,
-                            "artifact_id": 2
+                            "entity_type": 4,
+                            "item_type": 14
                         }
                     ],
                     "force_fields": [],
@@ -798,12 +995,12 @@
                         {
                             "entity_id": 4,
                             "target_index": 60,
-                            "entity_filename": "unit4_RM1_Ent"
+                            "entity_file_name": "unit4_RM1_Ent"
                         },
                         {
                             "entity_id": 38,
                             "target_index": 70,
-                            "entity_filename": "unit4_RM5_Ent"
+                            "entity_file_name": "unit4_RM5_Ent"
                         }
                     ]
                 },
@@ -813,28 +1010,34 @@
                             "entity_id": 26,
                             "entity_type": 17,
                             "model_id": 1,
-                            "artifact_id": 1
+                            "artifact_id": 0
                         },
                         {
                             "entity_id": 7,
-                            "entity_type": 17,
-                            "model_id": 7,
-                            "artifact_id": 2
+                            "entity_type": 4,
+                            "item_type": 19,
+                            "state_bit": 38
                         },
                         {
                             "entity_id": 1,
                             "entity_type": 4,
-                            "item_type": 11
+                            "item_type": 0
                         },
                         {
                             "entity_id": 34,
                             "entity_type": 4,
-                            "item_type": 6
+                            "item_type": 15
                         },
                         {
                             "entity_id": 6,
                             "entity_type": 4,
-                            "item_type": 4
+                            "item_type": 1
+                        },
+                        {
+                            "entity_id": 124,
+                            "entity_type": 4,
+                            "item_type": 19,
+                            "state_bit": 51
                         }
                     ],
                     "force_fields": [
@@ -863,12 +1066,12 @@
                         {
                             "entity_id": 20,
                             "target_index": 6,
-                            "entity_filename": "Unit4_TP1_Ent"
+                            "entity_file_name": "Unit4_TP1_Ent"
                         },
                         {
                             "entity_id": 162,
                             "target_index": 60,
-                            "entity_filename": "unit4_Land_Ent"
+                            "entity_file_name": "unit4_Land_Ent"
                         }
                     ]
                 },
@@ -877,13 +1080,18 @@
                         {
                             "entity_id": 18,
                             "entity_type": 4,
-                            "item_type": 17
+                            "item_type": 19,
+                            "state_bit": 53
                         },
                         {
                             "entity_id": 57,
-                            "entity_type": 17,
-                            "model_id": 0,
-                            "artifact_id": 0
+                            "entity_type": 4,
+                            "item_type": 16
+                        },
+                        {
+                            "entity_id": 3,
+                            "entity_type": 4,
+                            "item_type": 6
                         }
                     ],
                     "force_fields": [],
@@ -894,12 +1102,19 @@
                         {
                             "entity_id": 29,
                             "entity_type": 4,
-                            "item_type": 6
+                            "item_type": 19,
+                            "state_bit": 33
                         },
                         {
                             "entity_id": 35,
                             "entity_type": 4,
-                            "item_type": 4
+                            "item_type": 9
+                        },
+                        {
+                            "entity_id": 42,
+                            "entity_type": 17,
+                            "model_id": 5,
+                            "artifact_id": 1
                         }
                     ],
                     "force_fields": [],
@@ -910,13 +1125,18 @@
                         {
                             "entity_id": 7,
                             "entity_type": 17,
-                            "model_id": 6,
+                            "model_id": 4,
                             "artifact_id": 2
                         },
                         {
                             "entity_id": 43,
+                            "entity_type": 4,
+                            "item_type": 2
+                        },
+                        {
+                            "entity_id": 35,
                             "entity_type": 17,
-                            "model_id": 1,
+                            "model_id": 5,
                             "artifact_id": 0
                         }
                     ],
@@ -927,14 +1147,20 @@
                     "pickups": [
                         {
                             "entity_id": 46,
-                            "entity_type": 17,
-                            "model_id": 2,
-                            "artifact_id": 1
+                            "entity_type": 4,
+                            "item_type": 19,
+                            "state_bit": 39
                         },
                         {
                             "entity_id": 47,
                             "entity_type": 4,
-                            "item_type": 18
+                            "item_type": 19,
+                            "state_bit": 40
+                        },
+                        {
+                            "entity_id": 29,
+                            "entity_type": 4,
+                            "item_type": 16
                         }
                     ],
                     "force_fields": [],
@@ -942,12 +1168,12 @@
                         {
                             "entity_id": 39,
                             "target_index": 3,
-                            "entity_filename": "Unit4_TP2_Ent"
+                            "entity_file_name": "Unit4_TP2_Ent"
                         },
                         {
                             "entity_id": 71,
                             "target_index": 70,
-                            "entity_filename": "unit4_Land_Ent"
+                            "entity_file_name": "unit4_Land_Ent"
                         }
                     ]
                 },
@@ -958,7 +1184,7 @@
                         {
                             "entity_id": 1,
                             "target_index": 6,
-                            "entity_filename": "unit4_RM1_Ent"
+                            "entity_file_name": "unit4_RM1_Ent"
                         }
                     ]
                 },
@@ -969,7 +1195,7 @@
                         {
                             "entity_id": 1,
                             "target_index": 2,
-                            "entity_filename": "unit4_RM5_Ent"
+                            "entity_file_name": "unit4_RM5_Ent"
                         }
                     ]
                 }
@@ -983,7 +1209,23 @@
                             "entity_id": 8,
                             "entity_type": 17,
                             "model_id": 8,
-                            "artifact_id": 4
+                            "artifact_id": 1
+                        },
+                        {
+                            "entity_id": 14,
+                            "entity_type": 4,
+                            "item_type": 4
+                        },
+                        {
+                            "entity_id": 15,
+                            "entity_type": 17,
+                            "model_id": 3,
+                            "artifact_id": 0
+                        },
+                        {
+                            "entity_id": 16,
+                            "entity_type": 4,
+                            "item_type": 18
                         }
                     ],
                     "force_fields": [],
@@ -995,7 +1237,17 @@
                             "entity_id": 2,
                             "entity_type": 17,
                             "model_id": 8,
-                            "artifact_id": 1
+                            "artifact_id": 0
+                        },
+                        {
+                            "entity_id": 3,
+                            "entity_type": 4,
+                            "item_type": 2
+                        },
+                        {
+                            "entity_id": 12,
+                            "entity_type": 4,
+                            "item_type": 16
                         }
                     ],
                     "force_fields": [],
@@ -1013,7 +1265,7 @@
                         {
                             "entity_id": 35,
                             "target_index": 15,
-                            "entity_filename": "unit3_Land_Ent"
+                            "entity_file_name": "unit3_Land_Ent"
                         }
                     ]
                 },
@@ -1022,13 +1274,12 @@
                         {
                             "entity_id": 9,
                             "entity_type": 4,
-                            "item_type": 4
+                            "item_type": 18
                         },
                         {
                             "entity_id": 18,
-                            "entity_type": 17,
-                            "model_id": 3,
-                            "artifact_id": 1
+                            "entity_type": 4,
+                            "item_type": 7
                         }
                     ],
                     "force_fields": [
@@ -1046,12 +1297,12 @@
                         {
                             "entity_id": 5,
                             "target_index": 15,
-                            "entity_filename": "unit3_C1_Ent"
+                            "entity_file_name": "unit3_C1_Ent"
                         },
                         {
                             "entity_id": 8,
                             "target_index": 40,
-                            "entity_filename": "unit3_RM1_Ent"
+                            "entity_file_name": "unit3_RM1_Ent"
                         }
                     ]
                 },
@@ -1059,14 +1310,26 @@
                     "pickups": [
                         {
                             "entity_id": 23,
-                            "entity_type": 4,
-                            "item_type": 18
+                            "entity_type": 17,
+                            "model_id": 7,
+                            "artifact_id": 1
                         },
                         {
                             "entity_id": 61,
+                            "entity_type": 4,
+                            "item_type": 6
+                        },
+                        {
+                            "entity_id": 60,
+                            "entity_type": 4,
+                            "item_type": 19,
+                            "state_bit": 42
+                        },
+                        {
+                            "entity_id": 38,
                             "entity_type": 17,
-                            "model_id": 6,
-                            "artifact_id": 1
+                            "model_id": 4,
+                            "artifact_id": 0
                         }
                     ],
                     "force_fields": [
@@ -1079,7 +1342,7 @@
                         {
                             "entity_id": 47,
                             "target_index": 40,
-                            "entity_filename": "unit3_Land_Ent"
+                            "entity_file_name": "unit3_Land_Ent"
                         }
                     ]
                 },
@@ -1087,14 +1350,19 @@
                     "pickups": [
                         {
                             "entity_id": 12,
-                            "entity_type": 17,
-                            "model_id": 2,
-                            "artifact_id": 0
+                            "entity_type": 4,
+                            "item_type": 10
                         },
                         {
                             "entity_id": 72,
+                            "entity_type": 17,
+                            "model_id": 0,
+                            "artifact_id": 2
+                        },
+                        {
+                            "entity_id": 57,
                             "entity_type": 4,
-                            "item_type": 17
+                            "item_type": 18
                         }
                     ],
                     "force_fields": [],
@@ -1105,16 +1373,27 @@
                         {
                             "entity_id": 5,
                             "entity_type": 4,
-                            "item_type": 18
+                            "item_type": 19,
+                            "state_bit": 50
                         },
                         {
                             "entity_id": 4,
                             "entity_type": 17,
-                            "model_id": 1,
+                            "model_id": 7,
                             "artifact_id": 2
                         },
                         {
                             "entity_id": 90,
+                            "entity_type": 4,
+                            "item_type": 5
+                        },
+                        {
+                            "entity_id": 21,
+                            "entity_type": 4,
+                            "item_type": 11
+                        },
+                        {
+                            "entity_id": 79,
                             "entity_type": 4,
                             "item_type": 18
                         }
@@ -1124,7 +1403,7 @@
                         {
                             "entity_id": 3,
                             "target_index": 5,
-                            "entity_filename": "Unit3_TP2_Ent"
+                            "entity_file_name": "Unit3_TP2_Ent"
                         }
                     ]
                 },
@@ -1132,15 +1411,19 @@
                     "pickups": [
                         {
                             "entity_id": 17,
-                            "entity_type": 17,
-                            "model_id": 3,
-                            "artifact_id": 0
+                            "entity_type": 4,
+                            "item_type": 18
                         },
                         {
                             "entity_id": 9,
-                            "entity_type": 17,
-                            "model_id": 0,
-                            "artifact_id": 1
+                            "entity_type": 4,
+                            "item_type": 4
+                        },
+                        {
+                            "entity_id": 35,
+                            "entity_type": 4,
+                            "item_type": 19,
+                            "state_bit": 54
                         }
                     ],
                     "force_fields": [
@@ -1157,7 +1440,7 @@
                         {
                             "entity_id": 36,
                             "target_index": 4,
-                            "entity_filename": "Unit3_TP1_Ent"
+                            "entity_file_name": "Unit3_TP1_Ent"
                         }
                     ]
                 },
@@ -1168,7 +1451,7 @@
                         {
                             "entity_id": 1,
                             "target_index": 4,
-                            "entity_filename": "unit3_RM4_Ent"
+                            "entity_file_name": "unit3_RM4_Ent"
                         }
                     ]
                 },
@@ -1179,7 +1462,7 @@
                         {
                             "entity_id": 1,
                             "target_index": 5,
-                            "entity_filename": "unit3_RM3_Ent"
+                            "entity_file_name": "unit3_RM3_Ent"
                         }
                     ]
                 }
@@ -1193,7 +1476,18 @@
                     "portals": []
                 },
                 "Gorea 2 Arena": {
-                    "pickups": [],
+                    "pickups": [
+                        {
+                            "entity_id": 49,
+                            "entity_type": 4,
+                            "item_type": 18
+                        },
+                        {
+                            "entity_id": 49,
+                            "entity_type": 4,
+                            "item_type": 1
+                        }
+                    ],
                     "force_fields": [],
                     "portals": []
                 },
@@ -1204,17 +1498,17 @@
                         {
                             "entity_id": 3,
                             "target_index": 11,
-                            "entity_filename": "Gorea_Peek_Ent"
+                            "entity_file_name": "Gorea_Peek_Ent"
                         },
                         {
                             "entity_id": 6,
                             "target_index": 13,
-                            "entity_filename": "Gorea_Land_Ent"
+                            "entity_file_name": "Gorea_Land_Ent"
                         },
                         {
                             "entity_id": 7,
                             "target_index": 12,
-                            "entity_filename": "Gorea_Land_Ent"
+                            "entity_file_name": "Gorea_Land_Ent"
                         }
                     ]
                 },
@@ -1223,7 +1517,7 @@
                         {
                             "entity_id": 1,
                             "entity_type": 4,
-                            "item_type": 4
+                            "item_type": 13
                         }
                     ],
                     "force_fields": [],
@@ -1231,7 +1525,7 @@
                         {
                             "entity_id": 12,
                             "target_index": 11,
-                            "entity_filename": "Gorea_Land_Ent"
+                            "entity_file_name": "Gorea_Land_Ent"
                         }
                     ]
                 }
@@ -1243,19 +1537,39 @@
         "missile_expansion": 10,
         "ua_expansion": 30
     },
-    "game_patches": {
-        "shuffle_hunter_colors": false
+    "cosmetic_patches": {
+        "shuffle_hunter_colors": true,
+        "suit_color": "varia"
     },
-    "string_tables": {
-        "scan_log": {
-            "904L": "OCTOLITH HINTS 01\\OCTOLITH 1 is located in ARCTERRA. OCTOLITH 2 is located in VESPER DEFENSE OUTPOST.",
-            "014L": "OCTOLITH HINTS 02\\OCTOLITH 3 is located in ALINOS. OCTOLITH 4 is located in ARCTERRA.",
-            "114L": "OCTOLITH HINTS 03\\OCTOLITH 5 is located in VESPER DEFENSE OUTPOST. OCTOLITH 6 is located in ALINOS.",
-            "214L": "OCTOLITH HINTS 04\\OCTOLITH 7 is located in CELESTIAL ARCHIVES. OCTOLITH 8 is located in CELESTIAL ARCHIVES."
-        }
+    "game_patches": {
+        "skip_planet_intros": true
     },
     "text_patches": {
-        "patcher_version": "Some Words (XXXXXXXX)"
+        "frontend": {
+            "patcher_version": "Some Words (XXXXXXXX)"
+        },
+        "string_tables": {
+            "scan_log": {
+                "904L": "OCTOLITH HINTS 01\\OCTOLITH 1 is located in VESPER DEFENSE OUTPOST. OCTOLITH 2 is located in VESPER DEFENSE OUTPOST.",
+                "014L": "OCTOLITH HINTS 02\\OCTOLITH 3 is located in ALINOS. OCTOLITH 4 is located in CELESTIAL ARCHIVES.",
+                "114L": "OCTOLITH HINTS 03\\Don't forget that you can always get help if you are struggling.",
+                "214L": "OCTOLITH HINTS 04\\Want a hint? Just go where the items are."
+            },
+            "ship_in_space": {
+                "100S": "---STARTING ITEMS---",
+                "200S": "OCTOLITH 5\nOCTOLITH 6\nOCTOLITH 7\nOCTOLITH 8\n",
+                "300S": "---GOAL---",
+                "400S": "collect 4 OCTOLITHS and defeat GOREA in OUBLIETTE.",
+                "500S": "---PRESET SETTINGS---",
+                "600S": "FORCE FIELD weaknesses are UNCHANGED.",
+                "700S": "PORTAL destinations are UNCHANGED.",
+                "800S": "SHIELD KEYS and ITEM REFILLS are SHUFFLED.",
+                "900S": "---MORE INFO---",
+                "010S": "for more information, visit randovania.org.",
+                "110S": "join the discord server if you have any questions.",
+                "210S": "good luck and have fun!"
+            }
+        }
     },
     "_randovania_meta": {
         "layout_was_user_modified": true,
