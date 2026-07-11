@@ -295,22 +295,20 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     @asyncSlot()
     async def _world_abandon(self, world_uid: uuid.UUID, owner: int) -> None:
-        # TODO: Fix button style
         box = QtWidgets.QMessageBox(
             QtWidgets.QMessageBox.Icon.Warning,
             "Abandon world?",
-            f"Are you sure you want to abandon world '{self._session.get_world(world_uid).name}'?\n\n"
-            "This is irreversible. An abandoned world is played by a bot: it collects every location that is "
-            "in logic for it over time, and keeps doing so as it receives more items. The bot runs in a "
-            "Randovania that stays open and connected to the server.\n\n"
-            "You can start the bot here right now, or only abandon the world - for example because you are "
-            "about to shut this computer down. The world's players or a session admin can start the bot "
-            "later, from the world's menu.",
+            f"Abandon world '{self._session.get_world(world_uid).name}'?\n\n"
+            "This is irreversible. The world is then played by a bot that collects its in-logic locations "
+            "over time, running in a Randovania instance that stays open and connected.\n\n"
+            "Start the bot here now, or abandon only and let a player or admin start it later.",
             QtWidgets.QMessageBox.StandardButton.Cancel,
             self,
         )
-        play_here_button = box.addButton("Abandon and play it here", QtWidgets.QMessageBox.ButtonRole.YesRole)
-        abandon_only_button = box.addButton("Abandon only", QtWidgets.QMessageBox.ButtonRole.YesRole)
+        play_here_button = box.addButton("Abandon and play it here", QtWidgets.QMessageBox.ButtonRole.AcceptRole)
+        abandon_only_button = box.addButton("Abandon only", QtWidgets.QMessageBox.ButtonRole.DestructiveRole)
+        # style the custom buttons the same as the standard ones.
+        box.setStyleSheet("QMessageBox QPushButton { min-width: 72px; padding: 4px 16px; }")
         box.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Cancel)
         common_qt_lib.set_default_window_icon(box)
 
