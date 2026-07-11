@@ -10,7 +10,7 @@ import randovania
 
 class ConnectorBuilderChoice(Enum):
     AM2R = "am2r"
-    BOT = "bot"
+    ABANDONED = "abandoned"
     CS = "cave-story"
     DEBUG = "debug"
     DOLPHIN = "dolphin"
@@ -47,7 +47,7 @@ class ConnectorBuilderChoice(Enum):
 
 _pretty_backend_name = {
     ConnectorBuilderChoice.AM2R: "AM2R",
-    ConnectorBuilderChoice.BOT: "Abandoned World Bot",
+    ConnectorBuilderChoice.ABANDONED: "Abandoned World Bot",
     ConnectorBuilderChoice.CS: "Cave Story",
     ConnectorBuilderChoice.DEBUG: "Debug",
     ConnectorBuilderChoice.DOLPHIN: "Dolphin",

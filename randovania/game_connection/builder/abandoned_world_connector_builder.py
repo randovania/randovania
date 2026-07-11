@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-from randovania.game_connection.connector.bot_remote_connector import BotRemoteConnector
+from randovania.game_connection.connector.abandoned_world_remote_connector import AbandonedWorldRemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_client.network_client import ConnectionState, UnableToConnect
@@ -20,13 +20,13 @@ if TYPE_CHECKING:
 _RETRY_INTERVAL_SECONDS = 30.0
 
 
-class BotConnectorBuilder(ConnectorBuilder):
+class AbandonedWorldConnectorBuilder(ConnectorBuilder):
     """
-    Builds a `BotRemoteConnector` for an abandoned world, by downloading the data the bot needs
+    Builds an `AbandonedWorldRemoteConnector` for an abandoned world, by downloading the data the connector needs
     (the world's own game modifications and its collected locations) from the server.
 
     Requires the network client to be connected and the logged user to be a member of the world's
-    session (an abandoned world is ownerless, so any member may drive its bot); until then,
+    session (an abandoned world is ownerless, so any member may drive this connector); until then,
     `build_connector` keeps returning None and is retried like any other connector builder.
     """
 
@@ -42,7 +42,7 @@ class BotConnectorBuilder(ConnectorBuilder):
         self._next_attempt = 0.0
 
     @classmethod
-    def create(cls, game: RandovaniaGame, layout_uuid: uuid.UUID) -> BotConnectorBuilder:
+    def create(cls, game: RandovaniaGame, layout_uuid: uuid.UUID) -> AbandonedWorldConnectorBuilder:
         return cls(game.value, str(layout_uuid))
 
     @property
@@ -51,7 +51,7 @@ class BotConnectorBuilder(ConnectorBuilder):
 
     @property
     def connector_builder_choice(self) -> ConnectorBuilderChoice:
-        return ConnectorBuilderChoice.BOT
+        return ConnectorBuilderChoice.ABANDONED
 
     def configuration_params(self) -> dict:
         return {
@@ -77,7 +77,7 @@ class BotConnectorBuilder(ConnectorBuilder):
             return None
 
         self._status_message = None
-        return BotRemoteConnector(
+        return AbandonedWorldRemoteConnector(
             self.layout_uuid,
             VersionedPreset.from_str(data["preset_raw"]),
             data["order"],

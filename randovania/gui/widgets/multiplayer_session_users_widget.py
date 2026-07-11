@@ -13,7 +13,7 @@ from PySide6.QtCore import Qt, Signal
 from qasync import asyncSlot
 
 from randovania import monitoring
-from randovania.game_connection.builder.bot_connector_builder import BotConnectorBuilder
+from randovania.game_connection.builder.abandoned_world_connector_builder import AbandonedWorldConnectorBuilder
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.gui import game_specific_gui
@@ -321,7 +321,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         await self._session_api.abandon_world(world_uid, owner)
         if clicked is play_here_button:
-            self._register_bot_connector(world_uid)
+            self._register_abandoned_world_connector(world_uid)
 
     @asyncSlot()
     async def _preset_view_summary(self, world_uid: uuid.UUID) -> None:
@@ -416,15 +416,15 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             )
         )
 
-    def _register_bot_connector(self, world_uid: uuid.UUID) -> None:
+    def _register_abandoned_world_connector(self, world_uid: uuid.UUID) -> None:
         """Adds the connection builder that plays the given abandoned world, if not already present."""
         game_connection = common_qt_lib.get_game_connection()
         for builder in game_connection.connection_builders:
-            if isinstance(builder, BotConnectorBuilder) and builder.layout_uuid == world_uid:
+            if isinstance(builder, AbandonedWorldConnectorBuilder) and builder.layout_uuid == world_uid:
                 return
 
         game_connection.add_connection_builder(
-            BotConnectorBuilder.create(
+            AbandonedWorldConnectorBuilder.create(
                 self._get_preset(world_uid).game,
                 world_uid,
             )
@@ -527,12 +527,13 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 create_unclaim_entry(text)
 
         if world_is_abandoned:
-            # An abandoned world is ownerless and driven by a bot; any session member can pick the
-            # bot up where it stopped (e.g. when whoever was running it has closed Randovania).
+            # An abandoned world is ownerless and driven by an abandoned world connector
+            # any session member can pick the world up where it stopped
+            # (e.g. when whoever was running the abandoned world connector has closed Randovania).
             world_menu.addSeparator()
             connect_to(
                 world_menu.addAction("Play abandoned world on this device"),
-                self._register_bot_connector,
+                self._register_abandoned_world_connector,
                 world_id,
             )
 

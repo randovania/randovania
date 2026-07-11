@@ -53,9 +53,7 @@ _MAX_RESOLVER_ATTEMPTS = 500_000
 logger = logging.getLogger(__name__)
 
 
-def bot_setup_for_world(
-    configuration: BaseConfiguration, game_modifications: dict, order: int
-) -> tuple[WorldGraph, State]:
+def setup_for_world(configuration: BaseConfiguration, game_modifications: dict, order: int) -> tuple[WorldGraph, State]:
     """
     Builds the world graph and starting state for one world (same as ``resolver.setup_resolver``)
     from the data served by the server for an abandoned world.
@@ -78,7 +76,7 @@ def bot_setup_for_world(
     return graph, starting_state
 
 
-class _BotWorldLogic(Logic):
+class _AbandonedWorldLogic(Logic):
     """
     Logic whose victory condition is "collect any location not already in ``collected``".
 
@@ -133,7 +131,7 @@ async def _compute_one_round(
     Returns the newly-collected pickup indices (empty if nothing more is reachable) and the state the
     resolver ended in, for inventory reporting.
     """
-    logic = _BotWorldLogic(graph, configuration, collected)
+    logic = _AbandonedWorldLogic(graph, configuration, collected)
     state = _fresh_state(graph, starting_state, collected, received_pickups)
     if logic.victory_condition(state).num_alternatives() == 0:
         return set(), state  # every location collected; an empty OR would force a pointless full sweep
@@ -141,7 +139,7 @@ async def _compute_one_round(
     try:
         result = await advance_depth(state, logic, lambda s: None, max_attempts=_MAX_RESOLVER_ATTEMPTS)
     except ResolverTimeoutError:
-        logger.info("Abandoned world bot paused; will retry when new items arrive.")
+        logger.info("Abandoned world connector paused; will retry when new items arrive.")
         logger.debug("Resolver attempt cap reached (%d).", _MAX_RESOLVER_ATTEMPTS)
         return set(), state
     if result is None:
@@ -150,11 +148,11 @@ async def _compute_one_round(
     return {pickup_index.index for pickup_index in result.collected_pickup_indices(graph)} - collected, result
 
 
-class BotRemoteConnector(RemoteConnector):
+class AbandonedWorldRemoteConnector(RemoteConnector):
     """Plays an abandoned world by resolving it, one paced round at a time. See the module docstring."""
 
     # Pause between rounds while the world keeps yielding locations. Bounds the resolver to one round
-    # per this window, keeping the GUI responsive even with many bots running.
+    # per this window, keeping the GUI responsive even with many abandoned world remote connector running.
     ROUND_DELAY_SECONDS: float = 10.0
 
     remote_pickups: tuple[RemotePickup, ...] = ()
@@ -196,20 +194,20 @@ class BotRemoteConnector(RemoteConnector):
 
     @property
     def collected_locations(self) -> frozenset[int]:
-        """All locations this bot knows to be collected."""
+        """All locations this connector knows to be collected."""
         return frozenset(self._collected)
 
     async def set_remote_pickups(self, remote_pickups: tuple[RemotePickup, ...]) -> None:
         # TODO: Lengthy llm summary for discussion if it has to be changed for now:
-        # two bots driving the same world (on different Randovania instances) don't fully coordinate.
-        # A world's own collected locations come back here as coop_location entries, so both bots
-        # share those and never re-collect them. But a location holding *another* world's item is
-        # reported to the server with that other world as the receiver, so collecting it only
-        # refreshes the receiver's pickups -- never this world's. This bot is therefore never told
-        # the sibling bot already took such a location: it stays out of `_collected`, remains a valid
-        # victory target, and gets collected again. That redundant collection is harmless because the
-        # server de-duplicates it (WorldAction has a (provider, location) unique key, so the second
-        # report is dropped and the item isn't granted twice), but the two bots still do wasted work.
+        # two connectors driving the same world (on different Randovania instances) don't fully
+        # coordinate. A world's own collected locations come back here as coop_location entries, so both
+        # connectors share those and never re-collect them. But a location holding *another* world's item
+        # is reported to the server with that other world as the receiver, so collecting it only
+        # refreshes the receiver's pickups -- never this world's. This connector is therefore never told
+        # the sibling connector already took such a location: it stays out of `_collected`, remains a
+        # valid victory target, and gets collected again. That redundant collection is harmless because
+        # the server de-duplicates it (WorldAction has a (provider, location) unique key, so the second
+        # report is dropped and the item isn't granted twice), but the two connectors still do wasted work.
         self.remote_pickups = remote_pickups
 
         received = []
@@ -238,7 +236,7 @@ class BotRemoteConnector(RemoteConnector):
 
     def _ensure_setup(self) -> tuple[WorldGraph, State]:
         if self._graph is None or self._starting_state is None:
-            self._graph, self._starting_state = bot_setup_for_world(
+            self._graph, self._starting_state = setup_for_world(
                 self._preset.get_preset().configuration, self._game_modifications, self._order
             )
         return self._graph, self._starting_state
@@ -269,7 +267,7 @@ class BotRemoteConnector(RemoteConnector):
                 elapsed = time.perf_counter() - start
                 if elapsed > 1.0:
                     logger.info(
-                        "Bot round for world %s took %.2fs, collected %d locations",
+                        "Round for world %s took %.2fs, collected %d locations",
                         self._layout_uuid,
                         elapsed,
                         len(new_indices),
@@ -295,7 +293,7 @@ class BotRemoteConnector(RemoteConnector):
         except asyncio.CancelledError:
             raise
         except Exception:
-            logger.exception("Abandoned-world bot for %s failed; disconnecting it.", self._layout_uuid)
+            logger.exception("Abandoned world connector for %s failed; disconnecting it.", self._layout_uuid)
             self._finished = True
 
     def _emit_inventory(self, state: State | None) -> None:

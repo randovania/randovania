@@ -495,8 +495,8 @@ async def test_get_abandoned_world_data(test_client, solo_two_world_session, sol
 
 
 async def test_get_abandoned_world_data_admin_no_association(test_client, solo_two_world_session, mock_audit):
-    # An abandoned world is owned by nobody and driven by a bot: attaching creates no association
-    # (and no audit entry). The bot's reports are authorized by session membership at sync time.
+    # An abandoned world is owned by nobody: attaching creates no association
+    # (and no audit entry). The abandoned world's reports are authorized by session membership at sync time.
     admin_user = database.User.create(id=5555, name="Session Admin")
     database.MultiplayerMembership.create(user=admin_user, session=solo_two_world_session, admin=True)
     test_client.set_logged_in_user(5555)
@@ -524,7 +524,7 @@ async def test_get_abandoned_world_data_not_abandoned(test_client, solo_two_worl
 
 
 async def test_get_abandoned_world_data_member_without_association(test_client, solo_two_world_session):
-    # An abandoned world is ownerless, so any session member may attach the bot even without an
+    # An abandoned world is ownerless, so any session member may attach the abandoned world connector even without an
     # association with it.
     member = database.User.create(id=9999, name="Member")
     database.MultiplayerMembership.create(user=member, session=solo_two_world_session, admin=False)

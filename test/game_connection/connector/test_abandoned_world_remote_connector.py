@@ -8,8 +8,11 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_connection.connector import bot_remote_connector
-from randovania.game_connection.connector.bot_remote_connector import BotRemoteConnector, bot_setup_for_world
+from randovania.game_connection.connector import abandoned_world_remote_connector
+from randovania.game_connection.connector.abandoned_world_remote_connector import (
+    AbandonedWorldRemoteConnector,
+    setup_for_world,
+)
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout import game_patches_serializer
@@ -31,9 +34,9 @@ def giant_multi_layout(test_files_dir) -> LayoutDescription:
     )
 
 
-def make_connector(description: LayoutDescription, order: int) -> BotRemoteConnector:
+def make_connector(description: LayoutDescription, order: int) -> AbandonedWorldRemoteConnector:
     """A connector built from the same data the server serves for an abandoned world."""
-    return BotRemoteConnector(
+    return AbandonedWorldRemoteConnector(
         uuid.uuid4(),
         VersionedPreset.with_preset(description.get_preset(order)),
         order,
@@ -49,7 +52,7 @@ def _collect_emissions_into(emitted: list[PickupIndex]):
     return lambda index: emitted.append(index)  # noqa: PLW0108
 
 
-def is_idle(connector: BotRemoteConnector) -> bool:
+def is_idle(connector: AbandonedWorldRemoteConnector) -> bool:
     """
     The loop is parked waiting for items: nothing found by the last round and no inbound item since.
 
@@ -75,12 +78,12 @@ def inert_loop(mocker):
     async def no_loop(self) -> None:
         pass
 
-    mocker.patch.object(BotRemoteConnector, "_resolve_loop", no_loop)
+    mocker.patch.object(AbandonedWorldRemoteConnector, "_resolve_loop", no_loop)
 
 
 @pytest.fixture
 def instant_rounds(mocker):
-    mocker.patch.object(BotRemoteConnector, "ROUND_DELAY_SECONDS", 0)
+    mocker.patch.object(AbandonedWorldRemoteConnector, "ROUND_DELAY_SECONDS", 0)
 
 
 @pytest.fixture
@@ -88,7 +91,7 @@ def tracked_rounds(mocker):
     """Wraps the real `_resolve_one_round` to count rounds in flight, so tests running the real
     resolver can tell a parked loop apart from one still computing a round."""
     active = [0]
-    original = BotRemoteConnector._resolve_one_round
+    original = AbandonedWorldRemoteConnector._resolve_one_round
 
     async def tracked(self):
         active[0] += 1
@@ -97,7 +100,7 @@ def tracked_rounds(mocker):
         finally:
             active[0] -= 1
 
-    mocker.patch.object(BotRemoteConnector, "_resolve_one_round", tracked)
+    mocker.patch.object(AbandonedWorldRemoteConnector, "_resolve_one_round", tracked)
 
     def none_active() -> bool:
         return active[0] == 0
@@ -105,9 +108,9 @@ def tracked_rounds(mocker):
     return none_active
 
 
-def fake_connector() -> BotRemoteConnector:
+def fake_connector() -> AbandonedWorldRemoteConnector:
     """A connector with placeholder world data, for tests that fake the resolution rounds."""
-    return BotRemoteConnector(uuid.uuid4(), MagicMock(), 0, {}, [])
+    return AbandonedWorldRemoteConnector(uuid.uuid4(), MagicMock(), 0, {}, [])
 
 
 async def test_loop_resolves_goes_idle_and_wakes_on_items(mocker, instant_rounds):
@@ -121,7 +124,7 @@ async def test_loop_resolves_goes_idle_and_wakes_on_items(mocker, instant_rounds
         calls.append(1)
         return result
 
-    mocker.patch.object(BotRemoteConnector, "_resolve_one_round", fake_round)
+    mocker.patch.object(AbandonedWorldRemoteConnector, "_resolve_one_round", fake_round)
 
     connector = fake_connector()
     emitted: list[PickupIndex] = []
@@ -154,7 +157,7 @@ async def test_loop_never_resolvable_stays_idle(mocker, instant_rounds):
         calls.append(1)
         return set(), None
 
-    mocker.patch.object(BotRemoteConnector, "_resolve_one_round", fake_round)
+    mocker.patch.object(AbandonedWorldRemoteConnector, "_resolve_one_round", fake_round)
 
     connector = fake_connector()
     emitted: list[PickupIndex] = []
@@ -199,7 +202,7 @@ async def test_setup_grants_only_self_pickups(multi_layout):
     modifications = game_patches_serializer.serialize_single_world_only(
         order, len(description.all_patches), description.all_patches[order]
     )
-    graph, _ = bot_setup_for_world(description.get_preset(order).configuration, modifications, order)
+    graph, _ = setup_for_world(description.get_preset(order).configuration, modifications, order)
 
     full_assignment = description.all_patches[order].pickup_assignment
     checked_self = 0
@@ -224,7 +227,7 @@ async def test_resolve_loop_real_world(multi_layout, instant_rounds, tracked_rou
     try:
         await wait_until(lambda: is_idle(connector) and tracked_rounds())
         first_pass = set(connector.collected_locations)
-        assert first_pass, "the bot should collect the locations in logic from a fresh start"
+        assert first_pass, "the abandoned world should collect the locations in logic from a fresh start"
         assert {index.index for index in emitted} == first_pass
 
         assert connector._graph is not None
@@ -288,7 +291,7 @@ async def test_dread_abandoned_in_giant_multi_is_monotonic(giant_multi_layout):
         dread_order, len(description.all_patches), description.all_patches[dread_order]
     )
     # One setup shared across all rounds, exactly like a connector reuses its own graph.
-    graph, starting_state = bot_setup_for_world(configuration, modifications, dread_order)
+    graph, starting_state = setup_for_world(configuration, modifications, dread_order)
 
     # The pickups other worlds hold for Dread, in a deterministic order.
     held_for_dread = sorted(
@@ -309,7 +312,7 @@ async def test_dread_abandoned_in_giant_multi_is_monotonic(giant_multi_layout):
         while True:
             start = time.perf_counter()
             with debug.with_level(debug.LogLevel.SILENT):
-                new_pickup, _ = await bot_remote_connector._compute_one_round(
+                new_pickup, _ = await abandoned_world_remote_connector._compute_one_round(
                     graph, starting_state, configuration, set(self_collected), received
                 )
             elapsed = time.perf_counter() - start

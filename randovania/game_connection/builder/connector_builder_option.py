@@ -4,8 +4,8 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game_connection.builder.abandoned_world_connector_builder import AbandonedWorldConnectorBuilder
 from randovania.game_connection.builder.am2r_connector_builder import AM2RConnectorBuilder
-from randovania.game_connection.builder.bot_connector_builder import BotConnectorBuilder
 from randovania.game_connection.builder.cs_connector_builder import CSConnectorBuilder
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 
 _CHOICE_TO_BUILDER = {
-    ConnectorBuilderChoice.BOT: BotConnectorBuilder,
+    ConnectorBuilderChoice.ABANDONED: AbandonedWorldConnectorBuilder,
     ConnectorBuilderChoice.DEBUG: DebugConnectorBuilder,
     ConnectorBuilderChoice.DOLPHIN: DolphinConnectorBuilder,
     ConnectorBuilderChoice.NINTENDONT: NintendontConnectorBuilder,

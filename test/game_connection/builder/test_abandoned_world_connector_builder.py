@@ -5,15 +5,15 @@ import uuid
 from unittest.mock import AsyncMock, MagicMock
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_connection.builder.bot_connector_builder import BotConnectorBuilder
+from randovania.game_connection.builder.abandoned_world_connector_builder import AbandonedWorldConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common import error
 
 
-def make_builder() -> BotConnectorBuilder:
-    return BotConnectorBuilder.create(
+def make_builder() -> AbandonedWorldConnectorBuilder:
+    return AbandonedWorldConnectorBuilder.create(
         RandovaniaGame.BLANK,
         uuid.UUID("00000000-0000-0000-0000-000000000001"),
     )
@@ -52,7 +52,8 @@ async def test_build_connector_success(default_preset, mocker):
         }
     )
     mock_connector = mocker.patch(
-        "randovania.game_connection.builder.bot_connector_builder.BotRemoteConnector", autospec=True
+        "randovania.game_connection.builder.abandoned_world_connector_builder.AbandonedWorldRemoteConnector",
+        autospec=True,
     )
 
     result = await builder.build_connector()
@@ -84,7 +85,7 @@ def test_configuration_params_round_trip():
     builder = make_builder()
     params = builder.configuration_params()
 
-    restored = BotConnectorBuilder(**params)
+    restored = AbandonedWorldConnectorBuilder(**params)
     assert restored.target_game == builder.target_game
     assert restored.layout_uuid == builder.layout_uuid
-    assert restored.connector_builder_choice == ConnectorBuilderChoice.BOT
+    assert restored.connector_builder_choice == ConnectorBuilderChoice.ABANDONED

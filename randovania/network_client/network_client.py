@@ -710,7 +710,7 @@ class NetworkClient:
             return self._with_new_session(await response.json())
 
     async def get_abandoned_world_data(self, world_uid: uuid.UUID) -> dict:
-        """Fetches the data needed to drive the given abandoned world with a bot connector."""
+        """Fetches the data needed to drive an abandoned world connector."""
         try:
             async with self.server_get(f"world/{world_uid}/abandoned-data") as response:
                 if response.status != 200:

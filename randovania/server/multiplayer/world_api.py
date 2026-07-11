@@ -120,7 +120,7 @@ async def _collect_location(
         if not world.abandoned:
             log("It's nothing.")
             return None
-        # we must properly collect a nothing item for ourself in an abandoned world for the Bot
+        # we must properly collect a nothing item for ourself in an abandoned world for the connector
         try:
             WorldAction.create(provider=world, location=pickup_location, session=session, receiver=world)
         except peewee.IntegrityError:
@@ -209,11 +209,11 @@ async def watch_inventory(sa: ServerApp, sid: str, raw_world_uid: str, user_id: 
 @router.get("/world/{world_uuid}/abandoned-data")
 async def get_abandoned_world_data(user: UserDep, world_uuid: str) -> dict:
     """
-    The data the GUI needs to drive an abandoned world with a bot connector: the world's own game
+    The data the GUI needs to drive an abandoned world: the world's own game
     modifications (stripped of anything about other worlds) and the locations already collected.
     """
     world = World.get_by_uuid(uuid.UUID(world_uuid))
-    # An abandoned world is ownerless and driven by a bot, so any session member may attach to it.
+    # An abandoned world is ownerless, so any session member may attach to it.
     if not world.session.is_user_in_session(user):
         raise HTTPException(status_code=403, detail="Not a member of the session")
 
@@ -262,7 +262,7 @@ async def sync_one_world(
     session = MultiplayerSession.get_by_id(world.session_id)
 
     if world.abandoned:
-        # Owned by nobody and driven by a bot: authorize the reporter by session membership and keep
+        # Owned by nobody: authorize the reporter by session membership and keep
         # no per-user association state (connection status / inventory / activity).
         await session_common.get_membership_for(user, session, sid)
         association = None
