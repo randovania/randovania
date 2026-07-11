@@ -182,6 +182,11 @@ class MultiplayerSessionApi(NetworkErrorDelegator, QtCore.QObject):
         await self._session_admin_player(owner, admin_actions.SessionAdminUserAction.UNCLAIM, str(world_uid))
 
     @handle_network_errors
+    async def abandon_world(self, world_uid: uuid.UUID, owner: int) -> None:
+        self.logger.info("Abandoning %s for %d", world_uid, owner)
+        await self._session_admin_player(owner, admin_actions.SessionAdminUserAction.ABANDON, str(world_uid))
+
+    @handle_network_errors
     async def rename_world(self, world_uid: uuid.UUID, new_name: str) -> None:
         self.logger.info("Renaming world %s to %s", world_uid, new_name)
         await self._session_admin_global(

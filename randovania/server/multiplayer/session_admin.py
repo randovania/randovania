@@ -252,6 +252,7 @@ async def _change_layout_description(
         for world in session.worlds:
             world.uuid = uuid.uuid4()
             world.beaten = False
+            world.abandoned = False
             worlds_to_update.append(world)
 
     else:
@@ -512,6 +513,8 @@ async def _claim_world(
         await verify_has_admin(sa, sid, session.id, None)
 
     world = World.get_by_uuid(world_uid)
+    if world.abandoned:
+        raise error.InvalidActionError("Cannot claim an abandoned world")
 
     if not session.allow_coop:
         for _ in WorldUserAssociation.select().where(WorldUserAssociation.world == world.id):
@@ -533,6 +536,8 @@ async def _unclaim_world(
         await verify_has_admin(sa, sid, session.id, None)
 
     world = World.get_by_uuid(world_uid)
+    if world.abandoned:
+        raise error.InvalidActionError("Cannot unclaim an abandoned world")
     user = database.User.get_by_id(user_id)
 
     try:
@@ -542,6 +547,24 @@ async def _unclaim_world(
 
     association.delete_instance()
     await session_common.add_audit_entry(sa, sid, session, f"Unassociated world {world.name} from {user.name}")
+
+
+async def _abandon_world(sa: ServerApp, sid: str, session: MultiplayerSession, world_uid: uuid.UUID) -> None:
+    world = World.get_by_uuid(world_uid)
+    _verify_world_has_session(world, session)
+    await verify_has_admin_or_claimed(sa, sid, world)
+
+    if not session.has_layout_description():
+        raise error.InvalidActionError("Session has no generated game")
+
+    if world.abandoned:
+        raise error.InvalidActionError("World is already abandoned")
+
+    world.abandoned = True
+    world.save()
+    # An abandoned world is owned by nobody: drop every association so it stops showing under a user.
+    WorldUserAssociation.delete().where(WorldUserAssociation.world == world.id).execute()
+    await session_common.add_audit_entry(sa, sid, session, f"World {world.name} was abandoned")
 
 
 async def _switch_admin(
@@ -621,6 +644,8 @@ async def _create_patcher_file(
         player_names[world.order] = world.name
         uuids[world.order] = world.uuid
         if world.uuid == world_uuid:
+            if world.abandoned:
+                raise error.InvalidActionError("Cannot export an abandoned world")
             player_index = world.order
             await _check_user_associated_with(sa, sid, world)
 
@@ -681,8 +706,7 @@ async def admin_player(sa: ServerApp, sid: str, session_id: int, user_id: int, a
         await _switch_ready(sa, sid, session, membership)
 
     elif action_ == SessionAdminUserAction.ABANDON:
-        # FIXME
-        raise error.InvalidActionError("Abandon is NYI")
+        await _abandon_world(sa, sid, session, *args)
 
     await session_common.emit_session_meta_update(sa, session)
 

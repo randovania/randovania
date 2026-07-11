@@ -135,6 +135,92 @@ def test_widgets_in_normal_session(skip_qtbot, preset_manager):
     assert unclaimed.child(0).text(0) == "W3"
 
 
+def test_widgets_with_abandoned_world(skip_qtbot, preset_manager):
+    u1 = uuid.UUID("53308c10-c283-4be5-b5d2-1761c81a871b")
+    u2 = uuid.UUID("4bdb294e-9059-4fdf-9822-3f649023249a")
+    u3 = uuid.UUID("b1aa125a-dd65-4d2a-937d-4a64c4632261")
+
+    session = MultiplayerSessionEntry(
+        id=1234,
+        name="The Session",
+        worlds=[
+            MultiplayerWorld(
+                name="W1",
+                id=u1,
+                preset_raw=json.dumps(
+                    preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
+                ),
+                has_been_beaten=False,
+            ),
+            MultiplayerWorld(
+                name="W2",
+                id=u2,
+                preset_raw=json.dumps(preset_manager.default_preset.as_json),
+                has_been_beaten=False,
+            ),
+            # Abandoned world, associated to nobody.
+            MultiplayerWorld(
+                name="W3",
+                id=u3,
+                preset_raw=json.dumps(
+                    preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
+                ),
+                has_been_beaten=False,
+                is_abandoned=True,
+            ),
+        ],
+        users_list=[
+            MultiplayerUser(
+                12,
+                "Player A",
+                True,
+                True,
+                worlds={
+                    u1: UserWorldDetail(
+                        GameConnectionStatus.InGame, datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC)
+                    )
+                },
+            ),
+        ],
+        game_details=None,
+        visibility=MultiplayerSessionVisibility.VISIBLE,
+        generation_in_progress=None,
+        allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
+        allow_coop=False,
+        allow_everyone_claim_world=True,
+    )
+
+    session_api = MagicMock()
+    session_api.network_client = MagicMock()
+    session_api.network_client.current_user = MagicMock()
+    session_api.network_client.current_user.id = 12
+
+    window = MultiplayerSessionUsersWidget(MagicMock(), MagicMock(spec=WindowManager), session_api)
+    skip_qtbot.addWidget(window)
+
+    # Run
+    window.update_state(session)
+
+    root = window.invisibleRootItem()
+    # Player A, Unclaimed Worlds (W2), Abandoned Worlds (W3)
+    assert root.childCount() == 3
+    assert root.child(0).text(0) == "Player A"
+    # W1 plus the "Add new world" button item (no layout generated yet).
+    assert root.child(0).childCount() == 2
+    assert root.child(0).child(0).text(0) == "W1"
+
+    unclaimed = root.child(1)
+    assert unclaimed.text(0) == "Unclaimed Worlds"
+    assert unclaimed.childCount() == 1
+    assert unclaimed.child(0).text(0) == "W2"
+
+    abandoned = root.child(2)
+    assert abandoned.text(0) == "Abandoned Worlds"
+    assert abandoned.childCount() == 1
+    assert abandoned.child(0).text(0) == "W3"
+    assert abandoned.child(0).text(6) == "Abandoned"
+
+
 def test_widgets_in_coop_session(skip_qtbot, preset_manager):
     u1 = uuid.UUID("53308c10-c283-4be5-b5d2-1761c81a871b")
     u2 = uuid.UUID("4bdb294e-9059-4fdf-9822-3f649023249a")

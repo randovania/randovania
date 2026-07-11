@@ -13,6 +13,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel, StartingPickupBehavior
 from randovania.game_description.resources.inventory import Inventory
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.network_common import error, remote_inventory
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.world_sync import (
@@ -458,3 +459,91 @@ async def test_emit_inventory_room(mock_sa, solo_two_world_session):
         to=f"multiplayer-{world.uuid}-1234-inventory",
         room=None,
     )
+
+
+async def test_get_abandoned_world_data(mock_sa, solo_two_world_session, solo_two_world_session_layout):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    world = database.World.get_by_id(1)
+    world.abandoned = True
+    world.save()
+    database.WorldAction.create(provider=world, location=10, session=solo_two_world_session, receiver=world)
+    database.WorldAction.create(
+        provider=world, location=5, session=solo_two_world_session, receiver=database.World.get_by_id(2)
+    )
+
+    # Run
+    result = await world_api.get_abandoned_world_data(mock_sa, "TheSid", str(world.uuid))
+
+    # Assert
+    assert result["order"] == 0
+    assert result["preset_raw"] == world.preset
+    assert result["collected_locations"] == [5, 10]
+
+    # Only data about the world itself is shared: every location entry is owned by this world and no
+    # location holding another world's item leaks its content.
+    description = solo_two_world_session_layout
+    own_assignment = description.all_patches[0].pickup_assignment
+    for location in result["game_modifications"]["locations"]:
+        assert location["owner"] == 0
+        target = own_assignment.get(PickupIndex(location["index"]))
+        if target is not None and target.player != 0:
+            assert location["pickup"] == "Nothing"
+    assert result["game_modifications"]["hints"] == {}
+
+
+async def test_get_abandoned_world_data_admin_no_association(mock_sa, solo_two_world_session, mock_audit):
+    # An abandoned world is owned by nobody and driven by a bot: attaching creates no association
+    # (and no audit entry). The bot's reports are authorized by session membership at sync time.
+    admin_user = database.User.create(id=5555, name="Session Admin")
+    database.MultiplayerMembership.create(user=admin_user, session=solo_two_world_session, admin=True)
+    mock_sa.get_current_user.return_value = admin_user
+
+    world = database.World.get_by_id(1)
+    world.abandoned = True
+    world.save()
+
+    result = await world_api.get_abandoned_world_data(mock_sa, "TheSid", str(world.uuid))
+
+    assert result["order"] == 0
+    with pytest.raises(peewee.DoesNotExist):
+        database.WorldUserAssociation.get_by_instances(world=world, user=5555)
+    mock_audit.assert_not_awaited()
+
+
+async def test_get_abandoned_world_data_not_abandoned(mock_sa, solo_two_world_session):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+    world = database.World.get_by_id(1)
+
+    with pytest.raises(error.InvalidActionError, match="World is not abandoned"):
+        await world_api.get_abandoned_world_data(mock_sa, "TheSid", str(world.uuid))
+
+
+async def test_get_abandoned_world_data_member_without_association(mock_sa, solo_two_world_session):
+    # An abandoned world is ownerless, so any session member may attach the bot even without an
+    # association with it.
+    member = database.User.create(id=9999, name="Member")
+    database.MultiplayerMembership.create(user=member, session=solo_two_world_session, admin=False)
+    mock_sa.get_current_user.return_value = member
+
+    world = database.World.get_by_id(1)
+    world.abandoned = True
+    world.save()
+
+    result = await world_api.get_abandoned_world_data(mock_sa, "TheSid", str(world.uuid))
+
+    assert result["order"] == 0
+    with pytest.raises(peewee.DoesNotExist):
+        database.WorldUserAssociation.get_by_instances(world=world, user=9999)
+
+
+async def test_get_abandoned_world_data_non_member(mock_sa, solo_two_world_session):
+    intruder = database.User.create(id=9999, name="Intruder")
+    mock_sa.get_current_user.return_value = intruder
+
+    world = database.World.get_by_id(1)
+    world.abandoned = True
+    world.save()
+
+    with pytest.raises(error.NotAuthorizedForActionError):
+        await world_api.get_abandoned_world_data(mock_sa, "TheSid", str(world.uuid))

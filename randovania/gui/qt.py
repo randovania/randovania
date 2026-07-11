@@ -310,7 +310,7 @@ async def qt_main(app: QtWidgets.QApplication, args: argparse.Namespace) -> None
     logging.info("Creating the global game connection")
     from randovania.game_connection.game_connection import GameConnection
 
-    app.game_connection = GameConnection(options, app.world_database)
+    app.game_connection = GameConnection(options, app.world_database, app.network_client)
 
     logging.info("Creating the global multiworld client")
     from randovania.gui.multiworld_client import MultiworldClient

@@ -186,6 +186,10 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         self.add_builder_menu = QtWidgets.QMenu(self.add_builder_button)
         self._builder_actions = {}
         for choice in ConnectorBuilderChoice.all_usable_choices():
+            if choice == ConnectorBuilderChoice.BOT:
+                # a bot connection is bound to a specific abandoned world, so it's added from that
+                # world's context menu in the session window instead
+                continue
             action = QtGui.QAction(choice.pretty_text, self.add_builder_menu)
             self._builder_actions[choice] = action
             action.triggered.connect(functools.partial(self._add_connector_builder, choice))

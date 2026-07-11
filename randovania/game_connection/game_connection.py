@@ -21,6 +21,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.interface_common.options import Options
     from randovania.interface_common.world_database import WorldDatabase
+    from randovania.network_client.network_client import NetworkClient
 
 
 @dataclasses.dataclass()
@@ -43,7 +44,7 @@ class GameConnection:
     connected_states: dict[RemoteConnector, ConnectedGameState]
     _dt: float = 2.5
 
-    def __init__(self, options: Options, world_database: WorldDatabase):
+    def __init__(self, options: Options, world_database: WorldDatabase, network_client: NetworkClient | None = None):
         super().__init__()
         self.logger = logging.getLogger(type(self).__name__)
         self._options = options
@@ -51,6 +52,7 @@ class GameConnection:
         self.remote_connectors = {}
         self.connected_states = {}
         self.world_database = world_database
+        self.network_client = network_client
 
         for builder_param in options.connector_builders:
             self.add_connection_builder(builder_param.create_builder())
@@ -105,6 +107,7 @@ class GameConnection:
 
     def add_connection_builder(self, builder: ConnectorBuilder) -> None:
         self.logger.debug(f"Adding builder {builder.pretty_text} ...")
+        builder.network_client = self.network_client
         self.connection_builders.append(builder)
         builder.StatusUpdate.connect(self._on_builder_status_update)
         self._on_builders_changed()

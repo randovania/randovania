@@ -14,6 +14,7 @@ from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.layout import game_patches_serializer
 from randovania.layout.layout_description import LayoutDescription
 from randovania.network_common import error, remote_inventory
 from randovania.network_common.game_connection_status import GameConnectionStatus
@@ -113,10 +114,18 @@ async def _collect_location(
         )
 
     if pickup_target is None:
+        if not world.abandoned:
+            log("It's nothing.")
+            return None
+        # we must properly collect a nothing item for ourself in an abandoned world for the Bot
+        try:
+            WorldAction.create(provider=world, location=pickup_location, session=session, receiver=world)
+        except peewee.IntegrityError:
+            pass
         log("It's nothing.")
         return None
 
-    if pickup_target.player == world.order and not session.allow_coop:
+    if pickup_target.player == world.order and not session.allow_coop and not world.abandoned:
         log("It's a %s for themselves.", pickup_target.pickup.name)
         return None
 
@@ -194,6 +203,37 @@ async def watch_inventory(sa: ServerApp, sid: str, raw_world_uid: str, user_id: 
         await sa.sio.leave_room(sid, room_name)
 
 
+async def get_abandoned_world_data(sa: ServerApp, sid: str, raw_world_uid: str) -> dict:
+    """
+    The data a client needs to drive an abandoned world with a bot connector: the world's own game
+    modifications (stripped of anything about other worlds) and the locations already collected.
+    """
+    world = World.get_by_uuid(uuid.UUID(raw_world_uid))
+    user = await sa.get_current_user(sid)
+    # An abandoned world is ownerless and driven by a bot, so any session member may attach to it.
+    await session_common.get_membership_for(user, world.session, sid)
+
+    if not world.abandoned:
+        raise error.InvalidActionError("World is not abandoned")
+
+    description = world.session.layout_description
+    if description is None or world.order is None:
+        raise error.InvalidActionError("Session has no generated game")
+
+    collected_locations = [
+        action.location for action in WorldAction.select(WorldAction.location).where(WorldAction.provider == world)
+    ]
+
+    return {
+        "order": world.order,
+        "preset_raw": world.preset,
+        "game_modifications": game_patches_serializer.serialize_single_world_only(
+            world.order, len(description.all_patches), description.all_patches[world.order]
+        ),
+        "collected_locations": sorted(collected_locations),
+    }
+
+
 def _check_user_is_associated(user: User, world: World) -> WorldUserAssociation:
     try:
         return WorldUserAssociation.get_by_instances(
@@ -217,7 +257,13 @@ async def sync_one_world(
     sentry_sdk.set_tag("session_id", world.session_id)
     session = MultiplayerSession.get_by_id(world.session_id)
 
-    association = _check_user_is_associated(user, world)
+    if world.abandoned:
+        # Owned by nobody and driven by a bot: authorize the reporter by session membership and keep
+        # no per-user association state (connection status / inventory / activity).
+        await session_common.get_membership_for(user, session, sid)
+        association = None
+    else:
+        association = _check_user_is_associated(user, world)
     should_update_activity = False
     worlds_to_emit_update = set()
     session_id_to_return = None
@@ -232,7 +278,7 @@ async def sync_one_world(
             await sa.store_world_in_session(sid, world)
 
     # Update association connection state
-    if world_request.status != association.connection_state:
+    if association is not None and world_request.status != association.connection_state:
         association.connection_state = world_request.status
         should_update_activity = True
         session_id_to_return = world.session_id
@@ -248,7 +294,11 @@ async def sync_one_world(
         )
 
     # Update association inventory
-    if world_request.inventory is not None and world_request.inventory != association.inventory:
+    if (
+        association is not None
+        and world_request.inventory is not None
+        and world_request.inventory != association.inventory
+    ):
         association.inventory = world_request.inventory
         should_update_activity = True
         await emit_inventory_update(sa, world, user.id, world_request.inventory)
@@ -284,7 +334,7 @@ async def sync_one_world(
         should_update_activity = True
 
     # User did something, so update activity
-    if should_update_activity:
+    if should_update_activity and association is not None:
         association.last_activity = datetime.datetime.now(datetime.UTC)
         association.save()
 
@@ -440,3 +490,4 @@ async def report_disconnect(sa: ServerApp, session_dict: dict) -> None:
 def setup_app(sa: ServerApp) -> None:
     server_signals.Multiplayer.WatchInventory.register(sa, watch_inventory)
     server_signals.Multiplayer.WorldSync.register(sa, world_sync, with_header_check=True)
+    server_signals.Multiplayer.AbandonedWorldData.register(sa, get_abandoned_world_data)

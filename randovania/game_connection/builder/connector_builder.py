@@ -7,12 +7,16 @@ from randovania.lib.signal import RdvSignal
 if TYPE_CHECKING:
     from randovania.game_connection.connector.remote_connector import RemoteConnector
     from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
+    from randovania.network_client.network_client import NetworkClient
 
 
 class ConnectorBuilder:
     StatusUpdate = RdvSignal[[str]]()
 
     enabled: bool = True
+
+    network_client: NetworkClient | None = None
+    """Set by GameConnection when the builder is added, for builders that talk to the server."""
 
     @property
     def pretty_text(self) -> str:

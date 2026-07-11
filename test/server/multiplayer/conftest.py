@@ -145,7 +145,7 @@ def session_update(clean_database, mocker):
     )
 
     mock_layout.all_patches = MagicMock()
-    target = mock_layout.all_patches.__getitem__.return_value.pickup_assignment.__getitem__.return_value
+    target = mock_layout.all_patches.__getitem__.return_value.pickup_assignment.get.return_value
     target.pickup.name = "The Pickup"
 
     mocker.patch("randovania.server.database.MultiplayerSession._get_layout_description", return_value=mock_layout)

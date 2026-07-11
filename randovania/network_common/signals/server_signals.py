@@ -226,6 +226,16 @@ class Multiplayer:
     ) -> TypedBytes[ServerSyncResponse]:
         raise NotImplementedError
 
+    @server_signal("multiplayer_abandoned_world_data")
+    @staticmethod
+    async def AbandonedWorldData(
+        sa: ServerApp,
+        sid: str,
+        raw_world_uid: str,
+    ) -> dict:
+        """The data a client needs to drive an abandoned world with a bot connector."""
+        raise NotImplementedError
+
 
 class AsyncRace:
     @server_signal("async_race_list_rooms")

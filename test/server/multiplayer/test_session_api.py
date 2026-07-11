@@ -196,6 +196,7 @@ async def test_join_session(
                 "name": "World 1",
                 "preset_raw": "{}",
                 "has_been_beaten": False,
+                "is_abandoned": False,
             }
         ],
         "game_details": None,

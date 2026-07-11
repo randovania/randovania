@@ -70,6 +70,7 @@ class MultiplayerWorld(JsonDataclass):
     name: str
     preset_raw: str
     has_been_beaten: bool
+    is_abandoned: bool = False
 
     @cached_property
     def preset(self) -> VersionedPreset:
