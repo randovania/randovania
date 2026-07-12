@@ -92,9 +92,7 @@ def test_build_change_root(
     after: Requirement = editor._controller._replace_at_path(root_requirement, [], expected)
     # Command expects a path to the edited requirement for re-selection
     # [0] points toward the first child of the tree's invisible root item i.e. the root requirement
-    editor._controller._undo_stack.push(
-        connections_editor.Command(editor._model, editor._view, root_requirement, after, [0], "Test change root")
-    )
+    editor._controller._push_command(root_requirement, after, [0], "Test change root")
 
     # Assert
     assert editor.final_requirement == expected
