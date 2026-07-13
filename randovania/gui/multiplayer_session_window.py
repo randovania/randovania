@@ -1162,14 +1162,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         connected_worlds = {k: v for k, v in connected_worlds.items() if v}
 
-        # Besides your own worlds, also surface abandoned worlds this Randovania instance is currently
-        # driving with an abandoned world connector: they belong to the session but aren't associated to any user.
-        try:
-            abandoned_world_ids = {world.id for world in self._session.worlds if world.is_abandoned}
-        except AttributeError:
-            abandoned_world_ids = set()
         world_uids = list(user_worlds.keys())
-        world_uids.extend(uid for uid in connected_worlds if uid not in user_worlds and uid in abandoned_world_ids)
 
         world_status = []
         for uid in world_uids:

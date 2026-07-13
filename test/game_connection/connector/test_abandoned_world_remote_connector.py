@@ -18,6 +18,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout import game_patches_serializer
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.network_common import error
 from randovania.network_common.remote_pickup import RemotePickup
 from randovania.resolver import debug
 
@@ -111,6 +112,23 @@ def tracked_rounds(mocker):
 def fake_connector() -> AbandonedWorldRemoteConnector:
     """A connector with placeholder world data, for tests that fake the resolution rounds."""
     return AbandonedWorldRemoteConnector(uuid.uuid4(), MagicMock(), 0, {}, [])
+
+
+@pytest.mark.usefixtures("inert_loop")
+async def test_stops_when_world_no_longer_claimed():
+    connector = fake_connector()
+    await connector.on_world_sync_error(error.WorldNotAssociatedError())
+    assert connector.is_disconnected()
+
+
+@pytest.mark.usefixtures("inert_loop")
+async def test_keeps_running_on_other_sync_errors():
+    connector = fake_connector()
+    try:
+        await connector.on_world_sync_error(error.ServerError())
+        assert not connector.is_disconnected()
+    finally:
+        await connector.force_finish()
 
 
 async def test_loop_resolves_goes_idle_and_wakes_on_items(mocker, instant_rounds):

@@ -301,7 +301,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             f"Abandon world '{self._session.get_world(world_uid).name}'?\n\n"
             "This is irreversible. The world is then played by a bot that collects its in-logic locations "
             "over time, running in a Randovania instance that stays open and connected.\n\n"
-            "Start the bot here now, or abandon only and let a player or admin start it later.",
+            "Start the bot here now, or abandon only and let a player or admin claim and start it later.",
             QtWidgets.QMessageBox.StandardButton.Cancel,
             self,
         )
@@ -317,8 +317,9 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         if clicked not in (play_here_button, abandon_only_button):
             return
 
-        await self._session_api.abandon_world(world_uid, owner)
-        if clicked is play_here_button:
+        play_here = clicked is play_here_button
+        await self._session_api.abandon_world(world_uid, owner, play_here)
+        if play_here:
             self._register_abandoned_world_connector(world_uid)
 
     @asyncSlot()
@@ -486,19 +487,14 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
             def create_claim_for_each_player_entry() -> None:
                 claim_menu = world_menu.addMenu("Claim for")
-                claim_menu.menuAction().setEnabled(not world_is_abandoned)
                 for p in self._session.users.values():
                     connect_to(claim_menu.addAction(p.name), self._world_claim_with, world_id, p.id)
 
             def create_claim_for_yourself_entry() -> None:
-                connect_to(
-                    world_menu.addAction("Claim for yourself"), self._world_claim_with, world_id, self.your_id
-                ).setEnabled(not world_is_abandoned)
+                connect_to(world_menu.addAction("Claim for yourself"), self._world_claim_with, world_id, self.your_id)
 
             def create_unclaim_entry(menu_caption: str) -> None:
-                connect_to(world_menu.addAction(menu_caption), self._world_unclaim, world_id, owner).setEnabled(
-                    not world_is_abandoned
-                )
+                connect_to(world_menu.addAction(menu_caption), self._world_unclaim, world_id, owner)
 
             if not is_valid_owner(owner) and (self.is_admin() or self._session.allow_everyone_claim_world):
                 if self.your_id is not None and self._session.users[self.your_id].worlds.get(world_id):
@@ -524,10 +520,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 world_menu.addSeparator()
                 create_unclaim_entry(text)
 
-        if world_is_abandoned:
-            # An abandoned world is ownerless and driven by an abandoned world connector
-            # any session member can pick the world up where it stopped
-            # (e.g. when whoever was running the abandoned world connector has closed Randovania).
+        if world_is_abandoned and owner == self.your_id:
             world_menu.addSeparator()
             connect_to(
                 world_menu.addAction("Play abandoned world on this device"),
@@ -615,7 +608,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             )
             self._user_widgets[user.id].update(user)
 
-        abandoned_worlds = {world_uid for world_uid, world in world_by_id.items() if world.is_abandoned}
+        abandoned_worlds = {world_uid for world_uid, world in world_by_id.items() if world.is_abandoned} - used_worlds
         unclaimed_worlds = set(world_by_id.keys()) - used_worlds - abandoned_worlds
 
         if unclaimed_worlds:

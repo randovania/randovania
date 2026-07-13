@@ -250,6 +250,8 @@ async def _change_layout_description(
 
         description = None
         for world in session.worlds:
+            if world.abandoned:
+                WorldUserAssociation.delete().where(WorldUserAssociation.world == world.id).execute()
             world.uuid = uuid.uuid4()
             world.beaten = False
             world.abandoned = False
@@ -513,10 +515,8 @@ async def _claim_world(
         await verify_has_admin(sa, sid, session.id, None)
 
     world = World.get_by_uuid(world_uid)
-    if world.abandoned:
-        raise error.InvalidActionError("Cannot claim an abandoned world")
 
-    if not session.allow_coop:
+    if world.abandoned or not session.allow_coop:
         for _ in WorldUserAssociation.select().where(WorldUserAssociation.world == world.id):
             raise error.InvalidActionError("World is already claimed")
 
@@ -536,8 +536,6 @@ async def _unclaim_world(
         await verify_has_admin(sa, sid, session.id, None)
 
     world = World.get_by_uuid(world_uid)
-    if world.abandoned:
-        raise error.InvalidActionError("Cannot unclaim an abandoned world")
     user = database.User.get_by_id(user_id)
 
     try:
@@ -549,7 +547,9 @@ async def _unclaim_world(
     await session_common.add_audit_entry(sa, sid, session, f"Unassociated world {world.name} from {user.name}")
 
 
-async def _abandon_world(sa: ServerApp, sid: str, session: MultiplayerSession, world_uid: uuid.UUID) -> None:
+async def _abandon_world(
+    sa: ServerApp, sid: str, session: MultiplayerSession, world_uid: uuid.UUID, play_here: bool
+) -> None:
     world = World.get_by_uuid(world_uid)
     _verify_world_has_session(world, session)
     await verify_has_admin_or_claimed(sa, sid, world)
@@ -562,9 +562,19 @@ async def _abandon_world(sa: ServerApp, sid: str, session: MultiplayerSession, w
 
     world.abandoned = True
     world.save()
-    # An abandoned world is owned by nobody: drop every association so it stops showing under a user.
+
+    # remove the association for the abandoned world
     WorldUserAssociation.delete().where(WorldUserAssociation.world == world.id).execute()
     await session_common.add_audit_entry(sa, sid, session, f"World {world.name} was abandoned")
+
+    # the user who triggered the "abandon world" wants to run the AbandonedWorldConnector
+    # this might be the same user who was associated with the world but it could also be an admin
+    if play_here:
+        current_user = await sa.get_current_user(sid)
+        WorldUserAssociation.create(world=world, user=current_user)
+        await session_common.add_audit_entry(
+            sa, sid, session, f"Claimed world {world.name} to run its bot for {current_user.name}"
+        )
 
 
 async def _switch_admin(

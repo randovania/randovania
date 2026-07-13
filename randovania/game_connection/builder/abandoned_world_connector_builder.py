@@ -25,9 +25,7 @@ class AbandonedWorldConnectorBuilder(ConnectorBuilder):
     Builds an `AbandonedWorldRemoteConnector` for an abandoned world, by downloading the data the connector needs
     (the world's own game modifications and its collected locations) from the server.
 
-    Requires the network client to be connected and the logged user to be a member of the world's
-    session (an abandoned world is ownerless, so any member may drive this connector); until then,
-    `build_connector` keeps returning None and is retried like any other connector builder.
+    Requires the network client to be connected and the logged user to claim the world.
     """
 
     target_game: RandovaniaGame
@@ -70,6 +68,11 @@ class AbandonedWorldConnectorBuilder(ConnectorBuilder):
 
         try:
             data = await network_client.get_abandoned_world_data(self.layout_uuid)
+        except error.WorldNotAssociatedError:
+            self.logger.info("No longer claiming abandoned world %s; discarding its builder.", self.layout_uuid)
+            self.no_longer_usable = True
+            return None
+
         except (error.BaseNetworkError, UnableToConnect) as e:
             self.logger.info("Unable to get abandoned world data for %s: %s", self.layout_uuid, e)
             self._status_message = f"Unable to get world data from the server: {e}"

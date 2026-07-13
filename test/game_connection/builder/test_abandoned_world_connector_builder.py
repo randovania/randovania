@@ -75,10 +75,21 @@ async def test_build_connector_error_backs_off(mocker):
 
     assert await builder.build_connector() is None
     assert builder.get_status_message() is not None
+    assert not builder.no_longer_usable
 
     # The next attempt within the retry interval doesn't contact the server again.
     assert await builder.build_connector() is None
     builder.network_client.get_abandoned_world_data.assert_awaited_once()
+
+
+async def test_build_connector_world_not_claimed():
+    builder = make_builder()
+    builder.network_client = MagicMock()
+    builder.network_client.connection_state = ConnectionState.Connected
+    builder.network_client.get_abandoned_world_data = AsyncMock(side_effect=error.WorldNotAssociatedError())
+
+    assert await builder.build_connector() is None
+    assert builder.no_longer_usable
 
 
 def test_configuration_params_round_trip():

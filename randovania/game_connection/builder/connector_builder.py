@@ -18,6 +18,12 @@ class ConnectorBuilder:
     network_client: NetworkClient | None = None
     """Set by GameConnection when the builder is added, for builders that talk to the server."""
 
+    no_longer_usable: bool = False
+    """
+    Set by a builder that will never be able to build a connector again, so that GameConnection discards
+    it instead of retrying forever.
+    """
+
     @property
     def pretty_text(self) -> str:
         """Describes which builder and with what parameters it's been configured."""

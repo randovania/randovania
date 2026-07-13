@@ -23,6 +23,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.pickup_pool import pool_creator
 from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
 from randovania.layout import filtered_database, game_patches_serializer
+from randovania.network_common.error import WorldNotAssociatedError
 from randovania.resolver import debug
 from randovania.resolver.exceptions import ResolverTimeoutError
 from randovania.resolver.logic import Logic
@@ -38,6 +39,7 @@ if TYPE_CHECKING:
     from randovania.graph.world_graph import WorldGraph
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.versioned_preset import VersionedPreset
+    from randovania.network_common.error import BaseNetworkError
     from randovania.network_common.remote_pickup import RemotePickup
 
 # Runaway guard: cap resolver attempts per round. Hitting it treats the world as exhausted for now;
@@ -190,16 +192,6 @@ class AbandonedWorldRemoteConnector(RemoteConnector):
         return frozenset(self._collected)
 
     async def set_remote_pickups(self, remote_pickups: tuple[RemotePickup, ...]) -> None:
-        # TODO: Lengthy llm summary for discussion if it has to be changed for now:
-        # two connectors driving the same world (on different Randovania instances) don't fully
-        # coordinate. A world's own collected locations come back here as coop_location entries, so both
-        # connectors share those and never re-collect them. But a location holding *another* world's item
-        # is reported to the server with that other world as the receiver, so collecting it only
-        # refreshes the receiver's pickups -- never this world's. This connector is therefore never told
-        # the sibling connector already took such a location: it stays out of `_collected`, remains a
-        # valid victory target, and gets collected again. That redundant collection is harmless because
-        # the server de-duplicates it (WorldAction has a (provider, location) unique key, so the second
-        # report is dropped and the item isn't granted twice), but the two connectors still do wasted work.
         self.remote_pickups = remote_pickups
 
         received = []
@@ -214,6 +206,11 @@ class AbandonedWorldRemoteConnector(RemoteConnector):
 
         # An item arrived (or our record changed): wake up and re-check what is in logic now.
         self._dirty.set()
+
+    async def on_world_sync_error(self, err: BaseNetworkError) -> None:
+        if isinstance(err, WorldNotAssociatedError):
+            logger.info("No longer claiming world %s; stopping its bot.", self._layout_uuid)
+            await self.force_finish()
 
     async def force_finish(self) -> None:
         self._finished = True

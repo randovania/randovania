@@ -96,6 +96,9 @@ class GameConnection:
                 self.logger.debug(f"Building {build.pretty_text} was successful")
                 self.remote_connectors[build] = c
                 self._handle_new_connector(c)
+            elif build.no_longer_usable:
+                self.logger.debug(f"Builder {build.pretty_text} can never build again. Removing it.")
+                self.remove_connection_builder(build)
 
         await asyncio.gather(
             *[

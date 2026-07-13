@@ -213,12 +213,12 @@ async def get_abandoned_world_data(user: UserDep, world_uuid: str) -> dict:
     modifications (stripped of anything about other worlds) and the locations already collected.
     """
     world = World.get_by_uuid(uuid.UUID(world_uuid))
-    # An abandoned world is ownerless, so any session member may attach to it.
-    if not world.session.is_user_in_session(user):
-        raise HTTPException(status_code=403, detail="Not a member of the session")
 
     if not world.abandoned:
         raise HTTPException(status_code=409, detail="World is not abandoned")
+
+    if not any(association.user_id == user.id for association in world.associations):
+        raise HTTPException(status_code=403, detail="You must claim this world to run its bot")
 
     description = world.session.layout_description
     if description is None or world.order is None:
@@ -261,13 +261,7 @@ async def sync_one_world(
     sentry_sdk.set_tag("session_id", world.session_id)
     session = MultiplayerSession.get_by_id(world.session_id)
 
-    if world.abandoned:
-        # Owned by nobody: authorize the reporter by session membership and keep
-        # no per-user association state (connection status / inventory / activity).
-        await session_common.get_membership_for(user, session, sid)
-        association = None
-    else:
-        association = _check_user_is_associated(user, world)
+    association = _check_user_is_associated(user, world)
     should_update_activity = False
     worlds_to_emit_update = set()
     session_id_to_return = None
@@ -282,7 +276,7 @@ async def sync_one_world(
             await sa.store_world_in_session(sid, world)
 
     # Update association connection state
-    if association is not None and world_request.status != association.connection_state:
+    if world_request.status != association.connection_state:
         association.connection_state = world_request.status
         should_update_activity = True
         session_id_to_return = world.session_id
@@ -298,11 +292,7 @@ async def sync_one_world(
         )
 
     # Update association inventory
-    if (
-        association is not None
-        and world_request.inventory is not None
-        and world_request.inventory != association.inventory
-    ):
+    if world_request.inventory is not None and world_request.inventory != association.inventory:
         association.inventory = world_request.inventory
         should_update_activity = True
         await emit_inventory_update(sa, world, user.id, world_request.inventory)
@@ -338,7 +328,7 @@ async def sync_one_world(
         should_update_activity = True
 
     # User did something, so update activity
-    if should_update_activity and association is not None:
+    if should_update_activity:
         association.last_activity = datetime.datetime.now(datetime.UTC)
         association.save()
 
