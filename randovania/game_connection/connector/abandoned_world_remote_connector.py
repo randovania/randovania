@@ -3,16 +3,10 @@ RemoteConnector that plays an "abandoned" multiworld world like a bot: it collec
 logic for the world, freeing the items it holds for other players, and keeps up as it receives more
 items.
 
-Instead of attaching to a real game (like most connectors) or to a manually-driven window (like the
-debug connector), this connector drives the world with the resolver. It works in *paced rounds*: each
+This connector drives the world with the resolver. It works in *paced rounds*: each
 round finds one more reachable location, then waits ``ROUND_DELAY_SECONDS`` before the next round.
 Once a round finds nothing new, the connector goes idle and only re-checks when it receives something
 new through ``set_remote_pickups``.
-
-Each connector owns all of its mutable resolution state (collected locations, received pickups,
-world graph and starting state), so many abandoned worlds can be driven concurrently by fully
-independent connectors. Only the immutable game databases are shared, via ``filtered_database``'s
-cache.
 """
 
 from __future__ import annotations
@@ -114,9 +108,7 @@ def _fresh_state(
         node = graph.node_by_pickup_index.get(PickupIndex(index))
         if node is not None:
             state = state.collect_resource_node(node, state.damage_state)
-    if received_pickups:
-        state = state.assign_pickups_resources(received_pickups)
-    return state
+    return state.assign_pickups_resources(received_pickups)
 
 
 async def _compute_one_round(
@@ -190,7 +182,7 @@ class AbandonedWorldRemoteConnector(RemoteConnector):
         return self._preset.game
 
     def description(self) -> str:
-        return f"Abandoned world bot - {self.game_enum.long_name}: {self._layout_uuid}"
+        return f"Abandoned world bot - {self.game_enum.long_name}"
 
     @property
     def collected_locations(self) -> frozenset[int]:
