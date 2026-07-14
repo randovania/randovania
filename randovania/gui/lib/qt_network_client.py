@@ -3,12 +3,14 @@ from __future__ import annotations
 import abc
 import asyncio
 import functools
+import uuid
 from typing import TYPE_CHECKING, Concatenate
 
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Signal
 
 import randovania
+from randovania.game_connection.connector.remote_connector import ImportantStatusMessage
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, wait_dialog
 from randovania.lib.type_lib import AsyncCallable
@@ -127,6 +129,7 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
 
     WorldPickupsUpdated = Signal(MultiplayerWorldPickups)
     WorldUserInventoryUpdated = Signal(WorldUserInventory)
+    WorldImportantStatusMessageRequested = Signal(uuid.UUID, ImportantStatusMessage)
 
     AsyncRaceRoomUpdated = Signal(AsyncRaceRoomEntry)
 
@@ -178,6 +181,10 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
     async def on_world_user_inventory(self, inventory: WorldUserInventory) -> None:
         await super().on_world_user_inventory(inventory)
         self.WorldUserInventoryUpdated.emit(inventory)
+
+    async def on_world_important_status_message(self, world_uuid: uuid.UUID, message: ImportantStatusMessage) -> None:
+        await super().on_world_important_status_message(world_uuid, message)
+        self.WorldImportantStatusMessageRequested.emit(world_uuid, message)
 
     async def on_async_race_room_update(self, room: AsyncRaceRoomEntry) -> None:
         await super().on_async_race_room_update(room)

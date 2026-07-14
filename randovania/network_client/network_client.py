@@ -21,6 +21,7 @@ import socketio.exceptions
 
 import randovania
 from randovania.bitpacking import bitpacking, construct_pack
+from randovania.game_connection.connector.remote_connector import ImportantStatusMessage
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.lib import container_lib, http_lib
@@ -205,6 +206,7 @@ class NetworkClient:
         client_signals.WorldPickupsUpdate.register(self.sio, self._on_world_pickups_update_raw)
         client_signals.WorldBinaryInventory.register(self.sio, self._on_world_user_inventory_raw)
         client_signals.WorldJsonInventory.register(self.sio, self._on_world_user_inventory_json)
+        client_signals.WorldImportantStatusMessage.register(self.sio, self._on_world_important_status_message_raw)
         client_signals.AsyncRaceRoomUpdate.register(self.sio, self._on_async_race_room_update_raw)
 
     @property
@@ -451,6 +453,16 @@ class NetworkClient:
 
     async def _on_world_user_inventory_json(self, *args: Any, **kwargs: Any) -> None:
         print(*args, **kwargs)
+
+    async def on_world_important_status_message(self, world_uuid: uuid.UUID, message: ImportantStatusMessage) -> None:
+        pass
+
+    async def _on_world_important_status_message_raw(self, world_uuid_bytes: bytes, message: str) -> None:
+        important_message = ImportantStatusMessage(message)
+        world = uuid.UUID(bytes=world_uuid_bytes)
+        self.logger.info(f"Requesting {important_message.value} for world {world}")
+
+        await self.on_world_important_status_message(world, important_message)
 
     async def _on_async_race_room_update_raw(self, data: TypedJsonObject[AsyncRaceRoomEntry]) -> None:
         """Event triggered when the server pushes an e"""

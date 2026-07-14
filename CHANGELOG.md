@@ -26,6 +26,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The Twin Robot fight is now logically active from the start of the game, unless Highly Dangerous Logic is active. That means passing through the arena now logically requires meeting the fight requirements also before obtaining the Storm Missiles.
 
+### Metroid Prime
+
+- Added: A notification will appear in-game if Randovania reconnects to the game if several locations were collected while disconnected, to the point where it achieved an invalid state.
+
+### Metroid Prime 2: Echoes
+
+- Added: A notification will appear in-game if Randovania reconnects to the game if several locations were collected while disconnected, to the point where it achieved an invalid state.
+
 ### Metroid: Samus Returns
 
 - Changed: The Buff Charge Beam Doors option now also affects Beam Burst.

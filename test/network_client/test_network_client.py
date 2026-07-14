@@ -14,6 +14,7 @@ import pytest
 import socketio.exceptions
 
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_connection.connector.remote_connector import ImportantStatusMessage
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel, StartingPickupBehavior
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -509,6 +510,16 @@ async def test_on_world_user_inventory_raw(client: NetworkClient):
             inventory={"MyKey": 4},
         )
     )
+
+
+async def test_on_world_important_status_message_raw(client: NetworkClient) -> None:
+    client.on_world_important_status_message = AsyncMock()
+
+    our_uuid = uuid.uuid4()
+    message = ImportantStatusMessage.DISCONNECTED_FROM_SERVER
+
+    await client._on_world_important_status_message_raw(our_uuid.bytes, message.value)
+    client.on_world_important_status_message.assert_called_once_with(our_uuid, message)
 
 
 async def test_authentication_methods(client: NetworkClient):
