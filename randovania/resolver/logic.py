@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import asyncio
 import gc
 from typing import TYPE_CHECKING
 
+from randovania.game_description.pickup.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.graph.graph_requirement import GraphRequirementSet
 from randovania.resolver.exceptions import ResolverTimeoutError
 from randovania.resolver.logging import (
@@ -13,11 +16,29 @@ from randovania.resolver.logging import (
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
     from randovania.layout.base.base_configuration import BaseConfiguration
+
+
+class ResolverStepper:
+    async def synchronize(self) -> None:
+        """
+        For multiworld resolver, pauses execution until `resume_execution` is called.
+        """
+        await asyncio.sleep(0)
+
+    async def resume_execution(self, task: asyncio.Task) -> bool:
+        await task
+        return not task.done()
+
+    def on_collect_location(self, pickup_index: PickupIndex) -> None:
+        # Nothing
+        pass
+
+    def get_received_pickups(self) -> tuple[PickupEntry, ...]:
+        return ()
 
 
 class Logic:
@@ -29,9 +50,9 @@ class Logic:
     prioritize_hints: bool
     all_nodes: Sequence[WorldGraphNode]
     graph: WorldGraph
-    game: GameDescription | None
 
     logger: ResolverLogger
+    stepper: ResolverStepper
 
     _attempts: int
 
@@ -57,6 +78,7 @@ class Logic:
         self.disable_gc = disable_gc
 
         self.logger = TextResolverLogger()
+        self.stepper = ResolverStepper()
 
     def get_additional_requirements(self, node: WorldGraphNode) -> GraphRequirementSet:
         return self.additional_requirements[node.node_index]

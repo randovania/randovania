@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import dataclasses
 import enum
 from typing import TYPE_CHECKING, Any
 
@@ -9,17 +10,19 @@ from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
 from randovania.graph.world_graph import WorldGraphNode
 from randovania.layout import filtered_database
+from randovania.resolver import debug
 from randovania.resolver.hint_state import ResolverHintState
-from randovania.resolver.logic import Logic
+from randovania.resolver.logic import Logic, ResolverStepper
 from randovania.resolver.resolver_reach import ResolverReach
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable
+    from collections.abc import Callable, Iterable, Sequence
 
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
@@ -181,10 +184,12 @@ def _progressive_chain_info(node: WorldGraphNode, resources: ResourceCollection)
     return None
 
 
-def _assign_hint_available_locations(state: State, action: ResolverAction, logic: Logic) -> None:
-    if state.hint_state is not None and action.pickup_index is not None:
-        available = state.hint_state.valid_available_locations_for_hint(state, logic)
-        state.hint_state.assign_available_locations(action.pickup_index, available)
+def _post_act_on_node(state: State, action: ResolverAction, logic: Logic) -> None:
+    if action.pickup_index is not None:
+        logic.stepper.on_collect_location(action.pickup_index)
+        if state.hint_state is not None:
+            available = state.hint_state.valid_available_locations_for_hint(state, logic)
+            state.hint_state.assign_available_locations(action.pickup_index, available)
 
 
 def _resource_gain_for_state(state: State) -> list[int]:
@@ -198,47 +203,24 @@ def _index_for_action_pair(pair: tuple[ResolverAction, DamageState]) -> int:
     return node.database_node.node_index
 
 
-async def _inner_advance_depth(
+async def _calculate_actions_by_priority_and_try_safe(
     state: State,
     logic: Logic,
     status_update: Callable[[str], None],
-    *,
-    reach: ResolverReach | None = None,
-    max_attempts: int | None = None,
-) -> tuple[State | None, bool]:
+    reach: ResolverReach,
+    max_attempts: int | None,
+    actions_by_priority: dict[ActionPriority, list[tuple[ResolverAction, DamageState]]],
+) -> tuple[State | None, bool] | None:
     """
-
-    :param state:
-    :param logic:
-    :param status_update:
-    :param reach: A precalculated reach for the given state
-    :return:
+    Fills `actions_by_priority` with the possible actions of the given reach
+    with the given state, grouped by calculated priorities.
+    Also check if the action is safe and if so recurse into it.
     """
-
-    logic.start_new_attempt(state, max_attempts)
-
-    if state.hint_state is not None:
-        state.hint_state.advance_hint_seen_count(state)
-
-    if logic.victory_condition(state).satisfied(state.resources, state.health_for_damage_requirements):
-        return state, True
-
-    # Yield back to the asyncio runner, so cancel can do something
-    await asyncio.sleep(0)
-
-    if reach is None:
-        reach = ResolverReach.calculate_reach(logic, state)
-
-    status_update(f"Resolving... {state.resources.num_resources} total resources")
-
-    actions_by_priority: dict[ActionPriority, list[tuple[ResolverAction, DamageState]]] = {
-        priority: [] for priority in ActionPriority
-    }
 
     for action, damage_state in reach.possible_actions(state):
         if _should_check_if_action_is_safe(state, action, logic.dangerous_resources):
             potential_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
-            _assign_hint_available_locations(potential_state, action, logic)
+            _post_act_on_node(potential_state, action, logic)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
 
             # If we can go back to where we were without worsening the damage state, it's a simple safe node
@@ -275,35 +257,109 @@ async def _inner_advance_depth(
 
         actions_by_priority[_priority_for_resource_action(action, state, logic)].append((action, damage_state))
 
-    actions: list[tuple[ActionPriority, ResolverAction, DamageState]] = [
-        (priority, action, damage_state)
-        for priority, entries in actions_by_priority.items()
-        # HACK: sort nodes so they're somewhat more consistent between classic and new graph
-        for action, damage_state in sorted(entries, key=_index_for_action_pair)
-    ]
-    logic.logger.log_checking_satisfiable(actions)
+    return None
+
+
+async def _inner_advance_depth(
+    state: State,
+    logic: Logic,
+    status_update: Callable[[str], None],
+    *,
+    reach: ResolverReach | None = None,
+    max_attempts: int | None = None,
+) -> tuple[State | None, bool]:
+    """
+
+    :param state:
+    :param logic:
+    :param status_update:
+    :param reach: A precalculated reach for the given state
+    :return:
+    """
+
+    logic.start_new_attempt(state, max_attempts)
+
+    if state.hint_state is not None:
+        state.hint_state.advance_hint_seen_count(state)
+
+    if logic.victory_condition(state).satisfied(state.resources, state.health_for_damage_requirements):
+        return state, True
+
+    # Yield back to the asyncio runner, so cancel can do something
+    await asyncio.sleep(0)
+
+    status_update(f"Resolving... {state.resources.num_resources} total resources")
+
     has_action = False
-    for _, action, damage_state in actions:
-        action_additional_requirements = logic.get_additional_requirements(action)
-        if not action_additional_requirements.satisfied(state.resources, damage_state.health_for_damage_requirements()):
-            logic.logger.log_skip(action, state, logic)
+    keep_retrying = True
+
+    while keep_retrying:
+        keep_retrying = False
+
+        if state.received_pickups != logic.stepper.get_received_pickups():
+            state = state.receive_new_pickups(logic.stepper.get_received_pickups())
+            reach = None
+
+        if reach is None:
+            reach = ResolverReach.calculate_reach(logic, state)
+
+        actions_by_priority: dict[ActionPriority, list[tuple[ResolverAction, DamageState]]] = {
+            priority: [] for priority in ActionPriority
+        }
+
+        new_result = await _calculate_actions_by_priority_and_try_safe(
+            state,
+            logic,
+            status_update,
+            reach,
+            max_attempts,
+            actions_by_priority,
+        )
+        if new_result is not None:
+            return new_result
+
+        await logic.stepper.synchronize()
+        if state.received_pickups != logic.stepper.get_received_pickups():
+            keep_retrying = True
             continue
 
-        new_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
-        _assign_hint_available_locations(new_state, action, logic)
-        new_result = await _inner_advance_depth(
-            state=new_state,
-            logic=logic,
-            status_update=status_update,
-            max_attempts=max_attempts,
-        )
+        actions: list[tuple[ActionPriority, ResolverAction, DamageState]] = [
+            (priority, action, damage_state)
+            for priority, entries in actions_by_priority.items()
+            # HACK: sort nodes so they're somewhat more consistent between classic and new graph
+            for action, damage_state in sorted(entries, key=_index_for_action_pair)
+        ]
+        logic.logger.log_checking_satisfiable(actions)
+        has_action = False
+        for _, action, damage_state in actions:
+            action_additional_requirements = logic.get_additional_requirements(action)
+            if not action_additional_requirements.satisfied(
+                state.resources, damage_state.health_for_damage_requirements()
+            ):
+                logic.logger.log_skip(action, state, logic)
+                continue
 
-        # We got a positive result. Send it back up
-        if new_result[0] is not None:
-            return new_result
-        else:
-            has_action = True
+            new_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
+            _post_act_on_node(new_state, action, logic)
+            new_result = await _inner_advance_depth(
+                state=new_state,
+                logic=logic,
+                status_update=status_update,
+                max_attempts=max_attempts,
+            )
 
+            # We got a positive result. Send it back up
+            if new_result[0] is not None:
+                return new_result
+            else:
+                has_action = True
+
+            await logic.stepper.synchronize()
+            if state.received_pickups != logic.stepper.get_received_pickups():
+                keep_retrying = True
+                break
+
+    assert reach is not None
     additional_requirements: set[GraphRequirementList] = reach.satisfiable_requirements_for_additionals
     old_additional_requirements = logic.get_additional_requirements(state.node)
 
@@ -402,3 +458,128 @@ async def resolve(
         logic.logger = logger
 
     return await advance_depth(starting_state, logic, status_update)
+
+
+@dataclasses.dataclass()
+class MultiworldSharedState:
+    received_pickups: list[list[PickupEntry]]
+    steppers: list[MultiworldResolverStepper]
+    tasks: list[asyncio.Task]
+
+
+class MultiworldResolverStepper(ResolverStepper):
+    world_index: int
+    logic: Logic
+    initial_state: State
+    game: GameDescription
+    shared_state: MultiworldSharedState
+    _collected_indices: set[PickupIndex]
+
+    def __init__(
+        self,
+        world_index: int,
+        logic: Logic,
+        initial_state: State,
+        game: GameDescription,
+        shared_state: MultiworldSharedState,
+    ):
+        self.world_index = world_index
+        self.logic = logic
+        self.initial_state = initial_state
+        self.game = game
+        self.shared_state = shared_state
+        self._collected_indices = set()
+        self._paused = asyncio.Event()
+        self._resume = asyncio.Event()
+
+    async def synchronize(self) -> None:
+        self._paused.set()
+        debug.debug_print(f"{self.logic.logger.prefix} Sleeping")
+        await self._resume.wait()
+        debug.debug_print(f"{self.logic.logger.prefix} Resumed")
+        self._resume.clear()
+
+    async def resume_execution(self, task: asyncio.Task) -> bool:
+        waiter = asyncio.ensure_future(self._paused.wait())
+        self._resume.set()
+        await asyncio.wait({task, waiter}, return_when=asyncio.FIRST_COMPLETED)
+        waiter.cancel()
+        return not task.done()
+
+    def on_collect_location(self, pickup_index: PickupIndex) -> None:
+        if pickup_index in self._collected_indices:
+            return
+
+        self._collected_indices.add(pickup_index)
+        target = self.initial_state.patches.pickup_assignment.get(pickup_index)
+        if target is not None and target.player != self.world_index:
+            self.shared_state.received_pickups[target.player].append(target.pickup)
+
+    def get_received_pickups(self) -> Sequence[PickupEntry]:
+        return tuple(self.shared_state.received_pickups[self.world_index])
+
+
+async def multiworld_resolve(
+    worlds: list[tuple[BaseConfiguration, GamePatches]],
+) -> list[State] | None:
+    """
+
+    :param worlds:
+    :return:
+    """
+
+    status_update = _quiet_print
+
+    shared_state = MultiworldSharedState(
+        [[] for _ in worlds],
+        [],
+        [],
+    )
+
+    for index, (configuration, patches) in enumerate(worlds):
+        game = filtered_database.game_description_for_layout(configuration).get_mutable()
+        bootstrap = game.game.generator.bootstrap
+        game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
+        graph, starting_state = bootstrap.logic_bootstrap_graph(configuration, game, patches)
+        logic = Logic(graph, configuration)
+        logic.stepper = stepper = MultiworldResolverStepper(index, logic, starting_state, game, shared_state)
+        logic.logger.prefix = f"[{index}] "
+        shared_state.steppers.append(stepper)
+        shared_state.tasks.append(asyncio.ensure_future(advance_depth(starting_state, logic, status_update)))
+
+    keep_trying = [True] * len(worlds)
+    while True:
+        one_ok = False
+
+        for i in range(len(worlds)):
+            stepper = shared_state.steppers[i]
+
+            if keep_trying[i]:
+                keep_trying[i] = await stepper.resume_execution(shared_state.tasks[i])
+                one_ok = one_ok or keep_trying[i]
+
+            if not keep_trying[i]:
+                received_pickups = tuple(shared_state.received_pickups[i])
+                if stepper.initial_state.received_pickups != received_pickups:
+                    debug.debug_print(f"Restart world {i}")
+                    stepper.initial_state = stepper.initial_state.receive_new_pickups(received_pickups)
+
+                    # FIXME: keeping the additional_requirements would be amazing, but it's breaking things?
+                    stepper.logic.additional_requirements = [GraphRequirementSet.trivial()] * stepper.logic.num_nodes
+                    shared_state.tasks[i] = asyncio.ensure_future(
+                        advance_depth(stepper.initial_state, stepper.logic, status_update)
+                    )
+                    one_ok = keep_trying[i] = True
+
+        if not one_ok:
+            break
+        debug.debug_print(f"loop end! {one_ok}")
+
+    results = []
+    for task in shared_state.tasks:
+        result = task.result()
+        if result is None:
+            return None
+        results.append(result)
+
+    return results

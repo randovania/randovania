@@ -247,6 +247,7 @@ class Bootstrap(Generic[Configuration]):  # noqa: UP046
             self.create_damage_state(game, configuration).apply_collected_resource_difference(
                 resources, graph.resource_database.create_resource_collection()
             ),
+            (),
             graph.node_identifier_to_node[patches.starting_location],
             patches,
             None,

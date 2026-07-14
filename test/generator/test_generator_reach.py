@@ -229,6 +229,7 @@ def test_basic_search_with_translator_gate(
             game.resource_database.get_item("EnergyTank"),
             [],
         ),
+        (),
         graph.original_to_node[node_a.node_index],
         echoes_game_patches,
         None,

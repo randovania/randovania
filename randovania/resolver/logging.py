@@ -309,6 +309,7 @@ class ResolverLogger(abc.ABC):
 
 
 class TextResolverLogger(ResolverLogger):
+    prefix: str = ""
     current_indent: int
 
     def logger_start(self) -> None:
@@ -320,7 +321,7 @@ class TextResolverLogger(ResolverLogger):
         return debug.debug_level() > debug.LogLevel.SILENT
 
     def _indent(self, offset: int = 0) -> str:
-        return " " * (self.current_indent - offset)
+        return self.prefix + " " * (self.current_indent - offset)
 
     def action_string(self, details: ActionDetails | None) -> str:
         if details is None:

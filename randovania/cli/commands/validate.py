@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import time
+from collections.abc import Coroutine
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -20,8 +21,6 @@ def validate_command_logic(args: Namespace) -> int:
     debug.set_level(args.debug)
 
     description = LayoutDescription.from_file(args.layout_file)
-    if description.world_count != 1:
-        raise ValueError("Validator does not support layouts with more than 1 player.")
 
     output_file = None
     write_to: Path | None = args.write_to
@@ -33,20 +32,31 @@ def validate_command_logic(args: Namespace) -> int:
 
         debug.print_function = write_to_log
 
-    configuration: BaseConfiguration = description.get_preset(0).configuration
-    patches = description.all_patches[0]
+    if description.world_count > 1:
+
+        def do_resolve() -> Coroutine[None, None, object | None]:
+            return resolver.multiworld_resolve(
+                worlds=[
+                    (preset.configuration, patches)
+                    for preset, patches in zip(description.all_presets, description.all_patches.values(), strict=True)
+                ]
+            )
+    else:
+        configuration: BaseConfiguration = description.get_preset(0).configuration
+
+        def do_resolve() -> Coroutine[None, None, object | None]:
+            return resolver.resolve(
+                configuration=configuration,
+                patches=description.all_patches[0],
+                record_paths=debug.debug_level() > 0,
+            )
+
     total_times = []
 
     final_state_by_resolve = None
     for _ in range(args.repeat):
         before = time.perf_counter()
-        final_state_by_resolve = asyncio.run(
-            resolver.resolve(
-                configuration=configuration,
-                patches=patches,
-                record_paths=debug.debug_level() > 0,
-            )
-        )
+        final_state_by_resolve = asyncio.run(do_resolve())
         after = time.perf_counter()
         total_times.append(after - before)
         print(

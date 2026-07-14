@@ -42,6 +42,7 @@ def test_requirement_lists_without_satisfied_resources(
         echoes_game_description.game.generator.bootstrap.create_damage_state(
             echoes_game_description, default_echoes_preset.configuration
         ),
+        (),
         None,  # type: ignore[arg-type]
         echoes_game_patches,
         None,
@@ -222,6 +223,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
             db.get_item("EnergyTank"),
             [],
         ),
+        (),
         MagicMock(),
         echoes_game_patches,
         None,
