@@ -241,12 +241,14 @@ class Bootstrap(Generic[Configuration]):  # noqa: UP046
         patches: GamePatches,
     ) -> State:
         return State(
+            graph.world_index,
             resources.duplicate(),
             {},
             (),
             self.create_damage_state(game, configuration).apply_collected_resource_difference(
                 resources, graph.resource_database.create_resource_collection()
             ),
+            (),
             graph.node_identifier_to_node[patches.starting_location],
             patches,
             None,

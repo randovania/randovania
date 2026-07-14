@@ -250,6 +250,9 @@ class WorldGraph:
     Represents a highly optimised view of a RegionList, with all per-Preset tweaks baked in.
     """
 
+    world_index: int
+    """In the context of a multiworld, the index of the world this graph belongs to."""
+
     game_enum: RandovaniaGame
     resource_database: ResourceDatabaseView
     victory_condition: GraphRequirementSet

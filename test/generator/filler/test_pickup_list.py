@@ -36,12 +36,14 @@ def test_requirement_lists_without_satisfied_resources(
         return search.find_resource_info_with_long_name(db.item, name)
 
     state = State(
+        0,
         db.create_resource_collection(),
         {},
         (),
         echoes_game_description.game.generator.bootstrap.create_damage_state(
             echoes_game_description, default_echoes_preset.configuration
         ),
+        (),
         None,  # type: ignore[arg-type]
         echoes_game_patches,
         None,
@@ -212,6 +214,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
     resources.set_resource(db.get_item("Missile"), 5)
 
     state = State(
+        0,
         resources,
         {},
         (),
@@ -221,6 +224,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
             db.get_item("EnergyTank"),
             [],
         ),
+        (),
         MagicMock(),
         echoes_game_patches,
         None,

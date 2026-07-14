@@ -13,15 +13,11 @@ from randovania.resolver import debug, resolver
 if TYPE_CHECKING:
     from argparse import ArgumentParser, Namespace, _SubParsersAction
 
-    from randovania.layout.base.base_configuration import BaseConfiguration
-
 
 def validate_command_logic(args: Namespace) -> int:
     debug.set_level(args.debug)
 
     description = LayoutDescription.from_file(args.layout_file)
-    if description.world_count != 1:
-        raise ValueError("Validator does not support layouts with more than 1 player.")
 
     output_file = None
     write_to: Path | None = args.write_to
@@ -33,8 +29,6 @@ def validate_command_logic(args: Namespace) -> int:
 
         debug.print_function = write_to_log
 
-    configuration: BaseConfiguration = description.get_preset(0).configuration
-    patches = description.all_patches[0]
     total_times = []
 
     final_state_by_resolve = None
@@ -42,8 +36,10 @@ def validate_command_logic(args: Namespace) -> int:
         before = time.perf_counter()
         final_state_by_resolve = asyncio.run(
             resolver.resolve(
-                configuration=configuration,
-                patches=patches,
+                [
+                    (preset.configuration, patches)
+                    for preset, patches in zip(description.all_presets, description.all_patches, strict=True)
+                ],
                 record_paths=debug.debug_level() > 0,
             )
         )
