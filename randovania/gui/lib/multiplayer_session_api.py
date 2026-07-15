@@ -267,6 +267,14 @@ class MultiplayerSessionApi(NetworkErrorDelegator, QtCore.QObject):
         )
 
     @handle_network_errors
+    async def set_allow_abandon_worlds(self, flag: bool) -> None:
+        self.logger.info("Setting whether to allow abandoning worlds to %s", flag)
+        await self._session_admin_global(
+            admin_actions.SessionAdminGlobalAction.SET_ALLOW_ABANDON_WORLDS,
+            flag,
+        )
+
+    @handle_network_errors
     async def switch_readiness(self, user_id: int) -> None:
         self.logger.info("Switching ready-ness of %d", user_id)
         await self._session_admin_player(

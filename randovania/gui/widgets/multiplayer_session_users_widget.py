@@ -139,6 +139,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         admin: bool
         allow_coop: bool
         allow_everyone_claim_world: bool
+        allow_abandon_worlds: bool
         users: tuple[MultiplayerSessionUsersWidget.UserState, ...]
         worlds: tuple[MultiplayerSessionUsersWidget.WorldState, ...]
         generation_in_progress: int | None
@@ -185,6 +186,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             self.is_admin(),
             session.allow_coop,
             session.allow_everyone_claim_world,
+            session.allow_abandon_worlds,
             tuple(
                 MultiplayerSessionUsersWidget.UserState(
                     user.id,
@@ -539,7 +541,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 # if `is_valid_owner` is false, use your admin id to abandon an unclaimed world
                 abandon_owner = owner if is_valid_owner(owner) else self.your_id
                 abandon_action = world_menu.addAction("Abandon (release to bot)")
-                abandon_action.setEnabled(has_layout)
+                abandon_action.setEnabled(has_layout and self._session.allow_abandon_worlds)
                 connect_to(abandon_action, self._world_abandon, world_id, abandon_owner)
 
         if is_valid_owner(owner):

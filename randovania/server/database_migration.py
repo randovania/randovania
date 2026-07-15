@@ -36,7 +36,7 @@ def add_game_beaten_field(migrator: playhouse.migrate.SqliteMigrator) -> None:
         )
 
 
-def add_world_abandoned_field(migrator: playhouse.migrate.SqliteMigrator) -> None:
+def add_world_abandoned_fields(migrator: playhouse.migrate.SqliteMigrator) -> None:
     with database.db.atomic():
         database.db.execute(
             migrator._alter_table(migrator.make_context(), "world")
@@ -44,13 +44,19 @@ def add_world_abandoned_field(migrator: playhouse.migrate.SqliteMigrator) -> Non
             .sql(peewee.Entity("abandoned"))
             .literal(" INTEGER NOT NULL DEFAULT(0)")  # SQLite saves boolean values as integers
         )
+        database.db.execute(
+            migrator._alter_table(migrator.make_context(), "multiplayer_session")
+            .literal(" ADD ")
+            .sql(peewee.Entity("allow_abandon_worlds"))
+            .literal(" INTEGER NOT NULL DEFAULT(1)")
+        )
 
 
 _migrations = {
     database.DatabaseMigrations.ADD_READY_TO_MEMBERSHIP: add_ready_field,
     database.DatabaseMigrations.SESSION_STATE_TO_VISIBILITY: rename_state_to_visibility,
     database.DatabaseMigrations.ADD_GAME_BEATEN: add_game_beaten_field,
-    database.DatabaseMigrations.ADD_WORLD_ABANDONED: add_world_abandoned_field,
+    database.DatabaseMigrations.ADD_WORLD_ABANDONED: add_world_abandoned_fields,
 }
 
 

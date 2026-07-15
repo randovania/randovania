@@ -367,6 +367,7 @@ async def _duplicate_session(sa: ServerApp, sid: str, session: MultiplayerSessio
             dev_features=session.dev_features,
             allow_coop=session.allow_coop,
             allow_everyone_claim_world=session.allow_everyone_claim_world,
+            allow_abandon_worlds=session.allow_abandon_worlds,
         )
         for world in session.worlds:
             assert isinstance(world, World)
@@ -455,6 +456,9 @@ async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *
 
     elif action_ == SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM:
         await _set_allow_everyone_claim(sa, sid, session, *args)
+
+    elif action_ == SessionAdminGlobalAction.SET_ALLOW_ABANDON_WORLDS:
+        await _set_allow_abandon_worlds(sa, sid, session, *args)
 
     await session_common.emit_session_meta_update(sa, session)
 
@@ -554,6 +558,9 @@ async def _abandon_world(
     _verify_world_has_session(world, session)
     await verify_has_admin_or_claimed(sa, sid, world)
 
+    if not session.allow_abandon_worlds:
+        raise error.InvalidActionError("Abandoning worlds is not allowed in this session")
+
     if not session.has_layout_description():
         raise error.InvalidActionError("Session has no generated game")
 
@@ -620,6 +627,16 @@ async def _set_allow_everyone_claim(sa: ServerApp, sid: str, session: Multiplaye
         session.allow_everyone_claim_world = new_state
         new_operation = "Allowing" if session.allow_everyone_claim_world else "Disallowing"
         await session_common.add_audit_entry(sa, sid, session, f"{new_operation} everyone to claim worlds.")
+        session.save()
+
+
+async def _set_allow_abandon_worlds(sa: ServerApp, sid: str, session: MultiplayerSession, new_state: bool) -> None:
+    await verify_has_admin(sa, sid, session.id, None)
+
+    with database.db.atomic():
+        session.allow_abandon_worlds = new_state
+        new_operation = "Allowing" if session.allow_abandon_worlds else "Disallowing"
+        await session_common.add_audit_entry(sa, sid, session, f"{new_operation} abandoning worlds.")
         session.save()
 
 

@@ -186,6 +186,7 @@ class MultiplayerSession(BaseModel):
 
     allow_coop: bool = peewee.BooleanField(default=False)
     allow_everyone_claim_world: bool = peewee.BooleanField(default=False)
+    allow_abandon_worlds: bool = peewee.BooleanField(default=True)
 
     members: list[MultiplayerMembership]
     worlds: list[World]
@@ -389,6 +390,7 @@ class MultiplayerSession(BaseModel):
             allowed_games=self.allowed_games,
             allow_coop=self.allow_coop,
             allow_everyone_claim_world=self.allow_everyone_claim_world,
+            allow_abandon_worlds=self.allow_abandon_worlds,
         )
 
     def get_audit_log(self) -> MultiplayerSessionAuditLog:
