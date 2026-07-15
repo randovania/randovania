@@ -191,11 +191,11 @@ async def test_game_session_collect_pickup_for_self(
     result = await world_api.collect_locations(mock_sa, w1, (0,))
 
     # Assert
-    assert result == set()
+    assert result == ({w1} if has_pickup else set())
     mock_sa.sio.emit.assert_not_awaited()
     mock_get_pickup_target.assert_called_once_with(mock_session_description.return_value, 0, 0)
-    with pytest.raises(peewee.DoesNotExist):
-        database.WorldAction.get(provider=w1, location=0)
+    action = database.WorldAction.get(provider=w1, location=0)
+    assert action.receiver == w1
 
 
 @pytest.mark.parametrize(

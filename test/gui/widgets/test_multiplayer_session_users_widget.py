@@ -83,6 +83,7 @@ def test_widgets_in_normal_session(skip_qtbot, preset_manager):
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_abandon_worlds=True,
     )
 
     session_api = MagicMock()
@@ -118,6 +119,7 @@ def test_widgets_in_normal_session(skip_qtbot, preset_manager):
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_abandon_worlds=True,
     )
 
     # Run
@@ -193,6 +195,7 @@ def test_widgets_with_abandoned_world(skip_qtbot, preset_manager):
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_abandon_worlds=True,
     )
 
     session_api = MagicMock()
@@ -258,6 +261,7 @@ def _abandoned_world_session(preset_manager, *, claimed: bool) -> MultiplayerSes
         allowed_games=[RandovaniaGame.BLANK],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_abandon_worlds=True,
     )
 
 
@@ -388,6 +392,7 @@ def test_widgets_in_coop_session(skip_qtbot, preset_manager):
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=True,
         allow_everyone_claim_world=True,
+        allow_abandon_worlds=True,
     )
 
     session_api = MagicMock()
@@ -423,6 +428,7 @@ def test_widgets_in_coop_session(skip_qtbot, preset_manager):
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_abandon_worlds=True,
     )
 
     # Run
