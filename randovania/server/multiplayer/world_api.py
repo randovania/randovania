@@ -99,7 +99,7 @@ async def _collect_location(
     :param world:
     :param description:
     :param pickup_location:
-    :return: The rewarded player if some player must be updated of the fact.
+    :return: The rewarded world, if a new action was recorded for it.
     """
     assert world.order is not None
     pickup_target = _get_pickup_target(description, world.order, pickup_location)
@@ -117,19 +117,11 @@ async def _collect_location(
         )
 
     if pickup_target is None:
-        if not world.abandoned:
-            log("It's nothing.")
-            return None
-        # we must properly collect a nothing item for ourself in an abandoned world for the connector
         try:
             WorldAction.create(provider=world, location=pickup_location, session=session, receiver=world)
         except peewee.IntegrityError:
             pass
         log("It's nothing.")
-        return None
-
-    if pickup_target.player == world.order and not session.allow_coop and not world.abandoned:
-        log("It's a %s for themselves.", pickup_target.pickup.name)
         return None
 
     target_world = World.get_by_order(session.id, pickup_target.player)
@@ -142,9 +134,13 @@ async def _collect_location(
             receiver=target_world,
         )
     except peewee.IntegrityError:
-        # Already exists, and it's for another player, no inventory update needed
+        # Already exists, no inventory update needed
         log("It's a %s for %s, but it was already collected.", pickup_target.pickup.name, target_world.name)
         return None
+
+    if pickup_target.player == world.order and not session.allow_coop and not world.abandoned:
+        log("It's a %s for themselves.", pickup_target.pickup.name)
+        return target_world
 
     assert target_world.order is not None
     target_game = description.get_preset(target_world.order).game
@@ -412,6 +408,8 @@ async def emit_world_pickups_update(sa: ServerApp, world: World) -> None:
     assert world.order is not None
     resource_database = _get_resource_database(description, world.order)
 
+    include_own_pickups = session.allow_coop or world.abandoned
+
     result: list[RemotePickup] = []
     actions: list[WorldAction] = (
         WorldAction.select(
@@ -427,6 +425,10 @@ async def emit_world_pickups_update(sa: ServerApp, world: World) -> None:
 
     for action in actions:
         assert action.provider.order is not None
+        is_own_pickup = action.provider.uuid == world.uuid
+        if is_own_pickup and not include_own_pickups:
+            continue
+
         pickup_target = _get_pickup_target(description, action.provider.order, action.location)
 
         if pickup_target is not None:
@@ -434,7 +436,7 @@ async def emit_world_pickups_update(sa: ServerApp, world: World) -> None:
                 RemotePickup(
                     provider_name=action.provider.name,
                     pickup_entry=pickup_target.pickup,
-                    coop_location=PickupIndex(action.location) if action.provider.uuid == world.uuid else None,
+                    coop_location=PickupIndex(action.location) if is_own_pickup else None,
                 )
             )
 
