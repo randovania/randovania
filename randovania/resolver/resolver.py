@@ -283,83 +283,62 @@ async def _inner_advance_depth(
         state.hint_state.advance_hint_seen_count(state)
 
     if logic.victory_condition(state).satisfied(state.resources, state.health_for_damage_requirements):
-        return state, True
+        logic.stepper.has_victory = state
+        # FIXME: this is quite a hack to keep running past victory.
+        # return state, True
 
     # Yield back to the asyncio runner, so cancel can do something
     await asyncio.sleep(0)
 
     status_update(f"Resolving... {state.resources.num_resources} total resources")
 
+    if reach is None:
+        reach = ResolverReach.calculate_reach(logic, state)
+
+    actions_by_priority: dict[ActionPriority, list[tuple[ResolverAction, DamageState]]] = {
+        priority: [] for priority in ActionPriority
+    }
+
+    new_result = await _calculate_actions_by_priority_and_try_safe(
+        state,
+        logic,
+        status_update,
+        reach,
+        max_attempts,
+        actions_by_priority,
+    )
+    if new_result is not None:
+        return new_result
+
+    actions: list[tuple[ActionPriority, ResolverAction, DamageState]] = [
+        (priority, action, damage_state)
+        for priority, entries in actions_by_priority.items()
+        # HACK: sort nodes so they're somewhat more consistent between classic and new graph
+        for action, damage_state in sorted(entries, key=_index_for_action_pair)
+    ]
+    logic.logger.log_checking_satisfiable(actions)
     has_action = False
-    keep_retrying = True
-
-    while keep_retrying:
-        keep_retrying = False
-
-        if state.received_pickups != logic.stepper.get_received_pickups():
-            state = state.receive_new_pickups(logic.stepper.get_received_pickups())
-            reach = None
-
-        if reach is None:
-            reach = ResolverReach.calculate_reach(logic, state)
-
-        actions_by_priority: dict[ActionPriority, list[tuple[ResolverAction, DamageState]]] = {
-            priority: [] for priority in ActionPriority
-        }
-
-        new_result = await _calculate_actions_by_priority_and_try_safe(
-            state,
-            logic,
-            status_update,
-            reach,
-            max_attempts,
-            actions_by_priority,
-        )
-        if new_result is not None:
-            return new_result
-
-        await logic.stepper.synchronize()
-        if state.received_pickups != logic.stepper.get_received_pickups():
-            keep_retrying = True
+    for _, action, damage_state in actions:
+        action_additional_requirements = logic.get_additional_requirements(action)
+        if not action_additional_requirements.satisfied(state.resources, damage_state.health_for_damage_requirements()):
+            logic.logger.log_skip(action, state, logic)
             continue
 
-        actions: list[tuple[ActionPriority, ResolverAction, DamageState]] = [
-            (priority, action, damage_state)
-            for priority, entries in actions_by_priority.items()
-            # HACK: sort nodes so they're somewhat more consistent between classic and new graph
-            for action, damage_state in sorted(entries, key=_index_for_action_pair)
-        ]
-        logic.logger.log_checking_satisfiable(actions)
-        has_action = False
-        for _, action, damage_state in actions:
-            action_additional_requirements = logic.get_additional_requirements(action)
-            if not action_additional_requirements.satisfied(
-                state.resources, damage_state.health_for_damage_requirements()
-            ):
-                logic.logger.log_skip(action, state, logic)
-                continue
+        new_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
+        _post_act_on_node(new_state, action, logic)
+        new_result = await _inner_advance_depth(
+            state=new_state,
+            logic=logic,
+            status_update=status_update,
+            max_attempts=max_attempts,
+        )
 
-            new_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
-            _post_act_on_node(new_state, action, logic)
-            new_result = await _inner_advance_depth(
-                state=new_state,
-                logic=logic,
-                status_update=status_update,
-                max_attempts=max_attempts,
-            )
+        # We got a positive result. Send it back up
+        if new_result[0] is not None:
+            return new_result
+        else:
+            has_action = True
 
-            # We got a positive result. Send it back up
-            if new_result[0] is not None:
-                return new_result
-            else:
-                has_action = True
-
-            await logic.stepper.synchronize()
-            if state.received_pickups != logic.stepper.get_received_pickups():
-                keep_retrying = True
-                break
-
-    assert reach is not None
     additional_requirements: set[GraphRequirementList] = reach.satisfiable_requirements_for_additionals
     old_additional_requirements = logic.get_additional_requirements(state.node)
 
@@ -464,7 +443,6 @@ async def resolve(
 class MultiworldSharedState:
     received_pickups: list[list[PickupEntry]]
     steppers: list[MultiworldResolverStepper]
-    tasks: list[asyncio.Task]
 
 
 class MultiworldResolverStepper(ResolverStepper):
@@ -474,6 +452,7 @@ class MultiworldResolverStepper(ResolverStepper):
     game: GameDescription
     shared_state: MultiworldSharedState
     _collected_indices: set[PickupIndex]
+    last_received_pickup_count: int = -1
 
     def __init__(
         self,
@@ -489,22 +468,6 @@ class MultiworldResolverStepper(ResolverStepper):
         self.game = game
         self.shared_state = shared_state
         self._collected_indices = set()
-        self._paused = asyncio.Event()
-        self._resume = asyncio.Event()
-
-    async def synchronize(self) -> None:
-        self._paused.set()
-        debug.debug_print(f"{self.logic.logger.prefix} Sleeping")
-        await self._resume.wait()
-        debug.debug_print(f"{self.logic.logger.prefix} Resumed")
-        self._resume.clear()
-
-    async def resume_execution(self, task: asyncio.Task) -> bool:
-        waiter = asyncio.ensure_future(self._paused.wait())
-        self._resume.set()
-        await asyncio.wait({task, waiter}, return_when=asyncio.FIRST_COMPLETED)
-        waiter.cancel()
-        return not task.done()
 
     def on_collect_location(self, pickup_index: PickupIndex) -> None:
         if pickup_index in self._collected_indices:
@@ -517,6 +480,13 @@ class MultiworldResolverStepper(ResolverStepper):
 
     def get_received_pickups(self) -> Sequence[PickupEntry]:
         return tuple(self.shared_state.received_pickups[self.world_index])
+
+
+def print_item_requirements(req: GraphRequirementSet) -> None:
+    for alt in req.alternatives:
+        if any(it.resource_type not in {ResourceType.ITEM, ResourceType.DAMAGE} for it in alt.all_resources()):
+            continue
+        print(f"> {alt}")
 
 
 async def multiworld_resolve(
@@ -533,7 +503,6 @@ async def multiworld_resolve(
     shared_state = MultiworldSharedState(
         [[] for _ in worlds],
         [],
-        [],
     )
 
     for index, (configuration, patches) in enumerate(worlds):
@@ -545,41 +514,61 @@ async def multiworld_resolve(
         logic.stepper = stepper = MultiworldResolverStepper(index, logic, starting_state, game, shared_state)
         logic.logger.prefix = f"[{index}] "
         shared_state.steppers.append(stepper)
-        shared_state.tasks.append(asyncio.ensure_future(advance_depth(starting_state, logic, status_update)))
 
-    keep_trying = [True] * len(worlds)
     while True:
         one_ok = False
 
         for i in range(len(worlds)):
             stepper = shared_state.steppers[i]
+            received_pickups = shared_state.received_pickups[i]
 
-            if keep_trying[i]:
-                keep_trying[i] = await stepper.resume_execution(shared_state.tasks[i])
-                one_ok = one_ok or keep_trying[i]
+            if len(received_pickups) > stepper.last_received_pickup_count:
+                # print("==========================")
+                # print(f"Starting world {i} again. New pickups:")
+                # new_pickups = received_pickups[max(stepper.last_received_pickup_count, 0):]
+                # pickup_names = [p.name for p in new_pickups]
+                # for p in sorted(set(pickup_names)):
+                #     print(f"> {p}")
 
-            if not keep_trying[i]:
-                received_pickups = tuple(shared_state.received_pickups[i])
-                if stepper.initial_state.received_pickups != received_pickups:
-                    debug.debug_print(f"Restart world {i}")
-                    stepper.initial_state = stepper.initial_state.receive_new_pickups(received_pickups)
+                new_state = stepper.initial_state.assign_pickups_resources(received_pickups)
+                should_run = stepper.logic.get_additional_requirements(stepper.initial_state.node).satisfied(
+                    new_state.resources, new_state.health_for_damage_requirements
+                )
+                stepper.last_received_pickup_count = len(received_pickups)
 
-                    # FIXME: keeping the additional_requirements would be amazing, but it's breaking things?
-                    stepper.logic.additional_requirements = [GraphRequirementSet.trivial()] * stepper.logic.num_nodes
-                    shared_state.tasks[i] = asyncio.ensure_future(
-                        advance_depth(stepper.initial_state, stepper.logic, status_update)
-                    )
-                    one_ok = keep_trying[i] = True
+                # print("?? Additional Requirements:")
+                # print_item_requirements(stepper.logic.get_additional_requirements(stepper.initial_state.node))
+                # print(f"!! should run? {should_run}")
+                if not should_run:
+                    continue
+
+                one_ok = True
+                # FIXME: keeping the additional_requirements would be amazing, but it's breaking things?
+                stepper.logic.additional_requirements = [GraphRequirementSet.trivial()] * stepper.logic.num_nodes
+                await advance_depth(
+                    new_state,
+                    stepper.logic,
+                    status_update,
+                )
 
         if not one_ok:
             break
         debug.debug_print(f"loop end! {one_ok}")
 
-    results = []
-    for task in shared_state.tasks:
-        result = task.result()
-        if result is None:
-            return None
-        results.append(result)
+    print("Finished!")
 
-    return results
+    failed = False
+    last_result: list[State] = []
+
+    for i, stepper in enumerate(shared_state.steppers):
+        # print(f"> World {i}: {stepper.has_victory is not None}")
+        if stepper.has_victory is None:
+            failed = True
+            print_item_requirements(stepper.logic.get_additional_requirements(stepper.initial_state.node))
+        else:
+            last_result.append(stepper.has_victory)
+
+    if failed:
+        return None
+
+    return last_result

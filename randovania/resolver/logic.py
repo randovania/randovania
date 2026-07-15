@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 import gc
 from typing import TYPE_CHECKING
 
@@ -23,15 +22,7 @@ if TYPE_CHECKING:
 
 
 class ResolverStepper:
-    async def synchronize(self) -> None:
-        """
-        For multiworld resolver, pauses execution until `resume_execution` is called.
-        """
-        await asyncio.sleep(0)
-
-    async def resume_execution(self, task: asyncio.Task) -> bool:
-        await task
-        return not task.done()
+    has_victory: State | None = None
 
     def on_collect_location(self, pickup_index: PickupIndex) -> None:
         # Nothing
