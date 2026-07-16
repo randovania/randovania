@@ -282,6 +282,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.view_game_details_button.clicked.connect(self.view_game_details)
         self.everyone_can_claim_check.clicked.connect(self._on_everyone_can_claim_check)
         self.allow_coop_check.clicked.connect(self._on_allow_coop_check)
+        self.allow_abandon_worlds_check.clicked.connect(self._on_allow_abandon_worlds_check)
 
         # Background Tasks
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
@@ -398,6 +399,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.update_multiworld_client_status()
         self.everyone_can_claim_check.setChecked(session.allow_everyone_claim_world)
         self.everyone_can_claim_check.setEnabled(self.users_widget.is_admin())
+        self.allow_abandon_worlds_check.setChecked(session.allow_abandon_worlds)
+        self.allow_abandon_worlds_check.setEnabled(self.users_widget.is_admin())
         self.allow_coop_check.setChecked(session.allow_coop)
         self.allow_coop_check.setEnabled(self.users_widget.is_admin() and not_genned_yet)
         self.allow_coop_check.setText(
@@ -939,6 +942,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         await self.game_session_api.set_everyone_can_claim(self.everyone_can_claim_check.isChecked())
 
     @asyncSlot()
+    async def _on_allow_abandon_worlds_check(self) -> None:
+        await self.game_session_api.set_allow_abandon_worlds(self.allow_abandon_worlds_check.isChecked())
+
+    @asyncSlot()
     async def _on_allow_coop_check(self) -> None:
         if self.allow_coop_check.isChecked():
             await async_dialog.message_box(
@@ -1162,8 +1169,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         connected_worlds = {k: v for k, v in connected_worlds.items() if v}
 
+        world_uids = list(user_worlds.keys())
+
         world_status = []
-        for uid in user_worlds.keys():
+        for uid in world_uids:
             data = self._multiworld_client.database.get_data_for(uid)
 
             msg = (

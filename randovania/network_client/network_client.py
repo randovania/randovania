@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import base64
+import contextlib
 import functools
 import hashlib
 import logging
@@ -707,6 +708,22 @@ class NetworkClient:
 
             response.raise_for_status()
             return self._with_new_session(await response.json())
+
+    async def get_abandoned_world_data(self, world_uid: uuid.UUID) -> dict:
+        """Fetches the data needed to drive an abandoned world connector."""
+        try:
+            async with self.server_get(f"world/{world_uid}/abandoned-data") as response:
+                if response.status == 403:
+                    raise error.WorldNotAssociatedError
+
+                if response.status != 200:
+                    detail = ""
+                    with contextlib.suppress(Exception):
+                        detail = (await response.json()).get("detail", "")
+                    raise error.InvalidActionError(detail or f"Server returned status {response.status}")
+                return await response.json()
+        except aiohttp.ClientError as e:
+            raise UnableToConnect(str(e))
 
     async def join_multiplayer_session(self, session_id: int, password: str | None) -> MultiplayerSessionEntry:
         result = await server_signals.Multiplayer.JoinSession.call_server(self)(session_id, password)

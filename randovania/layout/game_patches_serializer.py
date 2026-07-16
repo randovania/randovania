@@ -125,6 +125,26 @@ def serialize_single(world_index: int, num_worlds: int, patches: GamePatches) ->
     return result
 
 
+def serialize_single_world_only(world_index: int, num_worlds: int, patches: GamePatches) -> dict:
+    """
+    Like ``serialize_single``, but strips all data about other worlds: pickups owned by them become
+    Nothing, and hints are removed entirely.
+
+    The result is enough to compute the world's own logic (only self-owned pickups affect it),
+    without spoiling what the world's locations hold for other worlds. It can be decoded with
+    ``decode_single`` using only this world's game and pool.
+    """
+    result = serialize_single(world_index, num_worlds, patches)
+    result["locations"] = [
+        location
+        if location["owner"] == world_index
+        else {**location, "pickup": _NOTHING_PICKUP_NAME, "owner": world_index}
+        for location in result["locations"]
+    ]
+    result["hints"] = {}
+    return result
+
+
 def _find_pickup_with_name(item_pool: list[PickupEntry], pickup_name: str) -> PickupEntry:
     for pickup in item_pool:
         if pickup.name == pickup_name:

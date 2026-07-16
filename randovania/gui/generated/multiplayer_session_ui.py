@@ -168,6 +168,12 @@ class Ui_MultiplayerSessionWindow(object):
 
         self.session_admin_layout.addWidget(self.allow_coop_check, 3, 0, 1, 1)
 
+        self.allow_abandon_worlds_check = QCheckBox(self.session_admin_group)
+        self.allow_abandon_worlds_check.setObjectName(u"allow_abandon_worlds_check")
+        self.allow_abandon_worlds_check.setChecked(True)
+
+        self.session_admin_layout.addWidget(self.allow_abandon_worlds_check, 2, 1, 1, 1)
+
 
         self.session_tab_layout.addWidget(self.session_admin_group, 0, 0, 1, 2)
 
@@ -301,7 +307,7 @@ class Ui_MultiplayerSessionWindow(object):
 
         self.retranslateUi(MultiplayerSessionWindow)
 
-        self.tab_widget.setCurrentIndex(0)
+        self.tab_widget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MultiplayerSessionWindow)
@@ -328,6 +334,7 @@ class Ui_MultiplayerSessionWindow(object):
         self.view_game_details_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"View Spoiler", None))
         self.everyone_can_claim_check.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Everyone can claim worlds", None))
         self.allow_coop_check.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Enable Co-Op", None))
+        self.allow_abandon_worlds_check.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Allow abandoning worlds", None))
         self.connectivity_group.setTitle(QCoreApplication.translate("MultiplayerSessionWindow", u"Connectivity", None))
         self.server_connection_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Connect to Server", None))
         self.edit_game_connections_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Edit Game Connections", None))

@@ -141,6 +141,7 @@ async def test_create_session(clean_database, test_client, preset_manager, defau
         "allowed_games": default_game_list,
         "allow_coop": False,
         "allow_everyone_claim_world": False,
+        "allow_abandon_worlds": True,
     }
 
 
@@ -196,6 +197,7 @@ async def test_join_session(
                 "name": "World 1",
                 "preset_raw": "{}",
                 "has_been_beaten": False,
+                "is_abandoned": False,
             }
         ],
         "game_details": None,
@@ -203,6 +205,7 @@ async def test_join_session(
         "allowed_games": default_game_list,
         "allow_coop": False,
         "allow_everyone_claim_world": False,
+        "allow_abandon_worlds": True,
     }
     mock_join_multiplayer_session.assert_awaited_once_with(mock_sa, "TheSid", session)
 

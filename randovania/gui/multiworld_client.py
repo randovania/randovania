@@ -212,6 +212,10 @@ class MultiworldClient(QtCore.QObject):
                 for uid, err in result.errors.items():
                     self.logger.info("When syncing %s, received %s", uid, err)
                     self._world_sync_errors[uid] = err
+                    for state in self.game_connection.connected_states.values():
+                        if state.id == uid:
+                            await state.source.on_world_sync_error(err)
+
                 self.SyncFailure.emit()
 
             if modified_data:
