@@ -329,6 +329,21 @@ async def test_admin_player_abandon_already_abandoned(mock_sa, solo_two_world_se
         )
 
 
+async def test_admin_player_abandon_not_allowed(mock_sa, solo_two_world_session):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+    solo_two_world_session.allow_abandon_worlds = False
+    solo_two_world_session.save()
+    world_uid = "1179c986-758a-4170-9b07-fe4541d78db0"
+
+    with pytest.raises(error.InvalidActionError, match="Abandoning worlds is not allowed in this session"):
+        await session_admin.admin_player(
+            mock_sa, "TheSid", 1, 1234, SessionAdminUserAction.ABANDON.value, world_uid, False
+        )
+
+    world = database.World.get_by_uuid(uuid.UUID(world_uid))
+    assert not world.abandoned
+
+
 async def test_admin_player_abandon_by_session_admin(
     mock_sa, solo_two_world_session, mock_audit, mock_emit_session_update
 ):
@@ -426,6 +441,19 @@ async def test_admin_session_patcher_file_not_associated(mock_sa, two_player_ses
 
     # Run
     with pytest.raises(error.NotAuthorizedForActionError):
+        await session_admin.admin_session(
+            mock_sa, "TheSid", 1, SessionAdminGlobalAction.CREATE_PATCHER_FILE.value, str(w2.uuid), {}
+        )
+
+
+async def test_admin_session_patcher_file_abandoned(mock_sa, solo_two_world_session):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+    w2 = database.World.get_by_id(2)
+    w2.abandoned = True
+    w2.save()
+
+    # Run
+    with pytest.raises(error.InvalidActionError, match="Cannot export an abandoned world"):
         await session_admin.admin_session(
             mock_sa, "TheSid", 1, SessionAdminGlobalAction.CREATE_PATCHER_FILE.value, str(w2.uuid), {}
         )
@@ -795,9 +823,16 @@ async def test_admin_session_change_layout_description(
     assert session_mod.game_details_json == '{"seed_hash": "ASDF", "word_hash": "Hash Words", "spoiler": true}'
 
 
+@pytest.mark.parametrize("abandoned", [False, True])
 @pytest.mark.parametrize("beaten", [True, False])
 async def test_admin_session_remove_layout_description(
-    mock_emit_session_update: MagicMock, clean_database, mock_sa, mock_audit, mocker: pytest_mock.MockerFixture, beaten
+    mock_emit_session_update: MagicMock,
+    clean_database,
+    mock_sa,
+    mock_audit,
+    mocker: pytest_mock.MockerFixture,
+    beaten,
+    abandoned,
 ):
     mock_emit_session_actions_update = mocker.patch(
         "randovania.server.multiplayer.session_common.emit_session_actions_update", autospec=True
@@ -814,7 +849,11 @@ async def test_admin_session_remove_layout_description(
         layout_description_json="layout_description_json",
     )
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
-    database.World.create(session=session, name="W1", preset="{}", uuid=original_uid, beaten=beaten)
+    world = database.World.create(
+        session=session, name="W1", preset="{}", uuid=original_uid, beaten=beaten, abandoned=abandoned
+    )
+    database.WorldUserAssociation.create(world=world, user=user1)
+    database.WorldAction.create(provider=world, location=0, receiver=world, session=session)
     mock_sa.get_current_user.return_value = user1
 
     # Run
@@ -828,8 +867,20 @@ async def test_admin_session_remove_layout_description(
     mock_audit.assert_awaited_once_with(mock_sa, "TheSid", session, "Removed generated game")
     assert database.MultiplayerSession.get_by_id(1).layout_description_json is None
     assert database.MultiplayerSession.get_by_id(1).generation_in_progress is None
-    assert database.World.get_by_id(1).uuid != original_uid
-    assert not database.World.get_by_id(1).beaten
+
+    # get new state of the world
+    world = database.World.get_by_id(world.id)
+    assert world.uuid != original_uid
+    assert not world.beaten
+    assert not world.abandoned
+    assert database.WorldAction.select().where(database.WorldAction.session == session).count() == 0
+    # An abandoned world's association is dropped when the layout is cleared, since it now needs a
+    # player to claim and play it
+    expected_associations = 0 if abandoned else 1
+    assert (
+        database.WorldUserAssociation.select().where(database.WorldUserAssociation.world == world.id).count()
+        == expected_associations
+    )
 
 
 @pytest.mark.parametrize("other_user", [False, True])
@@ -1149,5 +1200,52 @@ async def test_admin_error_on_disabling_coop_when_coop_worlds_exist(mock_sa, one
             "TheSid",
             one_world_two_player_coop_session.id,
             SessionAdminGlobalAction.SET_ALLOW_COOP.value,
+            False,
+        )
+
+
+@pytest.mark.parametrize("new_state", [False, True])
+@pytest.mark.parametrize("old_state", [False, True])
+async def test_admin_allow_abandon_worlds(
+    mock_sa, two_player_session, mock_audit, mock_emit_session_update, old_state, new_state
+):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+    two_player_session.allow_abandon_worlds = old_state
+    two_player_session.save()
+
+    # Run
+    await session_admin.admin_session(
+        mock_sa, "TheSid", 1, SessionAdminGlobalAction.SET_ALLOW_ABANDON_WORLDS.value, new_state
+    )
+
+    assert database.MultiplayerSession.get_by_id(1).allow_abandon_worlds == new_state
+    mock_audit.assert_awaited_once_with(
+        mock_sa, "TheSid", two_player_session, f"{'Allowing' if new_state else 'Disallowing'} abandoning worlds."
+    )
+    mock_emit_session_update.assert_awaited_once_with(mock_sa, two_player_session)
+
+
+async def test_admin_error_on_disabling_abandoned_worlds_when_abandoned_worlds_exist(mock_sa, two_player_session):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    two_player_session.allow_abandon_worlds = True
+    two_player_session.save()
+
+    database.World.create(
+        session=two_player_session,
+        name="World 3",
+        preset="{}",
+        order=2,
+        uuid=uuid.UUID("6b5ac1a1-d250-4f05-0000-ae37e8a92165"),
+        abandoned=True,
+    )
+
+    # Run / Assert
+    with pytest.raises(error.InvalidActionError):
+        await session_admin.admin_session(
+            mock_sa,
+            "TheSid",
+            two_player_session.id,
+            SessionAdminGlobalAction.SET_ALLOW_ABANDON_WORLDS.value,
             False,
         )

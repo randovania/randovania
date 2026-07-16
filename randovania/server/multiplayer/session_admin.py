@@ -633,6 +633,11 @@ async def _set_allow_everyone_claim(sa: ServerApp, sid: str, session: Multiplaye
 async def _set_allow_abandon_worlds(sa: ServerApp, sid: str, session: MultiplayerSession, new_state: bool) -> None:
     await verify_has_admin(sa, sid, session.id, None)
 
+    if not new_state:
+        for world in session.worlds:
+            if world.abandoned:
+                raise error.InvalidActionError("Can only disable abandoned worlds, if a world isn't already abandoned.")
+
     with database.db.atomic():
         session.allow_abandon_worlds = new_state
         new_operation = "Allowing" if session.allow_abandon_worlds else "Disallowing"
