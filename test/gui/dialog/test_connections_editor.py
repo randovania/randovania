@@ -90,9 +90,7 @@ def test_build_change_root(
     root_requirement = cast(RequirementAnd, Requirement.trivial())
     editor = connections_editor.ConnectionsEditor(parent, gd.resource_database, gd.region_list, root_requirement)
     after: Requirement = editor._controller._replace_at_path(root_requirement, [], expected)
-    # Command expects a path to the edited requirement for re-selection
-    # [0] points toward the first child of the tree's invisible root item i.e. the root requirement
-    editor._controller._push_command(root_requirement, after, [0], "Test change root")
+    editor._controller._push_command(root_requirement, after, [], "Test change root")
 
     # Assert
     assert editor.final_requirement == expected

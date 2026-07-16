@@ -1,3 +1,5 @@
+from typing import Any
+
 from PySide6.QtCore import QModelIndex, QObject, Signal
 from PySide6.QtGui import QUndoStack
 from PySide6.QtWidgets import QComboBox, QStackedWidget, QWidget
@@ -54,7 +56,7 @@ class RequirementController(QObject):
         self._undo_stack = undo_stack
 
         self._editors: dict[ResourceType | type[Requirement], Editor] = {}
-        self._active_item_index: QModelIndex | None = None
+        self._active_item_index: QModelIndex
 
         self._build_editors()
 
@@ -81,15 +83,14 @@ class RequirementController(QObject):
 
             editor.changed.connect(self._on_editor_field_changed)
 
-    def _insert_requirement_item(
-        self, items: tuple[Requirement, ...], item: Requirement, idx: int
-    ) -> tuple[Requirement, ...]:
-        return (*items[:idx], item, *items[idx:])
+    def _tuple_insert(self, items: tuple, idx: int, value: Any) -> tuple:
+        return (*items[:idx], value, *items[idx:])
 
-    def _replace_requirement_item(
-        self, items: tuple[Requirement, ...], item: Requirement, idx: int
-    ) -> tuple[Requirement, ...]:
-        return (*items[:idx], item, *items[idx + 1 :])
+    def _tuple_replace(self, items: tuple, idx: int, value: Any) -> tuple:
+        return (*items[:idx], value, *items[idx + 1 :])
+
+    def _tuple_remove(self, items: tuple, idx: int) -> tuple:
+        return (*items[:idx], *items[idx + 1 :])
 
     def _insert_at_path(
         self, root: RequirementArrayBase, path: list[int], at_idx: int, requirement: Requirement
@@ -98,14 +99,14 @@ class RequirementController(QObject):
         Returns a new Requirement tree with the Requirement inserted
         """
         if len(path) == 0:
-            new_items = self._insert_requirement_item(root.items, requirement, at_idx)
+            new_items = self._tuple_insert(root.items, at_idx, requirement)
             return type(root)(new_items, root.comment)
 
         idx = path[0]
         next_root = root.items[idx]
         assert isinstance(next_root, RequirementArrayBase)
         child = self._insert_at_path(next_root, path[1:], at_idx, requirement)
-        new_items = self._replace_requirement_item(root.items, child, idx)
+        new_items = self._tuple_replace(root.items, idx, child)
         return type(root)(new_items, root.comment)
 
     def _remove_at_path(self, root: RequirementArrayBase, path: list[int]) -> Requirement:
@@ -115,13 +116,13 @@ class RequirementController(QObject):
         idx = path[0]
 
         if len(path) == 1:
-            new_items = (*root.items[:idx], *root.items[idx + 1 :])
+            new_items = self._tuple_remove(root.items, idx)
             return type(root)(new_items, root.comment)
 
         next_root = root.items[idx]
         assert isinstance(next_root, RequirementArrayBase)
         child = self._remove_at_path(next_root, path[1:])
-        new_items = self._replace_requirement_item(root.items, child, idx)
+        new_items = self._tuple_replace(root.items, idx, child)
         return type(root)(new_items, root.comment)
 
     def _replace_at_path(self, root: RequirementArrayBase, path: list[int], requirement: Requirement) -> Requirement:
@@ -138,10 +139,10 @@ class RequirementController(QObject):
             if isinstance(next_root, RequirementArrayBase)
             else requirement
         )
-        new_items = self._replace_requirement_item(root.items, child, idx)
+        new_items = self._tuple_replace(root.items, idx, child)
         return type(root)(new_items, root.comment)
 
-    def _default_requirement_for_type(self, _type: type) -> Requirement:
+    def _default_requirement_for_type(self, _type: ResourceType | type[Requirement]) -> Requirement:
         if isinstance(_type, ResourceType):
             resource_info: ResourceInfo = self._db.get_by_type(_type)[0]
             return ResourceRequirement.simple(resource_info)
@@ -196,185 +197,148 @@ class RequirementController(QObject):
         with signals_blocked(self._combo_type):
             self._combo_type.setCurrentIndex(type_idx)
 
+    def _active_is_root(self) -> bool:
+        return not self._active_item_index.parent().isValid()
+
+    def _active_is_array(self) -> bool:
+        return isinstance(self._active_item_index.data(ROLE), RequirementArrayBase)
+
     def _push_command(
         self, before: Requirement, after: Requirement, selection_path: list[int], description: str
     ) -> None:
         self._undo_stack.push(Command(self._model, self._view, before, after, selection_path, description))
 
     def _on_add_requirement_pressed(self) -> None:
-        if self._active_item_index is None:
+        active = self._active_item_index.data(ROLE)
+        path: list[int] = self._model.path_from_index(self._active_item_index)
+        row: int
+        if self._active_is_array():
+            row = len(active.items)
+        elif len(path) > 0:
+            # Leaf is selected and is not the root
+            row = path[-1] + 1
+            path = path[:-1]
+        else:
             return
 
         before: Requirement = self._model.build_requirement()
-
-        # Root is not array type, can't add requirement
-        if not self._active_item_index.parent().isValid() and not isinstance(before, RequirementArrayBase):
-            return
-
         assert isinstance(before, RequirementArrayBase)
-        path: list[int] = self._model.path_from_index(self._active_item_index)
-        requirement_path = path[1:]
-        row: int = path[-1]
-        selected = self._active_item_index.data(ROLE)
+        new_requirement: Requirement = self._default_requirement_for_type(self._combo_type.currentData(ROLE))
+        after: Requirement = self._insert_at_path(before, path, row, new_requirement)
 
-        new_type = self._combo_type.currentData(ROLE)
-        requirement: Requirement = self._default_requirement_for_type(new_type)
-
-        if isinstance(selected, RequirementArrayBase):
-            # Array, add as child
-            row = len(selected.items)
-        elif self._active_item_index.parent().isValid():
-            # Leaf, add as sibling
-            requirement_path.pop()
-            row += 1
-        else:
-            # Root is leaf, can't add sibling
-            return
-
-        after: Requirement = self._insert_at_path(before, requirement_path, row, requirement)
-        selection_path: list[int] = path[:1] + requirement_path + [row]
-
-        self._push_command(before, after, selection_path, "Add Requirement")
+        self._push_command(before, after, [*path, row], "Add Requirement")
 
     def _on_delete_requirement_pressed(self) -> None:
-        if self._active_item_index is None:
-            return
-
         # Can't delete root
-        if not self._active_item_index.parent().isValid():
+        if self._active_is_root():
             return
 
         before: Requirement = self._model.build_requirement()
         assert isinstance(before, RequirementArrayBase)
         path: list[int] = self._model.path_from_index(self._active_item_index)
+        after: Requirement = self._remove_at_path(before, path)
+
         row: int = path[-1]
-        after: Requirement = self._remove_at_path(before, path[1:])
+        sibling_count: int = self._model.itemFromIndex(self._active_item_index).parent().rowCount() - 1
 
-        # Determine path for re-selection
-        selection_path: list[int] = list(path)
-        sibling_count: int = self._model.itemFromIndex(self._active_item_index).parent().rowCount()
+        if sibling_count == 0:
+            # No siblings remain, point to parent
+            path = path[:-1]
+        elif row == sibling_count:
+            # Has siblings but was last child, point to previous sibling
+            path[-1] = row - 1
 
-        if sibling_count == 1:
-            # No siblings remain, select parent
-            selection_path.pop()
-        elif row == sibling_count - 1:
-            # Was last child, select previous sibling
-            selection_path[-1] = row - 1
-
-        self._push_command(before, after, selection_path, "Delete Requirement")
+        self._push_command(before, after, path, "Delete Requirement")
 
     def _on_shift_up_pressed(self) -> None:
-        if self._active_item_index is None:
-            return
-
         # Can't shift root
-        if not self._active_item_index.parent().isValid():
+        if self._active_is_root():
             return
 
+        active: Requirement = self._active_item_index.data(ROLE)
         path: list[int] = self._model.path_from_index(self._active_item_index)
-        requirement_path = path[1:]
         row: int = path[-1]
 
-        selected: Requirement = self._active_item_index.data(ROLE)
         before: Requirement = self._model.build_requirement()
         assert isinstance(before, RequirementArrayBase)
-        after_remove: Requirement = self._remove_at_path(before, requirement_path)
+        after_remove: Requirement = self._remove_at_path(before, path)
         assert isinstance(after_remove, RequirementArrayBase)
 
         if row > 0:
-            # Next sibling exists
             row -= 1
             sibling_path: list[int] = [*path[:-1], row]
-            sibling_requirement = self._model.index_from_path(sibling_path).data(ROLE)
-            if isinstance(sibling_requirement, RequirementArrayBase):
-                # Sibling is an array, ascend into
-                row = len(sibling_requirement.items)
-                requirement_path = [*sibling_path[1:], row]
-        elif len(requirement_path) > 1:
-            # Escape parent
-            requirement_path.pop()
-            row = requirement_path[-1]
+            sibling: Requirement = self._model.index_from_path(sibling_path).data(ROLE)
+            if isinstance(sibling, RequirementArrayBase):
+                # Ascend into sibling
+                row = len(sibling.items)
+                path = [*sibling_path, row]
+        elif len(path) > 1:
+            path = path[:-1]
+            row = path[-1]
         else:
-            # Already at top, can't shift up
             return
 
-        after: Requirement = self._insert_at_path(after_remove, requirement_path[:-1], row, selected)
-        selection_path: list[int] = path[:1] + requirement_path[:-1] + [row]
+        after: Requirement = self._insert_at_path(after_remove, path[:-1], row, active)
+        path[-1] = row
 
-        self._push_command(before, after, selection_path, "Move Up")
+        self._push_command(before, after, path, "Move Up")
 
     def _on_shift_down_pressed(self) -> None:
-        if self._active_item_index is None:
-            return
-
         # Can't shift root
-        if not self._active_item_index.parent().isValid():
+        if self._active_is_root():
             return
 
+        active: Requirement = self._active_item_index.data(ROLE)
         path: list[int] = self._model.path_from_index(self._active_item_index)
-        requirement_path = path[1:]
         row: int = path[-1]
-        rows: int = self._model.itemFromIndex(self._active_item_index).parent().rowCount()
+        sibling_count: int = self._model.itemFromIndex(self._active_item_index).parent().rowCount() - 1
 
-        selected: Requirement = self._active_item_index.data(ROLE)
         before: Requirement = self._model.build_requirement()
         assert isinstance(before, RequirementArrayBase)
-        after_remove: Requirement = self._remove_at_path(before, requirement_path)
+        after_remove: Requirement = self._remove_at_path(before, path)
         assert isinstance(after_remove, RequirementArrayBase)
 
-        if row < rows - 1:
-            # Next sibling exists
+        if row < sibling_count:
             row += 1
             sibling_path: list[int] = [*path[:-1], row]
-            if isinstance(self._model.index_from_path(sibling_path).data(ROLE), RequirementArrayBase):
-                # Sibling is an array, descend into
+            sibling: Requirement = self._model.index_from_path(sibling_path).data(ROLE)
+            if isinstance(sibling, RequirementArrayBase):
+                # Descend into sibling
                 row = 0
-                requirement_path.extend([row])
-        elif len(requirement_path) > 1:
-            # Escape parent
-            requirement_path.pop()
-            row = requirement_path[-1] + 1
+                path = [*path, row]
+        elif len(path) > 1:
+            path = path[:-1]
+            row = path[-1] + 1
         else:
-            # Already at bottom, can't shift down
             return
 
-        after: Requirement = self._insert_at_path(after_remove, requirement_path[:-1], row, selected)
-        selection_path: list[int] = path[:1] + requirement_path[:-1] + [row]
+        after: Requirement = self._insert_at_path(after_remove, path[:-1], row, active)
+        path[-1] = row
 
-        self._push_command(before, after, selection_path, "Move Down")
+        self._push_command(before, after, path, "Move Down")
 
     def _on_type_combo_changed(self, idx: int = -1) -> None:
-        if self._active_item_index is None:
-            return
-
         before: Requirement = self._model.build_requirement()
-
-        current: Requirement = self._active_item_index.data(ROLE)
-        new_type: type = self._combo_type.currentData(ROLE)
-        changed: Requirement = self._change_requirement_type(current, new_type)
-
         path: list[int] = self._model.path_from_index(self._active_item_index)
-        after: Requirement = (
-            self._replace_at_path(before, path[1:], changed) if isinstance(before, RequirementArrayBase) else changed
+        changed: Requirement = self._change_requirement_type(
+            self._active_item_index.data(ROLE), self._combo_type.currentData(ROLE)
         )
+        after = changed
+        if isinstance(before, RequirementArrayBase):
+            after = self._replace_at_path(before, path, changed)
 
         self._push_command(before, after, path, "Change Type")
 
     def _on_editor_field_changed(self, requirement: Requirement) -> None:
-        if self._active_item_index is None:
-            return
-
-        current: Requirement = self._active_item_index.data(ROLE)
-        if isinstance(requirement, RequirementArrayBase) and isinstance(current, RequirementArrayBase):
-            requirement.items = current.items
+        if self._active_is_array() and isinstance(requirement, RequirementArrayBase):
+            # Preserve array items
+            requirement.items = self._active_item_index.data(ROLE).items
 
         before: Requirement = self._model.build_requirement()
         path: list[int] = self._model.path_from_index(self._active_item_index)
-        after: Requirement = (
-            self._replace_at_path(before, path[1:], requirement)
-            if isinstance(before, RequirementArrayBase)
-            else requirement
-        )
+        after = requirement
+        if isinstance(before, RequirementArrayBase):
+            after = self._replace_at_path(before, path, requirement)
 
         self._push_command(before, after, path, "Edit Requirement")
 

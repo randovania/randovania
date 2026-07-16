@@ -49,16 +49,21 @@ class RequirementModel(QStandardItemModel):
         return item
 
     def path_from_index(self, index: QModelIndex) -> list[int]:
+        """Returns the path to the given model index with the invisible root's index removed"""
         path = []
         while index.isValid():
             path.append(index.row())
             index = index.parent()
         path.reverse()
-        return path
+        return path[1:]
 
     def index_from_path(self, path: list[int]) -> QModelIndex:
+        """
+        Returns the model index at the given path <br>
+        Inserts the index of the invisible root item (0) before traversal
+        """
         index = QModelIndex()
-        for row in path:
+        for row in [0, *path]:
             next_index = self.index(row, 0, index)
             if not next_index.isValid():
                 return index  # Fallback to deepest valid ancenstor
