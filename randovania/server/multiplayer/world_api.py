@@ -208,7 +208,10 @@ async def get_abandoned_world_data(user: UserDep, world_uuid: str) -> dict:
     The data the GUI needs to drive an abandoned world: the world's own game
     modifications (stripped of anything about other worlds) and the locations already collected.
     """
-    world = World.get_by_uuid(uuid.UUID(world_uuid))
+    try:
+        world = World.get_by_uuid(uuid.UUID(world_uuid))
+    except MultiplayerSession.DoesNotExist:
+        raise HTTPException(status_code=404, detail="World not found")
 
     if not world.abandoned:
         raise HTTPException(status_code=409, detail="World is not abandoned")
