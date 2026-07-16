@@ -60,7 +60,12 @@ async def test_list_sessions(clean_database, mock_sa, limit):
     mock_sa.get_current_user.return_value = someone
 
     # Run
-    result = await session_api.list_sessions(mock_sa, "TheSid", limit)
+    if limit is None:
+        # omit the `limit` parameter, since a single parameter with the value `None` is not
+        # distinguishable from no parameter at all and it will be called without the parameter
+        result = await session_api.list_sessions(mock_sa, "TheSid")
+    else:
+        result = await session_api.list_sessions(mock_sa, "TheSid", limit)
 
     # Assert
     expected = [
@@ -136,6 +141,7 @@ async def test_create_session(clean_database, test_client, preset_manager, defau
         "allowed_games": default_game_list,
         "allow_coop": False,
         "allow_everyone_claim_world": False,
+        "allow_abandon_worlds": True,
     }
 
 
@@ -191,6 +197,7 @@ async def test_join_session(
                 "name": "World 1",
                 "preset_raw": "{}",
                 "has_been_beaten": False,
+                "is_abandoned": False,
             }
         ],
         "game_details": None,
@@ -198,6 +205,7 @@ async def test_join_session(
         "allowed_games": default_game_list,
         "allow_coop": False,
         "allow_everyone_claim_world": False,
+        "allow_abandon_worlds": True,
     }
     mock_join_multiplayer_session.assert_awaited_once_with(mock_sa, "TheSid", session)
 

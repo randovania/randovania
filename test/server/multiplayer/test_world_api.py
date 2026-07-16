@@ -13,6 +13,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel, StartingPickupBehavior
 from randovania.game_description.resources.inventory import Inventory
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.network_common import error, remote_inventory
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.world_sync import (
@@ -190,11 +191,11 @@ async def test_game_session_collect_pickup_for_self(
     result = await world_api.collect_locations(mock_sa, w1, (0,))
 
     # Assert
-    assert result == set()
+    assert result == ({w1} if has_pickup else set())
     mock_sa.sio.emit.assert_not_awaited()
     mock_get_pickup_target.assert_called_once_with(mock_session_description.return_value, 0, 0)
-    with pytest.raises(peewee.DoesNotExist):
-        database.WorldAction.get(provider=w1, location=0)
+    action = database.WorldAction.get(provider=w1, location=0)
+    assert action.receiver == w1
 
 
 @pytest.mark.parametrize(
@@ -362,6 +363,45 @@ async def test_world_sync(mock_sa, solo_two_world_session, mocker: MockerFixture
     mock_emit.assert_not_called()
 
 
+async def test_world_sync_abandoned_world_not_claimed(mock_sa, solo_two_world_session, mocker: MockerFixture):
+    # An abandoned world's bot runs for whoever claims it: a second instance reporting for the same
+    # world is refused, which is what keeps two bots from driving it at once.
+    mocker.patch("randovania.server.multiplayer.world_api.emit_world_pickups_update")
+
+    member = database.User.create(id=9999, name="Member")
+    database.MultiplayerMembership.create(user=member, session=solo_two_world_session, admin=False)
+    mock_sa.get_current_user.return_value = member
+
+    w1 = database.World.get_by_id(1)  # claimed by user 1234
+    w1.abandoned = True
+    w1.save()
+
+    request = ServerSyncRequest(
+        worlds=frozendict(
+            {
+                w1.uuid: ServerWorldSync(
+                    status=GameConnectionStatus.InGame,
+                    collected_locations=(5,),
+                    inventory=None,
+                    request_details=False,
+                    has_been_beaten=False,
+                ),
+            }
+        )
+    )
+
+    # Run
+    result = await world_api.world_sync(mock_sa, "TheSid", construct_pack.encode(request))
+
+    # Assert
+    assert construct_pack.decode(result, ServerSyncResponse) == ServerSyncResponse(
+        worlds=frozendict({}),
+        errors=frozendict({w1.uuid: error.WorldNotAssociatedError()}),
+    )
+    with pytest.raises(peewee.DoesNotExist):
+        database.WorldAction.get(provider=w1, location=5)
+
+
 @pytest.mark.parametrize("has_been_beaten", [True, False])
 async def test_dont_change_has_beaten(
     mock_sa, solo_two_world_session, mocker: MockerFixture, mock_emit_session_update, has_been_beaten
@@ -458,3 +498,108 @@ async def test_emit_inventory_room(mock_sa, solo_two_world_session):
         to=f"multiplayer-{world.uuid}-1234-inventory",
         room=None,
     )
+
+
+async def test_get_abandoned_world_data(test_client, solo_two_world_session, solo_two_world_session_layout):
+    test_client.set_logged_in_user(1234)
+
+    world = database.World.get_by_id(1)
+    world.abandoned = True
+    world.save()
+    database.WorldAction.create(provider=world, location=10, session=solo_two_world_session, receiver=world)
+    database.WorldAction.create(
+        provider=world, location=5, session=solo_two_world_session, receiver=database.World.get_by_id(2)
+    )
+
+    # Run
+    response = test_client.get(f"/world/{world.uuid}/abandoned-data")
+    response.raise_for_status()
+    result = response.json()
+
+    # Assert
+    assert result["order"] == 0
+    assert result["preset_raw"] == world.preset
+    assert result["collected_locations"] == [5, 10]
+
+    # Only data about the world itself is shared: every location entry is owned by this world and no
+    # location holding another world's item leaks its content.
+    description = solo_two_world_session_layout
+    own_assignment = description.all_patches[0].pickup_assignment
+    for location in result["game_modifications"]["locations"]:
+        assert location["owner"] == 0
+        target = own_assignment.get(PickupIndex(location["index"]))
+        if target is not None and target.player != 0:
+            assert location["pickup"] == "Nothing"
+    assert result["game_modifications"]["hints"] == {}
+
+
+async def test_get_abandoned_world_data_admin_without_claim(test_client, solo_two_world_session, mock_audit):
+    # Only whoever claims the world may run its bot, so not even a session admin gets the data
+    # without claiming it first. Fetching it never creates an association (nor an audit entry).
+    admin_user = database.User.create(id=5555, name="Session Admin")
+    database.MultiplayerMembership.create(user=admin_user, session=solo_two_world_session, admin=True)
+    test_client.set_logged_in_user(5555)
+
+    world = database.World.get_by_id(1)
+    world.abandoned = True
+    world.save()
+
+    response = test_client.get(f"/world/{world.uuid}/abandoned-data", headers={"Accept": "application/json"})
+    assert response.status_code == 403
+    assert response.json()["detail"] == "You must claim this world to run its bot"
+
+    with pytest.raises(peewee.DoesNotExist):
+        database.WorldUserAssociation.get_by_instances(world=world, user=5555)
+    mock_audit.assert_not_awaited()
+
+
+async def test_get_abandoned_world_data_not_abandoned(test_client, solo_two_world_session):
+    test_client.set_logged_in_user(1234)
+    world = database.World.get_by_id(1)
+
+    response = test_client.get(f"/world/{world.uuid}/abandoned-data", headers={"Accept": "application/json"})
+    assert response.status_code == 409
+    assert response.json()["detail"] == "World is not abandoned"
+
+
+async def test_get_abandoned_world_data_member_without_claim(test_client, solo_two_world_session):
+    # Being a session member isn't enough: the world's bot runs only for whoever claims it.
+    member = database.User.create(id=9999, name="Member")
+    database.MultiplayerMembership.create(user=member, session=solo_two_world_session, admin=False)
+    test_client.set_logged_in_user(9999)
+
+    world = database.World.get_by_id(1)
+    world.abandoned = True
+    world.save()
+
+    response = test_client.get(f"/world/{world.uuid}/abandoned-data", headers={"Accept": "application/json"})
+    assert response.status_code == 403
+    assert response.json()["detail"] == "You must claim this world to run its bot"
+
+
+async def test_get_abandoned_world_data_claimed_by_other_user(test_client, solo_two_world_session):
+    # The claimer runs the bot; a second member may not, so only one instance ever drives the world.
+    member = database.User.create(id=9999, name="Member")
+    database.MultiplayerMembership.create(user=member, session=solo_two_world_session, admin=False)
+    test_client.set_logged_in_user(9999)
+
+    world = database.World.get_by_id(1)
+    world.abandoned = True
+    world.save()
+    # world 1 is already claimed by user 1234, who is running its bot
+    assert database.WorldUserAssociation.get_by_instances(world=world, user=1234) is not None
+
+    response = test_client.get(f"/world/{world.uuid}/abandoned-data", headers={"Accept": "application/json"})
+    assert response.status_code == 403
+
+
+async def test_get_abandoned_world_data_non_member(test_client, solo_two_world_session):
+    database.User.create(id=9999, name="Intruder")
+    test_client.set_logged_in_user(9999)
+
+    world = database.World.get_by_id(1)
+    world.abandoned = True
+    world.save()
+
+    response = test_client.get(f"/world/{world.uuid}/abandoned-data", headers={"Accept": "application/json"})
+    assert response.status_code == 403

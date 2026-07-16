@@ -78,9 +78,12 @@ class BuilderUi:
         self.layout.addWidget(self.status, 1, 0, 1, 2)
 
     def update_for_disconnected_builder(self, builder: ConnectorBuilder) -> None:
-        message = "Not Connected."
-        if (status := builder.get_status_message()) is not None:
-            message += f" {status}"
+        if builder.enabled:
+            message = "Not Connected."
+            if (status := builder.get_status_message()) is not None:
+                message += f" {status}"
+        else:
+            message = "Disabled."
 
         self.status.setText(message)
         self.open_session_action.setEnabled(False)
@@ -183,6 +186,10 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         self.add_builder_menu = QtWidgets.QMenu(self.add_builder_button)
         self._builder_actions = {}
         for choice in ConnectorBuilderChoice.all_usable_choices():
+            if choice == ConnectorBuilderChoice.ABANDONED:
+                # an abandoned world connection is bound to a specific world, so it's added from that
+                # world's context menu in the session window instead
+                continue
             action = QtGui.QAction(choice.pretty_text, self.add_builder_menu)
             self._builder_actions[choice] = action
             action.triggered.connect(functools.partial(self._add_connector_builder, choice))
@@ -346,6 +353,11 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         ui.menu.addAction("Remove").triggered.connect(
             functools.partial(self.game_connection.remove_connection_builder, builder)
         )
+
+        action = ui.menu.addAction("Enabled")
+        action.setCheckable(True)
+        action.setChecked(builder.enabled)
+        action.triggered.connect(functools.partial(self.game_connection.toggle_builder_enabled, builder))
 
         ui.menu.addSeparator()
         ui.open_session_action = ui.menu.addAction("Open Session Window")

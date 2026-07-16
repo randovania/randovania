@@ -6,7 +6,7 @@ from randovania.discord_bot import bot
 
 
 async def test_on_ready():
-    b = bot.RandovaniaBot({"command_prefix": "prefix-"})
+    b = bot.RandovaniaBot({"token": "XXXXX", "command_prefix": "prefix-"}, {})
     assert len(b.extensions) == 3
 
     b.sync_commands = AsyncMock()
@@ -22,12 +22,13 @@ async def test_on_ready():
 
 
 def test_run(mocker):
-    config = MagicMock()
+    bot_config = MagicMock()
+    network_config = {
+        "discord_bot": bot_config,
+    }
     mocker.patch(
         "randovania.get_configuration",
-        return_value={
-            "discord_bot": config,
-        },
+        return_value=network_config,
     )
     mock_bot_class = mocker.patch("randovania.discord_bot.bot.RandovaniaBot")
 
@@ -35,5 +36,5 @@ def test_run(mocker):
     bot.run()
 
     # Assert
-    mock_bot_class.assert_called_once_with(config)
-    mock_bot_class.return_value.run.assert_called_once_with(config["token"])
+    mock_bot_class.assert_called_once_with(bot_config, network_config)
+    mock_bot_class.return_value.run.assert_called_once_with(bot_config["token"])

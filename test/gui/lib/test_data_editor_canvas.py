@@ -3,7 +3,7 @@ from __future__ import annotations
 from unittest.mock import ANY, MagicMock, call
 
 import pytest
-from PySide6.QtCore import QPoint
+from PySide6.QtCore import QPoint, QPointF
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
@@ -147,6 +147,49 @@ def test_camera_data_invalid():
     camera_data = CameraData("something_wrong", (), ())  # type: ignore[arg-type]
     with pytest.raises(ValueError, match="Unknown coordinate system"):
         camera_data.game_loc_to_qt_local(0.0, 0.0, 0.0)
+
+
+def _world_loc_at(canvas: DataEditorCanvas, widget_point: QPointF):
+    return canvas.qt_local_to_game_loc(widget_point - canvas.get_area_canvas_offset())
+
+
+def test_set_zoom_value_keeps_center(skip_qtbot, canvas: DataEditorCanvas):
+    canvas.resize(800, 600)
+    canvas._update_scale_variables()
+    center = QPointF(400, 300)
+
+    world_before = _world_loc_at(canvas, center)
+    canvas.set_zoom_value(30)
+    world_after = _world_loc_at(canvas, center)
+
+    assert world_after.x == pytest.approx(world_before.x)
+    assert world_after.y == pytest.approx(world_before.y)
+
+
+def test_wheel_zoom_keeps_mouse_position(skip_qtbot, canvas: DataEditorCanvas):
+    canvas.resize(800, 600)
+    canvas._update_scale_variables()
+    anchor = QPointF(600, 150)
+
+    event = MagicMock()
+    event.position.return_value = anchor
+    event.angleDelta.return_value.y.return_value = 120
+
+    update_slider = MagicMock()
+    canvas.UpdateSlider.connect(update_slider)
+
+    canvas.wheelEvent(event)
+    update_slider.assert_called_once_with(True)
+
+    world_before = _world_loc_at(canvas, anchor)
+    canvas.set_zoom_value(25)
+    world_after = _world_loc_at(canvas, anchor)
+
+    assert world_after.x == pytest.approx(world_before.x)
+    assert world_after.y == pytest.approx(world_before.y)
+
+    # the anchor is one-shot: a following slider-only zoom must not reuse it
+    assert canvas._wheel_zoom_anchor is None
 
 
 def test_region_image(skip_qtbot, canvas: DataEditorCanvas, dread_game_description):

@@ -52,7 +52,7 @@ class HuntersGameExporter(GameExporter[HuntersGameExportParams]):
 
         from open_prime_hunters_rando.version import version as open_prime_hunters_rando_version
 
-        text_patches = patch_data["text_patches"]
+        text_patches = patch_data["text_patches"]["frontend"]
         text_patches["patcher_version"] = (
             f"RDV {randovania.VERSION} | OPHR {open_prime_hunters_rando_version}\n{text_patches['patcher_version']}"
         )

@@ -175,6 +175,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     pan_offset_x: float = 0.0
     pan_offset_y: float = 0.0
+    _wheel_zoom_anchor: QPointF | None = None
     _last_pan_point: QPointF | None = None
     _pan_start_point: QPointF | None = None
     _is_panning: bool = False
@@ -626,25 +627,21 @@ class DataEditorCanvas(QtWidgets.QWidget):
         painter.translate(self.get_area_canvas_offset())
 
         if self._background_image is not None:
-            scaled_border_x = 8 * self.border_x / self.scale
-            scaled_border_y = 8 * self.border_y / self.scale
-
             wbounds = self.region_bounds
-            abounds = self.area_bounds
+            offset = self.get_area_canvas_offset()
 
-            # Calculate the top-left corner and bottom-right of the background image
-            percent_x_start = (abounds.min_x - wbounds.min_x - scaled_border_x) / (wbounds.max_x - wbounds.min_x)
-            percent_x_end = (abounds.max_x - wbounds.min_x + scaled_border_x) / (wbounds.max_x - wbounds.min_x)
-            percent_y_start = 1 - (abounds.max_y - wbounds.min_y + scaled_border_y) / (wbounds.max_y - wbounds.min_y)
-            percent_y_end = 1 - (abounds.min_y - wbounds.min_y - scaled_border_y) / (wbounds.max_y - wbounds.min_y)
+            # Draw the part of the region visible in the widget, so panning and zooming never
+            # reveal an area of the widget the image was not drawn to.
+            top_left = self.qt_local_to_game_loc(-offset)
+            bottom_right = self.qt_local_to_game_loc(QPointF(self.width(), self.height()) - offset)
+
+            percent_x_start = (top_left.x - wbounds.min_x) / (wbounds.max_x - wbounds.min_x)
+            percent_x_end = (bottom_right.x - wbounds.min_x) / (wbounds.max_x - wbounds.min_x)
+            percent_y_start = 1 - (top_left.y - wbounds.min_y) / (wbounds.max_y - wbounds.min_y)
+            percent_y_end = 1 - (bottom_right.y - wbounds.min_y) / (wbounds.max_y - wbounds.min_y)
 
             painter.drawImage(
-                QRectF(
-                    -scaled_border_x * self.scale,
-                    -scaled_border_y * self.scale,
-                    (scaled_border_x * 2 + self.area_size.width()) * self.scale,
-                    (scaled_border_y * 2 + self.area_size.height()) * self.scale,
-                ),
+                QRectF(-offset.x(), -offset.y(), self.width(), self.height()),
                 self._background_image,
                 QRectF(
                     self.get_image_point(percent_x_start, percent_y_start),
@@ -730,8 +727,31 @@ class DataEditorCanvas(QtWidgets.QWidget):
             centered_text(painter, p + QPointF(0, 15), node.name)
 
     def set_zoom_value(self, new_zoom: int) -> None:
-        self.additional_zoom = new_zoom / 20
+        """Changes the zoom level, adjusting the pan offset so the anchor point stays over the same world point."""
+        new_additional_zoom = new_zoom / 20
+        anchor = self._wheel_zoom_anchor
+        self._wheel_zoom_anchor = None
+
+        if self.area is not None and new_additional_zoom != self.additional_zoom:
+            self._update_scale_variables()
+            old_scale = self.scale
+            if anchor is None:
+                # When updating the zoom via the slider, use widget center as anchor.
+                anchor = QPointF(self.width() / 2, self.height() / 2)
+            local = anchor - self.get_area_canvas_offset()
+
+            self.additional_zoom = new_additional_zoom
+            self._update_scale_variables()
+
+            desired_offset = anchor - local * (self.scale / old_scale)
+            delta = desired_offset - self.get_area_canvas_offset()
+            self.pan_offset_x += delta.x()
+            self.pan_offset_y += delta.y()
+        else:
+            self.additional_zoom = new_additional_zoom
+
         self.repaint()
 
     def wheelEvent(self, event: QtGui.QWheelEvent) -> None:
+        self._wheel_zoom_anchor = event.position()
         self.UpdateSlider.emit(event.angleDelta().y() > 0)
