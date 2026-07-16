@@ -210,8 +210,10 @@ async def get_abandoned_world_data(user: UserDep, world_uuid: str) -> dict:
     """
     try:
         world = World.get_by_uuid(uuid.UUID(world_uuid))
-    except MultiplayerSession.DoesNotExist:
-        raise HTTPException(status_code=404, detail="World not found")
+    except error.WorldDoesNotExistError:
+        # Do not tell the user if a world id is valid
+        # The client also has special handling to delete the connector when it gets a 403
+        raise HTTPException(status_code=403, detail="You must claim this world to run its bot")
 
     if not world.abandoned:
         raise HTTPException(status_code=409, detail="World is not abandoned")
