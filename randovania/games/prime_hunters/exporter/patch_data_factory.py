@@ -309,9 +309,9 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         gorea_text = "defeat GOREA in OUBLIETTE."
         placed_octoliths = config.octoliths.placed_octoliths
         if placed_octoliths >= 2:
-            goal_text = f"collect {placed_octoliths} OCTOLITHS and " + gorea_text
+            goal_text = f"collect {placed_octoliths} OCTOLITHS and {gorea_text}"
         elif placed_octoliths == 1:
-            goal_text = "collect 1 OCTOLITH and " + gorea_text
+            goal_text = f"collect 1 OCTOLITH and {gorea_text}"
         else:
             goal_text = gorea_text
 

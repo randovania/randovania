@@ -13,7 +13,7 @@ from randovania.games.prime_hunters.layout.force_field_configuration import Forc
         {"encoded": b"\x00", "bit_count": 2, "json": ForceFieldConfiguration.default().with_vanilla().as_json},
         {"encoded": b"@", "bit_count": 2, "json": ForceFieldConfiguration.default().with_full_random().as_json},
         {
-            "encoded": b"\x86\x1d\xdd\xc4DUY\x99\x95UT\xcc\xcc",
+            "encoded": b"\x84DUY\x99\x86\x1d\xdd\xcc\xcc\xd5UT",
             "bit_count": 102,
             "json": {
                 "force_field_requirement": {"Celestial Archives/Celestial Gateway/Battlehammer Force Field": "random"}
