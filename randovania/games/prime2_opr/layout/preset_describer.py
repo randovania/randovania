@@ -2,7 +2,7 @@ from randovania.game.gui import ProgressiveItemTuples
 from randovania.games.prime2.layout.preset_describer import shared_preset_description
 from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.preset_describer import GamePresetDescriber
+from randovania.layout.preset_describer import GamePresetDescriber, fill_template_strings_from_tree
 
 
 class EchoesOPRPresetDescriber(GamePresetDescriber):
@@ -11,6 +11,20 @@ class EchoesOPRPresetDescriber(GamePresetDescriber):
 
         template_strings = super().format_params(configuration)
         template_strings = shared_preset_description(template_strings, configuration)
+
+        extra_message_tree = {
+            "Game Changes": [
+                {
+                    "Practice Mod": configuration.practice_mod,
+                }
+            ],
+            "Gameplay": [
+                {
+                    "Portal destinations randomized": configuration.portal_rando,
+                }
+            ],
+        }
+        fill_template_strings_from_tree(template_strings, extra_message_tree)
 
         return template_strings
 

@@ -40,8 +40,8 @@ class AmmoPickupDefinition(BasePickupDefinition):
     allows_negative: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
     """Determines whether the user can configure this expansion to remove maximum ammo rather than provide it."""
 
-    hide_requires_main: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
-    """Determines whether to hide the option of requiring mains for the ammo pickup."""
+    show_requires_main: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
+    """Determines whether to show the option of not requiring mains for the ammo pickup, when unlocked_by is set."""
 
     include_expected_counts: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
     """Whether to indicate the maximum ammo from this source in the item pool tab."""

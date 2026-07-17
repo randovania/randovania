@@ -29,7 +29,7 @@ if typing.TYPE_CHECKING:
         DockWeaknessAssociation,
         PickupTargetAssociation,
     )
-    from randovania.game_description.db.dock import DockWeakness
+    from randovania.game_description.db.dock import DockType, DockWeakness
     from randovania.game_description.db.node import Node
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
@@ -148,9 +148,13 @@ class GamePatches:
     def all_dock_connections_identifiers(self) -> Iterator[tuple[NodeIdentifier, NodeIdentifier]]:
         return iter(self.dock_connection.items())
 
-    def all_dock_connections(self, view: GameDatabaseView) -> Iterator[tuple[DockNode, Node]]:
+    def all_dock_connections(
+        self, view: GameDatabaseView, dock_type: DockType | None = None
+    ) -> Iterator[tuple[DockNode, Node]]:
         for source, target in self.dock_connection.items():
-            yield view.typed_node_by_identifier(source, DockNode), view.node_by_identifier(target)
+            source_node = view.typed_node_by_identifier(source, DockNode)
+            if dock_type is None or source_node.dock_type == dock_type:
+                yield source_node, view.node_by_identifier(target)
 
     # Dock Weakness
     def assign_dock_weakness(self, weaknesses: Iterable[tuple[DockNode, DockWeakness]]) -> GamePatches:
@@ -184,10 +188,12 @@ class GamePatches:
     def should_shuffle_weakness(self, node: DockNode) -> bool:
         return node.identifier in self.weaknesses_to_shuffle
 
-    def all_dock_weaknesses(self, game_view: GameDatabaseView) -> Iterator[DockWeaknessAssociation]:
+    def all_dock_weaknesses(
+        self, game_view: GameDatabaseView, dock_type: DockType | None = None
+    ) -> Iterator[DockWeaknessAssociation]:
         for _, _, node in game_view.iterate_nodes_of_type(DockNode):
             weakness = self.dock_weakness.get(node.identifier)
-            if weakness is not None:
+            if weakness is not None and (dock_type is None or node.dock_type == dock_type):
                 yield node, weakness
 
     def all_weaknesses_to_shuffle(self, game_view: GameDatabaseView) -> Iterator[DockNode]:

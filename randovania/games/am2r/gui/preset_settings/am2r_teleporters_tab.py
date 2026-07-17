@@ -16,8 +16,6 @@ from randovania.layout.lib.teleporters import (
 )
 
 if TYPE_CHECKING:
-    from PySide6 import QtWidgets
-
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
@@ -69,9 +67,7 @@ class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeL
         if not am2r_config.nest_pipes:
             locations = [loc for loc in locations if region_list.does_node_identifier_exist(loc)]
 
-        checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
-            loc: self._create_check_for_source_teleporters(loc) for loc in locations
-        }
+        checks = {loc: self._create_check_for_source_teleporters(loc) for loc in locations}
 
         self._teleporters_source_for_location = copy.copy(checks)
         self._teleporters_source_destination: dict[NodeIdentifier, NodeIdentifier | None] = {}

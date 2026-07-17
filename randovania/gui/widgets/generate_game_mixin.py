@@ -136,7 +136,11 @@ class GenerateGameMixin:
 
         except Exception as e:
             common_qt_lib.alert_user_on_generation(self.generate_parent_widget, self._options)
-            await self.failure_handler.handle_exception(e, self._background_task.progress_update_signal.emit)
+
+            def progress_update(s: str, p: int) -> None:
+                self._background_task.progress_update_signal.emit(s, p)
+
+            await self.failure_handler.handle_exception(e, progress_update)
             return None
 
         self._background_task.progress_update_signal.emit(f"Success! (Seed hash: {layout.shareable_hash})", 100)

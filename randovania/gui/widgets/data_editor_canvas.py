@@ -3,11 +3,14 @@ from __future__ import annotations
 import functools
 import math
 import os
-from typing import TYPE_CHECKING, NamedTuple
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Literal, NamedTuple
 
+import numpy as np
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import QPointF, QRectF, QSizeF, Signal
 
+from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
@@ -51,6 +54,78 @@ class BoundsFloat(NamedTuple):
         return QRectF(QPointF(self.min_x, self.min_y), QPointF(self.max_x, self.max_y))
 
 
+def _expand_bounds_to_match_aspect(image_bounds: BoundsInt, world_bounds: BoundsFloat) -> BoundsInt:
+    """
+    Expands the image bounds symmetrically on one axis until its aspect ratio matches the world bounds.
+    """
+    world_width = world_bounds.max_x - world_bounds.min_x
+    world_height = world_bounds.max_y - world_bounds.min_y
+    if world_width <= 0 or world_height <= 0:
+        return image_bounds
+
+    image_width = image_bounds.max_x - image_bounds.min_x
+    image_height = image_bounds.max_y - image_bounds.min_y
+    if image_width <= 0 or image_height <= 0:
+        return image_bounds
+
+    if image_width * world_height < image_height * world_width:
+        # image is proportionally narrower than the world: include more columns
+        padding = (image_height * world_width / world_height - image_width) / 2
+        return BoundsInt(
+            min_x=round(image_bounds.min_x - padding),
+            min_y=image_bounds.min_y,
+            max_x=round(image_bounds.max_x + padding),
+            max_y=image_bounds.max_y,
+        )
+    else:
+        # image is proportionally shorter than the world: include more rows
+        padding = (image_width * world_height / world_width - image_height) / 2
+        return BoundsInt(
+            min_x=image_bounds.min_x,
+            min_y=round(image_bounds.min_y - padding),
+            max_x=image_bounds.max_x,
+            max_y=round(image_bounds.max_y + padding),
+        )
+
+
+Matrix4f = tuple[
+    tuple[float, float, float, float],
+    tuple[float, float, float, float],
+    tuple[float, float, float, float],
+    tuple[float, float, float, float],
+]
+
+
+@dataclass(frozen=True)
+class CameraData(JsonDataclass):
+    """
+    The data necessary to project 3D world-space node coordinates onto the 2D canvas.
+    Most useful if generated at the same time as the area image is taken.
+    """
+
+    coords: Literal["opengl"]
+    """The coordinate system the nodes are using."""
+
+    projection: Matrix4f
+    """The projection matrix of the camera that took the screenshot."""
+
+    view: Matrix4f
+    """The view matrix of the camera that took the screenshot."""
+
+    def game_loc_to_qt_local(self, x: float, y: float, z: float) -> tuple[float, float]:
+        """Transforms the 3D coordinates into a pair of 2D coordinates, within the range [0.0, 1.0]."""
+
+        if self.coords == "opengl":
+            pos = np.array([x, y, z, 1.0])
+
+            clip_space_pos = np.array(self.projection) @ (np.array(self.view) @ pos)
+            ndc_space_pos = clip_space_pos[0:3] / clip_space_pos[3]
+
+            return (ndc_space_pos[0] + 1.0) / 2.0, (ndc_space_pos[1] + 1.0) / 2.0
+
+        raise ValueError("Unknown coordinate system")
+
+
 def centered_text(painter: QtGui.QPainter, pos: QPointF, text: str) -> None:
     rect = QRectF(pos.x() - 32767 * 0.5, pos.y() - 32767 * 0.5, 32767, 32767)
     painter.drawText(rect, QtGui.Qt.AlignmentFlag.AlignCenter, text)
@@ -67,9 +142,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
     highlighted_node: Node | None = None
     connected_node: Node | None = None
     _background_image: QtGui.QImage | None = None
+    _region_image: QtGui.QImage | None = None
+    _calculated_region_image_bounds: BoundsInt | None = None
+    _manual_region_image_bounds: BoundsInt | None = None
     region_bounds: BoundsFloat
     area_bounds: BoundsFloat
     area_size: QSizeF
+    camera_data: CameraData | None = None
     image_bounds: BoundsInt
     edit_mode: bool = True
 
@@ -96,12 +175,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     pan_offset_x: float = 0.0
     pan_offset_y: float = 0.0
+    _wheel_zoom_anchor: QPointF | None = None
     _last_pan_point: QPointF | None = None
     _pan_start_point: QPointF | None = None
     _is_panning: bool = False
     _pan_threshold: float = 5.0  # Minimum pixels to move before considering it a pan
 
-    def __init__(self, parent: QtWidgets.QWidget | None = None):
+    def __init__(self, parent: QtWidgets.QWidget | None = None) -> None:
         super().__init__(parent)
 
         # Enable mouse tracking to update cursor when hovering
@@ -139,14 +219,17 @@ class DataEditorCanvas(QtWidgets.QWidget):
             self.game.data_path.joinpath("assets", "maps", f"{region.name}.png") if self.game is not None else None
         )
         if image_path is not None and image_path.exists():
-            self._background_image = QtGui.QImage(os.fspath(image_path))
-            self.image_bounds = BoundsInt(
+            self._region_image = QtGui.QImage(os.fspath(image_path))
+            self._manual_region_image_bounds = BoundsInt(
                 min_x=region.extra.get("map_min_x", 0),
                 min_y=region.extra.get("map_min_y", 0),
-                max_x=self._background_image.width() - region.extra.get("map_max_x", 0),
-                max_y=self._background_image.height() - region.extra.get("map_max_y", 0),
+                max_x=self._region_image.width() - region.extra.get("map_max_x", 0),
+                max_y=self._region_image.height() - region.extra.get("map_max_y", 0),
             )
+            self._background_image = None
         else:
+            self._region_image = None
+            self._manual_region_image_bounds = None
             self._background_image = None
 
         self.update_region_bounds()
@@ -175,6 +258,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
             max_y=max_y,
         )
 
+        if self._manual_region_image_bounds is not None:
+            self._calculated_region_image_bounds = _expand_bounds_to_match_aspect(
+                self._manual_region_image_bounds, self.region_bounds
+            )
+        else:
+            self._calculated_region_image_bounds = None
+
     def get_image_point(self, x: float, y: float) -> QPointF:
         bounds = self.image_bounds
         return QPointF(
@@ -201,6 +291,11 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 max_x = max(max_x, node.location.x)
                 max_y = max(max_y, node.location.y)
 
+        if "camera_data" in area.extra:
+            self.camera_data = CameraData.from_json(area.extra["camera_data"])
+        else:
+            self.camera_data = None
+
         image_path = (
             self.game.data_path.joinpath("assets", "maps", f"{area.map_name}.png") if self.game is not None else None
         )
@@ -212,7 +307,15 @@ class DataEditorCanvas(QtWidgets.QWidget):
             max_y = self._background_image.height() - area.extra.get("map_max_y", 0)
             self.image_bounds = BoundsInt(min_x, min_y, max_x, max_y)
             self.region_bounds = BoundsFloat(min_x, min_y, max_x, max_y)
+        # some games (msr + dread) do not use area images but one per region
+        # the image to use was already set by `select_region`
+        elif self._region_image is not None:
+            assert self._calculated_region_image_bounds is not None
+            self._background_image = self._region_image
+            self.image_bounds = self._calculated_region_image_bounds
+            self.update_region_bounds()
         else:
+            self._background_image = None
             self.update_region_bounds()
 
         self.area_bounds = BoundsFloat(
@@ -225,6 +328,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
             max(max_x - min_x, 1),
             max(max_y - min_y, 1),
         )
+
+        if self.camera_data is not None:
+            # when using 3D projection, normalize coordinates to within [0.0, 1.0]
+            self.region_bounds = BoundsFloat(0.0, 0.0, 1.0, 1.0)
+            self.area_bounds = BoundsFloat(0.0, 0.0, 1.0, 1.0)
+            self.area_size = QSizeF(1.0, 1.0)
+
         self.update()
 
     def highlight_node(self, node: Node) -> None:
@@ -382,11 +492,15 @@ class DataEditorCanvas(QtWidgets.QWidget):
         if self.state is None:
             menu.addAction(self._show_all_connections_action)
         if self.edit_mode:
-            menu.addAction(self._create_node_action)
-            menu.addAction(self._move_node_action)
-            self._move_node_action.setEnabled(self.highlighted_node is not None)
+            # doing stuff with nodes at a screen location is difficult when we're using 3d projection
+            self._create_node_action.setEnabled(self.camera_data is None)
+            self._move_node_action.setEnabled(self.camera_data is None and self.highlighted_node is not None)
+
             if self.highlighted_node is not None:
                 self._move_node_action.setText(f"Move {self.highlighted_node.name} here")
+
+            menu.addAction(self._create_node_action)
+            menu.addAction(self._move_node_action)
 
         # Areas Menu
         menu.addSeparator()
@@ -473,8 +587,12 @@ class DataEditorCanvas(QtWidgets.QWidget):
         if isinstance(pos, NodeLocation):
             x = pos.x
             y = pos.y
+            z = pos.z
         else:
-            x, y = pos[0], pos[1]
+            x, y, z = pos[0], pos[1], 0.0
+
+        if self.camera_data is not None:
+            x, y = self.camera_data.game_loc_to_qt_local(x, y, z)
 
         return QPointF(self.scale * (x - self.area_bounds.min_x), self.scale * (self.area_bounds.max_y - y))
 
@@ -509,25 +627,21 @@ class DataEditorCanvas(QtWidgets.QWidget):
         painter.translate(self.get_area_canvas_offset())
 
         if self._background_image is not None:
-            scaled_border_x = 8 * self.border_x / self.scale
-            scaled_border_y = 8 * self.border_y / self.scale
-
             wbounds = self.region_bounds
-            abounds = self.area_bounds
+            offset = self.get_area_canvas_offset()
 
-            # Calculate the top-left corner and bottom-right of the background image
-            percent_x_start = (abounds.min_x - wbounds.min_x - scaled_border_x) / (wbounds.max_x - wbounds.min_x)
-            percent_x_end = (abounds.max_x - wbounds.min_x + scaled_border_x) / (wbounds.max_x - wbounds.min_x)
-            percent_y_start = 1 - (abounds.max_y - wbounds.min_y + scaled_border_y) / (wbounds.max_y - wbounds.min_y)
-            percent_y_end = 1 - (abounds.min_y - wbounds.min_y - scaled_border_y) / (wbounds.max_y - wbounds.min_y)
+            # Draw the part of the region visible in the widget, so panning and zooming never
+            # reveal an area of the widget the image was not drawn to.
+            top_left = self.qt_local_to_game_loc(-offset)
+            bottom_right = self.qt_local_to_game_loc(QPointF(self.width(), self.height()) - offset)
+
+            percent_x_start = (top_left.x - wbounds.min_x) / (wbounds.max_x - wbounds.min_x)
+            percent_x_end = (bottom_right.x - wbounds.min_x) / (wbounds.max_x - wbounds.min_x)
+            percent_y_start = 1 - (top_left.y - wbounds.min_y) / (wbounds.max_y - wbounds.min_y)
+            percent_y_end = 1 - (bottom_right.y - wbounds.min_y) / (wbounds.max_y - wbounds.min_y)
 
             painter.drawImage(
-                QRectF(
-                    -scaled_border_x * self.scale,
-                    -scaled_border_y * self.scale,
-                    (scaled_border_x * 2 + self.area_size.width()) * self.scale,
-                    (scaled_border_y * 2 + self.area_size.height()) * self.scale,
-                ),
+                QRectF(-offset.x(), -offset.y(), self.width(), self.height()),
                 self._background_image,
                 QRectF(
                     self.get_image_point(percent_x_start, percent_y_start),
@@ -613,8 +727,31 @@ class DataEditorCanvas(QtWidgets.QWidget):
             centered_text(painter, p + QPointF(0, 15), node.name)
 
     def set_zoom_value(self, new_zoom: int) -> None:
-        self.additional_zoom = new_zoom / 20
+        """Changes the zoom level, adjusting the pan offset so the anchor point stays over the same world point."""
+        new_additional_zoom = new_zoom / 20
+        anchor = self._wheel_zoom_anchor
+        self._wheel_zoom_anchor = None
+
+        if self.area is not None and new_additional_zoom != self.additional_zoom:
+            self._update_scale_variables()
+            old_scale = self.scale
+            if anchor is None:
+                # When updating the zoom via the slider, use widget center as anchor.
+                anchor = QPointF(self.width() / 2, self.height() / 2)
+            local = anchor - self.get_area_canvas_offset()
+
+            self.additional_zoom = new_additional_zoom
+            self._update_scale_variables()
+
+            desired_offset = anchor - local * (self.scale / old_scale)
+            delta = desired_offset - self.get_area_canvas_offset()
+            self.pan_offset_x += delta.x()
+            self.pan_offset_y += delta.y()
+        else:
+            self.additional_zoom = new_additional_zoom
+
         self.repaint()
 
     def wheelEvent(self, event: QtGui.QWheelEvent) -> None:
+        self._wheel_zoom_anchor = event.position()
         self.UpdateSlider.emit(event.angleDelta().y() > 0)

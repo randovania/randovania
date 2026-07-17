@@ -138,11 +138,12 @@ def _create_spawn_point_field(
     }
 
 
-def _pretty_name_for_elevator(
+def pretty_name_for_elevator(
     game: GameDescription,
     region_list: RegionList,
     original_teleporter_node: DockNode,
     connection: NodeIdentifier,
+    use_ui_name_when_vanilla: bool = False,
 ) -> str:
     """
     Calculates the name the room that contains this elevator should have
@@ -153,7 +154,10 @@ def _pretty_name_for_elevator(
     """
     if original_teleporter_node.extra.get("keep_name_when_vanilla", False):
         if original_teleporter_node.default_connection.area_identifier == connection.area_identifier:
-            return region_list.nodes_to_area(original_teleporter_node).name
+            if use_ui_name_when_vanilla and (ui_name := original_teleporter_node.ui_custom_name) is not None:
+                return ui_name
+            else:
+                return region_list.nodes_to_area(original_teleporter_node).name
 
     return f"Transport to {elevators.get_elevator_or_area_name(game.node_by_identifier(connection), False)}"
 
@@ -177,7 +181,7 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
                     "instance_id": node.extra["teleporter_instance_id"],
                     "origin_location": _area_identifier_to_json(game.region_list, node.identifier.area_identifier),
                     "target_location": _area_identifier_to_json(game.region_list, target_area_location),
-                    "room_name": _pretty_name_for_elevator(game, region_list, node, connection.identifier),
+                    "room_name": pretty_name_for_elevator(game, region_list, node, connection.identifier),
                 }
             )
 
@@ -858,7 +862,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
             )
 
             if "new_name" not in area_patches:
-                area_patches["new_name"] = _pretty_name_for_elevator(
+                area_patches["new_name"] = pretty_name_for_elevator(
                     self.game, self.game.region_list, node, node_identifier
                 )
 

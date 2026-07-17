@@ -5,25 +5,67 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.9.0] - 2026-07-0?
+## [10.10.0] - 2026-08-02
 
-- Waiting changes to be added.
-- Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
-- Changed: The seed hash text in the Multiplayer window can now be interacted with.
-- Added: The Data Visualizer now displays more information about Hint nodes.
+- **Major** - Added: Multiworld worlds can now be abandoned; abandoning a world is irreversible. An abandoned world can be played automatically by your own Randovania instance like a bot, via a dedicated game connection: it collects one location that is in logic for it every few seconds, and keeps doing so as it receives more items from other players.
+- Added: You can now disable game connections, preventing them from connecting without having to be removed entirely.
+- Changed: Automatic Item Tracker: The selected theme for the default game is now always shown while the selected game connection is not connected.
+- Fixed: Automatic Item Tracker: The text "Not currently connected to any games" is now always shown when the selected game connection is not connected and no default game is set.
+- Fixed: In the Data Visualizer and Editor, when the game uses region images these images are no longer be stretched in certain situations.
+- Fixed: In the Data Visualizer and Editor, when panning away from the selected area the region image is now displayed correctly.
+- Fixed: In the Data Visualizer and Editor, when changing the zoom the pan is adjusted now relative to either the center or the mouse position.
+
+### Resolver
+
+- Fixed: Some games being wrongly considered impossible.
 
 ### Metroid Dread
+
+#### Logic Database
+
+##### Ferenia
+
+- Changed: The Twin Robot fight is now logically active from the start of the game, unless Highly Dangerous Logic is active. That means passing through the arena now logically requires meeting the fight requirements also before obtaining the Storm Missiles.
+
+### Metroid: Samus Returns
+
+- Changed: The Buff Charge Beam Doors option now also affects Beam Burst.
+- Changed: Solo Plasma Beam now deals more damage to Steel Orbs.
+- Changed: Grapple Beam is now auto-selected when you aim at a Grapple Beam shield.
+- Changed: Usages of Power Bombs and Beam Burst to open Charge Beam Doors with the Buff Charge Beam Doors option disabled have been changed to no longer require Knowledge (Beginner).
+- Fixed: The area item collection percentage is now correct and counts all items and all Metroids.
+
+## [10.9.0] - 2026-07-06
+
+- Added: The Data Visualizer now displays more information about Hint nodes.
+- Changed: Updated the Nintendont version that is used when uploading it directly to the Wii.
+  Includes faster connection speeds and better crash resilience.
+- Changed: Nintendont Connector: Better error messages when connecting to an invalid Nintendont.
+- Changed: Nintendont Connector: Increase the timeout limit from 5s to 10s.
+
+### Another Metroid 2 Remake
+
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
+
+### Metroid Dread
+
+- Changed: Usages of Power Bombs to open Charge Beam Doors and destroying Enkies with the Power Bomb Limitations disabled have been changed to no longer require Knowledge (Beginner).
+- Removed: The option for disabling required mains for Power Bombs has been removed. Old presets will still work, but
+  are unsupported.
 
 #### Logic Database
 
 ##### Artaria
 
 - Added: Single-wall Wall Jump traversal option to get to EMMI Zone Dome.
-- Added: Speed booster conservation trick to get to the top of the EMMI Zone Hub without diabled door lock randomizer.
+- Added: Speed booster conservation trick to get to the top of the EMMI Zone Hub without disabled door lock randomizer.
 - Added: Added several videos for various connections in Artaria.
 - Changed: The connection from EMMI Zone Exit North to EMMI Zone Exit Northwest using Speedbooster is now classified as a Beginner Speedbooster Conservation trick.
 
 ### Metroid Fusion
+
+- Fixed: Missile and Power Bomb ammo is now correctly capped at 999 and 99 respectively. This also prevents a softlock when using a Recharge Station with more than 246 Power Bombs.
+- Changed: In Sector 5 - Training Grounds, lowered the Speed Booster runway by one tile to make it easier to shinespark through the door.
 
 #### Logic Database
 
@@ -31,15 +73,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Dark Stairwell: Using the hidden connection to/from Central Nexus can now expect Mid-Air Morphs instead of Bombs/Hi-Jump.
 
+##### Sector 1 (SRX)
+
+- Added: Atmospheric Stabilizer Northwest: Shinespark chain starting from Moto Motorway, recharging in Atmospheric Stabilizer Northeast, using any combination of either Wide, Plasma, or Wave Beam to clear Hornoad Hole and run off ledge in time to spark into the left slope, to ultimately spark into the stabilizer geron. Intermediate Knowledge, Intermediate or Advanced Combat, and Ludicrous Shinespark. Potential softlock after the hard parts are done.
+- Added: Yameba Corridor: As above, but chaining sparks one room further, and including Charge Beam option. This trick must account for Hornoad Hole's room state after all stabilizers are restored: dodging the aerial enemy requires moving further left, necessitating tighter movement in Twin Junctions West, but no risk of softlock. Intermediate Knowledge, Advanced Combat, and Ludicrous Shinespark.
+
+##### Sector 3 (PYR)
+
+- Fixed: Attic: Breaking the bottom right bomb block with Screw Attack now requires Beginner Knowledge.
+- Changed: Attic: Breaking the bottom right bomb block with an Intermediate Shinespark from Deserted Runway is no longer excluded from Door Lock Rando.
+
+##### Sector 6 (NOC)
+
+- Changed: Zozoro Wine Cellar: Zozoros can be frozen on the ground to give you enough height to reach the ledge, reducing Stand On Frozen Enemies to Beginner. Video replaced.
+- Added: Zozoro Wine Cellar: Ludicrous Wall Jump into back of a Zozoro to Ludicrous Damage Boost, then Ludicrous Jump Extend to reduce invincibility frames to d-boost off another zozoro, then use Morph Ball jump extends to turn more quickly and reach the ledge.
+
 ### Metroid Prime
 
-- Fixed: Exporting for NTSC 0-01 and Korean
-- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
+- Changed: Slightly reworked the way the inventory is read for the sake of a slight speedup. No expected changes in fuctionality.
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
 
 ### Metroid Prime 2: Echoes
 
-- Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
-- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
+- Changed: Slightly reworked the way the inventory is read for the sake of a significant speedup. No expected changes in fuctionality.
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
 
 #### Logic Database
 
@@ -52,6 +109,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Cosmetic option to use Fusion suits (default: off)
 - Added: Preset option to skip the opening storyboard cutscene (default: off)
 - Fixed: Spazer and Plasma beam projectiles no longer shoot through blocks without Wave
+- Fixed: Exporter error when Door Lock Randomizer used "Access Open" as a "Doors to Change" option.
+
+## [10.8.2] - 2026-06-14
+
+### Metroid Prime
+
+- Fixed: Edge case of Randovania sending wrong items to the game when it cannot read the inventory.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Edge case of Randovania sending wrong items to the game when it cannot read the inventory.
+
+## [10.8.1] - 2026-06-13
+
+- Changed: The seed hash text in the Multiplayer window can now be interacted with.
+- Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
+- Changed: When using the Nintendont game connection, it will now give better feedback when you're in the Homebrew Channel and haven't launched Nintendont yet.
+
+### Metroid Prime
+
+- Fixed: Exporting for NTSC 0-01 and Korean
+- Fixed: When having Randovania connected to the game while booting up or rebooting, it will not throw warnings (Dolphin) or disconnect (Nintendont) from the game.
+- Fixed: Converting Metroid Prime 2: Echoes models for multiworld, for certain pickups.
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
 
 ## [10.8.0] - 2026-06-01
 

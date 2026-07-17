@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import TYPE_CHECKING, Any, Self
+from types import TracebackType
+from typing import TYPE_CHECKING, Any, Protocol, Self, runtime_checkable
 
 from randovania.layout.preset import Preset
 
@@ -21,6 +22,11 @@ if TYPE_CHECKING:
     from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
+@runtime_checkable
+class ConfigurationWithTeleporters(Protocol):
+    teleporters: TeleporterConfiguration
+
+
 class PresetEditor[Configuration: BaseConfiguration]:
     _on_changed: Callable[[], None] | None = None
     _nested_autosave_level: int = 0
@@ -33,7 +39,7 @@ class PresetEditor[Configuration: BaseConfiguration]:
     _description: str
     _configuration: Configuration
 
-    def __init__(self, initial_preset: Preset[Configuration], options: Options):
+    def __init__(self, initial_preset: Preset[Configuration], options: Options) -> None:
         self._name = initial_preset.name
         self._uuid = initial_preset.uuid
         self._game = initial_preset.game
@@ -41,14 +47,19 @@ class PresetEditor[Configuration: BaseConfiguration]:
         self._configuration = initial_preset.configuration
         self._options = options
 
-    def _set_field(self, field_name: str, value) -> None:
+    def _set_field(self, field_name: str, value: Any) -> None:
         setattr(self, "_" + field_name, value)
 
     def __enter__(self) -> Self:
         self._nested_autosave_level += 1
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> None:
         if self._nested_autosave_level == 1:
             if self._is_dirty:
                 # TODO: maybe it should be an error to change options to different values in on_options_changed?
@@ -57,7 +68,7 @@ class PresetEditor[Configuration: BaseConfiguration]:
         self._nested_autosave_level -= 1
 
     # Events
-    def _set_on_changed(self, value) -> None:
+    def _set_on_changed(self, value: Callable[[], None]) -> None:
         self._on_changed = value
 
     on_changed = property(fset=_set_on_changed)
@@ -103,15 +114,16 @@ class PresetEditor[Configuration: BaseConfiguration]:
         return self.configuration.damage_strictness
 
     @layout_configuration_damage_strictness.setter
-    def layout_configuration_damage_strictness(self, value: LayoutDamageStrictness):
+    def layout_configuration_damage_strictness(self, value: LayoutDamageStrictness) -> None:
         self.set_configuration_field("damage_strictness", value)
 
     @property
     def layout_configuration_teleporters(self) -> TeleporterConfiguration:
+        assert isinstance(self.configuration, ConfigurationWithTeleporters)
         return self.configuration.teleporters
 
     @layout_configuration_teleporters.setter
-    def layout_configuration_teleporters(self, value: TeleporterConfiguration):
+    def layout_configuration_teleporters(self, value: TeleporterConfiguration) -> None:
         self.set_configuration_field("teleporters", value)
 
     @property
@@ -119,7 +131,7 @@ class PresetEditor[Configuration: BaseConfiguration]:
         return self.configuration.available_locations
 
     @available_locations.setter
-    def available_locations(self, value: AvailableLocationsConfiguration):
+    def available_locations(self, value: AvailableLocationsConfiguration) -> None:
         self.set_configuration_field("available_locations", value)
 
     @property
@@ -127,7 +139,7 @@ class PresetEditor[Configuration: BaseConfiguration]:
         return self.configuration.standard_pickup_configuration
 
     @standard_pickup_configuration.setter
-    def standard_pickup_configuration(self, value: StandardPickupConfiguration):
+    def standard_pickup_configuration(self, value: StandardPickupConfiguration) -> None:
         self.set_configuration_field("standard_pickup_configuration", value)
 
     @property
@@ -135,7 +147,7 @@ class PresetEditor[Configuration: BaseConfiguration]:
         return self.configuration.ammo_pickup_configuration
 
     @ammo_pickup_configuration.setter
-    def ammo_pickup_configuration(self, value: AmmoPickupConfiguration):
+    def ammo_pickup_configuration(self, value: AmmoPickupConfiguration) -> None:
         self.set_configuration_field("ammo_pickup_configuration", value)
 
     @property
@@ -143,7 +155,7 @@ class PresetEditor[Configuration: BaseConfiguration]:
         return self.configuration.dock_rando
 
     @dock_rando_configuration.setter
-    def dock_rando_configuration(self, value: DockRandoConfiguration):
+    def dock_rando_configuration(self, value: DockRandoConfiguration) -> None:
         self.set_configuration_field("dock_rando", value)
 
     @property
@@ -151,23 +163,23 @@ class PresetEditor[Configuration: BaseConfiguration]:
         return self.configuration.hints
 
     @hint_configuration.setter
-    def hint_configuration(self, value: HintConfiguration):
+    def hint_configuration(self, value: HintConfiguration) -> None:
         self.set_configuration_field("hints", value)
 
-    def set_configuration_field(self, field_name: str, value: Any):
+    def set_configuration_field(self, field_name: str, value: Any) -> None:
         self._edit_field("configuration", dataclasses.replace(self.configuration, **{field_name: value}))
 
-    def set_hint_configuration_field(self, field_name: str, value: Any):
+    def set_hint_configuration_field(self, field_name: str, value: Any) -> None:
         self.hint_configuration = dataclasses.replace(self.hint_configuration, **{field_name: value})
 
     ######
 
-    def _check_editable_and_mark_dirty(self):
+    def _check_editable_and_mark_dirty(self) -> None:
         """Checks if _nested_autosave_level is not 0 and marks at least one value was changed."""
         assert self._nested_autosave_level != 0, "Attempting to edit an PresetEditor, but it wasn't made editable"
         self._is_dirty = True
 
-    def _edit_field(self, field_name: str, new_value):
+    def _edit_field(self, field_name: str, new_value: Any) -> None:
         current_value = getattr(self, field_name)
         if current_value != new_value:
             self._check_editable_and_mark_dirty()

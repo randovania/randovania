@@ -61,7 +61,7 @@
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Practice Mod is a practice tool for Echoes, allowing in-game changes to which items you have and warping to all rooms.&lt;/p&gt;&lt;p&gt;See the &lt;a href=&quot;https://github.com/MetroidPrimeModding/prime2-practice-mod/blob/main/README.md&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Practice Mod README&lt;/span&gt;&lt;/a&gt; for more details.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
@@ -74,7 +74,7 @@
     <item>
      <widget class="Line" name="save_doors_line">
       <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
     </item>
@@ -96,16 +96,40 @@
      </widget>
     </item>
     <item>
+     <widget class="Line" name="portal_rando_line">
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="portal_rando_check">
+      <property name="text">
+       <string>Portal Randomizer</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="portal_rando_label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This randomizes the connections between portals. Dark Portals will always go to Dark Aether in the same region, and Light Portals will always go to Light Aether in the same region.&lt;/p&gt;&lt;p&gt;When enabled, this setting also adds some new portals to existing portal destinations, to ensure that all portals are two-way.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="Line" name="inverted_line">
       <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QCheckBox" name="inverted_check">
       <property name="text">
-       <string>[Unsupported] Inverted Aether</string>
+       <string>[Chaos] Inverted Aether</string>
       </property>
      </widget>
     </item>
@@ -115,7 +139,7 @@
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this mode, it's the Light Aether atmosphere that is dangerous!&lt;br/&gt;All safe zones are moved to Light Aether, but that's not enough so it's still extremely dangerous.&lt;/p&gt;&lt;p&gt;Logic always acts as if this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
@@ -125,7 +149,7 @@
     <item>
      <spacer name="verticalSpacer">
       <property name="orientation">
-       <enum>Qt::Vertical</enum>
+       <enum>Qt::Orientation::Vertical</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>

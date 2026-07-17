@@ -52,7 +52,7 @@ class BuilderUi:
     send_arbitrary_message_action: QtGui.QAction | None = None
     connector: RemoteConnector | None = None
 
-    def __init__(self, parent: QtWidgets.QWidget):
+    def __init__(self, parent: QtWidgets.QWidget) -> None:
         self.group = QtWidgets.QGroupBox(parent)
         self.layout = QtWidgets.QGridLayout(self.group)
         self.join_session = None
@@ -78,9 +78,12 @@ class BuilderUi:
         self.layout.addWidget(self.status, 1, 0, 1, 2)
 
     def update_for_disconnected_builder(self, builder: ConnectorBuilder) -> None:
-        message = "Not Connected."
-        if (status := builder.get_status_message()) is not None:
-            message += f" {status}"
+        if builder.enabled:
+            message = "Not Connected."
+            if (status := builder.get_status_message()) is not None:
+                message += f" {status}"
+        else:
+            message = "Disabled."
 
         self.status.setText(message)
         self.open_session_action.setEnabled(False)
@@ -168,7 +171,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         network_client: QtNetworkClient,
         options: Options,
         game_connection: GameConnection,
-    ):
+    ) -> None:
         super().__init__()
         common_qt_lib.set_default_window_icon(self)
         self.setupUi(self)
@@ -183,6 +186,10 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         self.add_builder_menu = QtWidgets.QMenu(self.add_builder_button)
         self._builder_actions = {}
         for choice in ConnectorBuilderChoice.all_usable_choices():
+            if choice == ConnectorBuilderChoice.ABANDONED:
+                # an abandoned world connection is bound to a specific world, so it's added from that
+                # world's context menu in the session window instead
+                continue
             action = QtGui.QAction(choice.pretty_text, self.add_builder_menu)
             self._builder_actions[choice] = action
             action.triggered.connect(functools.partial(self._add_connector_builder, choice))
@@ -347,6 +354,11 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             functools.partial(self.game_connection.remove_connection_builder, builder)
         )
 
+        action = ui.menu.addAction("Enabled")
+        action.setCheckable(True)
+        action.setChecked(builder.enabled)
+        action.triggered.connect(functools.partial(self.game_connection.toggle_builder_enabled, builder))
+
         ui.menu.addSeparator()
         ui.open_session_action = ui.menu.addAction("Open Session Window")
         ui.open_session_action.triggered.connect(functools.partial(self._attempt_join, builder))
@@ -397,9 +409,12 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         box.show()
 
         try:
+            builder.logger.debug("Uploading Nintendont to the Wii...")
             await wiiload.upload_file(nintendont_file, [], builder.ip)
+            builder.logger.debug("Nintendont upload successful.")
             box.setText("Upload finished successfully. Check your Wii for more.")
         except Exception as e:
+            builder.logger.warning(f"Error while uploading Nintendont to the Wii: {e}")
             box.setText(f"Error uploading to Wii: {e}")
         finally:
             box.button(QtWidgets.QMessageBox.StandardButton.Ok).setEnabled(True)

@@ -124,7 +124,7 @@ class ResourceRequirementEditor(BaseEditor):
         layout: QtWidgets.QHBoxLayout,
         resource_database: ResourceDatabase,
         item: ResourceRequirement,
-    ):
+    ) -> None:
         self.parent_widget = parent
         self.layout = layout
         self.resource_database = resource_database
@@ -242,7 +242,7 @@ class ArrayRequirementEditor(BaseEditor):
         resource_database: ResourceDatabase,
         region_list: RegionList,
         requirement: RequirementArrayBase,
-    ):
+    ) -> None:
         self._editors = []
         self.resource_database = resource_database
         self.region_list = region_list
@@ -323,7 +323,7 @@ class TemplateRequirementEditor(BaseEditor):
         layout: QtWidgets.QHBoxLayout,
         resource_database: ResourceDatabase,
         item: RequirementTemplate,
-    ):
+    ) -> None:
         self.parent = parent
         self.layout = layout
         self.resource_database = resource_database
@@ -359,7 +359,7 @@ class NodeRequirementEditor(BaseEditor):
         layout: QtWidgets.QHBoxLayout,
         region_list: RegionList,
         item: NodeRequirement,
-    ):
+    ) -> None:
         self.parent = parent
         self.layout = layout
         self.selector = NodeSelectorWidget(
@@ -390,7 +390,7 @@ class StaticRequirementEditor(BaseEditor):
         layout: QtWidgets.QHBoxLayout,
         item: Requirement,
         message: str,
-    ):
+    ) -> None:
         self.parent = parent
         self.layout = layout
         self.item = item
@@ -434,7 +434,7 @@ class RequirementEditor:
         region_list: RegionList,
         *,
         on_remove: typing.Callable[[], None] | None = None,
-    ):
+    ) -> None:
         self.parent = parent
         self.parent_layout = parent_layout
         self.resource_database = resource_database
@@ -585,7 +585,7 @@ class ConnectionsEditor(QtWidgets.QDialog, Ui_ConnectionEditor):
         resource_database: ResourceDatabase,
         region_list: RegionList,
         requirement: Requirement,
-    ):
+    ) -> None:
         super().__init__(parent)
         self.setupUi(self)
         set_default_window_icon(self)

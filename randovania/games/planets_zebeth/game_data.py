@@ -75,7 +75,7 @@ def _hash_words() -> list[str]:
 
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="7WPACWKA",
+        expected_seed_hash="F26CCU5G",
     )
 
 
@@ -106,6 +106,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     test_data=_test_data,
+    reject_undocumented_tricks_in_database=False,
     multiple_start_nodes_per_area=False,
     defaults_available_in_game_sessions=False,
 )

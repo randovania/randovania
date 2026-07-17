@@ -27,7 +27,13 @@ from randovania.network_common.async_race_room import (
     AsyncRaceRoomUserStatus,
 )
 from randovania.network_common.authentication import AuthenticationMethod
-from randovania.network_common.error import InvalidActionError, InvalidSessionError, RequestTimeoutError, ServerError
+from randovania.network_common.error import (
+    InvalidActionError,
+    InvalidSessionError,
+    RequestTimeoutError,
+    ServerError,
+    WorldNotAssociatedError,
+)
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, WorldUserInventory
 from randovania.network_common.remote_pickup import RemotePickup
@@ -237,7 +243,9 @@ async def test_session_admin_global(client: NetworkClient):
 
     # Assert
     assert result == client.server_call.return_value
-    client.server_call.assert_awaited_once_with("multiplayer_admin_session", (1234, "change_world", 5))
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_admin_session", (1234, "change_world", 5), namespace=None, handle_invalid_session=True
+    )
 
 
 @pytest.mark.parametrize("was_listening", [False, True])
@@ -253,7 +261,9 @@ async def test_listen_to_session(client: NetworkClient, listen, was_listening):
     await client.listen_to_session(session_meta.id, listen)
 
     # Assert
-    client.server_call.assert_awaited_once_with("multiplayer_listen_to_session", (1234, listen))
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_listen_to_session", (1234, listen), namespace=None, handle_invalid_session=True
+    )
     if listen:
         assert client._sessions_interested_in == {1234}
     else:
@@ -274,7 +284,9 @@ async def test_world_track_inventory(client: NetworkClient, listen, was_listenin
     await client.world_track_inventory(uid, 4567, listen)
 
     # Assert
-    client.server_call.assert_awaited_once_with("multiplayer_watch_inventory", (str(uid), 4567, listen, True))
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_watch_inventory", (str(uid), 4567, listen, True), namespace=None, handle_invalid_session=True
+    )
     if listen:
         assert client._tracking_worlds == {(uid, 9999), (uid, 4567)}
     else:
@@ -348,7 +360,7 @@ async def test_refresh_received_pickups(client: NetworkClient, blank_game_descri
     }
 
     pickups = [MagicMock(), MagicMock(), MagicMock()]
-    mock_decode = mocker.patch("randovania.network_client.network_client._decode_pickup", side_effect=pickups)
+    mock_decode = mocker.patch("randovania.network_common.remote_pickup._decode_pickup", side_effect=pickups)
 
     client.on_world_pickups_update = AsyncMock()
 
@@ -470,6 +482,45 @@ async def test_create_new_session_bad(client: NetworkClient, mocker: pytest_mock
     assert client._sessions_interested_in == set()
 
 
+async def test_get_abandoned_world_data(client: NetworkClient):
+    world_uid = uuid.UUID("00000000-0000-0000-0000-000000000001")
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 200
+    response.json.return_value = {"order": 2}
+
+    # Run
+    result = await client.get_abandoned_world_data(world_uid)
+
+    # Assert
+    assert result == {"order": 2}
+    client.server_get.assert_called_once_with(f"world/{world_uid}/abandoned-data")
+
+
+async def test_get_abandoned_world_data_error(client: NetworkClient):
+    world_uid = uuid.UUID("00000000-0000-0000-0000-000000000001")
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 409
+    response.json.return_value = {"detail": "World is not abandoned"}
+
+    # Run
+    with pytest.raises(InvalidActionError, match="World is not abandoned"):
+        await client.get_abandoned_world_data(world_uid)
+
+
+async def test_get_abandoned_world_data_not_claimed(client: NetworkClient):
+    world_uid = uuid.UUID("00000000-0000-0000-0000-000000000001")
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 403
+    response.json.return_value = {"detail": "You must claim this world to run its bot"}
+
+    # Run
+    with pytest.raises(WorldNotAssociatedError):
+        await client.get_abandoned_world_data(world_uid)
+
+
 async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mock.MockerFixture):
     session = MagicMock()
     mock_session_from = mocker.patch("randovania.network_common.multiplayer_session.MultiplayerSessionEntry.from_json")
@@ -480,7 +531,9 @@ async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mo
 
     # Assert
     assert result is mock_session_from.return_value
-    client.server_call.assert_awaited_once_with("multiplayer_join_session", (session.id, "mahSecret"))
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_join_session", (session.id, "mahSecret"), namespace=None, handle_invalid_session=True
+    )
     mock_session_from.assert_called_once_with(client.server_call.return_value)
     assert client._sessions_interested_in == {mock_session_from.return_value.id}
 
@@ -543,7 +596,9 @@ async def test_async_race_get_livesplit_url(client: NetworkClient):
 
     # Assert
     assert result == client.server_call.return_value
-    client.server_call.assert_awaited_once_with("async_race_get_livesplit_url", 1234)
+    client.server_call.assert_awaited_once_with(
+        "async_race_get_livesplit_url", 1234, namespace=None, handle_invalid_session=True
+    )
 
 
 async def test_on_async_race_room_update_raw(client: NetworkClient):

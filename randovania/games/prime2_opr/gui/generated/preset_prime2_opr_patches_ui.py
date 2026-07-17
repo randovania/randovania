@@ -46,7 +46,7 @@ class Ui_PresetEchoesOPRPatches(object):
         sizePolicy.setHeightForWidth(self.include_practice_mod_label.sizePolicy().hasHeightForWidth())
         self.include_practice_mod_label.setSizePolicy(sizePolicy)
         self.include_practice_mod_label.setMaximumSize(QSize(16777215, 60))
-        self.include_practice_mod_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.include_practice_mod_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
         self.include_practice_mod_label.setWordWrap(True)
         self.include_practice_mod_label.setOpenExternalLinks(True)
 
@@ -70,6 +70,24 @@ class Ui_PresetEchoesOPRPatches(object):
 
         self.verticalLayout.addWidget(self.save_doors_label)
 
+        self.portal_rando_line = QFrame(self.centralWidget)
+        self.portal_rando_line.setObjectName(u"portal_rando_line")
+        self.portal_rando_line.setFrameShape(QFrame.Shape.HLine)
+        self.portal_rando_line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout.addWidget(self.portal_rando_line)
+
+        self.portal_rando_check = QCheckBox(self.centralWidget)
+        self.portal_rando_check.setObjectName(u"portal_rando_check")
+
+        self.verticalLayout.addWidget(self.portal_rando_check)
+
+        self.portal_rando_label = QLabel(self.centralWidget)
+        self.portal_rando_label.setObjectName(u"portal_rando_label")
+        self.portal_rando_label.setWordWrap(True)
+
+        self.verticalLayout.addWidget(self.portal_rando_label)
+
         self.inverted_line = QFrame(self.centralWidget)
         self.inverted_line.setObjectName(u"inverted_line")
         self.inverted_line.setFrameShape(QFrame.Shape.HLine)
@@ -84,7 +102,7 @@ class Ui_PresetEchoesOPRPatches(object):
 
         self.inverted_label = QLabel(self.centralWidget)
         self.inverted_label.setObjectName(u"inverted_label")
-        self.inverted_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.inverted_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
         self.inverted_label.setWordWrap(True)
 
         self.verticalLayout.addWidget(self.inverted_label)
@@ -106,7 +124,9 @@ class Ui_PresetEchoesOPRPatches(object):
         self.include_practice_mod_label.setText(QCoreApplication.translate("PresetEchoesOPRPatches", u"<html><head/><body><p>Practice Mod is a practice tool for Echoes, allowing in-game changes to which items you have and warping to all rooms.</p><p>See the <a href=\"https://github.com/MetroidPrimeModding/prime2-practice-mod/blob/main/README.md\"><span style=\" text-decoration: underline; color:#0000ff;\">Practice Mod README</span></a> for more details.</p></body></html>", None))
         self.save_doors_check.setText(QCoreApplication.translate("PresetEchoesOPRPatches", u"Force all Save Station doors to be unlocked", None))
         self.save_doors_label.setText(QCoreApplication.translate("PresetEchoesOPRPatches", u"This ensures you can easily access Save Stations, regardless of your inventory or of door lock randomization.", None))
-        self.inverted_check.setText(QCoreApplication.translate("PresetEchoesOPRPatches", u"[Unsupported] Inverted Aether", None))
+        self.portal_rando_check.setText(QCoreApplication.translate("PresetEchoesOPRPatches", u"Portal Randomizer", None))
+        self.portal_rando_label.setText(QCoreApplication.translate("PresetEchoesOPRPatches", u"<html><head/><body><p>This randomizes the connections between portals. Dark Portals will always go to Dark Aether in the same region, and Light Portals will always go to Light Aether in the same region.</p><p>When enabled, this setting also adds some new portals to existing portal destinations, to ensure that all portals are two-way.</p></body></html>", None))
+        self.inverted_check.setText(QCoreApplication.translate("PresetEchoesOPRPatches", u"[Chaos] Inverted Aether", None))
         self.inverted_label.setText(QCoreApplication.translate("PresetEchoesOPRPatches", u"<html><head/><body><p>In this mode, it's the Light Aether atmosphere that is dangerous!<br/>All safe zones are moved to Light Aether, but that's not enough so it's still extremely dangerous.</p><p>Logic always acts as if this option is disabled.</p></body></html>", None))
     # retranslateUi
 

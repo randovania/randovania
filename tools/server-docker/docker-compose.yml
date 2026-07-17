@@ -37,13 +37,22 @@ services:
       labels:
         - traefik.enable=true
         - traefik.constraint-label=traefik-public
-        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.rule=(Host(`${DOMAIN}`) && PathPrefix(`/${PATH_PREFIX}`)) || Host(`${DOMAIN2}`)
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.rule=Host(`${APP_DOMAIN}`)
         - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.entrypoints=websecure
         - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.tls.certresolver=le
-        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.middlewares=rdv_${SERVER_ENVIRONMENT}_stripprefix
-        - traefik.http.middlewares.rdv_${SERVER_ENVIRONMENT}_stripprefix.stripprefix.prefixes=/${PATH_PREFIX}
         - traefik.http.services.rdv_${SERVER_ENVIRONMENT}.loadbalancer.server.port=5000
         - traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=25000000
+
+        # backwards-compat redirect for old LEGACY_DOMAIN/PATH_PREFIX -> APP_DOMAIN, remove once clients migrate
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_redirect.rule=Host(`${LEGACY_DOMAIN}`) && PathPrefix(`/${PATH_PREFIX}`)
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_redirect.priority=${LEGACY_REDIRECT_PRIORITY}
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_redirect.entrypoints=websecure
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_redirect.tls.certresolver=le
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_redirect.middlewares=rdv_${SERVER_ENVIRONMENT}_redirect
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_redirect.service=rdv_${SERVER_ENVIRONMENT}
+        - traefik.http.middlewares.rdv_${SERVER_ENVIRONMENT}_redirect.redirectregex.regex=^https://${LEGACY_DOMAIN}/${PATH_PREFIX}/(.*)
+        - traefik.http.middlewares.rdv_${SERVER_ENVIRONMENT}_redirect.redirectregex.replacement=https://${APP_DOMAIN}/$${1}
+        - traefik.http.middlewares.rdv_${SERVER_ENVIRONMENT}_redirect.redirectregex.permanent=true
 
     networks:
       - traefik-public
@@ -70,7 +79,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.constraint-label=traefik-public
-        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_sqlite_web.rule=Host(`${DOMAIN}`) && PathPrefix(`/sqlite-web/${SERVER_ENVIRONMENT}`)
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_sqlite_web.rule=Host(`${ADMIN_DOMAIN}`) && PathPrefix(`/sqlite-web/${SERVER_ENVIRONMENT}`)
         - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_sqlite_web.entrypoints=websecure
         - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_sqlite_web.tls.certresolver=le
         - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_sqlite_web.middlewares=admin-auth

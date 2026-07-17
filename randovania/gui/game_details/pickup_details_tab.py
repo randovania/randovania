@@ -9,6 +9,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from randovania.exporter import item_names
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.filtered_game_database_view import LayerFilteredGameDatabaseView
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.gui.generated.pickup_details_tab_ui import Ui_PickupDetailsTab
 from randovania.gui.lib import signal_handling
@@ -22,25 +23,49 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def _show_pickup_spoiler(button: QtWidgets.QPushButton):
-    target_player = getattr(button, "target_player", None)
-    if target_player is not None:
-        label = f"{button.item_name} for {button.player_names[target_player]}"
+class PickupSpoilerGroupBox(QtWidgets.QGroupBox):
+    vertical_layout: QtWidgets.QVBoxLayout
+
+
+class PickupSpoilerVerticalLayout(QtWidgets.QVBoxLayout):
+    horizontal_layouts: list[PickupSpoilerRow]
+
+
+class PickupSpoilerRow(QtWidgets.QHBoxLayout):
+    label: QtWidgets.QLabel
+    button: PickupSpoilerPushButton
+
+
+class PickupSpoilerPushButton(QtWidgets.QPushButton):
+    item_is_hidden: bool
+    pickup_index: PickupIndex
+    item_name: str
+    row: PickupSpoilerRow
+
+    target_player: int | None = None
+    player_names: dict[int, str] | None = None
+
+
+def _show_pickup_spoiler(button: PickupSpoilerPushButton) -> None:
+    if button.target_player is not None:
+        assert button.player_names is not None
+        label = f"{button.item_name} for {button.player_names[button.target_player]}"
     else:
         label = button.item_name
     button.setText(label)
     button.item_is_hidden = False
 
 
-def _hide_pickup_spoiler(button: QtWidgets.QPushButton):
+def _hide_pickup_spoiler(button: PickupSpoilerPushButton) -> None:
     button.setText("Hidden")
     button.item_is_hidden = True
 
 
 class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
-    pickup_spoiler_buttons: list[QtWidgets.QPushButton]
+    pickup_spoiler_buttons: list[PickupSpoilerPushButton]
+    _pickup_spoiler_region_to_group: dict[str, PickupSpoilerGroupBox]
 
-    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame):
+    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame) -> None:
         super().__init__(parent, game)
         self.root = QtWidgets.QWidget(parent)
         self.setupUi(self.root)
@@ -69,7 +94,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
 
     def update_content(
         self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
-    ):
+    ) -> None:
         self._update_search_pickup_group(all_patches, players)
 
         patches = all_patches[players.player_index]
@@ -117,15 +142,15 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
         self.pickup_spoiler_buttons.clear()
 
         self._pickup_spoiler_region_to_group = {}
-        nodes_in_region = collections.defaultdict(list)
+        nodes_in_region: dict[str, list[tuple[str, PickupIndex]]] = collections.defaultdict(list)
 
         for region, area, node in game_view.iterate_nodes_of_type(PickupNode):
             nodes_in_region[region.name].append((f"{area.name} - {node.name}", node.pickup_index))
 
         for region_name in sorted(nodes_in_region.keys()):
-            group_box = QtWidgets.QGroupBox(self.pickup_spoiler_scroll_contents)
+            group_box = PickupSpoilerGroupBox(self.pickup_spoiler_scroll_contents)
             group_box.setTitle(region_name)
-            vertical_layout = QtWidgets.QVBoxLayout(group_box)
+            vertical_layout = PickupSpoilerVerticalLayout(group_box)
             vertical_layout.setContentsMargins(8, 4, 8, 4)
             vertical_layout.setSpacing(2)
             group_box.vertical_layout = vertical_layout
@@ -135,7 +160,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
             self.pickup_spoiler_scroll_content_layout.addWidget(group_box)
 
             for area_name, pickup_index in sorted(nodes_in_region[region_name], key=lambda it: it[0]):
-                horizontal_layout = QtWidgets.QHBoxLayout()
+                horizontal_layout = PickupSpoilerRow()
                 horizontal_layout.setSpacing(2)
 
                 label = QtWidgets.QLabel(group_box)
@@ -143,7 +168,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
                 horizontal_layout.addWidget(label)
                 horizontal_layout.label = label
 
-                push_button = QtWidgets.QPushButton(group_box)
+                push_button = PickupSpoilerPushButton(group_box)
                 push_button.setFlat(True)
                 push_button.setText("Hidden")
                 push_button.item_is_hidden = True
@@ -158,7 +183,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
                 group_box.vertical_layout.addLayout(horizontal_layout)
                 group_box.vertical_layout.horizontal_layouts.append(horizontal_layout)
 
-    def _update_show_all_button_state(self):
+    def _update_show_all_button_state(self) -> None:
         self.pickup_spoiler_show_all_button.currently_show_all = all(
             button.item_is_hidden for button in self.pickup_spoiler_buttons
         )
@@ -167,14 +192,14 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
         else:
             self.pickup_spoiler_show_all_button.setText(QtCore.QCoreApplication.translate("HistoryWindow", "Hide All"))
 
-    def _toggle_pickup_spoiler(self, button):
+    def _toggle_pickup_spoiler(self, button: PickupSpoilerPushButton) -> None:
         if button.item_is_hidden:
             _show_pickup_spoiler(button)
         else:
             _hide_pickup_spoiler(button)
         self._update_show_all_button_state()
 
-    def _toggle_show_all_pickup_spoiler(self):
+    def _toggle_show_all_pickup_spoiler(self) -> None:
         if self.pickup_spoiler_show_all_button.currently_show_all:
             action = _show_pickup_spoiler
         else:
@@ -185,13 +210,13 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
 
         self._update_show_all_button_state()
 
-    def _on_change_pickup_filter(self, text):
+    def _on_change_pickup_filter(self, text: str) -> None:
         for button in self.pickup_spoiler_buttons:
             visible = text == "None" or text == button.item_name
             button.setVisible(visible)
             button.row.label.setVisible(visible)
 
-    def _update_search_pickup_group(self, all_patches: dict[int, GamePatches], players: PlayersConfiguration):
+    def _update_search_pickup_group(self, all_patches: dict[int, GamePatches], players: PlayersConfiguration) -> None:
         self.search_pickup_group.setVisible(players.is_multiworld)
         if not players.is_multiworld:
             return
@@ -228,7 +253,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
         for pickup_name in sorted(pickup_names):
             self.search_pickup_combo.addItem(pickup_name, pickup_name)
 
-    def _show_location_for_pickup(self, target: str | None):
+    def _show_location_for_pickup(self, target: str | None) -> None:
         if target is None:
             self.search_pickup_proxy.setFilterFixedString("<@NOT PRESENT@>")
         else:

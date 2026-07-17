@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
@@ -30,7 +31,7 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
         editor: PresetEditor,
         progressive_item: StandardPickupDefinition,
         non_progressive_items: Iterable[StandardPickupDefinition],
-    ):
+    ) -> None:
         super().__init__(parent)
         self._editor = editor
         self.progressive_item = progressive_item
@@ -38,7 +39,7 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
         self.setTristate(True)
         self.clicked.connect(self.change_progressive)
 
-    def on_preset_changed(self, preset: Preset, elements: dict[StandardPickupDefinition, QtWidgets.QWidget]):
+    def on_preset_changed(self, preset: Preset, elements: Mapping[StandardPickupDefinition, QtWidgets.QWidget]) -> None:
         major_configuration = preset.configuration.standard_pickup_configuration
 
         has_progressive = _state_has_item(major_configuration.pickups_state[self.progressive_item])
@@ -60,7 +61,7 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
             elements[item].setVisible(has_non_progressive)
         elements[self.progressive_item].setVisible(has_progressive)
 
-    def change_progressive(self, is_progressive: bool):
+    def change_progressive(self, is_progressive: bool) -> None:
         with self._editor as editor:
             if is_progressive:
                 non_progressive_state = StandardPickupState()

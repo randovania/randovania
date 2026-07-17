@@ -52,7 +52,7 @@ if TYPE_CHECKING:
 
 @pytest.fixture
 async def window(skip_qtbot: QtBot) -> MultiplayerSessionWindow:
-    window = MultiplayerSessionWindow(MagicMock(), MagicMock(spec=WindowManager), MagicMock())
+    window = MultiplayerSessionWindow(MagicMock(), 1234, MagicMock(spec=WindowManager), MagicMock())
     skip_qtbot.addWidget(window)
     window.connect_to_events()
 
@@ -117,6 +117,7 @@ def sample_session(preset_manager: PresetManager) -> MultiplayerSessionEntry:
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_abandon_worlds=True,
     )
 
 
@@ -236,6 +237,7 @@ async def test_on_session_meta_update(
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_abandon_worlds=True,
     )
     window = await MultiplayerSessionWindow.create_and_update(
         network_client, initial_session.id, MagicMock(spec=WindowManager), MagicMock()
@@ -244,7 +246,12 @@ async def test_on_session_meta_update(
 
     # Run
     await window.on_meta_update(second_session)
-    network_client.server_call.assert_awaited_once_with("multiplayer_request_session_update", 1234)
+    network_client.server_call.assert_awaited_once_with(
+        "multiplayer_request_session_update",
+        1234,
+        namespace=None,
+        handle_invalid_session=True,
+    )
 
 
 async def test_on_session_actions_update(window: MultiplayerSessionWindow, sample_session: MultiplayerSessionEntry):
@@ -1188,7 +1195,7 @@ async def test_update_multiworld_client_status(
     window_manager = MagicMock()
     window_manager.multiworld_client = multiworld_client
 
-    window = MultiplayerSessionWindow(MagicMock(), window_manager, options)
+    window = MultiplayerSessionWindow(MagicMock(), 1234, window_manager, options)
     skip_qtbot.addWidget(window)
 
     # Don't use threads during tests

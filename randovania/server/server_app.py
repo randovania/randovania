@@ -2,18 +2,17 @@ from __future__ import annotations
 
 import base64
 import functools
-import inspect
+import hashlib
 import json
 import logging
 import os
 import time
-import typing
-from collections.abc import AsyncGenerator, Coroutine
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from contextvars import ContextVar
 from http.client import responses as HTTP_RESPONSES
 from pathlib import Path
-from typing import TYPE_CHECKING, Annotated, Concatenate, Self, cast
+from typing import TYPE_CHECKING, Annotated, Concatenate, cast
 
 import fastapi
 import peewee
@@ -22,7 +21,8 @@ import starlette
 import starlette.exceptions
 from cryptography.fernet import Fernet
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import PlainTextResponse, RedirectResponse
+from fastapi.routing import APIRoute
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from prometheus_client import Summary
@@ -32,31 +32,41 @@ from starlette.responses import JSONResponse
 from uvicorn.logging import ColourizedFormatter
 
 import randovania
-from randovania.bitpacking import construct_pack
 from randovania.network_common import connection_headers, error
 from randovania.network_common.authentication import AuthenticationMethod
+from randovania.network_common.signals import server_signals
 from randovania.server import client_check, fastapi_discord
 from randovania.server.database import User, World, database_lifespan
 from randovania.server.discord_auth import EnforceDiscordRole, discord_oauth_lifespan
-from randovania.server.socketio import EventHandlerReturnType, fastapi_socketio_lifespan
+from randovania.server.socketio import (
+    fastapi_socketio_lifespan,
+)
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-
     from socketio import AsyncServer
     from socketio_handler import SocketManager
 
+    from randovania.lib.type_lib import AsyncCallable
     from randovania.network_common.configuration import NetworkConfiguration
     from randovania.server.fastapi_discord import DiscordOAuthClient
 
-type Lifespan[T] = AsyncGenerator[T, None, None]
-type AsyncCallable[**P, T] = Callable[P, Coroutine[None, None, T]]
+type Lifespan[T] = AsyncGenerator[T, None]
 
 type MiddlewareNext[T] = AsyncCallable[[fastapi.Request], T]
 
 
 class RdvFastAPI(fastapi.FastAPI):
     sa: ServerApp
+
+
+class RedirectToLoginError(Exception):
+    """
+    Raised by dependencies that require a User, to send the browser to the login page
+    (returning to `next_url` afterwards) instead of responding with an HTTP error.
+    """
+
+    def __init__(self, next_url: str):
+        self.next_url = next_url
 
 
 ctx_who: ContextVar[str | None] = ContextVar("who", default=None)
@@ -75,10 +85,6 @@ class ServerLoggingFormatter(ColourizedFormatter):
         record.context = ctx_context.get()
 
         return super().formatMessage(record)
-
-
-async def get_sid(sa: ServerApp, sid: str) -> str:
-    return sid
 
 
 class ServerApp:
@@ -185,7 +191,7 @@ class ServerApp:
             )
             return randovania.VERSION
 
-        self.on("get_sid", get_sid)
+        server_signals.GetSid.register(self, server_signals.get_sid)
 
     def _setup_exception_handlers(self) -> None:
         def status_message(status_code: int) -> str:
@@ -210,6 +216,11 @@ class ServerApp:
                 body,
                 status_code=exc.status_code,
             )
+
+        @self.app.exception_handler(RedirectToLoginError)
+        async def redirect_to_login_handler(request: fastapi.Request, exc: RedirectToLoginError) -> fastapi.Response:
+            login_url = request.url_for("browser_login_with_discord").include_query_params(next=exc.next_url)
+            return RedirectResponse(login_url)
 
         @self.app.exception_handler(RequestValidationError)
         async def validation_exception_handler(
@@ -267,10 +278,10 @@ class ServerApp:
             if "worlds" in sio_session and world.id in sio_session["worlds"]:
                 sio_session["worlds"].remove(world.id)
 
-    def on[**P, T: EventHandlerReturnType](
+    def on[**P, T](
         self,
         message: str,
-        handler: AsyncCallable[Concatenate[Self, str, P], T],
+        callback: server_signals.ServerEventCallback[P, T],
         namespace: str | None = None,
         *,
         with_header_check: bool = False,
@@ -286,7 +297,7 @@ class ServerApp:
             running the event handler. Default: `False`
         """
 
-        @functools.wraps(handler)
+        @functools.wraps(callback)
         async def _handler(sid: str, *args: P.args, **kwargs: P.kwargs) -> dict | dict[str, T]:
             ctx_where.set(message)
             ctx_who.set(self.current_client_ip(sid))
@@ -318,7 +329,7 @@ class ServerApp:
                 try:
                     span.set_tag("message.error", 0)
                     return {
-                        "result": await handler(self, sid, *args, **kwargs),
+                        "result": await callback(self, sid, *args, **kwargs),
                     }
 
                 except error.BaseNetworkError as err:
@@ -339,33 +350,7 @@ class ServerApp:
             with metric.time():
                 return await _handler(sid, *args, **kwargs)
 
-        typed_handler = cast("AsyncCallable[Concatenate[str, P], dict | dict[str, T]]", metric_wrapper)
-
-        return self.sio.on(message, namespace=namespace)(typed_handler)
-
-    def on_with_wrapper[T, R](
-        self, message: str, handler: AsyncCallable[[Self, str, T], R]
-    ) -> AsyncCallable[[str, T], dict | dict[str, R]]:
-        """
-        Registers a socket.io event handler, encoding and decoding the data via construct.
-
-        :param message: The event name.
-        :param handler: The event handler to register. Must be a coroutine (`async def`)
-            with exactly three arguments: a `ServerApp`, a `str` (the sid), and
-            a construct-encodable type.
-        """
-
-        types = typing.get_type_hints(handler)
-        arg_spec = inspect.getfullargspec(handler)
-
-        @functools.wraps(handler)
-        async def _handler(sa: Self, sid: str, arg: bytes) -> bytes:
-            decoded_arg = construct_pack.decode(arg, types[arg_spec.args[2]])
-            return construct_pack.encode(await handler(sa, sid, decoded_arg), types["return"])
-
-        typed_handler = cast("AsyncCallable[[Self, str, T], bytes]", _handler)
-
-        return self.on(message, typed_handler, with_header_check=True)
+        return self.sio.on(message, namespace=namespace)(metric_wrapper)  # type: ignore[type-var]
 
     def current_client_ip(self, sid: str) -> str:
         """Returns the IP address of the client with this sid."""
@@ -521,14 +506,60 @@ async def get_admin_user(
     return user
 
 
+async def check_admin_user_or_bot(
+    sa: ServerAppDep,
+    request: fastapi.Request,
+    x_randovania_session: Annotated[str | None, fastapi.Header()] = None,
+    x_randovania_discord_bot: Annotated[str | None, fastapi.Header()] = None,
+) -> None:
+    if x_randovania_discord_bot is not None and "discord_bot" in sa.configuration:
+        token_hash = hashlib.sha256(sa.configuration["discord_bot"]["token"].encode()).hexdigest()
+        if x_randovania_discord_bot == token_hash:
+            return
+
+    await get_admin_user(sa, request, x_randovania_session)
+
+
+async def get_user_or_redirect_to_login(
+    sa: ServerAppDep,
+    request: fastapi.Request,
+    x_randovania_session: Annotated[str | None, fastapi.Header()] = None,
+) -> User:
+    """
+    Like `get_user`, but instead of raising an HTTP error for an unauthenticated request, redirects
+    the browser to the login page and back, if it's not an API request.
+    """
+
+    try:
+        return await get_user(sa, request, x_randovania_session)
+    except fastapi.HTTPException:
+        if sa.is_api_request(request):
+            raise
+
+        route: APIRoute | None = request.scope.get("route")
+        if route is not None:
+            next_url = request.url_for(route.name, **request.path_params).path
+        else:
+            next_url = request.url.path
+        if request.url.query:
+            next_url = f"{next_url}?{request.url.query}"
+        raise RedirectToLoginError(next_url)
+
+
 RequireUser = fastapi.Depends(get_user)
 """Ensure that there is a User associated with the request before handling it."""
 RequireAdminUser = fastapi.Depends(get_admin_user)
 """Ensure that there is an admin User associated with the request before handling it."""
+RequireAdminUserOrDiscordBot = fastapi.Depends(check_admin_user_or_bot)
+"""Ensure the request is associated with either the Discord Bot or an admin User before handling it."""
+RequireUserOrRedirectToLogin = fastapi.Depends(get_user_or_redirect_to_login)
+"""Ensure that there is a User associated with the request, redirecting to login instead of erroring out."""
 
 UserDep = Annotated[User, RequireUser]
 """The User associated with the request."""
 AdminDep = Annotated[User, RequireAdminUser]
 """The admin User associated with the request."""
+UserOrRedirectDep = Annotated[User, RequireUserOrRedirectToLogin]
+"""The User associated with the request. Unauthenticated browser requests are redirected to login and back."""
 SidDep = Annotated[str | None, fastapi.Header(alias="X-Randovania-Sid")]
 """The client's socketio sid as well."""
