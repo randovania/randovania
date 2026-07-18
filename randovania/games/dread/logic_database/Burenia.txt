@@ -2293,30 +2293,6 @@ Extra - asset_id: collision_camera_021
   > Blob Alcove
       Morph Ball and Horizontal Water Movement
 
-> Event - Break Floor Blob 1; Heals? False
-  * Layers: default
-  * Event Burenia - Break Floor Blob 1
-  * Extra - actor_name: ev_demolition_db_001
-  * Extra - actor_def: actordef:actors/props/ev_demolition_db_001/charclasses/ev_demolition_db_001.bmsad
-  > Blob Alcove
-      Trivial
-
-> Event - Break Floor Blob 2; Heals? False
-  * Layers: default
-  * Event Burenia - Break Floor Blob 2
-  * Extra - actor_name: ev_demolition_db_002
-  * Extra - actor_def: actordef:actors/props/ev_demolition_db_002/charclasses/ev_demolition_db_002.bmsad
-  > Blob Alcove
-      Trivial
-
-> Event - Break Floor Blob 3; Heals? False
-  * Layers: default
-  * Event Burenia - Break Floor Blob 3
-  * Extra - actor_name: ev_demolition_db_003
-  * Extra - actor_def: actordef:actors/props/ev_demolition_db_003/charclasses/ev_demolition_db_003.bmsad
-  > Blob Alcove
-      Trivial
-
 > Event - Early Gravity Blob; Heals? False
   * Layers: default
   * Event Burenia - Early Gravity Blob
@@ -2386,6 +2362,9 @@ Extra - asset_id: collision_camera_021
                   Any of the following:
                       After Burenia - Gravity Suit Room Store Shinespark
                       Disabled Door Lock Randomizer and Lay Power Bomb
+  > Event - Early Gravity Blob
+      # Connection back to already collected node for generator safety reasons
+      Burenia/Gravity Suit Tower/Event - Early Gravity Blob
   > Dock to Ammo Recharge South (Middle)
       Any of the following:
           Space Jump or Before Burenia - Destroy Gravity Suit Floor
@@ -2432,16 +2411,10 @@ Extra - asset_id: collision_camera_021
           Any of the following:
               Wall Jump (Advanced)
               Wall Jump (Intermediate) and Use Spin Boost
-  > Event - Break Floor Blob 1
-      Lay Small Bomb or Shoot Beam
-  > Event - Break Floor Blob 2
-      After Burenia - Break Floor Blob 1 and Shoot Beam
-  > Event - Break Floor Blob 3
-      After Burenia - Break Floor Blob 2 and Shoot Diffusion or Wave
   > Breakable Floor
       Morph Ball
   > Event - Break Floor
-      Grapple Beam and After Burenia - Break Floor Blob 3
+      Grapple Beam and Shoot Diffusion or Wave
 
 > Shaft Base; Heals? False
   * Layers: default
