@@ -271,7 +271,7 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
             if weakness.unsafe_target_in_distributor_wtw:
                 output.write(
                     f"      Considered unsafe as target for "
-                    f"{DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS.long_name}\n"
+                    f'"{DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS.long_name}"\n'
                 )
 
             output.write("      Open:\n")
