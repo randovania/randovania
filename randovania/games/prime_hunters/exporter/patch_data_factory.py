@@ -305,10 +305,15 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             starting_items_text = "no additional starting items given."
 
         # Goal
+        goal_text = ""
         gorea_text = "defeat GOREA in OUBLIETTE."
         placed_octoliths = config.octoliths.placed_octoliths
-        if placed_octoliths > 0:
-            goal_text = f"collect {placed_octoliths} OCTOLITHS and " + gorea_text
+        if placed_octoliths >= 2:
+            goal_text = f"collect {placed_octoliths} OCTOLITHS and {gorea_text}"
+        elif placed_octoliths == 1:
+            goal_text = f"collect 1 OCTOLITH and {gorea_text}"
+        else:
+            goal_text = gorea_text
 
         # Force Fields
         force_field_config = config.force_field_configuration.description()
