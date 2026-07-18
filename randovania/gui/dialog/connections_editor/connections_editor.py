@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from PySide6.QtGui import QKeySequence, QUndoStack
+from PySide6.QtGui import QAction, QKeySequence, Qt, QUndoStack
 from PySide6.QtWidgets import QDialog, QMessageBox, QWidget
 
 from randovania.game_description.db.region_list import RegionList
@@ -26,13 +26,12 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
         self.setupUi(self)
         set_default_window_icon(self)
 
+        # Undo/Redo
         self._undo_stack = QUndoStack(self)
-
         undo_action = self._undo_stack.createUndoAction(self)
         undo_action.setShortcut(QKeySequence.StandardKey.Undo)
         redo_action = self._undo_stack.createRedoAction(self)
         redo_action.setShortcut(QKeySequence.StandardKey.Redo)
-
         self.addAction(undo_action)
         self.addAction(redo_action)
 
@@ -48,6 +47,32 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
             self._view,
             self._undo_stack,
         )
+
+        # Misc actions
+        add_action = QAction("Add", self._view._tree)
+        add_action.setShortcut(QKeySequence("Insert"))
+        add_action.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
+        add_action.triggered.connect(self._controller._on_add_requirement_pressed)
+
+        delete_action = QAction("Delete", self._view._tree)
+        delete_action.setShortcut(QKeySequence("Delete"))
+        delete_action.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
+        delete_action.triggered.connect(self._controller._on_delete_requirement_pressed)
+
+        move_up_action = QAction("Move Up", self._view._tree)
+        move_up_action.setShortcut(QKeySequence("Alt+Up"))
+        move_up_action.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
+        move_up_action.triggered.connect(self._controller._on_shift_up_pressed)
+
+        move_down_action = QAction("Move Down", self._view._tree)
+        move_down_action.setShortcut(QKeySequence("Alt+Down"))
+        move_down_action.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
+        move_down_action.triggered.connect(self._controller._on_shift_down_pressed)
+
+        self._view._tree.addAction(add_action)
+        self._view._tree.addAction(delete_action)
+        self._view._tree.addAction(move_up_action)
+        self._view._tree.addAction(move_down_action)
 
         # Connect Signals
         self._model.model_rebuilt.connect(self._view._on_model_rebuilt)

@@ -1,4 +1,3 @@
-from PySide6.QtCore import QItemSelectionModel, QModelIndex
 from PySide6.QtGui import QUndoCommand
 
 from randovania.game_description.requirements.base import Requirement
@@ -30,10 +29,7 @@ class Command(QUndoCommand):
 
     def redo(self) -> None:
         self._model.build_tree(self._after)
-        index: QModelIndex = self._model.index_from_path(self._selection_path)
-        self._view._tree.selectionModel().select(index, QItemSelectionModel.SelectionFlag.ClearAndSelect)
-        self._view._tree.setFocus()
-        self._view._notify_selection_changed(index)
+        self._view.restore_selection(self._selection_path)
 
     def undo(self) -> None:
         self._model.build_tree(self._before)
