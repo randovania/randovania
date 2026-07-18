@@ -332,7 +332,7 @@ class RequirementController(QObject):
     def _on_editor_field_changed(self, requirement: Requirement) -> None:
         if self._active_is_array() and isinstance(requirement, RequirementArrayBase):
             # Preserve array items
-            requirement.items = self._active_item_index.data(ROLE).items
+            requirement = type(requirement)(self._active_item_index.data(ROLE).items, requirement.comment)
 
         before: Requirement = self._model.build_requirement()
         path: list[int] = self._model.path_from_index(self._active_item_index)
