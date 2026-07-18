@@ -68,6 +68,9 @@ class GameData:
     test_data: Callable[[], GameTestData]
     """Contains data and configuration parameters to allow the test suit to assert things properly for this game."""
 
+    reject_undocumented_tricks_in_database: bool = True
+    """If a test should check and fail if there's any undocumented trick in the database."""
+
     defaults_available_in_game_sessions: bool = False
     """If this game is allowed by default in online game sessions."""
 

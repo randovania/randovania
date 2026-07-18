@@ -208,7 +208,12 @@ async def get_abandoned_world_data(user: UserDep, world_uuid: str) -> dict:
     The data the GUI needs to drive an abandoned world: the world's own game
     modifications (stripped of anything about other worlds) and the locations already collected.
     """
-    world = World.get_by_uuid(uuid.UUID(world_uuid))
+    try:
+        world = World.get_by_uuid(uuid.UUID(world_uuid))
+    except error.WorldDoesNotExistError:
+        # Do not tell the user if a world id is valid
+        # The client also has special handling to delete the connector when it gets a 403
+        raise HTTPException(status_code=403, detail="You must claim this world to run its bot")
 
     if not world.abandoned:
         raise HTTPException(status_code=409, detail="World is not abandoned")

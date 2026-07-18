@@ -267,11 +267,12 @@ class AbandonedWorldRemoteConnector(RemoteConnector):
                     emitted_location = True
                     self.PlayerLocationChanged.emit(PlayerLocationEvent(end_state.node.region, end_state.node.area))
 
+                self._emit_inventory(end_state)
+
                 if new_indices:
                     self._collected.update(new_indices)
                     for index in sorted(new_indices):
                         self.PickupIndexCollected.emit(PickupIndex(index))
-                    self._emit_inventory(end_state)
 
                     # More may be in logic: stay scheduled for the next paced round.
                     self._dirty.set()

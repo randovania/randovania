@@ -553,6 +553,16 @@ async def test_get_abandoned_world_data_admin_without_claim(test_client, solo_tw
     mock_audit.assert_not_awaited()
 
 
+async def test_get_abandoned_world_data_missing(test_client, solo_two_world_session):
+    test_client.set_logged_in_user(1234)
+
+    response = test_client.get(
+        "/world/e1d6e0d4-4e1e-4415-8ebb-19ddc003096c/abandoned-data", headers={"Accept": "application/json"}
+    )
+    assert response.status_code == 403
+    assert response.json()["detail"] == "You must claim this world to run its bot"
+
+
 async def test_get_abandoned_world_data_not_abandoned(test_client, solo_two_world_session):
     test_client.set_logged_in_user(1234)
     world = database.World.get_by_id(1)
