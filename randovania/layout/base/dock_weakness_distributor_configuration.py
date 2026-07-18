@@ -227,7 +227,7 @@ class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCh
         """
         True, if at least one type is configured as the given mode.
         """
-        return any(type_state == mode for type_state in self.types_state.values())
+        return any(type_state.mode == mode for type_state in self.types_state.values())
 
     def get_mode_for(self, dock_type: DockType) -> DockWeaknessDistributorMode:
         """

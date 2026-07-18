@@ -7,7 +7,10 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game.game_enum import RandovaniaGame
-from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorConfiguration
+from randovania.layout.base.dock_weakness_distributor_configuration import (
+    DockWeaknessDistributorConfiguration,
+    DockWeaknessDistributorMode,
+)
 
 core_blank_json = {
     "types_state": {
@@ -115,6 +118,8 @@ def test_prime_thing(default_prime_configuration):
 
     dc = DockWeaknessDistributorConfiguration.from_json(config, RandovaniaGame.METROID_PRIME)
     encoded = bitpacking.pack_value(dc, metadata=ref)
+
+    assert dc.is_any_type_mode(DockWeaknessDistributorMode.INDIVIDUAL_DOCK)
 
     decoder = BitPackDecoder(encoded)
     decoded = DockWeaknessDistributorConfiguration.bit_pack_unpack(decoder, ref)
