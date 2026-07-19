@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: In the Data Visualizer and Editor, when panning away from the selected area the region image is now displayed correctly.
 - Fixed: In the Data Visualizer and Editor, when changing the zoom the pan is adjusted now relative to either the center or the mouse position.
 
+### Generator
+
+- Fixed: Some cases of not correctly identifying which nodes are reachable.
+
 ### Resolver
 
 - Fixed: Some games being wrongly considered impossible.

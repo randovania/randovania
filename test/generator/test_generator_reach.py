@@ -341,11 +341,14 @@ def test_graph_module(blank_world_graph, blank_game_description, empty_patches):
     g = GeneratorDiGraph.new(blank_world_graph)
 
     g.add_node(1)
+    g.add_node(3)
     g.add_node(5)
     g.add_node(7)
     g.add_node(8)
     g.add_edge(1, 5, GraphRequirementSet.trivial())
+    g.add_edge(1, 3, GraphRequirementSet.trivial())
     g.add_edge(5, 1, GraphRequirementSet.trivial())
+    g.add_edge(3, 1, GraphRequirementSet.trivial())
     g.add_edge(7, 8, GraphRequirementSet.trivial())
 
     assert g.has_edge(1, 5)
@@ -364,6 +367,6 @@ def test_graph_module(blank_world_graph, blank_game_description, empty_patches):
     state.node = blank_world_graph.nodes[1]
     costs = g.calculate_reachable_costs(blank_world_graph, state)
     costs_dict = {key: costs[key] for key in costs.keys()}
-    assert costs_dict == {5: 1}
+    assert costs_dict == {5: 0, 3: 1}
 
-    assert g.strongly_connected_components(1) == {1, 5}
+    assert g.strongly_connected_components(1) == {1, 3, 5}
