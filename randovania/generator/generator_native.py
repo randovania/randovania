@@ -312,7 +312,9 @@ else:
                 node_index: cython.int = data[1]
                 result: cython.int = is_collected[node_index]
                 if result == 2:
-                    result = not nodes[node_index].resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
+                    result = nodes[node_index].require_collected_to_leave and not nodes[
+                        node_index
+                    ].resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
                     is_collected[node_index] = result
 
                 return result

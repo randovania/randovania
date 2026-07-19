@@ -364,6 +364,6 @@ def test_graph_module(blank_world_graph, blank_game_description, empty_patches):
     state.node = blank_world_graph.nodes[1]
     costs = g.calculate_reachable_costs(blank_world_graph, state)
     costs_dict = {key: costs[key] for key in costs.keys()}
-    assert costs_dict == {5: 1}
+    assert costs_dict == {5: 0}
 
     assert g.strongly_connected_components(1) == {1, 5}
