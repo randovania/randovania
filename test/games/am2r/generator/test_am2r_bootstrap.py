@@ -7,14 +7,29 @@ from random import Random
 import pytest
 
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.am2r.generator import AM2RBootstrap
 from randovania.games.am2r.layout.am2r_configuration import AM2RArtifactConfig
 from randovania.generator.pickup_pool import pool_creator
+from randovania.layout import filtered_database
 
 _boss_indices = [111, 3, 6, 14, 11, 50]
+
+
+def test_logic_bootstrap_without_nest_pipes(am2r_configuration):
+    configuration = dataclasses.replace(am2r_configuration, nest_pipes=False)
+    game = filtered_database.game_description_for_layout(configuration).get_mutable()
+    patches = GamePatches.create_from_game(game, 0, configuration)
+
+    graph, _ = AM2RBootstrap().logic_bootstrap_graph(configuration, game, patches)
+
+    assert (
+        NodeIdentifier.create("The Depths", "Bubble Lair Shinespark Cave East", "Pipe to Hideout Hub Access East")
+        not in graph.node_identifier_to_node
+    )
 
 
 @pytest.mark.parametrize(

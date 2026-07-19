@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Some games being wrongly considered impossible.
 
+### Another Metroid 2 Remake
+
+- Fixed: Generating a game with the new Teleporter Pipes in final areas disabled no longer causes an exception.
+
 ### Metroid Dread
 
 - Changed: The icon for the Super Missile in the automatic item tracker has been made lighter in color so that it matches the other icons better.
