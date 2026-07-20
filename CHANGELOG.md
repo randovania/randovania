@@ -30,6 +30,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Burenia
+
+- Changed: Merged event nodes for breaking the floor in Gravity Suit Tower, decluttering the room and helping the generator see when it is safe to complete the sequence.
+- Changed: Added connection back to the Early Gravity Blob in the Gravity Suit Tower to help the generator see when it is safe to complete the breakable floor sequence.
+
 ##### Cataris
 
 - Fixed: The door into the Central Unit is changed from Access Open to EMMI Door.
