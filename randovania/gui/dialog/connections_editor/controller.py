@@ -204,9 +204,12 @@ class RequirementController(QObject):
         return isinstance(self._active_item_index.data(ROLE), RequirementArrayBase)
 
     def _push_command(
-        self, before: Requirement, after: Requirement, selection_path: list[int], description: str
+        self, before: Requirement, after: Requirement, after_selection_path: list[int], description: str
     ) -> None:
-        self._undo_stack.push(Command(self._model, self._view, before, after, selection_path, description))
+        before_selection_path: list[int] = self._model.path_from_index(self._active_item_index)
+        self._undo_stack.push(
+            Command(self._model, self._view, before, after, before_selection_path, after_selection_path, description)
+        )
 
     def _on_add_requirement_pressed(self) -> None:
         active = self._active_item_index.data(ROLE)

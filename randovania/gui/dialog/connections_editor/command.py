@@ -17,7 +17,8 @@ class Command(QUndoCommand):
         view: RequirementView,
         before: Requirement,
         after: Requirement,
-        selection_path: list[int],
+        before_selection_path: list[int],
+        after_selection_path: list[int],
         description: str,
     ) -> None:
         super().__init__(description)
@@ -25,11 +26,13 @@ class Command(QUndoCommand):
         self._view = view
         self._before = before
         self._after = after
-        self._selection_path = selection_path
+        self._before_selection_path = before_selection_path
+        self._after_selection_path = after_selection_path
 
     def redo(self) -> None:
         self._model.build_tree(self._after)
-        self._view.restore_selection(self._selection_path)
+        self._view.restore_selection(self._after_selection_path)
 
     def undo(self) -> None:
         self._model.build_tree(self._before)
+        self._view.restore_selection(self._before_selection_path)
