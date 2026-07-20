@@ -102,7 +102,7 @@ def accumulate_results(
     for pickup_index, pickup_target in patches.pickup_assignment.items():
         pickup_node = patches.game.region_list.node_from_pickup_index(pickup_index)
         pickup: str = pickup_target.pickup.name
-        owner: int = pickup_target.player + 1
+        owner: int = pickup_target.world + 1
         world_prefix = f"World {world_index + 1}'s " if is_multi else ""
         area_name = f"{world_prefix}{pickup_node.identifier.as_string}"
         owner_prefix = f"World {owner}'s " if is_multi else ""

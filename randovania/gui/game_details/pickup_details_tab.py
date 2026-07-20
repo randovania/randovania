@@ -126,7 +126,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
             if pickup_target is not None:
                 pickup_button.item_name = pickup_target.pickup.name
                 if players.is_multiworld:
-                    pickup_button.target_player = pickup_target.player
+                    pickup_button.target_player = pickup_target.world
                     pickup_button.player_names = players.world_names
             else:
                 pickup_button.item_name = "Nothing"
@@ -227,7 +227,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
         for patches in all_patches:
             rl = patches.game.region_list
             for pickup_index, pickup_target in patches.pickup_assignment.items():
-                if pickup_target.player == worlds_config.world_index:
+                if pickup_target.world == worlds_config.world_index:
                     node = rl.node_from_pickup_index(pickup_index)
                     rows.append(
                         (

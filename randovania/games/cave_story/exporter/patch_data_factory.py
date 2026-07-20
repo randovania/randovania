@@ -127,8 +127,8 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
             mapname = typing.cast("MapName", node.extra.get("event_map", area.extra["map_name"]))
             event = typing.cast("EventNumber", node.extra["event"])
 
-            if not self.players_config.should_target_local_world(target.player):
-                message = f"Sent ={target.pickup.name}= to ={self.players_config.world_names[target.player]}=!"
+            if not self.players_config.should_target_local_world(target.world):
+                message = f"Sent ={target.pickup.name}= to ={self.players_config.world_names[target.world]}=!"
                 message = wrap_msg_text(message, False, ending="<WAI0025<NOD")
                 git = "<GIT0000"  # TODO: add GIT info in pickup db and use it here (respecting offworld models)
                 pickup_script = f"<PRI<MSG<TUR<IT+0000{git}{message}<EVE0015"

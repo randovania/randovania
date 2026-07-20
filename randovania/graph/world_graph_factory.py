@@ -498,7 +498,7 @@ def _adjust_graph_for_patches(
     for node in graph.nodes:
         if node.pickup_index is not None:
             target = patches.pickup_assignment.get(node.pickup_index)
-            if target is not None and target.player == patches.player_index:
+            if target is not None and target.world == patches.player_index:
                 node.pickup_entry = target.pickup
 
                 for resource, _ in node.pickup_entry.all_resources:

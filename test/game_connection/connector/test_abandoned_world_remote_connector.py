@@ -226,7 +226,7 @@ async def test_setup_grants_only_self_pickups(multi_layout):
     checked_self = 0
     for pickup_index, node in graph.node_by_pickup_index.items():
         target = full_assignment.get(pickup_index)
-        if target is not None and target.player == order:
+        if target is not None and target.world == order:
             assert node.pickup_entry is not None
             assert node.pickup_entry.name == target.pickup.name
             checked_self += 1
@@ -254,7 +254,7 @@ async def test_resolve_loop_real_world(multi_layout, instant_rounds, tracked_rou
 
         # Deliver everything the other world holds for this one.
         held_for_world = [
-            target.pickup for _, target in multi_layout.all_patches[1].pickup_assignment.items() if target.player == 0
+            target.pickup for _, target in multi_layout.all_patches[1].pickup_assignment.items() if target.world == 0
         ]
         assert held_for_world
         await connector.set_remote_pickups(tuple(RemotePickup("World 2", pickup, None) for pickup in held_for_world))
@@ -318,7 +318,7 @@ async def test_dread_abandoned_in_giant_multi_is_monotonic(giant_multi_layout):
             for provider in range(len(description.all_patches))
             if provider != dread_order
             for pickup_index, target in description.all_patches[provider].pickup_assignment.items()
-            if target.player == dread_order
+            if target.world == dread_order
         ),
         key=lambda entry: (entry[0], entry[1]),
     )

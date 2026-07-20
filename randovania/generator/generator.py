@@ -233,7 +233,7 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
     def assign_pickup(node_player: int, node: PickupNode, pickup_target: PickupTarget) -> None:
         if debug.debug_level() > debug.LogLevel.HIGH:
             print(
-                f"Assigning World {pickup_target.player + 1}'s {pickup_target.pickup.name} "
+                f"Assigning World {pickup_target.world + 1}'s {pickup_target.pickup.name} "
                 f"to {node_player + 1}'s {node.pickup_index}"
             )
         assignments[node_player].append((node.pickup_index, pickup_target))

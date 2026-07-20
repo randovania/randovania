@@ -97,7 +97,7 @@ async def test_emit_world_pickups_update_one_action(
         start_case=start_case,
         generator_params=default_generator_params,
     )
-    mock_get_pickup_target.return_value = PickupTarget(pickup=pickup, player=0)
+    mock_get_pickup_target.return_value = PickupTarget(pickup=pickup, world=0)
     mock_get_resource_database.return_value = echoes_resource_database
 
     # Run
@@ -528,7 +528,7 @@ async def test_get_abandoned_world_data(test_client, solo_two_world_session, sol
     for location in result["game_modifications"]["locations"]:
         assert location["owner"] == 0
         target = own_assignment.get(PickupIndex(location["index"]))
-        if target is not None and target.player != 0:
+        if target is not None and target.world != 0:
             assert location["pickup"] == "Nothing"
     assert result["game_modifications"]["hints"] == {}
 

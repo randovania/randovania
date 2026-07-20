@@ -549,7 +549,7 @@ def test_create_message_for_featural_hint(
         ]
     )
 
-    namer = EchoesHintNamer({0: patches}, players_config)
+    namer = EchoesHintNamer([patches], players_config)
     exporter = HintExporter(namer, random.Random(0), ["A Joke"], patches.game)
 
     loc_feature = echoes_game_description.hint_feature_database[loc_feature_id]

@@ -87,7 +87,7 @@ def create_pickup_hint(
             pickup=pickup_creator.create_visual_nothing(
                 RandovaniaGame.METROID_PRIME_ECHOES, "EnergyTransferModule", "Energy Transfer Module"
             ),
-            player=players_config.world_index,
+            world=players_config.world_index,
         )
 
     if isinstance(precision, HintFeature):
@@ -103,6 +103,6 @@ def create_pickup_hint(
     player = None
 
     if include_owner and players_config.is_multiworld:
-        player = players_config.world_names[target.player]
+        player = players_config.world_names[target.world]
 
     return PickupHint(determiner, player, details[1])

@@ -83,7 +83,7 @@ class HintDetailsTab(GameDetailsTab):
                 else:
                     hinted_pickup = target.pickup.name
                     if players.is_multiworld:
-                        hinted_pickup = f"{players.world_names[target.player]}'s {hinted_pickup}"
+                        hinted_pickup = f"{players.world_names[target.world]}'s {hinted_pickup}"
 
             per_region[source_region.name][node] = (hinted_pickup, hinted_location, hint_text)
 

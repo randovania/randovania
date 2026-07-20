@@ -293,11 +293,11 @@ class PickupExporterMulti(PickupExporter):
         If for yourself but coop, use the solo creator, but adjust name, all resources to give 0 and collection text.
         For offworld, create custom details.
         """
-        other_name = self.players_config.world_names[pickup_target.player]
+        other_name = self.players_config.world_names[pickup_target.world]
         remote_name = f"{other_name}'s {name}"
         remote_collection_text = [f"Sent {name} to {other_name}!"]
 
-        if pickup_target.player == self.players_config.world_index:
+        if pickup_target.world == self.players_config.world_index:
             details = self.solo_creator.create_details(
                 original_index,
                 pickup_target,
@@ -309,7 +309,7 @@ class PickupExporterMulti(PickupExporter):
                 description,
             )
             if (
-                self.players_config.should_target_local_world(pickup_target.player)
+                self.players_config.should_target_local_world(pickup_target.world)
                 or pickup_target.pickup == useless_pickup
             ):
                 # For own world in normal multi

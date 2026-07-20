@@ -20,7 +20,7 @@ from randovania.game_description.hint import (
     RedTempleHint,
     SpecificHintPrecision,
 )
-from randovania.game_description.pickup.pickup_entry import StartingPickupBehavior
+from randovania.game_description.pickup.pickup_entry import PickupEntry, StartingPickupBehavior
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.pre_fill_params import PreFillParams
@@ -172,7 +172,7 @@ def test_echoes_more_interesting_pickups(
 
 
 @pytest.mark.parametrize(
-    ("target_pickup", "target_player", "features", "expected"),
+    ("target_pickup", "target_world", "features", "expected"),
     [
         ("Violet Translator", 0, set(), False),
         ("Amber Translator", 0, set(), True),
@@ -182,7 +182,7 @@ def test_echoes_more_interesting_pickups(
     ],
 )
 def test_echoes_interesting_pickups(
-    target_pickup: str, target_player: int, features: set[str], expected: bool, echoes_game_description
+    target_pickup: str, target_world: int, features: set[str], expected: bool, echoes_game_description
 ):
     # Setup
     hint_node = echoes_game_description.region_list.typed_node_by_identifier(
@@ -191,10 +191,10 @@ def test_echoes_interesting_pickups(
     )
     hint_distributor = EchoesHintDistributor()
 
-    target = MagicMock(spec=PickupTarget)
-    target.pickup.name = target_pickup
-    target.pickup.has_hint_feature = lambda feat: feat in features
-    target.player = target_player
+    pickup_mock = MagicMock(spec=PickupEntry)
+    pickup_mock.name = target_pickup
+    pickup_mock.has_hint_feature = lambda feat: feat in features
+    target = PickupTarget(pickup=pickup_mock, world=target_world)
 
     # Run
     result = hint_distributor.is_pickup_interesting(target, 0, hint_node)

@@ -33,7 +33,7 @@ def get_locations_for_major_pickups_and_keys(
 
     for patches in all_patches:
         for pickup_index, target in patches.pickup_assignment.items():
-            if target.player != players_config.world_index:
+            if target.world != players_config.world_index:
                 continue
 
             if target.pickup.show_in_credits_spoiler:

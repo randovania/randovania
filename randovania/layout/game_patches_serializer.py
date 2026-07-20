@@ -42,7 +42,7 @@ def _pickup_assignment_to_pickup_locations(
             target = pickup_assignment[node.pickup_index]
             item_name = target.pickup.name
             if num_worlds > 1:
-                target_world = target.player
+                target_world = target.world
             else:
                 target_world = 0
         else:
@@ -304,7 +304,7 @@ def decode_single(
             pickup_db = default_database.pickup_database_for_game(game.game)
 
             def get_target_pickup_db(target: PickupTarget) -> PickupDatabase:
-                target_game = all_games[target.player]
+                target_game = all_games[target.world]
                 target_pickup_db = default_database.pickup_database_for_game(target_game.game)
                 return target_pickup_db
 

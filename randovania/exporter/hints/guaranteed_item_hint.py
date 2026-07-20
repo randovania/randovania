@@ -28,7 +28,7 @@ def find_locations_that_gives_items(
 
     for other_world, patches in enumerate(all_patches):
         for world_index, target in patches.pickup_assignment.items():
-            if target.player != player:
+            if target.world != player:
                 continue
 
             # TODO: iterate over all tiers of progression

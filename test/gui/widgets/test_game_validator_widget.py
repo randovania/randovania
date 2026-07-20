@@ -21,9 +21,7 @@ def widget(skip_qtbot):
     layout = MagicMock()
     layout.world_count = 1
     layout.all_presets = [MagicMock()]
-    players = MagicMock()
-    players.player_names = {0: "Player"}
-    players.player_index = 0
+    players = WorldsConfiguration(world_index=0, world_names={0: "Player"})
     widget = game_validator_widget.GameValidatorWidget(layout, players)
     skip_qtbot.addWidget(widget)
     return widget

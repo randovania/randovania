@@ -368,7 +368,7 @@ class HintDistributor(ABC):
         `MORE_INTERESTING` pickups are a subset of `INTERESTING` pickups,
         which are a subset of `LEAST_INTERESTING` pickups.
         """
-        hint_distributor = player_pools[target.player].game.game.hints.hint_distributor
+        hint_distributor = player_pools[target.world].game.game.hints.hint_distributor
 
         if not hint_distributor.is_pickup_interesting(target, player_id, hint_node):
             return HintSuitability.LEAST_INTERESTING
@@ -380,7 +380,7 @@ class HintDistributor(ABC):
         """Pickups which don't satisfy this check are lower priority for hinting than those that do."""
         return target.pickup.show_in_credits_spoiler
 
-    def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
+    def is_pickup_interesting(self, target: PickupTarget, world_id: int, hint_node: HintNode) -> bool:
         """Pickups which don't satisfy this check are only hinted as a last resort."""
         return True
 
@@ -662,7 +662,7 @@ class HintDistributor(ABC):
                 mean, std_dev = _get_gauss_params(precision.item, self.item_feature_distribution())
 
                 if precision.include_owner:
-                    specific_owner = item.player
+                    specific_owner = item.world
                 else:
                     specific_owner = None
 
