@@ -6,7 +6,7 @@ import peewee
 
 import randovania
 from randovania import monitoring
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import InvalidLayoutDescription, LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import error
@@ -686,18 +686,18 @@ async def _create_patcher_file(
 
     layout_description = session.layout_description
     assert layout_description is not None
-    players_config = PlayersConfiguration(
-        player_index=player_index,
-        player_names=player_names,
+    players_config = WorldsConfiguration(
+        world_index=player_index,
+        world_names=player_names,
         uuids=uuids,
         session_name=session.name,
         is_coop=session.allow_coop,
     )
-    preset = layout_description.get_preset(players_config.player_index)
+    preset = layout_description.get_preset(players_config.world_index)
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)
 
     await session_common.add_audit_entry(
-        sa, sid, session, f"Exporting game named {players_config.player_names[players_config.player_index]}"
+        sa, sid, session, f"Exporting game named {players_config.world_names[players_config.world_index]}"
     )
 
     data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)

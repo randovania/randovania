@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -93,11 +93,11 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
         return "Pickups"
 
     def update_content(
-        self, configuration: BaseConfiguration, all_patches: list[GamePatches], players: PlayersConfiguration
+        self, configuration: BaseConfiguration, all_patches: list[GamePatches], players: WorldsConfiguration
     ) -> None:
         self._update_search_pickup_group(all_patches, players)
 
-        patches = all_patches[players.player_index]
+        patches = all_patches[players.world_index]
         pickup_names = {pickup.pickup.name for pickup in patches.pickup_assignment.values()}
         game_view = LayerFilteredGameDatabaseView.create_for_configuration(
             configuration.game_enum().game_description,
@@ -127,7 +127,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
                 pickup_button.item_name = pickup_target.pickup.name
                 if players.is_multiworld:
                     pickup_button.target_player = pickup_target.player
-                    pickup_button.player_names = players.player_names
+                    pickup_button.player_names = players.world_names
             else:
                 pickup_button.item_name = "Nothing"
 
@@ -216,7 +216,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
             button.setVisible(visible)
             button.row.label.setVisible(visible)
 
-    def _update_search_pickup_group(self, all_patches: list[GamePatches], worlds_config: PlayersConfiguration) -> None:
+    def _update_search_pickup_group(self, all_patches: list[GamePatches], worlds_config: WorldsConfiguration) -> None:
         self.search_pickup_group.setVisible(worlds_config.is_multiworld)
         if not worlds_config.is_multiworld:
             return
@@ -227,12 +227,12 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
         for patches in all_patches:
             rl = patches.game.region_list
             for pickup_index, pickup_target in patches.pickup_assignment.items():
-                if pickup_target.player == worlds_config.player_index:
+                if pickup_target.player == worlds_config.world_index:
                     node = rl.node_from_pickup_index(pickup_index)
                     rows.append(
                         (
                             pickup_target.pickup.name,
-                            worlds_config.player_names[patches.player_index],
+                            worlds_config.world_names[patches.player_index],
                             node.identifier,
                         )
                     )

@@ -359,7 +359,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         return intro_text
 
     def _add_cosmetic_patches(self) -> dict:
-        cosmetic_rng = Random(self.description.get_seed_for_world(self.players_config.player_index))
+        cosmetic_rng = Random(self.description.get_seed_for_world(self.players_config.world_index))
         suit_color = self.cosmetic_patches.suit_color.randomized(cosmetic_rng).varia.value
 
         cosmetic_patches = {
@@ -378,7 +378,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         full_hash = f"{self.description.shareable_word_hash} ({self.description.shareable_hash})"
 
         return {
-            "configuration_id": self.description.get_seed_for_world(self.players_config.player_index),
+            "configuration_id": self.description.get_seed_for_world(self.players_config.world_index),
             "starting_items": starting_items_as_json,
             "areas": self._entity_patching_per_area(),
             "ammo_sizes": self._update_ammo_sizes(),

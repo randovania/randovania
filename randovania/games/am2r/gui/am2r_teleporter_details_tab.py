@@ -7,13 +7,13 @@ from randovania.gui.game_details.teleporter_details_tab import TeleporterDetails
 
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 class AM2RTeleporterDetailsTab(TeleporterDetailsTab[AM2RConfiguration]):
     @classmethod
     def should_appear_for(
-        cls, configuration: AM2RConfiguration, all_patches: list[GamePatches], players: PlayersConfiguration
+        cls, configuration: AM2RConfiguration, all_patches: list[GamePatches], players: WorldsConfiguration
     ) -> bool:
         return not configuration.teleporters.is_vanilla
 

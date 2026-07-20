@@ -49,7 +49,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.layout_description import LayoutDescription
 
@@ -503,7 +503,7 @@ def _create_string_patches(
     new_patcher: EchoesNewPatcher,
     game: GameDescription,
     all_patches: list[GamePatches],
-    players_config: PlayersConfiguration,
+    players_config: WorldsConfiguration,
     elevator_dock_type: DockType,
     exporter: HintExporter,
 ) -> list:
@@ -514,14 +514,14 @@ def _create_string_patches(
     :param all_patches:
     :return:
     """
-    patches = all_patches[players_config.player_index]
+    patches = all_patches[players_config.world_index]
 
     string_patches = []
 
     string_patches.extend(akul_testament_string_patch(exporter.namer))
 
     # Location Hints
-    string_patches.extend(hints.create_patches_hints(all_patches[players_config.player_index], exporter))
+    string_patches.extend(hints.create_patches_hints(all_patches[players_config.world_index], exporter))
 
     # Sky Temple Keys
     stk_mode = hint_config.specific_pickup_hints["sky_temple_keys"]
@@ -611,7 +611,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
     def __init__(
         self,
         description: LayoutDescription,
-        players_config: PlayersConfiguration,
+        players_config: WorldsConfiguration,
         cosmetic_patches: EchoesCosmeticPatches,
     ):
         super().__init__(description, players_config, cosmetic_patches)
@@ -897,7 +897,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         }
 
     def add_new_patcher_cosmetics(self) -> dict:
-        cosmetic_rng = Random(self.description.get_seed_for_world(self.players_config.player_index))
+        cosmetic_rng = Random(self.description.get_seed_for_world(self.players_config.world_index))
 
         suits = self.cosmetic_patches.suit_colors.randomized(cosmetic_rng).as_json
         suits.pop("randomize_separately")
@@ -920,7 +920,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         return {
             "worlds": regions_patch_data,
             "small_randomizations": {
-                "seed": self.description.get_seed_for_world(self.players_config.player_index),
+                "seed": self.description.get_seed_for_world(self.players_config.world_index),
                 "echo_locks": True,
                 "minigyro_chamber": True,
                 "rubiks": True,
@@ -958,11 +958,11 @@ def echoes_raw_pickup_list(
     configuration: BaseConfiguration,
     game: GameDatabaseView,
     patches: GamePatches,
-    players_config: PlayersConfiguration,
+    players_config: WorldsConfiguration,
     rng: Random,
 ) -> list[pickup_exporter.ExportedPickupDetails]:
     resource_db = game.get_resource_database_view()
-    useless_target = PickupTarget(create_echoes_useless_pickup(resource_db), players_config.player_index)
+    useless_target = PickupTarget(create_echoes_useless_pickup(resource_db), players_config.world_index)
 
     return pickup_exporter.export_all_indices(
         patches,
@@ -981,7 +981,7 @@ def _create_pickup_list(
     configuration: BaseConfiguration,
     game: GameDatabaseView,
     patches: GamePatches,
-    players_config: PlayersConfiguration,
+    players_config: WorldsConfiguration,
     rng: Random,
 ) -> list[dict]:
     resource_db = game.get_resource_database_view()

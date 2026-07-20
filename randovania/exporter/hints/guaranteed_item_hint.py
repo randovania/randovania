@@ -10,7 +10,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_info import ResourceInfo
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 def _resource_in_item_list(
@@ -59,7 +59,7 @@ def hint_text_if_items_are_starting(
 
 def create_guaranteed_hints_for_resources(
     all_patches: list[GamePatches],
-    players_config: PlayersConfiguration,
+    players_config: WorldsConfiguration,
     namer: HintNamer,
     hide_area: bool,
     items: list[ItemResourceInfo],
@@ -78,10 +78,8 @@ def create_guaranteed_hints_for_resources(
     :param with_color
     :return:
     """
-    resulting_hints = hint_text_if_items_are_starting(
-        items, all_patches, players_config.player_index, namer, with_color
-    )
-    locations_for_items = find_locations_that_gives_items(items, all_patches, players_config.player_index)
+    resulting_hints = hint_text_if_items_are_starting(items, all_patches, players_config.world_index, namer, with_color)
+    locations_for_items = find_locations_that_gives_items(items, all_patches, players_config.world_index)
 
     used_locations = set()
     for resource, locations in locations_for_items.items():
@@ -99,7 +97,7 @@ def create_guaranteed_hints_for_resources(
 
             world_name = None
             if players_config.is_multiworld:
-                world_name = players_config.player_names[location[0]]
+                world_name = players_config.world_names[location[0]]
 
             resulting_hints[resource] = namer.format_guaranteed_resource(
                 resource,

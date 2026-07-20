@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraphNode
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.layout_description import LayoutDescription
     from randovania.resolver.damage_state import DamageState
@@ -74,7 +74,7 @@ async def _run_validator(logger: ResolverLogger, debug_level: debug.LogLevel, la
 class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
     _current_task: asyncio.Task | None
 
-    def __init__(self, layout: LayoutDescription, players: PlayersConfiguration) -> None:
+    def __init__(self, layout: LayoutDescription, players: WorldsConfiguration) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -92,7 +92,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             "Minor": False,
             "Event": True,
             "Hint": False,
-            "Lock": configs[players.player_index].dock_weakness_distributor.is_enabled_for_any_type(),
+            "Lock": configs[players.world_index].dock_weakness_distributor.is_enabled_for_any_type(),
         }
         self._last_run_filters: dict[str, bool] | None = None
 
@@ -303,7 +303,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
             else:
                 action_text = details.target.pickup.name
                 if self.validator_widget.layout_description.world_count > 1:
-                    player_name = self.validator_widget.players.player_names[details.target.player]
+                    player_name = self.validator_widget.players.world_names[details.target.player]
                     action_text = f"{player_name}'s {action_text}"
 
         else:

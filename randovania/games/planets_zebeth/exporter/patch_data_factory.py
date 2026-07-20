@@ -207,7 +207,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         pickup_list = self.export_pickup_list()
 
         return {
-            "seed": self.description.get_seed_for_world(self.players_config.player_index),
+            "seed": self.description.get_seed_for_world(self.players_config.world_index),
             "game_config": self._create_game_config_dict(pickup_list),
             "preferences": self._create_cosmetics(),
             "level_data": {"room": "rm_Zebeth", "pickups": self._create_pickups_dict(pickup_list, self.rng)},

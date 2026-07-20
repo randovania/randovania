@@ -23,7 +23,7 @@ from randovania.games.prime2.layout.echoes_configuration import EchoesConfigurat
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState
@@ -614,7 +614,7 @@ def test_create_string_patches(
     # Setup
     game: GameDescription = MagicMock()
     all_patches = MagicMock()
-    player_config = PlayersConfiguration(0, {0: "you"})
+    player_config = WorldsConfiguration(0, {0: "you"})
 
     mock_item_create_hints: MagicMock = mocker.patch(
         "randovania.games.prime2.exporter.hints.create_patches_hints",
@@ -713,7 +713,7 @@ def test_generate_patcher_data(
 
     # Run
     factory = patch_data_factory.EchoesPatchDataFactory(
-        description, PlayersConfiguration(player_index, {0: "you"}), cosmetic_patches
+        description, WorldsConfiguration(player_index, {0: "you"}), cosmetic_patches
     )
     result = factory.create_data()
 

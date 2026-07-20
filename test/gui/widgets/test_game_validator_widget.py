@@ -7,7 +7,7 @@ import pytest
 
 from randovania.gui.widgets import game_validator_widget
 from randovania.gui.widgets.game_validator_widget import LABEL_IDS, ValidatorWidgetResolverLogger
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug
 from test.resolver.test_logging import perform_logging
@@ -219,9 +219,9 @@ async def test_on_start_button_no_task(
 
 async def test_on_start_button_with_resolver(skip_qtbot, test_files_dir):
     layout = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "blank/issue-3717.rdvgame"))
-    players = PlayersConfiguration(
-        player_index=0,
-        player_names={0: "Player"},
+    players = WorldsConfiguration(
+        world_index=0,
+        world_names={0: "Player"},
     )
     widget = game_validator_widget.GameValidatorWidget(layout, players)
     skip_qtbot.addWidget(widget)

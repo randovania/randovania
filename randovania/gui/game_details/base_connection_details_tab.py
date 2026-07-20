@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -37,14 +37,14 @@ class BaseConnectionDetailsTab[ConfigurationT: BaseConfiguration](GameDetailsTab
         raise NotImplementedError
 
     def update_content(
-        self, configuration: ConfigurationT, all_patches: list[GamePatches], players: PlayersConfiguration
+        self, configuration: ConfigurationT, all_patches: list[GamePatches], players: WorldsConfiguration
     ) -> None:
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(2)
         self.tree_widget.setHeaderLabels(["Source", "Destination"])
 
         game = filtered_database.game_description_for_layout(configuration)
-        patches = all_patches[players.player_index]
+        patches = all_patches[players.world_index]
 
         per_region: dict[str, dict[str, str | dict[str, str]]] = collections.defaultdict(dict)
         self._fill_per_region_connections(per_region, game, patches)

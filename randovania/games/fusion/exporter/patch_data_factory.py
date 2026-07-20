@@ -214,7 +214,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     "hue_max": getattr(cosmetics, f"{attr_name}_hue_override_max"),
                 }
         palette_dict = {
-            "seed": self.description.get_seed_for_world(self.players_config.player_index),
+            "seed": self.description.get_seed_for_world(self.players_config.world_index),
             "randomize": palettes,
             "color_space": cosmetics.color_space.long_name,
             "symmetric": getattr(cosmetics, "enable_symmetric"),
@@ -253,7 +253,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         restricted_hint = ""
         operations_hint = ""
         artifact_locations = guaranteed_item_hint.find_locations_that_gives_items(
-            artifacts, self.description.all_patches, self.players_config.player_index
+            artifacts, self.description.all_patches, self.players_config.world_index
         )
         fusion_bosses = [
             "ARACHNUS",

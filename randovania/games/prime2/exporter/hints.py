@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 def create_simple_logbook_hint(asset_id: int, hint: str) -> dict:
@@ -70,7 +70,7 @@ _SKY_TEMPLE_KEY_SCAN_ASSETS = [
 
 def create_stk_hints(
     all_patches: list[GamePatches],
-    players_config: PlayersConfiguration,
+    players_config: WorldsConfiguration,
     resource_database: ResourceDatabaseView,
     namer: HintNamer,
     hide_area: bool,

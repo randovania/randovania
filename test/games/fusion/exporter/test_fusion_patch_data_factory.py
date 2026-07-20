@@ -7,7 +7,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.games.fusion.exporter.patch_data_factory import FusionPatchDataFactory
 from randovania.games.fusion.layout.fusion_cosmetic_patches import FusionCosmeticPatches
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import json_lib
 
@@ -22,7 +22,7 @@ from randovania.lib import json_lib
 def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):
     # Setup
     rdvgame = test_files_dir.joinpath("log_files", "fusion", rdvgame_filename)
-    players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
+    players_config = WorldsConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
     description = LayoutDescription.from_file(rdvgame)
     cosmetic_patches = FusionCosmeticPatches()
     mocker.patch("random.Random.randint", new_callable=MagicMock, return_value=0)
@@ -32,7 +32,7 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
     db = data.game
 
     useless_target = PickupTarget(
-        pickup_creator.create_nothing_pickup(db.get_resource_database_view(), "Empty"), data.players_config.player_index
+        pickup_creator.create_nothing_pickup(db.get_resource_database_view(), "Empty"), data.players_config.world_index
     )
 
     memo_data = data.create_memo_data()

@@ -8,7 +8,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.patch_data_factory import AM2RPatchDataFactory, _construct_music_shuffle_dict
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches, MusicMode
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import json_lib
 
@@ -50,7 +50,7 @@ def test_construct_music_shuffle_dict_full() -> None:
 def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):
     # Setup
     rdvgame = test_files_dir.joinpath("log_files", "am2r", rdvgame_filename)
-    players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
+    players_config = WorldsConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
     description = LayoutDescription.from_file(rdvgame)
     cosmetic_patches = AM2RCosmeticPatches()
     mocker.patch("random.Random.randint", new_callable=MagicMock, return_value=0)
@@ -61,7 +61,7 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
 
     useless_target = PickupTarget(
         pickup_creator.create_nothing_pickup(db.get_resource_database_view(), "sItemNothing"),
-        data.players_config.player_index,
+        data.players_config.world_index,
     )
 
     text_data = data._get_text_data()

@@ -23,7 +23,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
@@ -43,7 +43,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
     """
 
     description: LayoutDescription
-    players_config: PlayersConfiguration
+    players_config: WorldsConfiguration
     game: GameDescription
     resource_db: ResourceDatabaseView
     pickup_db: PickupDatabase
@@ -56,7 +56,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
     def __init__(
         self,
         description: LayoutDescription,
-        players_config: PlayersConfiguration,
+        players_config: WorldsConfiguration,
         cosmetic_patches: CosmeticPatches,
     ):
         self.description = description
@@ -65,11 +65,11 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
 
         self.pickup_db = default_database.pickup_database_for_game(self.game_enum())
 
-        self.patches = description.all_patches[players_config.player_index]
+        self.patches = description.all_patches[players_config.world_index]
         self.configuration = typing.cast(
-            "Configuration", description.get_preset(players_config.player_index).configuration
+            "Configuration", description.get_preset(players_config.world_index).configuration
         )
-        self.rng = Random(description.get_seed_for_world(players_config.player_index))
+        self.rng = Random(description.get_seed_for_world(players_config.world_index))
         self.game = filtered_database.game_description_for_layout(self.configuration)
         self.resource_db = self.game.get_resource_database_view()
         self.memo_data = self.create_memo_data()
@@ -134,7 +134,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         """
         return pickup_exporter.export_all_indices(
             self.patches,
-            PickupTarget(self.create_useless_pickup(), self.players_config.player_index),
+            PickupTarget(self.create_useless_pickup(), self.players_config.world_index),
             self.game,
             self.rng,
             self.configuration.pickup_model_style,
@@ -152,7 +152,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
     def get_hint_namer(
         cls,
         all_patches: list[GamePatches],
-        players_config: PlayersConfiguration,
+        players_config: WorldsConfiguration,
     ) -> HintNamer:
         """Return an instance of this game's HintNamer."""
         return cls.hint_namer_type()(all_patches, players_config)
@@ -166,7 +166,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
     def get_hint_exporter(
         cls,
         all_patches: list[GamePatches],
-        players_config: PlayersConfiguration,
+        players_config: WorldsConfiguration,
         rng: Random,
         base_joke_hints: list[str],
         game_view: GameDatabaseView,

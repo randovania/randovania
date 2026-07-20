@@ -15,7 +15,7 @@ import pytest
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import InvalidLayoutDescription
 from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
@@ -417,7 +417,7 @@ async def test_admin_session_patcher_file(mock_sa, mock_audit, mocker, two_playe
     mock_layout_description.return_value.get_preset.assert_called_once_with(1)
     game.patch_data_factory.assert_called_once_with(
         mock_layout_description.return_value,
-        PlayersConfiguration(
+        WorldsConfiguration(
             1,
             {
                 0: "World 1",

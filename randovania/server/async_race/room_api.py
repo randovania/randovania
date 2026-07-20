@@ -13,7 +13,7 @@ from peewee import Case
 from starlette.websockets import WebSocket, WebSocketDisconnect
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.json_lib import JsonObject_RO
@@ -420,14 +420,14 @@ async def join_and_export(
     )
 
     layout_description = room.layout_description
-    players_config = PlayersConfiguration(
-        player_index=0,
-        player_names={0: "World"},
+    players_config = WorldsConfiguration(
+        world_index=0,
+        world_names={0: "World"},
         uuids={},
         session_name=None,
         is_coop=False,
     )
-    preset = layout_description.get_preset(players_config.player_index)
+    preset = layout_description.get_preset(players_config.world_index)
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)
 
     data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)

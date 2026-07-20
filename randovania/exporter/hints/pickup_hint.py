@@ -15,7 +15,7 @@ from randovania.generator.pickup_pool import pickup_creator
 if TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 _DET_AN = [
     "Annihilator Beam",
@@ -68,7 +68,7 @@ def create_pickup_hint(
     game_view: GameDatabaseView,
     precision: HintItemPrecision | HintFeature,
     target: PickupTarget | None,
-    players_config: PlayersConfiguration,
+    players_config: WorldsConfiguration,
     include_owner: bool,
 ) -> PickupHint:
     """
@@ -87,7 +87,7 @@ def create_pickup_hint(
             pickup=pickup_creator.create_visual_nothing(
                 RandovaniaGame.METROID_PRIME_ECHOES, "EnergyTransferModule", "Energy Transfer Module"
             ),
-            player=players_config.player_index,
+            player=players_config.world_index,
         )
 
     if isinstance(precision, HintFeature):
@@ -103,6 +103,6 @@ def create_pickup_hint(
     player = None
 
     if include_owner and players_config.is_multiworld:
-        player = players_config.player_names[target.player]
+        player = players_config.world_names[target.player]
 
     return PickupHint(determiner, player, details[1])

@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.hint import LocationHint
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 class FusionColor(Enum):
@@ -28,10 +28,10 @@ class FusionColor(Enum):
 
 
 class FusionHintNamer(HintNamer[FusionColor]):
-    def __init__(self, all_patches: list[GamePatches], players_config: PlayersConfiguration):
+    def __init__(self, all_patches: list[GamePatches], players_config: WorldsConfiguration):
         super().__init__(all_patches, players_config)
 
-        patches = all_patches[players_config.player_index]
+        patches = all_patches[players_config.world_index]
         location_hint_template = "{determiner.title}{pickup} can be found in {node}."
 
         self.location_formatters = basic_hint_formatters(

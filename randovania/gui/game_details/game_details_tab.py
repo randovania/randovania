@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -18,7 +18,7 @@ class CreateWhenRelevantMethod(typing.Protocol):
         parent: QtWidgets.QWidget,
         configuration: BaseConfiguration,
         all_patches: list[GamePatches],
-        players: PlayersConfiguration,
+        players: WorldsConfiguration,
     ) -> GameDetailsTab | None: ...
 
 
@@ -33,13 +33,13 @@ class GameDetailsTab[ConfigurationT: BaseConfiguration]:
         raise NotImplementedError
 
     def update_content(
-        self, configuration: ConfigurationT, all_patches: list[GamePatches], players: PlayersConfiguration
+        self, configuration: ConfigurationT, all_patches: list[GamePatches], players: WorldsConfiguration
     ) -> None:
         raise NotImplementedError
 
     @classmethod
     def should_appear_for(
-        cls, configuration: ConfigurationT, all_patches: list[GamePatches], players: PlayersConfiguration
+        cls, configuration: ConfigurationT, all_patches: list[GamePatches], players: WorldsConfiguration
     ) -> bool:
         return True
 
@@ -49,7 +49,7 @@ class GameDetailsTab[ConfigurationT: BaseConfiguration]:
         parent: QtWidgets.QWidget,
         configuration: ConfigurationT,
         all_patches: list[GamePatches],
-        players: PlayersConfiguration,
+        players: WorldsConfiguration,
     ) -> Self | None:
         """Creates an instance of this class when `should_appear_for` returns True, None otherwise."""
         if cls.should_appear_for(configuration, all_patches, players):

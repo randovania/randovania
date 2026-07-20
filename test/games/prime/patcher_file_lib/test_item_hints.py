@@ -33,14 +33,14 @@ from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.exporter.joke_hints import ECHOES_JOKE_HINTS
 from randovania.games.prime2.patcher import echoes_items
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 @pytest.fixture
-def players_config() -> PlayersConfiguration:
-    return PlayersConfiguration(
-        player_index=0,
-        player_names={0: "Player 1"},
+def players_config() -> WorldsConfiguration:
+    return WorldsConfiguration(
+        world_index=0,
+        world_names={0: "Player 1"},
     )
 
 
@@ -228,9 +228,9 @@ def test_create_hints_item_dark_temple_keys_cross_game(
     default_prime_configuration,
 ):
     # Setup
-    players_config = PlayersConfiguration(
-        player_index=0,
-        player_names={
+    players_config = WorldsConfiguration(
+        world_index=0,
+        world_names={
             0: "Player 1",
             1: "Player 2",
         },
@@ -310,9 +310,9 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
     pickup_index = PickupIndex(50)
     hint_node, _, _, game_view = _create_region_list(asset_id, pickup_index)
 
-    players_config = PlayersConfiguration(
-        player_index=0,
-        player_names={i: f"Player {i + 1}" for i in range(int(is_multiworld) + 1)},
+    players_config = WorldsConfiguration(
+        world_index=0,
+        world_names={i: f"Player {i + 1}" for i in range(int(is_multiworld) + 1)},
     )
     location_precision, determiner, item_name = item
     if owner and is_multiworld:

@@ -10,7 +10,7 @@ from randovania.generator.pickup_pool import pool_creator
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 
 
@@ -27,19 +27,19 @@ class OwnedPickupLocation(NamedTuple):
 
 def get_locations_for_major_pickups_and_keys(
     all_patches: list[GamePatches],
-    players_config: PlayersConfiguration,
+    players_config: WorldsConfiguration,
 ) -> dict[PickupEntry, list[OwnedPickupLocation | str]]:  # Technically inaccurate return type, but makes typing easier.
     results: dict[PickupEntry, list[OwnedPickupLocation | str]] = collections.defaultdict(list)
 
     for patches in all_patches:
         for pickup_index, target in patches.pickup_assignment.items():
-            if target.player != players_config.player_index:
+            if target.player != players_config.world_index:
                 continue
 
             if target.pickup.show_in_credits_spoiler:
                 player_name = None
                 if players_config.is_multiworld:
-                    player_name = players_config.player_names[patches.player_index]
+                    player_name = players_config.world_names[patches.player_index]
 
                 results[target.pickup].append(
                     OwnedPickupLocation(player_name, PickupLocation(patches.configuration.game, pickup_index))
@@ -68,7 +68,7 @@ def starting_pickups_with_count(patches: GamePatches) -> dict[PickupEntry, int]:
 def generic_credits(
     standard_pickup_configuration: StandardPickupConfiguration,
     all_patches: list[GamePatches],
-    players_config: PlayersConfiguration,
+    players_config: WorldsConfiguration,
 ) -> list[tuple[PickupEntry, list[OwnedPickupLocation | str]]]:
     """
     Returns the credits in the form of a list of tuples that can be used to create your own formatting.
@@ -86,7 +86,7 @@ def generic_credits(
 
     details = get_locations_for_major_pickups_and_keys(all_patches, players_config)
 
-    starting_pickups = starting_pickups_with_count(all_patches[players_config.player_index])
+    starting_pickups = starting_pickups_with_count(all_patches[players_config.world_index])
     for pickup, count in starting_pickups.items():
         if count < 1:
             continue
@@ -110,7 +110,7 @@ def generic_credits(
 def generic_string_credits(
     standard_pickup_configuration: StandardPickupConfiguration,
     all_patches: list[GamePatches],
-    players_config: PlayersConfiguration,
+    players_config: WorldsConfiguration,
     namer: HintNamer,
     pickup_name_format: str = "{}",
     use_player_color: bool = True,
@@ -136,7 +136,7 @@ def generic_string_credits(
 def prime_trilogy_credits(
     standard_pickup_configuration: StandardPickupConfiguration,
     all_patches: list[GamePatches],
-    players_config: PlayersConfiguration,
+    players_config: WorldsConfiguration,
     namer: HintNamer,
     title: str,
     pickup_name_format: str,

@@ -177,7 +177,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
         return pickup_map_dict
 
     def _create_room_dict(self) -> dict:
-        rng = Random(self.description.get_seed_for_world(self.players_config.player_index))
+        rng = Random(self.description.get_seed_for_world(self.players_config.world_index))
 
         return_dict = {}
         for region in self.game.region_list.regions:
@@ -539,6 +539,6 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
             "pipes": pipes if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA else {},
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
-            "cosmetics": self._create_cosmetics(self.description.get_seed_for_world(self.players_config.player_index)),
+            "cosmetics": self._create_cosmetics(self.description.get_seed_for_world(self.players_config.world_index)),
             "credits_spoiler": self._credits_spoiler(),
         }

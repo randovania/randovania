@@ -24,7 +24,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceGainTuple
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalResources]:
@@ -271,7 +271,7 @@ class PickupExporterSolo(PickupExporter):
 
 
 class PickupExporterMulti(PickupExporter):
-    def __init__(self, solo_creator: PickupExporter, players_config: PlayersConfiguration):
+    def __init__(self, solo_creator: PickupExporter, players_config: WorldsConfiguration):
         self.solo_creator = solo_creator
         self.players_config = players_config
         super().__init__(self.solo_creator.game)
@@ -293,11 +293,11 @@ class PickupExporterMulti(PickupExporter):
         If for yourself but coop, use the solo creator, but adjust name, all resources to give 0 and collection text.
         For offworld, create custom details.
         """
-        other_name = self.players_config.player_names[pickup_target.player]
+        other_name = self.players_config.world_names[pickup_target.player]
         remote_name = f"{other_name}'s {name}"
         remote_collection_text = [f"Sent {name} to {other_name}!"]
 
-        if pickup_target.player == self.players_config.player_index:
+        if pickup_target.player == self.players_config.world_index:
             details = self.solo_creator.create_details(
                 original_index,
                 pickup_target,
@@ -309,7 +309,7 @@ class PickupExporterMulti(PickupExporter):
                 description,
             )
             if (
-                self.players_config.should_target_local_player(pickup_target.player)
+                self.players_config.should_target_local_world(pickup_target.player)
                 or pickup_target.pickup == useless_pickup
             ):
                 # For own world in normal multi
@@ -418,7 +418,7 @@ class GenericAcquiredMemo(dict[str, str]):
 
 
 def create_pickup_exporter(
-    memo_data: dict, players_config: PlayersConfiguration, game: RandovaniaGame
+    memo_data: dict, players_config: WorldsConfiguration, game: RandovaniaGame
 ) -> PickupExporter:
     exporter: PickupExporter = PickupExporterSolo(memo_data, game)
     if players_config.is_multiworld:

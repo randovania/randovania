@@ -16,15 +16,15 @@ def patcher_data_command_logic(args: Namespace) -> None:
 
 
 async def patcher_data_command_logic_async(args: Namespace) -> None:
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.layout_description import LayoutDescription
 
     layout_description = LayoutDescription.from_file(args.layout_file)
-    players_config = PlayersConfiguration(
+    players_config = WorldsConfiguration(
         args.player_index,
         {i: f"Player {i + 1}" for i in range(layout_description.world_count)},
     )
-    preset: Preset = layout_description.get_preset(players_config.player_index)
+    preset: Preset = layout_description.get_preset(players_config.world_index)
 
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.default()
     data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)

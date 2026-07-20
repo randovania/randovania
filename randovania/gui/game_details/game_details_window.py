@@ -25,7 +25,7 @@ from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.gui.widgets.game_validator_widget import GameValidatorWidget
 from randovania.interface_common import generator_frontend
 from randovania.interface_common.options import InfoAlert, Options
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
 
@@ -128,10 +128,10 @@ class GameDetailsWindow(CloseEventWindow, Ui_GameDetailsWindow, BackgroundTaskMi
         return self.player_index_combo.currentData()
 
     @property
-    def players_configuration(self) -> PlayersConfiguration:
-        return PlayersConfiguration(
-            player_index=self.current_player_index,
-            player_names=self._player_names,
+    def players_configuration(self) -> WorldsConfiguration:
+        return WorldsConfiguration(
+            world_index=self.current_player_index,
+            world_names=self._player_names,
         )
 
     # Operations
@@ -203,7 +203,7 @@ class GameDetailsWindow(CloseEventWindow, Ui_GameDetailsWindow, BackgroundTaskMi
 
         dialog = game.gui.export_dialog(
             options,
-            layout.get_preset(self.players_configuration.player_index).configuration,
+            layout.get_preset(self.players_configuration.world_index).configuration,
             layout.shareable_word_hash,
             has_spoiler,
             list(layout.all_games),

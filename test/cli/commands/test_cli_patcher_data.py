@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 from randovania.cli.commands import patcher_data
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -21,7 +21,7 @@ async def test_patcher_data_logic_async(mocker: pytest_mock.MockerFixture):
     layout_description.world_count = 4
     layout_description.get_preset = MagicMock(return_value=preset)
 
-    players_config = PlayersConfiguration(
+    players_config = WorldsConfiguration(
         args.player_index,
         {
             0: "Player 1",

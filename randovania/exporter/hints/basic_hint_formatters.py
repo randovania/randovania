@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.hint_features import HintFeature
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 def basic_hint_formatters(
@@ -22,7 +22,7 @@ def basic_hint_formatters(
     location_hint_template: str,
     patches: GamePatches,
     distance_painter: Callable[[str, bool], str],
-    players_config: PlayersConfiguration,
+    players_config: WorldsConfiguration,
     featural_hint_template: str | None = None,
     with_region: bool = True,
     upper_pickup: bool = False,

@@ -11,7 +11,7 @@ from randovania.gui.game_details.base_connection_details_tab import BaseConnecti
 if TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -29,7 +29,7 @@ class DockWeaknessDistributionDetailsTab[ConfigurationT: BaseConfiguration](Base
     @classmethod
     @override
     def should_appear_for(
-        cls, configuration: ConfigurationT, all_patches: list[GamePatches], players: PlayersConfiguration
+        cls, configuration: ConfigurationT, all_patches: list[GamePatches], players: WorldsConfiguration
     ) -> bool:
         raise RuntimeError("Should not be called for this class")
 
@@ -58,7 +58,7 @@ class DockWeaknessDistributionDetailsTab[ConfigurationT: BaseConfiguration](Base
         parent: QtWidgets.QWidget,
         configuration: ConfigurationT,
         all_patches: list[GamePatches],
-        players: PlayersConfiguration,
+        players: WorldsConfiguration,
         dock_type: DockType,
     ) -> Self | None:
         if configuration.dock_weakness_distributor.is_enabled_for(dock_type):
