@@ -50,18 +50,18 @@ def test_construct_music_shuffle_dict_full() -> None:
 def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):
     # Setup
     rdvgame = test_files_dir.joinpath("log_files", "am2r", rdvgame_filename)
-    players_config = WorldsConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
+    worlds_config = WorldsConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
     description = LayoutDescription.from_file(rdvgame)
     cosmetic_patches = AM2RCosmeticPatches()
     mocker.patch("random.Random.randint", new_callable=MagicMock, return_value=0)
 
-    data = AM2RPatchDataFactory(description, players_config, cosmetic_patches)
+    data = AM2RPatchDataFactory(description, worlds_config, cosmetic_patches)
 
     db = data.game
 
     useless_target = PickupTarget(
         pickup_creator.create_nothing_pickup(db.get_resource_database_view(), "sItemNothing"),
-        data.players_config.world_index,
+        data.worlds_config.world_index,
     )
 
     text_data = data._get_text_data()
@@ -78,7 +78,7 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
         data.rng,
         data.configuration.pickup_model_style,
         data.configuration.pickup_model_data_source,
-        exporter=pickup_exporter.create_pickup_exporter(memo_data, data.players_config, data.game.game),
+        exporter=pickup_exporter.create_pickup_exporter(memo_data, data.worlds_config, data.game.game),
         visual_nothing=pickup_creator.create_visual_nothing(data.game_enum(), "sItemNothing"),
     )
 

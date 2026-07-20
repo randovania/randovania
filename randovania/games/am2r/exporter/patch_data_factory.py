@@ -155,7 +155,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
                 "quantity": quantity,
                 "text": {
                     "header": (
-                        text_data[pickup.name]["text_header"] if not self.players_config.is_multiworld else pickup.name
+                        text_data[pickup.name]["text_header"] if not self.worlds_config.is_multiworld else pickup.name
                     ),
                     "description": pickup.collection_text[text_index],
                 },
@@ -177,7 +177,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
         return pickup_map_dict
 
     def _create_room_dict(self) -> dict:
-        rng = Random(self.description.get_seed_for_world(self.players_config.world_index))
+        rng = Random(self.description.get_seed_for_world(self.worlds_config.world_index))
 
         return_dict = {}
         for region in self.game.region_list.regions:
@@ -272,7 +272,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
             "contains_spoiler": not rdv_meta["in_race_setting"],
             "word_hash": self.description.shareable_word_hash,
             "hash": self.description.shareable_hash,
-            "session_uuid": str(self.players_config.get_own_uuid()),
+            "session_uuid": str(self.worlds_config.get_own_uuid()),
             "starting_memo": self._create_starting_popup(self.patches),
         }
         return return_dict
@@ -359,11 +359,11 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
         ice = [(self.resource_db.get_item("Ice Beam"))]
 
         hint_config = self.configuration.hints
-        hint_namer = AM2RHintNamer(self.description.all_patches, self.players_config)
+        hint_namer = AM2RHintNamer(self.description.all_patches, self.worlds_config)
         if hint_config.specific_pickup_hints["artifacts"] != SpecificPickupHintMode.DISABLED:
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 hint_namer,
                 hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.HIDE_AREA,
                 artifacts,
@@ -409,7 +409,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
         if hint_config.specific_pickup_hints["ice_beam"] != SpecificPickupHintMode.DISABLED:
             temp_ice_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 hint_namer,
                 hint_config.specific_pickup_hints["ice_beam"] == SpecificPickupHintMode.HIDE_AREA,
                 ice,
@@ -473,8 +473,8 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
         spoiler_dict = credits_spoiler.generic_string_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
-            self.players_config,
-            AM2RHintNamer(self.description.all_patches, self.players_config),
+            self.worlds_config,
+            AM2RHintNamer(self.description.all_patches, self.worlds_config),
             "{}",
             False,
         )
@@ -539,6 +539,6 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
             "pipes": pipes if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA else {},
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
-            "cosmetics": self._create_cosmetics(self.description.get_seed_for_world(self.players_config.world_index)),
+            "cosmetics": self._create_cosmetics(self.description.get_seed_for_world(self.worlds_config.world_index)),
             "credits_spoiler": self._credits_spoiler(),
         }

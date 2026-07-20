@@ -37,7 +37,7 @@ from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 @pytest.fixture
-def players_config() -> WorldsConfiguration:
+def worlds_config() -> WorldsConfiguration:
     return WorldsConfiguration(
         world_index=0,
         world_names={0: "Player 1"},
@@ -106,12 +106,12 @@ def _create_region_list(asset_id: int, pickup_index: PickupIndex, num_pickups: i
 
 
 @pytest.fixture
-def echoes_hint_exporter(echoes_game_patches, players_config) -> HintExporter:
-    namer = EchoesHintNamer({0: echoes_game_patches}, players_config)
+def echoes_hint_exporter(echoes_game_patches, worlds_config) -> HintExporter:
+    namer = EchoesHintNamer({0: echoes_game_patches}, worlds_config)
     return HintExporter(namer, random.Random(0), ["A Joke"], echoes_game_patches.game)
 
 
-def test_create_hints_nothing(echoes_game_patches, players_config):
+def test_create_hints_nothing(echoes_game_patches, worlds_config):
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(0)
@@ -128,7 +128,7 @@ def test_create_hints_nothing(echoes_game_patches, players_config):
         },
     )
     rng = MagicMock()
-    namer = EchoesHintNamer({0: patches}, players_config)
+    namer = EchoesHintNamer({0: patches}, worlds_config)
     exporter = HintExporter(namer, rng, ECHOES_JOKE_HINTS, game_view)
 
     # Run
@@ -142,14 +142,14 @@ def test_create_hints_nothing(echoes_game_patches, players_config):
     assert result == [{"asset_id": asset_id, "strings": [message, "", message]}]
 
 
-def test_create_hints_item_joke(echoes_game_patches, players_config):
+def test_create_hints_item_joke(echoes_game_patches, worlds_config):
     # Setup
     asset_id = 1000
     hint_node, _, _, game_view = _create_region_list(asset_id, PickupIndex(50))
 
     patches = dataclasses.replace(echoes_game_patches, hints={hint_node.identifier: JokeHint()})
     rng = MagicMock()
-    namer = EchoesHintNamer({0: patches}, players_config)
+    namer = EchoesHintNamer({0: patches}, worlds_config)
     exporter = HintExporter(namer, rng, ECHOES_JOKE_HINTS, game_view)
 
     # Run
@@ -187,7 +187,7 @@ def test_create_hints_item_joke(echoes_game_patches, players_config):
 )
 def test_create_hints_item_dark_temple_keys(
     echoes_game_patches,
-    players_config,
+    worlds_config,
     echoes_game_description,
     blank_pickup,
     indices,
@@ -209,7 +209,7 @@ def test_create_hints_item_dark_temple_keys(
 
     hint = RedTempleHint(dark_temple=HintDarkTemple.TORVUS_BOG)
 
-    namer = EchoesHintNamer([patches], players_config)
+    namer = EchoesHintNamer([patches], worlds_config)
     exporter = HintExporter(namer, random.Random(0), ["A Joke"], MagicMock())
 
     # Run
@@ -228,7 +228,7 @@ def test_create_hints_item_dark_temple_keys_cross_game(
     default_prime_configuration,
 ):
     # Setup
-    players_config = WorldsConfiguration(
+    worlds_config = WorldsConfiguration(
         world_index=0,
         world_names={
             0: "Player 1",
@@ -259,7 +259,7 @@ def test_create_hints_item_dark_temple_keys_cross_game(
 
     hint = RedTempleHint(dark_temple=HintDarkTemple.TORVUS_BOG)
 
-    namer = EchoesHintNamer([echoes_patches, prime_patches], players_config)
+    namer = EchoesHintNamer([echoes_patches, prime_patches], worlds_config)
     exporter = HintExporter(namer, random.Random(0), ["A Joke"], echoes_patches.game)
 
     # Run
@@ -275,7 +275,7 @@ def test_create_hints_item_dark_temple_keys_cross_game(
 
 
 def test_create_message_for_hint_dark_temple_no_keys(
-    empty_patches, players_config, echoes_hint_exporter, echoes_game_description
+    empty_patches, worlds_config, echoes_hint_exporter, echoes_game_description
 ):
     # Setup
     hint = RedTempleHint(dark_temple=HintDarkTemple.TORVUS_BOG)
@@ -310,7 +310,7 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
     pickup_index = PickupIndex(50)
     hint_node, _, _, game_view = _create_region_list(asset_id, pickup_index)
 
-    players_config = WorldsConfiguration(
+    worlds_config = WorldsConfiguration(
         world_index=0,
         world_names={i: f"Player {i + 1}" for i in range(int(is_multiworld) + 1)},
     )
@@ -331,7 +331,7 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
         },
     )
     rng = MagicMock()
-    namer = EchoesHintNamer({0: patches}, players_config)
+    namer = EchoesHintNamer({0: patches}, worlds_config)
     exporter = HintExporter(namer, rng, ECHOES_JOKE_HINTS, game_view)
 
     # Run
@@ -363,7 +363,7 @@ def test_create_hints_guardians(
     pickup_index_and_guardian,
     blank_pickup,
     item,
-    players_config,
+    worlds_config,
 ):
     # Setup
     asset_id = 1000
@@ -388,7 +388,7 @@ def test_create_hints_guardians(
         },
     )
     rng = MagicMock()
-    namer = EchoesHintNamer({0: patches}, players_config)
+    namer = EchoesHintNamer({0: patches}, worlds_config)
     exporter = HintExporter(namer, rng, ECHOES_JOKE_HINTS, game_view)
 
     # Run
@@ -405,7 +405,7 @@ def test_create_hints_guardians(
         (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Blank Pickup&pop;"),
     ],
 )
-def test_create_hints_light_suit_location(echoes_game_patches, players_config, blank_pickup, item):
+def test_create_hints_light_suit_location(echoes_game_patches, worlds_config, blank_pickup, item):
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(50)
@@ -427,7 +427,7 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
         },
     )
     rng = MagicMock()
-    namer = EchoesHintNamer({0: patches}, players_config)
+    namer = EchoesHintNamer({0: patches}, worlds_config)
     exporter = HintExporter(namer, rng, ECHOES_JOKE_HINTS, game_view)
 
     # Run
@@ -455,7 +455,7 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
 def test_create_message_for_hint_relative_item(
     echoes_game_patches,
     blank_pickup,
-    players_config,
+    worlds_config,
     distance_precise,
     distance_text,
     reference_precision,
@@ -478,7 +478,7 @@ def test_create_message_for_hint_relative_item(
         PickupIndex(5),
     )
 
-    namer = EchoesHintNamer({0: patches}, players_config)
+    namer = EchoesHintNamer({0: patches}, worlds_config)
     exporter = HintExporter(namer, random.Random(0), ["A Joke"], echoes_game_patches.game)
 
     # Run
@@ -500,7 +500,7 @@ def test_create_message_for_hint_relative_item(
     ],
 )
 def test_create_message_for_hint_relative_area(
-    echoes_game_patches, blank_pickup, players_config, echoes_hint_exporter, offset, distance_text
+    echoes_game_patches, blank_pickup, worlds_config, echoes_hint_exporter, offset, distance_text
 ):
     patches = echoes_game_patches.assign_new_pickups(
         [
@@ -518,7 +518,7 @@ def test_create_message_for_hint_relative_area(
         PickupIndex(5),
     )
 
-    namer = EchoesHintNamer({0: patches}, players_config)
+    namer = EchoesHintNamer({0: patches}, worlds_config)
     exporter = HintExporter(namer, random.Random(0), ["A Joke"], patches.game)
 
     # Run
@@ -541,7 +541,7 @@ def test_create_message_for_featural_hint(
     blank_pickup,
     echoes_pickup_database,
     echoes_game_description,
-    players_config,
+    worlds_config,
 ):
     patches = echoes_game_patches.assign_new_pickups(
         [
@@ -549,7 +549,7 @@ def test_create_message_for_featural_hint(
         ]
     )
 
-    namer = EchoesHintNamer([patches], players_config)
+    namer = EchoesHintNamer([patches], worlds_config)
     exporter = HintExporter(namer, random.Random(0), ["A Joke"], patches.game)
 
     loc_feature = echoes_game_description.hint_feature_database[loc_feature_id]

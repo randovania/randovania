@@ -420,17 +420,17 @@ async def join_and_export(
     )
 
     layout_description = room.layout_description
-    players_config = WorldsConfiguration(
+    worlds_config = WorldsConfiguration(
         world_index=0,
         world_names={0: "World"},
         uuids={},
         session_name=None,
         is_coop=False,
     )
-    preset = layout_description.get_preset(players_config.world_index)
+    preset = layout_description.get_preset(worlds_config.world_index)
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)
 
-    data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)
+    data_factory = preset.game.patch_data_factory(layout_description, worlds_config, cosmetic_patches)
     rdv_meta = data_factory.create_default_patcher_data_meta()
     rdv_meta["in_race_setting"] = True
     try:

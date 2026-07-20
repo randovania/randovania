@@ -13,10 +13,10 @@ if TYPE_CHECKING:
 
 
 class EchoesHintNamer(PrimeFamilyHintNamer):
-    def __init__(self, all_patches: list[GamePatches], players_config: WorldsConfiguration):
-        super().__init__(all_patches, players_config)
+    def __init__(self, all_patches: list[GamePatches], worlds_config: WorldsConfiguration):
+        super().__init__(all_patches, worlds_config)
 
-        patches = all_patches[players_config.world_index]
+        patches = all_patches[worlds_config.world_index]
 
         def feat(loc: str) -> HintFeature:
             return patches.game.hint_feature_database[loc]

@@ -59,7 +59,7 @@ def hint_text_if_items_are_starting(
 
 def create_guaranteed_hints_for_resources(
     all_patches: list[GamePatches],
-    players_config: WorldsConfiguration,
+    worlds_config: WorldsConfiguration,
     namer: HintNamer,
     hide_area: bool,
     items: list[ItemResourceInfo],
@@ -71,15 +71,15 @@ def create_guaranteed_hints_for_resources(
     Intended for Sky Temple Key/Artifacts hints.
 
     :param all_patches:
-    :param players_config:
+    :param worlds_config:
     :param namer:
     :param hide_area: Should the area of the location be hidden?
     :param items: The item resources to hint
     :param with_color
     :return:
     """
-    resulting_hints = hint_text_if_items_are_starting(items, all_patches, players_config.world_index, namer, with_color)
-    locations_for_items = find_locations_that_gives_items(items, all_patches, players_config.world_index)
+    resulting_hints = hint_text_if_items_are_starting(items, all_patches, worlds_config.world_index, namer, with_color)
+    locations_for_items = find_locations_that_gives_items(items, all_patches, worlds_config.world_index)
 
     used_locations = set()
     for resource, locations in locations_for_items.items():
@@ -96,8 +96,8 @@ def create_guaranteed_hints_for_resources(
             used_locations.add(location)
 
             world_name = None
-            if players_config.is_multiworld:
-                world_name = players_config.world_names[location[0]]
+            if worlds_config.is_multiworld:
+                world_name = worlds_config.world_names[location[0]]
 
             resulting_hints[resource] = namer.format_guaranteed_resource(
                 resource,

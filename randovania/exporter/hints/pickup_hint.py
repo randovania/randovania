@@ -68,7 +68,7 @@ def create_pickup_hint(
     game_view: GameDatabaseView,
     precision: HintItemPrecision | HintFeature,
     target: PickupTarget | None,
-    players_config: WorldsConfiguration,
+    worlds_config: WorldsConfiguration,
     include_owner: bool,
 ) -> PickupHint:
     """
@@ -77,7 +77,7 @@ def create_pickup_hint(
     :param game_view:
     :param precision:
     :param target:
-    :param players_config:
+    :param worlds_config:
     :param include_owner:
     :return:
     """
@@ -87,7 +87,7 @@ def create_pickup_hint(
             pickup=pickup_creator.create_visual_nothing(
                 RandovaniaGame.METROID_PRIME_ECHOES, "EnergyTransferModule", "Energy Transfer Module"
             ),
-            world=players_config.world_index,
+            world=worlds_config.world_index,
         )
 
     if isinstance(precision, HintFeature):
@@ -102,7 +102,7 @@ def create_pickup_hint(
     determiner = Determiner(details[0])
     player = None
 
-    if include_owner and players_config.is_multiworld:
-        player = players_config.world_names[target.world]
+    if include_owner and worlds_config.is_multiworld:
+        player = worlds_config.world_names[target.world]
 
     return PickupHint(determiner, player, details[1])

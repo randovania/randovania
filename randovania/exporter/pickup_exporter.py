@@ -271,9 +271,9 @@ class PickupExporterSolo(PickupExporter):
 
 
 class PickupExporterMulti(PickupExporter):
-    def __init__(self, solo_creator: PickupExporter, players_config: WorldsConfiguration):
+    def __init__(self, solo_creator: PickupExporter, worlds_config: WorldsConfiguration):
         self.solo_creator = solo_creator
-        self.players_config = players_config
+        self.worlds_config = worlds_config
         super().__init__(self.solo_creator.game)
 
     def create_details(
@@ -293,11 +293,11 @@ class PickupExporterMulti(PickupExporter):
         If for yourself but coop, use the solo creator, but adjust name, all resources to give 0 and collection text.
         For offworld, create custom details.
         """
-        other_name = self.players_config.world_names[pickup_target.world]
+        other_name = self.worlds_config.world_names[pickup_target.world]
         remote_name = f"{other_name}'s {name}"
         remote_collection_text = [f"Sent {name} to {other_name}!"]
 
-        if pickup_target.world == self.players_config.world_index:
+        if pickup_target.world == self.worlds_config.world_index:
             details = self.solo_creator.create_details(
                 original_index,
                 pickup_target,
@@ -309,7 +309,7 @@ class PickupExporterMulti(PickupExporter):
                 description,
             )
             if (
-                self.players_config.should_target_local_world(pickup_target.world)
+                self.worlds_config.should_target_local_world(pickup_target.world)
                 or pickup_target.pickup == useless_pickup
             ):
                 # For own world in normal multi
@@ -417,10 +417,8 @@ class GenericAcquiredMemo(dict[str, str]):
         return f"{key} acquired!"
 
 
-def create_pickup_exporter(
-    memo_data: dict, players_config: WorldsConfiguration, game: RandovaniaGame
-) -> PickupExporter:
+def create_pickup_exporter(memo_data: dict, worlds_config: WorldsConfiguration, game: RandovaniaGame) -> PickupExporter:
     exporter: PickupExporter = PickupExporterSolo(memo_data, game)
-    if players_config.is_multiworld:
-        exporter = PickupExporterMulti(exporter, players_config)
+    if worlds_config.is_multiworld:
+        exporter = PickupExporterMulti(exporter, worlds_config)
     return exporter

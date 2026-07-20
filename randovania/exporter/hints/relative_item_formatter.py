@@ -16,10 +16,10 @@ if TYPE_CHECKING:
 
 class RelativeItemFormatter(RelativeFormatter):
     def __init__(
-        self, patches: GamePatches, distance_painter: Callable[[str, bool], str], players_config: WorldsConfiguration
+        self, patches: GamePatches, distance_painter: Callable[[str, bool], str], worlds_config: WorldsConfiguration
     ):
         super().__init__(patches, distance_painter)
-        self.players_config = players_config
+        self.worlds_config = worlds_config
 
     def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
         assert isinstance(hint.precision.relative, RelativeDataItem)
@@ -32,7 +32,7 @@ class RelativeItemFormatter(RelativeFormatter):
             self.game_view,
             hint.precision.relative.precision,
             self.patches.pickup_assignment.get(index),
-            self.players_config,
+            self.worlds_config,
             False,
         )
         assert phint.world_name is None

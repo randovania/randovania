@@ -312,8 +312,8 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         return credits_spoiler.generic_string_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
-            self.players_config,
-            DreadHintNamer(self.description.all_patches, self.players_config),
+            self.worlds_config,
+            DreadHintNamer(self.description.all_patches, self.worlds_config),
         )
 
     def _static_room_name_fixes(self, scenario_name: str, area: Area) -> tuple[str, str]:
@@ -458,8 +458,8 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         artifacts = [self.resource_db.get_item(f"Artifact{i + 1}") for i in range(12)]
         artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
             self.description.all_patches,
-            self.players_config,
-            DreadHintNamer(self.description.all_patches, self.players_config),
+            self.worlds_config,
+            DreadHintNamer(self.description.all_patches, self.worlds_config),
             True,
             artifacts,
             True,
@@ -572,7 +572,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
             "has_flash_upgrades": has_flash_upgrades,
             "has_speed_upgrades": has_speed_upgrades,
-            "enable_remote_lua": self.cosmetic_patches.enable_auto_tracker or self.players_config.is_multiworld,
+            "enable_remote_lua": self.cosmetic_patches.enable_auto_tracker or self.worlds_config.is_multiworld,
             "enable_logging": self.cosmetic_patches.enable_debug_logging,
             "skip_item_popups": self.configuration.skip_item_popups,
             "constant_environment_damage": {
@@ -596,7 +596,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             "mass_delete_actors": {
                 "to_remove": self._light_patches(),
             },
-            "layout_uuid": str(self.players_config.get_own_uuid()),
+            "layout_uuid": str(self.worlds_config.get_own_uuid()),
         }
 
 

@@ -8,10 +8,10 @@ from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 class PlanetsZebethHintNamer(HintNamer[None]):
-    def __init__(self, all_patches: list[GamePatches], players_config: WorldsConfiguration):
-        super().__init__(all_patches, players_config)
+    def __init__(self, all_patches: list[GamePatches], worlds_config: WorldsConfiguration):
+        super().__init__(all_patches, worlds_config)
 
-        patches = all_patches[players_config.world_index]
+        patches = all_patches[worlds_config.world_index]
         location_hint_template = "{determiner.title}{pickup} can be found in {node}."
 
         self.location_formatters = basic_hint_formatters(
@@ -19,7 +19,7 @@ class PlanetsZebethHintNamer(HintNamer[None]):
             location_hint_template,
             patches,
             lambda msg, with_color: msg,
-            players_config,
+            worlds_config,
         )
 
     @override

@@ -35,7 +35,7 @@ async def test_export_iso(skip_qtbot, mocker):
     configuration = window.layout_description.get_preset.return_value.configuration
     patch_data = game.patch_data_factory.return_value.create_data.return_value
 
-    players_config = WorldsConfiguration(
+    worlds_config = WorldsConfiguration(
         world_index=window.current_player_index,
         world_names=window._player_names,
     )
@@ -45,7 +45,7 @@ async def test_export_iso(skip_qtbot, mocker):
 
     # Assert
     game.patch_data_factory.assert_called_once_with(
-        window.layout_description, players_config, options.generic_per_game_options.return_value.cosmetic_patches
+        window.layout_description, worlds_config, options.generic_per_game_options.return_value.cosmetic_patches
     )
     game.gui.export_dialog.assert_called_once_with(
         options,

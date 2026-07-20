@@ -68,7 +68,7 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
         return CSHintExporter
 
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
-        self._seed_number = self.description.get_seed_for_world(self.players_config.world_index)
+        self._seed_number = self.description.get_seed_for_world(self.worlds_config.world_index)
 
         self._maps = self._create_maps_data()
         self._maps["Start"]["pickups"]["0201"] = self._create_starting_script()
@@ -78,7 +78,7 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
             "other_tsc": {"Head": self._head_tsc_edits()},
             "mychar": self.cosmetic_patches.mychar.mychar_bmp(Random(self._seed_number)),
             "hash": get_ingame_hash(self.description.shareable_hash_bytes),
-            "uuid": f"{{{self.players_config.get_own_uuid()}}}",
+            "uuid": f"{{{self.worlds_config.get_own_uuid()}}}",
         }
         return typing.cast("dict", data)
 
@@ -114,7 +114,7 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
     def _create_pickups_data(self) -> dict[MapName, dict[EventNumber, TscScript]]:
         nothing_item = PickupTarget(
             pickup_creator.create_visual_nothing(RandovaniaGame.CAVE_STORY, "Nothing", "Nothing"),
-            self.players_config.world_index,
+            self.worlds_config.world_index,
         )
 
         pickups: dict[MapName, dict[EventNumber, TscScript]] = defaultdict(dict)
@@ -127,8 +127,8 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
             mapname = typing.cast("MapName", node.extra.get("event_map", area.extra["map_name"]))
             event = typing.cast("EventNumber", node.extra["event"])
 
-            if not self.players_config.should_target_local_world(target.world):
-                message = f"Sent ={target.pickup.name}= to ={self.players_config.world_names[target.world]}=!"
+            if not self.worlds_config.should_target_local_world(target.world):
+                message = f"Sent ={target.pickup.name}= to ={self.worlds_config.world_names[target.world]}=!"
                 message = wrap_msg_text(message, False, ending="<WAI0025<NOD")
                 git = "<GIT0000"  # TODO: add GIT info in pickup db and use it here (respecting offworld models)
                 pickup_script = f"<PRI<MSG<TUR<IT+0000{git}{message}<EVE0015"
@@ -148,12 +148,12 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
 
         exporter = self.get_hint_exporter(
             self.description.all_patches,
-            self.players_config,
+            self.worlds_config,
             hint_rng,
             GENERIC_JOKE_HINTS,
             self.game,
         )
-        patches = self.description.all_patches[self.players_config.world_index]
+        patches = self.description.all_patches[self.worlds_config.world_index]
         hints_for_identifier = {
             identifier: exporter.create_message_for_hint(hint, False) for identifier, hint in patches.hints.items()
         }

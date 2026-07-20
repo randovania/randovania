@@ -313,15 +313,15 @@ class GameDetailsWindow(CloseEventWindow, Ui_GameDetailsWindow, BackgroundTaskMi
         self._game_details_tabs.clear()
 
         if description.has_spoiler:
-            players_config = self.players_configuration
+            worlds_config = self.players_configuration
 
             for tab_factory in _create_default_visualizers(preset.game):
                 new_tab = tab_factory(
-                    self.layout_info_tab, preset.configuration, description.all_patches, players_config
+                    self.layout_info_tab, preset.configuration, description.all_patches, worlds_config
                 )
                 if new_tab is None:
                     continue
-                new_tab.update_content(preset.configuration, description.all_patches, players_config)
+                new_tab.update_content(preset.configuration, description.all_patches, worlds_config)
                 self.layout_info_tab.addTab(new_tab.widget(), f"Spoiler: {new_tab.tab_title()}")
                 self._game_details_tabs.append(new_tab)
 

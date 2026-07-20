@@ -20,14 +20,14 @@ async def patcher_data_command_logic_async(args: Namespace) -> None:
     from randovania.layout.layout_description import LayoutDescription
 
     layout_description = LayoutDescription.from_file(args.layout_file)
-    players_config = WorldsConfiguration(
+    worlds_config = WorldsConfiguration(
         args.player_index,
         {i: f"Player {i + 1}" for i in range(layout_description.world_count)},
     )
-    preset: Preset = layout_description.get_preset(players_config.world_index)
+    preset: Preset = layout_description.get_preset(worlds_config.world_index)
 
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.default()
-    data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)
+    data_factory = preset.game.patch_data_factory(layout_description, worlds_config, cosmetic_patches)
     patch_data = data_factory.create_data()
 
     output = json.dumps(

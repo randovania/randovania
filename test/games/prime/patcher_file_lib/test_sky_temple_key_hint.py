@@ -56,7 +56,7 @@ def test_create_hints_all_placed(
 ):
     # Setup
     echoes_game = echoes_game_description
-    players_config = WorldsConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
+    worlds_config = WorldsConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
 
     patches = echoes_game_patches.assign_new_pickups(
         [
@@ -126,12 +126,12 @@ def test_create_hints_all_placed(
         for i, (asset_id, text) in enumerate(zip(assets, locations))
     ]
 
-    namer = EchoesHintNamer([patches, other_patches], players_config)
+    namer = EchoesHintNamer([patches, other_patches], worlds_config)
 
     # Run
     result = randovania.games.prime2.exporter.hints.create_stk_hints(
         [patches, other_patches] if multiworld else [patches],
-        players_config,
+        worlds_config,
         echoes_game.resource_database,
         namer,
         hide_area,
@@ -147,7 +147,7 @@ def test_create_hints_all_starting(
     hide_area: bool, multiworld: bool, echoes_game_patches, echoes_game_description, default_echoes_configuration
 ):
     # Setup
-    players_config = WorldsConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
+    worlds_config = WorldsConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
 
     patches = echoes_game_patches.assign_extra_starting_pickups(
         [
@@ -163,7 +163,7 @@ def test_create_hints_all_starting(
         ]
     )
     patches = dataclasses.replace(patches, configuration=default_echoes_configuration)
-    namer = EchoesHintNamer([patches], players_config)
+    namer = EchoesHintNamer([patches], worlds_config)
 
     expected = [
         {"asset_id": 0xD97685FE, "strings": make_starting_stk_hint(1)},
@@ -179,7 +179,7 @@ def test_create_hints_all_starting(
 
     # Run
     result = randovania.games.prime2.exporter.hints.create_stk_hints(
-        [patches], players_config, echoes_game_description.resource_database, namer, hide_area
+        [patches], worlds_config, echoes_game_description.resource_database, namer, hide_area
     )
 
     # Assert

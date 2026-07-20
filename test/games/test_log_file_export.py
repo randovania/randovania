@@ -70,7 +70,7 @@ def test_layout_patch_data_export(
 
     factory = game_enum.patch_data_factory(
         description=layout,
-        players_config=WorldsConfiguration(
+        worlds_config=WorldsConfiguration(
             world_index=world_index,
             world_names={i: f"World {i + 1}" for i in range(layout.world_count)},
             is_coop=is_coop,

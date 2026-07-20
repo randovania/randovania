@@ -22,7 +22,7 @@ def basic_hint_formatters(
     location_hint_template: str,
     patches: GamePatches,
     distance_painter: Callable[[str, bool], str],
-    players_config: WorldsConfiguration,
+    worlds_config: WorldsConfiguration,
     featural_hint_template: str | None = None,
     with_region: bool = True,
     upper_pickup: bool = False,
@@ -45,7 +45,7 @@ def basic_hint_formatters(
             HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(
                 patches,
                 distance_painter,
-                players_config,
+                worlds_config,
             ),
         }
     )

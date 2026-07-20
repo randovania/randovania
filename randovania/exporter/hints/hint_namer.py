@@ -31,9 +31,9 @@ ColorT = TypeVar("ColorT")
 class HintNamer[ColorT]:
     location_formatters: dict[HintLocationPrecision | HintFeature, LocationFormatter]
 
-    def __init__(self, all_patches: list[GamePatches], players_config: WorldsConfiguration):
+    def __init__(self, all_patches: list[GamePatches], worlds_config: WorldsConfiguration):
         self.all_patches = all_patches
-        self.players_config = players_config
+        self.worlds_config = worlds_config
 
     # Colors
     @classmethod

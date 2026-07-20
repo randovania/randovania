@@ -21,7 +21,7 @@ async def test_patcher_data_logic_async(mocker: pytest_mock.MockerFixture):
     layout_description.world_count = 4
     layout_description.get_preset = MagicMock(return_value=preset)
 
-    players_config = WorldsConfiguration(
+    worlds_config = WorldsConfiguration(
         args.player_index,
         {
             0: "Player 1",
@@ -37,7 +37,7 @@ async def test_patcher_data_logic_async(mocker: pytest_mock.MockerFixture):
 
     # Assert
     preset.game.data.layout.cosmetic_patches.default.assert_called_once_with()
-    preset.game.patch_data_factory.assert_called_once_with(layout_description, players_config, cosmetic_patches)
+    preset.game.patch_data_factory.assert_called_once_with(layout_description, worlds_config, cosmetic_patches)
     mock_json.assert_called_once_with(
         preset.game.patch_data_factory.return_value.create_data.return_value,
         indent=4,

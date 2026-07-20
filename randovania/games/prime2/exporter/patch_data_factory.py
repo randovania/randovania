@@ -503,7 +503,7 @@ def _create_string_patches(
     new_patcher: EchoesNewPatcher,
     game: GameDescription,
     all_patches: list[GamePatches],
-    players_config: WorldsConfiguration,
+    worlds_config: WorldsConfiguration,
     elevator_dock_type: DockType,
     exporter: HintExporter,
 ) -> list:
@@ -514,14 +514,14 @@ def _create_string_patches(
     :param all_patches:
     :return:
     """
-    patches = all_patches[players_config.world_index]
+    patches = all_patches[worlds_config.world_index]
 
     string_patches = []
 
     string_patches.extend(akul_testament_string_patch(exporter.namer))
 
     # Location Hints
-    string_patches.extend(hints.create_patches_hints(all_patches[players_config.world_index], exporter))
+    string_patches.extend(hints.create_patches_hints(all_patches[worlds_config.world_index], exporter))
 
     # Sky Temple Keys
     stk_mode = hint_config.specific_pickup_hints["sky_temple_keys"]
@@ -531,7 +531,7 @@ def _create_string_patches(
         string_patches.extend(
             randovania.games.prime2.exporter.hints.create_stk_hints(
                 all_patches,
-                players_config,
+                worlds_config,
                 game.get_resource_database_view(),
                 exporter.namer,
                 stk_mode == SpecificPickupHintMode.HIDE_AREA,
@@ -611,11 +611,11 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
     def __init__(
         self,
         description: LayoutDescription,
-        players_config: WorldsConfiguration,
+        worlds_config: WorldsConfiguration,
         cosmetic_patches: EchoesCosmeticPatches,
     ):
-        super().__init__(description, players_config, cosmetic_patches)
-        self.namer = self.get_hint_namer(description.all_patches, players_config)
+        super().__init__(description, worlds_config, cosmetic_patches)
+        self.namer = self.get_hint_namer(description.all_patches, worlds_config)
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_ECHOES
@@ -654,9 +654,9 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         result: dict[str, typing.Any] = {}
         _add_header_data_to_result(self.description, result)
 
-        if self.players_config.is_multiworld and self.players_config.session_name is not None:
-            filtered_name = string_lib.sanitize_for_path(self.players_config.get_own_name())
-            filtered_session = string_lib.sanitize_for_path(self.players_config.session_name)
+        if self.worlds_config.is_multiworld and self.worlds_config.session_name is not None:
+            filtered_name = string_lib.sanitize_for_path(self.worlds_config.get_own_name())
+            filtered_session = string_lib.sanitize_for_path(self.worlds_config.session_name)
 
             result["banner_name"] = f"Prime 2 Rando - {filtered_name} - {filtered_session}"[:40]
         else:
@@ -670,7 +670,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         result["credits"] = "\n\n\n\n\n" + credits_spoiler.prime_trilogy_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
-            self.players_config,
+            self.worlds_config,
             self.namer,
             "&push;&main-color=#89D6FF;Major Item Locations&pop;",
             "&push;&main-color=#33ffd6;{}&pop;",
@@ -682,7 +682,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
         result["menu_mod"] = self.configuration.menu_mod
         result["dol_patches"] = {
-            "world_uuid": str(self.players_config.get_own_uuid()),
+            "world_uuid": str(self.worlds_config.get_own_uuid()),
             "energy_per_tank": self.configuration.energy_per_tank,
             "beam_configuration": self.configuration.beam_configuration.as_json,
             "safe_zone_heal_per_second": self.configuration.safe_zone.heal_per_second,
@@ -703,7 +703,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
         # Add the pickups
         result["pickups"] = _create_pickup_list(
-            self.cosmetic_patches, self.configuration, self.game, self.patches, self.players_config, self.rng
+            self.cosmetic_patches, self.configuration, self.game, self.patches, self.worlds_config, self.rng
         )
 
         # Add the elevators
@@ -724,7 +724,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
             self.configuration.use_new_patcher,
             self.game,
             self.description.all_patches,
-            self.players_config,
+            self.worlds_config,
             self.elevator_dock_type(),
             self.create_hint_exporter(ECHOES_JOKE_HINTS),
         )
@@ -897,7 +897,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         }
 
     def add_new_patcher_cosmetics(self) -> dict:
-        cosmetic_rng = Random(self.description.get_seed_for_world(self.players_config.world_index))
+        cosmetic_rng = Random(self.description.get_seed_for_world(self.worlds_config.world_index))
 
         suits = self.cosmetic_patches.suit_colors.randomized(cosmetic_rng).as_json
         suits.pop("randomize_separately")
@@ -920,7 +920,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         return {
             "worlds": regions_patch_data,
             "small_randomizations": {
-                "seed": self.description.get_seed_for_world(self.players_config.world_index),
+                "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
                 "echo_locks": True,
                 "minigyro_chamber": True,
                 "rubiks": True,
@@ -958,11 +958,11 @@ def echoes_raw_pickup_list(
     configuration: BaseConfiguration,
     game: GameDatabaseView,
     patches: GamePatches,
-    players_config: WorldsConfiguration,
+    worlds_config: WorldsConfiguration,
     rng: Random,
 ) -> list[pickup_exporter.ExportedPickupDetails]:
     resource_db = game.get_resource_database_view()
-    useless_target = PickupTarget(create_echoes_useless_pickup(resource_db), players_config.world_index)
+    useless_target = PickupTarget(create_echoes_useless_pickup(resource_db), worlds_config.world_index)
 
     return pickup_exporter.export_all_indices(
         patches,
@@ -971,7 +971,7 @@ def echoes_raw_pickup_list(
         rng,
         configuration.pickup_model_style,
         configuration.pickup_model_data_source,
-        exporter=pickup_exporter.create_pickup_exporter(memo_data, players_config, game.get_game_enum()),
+        exporter=pickup_exporter.create_pickup_exporter(memo_data, worlds_config, game.get_game_enum()),
         visual_nothing=pickup_creator.create_visual_nothing(game.get_game_enum(), "EnergyTransferModule"),
     )
 
@@ -981,7 +981,7 @@ def _create_pickup_list(
     configuration: BaseConfiguration,
     game: GameDatabaseView,
     patches: GamePatches,
-    players_config: WorldsConfiguration,
+    worlds_config: WorldsConfiguration,
     rng: Random,
 ) -> list[dict]:
     resource_db = game.get_resource_database_view()
@@ -996,7 +996,7 @@ def _create_pickup_list(
         configuration,
         game,
         patches,
-        players_config,
+        worlds_config,
         rng,
     )
     multiworld_item = resource_db.get_item(echoes_items.MULTIWORLD_ITEM)
