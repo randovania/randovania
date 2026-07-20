@@ -233,7 +233,6 @@ def test_basic_search_with_translator_gate(
         echoes_game_patches,
         None,
         game.resource_database,
-        game.region_list,
     )
 
     def to_index(*args: Node) -> set[int]:
