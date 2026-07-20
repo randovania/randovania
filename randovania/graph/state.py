@@ -15,7 +15,6 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
-    from randovania.game_description.db.node_provider import NodeProvider
     from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -53,7 +52,6 @@ class State:
         patches: GamePatches,
         previous: Self | None,
         resource_database: ResourceDatabaseView,
-        node_provider: NodeProvider,
         hint_state: ResolverHintState | None = None,
     ):
         self.resources = resources
@@ -64,7 +62,6 @@ class State:
         self.path_from_previous_state = ()
         self.previous_state = previous
         self._resource_database = resource_database
-        self._node_provider = node_provider
         self.hint_state = hint_state
 
         # We place this last because we need resource_database set
@@ -80,7 +77,6 @@ class State:
             self.patches,
             self.previous_state,
             self._resource_database,
-            self._node_provider,
             copy.copy(self.hint_state),
         )
 
@@ -160,7 +156,6 @@ class State:
             patches,
             self,
             self._resource_database,
-            self._node_provider,
             copy.copy(self.hint_state),
         )
 

@@ -626,7 +626,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
         return EchoesHintNamer
 
     def elevator_dock_type(self) -> DockType:
-        return self.game.dock_weakness_database.find_type("elevator")
+        return self.game.dock_type_database.find_type("elevator")
 
     def create_specific_patches(self) -> dict[str, typing.Any]:
         # TODO: if we're starting at ship, needs to collect 9 sky temple keys and want item loss,

@@ -251,7 +251,6 @@ class Bootstrap(Generic[Configuration]):  # noqa: UP046
             patches,
             None,
             graph.resource_database,
-            game.region_list,
             hint_state=None,
         )
 

@@ -247,7 +247,7 @@ class PlayerState:
                 )
 
         teleporters = []
-        teleporter_dock_types = self.game_enum.game_description.dock_weakness_database.all_teleporter_dock_types
+        teleporter_dock_types = self.game_enum.game_description.dock_type_database.all_teleporter_dock_types
 
         for node in self.reach.iterate_nodes:
             db_node: Node | None
