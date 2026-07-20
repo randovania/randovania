@@ -763,17 +763,17 @@ def _should_use_resolver_hints(config: BaseConfiguration) -> bool:
     )
 
 
-async def get_resolver_hint_state(player: int, patches: GamePatches) -> ResolverHintState | None:
+async def get_resolver_hint_state(world: int, patches: GamePatches) -> ResolverHintState | None:
     with debug.with_level(debug.LogLevel.SILENT):
         new_state = await resolver.resolve(patches.configuration, patches, collect_hint_data=True)
 
     if new_state is None:
         logger.warning(
-            f"Unable to solve game for player {player + 1} after placing doors. Hints will be based on generator state."
+            f"Unable to solve game for world {world + 1} after placing doors. Hints will be based on generator state."
         )
         return None
     else:
-        debug.debug_print(f">> Player {player + 1} is solve-able after door placement. Beginning hint placement.")
+        debug.debug_print(f">> World {world + 1} is solve-able after door placement. Beginning hint placement.")
         return new_state.hint_state
 
 
@@ -782,21 +782,19 @@ async def distribute_generic_hints(
     filler_results: FillerResults,
 ) -> FillerResults:
     """Distribute HintNodeKind.GENERIC hints after all pickups are placed."""
-    new_patches: dict[int, GamePatches] = {
-        player: result.patches for player, result in filler_results.player_results.items()
-    }
+    new_patches: list[GamePatches] = [result.patches for result in filler_results.player_results]
 
-    for player_index, result in filler_results.player_results.items():
+    for world_index, result in enumerate(filler_results.player_results):
         patches = result.patches
 
         hint_state: HintState = result.hint_state
         if _should_use_resolver_hints(patches.configuration):
-            resolver_hint_state = await get_resolver_hint_state(player_index, patches)
+            resolver_hint_state = await get_resolver_hint_state(world_index, patches)
             if resolver_hint_state is not None:
                 hint_state = resolver_hint_state
 
         hint_distributor = patches.game.game.hints.hint_distributor
-        new_patches[player_index] = await hint_distributor.assign_post_filler_hints(
+        new_patches[world_index] = await hint_distributor.assign_post_filler_hints(
             patches,
             rng,
             result.pool,
@@ -807,10 +805,10 @@ async def distribute_generic_hints(
 
     return dataclasses.replace(
         filler_results,
-        player_results={
-            player: dataclasses.replace(result, patches=new_patches[player])
-            for player, result in filler_results.player_results.items()
-        },
+        player_results=[
+            dataclasses.replace(result, patches=patches)
+            for result, patches in zip(filler_results.player_results, new_patches, strict=True)
+        ],
     )
 
 
@@ -819,25 +817,23 @@ async def distribute_specific_location_hints(
     filler_results: FillerResults,
 ) -> FillerResults:
     """Distribute HintNodeKind.SPECIFIC_LOCATION hints after all pickups are placed."""
-    old_patches: dict[int, GamePatches] = {
-        player: result.patches for player, result in filler_results.player_results.items()
-    }
-    new_patches: dict[int, GamePatches] = {}
+    old_patches: list[GamePatches] = [result.patches for result in filler_results.player_results]
+    new_patches: list[GamePatches] = []
 
     player_pools = filler_results.player_pools
 
-    for player_index, patches in old_patches.items():
-        player_pool = filler_results.player_results[player_index]
-
+    for patches, player_pool in zip(old_patches, filler_results.player_results, strict=True):
         hint_distributor = player_pool.game.game_enum.hints.hint_distributor
-        new_patches[player_index] = await hint_distributor.assign_precision_to_hints(
-            patches, rng, player_pool.pool, player_pools, HintNodeKind.SPECIFIC_LOCATION
+        new_patches.append(
+            await hint_distributor.assign_precision_to_hints(
+                patches, rng, player_pool.pool, player_pools, HintNodeKind.SPECIFIC_LOCATION
+            )
         )
 
     return dataclasses.replace(
         filler_results,
-        player_results={
-            player: dataclasses.replace(result, patches=new_patches[player])
-            for player, result in filler_results.player_results.items()
-        },
+        player_results=[
+            dataclasses.replace(result, patches=patches)
+            for result, patches in zip(filler_results.player_results, new_patches, strict=True)
+        ],
     )

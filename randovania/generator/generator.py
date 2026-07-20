@@ -209,11 +209,11 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
     all_remaining_pickups: list[PickupTarget] = []
     remaining_major_pickups: list[PickupTarget] = []
 
-    assignments: dict[int, list[PickupTargetAssociation]] = {}
+    assignments: list[list[PickupTargetAssociation]] = []
 
     modes = [preset.configuration.available_locations.randomization_mode for preset in presets]
 
-    for player, filler_result in filler_results.player_results.items():
+    for player, filler_result in enumerate(filler_results.player_results):
         split_major = modes[player] is RandomizationMode.MAJOR_MINOR_SPLIT
         for pickup_node in get_unassigned_pickup_nodes(filler_result.game, filler_result.patches.pickup_assignment):
             if split_major and pickup_node.location_category == LocationCategory.MAJOR:
@@ -228,7 +228,7 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
             else:
                 all_remaining_pickups.append(target)
 
-        assignments[player] = []
+        assignments.append([])
 
     def assign_pickup(node_player: int, node: PickupNode, pickup_target: PickupTarget) -> None:
         if debug.debug_level() > debug.LogLevel.HIGH:
@@ -270,10 +270,10 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
 
     return dataclasses.replace(
         filler_results,
-        player_results={
-            player: dataclasses.replace(result, patches=result.patches.assign_new_pickups(assignments[player]))
-            for player, result in filler_results.player_results.items()
-        },
+        player_results=[
+            dataclasses.replace(result, patches=result.patches.assign_new_pickups(assignment))
+            for result, assignment in zip(filler_results.player_results, assignments, strict=True)
+        ],
     )
 
 
@@ -316,7 +316,7 @@ async def _create_description(
 
     return LayoutDescription.create_new(
         generator_parameters=generator_params,
-        all_patches={player: result.patches for player, result in filler_results.player_results.items()},
+        all_patches={player: result.patches for player, result in enumerate(filler_results.player_results)},
         item_order=filler_results.action_log,
     )
 
