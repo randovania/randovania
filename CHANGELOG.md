@@ -34,6 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Merged event nodes for breaking the floor in Gravity Suit Tower, decluttering the room and helping the generator see when it is safe to complete the sequence.
 - Changed: Added connection back to the Early Gravity Blob in the Gravity Suit Tower to help the generator see when it is safe to complete the breakable floor sequence.
+- Changed: Obtaining the Pickup underneath Drogyga with a Water Bomb Jump and Normal Bomb is now Intermediate, for consistency with other out of water bomb jumps.
+- Changed: The dangerous logic surrounding the water underneath Drogyga in terms of getting up the left left ledge and across to the right ledge is now waived. Logically by construction, if the water is there then Drogya has been defeated, whic requires Grapple Beam, which is a solutuion to the connections that are changed.
 
 ##### Cataris
 
@@ -42,6 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Dairon
 
 - Fixed: The door into the Central Unit is changed from Access Open to EMMI Door.
+- Fixed: Destroying the Hidden Blob in Freezer was available as a dangerous action with neither Gravity Suit or Highly Dangerous Logic.
 
 ##### Ferenia
 
