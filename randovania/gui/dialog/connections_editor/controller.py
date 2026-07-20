@@ -28,6 +28,7 @@ from .editor import (
     signals_blocked,
 )
 from .model import ROLE, RequirementModel
+from .path import Path
 from .view import RequirementView
 
 
@@ -92,28 +93,26 @@ class RequirementController(QObject):
     def _tuple_remove(self, items: tuple, idx: int) -> tuple:
         return (*items[:idx], *items[idx + 1 :])
 
-    def _insert_at_path(
-        self, root: RequirementArrayBase, path: list[int], at_idx: int, requirement: Requirement
-    ) -> Requirement:
+    def _insert_at_path(self, root: RequirementArrayBase, path: Path, requirement: Requirement) -> Requirement:
         """
         Returns a new Requirement tree with the Requirement inserted
         """
-        if len(path) == 0:
-            new_items = self._tuple_insert(root.items, at_idx, requirement)
+        if len(path) == 1:
+            new_items = self._tuple_insert(root.items, path.row(), requirement)
             return type(root)(new_items, root.comment)
 
-        idx = path[0]
+        idx = path.head()
         next_root = root.items[idx]
         assert isinstance(next_root, RequirementArrayBase)
-        child = self._insert_at_path(next_root, path[1:], at_idx, requirement)
+        child = self._insert_at_path(next_root, path.tail(), requirement)
         new_items = self._tuple_replace(root.items, idx, child)
         return type(root)(new_items, root.comment)
 
-    def _remove_at_path(self, root: RequirementArrayBase, path: list[int]) -> Requirement:
+    def _remove_at_path(self, root: RequirementArrayBase, path: Path) -> Requirement:
         """
         Returns a new Requirement tree with the Requirement at `path` removed
         """
-        idx = path[0]
+        idx = path.head()
 
         if len(path) == 1:
             new_items = self._tuple_remove(root.items, idx)
@@ -121,21 +120,21 @@ class RequirementController(QObject):
 
         next_root = root.items[idx]
         assert isinstance(next_root, RequirementArrayBase)
-        child = self._remove_at_path(next_root, path[1:])
+        child = self._remove_at_path(next_root, path.tail())
         new_items = self._tuple_replace(root.items, idx, child)
         return type(root)(new_items, root.comment)
 
-    def _replace_at_path(self, root: RequirementArrayBase, path: list[int], requirement: Requirement) -> Requirement:
+    def _replace_at_path(self, root: RequirementArrayBase, path: Path, requirement: Requirement) -> Requirement:
         """
         Returns a new Requirement tree with the Requirement at `path` replaced
         """
         if len(path) == 0:
             return requirement
 
-        idx = path[0]
+        idx = path.head()
         next_root = root.items[idx]
         child = (
-            self._replace_at_path(next_root, path[1:], requirement)
+            self._replace_at_path(next_root, path.tail(), requirement)
             if isinstance(next_root, RequirementArrayBase)
             else requirement
         )
@@ -204,32 +203,31 @@ class RequirementController(QObject):
         return isinstance(self._active_item_index.data(ROLE), RequirementArrayBase)
 
     def _push_command(
-        self, before: Requirement, after: Requirement, after_selection_path: list[int], description: str
+        self, before: Requirement, after: Requirement, after_selection_path: Path, description: str
     ) -> None:
-        before_selection_path: list[int] = self._model.path_from_index(self._active_item_index)
+        before_selection_path = self._model.path_from_index(self._active_item_index)
         self._undo_stack.push(
             Command(self._model, self._view, before, after, before_selection_path, after_selection_path, description)
         )
 
     def _on_add_requirement_pressed(self) -> None:
         active = self._active_item_index.data(ROLE)
-        path: list[int] = self._model.path_from_index(self._active_item_index)
-        row: int
+        path = self._model.path_from_index(self._active_item_index)
+
         if self._active_is_array():
-            row = len(active.items)
+            path = path.extend_with(len(active.items))
         elif len(path) > 0:
             # Leaf is selected and is not the root
-            row = path[-1] + 1
-            path = path[:-1]
+            path = path.next_sibling()
         else:
             return
 
         before: Requirement = self._model.build_requirement()
         assert isinstance(before, RequirementArrayBase)
         new_requirement: Requirement = self._default_requirement_for_type(self._combo_type.currentData(ROLE))
-        after: Requirement = self._insert_at_path(before, path, row, new_requirement)
+        after: Requirement = self._insert_at_path(before, path, new_requirement)
 
-        self._push_command(before, after, [*path, row], "Add Requirement")
+        self._push_command(before, after, path, "Add Requirement")
 
     def _on_delete_requirement_pressed(self) -> None:
         # Can't delete root
@@ -238,18 +236,17 @@ class RequirementController(QObject):
 
         before: Requirement = self._model.build_requirement()
         assert isinstance(before, RequirementArrayBase)
-        path: list[int] = self._model.path_from_index(self._active_item_index)
+        path = self._model.path_from_index(self._active_item_index)
         after: Requirement = self._remove_at_path(before, path)
 
-        row: int = path[-1]
-        sibling_count: int = self._model.itemFromIndex(self._active_item_index).parent().rowCount() - 1
+        sibling_count: int = self._model.sibling_count(path)
 
         if sibling_count == 0:
             # No siblings remain, point to parent
-            path = path[:-1]
-        elif row == sibling_count:
+            path = path.parent()
+        elif path.row() == sibling_count:
             # Has siblings but was last child, point to previous sibling
-            path[-1] = row - 1
+            path = path.previous_sibling()
 
         self._push_command(before, after, path, "Delete Requirement")
 
@@ -259,30 +256,25 @@ class RequirementController(QObject):
             return
 
         active: Requirement = self._active_item_index.data(ROLE)
-        path: list[int] = self._model.path_from_index(self._active_item_index)
-        row: int = path[-1]
+        path = self._model.path_from_index(self._active_item_index)
 
         before: Requirement = self._model.build_requirement()
         assert isinstance(before, RequirementArrayBase)
         after_remove: Requirement = self._remove_at_path(before, path)
         assert isinstance(after_remove, RequirementArrayBase)
 
-        if row > 0:
-            row -= 1
-            sibling_path: list[int] = [*path[:-1], row]
-            sibling: Requirement = self._model.index_from_path(sibling_path).data(ROLE)
+        if path.row() > 0:
+            path = path.previous_sibling()
+            sibling: Requirement = self._model.index_from_path(path).data(ROLE)
             if isinstance(sibling, RequirementArrayBase):
                 # Ascend into sibling
-                row = len(sibling.items)
-                path = [*sibling_path, row]
+                path = path.extend_with(len(sibling.items))
         elif len(path) > 1:
-            path = path[:-1]
-            row = path[-1]
+            path = path.parent()
         else:
             return
 
-        after: Requirement = self._insert_at_path(after_remove, path[:-1], row, active)
-        path[-1] = row
+        after: Requirement = self._insert_at_path(after_remove, path, active)
 
         self._push_command(before, after, path, "Move Up")
 
@@ -292,37 +284,34 @@ class RequirementController(QObject):
             return
 
         active: Requirement = self._active_item_index.data(ROLE)
-        path: list[int] = self._model.path_from_index(self._active_item_index)
-        row: int = path[-1]
-        sibling_count: int = self._model.itemFromIndex(self._active_item_index).parent().rowCount() - 1
+        path = self._model.path_from_index(self._active_item_index)
+        sibling_count: int = self._model.sibling_count(path)
 
         before: Requirement = self._model.build_requirement()
         assert isinstance(before, RequirementArrayBase)
         after_remove: Requirement = self._remove_at_path(before, path)
         assert isinstance(after_remove, RequirementArrayBase)
 
-        if row < sibling_count:
-            row += 1
-            sibling_path: list[int] = [*path[:-1], row]
+        if path.row() < sibling_count:
+            sibling_path = path.next_sibling()
             sibling: Requirement = self._model.index_from_path(sibling_path).data(ROLE)
             if isinstance(sibling, RequirementArrayBase):
                 # Descend into sibling
-                row = 0
-                path = [*path, row]
+                path = path.extend_with(0)
+            else:
+                path = sibling_path
         elif len(path) > 1:
-            path = path[:-1]
-            row = path[-1] + 1
+            path = path.parent().next_sibling()
         else:
             return
 
-        after: Requirement = self._insert_at_path(after_remove, path[:-1], row, active)
-        path[-1] = row
+        after: Requirement = self._insert_at_path(after_remove, path, active)
 
         self._push_command(before, after, path, "Move Down")
 
     def _on_type_combo_changed(self, idx: int = -1) -> None:
         before: Requirement = self._model.build_requirement()
-        path: list[int] = self._model.path_from_index(self._active_item_index)
+        path = self._model.path_from_index(self._active_item_index)
         changed: Requirement = self._change_requirement_type(
             self._active_item_index.data(ROLE), self._combo_type.currentData(ROLE)
         )
@@ -338,7 +327,7 @@ class RequirementController(QObject):
             requirement = type(requirement)(self._active_item_index.data(ROLE).items, requirement.comment)
 
         before: Requirement = self._model.build_requirement()
-        path: list[int] = self._model.path_from_index(self._active_item_index)
+        path = self._model.path_from_index(self._active_item_index)
         after = requirement
         if isinstance(before, RequirementArrayBase):
             after = self._replace_at_path(before, path, requirement)

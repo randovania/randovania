@@ -4,6 +4,7 @@ from PySide6.QtCore import QItemSelectionModel, QModelIndex, QObject, Signal
 from PySide6.QtWidgets import QAbstractItemView, QTreeView, QWidget
 
 from .model import RequirementModel
+from .path import Path
 
 
 class RequirementView(QObject):
@@ -27,7 +28,7 @@ class RequirementView(QObject):
     def _notify_selection_changed(self, current: QModelIndex, previous: QModelIndex) -> None:
         self.selection_changed.emit(current)
 
-    def restore_selection(self, path: list[int]) -> None:
+    def restore_selection(self, path: Path) -> None:
         model = cast(RequirementModel, self._tree.model())
         index = model.index_from_path(path)
 

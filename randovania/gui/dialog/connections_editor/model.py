@@ -10,6 +10,8 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.base.trick_level import LayoutTrickLevel
 
+from .path import Path
+
 ROLE = Qt.ItemDataRole.UserRole
 
 
@@ -48,27 +50,28 @@ class RequirementModel(QStandardItemModel):
         item.setData(requirement, ROLE)
         return item
 
-    def path_from_index(self, index: QModelIndex) -> list[int]:
-        """Returns the path to the given model index with the invisible root's index removed"""
-        path = []
+    def path_from_index(self, index: QModelIndex) -> Path:
+        """Builds a Path to the given index by walking up the tree, discarding the invisible root item"""
+        path = Path()
         while index.isValid():
-            path.append(index.row())
+            path = path.extend_with(index.row())
             index = index.parent()
-        path.reverse()
-        return path[1:]
+        # Current Path is in reverse order, parent() removes the last index (invisible root)
+        return path.parent().reversed()
 
-    def index_from_path(self, path: list[int]) -> QModelIndex:
-        """
-        Returns the model index at the given path <br>
-        Inserts the index of the invisible root item (0) before traversal
-        """
+    def index_from_path(self, path: Path) -> QModelIndex:
+        """Returns the model index at the given Path"""
         index = QModelIndex()
-        for row in [0, *path]:
+        for row in path.prefixed_with(0):  # Re-add index for invisible root
             next_index = self.index(row, 0, index)
             if not next_index.isValid():
                 return index  # Fallback to deepest valid ancenstor
             index = next_index
         return index
+
+    def sibling_count(self, path: Path) -> int:
+        index = self.index_from_path(path)
+        return self.itemFromIndex(index).parent().rowCount() - 1
 
     def build_tree(self, requirement: Requirement) -> None:
         """
