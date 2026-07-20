@@ -30,6 +30,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Cataris
+
+- Fixed: The door into the Central Unit is changed from Access Open to EMMI Door.
+
+##### Dairon
+
+- Fixed: The door into the Central Unit is changed from Access Open to EMMI Door.
+
 ##### Ferenia
 
 - Changed: The Twin Robot fight is now logically active from the start of the game, unless Highly Dangerous Logic is active. That means passing through the arena now logically requires meeting the fight requirements also before obtaining the Storm Missiles.
