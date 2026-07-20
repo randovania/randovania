@@ -213,16 +213,16 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
 
     modes = [preset.configuration.available_locations.randomization_mode for preset in presets]
 
-    for player, filler_result in enumerate(filler_results.player_results):
-        split_major = modes[player] is RandomizationMode.MAJOR_MINOR_SPLIT
+    for world, filler_result in enumerate(filler_results.player_results):
+        split_major = modes[world] is RandomizationMode.MAJOR_MINOR_SPLIT
         for pickup_node in get_unassigned_pickup_nodes(filler_result.game, filler_result.patches.pickup_assignment):
             if split_major and pickup_node.location_category == LocationCategory.MAJOR:
-                major_pickup_nodes.append((player, pickup_node))
+                major_pickup_nodes.append((world, pickup_node))
             else:
-                minor_pickup_nodes.append((player, pickup_node))
+                minor_pickup_nodes.append((world, pickup_node))
 
         for pickup in filler_result.unassigned_pickups:
-            target = PickupTarget(pickup, player)
+            target = PickupTarget(pickup, world)
             if split_major and pickup.generator_params.preferred_location_category == LocationCategory.MAJOR:
                 remaining_major_pickups.append(target)
             else:
@@ -230,22 +230,22 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
 
         assignments.append([])
 
-    def assign_pickup(node_player: int, node: PickupNode, pickup_target: PickupTarget) -> None:
+    def assign_pickup(node_world: int, node: PickupNode, pickup_target: PickupTarget) -> None:
         if debug.debug_level() > debug.LogLevel.HIGH:
             print(
                 f"Assigning World {pickup_target.world + 1}'s {pickup_target.pickup.name} "
-                f"to {node_player + 1}'s {node.pickup_index}"
+                f"to {node_world + 1}'s {node.pickup_index}"
             )
-        assignments[node_player].append((node.pickup_index, pickup_target))
+        assignments[node_world].append((node.pickup_index, pickup_target))
 
     def assign_while_both_non_empty(nodes: list[tuple[int, PickupNode]], pickups: list[PickupTarget]) -> None:
         rng.shuffle(nodes)
         rng.shuffle(pickups)
 
         while nodes and pickups:
-            node_player, node = nodes.pop()
+            node_world, node = nodes.pop()
             pickup = pickups.pop()
-            assign_pickup(node_player, node, pickup)
+            assign_pickup(node_world, node, pickup)
 
     # distribute major pickups
     assign_while_both_non_empty(major_pickup_nodes, remaining_major_pickups)
@@ -265,8 +265,8 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
             f"but there's only {len(unassigned_pickup_nodes)} unassigned locations."
         )
 
-    for (node_player, remaining_node), remaining_pickup in zip(unassigned_pickup_nodes, all_remaining_pickups):
-        assign_pickup(node_player, remaining_node, remaining_pickup)
+    for (world, remaining_node), remaining_pickup in zip(unassigned_pickup_nodes, all_remaining_pickups):
+        assign_pickup(world, remaining_node, remaining_pickup)
 
     return dataclasses.replace(
         filler_results,
