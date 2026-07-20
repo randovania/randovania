@@ -34,7 +34,7 @@ class TranslatorGateDetailsTab(GameDetailsTab[EchoesConfiguration | EchoesOPRCon
     def update_content(
         self,
         configuration: EchoesConfiguration | EchoesOPRConfiguration,
-        all_patches: dict[int, GamePatches],
+        all_patches: list[GamePatches],
         players: PlayersConfiguration,
     ) -> None:
         self.tree_widget.clear()

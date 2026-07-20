@@ -19,7 +19,7 @@ class PrimeTrilogyTeleporterDetailsTab(
     def should_appear_for(
         cls,
         configuration: PrimeConfiguration | EchoesConfiguration | EchoesOPRConfiguration,
-        all_patches: dict[int, GamePatches],
+        all_patches: list[GamePatches],
         players: PlayersConfiguration,
     ) -> bool:
         return not configuration.teleporters.is_vanilla

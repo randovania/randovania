@@ -21,7 +21,7 @@ class PortalDetailsTab(BaseConnectionDetailsTab[EchoesOPRConfiguration]):
 
     @classmethod
     def should_appear_for(
-        cls, configuration: EchoesOPRConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: EchoesOPRConfiguration, all_patches: list[GamePatches], players: PlayersConfiguration
     ) -> bool:
         return configuration.portal_rando
 

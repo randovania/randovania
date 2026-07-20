@@ -93,7 +93,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
         return "Pickups"
 
     def update_content(
-        self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        self, configuration: BaseConfiguration, all_patches: list[GamePatches], players: PlayersConfiguration
     ) -> None:
         self._update_search_pickup_group(all_patches, players)
 
@@ -216,23 +216,23 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
             button.setVisible(visible)
             button.row.label.setVisible(visible)
 
-    def _update_search_pickup_group(self, all_patches: dict[int, GamePatches], players: PlayersConfiguration) -> None:
-        self.search_pickup_group.setVisible(players.is_multiworld)
-        if not players.is_multiworld:
+    def _update_search_pickup_group(self, all_patches: list[GamePatches], worlds_config: PlayersConfiguration) -> None:
+        self.search_pickup_group.setVisible(worlds_config.is_multiworld)
+        if not worlds_config.is_multiworld:
             return
 
         pickup_names = set()
         rows: list[tuple[str, str, NodeIdentifier]] = []
 
-        for source_index, patches in all_patches.items():
+        for patches in all_patches:
             rl = patches.game.region_list
             for pickup_index, pickup_target in patches.pickup_assignment.items():
-                if pickup_target.player == players.player_index:
+                if pickup_target.player == worlds_config.player_index:
                     node = rl.node_from_pickup_index(pickup_index)
                     rows.append(
                         (
                             pickup_target.pickup.name,
-                            players.player_names[source_index],
+                            worlds_config.player_names[patches.player_index],
                             node.identifier,
                         )
                     )

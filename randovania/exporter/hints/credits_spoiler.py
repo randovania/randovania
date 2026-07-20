@@ -26,12 +26,12 @@ class OwnedPickupLocation(NamedTuple):
 
 
 def get_locations_for_major_pickups_and_keys(
-    all_patches: dict[int, GamePatches],
+    all_patches: list[GamePatches],
     players_config: PlayersConfiguration,
 ) -> dict[PickupEntry, list[OwnedPickupLocation | str]]:  # Technically inaccurate return type, but makes typing easier.
     results: dict[PickupEntry, list[OwnedPickupLocation | str]] = collections.defaultdict(list)
 
-    for player_index, patches in all_patches.items():
+    for patches in all_patches:
         for pickup_index, target in patches.pickup_assignment.items():
             if target.player != players_config.player_index:
                 continue
@@ -39,7 +39,7 @@ def get_locations_for_major_pickups_and_keys(
             if target.pickup.show_in_credits_spoiler:
                 player_name = None
                 if players_config.is_multiworld:
-                    player_name = players_config.player_names[player_index]
+                    player_name = players_config.player_names[patches.player_index]
 
                 results[target.pickup].append(
                     OwnedPickupLocation(player_name, PickupLocation(patches.configuration.game, pickup_index))
@@ -67,7 +67,7 @@ def starting_pickups_with_count(patches: GamePatches) -> dict[PickupEntry, int]:
 
 def generic_credits(
     standard_pickup_configuration: StandardPickupConfiguration,
-    all_patches: dict[int, GamePatches],
+    all_patches: list[GamePatches],
     players_config: PlayersConfiguration,
 ) -> list[tuple[PickupEntry, list[OwnedPickupLocation | str]]]:
     """
@@ -109,7 +109,7 @@ def generic_credits(
 
 def generic_string_credits(
     standard_pickup_configuration: StandardPickupConfiguration,
-    all_patches: dict[int, GamePatches],
+    all_patches: list[GamePatches],
     players_config: PlayersConfiguration,
     namer: HintNamer,
     pickup_name_format: str = "{}",
@@ -135,7 +135,7 @@ def generic_string_credits(
 
 def prime_trilogy_credits(
     standard_pickup_configuration: StandardPickupConfiguration,
-    all_patches: dict[int, GamePatches],
+    all_patches: list[GamePatches],
     players_config: PlayersConfiguration,
     namer: HintNamer,
     title: str,

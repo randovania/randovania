@@ -29,7 +29,7 @@ class DockWeaknessDistributionDetailsTab[ConfigurationT: BaseConfiguration](Base
     @classmethod
     @override
     def should_appear_for(
-        cls, configuration: ConfigurationT, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: ConfigurationT, all_patches: list[GamePatches], players: PlayersConfiguration
     ) -> bool:
         raise RuntimeError("Should not be called for this class")
 
@@ -57,7 +57,7 @@ class DockWeaknessDistributionDetailsTab[ConfigurationT: BaseConfiguration](Base
         cls,
         parent: QtWidgets.QWidget,
         configuration: ConfigurationT,
-        all_patches: dict[int, GamePatches],
+        all_patches: list[GamePatches],
         players: PlayersConfiguration,
         dock_type: DockType,
     ) -> Self | None:

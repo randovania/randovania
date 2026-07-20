@@ -8,7 +8,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 
 
 class PlanetsZebethHintNamer(HintNamer[None]):
-    def __init__(self, all_patches: dict[int, GamePatches], players_config: PlayersConfiguration):
+    def __init__(self, all_patches: list[GamePatches], players_config: PlayersConfiguration):
         super().__init__(all_patches, players_config)
 
         patches = all_patches[players_config.player_index]

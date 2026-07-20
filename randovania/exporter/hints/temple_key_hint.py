@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 
 def create_temple_key_hint(
-    all_patches: dict[int, GamePatches],
+    all_patches: list[GamePatches],
     player_index: int,
     temple: HintDarkTemple,
     namer: EchoesHintNamer,

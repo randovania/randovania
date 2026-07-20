@@ -35,7 +35,7 @@ class HintDetailsTab(GameDetailsTab):
         return "Hints"
 
     def update_content(
-        self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        self, configuration: BaseConfiguration, all_patches: list[GamePatches], players: PlayersConfiguration
     ) -> None:
         NUM_COLUMNS = 4
 

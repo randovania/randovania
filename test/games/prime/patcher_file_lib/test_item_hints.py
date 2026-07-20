@@ -209,7 +209,7 @@ def test_create_hints_item_dark_temple_keys(
 
     hint = RedTempleHint(dark_temple=HintDarkTemple.TORVUS_BOG)
 
-    namer = EchoesHintNamer({0: patches}, players_config)
+    namer = EchoesHintNamer([patches], players_config)
     exporter = HintExporter(namer, random.Random(0), ["A Joke"], MagicMock())
 
     # Run
@@ -259,7 +259,7 @@ def test_create_hints_item_dark_temple_keys_cross_game(
 
     hint = RedTempleHint(dark_temple=HintDarkTemple.TORVUS_BOG)
 
-    namer = EchoesHintNamer({0: echoes_patches, 1: prime_patches}, players_config)
+    namer = EchoesHintNamer([echoes_patches, prime_patches], players_config)
     exporter = HintExporter(namer, random.Random(0), ["A Joke"], echoes_patches.game)
 
     # Run
@@ -280,7 +280,7 @@ def test_create_message_for_hint_dark_temple_no_keys(
     # Setup
     hint = RedTempleHint(dark_temple=HintDarkTemple.TORVUS_BOG)
     patches = dataclasses.replace(empty_patches, game=echoes_game_description)
-    echoes_hint_exporter.namer.all_patches = {0: patches}
+    echoes_hint_exporter.namer.all_patches = [patches]
 
     # Run
     result = echoes_hint_exporter.create_message_for_hint(hint, True)

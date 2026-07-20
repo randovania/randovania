@@ -37,7 +37,7 @@ class BaseConnectionDetailsTab[ConfigurationT: BaseConfiguration](GameDetailsTab
         raise NotImplementedError
 
     def update_content(
-        self, configuration: ConfigurationT, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        self, configuration: ConfigurationT, all_patches: list[GamePatches], players: PlayersConfiguration
     ) -> None:
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(2)

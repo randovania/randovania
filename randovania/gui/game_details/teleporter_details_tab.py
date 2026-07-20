@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 class TeleporterDetailsTab[ConfigurationT: BaseConfiguration](BaseConnectionDetailsTab[ConfigurationT]):
     @classmethod
     def should_appear_for(
-        cls, configuration: ConfigurationT, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: ConfigurationT, all_patches: list[GamePatches], players: PlayersConfiguration
     ) -> bool:
         raise NotImplementedError
 

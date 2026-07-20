@@ -21,13 +21,13 @@ def _resource_in_item_list(
 
 def find_locations_that_gives_items(
     target_items: list[ItemResourceInfo],
-    all_patches: dict[int, GamePatches],
+    all_patches: list[GamePatches],
     player: int,
 ) -> dict[ItemResourceInfo, list[tuple[int, PickupLocation]]]:
     result: dict[ItemResourceInfo, list[tuple[int, PickupLocation]]] = {item: [] for item in target_items}
 
-    for other_player, patches in all_patches.items():
-        for pickup_index, target in patches.pickup_assignment.items():
+    for other_world, patches in enumerate(all_patches):
+        for world_index, target in patches.pickup_assignment.items():
             if target.player != player:
                 continue
 
@@ -36,14 +36,14 @@ def find_locations_that_gives_items(
             resources.add_resource_gain(target.pickup.resource_gain(resources))
             for resource, quantity in resources.as_resource_gain():
                 if quantity > 0 and _resource_in_item_list(resource, result):
-                    result[resource].append((other_player, PickupLocation(patches.configuration.game, pickup_index)))
+                    result[resource].append((other_world, PickupLocation(patches.configuration.game, world_index)))
 
     return result
 
 
 def hint_text_if_items_are_starting(
     target_items: list[ItemResourceInfo],
-    all_patches: dict[int, GamePatches],
+    all_patches: list[GamePatches],
     player: int,
     namer: HintNamer,
     with_color: bool,
@@ -58,7 +58,7 @@ def hint_text_if_items_are_starting(
 
 
 def create_guaranteed_hints_for_resources(
-    all_patches: dict[int, GamePatches],
+    all_patches: list[GamePatches],
     players_config: PlayersConfiguration,
     namer: HintNamer,
     hide_area: bool,

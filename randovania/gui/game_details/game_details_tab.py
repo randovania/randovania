@@ -17,7 +17,7 @@ class CreateWhenRelevantMethod(typing.Protocol):
         self,
         parent: QtWidgets.QWidget,
         configuration: BaseConfiguration,
-        all_patches: dict[int, GamePatches],
+        all_patches: list[GamePatches],
         players: PlayersConfiguration,
     ) -> GameDetailsTab | None: ...
 
@@ -33,13 +33,13 @@ class GameDetailsTab[ConfigurationT: BaseConfiguration]:
         raise NotImplementedError
 
     def update_content(
-        self, configuration: ConfigurationT, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        self, configuration: ConfigurationT, all_patches: list[GamePatches], players: PlayersConfiguration
     ) -> None:
         raise NotImplementedError
 
     @classmethod
     def should_appear_for(
-        cls, configuration: ConfigurationT, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: ConfigurationT, all_patches: list[GamePatches], players: PlayersConfiguration
     ) -> bool:
         return True
 
@@ -48,7 +48,7 @@ class GameDetailsTab[ConfigurationT: BaseConfiguration]:
         cls,
         parent: QtWidgets.QWidget,
         configuration: ConfigurationT,
-        all_patches: dict[int, GamePatches],
+        all_patches: list[GamePatches],
         players: PlayersConfiguration,
     ) -> Self | None:
         """Creates an instance of this class when `should_appear_for` returns True, None otherwise."""

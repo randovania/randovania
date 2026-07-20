@@ -69,7 +69,7 @@ _SKY_TEMPLE_KEY_SCAN_ASSETS = [
 
 
 def create_stk_hints(
-    all_patches: dict[int, GamePatches],
+    all_patches: list[GamePatches],
     players_config: PlayersConfiguration,
     resource_database: ResourceDatabaseView,
     namer: HintNamer,

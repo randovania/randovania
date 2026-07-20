@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 class DreadTeleporterDetailsTab(TeleporterDetailsTab[DreadConfiguration]):
     @classmethod
     def should_appear_for(
-        cls, configuration: DreadConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: DreadConfiguration, all_patches: list[GamePatches], players: PlayersConfiguration
     ) -> bool:
         return not configuration.teleporters.is_vanilla
 

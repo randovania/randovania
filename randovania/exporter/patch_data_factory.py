@@ -151,7 +151,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
     @classmethod
     def get_hint_namer(
         cls,
-        all_patches: dict[int, GamePatches],
+        all_patches: list[GamePatches],
         players_config: PlayersConfiguration,
     ) -> HintNamer:
         """Return an instance of this game's HintNamer."""
@@ -165,7 +165,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
     @classmethod
     def get_hint_exporter(
         cls,
-        all_patches: dict[int, GamePatches],
+        all_patches: list[GamePatches],
         players_config: PlayersConfiguration,
         rng: Random,
         base_joke_hints: list[str],

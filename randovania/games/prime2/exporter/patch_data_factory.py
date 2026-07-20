@@ -502,7 +502,7 @@ def _create_string_patches(
     hint_config: HintConfiguration,
     new_patcher: EchoesNewPatcher,
     game: GameDescription,
-    all_patches: dict[int, GamePatches],
+    all_patches: list[GamePatches],
     players_config: PlayersConfiguration,
     elevator_dock_type: DockType,
     exporter: HintExporter,

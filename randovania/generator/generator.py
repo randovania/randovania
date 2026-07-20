@@ -316,7 +316,7 @@ async def _create_description(
 
     return LayoutDescription.create_new(
         generator_parameters=generator_params,
-        all_patches={player: result.patches for player, result in enumerate(filler_results.player_results)},
+        all_patches=[result.patches for result in filler_results.player_results],
         item_order=filler_results.action_log,
     )
 

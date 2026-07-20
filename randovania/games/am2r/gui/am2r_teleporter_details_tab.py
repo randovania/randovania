@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 class AM2RTeleporterDetailsTab(TeleporterDetailsTab[AM2RConfiguration]):
     @classmethod
     def should_appear_for(
-        cls, configuration: AM2RConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: AM2RConfiguration, all_patches: list[GamePatches], players: PlayersConfiguration
     ) -> bool:
         return not configuration.teleporters.is_vanilla
 
