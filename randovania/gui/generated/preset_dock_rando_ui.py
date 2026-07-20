@@ -48,6 +48,15 @@ class Ui_PresetDockRando(object):
         self.scroll_area_layout.setContentsMargins(11, 11, 11, 11)
         self.scroll_area_layout.setObjectName(u"scroll_area_layout")
         self.scroll_area_layout.setContentsMargins(1, 1, 1, 0)
+        self.changes_box = QGroupBox(self.scroll_area_contents)
+        self.changes_box.setObjectName(u"changes_box")
+        self.changes_layout = QVBoxLayout(self.changes_box)
+        self.changes_layout.setSpacing(6)
+        self.changes_layout.setContentsMargins(11, 11, 11, 11)
+        self.changes_layout.setObjectName(u"changes_layout")
+
+        self.scroll_area_layout.addWidget(self.changes_box)
+
         self.settings_group = QGroupBox(self.scroll_area_contents)
         self.settings_group.setObjectName(u"settings_group")
         self.settings_layout = QVBoxLayout(self.settings_group)
@@ -117,6 +126,30 @@ class Ui_PresetDockRando(object):
 
         self.verticalLayout.addLayout(self.desc_layouts)
 
+        self.type_layout = QHBoxLayout()
+        self.type_layout.setSpacing(6)
+        self.type_layout.setObjectName(u"type_layout")
+        self.can_change_from_group = QGroupBox(self.dock_types_group)
+        self.can_change_from_group.setObjectName(u"can_change_from_group")
+        self.can_change_from_layout = QVBoxLayout(self.can_change_from_group)
+        self.can_change_from_layout.setSpacing(6)
+        self.can_change_from_layout.setContentsMargins(11, 11, 11, 11)
+        self.can_change_from_layout.setObjectName(u"can_change_from_layout")
+
+        self.type_layout.addWidget(self.can_change_from_group)
+
+        self.can_change_to_group = QGroupBox(self.dock_types_group)
+        self.can_change_to_group.setObjectName(u"can_change_to_group")
+        self.can_change_to_layout = QVBoxLayout(self.can_change_to_group)
+        self.can_change_to_layout.setSpacing(6)
+        self.can_change_to_layout.setContentsMargins(11, 11, 11, 11)
+        self.can_change_to_layout.setObjectName(u"can_change_to_layout")
+
+        self.type_layout.addWidget(self.can_change_to_group)
+
+
+        self.verticalLayout.addLayout(self.type_layout)
+
 
         self.scroll_area_layout.addWidget(self.dock_types_group)
 
@@ -137,6 +170,7 @@ class Ui_PresetDockRando(object):
 
     def retranslateUi(self, PresetDockRando):
         PresetDockRando.setWindowTitle(QCoreApplication.translate("PresetDockRando", u"Door Locks", None))
+        self.changes_box.setTitle(QCoreApplication.translate("PresetDockRando", u"Door Changes", None))
         self.settings_group.setTitle(QCoreApplication.translate("PresetDockRando", u"Settings", None))
         self.mode_label.setText(QCoreApplication.translate("PresetDockRando", u"Randomization Mode", None))
         self.mode_description.setText(QCoreApplication.translate("PresetDockRando", u"Original door locks.", None))
@@ -148,5 +182,7 @@ class Ui_PresetDockRando(object):
         self.change_to_desc.setText(QCoreApplication.translate("PresetDockRando", u"**Change Doors To**\n"
 "\n"
 "Which locks a door can be changed to.", None))
+        self.can_change_from_group.setTitle("")
+        self.can_change_to_group.setTitle("")
     # retranslateUi
 

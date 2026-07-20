@@ -28,7 +28,12 @@ if TYPE_CHECKING:
     from pathlib import Path
 
     from randovania.game_description.db.area import Area
-    from randovania.game_description.db.dock import DockLock, DockRandoParams, DockWeakness, DockWeaknessDatabase
+    from randovania.game_description.db.dock import (
+        DockLock,
+        DockTypeDatabase,
+        DockWeakness,
+        WeaknessDistributorSettings,
+    )
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription, MinimalLogicData
@@ -219,19 +224,24 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
         "extra": frozen_lib.unwrap(dock_weakness.extra),
         "requirement": write_requirement(dock_weakness.requirement),
         "lock": write_dock_lock(dock_weakness.lock),
+        "unsafe_target_in_distributor_wtw": dock_weakness.unsafe_target_in_distributor_wtw,
     }
 
 
-def write_dock_rando_params(dock_rando: DockRandoParams) -> dict:
+def write_dock_weakness_distributor_settings(settings: WeaknessDistributorSettings) -> dict:
     return {
-        "unlocked": dock_rando.unlocked.name,
-        "locked": dock_rando.locked.name,
-        "change_from": sorted(weakness.name for weakness in dock_rando.change_from),
-        "change_to": sorted(weakness.name for weakness in dock_rando.change_to),
+        "unlocked": settings.unlocked.name,
+        "locked": settings.locked.name,
+        "change_from": sorted(weakness.name for weakness in settings.change_from),
+        "change_to": sorted(weakness.name for weakness in settings.change_to),
+        "force_change_two_way": settings.force_change_two_way,
+        "resolver_attempts": settings.resolver_attempts,
+        "to_shuffle_proportion": settings.to_shuffle_proportion,
+        "ui_label": settings.ui_label,
     }
 
 
-def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
+def write_dock_type_database(database: DockTypeDatabase) -> dict:
     return {
         "types": {
             dock_type.short_name: {
@@ -240,9 +250,9 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
                 "items": {
                     name: write_dock_weakness(weakness) for name, weakness in database.weaknesses[dock_type].items()
                 },
-                "dock_rando": (
-                    write_dock_rando_params(database.dock_rando_params[dock_type])
-                    if dock_type in database.dock_rando_params
+                "weakness_distributor": (
+                    write_dock_weakness_distributor_settings(dock_type.weakness_distributor)
+                    if dock_type.weakness_distributor is not None
                     else None
                 ),
             }
@@ -251,11 +261,6 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
         "default_weakness": {
             "type": database.default_weakness[0].short_name,
             "name": database.default_weakness[1].name,
-        },
-        "dock_rando": {
-            "force_change_two_way": database.dock_rando_config.force_change_two_way,
-            "resolver_attempts": database.dock_rando_config.resolver_attempts,
-            "to_shuffle_proportion": database.dock_rando_config.to_shuffle_proportion,
         },
     }
 
@@ -444,7 +449,7 @@ def write_game_description(game: GameDescription) -> dict:
         "starting_location": game.starting_location.as_json,
         "minimal_logic": write_minimal_logic_db(game.minimal_logic),
         "victory_condition": write_requirement(game.victory_condition),
-        "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
+        "dock_type_database": write_dock_type_database(game.dock_type_database),
         "hint_feature_database": write_hint_feature_database(game.hint_feature_database),
         "used_trick_levels": write_used_trick_levels(game),
         "flatten_to_set_on_patch": game.region_list.flatten_to_set_on_patch,

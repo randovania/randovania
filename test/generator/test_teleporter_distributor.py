@@ -97,7 +97,7 @@ nc = NodeIdentifier.create
 def test_try_randomize_teleporters(seed_number: int, expected_ids: list[int], echoes_game_description):
     # Setup
     rng = Random(seed_number)
-    elevator_type = echoes_game_description.dock_weakness_database.find_type("elevator")
+    elevator_type = echoes_game_description.dock_type_database.find_type("elevator")
     teleporters = [
         node.identifier
         for node in echoes_game_description.region_list.all_nodes

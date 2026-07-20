@@ -35,7 +35,10 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.DreadCosmeticPatchesDialog,
         export_dialog=gui.DreadGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(HintDetailsTab, gui.DreadTeleporterDetailsTab),
+        spoiler_visualizer=(
+            HintDetailsTab,
+            gui.DreadTeleporterDetailsTab,
+        ),
         game_tab=gui.DreadGameTabWidget,
     )
 
