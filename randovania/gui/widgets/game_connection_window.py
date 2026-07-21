@@ -27,7 +27,7 @@ from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.game_connection_window_ui import Ui_GameConnectionWindow
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.network_common import error
 
 if TYPE_CHECKING:

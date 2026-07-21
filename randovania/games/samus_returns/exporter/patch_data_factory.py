@@ -342,7 +342,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         if hint_config.specific_pickup_hints["artifacts"] != SpecificPickupHintMode.DISABLED:
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 exporter.namer,
                 hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.HIDE_AREA,
                 artifacts,
@@ -382,7 +382,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         return hints
 
     def _create_final_boss_hint(self) -> str:
-        hint_namer = MSRHintNamer(self.description.all_patches, self.players_config)
+        hint_namer = MSRHintNamer(self.description.all_patches, self.worlds_config)
         hint_config = self.configuration.hints
 
         if self.configuration.final_boss == FinalBossConfiguration.RIDLEY:
@@ -404,7 +404,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         if hint_config.specific_pickup_hints["final_boss_item"] != SpecificPickupHintMode.DISABLED:
             temp_final_boss_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 hint_namer,
                 hint_config.specific_pickup_hints["final_boss_item"] == SpecificPickupHintMode.HIDE_AREA,
                 final_boss_resource,
@@ -513,8 +513,8 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         return credits_spoiler.generic_string_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
-            self.players_config,
-            MSRHintNamer(self.description.all_patches, self.players_config),
+            self.worlds_config,
+            MSRHintNamer(self.description.all_patches, self.worlds_config),
         )
 
     def _static_room_name_fixes(self, scenario_name: str, area: Area) -> tuple[str, str]:
@@ -738,7 +738,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
             "hints": self._encode_hints(self.rng),
             "final_boss_hint": self._create_final_boss_hint(),
             "cosmetic_patches": self._create_cosmetics(
-                self.description.get_seed_for_world(self.players_config.player_index)
+                self.description.get_seed_for_world(self.worlds_config.world_index)
             ),
             "configuration_identifier": self.description.shareable_hash,
             "custom_doors": self._add_custom_doors(),
@@ -748,7 +748,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
                 "lava": self.configuration.constant_lava_damage,
             },
             "objective": self._objective(self.configuration),
-            "layout_uuid": str(self.players_config.get_own_uuid()),
+            "layout_uuid": str(self.worlds_config.get_own_uuid()),
             "enable_remote_lua": True,
             "reveal_map_on_start": self.cosmetic_patches.reveal_map,
         }

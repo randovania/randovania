@@ -9,14 +9,14 @@ from randovania.games.prime2.exporter.hint_formaters import GuardianFormatter
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.hint_features import HintFeature
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 class EchoesHintNamer(PrimeFamilyHintNamer):
-    def __init__(self, all_patches: dict[int, GamePatches], players_config: PlayersConfiguration):
-        super().__init__(all_patches, players_config)
+    def __init__(self, all_patches: list[GamePatches], worlds_config: WorldsConfiguration):
+        super().__init__(all_patches, worlds_config)
 
-        patches = all_patches[players_config.player_index]
+        patches = all_patches[worlds_config.world_index]
 
         def feat(loc: str) -> HintFeature:
             return patches.game.hint_feature_database[loc]

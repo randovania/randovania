@@ -42,7 +42,7 @@ def _pickup_assignment_to_pickup_locations(
             target = pickup_assignment[node.pickup_index]
             item_name = target.pickup.name
             if num_worlds > 1:
-                target_world = target.player
+                target_world = target.world
             else:
                 target_world = 0
         else:
@@ -162,7 +162,7 @@ def _get_pickup_from_pool(pickup_list: list[PickupEntry], name: str) -> PickupEn
 
 def _decode_pickup_assignment(
     player_index: int,
-    all_pools: dict[int, PoolResults],
+    all_pools: list[PoolResults],
     region_list: RegionList,
     locations: dict,
 ) -> PickupAssignment:
@@ -207,16 +207,16 @@ def _decode_pickup_assignment(
 
 
 def decode_single(
-    player_index: int,
-    all_pools: dict[int, PoolResults],
+    world_index: int,
+    all_pools: list[PoolResults],
     game: GameDescription,
     game_modifications: dict,
     configuration: BaseConfiguration,
-    all_games: dict[int, GameDescription],
+    all_games: list[GameDescription],
 ) -> GamePatches:
     """
     Decodes a dict created by `serialize` back into a GamePatches.
-    :param player_index:
+    :param world_index:
     :param all_pools:
     :param game:
     :param game_modifications:
@@ -251,7 +251,7 @@ def decode_single(
             },
         )
     else:
-        player_pool = all_pools[player_index]
+        player_pool = all_pools[world_index]
         starting_equipment = []
         for starting in game_modifications["starting_equipment"]["pickups"]:
             try:
@@ -290,7 +290,7 @@ def decode_single(
 
     # Pickups
     pickup_assignment = _decode_pickup_assignment(
-        player_index,
+        world_index,
         all_pools,
         region_list,
         game_modifications["locations"],
@@ -304,7 +304,7 @@ def decode_single(
             pickup_db = default_database.pickup_database_for_game(game.game)
 
             def get_target_pickup_db(target: PickupTarget) -> PickupDatabase:
-                target_game = all_games[target.player]
+                target_game = all_games[target.world]
                 target_pickup_db = default_database.pickup_database_for_game(target_game.game)
                 return target_pickup_db
 
@@ -326,7 +326,7 @@ def decode_single(
 
         hints[NodeIdentifier.from_string(identifier_str)] = BaseHint.from_json(hint, **extra)
 
-    patches = GamePatches.create_from_game(game, player_index, configuration)
+    patches = GamePatches.create_from_game(game, world_index, configuration)
     patches = patches.assign_dock_connections(dock_connections)
     patches = patches.assign_dock_weakness(dock_weakness)
     return dataclasses.replace(
@@ -342,21 +342,20 @@ def decode_single(
 
 def decode(
     game_modifications: list[dict],
-    layout_configurations: dict[int, BaseConfiguration],
-) -> dict[int, GamePatches]:
-    all_games = {
-        index: filtered_database.game_description_for_layout(configuration)
-        for index, configuration in layout_configurations.items()
-    }
-    all_pools = {
-        index: pool_creator.calculate_pool_results(configuration, all_games[index])
-        for index, configuration in layout_configurations.items()
-    }
-    return {
-        index: decode_single(index, all_pools, all_games[index], modifications, layout_configurations[index], all_games)
+    layout_configurations: list[BaseConfiguration],
+) -> list[GamePatches]:
+    all_games = [
+        filtered_database.game_description_for_layout(configuration) for configuration in layout_configurations
+    ]
+    all_pools = [
+        pool_creator.calculate_pool_results(configuration, game)
+        for configuration, game in zip(layout_configurations, all_games, strict=True)
+    ]
+    return [
+        decode_single(index, all_pools, all_games[index], modifications, layout_configurations[index], all_games)
         for index, modifications in enumerate(game_modifications)
-    }
+    ]
 
 
-def serialize(all_patches: dict[int, GamePatches]) -> list[dict]:
-    return [serialize_single(index, len(all_patches), patches) for index, patches in all_patches.items()]
+def serialize(all_patches: list[GamePatches]) -> list[dict]:
+    return [serialize_single(index, len(all_patches), patches) for index, patches in enumerate(all_patches)]

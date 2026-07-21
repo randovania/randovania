@@ -7,7 +7,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 
 from randovania.gui.game_details.game_details_window import GameDetailsWindow
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 
@@ -35,9 +35,9 @@ async def test_export_iso(skip_qtbot, mocker):
     configuration = window.layout_description.get_preset.return_value.configuration
     patch_data = game.patch_data_factory.return_value.create_data.return_value
 
-    players_config = PlayersConfiguration(
-        player_index=window.current_player_index,
-        player_names=window._player_names,
+    worlds_config = WorldsConfiguration(
+        world_index=window.current_player_index,
+        world_names=window._player_names,
     )
 
     # Run
@@ -45,7 +45,7 @@ async def test_export_iso(skip_qtbot, mocker):
 
     # Assert
     game.patch_data_factory.assert_called_once_with(
-        window.layout_description, players_config, options.generic_per_game_options.return_value.cosmetic_patches
+        window.layout_description, worlds_config, options.generic_per_game_options.return_value.cosmetic_patches
     )
     game.gui.export_dialog.assert_called_once_with(
         options,

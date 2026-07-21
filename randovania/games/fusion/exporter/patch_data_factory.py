@@ -214,7 +214,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     "hue_max": getattr(cosmetics, f"{attr_name}_hue_override_max"),
                 }
         palette_dict = {
-            "seed": self.description.get_seed_for_world(self.players_config.player_index),
+            "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
             "randomize": palettes,
             "color_space": cosmetics.color_space.long_name,
             "symmetric": getattr(cosmetics, "enable_symmetric"),
@@ -233,7 +233,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         if metroid_precision != SpecificPickupHintMode.DISABLED:
             metroid_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 exporter.namer,
                 True if metroid_precision == SpecificPickupHintMode.HIDE_AREA else False,
                 artifacts,
@@ -242,7 +242,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         if charge_precision != SpecificPickupHintMode.DISABLED:
             charge_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 exporter.namer,
                 True if charge_precision == SpecificPickupHintMode.HIDE_AREA else False,
                 [self.resource_db.get_item("ChargeBeam")],
@@ -253,7 +253,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         restricted_hint = ""
         operations_hint = ""
         artifact_locations = guaranteed_item_hint.find_locations_that_gives_items(
-            artifacts, self.description.all_patches, self.players_config.player_index
+            artifacts, self.description.all_patches, self.worlds_config.world_index
         )
         fusion_bosses = [
             "ARACHNUS",
@@ -378,7 +378,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
     def _credits_elements(self) -> defaultdict[str, list[dict]]:
         elements = defaultdict(list)
         majors = credits_spoiler.generic_credits(
-            self.configuration.standard_pickup_configuration, self.description.all_patches, self.players_config
+            self.configuration.standard_pickup_configuration, self.description.all_patches, self.worlds_config
         )
 
         for pickup, locations in majors:
