@@ -382,6 +382,7 @@ module = [
 ignore_missing_imports = true
 
 [tool.uv]
+exclude-newer = "7 days"
 cache-keys = [
     { git = { commit = true, tags = true } },
     { file = "pyproject.toml" },
@@ -389,3 +390,17 @@ cache-keys = [
     { file = "README.md" },
     { file = "randovania/enable-cython" },
 ]
+
+[tool.uv.exclude-newer-package]
+am2r-yams = false
+cave-story-randomizer = false
+factorio-randovania-mod = false
+open-dread-rando = false
+mars-patcher = false
+planets-yapr = false
+py_randomprime = false
+random-enemy-attributes = false
+retro-data-structures = false
+mp2hudcolor = false
+open-prime-hunters-rando = false
+open-samus-returns-rando = false

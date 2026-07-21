@@ -7,6 +7,24 @@ resolution-markers = [
     "python_full_version < '3.13'",
 ]
 
+[options]
+exclude-newer = "0001-01-01T00:00:00Z" # This has no effect and is included for backwards compatibility when using relative exclude-newer values.
+exclude-newer-span = "P7D"
+
+[options.exclude-newer-package]
+planets-yapr = false
+factorio-randovania-mod = false
+open-samus-returns-rando = false
+random-enemy-attributes = false
+cave-story-randomizer = false
+retro-data-structures = false
+mp2hudcolor = false
+mars-patcher = false
+am2r-yams = false
+open-prime-hunters-rando = false
+open-dread-rando = false
+py-randomprime = false
+
 [[package]]
 name = "aiocache"
 version = "0.12.3"
