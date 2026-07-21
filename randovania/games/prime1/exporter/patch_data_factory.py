@@ -663,7 +663,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         # Setup
         db = self.game
-        namer = PrimeHintNamer(self.description.all_patches, self.players_config)
+        namer = PrimeHintNamer(self.description.all_patches, self.worlds_config)
 
         ammo_with_mains = [
             ammo.name
@@ -849,7 +849,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
                 hint_texts: dict[ItemResourceInfo, str] = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                     self.description.all_patches,
-                    self.players_config,
+                    self.worlds_config,
                     namer,
                     self.configuration.hints.specific_pickup_hints["phazon_suit"] == SpecificPickupHintMode.HIDE_AREA,
                     [phazon_suit_resource_info],
@@ -901,7 +901,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         credits_string = credits_spoiler.prime_trilogy_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
-            self.players_config,
+            self.worlds_config,
             namer,
             "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;",
             "&push;&font=C29C51F1;&main-color=#33ffd6;{}&pop;",
@@ -914,7 +914,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         else:
             resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 namer,
                 hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.HIDE_AREA,
                 [self.resource_db.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
@@ -1025,7 +1025,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
         data: dict = {
             "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
-            "seed": self.description.get_seed_for_world(self.players_config.player_index),
+            "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
             "preferences": {
                 "defaultGameOptions": self.get_default_game_options(),
                 "qolGameBreaking": not self.configuration.legacy_mode,
@@ -1097,7 +1097,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 self.configuration.enemy_attributes.as_json if self.configuration.enemy_attributes is not None else None
             ),
             "uuid": list(
-                self.players_config.get_own_uuid().bytes,
+                self.worlds_config.get_own_uuid().bytes,
             ),
         }
 

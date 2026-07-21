@@ -30,6 +30,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Burenia
+
+- Changed: Merged event nodes for breaking the floor in Gravity Suit Tower, decluttering the room and helping the generator see when it is safe to complete the sequence.
+- Changed: Added connection back to the Early Gravity Blob in the Gravity Suit Tower to help the generator see when it is safe to complete the breakable floor sequence.
+
+##### Cataris
+
+- Fixed: The door into the Central Unit is changed from Access Open to EMMI Door.
+
+##### Dairon
+
+- Fixed: The door into the Central Unit is changed from Access Open to EMMI Door.
+
 ##### Ferenia
 
 - Changed: The Twin Robot fight is now logically active from the start of the game, unless Highly Dangerous Logic is active. That means passing through the arena now logically requires meeting the fight requirements also before obtaining the Storm Missiles.

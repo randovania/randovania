@@ -72,8 +72,8 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         data = {
             "title_screen_text": "",
             "game_title": f"Echoes OPR - {self.description.shareable_word_hash}"[:64],
-            "seed": self.description.get_seed_for_world(self.players_config.player_index),
-            "world_uuid": str(self.players_config.get_own_uuid()),
+            "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
+            "world_uuid": str(self.worlds_config.get_own_uuid()),
         }
 
         # starting location/items
@@ -379,7 +379,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             self.configuration,
             self.game,
             self.patches,
-            self.players_config,
+            self.worlds_config,
             self.rng,
         )
 
@@ -528,7 +528,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         else:
             return hints.create_stk_hints(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 self.game.get_resource_database_view(),
                 namer,
                 hide_area=(stk_mode == SpecificPickupHintMode.HIDE_AREA),
@@ -553,7 +553,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             else:
                 hint = create_temple_key_hint(
                     self.description.all_patches,
-                    self.players_config.player_index,
+                    self.worlds_config.world_index,
                     temple,
                     namer,
                     with_color=True,
@@ -606,7 +606,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
     def create_suit_mapping(self) -> dict:
         """Returns a patcher-format dict for custom suit changes."""
-        suit_rng = Random(self.description.get_seed_for_world(self.players_config.player_index))
+        suit_rng = Random(self.description.get_seed_for_world(self.worlds_config.world_index))
 
         suits = self.cosmetic_patches.suit_colors.randomized(suit_rng).as_json
         suits.pop("randomize_separately")

@@ -7,13 +7,13 @@ from randovania.gui.game_details.teleporter_details_tab import TeleporterDetails
 
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 class DreadTeleporterDetailsTab(TeleporterDetailsTab[DreadConfiguration]):
     @classmethod
     def should_appear_for(
-        cls, configuration: DreadConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: DreadConfiguration, all_patches: list[GamePatches], players: WorldsConfiguration
     ) -> bool:
         return not configuration.teleporters.is_vanilla
 

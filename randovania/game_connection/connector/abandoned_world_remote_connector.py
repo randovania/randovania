@@ -18,9 +18,10 @@ import time
 from typing import TYPE_CHECKING
 
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent, RemoteConnector
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.generator.pickup_pool import pool_creator
+from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
 from randovania.layout import filtered_database, game_patches_serializer
 from randovania.network_common.error import WorldNotAssociatedError
@@ -61,8 +62,11 @@ def setup_for_world(configuration: BaseConfiguration, game_modifications: dict, 
     """
     immutable_game = filtered_database.game_description_for_layout(configuration)
     pool = pool_creator.calculate_pool_results(configuration, immutable_game)
+
+    all_pools: list[PoolResults] = ([None] * (order - 1)) + [pool]  # type: ignore[assignment]
+    all_games: list[GameDescription] = ([None] * (order - 1)) + [immutable_game]  # type: ignore[assignment]
     patches = game_patches_serializer.decode_single(
-        order, {order: pool}, immutable_game, game_modifications, configuration, {order: immutable_game}
+        order, all_pools, immutable_game, game_modifications, configuration, all_games
     )
 
     game = immutable_game.get_mutable()

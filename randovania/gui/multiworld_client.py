@@ -11,8 +11,8 @@ from PySide6 import QtCore
 from qasync import asyncSlot
 
 from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
-from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.interface_common.world_database import WorldData, WorldDatabase, WorldServerData
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.network_client.network_client import ConnectionState, UnableToConnect
 from randovania.network_common import error, remote_inventory
 from randovania.network_common.game_connection_status import GameConnectionStatus

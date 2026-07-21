@@ -37,15 +37,15 @@ class BaseEchoesHintDistributor(HintDistributor):
         return super().is_pickup_more_interesting(target, player_id, hint_node)
 
     @override
-    def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
+    def is_pickup_interesting(self, target: PickupTarget, world_id: int, hint_node: HintNode) -> bool:
         non_interesting_features = ["key"]
         for feature in non_interesting_features:
             if target.pickup.has_hint_feature(feature):
                 return False
-        if target.player == player_id and ("Translator" in target.pickup.name):
+        if target.world == world_id and ("Translator" in target.pickup.name):
             # don't place a translator hint on its color of lore scan
             return hint_node.extra["translator"] not in target.pickup.name
-        return super().is_pickup_interesting(target, player_id, hint_node)
+        return super().is_pickup_interesting(target, world_id, hint_node)
 
     # Post Filler
     @override

@@ -283,7 +283,7 @@ def retcon_playthrough_filler(
     rng: Random,
     player_states: list[PlayerState],
     status_update: Callable[[str], None],
-) -> tuple[dict[PlayerState, GamePatches], tuple[str, ...]]:
+) -> tuple[list[GamePatches], tuple[str, ...]]:
     """
     Runs the retcon logic.
     :param rng:
@@ -352,8 +352,7 @@ def retcon_playthrough_filler(
         current_player.reach = reach_lib.advance_after_action(current_player.reach)
         current_player.update_for_new_state()
 
-    all_patches = {player_state: player_state.reach.state.patches for player_state in player_states}
-    return all_patches, tuple(actions_log)
+    return [player_state.reach.state.patches for player_state in player_states], tuple(actions_log)
 
 
 def debug_print_weighted_locations(all_locations_weighted: WeightedLocations, player_states: list[PlayerState]) -> None:

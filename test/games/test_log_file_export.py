@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 import randovania
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import json_lib
 from test.conftest import COOP_RDVGAMES, SOLO_RDVGAMES
@@ -70,9 +70,9 @@ def test_layout_patch_data_export(
 
     factory = game_enum.patch_data_factory(
         description=layout,
-        players_config=PlayersConfiguration(
-            player_index=world_index,
-            player_names={i: f"World {i + 1}" for i in range(layout.world_count)},
+        worlds_config=WorldsConfiguration(
+            world_index=world_index,
+            world_names={i: f"World {i + 1}" for i in range(layout.world_count)},
             is_coop=is_coop,
         ),
         cosmetic_patches=cosmetic_patches,

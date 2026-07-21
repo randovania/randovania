@@ -75,7 +75,7 @@ class FactorioPatchDataFactory(PatchDataFactory[FactorioConfiguration, FactorioC
 
         result: cfg.Configuration = {
             "configuration_identifier": self.description.shareable_hash,
-            "layout_uuid": str(self.players_config.get_own_uuid()),
+            "layout_uuid": str(self.worlds_config.get_own_uuid()),
             "optional_modifications": {
                 "can_send_fish_to_space": self.configuration.can_send_fish_to_space,
                 "stronger_solar": self.configuration.stronger_solar,

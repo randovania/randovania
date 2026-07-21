@@ -243,7 +243,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
 
     unassigned_docks: list[tuple[int, DockNode]] = []
 
-    for player, results in filler_results.player_results.items():
+    for player, results in enumerate(filler_results.player_results):
         game = results.game
         patches = results.patches
 
@@ -404,9 +404,7 @@ async def distribute_post_fill_weaknesses(
 
     unassigned_docks = _get_docks_to_assign(rng, filler_results)
 
-    new_patches: dict[int, GamePatches] = {
-        player: result.patches for player, result in filler_results.player_results.items()
-    }
+    new_patches: list[GamePatches] = [result.patches for result in filler_results.player_results]
     initial_states: dict[int, State] = {}
     docks_placed = 0
     docks_to_place = len(unassigned_docks)
@@ -415,7 +413,8 @@ async def distribute_post_fill_weaknesses(
 
     start_time = time.perf_counter()
 
-    for player, patches in new_patches.items():
+    for patches in new_patches:
+        player = patches.player_index
         configuration = patches.configuration
 
         dock_type_db = filler_results.player_results[player].game.get_dock_type_database()
@@ -539,8 +538,8 @@ async def distribute_post_fill_weaknesses(
 
     return dataclasses.replace(
         filler_results,
-        player_results={
-            player: dataclasses.replace(result, patches=new_patches[player])
-            for player, result in filler_results.player_results.items()
-        },
+        player_results=[
+            dataclasses.replace(result, patches=patches)
+            for result, patches in zip(filler_results.player_results, new_patches, strict=True)
+        ],
     )

@@ -250,11 +250,7 @@ class PlayerState:
         teleporter_dock_types = self.game_enum.game_description.dock_type_database.all_teleporter_dock_types
 
         for node in self.reach.iterate_nodes:
-            db_node: Node | None
-            if isinstance(node, Node):
-                db_node = node
-            else:
-                db_node = node.database_node
+            db_node = node.database_node
 
             if not isinstance(db_node, DockNode):
                 continue

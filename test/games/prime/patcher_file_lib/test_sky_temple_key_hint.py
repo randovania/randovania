@@ -9,7 +9,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 def _create_hint_text(
@@ -56,7 +56,7 @@ def test_create_hints_all_placed(
 ):
     # Setup
     echoes_game = echoes_game_description
-    players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
+    worlds_config = WorldsConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
 
     patches = echoes_game_patches.assign_new_pickups(
         [
@@ -126,12 +126,12 @@ def test_create_hints_all_placed(
         for i, (asset_id, text) in enumerate(zip(assets, locations))
     ]
 
-    namer = EchoesHintNamer({0: patches, 1: other_patches}, players_config)
+    namer = EchoesHintNamer([patches, other_patches], worlds_config)
 
     # Run
     result = randovania.games.prime2.exporter.hints.create_stk_hints(
-        {0: patches, 1: other_patches} if multiworld else {0: patches},
-        players_config,
+        [patches, other_patches] if multiworld else [patches],
+        worlds_config,
         echoes_game.resource_database,
         namer,
         hide_area,
@@ -147,7 +147,7 @@ def test_create_hints_all_starting(
     hide_area: bool, multiworld: bool, echoes_game_patches, echoes_game_description, default_echoes_configuration
 ):
     # Setup
-    players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
+    worlds_config = WorldsConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
 
     patches = echoes_game_patches.assign_extra_starting_pickups(
         [
@@ -163,7 +163,7 @@ def test_create_hints_all_starting(
         ]
     )
     patches = dataclasses.replace(patches, configuration=default_echoes_configuration)
-    namer = EchoesHintNamer({0: patches}, players_config)
+    namer = EchoesHintNamer([patches], worlds_config)
 
     expected = [
         {"asset_id": 0xD97685FE, "strings": make_starting_stk_hint(1)},
@@ -179,7 +179,7 @@ def test_create_hints_all_starting(
 
     # Run
     result = randovania.games.prime2.exporter.hints.create_stk_hints(
-        {0: patches}, players_config, echoes_game_description.resource_database, namer, hide_area
+        [patches], worlds_config, echoes_game_description.resource_database, namer, hide_area
     )
 
     # Assert
@@ -200,7 +200,7 @@ def test_hide_hints(echoes_game_patches):
         {"asset_id": 0xCAA1C50A, "strings": make_useless_stk_hint(9)},
     ]
 
-    namer = EchoesHintNamer({0: echoes_game_patches}, PlayersConfiguration(0, {}))
+    namer = EchoesHintNamer({0: echoes_game_patches}, WorldsConfiguration(0, {}))
 
     # Run
     result = randovania.games.prime2.exporter.hints.hide_stk_hints(namer)
