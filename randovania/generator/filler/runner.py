@@ -49,11 +49,7 @@ async def run_filler(
         standard_pickups = list(pool.pickups)
         rng.shuffle(standard_pickups)
 
-        graph, state = pool.game_generator.bootstrap.logic_bootstrap_graph(
-            config,
-            pool.game,
-            pool.patches,
-        )
+        graph, state = pool.game_generator.bootstrap.logic_bootstrap_graph(config, pool.game, pool.patches)
         player_states.append(
             PlayerState(
                 index=index,
