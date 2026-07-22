@@ -310,7 +310,7 @@ async def _create_description(
     _player_pools, filler_results = pools_results
 
     filler_results = _distribute_remaining_items(rng, filler_results, presets)
-    filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, filler_results, status_update)
+    # filler_results=await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, filler_results, status_update)
     filler_results = await hint_distributor.distribute_generic_hints(rng, filler_results)
     filler_results = await hint_distributor.distribute_specific_location_hints(rng, filler_results)
 

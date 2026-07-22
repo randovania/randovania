@@ -160,6 +160,76 @@ def distribute_pre_fill_weaknesses(
             patches = patches.assign_weaknesses_to_shuffle([(node, True) for node, _ in docks_to_unlock])
             patches = patches.assign_dock_weakness(docks_to_unlock)
 
+            # MAJOR CHANGES STARTING HERE
+
+            # maprando has 55 locked doors with both ammo and beam presets
+            # apparently SM has 250-600 doors in the whole game (bit of a wide range, but okay)
+            # 55 is ~20% of 250
+            # 55 is ~10% of 600
+            # so, try both 10% and 20%, or 15% middle ground.
+            # UPDATE: After testing, 20% feels right
+
+            # Get docks that need assigning
+            docks_to_assign = _get_docks_to_assign_doorlockchange(rng, game, patches)
+
+            # Get the number of docks, and the number of which that ought to be locked
+            number_of_docks = len(docks_to_assign)
+            number_of_locked = number_of_docks * 0.2  # 20% of doors will be locked (test w/ diff. values)
+
+            dock_weaknesses = dock_type_db.weaknesses[dock_type]  # Get (str, DockWeakness) tuples
+            change_to_str_list = dock_rando_config.as_json["types_state"]["door"]["can_change_to"]  # Get str names
+
+            change_to_weaknesses = []  # Append DockWeaknesses to this list according to change_to_str_list
+            for change_to_str in change_to_str_list:
+                if change_to_str in dock_weaknesses:
+                    change_to_weaknesses.append(dock_weaknesses[change_to_str])
+
+            # Get the weakness that serves as the default/unlocked dock
+            unlocked_weakness = distributor_settings.unlocked
+
+            # Remove the default weakness so it's not part of the 20% in addition to being the 80%
+            if unlocked_weakness in change_to_weaknesses:
+                change_to_weaknesses.remove(unlocked_weakness)
+
+            # Every single weakness that'll be assigned to a dock.The len() of this list will match len(docks_to_assign)
+            all_weaknesses = []
+
+            # Splits locks between all available weaknesses
+            number_per_weakness = int(
+                -(-number_of_locked // len(change_to_weaknesses))
+            )  # Round up without importing math
+            for weakness in change_to_weaknesses:
+                for _ in range(number_per_weakness):
+                    all_weaknesses.append(weakness)
+
+            # Fill the remaining spots with unlocked weakness
+            while len(all_weaknesses) < len(docks_to_assign):
+                all_weaknesses.append(unlocked_weakness)
+
+            # Considering the docks are supposed to have been output in a random order, we should just be able to assign
+            # without shuffling all_weaknesses.
+            # UPDATE: A lot of easy doors seem pretty weighted to early game areas. Might try shuffling all_weaknesses
+            # after all
+            for i, dock in enumerate(docks_to_assign):
+                # Took most of this from elsewhere. Man this is convoluted
+                target = game.typed_node_by_identifier(patches.get_dock_connection_for(dock), DockNode)
+
+                new_assignment = [
+                    (dock, all_weaknesses[i]),
+                ]
+
+                # It'll be good to have these checks, but the former is checked elsewhere, and the latter is already
+                # going to be true for my personal use, I think
+                # if (target.default_dock_weakness in dock_type_state.can_change_from
+                #     or dock_type_settings.force_change_two_way):
+
+                new_assignment.append((target, all_weaknesses[i]))
+
+                patches = patches.assign_dock_weakness(new_assignment)
+
+            # MAJOR CHANGES ENDING HERE. Also made an alternate _get_docks_to_assign(),
+            # and commented out a call to distribute_post_fill_weaknesses in generator.py.
+
         else:
             assert mode == DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS
             patches = _distribute_mode_weakness(
@@ -264,6 +334,44 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
                 player_docks = player_docks[:limit]
 
             unassigned_docks.extend(player_docks)
+
+    rng.shuffle(unassigned_docks)
+    return unassigned_docks
+
+
+# Considering this is only intended for personal singleplayer use for now, I just stopped this from requiring multiple
+# players as I didn't really get what to do about the function requiring(?) them. If I work on this more, I'll likely
+# try to just use the original _get_docks_to_assign() so multiplayer can be supported.
+def _get_docks_to_assign_doorlockchange(
+    rng: Random, game: GameDescription, patches: GamePatches
+) -> list[tuple[int, DockNode]]:
+    """
+    Collects all docks to be assigned from each player, returning them in a random order
+    """
+
+    unassigned_docks: list[tuple[int, DockNode]] = []
+
+    # for player, results in enumerate(filler_results.player_results):
+    # game = results.game
+    # patches = results.patches
+
+    docks_type: defaultdict[DockType, list[tuple[int, DockNode]]] = defaultdict(list)
+
+    for dock in patches.all_weaknesses_to_shuffle(game):
+        docks = docks_type[dock.dock_type]
+        target_node = game.node_by_identifier(patches.get_dock_connection_for(dock))
+        if target_node not in docks:
+            docks.append(dock)
+
+    for dock_type, docks in docks_type.items():
+        to_shuffle_proportion = dock_type.get_weakness_distributor().to_shuffle_proportion
+
+        if to_shuffle_proportion < 1.0:
+            rng.shuffle(docks)
+            limit = int(len(docks) * to_shuffle_proportion)
+            docks = docks[:limit]
+
+        unassigned_docks.extend(docks)
 
     rng.shuffle(unassigned_docks)
     return unassigned_docks
