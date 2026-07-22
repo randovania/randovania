@@ -73,11 +73,10 @@ def default_from_type(
     from_type: ResourceType | type[Requirement], db: ResourceDatabase, region_list: RegionList
 ) -> Requirement:
     if isinstance(from_type, ResourceType):
-        resource_info: ResourceInfo = next(iter(db.get_by_type(from_type)))
+        resource_info = cast(ResourceInfo, next(iter(db.get_by_type(from_type))))
         return ResourceRequirement.simple(resource_info)
 
     if issubclass(from_type, RequirementArrayBase):
-        print("Hello")
         return RequirementAnd([], None)
 
     if from_type == RequirementTemplate:
