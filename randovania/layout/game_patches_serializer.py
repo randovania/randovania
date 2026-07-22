@@ -176,7 +176,7 @@ def _decode_pickup_assignment(
         if pickup_name == _NOTHING_PICKUP_NAME:
             continue
 
-        target_world = location["owner"]
+        target_world: int = location["owner"]
 
         pickup_index = PickupIndex(location["index"])
         node = region_list.node_from_pickup_index(pickup_index)

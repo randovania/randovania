@@ -289,8 +289,8 @@ async def test_connectors_share_no_mutable_state(multi_layout, inert_loop):
     assert result_b2 == result_b
 
 
-# @pytest.mark.skip_resolver_tests
-@pytest.mark.skip
+@pytest.mark.benchmark
+@pytest.mark.skip_resolver_tests
 async def test_dread_abandoned_in_giant_multi_is_monotonic(giant_multi_layout):
     # Abandon the Dread world of a 6-game multiworld, then deliver it the pickups other worlds hold
     # for it in increasing amounts, checking at each step that the in-logic set never shrinks.

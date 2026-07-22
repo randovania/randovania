@@ -63,8 +63,8 @@ def setup_for_world(configuration: BaseConfiguration, game_modifications: dict, 
     immutable_game = filtered_database.game_description_for_layout(configuration)
     pool = pool_creator.calculate_pool_results(configuration, immutable_game)
 
-    all_pools: list[PoolResults] = ([None] * (order - 1)) + [pool]  # type: ignore[assignment]
-    all_games: list[GameDescription] = ([None] * (order - 1)) + [immutable_game]  # type: ignore[assignment]
+    all_pools: list[PoolResults] = [pool] * (order + 1)
+    all_games: list[GameDescription] = [immutable_game] * (order + 1)
     patches = game_patches_serializer.decode_single(
         order, all_pools, immutable_game, game_modifications, configuration, all_games
     )
