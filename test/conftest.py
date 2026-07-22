@@ -4,6 +4,7 @@ import asyncio
 import dataclasses
 import functools
 import uuid
+from collections.abc import Callable
 from importlib.util import find_spec
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -14,11 +15,19 @@ from frozendict import frozendict
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
+from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.node_requirement import NodeRequirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games import default_data
 from randovania.games.blank.layout import BlankConfiguration
 from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
@@ -192,6 +201,41 @@ def echoes_game_data() -> dict:
 @pytest.fixture(scope="session")
 def echoes_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
+
+
+@pytest.fixture
+def echoes_simple_resource(echoes_resource_database) -> Callable[[str], ResourceRequirement]:
+    def _make_resource(name: str):
+        return ResourceRequirement.with_data(echoes_resource_database, ResourceType.ITEM, name, 1, False)
+
+    return _make_resource
+
+
+@pytest.fixture
+def echoes_varied_requirement(echoes_simple_resource) -> Requirement:
+    return RequirementOr(
+        [
+            echoes_simple_resource("ScrewAttack"),
+            RequirementAnd([echoes_simple_resource("Dark"), echoes_simple_resource("Light")], "Beams"),
+            RequirementTemplate("Has Suit"),
+            NodeRequirement(NodeIdentifier("Sanctuary Fortress", "Grand Abyss", "Door to Vault")),
+            RequirementAnd(
+                [
+                    echoes_simple_resource("Charge"),
+                    RequirementOr(
+                        [
+                            echoes_simple_resource("Supers"),
+                            echoes_simple_resource("Darkburst"),
+                            echoes_simple_resource("Sunburst"),
+                            echoes_simple_resource("SonicBoom"),
+                        ],
+                        "Combos",
+                    ),
+                ]
+            ),
+        ],
+        "This is a varied Requirement tree!",
+    )
 
 
 @pytest.fixture(scope="session")
