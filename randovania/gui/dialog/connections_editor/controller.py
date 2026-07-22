@@ -1,21 +1,17 @@
-from typing import Any
+from __future__ import annotations
 
 from PySide6.QtCore import QModelIndex, QObject, Signal
 from PySide6.QtGui import QUndoStack
 from PySide6.QtWidgets import QComboBox, QStackedWidget, QWidget
 
-from randovania.game_description.db.node import Node
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.node_requirement import NodeRequirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 
+from . import requirement_tree
 from .command import Command
 from .editor import (
     ArrayEditor,
@@ -64,17 +60,27 @@ class RequirementController(QObject):
         self._combo_type.currentIndexChanged.connect(self._on_type_combo_changed)
 
     def _build_editors(self) -> None:
-        editors: list[Editor] = [
-            CountedResourceEditor(self._db, self._stacked_widget, "Item", ResourceType.ITEM),
-            SimpleResourceEditor(self._db, self._stacked_widget, "Event", ResourceType.EVENT),
-            TrickResourceEditor(self._db, self._stacked_widget),
-            CountedResourceEditor(self._db, self._stacked_widget, "Damage", ResourceType.DAMAGE),
-            SimpleResourceEditor(self._db, self._stacked_widget, "Version", ResourceType.VERSION),
-            SimpleResourceEditor(self._db, self._stacked_widget, "Misc", ResourceType.MISC),
-            TemplateEditor(self._db, self._stacked_widget),
-            NodeEditor(self._db, self._stacked_widget, self._region_list),
-            ArrayEditor(self._db, self._stacked_widget),
-        ]
+        def has_resource(resource_type: ResourceType) -> bool:
+            return len(self._db.get_by_type(resource_type)) > 0
+
+        editors: list[Editor] = [ArrayEditor(self._db, self._stacked_widget)]
+
+        if has_resource(ResourceType.ITEM):
+            editors.append(CountedResourceEditor(self._db, self._stacked_widget, "Item", ResourceType.ITEM))
+        if has_resource(ResourceType.EVENT):
+            editors.append(SimpleResourceEditor(self._db, self._stacked_widget, "Event", ResourceType.EVENT))
+        if has_resource(ResourceType.TRICK):
+            editors.append(TrickResourceEditor(self._db, self._stacked_widget))
+        if has_resource(ResourceType.DAMAGE):
+            editors.append(CountedResourceEditor(self._db, self._stacked_widget, "Damage", ResourceType.DAMAGE))
+        if has_resource(ResourceType.VERSION):
+            editors.append(SimpleResourceEditor(self._db, self._stacked_widget, "Version", ResourceType.VERSION))
+        if has_resource(ResourceType.MISC):
+            editors.append(SimpleResourceEditor(self._db, self._stacked_widget, "Misc", ResourceType.MISC))
+        if len(self._db.requirement_template) > 0:
+            editors.append(TemplateEditor(self._db, self._stacked_widget))
+        # Database will always have at least one node
+        editors.append(NodeEditor(self._db, self._stacked_widget, self._region_list))
 
         for editor in editors:
             self._editors[editor.type()] = editor
@@ -83,87 +89,6 @@ class RequirementController(QObject):
             self._combo_type.addItem(editor.name(), editor.type())
 
             editor.changed.connect(self._on_editor_field_changed)
-
-    def _tuple_insert(self, items: tuple, idx: int, value: Any) -> tuple:
-        return (*items[:idx], value, *items[idx:])
-
-    def _tuple_replace(self, items: tuple, idx: int, value: Any) -> tuple:
-        return (*items[:idx], value, *items[idx + 1 :])
-
-    def _tuple_remove(self, items: tuple, idx: int) -> tuple:
-        return (*items[:idx], *items[idx + 1 :])
-
-    def _insert_at_path(self, root: RequirementArrayBase, path: Path, requirement: Requirement) -> Requirement:
-        """
-        Returns a new Requirement tree with the Requirement inserted
-        """
-        if len(path) == 1:
-            new_items = self._tuple_insert(root.items, path.row(), requirement)
-            return type(root)(new_items, root.comment)
-
-        idx = path.head()
-        next_root = root.items[idx]
-        assert isinstance(next_root, RequirementArrayBase)
-        child = self._insert_at_path(next_root, path.tail(), requirement)
-        new_items = self._tuple_replace(root.items, idx, child)
-        return type(root)(new_items, root.comment)
-
-    def _remove_at_path(self, root: RequirementArrayBase, path: Path) -> Requirement:
-        """
-        Returns a new Requirement tree with the Requirement at `path` removed
-        """
-        idx = path.head()
-
-        if len(path) == 1:
-            new_items = self._tuple_remove(root.items, idx)
-            return type(root)(new_items, root.comment)
-
-        next_root = root.items[idx]
-        assert isinstance(next_root, RequirementArrayBase)
-        child = self._remove_at_path(next_root, path.tail())
-        new_items = self._tuple_replace(root.items, idx, child)
-        return type(root)(new_items, root.comment)
-
-    def _replace_at_path(self, root: RequirementArrayBase, path: Path, requirement: Requirement) -> Requirement:
-        """
-        Returns a new Requirement tree with the Requirement at `path` replaced
-        """
-        if len(path) == 0:
-            return requirement
-
-        idx = path.head()
-        next_root = root.items[idx]
-        child = (
-            self._replace_at_path(next_root, path.tail(), requirement)
-            if isinstance(next_root, RequirementArrayBase)
-            else requirement
-        )
-        new_items = self._tuple_replace(root.items, idx, child)
-        return type(root)(new_items, root.comment)
-
-    def _default_requirement_for_type(self, _type: ResourceType | type[Requirement]) -> Requirement:
-        if isinstance(_type, ResourceType):
-            resource_info: ResourceInfo = self._db.get_by_type(_type)[0]
-            return ResourceRequirement.simple(resource_info)
-
-        if issubclass(_type, RequirementArrayBase):
-            return RequirementAnd([], None)
-
-        if _type == RequirementTemplate:
-            template_name = next(iter(self._db.requirement_template))
-            return RequirementTemplate(template_name)
-
-        if _type == NodeRequirement:
-            node: Node = next(self._region_list.iterate_nodes())
-            return NodeRequirement(node.identifier)
-
-        raise RuntimeError(f"Unknown requirement type: {_type}")
-
-    def _change_requirement_type(self, current: Requirement, to_type: type) -> Requirement:
-        """Wrapper to retain requirement data when changing between array types"""
-        if isinstance(current, RequirementArrayBase) and issubclass(type(to_type), RequirementArrayBase):
-            return to_type(current.items, current.comment)
-        return self._default_requirement_for_type(to_type)
 
     def _show_editor(self, editor: Editor) -> None:
         self._stacked_widget.setCurrentWidget(editor.widget())
@@ -224,8 +149,10 @@ class RequirementController(QObject):
 
         before: Requirement = self._model.build_requirement()
         assert isinstance(before, RequirementArrayBase)
-        new_requirement: Requirement = self._default_requirement_for_type(self._combo_type.currentData(ROLE))
-        after: Requirement = self._insert_at_path(before, path, new_requirement)
+        new_requirement: Requirement = requirement_tree.default_from_type(
+            self._combo_type.currentData(ROLE), self._db, self._region_list
+        )
+        after: Requirement = requirement_tree.insert_at_path(before, path, new_requirement)
 
         self._push_command(before, after, path, "Add Requirement")
 
@@ -237,7 +164,7 @@ class RequirementController(QObject):
         before: Requirement = self._model.build_requirement()
         assert isinstance(before, RequirementArrayBase)
         path = self._model.path_from_index(self._active_item_index)
-        after: Requirement = self._remove_at_path(before, path)
+        after = requirement_tree.remove_at_path(before, path)
 
         sibling_count: int = self._model.sibling_count(path)
 
@@ -260,7 +187,7 @@ class RequirementController(QObject):
 
         before: Requirement = self._model.build_requirement()
         assert isinstance(before, RequirementArrayBase)
-        after_remove: Requirement = self._remove_at_path(before, path)
+        after_remove = requirement_tree.remove_at_path(before, path)
         assert isinstance(after_remove, RequirementArrayBase)
 
         if path.row() > 0:
@@ -274,7 +201,7 @@ class RequirementController(QObject):
         else:
             return
 
-        after: Requirement = self._insert_at_path(after_remove, path, active)
+        after = requirement_tree.insert_at_path(after_remove, path, active)
 
         self._push_command(before, after, path, "Move Up")
 
@@ -289,7 +216,7 @@ class RequirementController(QObject):
 
         before: Requirement = self._model.build_requirement()
         assert isinstance(before, RequirementArrayBase)
-        after_remove: Requirement = self._remove_at_path(before, path)
+        after_remove = requirement_tree.remove_at_path(before, path)
         assert isinstance(after_remove, RequirementArrayBase)
 
         if path.row() < sibling_count:
@@ -305,19 +232,19 @@ class RequirementController(QObject):
         else:
             return
 
-        after: Requirement = self._insert_at_path(after_remove, path, active)
+        after = requirement_tree.insert_at_path(after_remove, path, active)
 
         self._push_command(before, after, path, "Move Down")
 
     def _on_type_combo_changed(self, idx: int = -1) -> None:
         before: Requirement = self._model.build_requirement()
         path = self._model.path_from_index(self._active_item_index)
-        changed: Requirement = self._change_requirement_type(
-            self._active_item_index.data(ROLE), self._combo_type.currentData(ROLE)
+        changed: Requirement = requirement_tree.change_to_type(
+            self._active_item_index.data(ROLE), self._combo_type.currentData(ROLE), self._db, self._region_list
         )
         after = changed
         if isinstance(before, RequirementArrayBase):
-            after = self._replace_at_path(before, path, changed)
+            after = requirement_tree.replace_at_path(before, path, changed)
 
         self._push_command(before, after, path, "Change Type")
 
@@ -330,7 +257,7 @@ class RequirementController(QObject):
         path = self._model.path_from_index(self._active_item_index)
         after = requirement
         if isinstance(before, RequirementArrayBase):
-            after = self._replace_at_path(before, path, requirement)
+            after = requirement_tree.replace_at_path(before, path, requirement)
 
         self._push_command(before, after, path, "Edit Requirement")
 
