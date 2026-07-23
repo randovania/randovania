@@ -51,6 +51,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The Twin Robot fight is now logically active from the start of the game, unless Highly Dangerous Logic is active. That means passing through the arena now logically requires meeting the fight requirements also before obtaining the Storm Missiles.
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+##### Dark Torvus Bog
+
+- Added: NSJ variant of the BSJ to go up through Sacrificial Chamber before Grapple Guardian, set as advanced.
+- Added: The various tricks that require power bombs to go up through Sacrificial Chamber now have videos.
+
 ### Metroid: Samus Returns
 
 - Changed: The Buff Charge Beam Doors option now also affects Beam Burst.
