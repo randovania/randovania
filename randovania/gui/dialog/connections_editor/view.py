@@ -37,6 +37,3 @@ class RequirementView(QObject):
 
         self._tree.setFocus()
         self._tree.scrollTo(index, QAbstractItemView.ScrollHint.EnsureVisible)
-
-    def deleteLater(self) -> None:
-        self._tree.deleteLater()

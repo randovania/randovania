@@ -260,7 +260,3 @@ class RequirementController(QObject):
             after = requirement_tree.replace_at_path(before, path, requirement)
 
         self._push_command(before, after, path, "Edit Requirement")
-
-    def deleteLater(self) -> None:
-        self._stacked_widget.deleteLater()
-        self._combo_type.deleteLater()
