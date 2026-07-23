@@ -146,6 +146,12 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
 
         if other_node is not None:
             if isinstance(other_node, DockNode):
+                if set(other_node.layers) != set(node.layers):
+                    yield (
+                        f"{node.name} has layers {sorted(node.layers)}, but connected dock "
+                        f"'{node.default_connection}' has layers {sorted(other_node.layers)}."
+                    )
+
                 if other_node.default_connection != node.identifier:
                     yield (
                         f"{node.name} connects to '{node.default_connection}', but that dock connects "
