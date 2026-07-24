@@ -881,6 +881,25 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             except ValueError:
                 pass  # Skip making the hint if Phazon Suit is not in the seed
 
+        if self.configuration.blue_save_doors:
+            room = level_data["Phazon Mines"]["rooms"]["Save Station Mines A"]
+            room.setdefault("timers", []).append(
+                {
+                    "id": 0x00EE_0000,
+                    "time": 0.5,
+                    "startImmediately": True,
+                }
+            )
+
+            room.setdefault("addConnections", []).append(
+                {
+                    "senderId": 0x00EE_0000,  # Randovania timer
+                    "state": "ZERO",
+                    "targetId": 0x0004001A,  # Relay - Unlock Gate
+                    "message": "SET_TO_ZERO",
+                }
+            )
+
         # strip extraneous info
         level_data = _remove_empty(level_data)
         for region_item in level_data.values():

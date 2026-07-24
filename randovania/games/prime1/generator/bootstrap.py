@@ -91,6 +91,7 @@ class PrimeBootstrap(Bootstrap):
             "superheated_probability": "superheated_probability",
             "submerged_probability": "submerged_probability",
             "remove_bars_great_tree_hall": "remove_bars_great_tree_hall",
+            "blue_save_doors": "blue_save_doors",
         }
         for name, index in logical_patches.items():
             if getattr(configuration, name):

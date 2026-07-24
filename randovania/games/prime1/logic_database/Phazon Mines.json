@@ -1408,7 +1408,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -1417,6 +1417,15 @@
                                         "data": {
                                             "type": "events",
                                             "name": "Event34",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "blue_save_doors",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1479,6 +1488,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Event - Save Station A Barrier Opened": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
