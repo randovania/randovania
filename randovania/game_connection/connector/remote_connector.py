@@ -5,7 +5,7 @@ import typing
 
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.gui.item_tracker.tracker_layout import TrackerLayout
+from randovania.gui.item_tracker.tracker_structure import TrackerStructure
 from randovania.lib import enum_lib
 from randovania.lib.signal import RdvSignal
 
@@ -116,6 +116,6 @@ class RemoteConnector:
         """When True, this connector has lost connection with the game and must be discarded."""
         raise NotImplementedError
 
-    def inform_connected_tracker(self, tracker_details: TrackerLayout | None) -> None:
+    def inform_connected_tracker(self, tracker_details: TrackerStructure | None) -> None:
         """Called when an AutoTracker is created using this connector."""
         return
