@@ -4,6 +4,7 @@ import copy
 import math
 import pprint
 import typing
+from itertools import groupby
 from typing import TYPE_CHECKING
 
 from randovania.game_description.assignment import PickupTarget
@@ -318,7 +319,6 @@ def retcon_playthrough_filler(
 
         new_resources, new_pickups = action.split_pickups()
         new_pickups.sort()
-        rng.shuffle(new_pickups)
 
         for new_resource in new_resources:
             debug_print_collect_event(new_resource)
@@ -326,8 +326,15 @@ def retcon_playthrough_filler(
             current_player.reach.act_on(new_resource)
 
         if new_pickups:
-            if current_player.configuration.staggered_multi_pickup_placement:
-                new_pickups = [new_pickups[0]]
+            # Group all the like pickups
+            nested = [list(group) for _, group in groupby(new_pickups)]
+            # Shuffle them so we dont always pick the same progression first
+            rng.shuffle(nested)
+            # Check if we can place in batch, else only use one element
+            if nested[0][0].generator_params.batch_placement:
+                new_pickups = nested[0]
+            else:
+                new_pickups = [nested[0][0]]
 
             debug.debug_print(f"\n>>> Will place {len(new_pickups)} pickups")
             for i, new_pickup in enumerate(new_pickups):

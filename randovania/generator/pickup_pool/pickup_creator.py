@@ -66,6 +66,7 @@ def create_standard_pickup(
             probability_offset=pickup.probability_offset,
             probability_multiplier=pickup.probability_multiplier * state.priority,
             index_age_impact=pickup.index_age_impact,
+            batch_placement=pickup.batch_placement,
         ),
         show_in_credits_spoiler=pickup.show_in_credits_spoiler,
         extra=pickup.extra,
@@ -104,6 +105,7 @@ def create_ammo_pickup(
             probability_offset=ammo.probability_offset,
             probability_multiplier=ammo.probability_multiplier,
             index_age_impact=ammo.index_age_impact,
+            batch_placement=ammo.batch_placement,
         ),
         show_in_credits_spoiler=False,
         is_expansion=True,
@@ -151,6 +153,7 @@ def create_generated_pickup(
             probability_multiplier=pickup.probability_multiplier,
             index_age_impact=pickup.index_age_impact,
             required_progression=minimum_progression,
+            batch_placement=pickup.batch_placement,
         ),
         extra=pickup.extra,
     )
