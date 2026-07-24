@@ -291,8 +291,8 @@ class NodeEditor(Editor):
         self._add_to_layout([self._combo_region, self._combo_area, self._combo_node])
 
         self._combo_region.currentIndexChanged.connect(self._region_changed)
-        self._combo_area.currentIndexChanged.connect(self._area_changed)
-        self._combo_node.currentIndexChanged.connect(self._notify_changed)
+        self._combo_area.currentTextChanged.connect(self._area_changed)
+        self._combo_node.currentTextChanged.connect(self._notify_changed)
 
     def to_string(self, data: Region | Area | Node) -> str:
         return data.name
@@ -305,32 +305,35 @@ class NodeEditor(Editor):
     def populate(self, requirement: Requirement) -> None:
         requirement = cast(NodeRequirement, requirement)
         region: Region = self._region_list.region_with_name(requirement.node_identifier.region)
+        area: Area = region.area_by_identifier(requirement.node_identifier.area_identifier)
+        node: Node = self._region_list.node_by_identifier(requirement.node_identifier)
+
         with signals_blocked(self._combo_region):
             set_combo_with_value(self._combo_region, region)
-        with signals_blocked(self._combo_node):
-            self._region_changed(requirement=requirement)
 
-    def _region_changed(self, idx: int = -1, requirement: NodeRequirement | None = None) -> None:
+        with signals_blocked(self._combo_area):
+            self._repopulate_combo(self._combo_area, region.areas)
+            set_combo_with_value(self._combo_area, area)
+
+        with signals_blocked(self._combo_node):
+            self._repopulate_combo(self._combo_node, area.nodes)
+            set_combo_with_value(self._combo_node, node)
+
+    def _region_changed(self, idx: int = -1) -> None:
         region: Region = self._combo_region.currentData(ROLE)
         with signals_blocked(self._combo_area):
             self._repopulate_combo(self._combo_area, region.areas)
+        area: Area = next(iter(region.areas))
+        set_combo_with_value(self._combo_area, area)
+        self._area_changed()
 
-        if requirement is not None:
-            area: Area = region.area_by_identifier(requirement.node_identifier.area_identifier)
-            with signals_blocked(self._combo_area):
-                set_combo_with_value(self._combo_area, area)
-
-        self._area_changed(requirement=requirement)
-
-    def _area_changed(self, idx: int = -1, requirement: NodeRequirement | None = None) -> None:
+    def _area_changed(self, text: str = "") -> None:
         area: Area = self._combo_area.currentData(ROLE)
         with signals_blocked(self._combo_node):
             self._repopulate_combo(self._combo_node, area.nodes)
-
-        if requirement is not None:
-            node: Node = self._region_list.node_by_identifier(requirement.node_identifier)
-            with signals_blocked(self._combo_node):
-                set_combo_with_value(self._combo_node, node)
+        node: Node = next(iter(area.nodes))
+        set_combo_with_value(self._combo_node, node)
+        self._notify_changed()
 
     def requirement(self) -> NodeRequirement:
         node_identifier = NodeIdentifier(
