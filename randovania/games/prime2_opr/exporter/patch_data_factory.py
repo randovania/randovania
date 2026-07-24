@@ -73,7 +73,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             "title_screen_text": "",
             "game_title": f"Echoes OPR - {self.description.shareable_word_hash}"[:64],
             "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
-            "world_uuid": str(self.worlds_config.get_own_uuid()),
+            "world_uuid": str(self.world_uuid),
         }
 
         # starting location/items

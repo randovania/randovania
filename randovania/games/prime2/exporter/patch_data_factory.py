@@ -682,7 +682,7 @@ class EchoesPatchDataFactory(PatchDataFactory[EchoesConfiguration, EchoesCosmeti
 
         result["menu_mod"] = self.configuration.menu_mod
         result["dol_patches"] = {
-            "world_uuid": str(self.worlds_config.get_own_uuid()),
+            "world_uuid": str(self.world_uuid),
             "energy_per_tank": self.configuration.energy_per_tank,
             "beam_configuration": self.configuration.beam_configuration.as_json,
             "safe_zone_heal_per_second": self.configuration.safe_zone.heal_per_second,

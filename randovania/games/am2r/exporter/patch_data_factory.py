@@ -272,7 +272,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
             "contains_spoiler": not rdv_meta["in_race_setting"],
             "word_hash": self.description.shareable_word_hash,
             "hash": self.description.shareable_hash,
-            "session_uuid": str(self.worlds_config.get_own_uuid()),
+            "session_uuid": str(self.world_uuid),
             "starting_memo": self._create_starting_popup(self.patches),
         }
         return return_dict
