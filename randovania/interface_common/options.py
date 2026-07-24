@@ -164,7 +164,8 @@ _SERIALIZER_FOR_FIELD = {
 _PER_GAME_SERIALIZERS = {
     "is_game_expanded": Serializer(identity, bool),
     "selected_preset_uuid": Serializer(str, uuid.UUID),
-    "selected_tracker": Serializer(identity, str),
+    "selected_tracker_layout": Serializer(identity, str),
+    "selected_tracker_theme": Serializer(identity, str),
     "preset_order": Serializer(serialize_uuid_list, decode_uuid_list),
 }
 
@@ -496,11 +497,17 @@ class Options:
     def tracker_default_game(self, value: RandovaniaGame | None) -> None:
         self._edit_field("tracker_default_game", value)
 
-    def selected_tracker_for(self, game: RandovaniaGame) -> str:
-        return getattr(self, f"selected_tracker_{game.value}")
+    def selected_tracker_layout_for(self, game: RandovaniaGame) -> str:
+        return getattr(self, f"selected_tracker_layout_{game.value}")
 
-    def set_selected_tracker_for(self, game: RandovaniaGame, value: str) -> None:
-        self._edit_field(f"selected_tracker_{game.value}", value)
+    def set_selected_tracker_layout_for(self, game: RandovaniaGame, value: str) -> None:
+        self._edit_field(f"selected_tracker_layout_{game.value}", value)
+
+    def selected_tracker_theme_for(self, game: RandovaniaGame) -> str:
+        return getattr(self, f"selected_tracker_theme_{game.value}")
+
+    def set_selected_tracker_theme_for(self, game: RandovaniaGame, value: str) -> None:
+        self._edit_field(f"selected_tracker_theme_{game.value}", value)
 
     @property
     def connector_builders(self) -> list[ConnectorBuilderOption]:

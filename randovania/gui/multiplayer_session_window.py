@@ -196,7 +196,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self._multiworld_client = window_manager.multiworld_client
 
         self._options = options
-        self._trackers = load_trackers_configuration(for_solo=False)
+        self._trackers = {
+            game: catalog.as_named_combos() for game, catalog in load_trackers_configuration(for_solo=False).items()
+        }
         self._update_status_lock = asyncio.Lock()
 
         self.users_widget = MultiplayerSessionUsersWidget(options, self._window_manager, self.game_session_api)

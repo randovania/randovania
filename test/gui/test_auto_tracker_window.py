@@ -12,7 +12,7 @@ from randovania.game_connection.builder.dolphin_connector_builder import Dolphin
 from randovania.game_connection.game_connection import ConnectedGameState
 from randovania.gui.item_tracker.auto_tracker_window import AutoTrackerWindow, load_trackers_configuration
 from randovania.gui.item_tracker.item_tracker_widget import ItemTrackerWidget
-from randovania.gui.item_tracker.tracker_assets import TrackerAssetPaths
+from randovania.gui.item_tracker.tracker_assets import TrackerCatalog
 from randovania.network_common.game_connection_status import GameConnectionStatus
 
 
@@ -46,13 +46,10 @@ def test_create_tracker_no_game(skip_qtbot):
 
 
 @pytest.mark.parametrize(
-    ("game", "tracker_name"),
-    [
-        (RandovaniaGame.METROID_PRIME, "Game Art (Standard)"),
-        (RandovaniaGame.METROID_PRIME_ECHOES, "Game Art (Standard)"),
-    ],
+    "game",
+    [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES],
 )
-def test_create_tracker_valid(skip_qtbot, game, tracker_name):
+def test_create_tracker_valid(skip_qtbot, game):
     # Setup
     connection = MagicMock()
     connector = connection.get_connector_for_builder.return_value
@@ -72,12 +69,17 @@ def test_create_tracker_valid(skip_qtbot, game, tracker_name):
     assert window._dummy_tracker is None
     assert window._current_tracker_game == game
 
-    # Select new theme
-    action = next(action for action in window._tracker_actions[game] if action.text() == tracker_name)
-    action.setChecked(True)
-
+    # Layout and theme can be selected independently
+    layout_action = next(action for action in window._layout_actions[game] if action.text() == "8 Lines")
+    layout_action.setChecked(True)
     window.create_tracker()
-    assert window._current_tracker_name == tracker_name
+    assert window._current_tracker_layout == "8 Lines"
+
+    theme_action = next(action for action in window._theme_actions[game] if action.text() == "Pixel Art")
+    theme_action.setChecked(True)
+    window.create_tracker()
+    assert window._current_tracker_theme == "Pixel Art"
+    assert window._current_tracker_layout == "8 Lines"
 
 
 def test_fall_back_to_default_game(skip_qtbot):
@@ -85,7 +87,7 @@ def test_fall_back_to_default_game(skip_qtbot):
     # default game = Prime
     options = MagicMock()
     options.tracker_default_game = RandovaniaGame.METROID_PRIME
-    options.selected_tracker_for.return_value = "Game Art (Standard)"
+    options.selected_tracker_layout_for.return_value = "Standard"
 
     # connected game = Echoes
     connector = MagicMock()
@@ -214,12 +216,13 @@ def test_on_game_state_updated(skip_qtbot, correct_source):
         window.item_tracker.update_state.assert_not_called()
 
 
-def _get_tracker_jsons() -> Iterator[tuple[RandovaniaGame, str, TrackerAssetPaths]]:
-    for game, trackers in load_trackers_configuration(False).items():
-        for name, paths in trackers.items():
-            yield game, name, paths
+def _get_tracker_combos() -> Iterator[tuple[RandovaniaGame, str, str, TrackerCatalog]]:
+    for game, catalog in load_trackers_configuration(False).items():
+        for theme_name, per_layout in catalog.themes.items():
+            for layout_name in per_layout:
+                yield game, layout_name, theme_name, catalog
 
 
-@pytest.mark.parametrize(("game", "name", "paths"), list(_get_tracker_jsons()))
-def test_validate_tracker_json(game: RandovaniaGame, name: str, paths: TrackerAssetPaths):
-    paths.load()
+@pytest.mark.parametrize(("game", "layout_name", "theme_name", "catalog"), list(_get_tracker_combos()))
+def test_validate_tracker_json(game: RandovaniaGame, layout_name: str, theme_name: str, catalog: TrackerCatalog):
+    catalog.resolve(layout_name, theme_name).load()
