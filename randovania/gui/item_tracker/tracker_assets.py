@@ -7,16 +7,30 @@ from randovania.gui.item_tracker.tracker_theme import TrackerTheme
 
 @dataclasses.dataclass(frozen=True)
 class TrackerAssetPaths:
-    """Points at a TrackerStructure file and a TrackerTheme file meant to be used together."""
+    """
+    Points at a TrackerStructure file and a TrackerTheme file meant to be used together, plus
+    the directory the theme's image paths are relative to (that game's own tracker folder,
+    since a theme sourced from a user override lives in a different place than one bundled
+    with the game itself).
+    """
 
     structure: Path
     theme: Path
+    assets_root: Path
 
     def load(self) -> tuple[TrackerStructure, TrackerTheme]:
         structure = TrackerStructure.read_json(self.structure)
         theme = TrackerTheme.read_json(self.theme)
         theme.validate_against(structure)
         return structure, theme
+
+
+@dataclasses.dataclass(frozen=True)
+class ThemeSource:
+    """A theme file plus the directory its image paths are relative to."""
+
+    path: Path
+    assets_root: Path
 
 
 @dataclasses.dataclass(frozen=True)
@@ -29,17 +43,20 @@ class TrackerCatalog:
     """
 
     layouts: dict[str, Path]
-    themes: dict[str, Path]
+    themes: dict[str, ThemeSource]
 
     def theme_names_for(self, layout_name: str) -> list[str]:
         """Themes compatible with the given layout, in catalog order."""
         structure = TrackerStructure.read_json(self.layouts[layout_name])
         return [
-            name for name, path in self.themes.items() if TrackerTheme.read_json(path).is_compatible_with(structure)
+            name
+            for name, source in self.themes.items()
+            if TrackerTheme.read_json(source.path).is_compatible_with(structure)
         ]
 
     def resolve(self, layout_name: str, theme_name: str) -> TrackerAssetPaths:
-        return TrackerAssetPaths(structure=self.layouts[layout_name], theme=self.themes[theme_name])
+        source = self.themes[theme_name]
+        return TrackerAssetPaths(structure=self.layouts[layout_name], theme=source.path, assets_root=source.assets_root)
 
     def as_named_combos(self) -> dict[str, TrackerAssetPaths]:
         """Flatten every valid (layout, theme) pair into a single "Theme (Layout)" name.

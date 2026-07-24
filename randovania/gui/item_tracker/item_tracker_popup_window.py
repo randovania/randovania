@@ -39,7 +39,7 @@ class ItemTrackerPopupWindow(QtWidgets.QWidget):
         assert tracker_paths is not None
 
         self.main_layout.addWidget(self.menu_bar)
-        self.item_tracker = ItemTrackerWidget(*tracker_paths.load())
+        self.item_tracker = ItemTrackerWidget(*tracker_paths.load(), tracker_paths.assets_root)
         self.item_tracker.update_state(Inventory.empty())
         self.main_layout.addWidget(self.item_tracker)
 
@@ -49,7 +49,7 @@ class ItemTrackerPopupWindow(QtWidgets.QWidget):
     def change_tracker_layout(self, paths: TrackerAssetPaths) -> None:
         self.item_tracker.deleteLater()
         current_state = self.item_tracker.current_state
-        self.item_tracker = ItemTrackerWidget(*paths.load())
+        self.item_tracker = ItemTrackerWidget(*paths.load(), paths.assets_root)
         self.item_tracker.update_state(current_state)
         self.main_layout.addWidget(self.item_tracker)
 

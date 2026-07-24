@@ -7,12 +7,11 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtGui, QtWidgets
 
-from randovania import get_data_path
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.inventory import Inventory
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.item_tracker.item_tracker_widget import ItemTrackerWidget
-from randovania.gui.item_tracker.tracker_assets import TrackerCatalog
+from randovania.gui.item_tracker.tracker_assets import ThemeSource, TrackerCatalog
 from randovania.gui.item_tracker.tracker_structure import TrackerStructure
 from randovania.gui.lib import common_qt_lib
 from randovania.interface_common import persistence
@@ -28,36 +27,34 @@ if TYPE_CHECKING:
 
 
 def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, TrackerCatalog]:
-    included_folder = get_data_path().joinpath("gui_assets/tracker")
+    """
+    Each game has its own self-contained tracker directory (its own trackers.json,
+    structures/, themes/, and image assets): one bundled alongside the game itself
+    (RandovaniaGame.data_path/assets/tracker), and optionally one under the user's local data
+    for overrides/customization. Results from both are merged, so a game present in the user
+    folder can add to or override what's included with Randovania.
+    """
     user_folder = persistence.local_data_dir().joinpath("tracker/layout")
 
-    folders = [included_folder]
-    if user_folder.joinpath("trackers.json").is_file():
-        folders.append(user_folder)
-
     layouts: dict[RandovaniaGame, dict[str, typing.Any]] = collections.defaultdict(dict)
-    themes: dict[RandovaniaGame, dict[str, typing.Any]] = collections.defaultdict(dict)
+    themes: dict[RandovaniaGame, dict[str, ThemeSource]] = collections.defaultdict(dict)
 
-    for folder in folders:
-        trackers_config = json_lib.read_dict(folder.joinpath("trackers.json"))
+    for game in RandovaniaGame.all_games():
+        for game_dir in [game.data_path.joinpath("assets", "tracker"), user_folder.joinpath(game.value)]:
+            trackers_json = game_dir.joinpath("trackers.json")
+            if not trackers_json.is_file():
+                continue
 
-        exclude_themes: dict[str, list[str]]
-        if for_solo:
-            exclude_themes = {}
-        else:
-            exclude_themes = typing.cast("dict", trackers_config["solo_only"])
+            game_config = json_lib.read_dict(trackers_json)
+            exclude_themes: list[str] = [] if for_solo else typing.cast("list", game_config["solo_only"])
 
-        all_trackers: dict[str, dict[str, typing.Any]] = typing.cast("dict", trackers_config["trackers"])
-        for game_value, game_config in all_trackers.items():
-            game = RandovaniaGame(game_value)
+            for layout_name, filename in typing.cast("dict", game_config["layouts"]).items():
+                layouts[game][layout_name] = game_dir.joinpath(filename)
 
-            for layout_name, filename in game_config["layouts"].items():
-                layouts[game][layout_name] = folder.joinpath(filename)
-
-            for theme_name, filename in game_config["themes"].items():
-                if theme_name in exclude_themes.get(game_value, []):
+            for theme_name, filename in typing.cast("dict", game_config["themes"]).items():
+                if theme_name in exclude_themes:
                     continue
-                themes[game][theme_name] = folder.joinpath(filename)
+                themes[game][theme_name] = ThemeSource(path=game_dir.joinpath(filename), assets_root=game_dir)
 
     return {
         game: TrackerCatalog(layouts=game_layouts, themes=themes.get(game, {}))
@@ -264,7 +261,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             paths = self.trackers[target_game].resolve(layout_name, theme_name)
             tracker_details, tracker_theme = paths.load()
 
-            self.item_tracker = ItemTrackerWidget(tracker_details, tracker_theme)
+            self.item_tracker = ItemTrackerWidget(tracker_details, tracker_theme, paths.assets_root)
             self.gridLayout.addWidget(self.item_tracker, 0, 0, 1, 1)
             self.item_tracker.update_state(inventory)
 

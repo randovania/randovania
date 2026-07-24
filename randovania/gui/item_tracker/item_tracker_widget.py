@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtGui, QtWidgets
 
-from randovania import get_data_path
 from randovania.game_description import default_database
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory
@@ -24,6 +23,8 @@ from randovania.gui.lib.pixmap_lib import paint_with_opacity
 from randovania.gui.widgets.tracker_item_image import TrackerItemImage
 
 if TYPE_CHECKING:
+    from pathlib import Path
+
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 
@@ -64,6 +65,7 @@ class ImageElementView(TrackerElementView):
         element: ImageTrackerElement,
         theme: TrackerTheme,
         resources: list[ItemResourceInfo],
+        assets_root: Path,
     ) -> None:
         self.element = element
         self.resources = resources
@@ -73,7 +75,7 @@ class ImageElementView(TrackerElementView):
 
         def get_image(path: str, invert_opacity: bool = False) -> TrackerItemImage:
             nonlocal visible
-            image_path = get_data_path().joinpath(path)
+            image_path = assets_root.joinpath(path)
             if not image_path.exists():
                 logging.error("Tracker asset not found: %s", image_path)
             pixmap = QtGui.QPixmap(str(image_path))
@@ -206,9 +208,10 @@ def _build_element_view(
     element: TrackerElement,
     theme: TrackerTheme,
     resources: list[ItemResourceInfo],
+    assets_root: Path,
 ) -> TrackerElementView:
     if isinstance(element, ImageTrackerElement):
-        return ImageElementView(parent, element, theme, resources)
+        return ImageElementView(parent, element, theme, resources, assets_root)
     elif isinstance(element, LabelTrackerElement):
         return LabelElementView(parent, element, theme, resources)
     elif isinstance(element, ProgressBarTrackerElement):
@@ -221,7 +224,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
     give_item_signal = QtCore.Signal(PickupEntry)
     current_state: Inventory
 
-    def __init__(self, structure: TrackerStructure, theme: TrackerTheme) -> None:
+    def __init__(self, structure: TrackerStructure, theme: TrackerTheme, assets_root: Path) -> None:
         super().__init__()
         self._layout = QtWidgets.QGridLayout(self)
         self.structure = structure
@@ -238,7 +241,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                 for resource_name in element.resources
             ]
 
-            view = _build_element_view(self, element, theme, resources)
+            view = _build_element_view(self, element, theme, resources, assets_root)
             self.tracker_elements.append(view)
 
             for widget in view.widgets:
