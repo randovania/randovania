@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Merged event nodes for breaking the floor in Gravity Suit Tower, decluttering the room and helping the generator see when it is safe to complete the sequence.
 - Changed: Added connection back to the Early Gravity Blob in the Gravity Suit Tower to help the generator see when it is safe to complete the breakable floor sequence.
-- Changed: The dangerous logic surrounding the water underneath Drogyga in terms of getting up the left left ledge and across to the right ledge is now waived. Logically by construction, if the water is there then Drogyga has been defeated, which requires Grapple Beam, which is a solution to the connections that are changed.
+- Changed: The dangerous logic surrounding the water underneath Drogyga in terms of getting up the left ledge and across to the right ledge is now waived. Logically by construction, if the water is there then Drogyga has been defeated, which requires Grapple Beam, which is a solution to the connections that are changed.
 
 ##### Cataris
 
