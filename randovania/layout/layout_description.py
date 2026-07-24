@@ -293,7 +293,8 @@ class LayoutDescription:
     def seed_uuid(self) -> uuid.UUID:
         """A UUID deterministically derived from the seed, for games that need a stable
         per-seed instance identifier even when not played as part of a multiworld session."""
-        return uuid.UUID(bytes=hashlib.blake2b(self.shareable_hash_bytes, digest_size=16).digest())
+        bytes_representation = json.dumps(self._serialized_patches).encode()
+        return uuid.UUID(bytes=hashlib.blake2b(bytes_representation, digest_size=16).digest())
 
     @property
     def shareable_word_hash(self) -> str:
