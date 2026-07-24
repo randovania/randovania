@@ -25,37 +25,45 @@ class LabelThemeElement(BaseModel):
 
 class TrackerTheme(BaseModel):
     """
-    The visual definition paired with a TrackerStructure: which images to show for each
-    image element, and which text/style to use for each label element. Keyed by the
-    element's index in TrackerStructure.elements, so a single theme is only meaningful
-    together with the specific structure it was authored against (see validate_against).
+    The visual definition that can be paired with any TrackerStructure that needs it: which
+    images to show for each named image element, and which text/style to use for each named
+    label element. Keyed by the element's `name` rather than its position, so the same theme
+    applies to every layout that happens to contain a given name (see is_compatible_with) -
+    nothing here is tied to one specific structure's shape.
     """
 
-    images: dict[int, ImageThemeElement] = Field(default_factory=dict)
-    labels: dict[int, LabelThemeElement] = Field(default_factory=dict)
+    images: dict[str, ImageThemeElement] = Field(default_factory=dict)
+    labels: dict[str, LabelThemeElement] = Field(default_factory=dict)
 
     @classmethod
     def read_json(cls, path: Path) -> Self:
         return cls.model_validate(json_lib.read_dict(path))
 
     def validate_against(self, structure: TrackerStructure) -> None:
-        for index, element in enumerate(structure.elements):
+        for element in structure.elements:
             if element.kind == ElementKind.IMAGE:
-                image = self.images.get(index)
+                image = self.images.get(element.name)
                 if image is None:
-                    raise ValueError(f"Theme is missing an image for element {index} ({element.resources})")
+                    raise ValueError(f"Theme is missing an image named {element.name!r}")
                 if len(image.image_paths) > 1 and len(image.image_paths) != len(element.resources):
                     raise ValueError(
-                        f"Element {index} has {len(image.image_paths)} progressive images, "
+                        f"{element.name!r} has {len(image.image_paths)} progressive images, "
                         f"but has {len(element.resources)} resources ({element.resources})"
                     )
 
             elif element.kind == ElementKind.LABEL:
-                if index not in self.labels:
-                    raise ValueError(f"Theme is missing a label for element {index} ({element.resources})")
+                if element.name not in self.labels:
+                    raise ValueError(f"Theme is missing a label named {element.name!r}")
 
-    def image_for(self, index: int) -> ImageThemeElement:
-        return self.images[index]
+    def is_compatible_with(self, structure: TrackerStructure) -> bool:
+        try:
+            self.validate_against(structure)
+        except ValueError:
+            return False
+        return True
 
-    def label_for(self, index: int) -> LabelThemeElement:
-        return self.labels[index]
+    def image_for(self, name: str) -> ImageThemeElement:
+        return self.images[name]
+
+    def label_for(self, name: str) -> LabelThemeElement:
+        return self.labels[name]

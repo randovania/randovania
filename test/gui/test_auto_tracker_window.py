@@ -218,8 +218,8 @@ def test_on_game_state_updated(skip_qtbot, correct_source):
 
 def _get_tracker_combos() -> Iterator[tuple[RandovaniaGame, str, str, TrackerCatalog]]:
     for game, catalog in load_trackers_configuration(False).items():
-        for theme_name, per_layout in catalog.themes.items():
-            for layout_name in per_layout:
+        for layout_name in catalog.layouts:
+            for theme_name in catalog.theme_names_for(layout_name):
                 yield game, layout_name, theme_name, catalog
 
 

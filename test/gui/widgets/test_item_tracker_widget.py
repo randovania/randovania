@@ -15,42 +15,49 @@ def item_tracker_widget(skip_qtbot):
             "game": "prime2",
             "elements": [
                 {
+                    "name": "Dark Suit + Light Suit",
                     "row": 0,
                     "column": 0,
                     "resources": ["Dark Suit", "Light Suit"],
                     "kind": "image",
                 },
                 {
+                    "name": "Combat Visor",
                     "row": 2,
                     "column": 0,
                     "resources": ["Combat Visor"],
                     "kind": "image",
                 },
                 {
+                    "name": "Scan Visor",
                     "row": 2,
                     "column": 1,
                     "resources": ["Scan Visor"],
                     "kind": "image",
                 },
                 {
+                    "name": "Dark Visor",
                     "row": 2,
                     "column": 2,
                     "resources": ["Dark Visor"],
                     "kind": "image",
                 },
                 {
+                    "name": "Echo Visor",
                     "row": 2,
                     "column": 3,
                     "resources": ["Echo Visor"],
                     "kind": "image",
                 },
                 {
+                    "name": "Sky Temple Key",
                     "row": 4,
                     "column": 4,
                     "resources": [],
                     "kind": "image",
                 },
                 {
+                    "name": "Sky Temple Key Count",
                     "row": 5,
                     "column": 4,
                     "resources": [
@@ -72,20 +79,20 @@ def item_tracker_widget(skip_qtbot):
     theme = TrackerTheme.model_validate(
         {
             "images": {
-                "0": {
+                "Dark Suit + Light Suit": {
                     "image_path": [
                         "gui_assets/tracker/game-images/mp2/dark_suit.gif",
                         "gui_assets/tracker/game-images/mp2/light_suit.gif",
                     ],
                 },
-                "1": {"image_path": "gui_assets/tracker/game-images/mp2/combat_visor.gif"},
-                "2": {"image_path": "gui_assets/tracker/game-images/mp2/scan_visor.gif"},
-                "3": {"image_path": "gui_assets/tracker/game-images/mp2/dark_visor.gif"},
-                "4": {"image_path": "gui_assets/tracker/game-images/mp2/echo_visor.gif"},
-                "5": {"image_path": "gui_assets/tracker/game-images/mp2/sky_temple_key.gif"},
+                "Combat Visor": {"image_path": "gui_assets/tracker/game-images/mp2/combat_visor.gif"},
+                "Scan Visor": {"image_path": "gui_assets/tracker/game-images/mp2/scan_visor.gif"},
+                "Dark Visor": {"image_path": "gui_assets/tracker/game-images/mp2/dark_visor.gif"},
+                "Echo Visor": {"image_path": "gui_assets/tracker/game-images/mp2/echo_visor.gif"},
+                "Sky Temple Key": {"image_path": "gui_assets/tracker/game-images/mp2/sky_temple_key.gif"},
             },
             "labels": {
-                "6": {"text": "x {amount}/{max_capacity}"},
+                "Sky Temple Key Count": {"text": "x {amount}/{max_capacity}"},
             },
         }
     )

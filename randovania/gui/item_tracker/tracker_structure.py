@@ -28,6 +28,7 @@ class BaseTrackerElement(BaseModel):
     depends on which theme (image set) is currently in use.
     """
 
+    name: str
     row: int
     column: int
     resources: list[str]

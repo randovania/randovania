@@ -63,13 +63,12 @@ class ImageElementView(TrackerElementView):
         parent: QtWidgets.QWidget,
         element: ImageTrackerElement,
         theme: TrackerTheme,
-        index: int,
         resources: list[ItemResourceInfo],
     ) -> None:
         self.element = element
         self.resources = resources
 
-        image_theme = theme.image_for(index)
+        image_theme = theme.image_for(element.name)
         visible = True
 
         def get_image(path: str, invert_opacity: bool = False) -> TrackerItemImage:
@@ -153,11 +152,11 @@ class LabelElementView(TrackerElementView):
     def __init__(
         self,
         parent: QtWidgets.QWidget,
+        element: LabelTrackerElement,
         theme: TrackerTheme,
-        index: int,
         resources: list[ItemResourceInfo],
     ) -> None:
-        label_theme = theme.label_for(index)
+        label_theme = theme.label_for(element.name)
 
         label = QtWidgets.QLabel(parent)
         label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
@@ -206,13 +205,12 @@ def _build_element_view(
     parent: QtWidgets.QWidget,
     element: TrackerElement,
     theme: TrackerTheme,
-    index: int,
     resources: list[ItemResourceInfo],
 ) -> TrackerElementView:
     if isinstance(element, ImageTrackerElement):
-        return ImageElementView(parent, element, theme, index, resources)
+        return ImageElementView(parent, element, theme, resources)
     elif isinstance(element, LabelTrackerElement):
-        return LabelElementView(parent, theme, index, resources)
+        return LabelElementView(parent, element, theme, resources)
     elif isinstance(element, ProgressBarTrackerElement):
         return ProgressBarElementView(parent, resources)
     else:
@@ -234,13 +232,13 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
         resource_database = default_database.resource_database_for(structure.game)
         self.resource_database = resource_database
 
-        for index, element in enumerate(structure.elements):
+        for element in structure.elements:
             resources = [
                 find_resource_info_with_long_name(resource_database.item, resource_name)
                 for resource_name in element.resources
             ]
 
-            view = _build_element_view(self, element, theme, index, resources)
+            view = _build_element_view(self, element, theme, resources)
             self.tracker_elements.append(view)
 
             for widget in view.widgets:

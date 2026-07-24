@@ -36,7 +36,7 @@ def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, TrackerC
         folders.append(user_folder)
 
     layouts: dict[RandovaniaGame, dict[str, typing.Any]] = collections.defaultdict(dict)
-    themes: dict[RandovaniaGame, dict[str, dict[str, typing.Any]]] = collections.defaultdict(dict)
+    themes: dict[RandovaniaGame, dict[str, typing.Any]] = collections.defaultdict(dict)
 
     for folder in folders:
         trackers_config = json_lib.read_dict(folder.joinpath("trackers.json"))
@@ -54,13 +54,10 @@ def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, TrackerC
             for layout_name, filename in game_config["layouts"].items():
                 layouts[game][layout_name] = folder.joinpath(filename)
 
-            for theme_name, per_layout in game_config["themes"].items():
+            for theme_name, filename in game_config["themes"].items():
                 if theme_name in exclude_themes.get(game_value, []):
                     continue
-
-                theme_paths = themes[game].setdefault(theme_name, {})
-                for layout_name, filename in per_layout.items():
-                    theme_paths[layout_name] = folder.joinpath(filename)
+                themes[game][theme_name] = folder.joinpath(filename)
 
     return {
         game: TrackerCatalog(layouts=game_layouts, themes=themes.get(game, {}))
