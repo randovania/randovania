@@ -1097,13 +1097,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             "randEnemyAttributes": (
                 self.configuration.enemy_attributes.as_json if self.configuration.enemy_attributes is not None else None
             ),
-            "uuid": list(
-                (
-                    self.worlds_config.get_own_uuid()
-                    if self.worlds_config.is_multiworld
-                    else self.description.seed_uuid
-                ).bytes,
-            ),
+            "uuid": list(self.world_uuid.bytes),
         }
 
         if starting_memo:
