@@ -76,6 +76,7 @@ class PickupGeneratorParams:
     probability_multiplier: float = 1.0
     required_progression: int = 0
     index_age_impact: float = 1.0  # By how much the PickupIndex's age is incremented when this pickup is placed
+    batch_placement: bool = False
 
 
 @dataclass(frozen=True)
