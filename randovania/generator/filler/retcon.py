@@ -29,6 +29,10 @@ if TYPE_CHECKING:
     from randovania.generator.generator_reach import GeneratorReach
 
 
+def _index_age_weight(age: float) -> float:
+    return min(10.0, age + 1.0) ** -2
+
+
 def _calculate_uncollected_index_weights(
     uncollected_indices: Set[PickupIndex],
     assigned_indices: Set[PickupIndex],
@@ -49,11 +53,30 @@ def _calculate_uncollected_index_weights(
         weight_from_collected_indices = math.sqrt(len(indices) / ((1 + len(assigned_indices & indices)) ** 2))
 
         for index in sorted(uncollected_indices & indices):
-            weight_from_index_age = min(10.0, index_age[index] + 1.0) ** -2
-            result[index] = weight_from_collected_indices * weight_from_index_age
-            # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_index_age}")
+            result[index] = weight_from_collected_indices * _index_age_weight(index_age[index])
 
     return result
+
+
+def _pickup_unlocks_nothing(player_state: PlayerState, pickup: PickupEntry) -> bool:
+    reach = copy.deepcopy(player_state.reach)
+    before = reach.set_of_reachable_node_indices()
+    reach.advance_to(reach.state.assign_pickup_resources(pickup), is_safe=True)
+    after = reach_lib.advance_after_action(reach).set_of_reachable_node_indices()
+    return not (after - before)
+
+
+def _ignore_index_age_for_inert_pickup(
+    locations: WeightedLocations, player_state: PlayerState, pickup: PickupEntry
+) -> WeightedLocations:
+    """
+    Cancels the index age term for pickups that unlock nothing, so they spread out instead of
+    piling onto the lone freshest location. Other pickups pass through unchanged.
+    """
+    if not _pickup_unlocks_nothing(player_state, pickup):
+        return locations
+
+    return locations.rescale(lambda player, index: 1 / _index_age_weight(player.pickup_index_ages[index]))
 
 
 def _get_next_player(
@@ -403,6 +426,7 @@ def _assign_pickup_somewhere(
         if debug.debug_level() > debug.LogLevel.HIGH:
             debug_print_weighted_locations(all_locations, player_states)
 
+        usable_locations = _ignore_index_age_for_inert_pickup(usable_locations, current_player, action)
         index_owner_state, pickup_index = usable_locations.select_location(rng)
         index_owner_state.assign_pickup(
             pickup_index,
