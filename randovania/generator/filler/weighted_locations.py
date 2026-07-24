@@ -7,7 +7,7 @@ from randovania.layout.base.available_locations import RandomizationMode
 from randovania.lib import random_lib
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Callable, Iterator
     from random import Random
 
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -72,6 +72,15 @@ class WeightedLocations:
         for player, locations in self._items:
             for index, weight in locations.items():
                 yield player, index, weight
+
+    def rescale(self, factor: Callable[[PlayerState, PickupIndex], float]) -> WeightedLocations:
+        """Returns a copy with every weight multiplied by factor(player, index)."""
+        return WeightedLocations(
+            [
+                (player, {index: weight * factor(player, index) for index, weight in locations.items()})
+                for player, locations in self._items
+            ]
+        )
 
     def select_location(self, rng: Random) -> tuple[PlayerState, PickupIndex]:
         return random_lib.select_element_with_weight(
