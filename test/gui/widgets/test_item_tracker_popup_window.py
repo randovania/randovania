@@ -25,8 +25,8 @@ def test_change_tracker_layout(skip_qtbot, mocker: pytest_mock.MockerFixture, tm
     mocker.patch.object(TrackerAssetPaths, "load", side_effect=[(1, 2), (3, 4)])
     on_close = MagicMock()
 
-    paths_a = TrackerAssetPaths(tmp_path.joinpath("a-structure.json"), tmp_path.joinpath("a-theme.json"))
-    paths_b = TrackerAssetPaths(tmp_path.joinpath("b-structure.json"), tmp_path.joinpath("b-theme.json"))
+    paths_a = TrackerAssetPaths(tmp_path.joinpath("a-structure.json"), tmp_path.joinpath("a-theme.json"), tmp_path)
+    paths_b = TrackerAssetPaths(tmp_path.joinpath("b-structure.json"), tmp_path.joinpath("b-theme.json"), tmp_path)
 
     trackers = {
         "ThemeA": paths_a,
@@ -35,11 +35,11 @@ def test_change_tracker_layout(skip_qtbot, mocker: pytest_mock.MockerFixture, tm
     popup = ItemTrackerPopupWindow("Hello", trackers, on_close)
     skip_qtbot.addWidget(popup)
 
-    mock_tracker.assert_called_once_with(1, 2)
+    mock_tracker.assert_called_once_with(1, 2, tmp_path)
     result.update_state.assert_called_once_with(Inventory.empty())
 
     popup._on_select_theme(paths_b)
-    mock_tracker.assert_called_with(3, 4)
+    mock_tracker.assert_called_with(3, 4, tmp_path)
     result.update_state.assert_called_with([5, 7])
 
     popup.close()

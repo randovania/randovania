@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
@@ -81,22 +83,22 @@ def item_tracker_widget(skip_qtbot):
             "images": {
                 "Dark Suit + Light Suit": {
                     "image_path": [
-                        "gui_assets/tracker/game-images/mp2/dark_suit.gif",
-                        "gui_assets/tracker/game-images/mp2/light_suit.gif",
+                        "game-images/mp2/dark_suit.gif",
+                        "game-images/mp2/light_suit.gif",
                     ],
                 },
-                "Combat Visor": {"image_path": "gui_assets/tracker/game-images/mp2/combat_visor.gif"},
-                "Scan Visor": {"image_path": "gui_assets/tracker/game-images/mp2/scan_visor.gif"},
-                "Dark Visor": {"image_path": "gui_assets/tracker/game-images/mp2/dark_visor.gif"},
-                "Echo Visor": {"image_path": "gui_assets/tracker/game-images/mp2/echo_visor.gif"},
-                "Sky Temple Key": {"image_path": "gui_assets/tracker/game-images/mp2/sky_temple_key.gif"},
+                "Combat Visor": {"image_path": "game-images/mp2/combat_visor.gif"},
+                "Scan Visor": {"image_path": "game-images/mp2/scan_visor.gif"},
+                "Dark Visor": {"image_path": "game-images/mp2/dark_visor.gif"},
+                "Echo Visor": {"image_path": "game-images/mp2/echo_visor.gif"},
+                "Sky Temple Key": {"image_path": "game-images/mp2/sky_temple_key.gif"},
             },
             "labels": {
                 "Sky Temple Key Count": {"text": "x {amount}/{max_capacity}"},
             },
         }
     )
-    widget = ItemTrackerWidget(structure, theme)
+    widget = ItemTrackerWidget(structure, theme, Path())
     skip_qtbot.addWidget(widget)
     return widget
 
