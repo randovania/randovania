@@ -12,7 +12,8 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.inventory import Inventory
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.item_tracker.item_tracker_widget import ItemTrackerWidget
-from randovania.gui.item_tracker.tracker_layout import TrackerLayout
+from randovania.gui.item_tracker.tracker_assets import TrackerAssetPaths
+from randovania.gui.item_tracker.tracker_structure import TrackerStructure
 from randovania.gui.lib import common_qt_lib
 from randovania.interface_common import persistence
 from randovania.lib import json_lib
@@ -28,7 +29,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, dict[str, Path]]:
+def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, dict[str, TrackerAssetPaths]]:
     included_folder = get_data_path().joinpath("gui_assets/tracker")
     user_folder = persistence.local_data_dir().joinpath("tracker/layout")
 
@@ -36,7 +37,7 @@ def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, dict[str
     if user_folder.joinpath("trackers.json").is_file():
         folders.append(user_folder)
 
-    result: dict[RandovaniaGame, dict[str, Path]] = {}
+    result: dict[RandovaniaGame, dict[str, TrackerAssetPaths]] = {}
 
     for folder in folders:
         trackers_config = json_lib.read_dict(folder.joinpath("trackers.json"))
@@ -47,27 +48,30 @@ def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, dict[str
         else:
             exclude_trackers = typing.cast("dict", trackers_config["solo_only"])
 
-        all_trackers: dict[str, dict[str, str]] = typing.cast("dict", trackers_config["trackers"])
+        all_trackers: dict[str, dict[str, dict[str, str]]] = typing.cast("dict", trackers_config["trackers"])
         for game_value, trackers in all_trackers.items():
             game = RandovaniaGame(game_value)
             if game not in result:
                 result[game] = {}
 
-            for name, file_name in trackers.items():
+            for name, paths in trackers.items():
                 if name not in exclude_trackers.get(game_value, []):
-                    result[game][name] = folder.joinpath(file_name)
+                    result[game][name] = TrackerAssetPaths(
+                        structure=folder.joinpath(paths["structure"]),
+                        theme=folder.joinpath(paths["theme"]),
+                    )
 
     return result
 
 
 class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
-    trackers: dict[RandovaniaGame, dict[str, Path]]
+    trackers: dict[RandovaniaGame, dict[str, TrackerAssetPaths]]
     _tracker_actions: dict[RandovaniaGame, list[QtGui.QAction]]
     _full_name_to_path: dict[str, Path]
     _connected_game: RandovaniaGame | None = None
     _current_tracker_game: RandovaniaGame | None = None
     _current_tracker_name: str | None = None
-    _current_tracker_details: TrackerLayout | None = None
+    _current_tracker_details: TrackerStructure | None = None
     item_tracker: ItemTrackerWidget | None = None
     _dummy_tracker: QtWidgets.QLabel | None = None
     _last_source: RemoteConnector | None = None
@@ -207,9 +211,9 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             self.gridLayout.addWidget(self._dummy_tracker, 0, 0, 1, 1)
             tracker_details = None
         else:
-            tracker_details = TrackerLayout.read_json(self.trackers[target_game][tracker_name])
+            tracker_details, tracker_theme = self.trackers[target_game][tracker_name].load()
 
-            self.item_tracker = ItemTrackerWidget(tracker_details)
+            self.item_tracker = ItemTrackerWidget(tracker_details, tracker_theme)
             self.gridLayout.addWidget(self.item_tracker, 0, 0, 1, 1)
             self.item_tracker.update_state(inventory)
 
