@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import subprocess
 import sys
 from argparse import Namespace
@@ -18,6 +19,7 @@ def _run_acceptance_tests(*extra_args: str) -> int:
 
 
 def update_committed_command_logic(args: Namespace) -> int:
+    from randovania.cli.commands.expected_seed_hash import update_expected_seed_hash_logic
     from randovania.cli.database import refresh_game_description_logic, refresh_pickup_database_logic
 
     refresh_args = Namespace(game=None, integrity_check=False)
@@ -31,6 +33,9 @@ def update_committed_command_logic(args: Namespace) -> int:
     # Omitted because migrating every committed preset to the latest schema is a large diff of its own.
     # Run `randovania development refresh-presets` when that migration is what you actually want.
     # refresh_presets_command_logic(refresh_args)
+
+    print("Updating the expected seed hash of all games...", flush=True)
+    asyncio.run(update_expected_seed_hash_logic(Namespace(games=[])))
 
     print("Rewriting the reference files of all acceptance tests...", flush=True)
     if _run_acceptance_tests("--update-committed") != 0:
