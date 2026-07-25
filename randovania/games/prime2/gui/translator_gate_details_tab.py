@@ -17,7 +17,7 @@ from randovania.lib.container_lib import iterate_key_sorted
 if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 class TranslatorGateDetailsTab(GameDetailsTab[EchoesConfiguration | EchoesOPRConfiguration]):
@@ -34,8 +34,8 @@ class TranslatorGateDetailsTab(GameDetailsTab[EchoesConfiguration | EchoesOPRCon
     def update_content(
         self,
         configuration: EchoesConfiguration | EchoesOPRConfiguration,
-        all_patches: dict[int, GamePatches],
-        players: PlayersConfiguration,
+        all_patches: list[GamePatches],
+        players: WorldsConfiguration,
     ) -> None:
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(2)
@@ -43,7 +43,7 @@ class TranslatorGateDetailsTab(GameDetailsTab[EchoesConfiguration | EchoesOPRCon
 
         game = filtered_database.game_description_for_layout(configuration)
         region_list = game.region_list
-        patches = all_patches[players.player_index]
+        patches = all_patches[players.world_index]
 
         gate_index_to_name, identifier_to_gate = gate_data(game)
         resource_db = game.resource_database

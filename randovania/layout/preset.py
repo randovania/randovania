@@ -62,7 +62,12 @@ class Preset[BaseConfigurationT: BaseConfiguration](BitPackValue):
         manager: PresetManager = metadata["manager"]
 
         reference = manager.reference_preset_for_game(self.game).get_preset()
-        yield from self.configuration.bit_pack_encode({"reference": reference.configuration})
+        yield from self.configuration.bit_pack_encode(
+            {
+                "game": self.game,
+                "reference": reference.configuration,
+            }
+        )
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
@@ -76,7 +81,13 @@ class Preset[BaseConfigurationT: BaseConfiguration](BitPackValue):
             description="A customized preset.",
             uuid=uuid_module.uuid4(),
             game=reference.game,
-            configuration=reference.configuration.bit_pack_unpack(decoder, {"reference": reference.configuration}),
+            configuration=reference.configuration.bit_pack_unpack(
+                decoder,
+                {
+                    "game": game,
+                    "reference": reference.configuration,
+                },
+            ),
         )
 
     def fork(self) -> Self:

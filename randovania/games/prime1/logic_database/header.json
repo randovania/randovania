@@ -1,5 +1,5 @@
 {
-    "schema_version": 33,
+    "schema_version": 34,
     "game": "prime1",
     "resource_database": {
         "items": {
@@ -2000,7 +2000,7 @@
             ]
         }
     },
-    "dock_weakness_database": {
+    "dock_type_database": {
         "types": {
             "door": {
                 "name": "Door",
@@ -2014,7 +2014,8 @@
                             "type": "template",
                             "data": "Open Normal Door"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Normal Door (Forced)": {
                         "extra": {
@@ -2024,7 +2025,8 @@
                             "type": "template",
                             "data": "Open Normal Door"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Ice Door": {
                         "extra": {
@@ -2034,7 +2036,8 @@
                             "type": "template",
                             "data": "Shoot Ice Beam"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Wave Door": {
                         "extra": {
@@ -2044,7 +2047,8 @@
                             "type": "template",
                             "data": "Shoot Wave Beam"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Plasma Door": {
                         "extra": {
@@ -2054,7 +2058,8 @@
                             "type": "template",
                             "data": "Shoot Plasma Beam"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Power Beam Only Door": {
                         "extra": {
@@ -2064,7 +2069,8 @@
                             "type": "template",
                             "data": "Shoot Power Beam"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Missile Blast Shield": {
                         "extra": {},
@@ -2098,7 +2104,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Missile Blast Shield (randomprime)": {
                         "extra": {
@@ -2136,7 +2143,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Permanently Locked": {
                         "extra": {
@@ -2149,7 +2157,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": true
                     },
                     "Circular Door": {
                         "extra": {},
@@ -2157,7 +2166,8 @@
                             "type": "template",
                             "data": "Open Normal Door"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Square Door": {
                         "extra": {},
@@ -2168,7 +2178,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Super Missile Blast Shield": {
                         "extra": {
@@ -2185,7 +2196,8 @@
                                 "type": "template",
                                 "data": "Shoot Super Missile"
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Power Bomb Blast Shield": {
                         "extra": {
@@ -2224,7 +2236,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Wavebuster Blast Shield": {
                         "extra": {
@@ -2276,7 +2289,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Ice Spreader Blast Shield": {
                         "extra": {
@@ -2328,7 +2342,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Flamethrower Blast Shield": {
                         "extra": {
@@ -2380,7 +2395,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Charge Beam Blast Shield": {
                         "extra": {
@@ -2414,7 +2430,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Bomb Blast Shield": {
                         "extra": {
@@ -2457,10 +2474,11 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": {
+                "weakness_distributor": {
                     "unlocked": "Normal Door",
                     "locked": "Permanently Locked",
                     "change_from": [
@@ -2485,7 +2503,11 @@
                         "Super Missile Blast Shield",
                         "Wave Door",
                         "Wavebuster Blast Shield"
-                    ]
+                    ],
+                    "force_change_two_way": false,
+                    "resolver_attempts": 125,
+                    "to_shuffle_proportion": 1.0,
+                    "ui_label": "Door Locks"
                 }
             },
             "morph_ball": {
@@ -2511,10 +2533,11 @@
                                 ]
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "other": {
                 "name": "Dock",
@@ -2529,7 +2552,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Closed Passage": {
                         "extra": {},
@@ -2540,7 +2564,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Not Determined": {
                         "extra": {},
@@ -2551,10 +2576,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "teleporter": {
                 "name": "Teleporter",
@@ -2572,7 +2598,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Frigate Ship Teleporter": {
                         "extra": {},
@@ -2593,7 +2620,8 @@
                                 ]
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Artifact Temple Teleporter": {
                         "extra": {},
@@ -2614,20 +2642,16 @@
                                 ]
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             }
         },
         "default_weakness": {
             "type": "other",
             "name": "Not Determined"
-        },
-        "dock_rando": {
-            "force_change_two_way": false,
-            "resolver_attempts": 125,
-            "to_shuffle_proportion": 1.0
         }
     },
     "hint_feature_database": {},

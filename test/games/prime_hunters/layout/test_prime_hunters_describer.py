@@ -35,7 +35,7 @@ def test_hunters_format_params(octoliths) -> None:
     # Assert
     assert dict(result) == {
         "Logic Settings": ["All tricks disabled"],
-        "Pickup Pool": [f"Size: {58 + octoliths.placed_octoliths} of 66", "Unmodified starting pickup"],
+        "Pickup Pool": [f"Size: {82 + octoliths.placed_octoliths} of 90", "Unmodified starting pickup"],
         "Gameplay": [
             "Starts at Celestial Archives - Celestial Gateway",
             "Force Fields: Vanilla",

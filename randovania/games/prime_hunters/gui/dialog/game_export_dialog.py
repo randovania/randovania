@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import dataclasses
-import hashlib
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -23,16 +22,12 @@ from randovania.gui.dialog.game_export_dialog import (
 if TYPE_CHECKING:
     from randovania.interface_common.options import Options, PerGameOptions
 
-# Expected MD5 hashes for vanilla "Metroid Prime Hunters.NDS" based on region
-EXPECTED_MD5_HASHES: list[str] = [
-    "b4c8a9398866b49c7be17d75736a223b",  # USA Rev0
-    "9fe5f1eb1eb9dc5d90130408f813b39e",  # USA Rev1
-    "be93b7aaaba93bafa37324fd7156c817",  # USA Rev1 (Wii U VC)
-    "c71a2d5fd41727c31f1619fb3085d4df",  # Europe Rev0
-    "378297159f176802e27384e18e33a1c4",  # Europe Rev1
-    "94b27d06db53519b2def908bdf80e201",  # Europe Rev1 (Wii U VC)
-    # "42850a19d7be2ee5e067df6984aa900e",  # Japan Rev0
-    # "4f04529f79564020a56e187b8f9865c3",  # Korea Rev0
+# Expected rom header data for vanilla "Metroid Prime Hunters.NDS" based on region
+EXPECTED_ROM_HEADER_DATA: list[bytes] = [
+    b"MP HUNTERS\x00\x00AMHE",  # USA Rev0/Rev1
+    b"MP HUNTERS\x00\x00AMHP",  # Europe Rev0/Rev1
+    # b"MP HUNTERS\x00\x00AMHJ",  # Japan Rev0
+    # b"MP HUNTERS\x00\x00AMHK",  # Korea Rev0
 ]
 
 
@@ -47,13 +42,12 @@ def is_hunters_validator(path: Path | None) -> bool:
     assert path is not None
     try:
         with path.open("rb") as file:
-            data = file.read()
-            md5_returned = hashlib.md5(data).hexdigest()
+            rom_header_data = file.read(16)
     except Exception:
         # If any error during opening happens, suppress that and pretend its invalid,
         # as otherwise it would cause the dialog to be inaccessible.
         return True
-    if md5_returned in EXPECTED_MD5_HASHES:
+    if rom_header_data in EXPECTED_ROM_HEADER_DATA:
         return False
     else:
         return True

@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 from typing import TYPE_CHECKING
 
+from randovania.game_description import trick_documentation
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import SpecificLocationHintNode, SpecificPickupHintNode
@@ -14,13 +15,14 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.trick_documentation import TrickUsageState
 
 if TYPE_CHECKING:
     from collections.abc import Iterator, Mapping
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
-    from randovania.game_description.db.dock import DockType, DockWeakness
+    from randovania.game_description.db.dock import DockType, DockTypeDatabase, DockWeakness
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
@@ -144,6 +146,12 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
 
         if other_node is not None:
             if isinstance(other_node, DockNode):
+                if set(other_node.layers) != set(node.layers):
+                    yield (
+                        f"{node.name} has layers {sorted(node.layers)}, but connected dock "
+                        f"'{node.default_connection}' has layers {sorted(other_node.layers)}."
+                    )
+
                 if other_node.default_connection != node.identifier:
                     yield (
                         f"{node.name} connects to '{node.default_connection}', but that dock connects "
@@ -151,8 +159,7 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
                     )
 
     elif any(
-        re.match(rf"{dock_type.long_name}\s*(to|from)", node.name)
-        for dock_type in game.dock_weakness_database.dock_types
+        re.match(rf"{dock_type.long_name}\s*(to|from)", node.name) for dock_type in game.dock_type_database.dock_types
     ):
         yield f"{node.name} is not a Dock Node, naming suggests it should be."
 
@@ -187,6 +194,9 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
             yield f"{area.name} - '{node.name}': Node has paths in, but no connections out."
 
     yield from check_for_unnormalized_hint_features(area)
+
+    if game.game.data.reject_undocumented_tricks_in_database:
+        yield from find_undocumented_tricks(area)
 
 
 def find_region_errors(game: GameDescription, region: Region) -> Iterator[str]:
@@ -296,6 +306,18 @@ def find_duplicated_pickup_index(region_list: RegionList) -> Iterator[str]:
             known_indices[node.pickup_index] = name
 
 
+def find_inconsistent_dock_configuration(dock_db: DockTypeDatabase) -> Iterator[str]:
+
+    for dock_type in dock_db.dock_types:
+        if dock_type.weakness_distributor is not None:
+            locked = dock_type.weakness_distributor.locked
+            if not locked.unsafe_target_in_distributor_wtw:
+                yield (
+                    f"{dock_type.short_name} - {locked.name}: Configured as the disabled weakness, "
+                    f"but unsafe_target_in_distributor_wtw is not set"
+                )
+
+
 def _needed_resources_partly_satisfied(
     req: Requirement,
     resources: tuple[str, tuple[str, ...]],
@@ -337,8 +359,8 @@ def _does_requirement_contain_resource(req: Requirement, resource: str) -> bool:
 
 
 def get_possible_connections(game: GameDescription) -> Iterator[tuple[str, Requirement]]:
-    for dock_type in game.dock_weakness_database.dock_types:
-        for weakness in game.dock_weakness_database.weaknesses[dock_type].values():
+    for dock_type in game.dock_type_database.dock_types:
+        for weakness in game.dock_type_database.weaknesses[dock_type].values():
             yield f"DockWeakness {weakness.name} ({dock_type.long_name}", weakness.requirement
 
     for region, area, source_node in game.node_iterator():
@@ -440,6 +462,20 @@ def check_for_unnormalized_hint_features(area: Area) -> Iterator[str]:
         )
 
 
+def find_undocumented_tricks(area: Area) -> Iterator[str]:
+    """
+    Reports all undocumented trick usage in the given area.
+    """
+
+    paths = trick_documentation.get_area_connection_docs(area)
+
+    for source_name, connections in paths.items():
+        for target_name, docs in connections.items():
+            for it, state in docs.items():
+                if state == TrickUsageState.UNDOCUMENTED:
+                    yield f"{area.name}: {source_name} -> {target_name} contains undocumented trick {it}"
+
+
 def find_database_errors(game: GameDescription) -> list[str]:
     result = []
 
@@ -452,6 +488,7 @@ def find_database_errors(game: GameDescription) -> list[str]:
     result.extend(find_invalid_strongly_connected_components(game))
     result.extend(find_recursive_templates(game))
     result.extend(find_duplicated_pickup_index(game.region_list))
+    result.extend(find_inconsistent_dock_configuration(game.dock_type_database))
     result.extend(game.game.data.logic_db_integrity(game))
     result.extend(find_incompatible_video_links(game))
 

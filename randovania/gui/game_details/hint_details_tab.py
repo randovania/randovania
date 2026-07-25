@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.hint import Hint
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -35,7 +35,7 @@ class HintDetailsTab(GameDetailsTab):
         return "Hints"
 
     def update_content(
-        self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        self, configuration: BaseConfiguration, all_patches: list[GamePatches], players: WorldsConfiguration
     ) -> None:
         NUM_COLUMNS = 4
 
@@ -45,7 +45,7 @@ class HintDetailsTab(GameDetailsTab):
 
         game = filtered_database.game_description_for_layout(configuration)
         region_list = game.region_list
-        patches = all_patches[players.player_index]
+        patches = all_patches[players.world_index]
 
         per_region: dict[str, dict[HintNode, tuple[str, str, str]]] = collections.defaultdict(dict)
         exporter = game.game.data.patch_data_factory().get_hint_exporter(
@@ -83,7 +83,7 @@ class HintDetailsTab(GameDetailsTab):
                 else:
                     hinted_pickup = target.pickup.name
                     if players.is_multiworld:
-                        hinted_pickup = f"{players.player_names[target.player]}'s {hinted_pickup}"
+                        hinted_pickup = f"{players.world_names[target.world]}'s {hinted_pickup}"
 
             per_region[source_region.name][node] = (hinted_pickup, hinted_location, hint_text)
 

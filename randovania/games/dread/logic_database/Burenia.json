@@ -14250,90 +14250,6 @@
                         }
                     }
                 },
-                "Event - Break Floor Blob 1": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5900.0,
-                        "y": -8800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "ev_demolition_db_001",
-                        "actor_def": "actordef:actors/props/ev_demolition_db_001/charclasses/ev_demolition_db_001.bmsad"
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "s040_aqua:default:ev_demolition_db_001",
-                    "connections": {
-                        "Blob Alcove": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Break Floor Blob 2": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6200.0,
-                        "y": -8800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "ev_demolition_db_002",
-                        "actor_def": "actordef:actors/props/ev_demolition_db_002/charclasses/ev_demolition_db_002.bmsad"
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "s040_aqua:default:ev_demolition_db_002",
-                    "connections": {
-                        "Blob Alcove": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Break Floor Blob 3": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6600.0,
-                        "y": -8700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "ev_demolition_db_003",
-                        "actor_def": "actordef:actors/props/ev_demolition_db_003/charclasses/ev_demolition_db_003.bmsad"
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "s040_aqua:default:ev_demolition_db_003",
-                    "connections": {
-                        "Blob Alcove": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Event - Early Gravity Blob": {
                     "node_type": "event",
                     "heal": false,
@@ -14750,6 +14666,22 @@
                                 ]
                             }
                         },
+                        "Event - Early Gravity Blob": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Connection back to already collected node for generator safety reasons",
+                                "items": [
+                                    {
+                                        "type": "node",
+                                        "data": {
+                                            "region": "Burenia",
+                                            "area": "Gravity Suit Tower",
+                                            "node": "Event - Early Gravity Blob"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Dock to Ammo Recharge South (Middle)": {
                             "type": "or",
                             "data": {
@@ -15125,64 +15057,6 @@
                                 ]
                             }
                         },
-                        "Event - Break Floor Blob 1": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Beam"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Break Floor Blob 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s040_aqua:default:ev_demolition_db_001",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Beam"
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Break Floor Blob 3": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s040_aqua:default:ev_demolition_db_002",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Diffusion or Wave"
-                                    }
-                                ]
-                            }
-                        },
                         "Breakable Floor": {
                             "type": "resource",
                             "data": {
@@ -15198,13 +15072,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s040_aqua:default:ev_demolition_db_003",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Diffusion or Wave"
                                     },
                                     {
                                         "type": "resource",

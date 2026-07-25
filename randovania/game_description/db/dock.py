@@ -67,6 +67,12 @@ class DockWeakness:
     requirement: Requirement
     lock: DockLock | None
 
+    unsafe_target_in_distributor_wtw: bool = False
+    """
+    When True, having this weakness set as a valid target for DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS is
+    considered a dangerous setting.
+    """
+
     def __hash__(self) -> int:
         return hash((self.name, self.extra))
 
@@ -89,11 +95,36 @@ class DockWeakness:
 
 
 @dataclass(frozen=True, slots=True)
-class DockRandoParams:
+class WeaknessDistributorSettings:
     unlocked: DockWeakness
+    """
+    The weakness that is trivial to open.
+    In INDIVIDUAL_DOCK, it's used for the generator step and as fallback. Will always be present in change_to.
+    In WEAKNESS_TO_WEAKNESS, it'll never be present in change_from.
+    """
+
     locked: DockWeakness
+    """
+    The weakness that is impossible to open.
+    Must have unsafe_target_in_distributor_wtw set to True.
+    """
+
     change_from: set[DockWeakness]
     change_to: set[DockWeakness]
+
+    force_change_two_way: bool
+    """Whether a two-way door should change both sides, even if one side has an excluded weakness."""
+
+    resolver_attempts: int
+    """How many attempts the resolver is allowed to do when distributing a dock with this type."""
+
+    to_shuffle_proportion: float
+
+    ui_label: str
+    """
+    The label used for GUI elements that mention this type, when talking about Dock Weakness Distributor.
+    Examples are the Preset Editor and Game Details tabs.
+    """
 
 
 @dataclass(frozen=True, slots=True, order=True)
@@ -104,22 +135,19 @@ class DockType:
     long_name: str
     extra: frozendict
 
+    weakness_distributor: WeaknessDistributorSettings | None = dataclasses.field(hash=False)
+    """When set, indicates this type supports dock weakness distribution."""
+
+    def get_weakness_distributor(self) -> WeaknessDistributorSettings:
+        assert self.weakness_distributor is not None
+        return self.weakness_distributor
+
 
 @dataclass(frozen=True, slots=True)
-class DockRandoConfig:
-    # whether a two-way door should change both sides, even if one side has an excluded weakness
-    force_change_two_way: bool
-    resolver_attempts: int
-    to_shuffle_proportion: float
-
-
-@dataclass(frozen=True, slots=True)
-class DockWeaknessDatabase:
+class DockTypeDatabase:
     dock_types: list[DockType]
     weaknesses: dict[DockType, dict[str, DockWeakness]]
-    dock_rando_params: dict[DockType, DockRandoParams]
     default_weakness: tuple[DockType, DockWeakness]
-    dock_rando_config: DockRandoConfig
 
     def find_type(self, dock_type_name: str) -> DockType:
         for dock_type in self.dock_types:
@@ -159,6 +187,6 @@ class DockWeaknessDatabase:
         Checks if the given DockWeakness is allowed to ever be shuffled into something else.
         """
         dock_type = self.find_type_for_weakness(weakness)
-        if dock_type not in self.dock_rando_params:
+        if dock_type.weakness_distributor is None:
             return False
-        return weakness in self.dock_rando_params[dock_type].change_from
+        return weakness in dock_type.weakness_distributor.change_from

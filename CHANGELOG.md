@@ -7,20 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.10.0] - 2026-08-02
 
+- **Major** - Added: Multiworld worlds can now be abandoned; abandoning a world is irreversible. An abandoned world can be played automatically by your own Randovania instance like a bot, via a dedicated game connection: it collects one location that is in logic for it every few seconds, and keeps doing so as it receives more items from other players.
 - Added: You can now disable game connections, preventing them from connecting without having to be removed entirely.
 - Changed: Automatic Item Tracker: The selected theme for the default game is now always shown while the selected game connection is not connected.
+- Changed: The "History" tab in the "Multiworld session" window now displays pickups where the provider and receiver are the same world, even in non-coop sessions.
 - Fixed: Automatic Item Tracker: The text "Not currently connected to any games" is now always shown when the selected game connection is not connected and no default game is set.
 - Fixed: In the Data Visualizer and Editor, when the game uses region images these images are no longer be stretched in certain situations.
 - Fixed: In the Data Visualizer and Editor, when panning away from the selected area the region image is now displayed correctly.
 - Fixed: In the Data Visualizer and Editor, when changing the zoom the pan is adjusted now relative to either the center or the mouse position.
 
+### Generator
+
+- Fixed: Some cases of not correctly identifying which nodes are reachable.
+
 ### Resolver
 
 - Fixed: Some games being wrongly considered impossible.
 
+### Another Metroid 2 Remake
+
+- Fixed: Generating a game with the new Teleporter Pipes in final areas disabled no longer causes an exception.
+
 ### Metroid Dread
 
+- Changed: The icon for the Super Missile in the automatic item tracker has been made lighter in color so that it matches the other icons better.
+
 #### Logic Database
+
+##### Burenia
+
+- Changed: Merged event nodes for breaking the floor in Gravity Suit Tower, decluttering the room and helping the generator see when it is safe to complete the sequence.
+- Changed: Added connection back to the Early Gravity Blob in the Gravity Suit Tower to help the generator see when it is safe to complete the breakable floor sequence.
+
+##### Cataris
+
+- Fixed: The door into the Central Unit is changed from Access Open to EMMI Door.
+
+##### Dairon
+
+- Fixed: The door into the Central Unit is changed from Access Open to EMMI Door.
 
 ##### Ferenia
 

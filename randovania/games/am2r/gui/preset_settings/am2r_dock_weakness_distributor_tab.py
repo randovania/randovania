@@ -5,10 +5,9 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
+from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.gui.lib import signal_handling
-from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.gui.preset_settings.dock_weakness_distributor_tab import PresetDockWeaknessDistributor
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
@@ -16,37 +15,46 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
 
-_CHECKBOX_FIELDS = ["blue_save_doors", "blast_shield_lockon"]
+_CHECKBOX_FIELDS = ["blue_save_doors", "force_blue_labs", "supers_on_missile_doors"]
 
 
-class PresetPrimeDockRando(PresetDockRando):
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+class PresetAM2RDockWeaknessDistributor(PresetDockWeaknessDistributor):
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager) -> None:
         super().__init__(editor, game_description, window_manager)
 
-        self.changes_box = QtWidgets.QGroupBox()
-        self.changes_box.setTitle("Door Changes")
-        self.changes_layout = QtWidgets.QVBoxLayout(self.changes_box)
+        # AM2R specific stuff
+        self.changes_box.setVisible(True)
 
         extra_widgets: list[tuple[type[QtWidgets.QCheckBox | QtWidgets.QLabel], str, str]] = [
-            (
-                QtWidgets.QCheckBox,
-                "blue_save_doors_check",
-                "Unlock Save Station Doors",
-            ),
+            (QtWidgets.QCheckBox, "blue_save_doors_check", "Unlock Save Station Doors"),
             (
                 QtWidgets.QLabel,
                 "blue_save_doors_label",
-                "Sets all Save Station doors to blue regardless of door randomization mode",
+                "Ensures all Save Station doors are normal (blue) doors, even with door lock rando enabled.",
             ),
             (
                 QtWidgets.QCheckBox,
-                "blast_shield_lockon_check",
-                "Enable Blast Shield Lock-On",
+                "force_blue_labs_check",
+                "Unlock Genetics Laboratory Doors",
             ),
             (
                 QtWidgets.QLabel,
-                "blast_shield_lockon_label",
-                "Makes all Blast Shield locks targetable in Combat Visor",
+                "force_blue_labs_label",
+                (
+                    "Ensures that the doors in the later parts of Genetics Laboratory are normal (blue) doors, "
+                    "even with door lock rando enabled.\nTo be more precise, "
+                    'all rooms after "Hatchling Room Underside" will have their doors changed.'
+                ),
+            ),
+            (
+                QtWidgets.QCheckBox,
+                "supers_on_missile_doors_check",
+                "Open Missile Doors with Super Missiles",
+            ),
+            (
+                QtWidgets.QLabel,
+                "supers_on_missile_doors_label",
+                "Determines whether Super Missiles can be used to open Missile Doors.",
             ),
         ]
 
@@ -61,22 +69,9 @@ class PresetPrimeDockRando(PresetDockRando):
 
             self.changes_layout.addWidget(widget)
 
-        # Add the group box
-        self.scroll_area_layout.insertWidget(0, self.changes_box)
-
         # Checkbox Signals
         for f in _CHECKBOX_FIELDS:
             self._add_checkbox_persist_option(getattr(self, f"{f}_check"), f)
-
-    def _on_mode_changed(self, value: DockRandoMode) -> None:
-        super()._on_mode_changed(value)
-        with self._editor as editor:
-            assert isinstance(editor.configuration, PrimeConfiguration)
-            if value == DockRandoMode.VANILLA:
-                editor.set_configuration_field("blast_shield_lockon", False)
-            else:
-                editor.set_configuration_field("blue_save_doors", True)
-                editor.set_configuration_field("blast_shield_lockon", True)
 
     def _add_checkbox_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
         def persist(value: bool) -> None:
@@ -88,6 +83,6 @@ class PresetPrimeDockRando(PresetDockRando):
     def on_preset_changed(self, preset: Preset) -> None:
         super().on_preset_changed(preset)
         config = preset.configuration
-        assert isinstance(config, PrimeConfiguration)
+        assert isinstance(config, AM2RConfiguration)
         for f in _CHECKBOX_FIELDS:
             typing.cast("QtWidgets.QCheckBox", getattr(self, f"{f}_check")).setChecked(getattr(config, f))
