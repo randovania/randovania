@@ -10,7 +10,6 @@ from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatch
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib import json_lib
 
 
 def test_construct_music_shuffle_dict_vanilla() -> None:
@@ -40,6 +39,7 @@ def test_construct_music_shuffle_dict_full() -> None:
     assert len(music_dict) == 48
 
 
+@pytest.mark.acceptance
 @pytest.mark.usefixtures("_mock_seed_hash")
 @pytest.mark.parametrize(
     ("rdvgame_filename", "expected_results_filename", "num_of_players"),
@@ -47,7 +47,9 @@ def test_construct_music_shuffle_dict_full() -> None:
         ("starter_preset.rdvgame", "shiny_pickups_dict_from_starter_preset.json", 1),  # starter preset
     ],
 )
-def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):
+def test_create_pickups_dict_shiny(
+    test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker, acceptance_check
+):
     # Setup
     rdvgame = test_files_dir.joinpath("log_files", "am2r", rdvgame_filename)
     worlds_config = WorldsConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
@@ -86,11 +88,4 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
     pickups_dict = data._create_pickups_dict(pickup_list, text_data, model_data, data.rng)
 
     # Expected Result
-    expected_results_path = test_files_dir.joinpath("patcher_data", "am2r", expected_results_filename)
-
-    # Uncomment to easily view diff of failed test
-    # json_lib.write_path(expected_results_path, pickups_dict); assert False
-
-    expected_data = json_lib.read_path(expected_results_path)
-
-    assert pickups_dict == expected_data
+    acceptance_check(test_files_dir.joinpath("patcher_data", "am2r", expected_results_filename), pickups_dict)
