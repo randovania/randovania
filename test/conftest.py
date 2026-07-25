@@ -59,6 +59,14 @@ def test_files_dir() -> TestFilesDir:
 AcceptanceCheck = Callable[[Path, "dict | list | bytes"], None]
 
 
+@pytest.hookimpl(tryfirst=True)
+def pytest_collection_modifyitems(items: list[pytest.Item]) -> None:
+    """Applies the `acceptance` mark to every test requesting `acceptance_check`."""
+    for item in items:
+        if "acceptance_check" in getattr(item, "fixturenames", ()):
+            item.add_marker(pytest.mark.acceptance)
+
+
 @pytest.fixture
 def acceptance_check(request: pytest.FixtureRequest) -> AcceptanceCheck:
     """Asserts that a value still matches the committed file it is expected to equal.

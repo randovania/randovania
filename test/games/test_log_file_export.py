@@ -24,7 +24,6 @@ def _get_world_count(file_path: Path) -> int:
     return len(data["info"]["presets"])
 
 
-@pytest.mark.acceptance
 @pytest.mark.benchmark
 @pytest.mark.usefixtures("_mock_seed_hash")
 def test_layout_patch_data_export(

@@ -17,7 +17,6 @@ from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
 
-@pytest.mark.acceptance
 @pytest.mark.parametrize(
     "rdvgame",
     [
@@ -30,7 +29,6 @@ def test_create_patch_data_layout(test_files_dir, mocker, acceptance_check, rdvg
     _create_patch_data(test_files_dir, mocker, acceptance_check, rdvgame, rdvgame, CSCosmeticPatches())
 
 
-@pytest.mark.acceptance
 @pytest.mark.parametrize(
     "patches",
     [
@@ -62,7 +60,6 @@ def test_create_patch_data_cosmetic(test_files_dir, mocker, acceptance_check, pa
     _create_patch_data(test_files_dir, mocker, acceptance_check, "arthur", test_file, cosmetic_patches)
 
 
-@pytest.mark.acceptance
 def test_create_patch_data_starting_items(test_files_dir, mocker, acceptance_check):
     _create_patch_data(test_files_dir, mocker, acceptance_check, "starting", "starting", CSCosmeticPatches())
 

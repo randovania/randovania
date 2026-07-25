@@ -39,7 +39,6 @@ def test_construct_music_shuffle_dict_full() -> None:
     assert len(music_dict) == 48
 
 
-@pytest.mark.acceptance
 @pytest.mark.usefixtures("_mock_seed_hash")
 @pytest.mark.parametrize(
     ("rdvgame_filename", "expected_results_filename", "num_of_players"),

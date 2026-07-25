@@ -71,7 +71,6 @@ def test_simple_round_trip():
     assert decoded == sample_data
 
 
-@pytest.mark.acceptance
 def test_complex_encode(test_files_dir, acceptance_check):
     data = test_files_dir.read_json("prime_data_as_json.json")
     data = game_description_migration.migrate_to_current(data, RandovaniaGame.METROID_PRIME_ECHOES)

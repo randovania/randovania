@@ -11,7 +11,6 @@ from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
 
-@pytest.mark.acceptance
 @pytest.mark.usefixtures("_mock_seed_hash")
 @pytest.mark.parametrize(
     ("rdvgame_filename", "expected_results_filename", "num_of_players"),

@@ -31,7 +31,6 @@ def test_find_database_errors(game_enum: RandovaniaGame):
     assert errors == []
 
 
-@pytest.mark.acceptance
 def test_invalid_db(test_files_dir, acceptance_check):
     data_path = test_files_dir.joinpath("integrity_check_invalid_db.json")
     sample_data = typing.cast("dict", json_lib.read_path(data_path))

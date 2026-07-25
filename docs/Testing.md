@@ -72,12 +72,11 @@ Two fixtures worth knowing about:
 
 Some parts of Randovania produce a large result: exporting a game, for example, produces a JSON file with thousands of fields. Asserting on those fields one at a time would be unreadable and nobody would keep it up to date.
 
-Instead, the expected result is stored as a real file in the repository, under `test/test_files/`. The test runs the code, then asserts that the result still equals the contents of that file. These are the *acceptance tests*, and they are labelled with the `acceptance` mark.
+Instead, the expected result is stored as a git-tracked reference file in the repository under `test/test_files/`. The test runs the code, then asserts that the result still equals the contents of the reference file.
 
 The comparison is done by the `acceptance_check` fixture, which takes the path of the committed file and the value that should equal it:
 
 ```py
-@pytest.mark.acceptance
 def test_create_pickups_dict(test_files_dir, acceptance_check):
     pickups_dict = ...
 
@@ -102,7 +101,7 @@ This regenerates everything in the repository that Randovania itself generates:
 
 ### Adding a new acceptance test
 
-1. Write the test as usual, add the `@pytest.mark.acceptance` mark, and take the `acceptance_check` fixture as an argument.
+1. Write the test as usual, taking the `acceptance_check` fixture as an argument.
 2. Call `acceptance_check(path, value)`, choosing a path inside `test/test_files/`. The file does not have to exist yet.
 3. Run `uv run randovania development update-committed` to create it, then commit it along with your test.
 

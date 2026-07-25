@@ -683,7 +683,6 @@ def test_create_string_patches(
     assert result == expected_result
 
 
-@pytest.mark.acceptance
 @pytest.mark.usefixtures("_mock_seed_hash")
 @pytest.mark.parametrize(
     ("rdvgame_filename", "expected_results_filename", "use_new_patcher"),
