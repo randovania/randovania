@@ -257,13 +257,7 @@ def calculate_node_replacement(database_view: GameDatabaseView) -> dict[Node, No
     return node_replacement
 
 
-def _should_create_front_node(database_view: GameDatabaseView, original_node: DockNode) -> bool:
-    """
-    Decide if we should wrap the dock node with an extra node.
-    Important since crossing ResourceNodes can be problematic in the generator.
-    """
-    area = database_view.area_from_node(original_node)
-
+def _can_dock_have_lock(database_view: GameDatabaseView, original_node: DockNode) -> bool:
     # If the original has a lock, that's a quick answer
     may_have_lock = original_node.default_dock_weakness.lock is not None
 
@@ -273,6 +267,22 @@ def _should_create_front_node(database_view: GameDatabaseView, original_node: Do
         if dock_type_database.can_weakness_be_shuffled(original_node.default_dock_weakness):
             dock_rando_params = original_node.dock_type.get_weakness_distributor()
             may_have_lock = any(possible.lock is not None for possible in dock_rando_params.change_to)
+    return may_have_lock
+
+
+def _should_create_front_node(database_view: GameDatabaseView, original_node: DockNode) -> bool:
+    """
+    Decide if we should wrap the dock node with an extra node.
+    Important since crossing ResourceNodes can be problematic in the generator.
+    """
+    area = database_view.area_from_node(original_node)
+
+    may_have_lock = _can_dock_have_lock(database_view, original_node)
+
+    if not may_have_lock:
+        other_dock = database_view.node_by_identifier(original_node.default_connection)
+        if isinstance(other_dock, DockNode):
+            may_have_lock = _can_dock_have_lock(database_view, other_dock)
 
     # Docks without locks don't have resources
     if not may_have_lock:
