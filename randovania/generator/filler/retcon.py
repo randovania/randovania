@@ -29,10 +29,6 @@ if TYPE_CHECKING:
     from randovania.generator.generator_reach import GeneratorReach
 
 
-def _index_age_weight(age: float) -> float:
-    return min(10.0, age + 1.0) ** -2
-
-
 def _calculate_uncollected_index_weights(
     uncollected_indices: Set[PickupIndex],
     assigned_indices: Set[PickupIndex],
@@ -53,45 +49,11 @@ def _calculate_uncollected_index_weights(
         weight_from_collected_indices = math.sqrt(len(indices) / ((1 + len(assigned_indices & indices)) ** 2))
 
         for index in sorted(uncollected_indices & indices):
-            result[index] = weight_from_collected_indices * _index_age_weight(index_age[index])
+            weight_from_index_age = min(10.0, index_age[index] + 1.0) ** -2
+            result[index] = weight_from_collected_indices * weight_from_index_age
+            # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_index_age}")
 
     return result
-
-
-def _pickup_unlocks_nothing(
-    player_state: PlayerState, pickup: PickupEntry, evaluated_reach: GeneratorReach | None
-) -> bool:
-    """
-    Whether collecting the pickup right now would leave the player's set of reachable nodes unchanged.
-    :param evaluated_reach: The reach from collecting the pickup, when action weighting already calculated it.
-    """
-    reachable = player_state.reach.set_of_reachable_node_indices()
-
-    if evaluated_reach is not None:
-        return not (evaluated_reach.set_of_reachable_node_indices() - reachable)
-
-    reach = copy.deepcopy(player_state.reach)
-    reach.advance_to(reach.state.assign_pickup_resources(pickup), is_safe=True)
-    if reach.set_of_reachable_node_indices() - reachable:
-        return False
-
-    return not (reach_lib.advance_after_action(reach).set_of_reachable_node_indices() - reachable)
-
-
-def _ignore_index_age_for_inert_pickup(
-    locations: WeightedLocations,
-    player_state: PlayerState,
-    pickup: PickupEntry,
-    evaluated_reach: GeneratorReach | None,
-) -> WeightedLocations:
-    """
-    Cancels the index age term for pickups that unlock nothing, so they spread out instead of
-    piling onto the lone freshest location. Other pickups pass through unchanged.
-    """
-    if not _pickup_unlocks_nothing(player_state, pickup, evaluated_reach):
-        return locations
-
-    return locations.rescale(lambda player, index: 1 / _index_age_weight(player.pickup_index_ages[index]))
 
 
 def _get_next_player(
@@ -198,13 +160,13 @@ def _evaluate_action(player_state: PlayerState, action_weights: ActionWeights, a
 
 def weighted_potential_actions(
     player_state: PlayerState, status_update: Callable[[str], None], locations_weighted: WeightedLocations
-) -> tuple[dict[Action, float], dict[Action, EvaluatedAction]]:
+) -> dict[Action, float]:
     """
     Weights all potential actions based on current criteria.
     :param player_state:
     :param status_update:
     :param locations_weighted: Which locations are available and their weight.
-    :return: The weight of each action, plus the evaluation each weight was derived from.
+    :return:
     """
     evaluated_actions: dict[Action, EvaluatedAction] = {}
     actions = player_state.potential_actions(locations_weighted)
@@ -212,7 +174,7 @@ def weighted_potential_actions(
     if len(actions) == 1:
         debug.debug_print(f"{actions[0]}")
         debug.debug_print("Only one action, weighting skipped")
-        return dict.fromkeys(actions, 1.0), evaluated_actions
+        return dict.fromkeys(actions, 1.0)
 
     current_uncollected = UncollectedState.from_reach(player_state.reach)
     current_unsafe_uncollected = UncollectedState.from_reach_only_unsafe(player_state.reach)
@@ -255,7 +217,7 @@ def weighted_potential_actions(
         for action, weight in final_weights.items():
             print(f"{action.name} - {weight}")
 
-    return final_weights, evaluated_actions
+    return final_weights
 
 
 def increment_index_age(locations_weighted: WeightedLocations, increment: float) -> None:
@@ -351,11 +313,8 @@ def retcon_playthrough_filler(
         if current_player is None:
             break
 
-        weighted_actions, evaluated_actions = weighted_potential_actions(
-            current_player, action_report, all_locations_weighted
-        )
+        weighted_actions = weighted_potential_actions(current_player, action_report, all_locations_weighted)
         action = random_lib.select_element_with_weight_and_uniform_fallback(rng, weighted_actions)
-        evaluation = evaluated_actions.get(action) if action.num_pickups == 1 else None
 
         new_resources, new_pickups = action.split_pickups()
         new_pickups.sort()
@@ -378,12 +337,7 @@ def retcon_playthrough_filler(
                     all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
 
                 log_entry = _assign_pickup_somewhere(
-                    new_pickup,
-                    current_player,
-                    player_states,
-                    rng,
-                    all_locations_weighted,
-                    evaluation.reach if evaluation is not None else None,
+                    new_pickup, current_player, player_states, rng, all_locations_weighted
                 )
                 actions_log.append(log_entry)
                 debug.debug_print(f"* {log_entry}")
@@ -432,7 +386,6 @@ def _assign_pickup_somewhere(
     player_states: list[PlayerState],
     rng: Random,
     all_locations: WeightedLocations,
-    evaluated_reach: GeneratorReach | None,
 ) -> str:
     """
     Assigns a PickupEntry to a free, collected PickupIndex or as a starting item.
@@ -440,8 +393,6 @@ def _assign_pickup_somewhere(
     :param current_player:
     :param player_states:
     :param rng:
-    :param all_locations:
-    :param evaluated_reach: The reach obtained by collecting `action`, if it was already calculated.
     :return:
     """
     assert action in current_player.pickups_left
@@ -452,7 +403,6 @@ def _assign_pickup_somewhere(
         if debug.debug_level() > debug.LogLevel.HIGH:
             debug_print_weighted_locations(all_locations, player_states)
 
-        usable_locations = _ignore_index_age_for_inert_pickup(usable_locations, current_player, action, evaluated_reach)
         index_owner_state, pickup_index = usable_locations.select_location(rng)
         index_owner_state.assign_pickup(
             pickup_index,
