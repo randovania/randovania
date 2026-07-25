@@ -51,6 +51,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The Twin Robot fight is now logically active from the start of the game, unless Highly Dangerous Logic is active. That means passing through the arena now logically requires meeting the fight requirements also before obtaining the Storm Missiles.
 
+### Metroid Fusion
+
+#### Logic Database
+
+##### Sector 3 (PYR)
+
+- Fixed: Attic: Breaking the bottom right bomb block with Screw Attack now requires Beginner Knowledge.
+- Changed: Attic: Breaking the bottom right bomb block with an Intermediate Shinespark from Deserted Runway is no longer excluded from Door Lock Rando.
+
 ### Metroid: Samus Returns
 
 - Changed: The Buff Charge Beam Doors option now also affects Beam Burst.
@@ -101,11 +110,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Atmospheric Stabilizer Northwest: Shinespark chain starting from Moto Motorway, recharging in Atmospheric Stabilizer Northeast, using any combination of either Wide, Plasma, or Wave Beam to clear Hornoad Hole and run off ledge in time to spark into the left slope, to ultimately spark into the stabilizer geron. Intermediate Knowledge, Intermediate or Advanced Combat, and Ludicrous Shinespark. Potential softlock after the hard parts are done.
 - Added: Yameba Corridor: As above, but chaining sparks one room further, and including Charge Beam option. This trick must account for Hornoad Hole's room state after all stabilizers are restored: dodging the aerial enemy requires moving further left, necessitating tighter movement in Twin Junctions West, but no risk of softlock. Intermediate Knowledge, Advanced Combat, and Ludicrous Shinespark.
-
-##### Sector 3 (PYR)
-
-- Fixed: Attic: Breaking the bottom right bomb block with Screw Attack now requires Beginner Knowledge.
-- Changed: Attic: Breaking the bottom right bomb block with an Intermediate Shinespark from Deserted Runway is no longer excluded from Door Lock Rando.
 
 ##### Sector 6 (NOC)
 
