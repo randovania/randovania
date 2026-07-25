@@ -18,7 +18,7 @@ from randovania.gui.lib import model_lib
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.gui.multiworld_client import MultiworldClient
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
@@ -117,6 +117,7 @@ def sample_session(preset_manager: PresetManager) -> MultiplayerSessionEntry:
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_abandon_worlds=True,
     )
 
 
@@ -236,6 +237,7 @@ async def test_on_session_meta_update(
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_abandon_worlds=True,
     )
     window = await MultiplayerSessionWindow.create_and_update(
         network_client, initial_session.id, MagicMock(spec=WindowManager), MagicMock()

@@ -11,7 +11,6 @@ from statistics import stdev
 from typing import TYPE_CHECKING
 
 from randovania.layout.layout_description import InvalidLayoutDescription, LayoutDescription
-from randovania.lib import json_lib
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -57,7 +56,7 @@ def is_non_major_progression(x: str):
     return False
 
 
-def iterate_with_log(x):
+def iterate_with_log[T](x: Iterable[T]) -> Iterable[T]:
     try:
         import tqdm
 
@@ -102,7 +101,7 @@ def accumulate_results(
     for pickup_index, pickup_target in patches.pickup_assignment.items():
         pickup_node = patches.game.region_list.node_from_pickup_index(pickup_index)
         pickup: str = pickup_target.pickup.name
-        owner: int = pickup_target.player + 1
+        owner: int = pickup_target.world + 1
         world_prefix = f"World {world_index + 1}'s " if is_multi else ""
         area_name = f"{world_prefix}{pickup_node.identifier.as_string}"
         owner_prefix = f"World {owner}'s " if is_multi else ""
@@ -176,7 +175,7 @@ def _region_only_starting_loc(locations: dict[str, int]) -> dict[str, int]:
 
 
 def create_report(
-    seeds_dir: Path, output_file: Path, csv_dir: Path | None, use_percentage: bool, major_progression_items_only: bool
+    seed_files: list[Path], csv_dir: Path | None, use_percentage: bool, major_progression_items_only: bool
 ):
     def item_creator():
         return collections.defaultdict(int)
@@ -193,7 +192,6 @@ def create_report(
     progression_items = None
     starting_locations = []
 
-    seed_files = list(seeds_dir.glob(f"**/*.{LayoutDescription.file_extension()}"))
     for seed in iterate_with_log(seed_files):
         try:
             layout = LayoutDescription.from_file(seed)
@@ -202,7 +200,7 @@ def create_report(
 
         is_multi = layout.world_count > 1
 
-        for i, patches in layout.all_patches.items():
+        for i, patches in enumerate(layout.all_patches):
             if len(starting_locations) <= i:
                 starting_locations.append(collections.defaultdict(int))
 
@@ -393,4 +391,4 @@ def create_report(
                     row_data["row_name"] = column
                     writer.writerow(row_data)
 
-    json_lib.write_path(output_file, final_results)
+    return final_results

@@ -10,7 +10,7 @@ import uuid
 from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.lib import json_lib, migration_lib
 from randovania.lib.migration_lib import UnsupportedVersion
 from randovania.lib.signal import RdvSignal

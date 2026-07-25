@@ -167,7 +167,7 @@ class PrimeGameExporter(GameExporter[PrimeGameExportParams]):
     def make_room_rando_maps(self, directory: Path, base_filename: str, level_data: dict) -> None:
         game_description = default_database.game_description_for(RandovaniaGame.METROID_PRIME)
         rl = game_description.region_list
-        dock_types_to_ignore = game_description.dock_weakness_database.all_teleporter_dock_types
+        dock_types_to_ignore = game_description.dock_type_database.all_teleporter_dock_types
 
         for region_name in level_data.keys():
             filepath = directory.with_name(f"{base_filename} {region_name}.png")

@@ -27,7 +27,13 @@ from randovania.network_common.async_race_room import (
     AsyncRaceRoomUserStatus,
 )
 from randovania.network_common.authentication import AuthenticationMethod
-from randovania.network_common.error import InvalidActionError, InvalidSessionError, RequestTimeoutError, ServerError
+from randovania.network_common.error import (
+    InvalidActionError,
+    InvalidSessionError,
+    RequestTimeoutError,
+    ServerError,
+    WorldNotAssociatedError,
+)
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, WorldUserInventory
 from randovania.network_common.remote_pickup import RemotePickup
@@ -474,6 +480,45 @@ async def test_create_new_session_bad(client: NetworkClient, mocker: pytest_mock
     mock_session_from.assert_not_called()
     response.raise_for_status.assert_not_called()
     assert client._sessions_interested_in == set()
+
+
+async def test_get_abandoned_world_data(client: NetworkClient):
+    world_uid = uuid.UUID("00000000-0000-0000-0000-000000000001")
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 200
+    response.json.return_value = {"order": 2}
+
+    # Run
+    result = await client.get_abandoned_world_data(world_uid)
+
+    # Assert
+    assert result == {"order": 2}
+    client.server_get.assert_called_once_with(f"world/{world_uid}/abandoned-data")
+
+
+async def test_get_abandoned_world_data_error(client: NetworkClient):
+    world_uid = uuid.UUID("00000000-0000-0000-0000-000000000001")
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 409
+    response.json.return_value = {"detail": "World is not abandoned"}
+
+    # Run
+    with pytest.raises(InvalidActionError, match="World is not abandoned"):
+        await client.get_abandoned_world_data(world_uid)
+
+
+async def test_get_abandoned_world_data_not_claimed(client: NetworkClient):
+    world_uid = uuid.UUID("00000000-0000-0000-0000-000000000001")
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 403
+    response.json.return_value = {"detail": "You must claim this world to run its bot"}
+
+    # Run
+    with pytest.raises(WorldNotAssociatedError):
+        await client.get_abandoned_world_data(world_uid)
 
 
 async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mock.MockerFixture):

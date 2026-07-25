@@ -186,6 +186,7 @@ class MultiplayerSession(BaseModel):
 
     allow_coop: bool = peewee.BooleanField(default=False)
     allow_everyone_claim_world: bool = peewee.BooleanField(default=False)
+    allow_abandon_worlds: bool = peewee.BooleanField(default=True)
 
     members: list[MultiplayerMembership]
     worlds: list[World]
@@ -281,12 +282,12 @@ class MultiplayerSession(BaseModel):
             assert provider.order is not None
 
             location_index = PickupIndex(action.location)
-            target = description.all_patches[provider.order].pickup_assignment[location_index]
+            target = description.all_patches[provider.order].pickup_assignment.get(location_index, None)
 
             return multiplayer_session.MultiplayerSessionAction(
                 provider=provider.uuid,
                 receiver=receiver.uuid,
-                pickup=target.pickup.name,
+                pickup=target.pickup.name if target else "Nothing",
                 location=action.location,
                 time=datetime.datetime.fromisoformat(action.time),
             )
@@ -324,6 +325,7 @@ class MultiplayerSession(BaseModel):
                 name=world.name,
                 preset_raw=world.preset,
                 has_been_beaten=world.beaten,
+                is_abandoned=world.abandoned,
             )
             for world in self.worlds
         }
@@ -388,6 +390,7 @@ class MultiplayerSession(BaseModel):
             allowed_games=self.allowed_games,
             allow_coop=self.allow_coop,
             allow_everyone_claim_world=self.allow_everyone_claim_world,
+            allow_abandon_worlds=self.allow_abandon_worlds,
         )
 
     def get_audit_log(self) -> MultiplayerSessionAuditLog:
@@ -410,6 +413,7 @@ class World(BaseModel):
     preset: str = peewee.TextField()
     order: int | None = peewee.IntegerField(null=True, default=None)
     beaten: bool = peewee.BooleanField(default=False)
+    abandoned: bool = peewee.BooleanField(default=False)
 
     associations: list[WorldUserAssociation]
 
@@ -437,6 +441,7 @@ class World(BaseModel):
         uid: UUID | None = None,
         order: int | None = None,
         beaten: bool = False,
+        abandoned: bool = False,
     ) -> Self:
         if uid is None:
             uid = uuid.uuid4()
@@ -447,6 +452,7 @@ class World(BaseModel):
             preset=json.dumps(preset.as_json, separators=(",", ":")),
             order=order,
             beaten=beaten,
+            abandoned=abandoned,
         )
 
 
@@ -799,6 +805,7 @@ class DatabaseMigrations(enum.Enum):
     ADD_READY_TO_MEMBERSHIP = "ready_membership"
     SESSION_STATE_TO_VISIBILITY = "session_state_to_visibility"
     ADD_GAME_BEATEN = "game_beaten"
+    ADD_WORLD_ABANDONED = "world_abandoned"
 
 
 class PerformedDatabaseMigrations(BaseModel):

@@ -17,7 +17,7 @@ from randovania.game_connection.connector_builder_choice import ConnectorBuilder
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.game_connection_window import GameConnectionWindow
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.network_common import error
 
 if TYPE_CHECKING:

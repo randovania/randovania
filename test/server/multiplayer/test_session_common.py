@@ -44,12 +44,14 @@ async def test_emit_session_meta_update(session_update, mock_sa, default_game_li
                 "name": "World1",
                 "preset_raw": "{}",
                 "has_been_beaten": False,
+                "is_abandoned": False,
             },
             {
                 "id": "d0f7ed70-66b0-413c-bc13-f9f7fb018726",
                 "name": "World2",
                 "preset_raw": "{}",
                 "has_been_beaten": False,
+                "is_abandoned": False,
             },
         ],
         "game_details": {
@@ -61,6 +63,7 @@ async def test_emit_session_meta_update(session_update, mock_sa, default_game_li
         "allowed_games": default_game_list,
         "allow_coop": False,
         "allow_everyone_claim_world": False,
+        "allow_abandon_worlds": True,
     }
 
     # Run

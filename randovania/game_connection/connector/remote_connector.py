@@ -15,6 +15,7 @@ if typing.TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.region import Region
+    from randovania.network_common.error import BaseNetworkError
     from randovania.network_common.remote_pickup import RemotePickup
 
 
@@ -99,6 +100,13 @@ class RemoteConnector:
         :param remote_pickups: Ordered list of pickups sent from other players, with the name of the player.
         """
         raise NotImplementedError
+
+    async def on_world_sync_error(self, err: BaseNetworkError) -> None:
+        """
+        Called when the server refuses a world sync for this connector's world.
+        Most connectors have nothing to do: the game keeps running, and syncing resumes if the error clears.
+        """
+        return
 
     async def force_finish(self) -> None:
         """Disconnect from the game, releasing any resources."""

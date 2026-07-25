@@ -35,7 +35,6 @@ def test_collected_pickup_indices(state_game_data, empty_patches, blank_world_gr
         empty_patches,
         None,
         empty_patches.game.resource_database,
-        empty_patches.game.region_list,
     )
 
     # Run
@@ -58,7 +57,6 @@ def test_add_pickup_to_state(state_game_data, empty_patches, generic_pickup_cate
         empty_patches,
         None,
         db,
-        empty_patches.game.region_list,
     )
 
     resource_a = db.item[0]
@@ -104,7 +102,6 @@ def test_assign_pickup_to_starting_items(
         empty_patches,
         None,
         db,
-        empty_patches.game.region_list,
     )
 
     resource_a = db.get_item("Ammo")

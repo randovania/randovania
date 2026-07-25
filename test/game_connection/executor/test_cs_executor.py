@@ -17,7 +17,7 @@ from randovania.game_connection.executor.cs_executor import (
     _message_for_tsc_value_list,
     _resolve_tsc_value,
 )
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 
 
 @pytest.fixture(name="executor")

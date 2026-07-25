@@ -151,7 +151,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
         # creates the credits elements for each pickup
         elements = defaultdict(list)
         majors = credits_spoiler.generic_credits(
-            self.configuration.standard_pickup_configuration, self.description.all_patches, self.players_config
+            self.configuration.standard_pickup_configuration, self.description.all_patches, self.worlds_config
         )
 
         for pickup, locations in majors:
