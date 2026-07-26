@@ -62,7 +62,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sector 3 (PYR)
 
 - Changed: The Intermediate Shinespark trick from Deserted Runway to Alcove no longer requires L0 Keycard in Door Lock Rando settings.
-- Added: A comment clarifying that the above trick can safely be in logic in Door Lock Rando settings.
 
 ### Metroid: Samus Returns
 
