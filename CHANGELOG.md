@@ -59,9 +59,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Sector 1 (SRX)
+
+- Fixed: Atmospheric Stabilizer Southeast: Destroying the Stabilizer with Screw Attack is now only possible if the Primary Geron Vulnerabilities setting is disabled. It's also not possible anymore to destroy it with Hi-Jump.
+- Added: Atmospheric Stabilizer Southeast: Destroying the Stabilizer is now possible with Power Bombs and Beginner Knowledge if the Primary Geron Vulnerabilities setting is disabled.
+
 ##### Sector 3 (PYR)
 
-- Changed: The Intermediate Shinespark trick from Deserted Runway to Alcove no longer requires L0 Keycard in Door Lock Rando settings.
+- Changed: Alcove: The Intermediate Shinespark trick from Deserted Runway to Alcove no longer requires L0 Keycard in Door Lock Rando settings.
 
 ### Metroid: Samus Returns
 
