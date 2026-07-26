@@ -247,6 +247,8 @@ class SimpleResourceEditor(ResourceEditor):
             self._checkbox_negate.setText(
                 ResourceType.EVENT.negated_prefix if requirement.negate else ResourceType.EVENT.non_negated_prefix
             )
+        else:
+            self._checkbox_negate.setText("Negate?")
 
     def requirement(self) -> ResourceRequirement:
         return self._make_requirement(1, self._checkbox_negate.isChecked())
