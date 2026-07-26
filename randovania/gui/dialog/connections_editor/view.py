@@ -51,8 +51,6 @@ class RequirementView(QObject):
         self._tree.scrollTo(index, QAbstractItemView.ScrollHint.EnsureVisible)
 
 
-# The liberal use of ignore[attr-defined] is due to the lack of accessor functions - see details below
-# https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QStyleOption.html#PySide6.QtWidgets.QStyleOption
 class RequirementDelegate(QStyledItemDelegate):
     """Renders Array comments in bold green"""
 
@@ -70,15 +68,15 @@ class RequirementDelegate(QStyledItemDelegate):
         # Without this, text color defaults to black with no regard for light/dark mode or selection state
         color_group = (
             QPalette.ColorGroup.Normal
-            if option.state & QStyle.StateFlag.State_Enabled  # type: ignore[attr-defined]
+            if option.state & QStyle.StateFlag.State_Enabled
             else QPalette.ColorGroup.Disabled
         )
         color_role = (
             QPalette.ColorRole.HighlightedText
-            if option.state & QStyle.StateFlag.State_Selected  # type: ignore[attr-defined]
+            if option.state & QStyle.StateFlag.State_Selected
             else QPalette.ColorRole.Text
         )
-        text_color = option.palette.color(color_group, color_role)  # type: ignore[attr-defined]
+        text_color = option.palette.color(color_group, color_role)
 
         html: str = (
             f"<span style='color:{text_color.name()}'>{array_type}</span>"
@@ -87,8 +85,8 @@ class RequirementDelegate(QStyledItemDelegate):
 
         document = QTextDocument()
         document.setHtml(html)
-        document.setDefaultFont(option.font)  # type: ignore[attr-defined]
-        document.setTextWidth(option.rect.width())  # type: ignore[attr-defined]
+        document.setDefaultFont(option.font)
+        document.setTextWidth(option.rect.width())
 
         return document
 
@@ -102,13 +100,13 @@ class RequirementDelegate(QStyledItemDelegate):
 
         _option = QStyleOptionViewItem(option)
         self.initStyleOption(_option, index)
-        _option.text = ""  # type: ignore[attr-defined]
+        _option.text = ""
 
-        style: QStyle = _option.widget.style() if _option.widget else QApplication.style()  # type: ignore[attr-defined]
-        style.drawControl(QStyle.ControlElement.CE_ItemViewItem, _option, painter, _option.widget)  # type: ignore[attr-defined]
+        style: QStyle = _option.widget.style() if _option.widget else QApplication.style()
+        style.drawControl(QStyle.ControlElement.CE_ItemViewItem, _option, painter, _option.widget)
 
         painter.save()
-        text_rect = style.subElementRect(QStyle.SubElement.SE_ItemViewItemText, _option, _option.widget)  # type: ignore[attr-defined]
+        text_rect = style.subElementRect(QStyle.SubElement.SE_ItemViewItemText, _option, _option.widget)
         painter.translate(text_rect.topLeft())
         document.documentLayout().draw(painter, QAbstractTextDocumentLayout.PaintContext())
         painter.restore()
