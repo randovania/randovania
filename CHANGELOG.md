@@ -51,6 +51,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The Twin Robot fight is now logically active from the start of the game, unless Highly Dangerous Logic is active. That means passing through the arena now logically requires meeting the fight requirements also before obtaining the Storm Missiles.
 
+### Metroid Fusion
+
+#### Logic Database
+
+##### Sector 3 (PYR)
+
+- Changed: The Intermediate Shinespark trick from Deserted Runway to Alcove no longer requires L0 Keycard in Door Lock Rando settings.
+- Added: A comment clarifying that the above trick can safely be in logic in Door Lock Rando settings.
+
 ### Metroid: Samus Returns
 
 - Changed: The Buff Charge Beam Doors option now also affects Beam Burst.
