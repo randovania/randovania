@@ -2,7 +2,8 @@ from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from typing import Any, cast
 
-from PySide6.QtCore import QObject, Signal
+from PySide6.QtCore import QObject, Qt, Signal
+from PySide6.QtGui import QKeyEvent
 from PySide6.QtWidgets import (
     QCheckBox,
     QComboBox,
@@ -104,7 +105,7 @@ class Editor(QObject):
         return QCheckBox(self._widget)
 
     def _create_line_edit(self, placeholder: str = "") -> QLineEdit:
-        line_edit = QLineEdit()
+        line_edit = NonPropgatingLineEdit()
         line_edit.setPlaceholderText(placeholder)
         return line_edit
 
@@ -380,6 +381,17 @@ class ArrayEditor(Editor):
         text: str = self._line_edit_comment.text()
         comment: str | None = text if len(text) > 0 else None
         return _type([], comment)
+
+
+class NonPropgatingLineEdit(QLineEdit):
+    """Wrapper class to intercept Enter/Return presses"""
+
+    def keyPressEvent(self, event: QKeyEvent) -> None:
+        if event.key() in (Qt.Key.Key_Enter, Qt.Key.Key_Return):
+            self.clearFocus()
+            event.accept()
+            return
+        super().keyPressEvent(event)
 
 
 @contextmanager
