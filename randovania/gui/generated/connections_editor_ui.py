@@ -125,6 +125,7 @@ class Ui_ConnectionEditor(object):
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.combo_requirement_type.sizePolicy().hasHeightForWidth())
         self.combo_requirement_type.setSizePolicy(sizePolicy2)
+        self.combo_requirement_type.setIconSize(QSize(0, 0))
 
         self.editors_control_layout.addWidget(self.combo_requirement_type)
 

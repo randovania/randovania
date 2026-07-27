@@ -2,7 +2,7 @@ from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from typing import Any, cast
 
-from PySide6.QtCore import QObject, Qt, Signal
+from PySide6.QtCore import QObject, QSize, Qt, Signal
 from PySide6.QtGui import QKeyEvent
 from PySide6.QtWidgets import (
     QCheckBox,
@@ -88,6 +88,7 @@ class Editor(QObject):
         """
         combo = ScrollProtectedComboBox(self._widget)
         combo.setEditable(False)
+        combo.setIconSize(QSize(0, 0))  # Removes empty space on Linux machines
         for resource in data:
             combo.addItem(to_string(resource), resource)
         return combo
