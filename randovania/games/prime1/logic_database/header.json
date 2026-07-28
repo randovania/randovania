@@ -819,99 +819,6 @@
             }
         },
         "requirement_template": {
-            "Shoot Super Missile": {
-                "display_name": "Shoot Super Missile",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Missile",
-                                    "amount": 5,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Charge",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Supers",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "Shoot Power Beam"
-                            }
-                        ]
-                    }
-                }
-            },
-            "Have all Beams": {
-                "display_name": "Have all Beams",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Power",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Wave",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Ice",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Plasma",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
-                            }
-                        ]
-                    }
-                }
-            },
             "Heat-Resisting Suit": {
                 "display_name": "Heat-Resisting Suit",
                 "requirement": {
@@ -975,8 +882,8 @@
                     }
                 }
             },
-            "Can Use Arm Cannon": {
-                "display_name": "Can Use Arm Cannon",
+            "Can Target Enemy": {
+                "display_name": "Can Target Enemy",
                 "requirement": {
                     "type": "or",
                     "data": {
@@ -1013,67 +920,102 @@
                     }
                 }
             },
-            "Shoot Any Beam": {
-                "display_name": "Shoot Any Beam",
+            "Any Visor": {
+                "display_name": "Any Visor",
                 "requirement": {
-                    "type": "and",
+                    "type": "or",
                     "data": {
                         "comment": null,
                         "items": [
                             {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Combat",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             },
                             {
-                                "type": "or",
+                                "type": "resource",
                                 "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Power",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Wave",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Ice",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Plasma",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "items",
+                                    "name": "Scan",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Thermal",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "X-Ray",
+                                    "amount": 1,
+                                    "negate": false
                                 }
                             }
                         ]
                     }
                 }
             },
-            "Shoot Power Beam": {
-                "display_name": "Shoot Power Beam",
+            "Any Beam": {
+                "display_name": "Any Beam",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Wave",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Ice",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Plasma",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "All Beams": {
+                "display_name": "All Beams",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -1089,21 +1031,6 @@
                                 }
                             },
                             {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
-                            }
-                        ]
-                    }
-                }
-            },
-            "Shoot Wave Beam": {
-                "display_name": "Shoot Wave Beam",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
@@ -1112,21 +1039,6 @@
                                     "negate": false
                                 }
                             },
-                            {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
-                            }
-                        ]
-                    }
-                }
-            },
-            "Shoot Ice Beam": {
-                "display_name": "Shoot Ice Beam",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
                             {
                                 "type": "resource",
                                 "data": {
@@ -1137,21 +1049,6 @@
                                 }
                             },
                             {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
-                            }
-                        ]
-                    }
-                }
-            },
-            "Shoot Plasma Beam": {
-                "display_name": "Shoot Plasma Beam",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
@@ -1159,17 +1056,37 @@
                                     "amount": 1,
                                     "negate": false
                                 }
-                            },
-                            {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
                             }
                         ]
                     }
                 }
             },
-            "Use Grapple Beam": {
-                "display_name": "Use Grapple Beam",
+            "Shoot Missile": {
+                "display_name": "Shoot Missile",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Any Beam"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missile",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Shoot Super Missile": {
+                "display_name": "Shoot Super Missile",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -1179,14 +1096,37 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "Grapple",
+                                    "name": "Missile",
+                                    "amount": 5,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Charge",
                                     "amount": 1,
                                     "negate": false
                                 }
                             },
                             {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Supers",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         ]
                     }
@@ -1201,7 +1141,7 @@
                         "items": [
                             {
                                 "type": "template",
-                                "data": "Shoot Any Beam"
+                                "data": "Any Beam"
                             },
                             {
                                 "type": "and",
@@ -1222,15 +1162,6 @@
                                             "data": {
                                                 "type": "items",
                                                 "name": "Bombs",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Scan",
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -1303,8 +1234,13 @@
                                 }
                             },
                             {
-                                "type": "template",
-                                "data": "Shoot Wave Beam"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Wave",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         ]
                     }
@@ -1331,35 +1267,6 @@
                                 "data": {
                                     "type": "items",
                                     "name": "Boost",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "Can Use Spider Ball": {
-                "display_name": "Can Use Spider Ball",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "MorphBall",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Spider",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -1426,6 +1333,35 @@
                     }
                 }
             },
+            "Can Use Spider Ball": {
+                "display_name": "Can Use Spider Ball",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Spider",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
             "Kill Elite Pirate": {
                 "display_name": "Kill Elite Pirate",
                 "requirement": {
@@ -1435,7 +1371,7 @@
                         "items": [
                             {
                                 "type": "template",
-                                "data": "Shoot Any Beam"
+                                "data": "Any Beam"
                             },
                             {
                                 "type": "or",
@@ -1607,8 +1543,13 @@
                                                                     }
                                                                 },
                                                                 {
-                                                                    "type": "template",
-                                                                    "data": "Shoot Plasma Beam"
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Plasma",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
                                                                 }
                                                             ]
                                                         }
@@ -1649,53 +1590,6 @@
                     }
                 }
             },
-            "Has Any Visor": {
-                "display_name": "Has Any Visor",
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Combat",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Scan",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Thermal",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "X-Ray",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
             "Kill Chozo Ghosts": {
                 "display_name": "Kill Multiple Chozo Ghosts",
                 "requirement": {
@@ -1704,8 +1598,13 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "template",
-                                "data": "Shoot Power Beam"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             },
                             {
                                 "type": "or",
@@ -1796,8 +1695,13 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "template",
-                                "data": "Shoot Power Beam"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             },
                             {
                                 "type": "or",
@@ -2037,8 +1941,13 @@
                             "shieldType": "Ice Beam"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Ice Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": null,
                         "unsafe_target_in_distributor_wtw": false
@@ -2048,8 +1957,13 @@
                             "shieldType": "Wave Beam"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Wave Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": null,
                         "unsafe_target_in_distributor_wtw": false
@@ -2059,8 +1973,13 @@
                             "shieldType": "Plasma Beam"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Plasma Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Plasma",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": null,
                         "unsafe_target_in_distributor_wtw": false
@@ -2070,8 +1989,13 @@
                             "shieldType": "Power Beam Only"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Power Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Power",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": null,
                         "unsafe_target_in_distributor_wtw": false
@@ -2103,7 +2027,7 @@
                                         },
                                         {
                                             "type": "template",
-                                            "data": "Shoot Any Beam"
+                                            "data": "Any Beam"
                                         }
                                     ]
                                 }
@@ -2142,7 +2066,7 @@
                                         },
                                         {
                                             "type": "template",
-                                            "data": "Shoot Any Beam"
+                                            "data": "Any Beam"
                                         }
                                     ]
                                 }
@@ -2249,8 +2173,13 @@
                             "blastShieldType": "Wavebuster"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Wave Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": {
                             "lock_type": "front-blast-back-free-unlock",
@@ -2287,8 +2216,13 @@
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Wave Beam"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Wave",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -2302,8 +2236,13 @@
                             "blastShieldType": "Ice Spreader"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Ice Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": {
                             "lock_type": "front-blast-back-free-unlock",
@@ -2340,8 +2279,13 @@
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Ice Beam"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Ice",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -2355,8 +2299,13 @@
                             "blastShieldType": "Flamethrower"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Plasma Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Plasma",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": {
                             "lock_type": "front-blast-back-free-unlock",
@@ -2393,8 +2342,13 @@
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Plasma Beam"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Plasma",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -2420,7 +2374,7 @@
                                     "items": [
                                         {
                                             "type": "template",
-                                            "data": "Shoot Any Beam"
+                                            "data": "Any Beam"
                                         },
                                         {
                                             "type": "resource",
