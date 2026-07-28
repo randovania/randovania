@@ -959,7 +959,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
         SUIT_ATTRIBUTES = ["powerDeg", "variaDeg", "gravityDeg", "phazonDeg"]
         suit_colors = {}
-        for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, self.cosmetic_patches.suit_color_rotations):
+        for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, self.cosmetic_patches.active_suit_color_rotations):
             if hue_rotation != 0:
                 suit_colors[attribute] = hue_rotation
 
@@ -1060,6 +1060,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 "quiet": False,
                 "suitColors": suit_colors,
                 "forceFusion": self.cosmetic_patches.force_fusion,
+                "rainbowPhazonBall": self.cosmetic_patches.rainbow_phazon_ball,
             },
             "gameConfig": {
                 "resultsString": _create_results_screen_text(self.description),

@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Life Grove: Boostless spinner manipulation trick does not work if pillar raised cutscene skipped.
 - Added: Replaced vanilla's inventory-based completion percent calculation with an algorithm based on location count. Completion percent now always reflects the progress towards collection of all non-nothing pickups in the player's local game.
 - Added: Power Suit and Varia Suit color customization now affect the textures of Samus' gunship.
+- Added: Rainbow Ball cosmetic option.
+- Changed: Organized cosmetic options into collapsable sections, suit customization now features preview images and Fusion Suit color preferences are now saved independently from non-Fusion.
 - Changed: Morph Ball now always renders the "inner glow" color appropriate for the current highest suit instead of the vanilla behavior which renders the "wrong" color when Spider, Gravity or Phazon are collected out of the vanilla-intended order.
 - Changed: It is now impossible for players to loading save slots which belong to another rdvgame or multiworld slot.
 - Changed: In-game hint option is now hidden.

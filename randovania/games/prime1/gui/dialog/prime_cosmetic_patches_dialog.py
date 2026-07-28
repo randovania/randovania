@@ -6,28 +6,48 @@ from typing import TYPE_CHECKING, override
 
 from PySide6 import QtCore, QtGui, QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime1.gui.generated.prime_cosmetic_patches_dialog_ui import Ui_PrimeCosmeticPatchesDialog
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.layout.prime_user_preferences import PrimeUserPreferences, SoundMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.lib import color_lib, slider_updater
-from randovania.gui.lib.signal_handling import set_combo_with_value
+from randovania.gui.lib.signal_handling import on_checked, set_combo_with_value
 
 if TYPE_CHECKING:
+    from pathlib import Path
+
+    import numpy
+
     from randovania.interface_common.options import Options
 
-SUIT_DEFAULT_COLORS = [
-    [(255, 173, 50), (220, 25, 45), (132, 240, 60)],  # Power
-    [(255, 173, 50), (220, 25, 45), (255, 125, 50), (132, 240, 60)],  # Varia
-    [(170, 170, 145), (70, 25, 50), (40, 20, 90), (140, 240, 240)],  # Gravity
-    [(50, 50, 50), (20, 20, 20), (230, 50, 62)],  # Phazon
-]
+SUIT_NAMES = ("power", "varia", "gravity", "phazon")
+UNMORPHED_SIZE = QtCore.QSize(130, 188)
+MORPHED_SIZE = QtCore.QSize(130, 140)
+
+# Mid-lightness hues, so the text stays legible against both light and dark backgrounds.
+RAINBOW_GRADIENT = (
+    "qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,"
+    " stop: 0 #d94141, stop: 0.2 #d1791b, stop: 0.4 #a89000,"
+    " stop: 0.6 #2f9e4f, stop: 0.8 #2f7fd1, stop: 1 #9455d1)"
+)
+
+
+def _suit_render_path(file_name: str) -> Path:
+    return RandovaniaGame.METROID_PRIME.data_path.joinpath("assets", "suit_renders", f"{file_name}.png")
 
 
 class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches], Ui_PrimeCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: PrimeCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
+
+        self.suit_colors_foldable.setTitle("Suit Colors")
+        self.suit_colors_foldable.setFolded(False)
+        self.suit_colors_foldable.set_content_layout(self.suit_colors_foldable_layout)
+
+        self.options_foldable.setTitle("In-Game Options")
+        self.options_foldable.set_content_layout(self.options_foldable_layout)
 
         self.field_to_slider_mapping = {
             "screen_brightness": self.screen_brightness_slider,
@@ -46,21 +66,14 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
             "swap_beam_controls": self.swap_beam_controls_check,
         }
 
+        self.suit_rotation_sliders = [getattr(self, f"{suit}_suit_rotation_slider") for suit in SUIT_NAMES]
+        self.suit_image_labels = [getattr(self, f"{suit}_suit_image_label") for suit in SUIT_NAMES]
+        self.ball_image_labels = [getattr(self, f"{suit}_ball_image_label") for suit in SUIT_NAMES]
+        self._suit_render_cache: dict[str, numpy.ndarray] = {}
+        self._preview_pixel_ratio = self.devicePixelRatioF()
+
         for sound_mode in SoundMode:
             self.sound_mode_combo.addItem(sound_mode.name, sound_mode)
-
-        # Build dynamically preview color squares for suits
-        suit_layouts = [
-            self.power_suit_color_layout,
-            self.varia_suit_color_layout,
-            self.gravity_suit_color_layout,
-            self.phazon_suit_color_layout,
-        ]
-        self.suit_color_preview_squares = []
-        for suit_layout, suit_colors in zip(suit_layouts, SUIT_DEFAULT_COLORS):
-            self.suit_color_preview_squares.append(
-                [self._add_preview_color_square_to_layout(suit_layout, color) for color in suit_colors]
-            )
 
         fields = {field.name: field for field in dataclasses.fields(PrimeUserPreferences)}
         for field_name, slider in self.field_to_slider_mapping.items():
@@ -88,11 +101,13 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
         self._persist_check_field(self.open_map_check, "open_map")
         self._persist_check_field(self.pickup_markers_check, "pickup_markers")
         self._persist_check_field(self.force_fusion_check, "force_fusion")
+        self._persist_check_field(self.rainbow_phazon_ball_check, "rainbow_phazon_ball")
         self._persist_check_field(self.custom_hud_color, "use_hud_color")
-        self.power_suit_rotation_field.valueChanged.connect(self._persist_suit_color_rotations)
-        self.varia_suit_rotation_field.valueChanged.connect(self._persist_suit_color_rotations)
-        self.gravity_suit_rotation_field.valueChanged.connect(self._persist_suit_color_rotations)
-        self.phazon_suit_rotation_field.valueChanged.connect(self._persist_suit_color_rotations)
+        # Connected after force_fusion's _persist_check_field, so the handler sees the already-updated value.
+        self.force_fusion_check.stateChanged.connect(self._on_fusion_toggled)
+        on_checked(self.rainbow_phazon_ball_check, self._on_rainbow_phazon_ball_toggled)
+        for slider in self.suit_rotation_sliders:
+            slider.valueChanged.connect(self._persist_suit_color_rotations)
         self.custom_hud_color_button.clicked.connect(self._open_color_picker)
         self.sound_mode_combo.currentIndexChanged.connect(self._on_sound_mode_update)
 
@@ -103,14 +118,13 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
             check.stateChanged.connect(partial(self._on_check_update, check, field_name))
 
     def on_new_cosmetic_patches(self, patches: PrimeCosmeticPatches) -> None:
+        self._cosmetic_patches = patches
         self.open_map_check.setChecked(patches.open_map)
         self.pickup_markers_check.setChecked(patches.pickup_markers)
         self.force_fusion_check.setChecked(patches.force_fusion)
+        self.rainbow_phazon_ball_check.setChecked(patches.rainbow_phazon_ball)
         self.custom_hud_color.setChecked(patches.use_hud_color)
-        self.power_suit_rotation_field.setValue(patches.suit_color_rotations[0])
-        self.varia_suit_rotation_field.setValue(patches.suit_color_rotations[1])
-        self.gravity_suit_rotation_field.setValue(patches.suit_color_rotations[2])
-        self.phazon_suit_rotation_field.setValue(patches.suit_color_rotations[3])
+        self._set_suit_rotation_sliders(patches.active_suit_color_rotations)
         self.on_new_user_preferences(patches.user_preferences)
 
     def on_new_user_preferences(self, user_preferences: PrimeUserPreferences) -> None:
@@ -125,17 +139,56 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
                 check = self.field_to_check_mapping[field.name]
                 check.setChecked(getattr(user_preferences, field.name))
 
+    def _set_suit_rotation_sliders(self, rotations: tuple[int, int, int, int]) -> None:
+        for slider, rotation in zip(self.suit_rotation_sliders, rotations):
+            with QtCore.QSignalBlocker(slider):
+                slider.setValue(rotation)
+        self._update_suit_previews()
+
+    def _on_fusion_toggled(self) -> None:
+        self._set_suit_rotation_sliders(self._cosmetic_patches.active_suit_color_rotations)
+
     def _persist_suit_color_rotations(self) -> None:
-        suit_color_rotations_tuple = (
-            self.power_suit_rotation_field.value(),
-            self.varia_suit_rotation_field.value(),
-            self.gravity_suit_rotation_field.value(),
-            self.phazon_suit_rotation_field.value(),
-        )
+        rotations = tuple(slider.value() for slider in self.suit_rotation_sliders)
+        field_name = "fusion_suit_color_rotations" if self._cosmetic_patches.force_fusion else "suit_color_rotations"
         self._cosmetic_patches = dataclasses.replace(
-            self._cosmetic_patches, suit_color_rotations=suit_color_rotations_tuple
+            self._cosmetic_patches,
+            **{field_name: rotations},  # type: ignore[arg-type]
         )
-        self._update_color_squares()
+        self._update_suit_previews()
+
+    def _suit_render(self, file_name: str, size: QtCore.QSize) -> numpy.ndarray:
+        cached = self._suit_render_cache.get(file_name)
+        if cached is None:
+            render = QtGui.QImage(str(_suit_render_path(file_name))).scaled(
+                size * self._preview_pixel_ratio,
+                QtCore.Qt.AspectRatioMode.IgnoreAspectRatio,
+                QtCore.Qt.TransformationMode.SmoothTransformation,
+            )
+            cached = color_lib.image_to_rgba_array(render)
+            self._suit_render_cache[file_name] = cached
+        return cached
+
+    def _update_suit_previews(self) -> None:
+        prefix = "fusion_" if self._cosmetic_patches.force_fusion else ""
+        rotations = self._cosmetic_patches.active_suit_color_rotations
+
+        for i, suit in enumerate(SUIT_NAMES):
+            matrix = color_lib.hue_rotate_matrix(rotations[i])
+            self.suit_rotation_sliders[i].setToolTip(f"{rotations[i]} degrees")
+
+            for label, file_name, size in (
+                (self.suit_image_labels[i], f"{prefix}{suit}", UNMORPHED_SIZE),
+                (self.ball_image_labels[i], f"{prefix}{suit}_ball", MORPHED_SIZE),
+            ):
+                render = color_lib.hue_rotate_rgba_array(self._suit_render(file_name, size), matrix)
+                pixmap = QtGui.QPixmap.fromImage(render)
+                pixmap.setDevicePixelRatio(self._preview_pixel_ratio)
+                label.setPixmap(pixmap)
+
+    def _on_rainbow_phazon_ball_toggled(self, checked: bool) -> None:
+        style = f"QCheckBox {{ color: {RAINBOW_GRADIENT}; }}" if checked else ""
+        self.rainbow_phazon_ball_check.setStyleSheet(style)
 
     def _open_color_picker(self) -> None:
         init_color = self._cosmetic_patches.hud_color
@@ -160,24 +213,6 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
         color = self._cosmetic_patches.hud_color
         style = "background-color: rgb({},{},{})".format(*color)
         self.custom_hud_color_square.setStyleSheet(style)
-
-        for i, suit_colors in enumerate(SUIT_DEFAULT_COLORS):
-            for j, color in enumerate(suit_colors):
-                color = color_lib.hue_rotate_color(color, self._cosmetic_patches.suit_color_rotations[i])
-                style = "background-color: rgb({},{},{})".format(*color)
-                self.suit_color_preview_squares[i][j].setStyleSheet(style)
-
-    def _add_preview_color_square_to_layout(
-        self, layout: QtWidgets.QLayout, default_color: tuple[int, int, int]
-    ) -> QtWidgets.QFrame:
-        color_square = QtWidgets.QFrame(self.game_changes_box)
-        color_square.setMinimumSize(QtCore.QSize(22, 22))
-        color_square.setSizePolicy(
-            QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
-        )
-        color_square.setStyleSheet("background-color: rgb({},{},{})".format(*default_color))
-        layout.addWidget(color_square)
-        return color_square
 
     @property
     def cosmetic_patches(self) -> PrimeCosmeticPatches:
@@ -212,3 +247,4 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
 
     def reset(self) -> None:
         self.on_new_cosmetic_patches(PrimeCosmeticPatches())
+        self._update_color_squares()
