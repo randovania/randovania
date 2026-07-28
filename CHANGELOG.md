@@ -9,17 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Multiworld worlds can now be abandoned; abandoning a world is irreversible. An abandoned world can be played automatically by your own Randovania instance like a bot, via a dedicated game connection: it collects one location that is in logic for it every few seconds, and keeps doing so as it receives more items from other players.
 - Added: You can now disable game connections, preventing them from connecting without having to be removed entirely.
-- Changed: Improved average location distribution of "inert" pickups such as Prime Artifacts and Echoes STKs.
 - Changed: Automatic Item Tracker: The selected theme for the default game is now always shown while the selected game connection is not connected.
 - Changed: The "History" tab in the "Multiworld session" window now displays pickups where the provider and receiver are the same world, even in non-coop sessions.
 - Fixed: Automatic Item Tracker: The text "Not currently connected to any games" is now always shown when the selected game connection is not connected and no default game is set.
 - Fixed: In the Data Visualizer and Editor, when the game uses region images these images are no longer be stretched in certain situations.
 - Fixed: In the Data Visualizer and Editor, when panning away from the selected area the region image is now displayed correctly.
 - Fixed: In the Data Visualizer and Editor, when changing the zoom the pan is adjusted now relative to either the center or the mouse position.
-
-### Generator
-
-- Fixed: Some cases of not correctly identifying which nodes are reachable.
 
 ### Resolver
 
@@ -57,6 +52,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Fusion
 
 - Fixed: Typo in the knowledge trick description.
+
+#### Logic Database
+
+##### Sector 1 (SRX)
+
+- Fixed: Atmospheric Stabilizer Southeast: Destroying the Stabilizer with Screw Attack is now only possible if the Primary Geron Vulnerabilities setting is disabled. It's also not possible anymore to destroy it with Hi-Jump.
+- Added: Atmospheric Stabilizer Southeast: Destroying the Stabilizer is now possible with Power Bombs and Beginner Knowledge if the Primary Geron Vulnerabilities setting is disabled.
+
+##### Sector 3 (PYR)
+
+- Changed: Alcove: The Intermediate Shinespark trick from Deserted Runway to Alcove no longer requires L0 Keycard in Door Lock Rando settings.
 
 ### Metroid: Samus Returns
 
