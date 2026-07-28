@@ -16,10 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: In the Data Visualizer and Editor, when panning away from the selected area the region image is now displayed correctly.
 - Fixed: In the Data Visualizer and Editor, when changing the zoom the pan is adjusted now relative to either the center or the mouse position.
 
-### Generator
-
-- Fixed: Some cases of not correctly identifying which nodes are reachable.
-
 ### Resolver
 
 - Fixed: Some games being wrongly considered impossible.
@@ -56,6 +52,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Fusion
 
 - Fixed: Typo in the knowledge trick description.
+
+#### Logic Database
+
+##### Sector 1 (SRX)
+
+- Fixed: Atmospheric Stabilizer Southeast: Destroying the Stabilizer with Screw Attack is now only possible if the Primary Geron Vulnerabilities setting is disabled. It's also not possible anymore to destroy it with Hi-Jump.
+- Added: Atmospheric Stabilizer Southeast: Destroying the Stabilizer is now possible with Power Bombs and Beginner Knowledge if the Primary Geron Vulnerabilities setting is disabled.
+
+##### Sector 3 (PYR)
+
+- Changed: Alcove: The Intermediate Shinespark trick from Deserted Runway to Alcove no longer requires L0 Keycard in Door Lock Rando settings.
 
 ### Metroid: Samus Returns
 
