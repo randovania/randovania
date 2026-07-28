@@ -1765,12 +1765,24 @@
                                                             "comment": "Damage requirements",
                                                             "items": [
                                                                 {
-                                                                    "type": "resource",
+                                                                    "type": "and",
                                                                     "data": {
-                                                                        "type": "damage",
-                                                                        "name": "Damage",
-                                                                        "amount": 200,
-                                                                        "negate": false
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "damage",
+                                                                                    "name": "Damage",
+                                                                                    "amount": 200,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Fight (Trivial)"
+                                                                            }
+                                                                        ]
                                                                     }
                                                                 },
                                                                 {
@@ -1935,6 +1947,10 @@
                                                                 }
                                                             ]
                                                         }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Fight (Trivial)"
                                                     }
                                                 ]
                                             }
@@ -1993,6 +2009,10 @@
                                                             "amount": 15,
                                                             "negate": false
                                                         }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Fight (Trivial)"
                                                     }
                                                 ]
                                             }
