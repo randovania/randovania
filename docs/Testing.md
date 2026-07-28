@@ -90,7 +90,7 @@ The point of these tests is that they fail whenever your change alters the outpu
 Do not edit those files by hand. Instead, run:
 
 ```sh
-uv run randovania development update-committed
+uv run randovania development update-acceptance-tests
 ```
 
 This regenerates everything in the repository that Randovania itself generates:
@@ -103,6 +103,6 @@ This regenerates everything in the repository that Randovania itself generates:
 
 1. Write the test as usual, taking the `acceptance_check` fixture as an argument.
 2. Call `acceptance_check(path, value)`, choosing a path inside `test/test_files/`. The file does not have to exist yet.
-3. Run `uv run randovania development update-committed` to create it, then commit it along with your test.
+3. Run `uv run randovania development update-acceptance-tests` to create it, then commit it along with your test.
 
 Note that `acceptance_check` accepts `dict`/`list` which gets stored as JSON, or `bytes` which is stored as-is.

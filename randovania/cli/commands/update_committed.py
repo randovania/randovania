@@ -18,6 +18,16 @@ def _run_acceptance_tests(*extra_args: str) -> int:
     return subprocess.run(command, cwd=_REPO_ROOT, check=False).returncode
 
 
+def update_acceptance_tests_command_logic(args: Namespace) -> int:
+    print("Rewriting the reference files of all acceptance tests...", flush=True)
+    if _run_acceptance_tests("--update-committed") != 0:
+        return 1
+
+    # A rewritten reference file can be the input of another acceptance test, and xdist gives no ordering between them.
+    print("Verifying the rewritten reference files...", flush=True)
+    return _run_acceptance_tests()
+
+
 def update_committed_command_logic(args: Namespace) -> int:
     from randovania.cli.commands.expected_seed_hash import update_expected_seed_hash_logic
     from randovania.cli.database import refresh_game_description_logic, refresh_pickup_database_logic
@@ -37,13 +47,16 @@ def update_committed_command_logic(args: Namespace) -> int:
     print("Updating the expected seed hash of all games...", flush=True)
     asyncio.run(update_expected_seed_hash_logic(Namespace(games=[])))
 
-    print("Rewriting the reference files of all acceptance tests...", flush=True)
-    if _run_acceptance_tests("--update-committed") != 0:
-        return 1
+    return update_acceptance_tests_command_logic(args)
 
-    # A rewritten reference file can be the input of another acceptance test, and xdist gives no ordering between them.
-    print("Verifying the rewritten reference files...", flush=True)
-    return _run_acceptance_tests()
+
+def add_update_acceptance_tests_command(sub_parsers: _SubParsersAction) -> None:
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "update-acceptance-tests",
+        help="Rewrites and verifies the committed reference files of all acceptance tests.",
+    )
+
+    parser.set_defaults(func=update_acceptance_tests_command_logic)
 
 
 def add_update_committed_command(sub_parsers: _SubParsersAction) -> None:
