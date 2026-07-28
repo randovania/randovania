@@ -970,6 +970,17 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             name: _starting_items_value_for(self.resource_db, starting_resources, index)
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
+        starting_items.update(
+            {
+                "missileLauncher": True,
+                "powerBombLauncher": True,
+                "powerSuit": 0,
+                "springBall": False,
+                "unknownItem1": 0,
+                "unlimitedMissiles": False,
+                "unlimitedPowerBombs": False,
+            }
+        )
 
         if not self.configuration.legacy_mode:
             idrone_config = {
