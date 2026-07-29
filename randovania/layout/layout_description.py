@@ -7,6 +7,7 @@ import hashlib
 import itertools
 import json
 import typing
+import uuid
 from dataclasses import dataclass
 from functools import lru_cache
 from random import Random
@@ -287,6 +288,13 @@ class LayoutDescription:
     @property
     def shareable_hash(self) -> str:
         return shareable_hash(self.shareable_hash_bytes)
+
+    @property
+    def seed_uuid(self) -> uuid.UUID:
+        """A UUID deterministically derived from the seed, for games that need a stable
+        per-seed instance identifier even when not played as part of a multiworld session."""
+        bytes_representation = json.dumps(self._serialized_patches).encode()
+        return uuid.UUID(bytes=hashlib.blake2b(bytes_representation, digest_size=16).digest())
 
     @property
     def shareable_word_hash(self) -> str:
