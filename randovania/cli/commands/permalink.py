@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import asyncio
-import random
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -21,7 +20,7 @@ def _error(msg: str) -> None:
 
 def create_permalink(args: Namespace) -> Permalink:
     from randovania.interface_common.preset_manager import PresetManager
-    from randovania.layout.generator_parameters import GeneratorParameters
+    from randovania.layout.generator_parameters import GeneratorParameters, random_seed_number
     from randovania.layout.permalink import Permalink
 
     preset_manager = PresetManager(None)
@@ -57,7 +56,7 @@ def create_permalink(args: Namespace) -> Permalink:
 
     seed = args.seed_number
     if seed is None:
-        seed = random.randint(0, 2**31)
+        seed = random_seed_number()
 
     return Permalink.from_parameters(
         GeneratorParameters(

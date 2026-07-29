@@ -4,7 +4,6 @@ import asyncio
 import collections
 import itertools
 import logging
-import random
 from typing import TYPE_CHECKING, Any, NamedTuple, Self
 
 from PySide6 import QtCore, QtGui, QtWidgets
@@ -29,7 +28,7 @@ from randovania.gui.widgets.audit_log_model import AuditEntryListDatabaseModel
 from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget, connect_to
 from randovania.interface_common import generator_frontend
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.generator_parameters import GeneratorParameters, random_seed_number
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
@@ -748,7 +747,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         permalink = Permalink.from_parameters(
             GeneratorParameters(
-                seed_number=random.randint(0, 2**31),
+                seed_number=random_seed_number(),
                 spoiler=spoiler,
                 presets=[VersionedPreset.from_str(world.preset_raw).get_preset() for world in self._session.worlds],
             )
