@@ -216,45 +216,47 @@ def _create_results_screen_text(description: LayoutDescription) -> str:
     return f"{randovania.VERSION} | Seed Hash - {description.shareable_word_hash} ({description.shareable_hash})"
 
 
-def _join_shortened_words(words: list[str], lengths: list[int]) -> str:
-    result = ""
-    for i, (word, length) in enumerate(zip(words, lengths)):
-        result += word[:length]
-        if length < len(word):
-            result += "."
-        elif i < len(words) - 1:
-            result += " "
-    return result
+def _abbreviate_word(word: str, length: int) -> str:
+    """Abbreviated words end in a dot and whole words in a space, so no separator is spent on a dot."""
+    if length < len(word):
+        return word[:length] + "."
+    return word + " "
+
+
+def _join_abbreviated_words(words: list[str], lengths: list[int]) -> str:
+    abbreviations = [_abbreviate_word(word, length) for word, length in zip(words, lengths, strict=True)]
+    return "".join(abbreviations).rstrip()
+
+
+def _balanced_word_lengths(words: list[str], max_length: int) -> list[int]:
+    lengths = [1] * len(words)
+    longest_word = max(len(word) for word in words)
+
+    for target_length in range(2, longest_word + 1):
+        for i, word in enumerate(words):
+            if len(word) < target_length:
+                continue
+
+            candidate_lengths = list(lengths)
+            candidate_lengths[i] = target_length
+
+            if len(_join_abbreviated_words(words, candidate_lengths)) > max_length:
+                continue
+
+            lengths = candidate_lengths
+
+    return lengths
 
 
 def _shorten_word_hash(word_hash: str, max_length: int = _SAVE_NAME_MAX_LENGTH) -> str:
-    """Fits a word hash into max_length by shortening every word by a similar amount, marking each cut with a dot."""
+    """Fits a word hash into max_length by abbreviating every word by a similar amount, marking each cut with a dot."""
     words = word_hash.split()
     if not words:
         return word_hash[:max_length]
 
-    lengths = [len(word) for word in words]
-    if len(_join_shortened_words(words, lengths)) <= max_length:
-        return _join_shortened_words(words, lengths)
-
-    cap = max(lengths)
-    while cap > 1 and len(_join_shortened_words(words, [cap] * len(words))) > max_length:
-        cap -= 1
-    lengths = [min(cap, length) for length in lengths]
-
-    grew = True
-    while grew:
-        grew = False
-        for i, word in enumerate(words):
-            if lengths[i] >= len(word):
-                continue
-            candidate = list(lengths)
-            candidate[i] += 1
-            if len(_join_shortened_words(words, candidate)) <= max_length:
-                lengths = candidate
-                grew = True
-
-    return _join_shortened_words(words, lengths)[:max_length].rstrip()
+    lengths = _balanced_word_lengths(words, max_length)
+    abbreviated = _join_abbreviated_words(words, lengths)
+    return abbreviated[:max_length].rstrip()
 
 
 def _random_factor(rng: Random, min: float, max: float, target: float) -> float:

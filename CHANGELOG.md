@@ -16,13 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Gravity Suit HD model looking more blue/purple than the low-poly counterpart when color customized.
 - Fixed: Power Suit and Varia Suit color customization both affecting shared chest-piece texture.
 - Fixed: Ruined Shrine: Large beetle does not aggro player until cutscene duration elapses regardless the cutscene was skipped.
-- Fixed: Life Grove: Boostless spinner manipulation trick does not work if pillar raised cutscene skipped.
-- Added: Replaced vanilla's inventory-based completion percent calculation with an algorithm based on location count. Completion percent now always reflects the progress towards collection of all non-nothing pickups in the player's local game.
-- Added: Power Suit and Varia Suit color customization now affect the textures of Samus' gunship.
+- Fixed: Life Grove: Boostless spinner manipulation trick not working if the pillar rise cutscene is skipped.
+- Added: Replaced vanilla's inventory-based completion percent calculation with an algorithm based on location count. Completion percent now always reflects the progress towards collection of all non-nothing pickups in the player's world.
+- Added: Power Suit color customization now affects Samus' gunship.
 - Added: Rainbow Ball cosmetic option.
 - Changed: Organized cosmetic options into collapsable sections, suit customization now features preview images and Fusion Suit color preferences are now saved independently from non-Fusion.
 - Changed: Morph Ball now always renders the "inner glow" color appropriate for the current highest suit instead of the vanilla behavior which renders the "wrong" color when Spider, Gravity or Phazon are collected out of the vanilla-intended order.
-- Changed: It is now impossible for players to loading save slots which belong to another rdvgame or multiworld slot.
+- Changed: It is now impossible for players to load save slots which belong to another rdvgame or multiworld slot.
 - Changed: In-game hint option is now hidden.
 - Changed: Save Station Mines A: Automatically unlock gate if "Unlock Save Station Doors" option is enabled or any time the player spawns into the room (starting room, one-way anywhere elevator).
 - Changed: Research Lab Aether: Unlock door when the Metroid dies in addition to the breakable wall.
@@ -37,6 +37,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Magmoor Caverns
 
 - Fixed: Monitor Station: Heat run logic assumed Charge Beam and Missiles could be fired without the Arm Cannon.
+
+##### Phazon Mines
+
+- Changed: Save Station Mines A: Now a valid target for Starting Room and Shuffled Elevator destination. No longer reqiures Scan Visor when "Unlock Save Station Doors" option is enabled.
 
 ## [10.10.0] - 2026-08-02
 
