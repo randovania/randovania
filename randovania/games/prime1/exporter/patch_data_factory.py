@@ -38,6 +38,8 @@ if TYPE_CHECKING:
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
+_SAVE_NAME_MAX_LENGTH = 17
+
 _STARTING_ITEM_NAME_TO_INDEX = {
     "powerBeam": "Power",
     "ice": "Ice",
@@ -212,6 +214,47 @@ def _name_for_start_location(region_list: RegionList, location: NodeIdentifier) 
 
 def _create_results_screen_text(description: LayoutDescription) -> str:
     return f"{randovania.VERSION} | Seed Hash - {description.shareable_word_hash} ({description.shareable_hash})"
+
+
+def _join_shortened_words(words: list[str], lengths: list[int]) -> str:
+    result = ""
+    for i, (word, length) in enumerate(zip(words, lengths)):
+        result += word[:length]
+        if length < len(word):
+            result += "."
+        elif i < len(words) - 1:
+            result += " "
+    return result
+
+
+def _shorten_word_hash(word_hash: str, max_length: int = _SAVE_NAME_MAX_LENGTH) -> str:
+    """Fits a word hash into max_length by shortening every word by a similar amount, marking each cut with a dot."""
+    words = word_hash.split()
+    if not words:
+        return word_hash[:max_length]
+
+    lengths = [len(word) for word in words]
+    if len(_join_shortened_words(words, lengths)) <= max_length:
+        return _join_shortened_words(words, lengths)
+
+    cap = max(lengths)
+    while cap > 1 and len(_join_shortened_words(words, [cap] * len(words))) > max_length:
+        cap -= 1
+    lengths = [min(cap, length) for length in lengths]
+
+    grew = True
+    while grew:
+        grew = False
+        for i, word in enumerate(words):
+            if lengths[i] >= len(word):
+                continue
+            candidate = list(lengths)
+            candidate[i] += 1
+            if len(_join_shortened_words(words, candidate)) <= max_length:
+                lengths = candidate
+                grew = True
+
+    return _join_shortened_words(words, lengths)[:max_length].rstrip()
 
 
 def _random_factor(rng: Random, min: float, max: float, target: float) -> float:
@@ -1112,7 +1155,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                     "description": f"Seed Hash: {self.description.shareable_word_hash}",
                 },
                 "mainMenuMessage": f"Randovania v{randovania.VERSION}\n{self.description.shareable_word_hash}",
-                "saveName": self.description.shareable_word_hash[:17],
+                "saveName": _shorten_word_hash(self.description.shareable_word_hash),
                 "creditsString": credits_string,
                 "artifactHints": {artifact.long_name: text for artifact, text in resulting_hints.items()},
                 "artifactTempleLayerOverrides": {

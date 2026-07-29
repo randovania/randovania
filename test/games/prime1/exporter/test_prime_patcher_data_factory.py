@@ -9,7 +9,10 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime1.exporter import game_exporter
-from randovania.games.prime1.exporter.patch_data_factory import prime1_pickup_details_to_patcher
+from randovania.games.prime1.exporter.patch_data_factory import (
+    _shorten_word_hash,
+    prime1_pickup_details_to_patcher,
+)
 
 
 @pytest.mark.parametrize("is_for_remote_player", [False, True])
@@ -85,3 +88,19 @@ def test_adjust_model_names(test_files_dir, case_name: str, external_assets: boo
     data = test_files_dir.read_json("patcher_data", "prime1", case_name, "world_1.json")
 
     game_exporter.adjust_model_names(data, assets_meta, external_assets)
+
+
+@pytest.mark.parametrize(
+    ("word_hash", "expected"),
+    [
+        ("Grove Ice Bomb", "Grove Ice Bomb"),
+        ("Wavebuster Thardus Grove", "Waveb.Thard.Grove"),
+        ("Wavebuster Thardus", "Wavebuste.Thardus"),
+        ("Supercalifragilistic", "Supercalifragili."),
+        ("Metroid Prime Chozo Artifact Temple", "Met.Pri.Ch.Ar.Te."),
+        ("A B C D E F G H I J", "A B C D E F G H I"),
+    ],
+)
+def test_shorten_word_hash(word_hash: str, expected: str) -> None:
+    assert _shorten_word_hash(word_hash) == expected
+    assert len(expected) <= 17
