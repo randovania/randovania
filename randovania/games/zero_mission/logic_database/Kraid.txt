@@ -466,9 +466,9 @@ Extra - room_id: [12]
   * Blue Door to Elevator to Brinstar/Door to Corrosive Pool
   * Extra - door_idx: [33]
   > Door to Block Column Hub
-      Screw Attack and After Kraid Chozo Statue Item Aquired and Use Space Jump
+      Screw Attack and After Kraid Chozo Statue Item Acquired and Use Space Jump
   > Open Passage to Acid Fall
-      After Kraid Chozo Statue Item Aquired
+      After Kraid Chozo Statue Item Acquired
 
 > Door to Block Column Hub; Heals? False
   * Layers: default
@@ -476,10 +476,12 @@ Extra - room_id: [12]
   * Extra - door_idx: [34]
   > Door to Elevator to Brinstar
       All of the following:
-          After Kraid Chozo Statue Item Aquired
+          After Kraid Chozo Statue Item Acquired
           Any of the following:
-              Missiles and Zipline Activation
+              # The enemies all spawn on the right before Kraid is defeated so this strategy does not work then
+              Missiles ≥ 10 and Zipline Activation and After Boss Kraid Defeated
               Screw Attack and Use Space Jump
+              Speed Booster and Shinespark (Beginner)
   > Open Passage to Acid Fall
       Trivial
 
@@ -627,7 +629,7 @@ Extra - room_id: [19]
   > Door to Replenishment Station
       Trivial
   > Tunnel to Speed Booster Tutorial Slope
-      Can Use Any Bombs
+      Can Break Single Bomb Blocks
 
 > Door to Replenishment Station; Heals? False
   * Layers: default
@@ -659,8 +661,10 @@ Extra - room_id: [20]
   > Save Station
       Trivial
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
+  * Extra - X: 9
+  * Extra - Y: 9
   > Door to Sidehopper Path
       Trivial
   > Door to Hidden Drop
@@ -708,14 +712,14 @@ Extra - room_id: [22]
   * Blue Door to Space Jump Access/Door to Sidehopper Path
   * Extra - door_idx: [52]
   > Door to Save Station (South)
-      Missiles or Combat (Intermediate)
+      Trivial
 
 > Door to Save Station (South); Heals? False
   * Layers: default
   * Blue Door to Save Station (South)/Door to Sidehopper Path
   * Extra - door_idx: [53]
   > Door to Space Jump Access
-      Missiles or Combat (Intermediate)
+      Trivial
 
 ----------------
 Drain
@@ -728,9 +732,7 @@ Extra - room_id: [23]
   > Door to Ball Launcher Speedway
       Trivial
   > Open Passage to Space Jump Access
-      Any of the following:
-          Can Use Any Bombs
-          Screw Attack and Knowledge (Beginner)
+      Can Break Single Bomb Blocks
 
 > Door to Ball Launcher Speedway; Heals? False
   * Layers: default
@@ -771,9 +773,9 @@ Extra - room_id: [25]
   * Vertical Passage to Drain/Open Passage to Space Jump Access
   * Extra - door_idx: [60]
   > Door to Sidehopper Path
-      After Kraid Chozo Statue Item Aquired
+      After Kraid Chozo Statue Item Acquired
   > Door to Save Station (Southwest)
-      Can Use Any Bombs
+      Can Break Single Bomb Blocks
 
 > Door to Sidehopper Path; Heals? False
   * Layers: default
@@ -781,8 +783,13 @@ Extra - room_id: [25]
   * Extra - door_idx: [61]
   > Door to Save Station (Southwest)
       All of the following:
-          Morph Ball and After Kraid Chozo Statue Item Aquired
-          Missiles or Can Bounce in Ball
+          After Kraid Chozo Statue Item Acquired
+          Any of the following:
+              Can Break Single Bomb Blocks
+              All of the following:
+                  Morph Ball
+                  # NOTE: Assumes 2x2 shot block is broken to access chozo statue item. If this is modified we will need to add a long beam req.
+                  Missiles or Can Bounce in Ball
 
 > Door to Save Station (Southwest); Heals? False
   * Layers: default
@@ -790,7 +797,7 @@ Extra - room_id: [25]
   * Extra - door_idx: [77]
   > Door to Sidehopper Path
       All of the following:
-          Morph Ball and Power Grip and After Kraid Chozo Statue Item Aquired
+          After Kraid Chozo Statue Item Acquired and Tunnel Climb
           Missiles or Can Bounce in Ball
   > Door to Space Jump Chamber
       Trivial
@@ -809,7 +816,7 @@ Extra - room_id: [25]
   > Door to Save Station (Southwest)
       Trivial
   > Tunnel to Space Jump Chamber
-      Morph Ball and Power Grip
+      Tunnel Climb
 
 ----------------
 Illusionary Acid Pool
@@ -884,7 +891,7 @@ Extra - room_id: [27]
   * Blue Door to Speed Booster Tutorial Slope/Door to Block Column Hub
   * Extra - door_idx: [67]
   > Door to Acid Fall
-      Speed Booster
+      Speed Booster or Use Space Jump
 
 > Door to Save Station (East); Heals? False
   * Layers: default
@@ -902,14 +909,14 @@ Extra - room_id: [28]
   * Blue Door to Kraid Arena Access/Door to Speed Booster Tutorial Slope
   * Extra - door_idx: [68]
   > Door to Block Column Hub
-      After Kraid Chozo Statue Item Aquired
+      After Kraid Chozo Statue Item Acquired
 
 > Door to Block Column Hub; Heals? False
   * Layers: default
   * Blue Door to Block Column Hub/Door to Speed Booster Tutorial Slope
   * Extra - door_idx: [69]
   > Door to Kraid Arena Access
-      After Kraid Chozo Statue Item Aquired
+      After Kraid Chozo Statue Item Acquired
   > Open Passage to Kraid Arena
       Speed Booster
 
@@ -961,30 +968,30 @@ Extra - room_id: [30, 37]
   * Horizontal Passage to Kraid's Reliquary/Open Passage to Kraid Arena
   * Extra - door_idx: [81, 90]
   > Arena
-      Trivial
+      After Boss Kraid Defeated
 
 > Open Passage to Speed Booster Tutorial Slope; Heals? False
   * Layers: default
   * Horizontal Passage to Speed Booster Tutorial Slope/Open Passage to Kraid Arena
   > Arena
-      Trivial
+      Speed Booster
 
 > Arena; Heals? False
   * Layers: default
   > Door to Kraid Arena Access
-      Trivial
+      After Boss Kraid Defeated and Climb High Ledges
   > Open Passage to Kraid's Reliquary
-      Trivial
+      After Boss Kraid Defeated
   > Open Passage to Speed Booster Tutorial Slope
-      Trivial
+      After Boss Kraid Defeated
   > Event - Kraid
       Trivial
 
 > Event - Kraid; Heals? False
   * Layers: default
   * Event Boss Kraid Defeated
-  > Arena
-      Trivial
+  > Open Passage to Kraid's Reliquary
+      Can Break Single Bomb Blocks
 
 ----------------
 Save Station (North)
@@ -1024,8 +1031,10 @@ Extra - room_id: [32]
   > Save Station
       Trivial
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
+  * Extra - X: 8
+  * Extra - Y: 9
   > Door to Space Jump Access
       Trivial
 
@@ -1045,7 +1054,7 @@ Extra - room_id: [33]
   * Blue Door to Space Jump Access/Door to Space Jump Chamber
   * Extra - door_idx: [80]
   > In Front of Statue
-      After Kraid Chozo Statue Item Aquired
+      After Kraid Chozo Statue Item Acquired
 
 > Pickup (Unknown Item 2); Heals? False
   * Layers: default
@@ -1056,14 +1065,14 @@ Extra - room_id: [33]
 
 > Event - Statue Item Acquired; Heals? False
   * Layers: default
-  * Event Kraid Chozo Statue Item Aquired
+  * Event Kraid Chozo Statue Item Acquired
   > In Front of Statue
       Trivial
 
 > In Front of Statue; Heals? False
   * Layers: default
   > Door to Space Jump Access
-      After Kraid Chozo Statue Item Aquired
+      After Kraid Chozo Statue Item Acquired
   > Pickup (Unknown Item 2)
       Trivial
 
@@ -1119,8 +1128,10 @@ Extra - room_id: [36]
   > Save Station
       Screw Attack
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
+  * Extra - X: 10
+  * Extra - Y: 9
   > Door to Block Column Hub
       Trivial
   > Open Passage to Norfair Tunnel
@@ -1153,20 +1164,24 @@ Extra - room_id: [39]
   * Layers: default
   * Blue Door to Apex Launcher Hub/Door to Save Station (Northeast)
   * Extra - door_idx: [93]
-  > Door to Zipline Activation Chamber
+  > Save Station
       Trivial
 
 > Door to Zipline Activation Chamber; Heals? False
   * Layers: default
   * Blue Door to Zipline Activation Chamber/Door to Save Station (Northeast)
   * Extra - door_idx: [94]
-  > Door to Apex Launcher Hub
+  > Save Station
       Trivial
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - X: 9
   * Extra - Y: 9
+  > Door to Apex Launcher Hub
+      Trivial
+  > Door to Zipline Activation Chamber
+      Trivial
 
 ----------------
 Acid Worm Arena Access
