@@ -1769,7 +1769,7 @@
                         "Door to Elevator Access A": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill or avoid enemies",
                                 "items": [
                                     {
                                         "type": "and",
@@ -1963,7 +1963,7 @@
                         "Door to Waste Disposal": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank enemies",
                                 "items": [
                                     {
                                         "type": "or",
@@ -2073,8 +2073,13 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Beginner)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -2893,7 +2898,7 @@
                         "Door to Security Access A": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Pirates",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2910,8 +2915,13 @@
                                             "comment": "Avoid Pirates",
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Expert)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -3061,7 +3071,7 @@
                         "Door to Security Access B": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Pirates",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3078,8 +3088,13 @@
                                             "comment": "Avoid Pirates",
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Expert)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -3238,7 +3253,7 @@
                         "Event - Mine Security Station Barrier Opened": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Pirates",
                                 "items": [
                                     {
                                         "type": "or",
@@ -3270,8 +3285,13 @@
                                                                                 "comment": "Avoid All Pirates",
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "template",
-                                                                                        "data": "Fight (Ludicrous)"
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 5,
+                                                                                            "negate": false
+                                                                                        }
                                                                                     },
                                                                                     {
                                                                                         "type": "resource",
@@ -3287,10 +3307,6 @@
                                                                                         "data": {
                                                                                             "comment": "Fight Shadow Pirates",
                                                                                             "items": [
-                                                                                                {
-                                                                                                    "type": "template",
-                                                                                                    "data": "Any Beam"
-                                                                                                },
                                                                                                 {
                                                                                                     "type": "or",
                                                                                                     "data": {
@@ -3558,8 +3574,13 @@
                                                                     "comment": "Avoid Pirates",
                                                                     "items": [
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Fight (Expert)"
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -3731,7 +3752,7 @@
                         "Event - Mine Security Station Doors Unlocked": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill Pirates",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4868,7 +4889,7 @@
                         "Pickup (Artifact of Warrior)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill Phazon Elite",
                                 "items": [
                                     {
                                         "type": "template",
@@ -4905,10 +4926,6 @@
                                         "data": {
                                             "comment": "Kill Phazon Elite (slightly different than the Elite Pirate Template)",
                                             "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Any Beam"
-                                                },
                                                 {
                                                     "type": "or",
                                                     "data": {
@@ -5123,7 +5140,7 @@
                         "Top Floor": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
                                         "type": "or",
@@ -5289,8 +5306,13 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Intermediate)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -5568,7 +5590,7 @@
                         "Door to Security Access B": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
                                         "type": "and",
@@ -5622,8 +5644,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Fight (Intermediate)"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -6408,52 +6435,65 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Event - Elite Pirate Defeated": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "https://youtu.be/mx0rQa9ZAY4",
+                                "comment": "Kill, avoid or tank Elite Pirate",
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://youtu.be/mx0rQa9ZAY4",
                                             "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Charge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Fight (Trivial)"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Charge",
+                                                        "type": "tricks",
+                                                        "name": "Combat",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Trivial)"
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Fight (Beginner)"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 200,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 200,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Fight (Trivial)"
+                                                            }
+                                                        ]
                                                     }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Fight (Trivial)"
                                                 }
                                             ]
                                         }
@@ -6719,7 +6759,7 @@
                         "Door to Ventilation Shaft": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -6814,8 +6854,13 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Fight (Intermediate)"
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -7464,7 +7509,7 @@
                         "Door to Transport Access": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
                                         "type": "or",
@@ -7670,8 +7715,13 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Fight (Intermediate)"
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
                                                                         },
                                                                         {
                                                                             "type": "and",
@@ -7798,7 +7848,7 @@
                         "Door to Maintenance Tunnel": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
                                         "type": "or",
@@ -8086,8 +8136,13 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Fight (Intermediate)"
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
                                                                         },
                                                                         {
                                                                             "type": "and",
@@ -8125,7 +8180,7 @@
                         "Pickup (Missile)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8248,8 +8303,13 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Fight (Intermediate)"
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
                                                                         },
                                                                         {
                                                                             "type": "and",
@@ -8620,7 +8680,7 @@
                         "Door to Dynamo Access": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Pirates",
                                 "items": [
                                     {
                                         "type": "and",
@@ -8674,8 +8734,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Fight (Intermediate)"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -8725,7 +8790,7 @@
                         "Door to Ventilation Shaft": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Pirates",
                                 "items": [
                                     {
                                         "type": "or",
@@ -8865,8 +8930,13 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Intermediate)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -10745,31 +10815,44 @@
                             }
                         },
                         "Event - Security Drone": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "Easy kills - Wavebuster (no X-Ray): https://youtu.be/3Y2n-boOGUw Super Missiles: https://youtu.be/aprVv7pePYc",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Fight (Beginner)"
-                                    },
-                                    {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Easy kills - Wavebuster (no X-Ray): https://youtu.be/3Y2n-boOGUw Super Missiles: https://youtu.be/aprVv7pePYc",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 100,
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Trivial)"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 100,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Fight (Trivial)"
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -10890,95 +10973,108 @@
                         "Door to Quarantine Access A": {
                             "type": "and",
                             "data": {
-                                "comment": "The Security Drone event triggers door locks on all doors in Central Dynamo except for the door to Quarantine Access A.",
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Power Bombs"
-                                    },
-                                    {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "The Security Drone event triggers door locks on all doors in Central Dynamo except for the door to Quarantine Access A.",
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "template",
+                                                    "data": "Can Use Power Bombs"
+                                                },
+                                                {
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "Event25",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
+                                                                "type": "and",
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "resource",
                                                                             "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Ice",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Fight (Trivial)"
-                                                                                    }
-                                                                                ]
+                                                                                "type": "events",
+                                                                                "name": "Event25",
+                                                                                "amount": 1,
+                                                                                "negate": false
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Fight (Intermediate)"
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
+                                                                            "type": "or",
                                                                             "data": {
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Ice",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Fight (Trivial)"
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
                                                                                         "type": "resource",
                                                                                         "data": {
-                                                                                            "type": "damage",
-                                                                                            "name": "Damage",
-                                                                                            "amount": 200,
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 2,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "template",
-                                                                                        "data": "Fight (Trivial)"
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "damage",
+                                                                                                        "name": "Damage",
+                                                                                                        "amount": 200,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Fight (Trivial)"
+                                                                                                }
+                                                                                            ]
+                                                                                        }
                                                                                     }
                                                                                 ]
                                                                             }
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -10990,7 +11086,7 @@
                         "Door to Save Station Mines B": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -11002,8 +11098,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Fight (Intermediate)"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "and",
@@ -11053,7 +11154,7 @@
                         "Fight Trigger": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
                                         "type": "or",
@@ -11150,8 +11251,13 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Intermediate)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -11680,7 +11786,7 @@
                         "Front of Barrier": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
                                         "type": "and",
@@ -11817,8 +11923,13 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Fight (Advanced)"
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -11843,15 +11954,6 @@
                                         "data": {
                                             "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "MorphBall",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "or",
                                                     "data": {
@@ -12037,8 +12139,13 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Fight (Intermediate)"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
                                                             },
                                                             {
                                                                 "type": "and",
@@ -12115,7 +12222,7 @@
                         "Door to Save Station Mines C": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
                                         "type": "and",
@@ -12148,8 +12255,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Fight (Intermediate)"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "and",
@@ -12220,7 +12332,7 @@
                         "Door to Quarantine Access B": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
                                         "type": "template",
@@ -12397,8 +12509,13 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Intermediate)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -12430,7 +12547,7 @@
                         "Door to Elite Quarters Access": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
                                         "type": "or",
@@ -12558,8 +12675,13 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Intermediate)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -12720,7 +12842,7 @@
                         "Door to Quarantine Access B": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Enemies",
                                 "items": [
                                     {
                                         "type": "or",
@@ -12822,8 +12944,13 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Intermediate)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -16624,7 +16751,7 @@
                         "Door to Phazon Mining Tunnel": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill, avoid or tank Metroids",
                                 "items": [
                                     {
                                         "type": "or",
@@ -16872,8 +16999,13 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Fight (Beginner)"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -16902,8 +17034,13 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Fight (Advanced)"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -16923,15 +17060,25 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Fight (Intermediate)"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Expert)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",

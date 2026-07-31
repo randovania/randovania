@@ -988,7 +988,7 @@
                                             "data": {
                                                 "type": "tricks",
                                                 "name": "Combat",
-                                                "amount": 2,
+                                                "amount": 1,
                                                 "negate": false
                                             }
                                         }
@@ -1223,29 +1223,17 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "Combat",
-                                                "amount": 5,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Can Target Enemy"
-                                        }
-                                    ]
-                                }
-                            },
-                            {
                                 "type": "template",
                                 "data": "Any Beam"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "tricks",
+                                    "name": "Combat",
+                                    "amount": 5,
+                                    "negate": false
+                                }
                             }
                         ]
                     }
@@ -1653,10 +1641,6 @@
                     "data": {
                         "comment": "Used for killing Elite Pirates. Note that the Phazon Elite in Elite Research does not use this template.",
                         "items": [
-                            {
-                                "type": "template",
-                                "data": "Any Beam"
-                            },
                             {
                                 "type": "or",
                                 "data": {

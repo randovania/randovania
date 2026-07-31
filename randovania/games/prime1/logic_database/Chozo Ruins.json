@@ -1644,7 +1644,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Deal with Scarabs",
+                                            "comment": "Kill or avoid Scarabs",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -1724,7 +1724,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Deal with Scarabs",
+                                            "comment": "Kill or avoid Scarabs",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -1830,7 +1830,7 @@
                         "Door to Main Plaza": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Scarabs",
+                                "comment": "Kill, avoid or tank Scarabs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -1842,8 +1842,13 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Beginner)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "or",
@@ -1939,7 +1944,7 @@
                         "Door to Ruined Shrine": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Scarabs",
+                                "comment": "Kill, avoid or tank Scarabs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -1951,8 +1956,13 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Beginner)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "or",
@@ -3490,70 +3500,63 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Dealing with Beetles",
+                                            "comment": "Kill Beetles",
                                             "items": [
                                                 {
                                                     "type": "template",
                                                     "data": "Fight (Trivial)"
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "MorphBall",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
+                                                                "type": "and",
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "template",
+                                                                            "data": "Can Use Power Bombs"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
                                                                             "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Can Use Power Bombs"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "PowerBomb",
-                                                                                            "amount": 4,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Fight (Intermediate)"
-                                                                                    }
-                                                                                ]
+                                                                                "type": "items",
+                                                                                "name": "PowerBomb",
+                                                                                "amount": 4,
+                                                                                "negate": false
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "resource",
                                                                             "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Can Use Bombs"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Fight (Expert)"
-                                                                                    }
-                                                                                ]
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Bombs"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 4,
+                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
@@ -3592,8 +3595,13 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Beginner)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -5328,7 +5336,7 @@
                         "Door to North Atrium": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Wasps",
+                                "comment": "Kill or avoid Wasps",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5391,7 +5399,7 @@
                         "Door to Save Station 1": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Wasps",
+                                "comment": "Kill or avoid Wasps",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5426,7 +5434,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Deal with Wasps",
+                                            "comment": "Kill Wasps",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5450,7 +5458,7 @@
                         "Event - Activate Main Plaza Wasps": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Wasps",
+                                "comment": "Kill or avoid Wasps",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5527,7 +5535,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Deal with Wasps",
+                                            "comment": "Kill or avoid Wasps",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5630,27 +5638,6 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Use Bombs"
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": "Deal with Wasps",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Fight (Trivial)"
-                                                                        }
-                                                                    ]
-                                                                }
                                                             },
                                                             {
                                                                 "type": "or",
@@ -5815,7 +5802,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Deal with Wasps",
+                                                                    "comment": "Kill or avoid Wasps",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -5845,7 +5832,7 @@
                         "Event - Activate Main Plaza Wasps": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Wasps",
+                                "comment": "Kill or avoid Wasps",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8380,7 +8367,7 @@
                         "Door to Sunchamber Access": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Weed and Vines",
+                                "comment": "Kill, avoid or tank Weed and Vines",
                                 "items": [
                                     {
                                         "type": "template",
@@ -8392,8 +8379,13 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Beginner)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -8413,8 +8405,13 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Expert)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -8476,7 +8473,7 @@
                         "Door to Arboretum": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Weed and Vines",
+                                "comment": "Kill, avoid or tank Weed and Vines",
                                 "items": [
                                     {
                                         "type": "template",
@@ -8488,8 +8485,13 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Beginner)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -8509,8 +8511,13 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Expert)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -8884,7 +8891,7 @@
                         "Door to Totem Access": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Wasps",
+                                "comment": "Kill or avoid Wasps",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8905,7 +8912,7 @@
                         "Door to Map Station": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Wasps",
+                                "comment": "Kill or avoid Wasps",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8932,15 +8939,6 @@
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
                                     {
                                         "type": "or",
                                         "data": {
@@ -8977,7 +8975,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Deal with Wasps",
+                                            "comment": "Kill or avoid Wasps",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -8998,8 +8996,13 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Fight (Beginner)"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             },
                                                             {
                                                                 "type": "template",
@@ -9059,7 +9062,7 @@
                         "Door to North Atrium": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Wasps",
+                                "comment": "Kill or avoid Wasps",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9122,7 +9125,7 @@
                         "Door to North Atrium": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Wasps",
+                                "comment": "Kill or avoid Wasps",
                                 "items": [
                                     {
                                         "type": "template",
@@ -9441,7 +9444,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Dealing with Wasps. Nests only take 1 missile, even on Hard mode.",
+                                                                    "comment": "Kill or avoid Wasps. Nests only take 1 missile, even on Hard mode.",
                                                                     "items": [
                                                                         {
                                                                             "type": "and",
@@ -9963,7 +9966,7 @@
                         "Door to Sunchamber Lobby": {
                             "type": "or",
                             "data": {
-                                "comment": "Dealing with the Weed and Vines",
+                                "comment": "Kill, avoid or tank Weed and Vines",
                                 "items": [
                                     {
                                         "type": "template",
@@ -9975,8 +9978,13 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Beginner)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -9996,8 +10004,13 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Advanced)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -10107,7 +10120,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Dealing with the Weed and Vines",
+                                            "comment": "Kill, avoid or tank Weed and Vines",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -10119,8 +10132,13 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Fight (Beginner)"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -10163,8 +10181,13 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Fight (Advanced)"
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -10716,7 +10739,7 @@
                         "Door to Hive Totem": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Plazmites",
+                                "comment": "Kill or avoid Plazmites",
                                 "items": [
                                     {
                                         "type": "template",
@@ -10732,8 +10755,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Fight (Intermediate)"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -10790,7 +10818,7 @@
                         "Door to Ruined Gallery": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Plazmites",
+                                "comment": "Kill or avoid Plazmites",
                                 "items": [
                                     {
                                         "type": "template",
@@ -10806,8 +10834,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Fight (Intermediate)"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -11372,7 +11405,7 @@
                         "Event - Hive Mecha": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill Hive Mecha",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -11919,15 +11952,6 @@
                                             "comment": "Normal Fight",
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "MorphBall",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "or",
                                                     "data": {
                                                         "comment": "Requirements for shooting the first dish",
@@ -11988,24 +12012,12 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "and",
+                                                                                        "type": "resource",
                                                                                         "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "Power",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "template",
-                                                                                                    "data": "Fight (Trivial)"
-                                                                                                }
-                                                                                            ]
+                                                                                            "type": "items",
+                                                                                            "name": "Power",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
@@ -12067,24 +12079,12 @@
                                                                                 "comment": "Health requirements",
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "and",
+                                                                                        "type": "resource",
                                                                                         "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "damage",
-                                                                                                        "name": "Damage",
-                                                                                                        "amount": 80,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "template",
-                                                                                                    "data": "Fight (Trivial)"
-                                                                                                }
-                                                                                            ]
+                                                                                            "type": "damage",
+                                                                                            "name": "Damage",
+                                                                                            "amount": 80,
+                                                                                            "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
@@ -12264,10 +12264,6 @@
                                                             }
                                                         ]
                                                     }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Any Visor"
                                                 }
                                             ]
                                         }
@@ -12296,8 +12292,13 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Intermediate)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -12476,188 +12477,124 @@
                         "Event - Flaahgra": {
                             "type": "and",
                             "data": {
-                                "comment": "Flahgra can be defeated by hitting the bomb slots from the outside, which are active before starting the fight",
+                                "comment": "Kill, avoid or tank Flaahgra",
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Requirements for destroying the bomb slots",
+                                            "comment": "Flahgra can be defeated by hitting the bomb slots from the outside, which are active before starting the fight",
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": "With Bombs",
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Requirements for destroying the bomb slots",
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Can Use Bombs"
-                                                            },
-                                                            {
-                                                                "type": "or",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "With Bombs",
                                                                     "items": [
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "template",
+                                                                            "data": "Can Use Bombs"
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
                                                                             "data": {
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "and",
                                                                                         "data": {
-                                                                                            "type": "damage",
-                                                                                            "name": "Damage",
-                                                                                            "amount": 20,
-                                                                                            "negate": false
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "damage",
+                                                                                                        "name": "Damage",
+                                                                                                        "amount": 20,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Fight (Trivial)"
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "template",
-                                                                                        "data": "Fight (Trivial)"
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
                                                                                     }
                                                                                 ]
                                                                             }
-                                                                        },
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Fight (Intermediate)"
                                                                         }
                                                                     ]
                                                                 }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "With Power Bombs",
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Use Power Bombs"
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "With Power Bombs",
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PowerBomb",
-                                                                                "amount": 4,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Can Use Power Bombs"
                                                                         },
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "or",
                                                                             "data": {
-                                                                                "comment": "You can hit multiple bomb slots at once",
+                                                                                "comment": null,
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "items",
                                                                                             "name": "PowerBomb",
-                                                                                            "amount": 2,
+                                                                                            "amount": 4,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "and",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Knowledge",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Requirements for getting to the center island",
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "With SJ",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "SpaceJump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "LJump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Scan",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Dash",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
+                                                                                            "comment": "You can hit multiple bomb slots at once",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "PowerBomb",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Knowledge",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -12670,26 +12607,94 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
-                                                        "comment": "NSJ",
+                                                        "comment": "Requirements for getting to the center island",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Dash",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": "With SJ",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "SpaceJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "LJump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Scan",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Dash",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Scan",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": "NSJ",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Dash",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Scan",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -14035,7 +14040,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Dealing with Vines/Blastcaps",
+                                            "comment": "Kill, avoid or tank Vines/Blastcaps",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -14047,8 +14052,13 @@
                                                         "comment": "Tank Blastcap and get back by jumping through water",
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Fight (Beginner)"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -14094,8 +14104,13 @@
                                                         "comment": "Destroy Blastcap with bombs and get back by jumping through water",
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Fight (Beginner)"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             },
                                                             {
                                                                 "type": "or",
@@ -14165,12 +14180,8 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Deal with Vines",
+                                            "comment": "Kill or avoid Vines",
                                             "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Fight (Trivial)"
-                                                },
                                                 {
                                                     "type": "and",
                                                     "data": {
@@ -14191,8 +14202,13 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Fight (Beginner)"
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -14216,49 +14232,6 @@
                                                         "name": "Standable",
                                                         "amount": 2,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Lower Path",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Standable",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "SpaceJump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Standable",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
                                                     }
                                                 },
                                                 {
@@ -14403,7 +14376,7 @@
                         "Behind Gate": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with Eyons",
+                                "comment": "Kill, avoid or tank Eyons",
                                 "items": [
                                     {
                                         "type": "template",
@@ -14415,8 +14388,13 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fight (Beginner)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -14761,7 +14739,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Deal with Vines",
+                                            "comment": "Kill or tank Vines",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -16255,7 +16233,7 @@
                         "Event - Incinerator Drone": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill Incinerator Drone",
                                 "items": [
                                     {
                                         "type": "or",
