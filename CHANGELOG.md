@@ -52,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Fusion
 
 - Fixed: Typo in the knowledge trick description.
+- Fixed: Generation now takes takes into account when Open Hatches in Door Lock Rando are shuffled.
 
 #### Logic Database
 
