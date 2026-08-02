@@ -80,26 +80,11 @@ def test_enabled_misc_resources(fusion_game_description, fusion_configuration, d
     elif door_state in ["type-all", "type-no-open"]:
         weakness_mode = DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS
 
-    if door_state in ["individual-all", "type-all"]:
-        all_door_weaknesses = set(door_db.weaknesses[door_type].values())
-
-        types_state = fusion_configuration.dock_weakness_distributor.types_state
-        types_state[door_type] = dataclasses.replace(types_state[door_type], mode=weakness_mode)
-        types_state[door_type] = dataclasses.replace(types_state[door_type], can_change_from=all_door_weaknesses)
-        types_state[door_type] = dataclasses.replace(types_state[door_type], can_change_to=all_door_weaknesses)
-        fusion_configuration = dataclasses.replace(
-            fusion_configuration,
-            dock_weakness_distributor=dataclasses.replace(
-                fusion_configuration.dock_weakness_distributor, types_state=types_state
-            ),
-        )
-
-        expected_resources.add("DoorLockRando")
-        expected_resources.add("OpenHatchLockRando")
-    elif door_state in ["individual-no-open", "type-no-open"]:
-        all_door_weaknesses = set(door_db.weaknesses[door_type].values())
+    all_door_weaknesses = set(door_db.weaknesses[door_type].values())
+    if door_state in ["individual-no-open", "type-no-open"]:
         all_door_weaknesses.remove(open_hatch_door)
 
+    if door_state != "vanilla":
         types_state = fusion_configuration.dock_weakness_distributor.types_state
         types_state[door_type] = dataclasses.replace(types_state[door_type], mode=weakness_mode)
         types_state[door_type] = dataclasses.replace(types_state[door_type], can_change_from=all_door_weaknesses)
@@ -110,8 +95,11 @@ def test_enabled_misc_resources(fusion_game_description, fusion_configuration, d
                 fusion_configuration.dock_weakness_distributor, types_state=types_state
             ),
         )
-
-        expected_resources.add("DoorLockRando")
+        if door_state in ["individual-all", "type-all"]:
+            expected_resources.add("DoorLockRando")
+            expected_resources.add("OpenHatchLockRando")
+        elif door_state in ["individual-no-open", "type-no-open"]:
+            expected_resources.add("DoorLockRando")
     elif door_state == "vanilla":
         # keep as is
         pass
@@ -128,5 +116,4 @@ def test_enabled_misc_resources(fusion_game_description, fusion_configuration, d
         fusion_configuration, fusion_game_description.get_resource_database_view()
     )
 
-    print(enabled_resources)
     assert enabled_resources == expected_resources
