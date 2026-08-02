@@ -7,7 +7,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.games.planets_zebeth.exporter.patch_data_factory import PlanetsZebethPatchDataFactory
 from randovania.games.planets_zebeth.layout.planets_zebeth_cosmetic_patches import PlanetsZebethCosmeticPatches
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import json_lib
 
@@ -22,18 +22,18 @@ from randovania.lib import json_lib
 def test_create_pickups_dict(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):
     # Setup
     rdvgame = test_files_dir.joinpath("log_files", "planets_zebeth", rdvgame_filename)
-    players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
+    worlds_config = WorldsConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
     description = LayoutDescription.from_file(rdvgame)
     cosmetic_patches = PlanetsZebethCosmeticPatches()
     mocker.patch("random.Random.randint", new_callable=MagicMock, return_value=0)
 
-    data = PlanetsZebethPatchDataFactory(description, players_config, cosmetic_patches)
+    data = PlanetsZebethPatchDataFactory(description, worlds_config, cosmetic_patches)
 
     db = data.game
 
     useless_target = PickupTarget(
         pickup_creator.create_nothing_pickup(db.get_resource_database_view(), "sItemNothing"),
-        data.players_config.player_index,
+        data.worlds_config.world_index,
     )
 
     text_data = data._get_item_data()
@@ -49,7 +49,7 @@ def test_create_pickups_dict(test_files_dir, rdvgame_filename, expected_results_
         data.rng,
         data.configuration.pickup_model_style,
         data.configuration.pickup_model_data_source,
-        exporter=pickup_exporter.create_pickup_exporter(memo_data, data.players_config, data.game.game),
+        exporter=pickup_exporter.create_pickup_exporter(memo_data, data.worlds_config, data.game.game),
         visual_nothing=pickup_creator.create_visual_nothing(data.game_enum(), "sItemNothing"),
     )
 
