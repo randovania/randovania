@@ -305,6 +305,10 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
             for weakness in sorted(distributor_settings.change_to):
                 output.write(f"\n          {weakness.name}")
 
+            output.write("\n      Indirect Change from:")
+            for weakness in sorted(distributor_settings.indirect_change_from):
+                output.write(f"\n          {weakness.name}")
+
             output.write("\n\n")
 
 

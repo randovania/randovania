@@ -260,6 +260,7 @@ def read_dock_type_database(
                     locked=weaknesses[dock_type][dr["locked"]],
                     change_from={weaknesses[dock_type][weak] for weak in dr["change_from"]},
                     change_to={weaknesses[dock_type][weak] for weak in dr["change_to"]},
+                    indirect_change_from={weaknesses[dock_type][weak] for weak in dr["indirect_change_from"]},
                     force_change_two_way=dr["force_change_two_way"],
                     resolver_attempts=dr["resolver_attempts"],
                     to_shuffle_proportion=dr["to_shuffle_proportion"],

@@ -111,6 +111,7 @@ class WeaknessDistributorSettings:
 
     change_from: set[DockWeakness]
     change_to: set[DockWeakness]
+    indirect_change_from: set[DockWeakness]
 
     force_change_two_way: bool
     """Whether a two-way door should change both sides, even if one side has an excluded weakness."""
