@@ -23,7 +23,6 @@ else:
     # However cython's compiler seems to expect the import to be this way, otherwise `cython.compiled` breaks
     import cython
 
-
 if cython.compiled:
     if not typing.TYPE_CHECKING:
         from cython.cimports.libcpp.utility import pair
@@ -45,7 +44,7 @@ else:
 
     if typing.TYPE_CHECKING:
         from randovania.game_description.resources.resource_collection import ResourceCollection
-        from randovania.graph.world_graph import BaseWorldGraphNode, WorldGraphNodeConnection
+        from randovania.graph.world_graph import BaseWorldGraphNode, WorldGraphNode, WorldGraphNodeConnection
 
 
 class ProcessNodesResponse(typing.NamedTuple):
@@ -180,16 +179,13 @@ if not cython.compiled:
 @cython.cfunc
 def _add_to_requirements_excluding_leaving_by_node(
     requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]],
-    node_index: cython.int,
     target_node_index_py: int,
-    state_ptr: cython.pointer[ProcessNodesState],
+    new_set: GraphRequirementSet,
     connection: WorldGraphNodeConnection,
 ) -> cython.void:
     if target_node_index_py not in requirements_excluding_leaving_by_node:
         requirements_excluding_leaving_by_node[target_node_index_py] = []
 
-    new_set: GraphRequirementSet | None = state_ptr[0].satisfied_requirement_on_node[node_index].first.get()
-    assert new_set is not None
     requirements_excluding_leaving_by_node[target_node_index_py].append(
         (connection.requirement_without_leaving, new_set)
     )
@@ -204,7 +200,7 @@ def resolver_reach_process_nodes(  # noqa: C901
     initial_state: State,
     output: ProcessNodesResponse,
 ) -> None:
-    all_nodes: Sequence[BaseWorldGraphNode] = logic.all_nodes
+    all_nodes: Sequence[WorldGraphNode] = logic.all_nodes
     resources: ResourceCollection = initial_state.resources
     initial_game_state: EnergyTankDamageState = initial_state.damage_state  # type: ignore[assignment]
     resource_bitmask: Bitmask = resources.resource_bitmask
@@ -357,13 +353,20 @@ def resolver_reach_process_nodes(  # noqa: C901
                 if not cython.cast(GraphRequirementSet, connection.requirement_without_leaving).satisfied(
                     resources, damage_health
                 ):
+                    new_set: GraphRequirementSet | None = (
+                        state_ptr[0].satisfied_requirement_on_node[node_index].first.get()
+                    )
+                    assert new_set is not None
                     _add_to_requirements_excluding_leaving_by_node(
                         requirements_excluding_leaving_by_node,
-                        node_index,
                         target_node_index,
-                        state_ptr,
+                        new_set,
                         connection,
                     )
+                    if not all_nodes[node_index].requirement_to_collect.satisfied(resources, damage_health):
+                        requirements_excluding_leaving_by_node[target_node_index].append(
+                            (all_nodes[node_index].requirement_to_collect, new_set)
+                        )
 
     for node_index in found_node_order:
         if node_index != initial_node_index:

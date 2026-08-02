@@ -9,6 +9,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import multiplayer_session
+from randovania.network_common.discord_preferences import GuildPreferences
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionAction,
@@ -80,6 +81,7 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
         visibility=MultiplayerSessionVisibility.HIDDEN,
         allow_coop=False,
         allow_everyone_claim_world=False,
+        allow_abandon_worlds=True,
     )
     assert result_actions == MultiplayerSessionActions(session_id=1, actions=actions)
 
@@ -143,3 +145,28 @@ def test_async_race_active_pause(clean_database):
     assert database.AsyncRaceEntryPause.active_pause(entry) is None
 
     assert entry.pauses == [pause]
+
+
+@pytest.fixture
+def database_for_guild_preferences(db_path):
+    # No longer needed after adding to all_classes
+    test_db = SqliteDatabase(db_path, uri=True)
+
+    with test_db.bind_ctx([database.DiscordGuildPreferences]):
+        test_db.create_tables([database.DiscordGuildPreferences])
+        yield test_db
+
+
+def test_discord_guild_preferences(database_for_guild_preferences):
+    db_preferences = database.DiscordGuildPreferences.get_with_default(1000)
+    assert db_preferences.get_preferences() == GuildPreferences()
+    db_preferences.set_preferences(
+        GuildPreferences(
+            multiworld_interest_ping_cooldown=120,
+        )
+    )
+    db_preferences.save()
+
+    assert database.DiscordGuildPreferences.get_with_default(1000).get_preferences() == GuildPreferences(
+        multiworld_interest_ping_cooldown=120,
+    )

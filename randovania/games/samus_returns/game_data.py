@@ -37,7 +37,10 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.MSRCosmeticPatchesDialog,
         export_dialog=gui.MSRGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(HintDetailsTab, gui.MSRTeleporterDetailsTab),
+        spoiler_visualizer=(
+            HintDetailsTab,
+            gui.MSRTeleporterDetailsTab,
+        ),
     )
 
 
@@ -213,6 +216,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     test_data=_test_data,
+    reject_undocumented_tricks_in_database=False,
     defaults_available_in_game_sessions=True,
     multiple_start_nodes_per_area=True,
     racetime_url="https://racetime.gg/msrr/data",

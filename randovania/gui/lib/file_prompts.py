@@ -26,12 +26,12 @@ async def _prompt_user_for_file(
     file_dialog = QtWidgets.QFileDialog(parent, caption, current_dir or "", file_filter)
 
     if new_file:
-        file_dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
+        file_dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptMode.AcceptSave)
     else:
-        file_dialog.setFileMode(QtWidgets.QFileDialog.ExistingFile)
+        file_dialog.setFileMode(QtWidgets.QFileDialog.FileMode.ExistingFile)
 
     result = await async_dialog.execute_dialog(file_dialog)
-    if result != QtWidgets.QDialog.Accepted:
+    if result != QtWidgets.QDialog.DialogCode.Accepted:
         return None
 
     return Path(file_dialog.selectedFiles()[0])

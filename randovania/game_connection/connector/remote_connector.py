@@ -5,6 +5,7 @@ import typing
 
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.gui.item_tracker.tracker_layout import TrackerLayout
 from randovania.lib import enum_lib
 from randovania.lib.signal import RdvSignal
 
@@ -14,6 +15,7 @@ if typing.TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.region import Region
+    from randovania.network_common.error import BaseNetworkError
     from randovania.network_common.remote_pickup import RemotePickup
 
 
@@ -99,6 +101,13 @@ class RemoteConnector:
         """
         raise NotImplementedError
 
+    async def on_world_sync_error(self, err: BaseNetworkError) -> None:
+        """
+        Called when the server refuses a world sync for this connector's world.
+        Most connectors have nothing to do: the game keeps running, and syncing resumes if the error clears.
+        """
+        return
+
     async def force_finish(self) -> None:
         """Disconnect from the game, releasing any resources."""
         raise NotImplementedError
@@ -107,5 +116,6 @@ class RemoteConnector:
         """When True, this connector has lost connection with the game and must be discarded."""
         raise NotImplementedError
 
-    def inform_connected_tracker(self, tracker_details: dict | None) -> None:
+    def inform_connected_tracker(self, tracker_details: TrackerLayout | None) -> None:
         """Called when an AutoTracker is created using this connector."""
+        return

@@ -9,16 +9,19 @@ from randovania.gui.game_details.teleporter_details_tab import TeleporterDetails
 
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
-    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
-class PrimeTrilogyTeleporterDetailsTab(TeleporterDetailsTab):
+class PrimeTrilogyTeleporterDetailsTab(
+    TeleporterDetailsTab[PrimeConfiguration | EchoesConfiguration | EchoesOPRConfiguration]
+):
     @classmethod
     def should_appear_for(
-        cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls,
+        configuration: PrimeConfiguration | EchoesConfiguration | EchoesOPRConfiguration,
+        all_patches: list[GamePatches],
+        players: WorldsConfiguration,
     ) -> bool:
-        assert isinstance(configuration, PrimeConfiguration | EchoesConfiguration | EchoesOPRConfiguration)
         return not configuration.teleporters.is_vanilla
 
     def tab_title(self) -> str:

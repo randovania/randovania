@@ -188,7 +188,12 @@ def unable_to_login(sa: ServerApp, request: Request, error_message: str, status_
 
 
 @router.get("/login")
-async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: str | None = None) -> Response:
+async def browser_login_with_discord(
+    sa: ServerAppDep,
+    request: Request,
+    sid: str | None = None,
+    next_url: typing.Annotated[str | None, Query(alias="next")] = None,
+) -> Response:
     request.state.sid = sid
 
     state = jwt.encode(
@@ -205,6 +210,12 @@ async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: st
         request.session["sid"] = sid
     else:
         request.session.pop("sid", None)
+
+    # Only accept paths relative to our own server, to avoid being used as an open redirect.
+    if next_url is not None and next_url.startswith("/") and not next_url.startswith("//"):
+        request.session["next_url"] = next_url
+    else:
+        request.session.pop("next_url", None)
 
     return RedirectResponse(sa.discord.get_oauth_login_url(request, state))
 
@@ -260,7 +271,8 @@ async def browser_discord_login_callback(
         user = await _create_session_with_discord_token(sa, sid, token)
 
         if sid is None:
-            return RedirectResponse(request.url_for("browser_me"))
+            next_url = request.session.pop("next_url", None)
+            return RedirectResponse(next_url or request.url_for("browser_me"))
         else:
             try:
                 session = await sa.sio.get_session(sid=sid)

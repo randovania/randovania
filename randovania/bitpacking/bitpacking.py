@@ -229,6 +229,8 @@ class BitPackDataclass(BitPackValue):
 
             field_meta = dict(**field.metadata)
             field_meta["reference"] = reference_item
+            field_meta["parent_object"] = self
+            field_meta["parent_metadata"] = metadata
 
             encoded_item = list(bit_pack_value.bit_pack_encode(field_meta))
             if any(not (0 <= a < b) for (a, b) in encoded_item):
@@ -286,6 +288,7 @@ class BitPackDataclass(BitPackValue):
             if should_decode:
                 field_meta = dict(**field.metadata)
                 field_meta["reference"] = reference_item
+                field_meta["parent_metadata"] = metadata
                 item = bit_pack_value.bit_pack_unpack(decoder, field_meta)
 
             args[field.name] = item

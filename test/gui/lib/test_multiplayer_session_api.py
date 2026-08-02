@@ -8,8 +8,8 @@ from unittest.mock import ANY, AsyncMock, MagicMock
 import pytest
 from PySide6 import QtWidgets
 
-from randovania.gui.lib import multiplayer_session_api
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
+from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.network_client.network_client import UnableToConnect
 from randovania.network_common import admin_actions, error
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
@@ -41,13 +41,13 @@ async def test_handle_network_errors(skip_qtbot, mocker: MockerFixture, exceptio
     skip_qtbot.add_widget(root)
 
     api = MagicMock()
-    api.widget_root = root
+    api.network_error_widget = root
 
     fn = AsyncMock(side_effect=exception)
     arg = MagicMock()
 
     # Run
-    wrapped = multiplayer_session_api.handle_network_errors(fn)
+    wrapped = handle_network_errors(fn)
     result = await wrapped(api, arg)
 
     # Assert
@@ -66,9 +66,8 @@ def session_api(skip_qtbot):
     root = QtWidgets.QWidget()
     skip_qtbot.addWidget(root)
 
-    api = MultiplayerSessionApi(network_client, 1234)
+    api = MultiplayerSessionApi(root, network_client, 1234)
     api.logger.setLevel(logging.DEBUG)
-    api.widget_root = root
     return api
 
 

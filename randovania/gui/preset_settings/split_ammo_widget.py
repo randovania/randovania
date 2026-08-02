@@ -31,7 +31,7 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
         editor: PresetEditor,
         unified_ammo: AmmoPickupDefinition,
         split_ammo: Iterable[AmmoPickupDefinition],
-    ):
+    ) -> None:
         super().__init__(parent)
         self._editor = editor
         self.unified_ammo = unified_ammo

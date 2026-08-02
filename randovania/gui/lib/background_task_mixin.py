@@ -9,10 +9,15 @@ import typing
 import randovania.games.prime2.patcher.csharp_subprocess
 from randovania.lib.background_task import AbortBackgroundTask
 from randovania.lib.signal import RdvSignal
+from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
 class BackgroundTaskInProgressError(Exception):
     pass
+
+
+class BackgroundTask[T](typing.Protocol):
+    def __call__(self, progress_update: ProgressUpdateCallable) -> T: ...
 
 
 class BackgroundTaskMixin:
@@ -26,11 +31,11 @@ class BackgroundTaskMixin:
         self._background_thread = threading.Thread(target=target, name=f"BackgroundThread for {self}")
         self._background_thread.start()
 
-    def run_in_background_thread(self, target, starting_message: str) -> None:
+    def run_in_background_thread(self, target: BackgroundTask[None], starting_message: str) -> None:
         loop = asyncio.get_event_loop()
         last_progress = 0.0
 
-        def progress_update(message: str, progress: float | None):
+        def progress_update(message: str, progress: float | None) -> None:
             nonlocal last_progress
             if progress is None:
                 progress = last_progress
@@ -61,12 +66,12 @@ class BackgroundTaskMixin:
         self._start_thread_for(thread)
         self.background_tasks_button_lock_signal.emit(False)
 
-    async def run_in_background_async(self, target, starting_message: str):
-        fut = concurrent.futures.Future()
+    async def run_in_background_async[T](self, target: BackgroundTask[T], starting_message: str) -> T:
+        fut: concurrent.futures.Future[T] = concurrent.futures.Future()
 
-        def work(**_kwargs) -> None:
+        def work(progress_update: ProgressUpdateCallable) -> None:
             try:
-                fut.set_result(target(**_kwargs))
+                fut.set_result(target(progress_update))
             except AbortBackgroundTask:
                 fut.cancel()
             except Exception as e:

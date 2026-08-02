@@ -2,7 +2,7 @@ from PySide6 import QtWidgets
 
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.gui.lib import model_lib, signal_handling
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
 
@@ -12,7 +12,7 @@ def test_search_pickup(skip_qtbot, test_files_dir):
     root = QtWidgets.QWidget()
     skip_qtbot.addWidget(root)
 
-    players = PlayersConfiguration(0, {0: "You", 1: "They"})
+    players = WorldsConfiguration(0, {0: "You", 1: "They"})
 
     tab = PickupDetailsTab(root, layout.all_patches[0].game.game)
     tab.update_content(layout.all_patches[0].configuration, layout.all_patches, players)

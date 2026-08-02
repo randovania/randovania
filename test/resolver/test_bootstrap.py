@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pickle
 from random import Random
 
 import pytest
@@ -112,3 +113,12 @@ def test_victory_condition_for_pickup_placement(
     # Assert
     # print(victory_str)
     assert victory_str == expected
+
+
+# ensure that Bootstrap class is serializable with pickle to use it in a ProcessPoolExecutor
+def test_pickle_roundtrip():
+    bootstrap_obj = bootstrap.Bootstrap()
+    serialised = pickle.dumps(bootstrap_obj)
+    loaded = pickle.loads(serialised)
+
+    assert serialised == pickle.dumps(loaded)

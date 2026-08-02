@@ -17,7 +17,7 @@ from randovania.games.dread.exporter.patch_data_factory import (
 )
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.layout_description import LayoutDescription
@@ -116,7 +116,7 @@ def test_pickup_data_for_recolored_missiles(
         pickup_database.ammo_pickups["Missile Tank"], (2,), False, resource_database=resource_db
     )
 
-    factory = DreadPatchDataFactory(description, PlayersConfiguration(0, {0: "Dread"}), cosmetics)
+    factory = DreadPatchDataFactory(description, WorldsConfiguration(0, {0: "Dread"}), cosmetics)
     creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text(), RandovaniaGame.METROID_DREAD)
 
     # Run
@@ -156,7 +156,7 @@ def test_pickup_data_for_a_major(dread_game_description: GameDescription, preset
         ammo_requires_main_item=False,
     )
 
-    factory = DreadPatchDataFactory(description, PlayersConfiguration(0, {0: "Dread"}), MagicMock())
+    factory = DreadPatchDataFactory(description, WorldsConfiguration(0, {0: "Dread"}), MagicMock())
     creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text(), RandovaniaGame.METROID_DREAD)
 
     # Run

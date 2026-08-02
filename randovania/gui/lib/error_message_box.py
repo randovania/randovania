@@ -1,22 +1,23 @@
 from __future__ import annotations
 
 import traceback
+import typing
 
 from PySide6 import QtWidgets
 
 from randovania.games.prime2.patcher.claris_randomizer import ClarisRandomizerExportError
 
 
-def create_box_for_exception(val: Exception) -> QtWidgets.QMessageBox:
+def create_box_for_exception(val: BaseException) -> QtWidgets.QMessageBox:
     box = QtWidgets.QMessageBox(
-        QtWidgets.QMessageBox.Critical,
+        QtWidgets.QMessageBox.Icon.Critical,
         "An exception was raised",
         (
             f"An unhandled Exception occurred:\n{val}\n\n"
             "When reporting, make sure to paste the entire contents of the following box."
             "\nIt has already been copied to your clipboard."
         ),
-        QtWidgets.QMessageBox.Ok,
+        QtWidgets.QMessageBox.StandardButton.Ok,
     )
     from randovania.gui.lib import common_qt_lib
 
@@ -33,11 +34,11 @@ def create_box_for_exception(val: Exception) -> QtWidgets.QMessageBox:
 
     # Expand the detailed text
     for button in box.buttons():
-        if box.buttonRole(button) == QtWidgets.QMessageBox.ActionRole:
+        if box.buttonRole(button) == QtWidgets.QMessageBox.ButtonRole.ActionRole:
             button.click()
             break
 
-    box_layout: QtWidgets.QGridLayout = box.layout()
+    box_layout = typing.cast("QtWidgets.QGridLayout", box.layout())
     box_layout.addItem(
         QtWidgets.QSpacerItem(600, 0, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding),
         box_layout.rowCount(),

@@ -35,7 +35,10 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.DreadCosmeticPatchesDialog,
         export_dialog=gui.DreadGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(HintDetailsTab, gui.DreadTeleporterDetailsTab),
+        spoiler_visualizer=(
+            HintDetailsTab,
+            gui.DreadTeleporterDetailsTab,
+        ),
         game_tab=gui.DreadGameTabWidget,
     )
 
@@ -176,6 +179,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     test_data=_test_data,
+    reject_undocumented_tricks_in_database=False,
     multiple_start_nodes_per_area=True,
     defaults_available_in_game_sessions=True,
     racetime_url="https://racetime.gg/dread-rando/data",

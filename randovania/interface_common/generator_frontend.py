@@ -3,24 +3,29 @@ from __future__ import annotations
 import asyncio
 import multiprocessing
 import operator
-from concurrent.futures import ProcessPoolExecutor
+import sys
+from concurrent.futures import Future, ProcessPoolExecutor
 from typing import TYPE_CHECKING, Any
 
 from randovania import monitoring
 from randovania.generator import generator
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.status_update_lib import ConstantPercentageCallback, ProgressUpdateCallable
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
     from collections.abc import Callable
-    from multiprocessing.connection import Connection
 
     from randovania.interface_common.options import Options
     from randovania.layout.generator_parameters import GeneratorParameters
     from randovania.layout.layout_description import LayoutDescription
+
+    if sys.platform == "win32":
+        from multiprocessing.connection import PipeConnection as Connection
+    else:
+        from multiprocessing.connection import Connection
 
 export_busy = False
 
@@ -49,10 +54,14 @@ def generate_layout(
         span.set_tag("unique_games", str(sorted(set(games))))
         span.set_tag("attempts", retries if retries is not None else generator.DEFAULT_ATTEMPTS)
         span.set_tag("validate_after", options.advanced_validate_seed_after)
-        span.set_tag("use_world_graph", True)
         span.set_tag(
             "dock_rando",
-            any(preset.configuration.dock_rando.mode == DockRandoMode.DOCKS for preset in parameters.presets),
+            any(
+                preset.configuration.dock_weakness_distributor.is_any_type_mode(
+                    DockWeaknessDistributorMode.INDIVIDUAL_DOCK
+                )
+                for preset in parameters.presets
+            ),
         )
         span.set_tag(
             "minimal_logic", any(preset.configuration.trick_level.minimal_logic for preset in parameters.presets)
@@ -119,8 +128,10 @@ def generate_layout(
             raise
 
 
-def _generate_layout_worker(output_pipe: Connection, debug_level: debug.LogLevel, extra_args: dict):
-    def status_update(message: str):
+def _generate_layout_worker(
+    output_pipe: Connection, debug_level: debug.LogLevel, extra_args: dict
+) -> LayoutDescription:
+    def status_update(message: str) -> None:
         output_pipe.send(message)
         if output_pipe.poll():
             raise RuntimeError(output_pipe.recv())
@@ -136,7 +147,7 @@ def generate_in_another_process(
 ) -> LayoutDescription:
     receiving_pipe, output_pipe = multiprocessing.Pipe(True)
 
-    def on_done(_):
+    def on_done(_: Future[LayoutDescription]) -> None:
         output_pipe.send(None)
 
     with ProcessPoolExecutor(max_workers=1) as executor:

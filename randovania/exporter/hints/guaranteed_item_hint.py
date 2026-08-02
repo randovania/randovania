@@ -10,7 +10,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_info import ResourceInfo
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 def _resource_in_item_list(
@@ -21,14 +21,14 @@ def _resource_in_item_list(
 
 def find_locations_that_gives_items(
     target_items: list[ItemResourceInfo],
-    all_patches: dict[int, GamePatches],
+    all_patches: list[GamePatches],
     player: int,
 ) -> dict[ItemResourceInfo, list[tuple[int, PickupLocation]]]:
     result: dict[ItemResourceInfo, list[tuple[int, PickupLocation]]] = {item: [] for item in target_items}
 
-    for other_player, patches in all_patches.items():
-        for pickup_index, target in patches.pickup_assignment.items():
-            if target.player != player:
+    for other_world, patches in enumerate(all_patches):
+        for world_index, target in patches.pickup_assignment.items():
+            if target.world != player:
                 continue
 
             # TODO: iterate over all tiers of progression
@@ -36,14 +36,14 @@ def find_locations_that_gives_items(
             resources.add_resource_gain(target.pickup.resource_gain(resources))
             for resource, quantity in resources.as_resource_gain():
                 if quantity > 0 and _resource_in_item_list(resource, result):
-                    result[resource].append((other_player, PickupLocation(patches.configuration.game, pickup_index)))
+                    result[resource].append((other_world, PickupLocation(patches.configuration.game, world_index)))
 
     return result
 
 
 def hint_text_if_items_are_starting(
     target_items: list[ItemResourceInfo],
-    all_patches: dict[int, GamePatches],
+    all_patches: list[GamePatches],
     player: int,
     namer: HintNamer,
     with_color: bool,
@@ -58,8 +58,8 @@ def hint_text_if_items_are_starting(
 
 
 def create_guaranteed_hints_for_resources(
-    all_patches: dict[int, GamePatches],
-    players_config: PlayersConfiguration,
+    all_patches: list[GamePatches],
+    worlds_config: WorldsConfiguration,
     namer: HintNamer,
     hide_area: bool,
     items: list[ItemResourceInfo],
@@ -71,17 +71,15 @@ def create_guaranteed_hints_for_resources(
     Intended for Sky Temple Key/Artifacts hints.
 
     :param all_patches:
-    :param players_config:
+    :param worlds_config:
     :param namer:
     :param hide_area: Should the area of the location be hidden?
     :param items: The item resources to hint
     :param with_color
     :return:
     """
-    resulting_hints = hint_text_if_items_are_starting(
-        items, all_patches, players_config.player_index, namer, with_color
-    )
-    locations_for_items = find_locations_that_gives_items(items, all_patches, players_config.player_index)
+    resulting_hints = hint_text_if_items_are_starting(items, all_patches, worlds_config.world_index, namer, with_color)
+    locations_for_items = find_locations_that_gives_items(items, all_patches, worlds_config.world_index)
 
     used_locations = set()
     for resource, locations in locations_for_items.items():
@@ -98,8 +96,8 @@ def create_guaranteed_hints_for_resources(
             used_locations.add(location)
 
             world_name = None
-            if players_config.is_multiworld:
-                world_name = players_config.player_names[location[0]]
+            if worlds_config.is_multiworld:
+                world_name = worlds_config.world_names[location[0]]
 
             resulting_hints[resource] = namer.format_guaranteed_resource(
                 resource,

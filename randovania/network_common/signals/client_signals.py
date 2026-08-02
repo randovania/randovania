@@ -18,7 +18,8 @@ if TYPE_CHECKING:
 
     from socketio import AsyncClient
 
-    from randovania.server.server_app import AsyncCallable, ServerApp
+    from randovania.lib.type_lib import AsyncCallable
+    from randovania.server.server_app import ServerApp
 
 
 class ClientSignal[**P]:
@@ -46,7 +47,13 @@ class ClientSignal[**P]:
         """
 
         async def inner(*args: P.args, **kwargs: P.kwargs) -> None:
-            await sa.sio.emit(self.message, args_to_sio_data(*args), to=to, room=room, namespace=namespace)
+            await sa.sio.emit(
+                self.message,
+                args_to_sio_data(*args),  # type: ignore[arg-type]
+                to=to,
+                room=room,
+                namespace=namespace,
+            )
 
         return inner
 

@@ -88,7 +88,7 @@ class LayoutDescription:
     randovania_version_text: str
     randovania_version_git: bytes
     generator_parameters: GeneratorParameters
-    all_patches: dict[int, GamePatches]
+    all_patches: list[GamePatches]
     item_order: tuple[str, ...]
     user_modified: bool
     original_dict: dict | None = dataclasses.field(compare=False, default=None)
@@ -104,7 +104,7 @@ class LayoutDescription:
     def create_new(
         cls,
         generator_parameters: GeneratorParameters,
-        all_patches: dict[int, GamePatches],
+        all_patches: list[GamePatches],
         item_order: tuple[str, ...],
     ) -> typing.Self:
         return cls(
@@ -156,7 +156,7 @@ class LayoutDescription:
         try:
             all_patches = game_patches_serializer.decode(
                 json_dict["game_modifications"],
-                {index: preset.configuration for index, preset in enumerate(generator_parameters.presets)},
+                [preset.configuration for preset in generator_parameters.presets],
             )
         except Exception as e:
             if expected_checksum == actual_checksum:

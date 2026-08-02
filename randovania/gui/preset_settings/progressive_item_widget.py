@@ -31,7 +31,7 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
         editor: PresetEditor,
         progressive_item: StandardPickupDefinition,
         non_progressive_items: Iterable[StandardPickupDefinition],
-    ):
+    ) -> None:
         super().__init__(parent)
         self._editor = editor
         self.progressive_item = progressive_item

@@ -3,6 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from randovania.lib import json_lib
+
 if TYPE_CHECKING:
     from argparse import ArgumentParser, Namespace, _SubParsersAction
 
@@ -10,11 +12,13 @@ __all__ = ["create_subparsers"]
 
 
 def run_analysis(args: Namespace) -> None:
+    from randovania.layout.layout_description import LayoutDescription
     from randovania.log_analyzer import log_analyzer
 
-    log_analyzer.create_report(
-        args.seeds_dir, args.output_file, args.csv_dir, args.use_percentage, args.major_progression_only
-    )
+    seed_files = list(args.seeds_dir.glob(f"**/*.{LayoutDescription.file_extension()}"))
+    report = log_analyzer.create_report(seed_files, args.csv_dir, args.use_percentage, args.major_progression_only)
+    json_lib.write_path(args.output_file, report)
+
     print("Analysis finished")
 
 

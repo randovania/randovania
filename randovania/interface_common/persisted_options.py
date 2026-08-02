@@ -219,6 +219,7 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # fusion: cosmetic option for alternative hud display
     _only_new_fields,  # dread: show_dna_in_hud/enable_debug_logging
     _only_new_fields,  # msr: option to use fusion models and reveal map
+    _only_new_fields,  # enabled field for builders
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 
@@ -259,7 +260,7 @@ def find_config_files(data_path: Path) -> Iterator[str]:
         yield result
 
 
-def replace_config_file_with(data_path: Path, new_data: dict):
+def replace_config_file_with(data_path: Path, new_data: dict) -> None:
     # Write to a separate file, so we don't corrupt the existing one in case we unexpectedly
     # are unable to finish writing the file
     new_config_path = data_path.joinpath("config_new.json")

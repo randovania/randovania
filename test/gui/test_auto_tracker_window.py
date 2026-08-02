@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import uuid
+from collections.abc import Iterator
+from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
@@ -9,8 +11,9 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.game_connection import ConnectedGameState
-from randovania.gui.auto_tracker_window import AutoTrackerWindow
-from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
+from randovania.gui.item_tracker.auto_tracker_window import AutoTrackerWindow, load_trackers_configuration
+from randovania.gui.item_tracker.item_tracker_widget import ItemTrackerWidget
+from randovania.gui.item_tracker.tracker_layout import TrackerLayout
 from randovania.network_common.game_connection_status import GameConnectionStatus
 
 
@@ -76,6 +79,69 @@ def test_create_tracker_valid(skip_qtbot, game, tracker_name):
 
     window.create_tracker()
     assert window._current_tracker_name == tracker_name
+
+
+def test_fall_back_to_default_game(skip_qtbot):
+    # Setup
+    # default game = Prime
+    options = MagicMock()
+    options.tracker_default_game = RandovaniaGame.METROID_PRIME
+    options.selected_tracker_for.return_value = "Game Art (Standard)"
+
+    # connected game = Echoes
+    connector = MagicMock()
+    connector.game_enum = RandovaniaGame.METROID_PRIME_ECHOES
+    connected_builder = DolphinConnectorBuilder()
+
+    # random builder with no connection
+    disconnected_builder = DebugConnectorBuilder(RandovaniaGame.BLANK.value)
+
+    connection = MagicMock()
+    connection.connection_builders = [disconnected_builder, connected_builder]
+    connection.connected_states = {
+        connector: ConnectedGameState(uuid.UUID(int=0), connector, GameConnectionStatus.InGame)
+    }
+    connection.get_connector_for_builder.side_effect = lambda builder: (
+        connector if builder is connected_builder else None
+    )
+
+    # Run
+    window = AutoTrackerWindow(connection, None, options)
+    skip_qtbot.addWidget(window)
+
+    # select a connected game shows the tracker for the game
+    window.select_game_combo.setCurrentIndex(window.select_game_combo.findData(connected_builder))
+    assert window._current_tracker_game == RandovaniaGame.METROID_PRIME_ECHOES
+    assert isinstance(window.item_tracker, ItemTrackerWidget)
+
+    # select a not-connected source and it should show the default game
+    window.select_game_combo.setCurrentIndex(window.select_game_combo.findData(disconnected_builder))
+    assert window._current_tracker_game == RandovaniaGame.METROID_PRIME
+    assert isinstance(window.item_tracker, ItemTrackerWidget)
+    assert window._dummy_tracker is None
+    assert window.connected_game_state_label.text() == "Not Connected"
+
+
+def test_on_disconnect_goes_back_to_default(skip_qtbot):
+    # Setup
+    connection = MagicMock()
+    connector = MagicMock()
+    connection.get_connector_for_builder.return_value = None
+
+    window = AutoTrackerWindow(connection, None, MagicMock())
+    skip_qtbot.addWidget(window)
+    window.create_tracker = MagicMock()
+    window.selected_builder = MagicMock()
+    window._last_source = connector
+
+    # Run
+    window.on_game_state_updated(
+        ConnectedGameState(uuid.UUID(int=0), connector, status=GameConnectionStatus.Disconnected)
+    )
+
+    # Assert
+    window.create_tracker.assert_called_once_with()
+    assert window._last_source is None
 
 
 def test_update_sources_combo(skip_qtbot):
@@ -147,3 +213,14 @@ def test_on_game_state_updated(skip_qtbot, correct_source):
         window.item_tracker.update_state.assert_called_once_with(inventory)
     else:
         window.item_tracker.update_state.assert_not_called()
+
+
+def _get_tracker_jsons() -> Iterator[tuple[RandovaniaGame, str, Path]]:
+    for game, trackers in load_trackers_configuration(False).items():
+        for name, path in trackers.items():
+            yield game, name, path
+
+
+@pytest.mark.parametrize(("game", "name", "path"), list(_get_tracker_jsons()))
+def test_validate_tracker_json(game: RandovaniaGame, name: str, path: Path):
+    TrackerLayout.read_json(path)

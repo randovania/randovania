@@ -43,6 +43,8 @@ class CSPerGameOptions(PerGameOptions):
         assert isinstance(cosmetic_json, dict)
         cosmetic_patches = game.data.layout.cosmetic_patches.from_json(cosmetic_json)
 
+        assert isinstance(value["output_directory"], str | None)
+
         return cls(
             cosmetic_patches=cosmetic_patches,
             output_directory=decode_if_not_none(value["output_directory"], Path),

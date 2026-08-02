@@ -18,7 +18,7 @@ class AsyncRaceRoomSettingsWidget(QtWidgets.QWidget):
 
     Changed = QtCore.Signal(bool)
 
-    def __init__(self, parent: QtWidgets.QWidget):
+    def __init__(self, parent: QtWidgets.QWidget) -> None:
         super().__init__(parent)
         self.ui = Ui_AsyncRaceRoomSettingsWidget()
         self.ui.setupUi(self)

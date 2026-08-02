@@ -41,7 +41,10 @@ class HuntersPresetDescriber(GamePresetDescriber):
         extra_message_tree = {
             "Logic Settings": [],
             "Difficulty": [],
-            "Pickup Pool": [],
+            "Pickup Pool": [
+                {"Shuffles Item Refills": configuration.shuffle_item_refills is True},
+                {"Shuffles Shield Keys": configuration.shuffle_shield_keys is True},
+            ],
             "Gameplay": [
                 {f"Force Fields: {configuration.force_field_configuration.description()}": True},
                 {
@@ -53,6 +56,7 @@ class HuntersPresetDescriber(GamePresetDescriber):
             "Goal": describe_objective(configuration.octoliths),
             "Game Changes": [
                 {f"Starting Energy: {configuration.starting_energy}": configuration.starting_energy != 99},
+                {"Skips Planet Intros": configuration.skip_planet_intros is True},
             ],
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)

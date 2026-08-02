@@ -12,7 +12,6 @@ from PySide6.QtWidgets import QFrame, QGraphicsOpacityEffect, QSizePolicy, QSpac
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.gui.generated.preset_location_pool_ui import Ui_PresetLocationPool
-from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.gui.widgets.foldable import Foldable
@@ -26,14 +25,12 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
-    _starting_location_for_region: dict[str, QtWidgets.QCheckBox]
-    _starting_location_for_area: dict[int, QtWidgets.QCheckBox]
+class PresetLocationPool(Ui_PresetLocationPool, PresetTab):
     _row_widget_for_node: dict[PickupNode, LocationPoolRowWidget]
     _during_batch_update: bool
     _major_minor: bool
 
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager) -> None:
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
         self._during_batch_update = False
@@ -101,7 +98,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
     def game_enum(self) -> RandovaniaGame:
         return self.game_description.game
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         available_locations = preset.configuration.available_locations
 
         self._during_batch_update = True
@@ -115,7 +112,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
 
         self._during_batch_update = False
 
-    def _on_update_randomization_mode(self):
+    def _on_update_randomization_mode(self) -> None:
         with self._editor as editor:
             mode = RandomizationMode.MAJOR_MINOR_SPLIT if self._major_minor else RandomizationMode.FULL
             editor.available_locations = dataclasses.replace(editor.available_locations, randomization_mode=mode)
@@ -127,7 +124,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
                     row_widget.setEnabled(True)
                     row_widget.set_can_have_progression(True)
 
-    def _on_location_changed(self, node: PickupNode):
+    def _on_location_changed(self, node: PickupNode) -> None:
         if self._during_batch_update:
             return
         with self._editor as editor:

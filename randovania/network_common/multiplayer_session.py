@@ -70,6 +70,7 @@ class MultiplayerWorld(JsonDataclass):
     name: str
     preset_raw: str
     has_been_beaten: bool
+    is_abandoned: bool = False
 
     @cached_property
     def preset(self) -> VersionedPreset:
@@ -134,6 +135,7 @@ class MultiplayerSessionEntry(JsonDataclass):
     allowed_games: list[RandovaniaGame]
     allow_coop: bool
     allow_everyone_claim_world: bool
+    allow_abandon_worlds: bool
 
     @property
     def users(self) -> dict[int, MultiplayerUser]:

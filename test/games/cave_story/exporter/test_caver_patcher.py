@@ -13,7 +13,7 @@ from randovania.games.cave_story.layout.cs_cosmetic_patches import (
     MusicRandoType,
     MyChar,
 )
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import json_lib
 
@@ -69,7 +69,7 @@ def _create_patch_data(test_files_dir, mocker, in_file, out_file, cosmetic):
     # Setup
     f = test_files_dir.joinpath("log_files", "cave_story", f"{in_file}.rdvgame")
     description = LayoutDescription.from_file(f)
-    players_config = PlayersConfiguration(0, {0: "Cave Story"})
+    worlds_config = WorldsConfiguration(0, {0: "Cave Story"})
 
     mocker.patch(
         "randovania.layout.layout_description.LayoutDescription.shareable_hash_bytes",
@@ -78,7 +78,7 @@ def _create_patch_data(test_files_dir, mocker, in_file, out_file, cosmetic):
     )
 
     # Run
-    data = CSPatchDataFactory(description, players_config, cosmetic).create_data()
+    data = CSPatchDataFactory(description, worlds_config, cosmetic).create_data()
 
     # Expected Result
 

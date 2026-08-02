@@ -99,6 +99,7 @@ async def test_auto_update_fail_build(connection, qapp):
     # Setup
     builder = MagicMock()
     builder.build_connector = AsyncMock(return_value=None)
+    builder.no_longer_usable = False
     connection.connection_builders.append(builder)
 
     # Run
@@ -107,6 +108,27 @@ async def test_auto_update_fail_build(connection, qapp):
     # Assert
     builder.build_connector.assert_awaited_once_with()
     assert connection.remote_connectors == {}
+    # A build that merely failed is retried later, so the builder is kept.
+    assert connection.connection_builders == [builder]
+
+
+async def test_auto_update_remove_unusable_builder(connection, qapp):
+    # Setup
+    connection._options.__enter__ = MagicMock(return_value=connection._options)
+    connection._options.connector_builders = []
+
+    builder = MagicMock()
+    builder.build_connector = AsyncMock(return_value=None)
+    builder.no_longer_usable = True
+    connection.connection_builders.append(builder)
+
+    # Run
+    await connection._auto_update()
+
+    # Assert: a builder that can never build again is discarded instead of retried forever.
+    assert connection.remote_connectors == {}
+    assert connection.connection_builders == []
+    assert connection._options.connector_builders == []
 
 
 async def test_auto_update_do_build(connection, qapp):
@@ -148,6 +170,26 @@ async def test_auto_update_remove_connector(connection, qapp):
         ]
     )
     assert connection.remote_connectors == {}
+
+
+async def test_auto_update_remove_connector_from_disabled_builder(connection, qapp):
+    # Setup
+    builder = MagicMock(name="builder")
+    builder.build_connector = AsyncMock(return_value=None)
+    builder.enabled = False
+    connector = MagicMock()
+    connector.force_finish = AsyncMock()
+    connector.is_disconnected.return_value = False
+    connector.has_been_beaten.return_value = False
+    connection.remote_connectors[builder] = connector
+    connection.connection_builders = [builder]
+
+    # Run
+    await connection._auto_update()
+
+    # Assert
+    connector.force_finish.assert_awaited_once_with()
+    builder.build_connector.assert_not_called()
 
 
 async def test_connector_state_update(connection, qapp, blank_resource_db):

@@ -10,7 +10,7 @@ from randovania.gui.lib.editable_table_model import AppendableEditableTableModel
 class HintFeatureDatabaseModel(AppendableEditableTableModel[HintFeature]):
     """Model for editing a HintFeature database using a QTableView."""
 
-    def __init__(self, db: dict[str, HintFeature]):
+    def __init__(self, db: dict[str, HintFeature]) -> None:
         super().__init__()
         self.db = db
 
@@ -52,7 +52,7 @@ class HintFeatureDatabaseModel(AppendableEditableTableModel[HintFeature]):
 class HintFeatureDatabaseEditor(QtWidgets.QDockWidget, Ui_HintFeatureDatabaseEditor):
     HintFeatureChanged = QtCore.Signal(object)
 
-    def __init__(self, parent: QtWidgets.QWidget, db: dict[str, HintFeature]):
+    def __init__(self, parent: QtWidgets.QWidget, db: dict[str, HintFeature]) -> None:
         super().__init__(parent)
         self.setupUi(self)
 
