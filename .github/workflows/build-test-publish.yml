@@ -235,7 +235,7 @@ jobs:
         id: version
         shell: bash
         run: |
-          echo "version=$(ls packages/ | cut -f2 -d- | sed 's/.dev/./')" >> $GITHUB_OUTPUT
+          echo "version=$(ls packages/ | cut -f2 -d- | sed 's/.dev/./' | sed 's/rc/./')" >> $GITHUB_OUTPUT
 
       - name: Extract executable
         run: |
