@@ -190,4 +190,7 @@ class DockTypeDatabase:
         dock_type = self.find_type_for_weakness(weakness)
         if dock_type.weakness_distributor is None:
             return False
-        return weakness in dock_type.weakness_distributor.change_from
+        return (
+            weakness in dock_type.weakness_distributor.change_from
+            or weakness in dock_type.weakness_distributor.indirect_change_from
+        )
