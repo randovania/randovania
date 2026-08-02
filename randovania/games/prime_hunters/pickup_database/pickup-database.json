@@ -95,14 +95,14 @@
             "offworld_models": {},
             "preferred_location_category": "major",
             "probability_offset": 0.25,
-            "progression": [
-                "{region}CArtifact{i}"
-            ],
-            "expected_case_for_describer": "shuffled",
             "extra": {
                 "entity_type": 17,
                 "artifact_id": 0
-            }
+            },
+            "progression": [
+                "{region}CArtifact{i}"
+            ],
+            "expected_case_for_describer": "shuffled"
         },
         "Attameter Artifact": {
             "name_template": "{region} Attameter Artifact {i}",
@@ -114,14 +114,14 @@
             "offworld_models": {},
             "preferred_location_category": "major",
             "probability_offset": 0.25,
-            "progression": [
-                "{region}AArtifact{i}"
-            ],
-            "expected_case_for_describer": "shuffled",
             "extra": {
                 "entity_type": 17,
                 "artifact_id": 1
-            }
+            },
+            "progression": [
+                "{region}AArtifact{i}"
+            ],
+            "expected_case_for_describer": "shuffled"
         },
         "Binary Subscripture Artifact": {
             "name_template": "{region} Binary Subscripture Artifact {i}",
@@ -133,14 +133,14 @@
             "offworld_models": {},
             "preferred_location_category": "major",
             "probability_offset": 0.25,
-            "progression": [
-                "{region}BSArtifact{i}"
-            ],
-            "expected_case_for_describer": "shuffled",
             "extra": {
                 "entity_type": 17,
                 "artifact_id": 2
-            }
+            },
+            "progression": [
+                "{region}BSArtifact{i}"
+            ],
+            "expected_case_for_describer": "shuffled"
         },
         "Octolith": {
             "name_template": "Octolith {i}",
@@ -152,14 +152,14 @@
             "offworld_models": {},
             "preferred_location_category": "major",
             "probability_offset": 0.25,
-            "progression": [
-                "Octolith{i}"
-            ],
-            "expected_case_for_describer": "shuffled",
             "extra": {
                 "entity_type": 17,
                 "model_id": 8
-            }
+            },
+            "progression": [
+                "Octolith{i}"
+            ],
+            "expected_case_for_describer": "shuffled"
         },
         "Shield Key": {
             "name_template": "{region} {area} Shield Key",
@@ -171,14 +171,14 @@
             "offworld_models": {},
             "preferred_location_category": "major",
             "probability_offset": 0.25,
-            "progression": [
-                "{region}{area}ShieldKey"
-            ],
-            "expected_case_for_describer": "shuffled",
             "extra": {
                 "entity_type": 4,
                 "item_type": 19
-            }
+            },
+            "progression": [
+                "{region}{area}ShieldKey"
+            ],
+            "expected_case_for_describer": "shuffled"
         }
     },
     "standard_pickups": {
@@ -200,12 +200,16 @@
         "Missile Launcher": {
             "gui_category": "missile",
             "hint_features": [
-                "missile",
-                "chozo_technology"
+                "chozo_technology",
+                "missile"
             ],
             "model_name": "AffinityWeapon",
             "offworld_models": {},
             "preferred_location_category": "major",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 21
+            },
             "progression": [
                 "MissileLauncher"
             ],
@@ -213,139 +217,135 @@
                 "MissileAmmo"
             ],
             "unlocks_ammo": true,
-            "expected_case_for_describer": "shuffled",
-            "extra": {
-                "entity_type": 4,
-                "item_type": 21
-            }
+            "expected_case_for_describer": "shuffled"
         },
         "Volt Driver": {
             "gui_category": "beam",
             "hint_features": [
-                "beam",
-                "affinity_weapon"
+                "affinity_weapon",
+                "beam"
             ],
             "model_name": "VoltDriver",
             "offworld_models": {},
             "preferred_location_category": "major",
-            "progression": [
-                "VoltDriver"
-            ],
-            "expected_case_for_describer": "shuffled",
             "extra": {
                 "entity_type": 4,
                 "item_type": 5
-            }
+            },
+            "progression": [
+                "VoltDriver"
+            ],
+            "expected_case_for_describer": "shuffled"
         },
         "Battlehammer": {
             "gui_category": "beam",
             "hint_features": [
-                "beam",
-                "affinity_weapon"
+                "affinity_weapon",
+                "beam"
             ],
             "model_name": "Battlehammer",
             "offworld_models": {},
             "preferred_location_category": "major",
-            "progression": [
-                "Battlehammer"
-            ],
-            "expected_case_for_describer": "shuffled",
             "extra": {
                 "entity_type": 4,
                 "item_type": 7
-            }
+            },
+            "progression": [
+                "Battlehammer"
+            ],
+            "expected_case_for_describer": "shuffled"
         },
         "Imperialist": {
             "gui_category": "beam",
             "hint_features": [
-                "beam",
-                "affinity_weapon"
+                "affinity_weapon",
+                "beam"
             ],
             "model_name": "Imperialist",
             "offworld_models": {},
             "preferred_location_category": "major",
-            "progression": [
-                "Imperialist"
-            ],
-            "expected_case_for_describer": "shuffled",
             "extra": {
                 "entity_type": 4,
                 "item_type": 8
-            }
+            },
+            "progression": [
+                "Imperialist"
+            ],
+            "expected_case_for_describer": "shuffled"
         },
         "Judicator": {
             "gui_category": "beam",
             "hint_features": [
-                "beam",
-                "affinity_weapon"
+                "affinity_weapon",
+                "beam"
             ],
             "model_name": "Judicator",
             "offworld_models": {},
             "preferred_location_category": "major",
-            "progression": [
-                "Judicator"
-            ],
-            "expected_case_for_describer": "shuffled",
             "extra": {
                 "entity_type": 4,
                 "item_type": 9
-            }
+            },
+            "progression": [
+                "Judicator"
+            ],
+            "expected_case_for_describer": "shuffled"
         },
         "Magmaul": {
             "gui_category": "beam",
             "hint_features": [
-                "beam",
-                "affinity_weapon"
+                "affinity_weapon",
+                "beam"
             ],
             "model_name": "Magmaul",
             "offworld_models": {},
             "preferred_location_category": "major",
-            "progression": [
-                "Magmaul"
-            ],
-            "expected_case_for_describer": "shuffled",
             "extra": {
                 "entity_type": 4,
                 "item_type": 10
-            }
+            },
+            "progression": [
+                "Magmaul"
+            ],
+            "expected_case_for_describer": "shuffled"
         },
         "Shock Coil": {
             "gui_category": "beam",
             "hint_features": [
-                "beam",
-                "affinity_weapon"
+                "affinity_weapon",
+                "beam"
             ],
             "model_name": "Shock Coil",
             "offworld_models": {},
             "preferred_location_category": "major",
-            "progression": [
-                "ShockCoil"
-            ],
-            "expected_case_for_describer": "shuffled",
             "extra": {
                 "entity_type": 4,
                 "item_type": 11
-            }
+            },
+            "progression": [
+                "ShockCoil"
+            ],
+            "expected_case_for_describer": "shuffled"
         },
         "Energy Tank": {
             "gui_category": "energy_tank",
             "hint_features": [
-                "energy_tank",
-                "chozo_technology"
+                "chozo_technology",
+                "energy_tank"
             ],
             "model_name": "EnergyTank",
             "offworld_models": {},
             "preferred_location_category": "minor",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 4
+            },
             "progression": [
                 "EnergyTank"
             ],
             "show_in_credits_spoiler": false,
             "expected_case_for_describer": "shuffled",
-            "custom_count_for_shuffled_case": 7,
-            "extra": {
-                "entity_type": 4,
-                "item_type": 4
-            }
+            "custom_count_for_shuffled_case": 7
         },
         "Small Energy": {
             "gui_category": "refills",
@@ -356,16 +356,16 @@
             "offworld_models": {},
             "preferred_location_category": "minor",
             "description": "Replenishes 30 units of Energy.",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 0
+            },
             "progression": [
                 "SmallEnergy"
             ],
             "show_in_credits_spoiler": false,
             "expected_case_for_describer": "missing",
             "starting_condition": "never_start",
-            "extra": {
-                "entity_type": 4,
-                "item_type": 0
-            },
             "original_locations": [
                 66,
                 67,
@@ -395,16 +395,16 @@
             "offworld_models": {},
             "preferred_location_category": "minor",
             "description": "Replenishes 60 units of Energy.",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 1
+            },
             "progression": [
                 "MediumEnergy"
             ],
             "show_in_credits_spoiler": false,
             "expected_case_for_describer": "missing",
             "starting_condition": "never_start",
-            "extra": {
-                "entity_type": 4,
-                "item_type": 1
-            },
             "original_locations": [
                 69,
                 75,
@@ -424,16 +424,16 @@
             "offworld_models": {},
             "preferred_location_category": "minor",
             "description": "Replenishes 100 units of Energy.",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 2
+            },
             "progression": [
                 "LargeEnergy"
             ],
             "show_in_credits_spoiler": false,
             "expected_case_for_describer": "missing",
             "starting_condition": "never_start",
-            "extra": {
-                "entity_type": 4,
-                "item_type": 2
-            },
             "original_locations": [
                 71,
                 84
@@ -448,17 +448,16 @@
             "offworld_models": {},
             "preferred_location_category": "minor",
             "description": "Replenishes 10 rounds of Universal Ammo.",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 13
+            },
             "progression": [
                 "SmallUAPack"
             ],
             "show_in_credits_spoiler": false,
             "expected_case_for_describer": "missing",
-            "starting_condition": "never_start",
-            "extra": {
-                "entity_type": 4,
-                "item_type": 13
-            },
-            "original_locations": []
+            "starting_condition": "never_start"
         },
         "Large UA Pack": {
             "gui_category": "refills",
@@ -469,17 +468,16 @@
             "offworld_models": {},
             "preferred_location_category": "minor",
             "description": "Replenishes 25 rounds of Universal Ammo.",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 14
+            },
             "progression": [
                 "LargeUAPack"
             ],
             "show_in_credits_spoiler": false,
             "expected_case_for_describer": "missing",
-            "starting_condition": "never_start",
-            "extra": {
-                "entity_type": 4,
-                "item_type": 14
-            },
-            "original_locations": []
+            "starting_condition": "never_start"
         },
         "Small Missile Pack": {
             "gui_category": "refills",
@@ -490,16 +488,16 @@
             "offworld_models": {},
             "preferred_location_category": "minor",
             "description": "Replenishes Missile reserves by 10 Missiles.",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 15
+            },
             "progression": [
                 "SmallMissilePack"
             ],
             "show_in_credits_spoiler": false,
             "expected_case_for_describer": "missing",
             "starting_condition": "never_start",
-            "extra": {
-                "entity_type": 4,
-                "item_type": 15
-            },
             "original_locations": [
                 92
             ]
@@ -513,39 +511,37 @@
             "offworld_models": {},
             "preferred_location_category": "minor",
             "description": "Replenishes Missile reserves by 25 Missiles.",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 16
+            },
             "progression": [
                 "LargeMissilePack"
             ],
             "show_in_credits_spoiler": false,
             "expected_case_for_describer": "missing",
-            "starting_condition": "never_start",
-            "extra": {
-                "entity_type": 4,
-                "item_type": 16
-            },
-            "original_locations": []
+            "starting_condition": "never_start"
         }
     },
     "ammo_pickups": {
         "Missile Expansion": {
             "gui_category": "missile",
             "hint_features": [
-                "expansion",
-                "chozo_technology"
+                "chozo_technology",
+                "expansion"
             ],
             "model_name": "MissileExpansion",
             "offworld_models": {},
             "preferred_location_category": "minor",
+            "extra": {
+                "entity_type": 4,
+                "item_type": 6
+            },
             "items": [
                 "MissileAmmo"
             ],
             "unlocked_by": "MissileLauncher",
-            "temporary": "MissileLocked",
-            "allows_negative": false,
-            "extra": {
-                "entity_type": 4,
-                "item_type": 6
-            }
+            "temporary": "MissileLocked"
         },
         "UA Expansion": {
             "gui_category": "beam",
@@ -555,14 +551,13 @@
             "model_name": "UAExpansion",
             "offworld_models": {},
             "preferred_location_category": "minor",
-            "items": [
-                "UAExpansion"
-            ],
-            "allows_negative": false,
             "extra": {
                 "entity_type": 4,
                 "item_type": 18
-            }
+            },
+            "items": [
+                "UAExpansion"
+            ]
         }
     },
     "default_pickups": {},
