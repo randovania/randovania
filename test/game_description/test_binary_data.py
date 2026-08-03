@@ -71,7 +71,7 @@ def test_simple_round_trip():
     assert decoded == sample_data
 
 
-def test_complex_encode(test_files_dir):
+def test_complex_encode(test_files_dir, acceptance_check):
     data = test_files_dir.read_json("prime_data_as_json.json")
     data = game_description_migration.migrate_to_current(data, RandovaniaGame.METROID_PRIME_ECHOES)
 
@@ -79,11 +79,9 @@ def test_complex_encode(test_files_dir):
 
     # Run
     binary_data.encode(data, b)
-    # # Whenever the file format changes, we can use the following line to force update our test file
-    # test_files_dir.joinpath("prime_data_as_binary.bin").write_bytes(b.getvalue()); assert False
 
     # Assert
-    assert test_files_dir.joinpath("prime_data_as_binary.bin").read_bytes() == b.getvalue()
+    acceptance_check(test_files_dir.joinpath("prime_data_as_binary.bin"), b.getvalue())
 
 
 def test_complex_decode(test_files_dir):

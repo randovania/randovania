@@ -78,7 +78,7 @@ class CSPatchDataFactory(PatchDataFactory[CSConfiguration, CSCosmeticPatches]):
             "other_tsc": {"Head": self._head_tsc_edits()},
             "mychar": self.cosmetic_patches.mychar.mychar_bmp(Random(self._seed_number)),
             "hash": get_ingame_hash(self.description.shareable_hash_bytes),
-            "uuid": f"{{{self.worlds_config.get_own_uuid()}}}",
+            "uuid": f"{{{self.world_uuid}}}",
         }
         return typing.cast("dict", data)
 

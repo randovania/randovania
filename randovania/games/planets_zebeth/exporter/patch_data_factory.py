@@ -99,7 +99,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         return {
             "word_hash": self.description.shareable_word_hash,
             "hash": self.description.shareable_hash,
-            "session_uuid": str(self.worlds_config.get_own_uuid()),
+            "session_uuid": str(self.world_uuid),
         }
 
     def _create_game_config_dict(self, pickup_list: list[ExportedPickupDetails]) -> dict:
