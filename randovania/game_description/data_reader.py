@@ -65,9 +65,6 @@ def read_array[Y, X](data: list[Y], item_reader: Callable[[Y], X]) -> list[X]:
     return [item_reader(item) for item in data]
 
 
-#
-
-
 class ResourceReader:
     def __init__(self, next_index: int = 0):
         self.next_index = next_index

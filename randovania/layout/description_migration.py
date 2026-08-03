@@ -709,7 +709,7 @@ def _migrate_v35(data: dict) -> None:
                 if "Energy Transfer Module" in pickup:
                     # Formatted so because some older rdvgames append "for player X" to ETMs
                     # Bad migration perhaps? idk
-                    game_modifications[index]["locations"][region].update({location: "Nothing"})
+                    game["locations"][region].update({location: "Nothing"})
 
 
 def _migrate_v36(data: dict) -> None:

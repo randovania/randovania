@@ -235,7 +235,7 @@ class Options:
 
         for game in RandovaniaGame.all_games():
             self._set_field(f"game_{game.value}", None)
-            for key in _PER_GAME_SERIALIZERS.keys():
+            for key in _PER_GAME_SERIALIZERS:
                 self._set_field(f"{key}_{game.value}", None)
 
     def __getattr__(self, item: object) -> Any:
@@ -244,7 +244,7 @@ class Options:
             if item.startswith("game_"):
                 game_name = item[len("game_") :]
             else:
-                for key in _PER_GAME_SERIALIZERS.keys():
+                for key in _PER_GAME_SERIALIZERS:
                     field_name = f"{key}_"
                     if item.startswith(field_name):
                         game_name = item[len(field_name) :]
@@ -370,7 +370,7 @@ class Options:
 
     def reset_to_defaults(self) -> None:
         self._check_editable_and_mark_dirty()
-        for field_name in _SERIALIZER_FOR_FIELD.keys():
+        for field_name in _SERIALIZER_FOR_FIELD:
             if field_name.startswith("last_changelog_displayed"):
                 continue
             self._set_field(field_name, None)

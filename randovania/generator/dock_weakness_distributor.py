@@ -135,7 +135,7 @@ def distribute_pre_fill_weaknesses(
 
         nodes_to_shuffle: list[DockNode] = [
             node
-            for node in all_docks.keys()
+            for node in all_docks
             if (
                 patches.has_default_weakness(node)  # don't randomize anything that was already modified
                 and node.dock_type == dock_type

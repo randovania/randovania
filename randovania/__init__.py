@@ -43,7 +43,7 @@ def get_icon_path() -> Path:
 
 def get_file_path() -> Path:
     if is_frozen():
-        file_dir = Path(getattr(sys, "_MEIPASS"))
+        file_dir = Path(sys._MEIPASS)
     else:
         file_dir = Path(__file__).parent
     return file_dir

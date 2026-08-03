@@ -61,7 +61,7 @@ def test_write_game_descriptions(mocker):
         [call(gd, g.data_path.joinpath("logic_database")) for g, gd in gds.items()]
     )
     mock_write_as_split_files.assert_has_calls(
-        [call(mock_write_game_description.return_value, g.data_path.joinpath("logic_database")) for g in gds.keys()]
+        [call(mock_write_game_description.return_value, g.data_path.joinpath("logic_database")) for g in gds]
     )
 
 

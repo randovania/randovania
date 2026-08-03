@@ -20,12 +20,11 @@ class FactorioGameExportParams(GameExportParams):
 
 
 async def download_file(url: str, path: Path) -> None:
-    async with http_lib.http_session() as session:
-        async with session.get(url) as resp:
-            resp.raise_for_status()
-            with path.open("wb") as fd:
-                async for chunk in resp.content.iter_chunked(8192):
-                    fd.write(chunk)
+    async with http_lib.http_session() as session, session.get(url) as resp:
+        resp.raise_for_status()
+        with path.open("wb") as fd:
+            async for chunk in resp.content.iter_chunked(8192):
+                fd.write(chunk)
 
 
 class FactorioGameExporter(GameExporter[FactorioGameExportParams]):

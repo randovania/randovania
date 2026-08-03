@@ -101,10 +101,9 @@ _TEST_RESPONSE = {
 
 
 async def _query_server(race_url: str) -> dict:
-    async with http_lib.http_session() as session:
-        async with session.get(race_url) as response:
-            response.raise_for_status()
-            return await response.json()
+    async with http_lib.http_session() as session, session.get(race_url) as response:
+        response.raise_for_status()
+        return await response.json()
 
 
 class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):

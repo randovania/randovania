@@ -226,8 +226,6 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         else:
             return None
 
-    #
-
     @asyncSlot()
     async def _world_replace_preset(self, world_uid: uuid.UUID) -> None:
         game = self._session.get_world(world_uid).preset.game
@@ -377,8 +375,6 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         )
         self.GameExportRequested.emit(world_uid, patch_data)
 
-    #
-
     @asyncSlot()
     async def _new_world(self, user_id: int) -> None:
         dialog = self._create_select_preset_dialog(True, None)
@@ -431,12 +427,9 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             )
         )
 
-    #
-
     def _watch_inventory(self, world_uid: uuid.UUID, user_id: int) -> None:
         self.TrackWorldRequested.emit(world_uid, user_id)
 
-    #
     def is_admin(self) -> bool:
         return self.your_id is not None and self._session.users[self.your_id].admin
 
@@ -621,7 +614,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             for world_uid, world in world_by_id.items():
                 if world_uid in unclaimed_worlds:
                     self._create_world_item(world_uid, unclaimed_world_item, self.UNCLAIMED_PSEUDO_USER_ID).update(
-                        world_by_id[world_uid],
+                        world,
                         UserWorldDetail(GameConnectionStatus.Unclaimed, datetime.datetime.min),
                     )
 
@@ -634,7 +627,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             for world_uid, world in world_by_id.items():
                 if world_uid in abandoned_worlds:
                     self._create_world_item(world_uid, abandoned_world_item, self.ABANDONED_PSEUDO_USER_ID).update(
-                        world_by_id[world_uid],
+                        world,
                         UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min),
                     )
 
@@ -643,9 +636,9 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             total_world_item.setExpanded(True)
             total_world_item.setText(0, "All Worlds")
             for world_uid, world in world_by_id.items():
-                if world_uid in world_by_id.keys():
+                if world_uid in world_by_id:
                     self._create_world_item(world_uid, total_world_item, self.ALL_WORLDS_PSEUDO_USER_ID).update(
-                        world_by_id[world_uid],
+                        world,
                         UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min),
                     )
 

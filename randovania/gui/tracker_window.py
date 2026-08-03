@@ -539,7 +539,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         if not hasattr(self.game_configuration, "teleporters"):
             return
 
-        teleporters_config: TeleporterConfiguration = getattr(self.game_configuration, "teleporters")
+        teleporters_config: TeleporterConfiguration = self.game_configuration.teleporters
 
         region_list = self.game_description.region_list
         nodes_by_region: dict[str, list[DockNode]] = collections.defaultdict(list)

@@ -169,7 +169,7 @@ def prompt_user_for_database_file(window: QtWidgets.QWidget) -> Path | None:
     return _prompt_user_for_file(window, caption="Select a Randovania database file.", filter="*.json")
 
 
-def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool, name: str | None = None) -> None | (Path):
+def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool, name: str | None = None) -> Path | None:
     """
     Shows an QFileDialog asking the user for a Randovania preset file
     :param window:
@@ -187,7 +187,7 @@ def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool, name:
     )
 
 
-def prompt_user_for_preset_folder(window: QtWidgets.QWidget) -> None | Path:
+def prompt_user_for_preset_folder(window: QtWidgets.QWidget) -> Path | None:
     """
     Shows a QFileDialog asking the user for a directory in which to save multiple Randovania preset files
     :param parent:
