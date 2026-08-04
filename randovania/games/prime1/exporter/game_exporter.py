@@ -169,7 +169,7 @@ class PrimeGameExporter(GameExporter[PrimeGameExportParams]):
         rl = game_description.region_list
         dock_types_to_ignore = game_description.dock_type_database.all_teleporter_dock_types
 
-        for region_name in level_data.keys():
+        for region_name in level_data:
             filepath = directory.with_name(f"{base_filename} {region_name}.png")
             make_one_map(filepath, level_data, rl.region_with_name(region_name), dock_types_to_ignore)
 

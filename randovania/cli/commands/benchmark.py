@@ -87,15 +87,14 @@ def generate_list_of_permalinks(parameters: list[GeneratorParameters], process_c
                 f.cancel()
 
     try:
-        with sleep_inhibitor.get_inhibitor():
-            with ProcessPoolExecutor(max_workers=process_count) as pool:
-                for i, p in enumerate(parameters):
-                    result = pool.submit(
-                        generate_helper,
-                        p,
-                    )
-                    result.add_done_callback(functools.partial(with_result, i))
-                    all_futures.append(result)
+        with sleep_inhibitor.get_inhibitor(), ProcessPoolExecutor(max_workers=process_count) as pool:
+            for i, p in enumerate(parameters):
+                result = pool.submit(
+                    generate_helper,
+                    p,
+                )
+                result.add_done_callback(functools.partial(with_result, i))
+                all_futures.append(result)
     except KeyboardInterrupt:
         pass
 

@@ -160,8 +160,6 @@ class MultiplayerSessionApi(NetworkErrorDelegator, QtCore.QObject):
 
         return LayoutDescription.from_bytes(description_binary, presets=[world.preset for world in worlds])
 
-    #
-
     @handle_network_errors
     async def replace_preset_for(self, world_uid: uuid.UUID, preset: VersionedPreset) -> None:
         self.logger.info("Replacing preset for %s with %s", world_uid, preset.name)

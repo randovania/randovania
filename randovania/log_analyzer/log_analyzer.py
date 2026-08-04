@@ -241,10 +241,10 @@ def create_report(
     for location in locations:
         region = location.split("/")[0]
 
-        if region not in regions.keys():
+        if region not in regions:
             regions[region] = 0
 
-        if region not in region_totals.keys():
+        if region not in region_totals:
             region_totals[region] = 0
         region_totals[region] += 1
 
@@ -298,7 +298,6 @@ def create_report(
     # Scale and account for the fact that 1% deviance in one location always results for 1% elsewhere
     bias_index /= 2
 
-    #
     starting_location_region_only = [sort_by_count(_region_only_starting_loc(it)) for it in starting_locations]
     starting_location_report = [sort_by_count(loc) for loc in starting_locations]
 

@@ -217,7 +217,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
             "randomize": palettes,
             "color_space": cosmetics.color_space.long_name,
-            "symmetric": getattr(cosmetics, "enable_symmetric"),
+            "symmetric": cosmetics.enable_symmetric,
         }
         return palette_dict
 
