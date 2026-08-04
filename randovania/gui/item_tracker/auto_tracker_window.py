@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import collections
 import functools
+import logging
 import typing
+from json import JSONDecodeError
 from typing import TYPE_CHECKING
 
 from PySide6 import QtGui, QtWidgets
@@ -40,25 +42,35 @@ def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, TrackerC
     themes: dict[RandovaniaGame, dict[str, ThemeSource]] = collections.defaultdict(dict)
 
     for game in RandovaniaGame.all_games():
-        for game_dir in [game.data_path.joinpath("assets", "tracker"), user_folder.joinpath(game.value)]:
+        for game_dir, optional in [
+            (game.data_path.joinpath("assets", "tracker"), False),
+            (user_folder.joinpath(game.value), True),
+        ]:
             trackers_json = game_dir.joinpath("trackers.json")
             if not trackers_json.is_file():
                 continue
 
-            game_config = json_lib.read_dict(trackers_json)
-            solo_only = typing.cast("dict", game_config.get("solo_only", {}))
-            exclude_layouts: list[str] = [] if for_solo else typing.cast("list", solo_only.get("layouts", []))
-            exclude_themes: list[str] = [] if for_solo else typing.cast("list", solo_only.get("themes", []))
+            try:
+                game_config: dict = json_lib.read_dict(trackers_json)
+                solo_only = game_config.get("solo_only", {})
+                exclude_layouts: list[str] = [] if for_solo else solo_only.get("layouts", [])
+                exclude_themes: list[str] = [] if for_solo else solo_only.get("themes", [])
 
-            for layout_name, filename in typing.cast("dict", game_config["layouts"]).items():
-                if layout_name in exclude_layouts:
-                    continue
-                layouts[game][layout_name] = game_dir.joinpath(filename)
+                for layout_name, filename in game_config.get("layouts", {}).items():
+                    if layout_name in exclude_layouts:
+                        continue
+                    layouts[game][layout_name] = game_dir.joinpath(filename)
 
-            for theme_name, filename in typing.cast("dict", game_config["themes"]).items():
-                if theme_name in exclude_themes:
-                    continue
-                themes[game][theme_name] = ThemeSource(path=game_dir.joinpath(filename), assets_root=game_dir)
+                for theme_name, filename in game_config.get("themes", {}).items():
+                    if theme_name in exclude_themes:
+                        continue
+                    themes[game][theme_name] = ThemeSource(path=game_dir.joinpath(filename), assets_root=game_dir)
+
+            except (JSONDecodeError, KeyError):
+                if optional:
+                    logging.exception("Error parsing %s", str(game_dir))
+                else:
+                    raise
 
     return {
         game: TrackerCatalog(layouts=game_layouts, themes=themes.get(game, {}))
