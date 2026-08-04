@@ -43,7 +43,6 @@ def test_requirement_lists_without_satisfied_resources(
         echoes_game_description.game.generator.bootstrap.create_damage_state(
             echoes_game_description, default_echoes_preset.configuration
         ),
-        (),
         None,  # type: ignore[arg-type]
         echoes_game_patches,
         None,

@@ -103,7 +103,6 @@ def test_assign_pickup_to_starting_items(
         {},
         (),
         state_game_data,
-        (),
         starting_node,
         empty_patches,
         None,

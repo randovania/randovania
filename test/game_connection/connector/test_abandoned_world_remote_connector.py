@@ -40,7 +40,6 @@ def make_connector(description: LayoutDescription, order: int) -> AbandonedWorld
     return AbandonedWorldRemoteConnector(
         uuid.uuid4(),
         VersionedPreset.with_preset(description.get_preset(order)),
-        order,
         game_patches_serializer.serialize_single_world_only(
             order, len(description.all_patches), description.all_patches[order]
         ),
@@ -111,7 +110,7 @@ def tracked_rounds(mocker):
 
 def fake_connector() -> AbandonedWorldRemoteConnector:
     """A connector with placeholder world data, for tests that fake the resolution rounds."""
-    return AbandonedWorldRemoteConnector(uuid.uuid4(), MagicMock(), 0, {}, [])
+    return AbandonedWorldRemoteConnector(uuid.uuid4(), MagicMock(), {}, [])
 
 
 @pytest.mark.usefixtures("inert_loop")
@@ -220,7 +219,7 @@ async def test_setup_grants_only_self_pickups(multi_layout):
     modifications = game_patches_serializer.serialize_single_world_only(
         order, len(description.all_patches), description.all_patches[order]
     )
-    graph, _ = setup_for_world(description.get_preset(order).configuration, modifications, order)
+    graph, _ = setup_for_world(description.get_preset(order).configuration, modifications)
 
     full_assignment = description.all_patches[order].pickup_assignment
     checked_self = 0
