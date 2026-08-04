@@ -18,10 +18,9 @@ import time
 from typing import TYPE_CHECKING
 
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent, RemoteConnector
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.generator.pickup_pool import PoolResults, pool_creator
+from randovania.generator.pickup_pool import pool_creator
 from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
 from randovania.layout import filtered_database, game_patches_serializer
 from randovania.network_common.error import WorldNotAssociatedError
@@ -50,7 +49,7 @@ _MAX_RESOLVER_ATTEMPTS = 500_000
 logger = logging.getLogger(__name__)
 
 
-def setup_for_world(configuration: BaseConfiguration, game_modifications: dict, order: int) -> tuple[WorldGraph, State]:
+def setup_for_world(configuration: BaseConfiguration, game_modifications: dict) -> tuple[WorldGraph, State]:
     """
     Builds the world graph and starting state for one world (same as ``resolver.setup_resolver``)
     from the data served by the server for an abandoned world.
@@ -63,10 +62,10 @@ def setup_for_world(configuration: BaseConfiguration, game_modifications: dict, 
     immutable_game = filtered_database.game_description_for_layout(configuration)
     pool = pool_creator.calculate_pool_results(configuration, immutable_game)
 
-    all_pools: list[PoolResults] = [pool] * (order + 1)
-    all_games: list[GameDescription] = [immutable_game] * (order + 1)
+    # The server has provided a game_modifications dict that has all locations being either local pickups or nothing,
+    # with the owner being index 0.
     patches = game_patches_serializer.decode_single(
-        order, all_pools, immutable_game, game_modifications, configuration, all_games
+        0, [pool], immutable_game, game_modifications, configuration, [immutable_game]
     )
 
     game = immutable_game.get_mutable()
@@ -163,14 +162,12 @@ class AbandonedWorldRemoteConnector(RemoteConnector):
         self,
         layout_uuid: uuid.UUID,
         preset: VersionedPreset,
-        order: int,
         game_modifications: dict,
         collected_locations: Iterable[int],
     ):
         super().__init__()
         self._layout_uuid = layout_uuid
         self._preset = preset
-        self._order = order
         self._game_modifications = game_modifications
 
         # All mutable resolution state is owned by this connector instance.
@@ -234,7 +231,8 @@ class AbandonedWorldRemoteConnector(RemoteConnector):
     def _ensure_setup(self) -> tuple[WorldGraph, State]:
         if self._graph is None or self._starting_state is None:
             self._graph, self._starting_state = setup_for_world(
-                self._preset.get_preset().configuration, self._game_modifications, self._order
+                self._preset.get_preset().configuration,
+                self._game_modifications,
             )
         return self._graph, self._starting_state
 

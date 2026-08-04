@@ -309,7 +309,7 @@ async def test_dread_abandoned_in_giant_multi_is_monotonic(giant_multi_layout):
         dread_order, len(description.all_patches), description.all_patches[dread_order]
     )
     # One setup shared across all rounds, exactly like a connector reuses its own graph.
-    graph, starting_state = setup_for_world(configuration, modifications, dread_order)
+    graph, starting_state = setup_for_world(configuration, modifications)
 
     # The pickups other worlds hold for Dread, in a deterministic order.
     held_for_dread = sorted(
