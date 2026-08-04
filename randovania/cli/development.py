@@ -8,6 +8,10 @@ from randovania.cli.commands.hash_input import add_hash_input_command
 from randovania.cli.commands.new_game import add_create_databases, add_new_game_command
 from randovania.cli.commands.refresh_presets import add_refresh_presets_command
 from randovania.cli.commands.render_regions import render_regions_graph
+from randovania.cli.commands.update_committed import (
+    add_update_acceptance_tests_command,
+    add_update_committed_command,
+)
 from randovania.cli.commands.website import (
     create_export_videos_yaml_command,
     create_extract_game_data_command,
@@ -32,6 +36,8 @@ def create_subparsers(sub_parsers: _SubParsersAction) -> None:
     create_extract_game_data_command(sub_parsers)
     add_hash_input_command(sub_parsers)
     add_update_expected_seed_hash_command(sub_parsers)
+    add_update_committed_command(sub_parsers)
+    add_update_acceptance_tests_command(sub_parsers)
 
     def check_command(args: Namespace) -> None:
         if args.command is None:

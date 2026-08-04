@@ -231,8 +231,7 @@ if cython.compiled:
                     # Weight function, embedded
                     cost: cython.int = is_collected[u]
                     if cost == 2:
-                        node: BaseWorldGraphNode = cython.cast(BaseWorldGraphNode, nodes[u])
-                        cost = node.require_collected_to_leave and not node.resource_gain_bitmask.is_subset_of(
+                        cost = not cython.cast(BaseWorldGraphNode, nodes[u]).resource_gain_bitmask.is_subset_of(
                             resource_bitmask
                         )
                         is_collected[u] = cost
@@ -313,10 +312,7 @@ else:
                 node_index: cython.int = data[1]
                 result: cython.int = is_collected[node_index]
                 if result == 2:
-                    node: BaseWorldGraphNode = nodes[node_index]
-                    result = node.require_collected_to_leave and not node.resource_gain_bitmask.is_subset_of(
-                        resources.resource_bitmask
-                    )
+                    result = not nodes[node_index].resource_gain_bitmask.is_subset_of(resources.resource_bitmask)
                     is_collected[node_index] = result
 
                 return result

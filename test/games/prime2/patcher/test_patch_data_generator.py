@@ -30,7 +30,6 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
-from randovania.lib import json_lib
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
@@ -701,6 +700,7 @@ def test_generate_patcher_data(
     expected_results_filename: str,
     use_new_patcher: EchoesNewPatcher,
     monkeypatch: pytest.MonkeyPatch,
+    acceptance_check,
 ) -> None:
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", rdvgame_filename))
@@ -718,11 +718,4 @@ def test_generate_patcher_data(
     result = factory.create_data()
 
     # Assert
-    expected_results_path = test_files_dir.joinpath("patcher_data", "prime2", expected_results_filename)
-
-    # Uncomment to easily view diff of failed test
-    # json_lib.write_path(expected_results_path, result)
-
-    expected_result = json_lib.read_path(expected_results_path)
-
-    assert result == expected_result
+    acceptance_check(test_files_dir.joinpath("patcher_data", "prime2", expected_results_filename), result)

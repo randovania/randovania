@@ -748,7 +748,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
                 "lava": self.configuration.constant_lava_damage,
             },
             "objective": self._objective(self.configuration),
-            "layout_uuid": str(self.worlds_config.get_own_uuid()),
+            "layout_uuid": str(self.world_uuid),
             "enable_remote_lua": True,
             "reveal_map_on_start": self.cosmetic_patches.reveal_map,
         }

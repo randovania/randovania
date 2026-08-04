@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.11.0] - 2026-09-01
+
+- Changed: Automatic Item Tracker: The layout and the theme are now split and can be selected separately.
+- Changed: Improved average location distribution of "inert" pickups such as Prime Artifacts and Echoes STKs.
+- Changed: Updated the Nintendont version that is used when uploading it directly to the Wii. It will now reconnect to the network once it has lost a connection.
+- Changed: The Nintendont connector will not try to connect to the Homebrew Channel anymore for giving better feedback.
+
 ## [10.10.0] - 2026-08-02
 
 - **Major** - Added: Multiworld worlds can now be abandoned; abandoning a world is irreversible. An abandoned world can be played automatically by your own Randovania instance like a bot, via a dedicated game connection: it collects one location that is in logic for it every few seconds, and keeps doing so as it receives more items from other players.
@@ -16,13 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: In the Data Visualizer and Editor, when panning away from the selected area the region image is now displayed correctly.
 - Fixed: In the Data Visualizer and Editor, when changing the zoom the pan is adjusted now relative to either the center or the mouse position.
 
-### Generator
-
-- Fixed: Some cases of not correctly identifying which nodes are reachable.
-
 ### Resolver
 
 - Fixed: Some games being wrongly considered impossible.
+
+### Another Metroid 2 Remake
+
+- Fixed: Generating a game with the new Teleporter Pipes in final areas disabled no longer causes an exception.
 
 ### Metroid Dread
 
@@ -34,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Merged event nodes for breaking the floor in Gravity Suit Tower, decluttering the room and helping the generator see when it is safe to complete the sequence.
 - Changed: Added connection back to the Early Gravity Blob in the Gravity Suit Tower to help the generator see when it is safe to complete the breakable floor sequence.
+- Changed: The dangerous logic surrounding the water underneath Drogyga in terms of getting up the left ledge and across to the right ledge is now waived. Logically by construction, if the water is there then Drogyga has been defeated, which requires Grapple Beam, which is a solution to the connections that are changed.
 
 ##### Cataris
 
@@ -42,10 +50,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Dairon
 
 - Fixed: The door into the Central Unit is changed from Access Open to EMMI Door.
+- Fixed: Destroying the Hidden Blob in Freezer was available as a dangerous action with neither Gravity Suit or Highly Dangerous Logic.
 
 ##### Ferenia
 
 - Changed: The Twin Robot fight is now logically active from the start of the game, unless Highly Dangerous Logic is active. That means passing through the arena now logically requires meeting the fight requirements also before obtaining the Storm Missiles.
+
+### Metroid Fusion
+
+- Fixed: Typo in the knowledge trick description.
+- Fixed: Generation now takes takes into account when Open Hatches in Door Lock Rando are shuffled.
+
+#### Logic Database
+
+##### Sector 1 (SRX)
+
+- Fixed: Atmospheric Stabilizer Southeast: Destroying the Stabilizer with Screw Attack is now only possible if the Primary Geron Vulnerabilities setting is disabled. It's also not possible anymore to destroy it with Hi-Jump.
+- Added: Atmospheric Stabilizer Southeast: Destroying the Stabilizer is now possible with Power Bombs and Beginner Knowledge if the Primary Geron Vulnerabilities setting is disabled.
+
+##### Sector 3 (PYR)
+
+- Changed: Alcove: The Intermediate Shinespark trick from Deserted Runway to Alcove no longer requires L0 Keycard in Door Lock Rando settings.
 
 ### Metroid: Samus Returns
 

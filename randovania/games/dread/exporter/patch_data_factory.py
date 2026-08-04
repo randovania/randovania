@@ -596,7 +596,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             "mass_delete_actors": {
                 "to_remove": self._light_patches(),
             },
-            "layout_uuid": str(self.worlds_config.get_own_uuid()),
+            "layout_uuid": str(self.world_uuid),
         }
 
 

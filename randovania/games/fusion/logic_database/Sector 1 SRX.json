@@ -3461,15 +3461,15 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Kill with Screw Attack",
+                                            "comment": "Alternative Methods",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
+                                                        "type": "misc",
+                                                        "name": "NerfGerons",
                                                         "amount": 1,
-                                                        "negate": false
+                                                        "negate": true
                                                     }
                                                 },
                                                 {
@@ -3484,19 +3484,53 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "Get high enough",
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Have Any Jump Upgrade"
+                                                                "data": "Can Use Power Bombs"
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "WallJump",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": "Kill with Screw Attack",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "ScrewAttack",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": "Get high enough",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "WallJump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "SpaceJump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]

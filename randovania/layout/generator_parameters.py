@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import functools
 import json
+import secrets
 from dataclasses import dataclass
 from random import Random
 from typing import TYPE_CHECKING
@@ -19,6 +20,10 @@ if TYPE_CHECKING:
 
 _PERMALINK_MAX_SEED = 2**31
 _PERMALINK_PLAYER_COUNT_LIMITS = (2, 256)
+
+
+def random_seed_number() -> int:
+    return secrets.randbelow(_PERMALINK_MAX_SEED)
 
 
 def raw_database_hash(data: dict) -> int:

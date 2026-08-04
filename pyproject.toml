@@ -99,7 +99,7 @@ exporters = [
     "mp2hudcolor==1.0.14",
 
     # Metroid Prime Hunters
-    "open-prime-hunters-rando==0.12.2",
+    "open-prime-hunters-rando==0.13.1",
 
     # Metroid: Samus Returns
     "open-samus-returns-rando==3.6.1",
@@ -124,7 +124,7 @@ gui = [
 ]
 
 server = [
-    "fastapi<0.137", # REST server
+    "fastapi<0.141", # REST server
     "jinja2", # templating
     "uvicorn[standard]", # server runner
     "itsdangerous", # for starlette SessionMiddleware
@@ -382,6 +382,7 @@ module = [
 ignore_missing_imports = true
 
 [tool.uv]
+required-version = ">=0.11.30"  # Good support for exclude-newer
 exclude-newer = "7 days"
 cache-keys = [
     { git = { commit = true, tags = true } },

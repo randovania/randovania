@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import typing
 import uuid
 from collections.abc import Iterator
-from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
@@ -11,9 +11,10 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.game_connection import ConnectedGameState
-from randovania.gui.item_tracker.auto_tracker_window import AutoTrackerWindow, load_trackers_configuration
+from randovania.gui.item_tracker.auto_tracker_window import AutoTrackerWindow
 from randovania.gui.item_tracker.item_tracker_widget import ItemTrackerWidget
-from randovania.gui.item_tracker.tracker_layout import TrackerLayout
+from randovania.gui.item_tracker.tracker_assets import ThemeSource, TrackerAssetPaths, TrackerCatalog
+from randovania.lib import json_lib
 from randovania.network_common.game_connection_status import GameConnectionStatus
 
 
@@ -47,13 +48,10 @@ def test_create_tracker_no_game(skip_qtbot):
 
 
 @pytest.mark.parametrize(
-    ("game", "tracker_name"),
-    [
-        (RandovaniaGame.METROID_PRIME, "Game Art (Standard)"),
-        (RandovaniaGame.METROID_PRIME_ECHOES, "Game Art (Standard)"),
-    ],
+    "game",
+    [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES],
 )
-def test_create_tracker_valid(skip_qtbot, game, tracker_name):
+def test_create_tracker_valid(skip_qtbot, game):
     # Setup
     connection = MagicMock()
     connector = connection.get_connector_for_builder.return_value
@@ -73,12 +71,42 @@ def test_create_tracker_valid(skip_qtbot, game, tracker_name):
     assert window._dummy_tracker is None
     assert window._current_tracker_game == game
 
-    # Select new theme
-    action = next(action for action in window._tracker_actions[game] if action.text() == tracker_name)
-    action.setChecked(True)
-
+    # Layout and theme can be selected independently
+    layout_action = next(action for action in window._layout_actions if action.text() == "8 Lines")
+    layout_action.setChecked(True)
     window.create_tracker()
-    assert window._current_tracker_name == tracker_name
+    assert window._current_tracker_layout == "8 Lines"
+
+    theme_action = next(action for action in window._theme_actions if action.text() == "Pixel Art")
+    theme_action.setChecked(True)
+    window.create_tracker()
+    assert window._current_tracker_theme == "Pixel Art"
+    assert window._current_tracker_layout == "8 Lines"
+
+
+def test_create_tracker_shows_error_for_broken_theme(skip_qtbot, mocker):
+    # Setup
+    game = RandovaniaGame.METROID_PRIME
+    connection = MagicMock()
+    connector = connection.get_connector_for_builder.return_value
+    connector.game_enum = game
+    connection.connected_states = {
+        connector: ConnectedGameState(uuid.UUID(int=0), connector, GameConnectionStatus.Disconnected)
+    }
+
+    # Run
+    window = AutoTrackerWindow(connection, None, MagicMock())
+    skip_qtbot.addWidget(window)
+    assert isinstance(window.item_tracker, ItemTrackerWidget)
+
+    mocker.patch.object(TrackerAssetPaths, "load", side_effect=ValueError("Theme is missing an image named 'Foo'"))
+    window._current_tracker_layout = None  # force create_tracker() past the no-op "already showing this" check
+    window.create_tracker()
+
+    # Assert
+    assert window.item_tracker is None
+    assert window._dummy_tracker is not None
+    assert "Foo" in window._dummy_tracker.text()
 
 
 def test_fall_back_to_default_game(skip_qtbot):
@@ -86,7 +114,7 @@ def test_fall_back_to_default_game(skip_qtbot):
     # default game = Prime
     options = MagicMock()
     options.tracker_default_game = RandovaniaGame.METROID_PRIME
-    options.selected_tracker_for.return_value = "Game Art (Standard)"
+    options.selected_tracker_layout_for.return_value = "Standard"
 
     # connected game = Echoes
     connector = MagicMock()
@@ -127,11 +155,14 @@ def test_on_disconnect_goes_back_to_default(skip_qtbot):
     connection = MagicMock()
     connector = MagicMock()
     connection.get_connector_for_builder.return_value = None
+    options = MagicMock()
+    options.tracker_default_game = RandovaniaGame.BLANK
 
-    window = AutoTrackerWindow(connection, None, MagicMock())
+    window = AutoTrackerWindow(connection, None, options)
     skip_qtbot.addWidget(window)
     window.create_tracker = MagicMock()
     window.selected_builder = MagicMock()
+    window._update_theme_and_layout_menus = MagicMock()
     window._last_source = connector
 
     # Run
@@ -188,9 +219,11 @@ def test_on_game_state_updated(skip_qtbot, correct_source):
     connector = MagicMock()
     # Return None during __init__ so create_tracker() exits early without crashing
     connection.get_connector_for_builder.return_value = None
+    options = MagicMock()
+    options.tracker_default_game = RandovaniaGame.BLANK
 
     # Run
-    window = AutoTrackerWindow(connection, None, MagicMock())
+    window = AutoTrackerWindow(connection, None, options)
     # Now set up the real connector and reset call history from init
     connection.get_connector_for_builder.return_value = connector
     connection.get_connector_for_builder.reset_mock()
@@ -215,12 +248,36 @@ def test_on_game_state_updated(skip_qtbot, correct_source):
         window.item_tracker.update_state.assert_not_called()
 
 
-def _get_tracker_jsons() -> Iterator[tuple[RandovaniaGame, str, Path]]:
-    for game, trackers in load_trackers_configuration(False).items():
-        for name, path in trackers.items():
-            yield game, name, path
+def _bundled_tracker_catalogs() -> Iterator[tuple[RandovaniaGame, TrackerCatalog]]:
+    """Every game's own bundled tracker data, ignoring any local user override.
+
+    A user's local override only needs to be internally consistent with itself (see
+    test_tracker_data_integrity.py, which validates it the same way) - it isn't required to
+    also cover every layout Randovania ships, so it's excluded here to keep this check
+    hermetic and independent of whatever happens to exist on the machine running it.
+    """
+    for game in RandovaniaGame.all_games():
+        game_dir = game.data_path.joinpath("assets", "tracker")
+        trackers_json = game_dir.joinpath("trackers.json")
+        if not trackers_json.is_file():
+            continue
+
+        game_config = typing.cast("dict[str, dict[str, str]]", json_lib.read_dict(trackers_json))
+        layouts = {name: game_dir.joinpath(filename) for name, filename in game_config["layouts"].items()}
+        themes = {
+            name: ThemeSource(path=game_dir.joinpath(filename), assets_root=game_dir)
+            for name, filename in game_config["themes"].items()
+        }
+        yield game, TrackerCatalog(layouts=layouts, themes=themes)
 
 
-@pytest.mark.parametrize(("game", "name", "path"), list(_get_tracker_jsons()))
-def test_validate_tracker_json(game: RandovaniaGame, name: str, path: Path):
-    TrackerLayout.read_json(path)
+def _get_tracker_combos() -> Iterator[tuple[RandovaniaGame, str, str, TrackerCatalog]]:
+    for game, catalog in _bundled_tracker_catalogs():
+        for layout_name in catalog.layouts:
+            for theme_name in catalog.themes:
+                yield game, layout_name, theme_name, catalog
+
+
+@pytest.mark.parametrize(("game", "layout_name", "theme_name", "catalog"), list(_get_tracker_combos()))
+def test_validate_tracker_json(game: RandovaniaGame, layout_name: str, theme_name: str, catalog: TrackerCatalog):
+    catalog.resolve(layout_name, theme_name).load()
