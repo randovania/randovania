@@ -9,7 +9,6 @@ from randovania.game_description.resources.resource_collection import ResourceCo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.graph import state_native
 from randovania.graph.world_graph import WorldGraph, WorldGraphNode
-from randovania.resolver import debug
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
@@ -33,7 +32,6 @@ class State:
     new_resources: dict[ResourceInfo, int]
     collected_resource_nodes: NodeSequence
     damage_state: DamageState
-    received_pickups: tuple[PickupEntry, ...]
     node: WorldGraphNode
     patches: GamePatches
     previous_state: Self | None
@@ -52,7 +50,6 @@ class State:
         new_resources: dict[ResourceInfo, int],
         collected_resource_nodes: NodeSequence,
         damage_state: DamageState,
-        received_pickups: tuple[PickupEntry, ...],
         node: WorldGraphNode,
         patches: GamePatches,
         previous: Self | None,
@@ -63,7 +60,6 @@ class State:
         self.resources = resources
         self.new_resources = new_resources
         self.collected_resource_nodes = collected_resource_nodes
-        self.received_pickups = received_pickups
         self.node = node
         self.patches = patches
         self.path_from_previous_state = ()
@@ -81,7 +77,6 @@ class State:
             copy.copy(self.new_resources),
             self.collected_resource_nodes,
             self.damage_state,
-            self.received_pickups,
             self.node,
             self.patches,
             self.previous_state,
@@ -162,7 +157,6 @@ class State:
             {resource: new_resources[resource] - self.resources[resource] for resource in modified_resources},
             self.collected_resource_nodes + new_collected_resource_nodes,
             damage_state,
-            self.received_pickups,
             self.node,
             patches,
             self,
@@ -242,20 +236,6 @@ class State:
         # FIXME: should expose that it's not guaranteed
         assert self.node.database_node is not None
         return self.node.database_node
-
-    def receive_new_pickups(self, received_pickups: tuple[PickupEntry, ...]) -> State:
-        if self.received_pickups != received_pickups[: len(self.received_pickups)]:
-            raise ValueError("Initial list of received pickups does not match previously assigned pickups!")
-
-        if len(self.received_pickups) == len(received_pickups):
-            return self
-
-        new_pickups = received_pickups[len(self.received_pickups) :]
-        for p in new_pickups:
-            debug.debug_print(f"Receiving pickup: {p.name}")
-        new_state = self.assign_pickups_resources(new_pickups)
-        new_state.received_pickups = received_pickups
-        return new_state
 
 
 def add_pickup_to_state(state: State, pickup: PickupEntry) -> None:
