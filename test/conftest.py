@@ -767,6 +767,7 @@ SOLO_RDVGAMES = [
     # Planets (Zebeth)
     ("planets_zebeth/starter_preset.rdvgame", True),  # starter preset (vanilla keys)
     ("planets_zebeth/starter_preset_shuffle_keys.rdvgame", True),  # starter preset (shuffled keys)
+    ("planets_zebeth/starter_preset_with_nothing.rdvgame", True),  # starter preset with nothing
     # Prime Hunters
     ("prime_hunters/starter_preset.rdvgame", True),  # starter preset
     ("prime_hunters/shuffled_force_fields.rdvgame", True),  # starter preset with shuffled force fields
