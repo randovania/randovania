@@ -58,13 +58,8 @@ def replace_at_path(root: RequirementArrayBase, path: Path, requirement: Require
     if len(path) == 0:
         return requirement
 
-    next_root = root.items[path.head()]
-    child = (
-        requirement
-        if not isinstance(next_root, RequirementArrayBase)
-        else replace_at_path(next_root, path.tail(), requirement)
-    )
-
+    next_root = cast(RequirementArrayBase, root.items[path.head()])
+    child = replace_at_path(next_root, path.tail(), requirement)
     new_items = tuple_replace(root.items, path.head(), child)
     return type(root)(new_items, root.comment)
 
