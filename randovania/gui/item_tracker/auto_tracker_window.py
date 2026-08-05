@@ -7,20 +7,18 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtGui, QtWidgets
 
-from randovania import get_data_path
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.inventory import Inventory
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.item_tracker.item_tracker_widget import ItemTrackerWidget
-from randovania.gui.item_tracker.tracker_layout import TrackerLayout
+from randovania.gui.item_tracker.tracker_assets import ThemeSource, TrackerCatalog
+from randovania.gui.item_tracker.tracker_structure import TrackerStructure
 from randovania.gui.lib import common_qt_lib
 from randovania.interface_common import persistence
 from randovania.lib import json_lib
 from randovania.network_common.game_connection_status import GameConnectionStatus
 
 if TYPE_CHECKING:
-    from pathlib import Path
-
     from randovania.game_connection.builder.connector_builder import ConnectorBuilder
     from randovania.game_connection.connector.remote_connector import RemoteConnector
     from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
@@ -28,46 +26,56 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, dict[str, Path]]:
-    included_folder = get_data_path().joinpath("gui_assets/tracker")
+def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, TrackerCatalog]:
+    """
+    Each game has its own self-contained tracker directory (its own trackers.json,
+    structures/, themes/, and image assets): one bundled alongside the game itself
+    (RandovaniaGame.data_path/assets/tracker), and optionally one under the user's local data
+    for overrides/customization. Results from both are merged, so a game present in the user
+    folder can add to or override what's included with Randovania.
+    """
     user_folder = persistence.local_data_dir().joinpath("tracker/layout")
 
-    folders = [included_folder]
-    if user_folder.joinpath("trackers.json").is_file():
-        folders.append(user_folder)
+    layouts: dict[RandovaniaGame, dict[str, typing.Any]] = collections.defaultdict(dict)
+    themes: dict[RandovaniaGame, dict[str, ThemeSource]] = collections.defaultdict(dict)
 
-    result: dict[RandovaniaGame, dict[str, Path]] = {}
+    for game in RandovaniaGame.all_games():
+        for game_dir in [game.data_path.joinpath("assets", "tracker"), user_folder.joinpath(game.value)]:
+            trackers_json = game_dir.joinpath("trackers.json")
+            if not trackers_json.is_file():
+                continue
 
-    for folder in folders:
-        trackers_config = json_lib.read_dict(folder.joinpath("trackers.json"))
+            game_config = json_lib.read_dict(trackers_json)
+            solo_only = typing.cast("dict", game_config.get("solo_only", {}))
+            exclude_layouts: list[str] = [] if for_solo else typing.cast("list", solo_only.get("layouts", []))
+            exclude_themes: list[str] = [] if for_solo else typing.cast("list", solo_only.get("themes", []))
 
-        exclude_trackers: dict[str, list[str]]
-        if for_solo:
-            exclude_trackers = {}
-        else:
-            exclude_trackers = typing.cast("dict", trackers_config["solo_only"])
+            for layout_name, filename in typing.cast("dict", game_config["layouts"]).items():
+                if layout_name in exclude_layouts:
+                    continue
+                layouts[game][layout_name] = game_dir.joinpath(filename)
 
-        all_trackers: dict[str, dict[str, str]] = typing.cast("dict", trackers_config["trackers"])
-        for game_value, trackers in all_trackers.items():
-            game = RandovaniaGame(game_value)
-            if game not in result:
-                result[game] = {}
+            for theme_name, filename in typing.cast("dict", game_config["themes"]).items():
+                if theme_name in exclude_themes:
+                    continue
+                themes[game][theme_name] = ThemeSource(path=game_dir.joinpath(filename), assets_root=game_dir)
 
-            for name, file_name in trackers.items():
-                if name not in exclude_trackers.get(game_value, []):
-                    result[game][name] = folder.joinpath(file_name)
-
-    return result
+    return {
+        game: TrackerCatalog(layouts=game_layouts, themes=themes.get(game, {}))
+        for game, game_layouts in layouts.items()
+    }
 
 
 class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
-    trackers: dict[RandovaniaGame, dict[str, Path]]
-    _tracker_actions: dict[RandovaniaGame, list[QtGui.QAction]]
-    _full_name_to_path: dict[str, Path]
+    trackers: dict[RandovaniaGame, TrackerCatalog]
+    _current_game_menu: RandovaniaGame | None = None
+    _layout_actions: list[QtGui.QAction]
+    _theme_actions: list[QtGui.QAction]
     _connected_game: RandovaniaGame | None = None
     _current_tracker_game: RandovaniaGame | None = None
-    _current_tracker_name: str | None = None
-    _current_tracker_details: TrackerLayout | None = None
+    _current_tracker_layout: str | None = None
+    _current_tracker_theme: str | None = None
+    _current_tracker_details: TrackerStructure | None = None
     item_tracker: ItemTrackerWidget | None = None
     _dummy_tracker: QtWidgets.QLabel | None = None
     _last_source: RemoteConnector | None = None
@@ -82,7 +90,8 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         common_qt_lib.set_default_window_icon(self)
 
         self.trackers = load_trackers_configuration(for_solo=True)
-        self._tracker_actions = collections.defaultdict(list)
+        self._layout_actions = []
+        self._theme_actions = []
         self.connected_game_state_label.setText(GameConnectionStatus.Disconnected.pretty_text)
 
         self._current_tracker_game = options.tracker_default_game
@@ -100,21 +109,6 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             default_game_action.triggered.connect(functools.partial(self._on_action_default_game, game))
             default_game_action_group.addAction(default_game_action)
 
-            game_menu = QtWidgets.QMenu(self.menu_tracker)
-            game_menu.setTitle(game.long_name)
-            self.menu_tracker.addMenu(game_menu)
-
-            group = QtGui.QActionGroup(game_menu)
-            for name in sorted(self.trackers[game].keys()):
-                action = QtGui.QAction(game_menu)
-                action.setText(name)
-                action.setCheckable(True)
-                action.setChecked(name == options.selected_tracker_for(game))
-                action.triggered.connect(functools.partial(self._on_action_select_tracker, game, name))
-                group.addAction(action)
-                game_menu.addAction(action)
-                self._tracker_actions[game].append(action)
-
         if window_manager is None:
             self.select_game_button.setVisible(False)
         else:
@@ -124,13 +118,20 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         self.game_connection.GameStateUpdated.connect(self.on_game_state_updated)
         self.update_sources_combo()
 
-    def selected_tracker_for(self, game: RandovaniaGame) -> str | None:
-        actions = [action for action in self._tracker_actions[game] if action.isChecked()]
-        if not actions:
-            actions = self._tracker_actions[game]
+    def selected_layout_for_current_game(self) -> str | None:
+        return self._first_checked_action_text(self._layout_actions)
 
-        if actions:
-            return actions[0].text()
+    def selected_theme_for_current_game(self) -> str | None:
+        return self._first_checked_action_text(self._theme_actions)
+
+    @staticmethod
+    def _first_checked_action_text(actions: list[QtGui.QAction]) -> str | None:
+        checked = [action for action in actions if action.isChecked()]
+        if not checked:
+            checked = actions
+
+        if checked:
+            return checked[0].text()
 
         return None
 
@@ -140,9 +141,14 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
 
         self.create_tracker()
 
-    def _on_action_select_tracker(self, game: RandovaniaGame, name: str) -> None:
+    def _on_action_select_tracker_layout(self, game: RandovaniaGame, name: str) -> None:
         with self.options as options:
-            options.set_selected_tracker_for(game, name)
+            options.set_selected_tracker_layout_for(game, name)
+        self.create_tracker()
+
+    def _on_action_select_tracker_theme(self, game: RandovaniaGame, name: str) -> None:
+        with self.options as options:
+            options.set_selected_tracker_theme_for(game, name)
         self.create_tracker()
 
     def delete_tracker(self) -> None:
@@ -158,9 +164,44 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         builder = self.selected_builder()
         return self.game_connection.get_connector_for_builder(builder)
 
+    def _update_theme_and_layout_menus(self, game: RandovaniaGame) -> None:
+        if self._current_game_menu == game:
+            return
+
+        self._current_game_menu = game
+        self.menu_layout.clear()
+        self._layout_actions.clear()
+        self.menu_theme.clear()
+        self._theme_actions.clear()
+
+        catalog = self.trackers[game]
+
+        layout_group = QtGui.QActionGroup(self.menu_layout)
+        for layout_name in sorted(catalog.layouts.keys()):
+            action = QtGui.QAction(self.menu_layout)
+            action.setText(layout_name)
+            action.setCheckable(True)
+            action.setChecked(layout_name == self.options.selected_tracker_layout_for(game))
+            action.triggered.connect(functools.partial(self._on_action_select_tracker_layout, game, layout_name))
+            layout_group.addAction(action)
+            self.menu_layout.addAction(action)
+            self._layout_actions.append(action)
+
+        theme_group = QtGui.QActionGroup(self.menu_theme)
+        for theme_name in sorted(catalog.themes.keys()):
+            action = QtGui.QAction(self.menu_theme)
+            action.setText(theme_name)
+            action.setCheckable(True)
+            action.setChecked(theme_name == self.options.selected_tracker_theme_for(game))
+            action.triggered.connect(functools.partial(self._on_action_select_tracker_theme, game, theme_name))
+            theme_group.addAction(action)
+            self.menu_theme.addAction(action)
+            self._theme_actions.append(action)
+
     def create_tracker(self) -> None:
         connector = self.get_connector()
-        tracker_name: str | None = None
+        layout_name: str | None = None
+        theme_name: str | None = None
         target_game: RandovaniaGame | None = None
 
         inventory: Inventory = Inventory.empty()
@@ -185,37 +226,51 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             target_game = self.options.tracker_default_game
 
         if target_game is not None:
-            tracker_name = self.selected_tracker_for(target_game)
+            self._update_theme_and_layout_menus(target_game)
+
+            layout_name = self.selected_layout_for_current_game()
+            theme_name = self.selected_theme_for_current_game()
 
         if (
             self._has_any_tracker
-            and tracker_name == self._current_tracker_name
+            and layout_name == self._current_tracker_layout
+            and theme_name == self._current_tracker_theme
             and target_game == self._current_tracker_game
         ):
             return
 
         self.delete_tracker()
 
-        if target_game is None or tracker_name is None:
-            if target_game is None:
-                msg = "Not currently connected to any games"
-            else:
-                msg = f"{target_game.long_name} does not support auto tracking"
+        tracker_details: TrackerStructure | None = None
+        error_message: str | None = None
 
-            self._dummy_tracker = QtWidgets.QLabel(msg, self)
+        if target_game is None:
+            error_message = "Not currently connected to any games"
+        elif layout_name is None or theme_name is None:
+            error_message = f"{target_game.long_name} does not support auto tracking"
+        else:
+            paths = self.trackers[target_game].resolve(layout_name, theme_name)
+            try:
+                tracker_details, tracker_theme = paths.load()
+            except (ValueError, OSError) as error:
+                error_message = (
+                    f"Unable to load the {theme_name!r} theme for {target_game.long_name}'s "
+                    f"{layout_name!r} layout: {error}"
+                )
+            else:
+                self.item_tracker = ItemTrackerWidget(tracker_details, tracker_theme, paths.assets_root)
+                self.gridLayout.addWidget(self.item_tracker, 0, 0, 1, 1)
+                self.item_tracker.update_state(inventory)
+
+        if error_message is not None:
+            self._dummy_tracker = QtWidgets.QLabel(error_message, self)
             self._dummy_tracker.setWordWrap(True)
             self.gridLayout.addWidget(self._dummy_tracker, 0, 0, 1, 1)
-            tracker_details = None
-        else:
-            tracker_details = TrackerLayout.read_json(self.trackers[target_game][tracker_name])
-
-            self.item_tracker = ItemTrackerWidget(tracker_details)
-            self.gridLayout.addWidget(self.item_tracker, 0, 0, 1, 1)
-            self.item_tracker.update_state(inventory)
 
         self._has_any_tracker = True
         self._current_tracker_game = target_game
-        self._current_tracker_name = tracker_name
+        self._current_tracker_layout = layout_name
+        self._current_tracker_theme = theme_name
         self._current_tracker_details = tracker_details
         if connector is not None:
             connector.inform_connected_tracker(tracker_details)

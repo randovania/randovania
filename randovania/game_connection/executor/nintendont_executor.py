@@ -38,7 +38,7 @@ class RequestBatch:
         return new
 
     def build_request_data(self) -> bytes:
-        header = struct.pack(f">BBBB{len(self.addresses)}I", 0, len(self.ops), len(self.addresses), 1, *self.addresses)
+        header = struct.pack(f">BBBB{len(self.addresses)}I", 1, 1, len(self.ops), len(self.addresses), *self.addresses)
         return header + self.data
 
     @property
@@ -100,7 +100,7 @@ class NintendontExecutor(MemoryOperationExecutor):
     _socket: SocketHolder | None = None
     _socket_error: Exception | None = None
 
-    SUPPORTED_API_VERSION = 1
+    SUPPORTED_API_VERSION = 2
 
     _timeout = 10
     # timeout in seconds on when we disconnect when we don't get a response.
@@ -146,7 +146,7 @@ class NintendontExecutor(MemoryOperationExecutor):
             # Send API details request
             self.logger.debug("Connection open, requesting API details.")
 
-            writer.write(struct.pack(">BBBB", 1, 0, 0, 1))
+            writer.write(struct.pack(">BB", 0, 1))
             await asyncio.wait_for(writer.drain(), timeout=self._timeout)
 
             self.logger.debug("Waiting for API details response.")
@@ -161,7 +161,7 @@ class NintendontExecutor(MemoryOperationExecutor):
                         f"{invalid_message} Nintendont has API {api_version} but expected {self.SUPPORTED_API_VERSION}."
                     )
 
-                max_input, max_output, max_addresses = struct.unpack(">4xIII", response)
+                max_input, max_output, max_addresses, major_version, minor_version = struct.unpack(">4x5I", response)
 
             except struct.error as e:
                 writer.close()
@@ -173,19 +173,16 @@ class NintendontExecutor(MemoryOperationExecutor):
                 writer.close()
                 return f"{invalid_message} Nintendont responding with invalid API details."
 
-            self.logger.debug(f"Remote replied with API level {api_version}, connection successful.")
+            self.logger.debug(
+                f"Remote replied with API level {api_version}, "
+                f"Nintendont version {major_version}.{minor_version} connection successful."
+            )
             self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
             return None
 
-        except ConnectionRefusedError as e:
+        except ConnectionRefusedError:
             # Ip exists, maybe it's listening to the HBC port instead?
-            try:
-                reader, writer = await asyncio.wait_for(asyncio.open_connection(self._ip, 4299), timeout=self._timeout)
-                writer.close()
-            except Exception:
-                raise e
-
-            return "Currently in the Homebrew Channel. Upload Nintendont or launch it manually."
+            return f"Unable to connect to {self.ip}. Either wrong IP, or not yet in-game."
         except (TimeoutError, OSError, UnicodeError) as e:
             # UnicodeError is for some invalid ip addresses
             self._socket = None
