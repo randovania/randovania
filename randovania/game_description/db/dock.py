@@ -111,6 +111,12 @@ class WeaknessDistributorSettings:
 
     change_from: set[DockWeakness]
     change_to: set[DockWeakness]
+
+    """
+    Extra weaknesses that aren't directly randomizable, but due to mechanisms such as force_change_two_way, may end up
+     randomized anyway. Documenting this information is useful because we have logic for the graph generation that uses
+      whether the dock can have a lock on it.
+    """
     indirect_change_from: set[DockWeakness]
 
     force_change_two_way: bool

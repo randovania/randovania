@@ -328,28 +328,22 @@ def find_mismatching_dock_types_randomizable_with_forced_two_way(game: GameDescr
             and dock.default_dock_weakness in settings.change_from
         ):
             other_dock = game.node_by_identifier(dock.default_connection)
+            base_message = (
+                f"{dock.identifier} weakness can be randomized, must become a two sided dock, the default"
+                f" connection is to {other_dock.identifier}"
+            )
             if not isinstance(other_dock, DockNode):
-                yield (
-                    f"{dock.identifier}"
-                    f" weakness can be randomized, must become a two sided dock, but the default connection is to"
-                    f" {other_dock.identifier}, which is not a DockNode"
-                )
+                yield f"{base_message}, which is not a DockNode"
                 continue
             if dock.dock_type != other_dock.dock_type:
-                yield (
-                    f"{dock.identifier}"
-                    f" weakness can be randomized, must become a two sided dock, the default connection is to"
-                    f" {other_dock.identifier}, which has a different dock type."
-                )
+                yield f"{base_message}, which has a different dock type."
                 continue
             if (
                 other_dock.default_dock_weakness not in settings.change_from
                 and other_dock.default_dock_weakness not in settings.indirect_change_from
             ):
                 yield (
-                    f"{dock.identifier}"
-                    f" weakness can be randomized, must become a two sided dock, the default connection is to"
-                    f" {other_dock.identifier}, of type {other_dock.default_dock_weakness}"
+                    f"{base_message}, of type {other_dock.default_dock_weakness}"
                     f", which is neither in change_from or indirect_change_from."
                 )
                 continue
