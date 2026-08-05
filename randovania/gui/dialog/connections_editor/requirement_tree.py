@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, cast
+from typing import cast
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.region_list import RegionList
@@ -17,15 +17,15 @@ from randovania.game_description.resources.resource_type import ResourceType
 from .path import Path
 
 
-def tuple_insert(items: tuple, idx: int, value: Any) -> tuple:
+def tuple_insert[T](items: tuple[T, ...], idx: int, value: T) -> tuple[T, ...]:
     return (*items[:idx], value, *items[idx:])
 
 
-def tuple_remove(items: tuple, idx: int) -> tuple:
+def tuple_remove[T](items: tuple[T, ...], idx: int) -> tuple[T, ...]:
     return (*items[:idx], *items[idx + 1 :])
 
 
-def tuple_replace(items: tuple, idx: int, value: Any) -> tuple:
+def tuple_replace[T](items: tuple[T, ...], idx: int, value: T) -> tuple[T, ...]:
     return (*items[:idx], value, *items[idx + 1 :])
 
 
