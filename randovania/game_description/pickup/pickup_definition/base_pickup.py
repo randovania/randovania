@@ -55,6 +55,9 @@ class BasePickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     probability_multiplier: float = dataclasses.field(default=1.0, metadata=EXCLUDE_DEFAULT)
     """During generation, determines by how much the weight when placing the pickup will be multiplied."""
 
+    batch_placement: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
+    """During generation, determines if multiple of the same pickup can be placed at once."""
+
     description: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     """An extra description of the pickup. Will be used in the GUI for more info."""
 
