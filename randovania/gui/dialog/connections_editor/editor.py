@@ -30,12 +30,11 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.resource_database import NamedRequirementTemplate, ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.gui.dialog.connections_editor.model import ROLE
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.enum_lib import iterate_enum
-
-from .model import ROLE
 
 
 class Editor(QObject):

@@ -13,9 +13,8 @@ from PySide6.QtWidgets import (
 )
 
 from randovania.game_description.requirements.array_base import RequirementArrayBase
-
-from .model import ROLE, RequirementModel
-from .path import RequirementTreePath
+from randovania.gui.dialog.connections_editor.model import ROLE, RequirementModel
+from randovania.gui.dialog.connections_editor.path import RequirementTreePath
 
 
 class RequirementView(QObject):

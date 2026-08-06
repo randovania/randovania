@@ -10,10 +10,9 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
-
-from . import requirement_tree
-from .command import RequirementEditCommand
-from .editor import (
+from randovania.gui.dialog.connections_editor import requirement_tree
+from randovania.gui.dialog.connections_editor.command import RequirementEditCommand
+from randovania.gui.dialog.connections_editor.editor import (
     ArrayEditor,
     CountedResourceEditor,
     Editor,
@@ -23,9 +22,9 @@ from .editor import (
     TrickResourceEditor,
     signals_blocked,
 )
-from .model import ROLE, RequirementModel
-from .path import RequirementTreePath
-from .view import RequirementView
+from randovania.gui.dialog.connections_editor.model import ROLE, RequirementModel
+from randovania.gui.dialog.connections_editor.path import RequirementTreePath
+from randovania.gui.dialog.connections_editor.view import RequirementView
 
 
 class RequirementController(QObject):

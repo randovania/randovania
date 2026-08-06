@@ -6,13 +6,12 @@ from PySide6.QtWidgets import QDialog, QMessageBox, QWidget
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.gui.dialog.connections_editor.controller import RequirementController
+from randovania.gui.dialog.connections_editor.model import RequirementModel
+from randovania.gui.dialog.connections_editor.path import RequirementTreePath
+from randovania.gui.dialog.connections_editor.view import RequirementView
 from randovania.gui.generated.connections_editor_ui import Ui_ConnectionEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-
-from .controller import RequirementController
-from .model import RequirementModel
-from .path import RequirementTreePath
-from .view import RequirementView
 
 
 class ConnectionsEditor(QDialog, Ui_ConnectionEditor):

@@ -12,8 +12,7 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
-
-from .path import RequirementTreePath
+from randovania.gui.dialog.connections_editor.path import RequirementTreePath
 
 
 def tuple_insert[T](items: tuple[T, ...], idx: int, value: T) -> tuple[T, ...]:

@@ -1,10 +1,9 @@
 from PySide6.QtGui import QUndoCommand
 
 from randovania.game_description.requirements.base import Requirement
-
-from .model import RequirementModel
-from .path import RequirementTreePath
-from .view import RequirementView
+from randovania.gui.dialog.connections_editor.model import RequirementModel
+from randovania.gui.dialog.connections_editor.path import RequirementTreePath
+from randovania.gui.dialog.connections_editor.view import RequirementView
 
 
 class RequirementEditCommand(QUndoCommand):
