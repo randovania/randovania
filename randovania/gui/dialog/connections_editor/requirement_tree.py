@@ -11,7 +11,6 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 
 from .path import Path
@@ -68,7 +67,7 @@ def default_from_type(
     from_type: ResourceType | type[Requirement], db: ResourceDatabase, region_list: RegionList
 ) -> Requirement:
     if isinstance(from_type, ResourceType):
-        resource_info = cast(ResourceInfo, next(iter(db.get_by_type(from_type))))
+        resource_info = db.get_by_type(from_type)[0]
         return ResourceRequirement.simple(resource_info)
 
     if issubclass(from_type, RequirementArrayBase):
@@ -85,9 +84,15 @@ def default_from_type(
     raise RuntimeError(f"Unknown requirement type: {from_type}")
 
 
-def change_to_type(current: Requirement, to_type: type, db: ResourceDatabase, region_list: RegionList) -> Requirement:
+def change_to_type(
+    current: Requirement, to_type: ResourceType | type[Requirement], db: ResourceDatabase, region_list: RegionList
+) -> Requirement:
     """Wrapper to retain data when changing between array types"""
-    if isinstance(current, RequirementArrayBase) and issubclass(type(to_type), RequirementArrayBase):
+    if (  # issubclass throws an error if to_type is ResourceType, so filter it out
+        not isinstance(to_type, ResourceType)
+        and issubclass(to_type, RequirementArrayBase)
+        and isinstance(current, RequirementArrayBase)
+    ):
         return to_type(current.items, current.comment)
     return default_from_type(to_type, db, region_list)
 
