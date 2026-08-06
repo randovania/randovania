@@ -3,7 +3,7 @@ from PySide6.QtGui import QUndoCommand
 from randovania.game_description.requirements.base import Requirement
 
 from .model import RequirementModel
-from .path import Path
+from .path import RequirementTreePath
 from .view import RequirementView
 
 
@@ -18,8 +18,8 @@ class RequirementEditCommand(QUndoCommand):
         view: RequirementView,
         before: Requirement,
         after: Requirement,
-        before_selection_path: Path,
-        after_selection_path: Path,
+        before_selection_path: RequirementTreePath,
+        after_selection_path: RequirementTreePath,
         description: str,
     ) -> None:
         super().__init__(description)

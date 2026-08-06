@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 
-class Path(tuple[int, ...]):
+class RequirementTreePath(tuple[int, ...]):
     """
     A series of indices for locating a Requirement within a requirement tree.
 
@@ -24,34 +24,34 @@ class Path(tuple[int, ...]):
         """The last index in the Path - this node's position amongst siblings."""
         return self[-1]
 
-    def parent(self) -> Path:
+    def parent(self) -> RequirementTreePath:
         """The Path to this node's parent, with the last index removed."""
-        return Path(self[:-1])
+        return RequirementTreePath(self[:-1])
 
     def head(self) -> int:
         """The first index in the Path - which child of the root to descend into."""
         return self[0]
 
-    def tail(self) -> Path:
+    def tail(self) -> RequirementTreePath:
         """The remainder of the Path with its first index removed"""
-        return Path(self[1:])
+        return RequirementTreePath(self[1:])
 
-    def extend_with(self, idx: int) -> Path:
+    def extend_with(self, idx: int) -> RequirementTreePath:
         """A new Path one level deeper, descending into child `idx` of this node."""
-        return Path((*self, idx))
+        return RequirementTreePath((*self, idx))
 
-    def prefixed_with(self, idx: int) -> Path:
+    def prefixed_with(self, idx: int) -> RequirementTreePath:
         """A new Path with `idx` inserted at the front, nesting this Path one level deeper within an outer index."""
-        return Path((idx, *self))
+        return RequirementTreePath((idx, *self))
 
-    def reversed(self) -> Path:
+    def reversed(self) -> RequirementTreePath:
         """This Path's indices in reverse order."""
-        return Path(self[::-1])
+        return RequirementTreePath(self[::-1])
 
-    def next_sibling(self) -> Path:
+    def next_sibling(self) -> RequirementTreePath:
         """The Path to the node immediately after this one, within the same parent."""
-        return Path((*self[:-1], self[-1] + 1))
+        return RequirementTreePath((*self[:-1], self[-1] + 1))
 
-    def previous_sibling(self) -> Path:
+    def previous_sibling(self) -> RequirementTreePath:
         """The Path to the node immediately before this one, within the same parent."""
-        return Path((*self[:-1], self[-1] - 1))
+        return RequirementTreePath((*self[:-1], self[-1] - 1))

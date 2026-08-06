@@ -12,7 +12,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.dialog.connections_editor import requirement_tree
 from randovania.gui.dialog.connections_editor.controller import RequirementController
 from randovania.gui.dialog.connections_editor.model import ROLE, RequirementModel
-from randovania.gui.dialog.connections_editor.path import Path
+from randovania.gui.dialog.connections_editor.path import RequirementTreePath
 from randovania.gui.dialog.connections_editor.view import RequirementView
 
 
@@ -54,17 +54,17 @@ def controller(skip_qtbot, echoes_game_description, echoes_simple_resource):
     return controller
 
 
-ROOT = Path(())
-POWER = Path((0,))
-OR = Path((1,))
-DARK = Path((1, 0))
-LIGHT = Path((1, 1))
-ANNIHILATOR = Path((2,))
+ROOT = RequirementTreePath(())
+POWER = RequirementTreePath((0,))
+OR = RequirementTreePath((1,))
+DARK = RequirementTreePath((1, 0))
+LIGHT = RequirementTreePath((1, 1))
+ANNIHILATOR = RequirementTreePath((2,))
 
 
 @pytest.fixture
 def select(controller):
-    def _select(path: Path) -> None:
+    def _select(path: RequirementTreePath) -> None:
         index = controller._model.index_from_path(path)
         controller._on_item_selected(index)
 

@@ -7,7 +7,7 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.dialog.connections_editor import requirement_tree
 from randovania.gui.dialog.connections_editor.connections_editor import ConnectionsEditor
-from randovania.gui.dialog.connections_editor.path import Path
+from randovania.gui.dialog.connections_editor.path import RequirementTreePath
 
 
 @pytest.fixture
@@ -38,6 +38,6 @@ def test_connections_editor_build_change_root(skip_qtbot, connections_editor, ty
         echoes_game_description.region_list,
     )
 
-    connections_editor._view.restore_selection(Path())  # Select root
+    connections_editor._view.restore_selection(RequirementTreePath())  # Select root
     connections_editor._controller._on_editor_field_changed(expected)
     assert connections_editor.final_requirement == expected

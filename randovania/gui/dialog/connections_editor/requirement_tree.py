@@ -13,7 +13,7 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 
-from .path import Path
+from .path import RequirementTreePath
 
 
 def tuple_insert[T](items: tuple[T, ...], idx: int, value: T) -> tuple[T, ...]:
@@ -28,7 +28,7 @@ def tuple_replace[T](items: tuple[T, ...], idx: int, value: T) -> tuple[T, ...]:
     return (*items[:idx], value, *items[idx + 1 :])
 
 
-def insert_at_path(root: RequirementArrayBase, path: Path, requirement: Requirement) -> Requirement:
+def insert_at_path(root: RequirementArrayBase, path: RequirementTreePath, requirement: Requirement) -> Requirement:
     if len(path) == 1:
         new_items = tuple_insert(root.items, path.row(), requirement)
         return type(root)(new_items, root.comment)
@@ -40,7 +40,7 @@ def insert_at_path(root: RequirementArrayBase, path: Path, requirement: Requirem
     return type(root)(new_items, root.comment)
 
 
-def remove_at_path(root: RequirementArrayBase, path: Path) -> Requirement:
+def remove_at_path(root: RequirementArrayBase, path: RequirementTreePath) -> Requirement:
     idx = path.head()
 
     if len(path) == 1:
@@ -53,7 +53,7 @@ def remove_at_path(root: RequirementArrayBase, path: Path) -> Requirement:
     return type(root)(new_items, root.comment)
 
 
-def replace_at_path(root: RequirementArrayBase, path: Path, requirement: Requirement) -> Requirement:
+def replace_at_path(root: RequirementArrayBase, path: RequirementTreePath, requirement: Requirement) -> Requirement:
     if len(path) == 0:
         return requirement
 
@@ -97,7 +97,7 @@ def change_to_type(
     return default_from_type(to_type, db, region_list)
 
 
-def _at_path(requirement: Requirement, path: Path) -> Requirement:
+def _at_path(requirement: Requirement, path: RequirementTreePath) -> Requirement:
     if len(path) == 0:
         return requirement
     return _at_path(cast(RequirementArrayBase, requirement).items[path.head()], path.tail())

@@ -15,7 +15,7 @@ from PySide6.QtWidgets import (
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 
 from .model import ROLE, RequirementModel
-from .path import Path
+from .path import RequirementTreePath
 
 
 class RequirementView(QObject):
@@ -40,7 +40,7 @@ class RequirementView(QObject):
     def _notify_selection_changed(self, current: QModelIndex, previous: QModelIndex) -> None:
         self.selection_changed.emit(current)
 
-    def restore_selection(self, path: Path) -> None:
+    def restore_selection(self, path: RequirementTreePath) -> None:
         model = cast(RequirementModel, self._tree.model())
         index = model.index_from_path(path)
 

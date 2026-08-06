@@ -10,7 +10,7 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.base.trick_level import LayoutTrickLevel
 
-from .path import Path
+from .path import RequirementTreePath
 
 ROLE = Qt.ItemDataRole.UserRole
 
@@ -50,16 +50,16 @@ class RequirementModel(QStandardItemModel):
         item.setData(requirement, ROLE)
         return item
 
-    def path_from_index(self, index: QModelIndex) -> Path:
+    def path_from_index(self, index: QModelIndex) -> RequirementTreePath:
         """Builds a Path to the given index by walking up the tree, discarding the invisible root item"""
-        path = Path()
+        path = RequirementTreePath()
         while index.isValid():
             path = path.extend_with(index.row())
             index = index.parent()
         # Current Path is in reverse order, parent() removes the last index (invisible root)
         return path.parent().reversed()
 
-    def index_from_path(self, path: Path) -> QModelIndex:
+    def index_from_path(self, path: RequirementTreePath) -> QModelIndex:
         """Returns the model index at the given Path"""
         index = QModelIndex()
         for row in path.prefixed_with(0):  # Re-add index for invisible root
@@ -69,7 +69,7 @@ class RequirementModel(QStandardItemModel):
             index = next_index
         return index
 
-    def sibling_count(self, path: Path) -> int:
+    def sibling_count(self, path: RequirementTreePath) -> int:
         index = self.index_from_path(path)
         return self.itemFromIndex(index).parent().rowCount() - 1
 

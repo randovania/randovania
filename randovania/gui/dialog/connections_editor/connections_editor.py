@@ -11,7 +11,7 @@ from randovania.gui.lib.common_qt_lib import set_default_window_icon
 
 from .controller import RequirementController
 from .model import RequirementModel
-from .path import Path
+from .path import RequirementTreePath
 from .view import RequirementView
 
 
@@ -88,7 +88,7 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
 
         # Don't push command for initial build so it can't be undone
         self._model.build_tree(requirement)
-        self._view.restore_selection(Path())
+        self._view.restore_selection(RequirementTreePath())
 
     def deleteLater(self) -> None:
         self._controller.deleteLater()

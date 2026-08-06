@@ -24,7 +24,7 @@ from .editor import (
     signals_blocked,
 )
 from .model import ROLE, RequirementModel
-from .path import Path
+from .path import RequirementTreePath
 from .view import RequirementView
 
 
@@ -128,7 +128,7 @@ class RequirementController(QObject):
         return isinstance(self._active_item_index.data(ROLE), RequirementArrayBase)
 
     def _push_command(
-        self, before: Requirement, after: Requirement, after_selection_path: Path, description: str
+        self, before: Requirement, after: Requirement, after_selection_path: RequirementTreePath, description: str
     ) -> None:
         before_selection_path = self._model.path_from_index(self._active_item_index)
         self._undo_stack.push(
