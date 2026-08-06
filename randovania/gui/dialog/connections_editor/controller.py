@@ -12,7 +12,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_type import ResourceType
 
 from . import requirement_tree
-from .command import Command
+from .command import RequirementEditCommand
 from .editor import (
     ArrayEditor,
     CountedResourceEditor,
@@ -132,7 +132,9 @@ class RequirementController(QObject):
     ) -> None:
         before_selection_path = self._model.path_from_index(self._active_item_index)
         self._undo_stack.push(
-            Command(self._model, self._view, before, after, before_selection_path, after_selection_path, description)
+            RequirementEditCommand(
+                self._model, self._view, before, after, before_selection_path, after_selection_path, description
+            )
         )
 
     def _on_add_requirement_pressed(self) -> None:

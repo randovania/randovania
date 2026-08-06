@@ -7,7 +7,7 @@ from .path import Path
 from .view import RequirementView
 
 
-class Command(QUndoCommand):
+class RequirementEditCommand(QUndoCommand):
     """
     Captures tree state to allow for undo/redo
     """
