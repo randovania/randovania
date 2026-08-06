@@ -15,6 +15,13 @@ from randovania.gui.lib.common_qt_lib import set_default_window_icon
 
 
 class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
+    """
+    Dialog for building and editing a Requirement.
+
+    Owns the model/view/controller triad and wires them together. Callers retrieve the edited result via
+    `final_requirement` after the dialog is accepted.
+    """
+
     def __init__(
         self,
         parent: QWidget,

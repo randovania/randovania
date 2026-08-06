@@ -28,6 +28,12 @@ from randovania.gui.dialog.connections_editor.view import RequirementView
 
 
 class RequirementController(QObject):
+    """
+    Translates UI actions into Requirement tree edits.
+
+    Edits are executed by pushing a RequirementEditCommand.
+    """
+
     requirement_changed = Signal(QModelIndex, Requirement)
 
     def __init__(

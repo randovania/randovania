@@ -8,7 +8,9 @@ from randovania.gui.dialog.connections_editor.view import RequirementView
 
 class RequirementEditCommand(QUndoCommand):
     """
-    Captures tree state to allow for undo/redo
+    An undoable/redoable edit to a requirement tree.
+
+    Stores a snapshot of the tree and the selection path both before and after the edit.
     """
 
     def __init__(

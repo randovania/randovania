@@ -18,6 +18,8 @@ from randovania.gui.dialog.connections_editor.path import RequirementTreePath
 
 
 class RequirementView(QObject):
+    """Owns the tree widget's selection and rendering behavior."""
+
     selection_changed = Signal(QModelIndex)
 
     def __init__(self, parent: QWidget, tree: QTreeView, model: RequirementModel) -> None:
@@ -51,7 +53,12 @@ class RequirementView(QObject):
 
 
 class RequirementDelegate(QStyledItemDelegate):
-    """Renders Array comments in bold green"""
+    """
+    Renders an array requirement's comment on a second line, in bold-green.
+
+    Comment text is read from the item's display string, split on the newline RequirementModel inserts between the
+    array type label and comment.
+    """
 
     def _build_document(
         self, option: QStyleOptionViewItem, index: QModelIndex | QPersistentModelIndex

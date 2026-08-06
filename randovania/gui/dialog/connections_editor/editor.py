@@ -38,6 +38,8 @@ from randovania.lib.enum_lib import iterate_enum
 
 
 class Editor(QObject):
+    """Base class for editor widgets used by RequirementController"""
+
     _db: ResourceDatabase
     _widget: QWidget
     _display_name: str
@@ -120,6 +122,8 @@ class Editor(QObject):
 
 
 class ResourceEditor(Editor):
+    """Base class for the various ResourceRequirement editors"""
+
     _resource_type: ResourceType
 
     def __init__(self, db: ResourceDatabase, parent: QWidget, display_name: str, resource_type: ResourceType) -> None:
@@ -156,9 +160,7 @@ class ResourceEditor(Editor):
 
 
 class CountedResourceEditor(ResourceEditor):
-    """
-    Editor for resources with varying amounts: Item, Damage
-    """
+    """Editor for resources with varying amounts: Item, Damage"""
 
     def __init__(self, db: ResourceDatabase, parent: QWidget, display_name: str, resource_type: ResourceType) -> None:
         super().__init__(db, parent, display_name, resource_type)
@@ -221,9 +223,7 @@ class TrickResourceEditor(ResourceEditor):
 
 
 class SimpleResourceEditor(ResourceEditor):
-    """
-    Editor for resources with an unchanging amount (1): Event, Version, Misc
-    """
+    """Editor for resources with an unchanging amount (1): Event, Version, Misc"""
 
     def __init__(self, db: ResourceDatabase, parent: QWidget, display_name: str, resource_type: ResourceType) -> None:
         super().__init__(db, parent, display_name, resource_type)

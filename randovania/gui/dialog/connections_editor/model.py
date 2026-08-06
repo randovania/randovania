@@ -15,12 +15,21 @@ ROLE = Qt.ItemDataRole.UserRole
 
 
 class RequirementModel(QStandardItemModel):
+    """
+    Models a Requirement tree.
+
+    Each item stores its corresponding Requirement under ROLE.
+
+    path_from_index()/index_from_path() act as an interface to convert between QModelIndex and RequirementTreePath.
+    """
+
     model_rebuilt = Signal()
 
     def __init__(self) -> None:
         super().__init__()
 
     def _requirement_to_str(self, requirement: Requirement) -> str:
+        """Returns the text to be displayed for the given requirement."""
         if isinstance(requirement, RequirementArrayBase):
             text = "All" if isinstance(requirement, RequirementAnd) else "Any"
             if len(requirement.items) == 0:
@@ -50,16 +59,16 @@ class RequirementModel(QStandardItemModel):
         return item
 
     def path_from_index(self, index: QModelIndex) -> RequirementTreePath:
-        """Builds a Path to the given index by walking up the tree, discarding the invisible root item"""
+        """Builds a RequirementTreePath to the given index by walking up the tree, discarding the invisible root item"""
         path = RequirementTreePath()
         while index.isValid():
             path = path.extend_with(index.row())
             index = index.parent()
-        # Current Path is in reverse order, parent() removes the last index (invisible root)
+        # Current RequirementTreePath is in reverse order, parent() removes the last index (invisible root)
         return path.parent().reversed()
 
     def index_from_path(self, path: RequirementTreePath) -> QModelIndex:
-        """Returns the model index at the given Path"""
+        """Returns the model index at the given RequirementTreePath"""
         index = QModelIndex()
         for row in path.prefixed_with(0):  # Re-add index for invisible root
             next_index = self.index(row, 0, index)
