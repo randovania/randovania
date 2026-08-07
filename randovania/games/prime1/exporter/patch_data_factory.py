@@ -38,7 +38,7 @@ if TYPE_CHECKING:
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
-_SAVE_NAME_MAX_LENGTH = 17
+_SAVE_NAME_MAX_LENGTH = 24
 
 _STARTING_ITEM_NAME_TO_INDEX = {
     "powerBeam": "Power",
@@ -217,15 +217,13 @@ def _create_results_screen_text(description: LayoutDescription) -> str:
 
 
 def _abbreviate_word(word: str, length: int) -> str:
-    """Abbreviated words end in a dot and whole words in a space, so no separator is spent on a dot."""
     if length < len(word):
         return word[:length] + "."
-    return word + " "
+    return word
 
 
 def _join_abbreviated_words(words: list[str], lengths: list[int]) -> str:
-    abbreviations = [_abbreviate_word(word, length) for word, length in zip(words, lengths, strict=True)]
-    return "".join(abbreviations).rstrip()
+    return " ".join(_abbreviate_word(word, length) for word, length in zip(words, lengths, strict=True))
 
 
 def _balanced_word_lengths(words: list[str], max_length: int) -> list[int]:
