@@ -24,6 +24,7 @@ if TYPE_CHECKING:
 SUIT_NAMES = ("power", "varia", "gravity", "phazon")
 UNMORPHED_SIZE = QtCore.QSize(130, 188)
 MORPHED_SIZE = QtCore.QSize(130, 140)
+GUNSHIP_SIZE = QtCore.QSize(180, 137)
 
 # Mid-lightness hues, so the text stays legible against both light and dark backgrounds.
 RAINBOW_GRADIENT = (
@@ -34,7 +35,7 @@ RAINBOW_GRADIENT = (
 
 
 def _suit_render_path(file_name: str) -> Path:
-    return RandovaniaGame.METROID_PRIME.data_path.joinpath("assets", "suit_renders", f"{file_name}.png")
+    return RandovaniaGame.METROID_PRIME.data_path.joinpath("assets", "suit_renders", f"{file_name}.webp")
 
 
 class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches], Ui_PrimeCosmeticPatchesDialog):
@@ -103,11 +104,13 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
         self._persist_check_field(self.force_fusion_check, "force_fusion")
         self._persist_check_field(self.rainbow_phazon_ball_check, "rainbow_phazon_ball")
         self._persist_check_field(self.custom_hud_color, "use_hud_color")
-        # Connected after force_fusion's _persist_check_field, so the handler sees the already-updated value.
+        self._persist_check_field(self.match_gunship_to_power_suit_check, "match_gunship_to_power_suit")
         self.force_fusion_check.stateChanged.connect(self._on_fusion_toggled)
+        self.match_gunship_to_power_suit_check.stateChanged.connect(self._on_match_gunship_toggled)
         on_checked(self.rainbow_phazon_ball_check, self._on_rainbow_phazon_ball_toggled)
         for slider in self.suit_rotation_sliders:
             slider.valueChanged.connect(self._persist_suit_color_rotations)
+        self.gunship_rotation_slider.valueChanged.connect(self._persist_gunship_color_rotation)
         self.custom_hud_color_button.clicked.connect(self._open_color_picker)
         self.sound_mode_combo.currentIndexChanged.connect(self._on_sound_mode_update)
 
@@ -148,6 +151,26 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
     def _on_fusion_toggled(self) -> None:
         self._set_suit_rotation_sliders(self._cosmetic_patches.active_suit_color_rotations)
 
+    def _on_match_gunship_toggled(self) -> None:
+        if not self._cosmetic_patches.match_gunship_to_power_suit:
+            self._cosmetic_patches = dataclasses.replace(
+                self._cosmetic_patches,
+                gunship_color_rotation=self.gunship_rotation_slider.value(),
+            )
+        self._update_gunship_controls()
+
+    def _persist_gunship_color_rotation(self) -> None:
+        if self._cosmetic_patches.active_gunship_color_rotation is None:
+            # While matched, the two sliders drag each other; the Power Suit one owns the value.
+            self.power_suit_rotation_slider.setValue(self.gunship_rotation_slider.value())
+            return
+
+        self._cosmetic_patches = dataclasses.replace(
+            self._cosmetic_patches,
+            gunship_color_rotation=self.gunship_rotation_slider.value(),
+        )
+        self._update_gunship_controls()
+
     def _persist_suit_color_rotations(self) -> None:
         rotations = tuple(slider.value() for slider in self.suit_rotation_sliders)
         field_name = "fusion_suit_color_rotations" if self._cosmetic_patches.force_fusion else "suit_color_rotations"
@@ -182,9 +205,34 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
                 (self.ball_image_labels[i], f"{prefix}{suit}_ball", MORPHED_SIZE),
             ):
                 render = color_lib.hue_rotate_rgba_array(self._suit_render(file_name, size), matrix)
-                pixmap = QtGui.QPixmap.fromImage(render)
-                pixmap.setDevicePixelRatio(self._preview_pixel_ratio)
-                label.setPixmap(pixmap)
+                self._set_preview_pixmap(label, render)
+
+        self._update_gunship_controls()
+
+    def _update_gunship_controls(self) -> None:
+        patches = self._cosmetic_patches
+        rotation = patches.active_gunship_color_rotation
+        matched = rotation is None
+
+        with QtCore.QSignalBlocker(self.match_gunship_to_power_suit_check):
+            self.match_gunship_to_power_suit_check.setChecked(matched)
+        self.match_gunship_to_power_suit_check.setEnabled(not patches.force_fusion)
+
+        if rotation is None:
+            rotation = patches.active_suit_color_rotations[0]
+        with QtCore.QSignalBlocker(self.gunship_rotation_slider):
+            self.gunship_rotation_slider.setValue(rotation)
+        self.gunship_rotation_slider.setToolTip(f"{rotation} degrees")
+
+        render = color_lib.hue_rotate_rgba_array(
+            self._suit_render("gunship", GUNSHIP_SIZE), color_lib.hue_rotate_matrix(rotation)
+        )
+        self._set_preview_pixmap(self.gunship_image_label, render)
+
+    def _set_preview_pixmap(self, label: QtWidgets.QLabel, render: QtGui.QImage) -> None:
+        pixmap = QtGui.QPixmap.fromImage(render)
+        pixmap.setDevicePixelRatio(self._preview_pixel_ratio)
+        label.setPixmap(pixmap)
 
     def _on_rainbow_phazon_ball_toggled(self, checked: bool) -> None:
         style = f"QCheckBox {{ color: {RAINBOW_GRADIENT}; }}" if checked else ""

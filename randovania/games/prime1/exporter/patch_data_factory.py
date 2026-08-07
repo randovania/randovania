@@ -1006,6 +1006,10 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             if hue_rotation != 0:
                 suit_colors[attribute] = hue_rotation
 
+        gunship_rotation = self.cosmetic_patches.active_gunship_color_rotation
+        if gunship_rotation is not None:
+            suit_colors["gunshipDeg"] = gunship_rotation
+
         starting_room = _name_for_start_location(db.region_list, self.patches.starting_location)
 
         starting_resources = self.patches.starting_resources()
