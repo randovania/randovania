@@ -51,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Games which start without Combat, Thermal and X-Ray Visor now require one of the three to target enemies or combat dash. All fight logic adjusted to require one Combat trick level higher when enemies are not able to be targeted.
 - Changed: The use of the arm cannon is no longer dependent on acquiring Combat, Thermal or X-Ray Visor.
+- Removed: All "No Gravity Suit" and "Enabled Allow Dangerous Gravity Suit Logic" requirements. These are no longer necessary due to the player's ability to unequip Gravity Suit. A FAQ entry has been added to assist with player education.
 
 ##### Magmoor Caverns
 

@@ -75,7 +75,6 @@ class PrimeBootstrap(Bootstrap):
         enabled_resources = set()
 
         logical_patches = {
-            "allow_underwater_movement_without_gravity": "NoGravity",
             "main_plaza_door": "main_plaza_door",
             "backwards_frigate": "backwards_frigate",
             "backwards_labs": "backwards_labs",

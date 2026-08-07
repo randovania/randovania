@@ -15,6 +15,5 @@ def test_dangerous_settings(test_files_dir):
         "Room Randomizer",
         "Extra Superheated Rooms",
         "Submerged Rooms",
-        "Dangerous Gravity Suit Logic",
         "Dangerous Random Enemy Attributes",
     ]
