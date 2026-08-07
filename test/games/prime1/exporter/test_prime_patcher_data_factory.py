@@ -94,13 +94,17 @@ def test_adjust_model_names(test_files_dir, case_name: str, external_assets: boo
     ("word_hash", "expected"),
     [
         ("Grove Ice Bomb", "Grove Ice Bomb"),
-        ("Wavebuster Thardus Grove", "Waveb.Thard.Grove"),
-        ("Wavebuster Thardus", "Wavebuste.Thardus"),
-        ("Supercalifragilistic", "Supercalifragili."),
-        ("Metroid Prime Chozo Artifact Temple", "Met.Pri.Ch.Ar.Te."),
-        ("A B C D E F G H I J", "A B C D E F G H I"),
+        ("Wavebuster Thardus Grove", "Wavebuster Thardus Grove"),
+        ("Wavebuster Thardus", "Wavebuster Thardus"),
+        ("Supercalifragilistic", "Supercalifragilistic"),
+        ("Metroid Prime Chozo Artifact Temple", "Met. Pri. Cho. Art. Tem."),
+        ("A B C D E F G H I J", "A B C D E F G H I J"),
+        ("A B C D E F G H I J K L M", "A B C D E F G H I J K L"),
+        ("Warrior Worm Workstation", "Warrior Worm Workstation"),
+        ("Wavebuster Thardus Sunchamber", "Wavebus. Thardus Suncha."),
+        ("Exoskeleton Shorelines Ghost", "Exoskele. Shoreli. Ghost"),
     ],
 )
 def test_shorten_word_hash(word_hash: str, expected: str) -> None:
     assert _shorten_word_hash(word_hash) == expected
-    assert len(expected) <= 17
+    assert len(expected) <= 24

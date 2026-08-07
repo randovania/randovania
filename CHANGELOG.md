@@ -35,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Elite Research: Softlock prevention was inconsistent across game versions. Prevention no longer locks the player in the room until they collect the item.
 - Added: Players can temporarily unequip Gravity Suit using in-game options.
 - Added: Replaced vanilla's inventory-based completion percent calculation with an algorithm based on location count. Completion percent now always reflects the progress towards collection of all non-nothing pickups in the player's world.
-- Added: Power Suit color customization now affects Samus' gunship.
+- Added: The color of Samus' Gunship can now be customized.
 - Added: Rainbow Ball cosmetic option.
 - Changed: Organized cosmetic options into collapsible sections, suit customization now features preview images and Fusion Suit color preferences are now saved independently from non-Fusion.
 - Changed: Morph Ball now always renders the "inner glow" color appropriate for the current highest suit instead of the vanilla behavior which renders the "wrong" color when Spider, Gravity or Phazon are collected out of the vanilla-intended order.
