@@ -7,35 +7,39 @@ from randovania.gui.dialog.connections_editor.path import RequirementTreePath
 
 
 @pytest.fixture
-def model() -> RequirementModel:
-    return RequirementModel()
+def model(echoes_varied_requirement) -> RequirementModel:
+    requirement_model = RequirementModel()
+    requirement_model.build_tree(echoes_varied_requirement)
+    return requirement_model
 
 
 def test_build_no_changes(model, echoes_varied_requirement):
-    model.build_tree(echoes_varied_requirement)
     assert model.build_requirement() == echoes_varied_requirement
 
 
-def test_path_from_index_discards_root(model, echoes_varied_requirement):
-    model.build_tree(echoes_varied_requirement)
+def test_path_from_index_discards_root(model):
+    TEMPLATE = RequirementTreePath((6,))
 
     root_index = model.invisibleRootItem().index()
-    or_index = model.index(0, 0, root_index)
-    template_index = model.index(2, 0, or_index)
+    and_index = model.index(0, 0, root_index)
+    template_index = model.index(6, 0, and_index)
 
-    assert model.path_from_index(template_index) == RequirementTreePath((2,))
+    assert model.path_from_index(template_index) == TEMPLATE
 
 
-def test_index_from_path_adds_root(model, echoes_varied_requirement, echoes_simple_resource):
-    model.build_tree(echoes_varied_requirement)
-    path = RequirementTreePath((1, 0))
-    assert model.index_from_path(path).data(ROLE) == echoes_simple_resource("Dark")
+def test_index_from_path_adds_root(model, echoes_item):
+    DARK = RequirementTreePath((0, 1))
+    assert model.index_from_path(DARK).data(ROLE) == echoes_item("Dark")
+
+
+OR = RequirementTreePath((0,))
+ANNIHILATOR = RequirementTreePath((0, 3))
+MISC = RequirementTreePath((5,))
 
 
 @pytest.mark.parametrize(
     ("path", "expected"),
-    [(RequirementTreePath((1, 1)), 1), (RequirementTreePath((3,)), 4), (RequirementTreePath((4, 1, 0)), 3)],
+    [(OR, 7), (ANNIHILATOR, 3), (MISC, 7)],
 )
-def test_sibling_count_is_last_index(model, echoes_varied_requirement, path, expected):
-    model.build_tree(echoes_varied_requirement)
+def test_sibling_count_is_last_index(model, path, expected):
     assert model.sibling_count(path) == expected

@@ -17,7 +17,23 @@ from randovania.gui.dialog.connections_editor.view import RequirementView
 
 
 @pytest.fixture
-def controller(skip_qtbot, echoes_game_description, echoes_simple_resource):
+def basic_requirement(make_and, make_or, echoes_item):
+    """Requirement with just enough structure to test controller behavior"""
+    return make_and(
+        [echoes_item("Power"), make_or([echoes_item("Dark"), echoes_item("Light")]), echoes_item("Annihilator")]
+    )
+
+
+ROOT = RequirementTreePath(())
+POWER = RequirementTreePath((0,))
+OR = RequirementTreePath((1,))
+DARK = RequirementTreePath((1, 0))
+LIGHT = RequirementTreePath((1, 1))
+ANNIHILATOR = RequirementTreePath((2,))
+
+
+@pytest.fixture
+def controller(skip_qtbot, echoes_game_description, basic_requirement):
     parent = QWidget()
     tree = QTreeView()
     stacked_widget = QStackedWidget()
@@ -42,24 +58,8 @@ def controller(skip_qtbot, echoes_game_description, echoes_simple_resource):
         undo_stack,
     )
 
-    basic_requirement = RequirementAnd(
-        [
-            echoes_simple_resource("Power"),
-            RequirementOr([echoes_simple_resource("Dark"), echoes_simple_resource("Light")]),
-            echoes_simple_resource("Annihilator"),
-        ]
-    )
-
     controller._model.build_tree(basic_requirement)
     return controller
-
-
-ROOT = RequirementTreePath(())
-POWER = RequirementTreePath((0,))
-OR = RequirementTreePath((1,))
-DARK = RequirementTreePath((1, 0))
-LIGHT = RequirementTreePath((1, 1))
-ANNIHILATOR = RequirementTreePath((2,))
 
 
 @pytest.fixture
@@ -71,31 +71,23 @@ def select(controller):
     return _select
 
 
-@pytest.fixture
-def expected_item_requirement(echoes_game_description):
-    return requirement_tree.default_from_type(
-        ResourceType.ITEM, echoes_game_description.resource_database, echoes_game_description.region_list
-    )
-
-
-@pytest.fixture
-def expected_or_requirement(echoes_game_description):
-    return requirement_tree.default_from_type(
-        RequirementOr, echoes_game_description.resource_database, echoes_game_description.region_list
-    )
-
-
-def test_on_add_requirement_pressed_adds_as_sibling(controller, select, expected_item_requirement):
+def test_on_add_requirement_pressed_adds_as_sibling(controller, select, echoes_game_description):
     select(POWER)
     controller._on_add_requirement_pressed()
     result = controller._model.build_requirement()
+    expected_item_requirement = requirement_tree.default_from_type(
+        ResourceType.ITEM, echoes_game_description.resource_database, echoes_game_description.region_list
+    )
     assert requirement_tree._at_path(result, POWER.next_sibling()) == expected_item_requirement
 
 
-def test_on_add_requirement_pressed_adds_as_last_child(controller, select, expected_or_requirement):
+def test_on_add_requirement_pressed_adds_as_last_child(controller, select, echoes_game_description):
     select(OR)
     controller._on_add_requirement_pressed()
     result = controller._model.build_requirement()
+    expected_or_requirement = requirement_tree.default_from_type(
+        RequirementOr, echoes_game_description.resource_database, echoes_game_description.region_list
+    )
     assert requirement_tree._at_path(result, LIGHT.next_sibling()) == expected_or_requirement
 
 
@@ -129,7 +121,7 @@ def test_on_shift_up_pressed_shifts_as_sibling(controller, select):
     selected_requirement = controller._model.index_from_path(LIGHT).data(ROLE)
     controller._on_shift_up_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, DARK) == selected_requirement
+    assert requirement_tree._at_path(result, LIGHT.previous_sibling()) == selected_requirement
 
 
 def test_on_shift_up_pressed_escapes_to_parent(controller, select):
@@ -137,7 +129,7 @@ def test_on_shift_up_pressed_escapes_to_parent(controller, select):
     selected_requirement = controller._model.index_from_path(DARK).data(ROLE)
     controller._on_shift_up_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, OR) == selected_requirement
+    assert requirement_tree._at_path(result, POWER.next_sibling()) == selected_requirement
 
 
 def test_on_shift_up_pressed_ascends_into_sibling(controller, select):
@@ -153,7 +145,7 @@ def test_on_shift_down_pressed_shifts_as_sibling(controller, select):
     selected_requirement = controller._model.index_from_path(DARK).data(ROLE)
     controller._on_shift_down_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, LIGHT) == selected_requirement
+    assert requirement_tree._at_path(result, DARK.next_sibling()) == selected_requirement
 
 
 def test_on_shift_down_pressed_escapes_to_parent(controller, select):
@@ -161,7 +153,7 @@ def test_on_shift_down_pressed_escapes_to_parent(controller, select):
     selected_requirement = controller._model.index_from_path(LIGHT).data(ROLE)
     controller._on_shift_down_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, ANNIHILATOR) == selected_requirement
+    assert requirement_tree._at_path(result, OR.next_sibling()) == selected_requirement
 
 
 def test_on_shift_down_pressed_descends_into_sibling(controller, select):
@@ -169,4 +161,4 @@ def test_on_shift_down_pressed_descends_into_sibling(controller, select):
     selected_requirement = controller._model.index_from_path(POWER).data(ROLE)
     controller._on_shift_down_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, POWER.extend_with(0)) == selected_requirement
+    assert requirement_tree._at_path(result, OR.previous_sibling().extend_with(0)) == selected_requirement
