@@ -234,6 +234,7 @@ def write_dock_weakness_distributor_settings(settings: WeaknessDistributorSettin
         "locked": settings.locked.name,
         "change_from": sorted(weakness.name for weakness in settings.change_from),
         "change_to": sorted(weakness.name for weakness in settings.change_to),
+        "indirect_change_from": sorted(weakness.name for weakness in settings.indirect_change_from),
         "force_change_two_way": settings.force_change_two_way,
         "resolver_attempts": settings.resolver_attempts,
         "to_shuffle_proportion": settings.to_shuffle_proportion,
