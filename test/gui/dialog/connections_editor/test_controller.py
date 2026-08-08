@@ -6,8 +6,12 @@ import pytest
 from PySide6.QtGui import QUndoStack
 from PySide6.QtWidgets import QComboBox, QStackedWidget, QTreeView, QWidget
 
+from randovania.game_description.requirements.array_base import RequirementArrayBase
+from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.dialog.connections_editor import requirement_tree
 from randovania.gui.dialog.connections_editor.controller import RequirementController
@@ -22,6 +26,12 @@ def basic_requirement(make_and, make_or, echoes_item):
     return make_and(
         [echoes_item("Power"), make_or([echoes_item("Dark"), echoes_item("Light")]), echoes_item("Annihilator")]
     )
+
+
+@pytest.fixture
+def single_requirement(echoes_item):
+    """Requirement with a leaf as the root"""
+    return echoes_item("Power")
 
 
 ROOT = RequirementTreePath(())
@@ -91,6 +101,13 @@ def test_on_add_requirement_pressed_adds_as_last_child(controller, select, echoe
     assert requirement_tree._at_path(result, LIGHT.next_sibling()) == expected_or_requirement
 
 
+def test_on_add_requirement_pressed_rejects_add(controller, select, single_requirement):
+    controller._model.build_tree(single_requirement)
+    select(ROOT)
+    controller._on_add_requirement_pressed()
+    assert controller._model.build_requirement() == single_requirement
+
+
 def test_on_delete_requirement_pressed_deletes(controller, select):
     select(POWER)
     controller._on_delete_requirement_pressed()
@@ -114,6 +131,13 @@ def test_on_delete_requirement_pressed_selects_previous_sibling(controller, sele
     assert controller._view._tree.selectionModel().currentIndex().data(ROLE) == controller._model.index_from_path(
         OR
     ).data(ROLE)
+
+
+def test_on_delete_requirement_pressed_rejects_delete(controller, select, single_requirement):
+    controller._model.build_tree(single_requirement)
+    select(ROOT)
+    controller._on_delete_requirement_pressed()
+    assert controller._model.build_requirement() == single_requirement
 
 
 def test_on_shift_up_pressed_shifts_as_sibling(controller, select):
@@ -140,6 +164,12 @@ def test_on_shift_up_pressed_ascends_into_sibling(controller, select):
     assert requirement_tree._at_path(result, LIGHT.next_sibling()) == selected_requirement
 
 
+def test_on_shift_up_pressed_rejects_shift(controller, select, basic_requirement):
+    select(ROOT)
+    controller._on_shift_up_pressed()
+    assert controller._model.build_requirement() == basic_requirement
+
+
 def test_on_shift_down_pressed_shifts_as_sibling(controller, select):
     select(DARK)
     selected_requirement = controller._model.index_from_path(DARK).data(ROLE)
@@ -162,3 +192,38 @@ def test_on_shift_down_pressed_descends_into_sibling(controller, select):
     controller._on_shift_down_pressed()
     result = controller._model.build_requirement()
     assert requirement_tree._at_path(result, OR.previous_sibling().extend_with(0)) == selected_requirement
+
+
+def test_on_shift_down_pressed_rejects_shift(controller, select, basic_requirement):
+    select(ROOT)
+    controller._on_shift_down_pressed()
+    assert controller._model.build_requirement() == basic_requirement
+
+
+@pytest.mark.parametrize(
+    "to_type",
+    [
+        RequirementArrayBase,
+        ResourceType.ITEM,
+        ResourceType.EVENT,
+        ResourceType.TRICK,
+        ResourceType.DAMAGE,
+        ResourceType.VERSION,
+        ResourceType.MISC,
+        RequirementTemplate,
+        NodeRequirement,
+    ],
+)
+def test_on_type_combo_changed_changes_requirement_to_type(controller, select, to_type):
+    select(ROOT)
+    type_index = controller._combo_type.findData(to_type, ROLE)
+    controller._combo_type.setCurrentIndex(type_index)
+
+    controller._on_type_combo_changed()
+    result = controller._model.build_requirement()
+
+    if isinstance(to_type, ResourceType):
+        assert isinstance(result, ResourceRequirement)
+        assert result.resource.resource_type == to_type
+    else:
+        assert isinstance(result, to_type)

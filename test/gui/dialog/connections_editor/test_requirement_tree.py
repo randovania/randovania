@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import pytest
 
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.gui.dialog.connections_editor import requirement_tree
 from randovania.gui.dialog.connections_editor.path import RequirementTreePath
 
@@ -51,3 +53,13 @@ def test_replace_at_path_replaces(echoes_varied_requirement, echoes_item, path):
     item_to_replace_with = echoes_item("MorphBall")
     after_replace = requirement_tree.replace_at_path(echoes_varied_requirement, path, item_to_replace_with)
     assert requirement_tree._at_path(after_replace, path) == item_to_replace_with
+
+
+def test_change_to_type_retains_array_data(echoes_varied_requirement, echoes_game_description):
+    OR_PATH = RequirementTreePath((0,))
+    db = echoes_game_description.resource_database
+    region_list = echoes_game_description.region_list
+    current_requirement: RequirementOr = requirement_tree._at_path(echoes_varied_requirement, OR_PATH)
+    changed_requirement = requirement_tree.change_to_type(current_requirement, RequirementAnd, db, region_list)
+    assert changed_requirement.items == current_requirement.items
+    assert changed_requirement.comment == current_requirement.comment
