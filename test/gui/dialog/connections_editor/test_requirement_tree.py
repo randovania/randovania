@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pytest
 
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -59,7 +61,11 @@ def test_change_to_type_retains_array_data(echoes_varied_requirement, echoes_gam
     OR_PATH = RequirementTreePath((0,))
     db = echoes_game_description.resource_database
     region_list = echoes_game_description.region_list
-    current_requirement: RequirementOr = requirement_tree._at_path(echoes_varied_requirement, OR_PATH)
+
+    current_requirement = requirement_tree._at_path(echoes_varied_requirement, OR_PATH)
+    current_requirement = cast(RequirementOr, current_requirement)
     changed_requirement = requirement_tree.change_to_type(current_requirement, RequirementAnd, db, region_list)
+    changed_requirement = cast(RequirementAnd, changed_requirement)
+
     assert changed_requirement.items == current_requirement.items
     assert changed_requirement.comment == current_requirement.comment
