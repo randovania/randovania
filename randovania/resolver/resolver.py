@@ -15,7 +15,7 @@ from randovania.graph.graph_requirement import GraphRequirementList, GraphRequir
 from randovania.graph.world_graph import WorldGraphNode
 from randovania.layout import filtered_database
 from randovania.resolver.hint_state import ResolverHintState
-from randovania.resolver.logic import Logic
+from randovania.resolver.logic import Logic, WorldSpecificLogic
 from randovania.resolver.resolver_reach import ResolverReach
 
 if TYPE_CHECKING:
@@ -32,6 +32,7 @@ if TYPE_CHECKING:
     from randovania.resolver.logging import ResolverLogger
 
 type ResolverAction = WorldGraphNode
+type PotentialAction = tuple[int, ResolverAction, DamageState]
 AnyPickupNode = PickupNode | EventPickupNode
 AnyEventNode = EventNode | EventPickupNode
 
@@ -136,10 +137,10 @@ def _is_hint_node(action: ResolverAction) -> bool:
     return isinstance(target_node, HintNode)
 
 
-def _priority_for_resource_action(action: ResolverAction, state: State, logic: Logic) -> ActionPriority:
+def _priority_for_resource_action(action: ResolverAction, state: State, logic: WorldSpecificLogic) -> ActionPriority:
     if _is_dangerous_event(state, action, logic.dangerous_resources):
         return ActionPriority.DANGEROUS
-    elif logic.prioritize_hints and _is_hint_node(action):
+    elif logic.main_logic.prioritize_hints and _is_hint_node(action):
         return ActionPriority.PRIORITIZED_HINT
     elif _is_major_or_key_pickup_node(action, state):
         return ActionPriority.MAJOR_PICKUP
@@ -181,131 +182,195 @@ def _progressive_chain_info(node: WorldGraphNode, resources: ResourceCollection)
     return None
 
 
-def _assign_hint_available_locations(state: State, action: ResolverAction, logic: Logic) -> None:
-    if state.hint_state is not None and action.pickup_index is not None:
-        available = state.hint_state.valid_available_locations_for_hint(state, logic)
-        state.hint_state.assign_available_locations(action.pickup_index, available)
+def _post_act_on_node(world_index: int, states: list[State], action: ResolverAction, logic: Logic) -> int | None:
+    modified_world = None
+
+    if action.pickup_index is not None:
+        state = states[world_index]
+
+        target = state.patches.pickup_assignment.get(action.pickup_index)
+        if target is not None and target.world != world_index:
+            states[target.world] = states[target.world].assign_pickup_resources(target.pickup)
+            modified_world = target.world
+
+        if state.hint_state is not None:
+            available = state.hint_state.valid_available_locations_for_hint(state, logic)
+            state.hint_state.assign_available_locations(action.pickup_index, available)
+
+    return modified_world
 
 
 def _resource_gain_for_state(state: State) -> list[int]:
     return [x.resource_index for x, _ in state.node.resource_gain_on_collect(state.resources)]
 
 
-def _index_for_action_pair(pair: tuple[ResolverAction, DamageState]) -> int:
-    node = pair[0]
+def _index_for_action_pair(pair: PotentialAction) -> int:
+    node = pair[1]
     # TODO: probably this entire sorting is pointless when there's only WorldGraph
     assert node.database_node is not None
     return node.database_node.node_index
 
 
-async def _inner_advance_depth(
-    state: State,
+async def _calculate_actions_by_priority_and_try_safe(
     logic: Logic,
+    states: list[State],
+    reaches: list[ResolverReach],
     status_update: Callable[[str], None],
-    *,
-    reach: ResolverReach | None = None,
-    max_attempts: int | None = None,
-) -> tuple[State | None, bool]:
+    max_attempts: int | None,
+    actions_by_priority: dict[ActionPriority, list[PotentialAction]],
+) -> list[State] | None:
+    """
+    Fills `actions_by_priority` with the possible actions of the given reach
+    with the given state, grouped by calculated priorities.
+    Also check if the action is safe and if so recurse into it.
     """
 
-    :param state:
+    for state, reach, world_logic in zip(states, reaches, logic.world_specific, strict=True):
+        wi = state.world_index
+        for action, damage_state in reach.possible_actions(state):
+            if _should_check_if_action_is_safe(state, action, world_logic.dangerous_resources):
+                potential_states = list(states)
+                potential_states[wi] = state.act_on_node(
+                    action, path=reach.path_to_node(action), new_damage_state=damage_state
+                )
+                _post_act_on_node(wi, potential_states, action, logic)
+
+                potential_reaches = list(reaches)
+                potential_reaches[wi] = ResolverReach.calculate_reach(logic, potential_states[wi])
+
+                # If we can go back to where we were without worsening the damage state, it's a simple safe node
+                if potential_reaches[wi].is_node_in_reach(state.node) and not state.damage_state.is_better_than(
+                    potential_reaches[wi].health_for_damage_requirements_at_node(state.node.node_index)
+                ):
+                    new_result = await _inner_advance_depth(
+                        logic=logic,
+                        states=potential_states,
+                        reaches=potential_reaches,
+                        last_action=wi,
+                        status_update=status_update,
+                        max_attempts=max_attempts,
+                    )
+
+                    if new_result is None:
+                        additional = logic.get_additional_requirements(wi, action).alternatives
+
+                        resources = _resource_gain_for_state(state)
+                        progressive_chain_info = _progressive_chain_info(state.node, state.resources)
+
+                        logic.set_additional_requirements(
+                            wi,
+                            state.node,
+                            _simplify_additional_requirement_set(
+                                additional, state, resources, progressive_chain_info, True
+                            ),
+                        )
+                        logic.logger.log_rollback(state, True, True, logic)
+
+                    # If a safe node was a dead end, we're certainly a dead end as well
+                    return new_result
+                else:
+                    actions_by_priority[ActionPriority.POINT_OF_NO_RETURN].append(
+                        (world_logic.world_index, action, damage_state)
+                    )
+                    continue
+
+            actions_by_priority[_priority_for_resource_action(action, state, world_logic)].append(
+                (world_logic.world_index, action, damage_state)
+            )
+
+    return None
+
+
+async def _inner_advance_depth(
+    logic: Logic,
+    states: list[State],
+    reaches: list[ResolverReach],
+    last_action: int,
+    status_update: Callable[[str], None],
+    *,
+    max_attempts: int | None = None,
+) -> list[State] | None:
+    """
+
     :param logic:
+    :param states:
+    :param reaches:
+    :param last_action:
     :param status_update:
-    :param reach: A precalculated reach for the given state
     :return:
     """
 
-    logic.start_new_attempt(state, max_attempts)
+    logic.start_new_attempt(states[last_action], max_attempts)
 
-    if state.hint_state is not None:
-        state.hint_state.advance_hint_seen_count(state)
+    if (hint_state := states[last_action].hint_state) is not None:
+        hint_state.advance_hint_seen_count(states[last_action])
 
-    if logic.victory_condition(state).satisfied(state.resources, state.health_for_damage_requirements):
-        return state, True
+    if logic.victory_conditions_satisfied(states):
+        return states
 
     # Yield back to the asyncio runner, so cancel can do something
     await asyncio.sleep(0)
 
-    if reach is None:
-        reach = ResolverReach.calculate_reach(logic, state)
+    status_update(f"Resolving... {sum(state.resources.num_resources for state in states)} total resources")
 
-    status_update(f"Resolving... {state.resources.num_resources} total resources")
+    actions_by_priority: dict[ActionPriority, list[PotentialAction]] = {priority: [] for priority in ActionPriority}
 
-    actions_by_priority: dict[ActionPriority, list[tuple[ResolverAction, DamageState]]] = {
-        priority: [] for priority in ActionPriority
-    }
+    new_result = await _calculate_actions_by_priority_and_try_safe(
+        logic,
+        states,
+        reaches,
+        status_update,
+        max_attempts,
+        actions_by_priority,
+    )
+    if new_result is not None:
+        return new_result
 
-    for action, damage_state in reach.possible_actions(state):
-        if _should_check_if_action_is_safe(state, action, logic.dangerous_resources):
-            potential_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
-            _assign_hint_available_locations(potential_state, action, logic)
-            potential_reach = ResolverReach.calculate_reach(logic, potential_state)
-
-            # If we can go back to where we were without worsening the damage state, it's a simple safe node
-            if potential_reach.is_node_in_reach(state.node) and not state.damage_state.is_better_than(
-                potential_reach.health_for_damage_requirements_at_node(state.node.node_index)
-            ):
-                new_result = await _inner_advance_depth(
-                    state=potential_state,
-                    logic=logic,
-                    status_update=status_update,
-                    reach=potential_reach,
-                    max_attempts=max_attempts,
-                )
-
-                if new_result[0] is None:
-                    additional = logic.get_additional_requirements(action).alternatives
-
-                    resources = _resource_gain_for_state(state)
-                    progressive_chain_info = _progressive_chain_info(state.node, state.resources)
-
-                    logic.set_additional_requirements(
-                        state.node,
-                        _simplify_additional_requirement_set(
-                            additional, state, resources, progressive_chain_info, True
-                        ),
-                    )
-                    logic.logger.log_rollback(state, True, True, logic)
-
-                # If a safe node was a dead end, we're certainly a dead end as well
-                return new_result
-            else:
-                actions_by_priority[ActionPriority.POINT_OF_NO_RETURN].append((action, damage_state))
-                continue
-
-        actions_by_priority[_priority_for_resource_action(action, state, logic)].append((action, damage_state))
-
-    actions: list[tuple[ActionPriority, ResolverAction, DamageState]] = [
-        (priority, action, damage_state)
+    actions: list[tuple[ActionPriority, *PotentialAction]] = [
+        (priority, world_index, action, damage_state)
         for priority, entries in actions_by_priority.items()
         # HACK: sort nodes so they're somewhat more consistent between classic and new graph
-        for action, damage_state in sorted(entries, key=_index_for_action_pair)
+        for world_index, action, damage_state in sorted(entries, key=_index_for_action_pair)
     ]
     logic.logger.log_checking_satisfiable(actions)
-    has_action = False
-    for _, action, damage_state in actions:
-        action_additional_requirements = logic.get_additional_requirements(action)
+    has_action = [False] * len(states)
+
+    for _, world_index, action, damage_state in actions:
+        state = states[world_index]
+        action_additional_requirements = logic.get_additional_requirements(world_index, action)
         if not action_additional_requirements.satisfied(state.resources, damage_state.health_for_damage_requirements()):
             logic.logger.log_skip(action, state, logic)
             continue
 
-        new_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
-        _assign_hint_available_locations(new_state, action, logic)
+        new_states = list(states)
+        new_states[world_index] = state.act_on_node(
+            action, path=reaches[world_index].path_to_node(action), new_damage_state=damage_state
+        )
+        receiver_index = _post_act_on_node(world_index, new_states, action, logic)
+
+        new_reaches = list(reaches)
+        new_reaches[world_index] = ResolverReach.calculate_reach(logic, new_states[world_index])
+        if receiver_index is not None:
+            new_reaches[receiver_index] = ResolverReach.calculate_reach(logic, new_states[receiver_index])
+
         new_result = await _inner_advance_depth(
-            state=new_state,
             logic=logic,
+            states=new_states,
+            reaches=new_reaches,
+            last_action=world_index,
             status_update=status_update,
             max_attempts=max_attempts,
         )
 
         # We got a positive result. Send it back up
-        if new_result[0] is not None:
+        if new_result is not None:
             return new_result
         else:
-            has_action = True
+            has_action[world_index] = True
 
-    additional_requirements: set[GraphRequirementList] = reach.satisfiable_requirements_for_additionals
-    old_additional_requirements = logic.get_additional_requirements(state.node)
+    # TODO: the entire additional_requirements logic needs improvements for multiworld
+    additional_requirements: set[GraphRequirementList] = reaches[last_action].satisfiable_requirements_for_additionals
+    old_additional_requirements = logic.get_additional_requirements(last_action, states[last_action].node)
 
     if (
         not old_additional_requirements.is_trivial()
@@ -320,29 +385,36 @@ async def _inner_advance_depth(
 
     if has_action:
         additional_alts: set[GraphRequirementList] = set()
-        for resource_node in reach.collectable_resource_nodes(state.resources):
-            additional_alts |= set(logic.get_additional_requirements(resource_node).alternatives)
+        for resource_node in reaches[last_action].collectable_resource_nodes(states[last_action].resources):
+            additional_alts |= set(logic.get_additional_requirements(last_action, resource_node).alternatives)
 
         additional_requirements = additional_requirements.union(additional_alts)
 
-    resources = _resource_gain_for_state(state)
-    progressive_chain_info = _progressive_chain_info(state.node, state.resources)
+    resources = _resource_gain_for_state(states[last_action])
+    progressive_chain_info = _progressive_chain_info(states[last_action].node, states[last_action].resources)
 
     logic.set_additional_requirements(
-        state.node,
-        _simplify_additional_requirement_set(additional_requirements, state, resources, progressive_chain_info, False),
+        last_action,
+        states[last_action].node,
+        _simplify_additional_requirement_set(
+            additional_requirements, states[last_action], resources, progressive_chain_info, False
+        ),
     )
-    logic.logger.log_rollback(state, has_action, False, logic)
+    logic.logger.log_rollback(states[last_action], has_action[last_action], False, logic)
 
-    return None, has_action
+    return None
 
 
 async def advance_depth(
-    state: State, logic: Logic, status_update: Callable[[str], None], max_attempts: int | None = None
-) -> State | None:
+    logic: Logic,
+    states: list[State],
+    status_update: Callable[[str], None],
+    max_attempts: int | None = None,
+) -> list[State] | None:
     try:
         logic.resolver_start()
-        result = (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
+        reaches = [ResolverReach.calculate_reach(logic, state) for state in states]
+        result = await _inner_advance_depth(logic, states, reaches, 0, status_update, max_attempts=max_attempts)
         logic.logger.log_complete(result)
         return result
     finally:
@@ -354,51 +426,58 @@ def _quiet_print(s: Any) -> None:
 
 
 def setup_resolver(
-    filtered_game: GameDescription,
-    configuration: BaseConfiguration,
-    patches: GamePatches,
+    worlds: list[tuple[GameDescription, BaseConfiguration, GamePatches]],
     *,
     record_paths: bool = False,
-) -> tuple[State, Logic]:
-    game = filtered_game
-    bootstrap = game.game.generator.bootstrap
+) -> tuple[list[State], Logic]:
+    """
+    The GameDescription must already be filtered.
+    """
+    graphs = []
+    states = []
 
-    game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
+    for game, configuration, patches in worlds:
+        bootstrap = game.game.generator.bootstrap
+        game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
+        graph, starting_state = bootstrap.logic_bootstrap_graph(configuration, game, patches)
 
-    graph, starting_state = bootstrap.logic_bootstrap_graph(configuration, game, patches)
-    logic = Logic(graph, configuration)
+        graphs.append(graph)
+        states.append(starting_state)
+
+    logic = Logic(graphs)
     logic.record_paths = record_paths
 
-    return starting_state, logic
+    return states, logic
 
 
 async def resolve(
-    configuration: BaseConfiguration,
-    patches: GamePatches,
+    worlds: list[tuple[BaseConfiguration, GamePatches]],
     status_update: Callable[[str], None] | None = None,
     *,
     collect_hint_data: bool = False,
     logger: ResolverLogger | None = None,
     record_paths: bool = False,
-) -> State | None:
+) -> list[State] | None:
     if status_update is None:
         status_update = _quiet_print
 
-    starting_state, logic = setup_resolver(
-        filtered_database.game_description_for_layout(configuration).get_mutable(),
-        configuration,
-        patches,
+    starting_states, logic = setup_resolver(
+        [
+            (filtered_database.game_description_for_layout(configuration).get_mutable(), configuration, patches)
+            for configuration, patches in worlds
+        ],
         record_paths=record_paths,
     )
 
     if collect_hint_data:
         logic.prioritize_hints = True
-        starting_state.hint_state = ResolverHintState(
-            FillerConfiguration.from_configuration(configuration),
-            logic.graph,
-        )
+        for state in starting_states:
+            state.hint_state = ResolverHintState(
+                FillerConfiguration.from_configuration(worlds[state.world_index][0]),
+                logic.world_specific[state.world_index].graph,
+            )
 
     if logger is not None:
         logic.logger = logger
 
-    return await advance_depth(starting_state, logic, status_update)
+    return await advance_depth(logic, starting_states, status_update)

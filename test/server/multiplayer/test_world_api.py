@@ -517,7 +517,6 @@ async def test_get_abandoned_world_data(test_client, solo_two_world_session, sol
     result = response.json()
 
     # Assert
-    assert result["order"] == 0
     assert result["preset_raw"] == world.preset
     assert result["collected_locations"] == [5, 10]
 

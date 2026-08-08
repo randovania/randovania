@@ -87,15 +87,19 @@ async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
 
     patches = patches.assign_extra_starting_pickups(new_pickups)
 
-    state, logic = resolver.setup_resolver(
-        filtered_database.game_description_for_layout(patches.configuration).get_mutable(),
-        patches.configuration,
-        patches,
+    states, logic = resolver.setup_resolver(
+        [
+            (
+                filtered_database.game_description_for_layout(patches.configuration).get_mutable(),
+                patches.configuration,
+                patches,
+            )
+        ]
     )
 
     with debug.with_level(debug.LogLevel.SILENT):
         try:
-            return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=1000) is not None
+            return await resolver.advance_depth(logic, states, lambda s: None, max_attempts=1000) is not None
         except exceptions.ResolverTimeoutError:
             return False
 
@@ -365,8 +369,10 @@ async def generate_and_validate_description(
 
     if resolve_after_generation and generator_params.world_count == 1:
         final_state_async = resolver.resolve(
-            configuration=generator_params.get_preset(0).configuration,
-            patches=result.all_patches[0],
+            [
+                (preset.configuration, patches)
+                for preset, patches in zip(generator_params.presets, result.all_patches, strict=True)
+            ],
             status_update=actual_status_update,
         )
         try:

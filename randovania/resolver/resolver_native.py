@@ -18,7 +18,7 @@ if typing.TYPE_CHECKING:
     from randovania.lib.bitmask import Bitmask
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
-    from randovania.resolver.logic import Logic
+    from randovania.resolver.logic import Logic, WorldSpecificLogic
 else:
     # However cython's compiler seems to expect the import to be this way, otherwise `cython.compiled` breaks
     import cython
@@ -200,11 +200,13 @@ def resolver_reach_process_nodes(  # noqa: C901
     initial_state: State,
     output: ProcessNodesResponse,
 ) -> None:
-    all_nodes: Sequence[WorldGraphNode] = logic.all_nodes
     resources: ResourceCollection = initial_state.resources
     initial_game_state: EnergyTankDamageState = initial_state.damage_state  # type: ignore[assignment]
     resource_bitmask: Bitmask = resources.resource_bitmask
-    additional_requirements_list: list[GraphRequirementSet] = logic.additional_requirements
+
+    world_specific = logic.world_specific[initial_state.world_index]
+    all_nodes: Sequence[WorldGraphNode] = world_specific.all_nodes
+    additional_requirements_list: list[GraphRequirementSet] = world_specific.additional_requirements
 
     record_paths: cython.bint = logic.record_paths
     initial_node_index: cython.int = initial_state.node.node_index
@@ -372,11 +374,11 @@ def resolver_reach_process_nodes(  # noqa: C901
         if node_index != initial_node_index:
             output.reach_nodes[node_index] = state.checked_nodes[node_index]
 
-    _fill_satisfiable_requirements_for_additionals(logic, requirements_excluding_leaving_by_node, output)
+    _fill_satisfiable_requirements_for_additionals(world_specific, requirements_excluding_leaving_by_node, output)
 
 
 def _fill_satisfiable_requirements_for_additionals(
-    logic: Logic,
+    world_specific_logic: WorldSpecificLogic,
     requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]],
     output: ProcessNodesResponse,
 ) -> None:
@@ -387,7 +389,7 @@ def _fill_satisfiable_requirements_for_additionals(
     if requirements_excluding_leaving_by_node:
         output.satisfiable_requirements_for_additionals.update(
             build_satisfiable_requirements(
-                logic,
+                world_specific_logic,
                 requirements_excluding_leaving_by_node,
             )
         )
@@ -396,12 +398,12 @@ def _fill_satisfiable_requirements_for_additionals(
 @cython.locals(node_index=cython.int)
 @cython.ccall
 def build_satisfiable_requirements(
-    logic: Logic,
+    world_specific_logic: WorldSpecificLogic,
     requirements_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]],
 ) -> list[GraphRequirementList]:
     data: list[GraphRequirementList] = []
 
-    additional_requirements_list: list[GraphRequirementSet] = logic.additional_requirements
+    additional_requirements_list: list[GraphRequirementSet] = world_specific_logic.additional_requirements
     trivial_set: GraphRequirementSet = GraphRequirementSet.trivial()
 
     for node_index, reqs in requirements_by_node.items():
