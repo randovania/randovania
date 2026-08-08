@@ -20,6 +20,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
 
+### Metroid Fusion
+
+#### Logic Database
+
+##### Sector 1 (SRX)
+
+- Changed: Lava Lake: Updated damage run logic, vidoes and shinespark trick.
+
 ## [10.10.0] - 2026-08-02
 
 - **Major** - Added: Multiworld worlds can now be abandoned; abandoning a world is irreversible. An abandoned world can be played automatically by your own Randovania instance like a bot, via a dedicated game connection: it collects one location that is in logic for it every few seconds, and keeps doing so as it receives more items from other players.
