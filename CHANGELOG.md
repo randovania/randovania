@@ -20,6 +20,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
 
+### Metroid Prime
+
+- Fixed: Less vulnerable to "Alloc Failed" and frame-perfect cutscene skip crashes.
+- Fixed: In some minimal inventory starts, players could use Power Beam and Scan Visor out of logic and experience other unintuitive behavior.
+- Fixed: Gravity Suit HD model looking more blue/purple than the low-poly counterpart when color customized.
+- Fixed: Power Suit and Varia Suit color customization both affecting shared chest-piece texture.
+- Fixed: Warp-to-start tutorial text not visible on non-English languages.
+- Fixed: Transport to Magmoor Caverns North: Longer load time when approached from Sun Tower Access.
+- Fixed: Research Lab Hydra: Battle music behaving differently than vanilla.
+- Fixed: Ruined Shrine: Large beetle does not aggro player until cutscene duration elapses regardless the cutscene was skipped.
+- Fixed: Life Grove: Boostless spinner manipulation trick not working if the pillar rise cutscene is skipped.
+- Fixed: Sunchamber: In specific circumstances, tentacles retracted while Flaahgra was not fainted.
+- Elite Research: Softlock prevention was inconsistent across game versions. Prevention no longer locks the player in the room until they collect the item.
+- Added: Players can temporarily unequip Gravity Suit using in-game options.
+- Added: Replaced vanilla's inventory-based completion percent calculation with an algorithm based on location count. Completion percent now always reflects the progress towards collection of all non-nothing pickups in the player's world.
+- Added: The color of Samus' Gunship can now be customized.
+- Added: Rainbow Ball cosmetic option.
+- Changed: Organized cosmetic options into collapsible sections, suit customization now features preview images and Fusion Suit color preferences are now saved independently from non-Fusion.
+- Changed: Morph Ball now always renders the "inner glow" color appropriate for the current highest suit instead of the vanilla behavior which renders the "wrong" color when Spider, Gravity or Phazon are collected out of the vanilla-intended order.
+- Changed: It is now impossible for players to load save slots which belong to another rdvgame or multiworld slot.
+- Changed: In-game hint option is now hidden.
+- Changed: Save Station Mines A: Automatically unlock gate if "Unlock Save Station Doors" option is enabled or any time the player spawns into the room (starting room, one-way anywhere elevator).
+- Changed: Hive Totem: Removed door lock present on NTSC 0-02+.
+- Changed: Research Lab Aether: Unlock door when the Metroid dies in addition to the breakable wall.
+- Changed: Sunchamber: Doors no longer instantly lock upon entering.
+- Changed: Fiery Shores, Monitor Station, Sunchamber Access, Sun Tower Access: Restored crate destruction debris.
+
+#### Logic Database
+
+- Changed: Games which start without Combat, Thermal and X-Ray Visor now require one of the three to target enemies or combat dash. All fight logic adjusted to require one Combat trick level higher when enemies are not able to be targeted.
+- Changed: The use of the arm cannon is no longer dependent on acquiring Combat, Thermal or X-Ray Visor.
+
+##### Magmoor Caverns
+
+- Fixed: Monitor Station: Heat run logic assumed Charge Beam and Missiles could be fired without the Arm Cannon.
+
+##### Phazon Mines
+
+- Changed: Save Station Mines A: Now a valid target for Starting Room and Shuffled Elevator destination. No longer requires Scan Visor when "Unlock Save Station Doors" option is enabled.
+
 ## [10.10.0] - 2026-08-02
 
 - **Major** - Added: Multiworld worlds can now be abandoned; abandoning a world is irreversible. An abandoned world can be played automatically by your own Randovania instance like a bot, via a dedicated game connection: it collects one location that is in logic for it every few seconds, and keeps doing so as it receives more items from other players.
