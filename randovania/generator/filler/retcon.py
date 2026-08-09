@@ -367,12 +367,15 @@ def retcon_playthrough_filler(
             current_player.reach.act_on(new_resource)
 
         if new_pickups:
-            # Group all the like pickups
-            nested = [list(group) for _, group in groupby(new_pickups)]
+            # Group all the like pickups based on if they can be placed in bulk
+            nested = [
+                list(group)
+                for _, group in groupby(new_pickups, key=lambda pickup: pickup.generator_params.bulk_placement)
+            ]
             # Shuffle them so we dont always pick the same progression first
             rng.shuffle(nested)
-            # Check if we can place in batch, else only use one element
-            if nested[0][0].generator_params.batch_placement:
+            # Check if we can place in bulk, else only use one element
+            if nested[0][0].generator_params.bulk_placement:
                 new_pickups = nested[0]
             else:
                 new_pickups = [nested[0][0]]
