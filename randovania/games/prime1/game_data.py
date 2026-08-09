@@ -155,8 +155,8 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "- Every room after Twin Fires Tunnel\n",
         ),
         (
-            "I picked up Gravity Suit too early and it is inhibiting my ability to perform gravityless "
-            "slope jumps. How do I proceed?",
+            "I picked up Gravity Suit too early and it is inhibiting my ability to perform Gravityless "
+            "Underwater Movement tricks. How do I proceed?",
             "You can temporarily unequip Gravity Suit by performing the following:\n\n"
             "\n\n```\nStart Menu --> Options --> Visor / Suit --> Gravity Suit --> Off\n```",
         ),
