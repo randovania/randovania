@@ -805,6 +805,10 @@
                 "long_name": "Entrance Rando",
                 "extra": {}
             },
+            "blue_save_doors": {
+                "long_name": "Unlock Save Station Doors",
+                "extra": {}
+            },
             "remove_bars_great_tree_hall": {
                 "long_name": "Remove Bars in Great Tree Hall",
                 "extra": {}
@@ -815,101 +819,8 @@
             }
         },
         "requirement_template": {
-            "Shoot Super Missile": {
-                "display_name": "Shoot Super Missile",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Missile",
-                                    "amount": 5,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Charge",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Supers",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "Shoot Power Beam"
-                            }
-                        ]
-                    }
-                }
-            },
-            "Have all Beams": {
-                "display_name": "Have all Beams",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Power",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Wave",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Ice",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Plasma",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
-                            }
-                        ]
-                    }
-                }
-            },
-            "Heat-Resisting Suit": {
-                "display_name": "Heat-Resisting Suit",
+            "Have Heat-Resisting Suit": {
+                "display_name": "Have Heat-Resisting Suit",
                 "requirement": {
                     "type": "or",
                     "data": {
@@ -971,8 +882,8 @@
                     }
                 }
             },
-            "Can Use Arm Cannon": {
-                "display_name": "Can Use Arm Cannon",
+            "Can Target Enemy": {
+                "display_name": "Can Target Enemy",
                 "requirement": {
                     "type": "or",
                     "data": {
@@ -1009,67 +920,374 @@
                     }
                 }
             },
-            "Shoot Any Beam": {
-                "display_name": "Shoot Any Beam",
+            "Have Any Visor": {
+                "display_name": "Have Any Visor",
                 "requirement": {
-                    "type": "and",
+                    "type": "or",
                     "data": {
                         "comment": null,
                         "items": [
                             {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Combat",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             },
                             {
-                                "type": "or",
+                                "type": "resource",
                                 "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Power",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Wave",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Ice",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Plasma",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "items",
+                                    "name": "Scan",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Thermal",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "X-Ray",
+                                    "amount": 1,
+                                    "negate": false
                                 }
                             }
                         ]
                     }
                 }
             },
-            "Shoot Power Beam": {
-                "display_name": "Shoot Power Beam",
+            "Fight (Trivial)": {
+                "display_name": "Fight (Trivial)",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "Use for encounters which require killing an enemy and is trivial with Combat, X-Ray or Thermal Visor equipped",
+                        "items": [
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Can Target Enemy"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Shoot Any Beam"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Fight (Beginner)": {
+                "display_name": "Fight (Beginner)",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "Use for encounters which require killing an enemy in a way that requires Combat (Beginner) competency with Combat, X-Ray or Thermal Visor equipped",
+                        "items": [
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "Combat",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Can Target Enemy"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Shoot Any Beam"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Fight (Intermediate)": {
+                "display_name": "Fight (Intermediate)",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "Use for encounters which require killing an enemy in a way that requires Combat (Intermediate) competency with Combat, X-Ray or Thermal Visor equipped",
+                        "items": [
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "Combat",
+                                                            "amount": 2,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Can Target Enemy"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Shoot Any Beam"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Fight (Advanced)": {
+                "display_name": "Fight (Advanced)",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "Use for encounters which require killing an enemy in a way that requires Combat (Advanced) competency with Combat, X-Ray or Thermal Visor equipped",
+                        "items": [
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "Combat",
+                                                            "amount": 3,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Can Target Enemy"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Shoot Any Beam"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Fight (Expert)": {
+                "display_name": "Fight (Expert)",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "Use for encounters which require killing an enemy in a way that requires Combat (Expert) competency with Combat, X-Ray or Thermal Visor equipped",
+                        "items": [
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "Combat",
+                                                            "amount": 4,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Can Target Enemy"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Shoot Any Beam"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Fight (Ludicrous)": {
+                "display_name": "Fight (Ludicrous)",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "Use for encounters which require killing an enemy, regardless of how difficult",
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Shoot Any Beam"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "tricks",
+                                    "name": "Combat",
+                                    "amount": 5,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Shoot Any Beam": {
+                "display_name": "Shoot Any Beam",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Wave",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Ice",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Plasma",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Shoot All Beams": {
+                "display_name": "Shoot All Beams",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -1085,21 +1303,6 @@
                                 }
                             },
                             {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
-                            }
-                        ]
-                    }
-                }
-            },
-            "Shoot Wave Beam": {
-                "display_name": "Shoot Wave Beam",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
@@ -1108,21 +1311,6 @@
                                     "negate": false
                                 }
                             },
-                            {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
-                            }
-                        ]
-                    }
-                }
-            },
-            "Shoot Ice Beam": {
-                "display_name": "Shoot Ice Beam",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
                             {
                                 "type": "resource",
                                 "data": {
@@ -1133,21 +1321,6 @@
                                 }
                             },
                             {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
-                            }
-                        ]
-                    }
-                }
-            },
-            "Shoot Plasma Beam": {
-                "display_name": "Shoot Plasma Beam",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
@@ -1155,17 +1328,37 @@
                                     "amount": 1,
                                     "negate": false
                                 }
-                            },
-                            {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
                             }
                         ]
                     }
                 }
             },
-            "Use Grapple Beam": {
-                "display_name": "Use Grapple Beam",
+            "Shoot Missile": {
+                "display_name": "Shoot Missile",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Shoot Any Beam"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missile",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Shoot Super Missile": {
+                "display_name": "Shoot Super Missile",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -1175,14 +1368,37 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "Grapple",
+                                    "name": "Missile",
+                                    "amount": 5,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Charge",
                                     "amount": 1,
                                     "negate": false
                                 }
                             },
                             {
-                                "type": "template",
-                                "data": "Can Use Arm Cannon"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Supers",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         ]
                     }
@@ -1218,15 +1434,6 @@
                                             "data": {
                                                 "type": "items",
                                                 "name": "Bombs",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Scan",
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -1299,8 +1506,13 @@
                                 }
                             },
                             {
-                                "type": "template",
-                                "data": "Shoot Wave Beam"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Wave",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         ]
                     }
@@ -1327,35 +1539,6 @@
                                 "data": {
                                     "type": "items",
                                     "name": "Boost",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "Can Use Spider Ball": {
-                "display_name": "Can Use Spider Ball",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "MorphBall",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Spider",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -1422,6 +1605,35 @@
                     }
                 }
             },
+            "Can Use Spider Ball": {
+                "display_name": "Can Use Spider Ball",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Spider",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
             "Kill Elite Pirate": {
                 "display_name": "Kill Elite Pirate",
                 "requirement": {
@@ -1429,10 +1641,6 @@
                     "data": {
                         "comment": "Used for killing Elite Pirates. Note that the Phazon Elite in Elite Research does not use this template.",
                         "items": [
-                            {
-                                "type": "template",
-                                "data": "Shoot Any Beam"
-                            },
                             {
                                 "type": "or",
                                 "data": {
@@ -1449,13 +1657,8 @@
                                                             "comment": "Beam only",
                                                             "items": [
                                                                 {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "Combat",
-                                                                        "amount": 2,
-                                                                        "negate": false
-                                                                    }
+                                                                    "type": "template",
+                                                                    "data": "Fight (Intermediate)"
                                                                 }
                                                             ]
                                                         }
@@ -1466,13 +1669,8 @@
                                                             "comment": "Missile-spam strat",
                                                             "items": [
                                                                 {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "Combat",
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
+                                                                    "type": "template",
+                                                                    "data": "Fight (Beginner)"
                                                                 },
                                                                 {
                                                                     "type": "or",
@@ -1551,12 +1749,24 @@
                                                             "comment": "Damage requirements",
                                                             "items": [
                                                                 {
-                                                                    "type": "resource",
+                                                                    "type": "and",
                                                                     "data": {
-                                                                        "type": "damage",
-                                                                        "name": "Damage",
-                                                                        "amount": 200,
-                                                                        "negate": false
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "damage",
+                                                                                    "name": "Damage",
+                                                                                    "amount": 200,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Fight (Trivial)"
+                                                                            }
+                                                                        ]
                                                                     }
                                                                 },
                                                                 {
@@ -1565,13 +1775,8 @@
                                                                         "comment": null,
                                                                         "items": [
                                                                             {
-                                                                                "type": "resource",
-                                                                                "data": {
-                                                                                    "type": "tricks",
-                                                                                    "name": "Combat",
-                                                                                    "amount": 1,
-                                                                                    "negate": false
-                                                                                }
+                                                                                "type": "template",
+                                                                                "data": "Fight (Beginner)"
                                                                             },
                                                                             {
                                                                                 "type": "resource",
@@ -1603,8 +1808,13 @@
                                                                     }
                                                                 },
                                                                 {
-                                                                    "type": "template",
-                                                                    "data": "Shoot Plasma Beam"
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Plasma",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
                                                                 }
                                                             ]
                                                         }
@@ -1624,13 +1834,8 @@
                                                                     }
                                                                 },
                                                                 {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "Combat",
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
+                                                                    "type": "template",
+                                                                    "data": "Fight (Beginner)"
                                                                 }
                                                             ]
                                                         }
@@ -1645,53 +1850,6 @@
                     }
                 }
             },
-            "Has Any Visor": {
-                "display_name": "Has Any Visor",
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Combat",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Scan",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Thermal",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "X-Ray",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
             "Kill Chozo Ghosts": {
                 "display_name": "Kill Multiple Chozo Ghosts",
                 "requirement": {
@@ -1700,8 +1858,13 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "template",
-                                "data": "Shoot Power Beam"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             },
                             {
                                 "type": "or",
@@ -1709,13 +1872,8 @@
                                     "comment": null,
                                     "items": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "Combat",
-                                                "amount": 2,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Fight (Intermediate)"
                                         },
                                         {
                                             "type": "and",
@@ -1773,6 +1931,10 @@
                                                                 }
                                                             ]
                                                         }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Fight (Trivial)"
                                                     }
                                                 ]
                                             }
@@ -1792,8 +1954,13 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "template",
-                                "data": "Shoot Power Beam"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             },
                             {
                                 "type": "or",
@@ -1801,13 +1968,8 @@
                                     "comment": null,
                                     "items": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "Combat",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Fight (Beginner)"
                                         },
                                         {
                                             "type": "and",
@@ -1831,6 +1993,10 @@
                                                             "amount": 15,
                                                             "negate": false
                                                         }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Fight (Trivial)"
                                                     }
                                                 ]
                                             }
@@ -1984,20 +2150,12 @@
         "description": "Items checked for: Morph Ball, Morph Ball Bomb, Wave Beam, Ice Beam, Phazon Suit, Artifacts."
     },
     "victory_condition": {
-        "type": "or",
+        "type": "resource",
         "data": {
-            "comment": null,
-            "items": [
-                {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "Event43",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            ]
+            "type": "events",
+            "name": "Event43",
+            "amount": 1,
+            "negate": false
         }
     },
     "dock_type_database": {
@@ -2033,8 +2191,13 @@
                             "shieldType": "Ice Beam"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Ice Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": null,
                         "unsafe_target_in_distributor_wtw": false
@@ -2044,8 +2207,13 @@
                             "shieldType": "Wave Beam"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Wave Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": null,
                         "unsafe_target_in_distributor_wtw": false
@@ -2055,8 +2223,13 @@
                             "shieldType": "Plasma Beam"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Plasma Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Plasma",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": null,
                         "unsafe_target_in_distributor_wtw": false
@@ -2066,8 +2239,13 @@
                             "shieldType": "Power Beam Only"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Power Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Power",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": null,
                         "unsafe_target_in_distributor_wtw": false
@@ -2084,25 +2262,8 @@
                         "lock": {
                             "lock_type": "front-blast-back-blast",
                             "requirement": {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missile",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Shoot Any Beam"
-                                        }
-                                    ]
-                                }
+                                "type": "template",
+                                "data": "Shoot Missile"
                             }
                         },
                         "unsafe_target_in_distributor_wtw": false
@@ -2123,25 +2284,8 @@
                         "lock": {
                             "lock_type": "front-blast-back-free-unlock",
                             "requirement": {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missile",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Shoot Any Beam"
-                                        }
-                                    ]
-                                }
+                                "type": "template",
+                                "data": "Shoot Missile"
                             }
                         },
                         "unsafe_target_in_distributor_wtw": false
@@ -2245,8 +2389,13 @@
                             "blastShieldType": "Wavebuster"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Wave Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": {
                             "lock_type": "front-blast-back-free-unlock",
@@ -2283,8 +2432,13 @@
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Wave Beam"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Wave",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -2298,8 +2452,13 @@
                             "blastShieldType": "Ice Spreader"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Ice Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": {
                             "lock_type": "front-blast-back-free-unlock",
@@ -2336,8 +2495,13 @@
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Ice Beam"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Ice",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -2351,8 +2515,13 @@
                             "blastShieldType": "Flamethrower"
                         },
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Plasma Beam"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Plasma",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "lock": {
                             "lock_type": "front-blast-back-free-unlock",
@@ -2389,8 +2558,13 @@
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Plasma Beam"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Plasma",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -2518,20 +2692,12 @@
                     "Morph Ball Door": {
                         "extra": {},
                         "requirement": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "lock": null,
@@ -2605,20 +2771,12 @@
                     "Frigate Ship Teleporter": {
                         "extra": {},
                         "requirement": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event33",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "Event33",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "lock": null,
@@ -2627,20 +2785,12 @@
                     "Artifact Temple Teleporter": {
                         "extra": {},
                         "requirement": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event2",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "Event2",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "lock": null,
