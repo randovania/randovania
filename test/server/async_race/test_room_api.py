@@ -869,7 +869,8 @@ async def test_livesplit_socket(test_client, simple_room, can_pause: bool, caplo
         entry = AsyncRaceEntry.entry_for(simple_room, User.get_by_id(1235))
         assert entry.user_status() == AsyncRaceRoomUserStatus.FINISHED
 
-    assert caplog.messages == [
+    server_logger = test_client.sa.logger.name
+    assert [record.getMessage() for record in caplog.records if record.name == server_logger] == [
         "Invalid transition to AsyncRaceRoomUserStatus.FINISHED received from livesplit:"
         " Invalid Action: Unsupported state transition",
         "Received invalid json from livesplit: Expecting value: line 1 column 1 (char 0) bad data",
