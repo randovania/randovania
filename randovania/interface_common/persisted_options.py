@@ -230,8 +230,8 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # dread: show_dna_in_hud/enable_debug_logging
     _only_new_fields,  # msr: option to use fusion models and reveal map
     _only_new_fields,  # enabled field for builders
-    _prime1_fusion_suit_color_rotations,  # prime1: suit colors are now remembered per Fusion Suit state
     _only_new_fields,  # split trackers into structure+theme
+    _prime1_fusion_suit_color_rotations,  # prime1: suit colors are now remembered per Fusion Suit state
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 
