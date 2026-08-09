@@ -43,6 +43,7 @@ if TYPE_CHECKING:
     import pytest_mock
 
     from randovania.lib.json_lib import JsonType_RO
+    from randovania.network_common.configuration import NetworkConfiguration
 
 
 @pytest.fixture
@@ -56,6 +57,21 @@ def client(tmp_path, mocker: pytest_mock.MockerFixture):
         },
     )
     return client
+
+
+@pytest.fixture
+async def make_client():
+    clients: list[NetworkClient] = []
+
+    def create(user_data_dir: Path, configuration: NetworkConfiguration) -> NetworkClient:
+        client = NetworkClient(user_data_dir, configuration)
+        clients.append(client)
+        return client
+
+    yield create
+
+    for client in clients:
+        await client.http.close()
 
 
 async def test_shutdown(tmp_path):
@@ -97,8 +113,8 @@ class MockResponse:
         return self
 
 
-async def test_on_connect_no_restore(tmp_path):
-    client = NetworkClient(
+async def test_on_connect_no_restore(tmp_path, make_client):
+    client = make_client(
         tmp_path,
         {
             "server_address": "http://localhost:5000",
@@ -114,8 +130,8 @@ async def test_on_connect_no_restore(tmp_path):
 
 
 @pytest.mark.parametrize("valid_session", [False, True])
-async def test_on_connect_restore(tmpdir, valid_session: bool):
-    client = NetworkClient(
+async def test_on_connect_restore(tmpdir, valid_session: bool, make_client):
+    client = make_client(
         Path(tmpdir),
         {
             "server_address": "http://localhost:5000",
@@ -172,9 +188,9 @@ async def test_on_connect_restore_timeout(client: NetworkClient):
     client.disconnect_from_server.assert_awaited_once_with()
 
 
-async def test_connect_to_server(tmp_path):
+async def test_connect_to_server(tmp_path, make_client):
     # Setup
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
+    client = make_client(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     async def connect(*args, **kwargs):
         assert client._waiting_for_on_connect is not None
@@ -193,9 +209,9 @@ async def test_connect_to_server(tmp_path):
     )
 
 
-async def test_connect_to_server_cancel(tmp_path):
+async def test_connect_to_server_cancel(tmp_path, make_client):
     # Setup
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
+    client = make_client(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     client.sio.disconnect = AsyncMock()
     client._internal_connect_to_server = AsyncMock(side_effect=asyncio.CancelledError())
@@ -207,9 +223,9 @@ async def test_connect_to_server_cancel(tmp_path):
     client.sio.disconnect.assert_awaited_once_with()
 
 
-async def test_internal_connect_to_server_failure(tmp_path):
+async def test_internal_connect_to_server_failure(tmp_path, make_client):
     # Setup
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
+    client = make_client(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     async def connect(*args, **kwargs):
         raise (aiohttp.client_exceptions.ContentTypeError(MagicMock(), (), message="thing"))
