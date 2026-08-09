@@ -1293,6 +1293,7 @@ def _migrate_v119(preset: dict, game: RandovaniaGame, *, from_layout_description
     if game == RandovaniaGame.METROID_PRIME:
         preset["configuration"].pop("allow_underwater_movement_without_gravity")
 
+
 def _migrate_v120(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
     preset["configuration"].pop("staggered_multi_pickup_placement")
 
