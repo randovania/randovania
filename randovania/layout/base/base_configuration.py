@@ -61,7 +61,6 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     first_progression_must_be_local: bool
     dock_weakness_distributor: DockWeaknessDistributorConfiguration
     single_set_for_pickups_that_solve: bool
-    staggered_multi_pickup_placement: bool
     check_if_beatable_after_base_patches: bool
     logical_pickup_placement: LogicalPickupPlacementConfiguration
     hints: HintConfiguration
