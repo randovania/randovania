@@ -174,6 +174,12 @@ def _msr_citra_to_azahar(options: dict) -> None:
         game_samus_returns["output_preference"] = json.dumps(as_dict, separators=(",", ":"))
 
 
+def _prime1_fusion_suit_color_rotations(options: dict) -> None:
+    cosmetic_patches = options.get("game_prime1", {}).get("cosmetic_patches", {})
+    if cosmetic_patches.get("force_fusion") and "suit_color_rotations" in cosmetic_patches:
+        cosmetic_patches["fusion_suit_color_rotations"] = cosmetic_patches["suit_color_rotations"]
+
+
 def _split_tracker_theme(options: dict) -> None:
     pass
 
@@ -225,6 +231,7 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # msr: option to use fusion models and reveal map
     _only_new_fields,  # enabled field for builders
     _only_new_fields,  # split trackers into structure+theme
+    _prime1_fusion_suit_color_rotations,  # prime1: suit colors are now remembered per Fusion Suit state
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 
