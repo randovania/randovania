@@ -60,6 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Phazon Mines
 
 - Changed: Save Station Mines A: Now a valid target for Starting Room and Shuffled Elevator destination. No longer requires Scan Visor when "Unlock Save Station Doors" option is enabled.
+- Changed: The event to unlock the doors in Mines Security Station can now be logically visited multiple times, making it possible for it to be considered a safe action.
 
 ## [10.10.0] - 2026-08-02
 
