@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
 
+### Metroid Fusion
+
+#### Logic Database
+
+##### Sector 1 (SRX)
+
+- Changed: Lava Lake: Updated damage run logic and videos.
+
 ### Metroid: Samus Returns
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
