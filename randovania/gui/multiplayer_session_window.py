@@ -19,7 +19,6 @@ from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessio
 from randovania.gui.item_tracker.auto_tracker_window import load_trackers_configuration
 from randovania.gui.item_tracker.item_tracker_popup_window import ItemTrackerPopupWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader
-from randovania.gui.lib.async_dialog import StandardButton
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
@@ -172,7 +171,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     _last_actions: MultiplayerSessionActions
     _pending_actions: MultiplayerSessionActions | None = None
     has_closed = False
-    _close_confirmed = False
     _logic_settings_window: CustomizePresetDialog | None = None
     _generating_game: bool = False
     _already_kicked = False
@@ -337,35 +335,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         return window
 
-    def _prompt_confirm_close(self) -> None:
-        box = QtWidgets.QMessageBox(
-            QtWidgets.QMessageBox.Icon.Warning,
-            "Confirm close window",
-            "Are you sure you want to close this window?\nClosing this window will abort current tasks.",
-            StandardButton.Yes | StandardButton.No,
-            self,
-        )
-        box.setDefaultButton(StandardButton.No)
-        box.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
-        box.setAttribute(QtCore.Qt.WidgetAttribute.WA_DeleteOnClose)
-        common_qt_lib.set_default_window_icon(box)
-
-        def _on_finished(result: int) -> None:
-            if result == StandardButton.Yes:
-                self._close_confirmed = True
-                self.close()
-
-        box.finished.connect(_on_finished)
-        box.open()
-
     @override
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
-        if self.has_background_process and not self._close_confirmed:
-            event.ignore()
-            self._prompt_confirm_close()
-            return
-        self.stop_background_process()
-        self._on_close_event(event)
+        if self.background_task_on_close_event(self, event):
+            self._on_close_event(event)
 
     def _on_close_event(self, event: QtGui.QCloseEvent) -> None:
         is_kicked = hasattr(self, "_session") and self.current_user_id not in self._session.users

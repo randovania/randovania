@@ -24,7 +24,6 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.game_description import GameDescription
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, theme
-from randovania.gui.lib.async_dialog import StandardButton
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import update_checker
@@ -327,23 +326,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         self.main_tab_widget.setCurrentIndex(0)
 
+    @typing.override
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
-        if self.has_background_process:
-            event.ignore()
-            dialog = QtWidgets.QMessageBox(
-                QtWidgets.QMessageBox.Icon.Warning,
-                "Confirm close window",
-                "Are you sure you want to close this window?\nClosing this window will abort current tasks.",
-                (StandardButton.Yes | StandardButton.No),
-            )
-            dialog.setDefaultButton(StandardButton.No)
-            dialog.setWindowIcon(QtGui.QIcon(os.fspath(randovania.get_icon_path())))
-            result = dialog.exec()
-            if result != StandardButton.Yes:
-                return
-            event.accept()
-        self.stop_background_process()
-        super().closeEvent(event)
+        if self.background_task_on_close_event(self, event):
+            super().closeEvent(event)
 
     def dragEnterEvent(self, event: QtGui.QDragEnterEvent) -> None:
         valid_extensions = [
