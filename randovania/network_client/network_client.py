@@ -160,6 +160,7 @@ class NetworkClient:
     _num_emit_failures: int = 0
     _sessions_interested_in: set[int]
     _tracking_worlds: set[tuple[uuid.UUID, int]]
+    _background_tasks: set[asyncio.Task]
     _allow_reporting_username: bool = False
 
     def __init__(self, user_data_dir: Path, configuration: NetworkConfiguration):
@@ -189,6 +190,7 @@ class NetworkClient:
         self._current_timeout = _MINIMUM_TIMEOUT
         self._sessions_interested_in = set()
         self._tracking_worlds = set()
+        self._background_tasks = set()
 
         self.configuration = configuration
         encoded_address = _hash_address(self.configuration["server_address"])
@@ -728,6 +730,27 @@ class NetworkClient:
     async def join_multiplayer_session(self, session_id: int, password: str | None) -> MultiplayerSessionEntry:
         result = await server_signals.Multiplayer.JoinSession.call_server(self)(session_id, password)
         return self._with_new_session(result)
+
+    def _run_in_background(self, coro: typing.Coroutine[Any, Any, Any], description: str) -> None:
+        """Schedules a coroutine to run without awaiting it, logging any error it raises."""
+
+        async def wrapper() -> None:
+            try:
+                await coro
+            except Exception:
+                self.logger.exception("Error while running background task: %s", description)
+
+        task = asyncio.ensure_future(wrapper())
+        self._background_tasks.add(task)
+        task.add_done_callback(self._background_tasks.discard)
+
+    def remove_interest_in_session(self, session_id: int) -> None:
+        self._sessions_interested_in.discard(session_id)
+        if not self.connection_state.is_disconnected:
+            self._run_in_background(
+                server_signals.Multiplayer.ListenToSession.call_server(self)(session_id, False),
+                f"stop listening to session {session_id}",
+            )
 
     async def listen_to_session(self, session_id: int, listen: bool) -> None:
         await server_signals.Multiplayer.ListenToSession.call_server(self)(session_id, listen)

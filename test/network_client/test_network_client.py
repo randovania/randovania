@@ -286,6 +286,32 @@ async def test_listen_to_session(client: NetworkClient, listen, was_listening):
         assert client._sessions_interested_in == set()
 
 
+@pytest.mark.parametrize("connected", [False, True])
+@pytest.mark.parametrize("was_listening", [False, True])
+async def test_remove_interest_in_session(client: NetworkClient, was_listening, connected):
+    client.server_call = AsyncMock()
+    client._connection_state = ConnectionState.Connected if connected else ConnectionState.Disconnected
+    if was_listening:
+        client._sessions_interested_in.add(1234)
+
+    # Run
+    client.remove_interest_in_session(1234)
+
+    # Let any scheduled background task run to completion.
+    for task in list(client._background_tasks):
+        await task
+
+    # Assert
+    assert client._sessions_interested_in == set()
+    assert client._background_tasks == set()
+    if connected:
+        client.server_call.assert_awaited_once_with(
+            "multiplayer_listen_to_session", (1234, False), namespace=None, handle_invalid_session=True
+        )
+    else:
+        client.server_call.assert_not_awaited()
+
+
 @pytest.mark.parametrize("was_listening", [False, True])
 @pytest.mark.parametrize("listen", [False, True])
 async def test_world_track_inventory(client: NetworkClient, listen, was_listening):
