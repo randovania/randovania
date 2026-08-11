@@ -172,6 +172,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     _last_actions: MultiplayerSessionActions
     _pending_actions: MultiplayerSessionActions | None = None
     has_closed = False
+    _close_confirmed = False
     _logic_settings_window: CustomizePresetDialog | None = None
     _generating_game: bool = False
     _already_kicked = False
@@ -336,20 +337,33 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         return window
 
+    def _prompt_confirm_close(self) -> None:
+        box = QtWidgets.QMessageBox(
+            QtWidgets.QMessageBox.Icon.Warning,
+            "Confirm close window",
+            "Are you sure you want to close this window?\nClosing this window will abort current tasks.",
+            StandardButton.Yes | StandardButton.No,
+            self,
+        )
+        box.setDefaultButton(StandardButton.No)
+        box.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
+        box.setAttribute(QtCore.Qt.WidgetAttribute.WA_DeleteOnClose)
+        common_qt_lib.set_default_window_icon(box)
+
+        def _on_finished(result: int) -> None:
+            if result == StandardButton.Yes:
+                self._close_confirmed = True
+                self.close()
+
+        box.finished.connect(_on_finished)
+        box.open()
+
     @asyncClose
     async def closeEvent(self, event: QtGui.QCloseEvent) -> None:
-        if self.has_background_process:
+        if self.has_background_process and not self._close_confirmed:
             event.ignore()
-            result = await async_dialog.warning(
-                self,
-                "Confirm close window",
-                "Are you sure you want to close this window?\nClosing this window will abort current tasks.",
-                buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
-                default_button=async_dialog.StandardButton.No,
-            )
-            if result != StandardButton.Yes:
-                return
-            event.accept()
+            self._prompt_confirm_close()
+            return
         self.stop_background_process()
         return await self._on_close_event(event)
 
