@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Improved average location distribution of "inert" pickups such as Prime Artifacts and Echoes STKs.
 - Changed: Updated the Nintendont version that is used when uploading it directly to the Wii. It will now reconnect to the network once it has lost a connection.
 - Changed: The Nintendont connector will not try to connect to the Homebrew Channel anymore for giving better feedback.
--
+- Fixed: Certain interactions with the server will no longer permanently fails in certain cases.
+
 ### Metroid Dread
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
