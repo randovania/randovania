@@ -15,6 +15,7 @@ from PySide6 import QtCore, QtWidgets
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
 from randovania.gui.lib import model_lib
+from randovania.gui.lib.async_dialog import StandardButton
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.gui.multiworld_client import MultiworldClient
@@ -1048,6 +1049,67 @@ async def test_on_close_event(window: MultiplayerSessionWindow, mocker, is_membe
         window.network_client.remove_interest_in_session.assert_called_once_with(1234)
     else:
         window.network_client.remove_interest_in_session.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    ("has_background_process", "close_confirmed"),
+    [
+        (False, False),
+        (True, False),
+        (True, True),
+    ],
+)
+async def test_close_event(
+    window: MultiplayerSessionWindow,
+    mocker: pytest_mock.MockerFixture,
+    has_background_process: bool,
+    close_confirmed: bool,
+):
+    # Setup
+    mock_on_close_event = mocker.patch.object(window, "_on_close_event")
+    mock_prompt = mocker.patch.object(window, "_prompt_confirm_close")
+    mock_stop = mocker.patch.object(window, "stop_background_process")
+    window._background_thread = MagicMock() if has_background_process else None
+    window._close_confirmed = close_confirmed
+    event = MagicMock()
+
+    # Run
+    window.closeEvent(event)
+
+    # Assert
+    if has_background_process and not close_confirmed:
+        event.ignore.assert_called_once_with()
+        mock_prompt.assert_called_once_with()
+        mock_stop.assert_not_called()
+        mock_on_close_event.assert_not_called()
+    else:
+        event.ignore.assert_not_called()
+        mock_prompt.assert_not_called()
+        mock_stop.assert_called_once_with()
+        mock_on_close_event.assert_called_once_with(event)
+
+
+@pytest.mark.parametrize("confirm", [False, True])
+async def test_prompt_confirm_close(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture, confirm: bool):
+    # Setup
+    mock_close = mocker.patch.object(window, "close")
+    mock_open = mocker.patch.object(QtWidgets.QMessageBox, "open")
+
+    # Run
+    window._prompt_confirm_close()
+
+    box = window.findChild(QtWidgets.QMessageBox)
+    assert box is not None
+    mock_open.assert_called_once_with()
+    assert box.standardButton(box.defaultButton()) == StandardButton.No
+    box.done(StandardButton.Yes if confirm else StandardButton.No)
+
+    # Assert
+    assert window._close_confirmed == confirm
+    if confirm:
+        mock_close.assert_called_once_with()
+    else:
+        mock_close.assert_not_called()
 
 
 async def test_update_session_audit_log(window: MultiplayerSessionWindow):
