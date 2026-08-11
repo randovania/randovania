@@ -10,6 +10,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
+from randovania.games.prime1.exporter.scan_tips import SCAN_TIP_INTRO, SCAN_TIPS
 from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
 from randovania.games.prime1.layout.prime_configuration import (
     LayoutCutsceneMode,
@@ -1100,6 +1101,23 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         else:
             spring_ball_item = "Spring Ball"
 
+        # build randomizer-specific tutorial scans
+        if not self.configuration.legacy_mode:
+            for world_name, world_tips in SCAN_TIPS.items():
+                rooms = level_data[world_name]["rooms"]
+
+                for room_name, room_tips in world_tips.items():
+                    edit_objs = rooms[room_name].setdefault("editObjs", {})
+
+                    for tip in room_tips:
+                        obj = edit_objs.setdefault(str(tip.obj_id), {})
+                        obj["scannableParameters"] = {
+                            "intro": SCAN_TIP_INTRO,
+                            "title": tip.title,
+                            "body": tip.body,
+                            "critical": True,
+                            "logbookCategory": tip.logbook_category,
+                        }
         data: dict = {
             "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
             "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
