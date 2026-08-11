@@ -318,20 +318,19 @@ async def qt_main(app: QtWidgets.QApplication, args: argparse.Namespace) -> None
     app.multiworld_client = MultiworldClient(app.network_client, app.game_connection, app.world_database)
     await app.multiworld_client.start()
 
-    logging.info("Configuring qasync...")
-    import qasync
+    async def _on_about_to_quit_async() -> None:
+        logger.info("about to quit")
+        await app.network_client.shutdown()
+        await app.game_connection.stop()
+        logger.info("Finished!")
 
-    @qasync.asyncClose
-    async def _on_last_window_closed() -> None:
-        if app.quitOnLastWindowClosed():
-            await app.network_client.shutdown()
-            await app.game_connection.stop()
-            logger.info("Last QT window closed")
-        else:
-            logger.warning("Last Qt window closed, but currently not doing anything")
+    def _on_about_to_quit_sync() -> None:
+        f = asyncio.ensure_future(_on_about_to_quit_async())
+        while not f.done():
+            app.processEvents()
 
     app.setQuitOnLastWindowClosed(True)
-    app.lastWindowClosed.connect(_on_last_window_closed, QtCore.Qt.ConnectionType.QueuedConnection)
+    app.aboutToQuit.connect(_on_about_to_quit_sync)
 
     await asyncio.gather(app.game_connection.start(), display_window_for(app, options, args.command, args))
 
