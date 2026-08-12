@@ -62,6 +62,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Save Station Mines A: Now a valid target for Starting Room and Shuffled Elevator destination. No longer requires Scan Visor when "Unlock Save Station Doors" option is enabled.
 - Fixed: Mines Security Station: The event to unlock the doors can now be logically visited multiple times, making it possible for it to be considered a safe action.
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+##### Dark Torvus Bog
+
+- Added: NSJ variant of the BSJ to go up through Sacrificial Chamber before Grapple Guardian, set as advanced.
+- Added: The various tricks that require power bombs to go up through Sacrificial Chamber now have videos.
+
 ## [10.10.0] - 2026-08-02
 
 - **Major** - Added: Multiworld worlds can now be abandoned; abandoning a world is irreversible. An abandoned world can be played automatically by your own Randovania instance like a bot, via a dedicated game connection: it collects one location that is in logic for it every few seconds, and keeps doing so as it receives more items from other players.
