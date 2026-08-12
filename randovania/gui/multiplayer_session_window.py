@@ -4,10 +4,10 @@ import asyncio
 import collections
 import itertools
 import logging
-from typing import TYPE_CHECKING, Any, NamedTuple, Self
+from typing import TYPE_CHECKING, Any, NamedTuple, Self, override
 
 from PySide6 import QtCore, QtGui, QtWidgets
-from qasync import asyncClose, asyncSlot
+from qasync import asyncSlot
 
 from randovania import monitoring
 from randovania.game_description import default_database
@@ -19,7 +19,6 @@ from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessio
 from randovania.gui.item_tracker.auto_tracker_window import load_trackers_configuration
 from randovania.gui.item_tracker.item_tracker_popup_window import ItemTrackerPopupWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader
-from randovania.gui.lib.async_dialog import StandardButton
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
@@ -336,25 +335,13 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         return window
 
-    @asyncClose
-    async def closeEvent(self, event: QtGui.QCloseEvent) -> None:
-        if self.has_background_process:
-            event.ignore()
-            result = await async_dialog.warning(
-                self,
-                "Confirm close window",
-                "Are you sure you want to close this window?\nClosing this window will abort current tasks.",
-                buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
-                default_button=async_dialog.StandardButton.No,
-            )
-            if result != StandardButton.Yes:
-                return
-            event.accept()
-        self.stop_background_process()
-        return await self._on_close_event(event)
+    @override
+    def closeEvent(self, event: QtGui.QCloseEvent) -> None:
+        if self.background_task_on_close_event(self, event):
+            self._on_close_event(event)
 
-    async def _on_close_event(self, event: QtGui.QCloseEvent) -> None:
-        is_kicked = self.current_user_id not in self._session.users
+    def _on_close_event(self, event: QtGui.QCloseEvent) -> None:
+        is_kicked = hasattr(self, "_session") and self.current_user_id not in self._session.users
 
         try:
             self.network_client.MultiplayerSessionMetaUpdated.disconnect(self.on_meta_update)
@@ -367,7 +354,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         try:
             if not is_kicked and not self.network_client.connection_state.is_disconnected:
-                await self.network_client.listen_to_session(self._session.id, False)
+                self.network_client.remove_interest_in_session(self.game_session_api.current_session_id)
         finally:
             for d in list(self.tracker_windows.values()):
                 d.close()
