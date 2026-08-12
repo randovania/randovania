@@ -7,8 +7,8 @@ import aiohttp
 import pytest
 import pytest_mock
 from aiohttp import web
-from aiohttp.test_utils import TestServer
 
+import randovania
 from randovania.games.factorio.exporter.game_exporter import (
     FactorioGameExporter,
     FactorioGameExportParams,
@@ -19,12 +19,16 @@ if TYPE_CHECKING:
     from collections.abc import AsyncIterator
     from pathlib import Path
 
+    from aiohttp.test_utils import TestServer
+
 # bigger than the 8192 chunk size, so the chunked reading is actually exercised
 _FILE_CONTENT = bytes(range(256)) * 100
 
 
 @pytest.fixture
 async def file_server() -> AsyncIterator[TestServer]:
+    from aiohttp.test_utils import TestServer
+
     async def get_file(request: web.Request) -> web.StreamResponse:
         return web.Response(body=_FILE_CONTENT)
 
@@ -41,6 +45,7 @@ async def file_server() -> AsyncIterator[TestServer]:
     await server.close()
 
 
+@pytest.mark.skipif(randovania.is_frozen(), reason="aiohttp.test_utils not included in executable")
 async def test_download_file(file_server: TestServer, tmp_path: Path) -> None:
     path = tmp_path.joinpath("mod.zip")
 
@@ -49,6 +54,7 @@ async def test_download_file(file_server: TestServer, tmp_path: Path) -> None:
     assert path.read_bytes() == _FILE_CONTENT
 
 
+@pytest.mark.skipif(randovania.is_frozen(), reason="aiohttp.test_utils not included in executable")
 async def test_download_file_error(file_server: TestServer, tmp_path: Path) -> None:
     path = tmp_path.joinpath("mod.zip")
 
