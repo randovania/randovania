@@ -1,17 +1,15 @@
 import datetime
-from typing import Annotated, Any
+from typing import Any
 
-import pydantic
 from fastapi import APIRouter
 from peewee import Case, fn
-from pydantic import StringConstraints
 
-from randovania.network_common import error, multiplayer_session
+from randovania.network_common import error, multiplayer_session, server_endpoints
 from randovania.network_common.multiplayer_session import (
-    MAX_SESSION_NAME_LENGTH,
     MultiplayerSessionEntry,
     MultiplayerSessionListEntry,
 )
+from randovania.network_common.server_endpoints import CreateSessionRequest
 from randovania.network_common.signals import server_signals
 from randovania.network_common.signals.common import TypedJsonObject
 from randovania.server import database
@@ -61,11 +59,7 @@ async def list_sessions(sa: ServerApp, sid: str, limit: int | None = None) -> li
     return [session.as_json for session in sessions]
 
 
-class CreateSessionRequest(pydantic.BaseModel):
-    name: Annotated[str, StringConstraints(min_length=1, max_length=MAX_SESSION_NAME_LENGTH)]
-
-
-@router.post("/session")
+@server_endpoints.CreateSession.route(router)
 async def create_session(
     sa: ServerAppDep,
     user: UserDep,

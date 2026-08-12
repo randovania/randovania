@@ -18,6 +18,7 @@ from starlette import status
 from starlette.responses import JSONResponse
 
 from randovania.network_common import error as network_error
+from randovania.network_common import server_endpoints
 from randovania.network_common.authentication import AuthenticationMethod
 from randovania.network_common.signals import client_signals, server_signals
 from randovania.server import fastapi_discord
@@ -348,7 +349,7 @@ async def guest_login(sa: ServerAppDep, request: Request) -> Response:
     )
 
 
-@router.post("/guest_login")
+@server_endpoints.GuestLogin.route(router)
 async def guest_login_post(
     sa: ServerAppDep, request: Request, name: typing.Annotated[str, Form()], sid: typing.Annotated[str, Form()]
 ) -> Response:
@@ -412,7 +413,7 @@ async def delete_token(request: Request, user: UserDep, token: str) -> RedirectR
     return RedirectResponse(request.url_for("browser_me"))
 
 
-@router.get("/authentication_methods")
+@server_endpoints.AuthenticationMethods.route(router)
 async def authentication_methods(sa: ServerAppDep, request: Request) -> list[AuthenticationMethod]:
     return [method for method in AuthenticationMethod if sa.is_authentication_method_supported(method)]
 

@@ -539,7 +539,7 @@ async def test_create_new_session(client: NetworkClient, mocker: pytest_mock.Moc
     mock_session_from = mocker.patch("randovania.network_common.multiplayer_session.MultiplayerSessionEntry.from_json")
     client.server_post = MagicMock(return_value=AsyncMock())
     response = client.server_post.return_value.__aenter__.return_value
-    response.raise_for_status = MagicMock()
+    response.status = 200
     client._session_id = "1234"
 
     # Run
@@ -549,7 +549,6 @@ async def test_create_new_session(client: NetworkClient, mocker: pytest_mock.Moc
     assert result is mock_session_from.return_value
     client.server_post.assert_called_once_with("session", json={"name": "The Session"})
     mock_session_from.assert_called_once_with(response.json.return_value)
-    response.raise_for_status.assert_called_once_with()
     assert client._sessions_interested_in == {mock_session_from.return_value.id}
 
 
@@ -623,6 +622,13 @@ async def test_get_abandoned_world_data_not_claimed(client: NetworkClient):
     # Run
     with pytest.raises(WorldNotAssociatedError):
         await client.get_abandoned_world_data(world_uid)
+
+
+async def test_rest_request_unable_to_connect(client: NetworkClient):
+    client.server_get = MagicMock(side_effect=aiohttp.ClientError("no route to host"))
+
+    with pytest.raises(UnableToConnect, match="no route to host"):
+        await client.query_authentication_methods()
 
 
 async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mock.MockerFixture):

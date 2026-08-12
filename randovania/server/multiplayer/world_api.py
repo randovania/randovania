@@ -17,7 +17,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.layout import game_patches_serializer
 from randovania.layout.layout_description import LayoutDescription
-from randovania.network_common import error, remote_inventory
+from randovania.network_common import error, remote_inventory, server_endpoints
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups
 from randovania.network_common.remote_pickup import RemotePickup
@@ -202,7 +202,7 @@ async def watch_inventory(sa: ServerApp, sid: str, raw_world_uid: str, user_id: 
         await sa.sio.leave_room(sid, room_name)
 
 
-@router.get("/world/{world_uuid}/abandoned-data")
+@server_endpoints.GetAbandonedWorldData.route(router)
 async def get_abandoned_world_data(user: UserDep, world_uuid: str) -> dict:
     """
     The data the GUI needs to drive an abandoned world: the world's own game

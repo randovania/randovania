@@ -31,6 +31,7 @@ from randovania.network_common import (
     multiplayer_session,
     pickup_serializer,
     remote_inventory,
+    server_endpoints,
 )
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
@@ -64,6 +65,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
     from randovania.network_common.configuration import NetworkConfiguration
+    from randovania.network_common.server_endpoints import ServerEndpoint
     from randovania.network_common.signals.common import SioDataType, TypedBytes, TypedJsonObject
 
 
@@ -94,6 +96,23 @@ class UnableToConnect(Exception):
     def __init__(self, reason: str):
         super().__init__(reason)
         self.reason = reason
+
+
+async def _detail_for_response(response: aiohttp.ClientResponse) -> str:
+    """The message the server sent along with a failed REST response, if there's one."""
+
+    body: Any = None
+    with contextlib.suppress(Exception):
+        body = await response.json()
+
+    if not isinstance(body, dict):
+        return ""
+
+    if "errors" in body:
+        # Request validation failed, so the server reports one entry per invalid field.
+        return "\n".join(entry["msg"] for entry in body["errors"])
+
+    return body.get("detail", "")
 
 
 _MINIMUM_TIMEOUT = 30
@@ -740,30 +759,15 @@ class NetworkClient:
         """
         assert self._session_id is not None
 
-        async with self.server_post("session", json={"name": session_name}) as response:
-            # TODO: this can very much be a generic component
-            if response.status == 422:
-                msg = "\n".join(err["msg"] for err in (await response.json())["errors"])
-                raise error.InvalidActionError(msg)
-
-            response.raise_for_status()
-            return self._with_new_session(await response.json())
+        return self._with_new_session(
+            await server_endpoints.CreateSession.call_server(self)(
+                body=server_endpoints.CreateSessionRequest(name=session_name)
+            )
+        )
 
     async def get_abandoned_world_data(self, world_uid: uuid.UUID) -> dict:
         """Fetches the data needed to drive an abandoned world connector."""
-        try:
-            async with self.server_get(f"world/{world_uid}/abandoned-data") as response:
-                if response.status == 403:
-                    raise error.WorldNotAssociatedError
-
-                if response.status != 200:
-                    detail = ""
-                    with contextlib.suppress(Exception):
-                        detail = (await response.json()).get("detail", "")
-                    raise error.InvalidActionError(detail or f"Server returned status {response.status}")
-                return await response.json()
-        except aiohttp.ClientError as e:
-            raise UnableToConnect(str(e))
+        return await server_endpoints.GetAbandonedWorldData.call_server(self)(world_uuid=str(world_uid))
 
     async def join_multiplayer_session(self, session_id: int, password: str | None) -> MultiplayerSessionEntry:
         result = await server_signals.Multiplayer.JoinSession.call_server(self)(session_id, password)
@@ -864,21 +868,49 @@ class NetworkClient:
         self._update_reported_username()
 
     async def query_authentication_methods(self) -> set[AuthenticationMethod]:
-        async with self.server_get("authentication_methods") as response:
-            response.raise_for_status()
-            result = await response.json()
-
-        return {AuthenticationMethod(r) for r in result}
+        return {
+            AuthenticationMethod(method) for method in await server_endpoints.AuthenticationMethods.call_server(self)()
+        }
 
     async def login_as_guest(self, name: str) -> None:
         if self.connection_state != ConnectionState.Connected:
             await self.connect_to_server()
 
-        async with self.server_post("guest_login", data={"name": name, "sid": self.sio.get_sid()}) as response:
-            response.raise_for_status()
-            new_session = await response.json()
+        sid = self.sio.get_sid()
+        assert sid is not None
 
+        new_session = await server_endpoints.GuestLogin.call_server(self)(form={"name": name, "sid": sid})
         await self.on_user_session_updated(new_session)
+
+    async def perform_rest_request(
+        self,
+        endpoint: ServerEndpoint,
+        path: str,
+        request_options: _RequestOptions,
+    ) -> Any:
+        """
+        Performs the request for the given endpoint, converting any failure into a network error.
+        Prefer `ServerEndpoint.call_server`, which is typed, over calling this directly.
+        """
+
+        # `server_get`/`server_post` take a path relative to the server address, but an endpoint
+        # declares the absolute path that FastAPI needs.
+        url = path.removeprefix("/")
+
+        try:
+            if endpoint.method == "GET":
+                request = self.server_get(url, **request_options)
+            else:
+                request = self.server_post(url, **request_options)
+
+            async with request as response:
+                if response.status < 400:
+                    return await response.json()
+
+                raise endpoint.error_for_response(response.status, await _detail_for_response(response))
+
+        except aiohttp.ClientError as e:
+            raise UnableToConnect(str(e)) from e
 
     def server_get(
         self,
