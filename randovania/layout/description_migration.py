@@ -876,6 +876,32 @@ def _migrate_v41(data: dict) -> None:
         game["game_specific"]["charge_door_burst_buff"] = False
 
 
+def _migrate_v42(data: dict) -> None:
+    for game in data["game_modifications"]:
+        if game["game"] != "dread":
+            continue
+
+        game["dock_weakness"].pop("Cataris/Central Unit/Door to Central Unit Access", None)
+        game["dock_weakness"].pop("Cataris/Central Unit Access/Door to Central Unit", None)
+        game["dock_weakness"].pop("Dairon/Central Unit/Door to Central Unit Access", None)
+        game["dock_weakness"].pop("Dairon/Central Unit Access/Door to Central Unit", None)
+
+
+def _migrate_v43(data: dict) -> None:
+    for game in data["game_modifications"]:
+        if game["game"] != "dread":
+            continue
+
+        dock_rename_mapping = migration_data.get_raw_data(RandovaniaGame.METROID_DREAD)[
+            "dock_renames_make_back_of_sensor_lock_door"
+        ]
+
+        for old_name, new_name in dock_rename_mapping.items():
+            old_value = game["dock_weakness"].pop(old_name, None)
+            if old_value:
+                game["dock_weakness"][new_name] = old_value
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -918,6 +944,8 @@ _MIGRATIONS = [
     _migrate_v39,  # Redo msr pickup features
     _migrate_v40,  # Renamed Fusion rooms that reference other sectors or unofficial enemy names
     _migrate_v41,  # MSR: force charge_door_burst_buff off for old seeds via game_specific
+    _migrate_v42,  # Dread: Fixed dock type on door into Cataris and Dairon Central unit
+    _migrate_v43,  # Dread: Rename dock nodes to make back of sensor locks doors instead of docks
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

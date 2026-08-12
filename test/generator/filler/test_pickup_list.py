@@ -46,7 +46,6 @@ def test_requirement_lists_without_satisfied_resources(
         echoes_game_patches,
         None,
         db,
-        echoes_game_description.region_list,
         hint_state=None,
     )
     state.resources.add_resource_gain(
@@ -226,7 +225,6 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
         echoes_game_patches,
         None,
         db,
-        echoes_game_description.region_list,
     )
 
     # Run

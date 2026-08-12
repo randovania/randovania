@@ -74,7 +74,7 @@ def test_add_elevator_connections_to_dock_connections_random(
 
     wl = echoes_game_description.region_list
     elevator_connection: list[tuple[DockNode, Node]] = []
-    teleporter_dock_types = echoes_game_description.dock_weakness_database.all_teleporter_dock_types
+    teleporter_dock_types = echoes_game_description.dock_type_database.all_teleporter_dock_types
 
     def ni(w: str, a: str, n: str, tw: str, ta: str, tn: str):
         elevator_connection.append(
@@ -302,7 +302,7 @@ def test_add_elevator_connections_to_dock_connections_random(
 def test_blue_save_doors(prime_game_description: GameDescription, default_prime_configuration):
     # Setup
     patches_factory = prime_game_description.game.generator.base_patches_factory
-    power_weak = prime_game_description.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
+    power_weak = prime_game_description.dock_type_database.get_by_weakness("door", "Normal Door (Forced)")
 
     configuration = dataclasses.replace(
         default_prime_configuration,

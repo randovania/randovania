@@ -12,6 +12,9 @@ from randovania.game_description.db.teleporter_network_node import TeleporterNet
 from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.node_requirement import NodeRequirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -22,12 +25,11 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
-    from randovania.game_description.db.dock import DockType, DockWeakness
+    from randovania.game_description.db.dock import DockType, DockTypeDatabase, DockWeakness
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.requirements.requirement_list import RequirementList
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
@@ -146,6 +148,12 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
 
         if other_node is not None:
             if isinstance(other_node, DockNode):
+                if set(other_node.layers) != set(node.layers):
+                    yield (
+                        f"{node.name} has layers {sorted(node.layers)}, but connected dock "
+                        f"'{node.default_connection}' has layers {sorted(other_node.layers)}."
+                    )
+
                 if other_node.default_connection != node.identifier:
                     yield (
                         f"{node.name} connects to '{node.default_connection}', but that dock connects "
@@ -153,8 +161,7 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
                     )
 
     elif any(
-        re.match(rf"{dock_type.long_name}\s*(to|from)", node.name)
-        for dock_type in game.dock_weakness_database.dock_types
+        re.match(rf"{dock_type.long_name}\s*(to|from)", node.name) for dock_type in game.dock_type_database.dock_types
     ):
         yield f"{node.name} is not a Dock Node, naming suggests it should be."
 
@@ -301,29 +308,102 @@ def find_duplicated_pickup_index(region_list: RegionList) -> Iterator[str]:
             known_indices[node.pickup_index] = name
 
 
+def find_inconsistent_dock_configuration(dock_db: DockTypeDatabase) -> Iterator[str]:
+
+    for dock_type in dock_db.dock_types:
+        if dock_type.weakness_distributor is not None:
+            locked = dock_type.weakness_distributor.locked
+            if not locked.unsafe_target_in_distributor_wtw:
+                yield (
+                    f"{dock_type.short_name} - {locked.name}: Configured as the disabled weakness, "
+                    f"but unsafe_target_in_distributor_wtw is not set"
+                )
+
+
+def find_mismatching_dock_types_randomizable_with_forced_two_way(game: GameDescription) -> Iterator[str]:
+    for dock in game.region_list.iterate_nodes_of_type(DockNode):
+        if (
+            (settings := dock.dock_type.weakness_distributor)
+            and settings.force_change_two_way
+            and dock.default_dock_weakness in settings.change_from
+        ):
+            other_dock = game.node_by_identifier(dock.default_connection)
+            base_message = (
+                f"{dock.identifier} weakness can be randomized, must become a two sided dock, the default"
+                f" connection is to {other_dock.identifier}"
+            )
+            if not isinstance(other_dock, DockNode):
+                yield f"{base_message}, which is not a DockNode"
+                continue
+            if dock.dock_type != other_dock.dock_type:
+                yield f"{base_message}, which has a different dock type."
+                continue
+            if (
+                other_dock.default_dock_weakness not in settings.change_from
+                and other_dock.default_dock_weakness not in settings.indirect_change_from
+            ):
+                yield (
+                    f"{base_message}, of type {other_dock.default_dock_weakness}"
+                    f", which is neither in change_from or indirect_change_from."
+                )
+                continue
+
+
+_RelevantAlternatives = frozenset[frozenset[str]]
+
+
+def _relevant_alternatives(
+    req: Requirement,
+    relevant: frozenset[str],
+    database: ResourceDatabase,
+    cache: dict[tuple[frozenset[str], Requirement], _RelevantAlternatives],
+) -> _RelevantAlternatives:
+    """
+    The requirement's alternatives reduced to which of relevant's resource short names it contains.
+    """
+    cache_key = (relevant, req)
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    if isinstance(req, RequirementTemplate):
+        result = _relevant_alternatives(req.template_requirement(database), relevant, database, cache)
+
+    elif isinstance(req, ResourceRequirement):
+        result = frozenset({frozenset({req.resource.short_name} & relevant)})
+
+    elif isinstance(req, RequirementAnd):
+        result = frozenset({frozenset()})
+        for item in req.items:
+            item_alternatives = _relevant_alternatives(item, relevant, database, cache)
+            result = frozenset(left | right for left in result for right in item_alternatives)
+
+    elif isinstance(req, RequirementOr):
+        result = frozenset(
+            alternative for item in req.items for alternative in _relevant_alternatives(item, relevant, database, cache)
+        )
+
+    elif isinstance(req, NodeRequirement):
+        result = frozenset({frozenset()})
+
+    else:
+        raise fast_as_set.UnableToAvoidError
+
+    cache[cache_key] = result
+    return result
+
+
 def _needed_resources_partly_satisfied(
     req: Requirement,
     resources: tuple[str, tuple[str, ...]],
     database: ResourceDatabase,
-    req_cache: dict[Requirement, tuple[RequirementList, ...]],
+    req_cache: dict[tuple[frozenset[str], Requirement], _RelevantAlternatives],
 ) -> bool:
-    if req in req_cache:
-        alternatives = req_cache[req]
-    else:
-        alternatives = fast_as_set.fast_as_alternatives(req, database)
-        req_cache[req] = alternatives
+    res_key, res_values = resources
+    alternatives = _relevant_alternatives(req, frozenset((res_key, *res_values)), database, req_cache)
 
-    counter = 0
-    res_key = resources[0]
-    res_values = resources[1]
-    for alternative in alternatives:
-        # Either the key must not be present, or the key is present with all values.
-        if not any(res_key == item.resource.short_name for item in alternative.values()):
-            counter += 1
-        elif all(any(resource == item.resource.short_name for item in alternative.values()) for resource in res_values):
-            counter += 1
-
-    return counter != len(alternatives)
+    # Either the key must not be present, or the key is present with all values.
+    return any(res_key in alternative and not alternative.issuperset(res_values) for alternative in alternatives)
 
 
 def _does_requirement_contain_resource(req: Requirement, resource: str) -> bool:
@@ -342,8 +422,8 @@ def _does_requirement_contain_resource(req: Requirement, resource: str) -> bool:
 
 
 def get_possible_connections(game: GameDescription) -> Iterator[tuple[str, Requirement]]:
-    for dock_type in game.dock_weakness_database.dock_types:
-        for weakness in game.dock_weakness_database.weaknesses[dock_type].values():
+    for dock_type in game.dock_type_database.dock_types:
+        for weakness in game.dock_type_database.weaknesses[dock_type].values():
             yield f"DockWeakness {weakness.name} ({dock_type.long_name}", weakness.requirement
 
     for region, area, source_node in game.node_iterator():
@@ -384,7 +464,7 @@ def check_for_resources_to_use_together(
     :return: Error messages of requirements which don't pass the check.
     """
     database = game.resource_database
-    requirement_cache: dict[Requirement, tuple[RequirementList, ...]] = {}
+    requirement_cache: dict[tuple[frozenset[str], Requirement], _RelevantAlternatives] = {}
 
     for label, requirement in get_possible_connections(game):
         for resource_key, resource_value in combined_resources.items():
@@ -471,6 +551,8 @@ def find_database_errors(game: GameDescription) -> list[str]:
     result.extend(find_invalid_strongly_connected_components(game))
     result.extend(find_recursive_templates(game))
     result.extend(find_duplicated_pickup_index(game.region_list))
+    result.extend(find_inconsistent_dock_configuration(game.dock_type_database))
+    result.extend(find_mismatching_dock_types_randomizable_with_forced_two_way(game))
     result.extend(game.game.data.logic_db_integrity(game))
     result.extend(find_incompatible_video_links(game))
 

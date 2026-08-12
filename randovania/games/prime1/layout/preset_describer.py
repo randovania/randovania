@@ -122,9 +122,6 @@ class PrimePresetDescriber(GamePresetDescriber):
                         not configuration.teleporters.is_vanilla
                     )
                 },
-                {
-                    "Dangerous Gravity Suit Logic": configuration.allow_underwater_movement_without_gravity,
-                },
             ],
             "Game Changes": [
                 message_for_required_mains(

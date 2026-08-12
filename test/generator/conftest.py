@@ -19,5 +19,4 @@ def default_filler_config() -> FillerConfiguration:
         minimum_available_locations_for_hint_placement=0,
         minimum_location_weight_for_hint_placement=0,
         single_set_for_pickups_that_solve=False,
-        staggered_multi_pickup_placement=False,
     )

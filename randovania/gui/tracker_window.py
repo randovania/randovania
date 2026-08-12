@@ -545,7 +545,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         nodes_by_region: dict[str, list[DockNode]] = collections.defaultdict(list)
 
         targets = {}
-        teleporter_dock_types = self.game_description.dock_weakness_database.all_teleporter_dock_types
+        teleporter_dock_types = self.game_description.dock_type_database.all_teleporter_dock_types
         for region, area, node in region_list.all_regions_areas_nodes:
             if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types:
                 nodes_by_region[region.name].append(node)

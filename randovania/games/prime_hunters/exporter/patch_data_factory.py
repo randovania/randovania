@@ -190,7 +190,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         portals = []
 
         for node, connection in self.patches.all_dock_connections(self.game):
-            if node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types and node in area.nodes:
+            if node.dock_type in self.game.dock_type_database.all_teleporter_dock_types and node in area.nodes:
                 portal: dict = {}
 
                 portal["entity_id"] = node.extra["header"]["entity_id"]
@@ -249,7 +249,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         if octoliths_precision != SpecificPickupHintMode.DISABLED:
             octolith_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 exporter.namer,
                 True if octoliths_precision == SpecificPickupHintMode.HIDE_AREA else False,
                 octoliths,
@@ -305,10 +305,15 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
             starting_items_text = "no additional starting items given."
 
         # Goal
+        goal_text = ""
         gorea_text = "defeat GOREA in OUBLIETTE."
         placed_octoliths = config.octoliths.placed_octoliths
-        if placed_octoliths > 0:
-            goal_text = f"collect {placed_octoliths} OCTOLITHS and " + gorea_text
+        if placed_octoliths >= 2:
+            goal_text = f"collect {placed_octoliths} OCTOLITHS and {gorea_text}"
+        elif placed_octoliths == 1:
+            goal_text = f"collect 1 OCTOLITH and {gorea_text}"
+        else:
+            goal_text = gorea_text
 
         # Force Fields
         force_field_config = config.force_field_configuration.description()
@@ -354,7 +359,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         return intro_text
 
     def _add_cosmetic_patches(self) -> dict:
-        cosmetic_rng = Random(self.description.get_seed_for_world(self.players_config.player_index))
+        cosmetic_rng = Random(self.description.get_seed_for_world(self.worlds_config.world_index))
         suit_color = self.cosmetic_patches.suit_color.randomized(cosmetic_rng).varia.value
 
         cosmetic_patches = {
@@ -373,7 +378,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         full_hash = f"{self.description.shareable_word_hash} ({self.description.shareable_hash})"
 
         return {
-            "configuration_id": self.description.get_seed_for_world(self.players_config.player_index),
+            "configuration_id": self.description.get_seed_for_world(self.worlds_config.world_index),
             "starting_items": starting_items_as_json,
             "areas": self._entity_patching_per_area(),
             "ammo_sizes": self._update_ammo_sizes(),

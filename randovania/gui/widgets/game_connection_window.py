@@ -27,7 +27,7 @@ from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.game_connection_window_ui import Ui_GameConnectionWindow
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import is_uuid_multiworld
 from randovania.network_common import error
 
 if TYPE_CHECKING:
@@ -94,7 +94,7 @@ class BuilderUi:
         has_session = False
 
         lines = [f"Connected to {connector.description()}.", ""]
-        if world_uid == INVALID_UUID:
+        if not is_uuid_multiworld(world_uid):
             lines.append("Solo game.")
         else:
             data = multiworld_client.database.get_data_for(world_uid)
@@ -318,7 +318,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             return
 
         layout_uuid = connector.layout_uuid
-        if layout_uuid == INVALID_UUID:
+        if not is_uuid_multiworld(layout_uuid):
             return
 
         if not await self.network_client.ensure_logged_in(self):

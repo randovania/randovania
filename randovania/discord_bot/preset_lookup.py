@@ -4,7 +4,6 @@ import io
 import json
 import logging
 import math
-import random
 import re
 import subprocess
 import time
@@ -21,7 +20,7 @@ from randovania.discord_bot.randovania_cog import RandovaniaCog
 from randovania.generator import generator
 from randovania.layout import layout_description, preset_describer
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.generator_parameters import GeneratorParameters, random_seed_number
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink, UnsupportedPermalink
 from randovania.layout.preset import Preset
@@ -337,7 +336,7 @@ class PermalinkLookupCog(RandovaniaCog):
             layout: LayoutDescription = await asyncio.wait_for(
                 generator.generate_and_validate_description(
                     generator_params=GeneratorParameters(
-                        seed_number=random.randint(0, 2**31),
+                        seed_number=random_seed_number(),
                         spoiler=True,
                         presets=presets,
                     ),

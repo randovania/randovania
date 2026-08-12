@@ -18,7 +18,7 @@ from randovania.gui.lib import model_lib
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.gui.multiworld_client import MultiworldClient
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
@@ -525,7 +525,9 @@ async def test_generate_game(
 ):
     mock_alert: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.alert_user_on_generation")
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.generator_frontend.generate_layout")
-    mock_randint: MagicMock = mocker.patch("random.randint", return_value=5000)
+    mock_seed_number: MagicMock = mocker.patch(
+        "randovania.gui.multiplayer_session_window.random_seed_number", return_value=5000
+    )
     mock_yes_no_prompt: AsyncMock = mocker.patch(
         "randovania.gui.lib.async_dialog.yes_no_prompt", new_callable=AsyncMock, return_value=True
     )
@@ -573,11 +575,11 @@ async def test_generate_game(
         "Multiworld Limitation",
         ANY,
     )
-    mock_randint.assert_called_once_with(0, 2**31)
+    mock_seed_number.assert_called_once_with()
     mock_generate_layout.assert_called_once_with(
         progress_update=ANY,
         parameters=GeneratorParameters(
-            seed_number=mock_randint.return_value,
+            seed_number=mock_seed_number.return_value,
             spoiler=spoiler,
             presets=[
                 preset_manager.default_preset.get_preset(),

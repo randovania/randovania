@@ -1,5 +1,5 @@
 {
-    "schema_version": 33,
+    "schema_version": 34,
     "game": "prime2_opr",
     "resource_database": {
         "items": {
@@ -2332,7 +2332,7 @@
             "negate": false
         }
     },
-    "dock_weakness_database": {
+    "dock_type_database": {
         "types": {
             "door": {
                 "name": "Door",
@@ -2346,7 +2346,8 @@
                             "type": "template",
                             "data": "Open Normal Door"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Normal Door (Forced)": {
                         "extra": {
@@ -2356,7 +2357,8 @@
                             "type": "template",
                             "data": "Open Normal Door"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Dark Door": {
                         "extra": {
@@ -2366,7 +2368,8 @@
                             "type": "template",
                             "data": "Shoot Dark Beam"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Light Door": {
                         "extra": {
@@ -2376,7 +2379,8 @@
                             "type": "template",
                             "data": "Shoot Light Beam"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Annihilator Door": {
                         "extra": {
@@ -2386,7 +2390,8 @@
                             "type": "template",
                             "data": "Shoot Annihilator Beam"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Missile Blast Shield": {
                         "extra": {
@@ -2410,7 +2415,8 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Super Missile Blast Shield": {
                         "extra": {
@@ -2469,7 +2475,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Seeker Launcher Blast Shield": {
                         "extra": {
@@ -2488,7 +2495,8 @@
                                 "type": "template",
                                 "data": "Destroy Seeker Locks"
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Seeker Launcher Blast Shield (patched)": {
                         "extra": {
@@ -2508,7 +2516,8 @@
                                 "type": "template",
                                 "data": "Destroy Underwater Seeker Locks"
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Power Bomb Blast Shield": {
                         "extra": {
@@ -2549,7 +2558,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Permanently Locked": {
                         "extra": {
@@ -2562,7 +2572,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": true
                     },
                     "Darkburst Blast Shield": {
                         "extra": {
@@ -2581,7 +2592,8 @@
                                 "type": "template",
                                 "data": "Shoot Darkburst"
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Sunburst Blast Shield": {
                         "extra": {
@@ -2600,7 +2612,8 @@
                                 "type": "template",
                                 "data": "Shoot Sunburst"
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Sonic Boom Blast Shield": {
                         "extra": {
@@ -2619,7 +2632,8 @@
                                 "type": "template",
                                 "data": "Shoot Sonic Boom"
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Bomb Blast Shield": {
                         "extra": {
@@ -2660,7 +2674,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Boost Ball Blast Shield": {
                         "extra": {
@@ -2701,7 +2716,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Screw Attack Blast Shield": {
                         "extra": {
@@ -2720,7 +2736,8 @@
                                 "type": "template",
                                 "data": "Use Screw Attack (Space Jump)"
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Dark Visor Blast Shield": {
                         "extra": {
@@ -2744,7 +2761,8 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Echo Visor Blast Shield": {
                         "extra": {
@@ -2768,10 +2786,11 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": {
+                "weakness_distributor": {
                     "unlocked": "Normal Door",
                     "locked": "Permanently Locked",
                     "change_from": [
@@ -2802,7 +2821,12 @@
                         "Sonic Boom Blast Shield",
                         "Sunburst Blast Shield",
                         "Super Missile Blast Shield"
-                    ]
+                    ],
+                    "indirect_change_from": [],
+                    "force_change_two_way": false,
+                    "resolver_attempts": 600,
+                    "to_shuffle_proportion": 1.0,
+                    "ui_label": "Door Locks"
                 }
             },
             "portal": {
@@ -2822,7 +2846,8 @@
                                 "negate": false
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Dark Portal": {
                         "extra": {},
@@ -2842,7 +2867,8 @@
                                 ]
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Light Portal": {
                         "extra": {},
@@ -2862,7 +2888,8 @@
                                 ]
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "No Return Portal": {
                         "extra": {},
@@ -2873,7 +2900,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Unknown Portal Type": {
                         "extra": {},
@@ -2884,10 +2912,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "morph_ball": {
                 "name": "Morph Ball Door",
@@ -2904,10 +2933,11 @@
                                 "negate": false
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "elevator": {
                 "name": "Elevator",
@@ -2925,10 +2955,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "teleporter": {
                 "name": "Teleporter",
@@ -2945,10 +2976,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "other": {
                 "name": "Dock",
@@ -2963,7 +2995,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Not Determined": {
                         "extra": {},
@@ -2974,20 +3007,16 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             }
         },
         "default_weakness": {
             "type": "other",
             "name": "Not Determined"
-        },
-        "dock_rando": {
-            "force_change_two_way": false,
-            "resolver_attempts": 600,
-            "to_shuffle_proportion": 1.0
         }
     },
     "hint_feature_database": {

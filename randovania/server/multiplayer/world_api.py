@@ -124,7 +124,7 @@ async def _collect_location(
         log("It's nothing.")
         return None
 
-    target_world = World.get_by_order(session.id, pickup_target.player)
+    target_world = World.get_by_order(session.id, pickup_target.world)
 
     try:
         WorldAction.create(
@@ -138,7 +138,7 @@ async def _collect_location(
         log("It's a %s for %s, but it was already collected.", pickup_target.pickup.name, target_world.name)
         return None
 
-    if pickup_target.player == world.order and not session.allow_coop and not world.abandoned:
+    if pickup_target.world == world.order and not session.allow_coop and not world.abandoned:
         log("It's a %s for themselves.", pickup_target.pickup.name)
         return target_world
 

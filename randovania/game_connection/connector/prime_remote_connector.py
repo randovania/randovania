@@ -24,7 +24,7 @@ from randovania.game_connection.executor.memory_operation import (
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.lib.infinite_timer import InfiniteTimer
 
 if TYPE_CHECKING:

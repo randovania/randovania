@@ -20,6 +20,7 @@ if TYPE_CHECKING:
         "starting_items_and_energy_with_nothings",
         "two_way_unchecked_portal_shuffle",
         "shuffled_extra_locations_and_skip_planet_intros",
+        "no_shuffled_octoliths",
     ],
 )
 def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):

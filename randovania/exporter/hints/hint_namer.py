@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.pickup_index import PickupIndex
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 class PickupLocation(NamedTuple):
@@ -31,9 +31,9 @@ ColorT = TypeVar("ColorT")
 class HintNamer[ColorT]:
     location_formatters: dict[HintLocationPrecision | HintFeature, LocationFormatter]
 
-    def __init__(self, all_patches: dict[int, GamePatches], players_config: PlayersConfiguration):
+    def __init__(self, all_patches: list[GamePatches], worlds_config: WorldsConfiguration):
         self.all_patches = all_patches
-        self.players_config = players_config
+        self.worlds_config = worlds_config
 
     # Colors
     @classmethod

@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 class PortalDetailsTab(BaseConnectionDetailsTab[EchoesOPRConfiguration]):
@@ -21,7 +21,7 @@ class PortalDetailsTab(BaseConnectionDetailsTab[EchoesOPRConfiguration]):
 
     @classmethod
     def should_appear_for(
-        cls, configuration: EchoesOPRConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: EchoesOPRConfiguration, all_patches: list[GamePatches], players: WorldsConfiguration
     ) -> bool:
         return configuration.portal_rando
 

@@ -8,9 +8,8 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.patch_data_factory import AM2RPatchDataFactory, _construct_music_shuffle_dict
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches, MusicMode
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib import json_lib
 
 
 def test_construct_music_shuffle_dict_vanilla() -> None:
@@ -47,21 +46,23 @@ def test_construct_music_shuffle_dict_full() -> None:
         ("starter_preset.rdvgame", "shiny_pickups_dict_from_starter_preset.json", 1),  # starter preset
     ],
 )
-def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):
+def test_create_pickups_dict_shiny(
+    test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker, acceptance_check
+):
     # Setup
     rdvgame = test_files_dir.joinpath("log_files", "am2r", rdvgame_filename)
-    players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
+    worlds_config = WorldsConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
     description = LayoutDescription.from_file(rdvgame)
     cosmetic_patches = AM2RCosmeticPatches()
     mocker.patch("random.Random.randint", new_callable=MagicMock, return_value=0)
 
-    data = AM2RPatchDataFactory(description, players_config, cosmetic_patches)
+    data = AM2RPatchDataFactory(description, worlds_config, cosmetic_patches)
 
     db = data.game
 
     useless_target = PickupTarget(
         pickup_creator.create_nothing_pickup(db.get_resource_database_view(), "sItemNothing"),
-        data.players_config.player_index,
+        data.worlds_config.world_index,
     )
 
     text_data = data._get_text_data()
@@ -78,7 +79,7 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
         data.rng,
         data.configuration.pickup_model_style,
         data.configuration.pickup_model_data_source,
-        exporter=pickup_exporter.create_pickup_exporter(memo_data, data.players_config, data.game.game),
+        exporter=pickup_exporter.create_pickup_exporter(memo_data, data.worlds_config, data.game.game),
         visual_nothing=pickup_creator.create_visual_nothing(data.game_enum(), "sItemNothing"),
     )
 
@@ -86,11 +87,4 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
     pickups_dict = data._create_pickups_dict(pickup_list, text_data, model_data, data.rng)
 
     # Expected Result
-    expected_results_path = test_files_dir.joinpath("patcher_data", "am2r", expected_results_filename)
-
-    # Uncomment to easily view diff of failed test
-    # json_lib.write_path(expected_results_path, pickups_dict); assert False
-
-    expected_data = json_lib.read_path(expected_results_path)
-
-    assert pickups_dict == expected_data
+    acceptance_check(test_files_dir.joinpath("patcher_data", "am2r", expected_results_filename), pickups_dict)

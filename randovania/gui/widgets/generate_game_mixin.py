@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 import asyncio
-import random
 from typing import TYPE_CHECKING
 
 import randovania
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.interface_common import generator_frontend
-from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.generator_parameters import GeneratorParameters, random_seed_number
 from randovania.layout.permalink import Permalink
 from randovania.resolver.exceptions import ImpossibleForSolver
 
@@ -79,7 +78,7 @@ class GenerateGameMixin:
                 return await self.generate_layout_from_permalink(
                     permalink=Permalink.from_parameters(
                         GeneratorParameters(
-                            seed_number=random.randint(0, 2**31),
+                            seed_number=random_seed_number(),
                             spoiler=spoiler,
                             presets=[preset.get_preset()] * num_worlds,
                         )

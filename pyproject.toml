@@ -87,7 +87,7 @@ exporters = [
     "planets-yapr==1.0.3",
 
     # Metroid Prime 1
-    "py_randomprime==1.31.3",
+    "py-randomprime==1.33.0",
     "random-enemy-attributes==1.0.9",
 
     # Metroid Prime 1/2
@@ -99,7 +99,7 @@ exporters = [
     "mp2hudcolor==1.0.14",
 
     # Metroid Prime Hunters
-    "open-prime-hunters-rando==0.11.2",
+    "open-prime-hunters-rando==0.13.2",
 
     # Metroid: Samus Returns
     "open-samus-returns-rando==3.6.1",
@@ -124,7 +124,7 @@ gui = [
 ]
 
 server = [
-    "fastapi<0.137", # REST server
+    "fastapi<0.142", # REST server
     "jinja2", # templating
     "uvicorn[standard]", # server runner
     "itsdangerous", # for starlette SessionMiddleware
@@ -382,6 +382,8 @@ module = [
 ignore_missing_imports = true
 
 [tool.uv]
+required-version = ">=0.11.30"  # Good support for exclude-newer
+exclude-newer = "7 days"
 cache-keys = [
     { git = { commit = true, tags = true } },
     { file = "pyproject.toml" },
@@ -389,3 +391,17 @@ cache-keys = [
     { file = "README.md" },
     { file = "randovania/enable-cython" },
 ]
+
+[tool.uv.exclude-newer-package]
+am2r-yams = false
+cave-story-randomizer = false
+factorio-randovania-mod = false
+open-dread-rando = false
+mars-patcher = false
+planets-yapr = false
+py_randomprime = false
+random-enemy-attributes = false
+retro-data-structures = false
+mp2hudcolor = false
+open-prime-hunters-rando = false
+open-samus-returns-rando = false
