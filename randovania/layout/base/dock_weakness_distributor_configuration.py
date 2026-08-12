@@ -27,6 +27,7 @@ class DockWeaknessDistributorMode(BitPackEnum, Enum):
     ORIGINAL = "original"
     INDIVIDUAL_DOCK = "individual-dock"
     WEAKNESS_TO_WEAKNESS = "weaknesses-to-weakness"
+    # INDIVIDUAL_BLIND = "individual_blind"
 
 
 enum_lib.add_long_name(
@@ -35,6 +36,7 @@ enum_lib.add_long_name(
         DockWeaknessDistributorMode.ORIGINAL: "Unmodified",
         DockWeaknessDistributorMode.INDIVIDUAL_DOCK: "Individually",
         DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS: "By Type",
+        # DockWeaknessDistributorMode.INDIVIDUAL_BLIND: "Individually (Blind)",
     },
 )
 
@@ -48,6 +50,9 @@ enum_lib.add_per_enum_field(
         DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS: (
             "Randomizes all doors by type, turning all of one type into another"
         ),
+        # DockWeaknessDistributorMode.INDIVIDUAL_BLIND: (
+        #     "Randomizes each door, while door placement is blind to the player's equipment"
+        # ),
     },
 )
 
@@ -143,6 +148,20 @@ class WeaknessDistributorTypeState(BitPackValue, DataclassPostInitTypeCheck):
 @dataclass(frozen=True)
 class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCheck):
     types_state: dict[DockType, WeaknessDistributorTypeState]
+
+    # Doors-then-items implementation
+    doors_first: bool = False  # TODO remove eventually to focus repo on items-then-doors alt method
+
+    # Makes sure seeds don't feel too locked down, while also significantly reducing generation time
+    locked_percentage: float = 0.2  # TODO add to GUI
+
+    # Temporary until I'm ready to add a DockWeaknessDistributorMode for my blind-to-equipment approach
+    temp_blind_mode = True
+
+    # Not sure if this SHOULD be an alternate setting. I do think it'd help with normal INDIVIDUAL, so it's worth a try?
+    # attempt_variety? balance_ something or other? It's generally about making sure all doors end up in similar
+    # quantities. I dunno
+    attempt_similar_quantities = True
 
     @property
     def as_json(self) -> dict:

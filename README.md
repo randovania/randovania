@@ -1,15 +1,7 @@
 <!-- The Begin and End comments throughout this document are used in order to pull specific sections of the readme into the main GUI window at runtime. -->
 Hello to anyone reading this!!!
 
-For a variety of reasons, I haven't enjoyed the individual door lock randomization for Randovania games. Some randomizers place doors before they place items. Randovania places items before it places doors. With the former, items must be placed in a way where the game is possible given the new doors; so, in theory, if you generated the exact same seed twice, with door locks on and off, the path of progression would likely be totally different.
-
-With the latter, though, the doors are placed such that the intended, logical path through the game is just as possible as it was without them. If you generated the same seed twice, with door locks on and off, the path would likely be barely different, if not completely identical. In other words, the current implementation of door locks functionally does nothing at all to progression.
-
-It's more complicated than that, and Randovania's method has a TON of things going for it! It's not useless, its functionality just lies more with speedrunning than exploration. I don't want to ramble too much, so please take my word for it when I say there are pros and cons to both approaches for sure.
-
-ANYWAY, I wrote up a hackey, hardcoded way of making the doors get placed before the items. I've tested it a few times with both Samus Returns and Prime 2, and it works great. (Disclaimer: haven't tested with any other game yet, but I see no reason it shouldn't work with all of them.) I'm personally having tons of fun with this implementation. I'll likely try to get it working as an actual selectable setting in the menu when I find the time.
-
-In order to get this to work, select "Individually" as the Randomization Mode on the Door Locks tab. Then, make sure EVERY door type in the left section is selected. You can pick and choose from the right section, though. (I'd recommend not adding Permanently Locked doors.) This implementation has a somewhat high failure rate, so just keep retrying the generation process until you get a seed through. It's a lot faster of a process than the post-item-placement implementation, so hopefully it's not too annoying.
+The goals of this fork have changed since last time. I hadn't yet realized what I was really trying to achieve - less guided, more exploration-based seeds - and I was under the assumption that doors-then-items was the only way to get results like that. After experimenting with many different approaches, I've settled on something that I think achieves what I'm going for while still using the items-then-doors approach.
 
 # Randovania
 
