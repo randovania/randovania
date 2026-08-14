@@ -839,8 +839,7 @@ class GraphRequirementSet:
             new_dmg: cython.float = cython.cast(GraphRequirementList, alt.raw()).satisfied_damage(resources)
             if new_dmg <= 0.0:
                 return new_dmg
-            if new_dmg < damage:
-                damage = new_dmg
+            damage = min(damage, new_dmg)
 
         return damage
 
