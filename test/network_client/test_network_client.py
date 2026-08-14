@@ -6,7 +6,7 @@ import json
 import re
 import uuid
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import aiohttp.client_exceptions
@@ -48,7 +48,8 @@ if TYPE_CHECKING:
 
 @pytest.fixture
 def client(tmp_path, mocker: pytest_mock.MockerFixture):
-    mocker.patch("randovania.lib.http_lib.http_session")
+    mock_http_session = mocker.patch("randovania.lib.http_lib.http_session")
+    mock_http_session.return_value.closed = False
     client = NetworkClient(
         tmp_path,
         {
@@ -71,20 +72,81 @@ async def make_client():
     yield create
 
     for client in clients:
-        await client.http.close()
+        await client.shutdown()
 
 
-async def test_shutdown(tmp_path):
+async def test_shutdown(tmp_path, make_client):
     # Explicitly not mocking http_session
     # The assert is not leaking a resource.
-    client = NetworkClient(
+    client = make_client(
         tmp_path,
         {
             "server_address": "http://localhost:5000",
             "socketio_path": "/socket.io",
         },
     )
+    session = client.http
+
     await client.shutdown()
+
+    assert session.closed
+    with pytest.raises(RuntimeError, match="was shut down"):
+        _ = client.http
+
+
+async def test_http_recreated_when_closed(tmp_path, make_client):
+    # Explicitly not mocking http_session
+    client = make_client(
+        tmp_path,
+        {
+            "server_address": "http://localhost:5000",
+            "socketio_path": "/socket.io",
+        },
+    )
+
+    # Run
+    # A ClientSession can be closed by something outside our control, and can't be re-opened.
+    first_session = client.http
+    await first_session.close()
+    second_session = client.http
+
+    # Assert
+    assert second_session is not first_session
+    assert not second_session.closed
+
+
+async def test_rest_headers_come_from_the_client(client: NetworkClient):
+    # The authentication state lives in the client and is applied per-request, so that the session
+    # can be re-created at any point without losing it.
+    client._session_id = "the-sid"
+    client._encoded_session = "the-session"
+    http = cast("MagicMock", client.http)
+
+    expected_headers = {
+        **connection_headers(),
+        "Accept": "application/json",
+        "X-Randovania-Sid": "the-sid",
+        "X-Randovania-Session": "the-session",
+    }
+
+    # Run
+    client.server_get("some-path")
+    client.server_post("some-path")
+
+    # Assert
+    http.get.assert_called_once_with("http://localhost:5000/some-path", headers=expected_headers)
+    http.post.assert_called_once_with("http://localhost:5000/some-path", headers=expected_headers)
+
+
+async def test_rest_headers_does_not_override_given_headers(client: NetworkClient):
+    http = cast("MagicMock", client.http)
+
+    client.server_get("some-path", headers={"Accept": "text/plain"})
+
+    http.get.assert_called_once_with(
+        "http://localhost:5000/some-path",
+        headers={**connection_headers(), "Accept": "text/plain"},
+    )
 
 
 class MockResponse:
@@ -163,7 +225,7 @@ async def test_on_connect_restore(tmpdir, valid_session: bool, make_client):
 
     # Assert
     if valid_session:
-        assert client.http.headers["X-Randovania-Sid"] == 12341234
+        assert client._session_id == 12341234
     client.sio.call.assert_awaited_once_with("restore_user_session", b"foo", namespace=None, timeout=30)
 
     if valid_session:
@@ -478,7 +540,7 @@ async def test_create_new_session(client: NetworkClient, mocker: pytest_mock.Moc
     client.server_post = MagicMock(return_value=AsyncMock())
     response = client.server_post.return_value.__aenter__.return_value
     response.raise_for_status = MagicMock()
-    client.http.headers["X-Randovania-Sid"] = "1234"
+    client._session_id = "1234"
 
     # Run
     result = await client.create_new_session("The Session")
@@ -509,7 +571,7 @@ async def test_create_new_session_bad(client: NetworkClient, mocker: pytest_mock
         "status_message": "422 Unprocessable Entity",
     }
     response.raise_for_status = MagicMock()
-    client.http.headers["X-Randovania-Sid"] = "1234"
+    client._session_id = "1234"
 
     # Run
     with pytest.raises(
