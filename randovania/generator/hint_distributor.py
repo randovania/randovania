@@ -139,7 +139,7 @@ class FeatureChooser[PrecisionT: Enum]:
         print(f"> {header}:")
         for feature, precision in sorted(self.feature_precisions().items(), key=lambda item: item[1]):
             print(f"   {self._debug_precision_text(feature, precision)}")
-        print("")
+        print()
 
     def choose_feature(
         self,
