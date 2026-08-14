@@ -51,7 +51,6 @@ class BasePatchesFactory[Configuration: BaseConfiguration]:
         player_index: int,
         rng_required: bool = True,
     ) -> GamePatches:
-        """ """
         patches = self.create_static_base_patches(configuration, game, player_index)
 
         # Teleporters
