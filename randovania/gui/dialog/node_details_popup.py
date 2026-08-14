@@ -223,7 +223,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             return self.tab_teleporter_network
 
         else:
-            raise ValueError(f"Unknown node type: {node}")
+            raise TypeError(f"Unknown node type: {node}")
 
     def fill_for_dock(self, node: DockNode) -> None:
         # Connection

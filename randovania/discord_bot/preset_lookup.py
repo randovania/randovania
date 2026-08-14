@@ -216,7 +216,7 @@ class RequestPresetsView(discord.ui.View):
         try:
             title = (await interaction.original_response()).embeds[0].title
             if not isinstance(title, str):
-                raise ValueError("no title in embed")
+                raise TypeError("no title in embed")
             # Trim leading and trailing `s
             permalink = Permalink.from_str(title[1:-1])
 
