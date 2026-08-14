@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, Any, Generic, NamedTuple, TypeVar
 from randovania.game_description import default_database
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -29,7 +30,6 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription, MinimalLogicData
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceQuantity

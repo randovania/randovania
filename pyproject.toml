@@ -258,11 +258,57 @@ extend-select = [
     "PLR0124", # Name compared with itself, consider replacing {actual}
 ]
 ignore = [
-    "ISC001",  # may cause conflicts with formatter
+    "ISC001",   # may cause conflicts with formatter
     "PLW0603",  # we use some globals here and there
-    "PLW2901",  # TODO: should actually fix these
     "PLC0415",  # we explicitly use the import within a function to postpone the loading of a module
+    "PLR2044",  # Line with empty comment
+    "SIM118",   # I like `key in dict.keys()` :(
 
+    # FIXME: revisit these codes
+    "ASYNC221", # Async functions should not run processes with blocking methods
+    "BLE001",   # Do not catch blind exception: `Exception`
+    "B008",     # Do not perform function call `<>` in argument defaults
+    "B009",     # Do not call `getattr` with a constant attribute value. It is not any safer than normal property access.
+    "B020",     # Loop control variable `report` overrides iterable it iterates
+    "B023",     # Function definition does not bind loop variable `game`
+    "B025",     # try-except block with duplicate exception
+    "D419",     # Docstring is empty
+    "DTZ001",   # `datetime.datetime()` called without a `tzinfo` argument
+    "DTZ005",   # `datetime.datetime.now()` called without a `tz` argument
+    "DTZ007",   # Naive datetime constructed using `datetime.datetime.strptime()` without %z
+    "DTZ901",   # Use of `datetime.datetime.min` without timezone information"
+    "FLY002",   # Consider f-string instead of string join
+    "FURB105",  # Unnecessary empty string passed to `print`
+    "FURB122",  # Use of `output.write` in a for loop
+    "FURB161",  # Use of `bin(value).count('1')`
+    "FURB162",  # Unnecessary timezone replacement with zero offset
+    "G010",     # Logging statement uses `warn` instead of `warning`
+    "ISC004",   # Unparenthesized implicit string concatenation in collection
+    "LOG015",   # call on root logger
+    "PERF102",  # When using only the values of a dict use the `values()` method
+    "PLR1704",  # Redefining argument with the local name
+    "PLR1730",  # Replace `if` statement with `damage = min(damage, new_dmg)`
+    "PLR1733",  # Unnecessary lookup of dictionary value by key
+    "PLR1736",  # List index lookup in `enumerate()` loop
+    "PLW2901",  # `for` loop variable `data` overwritten by assignment target
+    "PYI025",   # Use `from collections.abc import Set as AbstractSet` to avoid confusion with the `set` builtin
+    "PYI063",   # Use PEP 570 syntax for positional-only parameters
+    "RET501",   # Do not explicitly `return None` in function if it is the only possible return value
+    "RUF036",   # `None` not at the end of the type union.
+    "S110",     # `try`-`except`-`pass` detected, consider logging the exception
+    "SIM102",   # Use a single `if` statement instead of nested `if` statements
+    "SIM103",   # Return the negated condition directly
+    "SIM113",   # Use `enumerate()` for index variable `i` in `for` loop
+    "SIM114",   # Combine `if` branches using logical `or` operator
+    "SIM117",   # Use a single `with` statement with multiple contexts instead of nested `with` statements
+    "SIM201",   # Checks for negated == operators.
+    "SIM210",   # Use `bool(...)` instead of `True if ... else False`
+    "SIM401",   # Use dict.get instead of an `if` block
+    "TRY002",   # Create your own exception
+    "TRY004",   # Prefer `TypeError` exception for invalid type
+    "TRY201",   # Use `raise` without specifying exception name
+    "TRY203",   # Remove exception handler; error is immediately re-raised
+    "TRY401",   # Redundant exception object included in `logging.exception` call
 ]
 
 [tool.ruff.lint.isort]

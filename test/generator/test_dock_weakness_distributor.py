@@ -21,7 +21,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 def _force_blank_two_way(blank_game_description):
     dock_type = blank_game_description.dock_type_database.find_type("door")
     rando_settings = dock_type.get_weakness_distributor()
-    dock_type
+
     object.__setattr__(
         rando_settings,
         "force_change_two_way",
