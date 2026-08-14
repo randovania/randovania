@@ -255,19 +255,23 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
     output.write("====================\nTemplates\n")
     for template_name, template in game.resource_database.requirement_template.items():
         output.write(f"\n* {template.display_name}:\n")
-        for level, text in pretty_format_requirement(template.requirement, game.resource_database):
-            output.write("      {}{}\n".format("    " * level, text))
+        output.writelines(
+            "      {}{}\n".format("    " * level, text)
+            for level, text in pretty_format_requirement(template.requirement, game.resource_database)
+        )
 
     output.write("\n====================\nDock Weaknesses\n")
     for dock_type in game.dock_type_database.dock_types:
         output.write(f"\n> {dock_type.long_name}")
-        for extra_name, extra_field in dock_type.extra.items():
-            output.write(f"\n* Extra - {extra_name}: {extra_field}")
+        output.writelines(
+            f"\n* Extra - {extra_name}: {extra_field}" for extra_name, extra_field in dock_type.extra.items()
+        )
 
         for weakness in game.dock_type_database.get_by_type(dock_type):
             output.write(f"\n  * {weakness.name}\n")
-            for extra_name, extra_field in weakness.extra.items():
-                output.write(f"      Extra - {extra_name}: {extra_field}\n")
+            output.writelines(
+                f"      Extra - {extra_name}: {extra_field}\n" for extra_name, extra_field in weakness.extra.items()
+            )
             if weakness.unsafe_target_in_distributor_wtw:
                 output.write(
                     f"      Considered unsafe as target for "
@@ -275,15 +279,19 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
                 )
 
             output.write("      Open:\n")
-            for level, text in pretty_format_requirement(weakness.requirement, game.resource_database, level=1):
-                output.write("      {}{}\n".format("    " * level, text))
+            output.writelines(
+                "      {}{}\n".format("    " * level, text)
+                for level, text in pretty_format_requirement(weakness.requirement, game.resource_database, level=1)
+            )
 
             if weakness.lock is not None:
                 output.write(f"      Lock type: {weakness.lock}\n")
-                for level, text in pretty_format_requirement(
-                    weakness.lock.requirement, game.resource_database, level=1
-                ):
-                    output.write("      {}{}\n".format("    " * level, text))
+                output.writelines(
+                    "      {}{}\n".format("    " * level, text)
+                    for level, text in pretty_format_requirement(
+                        weakness.lock.requirement, game.resource_database, level=1
+                    )
+                )
             else:
                 output.write("      No lock\n")
             output.write("\n")
