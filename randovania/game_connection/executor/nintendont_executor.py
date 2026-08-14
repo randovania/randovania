@@ -4,8 +4,9 @@ import asyncio
 import dataclasses
 import logging
 import struct
+from asyncio import StreamReader, StreamWriter
 from datetime import datetime
-from typing import TypeGuard
+from typing import override
 
 from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
 from randovania.game_connection.executor.memory_operation import (
@@ -13,6 +14,7 @@ from randovania.game_connection.executor.memory_operation import (
     MemoryOperationException,
     MemoryOperationExecutor,
 )
+from randovania.game_connection.executor.socket_executor import BaseSocketExecutor
 
 
 @dataclasses.dataclass()
@@ -95,10 +97,10 @@ def _was_invalid_address(response: bytes, i: int) -> bool:
         raise MemoryOperationException("Server response too short for validator bytes")
 
 
-class NintendontExecutor(MemoryOperationExecutor):
+# NOTE: BaseSocketExecutor must come first. MemoryOperationExecutor declares connect/disconnect/is_connected
+# as NotImplementedError stubs, and reversing these bases would silently shadow the working implementations.
+class NintendontExecutor(BaseSocketExecutor[SocketHolder], MemoryOperationExecutor):
     _port = 43673
-    _socket: SocketHolder | None = None
-    _socket_error: Exception | None = None
 
     SUPPORTED_API_VERSION = 2
 
@@ -108,100 +110,63 @@ class NintendontExecutor(MemoryOperationExecutor):
     # response the experience is going to be bad and things *will* break.
     # Once the prime games are reworked, or this is used for other games, a reconsideration can be done to rework this.
 
-    def __init__(self, ip: str):
-        super().__init__()
-        self._ip = ip
+    _connect_timeout = _timeout
+    _connect_errors = (TimeoutError, OSError, UnicodeError)
 
     @property
-    def ip(self) -> str:
-        return self._ip
-
-    @property
-    def lock_identifier(self) -> str | None:
-        return None
-
-    @property
+    @override
     def max_output(self) -> int:
         if self._is_socket_connected(self._socket):
             return self._socket.max_output - 1
         return -1
 
     @property
+    @override
     def max_input(self) -> int:
         if self._is_socket_connected(self._socket):
             return self._socket.max_input - 1
         return -1
 
-    async def connect(self) -> str | None:
-        if self._socket is not None:
-            return None
-
-        try:
-            self._socket_error = None
-            self.logger.debug(f"Connecting to {self._ip}:{self._port}.")
-            reader, writer = await asyncio.wait_for(
-                asyncio.open_connection(self._ip, self._port), timeout=self._timeout
-            )
-
-            # Send API details request
-            self.logger.debug("Connection open, requesting API details.")
-
-            writer.write(struct.pack(">BB", 0, 1))
-            await asyncio.wait_for(writer.drain(), timeout=self._timeout)
-
-            self.logger.debug("Waiting for API details response.")
-            response = await asyncio.wait_for(reader.read(1024), timeout=self._timeout)
-            invalid_message = f"Unable to connect to {self._ip}:{self._port} - Unsupported Nintendont version!"
-            try:
-                api_version = struct.unpack_from(">I", response)[0]
-
-                if api_version != self.SUPPORTED_API_VERSION:
-                    writer.close()
-                    return (
-                        f"{invalid_message} Nintendont has API {api_version} but expected {self.SUPPORTED_API_VERSION}."
-                    )
-
-                max_input, max_output, max_addresses, major_version, minor_version = struct.unpack(">4x5I", response)
-
-            except struct.error as e:
-                writer.close()
-                self._socket_error = e
-                return f"{invalid_message} Invalid response when requesting API details."
-
-            if max_input > 256 or max_output > 256 or max_addresses > 16:
-                # 256, 256 and 16 are the current theoretical maximum values for input/output/address per the protocol.
-                writer.close()
-                return f"{invalid_message} Nintendont responding with invalid API details."
-
-            self.logger.debug(
-                f"Remote replied with API level {api_version}, "
-                f"Nintendont version {major_version}.{minor_version} connection successful."
-            )
-            self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
-            return None
-
-        except ConnectionRefusedError:
+    @override
+    def _message_for_connect_error(self, error: Exception) -> str:
+        if isinstance(error, ConnectionRefusedError):
             # Ip exists, maybe it's listening to the HBC port instead?
             return f"Unable to connect to {self.ip}. Either wrong IP, or not yet in-game."
-        except (TimeoutError, OSError, UnicodeError) as e:
-            # UnicodeError is for some invalid ip addresses
-            self._socket = None
-            message = f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}"
+        return super()._message_for_connect_error(error)
+
+    @override
+    async def _perform_handshake(self, reader: StreamReader, writer: StreamWriter) -> str | None:
+        # Send API details request
+        self.logger.debug("Connection open, requesting API details.")
+
+        writer.write(struct.pack(">BB", 0, 1))
+        await asyncio.wait_for(writer.drain(), timeout=self._timeout)
+
+        self.logger.debug("Waiting for API details response.")
+        response = await asyncio.wait_for(reader.read(1024), timeout=self._timeout)
+        invalid_message = f"Unable to connect to {self._ip}:{self._port} - Unsupported Nintendont version!"
+        try:
+            api_version = struct.unpack_from(">I", response)[0]
+
+            if api_version != self.SUPPORTED_API_VERSION:
+                return f"{invalid_message} Nintendont has API {api_version} but expected {self.SUPPORTED_API_VERSION}."
+
+            max_input, max_output, max_addresses, major_version, minor_version = struct.unpack(">4x5I", response)
+
+        except struct.error as e:
             self._socket_error = e
-            return message
+            return f"{invalid_message} Invalid response when requesting API details."
 
-    def disconnect(self) -> None:
-        socket = self._socket
-        self._socket = None
-        if socket is not None:
-            socket.writer.close()
+        if max_input > 256 or max_output > 256 or max_addresses > 16:
+            # 256, 256 and 16 are the current theoretical maximum values for input/output/address per the protocol.
+            return f"{invalid_message} Nintendont responding with invalid API details."
 
-    @staticmethod
-    def _is_socket_connected(socket: SocketHolder | None) -> TypeGuard[SocketHolder]:
-        return socket is not None
-
-    def is_connected(self) -> bool:
-        return self._is_socket_connected(self._socket)
+        self.logger.debug(
+            f"Remote replied with API level {api_version}, "
+            f"Nintendont version {major_version}.{minor_version} connection successful."
+        )
+        self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
+        return None
 
     def _prepare_requests_for(self, ops: list[MemoryOperation]) -> list[RequestBatch]:
         assert self._is_socket_connected(self._socket)
@@ -289,6 +254,7 @@ class NintendontExecutor(MemoryOperationExecutor):
 
         return all_responses
 
+    @override
     async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryOperation, bytes]:
         if self._socket is None:
             raise MemoryOperationException("Not connected")
