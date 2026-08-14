@@ -52,7 +52,7 @@ else:
 
 @cython.ccall
 def _is_later_progression_item(
-    resource_index: cython.size_t, progressive_chain_info: None | tuple[Sequence[cython.size_t], int]
+    resource_index: cython.size_t, progressive_chain_info: tuple[Sequence[cython.size_t], int] | None
 ) -> bool:
     if not progressive_chain_info:
         return False
@@ -632,7 +632,7 @@ class GraphRequirementList:
         resource_index: cython.size_t,
         amount: cython.int,
         negate: cython.bint,
-        progressive_item_info: "None | tuple[Sequence[cython.size_t], int]",
+        progressive_item_info: "tuple[Sequence[cython.size_t], int] | None",
     ) -> cython.void:
         if _is_later_progression_item(resource_index, progressive_item_info):
             assert progressive_item_info is not None
@@ -650,7 +650,7 @@ class GraphRequirementList:
         resources: ResourceCollection,
         health_for_damage_requirements: cython.float,
         node_resources: Sequence[cython.size_t],
-        progressive_item_info: "None | tuple[Sequence[cython.size_t], int]",
+        progressive_item_info: "tuple[Sequence[cython.size_t], int] | None",
     ) -> GraphRequirementList | None:
         """Used by resolver.py for `_simplify_additional_requirement_set`"""
 
