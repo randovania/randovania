@@ -104,8 +104,7 @@ async def look_for_permalinks(message: discord.Message) -> None:
             if e.__cause__ is not None:
                 error_message += f"\n{e.__cause__}"
 
-        except (ValueError, UnsupportedPermalink):
-            # TODO: handle the incorrect version permalink
+        except ValueError:
             continue
 
         version = get_version(word.group(1), randovania_version)
