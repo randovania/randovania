@@ -621,7 +621,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             for world_uid, world in world_by_id.items():
                 if world_uid in unclaimed_worlds:
                     self._create_world_item(world_uid, unclaimed_world_item, self.UNCLAIMED_PSEUDO_USER_ID).update(
-                        world_by_id[world_uid],
+                        world,
                         UserWorldDetail(GameConnectionStatus.Unclaimed, datetime.datetime.min),
                     )
 
@@ -634,7 +634,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             for world_uid, world in world_by_id.items():
                 if world_uid in abandoned_worlds:
                     self._create_world_item(world_uid, abandoned_world_item, self.ABANDONED_PSEUDO_USER_ID).update(
-                        world_by_id[world_uid],
+                        world,
                         UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min),
                     )
 
@@ -645,7 +645,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             for world_uid, world in world_by_id.items():
                 if world_uid in world_by_id.keys():
                     self._create_world_item(world_uid, total_world_item, self.ALL_WORLDS_PSEUDO_USER_ID).update(
-                        world_by_id[world_uid],
+                        world,
                         UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min),
                     )
 

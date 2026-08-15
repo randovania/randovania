@@ -10,8 +10,6 @@ from randovania.interface_common.options import PerGameOptions, decode_if_not_no
 
 @dataclasses.dataclass(frozen=True)
 class FactorioPerGameOptions(PerGameOptions):
-    """ """
-
     output_path: Path | None = None
 
     @property
