@@ -5229,12 +5229,24 @@
                             }
                         },
                         "Next to Scan Point": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "tricks",
-                                "name": "MissileJump",
-                                "amount": 2,
-                                "negate": false
+                                "comment": "Stand on the ledge next to the Artifact Shield: https://youtu.be/6NErobVzu1c",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "MissileJump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Missile Jump"
+                                    }
+                                ]
                             }
                         }
                     }
