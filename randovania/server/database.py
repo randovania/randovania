@@ -620,13 +620,12 @@ class AsyncRaceRoom(BaseModel):
             now,
         )
 
-    async def create_session_entry(self, sa: ServerApp, sid_or_user: str | User) -> async_race_room.AsyncRaceRoomEntry:
+    async def create_session_entry(self, sa: ServerApp, user: User) -> async_race_room.AsyncRaceRoomEntry:
         game_details = self.game_details()
 
         now = lib.datetime_now()
-        for_user = await sa.get_current_user(sid_or_user) if isinstance(sid_or_user, str) else sid_or_user
 
-        if (entry := AsyncRaceEntry.entry_for(self, for_user)) is not None:
+        if (entry := AsyncRaceEntry.entry_for(self, user)) is not None:
             status = entry.user_status()
         else:
             status = async_race_room.AsyncRaceRoomUserStatus.NOT_MEMBER
@@ -650,7 +649,7 @@ class AsyncRaceRoom(BaseModel):
             presets_raw=[
                 VersionedPreset.with_preset(preset).as_bytes() for preset in self.layout_description.all_presets
             ],
-            is_admin=for_user == self.creator,  # type: ignore[arg-type]
+            is_admin=user == self.creator,  # type: ignore[arg-type]
             self_status=status,
             allow_pause=self.allow_pause,
         )

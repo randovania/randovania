@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import dataclasses
 import datetime
 from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock
@@ -76,7 +75,7 @@ async def test_validate(skip_qtbot, preset_manager, options, mocker: pytest_mock
 
     dialog.ui.settings_widget.ui.password_edit.setText("The Secret")
     assert dialog.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
-    assert dialog.create_settings_object() == dataclasses.replace(settings, password="The Secret")
+    assert dialog.create_settings_object() == settings.model_copy(update={"password": "The Secret"})
 
 
 @pytest.mark.parametrize(

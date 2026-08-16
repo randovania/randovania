@@ -1,13 +1,11 @@
 from __future__ import annotations
 
-import dataclasses
 import datetime
 
-from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.lib.json_base_model import JsonBaseModel
 
 
-@dataclasses.dataclass(frozen=True)
-class AuditEntry(JsonDataclass):
+class AuditEntry(JsonBaseModel):
     """A single entry of the audit log for a session or room"""
 
     user: str
