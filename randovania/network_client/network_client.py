@@ -41,6 +41,7 @@ from randovania.network_common.async_race_room import (
     AsyncRaceSettings,
     RaceRoomLeaderboard,
 )
+from randovania.network_common.async_race_room_endpoints import async_race_room_endpoints as race_endpoints
 from randovania.network_common.audit import AuditEntry
 from randovania.network_common.authentication import AuthenticationMethod
 from randovania.network_common.multiplayer_session import (
@@ -568,158 +569,203 @@ class NetworkClient:
     async def create_async_race_room(
         self, layout: LayoutDescription, settings: AsyncRaceSettings
     ) -> AsyncRaceRoomEntry:
-        """
+        """POST /async-race-room"""
+        body = {
+            "layout_bin": base64.b64encode(layout.as_binary(force_spoiler=True)).decode("ascii"),
+            "settings": settings.as_json,
+        }
 
-        :param layout:
-        :param settings:
-        :return:
-        """
-        result = await server_signals.AsyncRace.CreateRoom.call_server(self)(
-            layout.as_binary(force_spoiler=True),
-            settings.as_json,
-        )
-        return AsyncRaceRoomEntry.from_json(result)
+        async with self.server_post(race_endpoints.create_room(), json=body) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
 
     async def get_async_race_room_list(self, ignore_limit: bool) -> list[AsyncRaceRoomListEntry]:
-        return [
-            AsyncRaceRoomListEntry.from_json(item)
-            for item in await server_signals.AsyncRace.ListRooms.call_server(self)(None if ignore_limit else 100)
-        ]
+        """GET /async-race-room"""
+        params = {} if ignore_limit else {"limit": "100"}
+        async with self.server_get(race_endpoints.list_rooms(), params=params) as response:
+            return [AsyncRaceRoomListEntry.from_json(item) for item in await self._rest_json_or_raise(response)]
 
     async def get_async_race_room(self, room_id: int, password: str | None) -> AsyncRaceRoomEntry:
         """
+        GET /async-race-room/{room_id}
+
         Gets details about the given room id.
         :param room_id:
         :param password: The room password
         :return: The room details
         """
-        return AsyncRaceRoomEntry.from_json(await server_signals.AsyncRace.GetRoom.call_server(self)(room_id, password))
+        params = {"password": password} if password is not None else {}
+        async with self.server_get(race_endpoints.get_room(room_id), params=params) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
 
     async def async_race_refresh_room(self, room: AsyncRaceRoomEntry) -> AsyncRaceRoomEntry:
         """
+        GET /async-race-room/{room_id}/refresh
+
         Gets details about the given room id.
         :param room: The room's data from get_async_race_room
         :return: The room details
         """
-        return AsyncRaceRoomEntry.from_json(
-            await server_signals.AsyncRace.RefreshRoom.call_server(self)(room.id, room.auth_token)
-        )
+        async with self.server_get(
+            race_endpoints.refresh_room(room.id), params={"auth_token": room.auth_token}
+        ) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
 
     async def async_race_get_leaderboard(self, room: AsyncRaceRoomEntry) -> RaceRoomLeaderboard:
         """
+        GET /async-race-room/{room_id}/leaderboard
+
         Gets the leaderboard for the given room. Must have already finished to work.
         :param room: The room's data from get_async_race_room
         :return: The room's leaderboard
         """
-        return RaceRoomLeaderboard.from_json(
-            await server_signals.AsyncRace.GetLeaderboard.call_server(self)(room.id, room.auth_token)
-        )
+        async with self.server_get(
+            race_endpoints.room_leaderboard(room.id), params={"auth_token": room.auth_token}
+        ) as response:
+            return RaceRoomLeaderboard.from_json(await self._rest_json_or_raise(response))
 
     async def async_race_get_layout(self, room: AsyncRaceRoomEntry) -> LayoutDescription:
         """
+        GET /async-race-room/{room_id}/layout
+
         Gets the LayoutDescription for the given room. Must have already finished to work.
         :param room: The room's data from get_async_race_room
         :return: The room's layout
         """
         from randovania.layout.layout_description import LayoutDescription
 
-        return LayoutDescription.from_bytes(
-            await server_signals.AsyncRace.GetLayout.call_server(self)(room.id, room.auth_token)
-        )
+        async with self.server_get(
+            race_endpoints.room_layout(room.id), params={"auth_token": room.auth_token}
+        ) as response:
+            await self._raise_for_rest_error(response)
+            return LayoutDescription.from_bytes(await response.read())
 
     async def async_race_get_audit_log(self, room: AsyncRaceRoomEntry) -> list[AuditEntry]:
         """
+        GET /async-race-room/{room_id}/audit-log
+
         Gets all the AuditEntry for the given room.
         :param room: The room's data from get_async_race_room
         :return: The room's audit log entries
         """
-        log_entries = await server_signals.AsyncRace.GetAuditLog.call_server(self)(room.id, room.auth_token)
-        return [AuditEntry.from_json(entry) for entry in log_entries]
+        async with self.server_get(
+            race_endpoints.room_audit_log(room.id), params={"auth_token": room.auth_token}
+        ) as response:
+            log_entries = await self._rest_json_or_raise(response)
+            return [AuditEntry.from_json(entry) for entry in log_entries]
 
     async def async_race_get_livesplit_url(self, room: AsyncRaceRoomEntry) -> str:
         """
+        GET /async-race-room/{room_id}/livesplit-url
+
         Gets a URL that lets LiveSplit One control this user's Start/Finish/Pause events.
         :param room: The room's data from get_async_race_room
         :return: the URL to configure LiveSplit One with
         """
-        return await server_signals.AsyncRace.GetLivesplitUrl.call_server(self)(room.id)
+        async with self.server_get(race_endpoints.room_livesplit_url(room.id)) as response:
+            return typing.cast("str", await self._rest_json_or_raise(response))
 
     async def async_race_admin_get_admin_data(self, room_id: int) -> AsyncRaceRoomAdminData:
         """
+        GET /async-race-room/{room_id}/admin-data
+
         Gets all details regarding a room that are exclusive to administrators
         :param room_id:
         :return: The room's data exclusive to administrators
         """
-        return AsyncRaceRoomAdminData.from_json(
-            await server_signals.AsyncRace.AdminGetAdminData.call_server(self)(room_id)
-        )
+        async with self.server_get(race_endpoints.room_admin_data(room_id)) as response:
+            return AsyncRaceRoomAdminData.from_json(await self._rest_json_or_raise(response))
 
     async def async_race_admin_update_entries(
         self, room_id: int, modified_entries: Sequence[AsyncRaceEntryData]
     ) -> AsyncRaceRoomEntry:
         """
+        POST /async-race-room/{room_id}/admin-entries
+
         :param room_id:
         :param modified_entries: the user entries that were modified.
         :return: The room details
         """
-        return AsyncRaceRoomEntry.from_json(
-            await server_signals.AsyncRace.AdminUpdateEntries.call_server(self)(
-                room_id, [entry.as_json for entry in modified_entries]
-            )
-        )
+        async with self.server_post(
+            race_endpoints.room_admin_entries(room_id),
+            json=[entry.as_json for entry in modified_entries],
+        ) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
 
     async def async_race_join_and_export(
         self, room: AsyncRaceRoomEntry, cosmetic: BaseCosmeticPatches
     ) -> JsonObject_RO:
         """
+        POST /async-race-room/{room_id}/join-and-export
+
         Requests to join the given room, along with some patcher data to export the game.
         :param room: The room's data from get_async_race_room
         :param cosmetic: Cosmetic Patches to use for creating the patcher data
         :return: The patcher data necessary for exporting the game
         """
-        return await server_signals.AsyncRace.JoinAndExport.call_server(self)(
-            room.id, room.auth_token, cosmetic.as_json
-        )
+        async with self.server_post(
+            race_endpoints.room_join_and_export(room.id),
+            params={"auth_token": room.auth_token},
+            json=cosmetic.as_json,
+        ) as response:
+            return await self._rest_json_or_raise(response)
 
     async def async_race_change_state(self, room_id: int, status: AsyncRaceRoomUserStatus) -> AsyncRaceRoomEntry:
         """
+        POST /async-race-room/{room_id}/state
+
         Requests the server to transition the user's state to the requested one.
         :param room_id:
         :param status:
         :return: Updated room details
         """
-        return AsyncRaceRoomEntry.from_json(
-            await server_signals.AsyncRace.ChangeState.call_server(self)(room_id, status.value)
-        )
+        async with self.server_post(
+            race_endpoints.room_state(room_id),
+            params={"new_state": status.value},
+        ) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
 
     async def async_race_get_own_proof(self, room_id: int) -> tuple[str, str]:
         """
+        GET /async-race-room/{room_id}/own-proof
+
         Gets your own submission_notes and proof_url in the given room.
         :param room_id:
         :return: submission_notes and proof_url
         """
-        return await server_signals.AsyncRace.GetOwnProof.call_server(self)(room_id)
+        async with self.server_get(race_endpoints.room_own_proof(room_id)) as response:
+            submission_notes, proof_url = await self._rest_json_or_raise(response)
+            return submission_notes, proof_url
 
     async def async_race_submit_proof(self, room_id: int, submission_notes: str, proof_url: str) -> None:
         """
+        POST /async-race-room/{room_id}/proof
+
         Uploads the proof data for the given room.
         :param room_id:
         :param submission_notes:
         :param proof_url:
         :return:
         """
-        await server_signals.AsyncRace.SubmitProof.call_server(self)(room_id, submission_notes, proof_url)
+        async with self.server_post(
+            race_endpoints.room_submit_proof(room_id),
+            params={"submission_notes": submission_notes, "proof_url": proof_url},
+        ) as response:
+            await self._raise_for_rest_error(response)
 
     async def async_race_change_room_settings(self, room_id: int, settings: AsyncRaceSettings) -> AsyncRaceRoomEntry:
         """
+        PATCH /async-race-room/{room_id}
+
         Updates the settings for the given room.
         :param room_id:
         :param settings: The settings to replace with. Password is ignored.
         :return: The updated room entry.
         """
-        return AsyncRaceRoomEntry.from_json(
-            await server_signals.AsyncRace.ChangeRoomSettings.call_server(self)(room_id, settings.as_json)
-        )
+        async with self.server_patch(
+            race_endpoints.change_room(room_id),
+            json=settings.as_json,
+        ) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
 
     async def get_multiplayer_session_list(self, ignore_limit: bool) -> list[MultiplayerSessionListEntry]:
         return [
@@ -907,3 +953,40 @@ class NetworkClient:
 
         self._apply_default_rest_headers(kwargs)
         return self.http.post(f"{self.configuration['server_address']}/{url}", **kwargs)
+
+    def server_patch(
+        self,
+        url: str,
+        **kwargs: Unpack[_RequestOptions],
+    ) -> _RequestContextManager:
+        """Perform HTTP PATCH request to Randovania's REST Server."""
+
+        self._apply_default_rest_headers(kwargs)
+        return self.http.patch(f"{self.configuration['server_address']}/{url}", **kwargs)
+
+    async def _raise_for_rest_error(self, response: aiohttp.ClientResponse) -> None:
+        """
+        Mirrors the error-handling half of `server_call`: if the response indicates
+        a failure, try to decode it as one of our `error.BaseNetworkError` and raise
+        that.
+        """
+        if response.status < 400:
+            return
+
+        body = None
+        with contextlib.suppress(Exception):
+            body = await response.json()
+
+        if body is not None:
+            possible_error = error.BaseNetworkError.from_json(body)
+            if possible_error is not None:
+                if isinstance(possible_error, error.InvalidSessionError):
+                    self.logger.info("Received InvalidSession during a REST call to %s", response.url)
+                    await self.logout()
+                raise possible_error
+
+        response.raise_for_status()
+
+    async def _rest_json_or_raise(self, response: aiohttp.ClientResponse) -> Any:
+        await self._raise_for_rest_error(response)
+        return await response.json()
