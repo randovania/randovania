@@ -45,11 +45,17 @@ class AsyncRaceRoomSettingsWidget(QtWidgets.QWidget):
         Prepares a settings object out of the configuration filled to the dialog.
         :return:
         """
+        start_utc = self.ui.start_time_edit.dateTime().toUTC().toPython()
+        end_utc = self.ui.end_time_edit.dateTime().toUTC().toPython()
+
+        start_date = start_utc.replace(tzinfo=datetime.UTC)
+        end_date = end_utc.replace(tzinfo=datetime.UTC)
+
         return AsyncRaceSettings(
             name=self.ui.name_edit.text(),
             password=self.ui.password_edit.text() if self.ui.password_edit.isEnabled() else None,
-            start_date=self.ui.start_time_edit.dateTime().toPython(),
-            end_date=self.ui.end_time_edit.dateTime().toPython(),
+            start_date=start_date,
+            end_date=end_date,
             visibility=self.ui.visibility_combo_box.currentData(),
             allow_pause=self.ui.allow_pause_check.isChecked(),
         )

@@ -599,7 +599,7 @@ class AsyncRaceRoom(BaseModel):
 
     @property
     def start_datetime(self) -> datetime.datetime:
-        return datetime.datetime.fromisoformat(self.start_date)
+        return datetime.datetime.fromisoformat(self.start_date).replace(tzinfo=datetime.UTC)
 
     @start_datetime.setter
     def start_datetime(self, value: datetime.datetime | None) -> None:
@@ -607,7 +607,7 @@ class AsyncRaceRoom(BaseModel):
 
     @property
     def end_datetime(self) -> datetime.datetime:
-        return datetime.datetime.fromisoformat(self.end_date)
+        return datetime.datetime.fromisoformat(self.end_date).replace(tzinfo=datetime.UTC)
 
     @end_datetime.setter
     def end_datetime(self, value: datetime.datetime | None) -> None:

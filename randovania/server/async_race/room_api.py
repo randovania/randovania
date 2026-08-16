@@ -9,6 +9,7 @@ from collections.abc import Sequence
 
 import fastapi
 import peewee
+from fastapi.params import Body
 from peewee import Case
 from starlette.websockets import WebSocket, WebSocketDisconnect
 
@@ -137,10 +138,11 @@ async def list_rooms(sa: ServerAppDep, limit: int | None) -> Sequence[AsyncRaceR
 async def create_room(
     sa: ServerAppDep,
     user: UserDep,
-    layout_bin: TypedBytes[LayoutDescription],
+    layout_bin: typing.Annotated[TypedBytes[LayoutDescription], Body()],
     settings: AsyncRaceSettings,
 ) -> AsyncRaceRoomEntry:
-    layout = LayoutDescription.from_bytes(layout_bin)
+    layout_decoded = base64.b64decode(layout_bin)
+    layout = LayoutDescription.from_bytes(layout_decoded)
 
     if not (0 < len(settings.name) <= MAX_SESSION_NAME_LENGTH):
         raise error.InvalidActionError("Invalid session name length")
@@ -153,12 +155,13 @@ async def create_room(
             name=settings.name,
             password=settings.password,
             visibility=settings.visibility,
-            layout_description_json=layout_bin,
+            # FIXME: That is a horrible name for something which takes the `bytes`
+            layout_description_json=layout_decoded,
             game_details_json=json.dumps(GameDetails.from_layout(layout).as_json),
             creator=user,
             creation_date=lib.datetime_now(),
-            start_date=settings.start_date,
-            end_date=settings.end_date,
+            start_date=settings.start_date.isoformat(),
+            end_date=settings.end_date.isoformat(),
             allow_pause=settings.allow_pause,
         ).id
 

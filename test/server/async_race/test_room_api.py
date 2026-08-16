@@ -146,7 +146,7 @@ async def test_create_room(clean_database, test_files_dir, mocker: pytest_mock.M
     sa.encrypt_and_b85_dict.return_value = "test-auth-token"
 
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime2_seed_b.rdvgame"))
-    layout_bin = description.as_binary()
+    layout_base64 = base64.b64encode(description.as_binary())
     settings = AsyncRaceSettings(
         name="TheRoom",
         password=None,
@@ -157,7 +157,7 @@ async def test_create_room(clean_database, test_files_dir, mocker: pytest_mock.M
     )
 
     # Run
-    result = await room_api.create_room(sa, user1, layout_bin, settings)
+    result = await room_api.create_room(sa, user1, layout_base64, settings)
 
     # Assert
     assert result.model_dump(mode="json") == {
