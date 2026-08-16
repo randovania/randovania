@@ -90,7 +90,7 @@ def _fast_get_games_list_from_raw_layout(layout_description_json: bytes) -> list
     return [g for g in RandovaniaGame.sorted_all_games() if g.value in present_games]
 
 
-@router.get("/async-race-room/rooms")
+@router.get("/async-race-room")
 async def list_rooms(sa: ServerAppDep, limit: int | None) -> Sequence[AsyncRaceRoomListEntry]:
     now = lib.datetime_now()
 
@@ -132,7 +132,7 @@ async def list_rooms(sa: ServerAppDep, limit: int | None) -> Sequence[AsyncRaceR
     return sessions
 
 
-@router.post("/async-race-room/create")
+@router.post("/async-race-room")
 async def create_room(
     sa: ServerAppDep,
     user: UserDep,
@@ -164,7 +164,7 @@ async def create_room(
     return await AsyncRaceRoom.get_by_id(new_room_id).create_session_entry(sa, user)
 
 
-@router.patch("/async-race-room/room/{room_id}")
+@router.patch("/async-race-room/{room_id}")
 async def change_room_settings(
     sa: ServerAppDep,
     user: UserDep,
@@ -217,7 +217,7 @@ async def listen_to_room(sa: ServerApp, sid: str, room_id: int, listen: bool) ->
         await sa.sio.leave_room(sid, socketio_room)
 
 
-@router.get("/async-race-room/room/{room_id}")
+@router.get("/async-race-room/{room_id}")
 async def get_room(sa: ServerAppDep, user: UserDep, room_id: int, password: str | None) -> AsyncRaceRoomEntry:
     """
     Gets details about the given room id
@@ -233,7 +233,7 @@ async def get_room(sa: ServerAppDep, user: UserDep, room_id: int, password: str 
     return await room.create_session_entry(sa, user)
 
 
-@router.get("/async-race-room/room/{room_id}/refresh")
+@router.get("/async-race-room/{room_id}/refresh")
 async def refresh_room(sa: ServerAppDep, user: UserDep, room_id: int, auth_token: str) -> AsyncRaceRoomEntry:
     """
     Gets details about the given room id
@@ -248,7 +248,7 @@ async def refresh_room(sa: ServerAppDep, user: UserDep, room_id: int, auth_token
     return await room.create_session_entry(sa, user)
 
 
-@router.get("/async-race-room/room/{room_id}/leaderboard")
+@router.get("/async-race-room/{room_id}/leaderboard")
 async def get_leaderboard(
     sa: ServerAppDep,
     user: UserDep,
@@ -299,7 +299,7 @@ async def get_leaderboard(
     return RaceRoomLeaderboard(entries=entries)
 
 
-@router.get("/async-race-room/room/{room_id}/layout")
+@router.get("/async-race-room/{room_id}/layout")
 async def get_layout(sa: ServerAppDep, user: UserDep, room_id: int, auth_token: str) -> TypedBytes[LayoutDescription]:
     """
     Gets the layout description for the room, if it has finished
@@ -318,7 +318,7 @@ async def get_layout(sa: ServerAppDep, user: UserDep, room_id: int, auth_token: 
     return room.layout_description_json
 
 
-@router.get("/async-race-room/room/{room_id}/audit-log")
+@router.get("/async-race-room/{room_id}/audit-log")
 async def get_audit_log(
     sa: ServerAppDep,
     user: UserDep,
@@ -339,7 +339,7 @@ async def get_audit_log(
     return [log.as_entry() for log in room.audit_log]
 
 
-@router.get("/async-race-room/room/{room_id}/admin-data")
+@router.get("/async-race-room/{room_id}/admin-data")
 async def admin_get_admin_data(user: UserDep, room_id: int) -> AsyncRaceRoomAdminData:
     """
     Gets the all details of every user who has joined the room. Only accessible by admins.
@@ -357,7 +357,7 @@ async def admin_get_admin_data(user: UserDep, room_id: int) -> AsyncRaceRoomAdmi
     )
 
 
-@router.post("/async-race-room/room/{room_id}/admin-entries")
+@router.post("/async-race-room/{room_id}/admin-entries")
 async def admin_update_entries(
     sa: ServerAppDep, user: UserDep, room_id: int, new_entries: list[AsyncRaceEntryData]
 ) -> AsyncRaceRoomEntry:
@@ -403,7 +403,7 @@ async def admin_update_entries(
     return await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, user)
 
 
-@router.post("/async-race-room/room/{room_id}/join-and-export")
+@router.post("/async-race-room/{room_id}/join-and-export")
 async def join_and_export(
     sa: ServerAppDep, user: UserDep, room_id: int, auth_token: str, cosmetic_patches: BaseCosmeticPatches
 ) -> dict:
@@ -518,7 +518,7 @@ async def perform_state_change(
             it.save()
 
 
-@router.post("/async-race-room/room/{room_id}/state")
+@router.post("/async-race-room/{room_id}/state")
 async def change_state(sa: ServerAppDep, user: UserDep, room_id: int, new_state: str) -> AsyncRaceRoomEntry:
     """
     Adjusts the start date, finish date or forfeit flag of the user's entry based on the requested state.
@@ -536,7 +536,7 @@ async def change_state(sa: ServerAppDep, user: UserDep, room_id: int, new_state:
     return await room.create_session_entry(sa, user)
 
 
-@router.get("/async-race-room/room/{room_id}/own-proof")
+@router.get("/async-race-room/{room_id}/own-proof")
 async def get_own_proof(user: UserDep, room_id: int) -> tuple[str, str]:
     """
     This endpoint allows a user to request their own submission notes and proof url.
@@ -554,7 +554,7 @@ async def get_own_proof(user: UserDep, room_id: int) -> tuple[str, str]:
     return entry.submission_notes, entry.proof_url
 
 
-@router.post("/async-race-room/room/{room_id}/proof")
+@router.post("/async-race-room/{room_id}/proof")
 async def submit_proof(user: UserDep, room_id: int, submission_notes: str, proof_url: str) -> None:
     """
     This endpoint allows a user to record submission notes and a link to proof for their run.
@@ -574,7 +574,7 @@ async def submit_proof(user: UserDep, room_id: int, submission_notes: str, proof
     entry.save()
 
 
-@router.get("/async-race-room/room/{room_id}/livesplit-url")
+@router.get("/async-race-room/{room_id}/livesplit-url")
 async def get_livesplit_url(sa: ServerAppDep, user: UserDep, room_id: int) -> str:
     room = AsyncRaceRoom.get_by_id(room_id)
     entry = database.AsyncRaceEntry.entry_for(room, user)
