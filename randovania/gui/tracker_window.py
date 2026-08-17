@@ -154,7 +154,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             self.preset.configuration, game, patches
         )
         self.graph = graph
-        self.logic = Logic(graph, self.preset.configuration, record_paths=True)
+        self.logic = Logic([graph], record_paths=True)
         self.map_canvas.select_game(graph.game_enum)
         self.map_canvas.set_world_graph(graph)
 

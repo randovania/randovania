@@ -18,13 +18,11 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.graph.state import State
-    from randovania.graph.world_graph import WorldGraphNode
     from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.layout_description import LayoutDescription
-    from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logging import ActionDetails, ActionLogEntry, RollbackLogEntry, SkipLogEntry
-    from randovania.resolver.resolver import ActionPriority
+    from randovania.resolver.resolver import ActionPriority, PotentialAction
 
 
 class IndentedWidget(NamedTuple):
@@ -53,14 +51,13 @@ def get_brush_for_action(action_type: ActionType | str) -> QtGui.QBrush:
 
 
 async def _run_validator(logger: ResolverLogger, debug_level: debug.LogLevel, layout: LayoutDescription) -> str:
-    configuration: BaseConfiguration = layout.get_preset(0).configuration
-    patches = layout.all_patches[0]
-
     before = time.perf_counter()
     with debug.with_level(debug_level):
         final_state_by_resolve = await resolver.resolve(
-            configuration=configuration,
-            patches=patches,
+            [
+                (preset.configuration, patches)
+                for preset, patches in zip(layout.all_presets, layout.all_patches, strict=True)
+            ],
             logger=logger,
             record_paths=True,
         )
@@ -344,7 +341,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
 
         self.validator_widget.add_log_entry(widget, action_entry.location.identifier)
 
-    def _log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, WorldGraphNode, DamageState]]) -> None:
+    def _log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, *PotentialAction]]) -> None:
         if not self.should_show("CheckSatisfiable", self.log_level):
             return
 
@@ -354,7 +351,8 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
 
         self.validator_widget.add_simple_log_entry("Satisfiable actions", 1)
 
-        for _, node, _ in actions:
+        for _, wi, node, _ in actions:
+            # TODO: world name?
             self.validator_widget.add_simple_log_entry(
                 f"• {node.identifier.as_string}",
                 indent=2,
@@ -425,11 +423,11 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
             extra_text_font=font,
         )
 
-    def _log_victory(self, state: State | None) -> None:
+    def _log_victory(self, states: list[State] | None) -> None:
         if not self.should_show("Completion", self.log_level):
             return
 
-        if state is None:
+        if states is None:
             action_type = "Failure"
             details = "Game is impossible"
         else:
