@@ -622,11 +622,9 @@ def _serialize_dock_modifications(
                         assert len(strongly_connected_components) > 1
 
                         def component_number(name: str) -> int:
-                            i = 0
-                            for component in strongly_connected_components:
+                            for i, component in enumerate(strongly_connected_components):
                                 if name in list(component):
                                     return i
-                                i += 1
                             raise KeyError("Name not found")
 
                         # randomly pick two room pairs which are not members of the same strongly connected

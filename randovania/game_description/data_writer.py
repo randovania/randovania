@@ -94,7 +94,7 @@ def write_requirement(requirement: Requirement) -> dict:
         return write_node_requirement(requirement)
 
     else:
-        raise ValueError(f"Unknown requirement type: {type(requirement)}")
+        raise TypeError(f"Unknown requirement type: {type(requirement)}")
 
 
 def write_optional_requirement(requirement: Requirement | None) -> dict | None:
@@ -342,7 +342,7 @@ def write_node(node: Node) -> dict:
         data["requirement_to_activate"] = write_requirement(node.requirement_to_activate)
 
     else:
-        raise ValueError(f"Unknown node class: {node}")
+        raise TypeError(f"Unknown node class: {node}")
 
     return data
 

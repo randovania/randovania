@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Improved average location distribution of "inert" pickups such as Prime Artifacts and Echoes STKs.
 - Changed: Updated the Nintendont version that is used when uploading it directly to the Wii. It will now reconnect to the network once it has lost a connection.
 - Changed: The Nintendont connector will not try to connect to the Homebrew Channel anymore for giving better feedback.
--
+- Fixed: Certain interactions with the server will no longer permanently fails in certain cases.
+
 ### Metroid Dread
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
@@ -60,6 +61,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Phazon Mines
 
 - Changed: Save Station Mines A: Now a valid target for Starting Room and Shuffled Elevator destination. No longer requires Scan Visor when "Unlock Save Station Doors" option is enabled.
+- Fixed: Mines Security Station: The event to unlock the doors can now be logically visited multiple times, making it possible for it to be considered a safe action.
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+##### Dark Torvus Bog
+
+- Added: NSJ variant of the BSJ to go up through Sacrificial Chamber before Grapple Guardian, set as advanced.
+- Added: The various tricks that require power bombs to go up through Sacrificial Chamber now have videos.
 
 ## [10.10.0] - 2026-08-02
 

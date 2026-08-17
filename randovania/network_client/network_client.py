@@ -3,10 +3,8 @@ from __future__ import annotations
 import asyncio
 import base64
 import contextlib
-import functools
 import hashlib
 import logging
-import ssl
 import time
 import typing
 import uuid
@@ -103,6 +101,8 @@ _MAXIMUM_TIMEOUT = 180
 _TIMEOUTS_TO_DISCONNECT = 4
 _TIMEOUT_STEP = 10
 
+# Explicitly trusted when connecting to the server, in addition to the certificates from `certifi`.
+# Kept from when the DST Root CA X3 expiration caused this root to be missing from some hosts.
 isrgrootx1 = """-----BEGIN CERTIFICATE-----
 MIIFazCCA1OgAwIBAgIRAIIQz7DSQONZRGPgu2OCiwAwDQYJKoZIhvcNAQELBQAw
 TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
@@ -136,21 +136,12 @@ emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=
 -----END CERTIFICATE-----"""
 
 
-def _apply_default_rest_headers(kwargs: _RequestOptions) -> None:
-    """Adds the default headers we should send to every REST request."""
-    headers = kwargs.get("headers")
-    if headers is None:
-        kwargs["headers"] = headers = {}
-    else:
-        assert isinstance(headers, dict)
-
-    if "Accept" not in headers:
-        headers["Accept"] = "application/json"
-
-
 class NetworkClient:
+    _background_tasks: set[asyncio.Task]
+    _was_shut_down: bool = False
+
+    # socketio
     sio: socketio.AsyncClient
-    _current_user: CurrentUser | None = None
     _connection_state: ConnectionState
     _call_lock: asyncio.Lock
     _connect_lock: asyncio.Lock
@@ -158,37 +149,39 @@ class NetworkClient:
     _restore_session_task: asyncio.Task | None = None
     _connect_error: str | None = None
     _num_emit_failures: int = 0
+
+    # REST
+    _http: aiohttp.ClientSession | None = None
+
+    # Authentication / State
+    _session_id: str | None = None
+    _encoded_session: str | None = None
     _sessions_interested_in: set[int]
     _tracking_worlds: set[tuple[uuid.UUID, int]]
+    _current_user: CurrentUser | None = None
+
+    # Preferences
     _allow_reporting_username: bool = False
 
     def __init__(self, user_data_dir: Path, configuration: NetworkConfiguration):
         self.logger = logging.getLogger("NetworkClient")
 
-        old_connect = aiohttp.ClientSession.ws_connect
-
-        @functools.wraps(old_connect)
-        def wrap_ws_connect(*args: Any, **kwargs: Any) -> Any:
-            if any("randovania.metroidprime.run" in x for x in args if isinstance(x, str)):
-                kwargs["ssl"] = ssl.create_default_context(cadata=isrgrootx1)
-            return old_connect(*args, **kwargs)
-
-        aiohttp.ClientSession.ws_connect = wrap_ws_connect  # type: ignore[method-assign]
-
         self._connection_state = ConnectionState.Disconnected
-        self.http = http_lib.http_session(
-            headers=connection_headers(),
-        )
+        self._ssl_context = http_lib.ssl_context(isrgrootx1)
+
+        verify_ssl = configuration.get("verify_ssl", True)
         self.sio = socketio.AsyncClient(
-            ssl_verify=configuration.get("verify_ssl", True),
+            ssl_verify=verify_ssl,
             reconnection=False,
-            http_session=self.http,
+            # Ensures the websocket connection uses our certificates, instead of the host's.
+            websocket_extra_options={"ssl": self._ssl_context} if verify_ssl else {},
         )
         self._call_lock = asyncio.Lock()
         self._connect_lock = asyncio.Lock()
         self._current_timeout = _MINIMUM_TIMEOUT
         self._sessions_interested_in = set()
         self._tracking_worlds = set()
+        self._background_tasks = set()
 
         self.configuration = configuration
         encoded_address = _hash_address(self.configuration["server_address"])
@@ -207,6 +200,50 @@ class NetworkClient:
         client_signals.WorldBinaryInventory.register(self.sio, self._on_world_user_inventory_raw)
         client_signals.WorldJsonInventory.register(self.sio, self._on_world_user_inventory_json)
         client_signals.AsyncRaceRoomUpdate.register(self.sio, self._on_async_race_room_update_raw)
+
+    @property
+    def http(self) -> aiohttp.ClientSession:
+        """
+        The session used for all REST requests to the server.
+
+        A `aiohttp.ClientSession` can be closed for reasons outside our control and can't be re-opened,
+        so a new one is created whenever that happens. For this reason, no state can be kept in the
+        session itself: `_rest_headers` provides the headers every request needs.
+        """
+        if self._was_shut_down:
+            raise RuntimeError("This NetworkClient was shut down and can't be used anymore.")
+
+        if self._http is None:
+            self._http = http_lib.http_session(context=self._ssl_context)
+        elif self._http.closed:
+            self.logger.warning("The http session was closed. Creating a new one.")
+            self._http = http_lib.http_session(context=self._ssl_context)
+
+        return self._http
+
+    def _rest_headers(self) -> dict[str, str]:
+        """The headers we should send with every REST request."""
+        headers = connection_headers()
+        headers["Accept"] = "application/json"
+
+        if self._session_id is not None:
+            headers["X-Randovania-Sid"] = self._session_id
+
+        if self._encoded_session is not None:
+            headers["X-Randovania-Session"] = self._encoded_session
+
+        return headers
+
+    def _apply_default_rest_headers(self, kwargs: _RequestOptions) -> None:
+        """Adds the default headers we should send to every REST request, without overriding given ones."""
+        headers = kwargs.get("headers")
+        if headers is None:
+            kwargs["headers"] = self._rest_headers()
+        else:
+            assert isinstance(headers, dict)
+            for name, value in self._rest_headers().items():
+                if name not in headers:
+                    headers[name] = value
 
     @property
     def connection_state(self) -> ConnectionState:
@@ -301,7 +338,10 @@ class NetworkClient:
 
     async def shutdown(self) -> None:
         await self.disconnect_from_server()
-        await self.http.close()
+        self._was_shut_down = True
+        if self._http is not None:
+            await self._http.close()
+            self._http = None
 
     async def _restore_session(self) -> None:
         persisted_session = await self.read_persisted_session()
@@ -380,7 +420,7 @@ class NetworkClient:
 
     async def on_user_session_updated(self, new_session: dict) -> None:
         if new_session["sid"] is not None:
-            self.http.headers["X-Randovania-Sid"] = new_session["sid"]
+            self._session_id = new_session["sid"]
 
         self._current_user = CurrentUser.from_json(new_session["user"])
         self._update_reported_username()
@@ -390,7 +430,7 @@ class NetworkClient:
 
         self.logger.info(f"{self._current_user.name}, state: {self.connection_state}")
 
-        self.http.headers["X-Randovania-Session"] = new_session["encoded_session_b85"]
+        self._encoded_session = new_session["encoded_session_b85"]
         encoded_session_data = base64.b85decode(new_session["encoded_session_b85"])
 
         self.server_data_path.mkdir(exist_ok=True, parents=True)
@@ -698,7 +738,7 @@ class NetworkClient:
         :param session_name: The name of the session to create.
         :return:
         """
-        assert self.http.headers["X-Randovania-Sid"] is not None
+        assert self._session_id is not None
 
         async with self.server_post("session", json={"name": session_name}) as response:
             # TODO: this can very much be a generic component
@@ -728,6 +768,27 @@ class NetworkClient:
     async def join_multiplayer_session(self, session_id: int, password: str | None) -> MultiplayerSessionEntry:
         result = await server_signals.Multiplayer.JoinSession.call_server(self)(session_id, password)
         return self._with_new_session(result)
+
+    def _run_in_background(self, coro: typing.Coroutine[Any, Any, Any], description: str) -> None:
+        """Schedules a coroutine to run without awaiting it, logging any error it raises."""
+
+        async def wrapper() -> None:
+            try:
+                await coro
+            except Exception:
+                self.logger.exception("Error while running background task: %s", description)
+
+        task = asyncio.ensure_future(wrapper())
+        self._background_tasks.add(task)
+        task.add_done_callback(self._background_tasks.discard)
+
+    def remove_interest_in_session(self, session_id: int) -> None:
+        self._sessions_interested_in.discard(session_id)
+        if not self.connection_state.is_disconnected:
+            self._run_in_background(
+                server_signals.Multiplayer.ListenToSession.call_server(self)(session_id, False),
+                f"stop listening to session {session_id}",
+            )
 
     async def listen_to_session(self, session_id: int, listen: bool) -> None:
         await server_signals.Multiplayer.ListenToSession.call_server(self)(session_id, listen)
@@ -766,7 +827,7 @@ class NetworkClient:
     async def logout(self) -> None:
         self.logger.info("Logging out")
         self.session_data_path.unlink()
-        del self.http.headers["X-Randovania-Session"]
+        self._encoded_session = None
         self._current_user = None
         self._update_reported_username()
 
@@ -834,7 +895,7 @@ class NetworkClient:
         >>>         return CurrentUser.from_json(await response.json())
         """
 
-        _apply_default_rest_headers(kwargs)
+        self._apply_default_rest_headers(kwargs)
         return self.http.get(f"{self.configuration['server_address']}/{url}", **kwargs)
 
     def server_post(
@@ -844,5 +905,5 @@ class NetworkClient:
     ) -> _RequestContextManager:
         """Perform HTTP POST request to Randovania's REST Server."""
 
-        _apply_default_rest_headers(kwargs)
+        self._apply_default_rest_headers(kwargs)
         return self.http.post(f"{self.configuration['server_address']}/{url}", **kwargs)

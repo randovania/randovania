@@ -19,6 +19,7 @@ Examples:
 
 import argparse
 import csv
+import logging
 import os
 import platform
 import re
@@ -28,6 +29,8 @@ import threading
 import typing
 from collections import Counter, defaultdict
 from pathlib import Path
+
+logger = logging.getLogger("pyspy-tools")
 
 
 def parse_raw_profile(file: typing.TextIO) -> list[list[str]]:
@@ -427,7 +430,7 @@ def map_cpp_to_python_line(cpp_file: Path, cpp_line: int, context_lines: int = 5
     Map a C++ line number back to the original Python source line.
     Cython embeds comments like: /* "randovania/_native.py":1378
     """
-    if not cpp_file.exists() or not cpp_file.suffix == ".cpp":
+    if not cpp_file.exists() or cpp_file.suffix != ".cpp":
         return None
 
     try:
@@ -459,7 +462,7 @@ def map_cpp_to_python_line(cpp_file: Path, cpp_line: int, context_lines: int = 5
                     return (py_file, py_line)
 
     except Exception:
-        pass
+        logger.exception("Unable to make cpp stack to python line")
 
     return None
 

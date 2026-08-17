@@ -73,7 +73,6 @@ class NodeListHelper:
         dict[AreaIdentifier, AreaCheckBox],
         dict[NodeIdentifier, NodeCheckBox],
     ]:
-        """"""
         region_to_group: dict[str, RegionGroupBox] = {}
         checks_for_region: dict[str, RegionCheckBox] = {}
         checks_for_area: dict[AreaIdentifier, AreaCheckBox] = {}

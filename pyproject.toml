@@ -20,6 +20,7 @@ classifiers = [
     "Intended Audience :: End Users/Desktop",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Games/Entertainment",
 ]
 requires-python = ">=3.12"
@@ -87,7 +88,7 @@ exporters = [
     "planets-yapr==1.0.3",
 
     # Metroid Prime 1
-    "py-randomprime==1.33.0",
+    "py-randomprime==1.33.1",
     "random-enemy-attributes==1.0.9",
 
     # Metroid Prime 1/2
@@ -99,7 +100,7 @@ exporters = [
     "mp2hudcolor==1.0.14",
 
     # Metroid Prime Hunters
-    "open-prime-hunters-rando==0.13.2",
+    "open-prime-hunters-rando==0.13.3",
 
     # Metroid: Samus Returns
     "open-samus-returns-rando==3.6.1",
@@ -257,11 +258,39 @@ extend-select = [
     "PLR0124", # Name compared with itself, consider replacing {actual}
 ]
 ignore = [
-    "ISC001",  # may cause conflicts with formatter
+    "ISC001",   # may cause conflicts with formatter
     "PLW0603",  # we use some globals here and there
-    "PLW2901",  # TODO: should actually fix these
     "PLC0415",  # we explicitly use the import within a function to postpone the loading of a module
+    "PLR2044",  # Line with empty comment
+    "SIM118",   # I like `key in dict.keys()` :(
 
+    # FIXME: revisit these codes
+    "ASYNC221", # Async functions should not run processes with blocking methods
+    "BLE001",   # Do not catch blind exception: `Exception`
+    "B008",     # Do not perform function call `<>` in argument defaults
+    "B009",     # Do not call `getattr` with a constant attribute value. It is not any safer than normal property access.
+    "B020",     # Loop control variable `report` overrides iterable it iterates
+    "B023",     # Function definition does not bind loop variable `game`
+    "DTZ001",   # `datetime.datetime()` called without a `tzinfo` argument
+    "DTZ005",   # `datetime.datetime.now()` called without a `tz` argument
+    "DTZ007",   # Naive datetime constructed using `datetime.datetime.strptime()` without %z
+    "DTZ901",   # Use of `datetime.datetime.min` without timezone information"
+    "FLY002",   # Consider f-string instead of string join
+    "FURB162",  # Unnecessary timezone replacement with zero offset
+    "ISC004",   # Unparenthesized implicit string concatenation in collection
+    "LOG015",   # call on root logger
+    "PERF102",  # When using only the values of a dict use the `values()` method
+    "PLR1704",  # Redefining argument with the local name
+    "PLW2901",  # `for` loop variable `data` overwritten by assignment target
+    "PYI063",   # Use PEP 570 syntax for positional-only parameters
+    "RET501",   # Do not explicitly `return None` in function if it is the only possible return value
+    "S110",     # `try`-`except`-`pass` detected, consider logging the exception
+    "SIM102",   # Use a single `if` statement instead of nested `if` statements
+    "SIM103",   # Return the negated condition directly
+    "SIM114",   # Combine `if` branches using logical `or` operator
+    "SIM117",   # Use a single `with` statement with multiple contexts instead of nested `with` statements
+    "TRY002",   # Create your own exception
+    "TRY401",   # Redundant exception object included in `logging.exception` call
 ]
 
 [tool.ruff.lint.isort]
