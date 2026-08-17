@@ -22,7 +22,7 @@ class AsyncRaceRoomEndpoints:
     room_own_proof_template: str = "/{room_id}/own-proof"
     room_submit_proof_template: str = "/{room_id}/proof"
     room_livesplit_url_template: str = "/{room_id}/livesplit-url"
-    room_livesplit_integratione: str = "/{room_id}/livesplit/{token}"
+    room_livesplit_integration_template: str = "/{room_id}/livesplit/{token}"
 
     def _build(self, template: str, **kwargs: object) -> str:
         return f"{self.prefix}{template}".format(**kwargs).lstrip("/")

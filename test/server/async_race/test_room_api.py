@@ -118,7 +118,7 @@ async def test_list_rooms(simple_room, mocker: pytest_mock.MockFixture):
     results = await room_api.list_rooms(sa, None)
 
     # Assert
-    assert results == [
+    assert [it.model_dump(mode="json") for it in results] == [
         {
             "id": simple_room.id,
             "name": simple_room.name,
@@ -146,7 +146,7 @@ async def test_create_room(clean_database, test_files_dir, mocker: pytest_mock.M
     sa.encrypt_and_b85_dict.return_value = "test-auth-token"
 
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime2_seed_b.rdvgame"))
-    layout_base64 = base64.b64encode(description.as_binary())
+    layout_bin = description.as_binary()
     settings = AsyncRaceSettings(
         name="TheRoom",
         password=None,
@@ -157,7 +157,7 @@ async def test_create_room(clean_database, test_files_dir, mocker: pytest_mock.M
     )
 
     # Run
-    result = await room_api.create_room(sa, user1, layout_base64, settings)
+    result = await room_api.create_room(sa, user1, layout_bin, settings)
 
     # Assert
     assert result.model_dump(mode="json") == {
@@ -453,7 +453,7 @@ async def test_change_state(
 
     # Run
     with expectation:
-        await room_api.change_state(sa, user, room.id, after_state.value)
+        await room_api.change_state(sa, user, room.id, after_state)
 
     # Assert
     if before_state != AsyncRaceRoomUserStatus.NOT_MEMBER:
@@ -567,7 +567,8 @@ async def test_get_layout_valid(simple_room, mocker: pytest_mock.MockFixture):
 
     # Assert
     mock_verify.assert_awaited_once_with(sa, user, simple_room, "AuthTokenx")
-    assert result == simple_room.layout_description_json
+    assert result.body == simple_room.layout_description_json
+    assert result.media_type == "application/octet-stream"
 
 
 async def test_admin_get_admin_data_non_admin(simple_room):

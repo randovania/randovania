@@ -9,13 +9,13 @@ from collections.abc import Sequence
 
 import fastapi
 import peewee
+import pydantic
 from fastapi.params import Body
 from peewee import Case
 from starlette.websockets import WebSocket, WebSocketDisconnect
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common.worlds_configuration import WorldsConfiguration
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
 from randovania.network_common import error
 from randovania.network_common.async_race_room import (
@@ -36,7 +36,6 @@ from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
 )
 from randovania.network_common.signals import client_signals, server_signals
-from randovania.network_common.signals.common import TypedBytes
 from randovania.server import database, lib
 from randovania.server.database import (
     AsyncRaceEntryPause,
@@ -93,7 +92,7 @@ def _fast_get_games_list_from_raw_layout(layout_description_json: bytes) -> list
 
 
 @router.get(endpoints.list_rooms_template)
-async def list_rooms(sa: ServerAppDep, limit: int | None) -> Sequence[AsyncRaceRoomListEntry]:
+async def list_rooms(sa: ServerAppDep, limit: int | None = None) -> Sequence[AsyncRaceRoomListEntry]:
     now = lib.datetime_now()
 
     def construct_helper(**args: typing.Any) -> AsyncRaceRoomListEntry:
@@ -112,7 +111,7 @@ async def list_rooms(sa: ServerAppDep, limit: int | None) -> Sequence[AsyncRaceR
         args["race_status"] = AsyncRaceRoomRaceStatus.from_dates(args["start_date"], args["end_date"], now)
         return AsyncRaceRoomListEntry(**args)
 
-    sessions: list[AsyncRaceRoomListEntry] = (
+    sessions = (
         AsyncRaceRoom.select(
             AsyncRaceRoom.id,
             AsyncRaceRoom.name,
@@ -131,18 +130,21 @@ async def list_rooms(sa: ServerAppDep, limit: int | None) -> Sequence[AsyncRaceR
         .objects(construct_helper)
     )
 
-    return sessions
+    return list(sessions)
 
 
 @router.post(endpoints.create_room_template)
 async def create_room(
     sa: ServerAppDep,
     user: UserDep,
-    layout_bin: typing.Annotated[TypedBytes[LayoutDescription], Body()],
+    layout_bin: typing.Annotated[pydantic.Base64Bytes, Body()],
     settings: AsyncRaceSettings,
 ) -> AsyncRaceRoomEntry:
-    layout_decoded = base64.b64decode(layout_bin)
-    layout = LayoutDescription.from_bytes(layout_decoded)
+    layout_decoded = bytes(layout_bin)
+    try:
+        layout = LayoutDescription.from_bytes(layout_decoded)
+    except Exception as e:
+        raise error.InvalidActionError(f"Unable to decode layout: {e}")
 
     if not (0 < len(settings.name) <= MAX_SESSION_NAME_LENGTH):
         raise error.InvalidActionError("Invalid session name length")
@@ -222,7 +224,7 @@ async def listen_to_room(sa: ServerApp, sid: str, room_id: int, listen: bool) ->
 
 
 @router.get(endpoints.get_room_template)
-async def get_room(sa: ServerAppDep, user: UserDep, room_id: int, password: str | None) -> AsyncRaceRoomEntry:
+async def get_room(sa: ServerAppDep, user: UserDep, room_id: int, password: str | None = None) -> AsyncRaceRoomEntry:
     """
     Gets details about the given room id
     :param sa:
@@ -303,8 +305,8 @@ async def get_leaderboard(
     return RaceRoomLeaderboard(entries=entries)
 
 
-@router.get(endpoints.room_layout_template)
-async def get_layout(sa: ServerAppDep, user: UserDep, room_id: int, auth_token: str) -> TypedBytes[LayoutDescription]:
+@router.get(endpoints.room_layout_template, response_class=fastapi.Response)
+async def get_layout(sa: ServerAppDep, user: UserDep, room_id: int, auth_token: str) -> fastapi.Response:
     """
     Gets the layout description for the room, if it has finished
     :param sa:
@@ -319,7 +321,7 @@ async def get_layout(sa: ServerAppDep, user: UserDep, room_id: int, auth_token: 
     if room.end_datetime > lib.datetime_now():
         raise error.NotAuthorizedForActionError
 
-    return room.layout_description_json
+    return fastapi.Response(content=room.layout_description_json, media_type="application/octet-stream")
 
 
 @router.get(endpoints.room_audit_log_template)
@@ -390,7 +392,8 @@ async def admin_update_entries(
                 raise error.InvalidActionError(f"Invalid dates for {modification.user.name}")
 
             entry = database.AsyncRaceEntry.entry_for(room, modification.user.id)
-            assert entry is not None
+            if entry is None:
+                raise error.InvalidActionError(f"{modification.user.name} is not a member of this room")
             entry.start_datetime = modification.start_date
             entry.finish_datetime = modification.finish_date
             entry.forfeit = modification.forfeit
@@ -409,7 +412,11 @@ async def admin_update_entries(
 
 @router.post(endpoints.room_join_and_export_template)
 async def join_and_export(
-    sa: ServerAppDep, user: UserDep, room_id: int, auth_token: str, cosmetic_patches: BaseCosmeticPatches
+    sa: ServerAppDep,
+    user: UserDep,
+    room_id: int,
+    auth_token: str,
+    cosmetic_json: typing.Annotated[dict, Body()],
 ) -> dict:
     """
 
@@ -417,7 +424,8 @@ async def join_and_export(
     :param user:
     :param room_id: The room to join
     :param auth_token:
-    :param cosmetic_json:
+    :param cosmetic_json: The json for a BaseCosmeticPatches subclass. Which subclass depends on the room's game,
+    so it can only be decoded after the room is known.
     :return:
     """
     room = AsyncRaceRoom.get_by_id(room_id)
@@ -425,11 +433,6 @@ async def join_and_export(
 
     if room.get_race_status(lib.datetime_now()) != AsyncRaceRoomRaceStatus.ACTIVE:
         raise error.NotAuthorizedForActionError("Room is not active")
-
-    database.AsyncRaceEntry.get_or_create(
-        room=room,
-        user=user,
-    )
 
     layout_description = room.layout_description
     worlds_config = WorldsConfiguration(
@@ -440,6 +443,16 @@ async def join_and_export(
         is_coop=False,
     )
     preset = layout_description.get_preset(worlds_config.world_index)
+
+    try:
+        cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)
+    except Exception as e:
+        raise error.InvalidActionError(f"Invalid cosmetic patches for {preset.game.long_name}: {e}")
+
+    database.AsyncRaceEntry.get_or_create(
+        room=room,
+        user=user,
+    )
 
     data_factory = preset.game.patch_data_factory(layout_description, worlds_config, cosmetic_patches)
     rdv_meta = data_factory.create_default_patcher_data_meta()
@@ -523,19 +536,20 @@ async def perform_state_change(
 
 
 @router.post(endpoints.room_state_template)
-async def change_state(sa: ServerAppDep, user: UserDep, room_id: int, new_state: str) -> AsyncRaceRoomEntry:
+async def change_state(
+    sa: ServerAppDep, user: UserDep, room_id: int, new_state: AsyncRaceRoomUserStatus
+) -> AsyncRaceRoomEntry:
     """
     Adjusts the start date, finish date or forfeit flag of the user's entry based on the requested state.
     :param sa:
     :param user:
     :param room_id:
-    :param sid:
     :param new_state:
     :return:
     """
     room = AsyncRaceRoom.get_by_id(room_id)
 
-    await perform_state_change(room, user, AsyncRaceRoomUserStatus(new_state))
+    await perform_state_change(room, user, new_state)
 
     return await room.create_session_entry(sa, user)
 
@@ -613,7 +627,7 @@ async def emit_async_room_update(sa: ServerApp, room: AsyncRaceRoom, sid_or_user
     )((await room.create_session_entry(sa, user)).as_json)
 
 
-@router.websocket(endpoints.room_livesplit_integratione)
+@router.websocket(endpoints.room_livesplit_integration_template)
 async def livesplit_integration(
     websocket: WebSocket,
     room_id: int,

@@ -3,7 +3,7 @@ import datetime
 import enum
 from typing import Self
 
-from pydantic import field_serializer
+from pydantic import AwareDatetime, field_serializer
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
@@ -16,8 +16,8 @@ from randovania.network_common.user import RandovaniaUser
 class AsyncRaceSettings(JsonBaseModel):
     name: str
     password: str | None
-    start_date: datetime.datetime
-    end_date: datetime.datetime
+    start_date: AwareDatetime
+    end_date: AwareDatetime
     visibility: MultiplayerSessionVisibility
     allow_pause: bool
 
