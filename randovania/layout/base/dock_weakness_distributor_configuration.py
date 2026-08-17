@@ -19,6 +19,16 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.dock import DockTypeDatabase
 
+# some possible names/descriptions:
+# - INDIVIDUAL_BLIND, "Randomizes each door, while door placement is blind to the player's equipment"
+# - INDIVIDUAL_THOROUGH, "Randomizes each door such that they have a greater impact on progression, but takes longer to
+#   generate"
+# - INDIVIDUAL_HARD or CHALLENGE or something, "Randomizes each door, placing them in more challenging positions"
+
+# I do want to call attention to the longer generation time if possible, so I'm gonna use "thorough" for now.
+# That said, I don't think the name's very good. It MIGHT be OKAY for players, but I think it's not super descriptive on
+# the dev side of things, so if a better one is proposed I'm super down for that instead.
+
 
 class DockWeaknessDistributorMode(BitPackEnum, Enum):
     long_name: str
@@ -26,8 +36,8 @@ class DockWeaknessDistributorMode(BitPackEnum, Enum):
 
     ORIGINAL = "original"
     INDIVIDUAL_DOCK = "individual-dock"
+    INDIVIDUAL_THOROUGH = "individual_thorough"
     WEAKNESS_TO_WEAKNESS = "weaknesses-to-weakness"
-    # INDIVIDUAL_BLIND = "individual_blind"
 
 
 enum_lib.add_long_name(
@@ -35,8 +45,8 @@ enum_lib.add_long_name(
     {
         DockWeaknessDistributorMode.ORIGINAL: "Unmodified",
         DockWeaknessDistributorMode.INDIVIDUAL_DOCK: "Individually",
+        DockWeaknessDistributorMode.INDIVIDUAL_THOROUGH: "Individually (Thorough)",
         DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS: "By Type",
-        # DockWeaknessDistributorMode.INDIVIDUAL_BLIND: "Individually (Blind)",
     },
 )
 
@@ -47,12 +57,12 @@ enum_lib.add_per_enum_field(
         # FIXME: these are Door specific
         DockWeaknessDistributorMode.ORIGINAL: "Original door locks",
         DockWeaknessDistributorMode.INDIVIDUAL_DOCK: "Randomizes each door individually",
+        DockWeaknessDistributorMode.INDIVIDUAL_THOROUGH: (
+            "Randomizes each door such that they have a greater impact on progression, but takes longer to generate"
+        ),
         DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS: (
             "Randomizes all doors by type, turning all of one type into another"
         ),
-        # DockWeaknessDistributorMode.INDIVIDUAL_BLIND: (
-        #     "Randomizes each door, while door placement is blind to the player's equipment"
-        # ),
     },
 )
 
@@ -149,19 +159,24 @@ class WeaknessDistributorTypeState(BitPackValue, DataclassPostInitTypeCheck):
 class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCheck):
     types_state: dict[DockType, WeaknessDistributorTypeState]
 
-    # Doors-then-items implementation
-    doors_first: bool = False  # TODO remove eventually to focus repo on items-then-doors alt method
+    # TODO both locked_percentage and attempt_similar_quantities probably need to be in dict[DockType]'s instead, so
+    # that dock_types other than doors can be supported. A lot of changes in dock_weakness_distributor.py need similar
+    # adjustments
 
     # Makes sure seeds don't feel too locked down, while also significantly reducing generation time
-    locked_percentage: float = 0.2  # TODO add to GUI
+    locked_percentage: int = 20
+    # NOTE locked_percentage should probably be its own setting with a spinbox on the dock tab in the UI. I noticed
+    # that, depending on the game, different values felt better or worse. For example, MSR feels perfect with 25%
+    # locked, but MP2 feels terrible; similarly, MP2 feels best at 20% and MSR feels terrible. I could go on about why
+    # this is, I think it's interesting stuff, but this isn't really the place, is it? I imagine trick settings also
+    # effect how many doors "feel right."
 
-    # Temporary until I'm ready to add a DockWeaknessDistributorMode for my blind-to-equipment approach
-    temp_blind_mode = True
-
-    # Not sure if this SHOULD be an alternate setting. I do think it'd help with normal INDIVIDUAL, so it's worth a try?
-    # attempt_variety? balance_ something or other? It's generally about making sure all doors end up in similar
-    # quantities. I dunno
-    attempt_similar_quantities = True
+    # Determines whether the weights of each weakness will be adjusted each step to help close the gap in quantities
+    # between weaknesses. Sorry if that's confusing I can try to reword this
+    attempt_similar_quantities: bool = True
+    # NOTE I'd like this to be its own setting, but I could see why we wouldn't want it if UI clutter's an issue. I do
+    # think it'd help with normal INDIVIDUAL_DOCK, so it's worth keeping as a separate thing, in my opinion. Not my call
+    # though. If you don't want it as its own thing, we could just fold its effects into INDIVIDUAL_THOROUGH.
 
     @property
     def as_json(self) -> dict:
@@ -270,7 +285,10 @@ class DockWeaknessDistributorConfiguration(BitPackValue, DataclassPostInitTypeCh
 
         for dock_type in self.types_state:
             mode = self.get_mode_for(dock_type)
-            if mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK:
+            if (
+                mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK
+                or mode == DockWeaknessDistributorMode.INDIVIDUAL_THOROUGH
+            ):
                 danger.append(f"{dock_type.get_weakness_distributor().ui_label} - {mode.long_name}: {mode.description}")
         return danger
 
