@@ -26,6 +26,7 @@ from randovania.network_common.async_race_room import (
     AsyncRaceRoomRaceStatus,
     AsyncRaceRoomUserStatus,
 )
+from randovania.network_common.async_race_room_endpoints import async_race_room_endpoints as race_endpoints
 from randovania.network_common.authentication import AuthenticationMethod
 from randovania.network_common.error import (
     InvalidActionError,
@@ -690,7 +691,10 @@ async def test_login_as_guest(client: NetworkClient):
 
 
 async def test_async_race_get_livesplit_url(client: NetworkClient):
-    client.server_call = AsyncMock()
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 200
+    response.json.return_value = "https://example.com/livesplit/1234"
 
     room = MagicMock()
     room.id = 1234
@@ -699,10 +703,8 @@ async def test_async_race_get_livesplit_url(client: NetworkClient):
     result = await client.async_race_get_livesplit_url(room)
 
     # Assert
-    assert result == client.server_call.return_value
-    client.server_call.assert_awaited_once_with(
-        "async_race_get_livesplit_url", 1234, namespace=None, handle_invalid_session=True
-    )
+    assert result == "https://example.com/livesplit/1234"
+    client.server_get.assert_called_once_with(race_endpoints.room_livesplit_url(1234))
 
 
 async def test_on_async_race_room_update_raw(client: NetworkClient):

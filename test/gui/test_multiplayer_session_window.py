@@ -1076,7 +1076,7 @@ async def test_update_session_audit_log(window: MultiplayerSessionWindow):
 
     log = MultiplayerSessionAuditLog(
         session_id=window._session.id,
-        entries=[AuditEntry("You", f"Did something for the {i}-th time.", now) for i in range(50)],
+        entries=[AuditEntry(user="You", message=f"Did something for the {i}-th time.", time=now) for i in range(50)],
     )
     scrollbar = window.tab_audit.verticalScrollBar()
 
