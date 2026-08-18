@@ -5,12 +5,10 @@ from typing import TYPE_CHECKING, override
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime_hunters.layout import HuntersConfiguration, force_field_configuration
 from randovania.games.prime_hunters.layout.force_field_configuration import LayoutForceFieldRequirement
-from randovania.lib.json_lib import JsonType
 from randovania.resolver.bootstrap import Bootstrap, ConfigurableNodeBootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
@@ -21,7 +19,9 @@ if TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.requirements.base import Requirement
     from randovania.generator.pickup_pool import PoolResults
+    from randovania.lib.json_lib import JsonType
     from randovania.resolver.damage_state import DamageState
 
 

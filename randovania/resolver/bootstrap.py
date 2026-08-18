@@ -19,7 +19,6 @@ from randovania.layout.base.logical_pickup_placement_configuration import Logica
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.lib import random_lib
-from randovania.lib.json_lib import JsonType
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Generator, Iterable
@@ -38,6 +37,7 @@ if TYPE_CHECKING:
     from randovania.graph.world_graph import WorldGraph
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
+    from randovania.lib.json_lib import JsonType
     from randovania.resolver.damage_state import DamageState
 
 

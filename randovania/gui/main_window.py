@@ -21,7 +21,6 @@ from qasync import asyncSlot
 import randovania
 from randovania import VERSION, get_readme_section, monitoring
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.game_description import GameDescription
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, theme
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
@@ -36,6 +35,7 @@ from randovania.lib import enum_lib, json_lib, version_lib
 from randovania.resolver import debug
 
 if typing.TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow

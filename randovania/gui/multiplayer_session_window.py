@@ -28,7 +28,6 @@ from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerS
 from randovania.interface_common import generator_frontend
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters, random_seed_number
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import string_lib
@@ -53,6 +52,7 @@ if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
     from randovania.interface_common.options import Options
+    from randovania.layout.layout_description import LayoutDescription
     from randovania.layout.preset import Preset
     from randovania.lib.status_update_lib import ProgressUpdateCallable
 

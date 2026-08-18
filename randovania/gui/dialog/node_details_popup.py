@@ -6,7 +6,6 @@ import json
 import logging
 import traceback
 import typing
-from collections.abc import Callable
 from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
@@ -38,6 +37,8 @@ from randovania.gui.widgets.editable_list_view import EditableListModel
 from randovania.lib import enum_lib, frozen_lib
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.dock import DockType, DockTypeDatabase
     from randovania.game_description.db.region import Region

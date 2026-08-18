@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import dataclasses
 from random import Random
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.game_description import GameDescription
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.generator import generate_and_validate_description
 from randovania.interface_common.preset_editor import PresetEditor
@@ -15,6 +15,9 @@ from randovania.layout.base.dock_weakness_distributor_configuration import (
     DockWeaknessDistributorMode,
 )
 from randovania.layout.generator_parameters import GeneratorParameters
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
 
 
 @pytest.fixture

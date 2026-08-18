@@ -7,8 +7,10 @@ from PySide6 import QtGui, QtWidgets
 
 from randovania.game_description.resources.inventory import Inventory
 from randovania.gui.item_tracker.item_tracker_widget import ItemTrackerWidget
-from randovania.gui.item_tracker.tracker_assets import TrackerAssetPaths
 from randovania.gui.lib import common_qt_lib
+
+if typing.TYPE_CHECKING:
+    from randovania.gui.item_tracker.tracker_assets import TrackerAssetPaths
 
 
 class ItemTrackerPopupWindow(QtWidgets.QWidget):
