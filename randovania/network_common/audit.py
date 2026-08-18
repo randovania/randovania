@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import datetime
+import datetime  # noqa: TC003 no type checking box because of pydantic model
 
 from randovania.lib.json_base_model import JsonBaseModel
 

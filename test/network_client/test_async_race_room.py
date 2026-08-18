@@ -10,7 +10,6 @@ import pytest
 
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib.json_base_model import JsonBaseModel
 from randovania.network_common import connection_headers, error
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
@@ -32,6 +31,7 @@ from randovania.network_common.user import RandovaniaUser
 if TYPE_CHECKING:
     import pytest_mock
 
+    from randovania.lib.json_base_model import JsonBaseModel
     from randovania.network_client.network_client import NetworkClient
 
 
