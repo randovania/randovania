@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 import os
 from typing import TYPE_CHECKING
 from unittest.mock import NonCallableMagicMock
@@ -117,23 +116,30 @@ def test_client_fixture(server_app) -> Generator[RdvTestClient, None, None]:
 @pytest.fixture(name="live_server")
 async def live_server_fixture(server_app) -> AsyncGenerator[str, None]:
     """
-    Serves the app with uvicorn on a free port, so a real `NetworkClient` can talk to it over HTTP.
+    Serves the app on a free port, so a real `NetworkClient` can talk to it over HTTP.
     Unlike `test_client`, this exercises the client's aiohttp requests as well.
+
+    Uses only uvicorn's socket and ASGI protocol: `Server.serve()`'s polling main loop and
+    graceful shutdown cost ~0.2s per test, and `make_live_client` has already closed every
+    client by teardown, so there's nothing left to drain.
+
     Yields the server's address.
     """
     config = uvicorn.Config(server_app.app, host="127.0.0.1", port=0, log_level="warning")
     server = uvicorn.Server(config)
-    serve_task = asyncio.create_task(server.serve())
+    # Both are done by `Server._serve` before it calls `startup`
+    config.load()
+    server.lifespan = config.lifespan_class(config)
 
+    await server.startup()
     try:
-        while not server.started:
-            await asyncio.sleep(0.01)
-
         port = server.servers[0].sockets[0].getsockname()[1]
         yield f"http://127.0.0.1:{port}"
     finally:
-        server.should_exit = True
-        await serve_task
+        for socket_server in server.servers:
+            socket_server.close()
+            await socket_server.wait_closed()
+        await server.lifespan.shutdown()
 
 
 @pytest.fixture(name="make_live_client")
