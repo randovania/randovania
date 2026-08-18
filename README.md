@@ -1,7 +1,4 @@
 <!-- The Begin and End comments throughout this document are used in order to pull specific sections of the readme into the main GUI window at runtime. -->
-Hello to anyone reading this!!!
-
-The goals of this fork have changed since last time. I hadn't yet realized what I was really trying to achieve - less guided, more exploration-based seeds - and I was under the assumption that doors-then-items was the only way to get results like that. After experimenting with many different approaches, I've settled on something that I think achieves what I'm going for while still using the items-then-doors approach.
 
 # Randovania
 
