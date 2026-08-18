@@ -228,26 +228,28 @@ extend-exclude = [
 
 [tool.ruff.lint]
 extend-select = [
-    "E", # PyCodeStyle Errors
-    "F", # Pyflakes (Errors/Warnings)
-    "W", # PyCodeStyle Warnings
-    "I", # Import Sorting (isort)
-    "UP", # Python Upgrades (pyupgrade)
-    "C4", # Comprehensions (flake8-comprehensions)
-    "C90", # complexity (mccabe)
-    "RSE", # flake8-raise (RSE)
-    "PTH", # use pathlib
-    "COM818", "COM819", # trailing comma
-    "ISC", # flake8-implicit-str-concat
-    "PIE", # flake8-pie (misc checks)
-    "PT", # common style issues or inconsistencies with pytest-based tests (flake8-pytest-style)
-    "SIM101", # Multiple isinstance calls for {name}, merge into a single call
-    "RUF",  # Ruff-specific rules
-
+    "E",    # PyCodeStyle Errors
+    "F",    # Pyflakes (Errors/Warnings)
+    "I",    # Import Sorting (isort)
+    "ISC",  # flake8-implicit-str-concat
+    "PIE",  # flake8-pie (misc checks)
     "PLC",  # pylint convention
-    "PLC0208",  # iterating over set is also not deterministic, so we shouldn't do that!
     "PLE",  # pylint error
     "PLW",  # pylint warning
+    "PT",   # common style issues or inconsistencies with pytest-based tests (flake8-pytest-style)
+    "PTH",  # use pathlib
+    "RSE",  # flake8-raise (RSE)
+    "RUF",  # Ruff-specific rules
+    "TC",   # move type-checking only imports into a TYPE_CHECKING block (flake8-type-checking)
+    "UP",   # Python Upgrades (pyupgrade)
+    "W",    # PyCodeStyle Warnings
+    
+    "C4",      # Comprehensions (flake8-comprehensions)
+    "C90",     # complexity (mccabe)
+    "PLC0208", # iterating over set is also not deterministic, so we shouldn't do that!
+    "COM818",
+    "COM819",  # trailing comma
+    "SIM101",  # Multiple isinstance calls for {name}, merge into a single call
 
     # pylint refactor
     "PLR0402", # Use from {module} import {name} in lieu of alias
@@ -304,6 +306,7 @@ max-complexity = 25
 
 [tool.ruff.lint.flake8-type-checking]
 runtime-evaluated-base-classes = [
+    "pydantic.BaseModel",
     "randovania.bitpacking.bitpacking.BitPackDataclass",
     "randovania.bitpacking.type_enforcement.DataclassPostInitTypeCheck",
     "randovania.bitpacking.json_dataclass.JsonDataclass",

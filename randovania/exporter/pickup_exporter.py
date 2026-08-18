@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING
 from randovania.exporter import item_names
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.game_database_view import GameDatabaseView
 from randovania.game_description.pickup.pickup_entry import (
     ConditionalResources,
     PickupEntry,
@@ -21,6 +20,7 @@ if TYPE_CHECKING:
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.assignment import PickupTarget
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceGainTuple

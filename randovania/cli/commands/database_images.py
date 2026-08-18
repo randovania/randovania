@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
-from pathlib import Path
 from typing import TYPE_CHECKING
 
 from randovania.game.game_enum import RandovaniaGame
 
 if TYPE_CHECKING:
     from argparse import ArgumentParser, Namespace, _SubParsersAction
+    from pathlib import Path
 
 try:
     from PIL import Image

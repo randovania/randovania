@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import functools
 import typing
-from collections.abc import Iterable
 
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
@@ -30,6 +29,8 @@ from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Iterable
+
     from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.game_details.game_details_tab import CreateWhenRelevantMethod, GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager

@@ -5,7 +5,6 @@ import datetime
 import functools
 import logging
 import uuid
-from collections.abc import Callable
 from typing import TYPE_CHECKING, NamedTuple
 
 from PySide6 import QtCore, QtGui, QtWidgets
@@ -24,7 +23,6 @@ from randovania.interface_common.options import InfoAlert, Options
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MAX_WORLD_NAME_LENGTH,
     WORLD_NAME_RE,
@@ -35,9 +33,12 @@ from randovania.network_common.multiplayer_session import (
 )
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
     from randovania.gui.lib.window_manager import WindowManager
+    from randovania.network_common.game_details import GameDetails
     from randovania.network_common.user import UserID
 
 logger = logging.getLogger(__name__)

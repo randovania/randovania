@@ -15,7 +15,6 @@ from randovania.game_connection.executor.memory_operation import (
 )
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.games.prime2.patcher import echoes_items
-from randovania.gui.item_tracker.tracker_structure import TrackerStructure
 
 if TYPE_CHECKING:
     from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
@@ -26,6 +25,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.gui.item_tracker.tracker_structure import TrackerStructure
 
 
 def format_received_item(item_name: str, player_name: str) -> str:

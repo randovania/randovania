@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import dataclasses
-from types import TracebackType
 from typing import TYPE_CHECKING, Any, Protocol, Self, runtime_checkable
 
 from randovania.layout.preset import Preset
@@ -9,6 +8,7 @@ from randovania.layout.preset import Preset
 if TYPE_CHECKING:
     import uuid
     from collections.abc import Callable
+    from types import TracebackType
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.interface_common.options import Options

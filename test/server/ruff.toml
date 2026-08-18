@@ -1,0 +1,16 @@
+# Inherits everything from the repository configuration; only the additions below differ.
+extend = "../../pyproject.toml"
+
+# `src` defaults to this file's own directory, which would make isort treat `randovania` as
+# third-party. Point it back at the repository root.
+src = ["../.."]
+
+[lint.flake8-type-checking]
+# Same reasoning as randovania/server/ruff.toml
+exempt-modules = [
+    "typing",
+    "typing_extensions",
+    "fastapi",
+    "starlette",
+    "randovania.server.server_app",  # ServerAppDep/UserDep/AdminDep/UserOrRedirectDep/SidDep
+]

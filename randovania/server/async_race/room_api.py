@@ -5,7 +5,6 @@ import datetime
 import json
 import math
 import typing
-from collections.abc import Sequence
 
 import fastapi
 import peewee
@@ -14,9 +13,7 @@ from starlette.websockets import WebSocket, WebSocketDisconnect
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common.worlds_configuration import WorldsConfiguration
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib.json_lib import JsonObject_RO
 from randovania.network_common import error
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
@@ -28,7 +25,6 @@ from randovania.network_common.async_race_room import (
     RaceRoomLeaderboard,
     RaceRoomLeaderboardEntry,
 )
-from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
@@ -44,7 +40,12 @@ from randovania.server.database import (
 from randovania.server.server_app import RdvFastAPI, ServerApp
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+    from randovania.lib.json_lib import JsonObject_RO
     from randovania.network_common.async_race_room import AsyncRaceRoomEntry
+    from randovania.network_common.audit import AuditEntry
     from randovania.network_common.signals.common import TypedBytes, TypedJsonObject
 
 MAX_AUTH_TOKEN_LENGTH = 3600 * 24

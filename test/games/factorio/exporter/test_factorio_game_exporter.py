@@ -5,7 +5,6 @@ from unittest.mock import MagicMock
 
 import aiohttp
 import pytest
-import pytest_mock
 from aiohttp import web
 
 import randovania
@@ -19,6 +18,7 @@ if TYPE_CHECKING:
     from collections.abc import AsyncIterator
     from pathlib import Path
 
+    import pytest_mock
     from aiohttp.test_utils import TestServer
 
 # bigger than the 8192 chunk size, so the chunked reading is actually exercised
