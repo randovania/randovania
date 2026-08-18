@@ -6,9 +6,7 @@ import logging.handlers
 import os
 import sys
 import typing
-from argparse import _SubParsersAction
 from pathlib import Path
-from types import TracebackType
 
 from PySide6 import QtCore, QtWidgets
 
@@ -19,7 +17,8 @@ from randovania.interface_common import persistence
 
 if typing.TYPE_CHECKING:
     import argparse
-    from argparse import ArgumentParser
+    from argparse import ArgumentParser, _SubParsersAction
+    from types import TracebackType
 
     import qasync
 

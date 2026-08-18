@@ -20,10 +20,7 @@ import socketio.exceptions
 
 import randovania
 from randovania.bitpacking import bitpacking, construct_pack
-from randovania.game_description.pickup.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.lib import container_lib, http_lib
-from randovania.lib.json_lib import JsonObject_RO
 from randovania.network_common import (
     admin_actions,
     connection_headers,
@@ -62,8 +59,11 @@ if TYPE_CHECKING:
 
     from aiohttp.client import _RequestContextManager, _RequestOptions
 
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
+    from randovania.lib.json_lib import JsonObject_RO
     from randovania.network_common.configuration import NetworkConfiguration
     from randovania.network_common.signals.common import SioDataType, TypedBytes, TypedJsonObject
 

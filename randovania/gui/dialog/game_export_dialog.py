@@ -8,13 +8,14 @@ from typing import TYPE_CHECKING, Any
 
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtWidgets import QMessageBox
-from typing_extensions import TypeForm
 
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
 if TYPE_CHECKING:
+    from typing_extensions import TypeForm
+
     from randovania.exporter.game_exporter import GameExportParams
     from randovania.game.game_enum import RandovaniaGame
     from randovania.interface_common.options import Options, PerGameOptions

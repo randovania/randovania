@@ -12,7 +12,6 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog, QFileDialog, QInputDialog, QMainWindow, QMessageBox, QRadioButton
 from qasync import asyncSlot
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import (
     data_reader,
     data_writer,
@@ -50,6 +49,7 @@ from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList

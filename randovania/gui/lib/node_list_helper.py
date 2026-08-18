@@ -5,17 +5,17 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.node import Node
-from randovania.game_description.db.region import Region
 from randovania.games.common import elevators
 from randovania.games.common.elevators import NodeListGrouping
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Sequence
 
+    from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.region import Region
     from randovania.game_description.game_description import GameDescription
 
 

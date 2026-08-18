@@ -1,19 +1,18 @@
 from __future__ import annotations
 
 import typing
-from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any, Never
 
-from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerSessionListEntry
 from randovania.network_common.signals.common import TypedBytes, TypedJsonObject, args_to_sio_data
-from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Sequence
     from typing import Concatenate
 
     from randovania.lib.type_lib import AsyncCallable
     from randovania.network_client.network_client import NetworkClient
+    from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerSessionListEntry
+    from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
     from randovania.server.server_app import ServerApp
 
 type ServerEventCallback[**P, RetT] = AsyncCallable[Concatenate[ServerApp, str, P], RetT]

@@ -5,14 +5,16 @@ import datetime
 import json
 import uuid
 from enum import Enum
-from typing import NamedTuple
+from typing import TYPE_CHECKING, NamedTuple
 
 import pytest
 
 from randovania.bitpacking.construct_pack import construct_for_type
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
-from randovania.lib.json_lib import JsonObject
+
+if TYPE_CHECKING:
+    from randovania.lib.json_lib import JsonObject
 
 
 class A(Enum):

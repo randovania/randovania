@@ -14,7 +14,6 @@ from randovania.game_description.resources.inventory import Inventory
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.item_tracker.item_tracker_widget import ItemTrackerWidget
 from randovania.gui.item_tracker.tracker_assets import ThemeSource, TrackerCatalog
-from randovania.gui.item_tracker.tracker_structure import TrackerStructure
 from randovania.gui.lib import common_qt_lib
 from randovania.interface_common import persistence
 from randovania.lib import json_lib
@@ -24,6 +23,7 @@ if TYPE_CHECKING:
     from randovania.game_connection.builder.connector_builder import ConnectorBuilder
     from randovania.game_connection.connector.remote_connector import RemoteConnector
     from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
+    from randovania.gui.item_tracker.tracker_structure import TrackerStructure
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.options import Options
 

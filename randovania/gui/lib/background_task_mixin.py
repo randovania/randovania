@@ -12,7 +12,9 @@ import randovania.games.prime2.patcher.csharp_subprocess
 from randovania.gui.lib import common_qt_lib
 from randovania.lib.background_task import AbortBackgroundTask
 from randovania.lib.signal import RdvSignal
-from randovania.lib.status_update_lib import ProgressUpdateCallable
+
+if typing.TYPE_CHECKING:
+    from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
 class BackgroundTaskInProgressError(Exception):

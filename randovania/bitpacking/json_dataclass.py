@@ -12,10 +12,11 @@ from enum import Enum
 from frozendict import frozendict
 
 from randovania.lib import type_lib
-from randovania.lib.json_lib import JsonObject, JsonObject_RO
 
 if typing.TYPE_CHECKING:
     from _typeshed import DataclassInstance
+
+    from randovania.lib.json_lib import JsonObject, JsonObject_RO
 
 T = typing.TypeVar("T")
 
