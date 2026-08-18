@@ -1,0 +1,231 @@
+{
+    "schema_version": 34,
+    "game": "prime_origins",
+    "resource_database": {
+        "items": {
+            "Weapon": {
+                "long_name": "Powerful Weapon",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "VictoryKey": {
+                "long_name": "Victory Key",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Health": {
+                "long_name": "Health",
+                "max_capacity": 500,
+                "extra": {}
+            },
+            "Power Beam": {
+                "long_name": "IGNOREME",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "PowerBeam": {
+                "long_name": "Power Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "WaveBeam": {
+                "long_name": "Wave Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "IceBeam": {
+                "long_name": "Ice Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "PlasmaBeam": {
+                "long_name": "Plasma Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "MorphBall": {
+                "long_name": "Morph Ball",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Bomb": {
+                "long_name": "Bomb",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "ChargeBeam": {
+                "long_name": "Charge Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "VariaSuit": {
+                "long_name": "VariaSuit",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "GravitySuit": {
+                "long_name": "GravitySuit",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "PhazonSuit": {
+                "long_name": "PhazonSuit",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "BoostBall": {
+                "long_name": "BoostBall",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "SpiderBall": {
+                "long_name": "SpiderBall",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "GrappleBeam": {
+                "long_name": "GrappleBeam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "ScrewAttack": {
+                "long_name": "ScrewAttack",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "SpaceJump": {
+                "long_name": "SpaceJump",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Spazer": {
+                "long_name": "Spazer",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "SuperMissile": {
+                "long_name": "SuperMissile",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Wavebuster": {
+                "long_name": "Wavebuster",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "IceSpreader": {
+                "long_name": "IceSpreader",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Flamethrower": {
+                "long_name": "Flamethrower",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "MissileLauncher": {
+                "long_name": "MissileLauncher",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "MissileExpansion": {
+                "long_name": "MissileExpansion",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "EnergyTank": {
+                "long_name": "EnergyTank",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "PowerBombExpansion": {
+                "long_name": "PowerBombExpansion",
+                "max_capacity": 1,
+                "extra": {}
+            }
+        },
+        "events": {},
+        "tricks": {},
+        "damage": {},
+        "versions": {},
+        "misc": {},
+        "requirement_template": {},
+        "damage_reductions": [],
+        "energy_tank_item_index": "Health"
+    },
+    "layers": [
+        "default"
+    ],
+    "starting_location": {
+        "region": "Tallon Overworld",
+        "area": "Landing Site",
+        "node": "Spawn Point"
+    },
+    "minimal_logic": null,
+    "victory_condition": {
+        "type": "resource",
+        "data": {
+            "type": "items",
+            "name": "VictoryKey",
+            "amount": 1,
+            "negate": false
+        }
+    },
+    "dock_type_database": {
+        "types": {
+            "Door": {
+                "name": "Door",
+                "extra": {},
+                "items": {
+                    "Power Beam": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
+                    }
+                },
+                "weakness_distributor": null
+            },
+            "Other": {
+                "name": "Other",
+                "extra": {},
+                "items": {
+                    "Not Determined": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
+                    }
+                },
+                "weakness_distributor": null
+            }
+        },
+        "default_weakness": {
+            "type": "Other",
+            "name": "Not Determined"
+        }
+    },
+    "hint_feature_database": {},
+    "used_trick_levels": {},
+    "flatten_to_set_on_patch": false,
+    "regions": [
+        "Chozo Ruins.json",
+        "Impact Crater.json",
+        "Magmoor Caverns.json",
+        "Phazon Mines.json",
+        "Phendrana Drifts.json",
+        "Tallon Overworld.json"
+    ]
+}
