@@ -72,7 +72,7 @@ class GeneratorParameters(BitPackValue):
             raise ValueError(f"Invalid seed number: {self.seed_number}")
 
         if not isinstance(self.presets, list):
-            raise ValueError("presets must be a list")
+            raise TypeError("presets must be a list")
 
         if not self.spoiler and self.development:
             raise ValueError("Race permalinks can't have development enabled")

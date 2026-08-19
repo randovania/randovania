@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import typing
 import uuid
-from collections.abc import Iterator
 from unittest.mock import MagicMock
 
 import pytest
@@ -16,6 +15,9 @@ from randovania.gui.item_tracker.item_tracker_widget import ItemTrackerWidget
 from randovania.gui.item_tracker.tracker_assets import ThemeSource, TrackerAssetPaths, TrackerCatalog
 from randovania.lib import json_lib
 from randovania.network_common.game_connection_status import GameConnectionStatus
+
+if typing.TYPE_CHECKING:
+    from collections.abc import Iterator
 
 
 def test_create_tracker_no_game(skip_qtbot):

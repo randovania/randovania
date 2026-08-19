@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import collections
 import dataclasses
-from collections.abc import Callable, Iterable, Mapping, Sequence
 from functools import partial
 from typing import TYPE_CHECKING
 
@@ -10,10 +9,8 @@ from PySide6 import QtCore, QtWidgets
 
 import randovania.gui.lib.signal_handling
 from randovania.exporter import item_names
-from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
-from randovania.game_description.pickup.pickup_definition.base_pickup import BasePickupDefinition
 from randovania.generator.pickup_pool import pool_creator
 from randovania.gui.generated.preset_pickup_pool_ui import Ui_PresetPickupPool
 from randovania.gui.lib import common_qt_lib
@@ -28,9 +25,13 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.exceptions import InvalidConfiguration
 
 if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable, Mapping, Sequence
+
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.pickup.pickup_database import PickupDatabase
+    from randovania.game_description.pickup.pickup_definition.base_pickup import BasePickupDefinition
     from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase

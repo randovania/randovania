@@ -132,7 +132,7 @@ async def test_multiworld_interaction(connector: Prime1RemoteConnector, depth: i
     # depth 1: empty check_for_collected_location and empty receive_remote_pickups
 
     connector.receive_remote_pickups = AsyncMock()
-    connector.check_for_collected_location = AsyncMock(return_value=True if depth == 0 else False)
+    connector.check_for_collected_location = AsyncMock(return_value=depth == 0)
 
     # Run
     result = await connector._multiworld_interaction()
