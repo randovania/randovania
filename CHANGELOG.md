@@ -17,6 +17,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
 
+### Metroid Fusion
+
+#### Logic Database
+
+##### Main Deck
+- Changed: Operations Deck: Shinesparking up to reach the Operations Room Door is now possible in Door Lock Rando.
+- Added: Operations Ventilation: It is now possible to destroy the Missile Geron by running into it from Operations Deck.
+- Changed: Operations Ventilation: Shinesparking the Missile Geron is now possible in Door Lock Rando.
+
 ### Metroid: Samus Returns
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
