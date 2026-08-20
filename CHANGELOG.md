@@ -26,6 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Operations Ventilation: It is now possible to destroy the Missile Geron by running into it from Operations Deck.
 - Changed: Operations Ventilation: Shinesparking the Missile Geron is now possible in Door Lock Rando.
 
+##### Sector 4 (AQA)
+- Added: Evir Enclosure: A video to go up by freezing the Evir and performing Underwater Walljumps.
+
 ### Metroid: Samus Returns
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
